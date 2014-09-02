@@ -534,6 +534,10 @@ module CodeGen
                     "#{owner_namespace}#{name.pascalize}"
                 end
 
+                def css_class
+                    csharp_class
+                end
+
                 def csharp_converter_class
                     "#{csharp_class}Converter"
                 end
