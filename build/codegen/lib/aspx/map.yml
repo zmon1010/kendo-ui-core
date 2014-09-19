@@ -7,6 +7,7 @@
           - tile
           - shape
           - marker
+          - bubble
 
     - :name: markers.shape
       :type: String
