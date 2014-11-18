@@ -8044,28 +8044,6 @@ var __meta__ = {
             plotArea.panes = panes;
         },
 
-        destroy: function() {
-            var plotArea = this,
-                charts = plotArea.charts,
-                axes = plotArea.axes,
-                crosshairs = plotArea.crosshairs,
-                i;
-
-            for (i = 0; i < charts.length; i++) {
-                charts[i].destroy();
-            }
-
-            for (i = 0; i < axes.length; i++) {
-                axes[i].destroy();
-            }
-
-            for (i = 0; i < crosshairs.length; i++) {
-                crosshairs[i].destroy();
-            }
-
-            ChartElement.fn.destroy.call(plotArea);
-        },
-
         createCrosshairs: function(panes) {
             var plotArea = this,
                 i, j, pane, axis, currentCrosshair;
