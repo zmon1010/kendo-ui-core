@@ -8669,14 +8669,15 @@ var __meta__ = {
             var options = this.options.plotArea;
             var border = options.border || {};
 
-            var bg = draw.Path.fromRect(bgBox.toRect(), {
+            var bg = this._bgVisual = draw.Path.fromRect(bgBox.toRect(), {
                 fill: {
                     color: options.background,
                     opacity: options.opacity
                 },
                 stroke: {
                     color: border.width ? border.color : "",
-                    width: border.width
+                    width: border.width,
+                    dashType: border.dashType
                 },
                 zIndex: -1
             });
