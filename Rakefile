@@ -1154,6 +1154,33 @@ namespace :build do
         ].flatten
 
         task :generate_help => [ :get_binaries, 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.xml', 'generate:php:api', 'generate:jsp:api', 'generate:mvc:api' ]
+
+        desc 'Upload NuGet packages to private repository'
+        task :private_nuget do
+            mkdir_p 'dist/nuget'
+
+            # copy nuget packages
+            source_dir = File.join(ARCHIVE_ROOT, "Production")
+            source_files = "#{source_dir}/*#{VERSION}.nupkg".gsub "/", "\\"
+
+            sh "xcopy #{source_files} dist\\nuget\\ /E /Y"
+
+            # generate metadata xml
+            template = ERB.new(File.read(File.join(File.dirname(__FILE__), 'build', 'nuget-metadata.xml.erb')), 0, '%<>')
+            File.open("dist/nuget/#{VERSION}.xml", "w") do |f|
+                f.write template.result(binding)
+            end
+
+            # run metadata tool
+            Kernel.spawn [
+                'Telerik.Metadata.Tool.exe',
+                '-u', 'true',
+                '-p', File.join(File.dirname(__FILE__), 'dist', 'nuget'),
+                '-v', VERSION
+            ].join(" "), {
+                :chdir => 'c:\nuget-uploader\MetadataTool\\'
+            }
+        end
     end
 
     namespace :master do
