@@ -373,7 +373,7 @@ var __meta__ = {
                 slot,
                 ring;
 
-            var group = new draw.Group({
+            var group = this._plotbandGroup = new draw.Group({
                 zIndex: -1
             });
 
