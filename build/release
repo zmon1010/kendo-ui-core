@@ -26,26 +26,26 @@ ReadVersions;
 
 MAINTENANCE_BRANCH="${VERSION_YEAR}.Q${VERSION_Q}"
 
-echo "git push origin origin/production:$MAINTENANCE_BRANCH"
-echo "git push --force origin origin/stable:production"
+git push origin origin/production:refs/heads/$MAINTENANCE_BRANCH
+git push --force origin origin/stable:production
 
-echo "git push core core/production:$MAINTENANCE_BRANCH"
-echo "git push --force core core/master:production"
+git push core core/production:refs/heads/$MAINTENANCE_BRANCH
+git push --force core core/master:production
 
 git reset --hard origin/stable;
 
 ReadVersions;
 
-echo "git tag -a $VERSION -m 'Kendo UI: $VERSION_YEAR Q$VERSION_Q' origin/stable"
-echo "git push origin $VERSION"
-echo "git tag -d $VERSION"
+git tag -a $VERSION -m 'Kendo UI: $VERSION_YEAR Q$VERSION_Q' origin/stable
+git push origin $VERSION
+git tag -d $VERSION
 
-echo "git tag -a $VERSION -m 'Kendo UI: $VERSION_YEAR Q$VERSION_Q' core/master"
-echo "git push core $VERSION"
+git tag -a $VERSION -m 'Kendo UI: $VERSION_YEAR Q$VERSION_Q' core/master
+git push core $VERSION
 
-echo "git --work-tree=docs --git-dir=docs/.git fetch origin"
-echo "git --work-tree=docs --git-dir=docs/.git tag -a $VERSION -m 'Kendo UI: $VERSION_YEAR Q$VERSION_Q' origin/master"
-echo "git --work-tree=docs --git-dir=docs/.git push origin $VERSION"
-echo "git --work-tree=docs --git-dir=docs/.git push --force origin origin/master:production"
+git --work-tree=docs --git-dir=docs/.git fetch origin
+git --work-tree=docs --git-dir=docs/.git tag -a $VERSION -m 'Kendo UI: $VERSION_YEAR Q$VERSION_Q' origin/master
+git --work-tree=docs --git-dir=docs/.git push origin $VERSION
+git --work-tree=docs --git-dir=docs/.git push --force origin origin/master:production
 
 echo "Now, make sure that you update the version in VERSION file in master and core-master. After the official build release, you should also add the servicePack flag in production and core-production"
