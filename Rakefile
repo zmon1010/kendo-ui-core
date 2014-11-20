@@ -1109,11 +1109,15 @@ namespace :build do
         end
     end
 
+    def map_archive_root drive
+        sh "if not exist #{drive} ( net use #{drive} #{ARCHIVE_ROOT} /user:telerik.com\\KendoBuildUser Kend0Tf$UseR )"
+    end
+
     { :production => "Production", :master => "Stable" }.each do |env, destination|
         namespace env do
             desc 'Build and publish ASP.NET MVC DLLs for #{destination} distribution'
             task :aspnetmvc_binaries => [ "mvc:binaries", "tests:aspnetmvc", 'vs_plugin:build' ] do
-                sh "if not exist L: ( net use L: #{ARCHIVE_ROOT} /user:telerik.com\\KendoBuildUser Kend0Tf$UseR )"
+                map_archive_root 'L:'
 
                 target_dir = "L:\\#{destination}\\binaries\\"
 
@@ -1157,11 +1161,12 @@ namespace :build do
 
         desc 'Upload NuGet packages to private repository'
         task :private_nuget do
+            map_archive_root 'L:'
+
             mkdir_p 'dist/nuget'
 
             # copy nuget packages
-            source_dir = File.join(ARCHIVE_ROOT, "Production")
-            source_files = "#{source_dir}/*#{VERSION}.nupkg".gsub "/", "\\"
+            source_files = "L:\\Production\\*#{VERSION}.nupkg"
 
             sh "xcopy #{source_files} dist\\nuget\\ /E /Y"
 
@@ -1172,7 +1177,7 @@ namespace :build do
             end
 
             # run metadata tool
-            Kernel.spawn [
+            Kernel.system [
                 'Telerik.Metadata.Tool.exe',
                 '-u', 'true',
                 '-p', File.join(File.dirname(__FILE__), 'dist', 'nuget'),
