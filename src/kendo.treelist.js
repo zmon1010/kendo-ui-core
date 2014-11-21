@@ -1088,7 +1088,6 @@ var __meta__ = {
 
         _layout: function () {
             var element = this.element;
-            var colgroup = this._colgroup();
             var layout = "";
 
             this.wrapper = element.addClass(classNames.wrapper);
@@ -1097,14 +1096,14 @@ var __meta__ = {
                 "<div class='#= gridHeader #' style=\"padding-right: " + kendo.support.scrollbar() + "px;\">" +
                     "<div class='#= gridHeaderWrap #'>" +
                         "<table role='grid'>" +
-                            colgroup +
+                            "<colgroup></colgroup>"+
                             "<thead role='rowgroup' />" +
                         "</table>" +
                     "</div>" +
                 "</div>" +
                 "<div class='#= gridContentWrap #'>" +
                     "<table role='treegrid' tabindex='0'>" +
-                        colgroup +
+                        "<colgroup></colgroup>"+
                         "<tbody />" +
                     "</table>" +
                 "</div>";
@@ -1112,7 +1111,7 @@ var __meta__ = {
             if (!this.options.scrollable) {
                 layout =
                     "<table role='treegrid' tabindex='0'>" +
-                        colgroup +
+                        "<colgroup></colgroup>"+
                         "<thead class='#= gridHeader #' role='rowgroup' />" +
                         "<tbody />" +
                     "</table>";
@@ -1130,6 +1129,17 @@ var __meta__ = {
             this.toolbar = element.find(DOT + classNames.gridToolbar);
 
             var header = this.header = element.find(DOT + classNames.gridHeader).find("thead").addBack().filter("thead");
+
+            this.content = element.find(DOT + classNames.gridContentWrap).find("tbody");
+
+            if (!this.content.length) {
+                this.content = element.find("tbody");
+            }
+
+            this._headerColsTree = new kendoDom.Tree(header.prev()[0]);
+            this._contentColsTree = new kendoDom.Tree(this.content.prev()[0]);
+            this._renderCols();
+
             this._headerTree = new kendoDom.Tree(this.header[0]);
             this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
 
@@ -1141,12 +1151,6 @@ var __meta__ = {
                     data: map(columns, function(col) { return { column: col }; })
                 };
             });
-
-            this.content = element.find(DOT + classNames.gridContentWrap).find("tbody");
-
-            if (!this.content.length) {
-                this.content = element.find("tbody");
-            }
 
             this._contentTree = new kendoDom.Tree(this.content[0]);
 
@@ -1244,26 +1248,34 @@ var __meta__ = {
             return ths;
         },
 
-        _colgroup: function() {
+        _cols: function() {
             var columns = this.columns;
             var cols = [];
-            var style, width;
+            var width, attr;
 
-            for (var i = 0, length = columns.length; i < length; i++) {
-                cols.push("<col ");
-
+            for (var i = 0; i < columns.length; i++) {
                 width = columns[i].width;
+                attr = {};
 
                 if (width && parseInt(width, 10) !== 0) {
-                    cols.push("style='width:");
-                    cols.push(typeof width === "string" ? width : width + "px");
-                    cols.push("'");
+                    attr.style = {
+                        width: typeof width === "string" ? width : width + "px"
+                    };
                 }
 
-                cols.push("/>");
+                cols.push(kendoDomElement("col", attr));
             }
 
-            return "<colgroup>" + cols.join("") + "</colgroup>";
+            return cols;
+        },
+
+        _renderCols: function() {
+            this._headerColsTree.render(this._cols());
+
+            if (this.options.scrollable) {
+                this._contentColsTree.render(this._cols());
+            }
+
         },
 
         _trs: function(options) {
