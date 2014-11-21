@@ -10645,9 +10645,10 @@ var __meta__ = {
                 userEvents.destroy();
             }
 
+            clearTimeout(that._mwTimeout);
             that._state = null;
 
-            this.wrapper.remove();
+            that.wrapper.remove();
         },
 
         _rangeEventArgs: function(range) {
