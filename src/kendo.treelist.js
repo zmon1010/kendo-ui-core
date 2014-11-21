@@ -1419,7 +1419,10 @@ var __meta__ = {
             var model = options.model;
             var column = options.column;
             var iconClass;
-            var attr = { "role": "gridcell" };
+            var attr = {
+                "role": "gridcell",
+                "style": column.hidden === true ? { "display": "none" } : {}
+            };
 
             if (model._edit && column.field && model.editable(column.field)) {
                 attr[kendo.attr("container-for")] = column.field;
@@ -1847,6 +1850,7 @@ var __meta__ = {
             this.columns[column].hidden = true;
             this._renderCols();
             this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
+            this._render();
         }
     });
 

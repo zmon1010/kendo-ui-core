@@ -124,4 +124,33 @@
         ok(!headerCells.eq(1).is(":visible"), "column header is still visible");
         ok(headerCells.eq(2).is(":visible"));
     });
+
+    test("intially hidden column renders data cells hidden", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, hidden: true },
+                { field: "parentid", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        var cells = instance.content.find("tr").first().children();
+
+        equal(cells.length, 3);
+        ok(!cells.eq(0).is(":visible"), "data cell is still visible");
+        ok(cells.eq(1).is(":visible"));
+        ok(cells.eq(2).is(":visible"));
+    });
+
+    test("hideColumn hides data cells", function() {
+        createTreeList();
+
+        instance.hideColumn(1);
+        var cells = instance.content.find("tr").first().children();
+
+        equal(cells.length, 3);
+        ok(cells.eq(0).is(":visible"));
+        ok(!cells.eq(1).is(":visible"), "data cell is still visible");
+        ok(cells.eq(2).is(":visible"));
+    });
 })();
