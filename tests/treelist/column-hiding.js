@@ -153,4 +153,40 @@
         ok(!cells.eq(1).is(":visible"), "data cell is still visible");
         ok(cells.eq(2).is(":visible"));
     });
+
+    test("intially hidden column renders footer cell hidden", function() {
+        createTreeList({
+            columns: [
+                { footerTemplate: "foo", field: "id", width: 10, hidden: true },
+                { footerTemplate: "foo", field: "parentid", width: 20 },
+                { footerTemplate: "foo", field: "text", width: 30 }
+            ]
+        });
+
+        var cells = instance.content.find(".k-footer-template").first().children();
+
+        equal(cells.length, 3);
+        ok(!cells.eq(0).is(":visible"), "footer cell is still visible");
+        ok(cells.eq(1).is(":visible"));
+        ok(cells.eq(2).is(":visible"));
+    });
+
+    test("hideColumn hides footer cell", function() {
+        createTreeList({
+            columns: [
+                { footerTemplate: "foo", field: "id", width: 10 },
+                { footerTemplate: "foo", field: "parentid", width: 20 },
+                { footerTemplate: "foo", field: "text", width: 30 }
+            ]
+        });
+
+        instance.hideColumn(1);
+        var cells = instance.content.find(".k-footer-template").first().children();
+
+        equal(cells.length, 3);
+        ok(cells.eq(0).is(":visible"));
+        ok(!cells.eq(1).is(":visible"), "footer cell is still visible");
+        ok(cells.eq(2).is(":visible"));
+    });
+
 })();

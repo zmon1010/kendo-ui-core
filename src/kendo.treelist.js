@@ -1372,7 +1372,10 @@ var __meta__ = {
             var column = options.column;
             var template = options.column.footerTemplate || $.noop;
             var aggregates = options.model[column.field] || {};
-            var attr = { "role": "gridcell" };
+            var attr = {
+                "role": "gridcell",
+                "style": column.hidden === true ? { "display": "none" } : {}
+            };
 
             if (column.expandable) {
                 content = content.concat(createPlaceholders({
