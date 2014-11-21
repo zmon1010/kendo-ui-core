@@ -1240,6 +1240,7 @@ var __meta__ = {
                 ths.push(kendoDomElement("th", {
                     "data-field": column.field,
                     "data-title": column.title,
+                    "style": column.hidden === true ? { "display": "none" } : {},
                     className: cellClasses.join(" "),
                     "role": "columnheader"
                 }, children));
@@ -1845,6 +1846,7 @@ var __meta__ = {
         hideColumn: function(column) {
             this.columns[column].hidden = true;
             this._renderCols();
+            this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
         }
     });
 

@@ -42,16 +42,16 @@
             ]
         });
 
-        var headercols = instance.header.prev().children();
-        var contentcols = instance.content.prev().children();
+        var headerCols = instance.header.prev().children();
+        var contentCols = instance.content.prev().children();
 
-        equal(headercols.length, 2);
-        equal(headercols[0].style.width, "20px");
-        equal(headercols[1].style.width, "30px");
+        equal(headerCols.length, 2);
+        equal(headerCols[0].style.width, "20px");
+        equal(headerCols[1].style.width, "30px");
 
-        equal(contentcols.length, 2);
-        equal(contentcols[0].style.width, "20px");
-        equal(contentcols[1].style.width, "30px");
+        equal(contentCols.length, 2);
+        equal(contentCols[0].style.width, "20px");
+        equal(contentCols[1].style.width, "30px");
     });
 
     test("col is not rendered for initially hidden column (not scrollable)", function() {
@@ -84,15 +84,44 @@
 
         instance.hideColumn(1);
 
-        var headercols = instance.header.prev().children();
-        var contentcols = instance.content.prev().children();
+        var headerCols = instance.header.prev().children();
+        var contentCols = instance.content.prev().children();
 
-        equal(headercols.length, 2);
-        equal(headercols[0].style.width, "10px");
-        equal(headercols[1].style.width, "30px");
+        equal(headerCols.length, 2);
+        equal(headerCols[0].style.width, "10px");
+        equal(headerCols[1].style.width, "30px");
 
-        equal(contentcols.length, 2);
-        equal(contentcols[0].style.width, "10px");
-        equal(contentcols[1].style.width, "30px");
+        equal(contentCols.length, 2);
+        equal(contentCols[0].style.width, "10px");
+        equal(contentCols[1].style.width, "30px");
+    });
+
+    test("intially hidden column renders header cell hidden", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, hidden: true },
+                { field: "parentid", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        var headerCells = instance.header.find("th");
+
+        equal(headerCells.length, 3);
+        ok(!headerCells.eq(0).is(":visible"));
+        ok(headerCells.eq(1).is(":visible"));
+        ok(headerCells.eq(2).is(":visible"));
+    });
+
+    test("hideColumn hides th element", function() {
+        createTreeList();
+
+        instance.hideColumn(1);
+        var headerCells = instance.header.find("th");
+
+        equal(headerCells.length, 3);
+        ok(headerCells.eq(0).is(":visible"));
+        ok(!headerCells.eq(1).is(":visible"), "column header is still visible");
+        ok(headerCells.eq(2).is(":visible"));
     });
 })();
