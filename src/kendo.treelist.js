@@ -1254,6 +1254,10 @@ var __meta__ = {
             var width, attr;
 
             for (var i = 0; i < columns.length; i++) {
+                if (columns[i].hidden === true) {
+                    continue;
+                }
+
                 width = columns[i].width;
                 attr = {};
 
@@ -1836,6 +1840,11 @@ var __meta__ = {
             }
 
             return mode.toLowerCase();
+        },
+
+        hideColumn: function(column) {
+            this.columns[column].hidden = true;
+            this._renderCols();
         }
     });
 
