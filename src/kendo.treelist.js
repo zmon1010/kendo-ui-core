@@ -1873,6 +1873,8 @@ var __meta__ = {
             this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
             this._render();
 
+            this._adjustTablesWidth();
+
             this.trigger(hidden ? COLUMNHIDE : COLUMNSHOW, { column: column });
         },
 
@@ -1886,6 +1888,29 @@ var __meta__ = {
             }
 
             return column;
+        },
+
+        _adjustTablesWidth: function() {
+            var idx, length;
+            var cols = this.header.prev().children();
+            var colWidth, width = 0;
+
+            for (idx = 0, length = cols.length; idx < length; idx++ ) {
+                colWidth = cols[idx].style.width;
+                if (colWidth && colWidth.indexOf("%") == -1) {
+                    width += parseInt(colWidth, 10);
+                } else {
+                    width = 0;
+                    break;
+                }
+            }
+
+
+            if (width) {
+                this.content.closest("table")
+                    .add(this.header.closest("table"))
+                    .width(width);
+            }
         }
     });
 
