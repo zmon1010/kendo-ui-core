@@ -1854,6 +1854,13 @@ var __meta__ = {
             this._renderCols();
             this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
             this._render();
+        },
+
+        showColumn: function(column) {
+            this.columns[column].hidden = false;
+            this._renderCols();
+            this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
+            this._render();
         }
     });
 
