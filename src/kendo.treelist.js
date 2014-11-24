@@ -1850,17 +1850,36 @@ var __meta__ = {
         },
 
         hideColumn: function(column) {
-            this.columns[column].hidden = true;
+            this._toggleColumnVisibility(column, true);
+        },
+
+        showColumn: function(column) {
+            this._toggleColumnVisibility(column, false);
+        },
+
+        _toggleColumnVisibility: function(column, hidden) {
+            column = this._findColumn(column);
+
+            if (!column) {
+                return;
+            }
+
+            column.hidden = hidden;
             this._renderCols();
             this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
             this._render();
         },
 
-        showColumn: function(column) {
-            this.columns[column].hidden = false;
-            this._renderCols();
-            this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
-            this._render();
+        _findColumn: function(column) {
+            if (typeof column == "number") {
+                column = this.columns[column];
+            } else {
+                column = grep(this.columns, function(item) {
+                    return item.field === column;
+                })[0];
+            }
+
+            return column;
         }
     });
 

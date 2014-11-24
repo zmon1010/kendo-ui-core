@@ -309,4 +309,21 @@
         ok(cells.eq(1).is(":visible"), "footer cell is still not visible");
         ok(cells.eq(2).is(":visible"));
     });
+
+    test("hideColumn accepts field as argument", function() {
+        createTreeList();
+
+        instance.hideColumn("text");
+
+        ok(instance.columns[2].hidden);
+    });
+
+    test("showColumn accepts field as argument", function() {
+        createTreeList();
+
+        instance.hideColumn("text");
+        instance.showColumn("text");
+
+        ok(!instance.columns[2].hidden);
+    });
 })();
