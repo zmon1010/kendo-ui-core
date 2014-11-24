@@ -74,6 +74,8 @@ var __meta__ = {
     var DATABOUND = "dataBound";
     var CANCEL = "cancel";
     var FILTERMENUINIT = "filterMenuInit";
+    var COLUMNHIDE = "columnHide";
+    var COLUMNSHOW = "columnShow";
 
     var classNames = {
         wrapper: "k-treelist k-grid k-widget",
@@ -919,7 +921,9 @@ var __meta__ = {
             DATABINDING,
             DATABOUND,
             CANCEL,
-            FILTERMENUINIT
+            FILTERMENUINIT,
+            COLUMNHIDE,
+            COLUMNSHOW
         ],
 
         _toggle: function(model, expand) {
@@ -1860,7 +1864,7 @@ var __meta__ = {
         _toggleColumnVisibility: function(column, hidden) {
             column = this._findColumn(column);
 
-            if (!column) {
+            if (!column || column.hidden === hidden) {
                 return;
             }
 
@@ -1868,6 +1872,8 @@ var __meta__ = {
             this._renderCols();
             this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
             this._render();
+
+            this.trigger(hidden ? COLUMNHIDE : COLUMNSHOW, { column: column });
         },
 
         _findColumn: function(column) {

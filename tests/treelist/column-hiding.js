@@ -326,4 +326,54 @@
 
         ok(!instance.columns[2].hidden);
     });
+
+    test("hideColumn triggers event", 2, function() {
+        createTreeList({
+            columnHide: function(e) {
+                ok(e.column);
+                equal(e.column.field, "text");
+            }
+        });
+
+        instance.hideColumn("text");
+    });
+
+    test("showColumn triggers event", 2, function() {
+        createTreeList({
+            columnShow: function(e) {
+                ok(e.column);
+                equal(e.column.field, "text");
+            }
+        });
+
+        instance.hideColumn("text");
+        instance.showColumn("text");
+    });
+
+    test("hideColumn doesn't trigger event if the column is already hidden", function() {
+        var wasCalled = false;
+        createTreeList({
+            columns: [ "id", "parentId", { field: "text", hidden: true }],
+            columnHide: function() {
+                wasCalled = true;
+            }
+        });
+
+        instance.hideColumn("text");
+
+        ok(!wasCalled, "event was triggered on already hidden column");
+    });
+
+    test("showColumn doesn't trigger event if the column is already visible", function() {
+        var wasCalled = false;
+        createTreeList({
+            columnHide: function() {
+                wasCalled = true;
+            }
+        });
+
+        instance.showColumn("text");
+
+        ok(!wasCalled, "event was triggered on already visible column");
+    });
 })();
