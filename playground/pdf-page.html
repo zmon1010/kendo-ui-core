@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+
+    <script src="./pako.min.js"></script>
+
+    <script>
+        kendo.pdf.defineFont({
+            "Droid Serif"             : "./DroidFont/DroidSerif-Regular.ttf",
+            "Droid Serif|Bold"        : "./DroidFont/DroidSerif-Bold.ttf",
+            "Droid Serif|Bold|Italic" : "./DroidFont/DroidSerif-BoldItalic.ttf",
+            "Droid Serif|Italic"      : "./DroidFont/DroidSerif-Italic.ttf",
+
+            "Droid Sans"              : "./DroidFont/DroidSans.ttf",
+            "Droid Sans|Bold"         : "./DroidFont/DroidSans-Bold.ttf"
+        });
+    </script>
+
+    <style>
+      /* font declarations, to make sure the browser will use the same fonts
+         that we're going to embed in the PDF */
+
+      @font-face {
+        font-family: "Droid Serif";
+        src: url("./DroidFont/DroidSerif-Regular.ttf");
+      }
+      @font-face {
+        font-family: "Droid Serif";
+        font-weight: bold;
+        src: url("./DroidFont/DroidSerif-Bold.ttf");
+      }
+      @font-face {
+        font-family: "Droid Serif";
+        font-weight: bold;
+        font-style: italic;
+        src: url("./DroidFont/DroidSerif-BoldItalic.ttf");
+      }
+      @font-face {
+        font-family: "Droid Serif";
+        font-style: italic;
+        src: url("./DroidFont/DroidSerif-Italic.ttf");
+      }
+
+      @font-face {
+        font-family: "Droid Sans";
+        src: url("./DroidFont/DroidSans.ttf");
+      }
+      @font-face {
+        font-family: "Droid Sans";
+        font-weight: bold;
+        src: url("./DroidFont/DroidSans-Bold.ttf");
+      }
+
+      html, body {
+        background: #eee;
+        color: black;
+        margin: 0; padding: 0;
+        font-family: "Droid Serif";
+        font-size: 14px;
+      }
+
+      html {
+        margin: 1em;
+      }
+
+      .a4 { width: 595.28px; height: 841.89px; }
+      .letter { width: 612.00px; height: 792.00px; }
+      .executive { width: 521.86px; height: 756.00px; }
+
+      .pdf-page-container {
+        border: 1px solid #000;
+        box-shadow: 3px 3px 3px #888;
+        float: right;
+      }
+
+      .pdf-page {
+        position: relative;
+        font-size: 12px;
+        font-family: "Droid Serif";
+        background: white;
+        border: 1px solid white;
+        box-sizing: border-box;
+      }
+
+      .pdf-page .k-widget {
+        font-size: 12px;
+        font-family: "Droid Sans";
+      }
+
+      .pdf-page .pdf-header {
+        position: absolute;
+        top: 0; left: 36px; right: 36px; height: 12%;
+        border-bottom: 1px solid #999;
+      }
+      .pdf-page .pdf-footer {
+        position: absolute;
+        bottom: 0; left: 36px; right: 36px; height: 12%;
+        border-top: 1px solid #999;
+      }
+      .pdf-page .pdf-body {
+        position: absolute;
+        top: 12%; bottom: 12%; left: 72px; right: 72px;
+      }
+
+      .pdf-page .pdf-header .company-logo {
+        position: absolute;
+        font-size: 200%; font-style: italic;
+        bottom: 5px;
+      }
+      .pdf-page .pdf-body .title {
+        margin: 3em 0 2em 0;
+        font-size: 200%;
+        text-align: center;
+      }
+
+      .pdf-page .pdf-body .k-grid-header {
+        padding-right: 0 !important;
+      }
+      .pdf-page .pdf-body .k-grid-header th.k-header {
+        font-weight: bold;
+      }
+      .pdf-page .pdf-body .k-grid-content {
+        overflow: hidden !important;
+        overflow-x: hidden !important;
+        overflow-y: hidden !important;
+      }
+      .pdf-page .pdf-body .ending {
+        margin-top: 5em;
+      }
+      .pdf-page .pdf-body .ending .signature {
+        float: right;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <div class="pdf-page-container">
+      <div class="pdf-page a4">
+        <div class="pdf-header">
+          <div class="company-logo">ACME<br/>logo</div>
+        </div>
+        <div class="pdf-footer">
+          <div style="margin-top: 5px; text-align: center; color: #777;">
+            This is a footer.
+          </div>
+        </div>
+        <div class="pdf-body">
+          <div class="title">Invoice #1234</div>
+          <div id="grid"></div>
+          <div class="ending">
+            <div class="signature">Signature: ________________</div>
+            <div class="date">Date: ________________</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <label>
+        Page size:
+        <select id="paper">
+          <option value="a4" selected>A4</option>
+          <option value="letter">Letter</option>
+          <option value="executive">Executive</option>
+        </select>
+      </label>
+      <hr />
+      <button onclick="getPDF('.pdf-page')">Get PDF</button>
+    </div>
+
+    <script>
+      function getPDF(selector) {
+        kendo.drawing.drawDOM($(selector)).then(function(group){
+          kendo.drawing.pdf.saveAs(group, "kendo.pdf");
+        });
+      }
+
+      $(document).ready(function(){
+        var data = [
+          { productName: "Chef Anton's Cajun Seasoning", unitPrice: 22, qty: 5 },
+          { productName: "Chef Anton's Gumbo Mix", unitPrice: 21.35, qty: 7 },
+          { productName: "Uncle Bob's Organic Dried Pears", unitPrice: 30, qty: 3 },
+          { productName: "Queso Manchego La Pastora", unitPrice: 38, qty: 1 },
+          { productName: "Unicode: © ® ™ ½ ¾ ¼ € λ α β π", unitPrice: 0, qty: 0 },
+          { productName: "sin²(β) + cos²(β) = 1", unitPrice: 0, qty: 0 }
+        ];
+        var schema = {
+          model: {
+            productName: { type: "string" },
+            unitPrice: { type: "number", editable: false },
+            qty: { type: "number" }
+          }
+        };
+        var columns = [
+          { field: "productName", title: "Product" },
+          { field: "unitPrice", title: "Price", format: "{0:c}", width: 60 },
+          { field: "qty", title: "Pcs.", width: 60 },
+          { field: "total", title: "Total", width: 60, template: "#: kendo.format('{0:c}', unitPrice * qty) #" }
+        ];
+        var grid = $("#grid").kendoGrid({
+          editable: true,
+          sortable: true,
+          dataSource: data,
+          schema: schema,
+          columns: columns
+        });
+
+        $("#paper").kendoDropDownList({
+          change: function() {
+            $(".pdf-page")
+              .removeClass("a4")
+              .removeClass("letter")
+              .removeClass("executive")
+              .addClass(this.value());
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
