@@ -1,6 +1,4 @@
 (function() {
-    return;
-
     var dataviz = kendo.dataviz,
         Box2D = dataviz.Box2D,
         categoriesCount = dataviz.categoriesCount,
@@ -11,6 +9,14 @@
         pointCoordinates,
         TOLERANCE = 1;
 
+    function segmentPaths() {
+        return areaChart._segments[0].visual.children;
+    }
+
+    function getAreaPath(areaChart) {
+        return segmentPaths()[0];
+    }
+
     function setupStepAreaChart(plotArea, options) {
         view = new ViewStub();
 
@@ -18,10 +24,10 @@
 
         root = new dataviz.RootElement();
         root.append(areaChart);
+        root.reflow();
 
-        areaChart.reflow();
-        areaChart.getViewElements(view);
-        pointCoordinates = mapPoints(view.log.path[0].points);
+        root.renderVisual();
+        pointCoordinates = mapSegments(getAreaPath(areaChart).segments);
     }
 
     function stubPlotArea(getCategorySlot, getValueSlot, options) {
