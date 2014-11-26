@@ -16,7 +16,7 @@
         var geom = kendo.geometry;
         var draw = kendo.drawing;
 
-        var center = new geom.Point(100, 100);
+        var center = new geom.Point(200, 300);
 
         var rect = new geom.Rect(center.clone().translate(-50, -50), [100, 100]);
         var path = draw.Path.fromRect(rect, {
@@ -44,7 +44,7 @@
             group.transform(geom.transform().rotate(
                 angle, center
             ));
-        }, 1000);
+        }, 500);
     });
     </script>
     <style>
