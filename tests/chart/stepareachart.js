@@ -5,7 +5,6 @@
         chartBox = new Box2D(0, 0, 800, 600),
         areaChart,
         root,
-        view,
         pointCoordinates,
         TOLERANCE = 1;
 
@@ -18,8 +17,6 @@
     }
 
     function setupStepAreaChart(plotArea, options) {
-        view = new ViewStub();
-
         areaChart = new dataviz.AreaChart(plotArea, options);
 
         root = new dataviz.RootElement();
