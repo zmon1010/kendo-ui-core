@@ -76,6 +76,11 @@ ROOT_MAP = {
     'typescript' => 'resources/typescript'
 }
 
+CORE_CHANGELOG_EXCLUDE = %w(
+    grid scheduler upload editor treeview
+    chart sparkline diagram map stockchart barcode qrcode lineargauge radialgauge
+)
+
 def api_doc(wildcard)
     FileList[File.join("docs/api/javascript", wildcard)]
 end
@@ -962,10 +967,7 @@ bundle :name => 'core',
        :license => 'src-license-core',
        :product => 'Kendo UI Core',
        :changelog => %w(components),
-       :changelog_exclude => %(
-            grid scheduler upload editor treeview
-            chart sparkline diagram map stockchart barcode qrcode lineargauge radialgauge
-        ),
+       :changelog_exclude => CORE_CHANGELOG_EXCLUDE,
        :readme => 'README.KendoUI.Core',
        :release_build => {
           :file_metadata => {
@@ -1159,8 +1161,16 @@ namespace :build do
 
         task :generate_help => [ :get_binaries, 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.xml', 'generate:php:api', 'generate:jsp:api', 'generate:mvc:api' ]
 
+        components_changelog_path = File.join("dist", "nuget", "changelog.xml")
+        core_components_changelog_path = File.join("dist", "nuget", "changelog-core.xml")
+        nuget_mvc_components_changelog_path = File.join("dist", "nuget", "changelog-mvc.xml")
+
+        write_changelog(components_changelog_path, %w(components), [])
+        write_changelog(nuget_mvc_components_changelog_path, %w(components aspnetmvc), [])
+        write_changelog(core_components_changelog_path, %w(components aspnetmvc), CORE_CHANGELOG_EXCLUDE)
+
         desc 'Upload NuGet packages to private repository'
-        task :private_nuget do
+        task :private_nuget => [ components_changelog_path, core_components_changelog_path, nuget_mvc_components_changelog_path] do
             map_archive_root 'L:'
 
             mkdir_p 'dist/nuget'
