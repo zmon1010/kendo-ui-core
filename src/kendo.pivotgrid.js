@@ -4605,6 +4605,202 @@ var __meta__ = {
     });
 
     ui.plugin(PivotGrid);
+
+    kendo.PivotExcelExporter = kendo.Class.extend({
+        init: function(options) {
+            this.options = options;
+
+            this.widget = options.widget;
+            this.dataSource = this.widget.dataSource;
+        },
+
+        _columns: function() {
+            var columnHeaderTable = this.widget.columnsHeaderTree.children[0];
+            var rowHeaderTable = this.widget.rowsHeaderTree.children[0];
+
+            var columnHeaderLength = columnHeaderTable.children[0].children.length;
+            var rowHeaderLength = rowHeaderTable.children[0].children.length;
+
+            var width = this.widget.options.columnWidth;
+            var result = [];
+            var idx;
+
+            if (rowHeaderLength && this.dataSource.data()[0]) {
+                for (idx = 0; idx < rowHeaderLength; idx++) {
+                    result.push({
+                        autoWidth: true
+                    });
+                }
+            }
+
+            for (idx = 0; idx < columnHeaderLength; idx++) {
+                result.push({
+                    autoWidth: false,
+                    width: width
+                });
+            }
+
+            return result;
+        },
+        _rows: function() {
+            var columnHeaderTable = this.widget.columnsHeaderTree.children[0];
+            var rowHeaderTable = this.widget.rowsHeaderTree.children[0];
+
+            var columnHeaderLength = columnHeaderTable.children[0].children.length;
+            var rowHeaderLength = rowHeaderTable.children[0].children.length;
+
+            var columnHeaderRows = columnHeaderTable.children[1].children;
+            var rowHeaderRows = rowHeaderTable.children[1].children;
+            var contentRows = this.widget.contentTree.children[0].children[1].children;
+
+            var columnRows = [];
+            //
+            for (var i = 0; i < columnHeaderRows.length; i++ ) {
+                var row = [];
+                var cells = columnHeaderRows[i].children;
+
+                for (var j = 0; j < cells.length; j++) {
+                    var cell = cells[j];
+
+                    row.push({
+                        background: "#7a7a7a",
+                        color: "#fff",
+                        value: cell.children[cell.children.length - 1].html,
+                        colSpan: cell.attr.colSpan || 1,
+                        rowSpan: cell.attr.rowSpan || 1
+                    });
+                }
+
+                columnRows.push({
+                    cells: row,
+                    type: "header"
+                });
+            }
+
+            if (rowHeaderLength) {
+                columnRows[0].cells.splice(0, 0, {
+                    background: "#7a7a7a",
+                    color: "#fff",
+                    value: "",
+                    colSpan: rowHeaderLength,
+                    rowSpan: columnHeaderRows.length
+                });
+            }
+
+            var rowRows = [];
+
+            for (var i = 0; i < rowHeaderRows.length; i++) {
+                var row = [];
+                var cells = rowHeaderRows[i].children;
+
+
+                for (var j = 0; j < cells.length; j++) {
+                    var cell = cells[j];
+
+                    row.push({
+                        background: "#7a7a7a",
+                        color: "#fff",
+                        value: cell.children[cell.children.length - 1].html,
+                        colSpan: cell.attr.colSpan || 1,
+                        rowSpan: cell.attr.rowSpan || 1
+                    });
+                }
+
+                cells = contentRows[i].children;
+
+                for (var j = 0; j < columnHeaderLength; j++) {
+                    var cell = cells[j];
+
+                    row.push({
+                        background: "#dfdfdf",
+                        color: "#333",
+                        value: cell.children[0].html,
+                        colSpan: 1,
+                        rowSpan: 1
+                    });
+                }
+
+                //TODO: find out how to define header for cell
+                rowRows.push({
+                    cells: row,
+                    type: "data"
+                });
+            }
+
+            return columnRows.concat(rowRows);
+        },
+
+        _freezePane: function() {
+            var columnHeaderTable = this.widget.columnsHeaderTree.children[0];
+            var rowHeaderTable = this.widget.rowsHeaderTree.children[0];
+
+            var rowHeaderLength = rowHeaderTable.children[0].children.length;
+            var columnHeaderRows = columnHeaderTable.children[1].children;
+
+            return {
+                colSplit: rowHeaderLength,
+                rowSplit: columnHeaderRows.length
+            };
+        },
+        workbook: function() {
+            var promise = this.dataSource.fetch();
+
+            return promise.then($.proxy(function() {
+                var columns = this._columns();
+                var rows = this._rows();
+
+                var freezePane = this._freezePane();
+
+                return {
+                    sheets: [ {
+                       columns: columns,
+                       rows: rows,
+                       freezePane: freezePane,
+                       filter: null
+                    } ]
+                };
+            }, this));
+        }
+    });
+
+    var PivotExcelMixin = {
+        extend: function(proto) {
+           proto.events.push("excelExport");
+           proto.options.excel = $.extend(proto.options.excel, this.options);
+           proto.saveAsExcel = this.saveAsExcel;
+        },
+        options: {
+            proxyURL: "",
+            allPages: false,
+            filterable: false,
+            fileName: "Export.xlsx"
+        },
+        saveAsExcel: function() {
+            var excel = this.options.excel || {};
+
+            var exporter = new kendo.PivotExcelExporter({
+                widget: this
+            });
+
+            exporter.workbook().then($.proxy(function(book) {
+                if (!this.trigger("excelExport", { workbook: book })) {
+                    var workbook = new kendo.ooxml.Workbook(book);
+
+                    kendo.saveAs({
+                        dataURI: workbook.toDataURL(),
+                        fileName: book.fileName || excel.fileName,
+                        proxyURL: excel.proxyURL,
+                        forceProxy: excel.forceProxy
+                    });
+                }
+            }, this));
+        }
+    };
+
+    kendo.PivotExcelMixin = PivotExcelMixin;
+
+    PivotExcelMixin.extend(PivotGrid.prototype);
+
 })(window.kendo.jQuery);
 
 return window.kendo;
