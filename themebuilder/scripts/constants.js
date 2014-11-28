@@ -331,19 +331,19 @@
             "@task-summary-selected-color": constant(BORDERCOLOR, ".k-state-selected.k-task-summary"),
 
             "@checkbox-border-color-before": constant(BORDERCOLOR, ".k-checkbox-label"),
-            "@checkbox-border-color-after": constant(BORDERCOLOR, ".k-checkbox-label"),
+            "@checkbox-border-color-after": constant(BORDERCOLOR, ".ktb-checkbox-label-after"),
             "@checkbox-border-radius-before": constant("border-radius", ".k-checkbox-label"),
-            "@checkbox-background-color": constant(BGCOLOR, ".k-checkbox-label"),
-            "@checkbox-hover-border-color": constant(BORDERCOLOR, ".k-checkbox-label"),
+            "@checkbox-background-color": constant(BGCOLOR, ".ktb-checkbox-label-after"),
+            "@checkbox-hover-border-color": constant(BORDERCOLOR, ".ktb-checkbox-label-hover-after"),
             "@checkbox-hover-box-shadow": constant("box-shadow", ".k-checkbox-label"),
 
-            "@checkbox-checked-border-color-after": constant(BORDERCOLOR, ".k-checkbox-label"),
+            "@checkbox-checked-border-color-after": constant(BORDERCOLOR, ".ktb-checkbox-checked + .ktb-checkbox-label-after"),
             "@checkbox-checked-border-radius-after": constant("border-radius", ".k-checkbox-label"),
-            "@checkbox-checked-background-color-after": constant(BORDERCOLOR, ".k-checkbox-label"),
-            "@checkbox-checked-color-after": constant(COLOR, ".k-checkbox-label"),
+            "@checkbox-checked-background-color-after": constant(BORDERCOLOR, ".ktb-checkbox-checked + .ktb-checkbox-label-after"),
+            "@checkbox-checked-color-after": constant(COLOR, ".ktb-checkbox-checked + .ktb-checkbox-label-after"),
 
             "@checkbox-active-border-color-before": constant(BORDERCOLOR, ".k-checkbox-label"),
-            "@checkbox-active-border-color-after": constant(BORDERCOLOR, ".k-checkbox-label"),
+            "@checkbox-active-border-color-after": constant(BORDERCOLOR, ".ktb-checkbox-label-active-after"),
             "@checkbox-active-border-radius": constant("border-radius", ".k-checkbox-label"),
             "@checkbox-active-border-radius-after": constant("border-radius", ".k-checkbox-label"),
             "@checkbox-active-box-shadow": constant("box-shadow", ".k-checkbox-label"),
@@ -351,28 +351,28 @@
             "@checkbox-checked-active-border-radius-before": constant("border-radius", ".k-checkbox-label"),
             "@checkbox-checked-active-box-shadow": constant("box-shadow", ".k-checkbox-label"),
 
-            "@checkbox-checked-disabled-color-after": constant(COLOR, ".k-checkbox-label"),
-            "@checkbox-disabled-background-color-after": constant(BORDERCOLOR, ".k-checkbox-label"),
+            "@checkbox-checked-disabled-color-after": constant(COLOR, ".ktb-checkbox-checked-disabled + .ktb-checkbox-label-after"),
+            "@checkbox-disabled-background-color-after": constant(BORDERCOLOR, ".ktb-checkbox-checked-disabled + .ktb-checkbox-label-after"),
             "@checkbox-disabled-color": constant(COLOR, ".k-checkbox-label"),
             "@checkbox-disabled-box-shadow": constant("box-shadow", ".k-checkbox-label"),
-            "@checkbox-disabled-border-color-before": constant(BORDERCOLOR, ".k-checkbox-label"),
+            "@checkbox-disabled-border-color-before": constant(BORDERCOLOR, ".ktb-checkbox-checked-disabled + .ktb-checkbox-label-after"),
 
-            "@radio-border-color-before": constant(BORDERCOLOR, ".k-radio-label"),
-            "@radio-background-color": constant(BGCOLOR, ".k-radio-label"),
+            "@radio-border-color-before": constant(BORDERCOLOR, ".ktb-radio-label-before"),
+            "@radio-background-color": constant(BGCOLOR, ".ktb-radio-label-before"),
             "@radio-border-width-before": constant("border-width", ".k-radio-label"),
-            "@radio-hover-border-color": constant(BORDERCOLOR, ".k-radio-label"),
+            "@radio-hover-border-color": constant(BORDERCOLOR, ".ktb-radio-label-hover-before"),
             "@radio-hover-box-shadow": constant("box-shadow", ".k-radio-label"),
 
-            "@radio-checked-border-color-before": constant(BORDERCOLOR, ".k-radio-label"),
-            "@radio-checked-background-color-after": constant(BGCOLOR, ".k-radio-label"),
-            "@radio-active-border-color-before": constant(BORDERCOLOR, ".k-radio-label"),
+            "@radio-checked-border-color-before": constant(BORDERCOLOR, ".ktb-radio-checked + .ktb-radio-label-before"),
+            "@radio-checked-background-color-after": constant(BGCOLOR, ".ktb-radio-checked + .ktb-radio-label-after"),
+            "@radio-active-border-color-before": constant(BORDERCOLOR, ".ktb-radio-label-active-before"),
             "@radio-active-box-shadow": constant("box-shadow", ".k-radio-label"),
 
             "@radio-checked-active-border-color-before": constant(BORDERCOLOR, ".k-radio-label"),
             "@radio-checked-active-box-shadow": constant("box-shadow", ".k-radio-label"),
 
-            "@radio-disabled-background-color-after": constant(BGCOLOR, ".k-radio-label"),
-            "@radio-disabled-color": constant(BORDERCOLOR, ".k-radio-label"),
+            "@radio-disabled-background-color-after": constant(BGCOLOR, ".ktb-radio-disabled + .ktb-radio-label-before"),
+            "@radio-disabled-color": constant(BORDERCOLOR, ".ktb-radio-checked + .ktb-radio-label-after"),
             "@radio-disabled-box-shadow": constant("box-shadow", ".k-radio-label"),
             "@radio-disabled-background-color-before": constant(BGCOLOR, ".k-radio-label")
         },
@@ -445,6 +445,29 @@
                 "@select-hover-background-color": "Popup item hover state",
 
                 "@input-text-color":              "Text color"
+            },
+             "Checkboxes": {
+                "@checkbox-background-color":     "Background",
+                "@checkbox-border-color-after":   "Border color",               
+                "@checkbox-checked-color-after":  "Checked color",
+                "@checkbox-checked-background-color-after": "Checked background",
+                "@checkbox-checked-border-color-after": "Checked border color",
+                "@checkbox-hover-border-color":   "Hover border color",
+                "@checkbox-active-border-color-after": "Active border color",
+                "@checkbox-checked-disabled-color-after": "Disabled color",
+                "@checkbox-disabled-background-color-after": "Disabled background",
+                "@checkbox-disabled-border-color-before": "Disabled border color"
+            },
+            "Radio buttons": {
+                "@radio-border-color-before":     "Border color",
+                "@radio-background-color":        "background",    
+                "@radio-checked-background-color-after": "Checked color",
+                "@radio-checked-border-color-before": "Checked border color",
+                "@radio-hover-border-color":       "Hover border color",     
+                "@radio-active-border-color-before": "Active border color",
+                "@radio-disabled-color":           "Disabled color",
+                "@radio-disabled-background-color-after": "Disabled background"
+
             },
             "Calendar": {
                 "@calendar-footer-hover-background": "Calendar footer hover background"
