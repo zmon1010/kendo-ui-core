@@ -2047,6 +2047,12 @@ var __meta__ = {
                 offsetX, offsetY,
                 offsetX + containerBox.width(), offsetY + containerBox.height()
             ));
+        },
+
+        renderVisual: function() {
+            if (this.hasItems()) {
+                ChartElement.fn.renderVisual.call(this);
+            }
         }
     });
 
