@@ -142,7 +142,7 @@
     test("labels are distributed in reverse (non-justified)", function() {
         createAxis({ justified: false, reverse: true });
 
-        closeTextPosition("", getAxisTexts(), [[96, 175], [290.5, 510], [483, 175]], TOLERANCE);        
+        closeTextPosition("", getAxisTexts(), [[96, 175], [290.5, 510], [483, 175]], TOLERANCE);
     });
 
     // ------------------------------------------------------------
@@ -598,10 +598,6 @@
         equal(axis._plotbandGroup.options.zIndex, -1);
     });
 
-    function getElement(chartElement) {
-        return $(chartElement.visual.observers()[0].element);
-    }
-
     (function() {
         var chart,
             label,
@@ -632,7 +628,7 @@
 
             plotArea = chart._model.children[1];
             label = plotArea.categoryAxis.labels[1];
-            clickChart(chart, getElement(label));
+            clickChart(chart, getChartDomElement(label));
         }
 
         // ------------------------------------------------------------
@@ -723,7 +719,7 @@
 
             plotArea = chart._model.children[1];
             label = plotArea.categoryAxis.labels[1];
-            getElement(label).click();
+            getChartDomElement(label).click();
         }
 
         // ------------------------------------------------------------

@@ -4,7 +4,6 @@
         draw = kendo.drawing,
         Box2D = dataviz.Box2D,
         Point2D = dataviz.Point2D,
-        getElement = dataviz.getElement,
         chartBox = new Box2D(5, 5, 1000, 1000),
         uniqueId = dataviz.uniqueId,
         TOLERANCE = 2;

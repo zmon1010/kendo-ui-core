@@ -350,10 +350,6 @@
             label,
             plotArea;
 
-        function getElement(chartElement) {
-            return $(chartElement.visual.observers()[0].element);
-        }
-
         function axisLabelClick(clickHandler, options) {
             chart = createChart($.extend(true, {
                 series: [{
@@ -365,7 +361,7 @@
 
             plotArea = chart._model.children[1];
             label = plotArea.valueAxis.labels[1];
-            clickChart(chart, getElement(label));
+            clickChart(chart, getChartDomElement(label));
         }
 
         // ------------------------------------------------------------

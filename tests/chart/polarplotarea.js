@@ -45,10 +45,6 @@
             plotAreaElement;
 
         var TOLERANCE = 5;
-
-        function getElement(chartElement) {
-            return $(chartElement.visual.observers()[0].element);
-        }
         
         function createPolarChart(options) {
             chart = $("<div id='container' style='width: 600px; height: 400px;' />").appendTo(QUnit.fixture).kendoChart($.extend({
@@ -63,9 +59,9 @@
             $("#container").css({ position: "absolute", top: "200px", left: "8px" });
 
             plotArea = chart._model.children[1];
-            plotAreaElement = getElement(plotArea);
+            plotAreaElement = getChartDomElement(plotArea);
             point = plotArea.charts[0].points[0];
-            pointElement = getElement(point.marker);
+            pointElement = getChartDomElement(point.marker);
         }
 
         // ------------------------------------------------------------

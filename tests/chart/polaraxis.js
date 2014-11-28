@@ -517,10 +517,6 @@
             label,
             plotArea;
 
-        function getElement(chartElement) {
-            return $(chartElement.visual.observers()[0].element);
-        }
-
         function axisLabelClick(clickHandler, options) {
             chart = createChart($.extend(true, {
                 series: [{
@@ -535,7 +531,7 @@
 
             plotArea = chart._model.children[1];
             label = plotArea.polarAxis.labels[1];
-            chart._userEvents.press(0, 0, getElement(label));
+            chart._userEvents.press(0, 0, getChartDomElement(label));
             chart._userEvents.end(0, 0);
         }
 

@@ -8,10 +8,6 @@
         SPACING = 1,
         chartSeries;
 
-    function getElement(chartElement) {
-        return $(chartElement.visual.observers()[0].element);
-    }
-
     function moduleSetup() {
     }
 
@@ -3638,12 +3634,12 @@
 
             plotArea = chart._model.children[1];
             var pane = plotArea.panes[0];
-            var element = getElement(pane);
+            var element = getChartDomElement(pane);
 
             plotArea.series[0].data[0] = 10;
             plotArea.redraw(plotArea.panes[0]);
 
-            notEqual(getElement(pane), element);
+            notEqual(getChartDomElement(pane), element);
 
             destroyChart();
         });
@@ -3827,8 +3823,8 @@
 
             plotArea = chart._model.children[1];
             bar = plotArea.charts[0].points[0];
-            barElement = getElement(bar);
-            plotAreaElement = getElement(plotArea);
+            barElement = getChartDomElement(bar);
+            plotAreaElement = getChartDomElement(plotArea);
         }
 
         // ------------------------------------------------------------
@@ -3990,7 +3986,7 @@
             });
 
             plotArea = chart._model.children[1];
-            plotAreaElement = getElement(plotArea);
+            plotAreaElement = getChartDomElement(plotArea);
         }
 
         module("Categorical Plot Area / Events / plotAreaClick / Panes", {
@@ -4048,7 +4044,7 @@
             });
 
             plotArea = chart._model.children[1];
-            plotAreaElement = getElement(plotArea);
+            plotAreaElement = getChartDomElement(plotArea);
             clickChart(chart, plotAreaElement, 300, 300);
         });
 
@@ -4972,9 +4968,9 @@
             });
 
             plotArea = chart._model.children[1];
-            plotAreaElement = getElement(plotArea);
+            plotAreaElement = getChartDomElement(plotArea);
             point = plotArea.charts[0].points[0];
-            pointElement = $(getElement(point.marker));
+            pointElement = getChartDomElement(point.marker);
         }
 
         // ------------------------------------------------------------

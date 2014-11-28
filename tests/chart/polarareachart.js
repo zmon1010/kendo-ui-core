@@ -1,6 +1,5 @@
 (function() {
     var dataviz = kendo.dataviz,
-        getElement = dataviz.getElement,
         Point2D = dataviz.Point2D,
         Box2D = dataviz.Box2D,
         Ring = dataviz.Ring,
