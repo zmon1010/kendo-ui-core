@@ -1,31 +1,20 @@
 (function() {
-    return;
-
     var dataviz = kendo.dataviz,
-        IDPool = dataviz.IDPool,
+        geom = kendo.geometry,
+        draw = kendo.drawing,
         Box2D = dataviz.Box2D,
         Point2D = dataviz.Point2D,
         getElement = dataviz.getElement,
         chartBox = new Box2D(5, 5, 1000, 1000),
         uniqueId = dataviz.uniqueId,
-        view,
         TOLERANCE = 2;
 
-    function ChartElementStub(viewElement) {
-        viewElement = viewElement || new ViewElementStub();
-        this.getView = function() {
-            return viewElement;
-        },
-
-        this.getViewElements = function() {
-            return [viewElement];
-        },
-
+    function ChartElementStub() {
         this.reflow = function() { }
     }
 
     function moduleSetup() {
-        view = new ViewStub();
+
     }
 
     function moduleTeardown() {
@@ -83,119 +72,30 @@
             ok(child2.getRoot() === chartElement);
         });
 
-        test("enableDiscovery assigns unique model id", function() {
-            chartElement.enableDiscovery();
-            ok(chartElement.modelId.length > 0);
-        });
-
-        test("getViewElements registers model id in root", function() {
-            var root = new dataviz.RootElement();
-
-            root.append(chartElement);
-            chartElement.enableDiscovery();
-            chartElement.getViewElements(view);
-
-            ok(root.modelMap[chartElement.modelId]);
-        });
-
-        test("getViewElements associates children with discoverable elements", function() {
-            var child1 = new dataviz.ChartElement(),
-                child2 = new dataviz.ChartElement();
-
-            child1.append(child2);
-            chartElement.append(child1);
-
-            chartElement.enableDiscovery();
-            chartElement.getViewElements(view);
-
-            equal(chartElement.modelId, child1.modelId);
-            equal(chartElement.modelId, child2.modelId);
-        });
-
-        test("getViewElements does not register associated elements", function() {
-            var root = new dataviz.RootElement(),
-                child = new dataviz.ChartElement();
-
-            chartElement.append(child);
-            root.append(chartElement);
-
-            chartElement.enableDiscovery();
-            chartElement.getViewElements(view);
-            child.getViewElements(view);
-
-            ok(root.modelMap[child.modelId] == chartElement);
-        });
-
-        test("getViewElements does not associate already discoverable children", function() {
-            var child1 = new dataviz.ChartElement();
-
-            child1.enableDiscovery();
-
-            chartElement.enableDiscovery();
-            chartElement.append(child1);
-
-            chartElement.getViewElements(view);
-
-            notEqual(chartElement.modelId, child1.modelId);
-        });
-
         // ------------------------------------------------------------
-        var pool,
-            originalPool;
-
         module("ChartElement / destroy", {
             setup: function() {
                 chartElement = new dataviz.ChartElement();
-
-                originalPool = IDPool.current;
-                pool = IDPool.current = new IDPool(10, "", 1);
-            },
-            teardown: function() {
-                IDPool.current = originalPool;
             }
         });
 
-        test("unregisters modelId from root", function() {
-            var root = new dataviz.RootElement();
-
-            root.append(chartElement);
-            chartElement.enableDiscovery();
-            chartElement.getViewElements(view);
+        test("destroys animation", function() {
+            chartElement.animation = {
+                destroy: function() {
+                    ok(true);
+                }
+            };
             chartElement.destroy();
-
-            ok(!root.modelMap[chartElement.modelId]);
-        });
-
-        test("unregisters modelId from IDPool", function() {
-            chartElement.enableDiscovery();
-            chartElement.destroy();
-
-            equal(pool._pool.length, 1);
-        });
-
-        test("unregisters id from IDPool", function() {
-            chartElement.id = uniqueId();
-            chartElement.destroy();
-
-            equal(pool._pool.length, 1);
         });
 
         test("destroys children", function() {
-            var root = new dataviz.RootElement(),
-                child1 = new dataviz.ChartElement(),
-                child2 = new dataviz.ChartElement();
-
-            child2.enableDiscovery();
-
-            root.append(chartElement);
+            var child1 = new dataviz.ChartElement();
             chartElement.append(child1);
-            child1.append(child2);
-
-            chartElement.enableDiscovery();
-            chartElement.getViewElements(view);
+            child1.destroy = function() {
+                ok(true);
+            };
             chartElement.destroy();
 
-            ok(!root.modelMap[child2.modelId]);
         });
     })();
 
@@ -211,8 +111,8 @@
         }
 
         function renderRoot() {
-            rootElement.getViewElements(view);
-            rootRect = view.log.rect[0];
+            rootElement.renderVisual();
+            rootRect = rootElement.visual.children[0];
         }
 
         // ------------------------------------------------------------
@@ -222,18 +122,6 @@
 
                 createRoot();
             }
-        });
-
-        test("creates view elements for child elements", function() {
-            var group = new ViewElementStub(),
-                text = new ViewElementStub();
-
-            rootElement.children.push(new ChartElementStub(group));
-            rootElement.children.push(new ChartElementStub(text));
-
-            var viewElements = rootElement.getViewElements(view);
-            viewElements.shift(); // Remove the rect
-            deepEqual(viewElements, [ group, text ]);
         });
 
         test("reflow is called for all children", 2, function() {
@@ -256,11 +144,12 @@
                 }
             });
             renderRoot();
+            var stroke = rootRect.options.stroke;
 
-            sameBox(rootRect, new Box2D(1, 1, 599, 399));
-            equal(rootRect.style.strokeWidth, 1);
-            equal(rootRect.style.stroke, "red");
-            equal(rootRect.style.dashType, "dot");
+            sameRectPath(rootRect, [1, 1, 599, 399]);
+            equal(stroke.width, 1);
+            equal(stroke.color, "red");
+            equal(stroke.dashType, "dot");
         });
 
         test("sets background to rootElement", function() {
@@ -269,7 +158,7 @@
             });
             renderRoot();
 
-            equal(rootRect.style.fill, "red");
+            equal(rootRect.options.fill.color, "red");
         });
 
         test("sets background opacity to rootElement", function() {
@@ -278,7 +167,7 @@
             });
             renderRoot();
 
-            equal(rootRect.style.fillOpacity, 0.1);
+            equal(rootRect.options.fill.opacity, 0.1);
         });
 
         test("applies top margin", function() {
@@ -289,7 +178,7 @@
             });
             renderRoot();
 
-            equal(rootElement.box.y1, rootRect.y1 + MARGIN);
+            equal(rootElement.box.y1, rootRect.segments[0].anchor().y + MARGIN);
         });
 
         test("applies right margin", function() {
@@ -300,7 +189,7 @@
             });
             renderRoot();
 
-            equal(rootElement.box.x2, rootRect.x2 - MARGIN);
+            equal(rootElement.box.x2, rootRect.segments[1].anchor().x - MARGIN);
         });
 
         test("applies bottom margin", function() {
@@ -311,7 +200,7 @@
             });
             renderRoot();
 
-            equal(rootElement.box.y2, rootRect.y2 - MARGIN);
+            equal(rootElement.box.y2, rootRect.segments[2].anchor().y - MARGIN);
         });
 
         test("applies left margin", function() {
@@ -322,7 +211,7 @@
             });
             renderRoot();
 
-            equal(rootElement.box.x1, rootRect.x1 + MARGIN);
+            equal(rootElement.box.x1, rootRect.segments[0].anchor().x + MARGIN);
         });
 
         test("getRoot returns self", function() {
@@ -341,7 +230,9 @@
             childBoxes,
             childrenBox = new Box2D(0, 0, 20, 20),
             boxElement,
-            childElements;
+            childElements,
+            visual,
+            rectVisual;
 
         function ChildElementStub() {
             this.boxes = []
@@ -739,156 +630,137 @@
             equal(childElements[1].box.x1, 140);
         });
 
+        function renderBoxElement(options) {
+            boxElement = new dataviz.BoxElement(options);
+            boxElement.reflow(targetBox);
+            boxElement.renderVisual();
+            visual = boxElement.visual;
+            if (visual) {
+                rectVisual = visual.children[0];
+            }
+        }
+
         // ------------------------------------------------------------
         module("BoxElement / Rendering", {
             setup: function() {
                 moduleSetup();
-
-                boxElement = new dataviz.BoxElement({
+                renderBoxElement({
                     width: WIDTH,
                     height: HEIGHT,
-                    border: { width: 1 },
+                    border: { width: 1, color: "#f00", dashType: "dot" },
+                    opacity: 0.5,
                     background: "#f00"
                 });
             }
         });
 
         test("does not render rectangle when no border and background are set", function() {
-            boxElement = new dataviz.BoxElement();
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
-            equal(view.log.rect.length, 0);
+            renderBoxElement();
+            equal(visual.children.length, 0);
         });
 
         test("renders border width", function() {
-            boxElement.options.border.width = 1;
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
-
-            equal(view.log.rect[0].style.strokeWidth, 1);
+            equal(rectVisual.options.stroke.width, 1);
         });
 
         test("renders border color", function() {
-            boxElement.options.border.color = "#f00";
-            boxElement.options.border.width = 1;
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
-
-            equal(view.log.rect[0].style.stroke, "#f00");
+            equal(rectVisual.options.stroke.color, "#f00");
         });
 
         test("renders border dash type", function() {
-            boxElement.options.border.width = 1;
-            boxElement.options.border.dashType = "dot";
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
-
-            equal(view.log.rect[0].style.dashType, "dot");
+            equal(rectVisual.options.stroke.dashType, "dot");
         });
 
         test("renders opacity as strokeOpacity", function() {
-            boxElement.options.opacity = 0.5;
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
-
-            equal(view.log.rect[0].style.strokeOpacity, 0.5);
+            equal(rectVisual.options.stroke.opacity, 0.5);
         });
 
-        test("does not render border color when no width is set", function() {
-            boxElement.options.border.width = 0;
-            boxElement.options.border.color = "#f00";
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
+        test("does not render rectangle when no width is set", function() {
+            renderBoxElement({
+                border: {
+                    width: 0,
+                    color: "#f00"
+                }
+            });
 
-            equal(view.log.rect[0].style.stroke, "");
+            equal(visual.children.length, 0);
         });
 
         test("renders fill color", function() {
-            boxElement.options.background = "#f00";
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
-
-            equal(view.log.rect[0].style.fill, "#f00");
+            equal(rectVisual.options.fill.color, "#f00");
         });
 
         test("renders opacity as fillOpacity", function() {
-            boxElement.options.opacity = 0.5;
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
-
-            equal(view.log.rect[0].style.fillOpacity, 0.5);
+            equal(rectVisual.options.fill.opacity, 0.5);
         });
 
         test("content box includes padding", function() {
-            boxElement.options.padding = PADDING;
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
+            renderBoxElement({
+                padding: PADDING,
+                width: WIDTH,
+                height: HEIGHT,
+                background: "#f00"
+            });
 
-            var rect = view.log.rect[0];
-            equal(rect.x2 - rect.x1, WIDTH + 2 * PADDING);
-            equal(rect.y2 - rect.y1, HEIGHT + 2 * PADDING);
+            var box = rectVisual.rawBBox();
+            var size = box.size;
+
+            equal(size.width, WIDTH + 2 * PADDING);
+            equal(size.height, HEIGHT + 2 * PADDING);
         });
 
         test("padding box does not include border", function() {
-            boxElement.options.border.width = BORDER;
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
+            renderBoxElement({
+                width: WIDTH,
+                height: HEIGHT,
+                border: { width: BORDER}
+            });
 
-            var rect = view.log.rect[0];
-            equal(rect.x2 - rect.x1, WIDTH);
-            equal(rect.y2 - rect.y1, HEIGHT);
+            var box = rectVisual.rawBBox();
+            var size = box.size;
+            equal(size.width, WIDTH);
+            equal(size.height, HEIGHT);
         });
 
         test("padding box does not include margin", function() {
-            boxElement.options.margin = MARGIN;
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
-
-            var rect = view.log.rect[0];
-            equal(rect.x2 - rect.x1, WIDTH);
-            equal(rect.y2 - rect.y1, HEIGHT);
+            renderBoxElement({
+                width: WIDTH,
+                height: HEIGHT,
+                background: "#f00",
+                margin: MARGIN
+            });
+            var box = rectVisual.rawBBox();
+            var size = box.size;
+            equal(size.width, WIDTH);
+            equal(size.height, HEIGHT);
         });
 
         test("does not render when visible is false", function() {
-            boxElement.options.visible = false;
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
-
-            equal(view.log.rect.length, 0);
-        });
-
-        test("renders id", function() {
-            boxElement.id = "id";
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
-
-            equal(view.log.rect[0].style.id, "id");
-        });
-
-        test("renders model id as data", function() {
-            boxElement.modelId = "id";
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
-
-            equal(view.log.rect[0].style.data.modelId, "id");
+            renderBoxElement({
+                visible: false
+            });
+            ok(!boxElement.visual);
         });
 
         test("renders zIndex", function() {
-            boxElement.options.zIndex = 100;
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
+            renderBoxElement({
+                zIndex: 100
+            });
 
-            equal(view.log.rect[0].style.zIndex, 100);
+            equal(visual.options.zIndex, 100);
         });
 
         test("renders cursor", function() {
-            boxElement.options.cursor = {
-                style: "pointer"
-            };
-            boxElement.reflow(targetBox);
-            boxElement.getViewElements(view);
+            renderBoxElement({
+                width: WIDTH,
+                height: HEIGHT,
+                background: "#f00",
+                cursor: {
+                    style: "pointer"
+                }
+            });
 
-            equal(view.log.rect[0].style.cursor.style, "pointer");
+            equal(rectVisual.options.cursor.style, "pointer");
         });
 
     })();
@@ -898,8 +770,8 @@
             titleTextBox,
             titleText,
             Title = dataviz.Title,
-            TITLE_TEXT_HEIGHT = 18,
-            TITLE_TEXT_WIDTH = 29,
+            TITLE_TEXT_HEIGHT = 15,
+            TITLE_TEXT_WIDTH = 40,
             MARGIN = 10,
             PADDING = 5;
 
@@ -1001,14 +873,6 @@
                    TITLE_TEXT_HEIGHT, TOLERANCE);
         });
 
-        test("getViewElements returns text element", 1, function() {
-            title.children[0] = {
-                getViewElements: function() { return [ 42 ]; }
-            };
-
-            deepEqual(title.getViewElements(), [ 42 ]);
-        });
-
         test("positions title at top with margin 20", function() {
             title = new Title({
                 text: "Title",
@@ -1085,100 +949,46 @@
 
     (function() {
         var text;
+        var textVisual;
+
+        function renderText(content, box) {
+            text = new dataviz.Text(content || "&nbsp;", { font: SANS12, color: "red" });
+            text.reflow(box || new Box2D());
+            text.renderVisual();
+            textVisual = text.visual;
+        }
 
         module("Text", {
             setup: function() {
                 moduleSetup();
 
-                text = new dataviz.Text("&nbsp;", { font: SANS12 });
+                renderText();
             },
             teardown: moduleTeardown
         });
 
-        test("creates text view element", function() {
-            var view = {
-                createText: function() {
-                    return 42;
-                }
-            };
-
-            deepEqual(text.getViewElements(view), [ 42 ]);
+        test("renders text", function() {
+            ok(textVisual instanceof draw.Text);
         });
 
-        test("sets content on view element", 1, function() {
-            var view = {
-                createText: function(content) {
-                    equal(content, "Content");
-                }
-            };
-
-            text.content = "Content";
-            text.getViewElements(view)
+        test("sets content on text", function() {
+            renderText("Content");
+            equal(textVisual.content(), "Content");
         });
 
-        test("sets position on view element", 2, function() {
-            var view = {
-                createText: function(content, options) {
-                    equal(options.x, 100);
-                    equal(options.y, 110);
-                }
-            };
-
-            text.reflow(new Box2D(100, 110, 200, 200));
-            text.getViewElements(view)
+        test("sets position on text", 2, function() {
+            renderText("", new Box2D(100, 110, 200, 200));
+            var origin = textVisual.rect().origin;
+            equal(origin.x, 100);
+            equal(origin.y, 110);
         });
 
-        test("sets font", 1, function() {
-            var view = {
-                createText: function(content, options) {
-                    equal(options.font, text.options.font);
-                }
-            };
-
-            text.reflow(new Box2D());
-            text.getViewElements(view)
+        test("sets font", function() {
+            equal(textVisual.options.font, SANS12);
         });
 
-        test("sets color", 1, function() {
-            var view = {
-                createText: function(content, options) {
-                    equal(options.color, text.options.color);
-                }
-            };
-
-            text.reflow(new Box2D());
-            text.getViewElements(view)
-        });
-
-        test("renders id", function() {
-            text.id = "id";
-            text.reflow(new Box2D());
-            text.getViewElements(view);
-
-            equal(view.log.text[0].style.id, "id");
-        });
-
-        test("renders model id as data", function() {
-            text.modelId = "id";
-            text.reflow(new Box2D());
-            text.getViewElements(view);
-
-            equal(view.log.text[0].style.data.modelId, "id");
-        });
-
-        test("renders zIndex", function() {
-            text.options.zIndex = 100;
-            text.reflow(new Box2D());
-            text.getViewElements(view);
-
-            equal(view.log.text[0].style.zIndex, 100);
-        });
-
-        test("renders baseline", function() {
-            text.reflow(new Box2D());
-            text.getViewElements(view);
-
-            close(view.log.text[0].style.baseline, 13, TOLERANCE);
+        test("sets color", function() {
+            equal(textVisual.options.fill.color, "red");
         });
 
     })();
@@ -1203,11 +1013,6 @@
 
         // ------------------------------------------------------------
         module("TextBox", {});
-
-        test("retains id", function() {
-            createTextBox({ id: "1" });
-            equal(textBox.id, "1");
-        });
 
         test("appends float element", function() {
             createTextBox();
@@ -1254,19 +1059,6 @@
             equal(texts[0].options.align, "left");
         });
 
-        test("sets options id on text", function() {
-            createTextBox({ id: "1" });
-            equal(texts[0].id, "1");
-        });
-
-        test("assigns unique id to text when background or border is set", function() {
-            createTextBox({ id: "1", border: { width: 1 }});
-
-            var id = texts[0].id;
-            notEqual(id, "1");
-            ok(id);
-        });
-
         test("creates text when passed content is a number", function() {
             createTextBox({}, 1);
             ok(texts[0]);
@@ -1280,21 +1072,6 @@
             equal(texts[1].content, "line2");
         });
 
-        test("multiline text assigns unique id to each text if textbox has box", function() {
-            createTextBox({id: "1", background: "red"}, "line1 \n line2");
-            ok(texts[0].id);
-            notEqual(texts[0].id, "1");
-            ok(texts[1].id);
-            notEqual(texts[1].id, "1");
-        });
-
-        test("multiline assigns id from options to first text and a unique one to each subsequent text when textbox has no box", function() {
-            createTextBox({id: "1"}, "line1 \n line2");
-            equal(texts[0].id, "1");
-            ok(texts[1].id);
-            notEqual(texts[1].id, "1");
-        });
-
         test("has box after the initialization", function() {
             textBox = new TextBox(TEXT, {});
             ok(textBox.box);
@@ -1305,11 +1082,8 @@
         function FloatElementStub(box) {
             this.box = box;
             this.reflow = function(target) {
-                //this.box = target.clone();
             };
-            this.getViewElements = function() {
-                return [];
-            };
+            this.renderVisual = $.noop;
             this.options = {};
         }
 
@@ -1321,13 +1095,6 @@
             floatElementStub = new FloatElementStub(floatBox || Box2D(0,0,30,30));
             textBox.children = [floatElementStub];
             textBox.container = floatElementStub;
-        }
-
-        function compareBoxes(box1, box2) {
-            equal(box1.x1, box2.x1);
-            equal(box1.x2, box2.x2);
-            equal(box1.y1, box2.y1);
-            equal(box1.y2, box2.y2);
         }
 
         module("TextBox / reflow", {});
@@ -1342,19 +1109,19 @@
         test("applies margin", function() {
             createTextBoxMock({margin: 5});
             textBox.reflow(targetBox);
-            compareBoxes(textBox.box, floatElementStub.box.pad(5));
+            sameBox(textBox.box, floatElementStub.box.pad(5));
         });
 
         test("applies padding", function() {
             createTextBoxMock({padding: 10});
             textBox.reflow(targetBox);
-            compareBoxes(textBox.box, floatElementStub.box.pad(10));
+            sameBox(textBox.box, floatElementStub.box.pad(10));
         });
 
         test("applies border", function() {
             createTextBoxMock({border: {width: 15}});
             textBox.reflow(targetBox);
-            compareBoxes(textBox.box, floatElementStub.box.pad(15));
+            sameBox(textBox.box, floatElementStub.box.pad(15));
         });
 
         // ------------------------------------------------------------
@@ -1427,24 +1194,24 @@
 
         test("rotates box", function() {
             textBox.reflow(targetBox);
-            compareBoxes(textBox.box, Box2D(0,0, 30, 20));
+            sameBox(textBox.box, Box2D(0,0, 30, 20));
         });
 
         test("sets normal box to box prior to rotation", function() {
             textBox.reflow(targetBox);
-            compareBoxes(textBox.normalBox, Box2D(0,0, 20, 30));
+            sameBox(textBox.normalBox, Box2D(0,0, 20, 30));
         });
 
         test("sets normal box to box prior to rotation without margin", function() {
             textBox.options.margin = 5;
             textBox.reflow(targetBox);
-            compareBoxes(textBox.normalBox, Box2D(5,5, 25, 35));
+            sameBox(textBox.normalBox, Box2D(5,5, 25, 35));
         });
 
         test("rotates box without margin and applies margin to the rotated box", function() {
             textBox.options.margin = 5;
             textBox.reflow(targetBox);
-            compareBoxes(textBox.box, Box2D(0,0, 40, 30));
+            sameBox(textBox.box, Box2D(0,0, 40, 30));
         });
 
         // ------------------------------------------------------------
@@ -1497,29 +1264,28 @@
         });
 
         // ------------------------------------------------------------
-        function setupViewElementsTextBox(options, text) {
+        function renderTextBox(options, text) {
             createTextBox(options, text);
-            textBox.modelId = "modelId";
-            textBox.getViewElements(view);
+            textBox.renderVisual();
         }
 
-        module("TextBox / view elements", {
+        module("TextBox / rendering", {
             setup: function() {
                 moduleSetup();
             }
         });
 
-        test("creates a TextBox", function() {
-            setupViewElementsTextBox();
-            equal(view.log.textbox.length, 1);
+        test("renders group", function() {
+            renderTextBox();
+            ok(textBox.visual);
         });
 
-        test("sets a matrix if rotation is set", function() {
-            moduleSetup();
+        test("sets transformation if rotation is set", function() {
             createTextBoxMock({rotation: 90}, Box2D(0,0,20,30));
             textBox.reflow(targetBox);
-            textBox.getViewElements(view);
-            var matrix = view.log.textbox[0].options.matrix;
+            textBox.renderVisual();
+
+            var matrix = textBox.visual.transform().matrix();
             var tolerance = 0.01;
             close(matrix.a, 0, tolerance);
             close(matrix.b, 1, tolerance);
@@ -1529,41 +1295,36 @@
             close(matrix.f, 0, tolerance);
         });
 
-        test("assigns zIndex from the options to textbox", function() {
-            setupViewElementsTextBox({zIndex: 1});
-            equal(view.log.textbox[0].options.zIndex, 1);
+        test("sets zIndex", function() {
+            renderTextBox({zIndex: 1});
+            equal(textBox.visual.options.zIndex, 1);
         });
 
         test("creates rect when background is set", function() {
-            setupViewElementsTextBox({background: "foo"});
-            equal(view.log.rect.length, 1);
+            renderTextBox({background: "foo"});
+            ok(textBox.visual.children[0] instanceof draw.Path);
         });
 
         test("creates rect when border is set", function() {
-            setupViewElementsTextBox({border: { width: 1 }});
-            equal(view.log.rect.length, 1);
+            renderTextBox({border: { width: 1 }});
+            ok(textBox.visual.children[0] instanceof draw.Path);
         });
 
         test("creates text", function() {
-            setupViewElementsTextBox();
-            equal(view.log.text.length, 1);
+            renderTextBox();
+            ok(textBox.visual.children[0] instanceof draw.Text);
         });
 
         test("creates text for each line", function() {
-            setupViewElementsTextBox({}, "line1 \n line2");
-            equal(view.log.text.length, 2);
-        });
-
-        test("sets zIndex from the options to text", function() {
-            setupViewElementsTextBox({ zIndex: 1});
-            equal(view.log.text[0].style.zIndex, 1);
+            renderTextBox({}, "line1 \n line2");
+            equal(textBox.visual.children.length, 2);
         });
 
         // ------------------------------------------------------------
-        module("TextBox / view elements / rect options", {
+        module("TextBox / rendering / rect options", {
             setup: function() {
                 moduleSetup();
-                setupViewElementsTextBox({
+                renderTextBox({
                     id: "1",
                     zIndex: 1,
                     border: {
@@ -1573,44 +1334,23 @@
                         dashType: "foo"
                     },
                     background: "green",
-                    opacity: 0.7,
-                    animation: {
-                        type: "foo",
-                        duration: 100
-                    }
+                    opacity: 0.7
                 });
 
-                rect = view.log.rect[0];
+                rect = textBox.visual.children[0];
             }
         });
 
-        test("sets id", function() {
-            equal(rect.style.id, "1");
-        });
-
-        test("sets zIndex", function() {
-            equal(rect.style.zIndex, 1);
-        });
-
         test("sets stroke options", function() {
-            equal(rect.style.stroke, "red");
-            equal(rect.style.strokeWidth, 2);
-            equal(rect.style.strokeOpacity, 0.5);
-            equal(rect.style.dashType, "foo");
+            equal(rect.options.stroke.color, "red");
+            equal(rect.options.stroke.width, 2);
+            equal(rect.options.stroke.opacity, 0.5);
+            equal(rect.options.stroke.dashType, "foo");
         });
 
         test("sets fill", function() {
-            equal(rect.style.fill, "green");
-            equal(rect.style.fillOpacity, 0.7);
-        });
-
-        test("sets animation", function() {
-            equal(rect.style.animation.type, "foo");
-            equal(rect.style.animation.duration, 100);
-        });
-
-        test("sets model id", function() {
-            equal(rect.style.data.modelId, "modelId");
+            equal(rect.options.fill.color, "green");
+            equal(rect.options.fill.opacity, 0.7);
         });
 
     })();
@@ -1629,6 +1369,7 @@
             }, options));
 
             legend.reflow(chartBox);
+            legend.renderVisual();
         }
 
         // ------------------------------------------------------------
@@ -1642,19 +1383,13 @@
         });
 
         test("renders legend in a group", function() {
-            legend.getViewElements(view);
-            equal(view.log.group.length, 1);
+            ok(legend.visual instanceof draw.Group);
         });
 
         test("renders no elements if legend has no items", function() {
-            moduleSetup();
-
             createLegend({items: []});
-            legend.getViewElements(view);
 
-            equal(view.log.group.length, 0);
-            equal(view.log.textbox.length, 0);
-            equal(view.log.path.length, 0);
+            ok(!legend.visual);
         });
 
         test("sets zIndex on group", function() {
@@ -1662,8 +1397,7 @@
                 zIndex: 10
             });
 
-            legend.getViewElements(view);
-            equal(view.log.group[0].options.zIndex, 10);
+            equal(legend.visual.options.zIndex, 10);
         });
 
         test("default zIndex is 1", function() {
@@ -1737,7 +1471,7 @@
 
             var legendBox = legend.children[0].box;
 
-            sameBox(legendBox, new Box2D(460, 965, 545, 1000), TOLERANCE);
+            sameBox(legendBox, new Box2D(453, 965, 552, 1000), TOLERANCE);
         });
 
         test("positions legend to the top should have correct box", function() {
@@ -1747,7 +1481,7 @@
 
             var legendBox = legend.children[0].box;
 
-            sameBox(legendBox, new Box2D(460, 5, 545, 40), TOLERANCE);
+            sameBox(legendBox, new Box2D(453, 5, 552, 40), TOLERANCE);
         });
 
         test("positions legend to the bottom", function() {
@@ -1911,31 +1645,31 @@
                 });
 
                 legend.reflow(chartBox);
-                legend.getViewElements(view);
+                legend.renderVisual();
 
-                legendBox = view.log.rect[0];
+                legendBox = legend.container.visual.children[0];
             },
             teardown: moduleTeardown
         });
 
         test("renders box with padding", function() {
-            sameBox(legendBox, new Box2D(912, 482.5, 993, 517.5), TOLERANCE);
+            sameRectPath(legendBox, [894, 482.5, 993, 517.5], TOLERANCE);
         });
 
         test("renders border width", function() {
-            deepEqual(legendBox.style.strokeWidth, BORDER_WIDTH);
+            deepEqual(legendBox.options.stroke.width, BORDER_WIDTH);
         });
 
         test("renders border color", function() {
-            deepEqual(legendBox.style.stroke, BORDER_COLOR);
+            deepEqual(legendBox.options.stroke.color, BORDER_COLOR);
         });
 
         test("renders border dashType", function() {
-            deepEqual(legendBox.style.dashType, BORDER_DASH_TYPE);
+            deepEqual(legendBox.options.stroke.dashType, BORDER_DASH_TYPE);
         });
 
         test("renders background color", function() {
-            deepEqual(legendBox.style.fill, BACKGROUND);
+            deepEqual(legendBox.options.fill.color, BACKGROUND);
         });
 
         // ------------------------------------------------------------
@@ -2221,7 +1955,8 @@
 
             legend = chart._model.children[0];
             legendItem = legend.children[0].children[0].children[itemIndex || 0];
-            legendItemOverlay = QUnit.fixture.find("[data-model-id='" + legendItem.modelId +"']").last();
+
+            legendItemOverlay = getChartDomElement(legendItem);
         }
 
         module("LegendItem / Events / click", {
@@ -2328,133 +2063,6 @@
             }, 1);
             triggerEvent("mouseover", legendItemOverlay);
         });
-    })();
-
-    (function() {
-        // ------------------------------------------------------------
-        var viewElement,
-            pool,
-            originalPool;
-
-        module("ViewElement / destroy", {
-            setup: function() {
-                viewElement = new dataviz.ViewElement();
-
-                originalPool = IDPool.current;
-                pool = IDPool.current = new IDPool(10, "", 1);
-            },
-            teardown: function() {
-                IDPool.current = originalPool;
-            }
-        });
-
-        test("unregisters id from IDPool", function() {
-            viewElement.options.id = uniqueId();
-            viewElement.destroy();
-
-            equal(pool._pool.length, 1);
-        });
-
-        test("destroys children", function() {
-            var root = new dataviz.ViewElement(),
-                child = new dataviz.ViewElement(),
-                grandchild = new dataviz.ViewElement();
-
-            root.children.push(child);
-            child.children.push(grandchild);
-
-            grandchild.destroy = function() { ok(true); };
-
-            root.destroy();
-        });
-    })();
-
-    (function() {
-        // ------------------------------------------------------------
-        var view;
-
-        module("ViewBase", {
-            setup: function() {
-                view = new dataviz.ViewBase();
-            }
-        });
-
-        test("playAnimations plays animation in order", function() {
-            var order;
-            view.animations = [
-                { play: function() { order = "1"; } },
-                { play: function() { order += "2"; } }
-            ];
-
-            view.playAnimations();
-            equal(order, "12");
-        });
-
-        test("destroy clears animations", function() {
-            var order;
-            view.animations = [
-                { destroy: function() { } }
-            ];
-
-            view.destroy();
-            equal(view.animations.length, 0);
-        });
-
-        test("decorate applies decorators in order", function() {
-            var order;
-            view.decorators = [
-                { decorate: function(element) { order = "1"; return element; } },
-                { decorate: function(element) { order += "2"; return element; } }
-            ];
-
-            view.decorate({ children: [] });
-            equal(order, "12");
-        });
-
-        test("decorate processes elements recursively", function() {
-            var order = "";
-            view.decorators = [
-                { decorate: function(element) { order += element.id; return element; } }
-            ];
-
-            view.decorate({
-                id: "1",
-                children: [{
-                    id: "2",
-                    children: [{
-                        id: "3",
-                        children: []
-                    }]
-                }]
-            });
-
-            equal(order, "321");
-        });
-
-        // ------------------------------------------------------------
-        module("ViewBase / buildGradient", {
-            setup: function() {
-                view = new dataviz.ViewBase();
-            }
-        });
-
-        test("builds gradient from name", function() {
-            equal(view.buildGradient({ gradient: "glass" }).type, "linear");
-        });
-
-        test("returns undefined when no gradient exists", function() {
-            equal(typeof view.buildGradient("x"), "undefined");
-        });
-
-        test("applies options", function() {
-            equal(view.buildGradient({ gradient: "glass", rotation: 90 }).rotation, 90);
-        });
-
-        test("returns same gradient for same options", function() {
-            equal(view.buildGradient({ gradient: "glass", rotation: 90 }).id,
-                   view.buildGradient({ gradient: "glass", rotation: 90 }).id);
-        });
-
     })();
 
     (function() {
@@ -2570,30 +2178,25 @@
             pane = new Pane(options);
             pane.renderGridLines = function() {};
             pane.reflow(chartBox);
+            pane.createVisual();
 
-            view = new ViewStub();
-            pane.getViewElements(view);
-            rect = view.log.rect[0];
+            rect = pane.visual.children[0];
         }
 
         // ------------------------------------------------------------
         module("Pane");
 
-        test("Sets unique id", function() {
-            pane = new Pane();
-            ok(pane.id);
-        });
-
         test("Sets background color", function() {
             createPaneRect({ background: "color", width: 600, height: 400 });
-            equal(rect.style.fill, "color");
+            equal(rect.options.fill.color, "color");
         });
 
         test("Sets border", function() {
             createPaneRect({ border: { color: "color", width: 1, dashType: "dashType" }, width: 600, height: 400 });
-            equal(rect.style.stroke, "color");
-            equal(rect.style.strokeWidth, 1);
-            equal(rect.style.dashType, "dashType");
+            var stroke = rect.options.stroke;
+            equal(stroke.color, "color");
+            equal(stroke.width, 1);
+            equal(stroke.dashType, "dashType");
         });
 
         // ------------------------------------------------------------
@@ -2654,8 +2257,8 @@
             BORDER_COLOR = "#cf0",
             BACKGROUND = "#f00",
             shape,
-            box,
-            view;
+            visual,
+            box;
 
         function createShape(options) {
             shape = new ShapeElement(
@@ -2670,8 +2273,8 @@
             box = new Box2D(0, 0, SIZE, SIZE);
             shape.reflow(box);
 
-            view = new ViewStub();
-            shape.getViewElements(view);
+            shape.renderVisual();
+            visual = shape.visual;
         }
 
         // ------------------------------------------------------------
@@ -2682,82 +2285,71 @@
         });
 
         test("renders square", function() {
-            var path = view.log.path[0];
-            arrayClose(mapPoints(path.points), [
-                [ 0, 0 ], [ SIZE, 0 ],
-                [ SIZE, SIZE ], [ 0, SIZE ]
-            ], 1);
+            sameRectPath(visual, [0, 0, SIZE, SIZE]);
         });
 
-        test("renders rotated square", function() {
+        test("renders rotated square", function() {            ;
             createShape({ type: "square", rotation: 45 });
-            var path = view.log.path[0];
-            arrayClose(mapPoints(path.points), [
-                [ -1.036, SIZE / 2 ], [ SIZE / 2, -1.036 ],
-                [ 6.036, SIZE / 2 ], [ SIZE / 2, 6.036 ]
-            ], 1);
-            ok(path.closed);
+            visual = shape.visual;
+
+            sameRectPath(visual, [0, 0, SIZE, SIZE]);
+            ok(visual.transform().equals(geom.transform().rotate(-45, [SIZE / 2 , SIZE / 2])));
+            ok(visual.options.closed);
         });
 
         test("renders triangle", function() {
             createShape({ type: "triangle" });
-            var path = view.log.path[0];
-            deepEqual(mapPoints(path.points), [
-                [SIZE / 2, 0], [0, SIZE], [SIZE, SIZE]
-            ]);
-            ok(path.closed);
+            var expectedPath = new draw.Path().moveTo(SIZE / 2, 0)
+                .lineTo(0, SIZE).lineTo(SIZE, SIZE).close();
+
+            sameLinePath(shape.visual, expectedPath);
         });
 
         test("renders rotated triangle", function() {
             createShape({ type: "triangle", rotation: 180 });
-            var path = view.log.path[0];
-            deepEqual(mapPoints(path.points), [
-                [SIZE / 2, SIZE], [SIZE, 0], [0, 0]
-            ]);
-            ok(path.closed);
+            var expectedPath = new draw.Path().moveTo(SIZE / 2, 0)
+                .lineTo(0, SIZE).lineTo(SIZE, SIZE).close();
+
+            sameLinePath(shape.visual, expectedPath);
+            ok(shape.visual.transform().equals(geom.transform().rotate(-180, [SIZE / 2 , SIZE / 2])));
         });
 
         test("renders circle", function() {
             createShape({ type: "circle" });
-            var circle = view.log.circle[0];
-            deepEqual(circle.c.x, SIZE / 2);
-            deepEqual(circle.c.y, SIZE / 2);
-            deepEqual(circle.r, SIZE / 2);
+            var circle = shape.visual.geometry();
+
+            deepEqual(circle.center.x, SIZE / 2);
+            deepEqual(circle.center.y, SIZE / 2);
+            deepEqual(circle.radius, SIZE / 2);
         });
 
         test("renders cross", function() {
             createShape({ type: "cross" });
-            var cross1 = view.log.path[0];
-            var cross2 = view.log.path[1];
-            deepEqual(cross1.points, [Point2D(0, 0), Point2D(SIZE, SIZE)]);
-            deepEqual(cross2.points, [Point2D(0, SIZE), Point2D(SIZE, 0)]);
-            equal(view.log.group.length, 1);
+            var cross = shape.visual;
+            sameLinePath(cross.paths[0], new draw.Path().moveTo(0, 0).lineTo(SIZE, SIZE));
+            sameLinePath(cross.paths[1], new draw.Path().moveTo(0, SIZE).lineTo(SIZE, 0));
         });
 
-        test("sets cross group zIndex", function() {
+        test("sets cross zIndex", function() {
             createShape({ type: "cross", zIndex: 1 });
+            var cross = shape.visual;
 
-            equal(view.log.group[0].options.zIndex, 1);
-        });
-
-        test("renders id", function() {
-            createShape({ id: "id" });
-            equal(view.log.circle[0].style.id, "id");
+            equal(cross.options.zIndex, 1);
         });
 
         test("does not render element when hidden", function() {
             createShape({ visible: false });
-            equal(view.log.rect.length, 0);
+            ok(!shape.visual);
         });
 
         test("does not render element when hidden (triangle)", function() {
             createShape({ visible: false,  type: "triangle"});
-            equal(view.log.path.length, 0);
+            ok(!shape.visual);
         });
 
         test("does not render element when hidden (circle)", function() {
             createShape({ visible: false,  type: "circle"});
-            equal(view.log.circle.length, 0);
+            ok(!shape.visual);
         });
 
     })();
