@@ -3101,7 +3101,7 @@ var __meta__ = {
             for (idx = 0, length = columns.length; idx < length; idx++) {
                 column = columns[idx];
 
-                if (model && (!model.editable || model.editable(column.field)) && !column.command && column.field) {
+                if (model && (!model.editable || model.editable(column.field)) && !column.command && column.field && column.hidden !== true) {
                     return idx;
                 }
             }
