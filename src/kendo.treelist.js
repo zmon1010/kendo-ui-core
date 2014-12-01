@@ -76,6 +76,7 @@ var __meta__ = {
     var FILTERMENUINIT = "filterMenuInit";
     var COLUMNHIDE = "columnHide";
     var COLUMNSHOW = "columnShow";
+    var HEADERCELLS = "th.k-header";
 
     var classNames = {
         wrapper: "k-treelist k-grid k-widget",
@@ -700,6 +701,7 @@ var __meta__ = {
             this._attachEvents();
             this._toolbar();
             this._scrollable();
+            this._reorderable();
 
             if (this.options.autoBind) {
                 this.dataSource.fetch();
@@ -866,6 +868,16 @@ var __meta__ = {
             dataSource.unbind(ERROR, this._errorHandler);
             dataSource.unbind(PROGRESS, this._progressHandler);
 
+            if (this.reorderable) {
+                this.reorderable.destroy();
+                this.reorderable = null;
+            }
+
+            if (this._draggableInstance && this._draggableInstance.element) {
+                this._draggableInstance.destroy();
+                this._draggableInstance = null;
+            }
+
             this._destroyEditor();
 
             this.element.off(NS);
@@ -908,7 +920,8 @@ var __meta__ = {
                 hierarchy: true
             },
             filterable: false,
-            editable: false
+            editable: false,
+            reorderable: false
         },
 
         events: [
@@ -1931,6 +1944,40 @@ var __meta__ = {
                     .add(this.header.closest("table"))
                     .width(width);
             }
+        },
+
+        _reorderable: function() {
+            if (!this.options.reorderable) {
+                return;
+            }
+
+            var scrollable = this.options.scrollable === true;
+            var selector = (scrollable ? ".k-grid-header:first " : "table:first>.k-grid-header ") + HEADERCELLS;
+
+            this._draggableInstance = new ui.Draggable(this.wrapper, {
+                group: kendo.guid(),
+                filter: selector,
+                hint: function(target) {
+                    return $('<div class="k-header k-drag-clue" />')
+                    .css({
+                        width: target.width(),
+                        paddingLeft: target.css("paddingLeft"),
+                        paddingRight: target.css("paddingRight"),
+                        lineHeight: target.height() + "px",
+                        paddingTop: target.css("paddingTop"),
+                        paddingBottom: target.css("paddingBottom")
+                    })
+                    .html(target.attr(kendo.attr("title")) || target.attr(kendo.attr("field")) || target.text())
+                    .prepend('<span class="k-icon k-drag-status k-denied" />');
+                }
+            });
+
+            this.reorderable = new ui.Reorderable(this.wrapper, {
+                draggable: this._draggableInstance,
+                change: function(e) {
+                    //reorder columns
+                }
+            });
         }
     });
 
