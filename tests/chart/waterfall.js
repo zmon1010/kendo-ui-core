@@ -339,16 +339,16 @@
         });
 
         test("connects point end to next point start", function() {
-            ok(polyline.segments[0].anchor().equals(new geom.Point(0, 0)));
-            ok(polyline.segments[1].anchor().equals(new geom.Point(30, 0)));
+            ok(polyline.segments[0].anchor().equals(new geom.Point(0.5, 0.5)));
+            ok(polyline.segments[1].anchor().equals(new geom.Point(30.5, 0.5)));
         });
 
         test("connects point end to next point start (negative values)", function() {
             segment.from.aboveAxis = segment.to.aboveAxis = false;
             segment.renderVisual();
             polyline = segment.visual.children[0];
-            ok(polyline.segments[0].anchor().equals(new geom.Point(0, 100)));
-            ok(polyline.segments[1].anchor().equals(new geom.Point(30, 100)));
+            ok(polyline.segments[0].anchor().equals(new geom.Point(0.5, 100.5)));
+            ok(polyline.segments[1].anchor().equals(new geom.Point(30.5, 100.5)));
         });
 
         test("renders open polyline", function() {
@@ -398,16 +398,16 @@
         });
 
         test("connects point end to next point start", function() {
-            ok(polyline.segments[0].anchor().equals(new dataviz.Point2D(100, 0)));
-            ok(polyline.segments[1].anchor().equals(new dataviz.Point2D(100, 30)));
+            ok(polyline.segments[0].anchor().equals(new dataviz.Point2D(100.5, 0.5)));
+            ok(polyline.segments[1].anchor().equals(new dataviz.Point2D(100.5, 30.5)));
         });
 
         test("connects point end to next point start (negative values)", function() {
             segment.from.aboveAxis = segment.to.aboveAxis = false;
             segment.renderVisual();
             polyline = segment.visual.children[0];
-            ok(polyline.segments[0].anchor().equals(new dataviz.Point2D(0, 0)));
-            ok(polyline.segments[1].anchor().equals(new dataviz.Point2D(0, 30)));
+            ok(polyline.segments[0].anchor().equals(new dataviz.Point2D(0.5, 0.5)));
+            ok(polyline.segments[1].anchor().equals(new dataviz.Point2D(0.5, 30.5)));
         });
     })();
 })();
