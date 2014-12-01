@@ -17,7 +17,7 @@
     .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
     .Sortable()
     .ColumnMenu()
-    .Resizable()
+    .Resizable(rsb=>rsb.Columns(true))
     .Reorderable(r => r.Columns(true))
     .Pageable(pageable => pageable
     .Refresh(true)
