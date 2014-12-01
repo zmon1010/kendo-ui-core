@@ -559,6 +559,94 @@
             ok(rootElement.getRoot() === rootElement);
         });
 
+        // ------------------------------------------------------------
+        module("RootElement / createGradient", {
+            setup: function() {
+                createRoot();
+            }
+        });
+
+        test("creates gradient based on type", function() {
+            var linear = rootElement.createGradient({
+                gradient: "glass"
+            });
+
+            ok(linear instanceof draw.LinearGradient);
+
+            var radial = rootElement.createGradient({
+                gradient: "sharpGlass"
+            });
+
+            ok(radial instanceof draw.RadialGradient);
+            equal(radial.stops.length, 6);
+        });
+
+        test("returns the same instance if the options are the same", function() {
+            var linear1 = rootElement.createGradient({
+                gradient: "glass"
+            });
+            var linear2 = rootElement.createGradient({
+                gradient: "glass"
+            });
+
+            ok(linear1 === linear2);
+        });
+
+        test("returns a new instance if the options are not the same", function() {
+            var linear1 = rootElement.createGradient({
+                gradient: "glass"
+            });
+            var linear2 = rootElement.createGradient({
+                gradient: "glass",
+                foo: "bar"
+            });
+
+            ok(linear1 !== linear2);
+        });
+
+        test("sets custom options to gradient", function() {
+            var linear = rootElement.createGradient({
+                gradient: "glass",
+                userSpace: true
+            });
+
+            ok(linear.userSpace());
+        });
+
+        test("converts stops offsets for radial gradient if innerRadius is passed", function() {
+            var radial = rootElement.createGradient({
+                gradient: "roundedBevel",
+                innerRadius: 10,
+                radius: 20
+            });
+            var stops = radial.stops;
+            var expectedStops = [{
+                offset: 0.665
+            }, {
+                offset: 0.915
+            }, {
+                offset: 0.975
+            }];
+
+            for (var idx = 0; idx < stops.length; idx++) {
+                equal(stops[idx].offset(), expectedStops[idx].offset);
+            }
+        });
+
+        test("sets supportVML based on gradient options", function() {
+            var radial = rootElement.createGradient({
+                gradient: "roundedBevel"
+            });
+
+            equal(radial.supportVML, true);
+
+            radial = rootElement.createGradient({
+                gradient: "roundedGlass"
+            });
+
+            equal(radial.supportVML, false);
+        });
+
     })();
 
     (function() {
