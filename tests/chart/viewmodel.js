@@ -23,13 +23,13 @@
     (function() {
         var chartElement;
 
+        function setup() {
+            chartElement = new dataviz.ChartElement();
+        }
+
         // ------------------------------------------------------------
         module("ChartElement", {
-            setup: function() {
-                moduleSetup();
-
-                chartElement = new dataviz.ChartElement();
-            }
+            setup: setup
         });
 
         test("box wraps children", function() {
@@ -71,11 +71,353 @@
             ok(child2.getRoot() === chartElement);
         });
 
+        test("getRoot returns null if element does not have parent", function() {
+            ok(chartElement.getRoot() === null);
+        });
+
+        test("stackRoot returns the stackRoot for first level children", function() {
+            var child = new dataviz.ChartElement();
+
+            chartElement.stackRoot = function() { return this; }
+
+            chartElement.append(child);
+            ok(child.stackRoot() === chartElement);
+        });
+
+        test("stackRoot returns root for second level children", function() {
+            var child1 = new dataviz.ChartElement(),
+                child2 = new dataviz.ChartElement();
+
+            chartElement.stackRoot = function() { return this; }
+
+            child1.append(child2);
+            chartElement.append(child1);
+
+            ok(child2.stackRoot() === chartElement);
+        });
+
+        test("traverse traverses all children", 2, function() {
+            var child1 = new dataviz.ChartElement(),
+                child2 = new dataviz.ChartElement();
+
+            child1.append(child2);
+            chartElement.append(child1);
+            chartElement.traverse(function(element) {
+                ok(element === child1 || element === child2);
+            });
+        });
+
+        test("closest returns matched parent",function() {
+            var child1 = new dataviz.ChartElement(),
+                child2 = new dataviz.ChartElement();
+
+            child1.append(child2);
+            chartElement.append(child1);
+
+            var result = child2.closest(function(element) {
+                return element === chartElement;
+            });
+            ok(result === chartElement);
+        });
+
+        test("stackRoot returns self if element does not have parent", function() {
+            ok(chartElement.stackRoot() === chartElement);
+        });
+
+        test("stackVisual inserts visual at sorted position", function() {
+            var child = new dataviz.ChartElement({zIndex: 2}),
+                visual1 = new draw.Path({zIndex: 1}),
+                visual2 = new draw.Path({zIndex: 3});
+
+            chartElement.createVisual();
+            chartElement.visual.append(visual1, visual2);
+            chartElement.stackVisual(child);
+
+            equal($.inArray(child, chartElement.visual.children), 1);
+        });
+
+        test("createVisual creates group with zIndex and visibility set", function() {
+            chartElement.options.zIndex = 10;
+            chartElement.options.visible = false;
+            chartElement.createVisual();
+
+            var visual = chartElement.visual;
+            ok(visual instanceof draw.Group);
+            equal(visual.options.zIndex, 10);
+            equal(visual.options.visible, false);
+        });
+
+        test("createVisual sets visible to true by default", function() {
+            chartElement.createVisual();
+            equal(chartElement.visual.options.visible, true);
+        });
+
+        test("createAnimation creates visual animation", function() {
+            chartElement.options.animation = {
+                type: "bar"
+            };
+            chartElement.createVisual();
+            chartElement.createAnimation();
+            ok(chartElement.animation);
+            ok(chartElement.animation.element === chartElement.visual);
+        });
+
+        // ------------------------------------------------------------
+        module("ChartElement / appendVisual", {
+            setup: setup
+        });
+
+        test("assigns chartElement to visual", function() {
+            var visual = new draw.Group();
+            chartElement.createVisual();
+            chartElement.appendVisual(visual);
+            ok(visual.chartElement === chartElement);
+        });
+
+        test("does not override already assigned chartElement", function() {
+            var visual = new draw.Group();
+            visual.chartElement = "foo";
+            chartElement.createVisual();
+            chartElement.appendVisual(visual);
+            equal(visual.chartElement, "foo");
+        });
+
+        test("appends visual", function() {
+            var visual = new draw.Group();
+            chartElement.createVisual();
+            chartElement.appendVisual(visual);
+            ok(chartElement.visual.children[0] === visual);
+        });
+
+        test("appends visual to parent if element does not have visual", function() {
+            var visual = new draw.Group();
+            chartElement.parent = {
+                appendVisual: function(childVisual) {
+                    ok(visual, childVisual);
+                }
+            };
+            chartElement.appendVisual(visual);
+        });
+
+        test("appends visual to the root if noClip is true", function() {
+            var child = new dataviz.ChartElement();
+            var visual = new draw.Group({
+                noclip: true
+            });
+            chartElement.append(child);
+            chartElement.createVisual();
+            chartElement.getRoot = function() { return this; };
+
+            child.appendVisual(visual);
+            ok(chartElement.visual.children[0] === visual);
+        });
+
+        test("appends stacks visual to stack root if visual has zIndex", function() {
+            var child = new dataviz.ChartElement();
+            var visual = new draw.Group({
+                zIndex: 1
+            });
+            chartElement.append(child);
+            chartElement.createVisual();
+            chartElement.stackRoot = function() { return this; };
+            chartElement.stackVisual = function(childVisual) {
+                ok(visual === childVisual);
+            };
+
+            child.appendVisual(visual);
+        });
+
+        // ------------------------------------------------------------
+        module("ChartElement / renderVisual", {
+            setup: setup
+        });
+
+        test("creates visual", function() {
+            chartElement.createVisual = function() {
+                ok(true);
+            };
+            chartElement.renderVisual();
+        });
+
+        test("assigns chartElement to visual", function() {
+            chartElement.renderVisual();
+            ok(chartElement.visual.chartElement === chartElement);
+        });
+
+        test("appends visual to parent", function() {
+            chartElement.parent = {
+                appendVisual: function(visual) {
+                    ok(chartElement.visual, visual);
+                }
+            };
+            chartElement.renderVisual();
+        });
+
+        test("renders children", 2, function() {
+            var child1 = child2 = {
+                renderVisual: function() {
+                    ok(true);
+                }
+            };
+            chartElement.append(child1, child2);
+            chartElement.renderVisual();
+        });
+
+        test("creates animation", function() {
+            chartElement.createAnimation = function() {
+                ok(true);
+            };
+            chartElement.renderVisual();
+        });
+
+        test("calls renderComplete", function() {
+            chartElement.renderComplete = function() {
+                ok(true);
+            };
+            chartElement.renderVisual();
+        });
+
+        // ------------------------------------------------------------
+        module("ChartElement / toggleHighlight", {
+            setup: function() {
+                setup();
+                chartElement.createVisual();
+            }
+        });
+
+        test("does nothing if element does not have createHighlight method", function() {
+            chartElement.toggleHighlight();
+            ok(!chartElement._highlight);
+            equal(chartElement.visual.children.length, 0);
+        });
+
+        test("does not create highlight if highlight is disabled", 0, function() {
+            chartElement.options.highlight = {
+                visible: false
+            };
+            chartElement.createHighlight = function() {
+                ok(false);
+            };
+            chartElement.toggleHighlight();
+        });
+
+        test("creates highlight", function() {
+            chartElement.createHighlight = function() {
+                ok(true);
+                return new draw.Path();
+            };
+            chartElement.toggleHighlight();
+        });
+
+        test("creates highlight only once", 1, function() {
+            chartElement.createHighlight = function() {
+                ok(true);
+                return new draw.Path();
+            };
+            chartElement.toggleHighlight(true);
+            chartElement.toggleHighlight(false);
+        });
+
+        test("appends highlight", function() {
+            var visual = new draw.Path();
+            chartElement.createHighlight = function() {
+                return visual;
+            };
+            chartElement.toggleHighlight();
+            ok(chartElement.visual.children[0] === visual);
+        });
+
+        test("passes default options", function() {
+            chartElement.createHighlight = function(options) {
+                equal(options.fill.color, "#fff");
+                equal(options.fill.opacity, 0.2);
+                equal(options.stroke.color, "#fff");
+                equal(options.stroke.width, 1);
+                equal(options.stroke.opacity, 0.2);
+                return new draw.Path();
+            };
+            chartElement.toggleHighlight();
+        });
+
+        test("sets highlight visibility", function() {
+            var visual = new draw.Path();
+            chartElement.createHighlight = function() {
+                return visual;
+            };
+
+            chartElement.toggleHighlight(false);
+            equal(visual.visible(), false);
+
+            chartElement.toggleHighlight(true);
+            equal(visual.visible(), true);
+        });
+
+        // ------------------------------------------------------------
+        (function() {
+            var gradient;
+            var gradientOptions;
+            var path;
+            var overlay;
+            module("ChartElement / createGradientOverlay", {
+                setup: function() {
+                    setup();
+                    gradient = new draw.LinearGradient();
+                    path = new draw.Path().moveTo(10, 20).curveTo([20, 30], [40, 30], [60, 10]);
+                    chartElement.parent = {
+                        createGradient: function(options) {
+                            gradientOptions = options;
+                            return gradient;
+                        }
+                    };
+                }
+            });
+
+            test("creates Path with gradient fill", function() {
+                overlay = chartElement.createGradientOverlay(path);
+                ok(overlay instanceof draw.Path);
+                ok(overlay.fill() === gradient);
+            });
+
+            test("overlay path has none stroke color", function() {
+                overlay = chartElement.createGradientOverlay(path);
+                equal(overlay.options.stroke.color, "none");
+            });
+
+            test("overlay path has same segments", function() {
+                overlay = chartElement.createGradientOverlay(path);
+                closePaths(path, overlay);
+            });
+
+            test("overlay path is closed based on source element path", function() {
+                overlay = chartElement.createGradientOverlay(path);
+                ok(!overlay.options.closed);
+
+                path.close();
+                overlay = chartElement.createGradientOverlay(path);
+                ok(overlay.options.closed);
+            });
+
+            test("creates gradient with passed options", function() {
+                overlay = chartElement.createGradientOverlay(path, {}, {
+                    foo: "bar"
+                });
+                equal(gradientOptions.foo, "bar");
+            });
+
+            test("sets custom options to path", function() {
+                overlay = chartElement.createGradientOverlay(path, {
+                    stroke: {
+                        color: "red"
+                    }
+                });
+                equal(overlay.options.stroke.color, "red");
+            });
+
+        })();
+
         // ------------------------------------------------------------
         module("ChartElement / destroy", {
-            setup: function() {
-                chartElement = new dataviz.ChartElement();
-            }
+            setup: setup
         });
 
         test("destroys animation", function() {
