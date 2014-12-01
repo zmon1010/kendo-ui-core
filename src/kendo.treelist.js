@@ -74,6 +74,8 @@ var __meta__ = {
     var DATABOUND = "dataBound";
     var CANCEL = "cancel";
     var FILTERMENUINIT = "filterMenuInit";
+    var COLUMNHIDE = "columnHide";
+    var COLUMNSHOW = "columnShow";
 
     var classNames = {
         wrapper: "k-treelist k-grid k-widget",
@@ -919,7 +921,9 @@ var __meta__ = {
             DATABINDING,
             DATABOUND,
             CANCEL,
-            FILTERMENUINIT
+            FILTERMENUINIT,
+            COLUMNHIDE,
+            COLUMNSHOW
         ],
 
         _toggle: function(model, expand) {
@@ -1088,7 +1092,6 @@ var __meta__ = {
 
         _layout: function () {
             var element = this.element;
-            var colgroup = this._colgroup();
             var layout = "";
 
             this.wrapper = element.addClass(classNames.wrapper);
@@ -1097,14 +1100,14 @@ var __meta__ = {
                 "<div class='#= gridHeader #' style=\"padding-right: " + kendo.support.scrollbar() + "px;\">" +
                     "<div class='#= gridHeaderWrap #'>" +
                         "<table role='grid'>" +
-                            colgroup +
+                            "<colgroup></colgroup>"+
                             "<thead role='rowgroup' />" +
                         "</table>" +
                     "</div>" +
                 "</div>" +
                 "<div class='#= gridContentWrap #'>" +
                     "<table role='treegrid' tabindex='0'>" +
-                        colgroup +
+                        "<colgroup></colgroup>"+
                         "<tbody />" +
                     "</table>" +
                 "</div>";
@@ -1112,7 +1115,7 @@ var __meta__ = {
             if (!this.options.scrollable) {
                 layout =
                     "<table role='treegrid' tabindex='0'>" +
-                        colgroup +
+                        "<colgroup></colgroup>"+
                         "<thead class='#= gridHeader #' role='rowgroup' />" +
                         "<tbody />" +
                     "</table>";
@@ -1130,6 +1133,17 @@ var __meta__ = {
             this.toolbar = element.find(DOT + classNames.gridToolbar);
 
             var header = this.header = element.find(DOT + classNames.gridHeader).find("thead").addBack().filter("thead");
+
+            this.content = element.find(DOT + classNames.gridContentWrap).find("tbody");
+
+            if (!this.content.length) {
+                this.content = element.find("tbody");
+            }
+
+            this._headerColsTree = new kendoDom.Tree(header.prev()[0]);
+            this._contentColsTree = new kendoDom.Tree(this.content.prev()[0]);
+            this._renderCols();
+
             this._headerTree = new kendoDom.Tree(this.header[0]);
             this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
 
@@ -1141,12 +1155,6 @@ var __meta__ = {
                     data: map(columns, function(col) { return { column: col }; })
                 };
             });
-
-            this.content = element.find(DOT + classNames.gridContentWrap).find("tbody");
-
-            if (!this.content.length) {
-                this.content = element.find("tbody");
-            }
 
             this._contentTree = new kendoDom.Tree(this.content[0]);
 
@@ -1236,6 +1244,7 @@ var __meta__ = {
                 ths.push(kendoDomElement("th", {
                     "data-field": column.field,
                     "data-title": column.title,
+                    "style": column.hidden === true ? { "display": "none" } : {},
                     className: cellClasses.join(" "),
                     "role": "columnheader"
                 }, children));
@@ -1244,26 +1253,38 @@ var __meta__ = {
             return ths;
         },
 
-        _colgroup: function() {
+        _cols: function() {
             var columns = this.columns;
             var cols = [];
-            var style, width;
+            var width, attr;
 
-            for (var i = 0, length = columns.length; i < length; i++) {
-                cols.push("<col ");
-
-                width = columns[i].width;
-
-                if (width && parseInt(width, 10) !== 0) {
-                    cols.push("style='width:");
-                    cols.push(typeof width === "string" ? width : width + "px");
-                    cols.push("'");
+            for (var i = 0; i < columns.length; i++) {
+                if (columns[i].hidden === true) {
+                    continue;
                 }
 
-                cols.push("/>");
+                width = columns[i].width;
+                attr = {};
+
+                if (width && parseInt(width, 10) !== 0) {
+                    attr.style = {
+                        width: typeof width === "string" ? width : width + "px"
+                    };
+                }
+
+                cols.push(kendoDomElement("col", attr));
             }
 
-            return "<colgroup>" + cols.join("") + "</colgroup>";
+            return cols;
+        },
+
+        _renderCols: function() {
+            this._headerColsTree.render(this._cols());
+
+            if (this.options.scrollable) {
+                this._contentColsTree.render(this._cols());
+            }
+
         },
 
         _trs: function(options) {
@@ -1355,7 +1376,10 @@ var __meta__ = {
             var column = options.column;
             var template = options.column.footerTemplate || $.noop;
             var aggregates = options.model[column.field] || {};
-            var attr = { "role": "gridcell" };
+            var attr = {
+                "role": "gridcell",
+                "style": column.hidden === true ? { "display": "none" } : {}
+            };
 
             if (column.expandable) {
                 content = content.concat(createPlaceholders({
@@ -1402,7 +1426,10 @@ var __meta__ = {
             var model = options.model;
             var column = options.column;
             var iconClass;
-            var attr = { "role": "gridcell" };
+            var attr = {
+                "role": "gridcell",
+                "style": column.hidden === true ? { "display": "none" } : {}
+            };
 
             if (model._edit && column.field && model.editable(column.field)) {
                 attr[kendo.attr("container-for")] = column.field;
@@ -1824,6 +1851,66 @@ var __meta__ = {
             }
 
             return mode.toLowerCase();
+        },
+
+        hideColumn: function(column) {
+            this._toggleColumnVisibility(column, true);
+        },
+
+        showColumn: function(column) {
+            this._toggleColumnVisibility(column, false);
+        },
+
+        _toggleColumnVisibility: function(column, hidden) {
+            column = this._findColumn(column);
+
+            if (!column || column.hidden === hidden) {
+                return;
+            }
+
+            column.hidden = hidden;
+            this._renderCols();
+            this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
+            this._render();
+
+            this._adjustTablesWidth();
+
+            this.trigger(hidden ? COLUMNHIDE : COLUMNSHOW, { column: column });
+        },
+
+        _findColumn: function(column) {
+            if (typeof column == "number") {
+                column = this.columns[column];
+            } else {
+                column = grep(this.columns, function(item) {
+                    return item.field === column;
+                })[0];
+            }
+
+            return column;
+        },
+
+        _adjustTablesWidth: function() {
+            var idx, length;
+            var cols = this.header.prev().children();
+            var colWidth, width = 0;
+
+            for (idx = 0, length = cols.length; idx < length; idx++ ) {
+                colWidth = cols[idx].style.width;
+                if (colWidth && colWidth.indexOf("%") == -1) {
+                    width += parseInt(colWidth, 10);
+                } else {
+                    width = 0;
+                    break;
+                }
+            }
+
+
+            if (width) {
+                this.content.closest("table")
+                    .add(this.header.closest("table"))
+                    .width(width);
+            }
         }
     });
 
