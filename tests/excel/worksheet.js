@@ -24,6 +24,7 @@ function Worksheet(options) {
     return new kendo.ooxml.Worksheet(options, sharedStrings, styles);
 }
 
+/*
 test("toXML creates a 'c' element for cells", function() {
     var worksheet = Worksheet();
 
@@ -564,6 +565,26 @@ test("toXML creates 'autoFilter' element when the filter option is set", functio
     var dom = $(worksheet.toXML());
 
     equal(dom.find("autoFilter").attr("ref"), "B1:C1");
+});
+*/
+test("toXML creates cell with correct value after merged cell", function() {
+    var worksheet = Worksheet({
+        rows: [ {
+            cells: [
+                {"value":"","colSpan":2,"rowSpan":2},
+                {"value":"dim 0","colSpan":1,"rowSpan":1}
+            ]
+        }, {
+            cells: [
+                {"value":"dim 0_1","colSpan":1,"rowSpan":1}
+            ]
+        } ]
+    });
+
+    var dom = $(worksheet.toXML());
+    var cell = dom.find("row:eq(1) > c:eq(0)");
+
+    equal(cell.attr("r"), "C2");
 });
 
 }());
