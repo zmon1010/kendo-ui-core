@@ -151,7 +151,19 @@
         equal(headerCols[2].style.width, "20px");
     });
 
-    test("reorder header cells", function() {
+    test("reorder data cells", function() {
+        createTreeList();
+
+        instance.reorderColumn(1, instance.columns[2]);
+
+        var tds = instance.content.find("tr:first").children();
+
+        equal(tds.eq(0).text(), "1");
+        equal(tds.eq(1).text(), "foo");
+        equal(tds.eq(2).text(), "");
+    });
+
+    test("move header cell to the left", function() {
         createTreeList();
 
         instance.reorderColumn(1, instance.columns[2]);
@@ -163,15 +175,32 @@
         equal(ths.eq(2).text(), "parentId");
     });
 
-    test("reorder data cells", function() {
+    test("move header cell to the right", function() {
         createTreeList();
 
-        instance.reorderColumn(1, instance.columns[2]);
+        instance.reorderColumn(0, instance.columns[1]);
 
-        var tds = instance.content.find("tr:first").children();
+        var ths = instance.header.find("tr:first").children();
 
-        equal(tds.eq(0).text(), "1");
-        equal(tds.eq(1).text(), "foo");
-        equal(tds.eq(2).text(), "");
+        equal(ths.eq(0).text(), "parentId");
+        equal(ths.eq(1).text(), "id");
+        equal(ths.eq(2).text(), "text");
+    });
+
+    test("sort icons is in correct header cell", function() {
+        createTreeList({
+            sortable: true
+        });
+
+        instance.dataSource.sort({
+            field: "parentId",
+            dir: "asc"
+        });
+        instance.reorderColumn(0, instance.columns[1]);
+
+        var ths = instance.header.find("tr:first").children();
+
+        equal(ths.eq(0).text(), "parentId");
+        ok(ths.eq(0).find(".k-i-arrow-n")[0]);
     });
 })();

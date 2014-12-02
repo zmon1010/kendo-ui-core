@@ -1948,7 +1948,7 @@ var __meta__ = {
 
         _reorderable: function() {
             if (!this.options.reorderable) {
-                return;
+                //return;
             }
 
             var scrollable = this.options.scrollable === true;
@@ -2001,7 +2001,10 @@ var __meta__ = {
             columns.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
 
             this._renderCols();
-            this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
+            //reorder column header manually
+            var ths = this.header.find("th");
+            ths.eq(sourceIndex)[before ? "insertBefore" : "insertAfter"](ths.eq(destIndex));
+
             this._render();
         }
     });
