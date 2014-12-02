@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <title>locked columns</title>
+        <script src="../src/jszip.js" type="text/javascript"></script>
         <script src="../src/jquery.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../src/kendo.core.js" type="text/javascript" charset="utf-8"></script>
         <script src="../src/kendo.userevents.js" type="text/javascript" charset="utf-8"></script>
@@ -28,6 +29,9 @@
         <script src="../src/kendo.window.js" type="text/javascript" charset="utf-8"></script>
         <script src="../src/kendo.filtermenu.js" type="text/javascript" charset="utf-8"></script>
         <script src="../src/kendo.columnmenu.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../src/kendo.ooxml.js"></script>
+        <script src="../src/kendo.excel.js"></script>
+        <script src="../src/kendo.columnsorter.js"></script>
         <script src="../src/kendo.grid.js" type="text/javascript" charset="utf-8"></script>
         <link rel="stylesheet" href="../dist/styles/web/kendo.common.css"/>
         <link rel="stylesheet/less" type="text/css" href="../dist/styles/web/kendo.default.less"/>
@@ -109,37 +113,31 @@
                         //filterable: true,
                         columnMenu: true,
                         resizable: true,
-                        toolbar: ["create"],
+                        toolbar: ["excel", "create"],
                         columns: [{
                             field: "ContactName",
-                            template: "[locked 1] #=ContactName# #=ContactName#",
                             title: "[locked 1] Contact Name",
                             locked: true,
-                   //        footerTemplate: "[locked 1]",
-                            editor: "<textarea style='height:300px'/>",
                             width: 140
                         }, {
                             field: "ContactTitle",
-                            template: "[locked 2] #=ContactTitle#",
-                            //groupFooterTemplate: "[locked 2] group",
                             locked: true,
-                            hidden: true,
-                            footerTemplate: "[locked 2]",
                             title: "[locked 2] Contact Title",
                             width: 290
                         }, {
                             field: "CompanyName",
                             title: "Company Name",
-                            //locked: true,
-                      //      footerTemplate: "baz",
                             width: 250
                         },{
-                            field: "CustomerID",
-                            width: 100
-                        },  {
-                            field: "Country",
-                            width: 203
-                            }, {
+                            title: "Common column",
+                            columns: [ {
+                                field: "CustomerID",
+                                width: 100
+                            },  {
+                                field: "Country",
+                                width: 203
+                            } ]
+                        }, {
                             command: "edit",
                             width: 128,
                             title: "&nbsp;"
