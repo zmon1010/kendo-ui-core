@@ -1953,6 +1953,7 @@ var __meta__ = {
 
             var scrollable = this.options.scrollable === true;
             var selector = (scrollable ? ".k-grid-header:first " : "table:first>.k-grid-header ") + HEADERCELLS;
+            var that = this;
 
             this._draggableInstance = new ui.Draggable(this.wrapper, {
                 group: kendo.guid(),
@@ -1975,9 +1976,29 @@ var __meta__ = {
             this.reorderable = new ui.Reorderable(this.wrapper, {
                 draggable: this._draggableInstance,
                 change: function(e) {
-                    //reorder columns
+                    var newIndex = e.newIndex;
+                    var oldIndex = e.oldIndex;
+                    var before = e.position === "before";
+
+                    that.reorderColumn(newIndex, that.columns[oldIndex], before);
                 }
             });
+        },
+
+        reorderColumn: function(destIndex, column, before) {
+            var columns = this.columns;
+            var sourceIndex = $.inArray(column, columns);
+
+            if (sourceIndex === destIndex) {
+                return;
+            }
+
+            if (before === undefined) {
+                before = destIndex < sourceIndex;
+            }
+
+            columns.splice(before ? destIndex : destIndex + 1, 0, column);
+            columns.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
         }
     });
 

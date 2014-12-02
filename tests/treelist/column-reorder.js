@@ -55,4 +55,70 @@
         ok(!instance.wrapper.data("kendoReorderable"));
         equal(instance.reorderable, null);
     });
+
+    test("move column to the left before another column, reorders columns collection", function() {
+        createTreeList();
+
+        instance.reorderColumn(1, instance.columns[2], true);
+
+        var columns = instance.columns;
+        equal(columns[0].field, "id");
+        equal(columns[1].field, "text");
+        equal(columns[2].field, "parentId");
+    });
+
+    test("move column to the left after another column, reorders columns collection", function() {
+        createTreeList();
+
+        instance.reorderColumn(0, instance.columns[2], false);
+
+        var columns = instance.columns;
+        equal(columns[0].field, "id");
+        equal(columns[1].field, "text");
+        equal(columns[2].field, "parentId");
+    });
+
+    test("move column to the right before another column, reorders columns collection", function() {
+        createTreeList();
+
+        instance.reorderColumn(2, instance.columns[0], true);
+
+        var columns = instance.columns;
+        equal(columns[0].field, "parentId");
+        equal(columns[1].field, "id");
+        equal(columns[2].field, "text");
+    });
+
+    test("move column to the right after another column, reorders columns collection", function() {
+        createTreeList();
+
+        instance.reorderColumn(2, instance.columns[0], false);
+
+        var columns = instance.columns;
+        equal(columns[0].field, "parentId");
+        equal(columns[1].field, "text");
+        equal(columns[2].field, "id");
+    });
+
+    test("move column to the left without explicit before parameter", function() {
+        createTreeList();
+
+        instance.reorderColumn(1, instance.columns[2]);
+
+        var columns = instance.columns;
+        equal(columns[0].field, "id");
+        equal(columns[1].field, "text");
+        equal(columns[2].field, "parentId");
+    });
+
+    test("move column to the right without explicit before parameter", function() {
+        createTreeList();
+
+        instance.reorderColumn(1, instance.columns[0]);
+
+        var columns = instance.columns;
+        equal(columns[0].field, "parentId");
+        equal(columns[1].field, "id");
+        equal(columns[2].field, "text");
+    });
 })();
