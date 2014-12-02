@@ -1999,6 +1999,10 @@ var __meta__ = {
 
             columns.splice(before ? destIndex : destIndex + 1, 0, column);
             columns.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
+
+            this._renderCols();
+            this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
+            this._render();
         }
     });
 

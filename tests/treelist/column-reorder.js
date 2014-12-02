@@ -121,4 +121,57 @@
         equal(columns[1].field, "id");
         equal(columns[2].field, "text");
     });
+
+    test("reorder col elements in scrollable widget", function() {
+        createTreeList();
+
+        instance.reorderColumn(1, instance.columns[2]);
+
+        var headerCols = instance.header.prev().children();
+        var contentCols = instance.content.prev().children();
+
+        equal(headerCols[0].style.width, "10px");
+        equal(headerCols[1].style.width, "30px");
+        equal(headerCols[2].style.width, "20px");
+
+        equal(contentCols[0].style.width, "10px");
+        equal(contentCols[1].style.width, "30px");
+        equal(contentCols[2].style.width, "20px");
+    });
+
+    test("reorder col elements in non-scrollable widget", function() {
+        createTreeList({ scrollable: false });
+
+        instance.reorderColumn(1, instance.columns[2]);
+
+        var headerCols = instance.header.prev().children();
+
+        equal(headerCols[0].style.width, "10px");
+        equal(headerCols[1].style.width, "30px");
+        equal(headerCols[2].style.width, "20px");
+    });
+
+    test("reorder header cells", function() {
+        createTreeList();
+
+        instance.reorderColumn(1, instance.columns[2]);
+
+        var ths = instance.header.find("tr:first").children();
+
+        equal(ths.eq(0).text(), "id");
+        equal(ths.eq(1).text(), "text");
+        equal(ths.eq(2).text(), "parentId");
+    });
+
+    test("reorder data cells", function() {
+        createTreeList();
+
+        instance.reorderColumn(1, instance.columns[2]);
+
+        var tds = instance.content.find("tr:first").children();
+
+        equal(tds.eq(0).text(), "1");
+        equal(tds.eq(1).text(), "foo");
+        equal(tds.eq(2).text(), "");
+    });
 })();
