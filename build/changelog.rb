@@ -207,6 +207,7 @@ class ChangeLog
 end
 
 class WriteChangeLogTask < Rake::FileTask
+    include Rake::DSL
     attr_accessor :suites, :exclude
 
     def template(name)
@@ -216,6 +217,7 @@ class WriteChangeLogTask < Rake::FileTask
     end
 
     def execute(args)
+        ensure_path name
         File.open(name, 'w') { |file| file.write(contents(template(name))) }
     end
 
