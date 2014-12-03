@@ -24,7 +24,6 @@ function Worksheet(options) {
     return new kendo.ooxml.Worksheet(options, sharedStrings, styles);
 }
 
-/*
 test("toXML creates a 'c' element for cells", function() {
     var worksheet = Worksheet();
 
@@ -566,8 +565,8 @@ test("toXML creates 'autoFilter' element when the filter option is set", functio
 
     equal(dom.find("autoFilter").attr("ref"), "B1:C1");
 });
-*/
-test("toXML creates cell with correct value after merged cell", function() {
+
+test("toXML offsets cells if first has merged rows", function() {
     var worksheet = Worksheet({
         rows: [ {
             cells: [
@@ -585,6 +584,79 @@ test("toXML creates cell with correct value after merged cell", function() {
     var cell = dom.find("row:eq(1) > c:eq(0)");
 
     equal(cell.attr("r"), "C2");
+});
+
+test("toXML offsets cells if second cell is merged in 3 rows", function() {
+    var worksheet = Worksheet({
+        rows: [ {
+            cells: [
+                { "value":"cell 0", "colSpan":1, "rowSpan":1 },
+                { "value":"cell 1", "colSpan":1, "rowSpan":3 },
+                { "value":"cell 2", "colSpan":1, "rowSpan":1 }
+            ]
+        }, {
+            cells: [
+                { "value":"cell 0_1", "colSpan":1, "rowSpan":1 },
+                { "value":"cell 2_1", "colSpan":1, "rowSpan":1 }
+            ]
+        }, {
+            cells: [
+                { "value":"cell 0_2", "colSpan":1, "rowSpan":1 },
+                { "value":"cell 2_2", "colSpan":1, "rowSpan":1 }
+            ]
+        } ]
+    });
+
+    var dom = $(worksheet.toXML());
+    var cell0_1 = dom.find("row:eq(1) > c:eq(0)");
+    var cell2_1 = dom.find("row:eq(1) > c:eq(1)");
+
+    equal(cell0_1.attr("r"), "A2");
+    equal(cell2_1.attr("r"), "C2");
+
+    var cell0_2 = dom.find("row:eq(2) > c:eq(0)");
+    var cell2_2 = dom.find("row:eq(2) > c:eq(1)");
+
+    equal(cell0_2.attr("r"), "A3");
+    equal(cell2_2.attr("r"), "C3");
+});
+
+test("toXML renders third level cells after second cell is merged in 2 rows", function() {
+    var worksheet = Worksheet({
+        rows: [ {
+            cells: [
+                { "value":"cell 0", "colSpan":1, "rowSpan":1 },
+                { "value":"cell 1", "colSpan":1, "rowSpan":2 },
+                { "value":"cell 2", "colSpan":1, "rowSpan":1 }
+            ]
+        }, {
+            cells: [
+                { "value":"cell 0_1", "colSpan":1, "rowSpan":1 },
+                { "value":"cell 2_1", "colSpan":1, "rowSpan":1 }
+            ]
+        }, {
+            cells: [
+                { "value":"cell 0_2", "colSpan":1, "rowSpan":1 },
+                { "value":"cell 1_2", "colSpan":1, "rowSpan":1 },
+                { "value":"cell 2_2", "colSpan":1, "rowSpan":1 }
+            ]
+        } ]
+    });
+
+    var dom = $(worksheet.toXML());
+    var cell0_1 = dom.find("row:eq(1) > c:eq(0)");
+    var cell2_1 = dom.find("row:eq(1) > c:eq(1)");
+
+    equal(cell0_1.attr("r"), "A2");
+    equal(cell2_1.attr("r"), "C2");
+
+    var cell0_2 = dom.find("row:eq(2) > c:eq(0)");
+    var cell1_2 = dom.find("row:eq(2) > c:eq(1)");
+    var cell2_2 = dom.find("row:eq(2) > c:eq(2)");
+
+    equal(cell0_2.attr("r"), "A3");
+    equal(cell1_2.attr("r"), "B3");
+    equal(cell2_2.attr("r"), "C3");
 });
 
 }());

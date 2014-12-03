@@ -309,20 +309,22 @@ var Worksheet = kendo.Class.extend({
     toXML: function() {
         var rows = this.options.rows || [];
         var filter = this.options.filter;
+        var columnsInfo = {};
 
         return WORKSHEET({
             freezePane: this.options.freezePane,
             columns: this.options.columns,
-            data: $.map(rows, $.proxy(this._row, this, rows)),
+            data: $.map(rows, $.proxy(this._row, this, rows, columnsInfo)),
             mergeCells: this._mergeCells,
             filter: filter ? { from: ref(0, filter.from), to: ref(0, filter.to) } : null
         });
     },
-    _row: function(rows, row, rowIndex) {
+    _row: function(rows, columnsInfo, row, rowIndex) {
         this._cellIndex = 0;
+        this._cellOffset = 0;
 
         return {
-            data: $.map(row.cells, $.proxy(this._cell, this, rows, rowIndex))
+            data: $.map(row.cells, $.proxy(this._cell, this, rows, columnsInfo, rowIndex))
         };
     },
     _lookupString: function(value) {
@@ -356,7 +358,7 @@ var Worksheet = kendo.Class.extend({
         // There is one default style
         return index + 1;
     },
-    _cell: function(rows, rowIndex, data) {
+    _cell: function(rows, columnsInfo, rowIndex, data) {
         if (!data) {
             this._cellIndex++;
             return;
@@ -408,11 +410,20 @@ var Worksheet = kendo.Class.extend({
 
         style = this._lookupStyle(style);
 
+        var columnInfo = columnsInfo[this._cellIndex] || {};
+
+        if (columnInfo.rowSpan > 1) {
+            columnInfo.rowSpan -= 1;
+            this._cellOffset += columnInfo.colSpan;
+        }
+
+        var cellIndex = this._cellIndex + this._cellOffset;
+
         var cell = {
             value: value,
             type: type,
             style: style,
-            ref: ref(rowIndex, this._cellIndex)
+            ref: ref(rowIndex, cellIndex)
         };
 
         var colSpan = data.colSpan || 1;
@@ -420,6 +431,13 @@ var Worksheet = kendo.Class.extend({
 
         if (colSpan > 1 || rowSpan > 1) {
             var cells = [cell];
+
+            if (rowSpan > 1) {
+                columnsInfo[cellIndex] = {
+                    colSpan: colSpan,
+                    rowSpan: rowSpan
+                };
+            }
 
             for (var ci = 1; ci < colSpan; ci++) {
                 this._cellIndex++;
