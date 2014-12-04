@@ -626,6 +626,49 @@
         return path.close();
     }
 
+    function evalPseudoElementContent(element, content) {
+        if (/^(none|normal)$/i.test(content)) {
+            return null;
+        }
+        // XXX: this is incomplete.  We need to parse the content and
+        // evaluate it against the current context.  It can be a
+        // space-concatenated string containing expressions like
+        // attr(title), counter(foo) or "strings".
+        return content;
+    }
+
+    function getCssText(style) {
+        if (style.cssText) {
+            return style.cssText;
+        }
+        // Status: NEW.  Report year: 2002.  Current year: 2014.
+        // Nice played, Mozillians.
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=137687
+        var result = [];
+        for (var i = 0; i < style.length; ++i) {
+            result.push(style[i] + ": " + getPropertyValue(style, style[i]));
+        }
+        return result.join(";\n");
+    }
+
+    function _renderWithPseudoElements(element, group) {
+        function pseudo(kind, place) {
+            var style = getComputedStyle(element, kind);
+            var content = evalPseudoElementContent(element, style.content);
+            if (content) {
+                var psel = document.createElement("kendo-pseudo-element");
+                psel.style.cssText = getCssText(style);
+                //psel.textContent = content;
+                element.insertBefore(psel, place);
+                renderElement(psel, group);
+                element.removeChild(psel);
+            }
+        }
+        pseudo(":before", element.firstChild);
+        _renderElement(element, group);
+        pseudo(":after", null);
+    }
+
     function _renderElement(element, group) {
         var style = getComputedStyle(element);
 
@@ -1736,32 +1779,8 @@
 
         pushNodeInfo(element, style, group);
 
-        var before, after, tmp;
-
-        before = getComputedStyle(element, ":before");
-        if (before.content) {
-            tmp = document.createElement("kendo-before");
-            tmp.style.cssText = before.cssText;
-            //tmp.textContent = pseudoElementContent(element, before.content);
-            before = tmp;
-            element.insertBefore(tmp, element.firstChild);
-        } else {
-            before = null;
-        }
-
-        after = getComputedStyle(element, ":after");
-        if (after.content) {
-            tmp = document.createElement("kendo-after");
-            tmp.style.cssText = after.cssText;
-            //tmp.textContent = pseudoElementContent(element, after.content);
-            after = tmp;
-            element.appendChild(after);
-        } else {
-            after = null;
-        }
-
         if (!tr) {
-            _renderElement(element, group);
+            _renderWithPseudoElements(element, group);
         }
         else {
             saveStyle(element, function(){
@@ -1791,7 +1810,7 @@
 
                 nodeInfo._matrix = nodeInfo._matrix.multiplyCopy(m);
 
-                _renderElement(element, group);
+                _renderWithPseudoElements(element, group);
             });
         }
 
