@@ -311,6 +311,8 @@ var Worksheet = kendo.Class.extend({
         var filter = this.options.filter;
         var columnsInfo = {};
 
+        this._maxCellIndex = 0;
+
         return WORKSHEET({
             freezePane: this.options.freezePane,
             columns: this.options.columns,
@@ -320,10 +322,37 @@ var Worksheet = kendo.Class.extend({
         });
     },
     _row: function(rows, columnsInfo, row, rowIndex) {
+        if (this._cellIndex && this._cellIndex > this._maxCellIndex) {
+            this._maxCellIndex = this._cellIndex;
+        }
+
         this._cellIndex = 0;
 
+        var cell;
+        var data = [];
+        var cells = row.cells;
+
+        for (var idx = 0, length = cells.length; idx < length; idx ++) {
+            cell = this._cell(cells[idx], columnsInfo, rowIndex);
+
+            if (cell) {
+                data = data.concat(cell);
+            }
+        }
+
+        var columnInfo;
+        while(this._cellIndex < this._maxCellIndex) {
+            columnInfo = columnsInfo[this._cellIndex];
+            if (columnInfo) {
+                columnInfo.rowSpan -= 1;
+            }
+
+            data.push({ ref: ref(rowIndex, this._cellIndex) });
+            this._cellIndex++;
+        }
+
         return {
-            data: $.map(row.cells, $.proxy(this._cell, this, rows, columnsInfo, rowIndex))
+            data: data
         };
     },
     _lookupString: function(value) {
@@ -357,7 +386,7 @@ var Worksheet = kendo.Class.extend({
         // There is one default style
         return index + 1;
     },
-    _cell: function(rows, columnsInfo, rowIndex, data) {
+    _cell: function(data, columnsInfo, rowIndex) {
         if (!data) {
             this._cellIndex++;
             return;

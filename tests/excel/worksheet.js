@@ -772,4 +772,72 @@ test("toXML outputs cells with correct value when render multiline row headers",
     equal(row3_cells.eq(2).find("v").length, 0);
 });
 
+test("toXML outputs data cells correctly when render multiline row and column headers", function() {
+    var worksheet = Worksheet({
+        rows: [
+            {
+                "cells":[
+                    {"value":"","colSpan":3,"rowSpan":2},
+                    {"value":"col 0","colSpan":1,"rowSpan":1},
+                    {"value":"col 0","colSpan":1,"rowSpan":2}
+                ]
+            },
+            {
+                "cells":[
+                    {"value":"col 0_1","colSpan":1,"rowSpan":1}
+                ]
+            },
+            {
+                "cells":[
+                    {"value":"row 0","colSpan":1,"rowSpan":2},
+                    {"value":"row 0_1","colSpan":1,"rowSpan":1},
+                    {"value":"row 0_2","colSpan":1,"rowSpan":1},
+                    {"value":"1","colSpan":1,"rowSpan":1},
+                    {"value":"2","colSpan":1,"rowSpan":1}
+                ]
+            }, {
+                "cells":[
+                    {"value":"row 0_1","colSpan":2,"rowSpan":1},
+                    {"value":"1","colSpan":1,"rowSpan":1},
+                    {"value":"2","colSpan":1,"rowSpan":1}
+                ]
+            }, {
+                "cells":[
+                    {"value":"row 0","colSpan":3,"rowSpan":1},
+                    {"value":"1","colSpan":1,"rowSpan":1},
+                    {"value":"2","colSpan":1,"rowSpan":1}
+                ]
+            }
+        ]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    var rows = dom.find("row");
+    var data1_cells = rows.eq(2).find("c");
+    var data2_cells = rows.eq(3).find("c");
+    var data3_cells = rows.eq(4).find("c");
+
+    equal(data1_cells.length, 5);
+    equal(data1_cells.eq(3).attr("r"), "D3")
+    equal(data1_cells.eq(3).find("v").length, 1);
+
+    equal(data1_cells.eq(4).attr("r"), "E3")
+    equal(data1_cells.eq(4).find("v").length, 1);
+
+    equal(data2_cells.length, 5);
+    equal(data2_cells.eq(3).attr("r"), "D4")
+    equal(data2_cells.eq(3).find("v").length, 1);
+
+    equal(data2_cells.eq(4).attr("r"), "E4")
+    equal(data2_cells.eq(4).find("v").length, 1);
+
+    equal(data3_cells.length, 5);
+    equal(data3_cells.eq(3).attr("r"), "D5")
+    equal(data3_cells.eq(3).find("v").length, 1);
+
+    equal(data3_cells.eq(4).attr("r"), "E5")
+    equal(data3_cells.eq(4).find("v").length, 1);
+});
+
 }());
