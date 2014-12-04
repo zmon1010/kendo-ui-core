@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+    <script src="./pako.min.js"></script>
+  </head>
+  <body>
+    <div id="grid"></div>
+    <script>
+      $("#grid").kendoGrid({
+        toolbar: ["pdf"],
+        pdfExport: function(e) {
+        	e.preventDefault();
+
+          var master = new kendo.drawing.Group();
+          var offsetTop = 0;
+          var wrapper = this.wrapper;
+
+          this.dataSource.bind("change", function() {
+
+            var dataSource = this;
+
+
+              kendo.drawing.drawDOM(wrapper)
+            	.done(function(group) {
+
+                master.append(group);
+
+                group.transform(kendo.geometry.transform().translate(0, offsetTop));
+
+                offsetTop += wrapper.height();
+                console.log(dataSource.page())
+                if (dataSource.page() < dataSource.totalPages()) {
+                  dataSource.page(dataSource.page() + 1);
+                } else {
+                  kendo.drawing.exportPDF(master, {
+                    paperSize: "auto",
+                    margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
+                  }).done(function(data) {
+                    // Save the PDF file
+                    kendo.saveAs({
+                      dataURI: data,
+                      fileName: "HR-Dashboard.pdf",
+                      proxyURL: "http://demos.telerik.com/kendo-ui/service/export"
+                    });
+                  });
+                }
+              });
+
+    	      });
+
+          this.dataSource.fetch();
+        },
+        dataSource: {
+          type: "odata",
+          transport: {
+            read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+          },
+          schema: {
+            model: {
+              fields: {
+                OrderID: { type: "number" },
+                Freight: { type: "number" },
+                ShipName: { type: "string" },
+                OrderDate: { type: "date" },
+                ShipCity: { type: "string" }
+              }
+            }
+          },
+          pageSize: 20,
+          serverPaging: true,
+          serverFiltering: true,
+          serverSorting: true
+        },
+        //height: 550,
+        filterable: true,
+        sortable: true,
+        pageable: true,
+        columns: [{
+          field:"OrderID",
+          filterable: false
+        },
+                  "Freight",
+                  {
+                    field: "OrderDate",
+                    title: "Order Date",
+                    format: "{0:MM/dd/yyyy}"
+                  }, {
+                    field: "ShipName",
+                    title: "Ship Name"
+                  }, {
+                    field: "ShipCity",
+                    title: "Ship City"
+                  }
+                 ]
+      });
+    </script>
+  </body>
+</html>
