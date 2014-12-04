@@ -321,7 +321,6 @@ var Worksheet = kendo.Class.extend({
     },
     _row: function(rows, columnsInfo, row, rowIndex) {
         this._cellIndex = 0;
-        this._cellOffset = 0;
 
         return {
             data: $.map(row.cells, $.proxy(this._cell, this, rows, columnsInfo, rowIndex))
@@ -410,55 +409,49 @@ var Worksheet = kendo.Class.extend({
 
         style = this._lookupStyle(style);
 
-        var columnInfo = columnsInfo[this._cellIndex] || {};
+        var cells = [];
+        var ci, cellRef;
 
+        var columnInfo = columnsInfo[this._cellIndex] || {};
         if (columnInfo.rowSpan > 1) {
             columnInfo.rowSpan -= 1;
-            this._cellOffset += columnInfo.colSpan;
+
+            for (ci = 0; ci < columnInfo.colSpan; ci++) {
+                cells[ci] = { ref: ref(rowIndex, this._cellIndex) };
+                this._cellIndex++;
+            }
         }
 
-        var cellIndex = this._cellIndex + this._cellOffset;
-
-        var cell = {
+        cellRef = ref(rowIndex, this._cellIndex);
+        cells.push({
             value: value,
             type: type,
             style: style,
-            ref: ref(rowIndex, cellIndex)
-        };
+            ref: cellRef
+        });
 
         var colSpan = data.colSpan || 1;
         var rowSpan = data.rowSpan || 1;
 
         if (colSpan > 1 || rowSpan > 1) {
-            var cells = [cell];
-
             if (rowSpan > 1) {
-                columnsInfo[cellIndex] = {
+                columnsInfo[this._cellIndex] = {
                     colSpan: colSpan,
                     rowSpan: rowSpan
                 };
             }
 
-            for (var ci = 1; ci < colSpan; ci++) {
+            for (ci = 1; ci < colSpan; ci++) {
                 this._cellIndex++;
-
-                cells[ci] = { ref: ref(rowIndex, this._cellIndex) };
+                cells.push({ ref: ref(rowIndex, this._cellIndex) });
             }
 
-            for (var ri = 1; ri < rowSpan; ri++) {
-                if (rows[rowIndex + ri]) {
-                    rows[rowIndex + ri].cells.splice(this._cellIndex, 0, {});
-                }
-            }
-
-            this._mergeCells.push(cell.ref + ":" + ref(rowIndex + rowSpan - 1, this._cellIndex));
-
-            cell = cells;
+            this._mergeCells.push(cellRef + ":" + ref(rowIndex + rowSpan - 1, this._cellIndex));
         }
 
         this._cellIndex ++;
 
-        return cell;
+        return cells;
     }
 });
 
