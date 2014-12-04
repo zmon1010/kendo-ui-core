@@ -1301,8 +1301,16 @@ var __meta__ = {
         });
     }
 
+    function shouldRemoveFileEntry(upload) {
+        return !upload.multiple && $(".k-file", upload.wrapper).length > 1;
+    }
+
     function removeUploadedFile(fileEntry, upload, data) {
         if (!upload._supportsRemove()) {
+            if(shouldRemoveFileEntry(upload)) {
+                upload._removeFileEntry(fileEntry);
+            }
+
             return;
         }
 
@@ -1322,6 +1330,10 @@ var __meta__ = {
             },
 
             function onError(xhr) {
+                if(shouldRemoveFileEntry(upload)) {
+                    upload._removeFileEntry(fileEntry);
+                }
+
                 upload.trigger(ERROR, {
                     operation: "remove",
                     files: files,
