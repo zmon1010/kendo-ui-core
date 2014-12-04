@@ -394,8 +394,8 @@
         }
     }
 
-    function getComputedStyle(element) {
-        return window.getComputedStyle(element);
+    function getComputedStyle(element, pseudoElt) {
+        return window.getComputedStyle(element, pseudoElt || null);
     }
 
     function getPropertyValue(style, prop) {
@@ -1735,6 +1735,30 @@
         }
 
         pushNodeInfo(element, style, group);
+
+        var before, after, tmp;
+
+        before = getComputedStyle(element, ":before");
+        if (before.content) {
+            tmp = document.createElement("kendo-before");
+            tmp.style.cssText = before.cssText;
+            //tmp.textContent = pseudoElementContent(element, before.content);
+            before = tmp;
+            element.insertBefore(tmp, element.firstChild);
+        } else {
+            before = null;
+        }
+
+        after = getComputedStyle(element, ":after");
+        if (after.content) {
+            tmp = document.createElement("kendo-after");
+            tmp.style.cssText = after.cssText;
+            //tmp.textContent = pseudoElementContent(element, after.content);
+            after = tmp;
+            element.appendChild(after);
+        } else {
+            after = null;
+        }
 
         if (!tr) {
             _renderElement(element, group);
