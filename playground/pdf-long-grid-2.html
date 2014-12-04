@@ -14,6 +14,27 @@
       ]);
     </script>
     <script src="./pako.min.js"></script>
+
+    <script>
+        kendo.pdf.defineFont({
+            "Verdana"             : "./Verdana/Verdana.ttf",
+            "Verdana|Bold"        : "./Verdana/Verdana_Bold.ttf",
+            "Verdana|Bold|Italic" : "./Verdana/Verdana_Bold_Italic.ttf",
+            "Verdana|Italic"      : "./Verdana/Verdana_Italic.ttf"
+        });
+    </script>
+
+    <style>
+      body {
+        margin: 0; padding: 1em;
+        font-size: 12px;
+        font-family: Verdana;
+      }
+      .k-widget, button {
+        font-family: Verdana !important;
+      }
+    </style>
+
   </head>
   <body>
     <div id="grid"></div>
