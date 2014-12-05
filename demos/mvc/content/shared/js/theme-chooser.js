@@ -124,6 +124,8 @@
             { value: "material", name: "Material", colors: [ "#3f51b5", "#283593", "#fff" ]  },
             { value: "materialblack", name: "Material Black", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] },
             { name: "Fiori", value: "fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] }
+            { value: "fiori", name: "Fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] },
+            { value: "office365", name: "Office 365", colors: ["#0072c6", "#cde6f7", "#fff"] }
         ],
         mobileThemes: [
             { name: "iOS7", value:"ios7", colors: [ "#007aff", "#f5f5f5", "#ffffff" ]  },
@@ -141,7 +143,8 @@
             { name: "Standard", value: "common" },
             { name: "Bootstrap", value: "common-bootstrap", relativity: "larger" },
             { name: "Material", value: "common-material", relativity: "bold" },
-            { name: "Fiori", value: "common-fiori", relativity: "larger" }
+            { name: "Fiori", value: "common-fiori", relativity: "larger" },
+            { name: "Office365", value: "common-office365", relativity: "bold" }
         ],
 
         selectedTheme: window.kendoTheme,
