@@ -422,4 +422,42 @@ test("Exporter generate rows for row header and data", function() {
     });
 });
 
+test("Exporter honours two level row headers when creating first empty cell", function() {
+    var columns = [
+        { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },
+        { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] } ] }
+    ];
+
+    var rows = [
+        { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1", levelNum: "0", children: [] } ] },
+        { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] }, { name: "dim 1", levelNum: "0", children: [] } ] },
+        { members: [ { name: "dim 0_2", parentName: "dim 0", levelNum: "1", children: [] }, { name: "dim 1", levelNum: "0", children: [] } ] },
+        { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1_1", parentName: "dim 1", levelNum: "1", children: [] } ] },
+        { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1_2", parentName: "dim 1", levelNum: "1", children: [] } ] }
+    ];
+
+    var data = [
+        { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 },
+        { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }
+    ];
+
+    var pivotgrid = createPivot({
+        autoBind: false,
+        dataSource: createDataSource(columns, rows, data)
+    });
+
+    var options = {
+        widget: pivotgrid
+    };
+
+    testWorkbook(options, function(book) {
+        var cells_level1 = book.sheets[0].rows[0].cells;
+
+        equal(cells_level1.length, 3);
+        equal(cells_level1[0].value, "");
+        equal(cells_level1[0].colSpan, 4);
+        equal(cells_level1[0].rowSpan, 2);
+    });
+});
+
 }());
