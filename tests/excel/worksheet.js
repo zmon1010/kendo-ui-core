@@ -840,4 +840,67 @@ test("toXML outputs data cells correctly when render multiline row and column he
     equal(data3_cells.eq(4).find("v").length, 1);
 });
 
+test("toXML outputs empty data cells for continues cells with rowSpan", function() {
+    var worksheet = Worksheet({
+        rows: [
+            {
+                "cells": [
+                    {"background":"#7a7a7a","color":"#fff","value":"","colSpan":4,"rowSpan":1},
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 0","colSpan":1,"rowSpan":1}
+                ],
+                "type":"header"
+            }, {
+                "cells": [
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 0","colSpan":1,"rowSpan":1},
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 0_1","colSpan":1,"rowSpan":1},
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 1","colSpan":2,"rowSpan":1},
+                    {"background":"#dfdfdf","color":"#333","value":"2","colSpan":1,"rowSpan":1}
+                ],
+                "type":"data"
+            }, {
+                "cells": [
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 0","colSpan":2,"rowSpan":3},
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 1","colSpan":1,"rowSpan":2},
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 1_1","colSpan":1,"rowSpan":1},
+                    {"background":"#dfdfdf","color":"#333","value":"3","colSpan":1,"rowSpan":1}
+                ],
+                "type": "data"
+            }, {
+                "cells": [
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 1_2","colSpan":1,"rowSpan":1},
+                    {"background":"#dfdfdf","color":"#333","value":"4","colSpan":1,"rowSpan":1}
+                ],
+                "type": "data"
+            }, {
+                "cells": [
+                    {"background":"#7a7a7a","color":"#fff","value":"dim 1","colSpan":2,"rowSpan":1},
+                    {"background":"#dfdfdf","color":"#333","value":"1","colSpan":1,"rowSpan":1}
+                ],
+                "type":"data"
+            }
+        ]
+    });
+
+    var dom = $(worksheet.toXML());
+
+    var rows = dom.find("row");
+    var cells = rows.eq(3).find("c");
+
+    equal(cells.length, 5);
+    equal(cells.eq(0).attr("r"), "A4")
+    equal(cells.eq(0).find("v").length, 0);
+
+    equal(cells.eq(1).attr("r"), "B4")
+    equal(cells.eq(1).find("v").length, 0);
+
+    equal(cells.eq(2).attr("r"), "C4")
+    equal(cells.eq(2).find("v").length, 0);
+
+    equal(cells.eq(3).attr("r"), "D4")
+    equal(cells.eq(3).find("v").length, 1);
+
+    equal(cells.eq(4).attr("r"), "E4")
+    equal(cells.eq(4).find("v").length, 1);
+});
+
 }());

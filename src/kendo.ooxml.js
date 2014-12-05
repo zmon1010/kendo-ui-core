@@ -439,16 +439,23 @@ var Worksheet = kendo.Class.extend({
         style = this._lookupStyle(style);
 
         var cells = [];
-        var ci, cellRef;
+        var colSpanLength, cellRef;
 
         var columnInfo = columnsInfo[this._cellIndex] || {};
-        if (columnInfo.rowSpan > 1) {
+
+        while (columnInfo && columnInfo.rowSpan > 1) {
             columnInfo.rowSpan -= 1;
 
-            for (ci = 0; ci < columnInfo.colSpan; ci++) {
-                cells[ci] = { ref: ref(rowIndex, this._cellIndex) };
+            colSpanLength = columnInfo.colSpan;
+
+            while(colSpanLength > 0) {
+                cells.push({ ref: ref(rowIndex, this._cellIndex) });
+                colSpanLength--;
+
                 this._cellIndex++;
             }
+
+            columnInfo = columnsInfo[this._cellIndex] || {};
         }
 
         cellRef = ref(rowIndex, this._cellIndex);
@@ -470,7 +477,7 @@ var Worksheet = kendo.Class.extend({
                 };
             }
 
-            for (ci = 1; ci < colSpan; ci++) {
+            for (var ci = 1; ci < colSpan; ci++) {
                 this._cellIndex++;
                 cells.push({ ref: ref(rowIndex, this._cellIndex) });
             }
