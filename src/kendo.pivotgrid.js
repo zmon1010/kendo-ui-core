@@ -4178,8 +4178,23 @@ var __meta__ = {
             this.metadata = {};
         },
 
+        _rowLength: function() {
+            var children = this.rows[0].children;
+            var length = 0;
+            var idx = 0;
+
+            var cell = children[idx];
+
+            while(cell) {
+                length += (cell.attr.colSpan || 1);
+                cell = children[++idx];
+            }
+
+            return length;
+        },
+
         _colGroup: function() {
-            var length = this.rows[0].children.length;
+            var length = this._rowLength();
             var children = [];
             var idx = 0;
 
