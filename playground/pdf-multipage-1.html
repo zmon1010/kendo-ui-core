@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+
+    <script src="./pako.min.js"></script>
+
+    <script>
+      kendo.pdf.defineFont({
+        "Droid Serif"             : "./DroidFont/DroidSerif-Regular.ttf",
+        "Droid Serif|Bold"        : "./DroidFont/DroidSerif-Bold.ttf",
+        "Droid Serif|Bold|Italic" : "./DroidFont/DroidSerif-BoldItalic.ttf",
+        "Droid Serif|Italic"      : "./DroidFont/DroidSerif-Italic.ttf",
+
+        "Droid Sans"              : "./DroidFont/DroidSans.ttf",
+        "Droid Sans|Bold"         : "./DroidFont/DroidSans-Bold.ttf"
+      });
+    </script>
+
+    <style>
+      body {
+        font-family: "Droid Serif";
+      }
+    </style>
+  </head>
+  <body>
+
+    <script>
+      function multipagePDF(sel) {
+        var drawing = kendo.drawing;
+        var elements = $(sel).get();
+        var master = new drawing.Group({
+          pdf: {
+            multiPage: true,
+            margin: "0.5cm"
+          }
+        });
+        (function loop(i){
+          if (i == elements.length) {
+            drawing.pdf.saveAs(master, "kendo.pdf", "http://kendo.local:7569/");
+          } else {
+            drawing.drawDOM(elements[i]).then(function(group){
+              master.append(group);
+              loop(i + 1);
+            });
+          }
+        })(0);
+      }
+    </script>
+
+    <button onclick="multipagePDF('.page')">Get PDF</button>
+
+    <div class="page">
+      <h1>This is first page</h1>
+      <div data-role="flatcolorpicker"></div>
+    </div>
+
+    <div class="page">
+      <h1>This is second page</h1>
+      <div data-role="grid" style="width: 300px"
+           data-toolbar="[ 'pdf' ]"
+           data-bind="source: gridData"
+           data-columns="[ { field: 'text', title: 'Text' } ]"></div>
+    </div>
+
+    <script>
+      kendo.bind(document.body, {
+        gridData: [
+          { text: "Foo" },
+          { text: "Bar" },
+          { text: "Baz" }
+        ]
+      });
+    </script>
+
+  </body>
+</html>
