@@ -203,4 +203,33 @@
         equal(ths.eq(0).text(), "parentId");
         ok(ths.eq(0).find(".k-i-arrow-n")[0]);
     });
+
+    test("reorder with hidden column", function() {
+        createTreeList();
+
+        instance.hideColumn("parentId");
+        instance.reorderColumn(1, instance.columns[2]);
+        instance.showColumn("parentId");
+
+        var columns = instance.columns;
+        equal(columns[0].field, "id");
+        equal(columns[1].field, "text");
+        equal(columns[2].field, "parentId");
+
+        var headerCols = instance.header.prev().children();
+        equal(headerCols[0].style.width, "10px");
+        equal(headerCols[1].style.width, "30px");
+        equal(headerCols[2].style.width, "20px");
+
+        var ths = instance.header.find("tr").children();
+        equal(ths.length, 3);
+        equal(ths.eq(0).text(), "id");
+        equal(ths.eq(1).text(), "text");
+        equal(ths.eq(2).text(), "parentId");
+
+        var tds = instance.content.find("tr:first").children();
+        equal(tds.eq(0).text(), "1");
+        equal(tds.eq(1).text(), "foo");
+        equal(tds.eq(2).text(), "");
+    });
 })();

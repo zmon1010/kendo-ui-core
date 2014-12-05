@@ -2001,9 +2001,14 @@ var __meta__ = {
             columns.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
 
             this._renderCols();
+
             //reorder column header manually
             var ths = this.header.find("th");
             ths.eq(sourceIndex)[before ? "insertBefore" : "insertAfter"](ths.eq(destIndex));
+
+            var dom = this._headerTree.children[0].children;
+            dom.splice(before ? destIndex : destIndex + 1, 0, dom[sourceIndex]);
+            dom.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
 
             this._render();
         }
