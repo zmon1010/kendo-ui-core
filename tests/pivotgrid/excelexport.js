@@ -460,4 +460,85 @@ test("Exporter honours two level row headers when creating first empty cell", fu
     });
 });
 
+test("Exporter generate column header cells using member title", function() {
+    var columns = [
+        { members: [ { name: "dim 0", levelNum: "0", children: [] } ] }
+    ];
+
+    var data = [
+        { value: 1 }
+    ];
+
+    var pivotgrid = createPivot({
+        autoBind: false,
+        dataSource: createDataSource(columns, [], data),
+        columnHeaderTemplate: "<span>#:member.name#</span>"
+    });
+
+    var options = {
+        widget: pivotgrid
+    };
+
+    testWorkbook(options, function(book) {
+        var header_cell = book.sheets[0].rows[0].cells[1]
+
+        equal(header_cell.value, "dim 0");
+    });
+});
+
+test("Exporter generate row header cells using member title", function() {
+    var rows = [
+        { members: [ { name: "dim 0", levelNum: "0", children: [] } ] }
+    ];
+
+    var data = [
+        { value: 1 }
+    ];
+
+    var pivotgrid = createPivot({
+        autoBind: false,
+        dataSource: createDataSource([], rows, data),
+        rowHeaderTemplate: "<span>#:member.name#</span>"
+    });
+
+    var options = {
+        widget: pivotgrid
+    };
+
+    testWorkbook(options, function(book) {
+        var header_cell = book.sheets[0].rows[1].cells[0]
+
+        equal(header_cell.value, "dim 0");
+    });
+});
+
+test("Exporter generate cells using data item.value", function() {
+    var columns = [
+        { members: [ { name: "dim 0", levelNum: "0", children: [] } ] }
+    ];
+
+    var rows = [
+        { members: [ { name: "dim 0", levelNum: "0", children: [] } ] }
+    ];
+
+    var data = [
+        { value: 1, fmtValue: "$ 1" }
+    ];
+
+    var pivotgrid = createPivot({
+        autoBind: false,
+        dataSource: createDataSource(columns, rows, data)
+    });
+
+    var options = {
+        widget: pivotgrid
+    };
+
+    testWorkbook(options, function(book) {
+        var data_cell = book.sheets[0].rows[1].cells[1];
+
+        equal(data_cell.value, 1);
+    });
+});
+
 }());

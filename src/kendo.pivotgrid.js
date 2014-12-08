@@ -4031,7 +4031,7 @@ var __meta__ = {
 
             for (var idx = 0, length = measures.length; idx < length; idx++) {
                 measure = measures[idx];
-                row.children.push(element("th", { className: "k-header" + (className || "") }, [this._content(measure, tuple)]));
+                row.children.push(this._cell((className || ""), [this._content(measure, tuple)], measure));
             }
 
             return length;
@@ -4044,8 +4044,10 @@ var __meta__ = {
             }));
         },
 
-        _cell: function(className, children) {
-            return element("th", { className: "k-header" + className }, children);
+        _cell: function(className, children, member) {
+            var cell = element("th", { className: "k-header" + className }, children);
+            cell.value = member.caption || member.name;
+            return cell;
         },
 
         _buildRows: function(tuple, memberIdx, parentMember) {
@@ -4096,13 +4098,13 @@ var __meta__ = {
             }
 
             cellChildren.push(this._content(member, tuple));
-            cell = this._cell((row.notFirst ? " k-first" : ""), cellChildren);
+            cell = this._cell((row.notFirst ? " k-first" : ""), cellChildren, member);
 
             row.children.push(cell);
             row.colSpan += 1;
 
             if (childrenLength) {
-                allCell = this._cell(" k-alt", [this._content(member, tuple)]);
+                allCell = this._cell(" k-alt", [this._content(member, tuple)], member);
                 row.children.push(allCell);
 
                 for (; idx < childrenLength; idx++) {
@@ -4282,6 +4284,12 @@ var __meta__ = {
             }));
         },
 
+        _cell: function(className, children, member) {
+            var cell = element("td", { className: className }, children);
+            cell.value = member.caption || member.name;
+            return cell;
+        },
+
         _buildRows: function(tuple, memberIdx) {
             var map = this.map;
             var path;
@@ -4303,11 +4311,11 @@ var __meta__ = {
             var allRow;
 
             var metadata;
+            var className;
             var expandIconAttr;
             var cellChildren = [];
             var allCell;
             var cell;
-            var attr;
             var idx;
 
             if (!row || row.hasChild) {
@@ -4317,13 +4325,13 @@ var __meta__ = {
             }
 
             if (member.measure) {
-                attr = { className: row.allCell ? "k-grid-footer" : "" };
-                row.children.push(element("td", attr, [ this._content(children[0], tuple) ]));
+                className = row.allCell ? "k-grid-footer" : "";
+                row.children.push(this._cell(className, [ this._content(children[0], tuple) ], children[0]));
 
                 row.rowSpan = childrenLength;
 
                 for (idx = 1; idx < childrenLength; idx++) {
-                    this._row([ element("td", attr, [ this._content(children[idx], tuple) ]) ]);
+                    this._row([ this._cell(className, [ this._content(children[idx], tuple) ], children[idx]) ]);
                 }
 
                 return row;
@@ -4356,7 +4364,9 @@ var __meta__ = {
             }
 
             cellChildren.push(this._content(member, tuple));
-            cell = element("td", { className: row.allCell && !childrenLength ? "k-grid-footer" : "" }, cellChildren);
+
+            className = row.allCell && !childrenLength ? "k-grid-footer" : "";
+            cell = this._cell(className, cellChildren, member);
             cell.levelNum = levelNum;
 
             row.children.push(cell);
@@ -4384,7 +4394,7 @@ var __meta__ = {
 
                 metadata.children = row.rowSpan;
 
-                allCell = element("td", { className: "k-grid-footer" }, [this._content(member, tuple)]);
+                allCell = this._cell("k-grid-footer", [this._content(member, tuple)], member);
                 allCell.levelNum = levelNum;
 
                 allRow = this._row([ allCell ]);
@@ -4573,7 +4583,7 @@ var __meta__ = {
             var idx = 0;
 
             var templateInfo;
-            var cellContent;
+            var cell, cellContent;
             var attr, dataItem, measure;
 
             for (; idx < length; idx++) {
@@ -4607,7 +4617,9 @@ var __meta__ = {
                     cellContent = this.dataTemplate(templateInfo);
                 }
 
-                cells.push(element("td", attr, [ htmlNode(cellContent) ]));
+                cell = element("td", attr, [ htmlNode(cellContent) ]);
+                cell.value = dataItem.value;
+                cells.push(cell);
             }
 
             attr = {};
@@ -4669,7 +4681,7 @@ var __meta__ = {
             var contentRows = this.widget.contentTree.children[0].children[1].children;
 
             var columnRows = [];
-            //
+
             for (var i = 0; i < columnHeaderRows.length; i++ ) {
                 var row = [];
                 var cells = columnHeaderRows[i].children;
@@ -4680,7 +4692,7 @@ var __meta__ = {
                     row.push({
                         background: "#7a7a7a",
                         color: "#fff",
-                        value: cell.children[cell.children.length - 1].html,
+                        value: cell.value,
                         colSpan: cell.attr.colSpan || 1,
                         rowSpan: cell.attr.rowSpan || 1
                     });
@@ -4715,7 +4727,7 @@ var __meta__ = {
                     row.push({
                         background: "#7a7a7a",
                         color: "#fff",
-                        value: cell.children[cell.children.length - 1].html,
+                        value: cell.value,
                         colSpan: cell.attr.colSpan || 1,
                         rowSpan: cell.attr.rowSpan || 1
                     });
@@ -4725,11 +4737,16 @@ var __meta__ = {
 
                 for (var j = 0; j < columnHeaderLength; j++) {
                     var cell = cells[j];
+                    var value = Number(cell.value);
+
+                    if (isNaN(value)) {
+                        value = "";
+                    }
 
                     row.push({
                         background: "#dfdfdf",
                         color: "#333",
-                        value: cell.children[0].html,
+                        value: value,
                         colSpan: 1,
                         rowSpan: 1
                     });
