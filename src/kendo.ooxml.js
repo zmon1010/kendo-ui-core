@@ -309,19 +309,19 @@ var Worksheet = kendo.Class.extend({
     toXML: function() {
         var rows = this.options.rows || [];
         var filter = this.options.filter;
-        var columnsInfo = {};
+        var spans = {};
 
         this._maxCellIndex = 0;
 
         return WORKSHEET({
             freezePane: this.options.freezePane,
             columns: this.options.columns,
-            data: $.map(rows, $.proxy(this._row, this, rows, columnsInfo)),
+            data: $.map(rows, $.proxy(this._row, this, rows, spans)),
             mergeCells: this._mergeCells,
             filter: filter ? { from: ref(0, filter.from), to: ref(0, filter.to) } : null
         });
     },
-    _row: function(rows, columnsInfo, row, rowIndex) {
+    _row: function(rows, spans, row, rowIndex) {
         if (this._cellIndex && this._cellIndex > this._maxCellIndex) {
             this._maxCellIndex = this._cellIndex;
         }
@@ -333,7 +333,7 @@ var Worksheet = kendo.Class.extend({
         var cells = row.cells;
 
         for (var idx = 0, length = cells.length; idx < length; idx ++) {
-            cell = this._cell(cells[idx], columnsInfo, rowIndex);
+            cell = this._cell(cells[idx], spans, rowIndex);
 
             if (cell) {
                 data = data.concat(cell);
@@ -341,8 +341,9 @@ var Worksheet = kendo.Class.extend({
         }
 
         var columnInfo;
-        while(this._cellIndex < this._maxCellIndex) {
-            columnInfo = columnsInfo[this._cellIndex];
+
+        while (this._cellIndex < this._maxCellIndex) {
+            columnInfo = spans[this._cellIndex];
             if (columnInfo) {
                 columnInfo.rowSpan -= 1;
             }
@@ -386,7 +387,7 @@ var Worksheet = kendo.Class.extend({
         // There is one default style
         return index + 1;
     },
-    _cell: function(data, columnsInfo, rowIndex) {
+    _cell: function(data, spans, rowIndex) {
         if (!data) {
             this._cellIndex++;
             return;
@@ -441,9 +442,9 @@ var Worksheet = kendo.Class.extend({
         var cells = [];
         var colSpanLength, cellRef;
 
-        var columnInfo = columnsInfo[this._cellIndex] || {};
+        var columnInfo = spans[this._cellIndex] || {};
 
-        while (columnInfo && columnInfo.rowSpan > 1) {
+        while (columnInfo.rowSpan > 1) {
             columnInfo.rowSpan -= 1;
 
             colSpanLength = columnInfo.colSpan;
@@ -455,7 +456,7 @@ var Worksheet = kendo.Class.extend({
                 this._cellIndex++;
             }
 
-            columnInfo = columnsInfo[this._cellIndex] || {};
+            columnInfo = spans[this._cellIndex] || {};
         }
 
         cellRef = ref(rowIndex, this._cellIndex);
@@ -471,7 +472,7 @@ var Worksheet = kendo.Class.extend({
 
         if (colSpan > 1 || rowSpan > 1) {
             if (rowSpan > 1) {
-                columnsInfo[this._cellIndex] = {
+                spans[this._cellIndex] = {
                     colSpan: colSpan,
                     rowSpan: rowSpan
                 };
