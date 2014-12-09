@@ -72,6 +72,39 @@ function testWorkbook(options, callback) {
     exporter.workbook().then(callback);
 }
 
+test("Exporter does not fetch data source", function() {
+    var columns = [
+        { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },
+        { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] } ] },
+        { members: [ { name: "dim 0_2", parentName: "dim 0_1", levelNum: "2", children: [] } ] }
+    ];
+
+    var data = [
+        { value: 1 },
+        { value: 2 },
+        { value: 3 }
+    ];
+
+    var source = createDataSource(columns, [], data);
+
+    stub(source, {
+        fetch: source.fetch
+    });
+
+    var pivotgrid = createPivot({
+        dataSource: source
+    });
+
+    var options = {
+        widget: pivotgrid
+    };
+
+    testWorkbook(options, function(book) {
+        ok(true);
+        equal(source.calls("fetch"), 1);
+    });
+});
+
 test("Exporter creates columns array with correct length", function() {
     var columns = [
         { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },

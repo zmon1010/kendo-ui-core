@@ -4775,7 +4775,14 @@ var __meta__ = {
         },
 
         workbook: function() {
-            var promise = this.dataSource.fetch();
+            var promise;
+
+            if (this.dataSource.view()[0]) {
+                promise = $.Deferred();
+                promise.resolve();
+            } else {
+                promise = this.dataSource.fetch();
+            }
 
             return promise.then($.proxy(function() {
                 return {
