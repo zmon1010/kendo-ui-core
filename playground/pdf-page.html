@@ -3,6 +3,8 @@
   <head>
     <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
     <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <!-- <link rel="stylesheet" href="./DroidFont/fonts.css" /> -->
+    <link rel="stylesheet" href="./pdf-page.css" />
     <script src="html2canvas.min.js"></script>
     <script src="loader.js"></script>
     <script>
@@ -16,133 +18,19 @@
 
     <script src="./pako.min.js"></script>
 
-    <script>
-      kendo.pdf.defineFont({
-        "Droid Serif"             : "./DroidFont/DroidSerif-Regular.ttf",
-        "Droid Serif|Bold"        : "./DroidFont/DroidSerif-Bold.ttf",
-        "Droid Serif|Bold|Italic" : "./DroidFont/DroidSerif-BoldItalic.ttf",
-        "Droid Serif|Italic"      : "./DroidFont/DroidSerif-Italic.ttf",
+    <!-- <script> -->
+    <!--   kendo.pdf.defineFont({ -->
+    <!--     "Droid Serif"             : "./DroidFont/DroidSerif-Regular.ttf", -->
+    <!--     "Droid Serif|Bold"        : "./DroidFont/DroidSerif-Bold.ttf", -->
+    <!--     "Droid Serif|Bold|Italic" : "./DroidFont/DroidSerif-BoldItalic.ttf", -->
+    <!--     "Droid Serif|Italic"      : "./DroidFont/DroidSerif-Italic.ttf", -->
 
-        "Droid Sans"              : "./DroidFont/DroidSans.ttf",
-        "Droid Sans|Bold"         : "./DroidFont/DroidSans-Bold.ttf"
-      });
-    </script>
+    <!--     "Droid Sans"              : "./DroidFont/DroidSans.ttf", -->
+    <!--     "Droid Sans|Bold"         : "./DroidFont/DroidSans-Bold.ttf" -->
+    <!--   }); -->
+    <!-- </script> -->
 
     <style>
-      /* font declarations, to make sure the browser will use the same fonts
-         that we're going to embed in the PDF */
-
-      @font-face {
-        font-family: "Droid Serif";
-        src: url("./DroidFont/DroidSerif-Regular.ttf");
-      }
-      @font-face {
-        font-family: "Droid Serif";
-        font-weight: bold;
-        src: url("./DroidFont/DroidSerif-Bold.ttf");
-      }
-      @font-face {
-        font-family: "Droid Serif";
-        font-weight: bold;
-        font-style: italic;
-        src: url("./DroidFont/DroidSerif-BoldItalic.ttf");
-      }
-      @font-face {
-        font-family: "Droid Serif";
-        font-style: italic;
-        src: url("./DroidFont/DroidSerif-Italic.ttf");
-      }
-
-      @font-face {
-        font-family: "Droid Sans";
-        src: url("./DroidFont/DroidSans.ttf");
-      }
-      @font-face {
-        font-family: "Droid Sans";
-        font-weight: bold;
-        src: url("./DroidFont/DroidSans-Bold.ttf");
-      }
-
-      html, body {
-        background: #eee;
-        color: black;
-        margin: 0; padding: 0;
-        font-family: "Droid Serif";
-        font-size: 14px;
-      }
-
-      html {
-        margin: 1em;
-      }
-
-      .a4 { width: 595.28px; height: 841.89px; }
-      .letter { width: 612.00px; height: 792.00px; }
-      .executive { width: 521.86px; height: 756.00px; }
-
-      .pdf-page-container {
-        border: 1px solid #000;
-        box-shadow: 3px 3px 3px #888;
-        display: table;
-        margin: 1em auto;
-      }
-
-      .pdf-page {
-        position: relative;
-        font-size: 12px;
-        font-family: "Droid Serif";
-        background: white;
-        border: 1px solid white;
-        box-sizing: border-box;
-      }
-
-      .pdf-page .k-widget {
-        font-size: 12px;
-        font-family: "Droid Sans";
-      }
-
-      .pdf-page .pdf-header {
-        position: absolute;
-        top: 0; left: 36px; right: 36px; height: 12%;
-        border-bottom: 1px solid #999;
-      }
-      .pdf-page .pdf-footer {
-        position: absolute;
-        bottom: 0; left: 36px; right: 36px; height: 12%;
-        border-top: 1px solid #999;
-      }
-      .pdf-page .pdf-body {
-        position: absolute;
-        top: 12%; bottom: 12%; left: 72px; right: 72px;
-      }
-
-      .pdf-page .pdf-header .company-logo {
-        position: absolute;
-        font-size: 200%; font-style: italic;
-        bottom: 5px;
-      }
-      .pdf-page .pdf-body .title {
-        margin: 3em 0 2em 0;
-        font-size: 200%;
-        text-align: center;
-      }
-
-      .pdf-page .pdf-body .k-grid-header {
-        padding-right: 0 !important;
-      }
-      .pdf-page .pdf-body .k-grid-header th.k-header {
-        font-weight: bold;
-      }
-      .pdf-page .pdf-body .k-grid-content {
-        overflow: hidden !important;
-        overflow-x: hidden !important;
-        overflow-y: hidden !important;
-      }
-      .pdf-page .pdf-body .ending {
-        margin-top: 5em;
-      }
-      .pdf-page .pdf-body .ending .signature {
-        float: right;
-      }
     </style>
 
   </head>
