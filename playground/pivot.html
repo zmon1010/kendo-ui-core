@@ -4,6 +4,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <title>pivot columns</title>
         <script src="../src/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../src/jszip.js"></script>
         <script src="../src/kendo.core.js"></script>
         <script src="../src/kendo.fx.js"></script>
         <script src="../src/kendo.userevents.js"></script>
@@ -13,6 +14,7 @@
         <script src="../src/kendo.data.odata.js" type="text/javascript" charset="utf-8"></script>
         <script src="../src/kendo.data.xml.js" type="text/javascript" charset="utf-8"></script>
         <script src="../src/kendo.data.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../src/kendo.ooxml.js"></script>
         <script src="../src/kendo.pivotgrid.js" type="text/javascript" charset="utf-8"></script>
         <script src="../src/kendo.pivot.configurator.js" type="text/javascript" charset="utf-8"></script>
         <script src="../src/kendo.popup.js" type="text/javascript" charset="utf-8"></script>
@@ -42,9 +44,80 @@
     </head>
     <body>
         <div id="configurator"></div>
+        <button id="export">Export</button>
         <div id="pivotgrid"></div>
         <script>
             $(document).ready(function () {
+
+    var columns = [
+        { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },
+        { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] } ] }
+    ];
+
+    var rows = [
+        { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },
+        { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] } ] },
+        { members: [ { name: "dim 0_2", parentName: "dim 0_1", levelNum: "2", children: [] } ] }
+    ];
+
+    var data = [
+        { value: 1 }, { value: 2 }, { value: 3 },
+        { value: 1 }, { value: 2 }, { value: 3 }
+    ];
+
+    var pivotgrid = $("#pivotgrid").kendoPivotGrid({
+        autoBind: false,
+        dataSource: {
+            measures: [],
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success({
+                        axes: {
+                            columns: {
+                                tuples: columns
+                            },
+                            rows: {
+                                tuples: rows
+                            }
+                        },
+                        data: data
+                    });
+                }
+            }
+        }
+    });
+
+    $("#export").click(function() {
+        var workbook = new kendo.ooxml.Workbook({
+            sheets: [ {
+                rows: [
+                    {
+                        "cells":[
+                            {"value":"","colSpan":2,"rowSpan":2},
+                            {"value":"dim 0","colSpan":1,"rowSpan":1}
+                        ]
+                    }, {
+                        "cells":[
+                            {"value":"dim 0_1","colSpan":1,"rowSpan":1}
+                        ]
+                    }
+                ]
+            } ]
+        });
+
+        kendo.saveAs({
+            dataURI: workbook.toDataURL(),
+            fileName: "test"
+        });
+
+        //$("#pivotgrid").data("kendoPivotGrid").saveAsExcel();
+    });
+    return;
+
                 var pivot = $("#pivotgrid").kendoPivotGrid({
                     columnWidth: 120,
                     height: 570,

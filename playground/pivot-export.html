@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>pivot export</title>
+        <script src="../src/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../src/jszip.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../dist/js/kendo.all.min.js"></script>
+
+        <link href="../styles/web/kendo.common.less" rel="stylesheet/less" />
+        <link href="../styles/web/kendo.bootstrap.less" rel="stylesheet/less" />
+        <script src="../demos/mvc/content/shared/js/less.js"></script>
+    </head>
+    <body>
+        <button id="excel">Export (excel)</button>
+        <button id="pdf">Export (pdf)</button>
+        <div id="pivotgrid"></div>
+
+        <script>
+            $(function() {
+                var pivot = $("#pivotgrid").kendoPivotGrid({
+                    filterable: true,
+                    sortable: true,
+                    dataSource: {
+                        type: "xmla",
+                        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+                        rows: [ { name: "[Product].[Category]", expand: true } ],
+                        measures: [
+                            { name: "[Measures].[Internet Revenue Status]", type: "status" }, //KPI Status measure that will render kpiStatusTemplate
+                            { name: "[Measures].[Internet Revenue Trend]", type: "trend" } //KPI Trend measure that will render kpiTrendTemplate
+                        ],
+                        transport: {
+                            connection: {
+                               catalog: "Adventure Works DW 2008R2",
+                               cube: "Adventure Works"
+                            },
+                            read: {
+                                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                                dataType: "text",
+                                contentType: "text/xml",
+                                type: "POST"
+                            }
+                        },
+                        schema: {
+                            type: "xmla"
+                        },
+                        error: function(e) {
+                           alert("error: " + kendo.stringify(e.errors[0]));
+                        }
+                    }
+                }).data("kendoPivotGrid");
+
+                $("#excel").click(function() {
+                    pivot.saveAsExcel();
+                });
+
+                $("#pdf").click(function() {
+                    pivot.saveAsPDF();
+                });
+            });
+
+        </script>
+    </body>
+</html>

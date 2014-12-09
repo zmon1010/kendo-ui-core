@@ -2227,6 +2227,56 @@
         equal(cols.length, 1);
     });
 
+    test("PivotGrid renders colgroup when two dimensions are expanded", function() {
+        var columns = [
+            { members: [ { name: "dim 0", levelNum: "0", children: [] } ] },
+            { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] } ] }
+        ];
+
+        var rows = [
+            { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1", levelNum: "0", children: [] } ] },
+            { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] }, { name: "dim 1", levelNum: "0", children: [] } ] },
+            { members: [ { name: "dim 0_2", parentName: "dim 0", levelNum: "1", children: [] }, { name: "dim 1", levelNum: "0", children: [] } ] },
+            { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1_1", parentName: "dim 1", levelNum: "1", children: [] } ] },
+            { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1_2", parentName: "dim 1", levelNum: "1", children: [] } ] }
+        ];
+
+        var data = [
+            { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 },
+            { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }
+        ];
+
+        var pivotgrid = createPivot({
+            dataSource: new PivotDataSource({
+                schema: {
+                    axes: "axes",
+                    data: "data"
+                },
+                transport: {
+                    read: function(options) {
+                        options.success({
+                            axes: {
+                                columns: {
+                                    tuples: (columns || []).slice()
+                                },
+                                rows: {
+                                    tuples: (rows || []).slice()
+                                }
+                            },
+                            data: (data || []).slice()
+                        });
+                    }
+                }
+            })
+        });
+
+        var colGroup = pivotgrid.wrapper.find(".k-pivot-rowheaders").find("colgroup");
+
+        var cols = colGroup.find("col");
+
+        equal(cols.length, 4);
+    });
+
     test("PivotGrid use rowHeaderTemplate to render row header measure", function() {
         var tuples = [
             { members: [ { name: "measure 1", children: [] } ] }

@@ -18,7 +18,17 @@ var __meta__ = {
         name: "PivotGrid Filtering",
         description: "Support for filtering",
         depends: [ "pivot.fieldmenu" ]
-    } ]
+    }, {
+        id: "pivotgrid-excel-export",
+        name: "Excel export",
+        description: "Export pivot grid data as Excel spreadsheet",
+        depends: [ "ooxml" ]
+    }, {
+        id: "pivotgrid-pdf-export",
+        name: "PDF export",
+        description: "Export pivot grid data as PDF",
+        depends: [ "pdf", "drawing" ]
+    }]
 };
 
 /*jshint eqnull: true*/
@@ -4031,7 +4041,7 @@ var __meta__ = {
 
             for (var idx = 0, length = measures.length; idx < length; idx++) {
                 measure = measures[idx];
-                row.children.push(element("th", { className: "k-header" + (className || "") }, [this._content(measure, tuple)]));
+                row.children.push(this._cell((className || ""), [this._content(measure, tuple)], measure));
             }
 
             return length;
@@ -4044,8 +4054,10 @@ var __meta__ = {
             }));
         },
 
-        _cell: function(className, children) {
-            return element("th", { className: "k-header" + className }, children);
+        _cell: function(className, children, member) {
+            var cell = element("th", { className: "k-header" + className }, children);
+            cell.value = member.caption || member.name;
+            return cell;
         },
 
         _buildRows: function(tuple, memberIdx, parentMember) {
@@ -4096,13 +4108,13 @@ var __meta__ = {
             }
 
             cellChildren.push(this._content(member, tuple));
-            cell = this._cell((row.notFirst ? " k-first" : ""), cellChildren);
+            cell = this._cell((row.notFirst ? " k-first" : ""), cellChildren, member);
 
             row.children.push(cell);
             row.colSpan += 1;
 
             if (childrenLength) {
-                allCell = this._cell(" k-alt", [this._content(member, tuple)]);
+                allCell = this._cell(" k-alt", [this._content(member, tuple)], member);
                 row.children.push(allCell);
 
                 for (; idx < childrenLength; idx++) {
@@ -4178,8 +4190,23 @@ var __meta__ = {
             this.metadata = {};
         },
 
+        _rowLength: function() {
+            var children = this.rows[0].children;
+            var length = 0;
+            var idx = 0;
+
+            var cell = children[idx];
+
+            while(cell) {
+                length += (cell.attr.colSpan || 1);
+                cell = children[++idx];
+            }
+
+            return length;
+        },
+
         _colGroup: function() {
-            var length = this.rows[0].children.length;
+            var length = this._rowLength();
             var children = [];
             var idx = 0;
 
@@ -4267,6 +4294,12 @@ var __meta__ = {
             }));
         },
 
+        _cell: function(className, children, member) {
+            var cell = element("td", { className: className }, children);
+            cell.value = member.caption || member.name;
+            return cell;
+        },
+
         _buildRows: function(tuple, memberIdx) {
             var map = this.map;
             var path;
@@ -4288,11 +4321,11 @@ var __meta__ = {
             var allRow;
 
             var metadata;
+            var className;
             var expandIconAttr;
             var cellChildren = [];
             var allCell;
             var cell;
-            var attr;
             var idx;
 
             if (!row || row.hasChild) {
@@ -4302,13 +4335,13 @@ var __meta__ = {
             }
 
             if (member.measure) {
-                attr = { className: row.allCell ? "k-grid-footer" : "" };
-                row.children.push(element("td", attr, [ this._content(children[0], tuple) ]));
+                className = row.allCell ? "k-grid-footer" : "";
+                row.children.push(this._cell(className, [ this._content(children[0], tuple) ], children[0]));
 
                 row.rowSpan = childrenLength;
 
                 for (idx = 1; idx < childrenLength; idx++) {
-                    this._row([ element("td", attr, [ this._content(children[idx], tuple) ]) ]);
+                    this._row([ this._cell(className, [ this._content(children[idx], tuple) ], children[idx]) ]);
                 }
 
                 return row;
@@ -4341,7 +4374,9 @@ var __meta__ = {
             }
 
             cellChildren.push(this._content(member, tuple));
-            cell = element("td", { className: row.allCell && !childrenLength ? "k-grid-footer" : "" }, cellChildren);
+
+            className = row.allCell && !childrenLength ? "k-grid-footer" : "";
+            cell = this._cell(className, cellChildren, member);
             cell.levelNum = levelNum;
 
             row.children.push(cell);
@@ -4369,7 +4404,7 @@ var __meta__ = {
 
                 metadata.children = row.rowSpan;
 
-                allCell = element("td", { className: "k-grid-footer" }, [this._content(member, tuple)]);
+                allCell = this._cell("k-grid-footer", [this._content(member, tuple)], member);
                 allCell.levelNum = levelNum;
 
                 allRow = this._row([ allCell ]);
@@ -4558,7 +4593,7 @@ var __meta__ = {
             var idx = 0;
 
             var templateInfo;
-            var cellContent;
+            var cell, cellContent;
             var attr, dataItem, measure;
 
             for (; idx < length; idx++) {
@@ -4592,7 +4627,9 @@ var __meta__ = {
                     cellContent = this.dataTemplate(templateInfo);
                 }
 
-                cells.push(element("td", attr, [ htmlNode(cellContent) ]));
+                cell = element("td", attr, [ htmlNode(cellContent) ]);
+                cell.value = dataItem.value;
+                cells.push(cell);
             }
 
             attr = {};
@@ -4605,6 +4642,215 @@ var __meta__ = {
     });
 
     ui.plugin(PivotGrid);
+
+    kendo.PivotExcelExporter = kendo.Class.extend({
+        init: function(options) {
+            this.options = options;
+
+            this.widget = options.widget;
+            this.dataSource = this.widget.dataSource;
+        },
+
+        _columns: function() {
+            var columnHeaderTable = this.widget.columnsHeaderTree.children[0];
+            var rowHeaderTable = this.widget.rowsHeaderTree.children[0];
+
+            var columnHeaderLength = columnHeaderTable.children[0].children.length;
+            var rowHeaderLength = rowHeaderTable.children[0].children.length;
+
+            var width = this.widget.options.columnWidth;
+            var result = [];
+            var idx;
+
+            if (rowHeaderLength && this.dataSource.data()[0]) {
+                for (idx = 0; idx < rowHeaderLength; idx++) {
+                    result.push({
+                        autoWidth: true
+                    });
+                }
+            }
+
+            for (idx = 0; idx < columnHeaderLength; idx++) {
+                result.push({
+                    autoWidth: false,
+                    width: width
+                });
+            }
+
+            return result;
+        },
+
+        _cells: function(rows, type, callback) {
+            var result = [];
+
+            var i = 0;
+            var length = rows.length;
+
+            var cellsLength;
+            var row, cells;
+            var j, cell;
+
+            for (; i < length; i++) {
+                row = [];
+                cells = rows[i].children;
+                cellsLength = cells.length;
+
+                for (j = 0; j < cellsLength; j++) {
+                    cell = cells[j];
+
+                    row.push({
+                        background: "#7a7a7a",
+                        color: "#fff",
+                        value: cell.value,
+                        colSpan: cell.attr.colSpan || 1,
+                        rowSpan: cell.attr.rowSpan || 1
+                    });
+                }
+
+                if (callback) {
+                    callback(row, i);
+                }
+
+                result.push({
+                    cells: row,
+                    type: type
+                });
+            }
+
+            return result;
+        },
+
+        _rows: function() {
+            var columnHeaderTable = this.widget.columnsHeaderTree.children[0];
+            var rowHeaderTable = this.widget.rowsHeaderTree.children[0];
+
+            var columnHeaderLength = columnHeaderTable.children[0].children.length;
+            var rowHeaderLength = rowHeaderTable.children[0].children.length;
+
+            var columnHeaderRows = columnHeaderTable.children[1].children;
+            var rowHeaderRows = rowHeaderTable.children[1].children;
+            var contentRows = this.widget.contentTree.children[0].children[1].children;
+
+            var columnRows = this._cells(columnHeaderRows, "header");
+
+            if (rowHeaderLength) {
+                columnRows[0].cells.splice(0, 0, {
+                    background: "#7a7a7a",
+                    color: "#fff",
+                    value: "",
+                    colSpan: rowHeaderLength,
+                    rowSpan: columnHeaderRows.length
+                });
+            }
+
+            var dataCallback = function(row, index) {
+                var j = 0;
+                var cell, value;
+                var cells = contentRows[index].children;
+
+                for (; j < columnHeaderLength; j++) {
+                    cell = cells[j];
+                    value = Number(cell.value);
+
+                    if (isNaN(value)) {
+                        value = "";
+                    }
+
+                    row.push({
+                        background: "#dfdfdf",
+                        color: "#333",
+                        value: value,
+                        colSpan: 1,
+                        rowSpan: 1
+                    });
+                }
+            };
+
+            var rowRows = this._cells(rowHeaderRows, "data", dataCallback);
+
+            return columnRows.concat(rowRows);
+        },
+
+        _freezePane: function() {
+            var columnHeaderTable = this.widget.columnsHeaderTree.children[0];
+            var rowHeaderTable = this.widget.rowsHeaderTree.children[0];
+
+            var rowHeaderLength = rowHeaderTable.children[0].children.length;
+            var columnHeaderRows = columnHeaderTable.children[1].children;
+
+            return {
+                colSplit: rowHeaderLength,
+                rowSplit: columnHeaderRows.length
+            };
+        },
+
+        workbook: function() {
+            var promise;
+
+            if (this.dataSource.view()[0]) {
+                promise = $.Deferred();
+                promise.resolve();
+            } else {
+                promise = this.dataSource.fetch();
+            }
+
+            return promise.then($.proxy(function() {
+                return {
+                    sheets: [ {
+                       columns: this._columns(),
+                       rows: this._rows(),
+                       freezePane: this._freezePane(),
+                       filter: null
+                    } ]
+                };
+            }, this));
+        }
+    });
+
+    var PivotExcelMixin = {
+        extend: function(proto) {
+           proto.events.push("excelExport");
+           proto.options.excel = $.extend(proto.options.excel, this.options);
+           proto.saveAsExcel = this.saveAsExcel;
+        },
+        options: {
+            proxyURL: "",
+            allPages: false,
+            filterable: false,
+            fileName: "Export.xlsx"
+        },
+        saveAsExcel: function() {
+            var excel = this.options.excel || {};
+
+            var exporter = new kendo.PivotExcelExporter({
+                widget: this
+            });
+
+            exporter.workbook().then($.proxy(function(book) {
+                if (!this.trigger("excelExport", { workbook: book })) {
+                    var workbook = new kendo.ooxml.Workbook(book);
+
+                    kendo.saveAs({
+                        dataURI: workbook.toDataURL(),
+                        fileName: book.fileName || excel.fileName,
+                        proxyURL: excel.proxyURL,
+                        forceProxy: excel.forceProxy
+                    });
+                }
+            }, this));
+        }
+    };
+
+    kendo.PivotExcelMixin = PivotExcelMixin;
+
+    if (kendo.ooxml.Workbook) {
+        PivotExcelMixin.extend(PivotGrid.prototype);
+    }
+
+    if (kendo.PDFMixin) {
+        kendo.PDFMixin.extend(PivotGrid.prototype);
+    }
+
 })(window.kendo.jQuery);
 
 return window.kendo;
