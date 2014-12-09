@@ -4717,7 +4717,7 @@ var __meta__ = {
                 });
             }
 
-            return result
+            return result;
         },
 
         _rows: function() {
@@ -4764,7 +4764,7 @@ var __meta__ = {
                         rowSpan: 1
                     });
                 }
-            }
+            };
 
             var rowRows = this._cells(rowHeaderRows, "data", dataCallback);
 
