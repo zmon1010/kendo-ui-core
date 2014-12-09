@@ -11,6 +11,9 @@
       :type: kendo.dataviz.diagram.Shape.Hover
       :description: Defines the hover configuration.
 
+    - :name: source
+      :type: [String, Url]
+
     - :name: editable
       :type: Boolean
       :description: Specifies editable properties for shapes

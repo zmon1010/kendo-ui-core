@@ -39,7 +39,8 @@ module CodeGen
                 'Date' => 'null',
                 'Array' => 'null',
                 'stringArray' => 'null',
-                'ClientEvent' => '""'
+                'ClientEvent' => '""',
+                'Url' => '""'
             }
 
             CLASS_TEMPLATE = ERB.new(File.read('build/codegen/lib/aspx/class.template.erb'))
@@ -79,6 +80,9 @@ module CodeGen
                 AddScript(state, "<%= name %>", convertable.<%= csharp_name %>.Substring(11).TrimStart());
             else
                 AddProperty(state, "<%= name %>", convertable.<%= csharp_name %>, <%= csharp_default %>);')
+
+            CONVERTER_URL_TEMPLATE = ERB.new('
+            AddProperty(state, "<%= name %>", UrlHelpers.ToAbsolute(convertable.<%= csharp_name %>), <%= csharp_default %>);')
 
             CONVERTER_EVENT_TEMPLATE = ERB.new('
             AddScript(state, "<%= name %>", convertable.ClientEvents.<%= csharp_name %>);')
@@ -264,6 +268,7 @@ module CodeGen
                     return CONVERTER_ENUM_PROPERTY_TEMPLATE.result(get_binding) if values
                     return CONVERTER_SCRIPT_TEMPLATE.result(get_binding) if type.instance_of?([].class) && type.length == 1 && (type.include?("Function") || type.include?("ClientEvent"))
                     return CONVERTER_STRING_FUNCTION_TEMPLATE.result(get_binding) if type.include?('String') && type.include?('Function')
+                    return CONVERTER_URL_TEMPLATE.result(get_binding) if type.include?('String') && type.include?('Url')
                     return CONVERTER_PROPERTY_TEMPLATE.result(get_binding) if csharp_default
                 end
 
@@ -527,6 +532,10 @@ module CodeGen
                     return "Rad#{name.pascalize}" if widget?
 
                     "#{owner_namespace}#{name.pascalize}"
+                end
+
+                def css_class
+                    csharp_class
                 end
 
                 def csharp_converter_class
