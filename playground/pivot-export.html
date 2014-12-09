@@ -2,27 +2,10 @@
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <title>pivot columns</title>
+        <title>pivot export</title>
         <script src="../src/jquery.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../src/jszip.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.core.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.dom.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.data.odata.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.data.xml.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.data.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.ooxml.js"></script>
-        <script src="../src/kendo.pivotgrid.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.popup.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.list.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.dropdownlist.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.userevents.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.draganddrop.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.menu.js"></script>
-        <script src="../src/kendo.window.js"></script>
-        <script src="../src/kendo.sortable.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.treeview.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.pivot.configurator.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../src/kendo.pivot.fieldmenu.js"></script>
+        <script src="../dist/js/kendo.all.min.js"></script>
 
         <link href="../styles/web/kendo.common.less" rel="stylesheet/less" />
         <link href="../styles/web/kendo.bootstrap.less" rel="stylesheet/less" />
@@ -30,6 +13,7 @@
     </head>
     <body>
         <button id="excel">Export (excel)</button>
+        <button id="pdf">Export (pdf)</button>
         <div id="pivotgrid"></div>
 
         <script>
@@ -68,6 +52,10 @@
 
                 $("#excel").click(function() {
                     pivot.saveAsExcel();
+                });
+
+                $("#pdf").click(function() {
+                    pivot.saveAsPDF();
                 });
             });
 

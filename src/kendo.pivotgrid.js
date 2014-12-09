@@ -18,7 +18,17 @@ var __meta__ = {
         name: "PivotGrid Filtering",
         description: "Support for filtering",
         depends: [ "pivot.fieldmenu" ]
-    } ]
+    }, {
+        id: "pivotgrid-excel-export",
+        name: "Excel export",
+        description: "Export pivot grid data as Excel spreadsheet",
+        depends: [ "ooxml" ]
+    }, {
+        id: "pivotgrid-pdf-export",
+        name: "PDF export",
+        description: "Export pivot grid data as PDF",
+        depends: [ "pdf", "drawing" ]
+    }]
 };
 
 /*jshint eqnull: true*/
@@ -4835,6 +4845,10 @@ var __meta__ = {
 
     if (kendo.ooxml.Workbook) {
         PivotExcelMixin.extend(PivotGrid.prototype);
+    }
+
+    if (kendo.PDFMixin) {
+        kendo.PDFMixin.extend(PivotGrid.prototype);
     }
 
 })(window.kendo.jQuery);
