@@ -4669,6 +4669,47 @@ var __meta__ = {
 
             return result;
         },
+
+        _cells: function(rows, type, callback) {
+            var result = [];
+
+            var i = 0;
+            var length = rows.length;
+
+            var cellsLength;
+            var row, cells;
+            var j, cell;
+
+            for (; i < length; i++) {
+                row = [];
+                cells = rows[i].children;
+                cellsLength = cells.length;
+
+                for (j = 0; j < cellsLength; j++) {
+                    cell = cells[j];
+
+                    row.push({
+                        background: "#7a7a7a",
+                        color: "#fff",
+                        value: cell.value,
+                        colSpan: cell.attr.colSpan || 1,
+                        rowSpan: cell.attr.rowSpan || 1
+                    });
+                }
+
+                if (callback) {
+                    callback(row, i);
+                }
+
+                result.push({
+                    cells: row,
+                    type: type
+                });
+            }
+
+            return result
+        },
+
         _rows: function() {
             var columnHeaderTable = this.widget.columnsHeaderTree.children[0];
             var rowHeaderTable = this.widget.rowsHeaderTree.children[0];
@@ -4680,29 +4721,7 @@ var __meta__ = {
             var rowHeaderRows = rowHeaderTable.children[1].children;
             var contentRows = this.widget.contentTree.children[0].children[1].children;
 
-            var columnRows = [];
-
-            for (var i = 0; i < columnHeaderRows.length; i++ ) {
-                var row = [];
-                var cells = columnHeaderRows[i].children;
-
-                for (var j = 0; j < cells.length; j++) {
-                    var cell = cells[j];
-
-                    row.push({
-                        background: "#7a7a7a",
-                        color: "#fff",
-                        value: cell.value,
-                        colSpan: cell.attr.colSpan || 1,
-                        rowSpan: cell.attr.rowSpan || 1
-                    });
-                }
-
-                columnRows.push({
-                    cells: row,
-                    type: "header"
-                });
-            }
+            var columnRows = this._cells(columnHeaderRows, "header");
 
             if (rowHeaderLength) {
                 columnRows[0].cells.splice(0, 0, {
@@ -4714,30 +4733,14 @@ var __meta__ = {
                 });
             }
 
-            var rowRows = [];
+            var dataCallback = function(row, index) {
+                var j = 0;
+                var cell, value;
+                var cells = contentRows[index].children;
 
-            for (var i = 0; i < rowHeaderRows.length; i++) {
-                var row = [];
-                var cells = rowHeaderRows[i].children;
-
-
-                for (var j = 0; j < cells.length; j++) {
-                    var cell = cells[j];
-
-                    row.push({
-                        background: "#7a7a7a",
-                        color: "#fff",
-                        value: cell.value,
-                        colSpan: cell.attr.colSpan || 1,
-                        rowSpan: cell.attr.rowSpan || 1
-                    });
-                }
-
-                cells = contentRows[i].children;
-
-                for (var j = 0; j < columnHeaderLength; j++) {
-                    var cell = cells[j];
-                    var value = Number(cell.value);
+                for (; j < columnHeaderLength; j++) {
+                    cell = cells[j];
+                    value = Number(cell.value);
 
                     if (isNaN(value)) {
                         value = "";
@@ -4751,13 +4754,9 @@ var __meta__ = {
                         rowSpan: 1
                     });
                 }
-
-                //TODO: find out how to define header for cell
-                rowRows.push({
-                    cells: row,
-                    type: "data"
-                });
             }
+
+            var rowRows = this._cells(rowHeaderRows, "data", dataCallback);
 
             return columnRows.concat(rowRows);
         },
@@ -4774,20 +4773,16 @@ var __meta__ = {
                 rowSplit: columnHeaderRows.length
             };
         },
+
         workbook: function() {
             var promise = this.dataSource.fetch();
 
             return promise.then($.proxy(function() {
-                var columns = this._columns();
-                var rows = this._rows();
-
-                var freezePane = this._freezePane();
-
                 return {
                     sheets: [ {
-                       columns: columns,
-                       rows: rows,
-                       freezePane: freezePane,
+                       columns: this._columns(),
+                       rows: this._rows(),
+                       freezePane: this._freezePane(),
                        filter: null
                     } ]
                 };
@@ -4831,7 +4826,9 @@ var __meta__ = {
 
     kendo.PivotExcelMixin = PivotExcelMixin;
 
-    PivotExcelMixin.extend(PivotGrid.prototype);
+    if (kendo.ooxml.Workbook) {
+        PivotExcelMixin.extend(PivotGrid.prototype);
+    }
 
 })(window.kendo.jQuery);
 
