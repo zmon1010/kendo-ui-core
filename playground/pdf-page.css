@@ -1,10 +1,10 @@
-@import url("./DroidFont/fonts.css");
+/* @import url("./DroidFont/fonts.css"); */
 
 html, body {
   background: #eee;
   color: black;
   margin: 0; padding: 0;
-  font-family: "Droid Serif";
+  /* font-family: "Droid Serif"; */
   font-size: 14px;
 }
 
@@ -26,7 +26,7 @@ html {
 .pdf-page {
   position: relative;
   font-size: 12px;
-  font-family: "Droid Serif";
+  /* font-family: "Droid Serif"; */
   background: white;
   border: 1px solid white;
   box-sizing: border-box;
@@ -34,7 +34,7 @@ html {
 
 .pdf-page .k-widget {
   font-size: 12px;
-  font-family: "Droid Sans";
+  /* font-family: "Droid Sans"; */
 }
 
 .pdf-page .pdf-header {
