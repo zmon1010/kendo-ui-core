@@ -8,14 +8,14 @@ var __meta__ = {
     category: "web",
     description: "The PivotGrid widget is a data summarization tool.",
     depends: [ "dom", "data", "data.xml", "sortable" ],
-    features: [ {
-        id: "mobile-scroller",
-        name: "Mobile scroller",
-        description: "Support for kinetic scrolling in mobile device",
-        depends: [ "mobile.scroller" ]
+    features: [{
+        id: "pivotgrid-configurator",
+        name: "Configurator",
+        description: "The PivotConfigurator widget allows the user to select data slices displayed in PivotGrid",
+        depends: [ "pivot.configurator" ]
     }, {
         id: "pivotgrid-filtering",
-        name: "PivotGrid Filtering",
+        name: "Filtering",
         description: "Support for filtering",
         depends: [ "pivot.fieldmenu" ]
     }, {
@@ -28,6 +28,11 @@ var __meta__ = {
         name: "PDF export",
         description: "Export pivot grid data as PDF",
         depends: [ "pdf", "drawing" ]
+    }, {
+        id: "mobile-scroller",
+        name: "Mobile scroller",
+        description: "Support for kinetic scrolling in mobile device",
+        depends: [ "mobile.scroller" ]
     }]
 };
 
