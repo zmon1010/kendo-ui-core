@@ -208,4 +208,54 @@
             }, 100);
         });
     })();
+
+    (function() {
+        var anim,
+            visual,
+            clip,
+            box;
+
+        function createAnim() {
+            box = Box2D(10, 20, 100, 200);
+            visual = new draw.Group({});
+            anim = draw.Animation.create(visual, {
+                type: "clip",
+                box: box.clone(),
+                duration: 50
+            });
+        }
+
+        // ------------------------------------------------------------
+        module("PieAnimation", {
+            setup: function() {
+                createAnim();
+            }
+        });
+
+        test("setup clips element with zero width path", function() {
+            anim.setup();
+            box.x2 = box.x1;
+            sameLinePath(visual.clip(), draw.Path.fromRect(box.toRect()));
+        });
+
+        test("step expands clip path based on progress", function() {
+            anim.setup();
+            anim.step(0.5);
+            box.x2 = box.x1 + (box.x2 - box.x1) * 0.5;
+            sameLinePath(visual.clip(), draw.Path.fromRect(box.toRect()));
+        });
+
+        asyncTest("cleans up clip", function() {
+            anim.setup();
+            anim.play();
+
+            setTimeout(function() {
+                equal(visual.clip(), null);
+
+                start();
+            }, 100);
+        });
+
+    })();
+
 })();

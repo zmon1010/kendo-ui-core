@@ -5206,6 +5206,33 @@ var __meta__ = {
     });
     deepExtend(LineChart.fn, LineChartMixin);
 
+    var ClipAnimation = draw.Animation.extend({
+        options: {
+            duration: INITIAL_ANIMATION_DURATION
+        },
+
+        setup: function() {
+            var element = this.element;
+            var box = this.options.box.clone();
+            box.x2 = box.x1;
+            this.path = draw.Path.fromRect(box.toRect());
+
+            element.clip(this.path);
+        },
+
+        step: function(pos) {
+            var box = this.options.box.clone();
+            box.x2 = interpolate(box.x1, box.x2, pos);
+            this.path.segments.elements(draw.Path.fromRect(box.toRect()).segments.elements());
+        },
+
+        abort: function() {
+            draw.Animation.fn.abort.call(this);
+            this.element.clip(null);
+        }
+    });
+    draw.AnimationFactory.current.register(CLIP, ClipAnimation);
+
     var StepLineSegment = LineSegment.extend({
         points: function(visualPoints) {
             var segment = this,
@@ -11984,6 +12011,7 @@ var __meta__ = {
         CategoricalPlotArea: CategoricalPlotArea,
         CategoryAxis: CategoryAxis,
         ChartContainer: ChartContainer,
+        ClipAnimation: ClipAnimation,
         ClusterLayout: ClusterLayout,
         Crosshair: Crosshair,
         CrosshairTooltip: CrosshairTooltip,
