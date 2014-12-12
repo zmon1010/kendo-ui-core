@@ -49,7 +49,7 @@ namespace :generate do
                 'docs/api/javascript/dataviz/ui/diagram.md',
                 'docs/api/javascript/dataviz/diagram/connection.md',
                 'docs/api/javascript/dataviz/diagram/shape.md',
-                'docs/api/javascript/dataviz/map.md'
+                'docs/api/javascript/dataviz/ui/map.md'
             ]
 
 

@@ -143,6 +143,30 @@
     - :name: shapes.content
       :type: kendo.dataviz.diagram.Shape.Content
 
+    - :name: 
+      :type: kendo.dataviz.diagram.Shape.Stroke
+      :description: Defines the stroke configuration.
+
+    - :name: pannable.key
+      :type: kendo.dataviz.diagram.Modifier.Key
+      :description: Defines the pannable modifier key.
+      :default: ModifierKey.Ctrl
+      :values:
+          - none - No activation key
+          - ctrl - The activation key will be "ctrl"
+          - shift - The activation key will be "shift"
+          - alt - The activation key will be "alt"
+
+    - :name: selectable.key
+      :type: kendo.dataviz.diagram.Modifier.Key
+      :description: Defines the selectable modifier key.
+      :default: ModifierKey.None
+      :values:
+          - none - No activation key
+          - ctrl - The activation key will be "ctrl"
+          - shift - The activation key will be "shift"
+          - alt - The activation key will be "alt"
+
     - :name: layout.enabled
       :type: Boolean
       :default: false
