@@ -10,6 +10,7 @@ module CodeGen
 
             OPTIONS_TO_SKIP = %w{
                 dataSource
+                connectionsDataSource
                 autoBind
                 layers.dataSource
                 layers.autoBind
@@ -158,7 +159,6 @@ module CodeGen
                     if !settings[:type].nil? && settings[:type].include?('kendo.')
 
                         name = settings[:name].strip
-
                         prefix = settings[:prefix]
 
                         name = name.sub(prefix, '') if prefix
@@ -202,7 +202,6 @@ module CodeGen
                             end
 
                         else
-
                             @options.delete_if { |o| o.name == name } if remove_existing
 
                             @options.push composite_option_class.new(:name => name,
