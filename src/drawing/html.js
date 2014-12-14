@@ -59,6 +59,7 @@
     };
 
     var nodeInfo = {};
+    nodeInfo._root = nodeInfo;
 
     var parseGradient = (function(){
         var tok_linear_gradient  = /^((-webkit-|-moz-|-o-|-ms-)?linear-gradient\s*)\(/;
@@ -176,6 +177,57 @@
     // only function definitions after this line.
     return;
 
+    function hasOwnProperty(obj, key) {
+        return Object.prototype.hasOwnProperty.call(obj, key);
+    }
+
+    function getCounter(name) {
+        name = "_counter_" + name;
+        return nodeInfo[name];
+    }
+
+    function getAllCounters(name) {
+        var values = [], p = nodeInfo;
+        name = "_counter_" + name;
+        while (p) {
+            if (hasOwnProperty(p, name)) {
+                values.push(p[name]);
+            }
+            p = Object.getPrototypeOf(p);
+        }
+        return values.reverse();
+    }
+
+    function incCounter(name, inc) {
+        var p = nodeInfo;
+        name = "_counter_" + name;
+        while (p && !hasOwnProperty(p, name)) {
+            p = Object.getPrototypeOf(p);
+        }
+        if (!p) {
+            p = nodeInfo._root;
+        }
+        p[name] = (p[name] || 0) + (inc == null ? 1 : inc);
+    }
+
+    function resetCounter(name, val) {
+        name = "_counter_" + name;
+        nodeInfo[name] = val == null ? 0 : val;
+    }
+
+    function doCounters(a, f, def) {
+        for (var i = 0; i < a.length;) {
+            var name = a[i++];
+            var val = parseFloat(a[i]);
+            if (isNaN(val)) {
+                f(name, def);
+            } else {
+                f(name, val);
+                ++i;
+            }
+        }
+    }
+
     function splitProperty(input, separator) {
         var ret = [];
         var last = 0, pos = 0;
@@ -196,14 +248,11 @@
         }
 
         while (pos < input.length) {
-            if (looking_at(/^\s+/)) {
-                pos += m[0].length;
-            }
-            else if (looking_at(/^[\(\[\{]/)) {
+            if (!in_string && looking_at(/^[\(\[\{]/)) {
                 in_paren++;
                 pos++;
             }
-            else if (looking_at(/^[\)\]\}]/)) {
+            else if (!in_string && looking_at(/^[\)\]\}]/)) {
                 in_paren--;
                 pos++;
             }
@@ -630,24 +679,61 @@
         return path.close();
     }
 
+    function formatCounter(val, style) {
+        var str = parseFloat(val) + "";
+        switch (style) {
+          case "decimal-leading-zero":
+            if (str.length < 2) {
+                str = "0" + str;
+            }
+            return str;
+          case "lower-roman":
+            return romanNumeral(val);
+          case "upper-roman":
+            return romanNumeral(val).toUpperCase();
+          case "lower-latin":
+          case "lower-alpha":
+            return alphaNumeral(val - 1);
+          case "upper-latin":
+          case "upper-alpha":
+            return alphaNumeral(val - 1).toUpperCase();
+          default:
+            return str;
+        }
+    }
+
     function evalPseudoElementContent(element, content) {
+        function displayCounter(name, style, separator) {
+            if (!separator) {
+                return formatCounter(getCounter(name) || 0, style);
+            }
+            separator = separator.replace(/^\s*(["'])(.*)\1\s*$/, "$2");
+            return getAllCounters(name).map(function(val){
+                return formatCounter(val, style);
+            }).join(separator);
+        }
         if (/^(none|normal)$/i.test(content)) {
             return null;
         }
-        var a = splitProperty(content, /\s+/);
+        var a = splitProperty(content, /^\s+/);
         var result = [], m;
         a.forEach(function(el){
+            var tmp;
             if ((m = /^\s*(["'])(.*)\1\s*$/.exec(el))) {
-                var txt = m[2].replace(/\\([0-9a-f]{4})/gi, function(s, p){
+                result.push(m[2].replace(/\\([0-9a-f]{4})/gi, function(s, p){
                     return String.fromCharCode(parseInt(p, 16));
-                });
-                result.push(m[2]);
+                }));
             }
             else if ((m = /^\s*counter\((.*?)\)\s*$/.exec(el))) {
-                // XXX: counters
+                tmp = splitProperty(m[1]);
+                result.push(displayCounter(tmp[0], tmp[1]));
+            }
+            else if ((m = /^\s*counters\((.*?)\)\s*$/.exec(el))) {
+                tmp = splitProperty(m[1]);
+                result.push(displayCounter(tmp[0], tmp[2], tmp[1]));
             }
             else if ((m = /^\s*attr\((.*?)\)\s*$/.exec(el))) {
-                // XXX: attributes
+                result.push(element.getAttribute(m[1]) || "");
             }
             else {
                 result.push(el);
@@ -671,6 +757,7 @@
     }
 
     function _renderWithPseudoElements(element, group) {
+        var fake = [];
         function pseudo(kind, place) {
             var style = getComputedStyle(element, kind);
             var content = evalPseudoElementContent(element, style.content);
@@ -684,13 +771,13 @@
                     // created it as a real node and it'll overlap the host element position.
                     psel.style.marginLeft = parseFloat(getPropertyValue(psel.style, "margin-left")) - psel.offsetWidth + "px";
                 }
-                renderElement(psel, group);
-                element.removeChild(psel);
+                fake.push(psel);
             }
         }
         pseudo(":before", element.firstChild);
         _renderElement(element, group);
         pseudo(":after", null);
+        fake.forEach(function(el){ element.removeChild(el); });
     }
 
     function _renderElement(element, group) {
@@ -1763,6 +1850,18 @@
     }
 
     function renderElement(element, container) {
+        var style = getComputedStyle(element);
+
+        var counterReset = getPropertyValue(style, "counter-reset");
+        if (counterReset) {
+            doCounters(splitProperty(counterReset, /^\s+/), resetCounter, 0);
+        }
+
+        var counterIncrement = getPropertyValue(style, "counter-increment");
+        if (counterIncrement) {
+            doCounters(splitProperty(counterIncrement, /^\s+/), incCounter, 1);
+        }
+
         if (/^(style|script|link|meta|iframe|svg)$/i.test(element.tagName)) {
             return;
         }
@@ -1771,7 +1870,6 @@
             return;
         }
 
-        var style = getComputedStyle(element);
         var opacity = parseFloat(getPropertyValue(style, "opacity"));
         var visibility = getPropertyValue(style, "visibility");
         var display = getPropertyValue(style, "display");
