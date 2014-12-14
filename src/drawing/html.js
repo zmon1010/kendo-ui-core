@@ -176,12 +176,16 @@
     // only function definitions after this line.
     return;
 
-    function splitOnComma(input) {
+    function splitProperty(input, separator) {
         var ret = [];
         var last = 0, pos = 0;
         var in_paren = 0;
         var in_string = false;
         var m;
+
+        if (!separator) {
+            separator = /^\s*,\s*/;
+        }
 
         function looking_at(rx) {
             return (m = rx.exec(input.substr(pos)));
@@ -221,7 +225,7 @@
                 in_string = false;
                 pos++;
             }
-            else if (looking_at(/^\s*,\s*/)) {
+            else if (looking_at(separator)) {
                 if (!in_string && !in_paren && pos > last) {
                     ret.push(trim(input.substring(last, pos)));
                     last = pos + m[0].length;
@@ -630,11 +634,26 @@
         if (/^(none|normal)$/i.test(content)) {
             return null;
         }
-        // XXX: this is incomplete.  We need to parse the content and
-        // evaluate it against the current context.  It can be a
-        // space-concatenated string containing expressions like
-        // attr(title), counter(foo) or "strings".
-        return content;
+        var a = splitProperty(content, /\s+/);
+        var result = [], m;
+        a.forEach(function(el){
+            if ((m = /^\s*(["'])(.*)\1\s*$/.exec(el))) {
+                var txt = m[2].replace(/\\([0-9a-f]{4})/gi, function(s, p){
+                    return String.fromCharCode(parseInt(p, 16));
+                });
+                result.push(m[2]);
+            }
+            else if ((m = /^\s*counter\((.*?)\)\s*$/.exec(el))) {
+                // XXX: counters
+            }
+            else if ((m = /^\s*attr\((.*?)\)\s*$/.exec(el))) {
+                // XXX: attributes
+            }
+            else {
+                result.push(el);
+            }
+        });
+        return result.join("");
     }
 
     function getCssText(style) {
@@ -658,8 +677,13 @@
             if (content) {
                 var psel = document.createElement("kendo-pseudo-element");
                 psel.style.cssText = getCssText(style);
-                //psel.textContent = content;
+                psel.textContent = content;
                 element.insertBefore(psel, place);
+                if (kind == ":before" && !(/absolute|fixed/.test(getPropertyValue(psel.style, "position")))) {
+                    // we need to shift the "pseudo element" to the left by its width, because we
+                    // created it as a real node and it'll overlap the host element position.
+                    psel.style.marginLeft = parseFloat(getPropertyValue(psel.style, "margin-left")) - psel.offsetWidth + "px";
+                }
                 renderElement(psel, group);
                 element.removeChild(psel);
             }
@@ -687,18 +711,18 @@
         var backgroundColor = getPropertyValue(style, "background-color");
         backgroundColor = parseColor(backgroundColor);
 
-        var backgroundImage = splitOnComma( getPropertyValue(style, "background-image") );
-        var backgroundRepeat = splitOnComma( getPropertyValue(style, "background-repeat") );
-        var backgroundPosition = splitOnComma( getPropertyValue(style, "background-position") );
-        var backgroundOrigin = splitOnComma( getPropertyValue(style, "background-origin") );
-        var backgroundSize = splitOnComma( getPropertyValue(style, "background-size") );
+        var backgroundImage = splitProperty( getPropertyValue(style, "background-image") );
+        var backgroundRepeat = splitProperty( getPropertyValue(style, "background-repeat") );
+        var backgroundPosition = splitProperty( getPropertyValue(style, "background-position") );
+        var backgroundOrigin = splitProperty( getPropertyValue(style, "background-origin") );
+        var backgroundSize = splitProperty( getPropertyValue(style, "background-size") );
 
         if (browser.msie && browser.version < 10) {
             // IE9 hacks.  getPropertyValue won't return the correct
             // value.  Sucks that we have to do it here, I'd prefer to
             // move it in getPropertyValue, but we don't have the
             // element.
-            backgroundPosition = splitOnComma(element.currentStyle.backgroundPosition);
+            backgroundPosition = splitProperty(element.currentStyle.backgroundPosition);
         }
 
         var innerbox = innerBox(element.getBoundingClientRect(), "border-*-width", element);
