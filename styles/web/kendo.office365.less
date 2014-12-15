@@ -4,11 +4,11 @@
 @fallback-texture: none;
 
 /* Widget Base Styles */
-@widget-text-color: #444444;
+@widget-text-color: #333333;
 @inverse-text-color: #fff;
 @widget-gradient: none;
 @widget-background-color: #fff;
-@widget-border-color: #e5e5e5;
+@widget-border-color: #c8c8c8;
 @widget-shadow: none;
 
 /* Inputs */
@@ -16,7 +16,7 @@
 @input-text-color: @widget-text-color;
 
 /* Links */
-@link-text-color: #428bca;
+@link-text-color: #0072c6;
 
 /* Headers */
 @header-text-color: #333333;
@@ -24,11 +24,11 @@
 
 /* Buttons */
 @button-text-color: @widget-text-color;
-@button-background-color: #f9f9f9;
+@button-background-color: #f4f4f4;
 
 /* Group Base Styles */
-@group-background-color: #3f51b5;
-@group-border-color: rgba(0, 0, 0, 0.2);
+@group-background-color: #fff;
+@group-border-color: @widget-border-color;
 
 /* Content */
 @content-background-color: @widget-background-color;
@@ -37,36 +37,36 @@
 /* Widget States */
 
 /* Hover State */
-@hover-text-color: @widget-text-color;
+@hover-text-color: #000;
 @hover-gradient: none;
-@hover-background-color: #ebebeb;
-@hover-border-color: #ebebeb;
-@hover-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+@hover-background-color: #f4f4f4;
+@hover-border-color: #8f8f8f;
+@hover-shadow: none;
 
 /* Selects, Dropdowns */
-@select-background-color: #fff;
-@select-border-color: @hover-border-color;
-@select-hover-background-color: #fff;
-@select-group-background-color: #ffffff;
+@select-background-color: #0072c6;
+@select-border-color: @select-background-color;
+@select-hover-background-color: @hover-background-color;
+@select-group-background-color: @hover-background-color;
 
 /* Selected State */
-@selected-text-color: #3f51b5;
+@selected-text-color: @widget-text-color;
 @selected-gradient: none;
-@selected-background-color: #fff;
-@selected-border-color: #fff;
-@selected-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+@selected-background-color: #0072c6;
+@selected-border-color: #0072c6;
+@selected-shadow: none;
 
 /*Focused State*/
-@focused-border-color: #67afe9;
-@focused-shadow: 0 2px 6px rgba(0,0,0,.2), 0 2px 3px rgba(0,0,0,.05);
-@focused-item-shadow: 0 6px 17px 0 rgba(0, 0, 0, 0.3);
+@focused-border-color: #0072c6;
+@focused-shadow: none;
+@focused-item-shadow: none;
 @focused-active-item-shadow: none;
 
 /* Active State */
 @active-text-color: @widget-text-color;
 @active-gradient:  none;
 @active-background-color: #ffffff;
-@active-border-color: #cccccc;
+@active-border-color: #0072c6;
 @active-shadow: none;
 
 /* Error State */
@@ -75,7 +75,7 @@
 @error-border-color: #eed3d7;
 
 /* Disabled State */
-@disabled-text-color: #999999;
+@disabled-text-color: #a6a6a6;
 
 /* Notification */
 @notification-info-background-color: #bbdefb;
@@ -92,9 +92,9 @@
 @notification-error-border-color: #ffcdd2;
 
 /* ToolTip */
-@tooltip-text-color: #fff;
-@tooltip-background-color: rgba(100,100,100,.9);
-@tooltip-border-color: rgba(100,100,100,.9);
+@tooltip-text-color: @widget-text-color;
+@tooltip-background-color: @widget-background-color;
+@tooltip-border-color: @widget-border-color;
 
 /* Validation Message */
 @validation-text-color: #f2953f;
@@ -105,18 +105,18 @@
 @splitbar-background-color: @button-background-color;
 
 /* Slider */
-@draghandle-border-radius: 13px;
-@draghandle-border-color: #3f51b5;
-@draghandle-background-color: #3f51b5;
+@draghandle-border-radius: 0;
+@draghandle-border-color: #bababa;
+@draghandle-background-color: #bababa;
 @draghandle-shadow: none;
 @draghandle-hover-border-color: @draghandle-border-color;
 @draghandle-hover-background-color: @draghandle-background-color;
-@draghandle-hover-shadow: 0 0 0 8px RGBA(63, 81, 181, 0.3);
+@draghandle-hover-shadow: none;
 
 /* Grid */
-@alt-background-color: #f9f9f9;
+@alt-background-color: #fff;
 @nested-alt-background-color: darken(@alt-background-color, 8%);
-@cell-border-color: #e7e7e7;
+@cell-border-color: @widget-border-color;
 @column-highlight-background-color: #e9e9e9;
 @active-filter-background-color: @active-background-color;
 
@@ -126,7 +126,7 @@
 @event-background-color: @header-background-color;
 @event-text-color: @header-text-color;
 @event-inverse-text-color: @widget-text-color;
-@scheduler-nonwork-background-color: @secondary-background-color;
+@scheduler-nonwork-background-color: @widget-background-color;
 @resize-background-color: #fff;
 
 /* Upload */
@@ -150,15 +150,15 @@
 @shadow-inset-color: #ccc;
 
 /* Border Radii */
-@main-border-radius: 2px;
-@list-border-radius: @main-border-radius - 1;
-@inner-border-radius: @main-border-radius - 1;
-@slider-border-radius: 13px;
+@main-border-radius: 0;
+@list-border-radius: 0;
+@inner-border-radius: 0;
+@slider-border-radius: 0;
 
 /* Icons */
 @default-icon-opacity: .5;
 
-@calendar-border-radius: 50%;
+@calendar-border-radius: 0;
 @calendar-content-text-color: @widget-text-color;
 @calendar-footer-background: @widget-background-color;
 @calendar-footer-text-decoration: none;
@@ -168,20 +168,20 @@
 @calendar-header-hover-background: @hover-background-color;
 @calendar-footer-active-background: @widget-background-color;
 @calendar-group-background-color: @group-background-color;
-@button-border-color: #f9f9f9;
-@menu-border-color: @widget-border-color;
+@button-border-color: @button-background-color;
+@menu-border-color: @widget-background-color;
 @tabstrip-items-border: transparent;
 @tabstrip-active-background: @widget-background-color;
 @tabstrip-tabs-color: #fff;
 @form-widget-color: @widget-text-color;
-@drop-down-border-color: #efefef;
-@drop-down-hover-border-color: #f4f4f4;
-@drop-down-focused-border-color: #f4f4f4;
-@drop-down-background: #f9f9f9;
+@drop-down-border-color: #bababa;
+@drop-down-hover-border-color: @hover-border-color;
+@drop-down-focused-border-color: #0072c6;
+@drop-down-background: @widget-background-color;
 @drop-down-text-color: @widget-text-color;
-@secondary-border-color: #cccccc;
-@secondary-text-color: #fff;
-@numeric-selected-background: #ebebeb;
+@secondary-border-color: @widget-border-color;
+@secondary-text-color: @widget-text-color;
+@numeric-selected-background: #0072c6;
 @panelbar-items-border: @widget-border-color;
 @panelbar-content-background: @content-background-color;
 @panelbar-content-color: @widget-text-color;
@@ -193,40 +193,40 @@
 @disabled-gradient: @widget-gradient;
 
 //new var-s
-@treeview-text-color: #428bca;
-@treeview-hover-text-color: #428bca;
-@tabstrip-tabs-hover-color: #428bca;
-@pager-hover-color: #428bca;
-@multiselect-buttons-border-color: #357ebd;
-@multiselect-buttons-color: #ffffff;
-@multiselect-buttons-background: #428bca;
-@multiselect-buttons-hover-background: #3276b1;
-@multiselect-buttons-hover-border-color: #295f8e;
-@slider-selection-background-color: #3f51b5;
-@form-widgets-border-color: #e7e7e7;
-@pager-text-color: #a5a5a5;
-@draghandle-selected-background: #cccccc;
+@treeview-text-color: @widget-text-color;
+@treeview-hover-text-color: @widget-text-color;
+@tabstrip-tabs-hover-color: @widget-text-color;
+@pager-hover-color: #000;
+@multiselect-buttons-border-color: @button-background-color;
+@multiselect-buttons-color: @widget-text-color;
+@multiselect-buttons-background: @button-background-color;
+@multiselect-buttons-hover-background: @button-hover-background-color;
+@multiselect-buttons-hover-border-color: @button-hover-border-color;
+@slider-selection-background-color: #0072c6;
+@form-widgets-border-color: #bababa;
+@pager-text-color: @widget-text-color;
+@draghandle-selected-background: #0072c6;
 @upload-status-color: #f0ad4e;
-@form-widgets-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-@menu-active-background: #e7e7e7;
+@form-widgets-shadow: none;
+@menu-active-background: #cde6f7;
 @concave-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
 
 @primary-button-text-color: #fff;
-@primary-button-background-color: #3f51b5;
-@primary-button-border-color: #3f51b5;
+@primary-button-background-color: #0072c6;
+@primary-button-border-color: #0072c6;
 @primary-gradient: none;
 @primary-shadow:none;
 
 @primary-hover-text-color: @primary-button-text-color;
-@primary-hover-background-color: #5c6bc0;
-@primary-hover-border-color: #5c6bc0;
+@primary-hover-background-color: #005a9e;
+@primary-hover-border-color: #005a9e;
 @primary-hover-gradient: none;
 @primary-hover-shadow: none;
 
 @primary-focused-color: @primary-button-text-color; 
-@primary-focused-border-color: #eff8ff;
+@primary-focused-border-color: #004578;
 @primary-focused-gradient: none;
-@primary-focused-active-item-shadow: 0 0 8px 0 #cfe6f8;
+@primary-focused-active-item-shadow: none;
 
 @primary-active-text-color: @primary-button-text-color;
 @primary-active-background-color: #283593;
@@ -234,78 +234,87 @@
 @primary-active-border-color: #283593;
 @primary-active-shadow: 0 6px 17px 0 rgba(0, 0, 0, 0.3);
 
-@primary-disabled-text-color: #a8a8a8;
-@primary-disabled-background-color: #eaeaea;
-@primary-disabled-border-color: #eaeaea;
+@primary-disabled-text-color: #888888;
+@primary-disabled-background-color: #e4e4e4;
+@primary-disabled-border-color: #e4e4e4;
 @primary-disabled-gradient: none;
 
 @button-hover-text-color: @hover-text-color;
-@button-hover-background-color: #ebebeb;
-@button-hover-border-color: #ebebeb;
+@button-hover-background-color: #eaeaea;
+@button-hover-border-color: #eaeaea;
 
-@button-active-background: #dbdbdb;
-@button-active-border-color: #dbdbdb;
-@button-focused-border-color: #dbdbdb;
-@button-focused-shadow: 0 6px 17px 0 #c4c4c4;
-@button-focused-active-shadow: 0 6px 17px 0 rgba(0, 0, 0, .3);
+@button-active-background: #0072c6;
+@button-active-border-color: #0072c6;
+@button-focused-border-color: #0072c6;
+@button-focused-shadow: none;
+@button-focused-active-shadow: none;
 
 
 //new var-s
-@secondary-background-color: #f9f9f9;
-@secondary-hover-background-color: #5c6bc0;
-@secondary-header-color: rgba(256, 256, 256, 0.5);
-@secondary-header-background-color: #283593;
-@accent-color: #00b0ff;
+//@secondary-background-color: #f9f9f9;
+//@secondary-hover-background-color: #5c6bc0;
+//@secondary-header-color: rgba(256, 256, 256, 0.5);
+//@secondary-header-background-color: #283593;
+//@accent-color: #00b0ff;
 
 //Checkboxes
 @checkbox-border-color-before: transparent;
-@checkbox-border-color-after: #7f7f7f;
+@checkbox-border-color-after: #666666;
 @checkbox-border-radius-before: 1px;
 @checkbox-background-color: @widget-background-color;
 
-@checkbox-hover-border-color: #7f7f7f;
+@checkbox-hover-border-color: #212121;
 @checkbox-hover-box-shadow:none;
 
-@checkbox-checked-border-color-after: #3f51b5;
+@checkbox-checked-border-color-after: @checkbox-border-color-after;
 @checkbox-checked-border-radius-after: 1px;
-@checkbox-checked-background-color-after: #3f51b5;
-@checkbox-checked-color-after: #fff;
+@checkbox-checked-background-color-after: @widget-background-color;
+@checkbox-checked-color-after: @widget-text-color;
 
 @checkbox-active-border-color-before: transparent;
-@checkbox-active-border-color-after: #7f7f7f;
+@checkbox-active-border-color-after: @checkbox-hover-border-color;
 @checkbox-active-border-radius: 50%;
 @checkbox-active-border-radius-after: 1px;
-@checkbox-active-box-shadow: 0 0 0 12px RGBA(235, 235, 235, 0.3);
+@checkbox-active-box-shadow: none;
 
 @checkbox-checked-active-border-radius-before: 50%;
-@checkbox-checked-active-box-shadow: 0 0 0 12px RGBA(63, 81, 181, 0.3);
+@checkbox-checked-active-box-shadow: none;
 
-@checkbox-checked-disabled-color-after: #b3bac7;
-@checkbox-disabled-background-color-after: #f4f4f5;
-@checkbox-disabled-color: #bfbfbf;
+@checkbox-checked-disabled-color-after: #a6a6a6;
+@checkbox-disabled-background-color-after: @widget-background-color;
+@checkbox-disabled-color: a6a6a6;
 @checkbox-disabled-box-shadow: none;
-@checkbox-disabled-border-color-before: #bfbfbf;
+@checkbox-disabled-border-color-before: #a6a6a6;
 
 //Radio buttons
-@radio-border-color-before: #7f7f7f;
+@radio-border-color-before: #666666;
 @radio-background-color: @widget-background-color;
-@radio-border-width-before: 2px;
+@radio-border-width-before: 1px;
 
-@radio-hover-border-color: #7f7f7f;
+@radio-hover-border-color: #212121;
 @radio-hover-box-shadow:none;
 
-@radio-checked-border-color-before: #3f51b5;
-@radio-checked-background-color-after: #3f51b5;
+@radio-checked-border-color-before: #212121;
+@radio-checked-background-color-after: @widget-background-color;
 
-@radio-active-border-color-before: #7f7f7f;
-@radio-active-box-shadow: 0 0 0 0.750em RGBA(235, 235, 235, 0.3);
+@radio-active-border-color-before: @checkbox-border-color-after;
+@radio-active-box-shadow: none;
 
-@radio-checked-active-border-color-before: #3f51b5;
-@radio-checked-active-box-shadow: 0 0 0 0.750em RGBA(63, 81, 181, 0.3);
+@radio-checked-active-border-color-before: @radio-hover-border-color;
+@radio-checked-active-box-shadow: none;
 
-@radio-disabled-background-color-after: #fff;
-@radio-disabled-color: #bfbfbf;
+@radio-disabled-background-color-after: @widget-background-color;
+@radio-disabled-color: @widget-background-color;
 @radio-disabled-box-shadow: none;
-@radio-disabled-background-color-before: #fff;
+@radio-disabled-background-color-before: @widget-background-color;
 
 @import "theme-template.less";
+
+
+.k-button:active:hover,
+.k-button.k-state-active:hover
+{
+    color: @primary-hover-text-color;
+    border-color: @button-active-border-color;
+    background-color: @button-active-background;
+}
