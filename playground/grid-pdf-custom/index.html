@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1119/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1119/styles/kendo.rtl.min.css">
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1119/styles/kendo.default.min.css">
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1119/styles/kendo.dataviz.min.css">
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1119/styles/kendo.dataviz.default.min.css">
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1119/styles/kendo.mobile.all.min.css">
+
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="js/kendo.all.min.js"></script>
+
+    <style>
+        /*
+            Register the DejaVu Sans font
+
+            We'll use it for both display and embedding in the PDF file.
+            The standard PDF fonts have no support for Unicode characters.
+        */
+        @font-face {
+          font-family: "DejaVu Sans";
+          src: url("fonts/DejaVuSans.ttf") format("truetype");
+        }
+        @font-face {
+          font-family: "DejaVu Sans";
+          font-weight: bold;
+          src: url("fonts/DejaVuSans-Bold.ttf") format("truetype");
+        }
+        @font-face {
+          font-family: "DejaVu Sans";
+          font-weight: bold;
+          font-style: italic;
+          src: url("fonts/DejaVuSans-BoldOblique.ttf") format("truetype");
+        }
+        @font-face {
+          font-family: "DejaVu Sans";
+          font-style: italic;
+          src: url("fonts/DejaVuSans-Oblique.ttf") format("truetype");
+        }
+
+        .k-grid {
+            font-family: "DejaVu Sans", "Times New Roman", serif;
+            font-size: 90%;
+        }
+    </style>
+
+    <script>
+        // Import DejaVu Sans font for embedding
+        kendo.pdf.defineFont({
+            "DejaVu Sans"             : "fonts/DejaVuSans.ttf",
+            "DejaVu Sans|Bold"        : "fonts/DejaVuSans-Bold.ttf",
+            "DejaVu Sans|Bold|Italic" : "fonts/DejaVuSans-Oblique.ttf",
+            "DejaVu Sans|Italic"      : "fonts/DejaVuSans-Oblique.ttf"
+        });
+    </script>
+
+    <!-- Load Pako ZLIB library to enable PDF compression -->
+    <script src="js/pako.min.js"></script>
+
+    <style>
+        .k-grid {
+            font-family: "DejaVu Sans", "Arial", sans-serif;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="grid"></div>
+    <script>
+    // Import Drawing API namespaces
+    var draw = kendo.drawing;
+    var geom = kendo.geometry;
+
+    function saveReport(doc) {
+        draw.exportPDF(doc, {
+            paperSize: "A4",
+            landscape: true,
+            margin    : "1cm",
+            multiPage : true
+        }).done(function(data) {
+            // Save the PDF file
+            kendo.saveAs({
+                dataURI: data,
+                fileName: "Report.pdf",
+                proxyURL: "http://demos.telerik.com/kendo-ui/service/export"
+            });
+        });
+    }
+
+    $("#grid").kendoGrid({
+        pdfExport: function (e) {
+            // Stop the built-in export
+            e.preventDefault();
+
+            var doc = new draw.Group();
+            var wrapper = this.wrapper;
+
+            this.dataSource.bind("change", function handler() {
+                var dataSource = this;
+
+                draw.drawDOM(wrapper)
+                    .done(function(group) {
+                        // Format the current page
+                        var pageNum = dataSource.page();
+                        var totalPages = dataSource.totalPages();
+
+                        var page = formatPage(group, {
+                            page: pageNum,
+                            total: totalPages
+                        });
+
+                        doc.append(page);
+
+                        if (pageNum < totalPages) {
+                            // Move to the next page
+                            dataSource.page(pageNum + 1);
+                        } else {
+                            // Last page processed reached
+                            dataSource.unbind("change", handler);
+                            saveReport(doc);
+                        }
+                    });
+            });
+
+            // Read the first page
+            this.dataSource.fetch();
+        },
+        toolbar: ["pdf"],
+        dataSource: {
+            type: "odata",
+            transport: {
+                read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+            },
+            schema: {
+                model: {
+                    fields: {
+                        OrderID: { type: "number" },
+                        Freight: { type: "number" },
+                        ShipName: { type: "string" },
+                        OrderDate: { type: "date" },
+                        ShipCity: { type: "string" }
+                    }
+                }
+            },
+            pageSize: 30,
+            serverPaging: true,
+        },
+        pageable: true,
+        scrollable: false,
+        columns: [
+            {
+                field:"OrderID",
+                filterable: false
+            },
+            "Freight",
+            {
+                field: "OrderDate",
+                title: "Order Date",
+                format: "{0:MM/dd/yyyy}"
+            }, {
+                field: "ShipName",
+                title: "Ship Name"
+            }, {
+                field: "ShipCity",
+                title: "Ship City"
+            }
+        ]
+    });
+
+    // PDF Output is fixed at 72 DPI
+    // This gives us a fixed mm/px ratio
+    var MM_TO_PX = 2.8347;
+
+    // A4 Sheet with 1 cm borders, landscape
+    var PAPER_RECT = new geom.Rect(
+        [0, 0], [(297 - 20) * MM_TO_PX, (210 - 20) * MM_TO_PX]
+    );
+
+    // Spacing between header, content and footer
+    var V_SPACING = 5 * MM_TO_PX;
+
+    function formatPage(content, data) {
+        var header = createHeader();
+        var footer = createFooter(data);
+
+        // Do a "dry run" on the layout to measure the available space
+        var other = vStack(
+            header,
+            vSpacer(V_SPACING),
+            // Content will go here
+            vSpacer(V_SPACING),
+            footer
+        );
+
+        var contentSize = PAPER_RECT.size.clone();
+        contentSize.height -= other.bbox().height();
+
+        // Fit the content in the available space
+        content = fit(content, contentSize)
+        content = hAlign(content, PAPER_RECT, "center")
+
+        // Do a final layout with content
+        var page = vStack(
+            header,
+            vSpacer(V_SPACING),
+            content,
+            vSpacer(V_SPACING),
+            footer
+        );
+
+        return page;
+    }
+
+    // Transform the content to fit into the specified size
+    function fit(content, size) {
+        var bbox = content.clippedBBox();
+        var scale = Math.min(
+            size.width / bbox.width(),
+            size.height / bbox.height()
+        );
+
+        // We apply the actual transformation on a wrapper
+        // so its applied before any existing transformations
+        var wrap = new draw.Group({
+            transform: geom.transform().scale(scale, scale)
+        });
+        wrap.append(content);
+
+        return wrap;
+    }
+
+    function createHeader() {
+        var text = new draw.Text("Acme Inc.", [0, 0], {
+            font: (8 * MM_TO_PX) + "px 'DejaVu Sans'"
+        });
+
+        var wrap = hAlign(text, PAPER_RECT, "center");
+
+        return wrap;
+    }
+
+    var footerTmpl = kendo.template("Page #: page # of #: total #");
+    function createFooter(data) {
+        var text = new draw.Text(footerTmpl(data), [0, 0], {
+            font: (3 * MM_TO_PX) + "px 'DejaVu Sans'"
+        });
+
+        var wrap = hAlign(text, PAPER_RECT, "right");
+
+        return wrap;
+    }
+
+    // Horizontally aligns an element within a rectangle
+    // Supported aligments are "left", "center" and "right"
+    function hAlign(element, rect, pos) {
+        var offset = 0;
+        var anchor = "topLeft";
+
+        if (pos === "center") {
+            anchor = "center";
+        } else if (pos === "right") {
+            anchor = "topRight";
+        }
+
+        var offset = rect[anchor]().x - element.clippedBBox()[anchor]().x;
+
+        // We apply the actual transformation on a wrapper
+        // so its applied before any existing transformations
+        var wrap = new draw.Group({
+            transform: geom.transform().translate(offset, 0)
+        });
+
+        wrap.append(element);
+
+        return wrap;
+    }
+
+    // Stack elements on top of each other
+    function vStack() {
+        var offset = 0;
+        var group = new draw.Group();
+
+        for (var i = 0; i < arguments.length; i++) {
+            var child = arguments[i];
+            var wrap = new draw.Group({
+                transform: geom.transform().translate(0, offset)
+            });
+
+            offset += child.clippedBBox().height();
+
+            wrap.append(child);
+            group.append(wrap);
+        }
+
+        return group;
+    }
+
+    // Return a transparent spacer with the given height
+    function vSpacer(height) {
+        var rect = new geom.Rect([0, 0], [0, height]);
+        return draw.Path.fromRect(rect, { stroke: null });
+    }
+    </script>
+  </body>
+</html>
