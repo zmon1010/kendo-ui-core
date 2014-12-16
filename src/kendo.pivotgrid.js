@@ -4848,7 +4848,7 @@ var __meta__ = {
 
     kendo.PivotExcelMixin = PivotExcelMixin;
 
-    if (kendo.ooxml.Workbook) {
+    if (kendo.ooxml && kendo.ooxml.Workbook) {
         PivotExcelMixin.extend(PivotGrid.prototype);
     }
 
