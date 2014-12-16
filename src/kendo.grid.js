@@ -6150,6 +6150,8 @@ var __meta__ = {
                 //requires manual trigger of scroll to sync both tables
                 if (that.options.scrollable.virtual) {
                     that.content.find(">.k-virtual-scrollable-wrap").trigger("scroll");
+                } else if (that.touchScroller) {
+                    that.touchScroller.movable.trigger("change");
                 } else {
                     if (that.touchScroller) {
                         that.touchScroller.movable.trigger("change");
