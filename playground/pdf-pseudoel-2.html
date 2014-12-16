@@ -84,26 +84,30 @@
         position: relative;
       }
       .before-after item:before {
+        background: yellow;
         content: "";
         display: block;
         position: absolute;
         border: 10px solid transparent;
         border-right-color: orange;
+        border-left-width: 0;
         width: 10px;
         height: 100%;
-        left: -20px;
+        left: -10px;
         top: 0px;
         box-sizing: border-box;
       }
       .before-after item:after {
+        background: yellow;
         content: "";
         display: block;
         position: absolute;
         border: 10px solid transparent;
         border-left-color: orange;
+        border-right-width: 0;
         width: 10px;
         height: 100%;
-        right: -20px;
+        right: -10px;
         top: 0px;
         box-sizing: border-box;
       }
