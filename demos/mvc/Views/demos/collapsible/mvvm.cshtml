@@ -1,0 +1,28 @@
+<div data-model="viewModel" data-role="view" data-title="ButtonGroup MVVM">
+    <ul data-role="listview" data-style="inset">
+        <li>Visible <input type="checkbox" data-role="switch" data-bind="checked: isVisible"></li>
+    </ul>
+
+    <div data-role="collapsible" data-bind="visible: isVisible, events: { expand: expand, collapse: collapse }">
+        <h2>Header</h3>
+        <p>Content</p>
+    </div>
+    <p>
+        Kendo UI Mobile ButtonGroup supports the
+        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/events">events</a> and
+        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/visible">visible</a> bindings.
+    </p>
+    <div class="console"></div>
+</div>
+
+<script>
+    var viewModel = kendo.observable({
+        isVisible: true,
+        expand: function(e) {
+            kendoConsole.log("expand");
+        },
+        collapse: function(e) {
+            kendoConsole.log("collapse");
+        }
+    });
+</script>

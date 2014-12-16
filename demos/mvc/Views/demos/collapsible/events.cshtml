@@ -1,0 +1,18 @@
+<div data-role="view">
+    <div data-role="collapsible" data-collapse="onCollapse" data-expand="onExpand">
+        <h2>Header</h3>
+        <p>Content</p>
+    </div>
+
+    <div class="console"></div>
+</div>
+
+<script>
+    function onCollapse() {
+        kendoConsole.log("collapse");
+    }
+
+    function onExpand() {
+        kendoConsole.log("expand");
+    }
+</script>

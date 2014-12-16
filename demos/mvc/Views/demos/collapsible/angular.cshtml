@@ -1,0 +1,19 @@
+<div kendo-mobile-application ng-app="kendoDemo">
+     <kendo-mobile-view ng-controller="MyCtrl">
+        <div class="head">&nbsp;</div>
+
+        <kendo-mobile-collapsible k-options="collapsibleOptions">
+            <h2>Header</h3>
+            <p>Content</p>
+        </kendo-mobile-collapsible>
+    </kendo-mobile-view>
+</div>
+
+<script>
+    angular.module("kendoDemo", [ "kendo.directives" ]).controller("MyCtrl", function($scope) {
+
+      $scope.collapsibleOptions = {
+          animation: false
+      };
+   });
+</script>

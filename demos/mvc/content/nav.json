@@ -9384,6 +9384,113 @@
     "category": "Mobile"
   },
   {
+    "text": "Collapsible",
+    "name": "collapsible",
+    "api": "mobile/collapsible",
+    "documentation": {
+       "kendo-ui": "getting-started/mobile/collapsible",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/collapsible/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/collapsible",
+       "aspnet-mvc": "aspnet-mvc/collapsible"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/collapsible",
+       "aspnet-mvc": "aspnet-mvc/collapsible"
+    },
+    "spriteCssClass": "mobileCollapsibleIcon",
+    "mobile": true,
+    "packages": [ "!jsp", "!php" ],
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "collapsible/index",
+        "title": {
+            "kendo-ui": "Example of Kendo UI Mobile Collapsible",
+			"aspnet-mvc": "ASP.NET MVC Collapsible sample "
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the core functionality of Kendo UI Mobile Collapsible.",
+			"aspnet-mvc": "In this example you will see in action the basic functionality of Telerik Collapsible helper for ASP.NET MVC."
+        }
+      },
+      {
+        "text": "Nested collapsibles",
+        "url": "collapsible/nested",
+        "title": {
+            "kendo-ui": "Example of Kendo UI Mobile Collapsible nesting",
+			"aspnet-mvc": "Nesting Telerik ASP.NET MVC Collapsible"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to nest Kendo UI Mobile Collapsible widgets.",
+			"aspnet-mvc": "This demo shows how to nest Telerik Collapsible widgets in ASP.NET MVC."
+        }
+      },
+      {
+        "text": "Events",
+        "url": "collapsible/events",
+        "title": {
+            "kendo-ui": "Events in Kendo UI Mobile Collapsible | Kendo Collapsible Demo",
+			"aspnet-mvc": "Events in ASP.NET MVC Mobile Collapsible"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the events which can be bound to Kendo UI Collapsible.",
+			"aspnet-mvc": "This demo shows the events which can be bound to the ASP.NET MVC Collapsible component."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "collapsible/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI Mobile Collapsible"
+        },
+        "meta": {
+            "kendo-ui": "Events and visible MVVM binding support in Kendo UI Mobile Collapsible"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "Adaptive Usage",
+        "disableInMobile": true,
+        "url": "collapsible/adaptive",
+        "title": {
+            "kendo-ui": "Mobile Collapsible widget demo | Kendo UI Demos"
+        },
+        "meta": {
+            "kendo-ui": "This example demonstrates how the Mobile Collapsible may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "disableInMobile": true,
+        "mobile": true,
+        "url": "collapsible/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Mobile Collapsible"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directive support for Kendo UI Mobile Collapsible"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Mobile"
+  },
+  {
     "text": "Drawer",
     "name": "drawer",
     "api": "mobile/drawer",
