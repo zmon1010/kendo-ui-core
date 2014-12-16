@@ -6153,11 +6153,7 @@ var __meta__ = {
                 } else if (that.touchScroller) {
                     that.touchScroller.movable.trigger("change");
                 } else {
-                    if (that.touchScroller) {
-                        that.touchScroller.movable.trigger("change");
-                    } else {
-                        that.content.trigger("scroll");
-                    }
+                    that.content.trigger("scroll");
                 }
             }
 
