@@ -72,6 +72,41 @@
         width: 12em;
         text-align: right;
       }
+
+      //.counters, .counters2 { display: none }
+
+      .before-after {
+        margin-left: 5em;
+      }
+      .before-after item {
+        background: #aaa;
+        padding: 3px 10px;
+        position: relative;
+      }
+      .before-after item:before {
+        content: "";
+        display: block;
+        position: absolute;
+        border: 10px solid transparent;
+        border-right-color: orange;
+        width: 10px;
+        height: 100%;
+        left: -20px;
+        top: 0px;
+        box-sizing: border-box;
+      }
+      .before-after item:after {
+        content: "";
+        display: block;
+        position: absolute;
+        border: 10px solid transparent;
+        border-left-color: orange;
+        width: 10px;
+        height: 100%;
+        right: -20px;
+        top: 0px;
+        box-sizing: border-box;
+      }
     </style>
   </head>
   <body>
@@ -108,6 +143,12 @@
         <item label="Eight">Elit</item>
         <item label="Nine">Phasellus</item>
         <item label="Ten">Porttitor</item>
+      </div>
+
+      <p></p>
+
+      <div class="before-after">
+        <item>Foo</item>
       </div>
     </div>
 
