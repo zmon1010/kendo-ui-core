@@ -2168,7 +2168,6 @@ var __meta__ = {
                     }
 
                     note.label = new TextBox(text, deepExtend({}, label));
-                    note.append(note.label);
 
                     if (label.position === INSIDE) {
                         if (icon.type === CIRCLE) {
@@ -2188,6 +2187,11 @@ var __meta__ = {
 
                 note.marker = marker;
                 note.append(marker);
+
+                if (note.label) {
+                    note.append(note.label);
+                }
+
                 marker.reflow(Box2D());
                 note.wrapperBox = box.wrap(marker.box);
             }

@@ -122,7 +122,8 @@
             { value: "moonlight", name: "Moonlight", colors: [ "#ee9f05", "#40444f", "#212a33" ]  },
             { value: "flat", name: "Flat", colors: [ "#363940", "#2eb3a6", "#fff" ]  },
             { value: "material", name: "Material", colors: [ "#3f51b5", "#283593", "#fff" ]  },
-            { value: "materialblack", name: "Material Black", colors: [ "#3f51b5", "#1c1c1c", "#4d4d4d" ]  }
+            { value: "materialblack", name: "Material Black", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] },
+            { value: "fiori", name: "Fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] },
         ],
         mobileThemes: [
             { name: "iOS7", value:"ios7", colors: [ "#007aff", "#f5f5f5", "#ffffff" ]  },
@@ -139,7 +140,8 @@
         sizes: [
             { name: "Standard", value: "common" },
             { name: "Bootstrap", value: "common-bootstrap", relativity: "larger" },
-            { name: "Material", value: "common-material", relativity: "bold" }
+            { name: "Material", value: "common-material", relativity: "bold" },
+            { name: "Fiori", value: "common-fiori", relativity: "larger" }
         ],
 
         selectedTheme: window.kendoTheme,
@@ -160,7 +162,9 @@
                 commonFile = "common-material";
             } else if (/bootstrap/i.test(themeName) && !/bootstrap/i.test(commonFile)) {
                 commonFile = "common-bootstrap";
-            } else if (!/material|bootstrap/i.test(themeName)) {
+            } else if (/fiori/i.test(themeName) && !/fiori/i.test(commonFile)) {
+                commonFile = "common-fiori";
+            } else if (!/material|bootstrap|fiori/i.test(themeName)) {
                 commonFile = "common";
             }
 
