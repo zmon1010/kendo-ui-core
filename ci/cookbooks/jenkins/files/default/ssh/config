@@ -1,6 +1,6 @@
 StrictHostKeyChecking no
 
 Host kendoorigin
-    Hostname 10.177.25.183
+    Hostname 172.17.82.75
     User     nginx
     Port     22
