@@ -52,8 +52,8 @@
 /* Selected State */
 @selected-text-color: @widget-text-color;
 @selected-gradient: none;
-@selected-background-color: #0072c6;
-@selected-border-color: #0072c6;
+@selected-background-color: #cde6f7;
+@selected-border-color: #cde6f7;
 @selected-shadow: none;
 
 /*Focused State*/
@@ -79,16 +79,16 @@
 
 /* Notification */
 @notification-info-background-color: #bbdefb;
-@notification-info-text-color: #1976d2;
+@notification-info-text-color: #4c4c4c;
 @notification-info-border-color: #bbdefb;
 @notification-success-background-color: #c8e6c9;
-@notification-success-text-color: #43a047;
+@notification-success-text-color: #4c4c4c;
 @notification-success-border-color: #c8e6c9;
-@notification-warning-background-color: #fdefba;
-@notification-warning-text-color: #f2953f;
-@notification-warning-border-color: #fdefba;
+@notification-warning-background-color: #fff19d;
+@notification-warning-text-color: #4c4c4c;
+@notification-warning-border-color: #fff19d;
 @notification-error-background-color: #ffcdd2;
-@notification-error-text-color: #f44336;
+@notification-error-text-color: #4c4c4c;
 @notification-error-border-color: #ffcdd2;
 
 /* ToolTip */
@@ -97,17 +97,17 @@
 @tooltip-border-color: @widget-border-color;
 
 /* Validation Message */
-@validation-text-color: #f2953f;
-@validation-background-color: #fdefba;
-@validation-border-color: #fdefba;
+@validation-text-color: #4c4c4c;
+@validation-background-color: #fff19d;
+@validation-border-color: #fff19d;
 
 /* Splitter */
 @splitbar-background-color: @button-background-color;
 
 /* Slider */
 @draghandle-border-radius: 0;
-@draghandle-border-color: #bababa;
-@draghandle-background-color: #bababa;
+@draghandle-border-color: #0072c6;
+@draghandle-background-color: #0072c6;
 @draghandle-shadow: none;
 @draghandle-hover-border-color: @draghandle-border-color;
 @draghandle-hover-background-color: @draghandle-background-color;
@@ -117,7 +117,7 @@
 @alt-background-color: #fff;
 @nested-alt-background-color: darken(@alt-background-color, 8%);
 @cell-border-color: @widget-border-color;
-@column-highlight-background-color: #e9e9e9;
+@column-highlight-background-color: @widget-background-color;
 @active-filter-background-color: @active-background-color;
 
 /* Scheduler */
@@ -172,7 +172,7 @@
 @menu-border-color: @widget-background-color;
 @tabstrip-items-border: transparent;
 @tabstrip-active-background: @widget-background-color;
-@tabstrip-tabs-color: #fff;
+@tabstrip-tabs-color: @widget-text-color;
 @form-widget-color: @widget-text-color;
 @drop-down-border-color: #bababa;
 @drop-down-hover-border-color: @hover-border-color;
@@ -380,15 +380,15 @@
 	&.k-state-focused.k-state-border-down .k-button
 	{
 		color: @inverse-text-color;
-		background-color: @selected-background-color;
-		border-color: @selected-background-color;
+		background-color: @select-background-color;
+		border-color: @select-border-color;
 	}	
 } 
 
 .k-dropdown-wrap.k-state-default.k-state-active,
 .k-picker-wrap.k-state-default.k-state-active {
-	background-color: @selected-background-color;
-	border-color: @selected-background-color;
+	background-color: @select-background-color;
+	border-color: @select-border-color;
 }
 
 .k-dropdown .k-state-default.k-state-active .k-input {
@@ -400,8 +400,8 @@
 }
 
 .k-list > .k-state-selected {
-	background-color: @menu-active-background;
-	border-color: @menu-active-background;
+	background-color: @selected-background-color;
+	border-color: @selected-background-color;
 }
 
 .k-popup {
@@ -460,10 +460,11 @@
 
 .k-grid .k-state-selected,
 .k-grid td.k-state-selected.k-state-focused {
-	background-color: @menu-active-background;
+	background-color: @selected-background-color;
 }
 
-.k-grid-content tr:hover {
+.k-grid-content tr:hover,
+.k-gantt .k-treelist tr:hover {
 	background-color: @hover-background-color;
 }
 
@@ -523,4 +524,124 @@
 .k-pager-numbers .k-state-selected {
 	color: @link-text-color;
 	border-color: transparent;
+}
+
+.k-pivot {
+	.k-button
+
+}
+
+.k-progressbar {
+	background-color: @primary-disabled-background-color;
+	border-color: @primary-disabled-background-color;
+
+	.k-state-default {
+		border-color: @widget-background-color;
+	}
+
+	.k-state-selected {
+		background-color: @slider-selection-background-color;
+		border-color: @widget-background-color;
+	}
+}
+
+.k-toolbar {
+	.k-toggle-button {
+		background-color: @widget-background-color;
+		border-color: @widget-background-color;
+	}
+
+	.k-toggle-button:hover {
+		background-color: @hover-background-color;
+	}
+
+	.k-toggle-button.k-state-active,
+	.k-toggle-button:active,
+	.k-toggle-button:active:hover {
+		background-color: @selected-background-color;
+		border-color: @selected-border-color;
+	}
+}
+
+.k-tabstrip {
+	.k-item {
+	 	background-color: @button-background-color;
+	 	border-color: @button-border-color;
+	}
+
+	.k-item.k-state-active {
+		background-color: @active-background-color;
+		border-color: @active-background-color;
+	}
+
+	.k-item.k-state-hover .k-link,
+	.k-item.k-state-active .k-link {
+		color: @link-text-color;
+	}
+
+	.k-content {
+		border-color: transparent;
+	}
+}
+
+.k-slider-track {
+	background-color: @form-widgets-border-color;
+}
+
+.k-slider-selection {
+    background-color: @select-background-color;
+}
+
+.k-draghandle {
+	background-color: @draghandle-background-color;
+	border-color: @draghandle-border-color;
+}
+
+.k-draghandle:hover,
+.k-draghandle.k-state-selected,
+.k-draghandle.k-state-selected:hover {
+	background-color: @primary-hover-background-color;
+	border-color: @primary-hover-border-color;
+}
+
+.k-treeview {
+	.k-state-selected {
+		color: @select-background-color;
+		background-color: @widget-background-color;		
+	}
+}
+
+.k-scheduler-toolbar,
+.k-gantt-toolbar {
+	.k-link {
+		color: @widget-text-color;
+	}	
+
+	.k-state-selected .k-link {
+		color: @link-text-color;
+	}
+
+	.k-nav-current .k-link {
+		color: @link-text-color;
+	}
+}
+
+.k-scheduler .k-scheduler-toolbar,
+.k-gantt .k-gantt-toolbar {
+    ul li,
+	ul li.k-state-hover,
+	ul li.k-state-selected {
+		background-color: @widget-background-color;
+		border-color: transparent;
+	}
+}	
+
+.k-scheduler-footer {
+	ul li {
+		border-color: transparent;
+	}
+}
+
+.k-gantt .k-treelist .k-alt {
+	background-color: @widget-background-color;
 }
