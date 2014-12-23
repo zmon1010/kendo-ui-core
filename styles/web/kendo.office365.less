@@ -1,4 +1,4 @@
-@image-folder: "Material";
+@image-folder: "Office365";
 @texture: none;
 @tooltip-texture: none;
 @fallback-texture: none;
@@ -123,15 +123,15 @@
 /* Scheduler */
 @scheduler-background-color: @widget-background-color;
 @current-time-color: @error-border-color;
-@event-background-color: @header-background-color;
+@event-background-color: #5db2ff;
 @event-text-color: @header-text-color;
 @event-inverse-text-color: @widget-text-color;
 @scheduler-nonwork-background-color: @widget-background-color;
 @resize-background-color: #fff;
 
 /* Upload */
-@upload-progress-background-color: #3f51b5;
-@upload-progress-text-color: #06c;
+@upload-progress-background-color: #0072c6;
+@upload-progress-text-color: #fff;
 @upload-success-background-color: #fce68d;
 @upload-success-text-color: @widget-text-color;
 @upload-error-background-color: #fce68d;
@@ -139,8 +139,8 @@
 
 /* Gantt*/
 
-@task-summary-color: lighten(@header-background-color, 25%);
-@task-summary-selected-color: lighten(@header-background-color, 25%);
+@task-summary-color: #cdd3d5;
+@task-summary-selected-color: #000;
 
 /* Loading Indicators */
 @loading-panel-color: #fff;
@@ -355,6 +355,10 @@
 .k-dropdown-wrap.k-state-focused,
 .k-multiselect.k-header.k-state-focused {
     background-color: @widget-background-color;
+}
+
+input.k-textbox:focus {
+	border-color: @drop-down-focused-border-color;
 }
 
 .k-multiselect {
@@ -644,4 +648,14 @@
 
 .k-gantt .k-treelist .k-alt {
 	background-color: @widget-background-color;
+}
+
+.k-gantt .k-grid-content tr:hover {
+	background-color: @widget-background-color;
+}
+
+.k-panelbar > li > .k-state-selected,
+.k-panelbar > li.k-state-default > .k-link.k-state-selected {
+	color: @inverse-text-color;
+	background-color: @select-background-color;
 }
