@@ -418,6 +418,7 @@ input.k-textbox:focus {
 	    color: @inverse-text-color;
 	}
 
+	.k-state-selected,
 	.k-state-selected.k-state-hover 
 	{
 		background-color: @primary-hover-background-color;
@@ -434,6 +435,10 @@ input.k-textbox:focus {
 	.k-footer .k-nav-today 
 	{
 		color: @link-text-color;
+	}
+
+	.k-footer {
+		border-color: transparent;
 	}
 }
 
@@ -658,4 +663,8 @@ input.k-textbox:focus {
 .k-panelbar > li.k-state-default > .k-link.k-state-selected {
 	color: @inverse-text-color;
 	background-color: @select-background-color;
+}
+
+.k-window .k-header {
+	border-color: transparent;
 }
