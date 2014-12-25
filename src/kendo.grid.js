@@ -4560,7 +4560,11 @@ var __meta__ = {
                             options.messages = extend(true, {}, filterable.messages, columnFilterable.messages);
                         }
 
-                        cell.kendoFilterMenu(options);
+                        if (columnFilterable && columnFilterable.multi) {
+                            cell.kendoFilterMultiCheck(options);
+                        } else {
+                            cell.kendoFilterMenu(options);
+                        }
                     }
                 }
             }

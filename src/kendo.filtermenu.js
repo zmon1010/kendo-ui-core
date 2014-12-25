@@ -704,7 +704,30 @@ var __meta__ = {
         }
     });
 
+    FilterMultiCheck = Widget.extend({
+        init: function(element, options) {
+            Widget.fn.init.call(this, element, options);
+            this.element = element;
+            options = this.options;
+            this._createForm();
+        },
+        _createForm: function() {
+            var listView = $("<div />").kendoListView({
+                dataSource: this.options.dataSource.data(),
+                template: "<div><label><input type='checkbox' value='#:" + this.options.field + "#'/>#:" + this.options.field + "#</label></div>"
+            });
+            this.form = $('<form class="k-filter-menu"/>').html(listView).kendoPopup({
+                anchor: this.element,
+                open: proxy
+            })
+        },
+        options: {
+            name: "FilterMultiCheck"
+        }
+    });
+
     ui.plugin(FilterMenu);
+    ui.plugin(FilterMultiCheck);
 })(window.kendo.jQuery);
 
 return window.kendo;
