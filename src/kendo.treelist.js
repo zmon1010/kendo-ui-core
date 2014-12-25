@@ -1073,10 +1073,9 @@ var __meta__ = {
             // column style attribute is string, kendo.dom expects object
             var idx, length, column;
             var columns = this.columns;
-            var attr, properties, i, declaration;
 
-            for (idx = 0, length = columns.length; idx < length; idx++) {
-                attr = columns[idx].attributes;
+            function convertStyle(attr) {
+                var properties, i, declaration;
 
                 if (attr && attr.style) {
                     properties = attr.style.split(";");
@@ -1087,6 +1086,11 @@ var __meta__ = {
                         attr.style[declaration[0]] = declaration[1];
                     }
                 }
+            }
+
+            for (idx = 0, length = columns.length; idx < length; idx++) {
+                convertStyle(columns[idx].attributes);
+                convertStyle(columns[idx].headerAttributes);
             }
         },
 
@@ -1218,7 +1222,7 @@ var __meta__ = {
             var columns = this.columns;
             var filterable = this.options.filterable;
             var ths = [];
-            var column, title, children, cellClasses;
+            var column, title, children, cellClasses, attr;
 
             for (var i = 0, length = columns.length; i < length; i++) {
                 column = columns[i];
@@ -1241,13 +1245,19 @@ var __meta__ = {
                     children.push(kendoTextElement(title));
                 }
 
-                ths.push(kendoDomElement("th", {
+                attr = {
                     "data-field": column.field,
                     "data-title": column.title,
                     "style": column.hidden === true ? { "display": "none" } : {},
                     className: cellClasses.join(" "),
                     "role": "columnheader"
-                }, children));
+                };
+
+                if (column.headerAttributes) {
+                    extend(attr, column.headerAttributes);
+                }
+
+                ths.push(kendoDomElement("th", attr, children));
             }
 
             return ths;
