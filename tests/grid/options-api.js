@@ -222,7 +222,6 @@
         equal(grid._events.columnHide.length, 1);
         grid.setOptions({ sortable: true });
 
-        console.log(kendo.stringify(grid._events));
         equal(grid._events.columnHide.length, 0);
     });
 

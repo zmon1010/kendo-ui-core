@@ -144,6 +144,24 @@
         equal(grid.columns.length, 2);
     });
 
+    test("resetting dataSource removes previous filter-row", function() {
+        var grid = new Grid(dom, {
+            scrollable: false,
+            filterable: {
+                mode: "row"
+            },
+            dataSource: {
+                data: [{foo: 1}]
+            }
+        });
+
+        grid.setDataSource(new kendo.data.DataSource({
+            data:[{text: 1, value: 1}, {text:2, value:2}]
+        }));
+
+        equal(grid.thead.find(".k-filter-row").length, 1);
+    });
+
     test("setDataSource resets the data area scroll offset to zero", function () {
         var grid = new Grid(dom, {
             dataSource: {
