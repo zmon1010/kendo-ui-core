@@ -1480,6 +1480,26 @@ if (kendo.support.input.date) {
 
         equal(dom.val(), "2013-06-03");
     });
+
+    test("input type date value binding explicit 'date' data-type", function() {
+        dom = $('<input type="date" data-type="date" data-bind="value: date">');
+
+        kendo.bind(dom, {
+            date: new Date("2013/6/3")
+        });
+
+        equal(dom.val(), "2013-06-03");
+    });
+
+    test("input type date value binding explicit 'text' data-type", function() {
+        dom = $('<input type="date" data-type="text" data-bind="value: date">');
+
+        kendo.bind(dom, {
+            date: kendo.toString(new Date("2013/6/3"), "yyyy-MM-dd")
+        });
+
+        equal(dom.val(), "2013-06-03");
+    });
 }
 
 if (kendo.support.input.datetimelocal) {
@@ -1497,6 +1517,16 @@ if (kendo.support.input.datetimelocal) {
 if (kendo.support.input.number) {
     test("input type number value binding", function() {
         dom = $('<input type="number" data-bind="value: number">');
+
+        kendo.bind(dom, {
+            number: 3.14
+        });
+
+        equal(dom.val(), "3.14");
+    });
+
+    test("input type number value binding explicit 'text' data-type", function() {
+        dom = $('<input type="number" data-type="text" data-bind="value: number">');
 
         kendo.bind(dom, {
             number: 3.14

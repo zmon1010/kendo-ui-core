@@ -46,30 +46,6 @@ var __meta__ = {
         }
     })();
 
-    function getDataType(element){
-        var type = element.type;
-        if(element.hasAttribute("data-type")){
-            type = element.attributes["data-type"].value;
-        }
-        return type.toLowerCase();
-    };
-    function getValue(value, type){
-        if (type == "date") {
-            value = kendo.parseDate(value, "yyyy-MM-dd");
-        } else if (type == "datetime-local") {
-            value = kendo.parseDate(value, ["yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm"] );
-        } else if (type == "number") {
-            value = kendo.parseFloat(value);
-        } else if (type == "boolean"){
-            value = value.toLowerCase();
-            if(kendo.parseFloat(value) !== null){
-                value = Boolean(kendo.parseFloat(value));
-            }else{
-                value = (value.toLowerCase() === "true");
-            }
-        }
-        return value;
-    }
     var Binding = Observable.extend( {
         init: function(parents, path) {
             var that = this;
@@ -307,6 +283,32 @@ var __meta__ = {
         },
 
         destroy: function() {
+        },
+
+        getDataType: function(element){
+            var type = element.type;
+            if(element.hasAttribute("data-type")){
+                type = element.attributes["data-type"].value;
+            }
+            return type.toLowerCase();
+        },
+
+        getParsedValue : function (value, type){
+            if (type == "date") {
+                value = kendo.parseDate(value, "yyyy-MM-dd");
+            } else if (type == "datetime-local") {
+                value = kendo.parseDate(value, ["yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm"] );
+            } else if (type == "number") {
+                value = kendo.parseFloat(value);
+            } else if (type == "boolean"){
+                value = value.toLowerCase();
+                if(kendo.parseFloat(value) !== null){
+                    value = Boolean(kendo.parseFloat(value));
+                }else{
+                    value = (value.toLowerCase() === "true");
+                }
+            }
+            return value;
         }
     });
 
@@ -434,8 +436,8 @@ var __meta__ = {
 
         change: function() {
             this._initChange = this.eventName != CHANGE;
-            var type = getDataType(this.element);
-            var value = getValue(this.element.value, type);
+            var type = this.getDataType(this.element);
+            var value = this.getParsedValue(this.element.value, type);
 
             this.bindings[VALUE].set(value);
 
@@ -450,7 +452,7 @@ var __meta__ = {
                     value = "";
                 }
 
-                var type = getDataType(this.element);
+                var type = this.getDataType(this.element);
 
                 if (type == "date") {
                     value = kendo.toString(value, "yyyy-MM-dd");
@@ -617,17 +619,17 @@ var __meta__ = {
             change: function() {
                 var element = this.element;
                 var value = this.value();
-                var dataType = getDataType(this.element);
+                var dataType = this.getDataType(this.element);
 
                 if (element.type == "radio") {
-                    value = getValue(this.element.value, dataType);
+                    value = this.getParsedValue(this.element.value, dataType);
                     this.bindings[CHECKED].set(value);
                 } else if (element.type == "checkbox") {
                     var source = this.bindings[CHECKED].get();
                     var index;
 
                     if (source instanceof ObservableArray) {
-                        value = getValue(this.element.value, dataType);
+                        value = this.getParsedValue(this.element.value, dataType);
                         if (value instanceof Date) {
                             for(var i = 0; i < source.length; i++){
                                 if(source[i] instanceof Date && +source[i] === +value){
@@ -653,12 +655,12 @@ var __meta__ = {
                 var value = this.bindings[CHECKED].get(),
                     source = value,
                     element = this.element,
-                    dataType = getDataType(this.element);
+                    dataType = this.getDataType(this.element);
 
                 if (element.type == "checkbox") {
                     if (source instanceof ObservableArray) {
                         var index = -1;
-                        value = getValue(this.element.value, dataType);
+                        value = this.getParsedValue(this.element.value, dataType);
                         if(value instanceof Date){
                             for(var i = 0; i < source.length; i++){
                                 if(source[i] instanceof Date && +source[i] === +value){
@@ -1698,4 +1700,3 @@ var __meta__ = {
 return window.kendo;
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
-

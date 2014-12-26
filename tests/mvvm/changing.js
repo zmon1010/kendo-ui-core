@@ -494,6 +494,45 @@ test("changing the value updates the view model", function() {
     equal(viewModel.foo, "bar");
 });
 
+test("changing the number type input value updates the view model", function() {
+    var dom = $('<input data-type="number" data-bind="value:foo" />');
+
+    var viewModel = kendo.observable( { foo: -1.23 });
+
+    kendo.bind(dom, viewModel);
+
+    dom.val(5.4321);
+    dom.trigger("change");
+
+    equal(viewModel.foo, 5.4321);
+});
+
+test("changing the date type input value updates the view model", function() {
+    var dom = $('<input data-type="date" data-bind="value:foo" />');
+
+    var viewModel = kendo.observable( { foo: new Date() });
+
+    kendo.bind(dom, viewModel);
+
+    dom.val("2015-01-31");
+    dom.trigger("change");
+
+    deepEqual(viewModel.foo, kendo.parseDate("2015-01-31"));
+});
+
+test("changing the boolean type input value updates the view model", function() {
+    var dom = $('<input data-type="boolean" data-bind="value:foo" />');
+
+    var viewModel = kendo.observable( { foo: false });
+
+    kendo.bind(dom, viewModel);
+
+    dom.val(true);
+    dom.trigger("change");
+
+    equal(viewModel.foo, true);
+});
+
 test("changing the input value updates dependent observable", 1, function() {
     var dom = $('<input data-bind="value:foo" />');
 
@@ -1330,6 +1369,21 @@ if (number[0].type == "number") {
         dom.val("3.14").trigger("change");
 
         strictEqual(observable.number, 3.14);
+    });
+
+
+    test("changing the value of input type number and data-type 'boolean' updates the view model with a valid Boolean", function() {
+        var dom = $('<input type="number" data-type="boolean" data-bind="value: number">');
+
+        var observable = kendo.observable({
+            number: 0
+        });
+
+        kendo.bind(dom, observable);
+
+        dom.val(1).trigger("change");
+
+        strictEqual(observable.number, true);
     });
 }
 
