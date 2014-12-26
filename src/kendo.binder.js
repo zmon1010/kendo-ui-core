@@ -620,7 +620,7 @@ var __meta__ = {
                 var dataType = getDataType(this.element);
 
                 if (element.type == "radio") {
-                    var value = getValue(this.element.value, dataType);
+                    value = getValue(this.element.value, dataType);
                     this.bindings[CHECKED].set(value);
                 } else if (element.type == "checkbox") {
                     var source = this.bindings[CHECKED].get();
@@ -628,15 +628,21 @@ var __meta__ = {
 
                     if (source instanceof ObservableArray) {
                         value = getValue(this.element.value, dataType);
-
-                        // if (value !== "on" && value !== "off") {
-                            index = source.indexOf(value);
-                            if (index > -1) {
-                                source.splice(index, 1);
-                            } else {
-                                source.push(value);
+                        if (value instanceof Date) {
+                            for(var i = 0; i < source.length; i++){
+                                if(source[i] instanceof Date && +source[i] === +value){
+                                    index = i;
+                                    break;
+                                }
                             }
-                        // }
+                        }else{
+                            index = source.indexOf(value);
+                        }
+                        if (index > -1) {
+                            source.splice(index, 1);
+                        } else {
+                            source.push(value);
+                        }
                     } else {
                         this.bindings[CHECKED].set(value);
                     }
@@ -646,17 +652,27 @@ var __meta__ = {
             refresh: function() {
                 var value = this.bindings[CHECKED].get(),
                     source = value,
-                    element = this.element;
+                    element = this.element,
+                    dataType = getDataType(this.element);
 
                 if (element.type == "checkbox") {
                     if (source instanceof ObservableArray) {
-                        value = this.element.value;
-                        if (source.indexOf(value) >= 0) {
-                            value = true;
+                        var index = -1;
+                        value = getValue(this.element.value, dataType);
+                        if(value instanceof Date){
+                            for(var i = 0; i < source.length; i++){
+                                if(source[i] instanceof Date && +source[i] === +value){
+                                    index = i;
+                                    break;
+                                }
+                            }
+                        }else{
+                            index = source.indexOf(value);
                         }
+                        element.checked = (index >= 0);
+                    }else{
+                        element.checked = source;
                     }
-
-                    element.checked = value === true;
                 } else if (element.type == "radio" && value != null) {
                     if (element.value === value.toString()) {
                         element.checked = true;

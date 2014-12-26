@@ -975,6 +975,84 @@ test("checked binding removing the item unchecks the checkbox", function() {
     ok(!dom.is(":checked"));
 });
 
+test("checked binding adding a date item should check the checkbox", function() {
+    var dom = $('<input type="checkbox" value="2015-1-1" data-type="date" data-bind="checked:selectedItems"/>');
+
+    var viewModel = kendo.observable({
+        selectedItems: [kendo.parseDate(dom.val(), "yyyy-MM-dd")]
+    });
+
+    kendo.bind(dom, viewModel);
+
+    ok(dom.is(":checked"));
+});
+
+test("checked binding removing a date item should uncheck the checkbox", function() {
+    var dom = $('<input type="checkbox" value="2015-1-1" data-type="date" data-bind="checked:selectedItems"/>');
+
+    var viewModel = kendo.observable({
+        selectedItems: [kendo.parseDate(dom.val(), "yyyy-MM-dd")]
+    });
+
+    kendo.bind(dom, viewModel);
+
+    viewModel.selectedItems.splice(0,1);
+
+    ok(!dom.is(":checked"));
+});
+
+test("checked binding adding a boolean item should check the checkbox", function() {
+    var dom = $('<input type="checkbox" value="false" data-type="boolean" data-bind="checked:selectedItems"/>');
+
+    var viewModel = kendo.observable({
+        selectedItems: [false]
+    });
+
+    kendo.bind(dom, viewModel);
+
+    ok(dom.is(":checked"));
+});
+
+test("checked binding removing a boolean item should uncheck the checkbox", function() {
+    var dom = $('<input type="checkbox" value="true" data-type="boolean" data-bind="checked:selectedItems"/>');
+
+    var viewModel = kendo.observable({
+        selectedItems: [true]
+    });
+
+    kendo.bind(dom, viewModel);
+
+    viewModel.selectedItems.splice(0,1);
+
+    ok(!dom.is(":checked"));
+});
+
+test("checked binding adding a number item should check the checkbox", function() {
+    var dom = $('<input type="checkbox" value="1.23" data-type="number" data-bind="checked:selectedItems"/>');
+
+    var viewModel = kendo.observable({
+        selectedItems: [kendo.parseFloat(dom.val())]
+    });
+
+    kendo.bind(dom, viewModel);
+
+    ok(dom.is(":checked"));
+});
+
+test("checked binding removing a number item should uncheck the checkbox", function() {
+    var dom = $('<input type="checkbox" value="1.23" data-type="number" data-bind="checked:selectedItems"/>');
+
+    var viewModel = kendo.observable({
+        selectedItems: [kendo.parseFloat(dom.val())]
+    });
+
+    kendo.bind(dom, viewModel);
+
+    viewModel.selectedItems.splice(0,1);
+
+    ok(!dom.is(":checked"));
+});
+
 test("model is not updated after target is destoryed", function() {
     var dom = $('<input data-bind="value:foo" />');
 
