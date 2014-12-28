@@ -29,48 +29,48 @@
             decode: function(str) {
                 var input = str.replace(/[^A-Za-z0-9\+\/\=]/g, ""), i = 0, n = input.length, output = [];
 
-	        while (i < n) {
-		    var enc1 = keyStr.indexOf(input.charAt(i++));
-		    var enc2 = keyStr.indexOf(input.charAt(i++));
-		    var enc3 = keyStr.indexOf(input.charAt(i++));
-		    var enc4 = keyStr.indexOf(input.charAt(i++));
+            while (i < n) {
+            var enc1 = keyStr.indexOf(input.charAt(i++));
+            var enc2 = keyStr.indexOf(input.charAt(i++));
+            var enc3 = keyStr.indexOf(input.charAt(i++));
+            var enc4 = keyStr.indexOf(input.charAt(i++));
 
-		    var chr1 = (enc1 << 2) | (enc2 >>> 4);
-		    var chr2 = ((enc2 & 15) << 4) | (enc3 >>> 2);
-		    var chr3 = ((enc3 & 3) << 6) | enc4;
+            var chr1 = (enc1 << 2) | (enc2 >>> 4);
+            var chr2 = ((enc2 & 15) << 4) | (enc3 >>> 2);
+            var chr3 = ((enc3 & 3) << 6) | enc4;
 
-		    output.push(chr1);
-		    if (enc3 != 64) {
+            output.push(chr1);
+            if (enc3 != 64) {
                         output.push(chr2);
                     }
-		    if (enc4 != 64) {
+            if (enc4 != 64) {
                         output.push(chr3);
                     }
-	        }
+            }
 
-	        return output;
+            return output;
             },
             encode: function(bytes) {
                 var i = 0, n = bytes.length;
                 var output = "";
 
-	        while (i < n) {
-		    var chr1 = bytes[i++];
-		    var chr2 = bytes[i++];
-		    var chr3 = bytes[i++];
+            while (i < n) {
+            var chr1 = bytes[i++];
+            var chr2 = bytes[i++];
+            var chr3 = bytes[i++];
 
-		    var enc1 = chr1 >>> 2;
-		    var enc2 = ((chr1 & 3) << 4) | (chr2 >>> 4);
-		    var enc3 = ((chr2 & 15) << 2) | (chr3 >>> 6);
-		    var enc4 = chr3 & 63;
+            var enc1 = chr1 >>> 2;
+            var enc2 = ((chr1 & 3) << 4) | (chr2 >>> 4);
+            var enc3 = ((chr2 & 15) << 2) | (chr3 >>> 6);
+            var enc4 = chr3 & 63;
 
-		    if (i - n == 2) {
-			enc3 = enc4 = 64;
-		    } else if (i - n == 1) {
-			enc4 = 64;
-		    }
+            if (i - n == 2) {
+            enc3 = enc4 = 64;
+            } else if (i - n == 1) {
+            enc4 = 64;
+            }
 
-		    output += keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);
+            output += keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);
                 }
                 return output;
             }

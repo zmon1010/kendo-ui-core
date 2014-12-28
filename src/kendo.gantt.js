@@ -53,7 +53,7 @@ var __meta__ = {
     var BUTTON_TEMPLATE = '<button class="#=styles.button# #=className#" '+
             '#if (action) {#' +
                 'data-action="#=action#"' +
-            '#}#' + 
+            '#}#' +
         '><span class="#=iconClass#"></span>#=text#</button>';
     var COMMAND_BUTTON_TEMPLATE = '<a class="#=className#" #=attr# href="\\#">#=text#</a>';
     var HEADER_VIEWS_TEMPLATE = kendo.template('<ul class="#=styles.viewsWrapper#">' +
@@ -619,7 +619,7 @@ var __meta__ = {
                 field: "parentId",
                 operator: "eq",
                 value: null
-            }; 
+            };
             var order = this._sort || {
                 field: "orderId",
                 dir: "asc"
@@ -1092,7 +1092,7 @@ var __meta__ = {
             var ganttStyles = Gantt.styles;
             var popupStyles = ganttStyles.popup;
 
-            var html = kendo.format('<div {0}="{1}" class="{2} {3}"><div class="{4}">', 
+            var html = kendo.format('<div {0}="{1}" class="{2} {3}"><div class="{4}">',
                 kendo.attr("uid"), task.uid, popupStyles.form, popupStyles.editForm, popupStyles.formContainer);
 
             var fields = this.fields(editors.desktop, task);
@@ -1513,7 +1513,7 @@ var __meta__ = {
 
         destroy: function() {
             Widget.fn.destroy.call(this);
-            
+
             if (this.dataSource) {
                 this.dataSource.unbind("change", this._refreshHandler);
                 this.dataSource.unbind("progress", this._progressHandler);
@@ -1683,7 +1683,7 @@ var __meta__ = {
             var messages = this.options.messages.actions;
             var commandName = typeof command === STRING ? command : command.name || command.text;
             var className = defaultCommands[commandName] ? defaultCommands[commandName].className : "k-gantt-" + (commandName || "").replace(/\s/g, "");
-            var options = { 
+            var options = {
                 iconClass: "",
                 action: "",
                 text: commandName,
@@ -1914,7 +1914,7 @@ var __meta__ = {
                     var task = e.task;
                     var start = e.start;
                     var end = new Date(start.getTime() + task.duration());
-                    
+
                     if (!that.trigger("moveEnd", { task: task, start: start, end: end })) {
                         that._updateTask(that.dataSource.getByUid(task.uid), {
                             start: start,
@@ -1941,7 +1941,7 @@ var __meta__ = {
                     } else {
                         updateInfo.end = e.end;
                     }
-                    
+
                     if (!that.trigger("resizeEnd", { task: task, start: e.start, end: e.end })) {
                         that._updateTask(that.dataSource.getByUid(task.uid), updateInfo);
                     }
@@ -2125,7 +2125,7 @@ var __meta__ = {
 
         _createPopupButton: function(command) {
             var commandName = command.name || command.text;
-            var options = { 
+            var options = {
                 className: Gantt.styles.popup.button + " k-gantt-" + (commandName || "").replace(/\s/g, ""),
                 text: commandName,
                 attr: ""
@@ -2968,7 +2968,7 @@ var __meta__ = {
             this.list._adjustHeight();
         }
     });
-    
+
     if (kendo.PDFMixin) {
         kendo.PDFMixin.extend(Gantt.prototype);
     }
