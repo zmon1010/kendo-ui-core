@@ -1,64 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1119/styles/kendo.common.min.css">
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1119/styles/kendo.rtl.min.css">
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1119/styles/kendo.default.min.css">
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1119/styles/kendo.dataviz.min.css">
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1119/styles/kendo.dataviz.default.min.css">
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1119/styles/kendo.mobile.all.min.css">
+    <link rel="stylesheet" href="styles/kendo.common.min.css">
+    <link rel="stylesheet" href="styles/kendo.rtl.min.css">
+    <link rel="stylesheet" href="styles/kendo.default.min.css">
+    <link rel="stylesheet" href="styles/kendo.dataviz.min.css">
+    <link rel="stylesheet" href="styles/kendo.dataviz.default.min.css">
+    <link rel="stylesheet" href="styles/kendo.mobile.all.min.css">
 
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="js/kendo.all.min.js"></script>
 
+    <!-- Load Pako ZLIB library to enable PDF compression -->
+    <script src="js/pako_deflate.min.js"></script>
+
     <style>
         /*
-            Register the DejaVu Sans font
-
-            We'll use it for both display and embedding in the PDF file.
+            We'll use the DejaVu Sans font for both display and embedding in the PDF file.
             The standard PDF fonts have no support for Unicode characters.
         */
-        @font-face {
-          font-family: "DejaVu Sans";
-          src: url("fonts/DejaVuSans.ttf") format("truetype");
-        }
-        @font-face {
-          font-family: "DejaVu Sans";
-          font-weight: bold;
-          src: url("fonts/DejaVuSans-Bold.ttf") format("truetype");
-        }
-        @font-face {
-          font-family: "DejaVu Sans";
-          font-weight: bold;
-          font-style: italic;
-          src: url("fonts/DejaVuSans-BoldOblique.ttf") format("truetype");
-        }
-        @font-face {
-          font-family: "DejaVu Sans";
-          font-style: italic;
-          src: url("fonts/DejaVuSans-Oblique.ttf") format("truetype");
-        }
-
-        .k-grid {
-            font-family: "DejaVu Sans", "Times New Roman", serif;
-            font-size: 90%;
-        }
-    </style>
-
-    <script>
-        // Import DejaVu Sans font for embedding
-        kendo.pdf.defineFont({
-            "DejaVu Sans"             : "fonts/DejaVuSans.ttf",
-            "DejaVu Sans|Bold"        : "fonts/DejaVuSans-Bold.ttf",
-            "DejaVu Sans|Bold|Italic" : "fonts/DejaVuSans-Oblique.ttf",
-            "DejaVu Sans|Italic"      : "fonts/DejaVuSans-Oblique.ttf"
-        });
-    </script>
-
-    <!-- Load Pako ZLIB library to enable PDF compression -->
-    <script src="js/pako.min.js"></script>
-
-    <style>
         .k-grid {
             font-family: "DejaVu Sans", "Arial", sans-serif;
         }
@@ -142,7 +102,7 @@
                     }
                 }
             },
-            pageSize: 30,
+            pageSize: 24,
             serverPaging: true,
         },
         pageable: true,
@@ -200,12 +160,21 @@
         content = hAlign(content, PAPER_RECT, "center")
 
         // Do a final layout with content
-        var page = vStack(
+        var top = vStack(
             header,
             vSpacer(V_SPACING),
-            content,
+            content
+        );
+
+        var bottom = vStack(
             vSpacer(V_SPACING),
             footer
+        );
+
+        var page = new draw.Group();
+        page.append(
+            vAlign(top, PAPER_RECT, "top"),
+            vAlign(bottom, PAPER_RECT, "bottom")
         );
 
         return page;
@@ -268,6 +237,31 @@
         // so its applied before any existing transformations
         var wrap = new draw.Group({
             transform: geom.transform().translate(offset, 0)
+        });
+
+        wrap.append(element);
+
+        return wrap;
+    }
+
+    // Vertically aligns an element within a rectangle
+    // Supported aligments are "top", "center" and "bottom""
+    function vAlign(element, rect, pos) {
+        var offset = 0;
+        var anchor = "topLeft";
+
+        if (pos === "center") {
+            anchor = "center";
+        } else if (pos === "bottom") {
+            anchor = "bottomLeft";
+        }
+
+        var offset = rect[anchor]().y - element.clippedBBox()[anchor]().y;
+
+        // We apply the actual transformation on a wrapper
+        // so its applied before any existing transformations
+        var wrap = new draw.Group({
+            transform: geom.transform().translate(0, offset)
         });
 
         wrap.append(element);
