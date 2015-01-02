@@ -108,12 +108,8 @@
             }
         });
 
-        test("does not visual", function() {
-            ok(!series.visual);
-        });
-
-        test("does not create animation", function() {
-            equal(series.animation, undefined);
+        test("creates animation", function() {
+            ok(series.animation);
         });
 
         // ------------------------------------------------------------
@@ -543,23 +539,6 @@
             deepEqual(barHeights, [1, 1, 2, 2]);
         });
 
-        test("stack base is set to zero value slot", function() {
-            equal(series.points[0].options.stackBase, 2);
-        });
-
-        test("stack base is set to zero value slot when category axis is moved to top", function() {
-            CATEGORY_AXIS_Y = 0;
-
-            setupBarChart(plotArea, {
-                series: [ positiveSeries, positiveSeries ],
-                isStacked: true }
-            );
-
-            equal(series.points[0].options.stackBase, 2);
-
-            CATEGORY_AXIS_Y = 2;
-        });
-
         // ------------------------------------------------------------
         module("Bar Chart / Stack / Negative Values", {
             setup: function() {
@@ -609,23 +588,6 @@
             CATEGORY_AXIS_Y = 2;
         });
 
-        test("stack base is set to zero value slot", function() {
-            equal(series.points[0].options.stackBase, 2);
-        });
-
-        test("stack base is set to zero value slot when category axis is moved to bottom", function() {
-            CATEGORY_AXIS_Y = 4;
-
-            setupBarChart(plotArea, {
-                series: [ negativeSeries, negativeSeries ],
-                isStacked: true }
-            );
-
-            equal(series.points[0].options.stackBase, 4);
-
-            CATEGORY_AXIS_Y = 2;
-        });
-
         // ------------------------------------------------------------
         var oldGetSlot;
         module("Bar Chart / Stack / Mixed Values", {
@@ -670,62 +632,6 @@
             });
 
             deepEqual(barHeights, [1, 1]);
-        });
-
-        test("stack base is set to zero value slot", function() {
-            equal(series.points[0].options.stackBase, 2);
-        });
-
-        test("stack base is set to zero value slot when category axis is moved to bottom (negative series first)", function() {
-            CATEGORY_AXIS_Y = 4;
-
-            setupBarChart(plotArea, {
-                series: [ negativeSeries, positiveSeries ],
-                isStacked: true }
-            );
-
-            equal(series.points[0].options.stackBase, 2);
-
-            CATEGORY_AXIS_Y = 2;
-        });
-
-        test("stack base is set to zero value slot when category axis is moved to bottom (positive series first)", function() {
-            CATEGORY_AXIS_Y = 4;
-
-            setupBarChart(plotArea, {
-                series: [ positiveSeries, negativeSeries ],
-                isStacked: true }
-            );
-
-            equal(series.points[0].options.stackBase, 2);
-
-            CATEGORY_AXIS_Y = 2;
-        });
-
-        test("stack base is set to zero value slot when category axis is moved to top (negative series first)", function() {
-            CATEGORY_AXIS_Y = 0;
-
-            setupBarChart(plotArea, {
-                series: [ negativeSeries, positiveSeries ],
-                isStacked: true }
-            );
-
-            equal(series.points[0].options.stackBase, 2);
-
-            CATEGORY_AXIS_Y = 2;
-        });
-
-        test("stack base is set to zero value slot when category axis is moved to top (positive series first)", function() {
-            CATEGORY_AXIS_Y = 0;
-
-            setupBarChart(plotArea, {
-                series: [ positiveSeries, negativeSeries ],
-                isStacked: true }
-            );
-
-            equal(series.points[0].options.stackBase, 2);
-
-            CATEGORY_AXIS_Y = 2;
         });
 
         // ------------------------------------------------------------
@@ -887,11 +793,6 @@
             ok(series.points[2].box.y2 != series.points[1].box.y1);
         });
 
-        test("stack base is set to zero value slot", function() {
-            equal(series.points[0].options.stackBase, 2);
-            equal(series.points[2].options.stackBase, 2);
-        });
-
         test("groups with no stack are assigned to first stack", function() {
             setupBarChart(plotArea, {
                 series: [
@@ -939,11 +840,6 @@
             ok(series.points[2].box.y1 != series.points[1].box.y2);
         });
 
-        test("stack base is set to zero value slot", function() {
-            equal(series.points[0].options.stackBase, 2);
-            equal(series.points[2].options.stackBase, 2);
-        });
-
         // ------------------------------------------------------------
         module("Bar Chart / Grouped Stack / Mixed Values", {
             setup: function() {
@@ -985,11 +881,6 @@
 
         test("bars in second category, second group are stacked", function() {
             equal(series.points[7].box.y1, series.points[6].box.y2);
-        });
-
-        test("stack base is set to zero value slot", function() {
-            equal(series.points[0].options.stackBase, 2);
-            equal(series.points[2].options.stackBase, 2);
         });
 
         // ------------------------------------------------------------
