@@ -3276,6 +3276,41 @@ var __meta__ = {
     });
     draw.AnimationFactory.current.register(BAR, BarChartAnimation);
 
+    var BarChartAnimationMixin = {
+        extend: function(proto) {
+            if (proto.createVisual !== noop) {
+                throw new Error("Refusing to override existing createVisual");
+            }
+
+            proto.createVisual = this.createVisual;
+            proto.createAnimation = this.createAnimation;
+
+            deepExtend(proto.options, {
+                animation: {
+                    type: BAR
+                }
+            });
+        },
+
+        createVisual: function() {
+            ChartElement.fn.createVisual.call(this);
+        },
+
+        createAnimation: function() {
+            var options = this.options;
+
+            var origin = this.categoryAxis.getSlot(0);
+            deepExtend(options, {
+                animation: {
+                    origin: [origin.x1, origin.y1],
+                    vertical: !options.invertAxes
+                }
+            });
+
+            ChartElement.fn.createAnimation.call(this);
+        }
+    };
+
     var FadeInAnimation = draw.Animation.extend({
         options: {
             duration: 200,
@@ -3920,12 +3955,6 @@ var __meta__ = {
     });
 
     var BarChart = CategoricalChart.extend({
-        options: {
-            animation: {
-                type: BAR
-            }
-        },
-
         render: function() {
             var chart = this;
 
@@ -4070,26 +4099,9 @@ var __meta__ = {
             for (i = 0; i < childrenLength; i++) {
                 children[i].reflow(categorySlots[i]);
             }
-        },
-
-        createVisual: function() {
-            ChartElement.fn.createVisual.call(this);
-        },
-
-        createAnimation: function() {
-            var options = this.options;
-
-            var origin = this.categoryAxis.getSlot(0);
-            deepExtend(options, {
-                animation: {
-                    origin: [origin.x1, origin.y1],
-                    vertical: !options.invertAxes
-                }
-            });
-
-            ChartElement.fn.createAnimation.call(this);
         }
     });
+    BarChartAnimationMixin.extend(BarChart.fn);
 
     var RangeBar = Bar.extend({
         defaults: {
@@ -4232,12 +4244,6 @@ var __meta__ = {
             CategoricalChart.fn.init.call(chart, plotArea, options);
         },
 
-        options: {
-            animation: {
-                type: BAR
-            }
-        },
-
         wrapData: function(options) {
             var series = options.series,
                 i, data, seriesItem;
@@ -4339,16 +4345,9 @@ var __meta__ = {
             var value = point.value.current;
 
             return value > 0;
-        },
-
-        createVisual: function() {
-            ChartElement.fn.createVisual.call(this);
-        },
-
-        createAnimation: function() {
-            BarChart.fn.createAnimation.call(this);
         }
     });
+    BarChartAnimationMixin.extend(BulletChart.fn);
 
     var Bullet = ChartElement.extend({
         init: function(value, options) {
