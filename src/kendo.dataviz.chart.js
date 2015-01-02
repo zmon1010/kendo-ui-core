@@ -3274,7 +3274,7 @@ var __meta__ = {
             this.element.transform(null);
         }
     });
-    draw.AnimationFactory.current.register("barChart", BarChartAnimation);
+    draw.AnimationFactory.current.register(BAR, BarChartAnimation);
 
     var FadeInAnimation = draw.Animation.extend({
         options: {
@@ -3922,7 +3922,7 @@ var __meta__ = {
     var BarChart = CategoricalChart.extend({
         options: {
             animation: {
-                type: "barChart"
+                type: BAR
             }
         },
 
@@ -4234,7 +4234,7 @@ var __meta__ = {
 
         options: {
             animation: {
-                type: "barChart"
+                type: BAR
             }
         },
 
