@@ -4232,6 +4232,12 @@ var __meta__ = {
             CategoricalChart.fn.init.call(chart, plotArea, options);
         },
 
+        options: {
+            animation: {
+                type: "barChart"
+            }
+        },
+
         wrapData: function(options) {
             var series = options.series,
                 i, data, seriesItem;
@@ -4333,6 +4339,14 @@ var __meta__ = {
             var value = point.value.current;
 
             return value > 0;
+        },
+
+        createVisual: function() {
+            ChartElement.fn.createVisual.call(this);
+        },
+
+        createAnimation: function() {
+            BarChart.fn.createAnimation.call(this);
         }
     });
 
@@ -4352,9 +4366,6 @@ var __meta__ = {
                 width: 1
             },
             vertical: false,
-            animation: {
-                type: BAR
-            },
             opacity: 1,
             target: {
                 shape: "",
