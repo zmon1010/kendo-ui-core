@@ -103,13 +103,34 @@
         // ------------------------------------------------------------
         module("Bar Chart", {
             setup: function() {
-                setupBarChart(plotArea, { series: [ positiveSeries ] });
+                setupBarChart(plotArea, {
+                    series: [
+                        {
+                            data: [1, 2]
+                        }, {
+                            data: [1, 2],
+                            zIndex: 1
+                        }
+                    ]
+                });
                 visual = series.visual;
             }
         });
 
         test("creates animation", function() {
             ok(series.animation);
+        });
+
+        test("does not create animation on bars", function() {
+            ok(!series.points[0].animation);
+        });
+
+        test("does create animation on bars with zIndex", function() {
+            ok(series.points[1].animation);
+        });
+
+        test("copies animation options on bars with zIndex", function() {
+            deepEqual(series.points[1].options.animation, series.options.animation);
         });
 
         // ------------------------------------------------------------

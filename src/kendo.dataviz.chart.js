@@ -2902,6 +2902,19 @@ var __meta__ = {
         }
     });
 
+    var PassthroughVisualMixin = {
+        extend: function(proto) {
+            proto.createVisual = this.createVisual;
+            proto.appendVisual = this.appendVisual;
+        },
+
+        createVisual: noop,
+
+        appendVisual: function(childVisual) {
+            this.parent.appendVisual(childVisual);
+        }
+    };
+
     var ClusterLayout = ChartElement.extend({
         options: {
             vertical: false,
@@ -2937,10 +2950,9 @@ var __meta__ = {
 
                 position += slotSize;
             }
-        },
-
-        createVisual: noop
+        }
     });
+    PassthroughVisualMixin.extend(ClusterLayout.fn);
 
     var StackWrap = ChartElement.extend({
         options: {
@@ -2972,10 +2984,9 @@ var __meta__ = {
                     box.wrap(childBox);
                 }
             }
-        },
-
-        createVisual: noop
+        }
     });
+    PassthroughVisualMixin.extend(StackWrap.fn);
 
     var PointEventsMixin = {
         click: function(chart, e) {
@@ -3282,8 +3293,9 @@ var __meta__ = {
                 throw new Error("Refusing to override existing createVisual");
             }
 
+            proto.appendVisual = this.appendVisual;
             proto.createVisual = this.createVisual;
-            proto.createAnimation = this.createAnimation;
+            proto._setAnimationOptions = this._setAnimationOptions;
 
             deepExtend(proto.options, {
                 animation: {
@@ -3293,21 +3305,26 @@ var __meta__ = {
         },
 
         createVisual: function() {
+            this._setAnimationOptions();
             ChartElement.fn.createVisual.call(this);
         },
 
-        createAnimation: function() {
+        appendVisual: function(childVisual) {
+            if (defined(childVisual.options.zIndex)) {
+                childVisual.chartElement.options.animation =
+                    this.options.animation;
+            }
+
+            ChartElement.fn.appendVisual.call(this, childVisual);
+        },
+
+        _setAnimationOptions: function() {
             var options = this.options;
-
             var origin = this.categoryAxis.getSlot(0);
-            deepExtend(options, {
-                animation: {
-                    origin: [origin.x1, origin.y1],
-                    vertical: !options.invertAxes
-                }
-            });
 
-            ChartElement.fn.createAnimation.call(this);
+            options.animation = options.animation || {};
+            options.animation.origin = new geom.Point(origin.x1, origin.y1);
+            options.animation.vertical = !this.options.invertAxes;
         }
     };
 
