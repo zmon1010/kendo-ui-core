@@ -606,6 +606,47 @@ test("changing the value of pre populated multi select updates the view model", 
     equal(viewModel.foo[0], "bar");
 });
 
+test("changing the value of pre populated number type multi select updates the view model", function() {
+    var dom = $('<select multiple="multiple" data-type="number" data-bind="value:foo"><option value="1">1</option><option value="2">2</option>');
+
+    var viewModel = kendo.observable( { foo: [] });
+
+    kendo.bind(dom, viewModel);
+
+    dom.find("option:last").attr("selected", "selected");
+    dom.trigger("change");
+
+    strictEqual(viewModel.foo[0], 2);
+});
+
+test("changing the value of pre populated boolean type multi select updates the view model", function() {
+    var dom = $('<select multiple="multiple" data-type="boolean" data-bind="value:foo"><option value="0">1</option><option value="true">2</option>');
+
+    var viewModel = kendo.observable( { foo: [] });
+
+    kendo.bind(dom, viewModel);
+
+    dom.find("option").attr("selected", "selected");
+    dom.trigger("change");
+
+    strictEqual(viewModel.foo[0], false);
+    strictEqual(viewModel.foo[1], true);
+});
+
+test("changing the value of pre populated date type multi select updates the view model", function() {
+    var dom = $('<select multiple="multiple" data-type="date" data-bind="value:foo"><option value="2015-1-1">1</option><option value="2015-11-1">2</option>');
+
+    var viewModel = kendo.observable( { foo: [] });
+
+    kendo.bind(dom, viewModel);
+
+    dom.find("option").attr("selected", "selected");
+    dom.trigger("change");
+
+    deepEqual(viewModel.foo[0], kendo.parseDate("2015-1-1", "yyyy-MM-dd"));
+    deepEqual(viewModel.foo[1], kendo.parseDate("2015-11-1", "yyyy-MM-dd"));
+});
+
 test("changing radiobutton value updates the view model", function() {
     var dom = $('<input type="radio" value="bar"  data-bind="checked:foo"/>');
 

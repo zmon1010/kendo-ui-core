@@ -283,24 +283,30 @@ var __meta__ = {
         },
 
         destroy: function() {
-        },
+        }
+    });
 
-        getDataType: function(element){
-            var type = element.type;
-            if(element.hasAttribute("data-type")){
-                type = element.attributes["data-type"].value;
+    var TypedBinder = Binder.extend({
+        dataType: function() {
+            var dataType = this.element.type || "";
+            if(this.element.hasAttribute("data-type")){
+                dataType = this.element.attributes["data-type"].value;
             }
-            return type.toLowerCase();
+            return dataType.toLowerCase();
         },
 
-        getParsedValue : function (value, type){
-            if (type == "date") {
+        parsedValue: function() {
+            return this._parseValue(this.element.value, this.dataType());
+        },
+
+        _parseValue : function (value, dataType){
+            if (dataType == "date") {
                 value = kendo.parseDate(value, "yyyy-MM-dd");
-            } else if (type == "datetime-local") {
+            } else if (dataType == "datetime-local") {
                 value = kendo.parseDate(value, ["yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm"] );
-            } else if (type == "number") {
+            } else if (dataType == "number") {
                 value = kendo.parseFloat(value);
-            } else if (type == "boolean"){
+            } else if (dataType == "boolean"){
                 value = value.toLowerCase();
                 if(kendo.parseFloat(value) !== null){
                     value = Boolean(kendo.parseFloat(value));
@@ -422,9 +428,9 @@ var __meta__ = {
         }
     });
 
-    binders.value = Binder.extend({
+    binders.value = TypedBinder.extend({
         init: function(element, bindings, options) {
-            Binder.fn.init.call(this, element, bindings, options);
+            TypedBinder.fn.init.call(this, element, bindings, options);
 
             this._change = proxy(this.change, this);
             this.eventName = options.valueUpdate || CHANGE;
@@ -436,10 +442,8 @@ var __meta__ = {
 
         change: function() {
             this._initChange = this.eventName != CHANGE;
-            var type = this.getDataType(this.element);
-            var value = this.getParsedValue(this.element.value, type);
 
-            this.bindings[VALUE].set(value);
+            this.bindings[VALUE].set(this.parsedValue());
 
             this._initChange = false;
         },
@@ -452,7 +456,7 @@ var __meta__ = {
                     value = "";
                 }
 
-                var type = this.getDataType(this.element);
+                var type = this.dataType();
 
                 if (type == "date") {
                     value = kendo.toString(value, "yyyy-MM-dd");
@@ -609,27 +613,27 @@ var __meta__ = {
     });
 
     binders.input = {
-        checked: Binder.extend({
+        checked: TypedBinder.extend({
             init: function(element, bindings, options) {
-                Binder.fn.init.call(this, element, bindings, options);
+                TypedBinder.fn.init.call(this, element, bindings, options);
                 this._change = proxy(this.change, this);
 
                 $(this.element).change(this._change);
             },
+
             change: function() {
                 var element = this.element;
                 var value = this.value();
-                var dataType = this.getDataType(this.element);
 
                 if (element.type == "radio") {
-                    value = this.getParsedValue(this.element.value, dataType);
+                    value = this.parsedValue();
                     this.bindings[CHECKED].set(value);
                 } else if (element.type == "checkbox") {
                     var source = this.bindings[CHECKED].get();
                     var index;
 
                     if (source instanceof ObservableArray) {
-                        value = this.getParsedValue(this.element.value, dataType);
+                        value = this.parsedValue();
                         if (value instanceof Date) {
                             for(var i = 0; i < source.length; i++){
                                 if(source[i] instanceof Date && +source[i] === +value){
@@ -654,13 +658,12 @@ var __meta__ = {
             refresh: function() {
                 var value = this.bindings[CHECKED].get(),
                     source = value,
-                    element = this.element,
-                    dataType = this.getDataType(this.element);
+                    element = this.element;
 
                 if (element.type == "checkbox") {
                     if (source instanceof ObservableArray) {
                         var index = -1;
-                        value = this.getParsedValue(this.element.value, dataType);
+                        value = this.parsedValue();
                         if(value instanceof Date){
                             for(var i = 0; i < source.length; i++){
                                 if(source[i] instanceof Date && +source[i] === +value){
@@ -699,12 +702,34 @@ var __meta__ = {
     };
 
     binders.select = {
-        value: Binder.extend({
+        value: TypedBinder.extend({
             init: function(target, bindings, options) {
-                Binder.fn.init.call(this, target, bindings, options);
+                TypedBinder.fn.init.call(this, target, bindings, options);
 
                 this._change = proxy(this.change, this);
                 $(this.element).change(this._change);
+            },
+
+            parsedValue : function() {
+                var dataType = this.dataType();
+                var values = [];
+                var value, option, idx;
+                for (idx = 0, length = this.element.options.length; idx < length; idx++) {
+                    option = this.element.options[idx];
+
+                    if (option.selected) {
+                        value = option.attributes.value;
+
+                        if (value && value.specified) {
+                            value = option.value;
+                        } else {
+                            value = option.text;
+                        }
+
+                        values.push(this._parseValue(value, dataType));
+                    }
+                }
+                return values;
             },
 
             change: function() {
@@ -719,21 +744,7 @@ var __meta__ = {
                     idx,
                     length;
 
-                for (idx = 0, length = element.options.length; idx < length; idx++) {
-                    option = element.options[idx];
-
-                    if (option.selected) {
-                        value = option.attributes.value;
-
-                        if (value && value.specified) {
-                            value = option.value;
-                        } else {
-                            value = option.text;
-                        }
-
-                        values.push(value);
-                    }
-                }
+                values = this.parsedValue();
 
                 if (field) {
                     source = this.bindings.source.get();
