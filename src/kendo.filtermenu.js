@@ -704,26 +704,63 @@ var __meta__ = {
         }
     });
 
+    var multiCheckNS = ".kendoFilterMultiCheck";
+
     FilterMultiCheck = Widget.extend({
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
-            this.element = element;
-            options = this.options;
+            this.element = $(element);
+            this.field = this.options.field || this.element.attr(kendo.attr("field"));
+            this._createLink();
+        },
+        _createLink: function() {
+            var element = this.element;
+            link = element.addClass("k-with-icon k-filterable").find(".k-grid-filter");
+
+            if (!link[0]) {
+                link = element.prepend('<a class="k-grid-filter" href="#"><span class="k-icon k-filter"/></a>').find(".k-grid-filter");
+            }
+
+            this._link = link.attr("tabindex", -1).on("click" + NS, proxy(this._click, this));
+        },
+        _click: function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (!this.popup && !this.pane) {
+                this._init();
+            }
+
+            this.popup.toggle();
+        },
+        _init: function() {
             this._createForm();
         },
         _createForm: function() {
-            var listView = $("<div />").kendoListView({
-                dataSource: this.options.dataSource.data(),
-                template: "<div><label><input type='checkbox' value='#:" + this.options.field + "#'/>#:" + this.options.field + "#</label></div>"
-            });
-            this.form = $('<form class="k-filter-menu"/>').html(listView).kendoPopup({
-                anchor: this.element,
-                open: proxy
-            })
+            var options = this.options;
+            var template = kendo.template(options.itemTemplate(this.field));
+            var itemsHtml = kendo.render(template, options.dataSource.data());
+            itemsHtml += "<button type='reset' class='k-button'>" + options.messages.clear + "</button>";
+            this.form = $('<form class="k-filter-menu"/>');
+            this.popup = this.form.html(itemsHtml).kendoPopup({
+                anchor: this._link
+            }).data("kendoPopup");
+
+            this.form.on("keydown" + multiCheckNS, proxy(this._keydown, this));
         },
         options: {
-            name: "FilterMultiCheck"
-        }
+            name: "FilterMultiCheck",
+            itemTemplate: function(field) {
+                return "<div><label><input type='checkbox' value='#:"+ field +" #'/>#:"+ field +"#</label></div>";
+            },
+            messages: {
+                clear: "clear"
+            }
+        },
+    });
+
+    $.extend(FilterMultiCheck.fn, {
+        _keydown: FilterMenu.fn._keydown
     });
 
     ui.plugin(FilterMenu);
