@@ -1266,9 +1266,7 @@ var __meta__ = {
                     "role": "columnheader"
                 };
 
-                if (column.headerAttributes) {
-                    extend(attr, column.headerAttributes);
-                }
+                attr = extend({}, attr, column.headerAttributes);
 
                 ths.push(kendoDomElement("th", attr, children));
             }
