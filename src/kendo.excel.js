@@ -40,7 +40,8 @@ kendo.ExcelExporter = kendo.Class.extend({
             var data = dataSource.data();
 
             if (data.length > 0) {
-                this.dataSource.data(data.toJSON());
+                // Avoid toJSON() for perf and avoid data() to prevent reparenting.
+                this.dataSource._data = data;
             }
 
         } else {
@@ -128,68 +129,81 @@ kendo.ExcelExporter = kendo.Class.extend({
             to: depth + this.columns.length - 1
         };
     },
-    _dataRows: function(dataItems, level) {
-        var depth = this._depth();
-        var rows = $.map(dataItems, $.proxy(function(dataItem) {
-            if (this._hierarchical()) {
-                level = this.dataSource.level(dataItem) + 1;
+
+    _dataRow: function(dataItem, level, depth) {
+        if (this._hierarchical()) {
+            level = this.dataSource.level(dataItem) + 1;
+        }
+
+        var cells = [];
+
+        for (var li = 0; li < level; li++) {
+            cells[li] = {
+                background: "#dfdfdf",
+                color: "#333"
+            };
+        }
+
+        // grouped
+        if (depth && dataItem.items) {
+            var column = $.grep(this.columns, function(column) {
+                return column.field == dataItem.field;
+            })[0];
+
+            var title = column && column.title ? column.title : dataItem.field;
+            var template = column ? column.groupHeaderTemplate : null;
+            var value = title + ": " + dataItem.value;
+            var group = $.extend({
+                    title: title,
+                    field: dataItem.field,
+                    value: dataItem.value,
+                    aggregates: dataItem.aggregates
+                }, dataItem.aggregates[dataItem.field]);
+
+            if (template) {
+                value = template(group);
             }
 
-            var cells = $.map(new Array(level), function() {
-                return {
-                    background: "#dfdfdf",
-                    color: "#333"
-                };
+            cells.push( {
+                value: value,
+                background: "#dfdfdf",
+                color: "#333",
+                colSpan: this.columns.length + depth - level
+            } );
+
+            var rows = this._dataRows(dataItem.items, level + 1);
+
+            rows.unshift({
+                type: "group-header",
+                cells: cells
             });
 
-            // grouped
-            if (depth && dataItem.items) {
-                var column = $.grep(this.columns, function(column) {
-                    return column.field == dataItem.field;
-                })[0];
+            return rows.concat(this._footer(dataItem, level+1));
+        } else {
+            var dataCells = [];
 
-                var title = column && column.title ? column.title : dataItem.field;
-                var template = column ? column.groupHeaderTemplate : null;
-                var value = title + ": " + dataItem.value;
-                var group = $.extend({
-                        title: title,
-                        field: dataItem.field,
-                        value: dataItem.value,
-                        aggregates: dataItem.aggregates
-                    }, dataItem.aggregates[dataItem.field]);
-
-                if (template) {
-                    value = template(group);
-                }
-
-                cells.push( {
-                    value: value,
-                    background: "#dfdfdf",
-                    color: "#333",
-                    colSpan: this.columns.length + depth - level
-                } );
-
-                var rows = this._dataRows(dataItem.items, level + 1);
-
-                rows.unshift({
-                    type: "group-header",
-                    cells: cells
-                });
-
-                return rows.concat(this._footer(dataItem, level+1));
-            } else {
-                var dataCells = $.map(this.columns, $.proxy(this._cell, this, dataItem));
-
-                if (this._hierarchical()) {
-                    dataCells[0].colSpan = depth - level + 1;
-                }
-
-                return {
-                    type: "data",
-                    cells: cells.concat(dataCells)
-                };
+            for (var ci = 0; ci < this.columns.length; ci++) {
+                dataCells[ci] = this._cell(dataItem, this.columns[ci]);
             }
-        }, this));
+
+            if (this._hierarchical()) {
+                dataCells[0].colSpan = depth - level + 1;
+            }
+
+            return [{
+                type: "data",
+                cells: cells.concat(dataCells)
+            }];
+        }
+    },
+
+    _dataRows: function(dataItems, level) {
+        var depth = this._depth();
+        var rows = [];
+
+        for (var i = 0; i < dataItems.length; i++) {
+            rows.push.apply(rows, this._dataRow(dataItems[i], level, depth));
+        }
 
         return rows;
     },

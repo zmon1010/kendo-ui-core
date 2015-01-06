@@ -28,13 +28,24 @@
         $("#grid").kendoGrid({
           toolbar: ["excel"],
           dataSource: {
-              type: "odata",
               transport: {
-                  read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                  read: function(options) {
+                    var data = [];
+                    for (var i = 0; i < 150 * 1000; i++) {
+                        data.push( {
+                            ContactName: "Contact " + i,
+                            ContactTitle: "Contact Title " + i,
+                            CompanyName: "Company Name " + i
+                        } );
+                    }
+
+                    options.success(data);
+                  }
               },
-              pageSize: 10,
-              group: [ { field: "CompanyName", aggregates: [{ field: "CompanyName", aggregate: "count" }] } ],
-              aggregate: [  { field: "CompanyName", aggregate: "count" } ]
+              pageSize: 10
+          },
+          excel: {
+              allPages: true
           },
           sortable: true,
           pageable: {
@@ -42,31 +53,32 @@
               pageSizes: true,
               buttonCount: 5
           },
+          excelExport: function(e) {
+//              e.preventDefault();
+            console.log("generation done");
+          },
           columns: [{
               field: "ContactName",
               title: "Contact Name",
-              width: 300,
-              locked: true
+              width: 300
           }, {
               field: "ContactTitle",
               title: "Contact Title",
               width: 250
           }, {
               field: "CompanyName",
-              title: "Company Name",
-              groupHeaderTemplate: "Company Name: #: value# Total(#: count #)",
-              groupFooterTemplate: "Total(#: count #)",
-              footerTemplate: "Total(#: count #)",
-              width: 500
+              title: "Company Name"
           }
           ],
-          excelExport: function(e) {
-              e.workbook.sheets[0].rows[1].cells[0].wrap = true;
-          },
           columnMenu: false,
           groupable: true,
           resizable: true,
           reorderable: true
+      });
+
+      var start;
+      $(".k-grid-excel").click(function() {
+          start = new Date();
       });
   </script>
 </body>
