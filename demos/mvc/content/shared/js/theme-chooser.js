@@ -123,7 +123,7 @@
             { value: "flat", name: "Flat", colors: [ "#363940", "#2eb3a6", "#fff" ]  },
             { value: "material", name: "Material", colors: [ "#3f51b5", "#283593", "#fff" ]  },
             { value: "materialblack", name: "Material Black", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] },
-            { value: "fiori", name: "Fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] },
+            { value: "fiori", name: "Fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] }
         ],
         mobileThemes: [
             { name: "iOS7", value:"ios7", colors: [ "#007aff", "#f5f5f5", "#ffffff" ]  },
@@ -151,7 +151,7 @@
         updateMobileTheme: function(e) {
             var that = this;
 
-            setTimeout(function () { that.setMobileTheme(e.item.value) }, 0);
+            setTimeout(function () { that.setMobileTheme(e.item.value); }, 0);
         },
 
         updateTheme: function(e) {
@@ -173,7 +173,7 @@
 
         setMobileTheme: function(themeName) {
             var mobileContainer = $("#mobile-application-container");
-            var toClass = function(x) { return "km-" + x + (" km-" + x.replace(/-.*/, "")) };
+            var toClass = function(x) { return "km-" + x + (" km-" + x.replace(/-.*/, "")); };
             var themeIds = $.map(this.mobileThemes, function(x) { return x.value; });
             mobileContainer.removeClass($.map(themeIds, toClass).join(" ")).addClass(toClass(themeName));
             $("#device-wrapper").removeClass(themeIds.join(" ")).addClass(themeName);
