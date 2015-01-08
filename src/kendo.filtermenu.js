@@ -721,6 +721,9 @@ var __meta__ = {
     }
 
     function flatFilterValues(expression) {
+        if (expression.logic == "and" && expression.filters.length > 1) {
+            return [];
+        }
         if (expression.filters) {
             return $.map(expression.filters, function(filter) {
                 return flatFilterValues(filter);
