@@ -57,20 +57,9 @@
                         }
                     },
                     columns: [
-                        { field: "Id", locked: false, width: 300 },
                         {
-                            field: "Name",
-                            locked: true,
-                            width: 300
-                        },
-                        {
-                            field: "Name",
-                            locked: true,
-                            width: 300
-                        },
-                        {
-                            field: "Name",
-                            locked: true,
+                            field: "Id",
+                            locked: false,
                             width: 300,
                             filterable: {
                                 multi: true
@@ -89,11 +78,22 @@
                             locked: false,
                             width: 300,
                             filterable: {
+                                multi: true
                             }
                         },
-                        { field: "Position", filterable: {  }, locked: true, width: 300 },
+                        {
+                            field: "Position",
+                            filterable: {
+                                multi: true
+                            },
+                            locked: true,
+                            width: 300
+                        },
                         {
                             field: "Grade",
+                            filterable: {
+                                multi: true
+                            },
                             values: [
                                 {
                                     text: "Grade 2",
@@ -119,6 +119,7 @@
                             width: 400,
                             format: "{0:MM/dd/yyyy}",
                             filterable: {
+                                multi: true,
                                 operators: {
                                     date: {
                                         eq: "col level equal"

@@ -729,7 +729,7 @@ var __meta__ = {
                 return flatFilterValues(filter);
             });
         } else if (expression.value !== null && expression.value !== undefined) {
-            return [expression.value];
+            return [expression.value + ""];
         } else {
             return [];
         }
@@ -739,8 +739,23 @@ var __meta__ = {
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
             this.element = $(element);
-            this.field = this.options.field || this.element.attr(kendo.attr("field"));
+            var field = this.field = this.options.field || this.element.attr(kendo.attr("field"));
             this.dataSource = this.options.dataSource;
+            this.model = this.dataSource.reader.model;
+
+            this._parse = function(value) {
+                 return value + "";
+            };
+
+            if (this.model && this.model.fields) {
+                field = this.model.fields[this.field];
+
+                if (field) {
+                    if (field.parse) {
+                        this._parse = proxy(field.parse, field);
+                    }
+                }
+            }
             this._createLink();
 
             this._refreshHandler = proxy(this.refresh, this);
@@ -774,6 +789,7 @@ var __meta__ = {
             var options = this.options;
             var template = kendo.template(options.itemTemplate(this.field));
             var itemsHtml = kendo.render(template, this.dataSource.data());
+            itemsHtml += "<button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
             itemsHtml += "<button type='reset' class='k-button'>" + options.messages.clear + "</button>";
             this.form = $('<form class="k-filter-menu"/>');
             this.popup = this.form.html(itemsHtml).kendoPopup({
@@ -781,6 +797,7 @@ var __meta__ = {
             }).data("kendoPopup");
 
             this.form.on("keydown" + multiCheckNS, proxy(this._keydown, this))
+                        .on("submit" + multiCheckNS, proxy(this._filter, this))
                         .on("reset" + multiCheckNS, proxy(this._reset, this));
             this.refresh();
         },
@@ -798,13 +815,32 @@ var __meta__ = {
                 return $.inArray($(ele).val(), values) != -1;
             })).prop("checked", true);
         },
+        _filter: function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var expression = { logic: "or" };
+
+            var that = this;
+            expression.filters = $.map(this.form.find(":checkbox:checked"), function (item) {
+                return { value: $(item).val(), operator: "eq", field: that.field };
+            });
+
+            expression = this._merge(expression);
+            if (expression.filters.length) {
+                this.dataSource.filter(expression);
+            }
+
+            this._closeForm();
+        },
         options: {
             name: "FilterMultiCheck",
             itemTemplate: function(field) {
                 return "<div><label><input type='checkbox' value='#:"+ field +" #'/>#:"+ field +"#</label></div>";
             },
             messages: {
-                clear: "clear"
+                clear: "clear",
+                filter: "filter"
             }
         },
     });
@@ -813,7 +849,9 @@ var __meta__ = {
         _keydown: FilterMenu.fn._keydown,
         _reset: FilterMenu.fn._reset,
         _closeForm: FilterMenu.fn._closeForm,
-        clear: FilterMenu.fn.clear
+        clear: FilterMenu.fn.clear,
+
+        _merge: FilterMenu.fn._merge
     });
 
     ui.plugin(FilterMenu);
