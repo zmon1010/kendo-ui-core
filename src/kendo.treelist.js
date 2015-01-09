@@ -1998,6 +1998,9 @@ var __meta__ = {
             columns.splice(before ? destIndex : destIndex + 1, 0, column);
             columns.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
 
+            this._angularItems("cleanup");
+            this._angularFooters("cleanup");
+
             this._renderCols();
 
             //reorder column header manually
@@ -2009,6 +2012,9 @@ var __meta__ = {
             dom.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
 
             this._render();
+
+            this._angularItems("compile");
+            this._angularFooters("compile");
         }
     });
 
