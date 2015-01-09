@@ -779,6 +779,7 @@ var __meta__ = {
                     values = value,
                     field = this.options.valueField || this.options.textField,
                     found = false,
+                    type = this.dataType(),
                     optionValue;
 
                 if (!(values instanceof ObservableArray)) {
@@ -790,8 +791,15 @@ var __meta__ = {
                 for (var valueIndex = 0; valueIndex < values.length; valueIndex++) {
                     value = values[valueIndex];
 
+
                     if (field && value instanceof ObservableObject) {
                         value = value.get(field);
+                    }
+
+                    if (type == "date") {
+                        value = kendo.toString(values[valueIndex], "yyyy-M-d");
+                    } else if (type == "datetime-local") {
+                        value = kendo.toString(values[valueIndex], "yyyy-M-dTHH:mm:ss");
                     }
 
                     for (optionIndex = 0; optionIndex < options.length; optionIndex++) {
@@ -801,7 +809,7 @@ var __meta__ = {
                             optionValue = options[optionIndex].text;
                         }
 
-                        if (optionValue == value) {
+                        if (optionValue == value) { /* TODO: explicit number and boolean conversion*/
                             options[optionIndex].selected = true;
                             found = true;
                         }

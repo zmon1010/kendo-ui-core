@@ -391,7 +391,7 @@ test("splicing items from array removes option elements without destroying the e
     equal(dom.find("option")[1], lastOption);
 });
 
-test("removing items from data source removes option elements without destroing the existing ones", function() {
+test("removing items from data source removes option elements without destroying the existing ones", function() {
     dom = $('<select data-template="select-template" data-bind="source:foo"/>');
 
     var viewModel = kendo.observable( {
@@ -644,6 +644,36 @@ test("binding multi select value to multiple objects", function() {
 
     kendo.bind(dom, viewModel);
     ok(dom.find("option").eq(1).is(":selected"));
+    ok(dom.find("option").eq(2).is(":selected"));
+});
+
+test("binding multiple select value to date array", function() {
+    dom = $('<select multiple="multiple" data-value-field="text" data-type="date" data-bind="source:items, value:selectedItems"/>');
+
+    var viewModel = kendo.observable({
+        items: [{text: "2015-1-1"}, {text:"2014-1-1"}, {text:"2014-12-31"}],
+        selectedItems: []
+    });
+
+    kendo.bind(dom, viewModel);
+    viewModel.set("selectedItems", [kendo.parseDate("2015-1-1"), kendo.parseDate("2014-12-31")]);
+
+    ok(dom.find("option").eq(0).is(":selected"));
+    ok(dom.find("option").eq(2).is(":selected"));
+});
+
+test("binding multiple select value to number array", function() {
+    dom = $('<select multiple="multiple" data-value-field="text" data-type="number" data-bind="source:items, value:selectedItems"/>');
+
+    var viewModel = kendo.observable({
+        items: [{text: "123"}, {text:"14.5"}, {text:"-3.14"}],
+        selectedItems: []
+    });
+
+    kendo.bind(dom, viewModel);
+    viewModel.set("selectedItems", [123, -3.14]);
+
+    ok(dom.find("option").eq(0).is(":selected"));
     ok(dom.find("option").eq(2).is(":selected"));
 });
 
