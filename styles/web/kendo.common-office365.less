@@ -11,6 +11,12 @@
 
 @import "common/all.less";
 
+.k-calendar .k-header,
+.k-calendar .k-content thead,
+.k-calendar .k-footer {
+    text-transform: uppercase;
+}
+
 .k-webkit .k-combobox .k-dropdown-wrap:before,
 .k-webkit .k-picker-wrap:before,
 .k-webkit .k-numeric-wrap:before
@@ -57,3 +63,39 @@ input.k-textbox
 .k-notification-wrap {
     padding: 1.5em;
 }
+
+.k-calendar .k-content {
+    height: 17.143em;
+}
+
+.k-calendar {
+    width: 20em;
+}
+
+.k-calendar th {
+    padding: .4em .75em .4em .45em;
+}
+
+.k-calendar td {
+    padding: .08333em .286em;
+}
+
+.k-calendar .k-content .k-link {
+    min-height: 2.714em;
+    line-height: 2.714em;
+    padding: 0 .857em 0 .714em;
+}
+
+.k-widget.k-calendar .k-nav-fast {
+    height: 2.429em;
+    line-height: 2.429em;
+    margin: 0.214em -0.08333em 0.357em 0;
+}
+
+.k-calendar .k-header .k-link.k-nav-prev, 
+.k-calendar .k-header .k-link.k-nav-next {
+    height: 2.429em;
+    line-height: 2.429em;
+    width: 2.429em;
+    top: 0.214em;
+} 
