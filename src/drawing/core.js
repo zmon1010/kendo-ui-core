@@ -18,18 +18,17 @@
         defined = util.defined;
 
     // Base drawing surface ==================================================
-    var Surface = kendo.Observable.extend({
+    var Surface = Widget.extend({
         init: function(element, options) {
-            kendo.Observable.fn.init.call(this);
-
             this.options = deepExtend({}, this.options, options);
-            this.bind(this.events, this.options);
+
+            Widget.fn.init.call(this, element, this.options);
 
             this._click = this._handler("click");
             this._mouseenter = this._handler("mouseenter");
             this._mouseleave = this._handler("mouseleave");
 
-            this.element = $(element);
+            this._visual = new kendo.drawing.Group();
 
             if (this.options.width) {
                 this.element.css("width", this.options.width);
@@ -40,7 +39,9 @@
             }
         },
 
-        options: { },
+        options: {
+            name: "Surface"
+        },
 
         events: [
             "click",
@@ -49,12 +50,22 @@
             "resize"
         ],
 
-        draw: noop,
-        clear: noop,
-        destroy: noop,
+        draw: function(element) {
+            this._visual.children.push(element);
+        },
 
-        resize: Widget.fn.resize,
-        size: Widget.fn.size,
+        clear: function() {
+            this._visual.children = [];
+        },
+
+        destroy: function() {
+            this._visual = null;
+            Widget.fn.destroy.call(this);
+        },
+
+        exportVisual: function() {
+            return this._visual;
+        },
 
         getSize: function() {
             return {
@@ -107,6 +118,8 @@
             };
         }
     });
+
+    kendo.ui.plugin(Surface);
 
     Surface.create = function(element, options) {
         return SurfaceFactory.current.create(element, options);
