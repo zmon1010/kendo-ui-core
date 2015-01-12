@@ -11,6 +11,9 @@
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\..\src\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">..\..\src\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AssemblyName>Kendo.Mvc.Examples</AssemblyName>
+  </PropertyGroup>
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
     <DevelopmentServerPort>6004</DevelopmentServerPort>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
 using System;
@@ -46,6 +47,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public bool HasDeferredInitialization
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Gets the HTML attributes of the widget.
         /// </summary>
@@ -54,6 +61,12 @@ namespace Kendo.Mvc.UI
         {
             get;
             private set;
+        }
+
+        public ModelMetadata ModelMetadata
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -74,6 +87,26 @@ namespace Kendo.Mvc.UI
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Renders the component.
+        /// </summary>
+        public void Render()
+        {
+            // TODO
+        }
+
+        public HtmlString ToClientTemplate()
+        {
+            // TODO
+            return HtmlString.Empty;
+        }
+
+        public string ToHtmlString()
+        {
+            // TODO
+            return "";
         }
 
         public string SanitizeId(string id)

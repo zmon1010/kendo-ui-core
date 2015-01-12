@@ -6,7 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 
-namespace Kendo.Mvc.UI
+namespace Kendo.Mvc.UI.Fluent
 {
     public class WidgetFactory<TModel> : WidgetFactory
     {

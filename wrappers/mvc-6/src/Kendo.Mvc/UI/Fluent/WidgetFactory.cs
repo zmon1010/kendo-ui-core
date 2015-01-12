@@ -3,7 +3,7 @@ using Microsoft.AspNet.Mvc.Rendering;
 using System;
 using System.ComponentModel;
 
-namespace Kendo.Mvc.UI
+namespace Kendo.Mvc.UI.Fluent
 {
     public class WidgetFactory
     {
@@ -29,9 +29,9 @@ namespace Kendo.Mvc.UI
         /// %&gt;
         /// </code>
         /// </example>
-        public virtual DateTimePickerBuilder DateTimePicker(ViewContext viewContext)
+        public virtual DateTimePickerBuilder DateTimePicker()
         {
-            return new DateTimePickerBuilder(new DateTimePicker(ViewContext));
+            return new DateTimePickerBuilder(new DateTimePicker(HtmlHelper.ViewContext));
         }
     }
 }
