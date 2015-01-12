@@ -467,6 +467,10 @@ input.k-textbox:focus {
 	border-color: @focused-border-color;
 }
 
+.k-marquee-color {
+	background-color: @select-background-color;
+}
+
 .k-grid .k-state-selected,
 .k-grid td.k-state-selected.k-state-focused {
 	background-color: @selected-background-color;
@@ -651,6 +655,10 @@ input.k-textbox:focus {
 	}
 }
 
+.k-gantt .k-grid-content td {
+	//border-color: @widget-border-color;
+}
+
 .k-gantt .k-treelist .k-alt {
 	background-color: @widget-background-color;
 }
@@ -667,4 +675,9 @@ input.k-textbox:focus {
 
 .k-window .k-header {
 	border-color: transparent;
+}
+
+.k-tooltip-validation,
+.k-notification {
+	.box-shadow(none);	
 }
