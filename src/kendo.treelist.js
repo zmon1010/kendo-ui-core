@@ -77,6 +77,7 @@ var __meta__ = {
     var COLUMNHIDE = "columnHide";
     var COLUMNSHOW = "columnShow";
     var HEADERCELLS = "th.k-header";
+    var COLUMNREORDER = "columnReorder";
 
     var classNames = {
         wrapper: "k-treelist k-grid k-widget",
@@ -936,7 +937,8 @@ var __meta__ = {
             CANCEL,
             FILTERMENUINIT,
             COLUMNHIDE,
-            COLUMNSHOW
+            COLUMNSHOW,
+            COLUMNREORDER
         ],
 
         _toggle: function(model, expand) {
@@ -1946,7 +1948,7 @@ var __meta__ = {
 
         _reorderable: function() {
             if (!this.options.reorderable) {
-                //return;
+                return;
             }
 
             var scrollable = this.options.scrollable === true;
@@ -1977,8 +1979,15 @@ var __meta__ = {
                     var newIndex = e.newIndex;
                     var oldIndex = e.oldIndex;
                     var before = e.position === "before";
+                    var column = that.columns[oldIndex];
 
-                    that.reorderColumn(newIndex, that.columns[oldIndex], before);
+                    that.trigger(COLUMNREORDER, {
+                        newIndex: newIndex,
+                        oldIndex: oldIndex,
+                        column: column
+                    });
+
+                    that.reorderColumn(newIndex, column, before);
                 }
             });
         },
