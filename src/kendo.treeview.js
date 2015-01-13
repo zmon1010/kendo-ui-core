@@ -1859,7 +1859,18 @@ var __meta__ = {
         },
 
         findByUid: function(uid) {
-            return this.element.find(".k-item[" + kendo.attr("uid") + "=" + uid + "]");
+            var items = this.element.find(".k-item");
+            var uidAttr = kendo.attr("uid");
+            var result;
+
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].getAttribute(uidAttr) == uid) {
+                    result = items[i];
+                    break;
+                }
+            }
+
+            return $(result);
         },
 
         expandPath: function(path, complete) {
