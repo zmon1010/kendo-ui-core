@@ -5764,7 +5764,7 @@
     "items": [
       {
         "text": "Document Export",
-        "url": "drawing/export",
+        "url": "pdf-export/index",
         "new": true,
         "packages": [
           "!mvc"
@@ -5777,7 +5777,7 @@
         }
       }, {
         "text": "Page Layout",
-        "url": "drawing/custom-pdf-export",
+        "url": "pdf-export/page-layout",
         "new": true,
         "packages": [
           "!mvc"
