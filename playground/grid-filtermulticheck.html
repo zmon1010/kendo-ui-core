@@ -44,10 +44,11 @@
     </head>
     <body>
         <h3>feature grid</h3>
-        <div id="feature"></div>
+        <div id="grid"></div>
         <script>
             $(function() {
-                var feature = $("#feature").kendoGrid({
+                var feature = $("#grid").kendoGrid({
+                    sortable: true,
                     filterable: {
                         mode: "menu",
                         operators: {

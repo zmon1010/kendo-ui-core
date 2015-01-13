@@ -735,6 +735,29 @@ var __meta__ = {
         }
     }
 
+    function removeDuplicates (dataSelector, dataTextField) {
+        var getter = kendo.getter(dataTextField, true);
+
+        return function(e) {
+            var items = dataSelector(e),
+                result = [],
+                index = 0,
+                seen = {};
+
+            while (index < items.length) {
+                var item = items[index++],
+                    text = getter(item);
+
+                if(!seen.hasOwnProperty(text)){
+                    result.push(item);
+                    seen[text] = true;
+                }
+            }
+
+            return result;
+        };
+    }
+
     FilterMultiCheck = Widget.extend({
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
@@ -786,13 +809,20 @@ var __meta__ = {
             this._createForm();
         },
         _createForm: function() {
+            var ds = this.dataSource;
+
+            this.createItemsHandler = proxy(this.createItems, this);
+            if (this.options.forceUnique) {
+                ds.reader.data = removeDuplicates(ds.reader.data, this.field);
+            }
+            this.dataSource.fetch(this.createItemsHandler);
+        },
+        createItems: function() {
             var options = this.options;
-            var template = kendo.template(options.itemTemplate(this.field));
-            var itemsHtml = kendo.render(template, this.dataSource.data());
-            itemsHtml += "<button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
-            itemsHtml += "<button type='reset' class='k-button'>" + options.messages.clear + "</button>";
+            var html = "<div class='multicheck-container'></div><button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
+            html += "<button type='reset' class='k-button'>" + options.messages.clear + "</button>";
             this.form = $('<form class="k-filter-menu"/>');
-            this.popup = this.form.html(itemsHtml).kendoPopup({
+            this.popup = this.form.html(html).kendoPopup({
                 anchor: this._link
             }).data("kendoPopup");
 
@@ -804,11 +834,18 @@ var __meta__ = {
         refresh: function() {
             var ds = this.dataSource;
             if (this.form) {
+                this.createCheckBoxes();
                 var expression = $.extend(true, {}, { filters: [], logic: "and" }, ds.filter());
                 filterValuesForField(expression, this.field) || [];
                 var flatValues = flatFilterValues(expression);
                 this.checkValues(flatValues);
             }
+        },
+        createCheckBoxes: function() {
+            var options = this.options;
+            var template = kendo.template(options.itemTemplate(this.field));
+            var itemsHtml = kendo.render(template, this.dataSource.data()); //unique values should be shown and values for foreign key column should be provided when this is implemented
+            this.form.find(".multicheck-container").html(itemsHtml);
         },
         checkValues: function(values) {
             $($.grep(this.form.find(":checkbox").prop("checked", false), function(ele) {
@@ -833,6 +870,37 @@ var __meta__ = {
 
             this._closeForm();
         },
+
+        destroy: function() {
+            var that = this;
+
+            Widget.fn.destroy.call(that);
+
+            if (that.form) {
+                kendo.unbind(that.form);
+                kendo.destroy(that.form);
+                that.form.unbind(NS);
+                if (that.popup) {
+                    that.popup.destroy();
+                    that.popup = null;
+                }
+                that.form = null;
+            }
+
+            if (that.view) {
+                that.view.purge();
+                that.view = null;
+            }
+
+            that._link.unbind(NS);
+
+            if (that._refreshHandler) {
+                that.dataSource.unbind("change", that._refreshHandler);
+                that.dataSource = null;
+            }
+
+            that.element = that._link = that._refreshHandler = null;
+        },
         options: {
             name: "FilterMultiCheck",
             itemTemplate: function(field) {
@@ -841,7 +909,8 @@ var __meta__ = {
             messages: {
                 clear: "clear",
                 filter: "filter"
-            }
+            },
+            forceUnique: true
         },
     });
 
