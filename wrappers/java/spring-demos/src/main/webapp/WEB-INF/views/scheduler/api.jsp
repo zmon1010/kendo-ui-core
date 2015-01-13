@@ -53,10 +53,10 @@
 
 	Map<String, Object> timeline = new HashMap<String, Object>();
 
-	week.put("text", "Timeline");
-	week.put("value", "timeline");
+	timeline.put("text", "Timeline");
+	timeline.put("value", "timeline");
 
-	views.add(week);
+	views.add(timeline);
 %>
 
 <demo:header />
