@@ -14,7 +14,8 @@
 .k-gantt .k-grid-header,
 .k-calendar .k-header,
 .k-calendar .k-content thead,
-.k-calendar .k-footer {
+.k-calendar .k-footer,
+.k-tabstrip-items {
     text-transform: uppercase;
 }
 
@@ -112,6 +113,7 @@ span.k-tooltip {
 
 .k-widget.k-tooltip {
 	border-radius: 3px;
+    padding: 1em;
 }
 
 .k-ghost-splitbar-vertical,
@@ -234,3 +236,60 @@ span.k-tooltip {
 	height: 14px;
 }*/
 
+.k-tabstrip.k-header {
+    border: 0;
+}
+
+.k-tabstrip .k-tabstrip-items {
+    padding: 0;
+}
+
+.k-tabstrip > .k-content {
+    margin: 0;
+}
+
+.k-tabstrip-items .k-link,
+.k-panelbar .k-tabstrip-items .k-link {
+    padding: .5em .786em;
+}
+
+.k-panelbar > .k-item > .k-link,
+.k-panel > .k-item > .k-link {
+    line-height: 3.5em;
+}
+
+.k-menu .k-item > .k-link,
+.k-context-menu.k-menu-vertical > .k-item > .k-link,
+.k-menu .k-menu-group .k-item > .k-link {
+    padding: .786em 1.071em;
+}
+
+.k-toolbar, 
+.k-editor-toolbar {
+    line-height: 2.86em;
+}
+
+.k-toolbar .k-overflow-anchor {
+    width: 2.86em;    
+    height: 2.86em;
+    line-height: inherit;
+}
+
+.k-toolbar .k-button {
+    padding: .143em 1em;
+}
+
+.k-toolbar .k-button-group .k-button {
+    padding: .143em;
+    margin-right: 0.143em;
+}
+
+table.k-editor {
+    border-spacing: 0;
+}
+
+.k-editor .k-editor-toolbar-wrap,
+.k-editor .k-editable-area {
+    padding-left: 10px;
+    border-width: 1px 0 0;
+}

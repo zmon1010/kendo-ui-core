@@ -566,6 +566,7 @@ input.k-textbox:focus {
 
 	.k-toggle-button:hover {
 		background-color: @hover-background-color;
+		border-color: @hover-background-color;
 	}
 
 	.k-toggle-button.k-state-active,
@@ -577,6 +578,10 @@ input.k-textbox:focus {
 }
 
 .k-tabstrip {
+	&.k-header {
+		background-color: @button-background-color;
+	}
+
 	.k-item {
 	 	background-color: @button-background-color;
 	 	border-color: @button-border-color;
@@ -680,4 +685,18 @@ input.k-textbox:focus {
 .k-tooltip-validation,
 .k-notification {
 	.box-shadow(none);	
+}
+
+.k-editor {
+	 .k-tool {
+		border-color: @header-background-color;
+	}
+
+	.k-tool.k-state-hover {
+		border-color: @widget-border-color;
+	}
+
+	.k-tool.k-state-selected {
+		border-color: @selected-border-color;
+	}
 }
