@@ -95,7 +95,7 @@ public class MoveResizeController {
     }
     
     @RequestMapping(value = "/move-resize/destroy", method = RequestMethod.POST)
-    public @ResponseBody List<Task> destroy(@RequestBody ArrayList<Map<String, Object>> models) {
+    public @ResponseBody List<Task> destroy(@RequestBody ArrayList<Map<String, Object>> models) throws ParseException {
         List<Task> tasks = new ArrayList<Task>();
         
         for (Map<String, Object> model : models) {
@@ -103,6 +103,11 @@ public class MoveResizeController {
             
             task.setTaskId((int)model.get("taskId"));
             
+            SimpleDateFormat iso8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            iso8601.setTimeZone(TimeZone.getTimeZone("UTC"));
+            task.setStart(iso8601.parse((String)model.get("start")));
+            task.setEnd(iso8601.parse((String)model.get("end")));
+
             tasks.add(task);
         }
         

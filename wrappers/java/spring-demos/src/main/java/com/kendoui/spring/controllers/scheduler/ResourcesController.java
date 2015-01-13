@@ -98,7 +98,7 @@ public class ResourcesController {
     }
     
     @RequestMapping(value = "/resources/destroy", method = RequestMethod.POST)
-    public @ResponseBody List<Meeting> destroy(@RequestBody ArrayList<Map<String, Object>> models) {
+    public @ResponseBody List<Meeting> destroy(@RequestBody ArrayList<Map<String, Object>> models) throws ParseException {
         List<Meeting> meetings = new ArrayList<Meeting>();
         
         for (Map<String, Object> model : models) {
@@ -106,6 +106,11 @@ public class ResourcesController {
             
             meeting.setMeetingId((int)model.get("meetingId"));
             
+            SimpleDateFormat iso8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            iso8601.setTimeZone(TimeZone.getTimeZone("UTC"));
+            meeting.setStart(iso8601.parse((String)model.get("start")));
+            meeting.setEnd(iso8601.parse((String)model.get("end")));
+
             meetings.add(meeting);
         }
         
