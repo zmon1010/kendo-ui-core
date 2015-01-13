@@ -308,10 +308,6 @@
                 that.dataItem = (options || {}).dataItem;
                 Observable.fn.init.call(that);
                 that.options = deepExtend({ id: diagram.randomId() }, that.options, options);
-                // Update dataItem after deepExtend in order to fix editing model wrapping
-                if (that.dataItem) {
-                    that.options.dataItem = that.dataItem;
-                }
                 that.isSelected = false;
                 that.visual = new Group({
                     id: that.options.id,
@@ -366,8 +362,8 @@
             serialize: function () {
                 // the options json object describes the shape perfectly. So this object can serve as shape serialization.
                 var json = deepExtend({}, {options: this.options});
-                if (this.options.dataItem) {
-                    json.dataItem = this.options.dataItem.toString();
+                if (this.dataItem) {
+                    json.dataItem = this.dataItem.toString();
                 }
                 return json;
             },
@@ -406,7 +402,7 @@
             _template: function () {
                 var that = this;
                 if (that.options.content.template) {
-                    var data = that.options.dataItem || {},
+                    var data = that.dataItem || {},
                         elementTemplate = kendo.template(that.options.content.template, {
                             paramName: "dataItem"
                         });
@@ -499,7 +495,7 @@
 
             updateOptionsFromModel: function(model, field) {
                 if (this.diagram && this.diagram._isEditable) {
-                    var modelOptions = filterShapeDataItem(model || this.options.dataItem);
+                    var modelOptions = filterShapeDataItem(model || this.dataItem);
 
                     if (model) {
                         if (field && !dataviz.inArray(field, ["x", "y", "width", "height"])) {
@@ -516,9 +512,7 @@
                             }
                         }
                     } else {
-                        var dataItem = this.options.dataItem;
                         this.options = deepExtend({}, this.options, modelOptions);
-                        this.options.dataItem = dataItem;
                     }
                 }
             },
@@ -526,6 +520,7 @@
             redrawVisual: function() {
                 this.visual.clear();
                 this._contentVisual = null;
+                this.options.dataItem = this.dataItem;
                 this.shapeVisual = Shape.createShapeVisual(this.options);
                 this.visual.append(this.shapeVisual);
                 this.updateBounds();
@@ -535,8 +530,8 @@
                 if (this.diagram && this.diagram._isEditable) {
                     var bounds = this._bounds;
                     var model;
-                    if (this.options.dataItem) {
-                        model = this.diagram.dataSource.getByUid(this.options.dataItem.uid);
+                    if (this.dataItem) {
+                        model = this.diagram.dataSource.getByUid(this.dataItem.uid);
                     }
 
                     if (model) {
@@ -556,7 +551,7 @@
                             model.set("height", bounds.height);
                         }
 
-                        this.dataItem = this.options.dataItem = model;
+                        this.dataItem = model;
                     }
                 }
             },
@@ -676,9 +671,9 @@
 
                 json.options.id = diagram.randomId();
 
-                if (this.diagram && this.diagram._isEditable && defined(this.options.dataItem)) {
-                    json.options.dataItem = this.options.dataItem.toJSON();
-                    json.options.dataItem[this.options.dataItem.idField] = this.options.dataItem._defaultId;
+                if (this.diagram && this.diagram._isEditable && defined(this.dataItem)) {
+                    json.options.dataItem = this.dataItem.toJSON();
+                    json.options.dataItem[this.dataItem.idField] = this.dataItem._defaultId;
                 }
 
                 return new Shape(json.options);
@@ -1016,7 +1011,7 @@
 
             updateOptionsFromModel: function(model) {
                 if (this.diagram && this.diagram._isEditable) {
-                    var options = filterConnectionDataItem(model || this.options.dataItem);
+                    var options = filterConnectionDataItem(model || this.dataItem);
 
                     if (model) {
                         if (defined(options.from)) {
@@ -1031,7 +1026,7 @@
                             this.target(new Point(options.toX, options.toY));
                         }
 
-                        this.options.dataItem = model;
+                        this.dataItem = model;
 
                         this._template();
                         this.redraw(this.options);
@@ -1044,7 +1039,7 @@
             updateModel: function(shouldRefresh) {
                 if (this.diagram && this.diagram._isEditable) {
                     if (this.diagram.connectionsDataSource) {
-                        var model = this.diagram.connectionsDataSource.getByUid(this.options.dataItem.uid);
+                        var model = this.diagram.connectionsDataSource.getByUid(this.dataItem.uid);
                         if (model) {
                             this.diagram._shouldRefresh = false;
                             if (defined(this.options.fromX) && this.options.fromX !== null) {
@@ -1067,7 +1062,7 @@
                                 model._set("toY", null);
                             }
 
-                            this.dataItem = this.options.dataItem = model;
+                            this.dataItem = model;
 
                             if (shouldRefresh !== false) {
                                 this.diagram._shouldRefresh = true;
@@ -1107,7 +1102,7 @@
                                 this._clearSourceConnector();
                             }
                         } else if (source instanceof Connector) {
-                            dataItem = source.shape.options.dataItem;
+                            dataItem = source.shape.dataItem;
                             if (dataItem) {
                                 this.options.from = dataItem.id;
                                 this.options.fromX = null;
@@ -1126,7 +1121,7 @@
                             }
 
                         } else if (source instanceof Shape) {
-                            dataItem = source.options.dataItem;
+                            dataItem = source.dataItem;
                             if (dataItem) {
                                 this.options.from = dataItem.id;
                                 this.options.fromX = null;
@@ -1192,7 +1187,7 @@
                                 this._clearTargetConnector();
                             }
                         } else if (target instanceof Connector) {
-                            dataItem = target.shape.options.dataItem;
+                            dataItem = target.shape.dataItem;
                             if (dataItem) {
                                 this.options.to = dataItem.id;
                                 this.options.toX = null;
@@ -1209,7 +1204,7 @@
                                 this._clearTargetConnector();
                             }
                         } else if (target instanceof Shape) {
-                            dataItem = target.options.dataItem;
+                            dataItem = target.dataItem;
                             if (dataItem) {
                                 this.options.to = dataItem.id;
                                 this.options.toX = null;
@@ -1416,9 +1411,9 @@
             clone: function () {
                 var json = this.serialize();
 
-                if (this.diagram && this.diagram._isEditable && defined(this.options.dataItem)) {
-                    json.options.dataItem = this.options.dataItem.toJSON();
-                    json.options.dataItem[this.options.dataItem.idField] = this.options.dataItem._defaultId;
+                if (this.diagram && this.diagram._isEditable && defined(this.dataItem)) {
+                    json.options.dataItem = this.dataItem.toJSON();
+                    json.options.dataItem[this.dataItem.idField] = this.dataItem._defaultId;
                 }
 
                 return new Connection(this.from, this.to, json.options);
@@ -1697,7 +1692,7 @@
                     return;
                 }
 
-                if (item.options.dataItem) {
+                if (item.dataItem) {
                     this.editor = new PopupEditor(this.element, {
                         update: proxy(this._update, this),
                         cancel: proxy(this._cancel, this),
@@ -2141,17 +2136,17 @@
             _addConnection: function (connection, undoable) {
                 var that = this;
                 if (this.connectionsDataSource && this._isEditable) {
-                    if (!this.trigger("add", { connection: connection.options.dataItem })) {
-                        var dataItem = this.connectionsDataSource.add(connection.options.dataItem);
+                    if (!this.trigger("add", { connection: connection.dataItem })) {
+                        var dataItem = this.connectionsDataSource.add(connection.dataItem);
                         this.connectionsDataSource.one("sync", function() {
                             for (var i = 0; i < that.connections.length; i++) {
                                 var element = that.connections[i];
-                                if (element.options.dataItem.uid === dataItem.uid) {
+                                if (element.dataItem.uid === dataItem.uid) {
                                     element.redraw(connection.options);
                                 }
                             }
                         });
-                        connection.options.dataItem = dataItem;
+                        connection.dataItem = dataItem;
                         this.connectionsDataSource.sync();
                     } else {
                         this._remove(connection, false);
@@ -2206,17 +2201,17 @@
             _addShape: function(shape, options) {
                 var that = this;
                 if (this.dataSource && this._isEditable) {
-                    if (!this.trigger("add", { shape: shape.options.dataItem })) {
-                        var dataItem = this.dataSource.add(shape.options.dataItem);
+                    if (!this.trigger("add", { shape: shape.dataItem })) {
+                        var dataItem = this.dataSource.add(shape.dataItem);
                         this.dataSource.one("sync", function() {
                             for (var i = 0; i < that.shapes.length; i++) {
                                 var element = that.shapes[i];
-                                if (element.options.dataItem.uid === dataItem.uid) {
+                                if (element.dataItem.uid === dataItem.uid) {
                                     element.redraw(shape.options);
                                 }
                             }
                         });
-                        shape.options.dataItem = dataItem;
+                        shape.dataItem = dataItem;
                         this.dataSource.sync();
                     } else {
                         this._remove(shape, false);
@@ -2270,15 +2265,15 @@
                         if (item instanceof Connection) {
                             if (this.connectionsDataSource) {
                                 dataSource = this.connectionsDataSource;
-                                eventArgs.connection = item.options.dataItem;
+                                eventArgs.connection = item.dataItem;
                             }
                         } else if (this.dataSource) {
                             dataSource = this.dataSource;
-                            eventArgs.shape = item.options.dataItem;
+                            eventArgs.shape = item.dataItem;
                         }
 
                         if (dataSource && !this.trigger("remove", eventArgs)) {
-                            dataSource.remove(item.options.dataItem);
+                            dataSource.remove(item.dataItem);
                             dataSource.sync();
                         }
                     }
