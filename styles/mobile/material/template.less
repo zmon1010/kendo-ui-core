@@ -234,12 +234,12 @@
 
 .km-material .km-popup-arrow:after
 {
-    border-color: @material-background;
+    border-color: @material-background transparent;
 }
 
 .km-material-dark .km-popup-arrow:after
 {
-    border-color: @material-dark-background;
+    border-color: @material-dark-background transparent;
 }
 
 .km-material .km-left .km-popup-arrow:after,
@@ -429,6 +429,8 @@
 }
 
 .km-material .km-tabstrip .km-button,
+.km-material .km-popover-root .km-header .km-button,
+.km-material .km-popover-root .km-footer .km-button,
 .km-material .km-modalview .km-header .km-button,
 .km-material .km-modalview .km-footer .km-button
 {
@@ -436,6 +438,8 @@
 }
 
 .km-material-dark .km-tabstrip .km-button,
+.km-material-dark .km-popover-root .km-header .km-button,
+.km-material-dark .km-popover-root .km-footer .km-button,
 .km-material-dark .km-modalview .km-header .km-button,
 .km-material-dark .km-modalview .km-footer .km-button
 {
@@ -517,6 +521,7 @@
 
 .km-material .km-content,
 .km-material .km-tabstrip,
+.km-material .km-popover-root .km-navbar,
 .km-material .km-modalview .km-navbar
 {
     color: @material-main-color;
@@ -525,6 +530,7 @@
 
 .km-material-dark .km-content,
 .km-material-dark .km-tabstrip,
+.km-material-dark .km-popover-root .km-navbar,
 .km-material-dark .km-modalview .km-navbar
 {
     color: @material-dark-main-color;
