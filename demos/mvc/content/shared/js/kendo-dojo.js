@@ -5,11 +5,27 @@
             snippet = dojo.addBaseRedirectTag(snippet, baseUrl);
             snippet = dojo.addConsoleScript(snippet);
             snippet = dojo.fixLineEndings(snippet);
+            snippet = dojo.replaceCommon(snippet, window.kendoCommonFile);
+            snippet = dojo.replaceTheme(snippet, window.kendoTheme);
 
             var form = $('<form method="post" action="' + dojo.configuration.url + '" target="_blank" />').hide().appendTo(document.body);
             $("<input name='snippet'>").val(window.btoa(snippet)).appendTo(form);
 
             form.submit();
+        },
+        replaceCommon: function(code, common) {
+            if (common) {
+                code = code.replace(/common\.min\.css/, common + ".min.css");
+            }
+
+            return code;
+        },
+        replaceTheme: function(code, theme) {
+            if (theme) {
+                code = code.replace(/default\.min\.css/g, theme + ".min.css");
+            }
+
+            return code;
         },
         addBaseRedirectTag: function (code, baseUrl) {
             return code.replace(
@@ -21,8 +37,8 @@
         },
         addConsoleScript: function (code) {
             if (code.indexOf("kendoConsole") !== -1) {
-                var styleReference = '\t<link rel="stylesheet" href="../content/shared/styles/examples-offline.css">\n';
-                var scriptReference = '\t<script src="../content/shared/js/console.js"></script>\n';
+                var styleReference = '    <link rel="stylesheet" href="../content/shared/styles/examples-offline.css">\n';
+                var scriptReference = '    <script src="../content/shared/js/console.js"></script>\n';
                 code = code.replace("</head>", styleReference + scriptReference + "</head>");
             }
 

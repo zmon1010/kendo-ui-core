@@ -424,6 +424,8 @@
                     ThemeChooser.getThemeUrl(themeName)
                 ],
                 replace: function() {
+                    window.kendoTheme = themeName;
+                    window.kendoCommonFile = commonName;
                     ThemeChooser.replaceCommon(commonName);
                     ThemeChooser.replaceTheme(themeName);
                 }
