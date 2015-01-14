@@ -182,7 +182,15 @@
         // Center the content
         content = hAlign(content, PAPER_RECT, "center")
 
-        return content;
+        // Add a frame to fix the page size
+        var frame = draw.Path.fromRect(PAPER_RECT, {
+            stroke: null
+        });
+
+        var page = new draw.Group();
+        page.append(frame, content);
+
+        return page;
     }
 
     // Transform the content to fit into the specified size
@@ -199,6 +207,7 @@
         var wrap = new draw.Group({
             transform: geom.transform().scale(scale, scale)
         });
+
         wrap.append(content);
 
         return wrap;
