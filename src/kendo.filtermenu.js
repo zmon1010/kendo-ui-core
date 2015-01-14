@@ -758,12 +758,24 @@ var __meta__ = {
         };
     }
 
+    var DataSource = kendo.data.DataSource;
+
     FilterMultiCheck = Widget.extend({
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
+            options = this.options;
             this.element = $(element);
             var field = this.field = this.options.field || this.element.attr(kendo.attr("field"));
-            this.dataSource = this.options.dataSource;
+            var checkSource = options.checkSource;
+            if (options.forceUnique) {
+                checkSource = options.dataSource.options;
+                this.checkSource = DataSource.create(checkSource);
+                this.checkSource.reader.data = removeDuplicates(this.checkSource.reader.data, this.field);
+            } else {
+                this.checkSource = DataSource.create(checkSource);
+            }
+
+            this.dataSource = options.dataSource;
             this.model = this.dataSource.reader.model;
 
             this._parse = function(value) {
@@ -782,7 +794,7 @@ var __meta__ = {
             this._createLink();
 
             this._refreshHandler = proxy(this.refresh, this);
-            this.options.dataSource.bind("change", this._refreshHandler);
+            this.dataSource.bind("change", this._refreshHandler);
 
         },
         _createLink: function() {
@@ -807,15 +819,11 @@ var __meta__ = {
         },
         _init: function() {
             this._createForm();
+            this.trigger(INIT, { field: this.field, container: this.form });
         },
         _createForm: function() {
-            var ds = this.dataSource;
-
             this.createItemsHandler = proxy(this.createItems, this);
-            if (this.options.forceUnique) {
-                ds.reader.data = removeDuplicates(ds.reader.data, this.field);
-            }
-            this.dataSource.fetch(this.createItemsHandler);
+            this.checkSource.fetch(this.createItemsHandler);
         },
         createItems: function() {
             var options = this.options;
@@ -839,12 +847,14 @@ var __meta__ = {
                 filterValuesForField(expression, this.field) || [];
                 var flatValues = flatFilterValues(expression);
                 this.checkValues(flatValues);
+                this.trigger("refresh");
+                this._link.toggleClass("k-state-active", flatValues.length);
             }
         },
         createCheckBoxes: function() {
             var options = this.options;
             var template = kendo.template(options.itemTemplate(this.field));
-            var itemsHtml = kendo.render(template, this.dataSource.data()); //unique values should be shown and values for foreign key column should be provided when this is implemented
+            var itemsHtml = kendo.render(template, this.checkSource.data());
             this.form.find(".multicheck-container").html(itemsHtml);
         },
         checkValues: function(values) {
@@ -912,6 +922,7 @@ var __meta__ = {
             },
             forceUnique: true
         },
+        events: [ INIT, "refresh" ]
     });
 
     $.extend(FilterMultiCheck.fn, {

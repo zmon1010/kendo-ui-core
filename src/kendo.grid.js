@@ -4559,6 +4559,10 @@ var __meta__ = {
                         if (columnFilterable && columnFilterable.messages) {
                             options.messages = extend(true, {}, filterable.messages, columnFilterable.messages);
                         }
+                        if (columnFilterable && columnFilterable.dataSource) {
+                            options.forceUnique = false;
+                            options.checkSource = columnFilterable.dataSource;
+                        }
 
                         if (columnFilterable && columnFilterable.multi) {
                             cell.kendoFilterMultiCheck(options);
