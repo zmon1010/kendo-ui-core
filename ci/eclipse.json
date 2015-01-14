@@ -1,0 +1,7 @@
+{
+    "run_list": [
+        "role[java]",
+        "recipe[tomcat::workstation]",
+        "recipe[eclipse]"
+    ]
+}

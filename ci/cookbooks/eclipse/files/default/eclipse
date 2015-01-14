@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export ECLIPSE_HOME="/usr/lib/eclipse/eclipse"
+/usr/lib/eclipse/eclipse
