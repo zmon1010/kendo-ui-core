@@ -848,7 +848,7 @@ var __meta__ = {
                 var flatValues = flatFilterValues(expression);
                 this.checkValues(flatValues);
                 this.trigger("refresh");
-                this._link.toggleClass("k-state-active", flatValues.length);
+                this._link.toggleClass("k-state-active", flatValues.length != 0);
             }
         },
         createCheckBoxes: function() {
