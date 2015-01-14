@@ -658,6 +658,7 @@ var __meta__ = {
             refresh: function() {
                 var value = this.bindings[CHECKED].get(),
                     source = value,
+                    type = this.dataType(),
                     element = this.element;
 
                 if (element.type == "checkbox") {
@@ -679,6 +680,11 @@ var __meta__ = {
                         element.checked = source;
                     }
                 } else if (element.type == "radio" && value != null) {
+                    if (type == "date") {
+                        value = kendo.toString(value, "yyyy-MM-dd");
+                    } else if (type == "datetime-local") {
+                        value = kendo.toString(value, "yyyy-MM-ddTHH:mm:ss");
+                    }
                     if (element.value === value.toString()) {
                         element.checked = true;
                     }
@@ -754,7 +760,7 @@ var __meta__ = {
 
                     for (valueIndex = 0; valueIndex < values.length; valueIndex++) {
                         for (idx = 0, length = source.length; idx < length; idx++) {
-                            if (source[idx].get(field) == values[valueIndex]) {
+                            if (this._parseValue(source[idx].get(field), this.dataType()) === values[valueIndex]) {
                                 values[valueIndex] = source[idx];
                                 break;
                             }
@@ -797,9 +803,9 @@ var __meta__ = {
                     }
 
                     if (type == "date") {
-                        value = kendo.toString(values[valueIndex], "yyyy-M-d");
+                        value = kendo.toString(values[valueIndex], "yyyy-MM-dd");
                     } else if (type == "datetime-local") {
-                        value = kendo.toString(values[valueIndex], "yyyy-M-dTHH:mm:ss");
+                        value = kendo.toString(values[valueIndex], "yyyy-MM-ddTHH:mm:ss");
                     }
 
                     for (optionIndex = 0; optionIndex < options.length; optionIndex++) {
@@ -809,7 +815,7 @@ var __meta__ = {
                             optionValue = options[optionIndex].text;
                         }
 
-                        if (optionValue == value) { /* TODO: explicit number and boolean conversion*/
+                        if (value != null && optionValue == value.toString()) {
                             options[optionIndex].selected = true;
                             found = true;
                         }
@@ -1717,5 +1723,6 @@ var __meta__ = {
 })(window.kendo.jQuery);
 
 return window.kendo;
+
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
