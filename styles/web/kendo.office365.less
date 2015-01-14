@@ -395,7 +395,8 @@ input.k-textbox:focus {
 	border-color: @select-border-color;
 }
 
-.k-dropdown .k-state-default.k-state-active .k-input {
+.k-dropdown .k-state-default.k-state-active .k-input,
+.k-state-selected .k-progress-status {
 	color: @inverse-text-color;	
 }
 
@@ -539,22 +540,21 @@ input.k-textbox:focus {
 	border-color: transparent;
 }
 
-.k-pivot {
-	.k-button
-
-}
-
 .k-progressbar {
 	background-color: @primary-disabled-background-color;
 	border-color: @primary-disabled-background-color;
 
 	.k-state-default {
-		border-color: @widget-background-color;
+		border-color: @primary-disabled-border-color;
 	}
 
 	.k-state-selected {
 		background-color: @slider-selection-background-color;
-		border-color: @widget-background-color;
+		border-color: @slider-selection-background-color;
+	}
+
+	&.k-progressbar-vertical .k-state-selected {
+		border-color: @slider-selection-background-color;
 	}
 }
 

@@ -15,8 +15,15 @@
 .k-calendar .k-header,
 .k-calendar .k-content thead,
 .k-calendar .k-footer,
-.k-tabstrip-items {
+.k-tabstrip-items,
+.k-scheduler-header .k-scheduler-table {
     text-transform: uppercase;
+}
+
+.k-scheduler-toolbar .k-scheduler-views,
+.k-scheduler-toolbar .k-nav-today,
+.k-gantt-toolbar .k-gantt-views {
+    text-transform: lowercase;
 }
 
 .k-webkit .k-combobox .k-dropdown-wrap:before,
@@ -75,7 +82,7 @@ input.k-textbox
 }
 
 .k-calendar th {
-    padding: .4em .75em .4em .45em;
+    padding: .5em .75em .5em .45em;
 }
 
 .k-calendar td {
@@ -100,7 +107,7 @@ input.k-textbox
     line-height: 2.429em;
     width: 2.429em;
     top: 0.214em;
-} 
+}
 
 .k-treeview .k-in {
     line-height: 1.143em;
@@ -292,4 +299,129 @@ table.k-editor {
 .k-editor .k-editable-area {
     padding-left: 10px;
     border-width: 1px 0 0;
+}
+
+.k-progressbar,
+.k-progressbar-horizontal > .k-state-selected,
+.k-rtl .k-progressbar-horizontal.k-progressbar-reverse > .k-state-selected,
+.k-progressbar > .k-reset,
+.k-progressbar-horizontal .k-first,
+.k-rtl .k-progressbar-horizontal .k-last,
+.k-rtl .k-progressbar-horizontal.k-progressbar-reverse .k-last,
+.k-progressbar-horizontal .k-last,
+.k-rtl .k-progressbar-horizontal .k-first,
+.k-progressbar-vertical .k-last,
+.k-progressbar > .k-state-selected,
+.k-progressbar-vertical .k-first,
+.k-progressbar > .k-state-selected.k-complete,
+.k-rtl .k-progressbar > .k-state-selected.k-complete {
+    border-radius: 0;
+}
+
+.k-progressbar-horizontal {
+    height: 1em; 
+}
+
+.k-progressbar-vertical {
+    width: 1em;
+}
+
+.k-progress-status-wrap {
+    line-height: 1em;
+}
+
+.k-slider-track {
+    border-width: 0;
+}
+
+.k-slider-horizontal .k-slider-track,
+.k-slider-horizontal .k-slider-selection {
+    height: 2px;
+    margin-top: -1px;
+}
+
+.k-slider-vertical .k-slider-track,
+.k-slider-vertical .k-slider-selection {
+    width: 2px;
+    margin-left: -1px;
+}
+
+.k-slider-horizontal .k-draghandle,
+.k-flatcolorpicker .k-hue-slider .k-draghandle,
+.k-flatcolorpicker .k-transparency-slider .k-draghandle
+{
+    width: 4px;
+    height: 10px;
+    top: -5px;
+}
+
+.k-slider-vertical .k-draghandle
+{
+    width: 10px;
+    height: 4px;
+    left: -5px;
+}
+
+.k-widget.k-slider .k-slider-buttons .k-button
+{
+    border-width: 0;
+    background: transparent;
+}
+
+.k-slider .k-button .k-icon
+{
+    margin-top: 4px;
+}
+
+.k-widget.k-flatcolorpicker .k-hue-slider .k-draghandle {
+    margin-top: -1px;
+    box-shadow: none;
+}
+
+.k-window-titlebar {
+    padding: .857em 0;
+}
+
+div.k-window-content {
+    padding: 0 .857em;
+}
+
+.k-window-title {
+    left: .857em;
+}
+
+.k-window-titlebar .k-window-actions {
+    padding-top: .7em;
+    right: .857em;
+}
+
+.k-nav-current>.k-link span+span {
+    font-size: 1.786em;
+}
+
+.k-scheduler-table td,
+.k-scheduler-table th {
+    height: 1.286em;
+}
+
+.k-scheduler-toolbar,
+.k-scheduler-footer {
+    line-height: 2.357em;
+}
+
+.k-upload-sync .k-upload-button,
+.k-ie7 .k-upload-button,
+.k-ie8 .k-upload-button,
+.k-ie9 .k-upload-button {
+    margin: .36em;
+}
+
+.k-file {
+    line-height: 1.143em;
+    padding: .43em .17em .43em 1.14em;
+}
+
+.k-upload-status {
+    line-height: 1.29em;
+    top: auto;
 }
