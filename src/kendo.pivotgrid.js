@@ -1275,18 +1275,18 @@ var __meta__ = {
 
             var columnIndexes, rowIndexes;
             var tuples, resultAxis, measures, axisToSkip;
-            var columnDescriptors = this.columns().length;
-            var rowDescriptors = this.rows().length;
+            var columnDescriptors = this.columns();
+            var rowDescriptors = this.rows();
             var hasColumnTuples = axes.columns && axes.columns.tuples;
 
-            if (!columnDescriptors && rowDescriptors && hasColumnTuples && (this._rowMeasures().length || !this.measures().length)) {
+            if (!columnDescriptors.length && rowDescriptors.length && hasColumnTuples && (this._rowMeasures().length || !this.measures().length)) {
                 axes = {
                     columns: {},
                     rows: axes.columns
                 };
             }
 
-            if (!columnDescriptors && !rowDescriptors && this.measuresAxis() === "rows" && hasColumnTuples) {
+            if (!columnDescriptors.length && !rowDescriptors.length && this.measuresAxis() === "rows" && hasColumnTuples) {
                 axes = {
                     columns: {},
                     rows: axes.columns
@@ -1303,8 +1303,8 @@ var __meta__ = {
                 rows: normalizeAxis(axes.rows)
             };
 
-            columnIndexes = this._normalizeTuples(axes.columns.tuples, this._axes.columns.tuples, this._columnMeasures());
-            rowIndexes = this._normalizeTuples(axes.rows.tuples, this._axes.rows.tuples, this._rowMeasures());
+            columnIndexes = this._normalizeTuples(axes.columns.tuples, this._axes.columns.tuples, columnDescriptors, this._columnMeasures());
+            rowIndexes = this._normalizeTuples(axes.rows.tuples, this._axes.rows.tuples, rowDescriptors, this._rowMeasures());
 
             if (!this.cubeBuilder) {
                 data = this._normalizeData({
@@ -1420,13 +1420,14 @@ var __meta__ = {
             return root;
         },
 
-        _hasRoot: function(target, source) {
+        _hasRoot: function(target, source, descriptors) {
             if (source.length) {
                 return findExistingTuple(source, target).tuple;
             }
 
             var members = target.members;
             var member;
+            var descriptor;
 
             var isRoot = true;
             var levelNum;
@@ -1434,8 +1435,9 @@ var __meta__ = {
             for (var idx = 0, length = members.length; idx < length; idx++) {
                 member = members[idx];
                 levelNum = Number(member.levelNum) || 0;
+                descriptor = descriptors[idx];
 
-                if (levelNum !== 0) {
+                if (!(levelNum === 0 || (descriptor && member.name === getName(descriptor)))) {
                     isRoot = false;
                     break;
                 }
@@ -1599,7 +1601,7 @@ var __meta__ = {
             }
         },
 
-        _normalizeTuples: function(tuples, source, measures) {
+        _normalizeTuples: function(tuples, source, descriptors, measures) {
             var length = measures.length || 1;
             var idx = 0;
 
@@ -1612,7 +1614,7 @@ var __meta__ = {
                 return;
             }
 
-            if (!this._hasRoot(tuples[0], source)) {
+            if (!this._hasRoot(tuples[0], source, descriptors)) {
                 for (; idx < length; idx++) {
                     roots.push(this._createTuple(tuples[0], measures[idx], true));
                     indexes[idx] = idx;

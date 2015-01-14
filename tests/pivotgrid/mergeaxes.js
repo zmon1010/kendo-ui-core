@@ -835,6 +835,38 @@
         equal(axes.columns.tuples[0].members[0].children[0].members[0].name, "dim 0 - 1");
     });
 
+    test("skip root creation if dimension does not start from first level", function() {
+        var dataSource = new PivotDataSource({
+            columns: [ "dim 0 - 1" ],
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success({
+                        axes: {
+                            columns: {
+                                tuples: [
+                                    { members: [ { name: "dim 0 - 1", parentName: "dim 0", levelNum: "1", children: [] } ] }
+                                ]
+                            }
+                        },
+                        data: []
+                    });
+                }
+            }
+        });
+
+        dataSource.read();
+
+        var axes = dataSource.axes();
+
+        equal(axes.columns.tuples.length, 1);
+        equal(axes.columns.tuples[0].members[0].name, "dim 0 - 1");
+        equal(axes.columns.tuples[0].members[0].children.length, 0);
+    });
+
     test("skip root creation if returned tuple has parent in datasource", function() {
         var axes = [
             {
