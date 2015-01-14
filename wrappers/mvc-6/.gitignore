@@ -3,3 +3,4 @@
 **/wwwroot/**
 **/*.sln.ide/**
 artifacts/**
+**/bin/**
