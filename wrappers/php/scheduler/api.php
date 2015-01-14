@@ -168,6 +168,7 @@ echo $scheduler->render();
                 $viewsPicker->change('views_change')
                       ->dataTextField('text')
                       ->dataValueField('value')
+                      ->value('week')
                       ->dataSource(array(
                           array('text' => 'Agenda', 'value' => 'agenda'),
                           array('text' => 'Day', 'value' => 'day'),
