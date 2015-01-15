@@ -9,8 +9,8 @@ link "/usr/share/tomcat7/conf" do
   to "/var/lib/tomcat7/conf"
 end
 
-directory "/etc/tomcat7" do
-    mode "0777"
+execute "fixup /etc/tomcat7 mode" do
+  command "chmod -R 777 /etc/tomcat7"
 end
 
 link "/usr/share/tomcat7/conf/catalina.policy" do
