@@ -5212,23 +5212,23 @@ var __meta__ = {
         },
 
         setup: function() {
-            var element = this.element;
-            var box = this.options.box.clone();
-            box.x2 = box.x1;
-            this.path = draw.Path.fromRect(box.toRect());
-
-            element.clip(this.path);
+            this._setEnd(this.options.box.x1);
         },
 
         step: function(pos) {
-            var box = this.options.box.clone();
-            box.x2 = interpolate(box.x1, box.x2, pos);
-            this.path.segments.elements(draw.Path.fromRect(box.toRect()).segments.elements());
+            var box = this.options.box;
+            this._setEnd(interpolate(box.x1, box.x2, pos));
         },
-
-        abort: function() {
-            draw.Animation.fn.abort.call(this);
-            this.element.clip(null);
+        
+        _setEnd: function(x) {
+            var element = this.element;
+            var segments = element.segments;
+            var topRight = segments[1].anchor();
+            var bottomRight = segments[2].anchor();
+            element.suspend();
+            topRight.setX(x);
+            element.resume();
+            bottomRight.setX(x);
         }
     });
     draw.AnimationFactory.current.register(CLIP, ClipAnimation);

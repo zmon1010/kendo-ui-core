@@ -211,14 +211,14 @@
 
     (function() {
         var anim,
-            visual,
+            path,
             clip,
             box;
 
         function createAnim() {
             box = Box2D(10, 20, 100, 200);
-            visual = new draw.Group({});
-            anim = draw.Animation.create(visual, {
+            path = draw.Path.fromRect(box.toRect());
+            anim = draw.Animation.create(path, {
                 type: "clip",
                 box: box.clone(),
                 duration: 50
@@ -232,25 +232,25 @@
             }
         });
 
-        test("setup clips element with zero width path", function() {
+        test("setup updates clip path to have zero width", function() {
             anim.setup();
             box.x2 = box.x1;
-            sameLinePath(visual.clip(), draw.Path.fromRect(box.toRect()));
+            sameLinePath(path, draw.Path.fromRect(box.toRect()));
         });
 
         test("step expands clip path based on progress", function() {
             anim.setup();
             anim.step(0.5);
             box.x2 = box.x1 + (box.x2 - box.x1) * 0.5;
-            sameLinePath(visual.clip(), draw.Path.fromRect(box.toRect()));
+            sameLinePath(path, draw.Path.fromRect(box.toRect()));
         });
 
-        asyncTest("cleans up clip", function() {
+        asyncTest("animates clip path to the size of the box", function() {
             anim.setup();
             anim.play();
 
             setTimeout(function() {
-                equal(visual.clip(), null);
+                sameLinePath(path, draw.Path.fromRect(box.toRect()));
 
                 start();
             }, 100);
