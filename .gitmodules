@@ -23,3 +23,6 @@
 [submodule "ci/cookbooks/windows"]
     path = ci/cookbooks/windows
     url = git@github.com:opscode-cookbooks/windows.git
+[submodule "ci/cookbooks/java"]
+	path = ci/cookbooks/java
+	url = git@github.com:agileorbit-cookbooks/java.git
