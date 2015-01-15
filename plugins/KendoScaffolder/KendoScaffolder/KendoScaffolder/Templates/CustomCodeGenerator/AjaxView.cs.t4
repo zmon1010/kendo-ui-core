@@ -1,0 +1,103 @@
+﻿﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="ImportsGridView.include.t4" #>
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+    var batchEditMode = "InCell";
+#>
+@(Html.Kendo().Grid<<#= ViewDataTypeName #>>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+<#
+IEnumerable<PropertyMetadata> properties = ModelMetadata.Properties;
+foreach (PropertyMetadata property in properties) {
+    if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+#>
+<#
+        if (property.IsAssociation) { continue; }
+            if (UseViewModel) {
+                foreach (EnvDTE.CodeElement child in ViewModelTypeChildren) { 
+                    if(child.Name.Equals(property.PropertyName)) {
+#>
+        columns.Bound(c => c.<#= property.PropertyName#>).Width(140);
+<#
+                        break;
+                    }
+                }  
+            }  else {
+#>
+        columns.Bound(c => c.<#= property.PropertyName#>).Width(140);
+<#
+            }
+    }
+}
+if(Editable) {
+#>
+        columns.Command(command => { <# if (EditMode != batchEditMode) { #> command.Edit(); <# } #> <# if (EditableDestroy) { #> command.Destroy(); <# } #> }).Width(172);
+<#
+}
+#>
+      })
+<#
+if(Editable) {
+        if(EditableCreate || EditMode.Equals(batchEditMode)) {
+#>
+      .ToolBar(toolbar => {
+<#
+        if(EditableCreate){
+#>
+            toolbar.Create();
+<#
+        }
+        if(EditMode.Equals(batchEditMode)){
+#>
+            toolbar.Save();
+<#
+        }
+#>
+      }) 
+<#       
+    }
+#>
+      .Editable(editable => editable.Mode(GridEditMode.<#= EditMode #>))
+<#
+}
+#>
+      .Pageable()
+      .DataSource(dataSource => dataSource
+          .Ajax()
+<#
+if(Editable) {
+   if(EditMode.Equals(batchEditMode)) {
+#>
+          .Batch(true)
+<#
+}
+#>
+          .Model(model => model.Id(p => p.<#= PrimaryKeyName #>))
+<#
+}
+#>
+          .Read(read => read.Action("Products_Read", "<#= ControllerRootName #>"))
+<#
+if(Editable) {
+    if(EditableCreate) {
+#>
+          .Create(create => create.Action("<#= entitySetName #>_Create", "<#= ControllerRootName #>"))
+<#
+    }
+    if(EditableUpdate) {
+#>
+          .Update(update => update.Action("<#= entitySetName #>_Update", "<#= ControllerRootName #>"))
+<#
+    }
+    if(EditableDestroy) {
+#>
+          .Destroy(destroy => destroy.Action("<#= entitySetName #>_Destroy", "<#= ControllerRootName #>"))
+<#
+    }
+}
+#>
+      )
+)

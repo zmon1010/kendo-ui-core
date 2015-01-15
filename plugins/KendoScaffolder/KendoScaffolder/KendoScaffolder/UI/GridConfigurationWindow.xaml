@@ -1,0 +1,44 @@
+﻿<Window x:Class="KendoScaffolder.UI.GridConfigurationWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" Height="800" Width="800" Title="Kendo UI Grid Configuration">
+    <Grid>
+        <Label Content="Controller Name" HorizontalAlignment="Left" Margin="36,8,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="ControllerName" Loaded="ControllerName_Loaded" HorizontalAlignment="Left" Height="23" Margin="259,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ControllerName}" />
+
+        <Label Content="Choose a Model Type:" HorizontalAlignment="Left"   Margin="36,39,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="ModelType" HorizontalAlignment="Left" Margin="259,43,0,0" VerticalAlignment="Top" Width="311"
+              ItemsSource="{Binding ModelTypes}" DisplayMemberPath="DisplayName"
+              SelectedItem="{Binding SelectedModelType, Mode=OneWayToSource}" />
+
+        <CheckBox Content="Use an existing ViewModel" HorizontalAlignment="Left" Margin="36,89,0,0" VerticalAlignment="Top" Click="UseViewModel_Clicked" IsChecked="{Binding UseViewModel, Mode=OneWayToSource}" />
+        <Label Name="ViewModelTypeLabel" Content="Choose a ViewModel Type" Visibility="Hidden" HorizontalAlignment="Left" Margin="234,85,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="ViewModelType" Visibility="Hidden" HorizontalAlignment="Left" Margin="389,89,0,0" VerticalAlignment="Top" Width="311"
+              ItemsSource="{Binding ModelTypes}" DisplayMemberPath="DisplayName"
+              SelectedItem="{Binding SelectedViewModelType, Mode=OneWayToSource}" />
+
+        <CheckBox Content="Editable" HorizontalAlignment="Left" Margin="36,137,0,0" VerticalAlignment="Top" Click="Editable_Clicked" IsChecked="{Binding Editable, Mode=OneWayToSource}" />
+        <Label Name="EditModeLabel" Visibility="Hidden" Content="Choose an Edit Mode" HorizontalAlignment="Left" Margin="234,133,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="EditMode" Visibility="Hidden"  HorizontalAlignment="Left" Margin="389,137,0,0" VerticalAlignment="Top" Width="311"
+              ItemsSource="{Binding EditModes}" SelectedItem="{Binding EditMode, Mode=OneWayToSource}" />
+        <Label Name="CrudOperationsLabel" Visibility="Hidden" Content="Choose operations" HorizontalAlignment="Left" Margin="234,164,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="EditableCreate" Content="Create" IsChecked="{Binding EditableCreate, Mode=OneWayToSource}" Visibility="Hidden" HorizontalAlignment="Left" Margin="389,169,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="EditableUpdate" Content="Update" IsChecked="{Binding EditableUpdate, Mode=OneWayToSource}" Visibility="Hidden" HorizontalAlignment="Left" Margin="479,169,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="EditableDestroy" Content="Delete"  IsChecked="{Binding EditableDestroy, Mode=OneWayToSource}" Visibility="Hidden" HorizontalAlignment="Left" Margin="566,169,0,0" VerticalAlignment="Top"/>
+        
+        <Label Content="Choose a DbContext:" HorizontalAlignment="Left"  Margin="225,315,0,0" VerticalAlignment="Top"/>
+        <ComboBox HorizontalAlignment="Left" Margin="430,315,0,0" VerticalAlignment="Top" Width="311"
+            ItemsSource="{Binding DbContextTypes}" DisplayMemberPath="DisplayName"
+            SelectedItem="{Binding SelectedDbContextType, Mode=OneWayToSource}" />
+
+        <Label Content="Choose a DataSource Type:" HorizontalAlignment="Left" Margin="201,362,0,0" VerticalAlignment="Top" Width="179"/>
+        <ComboBox HorizontalAlignment="Left" Margin="430,362,0,0" VerticalAlignment="Top" Width="311"
+                  ItemsSource="{Binding DataSourceTypes}" SelectedItem="{Binding SelectedDataSourceType, Mode=OneWayToSource}" />
+
+        <Button Content="Add" IsDefault="True" HorizontalAlignment="Left" Margin="576,665,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.187,0.75" Click="AddButton_Click"/>
+        <Button Content="Cancel" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="666,665,0,0"/>
+
+    </Grid>
+</Window>
