@@ -1,20 +1,29 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Kendo.Mvc.Extensions;
+using Kendo.Mvc.Infrastructure;
+using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Kendo.Mvc.UI
 {
-    public abstract class WidgetBase
+    public abstract class WidgetBase : IHtmlAttributesContainer
     {
+        internal static readonly string DeferredScriptsKey = "$DeferredScriptsKey$";
+        private static readonly Regex UnicodeEntityExpression = new Regex(@"\\+u(\d+)\\*#(\d+;)", RegexOptions.Compiled);
+
         public WidgetBase(ViewContext viewContext)
         {            
             Events = new Dictionary<string, object>();
             HtmlAttributes = new RouteValueDictionary();
             IsSelfInitialized = true;
+            Initializer = new JavaScriptInitializer();
             ViewContext = viewContext;
         }
 
@@ -79,6 +88,26 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public IJavaScriptInitializer Initializer
+        {
+            get;
+            set;
+        }
+
+        public bool IsInClientTemplate
+        {
+            get;
+            private set;
+        }
+
+        public string Selector
+        {
+            get
+            {
+                return (IsInClientTemplate ? "\\#" : "#") + Id;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the view context to rendering a view.
         /// </summary>
@@ -89,12 +118,15 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        [Activate]
+        protected internal IHtmlGenerator Generator { get; set; }
+
         /// <summary>
         /// Renders the component.
         /// </summary>
         public void Render()
         {
-            // TODO
+            WriteHtml(ViewContext.Writer);
         }
 
         public HtmlString ToClientTemplate()
@@ -105,7 +137,6 @@ namespace Kendo.Mvc.UI
 
         public string ToHtmlString()
         {
-            // TODO
             return "";
         }
 
@@ -132,6 +163,77 @@ namespace Kendo.Mvc.UI
             }
 
             return builder.ToString();
+        }
+
+        public virtual void VerifySettings()
+        {
+            if (string.IsNullOrEmpty(Name))
+            {
+                throw new InvalidOperationException(Resources.Exceptions.NameCannotBeBlank);
+            }
+
+            if (!Name.Contains("<#=") && Name.IndexOf(" ") != -1)
+            {
+                throw new InvalidOperationException(Resources.Exceptions.NameCannotContainSpaces);
+            }
+
+            ((IHtmlAttributesContainer) this).ThrowIfClassIsPresent("k-" + GetType().Name.ToLowerInvariant() + "-rtl", Resources.Exceptions.Rtl);
+        }
+
+        /// <summary>
+        /// Writes the initialization script.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+        public virtual void WriteInitializationScript(TextWriter writer)
+        {
+            
+        }
+
+        /// <summary>
+        /// Writes the HTML.
+        /// </summary>
+        protected virtual void WriteHtml(TextWriter writer)
+        {
+            VerifySettings();
+
+            if (IsSelfInitialized)
+            {
+                if (HasDeferredInitialization)
+                {
+                    WriteDeferredScriptInitialization();
+                }
+                else
+                {
+                    writer.Write("<script>");
+                    WriteInitializationScript(writer);
+                    writer.Write("</script>");
+                }
+            }
+        }
+
+        protected virtual void WriteDeferredScriptInitialization()
+        {
+            var scripts = new StringWriter();
+            WriteInitializationScript(scripts);
+            AppendScriptToContext(scripts.ToString());
+        }
+
+        private void AppendScriptToContext(string script)
+        {
+            var items = ViewContext.HttpContext.Items;
+
+            var scripts = new List<KeyValuePair<string,string>>();
+
+            if (items.ContainsKey(DeferredScriptsKey))
+            {
+                scripts = (List<KeyValuePair<string, string>>)items[DeferredScriptsKey];
+            }
+            else
+            {
+                items[DeferredScriptsKey] = scripts;
+            }
+
+            scripts.Add(new KeyValuePair<string, string>(Name, script));
         }
 
         private void ReplaceInvalidCharacters(string part, StringBuilder builder)

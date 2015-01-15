@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNet.Mvc;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Kendo.Mvc.UI
 {
@@ -14,6 +16,15 @@ namespace Kendo.Mvc.UI
         {
             get;
             set;
+        }
+
+        public override void WriteInitializationScript(TextWriter writer)
+        {
+            var options = new Dictionary<string, object>(Events);
+
+            writer.Write(Initializer.Initialize(Selector, "DateTimePicker", options));
+
+            base.WriteInitializationScript(writer);
         }
     }
 }

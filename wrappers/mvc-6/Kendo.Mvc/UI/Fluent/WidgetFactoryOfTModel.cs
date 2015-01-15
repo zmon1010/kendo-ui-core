@@ -10,14 +10,14 @@ namespace Kendo.Mvc.UI.Fluent
 {
     public class WidgetFactory<TModel> : WidgetFactory
     {
-        public WidgetFactory(HtmlHelper<TModel> htmlHelper)
+        public WidgetFactory(IHtmlHelper<TModel> htmlHelper)
             : base(htmlHelper)
         {
             HtmlHelper = htmlHelper;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new HtmlHelper<TModel> HtmlHelper
+        public new IHtmlHelper<TModel> HtmlHelper
         {
             get;
             set;

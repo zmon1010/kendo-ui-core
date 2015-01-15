@@ -4,12 +4,12 @@ using Kendo.Mvc.UI.Fluent;
 namespace Kendo.Mvc.UI
 {    public static class HtmlHelperExtension
     {
-        public static WidgetFactory Kendo(this HtmlHelper helper)
+        public static WidgetFactory Kendo(this IHtmlHelper helper)
         {
             return new WidgetFactory(helper);
         }
 
-        public static WidgetFactory<TModel> Kendo<TModel>(this HtmlHelper<TModel> helper)
+        public static WidgetFactory<TModel> Kendo<TModel>(this IHtmlHelper<TModel> helper)
         {
             return new WidgetFactory<TModel>(helper);
         }

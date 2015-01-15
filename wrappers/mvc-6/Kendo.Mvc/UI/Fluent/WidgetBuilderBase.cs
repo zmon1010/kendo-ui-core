@@ -103,7 +103,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         public virtual void Render()
         {
-            Component.Render();
+            //Component.Render();
         }
 
         public virtual HtmlString ToHtmlString()
