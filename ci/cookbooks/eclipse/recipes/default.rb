@@ -18,6 +18,22 @@ bash 'extract_eclipse' do
   not_if { ::File.exists?(extract_path) }
 end
 
+bash 'install m2e' do
+  code <<-EOH
+    export ECLIPSE_HOME="/usr/lib/eclipse/eclipse"
+
+    /usr/lib/eclipse/eclipse \
+    -clean -purgeHistory \
+    -application org.eclipse.equinox.p2.director \
+    -noSplash \
+    -repository \
+    http://download.eclipse.org/technology/m2e/releases/ \
+    -installIUs \
+    org.eclipse.m2e.feature.feature.group \
+    -vmargs -Declipse.p2.mirrors=true -Djava.net.preferIPv4Stack=true
+    EOH
+end
+
 cookbook_file "eclipse" do
     path "/usr/bin/eclipse"
     owner "root"
