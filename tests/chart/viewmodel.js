@@ -352,6 +352,23 @@
             equal(visual.visible(), true);
         });
 
+        test("appends highlight to the same container as the element when zIndex is set", function() {
+            var parent = new dataviz.ChartElement();
+            var child = new dataviz.ChartElement();
+            var highlight = new draw.Path();
+            chartElement.options.zIndex = 1;
+            parent.append(child);
+            child.append(chartElement);
+            parent.renderVisual();
+
+            chartElement.createHighlight = function() {
+                return highlight;
+            };
+            chartElement.toggleHighlight();
+            equal(parent.visual.children.length, 3);
+            ok($.inArray(highlight, parent.visual.children) >= 0);
+        });
+
         // ------------------------------------------------------------
         (function() {
             var gradient;

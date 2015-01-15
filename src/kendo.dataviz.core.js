@@ -789,6 +789,7 @@ var __meta__ = {
                     }
                 });
 
+                highlight.options.zIndex = this.options.zIndex;
                 this.appendVisual(highlight);
             }
 
