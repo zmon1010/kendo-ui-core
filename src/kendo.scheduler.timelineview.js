@@ -70,10 +70,6 @@ var __meta__ = {
         return staticDate;
     }
 
-    function isInDateRange(value, min, max) {
-        return value >= min && value <= max;
-    }
-
     function getWorkDays(options) {
         var workDays = [];
         var dayIndex = options.workWeekStart;
@@ -103,6 +99,49 @@ var __meta__ = {
             columnLevel.colspan = 1;
             return 1;
         }
+    }
+
+    function collidingEvents(elements, left, right) {
+        var idx,
+            startPosition,
+            overlaps,
+            endPosition;
+
+        for (idx = elements.length-1; idx >= 0; idx--) {
+            startPosition = elements[idx].rectLeft;
+            endPosition = elements[idx].rectRight;
+
+            overlaps = startPosition <= left && endPosition >= left;
+
+            if (overlaps || (startPosition >= left && endPosition <= right) || (left <= startPosition && right >= startPosition)) {
+                if (startPosition < left) {
+                    left = startPosition;
+                }
+
+                if (endPosition > right) {
+                    right = endPosition;
+                }
+            }
+        }
+
+        return eventsForSlot(elements, left, right);
+    }
+
+    function eventsForSlot(elements, left, right) {
+        var events = [];
+
+        for (var idx = 0; idx < elements.length; idx++) {
+            var event = {
+                rectLeft: elements[idx].rectLeft,
+                rectRight: elements[idx].rectRight
+            };
+
+            if ((event.rectLeft < left && event.rectRight > left) || (event.rectLeft >= left && event.rectRight <= right)) {
+                events.push(elements[idx]);
+            }
+        }
+
+        return events;
     }
 
     var TimelineView = SchedulerView.extend({
@@ -804,16 +843,6 @@ var __meta__ = {
 
             this._eventsByResource(events, this.groupedResources, eventsByResource);
 
-            var eventsPerDate = $.map(this._dates, function(date) {
-                return Math.max.apply(null,
-                    $.map(eventsByResource, function(events) {
-                        return $.grep(events, function(event) {
-                            return isInDateRange(date, getDate(event.start), getDate(event.end));
-                        }).length;
-                    })
-                );
-            });
-
             var eventGroups = [];
             var maxRowCount = 0;
 
@@ -902,7 +931,6 @@ var __meta__ = {
 
             var rect = eventObject.slotRange.innerRect(eventObject.start, eventObject.end, false);
 
-            rect.top = eventObject.slotRange.start.offsetTop;
             var width = rect.right - rect.left - 2;
 
             if (width < 0) {
@@ -1160,10 +1188,26 @@ var __meta__ = {
         _arrangeRows: function (eventObject, slotRange, eventGroup) {
             var startIndex = slotRange.start.index;
             var endIndex = slotRange.end.index;
-            var events = SchedulerView.collidingEvents(slotRange.events(), startIndex, endIndex);
 
-            slotRange.addEvent({ slotIndex: startIndex, start: startIndex, end: endIndex, element: eventObject.element, uid: eventObject.uid });
-            events.push({ slotIndex: startIndex, start: startIndex, end: endIndex, element: eventObject.element, uid: eventObject.uid });
+            var rect = eventObject.slotRange.innerRect(eventObject.start, eventObject.end, false);
+
+            var events = collidingEvents(slotRange.events(), rect.left, rect.right);
+
+            slotRange.addEvent({
+                slotIndex: startIndex,
+                start: startIndex,
+                end: endIndex,
+                rectLeft: rect.left,
+                rectRight: rect.right,
+                element: eventObject.element,
+                uid: eventObject.uid
+            });
+
+            events.push({
+                start: startIndex,
+                end: endIndex,
+                uid: eventObject.uid
+            });
 
             var rows = SchedulerView.createRows(events);
 

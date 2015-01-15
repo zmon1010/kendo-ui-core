@@ -77,7 +77,6 @@
         ok(view.footer.hasClass("k-scheduler-footer"));
     });
 
-
     test("footer is not rendered", function() {
         var view = setup({ footer: false });
 
@@ -433,6 +432,33 @@
 
         var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
         equal(timeElementsCount,1);
+    });
+
+    test("event is rendered correctly", function() {
+        var view = setup({ date: new Date(2013, 1, 2) });
+
+        view.render([new SchedulerEvent({
+            uid: "foo",
+            title: "",
+            start: new Date(2013, 1, 2, 2, 0, 0),
+            end: new Date(2013, 1, 2, 2, 10, 0),
+            isAllDay: false,
+            id: "2"
+        }), new SchedulerEvent({
+            uid: "bar",
+            title: "",
+            start: new Date(2013, 1, 2, 2, 20, 0),
+            end: new Date(2013, 1, 2, 2, 40, 0),
+            isAllDay: false,
+            id: "3"
+        })]);
+
+        var events = view.groups[0].getTimeSlotCollection(0).events();
+        var firstEventTop = events[0].element.offset().top;
+        var secondEventTop = events[1].element.offset().top;
+
+        equal(firstEventTop, secondEventTop);
+        equal(view.element.find(".k-event").length, 2);
     });
 
     module("Timeline View rendering without slot holes", {
