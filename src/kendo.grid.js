@@ -4550,6 +4550,7 @@ var __meta__ = {
                             {
                                 dataSource: that.dataSource,
                                 values: columns[idx].values,
+                                format: columns[idx].format,
                                 closeCallback: closeCallback,
                                 init: filterInit,
                                 pane: that.pane
