@@ -3964,9 +3964,7 @@ var __meta__ = {
 
         pointValue: function(data) {
             return data.valueFields.value;
-        },
-
-        createVisual: noop
+        }
     });
 
     var BarChart = CategoricalChart.extend({
@@ -5920,9 +5918,7 @@ var __meta__ = {
         formatPointValue: function(point, format) {
             var value = point.value;
             return autoFormat(format, value.x, value.y);
-        },
-
-        createVisual: noop
+        }
     });
 
     var ScatterLineChart = ScatterChart.extend({
@@ -6083,7 +6079,9 @@ var __meta__ = {
         formatPointValue: function(point, format) {
             var value = point.value;
             return autoFormat(format, value.x, value.y, value.size, point.category);
-        }
+        },
+
+        createVisual: noop
     });
 
     var Candlestick = ChartElement.extend({

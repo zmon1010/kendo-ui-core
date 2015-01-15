@@ -26,10 +26,6 @@
             teardown: destroyChart
         });
 
-        test("Chart root has no visual (pass-through to ChartContainer)", function() {
-            ok(chart.animation || !chart.visual);
-        });
-
         test("z-index is applied to points", function() {
             equal(chart.points[0].options.zIndex, 100);
         });
