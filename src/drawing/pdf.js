@@ -101,7 +101,7 @@
                 var bbox = tmp.bbox;
                 group = tmp.root;
 
-                var paperSize = getOption("paperSize", getOption("auto"), options), addMargin = false;
+                var paperSize = getOption("paperSize", getOption("paperSize", "auto"), options), addMargin = false;
                 if (paperSize == "auto") {
                     if (bbox) {
                         var size = bbox.getSize();
