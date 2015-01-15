@@ -87,7 +87,7 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
     </div>
 
-    <style scoped>
+    <style>
         .k-panel
         {
             -webkit-transform: translatez(0);

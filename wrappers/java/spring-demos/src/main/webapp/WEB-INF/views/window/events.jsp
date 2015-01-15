@@ -72,7 +72,7 @@
 
 	<br/>
 	
-	<style scoped="scoped">
+	<style>
          .wrap 
          {
              min-height:400px;

@@ -268,7 +268,7 @@
         .Render();
 %>
 
-<style scoped>
+<style>
     #navbar-home h2,
     #navbar-grouped h2 {
         display: inline-block;

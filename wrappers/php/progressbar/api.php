@@ -78,7 +78,7 @@ require_once '../include/header.php';
         });
     </script>
 
-    <style scoped>
+    <style>
         #example .config-section {
             min-width: 160px;
         }

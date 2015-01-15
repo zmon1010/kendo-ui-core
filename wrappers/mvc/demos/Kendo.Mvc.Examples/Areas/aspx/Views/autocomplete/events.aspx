@@ -116,7 +116,7 @@
     }
 </script>
 
-<style scoped>
+<style>
 	#taxi {
 		width: 240px;
 		height: 160px;

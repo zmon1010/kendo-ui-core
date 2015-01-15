@@ -136,7 +136,7 @@ require_once '../lib/Kendo/Autoload.php';
     </li>
   </ul>
   
-  <style scoped>
+  <style>
     .demo-section {
       margin: 0 auto 25px;
       width: 500px;

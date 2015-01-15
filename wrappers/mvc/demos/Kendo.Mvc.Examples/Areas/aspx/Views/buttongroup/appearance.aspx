@@ -88,7 +88,7 @@
         .Render();
 %>
 
-<style scoped>
+<style>
     #buttongroup-appearance .km-button:not(.km-back) {
         padding-left: .5em;
         padding-right: .5em;

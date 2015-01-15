@@ -61,7 +61,7 @@
     </div>
 
 
-    <style scoped>
+    <style>
         .demo-section {
             width: 400px;
         }

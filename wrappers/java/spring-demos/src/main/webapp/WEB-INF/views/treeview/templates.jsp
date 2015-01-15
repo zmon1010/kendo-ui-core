@@ -17,7 +17,7 @@
             treeview.remove($(this).closest(".k-item"));
         });
 	</script>
-	<style scoped>
+	<style>
 		#treeview {
 	        width: 300px;
 	        margin: 0 auto;

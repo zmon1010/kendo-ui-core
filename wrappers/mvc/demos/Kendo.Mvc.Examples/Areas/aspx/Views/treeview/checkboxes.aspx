@@ -67,7 +67,7 @@
 <% } %>
 </div>
 
-<style scoped>
+<style>
     #treeview .k-sprite {
         background-image: url("<%=Url.Content("~/Content/web/treeview/coloricons-sprite.png")%>");
     }

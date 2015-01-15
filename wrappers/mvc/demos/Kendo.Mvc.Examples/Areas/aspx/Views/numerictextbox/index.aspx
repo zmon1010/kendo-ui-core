@@ -39,7 +39,7 @@
         %>
     </div>
 </div>
-<style scoped>
+<style>
     #add-product {
         height: 181px;
         width: 252px;

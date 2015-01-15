@@ -41,7 +41,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
-     <style scoped="scoped">
+     <style>
         .customer-details
         {
             padding:.8em .6em;

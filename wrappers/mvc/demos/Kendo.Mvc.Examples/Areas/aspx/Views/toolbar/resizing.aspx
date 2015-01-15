@@ -104,7 +104,7 @@
     });
 </script>
 
-<style scoped>
+<style>
     div.k-window-content {
         padding: 0;
     }

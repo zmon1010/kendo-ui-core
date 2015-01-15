@@ -129,7 +129,7 @@ echo $calendar->render();
     });
 </script>
 
-<style scoped>
+<style>
     .demo-section {
         width: 233px;
     }

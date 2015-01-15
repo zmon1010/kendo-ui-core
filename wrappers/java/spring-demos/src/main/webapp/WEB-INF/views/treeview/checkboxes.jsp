@@ -38,7 +38,7 @@
         </kendo:treeView-items>
     </kendo:treeView>
 
-    <style scoped>
+    <style>
         .demo-section {
             width: 200px;
         }

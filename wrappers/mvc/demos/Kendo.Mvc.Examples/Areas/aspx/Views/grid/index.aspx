@@ -27,7 +27,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
      %>
 </div>
 
-<style scoped>
+<style>
     #clientsDb {
         width: 952px;
         height: 396px;

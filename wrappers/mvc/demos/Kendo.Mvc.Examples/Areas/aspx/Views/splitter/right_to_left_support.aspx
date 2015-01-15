@@ -84,7 +84,7 @@
 
 </div>
 
-<style scoped>
+<style>
     #vertical {
         height: 380px;
     }

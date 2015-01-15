@@ -36,7 +36,7 @@
     </ul>
 </div>
 
-   <style scoped>
+   <style>
        #example h2 {
            padding: 5px 0;
            font-weight: normal;

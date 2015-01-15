@@ -43,7 +43,7 @@
     };
 </script>
 
-<style scoped>
+<style>
     .birthday {
         background: transparent url('/Content/web/calendar/cake.png') no-repeat 0 50%;
         display: inline-block;

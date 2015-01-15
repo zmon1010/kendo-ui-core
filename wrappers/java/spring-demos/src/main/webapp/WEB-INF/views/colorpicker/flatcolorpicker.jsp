@@ -26,7 +26,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .demo-section {
         text-align: center;
         width: 580px;

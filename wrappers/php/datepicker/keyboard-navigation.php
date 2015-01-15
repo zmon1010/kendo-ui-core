@@ -164,7 +164,7 @@ echo $datePicker->render();
         </span>
     </li>
 </ul>
-<style scoped>
+<style>
     .demo-section
     {
         width: 204px;

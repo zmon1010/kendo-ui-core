@@ -137,7 +137,7 @@ require_once '../lib/Kendo/Autoload.php';
     <div class="console"></div>
 </div>
 
-<style scoped>
+<style>
     .demo-section .box-col li {
         margin-bottom: 0;
     }

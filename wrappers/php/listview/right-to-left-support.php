@@ -79,7 +79,7 @@ require_once '../include/header.php';
 
 </div>
 
-<style scoped>
+<style>
     .demo-section {
         padding: 15px;
         width: 692px;

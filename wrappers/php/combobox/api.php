@@ -143,7 +143,7 @@ $(function() {
     }
 });
 </script>
-<style scoped>
+<style>
     .configuration .k-textbox {
         width: 40px;
     }

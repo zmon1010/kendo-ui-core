@@ -19,7 +19,7 @@
 	</kendo:tabStrip>
 </div>
 
-<style scoped="scoped">
+<style>
     .wrapper {
         width: 270px;
         height: 455px;

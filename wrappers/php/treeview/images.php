@@ -90,7 +90,7 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
 </div>
 
-<style scoped>
+<style>
     #treeview-sprites .k-sprite {
         background-image: url("../content/web/treeview/coloricons-sprite.png");
     }

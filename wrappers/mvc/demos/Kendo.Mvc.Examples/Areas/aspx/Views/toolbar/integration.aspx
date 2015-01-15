@@ -109,7 +109,7 @@
     });
 </script>
 
-<style scoped>
+<style>
     #toolbar {
         margin: 1em 0;
         padding: 0 .9em;

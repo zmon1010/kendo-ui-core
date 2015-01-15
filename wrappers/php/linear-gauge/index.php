@@ -19,7 +19,7 @@ $gauge->pointer(array('value' => 28))
     ?>
 </div>
 
-<style scoped>
+<style>
     #gauge-container {
         text-align: center;
         margin: 0 auto;

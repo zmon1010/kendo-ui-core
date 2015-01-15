@@ -31,7 +31,7 @@
 	</div>
 </script>
 
-<style scoped="scoped">
+<style>
 #listView {
     min-height: 300px;
 }

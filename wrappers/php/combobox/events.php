@@ -66,7 +66,7 @@ echo $comboBox->render();
         }
     };
 </script>
-<style scoped>
+<style>
     .demo-section {
         width: 500px;
         text-align: center;

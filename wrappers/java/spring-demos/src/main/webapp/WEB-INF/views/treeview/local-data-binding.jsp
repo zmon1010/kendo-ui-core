@@ -22,7 +22,7 @@
         </kendo:dataSource>
     </kendo:treeView>
 </div>
- <style scoped>
+ <style>
 	  #example {
 	      text-align: center;
 	  }

@@ -59,7 +59,7 @@
             <kendo:dateTimePicker-month content="<%=template%>"/>
         </kendo:dateTimePicker>
     </div>
-    <style scoped>       
+    <style>       
         .demo-section {
             width: 185px;
         }

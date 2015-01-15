@@ -94,7 +94,7 @@
         <a href="http://docs.telerik.com/kendo-ui/getting-started/web/editor/troubleshooting#inline-editor-value-is-not-posted-to-the-server">how to post the inline editor value</a> help section.
     </p>
 </div>
-<style scoped>
+<style>
     .demo-section {
         padding: 40px;
     }

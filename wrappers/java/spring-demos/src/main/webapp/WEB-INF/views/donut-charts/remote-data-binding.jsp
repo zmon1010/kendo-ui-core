@@ -28,7 +28,7 @@
          </kendo:chart>
     </div>
     
-    <style scoped>
+    <style>
 	    .chart-wrapper 
 	    {
 	    	text-align: center;

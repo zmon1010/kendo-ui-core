@@ -53,7 +53,7 @@ $dropDownList->dataSource($dataSource)
 echo $dropDownList->render();
 ?>
 </div>
-<style scoped>
+<style>
     .demo-section {
         width: 250px;
         margin: 35px auto 50px;

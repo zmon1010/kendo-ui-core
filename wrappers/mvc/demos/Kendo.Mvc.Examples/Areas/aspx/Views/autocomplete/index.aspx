@@ -71,7 +71,7 @@
 
 </div>
 
-<style scoped="scoped">
+<style>
 	.info {
 		display: block;
 		line-height: 22px;

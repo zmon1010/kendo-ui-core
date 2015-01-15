@@ -55,7 +55,7 @@
     </kendo:tabStrip-items>
 </kendo:tabStrip>
 
-<style scoped>
+<style>
 	#forecast {
 	    width: 360px;
 	    height: 337px;

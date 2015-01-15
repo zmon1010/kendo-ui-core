@@ -26,7 +26,7 @@
     </div>
 </script>
 
-<style scoped>
+<style>
     .product h3 {
         font-size: 1.3em;
         font-weight: normal;

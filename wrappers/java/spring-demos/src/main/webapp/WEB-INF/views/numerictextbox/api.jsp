@@ -55,7 +55,7 @@
     });
 </script>
 
-<style scoped>
+<style>
     .demo-section{
         width:150px;
         margin-right: 360px;

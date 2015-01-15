@@ -28,7 +28,7 @@
         .Render();
 %>
 
-<style scoped>
+<style>
     #music .head {
 	    display: block;
 	    margin: 1em;

@@ -91,7 +91,7 @@
         })
         .Render();
 %>
-<style scoped>
+<style>
     .transitions-button,
     .transitions-cancel {
         display: block;

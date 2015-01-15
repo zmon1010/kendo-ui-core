@@ -65,7 +65,7 @@
 
 </div>
 
-<style scoped="scoped">
+<style>
 
 .treeview-back 
 {

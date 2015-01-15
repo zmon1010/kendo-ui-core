@@ -93,7 +93,7 @@ require_once '../lib/Kendo/Autoload.php';
     echo $outer->render();
 ?>
 
-<style scoped>
+<style>
     #vertical {
         height: 380px;
         width: 700px;

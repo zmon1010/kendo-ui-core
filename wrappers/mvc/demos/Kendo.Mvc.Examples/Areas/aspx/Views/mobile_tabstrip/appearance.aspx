@@ -151,7 +151,7 @@
     .Render();
 %>
 
-<style scoped>
+<style>
     #custom-tabstrip,
     #tabstrip-appearance-header .km-navbar,
     #custom-tabstrip .km-state-active .km-icon,

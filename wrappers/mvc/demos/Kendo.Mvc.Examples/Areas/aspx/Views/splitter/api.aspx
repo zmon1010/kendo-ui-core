@@ -142,7 +142,7 @@
     $("#insertAfter").click(insertAfter);
 </script>
 
-<style scoped>
+<style>
     .configuration .options input
     {
         width: 40px;

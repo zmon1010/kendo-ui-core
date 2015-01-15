@@ -68,7 +68,7 @@
     });
 </script>
 
-<style scoped>
+<style>
     .demo-section {
         padding: 30px;
     }

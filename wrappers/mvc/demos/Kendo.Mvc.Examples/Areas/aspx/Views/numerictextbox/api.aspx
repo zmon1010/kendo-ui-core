@@ -56,7 +56,7 @@
         });
     });
 </script>
-<style scoped>
+<style>
     .demo-section{
         width:150px;
     }

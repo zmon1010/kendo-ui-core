@@ -27,7 +27,7 @@
     .BindTo(Model)
  %>
 
-<style scoped>
+<style>
     .movie-template img {
         float: left;
         margin: 0 8px;

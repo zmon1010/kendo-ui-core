@@ -39,7 +39,7 @@
         kendoConsole.log("event :: hide");
     }
 </script>
-<style scoped="scoped">
+<style>
     .demo-section
     {
         padding-top: 2em;

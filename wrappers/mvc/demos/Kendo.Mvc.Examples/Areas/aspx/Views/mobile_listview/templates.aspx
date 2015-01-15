@@ -38,7 +38,7 @@
     <h2>Letter #=value#</h2>
 </script>
 
-<style scoped>
+<style>
 #listview-templates .km-content {
     background-color: #f0f0f0;
 }

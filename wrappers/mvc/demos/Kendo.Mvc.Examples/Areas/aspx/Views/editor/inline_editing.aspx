@@ -130,7 +130,7 @@
     </p>
 </div>
 
-<style scoped>
+<style>
     .demo-section {
         padding: 40px;
     }

@@ -154,7 +154,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
     </li>
 </ul>
 
-<style scoped>
+<style>
     .demo-section {
         width: 605px;
     }

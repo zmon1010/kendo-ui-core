@@ -20,7 +20,7 @@
           })
     %>
 </div>
-<style scoped>
+<style>
     .demo-section {
         width: 450px;
         margin-top: 40px;

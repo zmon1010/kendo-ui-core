@@ -81,7 +81,7 @@ echo $upload->render();
     }
 </script>
 
-<style scoped>
+<style>
     .file-icon
     {
         display: inline-block;

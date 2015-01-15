@@ -121,7 +121,7 @@ Snowboarding is a sport that involves descending a slope that is covered with sn
         $("#afterText").keypress(after);
     });
 </script>
-<style scoped>
+<style>
     .configuration .k-textbox {
         width: 40px;
     }

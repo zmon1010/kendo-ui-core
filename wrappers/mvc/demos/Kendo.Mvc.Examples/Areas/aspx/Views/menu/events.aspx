@@ -133,7 +133,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .demo-section .box-col li {
         margin-bottom: 0;
     }

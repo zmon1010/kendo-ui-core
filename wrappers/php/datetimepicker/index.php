@@ -13,7 +13,7 @@ $dateTimePicker->value(new DateTime('now', new DateTimeZone('UTC')))
 echo $dateTimePicker->render();
 ?>
 </div>
-<style scoped>
+<style>
     #to-do {
         height: 52px;
         width: 221px;

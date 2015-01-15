@@ -88,7 +88,7 @@ function createSlider($name, $value){
     });
 </script>
 
-<style scoped>
+<style>
     #gauge-container {
         background: transparent url("../content/dataviz/gauge/gauge-container.png") no-repeat 50% 50%;
         width: 404px;

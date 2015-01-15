@@ -56,7 +56,7 @@ $multiselect->dataSource($dataSource)
 <?php
 echo $multiselect->render();
 ?>
-<style scoped>
+<style>
     .demo-section {
         width: 300px;
         margin: 35px auto 50px;

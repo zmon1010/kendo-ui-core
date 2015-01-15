@@ -107,7 +107,7 @@
     })
 %>
   
-<style scoped>
+<style>
     .configuration .k-textbox
     {
         margin-top: -3px;

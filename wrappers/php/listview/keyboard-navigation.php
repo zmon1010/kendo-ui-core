@@ -286,7 +286,7 @@ require_once '../include/header.php';
 </ul>
 
 
- <style scoped>
+ <style>
 .demo-section {
     width: 605px;
 }

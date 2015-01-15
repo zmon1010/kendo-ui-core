@@ -99,7 +99,7 @@
         });
     });
 </script>
-<style scoped>
+<style>
     .demo-section {
         width: 460px;
         padding: 30px;

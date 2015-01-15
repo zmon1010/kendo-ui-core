@@ -108,7 +108,7 @@
         kendoConsole.log("Deactivated: " + ($(e.item).children(".k-link").text() || "ContextMenu"));
     }
 </script>
-<style scoped>
+<style>
     #context-target
     {
         height: 50px;

@@ -69,7 +69,7 @@ for (int i = 0; i < months.length; i++) {
     </table>
 </div>
 
-<style scoped>
+<style>
     .chart-wrapper {
         height: 370px;
     }

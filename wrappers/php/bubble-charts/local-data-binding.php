@@ -50,7 +50,7 @@ $chart->title(array('text' => 'Job Growth for 2011'))
     </ul>
 </div>
 
-<style scoped>
+<style>
 .chart-wrapper {
     position: relative;
 }

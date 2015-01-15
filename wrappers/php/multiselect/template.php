@@ -60,7 +60,7 @@ echo $multiselect->render();
         Click the MultiSelect to see the customized appearance of the items.
     </p>
 </div>
-<style scoped>
+<style>
     .dropdown-header {
         font-size: 1.2em;
     }

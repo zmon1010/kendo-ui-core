@@ -44,7 +44,7 @@
 	}
 </script>
 
-<style scoped>
+<style>
 	.file-icon {
 		display: inline-block;
 		float: left;

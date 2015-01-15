@@ -70,7 +70,7 @@ echo $select->render();
         });
     });
 </script>
-<style scoped>
+<style>
     .demo-section {
         width: 350px;
         height: 200px;

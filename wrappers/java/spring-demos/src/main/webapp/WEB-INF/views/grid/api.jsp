@@ -79,7 +79,7 @@
         });
 	</script>
 	
-	<style scoped>
+	<style>
 	.configuration .k-textbox
 	{
 	    width: 23px;

@@ -28,7 +28,7 @@
     </kendo:qRCode>
 </div>
 
-<style scoped>
+<style>
     .demo-section {
         display: inline-block;
         margin: 17px;

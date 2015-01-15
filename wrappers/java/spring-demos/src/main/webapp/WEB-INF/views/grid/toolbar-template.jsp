@@ -55,7 +55,7 @@
          }
 	}
 </script>
- <style scoped="scoped">
+ <style>
     #grid .k-grid-toolbar
     {
         padding: .6em 1.3em;

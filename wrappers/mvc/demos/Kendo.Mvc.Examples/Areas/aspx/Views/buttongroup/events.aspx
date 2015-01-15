@@ -33,7 +33,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     #buttongroup-events .km-button:not(.km-back) {
         padding-left: 1em;
         padding-right: 1em;

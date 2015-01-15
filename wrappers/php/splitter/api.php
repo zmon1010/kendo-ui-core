@@ -140,7 +140,7 @@ require_once '../lib/Kendo/Autoload.php';
           
 </script>
 
-<style scoped>
+<style>
     .configuration .options input
     {
         width: 40px;

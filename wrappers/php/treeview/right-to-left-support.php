@@ -49,7 +49,7 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
 </div>
 
-<style scoped>
+<style>
     .demo-section {
         width: 200px;
     }

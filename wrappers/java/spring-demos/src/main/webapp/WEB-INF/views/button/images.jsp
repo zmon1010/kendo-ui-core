@@ -7,7 +7,7 @@
 
 <c:url value="/resources/shared/icons/sports/snowboarding.png" var="snowboarding"/>
 
-<style scoped>
+<style>
 
 .k-button .k-image
 {

@@ -52,7 +52,7 @@ require_once '../include/header.php';
     echo $chart->render();
 ?>
 </div>
-<style scoped>
+<style>
     .chart-wrapper .k-chart {
         margin: 0 auto;
         width: 400px;

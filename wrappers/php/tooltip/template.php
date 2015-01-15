@@ -56,7 +56,7 @@ echo $tooltip->render();
         </ul>
     </div>
 
-    <style scoped="scoped">
+    <style>
         .demo-section {
             width: 620px;
             border: 0;

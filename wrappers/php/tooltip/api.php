@@ -48,7 +48,7 @@ echo $tooltip->render();
         }
     </script>
 
-    <style scoped="scoped">
+    <style>
         #target1, #target2 {
             text-align: center;
             width: 200px;

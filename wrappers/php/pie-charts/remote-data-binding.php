@@ -48,7 +48,7 @@ for ($year = 2000; $year <= 2009; $year++) {
 }
 ?>
 </div>
-<style scoped>
+<style>
     .chart-wrapper {
         text-align: center;
         height: 340px;

@@ -55,7 +55,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
     });
 </script>
 
-<style scoped>
+<style>
     .demo-section {
         width: 605px;
     }

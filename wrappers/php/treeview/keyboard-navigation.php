@@ -136,7 +136,7 @@ require_once '../lib/Kendo/Autoload.php';
     });
 </script>
 
-<style scoped>
+<style>
     .demo-section {
         width: 200px;
     }

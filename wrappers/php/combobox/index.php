@@ -41,7 +41,7 @@ echo $select->render();
         <button class="k-button" id="get">Customize</button>
     </div>
 </div>
-<style scoped>
+<style>
 #example h2 {
     font-weight: normal;
 }

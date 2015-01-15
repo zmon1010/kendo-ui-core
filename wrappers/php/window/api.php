@@ -47,7 +47,7 @@ require_once '../lib/Kendo/Autoload.php';
     });
 </script>
 
-<style scoped>
+<style>
     #example {
         min-height: 400px;
     }

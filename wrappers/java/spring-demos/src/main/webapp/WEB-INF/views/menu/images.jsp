@@ -75,7 +75,7 @@
 </kendo:menu>
 </div>
 
-<style scoped>
+<style>
     .demo-section {
         margin: 30px auto;
     }

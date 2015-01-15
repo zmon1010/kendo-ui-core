@@ -61,7 +61,7 @@ $maskedtextbox->attr('data-validmask-msg', 'phone number is incomplete');
 
 </script>
 
-<style scoped>
+<style>
 
     #employeeForm ul {
         list-style-type: none;

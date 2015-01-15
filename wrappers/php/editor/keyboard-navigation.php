@@ -60,7 +60,7 @@ require_once '../lib/Kendo/Autoload.php';
     </li>
 </ul>
 
-<style scoped>
+<style>
     #keyboard-nav
     {
         padding-top: 35px;

@@ -52,7 +52,7 @@ echo $tooltip->render();
          </div>
     </div>
 
-    <style scoped="scoped">
+    <style>
         .demo-section {
             height: 460px;
         }

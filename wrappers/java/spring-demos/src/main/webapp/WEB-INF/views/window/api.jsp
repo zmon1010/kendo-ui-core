@@ -43,7 +43,7 @@
 
 	
 	
-	<style scoped="scoped">
+	<style>
         #example
         {
             min-height:400px;

@@ -142,7 +142,7 @@
     });
 </script>
 
-<style scoped>
+<style>
     .product-item {
         font-size: 1.2;
     }

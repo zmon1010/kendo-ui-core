@@ -54,7 +54,7 @@
     <div class="console"></div>
 </div>
 
-<style scoped>
+<style>
     .demo-section {
     padding: 15px;
     width: 692px;

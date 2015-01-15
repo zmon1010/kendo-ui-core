@@ -52,7 +52,7 @@ $end->value('10/10/2012')
     });
 
 </script>
-<style scoped>
+<style>
     #example .k-datepicker {
         vertical-align: middle;
     }

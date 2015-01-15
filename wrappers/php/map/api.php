@@ -93,7 +93,7 @@ $map->center(array(30.2681, -97.7448))
             }
         }
     </script>
-    <style scoped>
+    <style>
         .demo-section {
             width: 700px;
         }

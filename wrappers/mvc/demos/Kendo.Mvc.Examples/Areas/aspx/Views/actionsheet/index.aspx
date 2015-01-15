@@ -69,7 +69,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .reply {
         float: right;
     }

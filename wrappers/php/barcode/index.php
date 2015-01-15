@@ -38,7 +38,7 @@ require_once '../include/header.php';
         </li>
     </ul>
         
-    <style scoped>
+    <style>
         #dairy {
             margin: 0;
             padding: 30px 25px;

@@ -10,7 +10,7 @@ $maskedtextbox->mask("(999) 000-0000");
     <?= $maskedtextbox->render() ?>
 </div>
 
-<style scoped>
+<style>
     .demo-section {
         width: 250px;
         margin: 35px auto 50px;

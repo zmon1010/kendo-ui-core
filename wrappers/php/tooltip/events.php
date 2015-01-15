@@ -41,7 +41,7 @@ echo $tooltip->render();
         }
     </script>
 
-    <style scoped="scoped">
+    <style>
         .demo-section {
             width: 600px;
             padding-top: 2em;

@@ -76,7 +76,7 @@ $gauge->pointer(array($pointer0, $pointer1, $pointer2, $pointer3))
             });
         });
     </script>
-    <style scoped>
+    <style>
 	    #gauge-container {
 	        text-align: center;
 	        margin: 0 auto;

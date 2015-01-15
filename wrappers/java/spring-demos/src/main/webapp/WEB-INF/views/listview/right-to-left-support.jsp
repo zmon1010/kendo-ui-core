@@ -33,7 +33,7 @@
     </div>
 </script>
 
-<style scoped>
+<style>
     .demo-section {
     padding: 15px;
     width: 692px;

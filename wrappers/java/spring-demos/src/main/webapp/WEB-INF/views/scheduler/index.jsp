@@ -125,7 +125,7 @@
         scheduler.dataSource.filter(filter);
     });
 </script>
-<style scoped>
+<style>
     #scheduler {
         font-size: 14px;    
     }

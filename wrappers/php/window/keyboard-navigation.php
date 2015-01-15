@@ -157,7 +157,7 @@ $window->title('About Alvar Aalto')
     });
 </script>
 
-<style scoped>
+<style>
     #example {
         min-height:500px;
     }

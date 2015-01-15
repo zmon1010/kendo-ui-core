@@ -117,7 +117,7 @@ $("#select-symbol").kendoMobileButtonGroup({
     index: 0
 });
 </script>
-<style scoped>
+<style>
     .select-col {
         float: right;
     }

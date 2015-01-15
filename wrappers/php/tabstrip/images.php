@@ -103,7 +103,7 @@ require_once '../lib/Kendo/Autoload.php';
     </script>
 </div>
 
-<style scoped>
+<style>
     h3 {
         font-weight: normal;
         padding: 0 0 1em 0;

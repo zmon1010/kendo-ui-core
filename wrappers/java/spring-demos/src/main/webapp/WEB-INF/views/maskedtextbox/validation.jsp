@@ -58,7 +58,7 @@
 
 </script>
 
-<style scoped>
+<style>
 
     #employeeForm ul {
         list-style-type: none;

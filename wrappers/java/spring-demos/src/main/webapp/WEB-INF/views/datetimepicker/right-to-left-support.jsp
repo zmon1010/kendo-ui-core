@@ -8,7 +8,7 @@
 	        <kendo:dateTimePicker name="datetimepicker"></kendo:dateTimePicker>
 	    </div>
     </div>
-    <style scoped>
+    <style>
         .demo-section {
             width: 400px;
             text-align: center;

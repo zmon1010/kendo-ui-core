@@ -33,7 +33,7 @@
     %>
 </div>
 
-<style scoped>
+<style>
     #example {
         text-align: center;
     }

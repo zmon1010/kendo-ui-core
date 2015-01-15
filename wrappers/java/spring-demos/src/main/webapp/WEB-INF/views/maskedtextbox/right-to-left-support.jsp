@@ -9,7 +9,7 @@
     <kendo:maskedTextBox name="maskedtextbox" mask="(999) 000-0000"></kendo:maskedTextBox>
 </div>
 
-<style scoped>
+<style>
     .demo-section {
         width: 250px;
         margin: 35px auto 50px;

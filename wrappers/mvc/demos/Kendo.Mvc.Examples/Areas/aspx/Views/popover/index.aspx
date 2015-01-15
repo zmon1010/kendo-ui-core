@@ -129,7 +129,7 @@
 %>
 
 
-<style scoped>
+<style>
     .km-ios #popover .km-view-title,
     .km-ios #popover-people .km-view-title
     {

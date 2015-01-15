@@ -60,7 +60,7 @@ $window->attr("class", "k-rtl")
     });
 </script>
 
-<style scoped>
+<style>
     #example {
         min-height: 500px;
     }

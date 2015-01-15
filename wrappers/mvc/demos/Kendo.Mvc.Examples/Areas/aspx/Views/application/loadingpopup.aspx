@@ -57,7 +57,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .km-ios #loading .km-content
     {
         background: transparent;

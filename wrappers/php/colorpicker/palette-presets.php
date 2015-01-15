@@ -239,7 +239,7 @@ require_once '../lib/Kendo/Autoload.php';
     </div>
 </div>
 
-<style scoped>
+<style>
     .demo-section {
         overflow: hidden;
         padding: 40px 50px 15px;

@@ -313,7 +313,7 @@
     .Render();
 %>
 
-<style scoped>
+<style>
     #tabstrip-profile h2 {
         display: inline-block;
         font-size: 1.1em;

@@ -150,7 +150,7 @@
 	</span> <span class="button-descr"> Select item </span></li>
 </ul>
 
-<style scoped>
+<style>
 .demo-section {
     width: 605px;
 }

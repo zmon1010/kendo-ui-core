@@ -25,7 +25,7 @@
     </div>
 </script>
 
-<style scoped>
+<style>
     .product h3 {
         font-size: 1.3em;
         line-height: 1.4em;

@@ -39,7 +39,7 @@
             </div>
         </div>
              
-	<style scoped>
+	<style>
 		.demo-section {
 			height: 430px;
 			width: 690px;  

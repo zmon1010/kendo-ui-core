@@ -62,7 +62,7 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
 </div>
 
-<style scoped>
+<style>
     #treeview-left,
     #treeview-right
     {

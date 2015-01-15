@@ -114,7 +114,7 @@ require_once '../include/header.php';
 
 </script>
 
-<style scoped>
+<style>
 
     .k-qrcode {
         margin: 20px auto;

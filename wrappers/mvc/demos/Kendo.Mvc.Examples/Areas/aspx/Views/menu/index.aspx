@@ -84,7 +84,7 @@
       .Render();
     %>
 
-<style scoped="scoped">
+<style>
 
     #menu h2 {
         font-size: 1em;

@@ -31,7 +31,7 @@
 		    </kendo:chart>
    		</c:forEach>      
     </div>
-    <style scoped>
+    <style>
     .chart-wrapper {
         text-align: center;
         width: 700px;

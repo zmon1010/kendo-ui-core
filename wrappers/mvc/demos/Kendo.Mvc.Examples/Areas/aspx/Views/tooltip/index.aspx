@@ -30,7 +30,7 @@
             $("#agglomerations").data("kendoTooltip").show($("#canton"));
         });
     </script>
- <style scoped="scoped">
+ <style>
 
     .demo-section {
         width: 692px;

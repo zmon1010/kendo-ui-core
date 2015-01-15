@@ -10,7 +10,7 @@
             <kendo:dataSource data="${products}"></kendo:dataSource>
         </kendo:multiSelect>
     </div>
-    <style scoped>
+    <style>
         .demo-section {
             width: 450px;
             margin-top: 40px;

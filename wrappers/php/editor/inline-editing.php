@@ -130,7 +130,7 @@ require_once '../lib/Kendo/Autoload.php';
     echo $editor->render();
 ?>
 
-<style scoped>
+<style>
     .demo-section {
         padding: 40px;
     }

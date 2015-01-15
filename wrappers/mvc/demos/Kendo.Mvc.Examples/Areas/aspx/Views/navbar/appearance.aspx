@@ -91,7 +91,7 @@
         .Render();
 %>
 
-<style scoped>
+<style>
         #dark-theme .km-content, #dark-theme .km-navbar {
 	    background-color: #111;
     }

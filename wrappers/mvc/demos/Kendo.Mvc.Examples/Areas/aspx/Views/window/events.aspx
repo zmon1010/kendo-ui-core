@@ -69,7 +69,7 @@
 <br/>
 <div class="console"></div>
 
-<style scoped>
+<style>
     #example 
     {
         min-height: 400px;

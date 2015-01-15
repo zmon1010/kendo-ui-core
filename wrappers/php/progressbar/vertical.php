@@ -99,7 +99,7 @@
 
         var itemsToLoad = ["styles", "scripts", "images", "fonts"];
     </script>
-    <style scoped>
+    <style>
         .demo-section {
             width: 250px;
             margin: 50px auto;

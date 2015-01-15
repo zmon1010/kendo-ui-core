@@ -102,7 +102,7 @@
 	    
         $("#reverse, #zoom").click(setOptions);
 	</script>
-	<style scoped>
+	<style>
 	    .chart-wrapper, .chart-wrapper .k-chart {
 	        height: 250px;
 	    }

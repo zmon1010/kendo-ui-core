@@ -134,7 +134,7 @@ $chart_dec->title(array('position' => 'bottom', 'text' => 'December'))
         });
 
     </script>
-    <style scoped>
+    <style>
         .chart-wrapper {
             height: 360px;
             width:730px;

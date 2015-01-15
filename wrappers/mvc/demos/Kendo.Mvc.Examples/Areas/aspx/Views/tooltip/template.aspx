@@ -49,7 +49,7 @@
     <p>#=target.data('title')#</p>
 </script>
 
-<style scoped="scoped">
+<style>
     .demo-section
     {
         width: 620px;

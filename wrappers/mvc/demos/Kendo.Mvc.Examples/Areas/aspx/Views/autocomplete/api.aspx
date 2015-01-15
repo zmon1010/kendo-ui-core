@@ -74,7 +74,7 @@
                 });
             });
         </script>
-            <style scoped>
+            <style>
                 #colors {
                     width: 366px;
                     height: 180px;

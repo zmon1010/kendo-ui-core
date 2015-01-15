@@ -57,7 +57,7 @@
    	</kendo:contextMenu>
 </div>
 
-    <style scoped>
+    <style>
         .demo-section {
                 width: 860px;
             }

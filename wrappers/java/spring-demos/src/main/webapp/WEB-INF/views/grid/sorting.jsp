@@ -67,7 +67,7 @@
 	    </kendo:grid>
     </div>
     
-    <style scoped="scoped">
+    <style>
         .demo-section {
             width: 600px;
         }

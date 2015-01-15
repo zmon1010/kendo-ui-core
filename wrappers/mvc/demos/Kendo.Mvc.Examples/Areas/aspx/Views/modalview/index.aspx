@@ -77,7 +77,7 @@
        .Render();
 %>
 
-<style scoped>
+<style>
     #modalview-login-button,
     #modalview-reg-button,
     #modalview-open-button {

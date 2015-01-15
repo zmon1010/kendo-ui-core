@@ -92,7 +92,7 @@
     </div>
 </div>
 
-<style scoped>
+<style>
     .chart-wrapper {
         width: 460px;
         height: 100%;

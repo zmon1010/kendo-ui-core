@@ -37,7 +37,7 @@
     </kendo:grid>
 </div>  
 
- <style scoped>
+ <style>
 	#clientsDb {
 	    width: 952px;
 	    height: 396px;

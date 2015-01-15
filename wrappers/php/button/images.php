@@ -3,7 +3,7 @@ require_once '../include/header.php';
 require_once '../lib/Kendo/Autoload.php';
 ?>
 
-<style scoped>
+<style>
 
   .k-button .k-image
   {

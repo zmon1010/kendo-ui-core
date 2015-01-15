@@ -79,7 +79,7 @@
         }
     </script>
 
-    <style scoped>
+    <style>
         #passStrength {
             width: 260px;
         }

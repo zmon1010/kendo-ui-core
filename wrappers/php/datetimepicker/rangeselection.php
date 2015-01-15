@@ -54,7 +54,7 @@ $end->value(new DateTime('now', new DateTimeZone('UTC')))
     });
 
 </script>
-<style scoped>
+<style>
     #example .k-datetimepicker {
         vertical-align: middle;
     }

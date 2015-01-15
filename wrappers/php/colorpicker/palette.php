@@ -49,7 +49,7 @@ require_once '../lib/Kendo/Autoload.php';
     </div>
 </div>
 
-<style scoped>
+<style>
 
     .demo-section {
         overflow: hidden;

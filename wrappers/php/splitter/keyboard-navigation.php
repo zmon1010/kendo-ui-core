@@ -187,7 +187,7 @@ require_once '../lib/Kendo/Autoload.php';
     });
 </script>
 
-<style scoped>
+<style>
     #vertical {
         height: 200px;
         width: 700px;

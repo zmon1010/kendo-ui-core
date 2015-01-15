@@ -40,7 +40,7 @@
     </li>
 </ul>
 
-<style scoped>
+<style>
     #keyboard-nav
     {
         padding-top: 35px;

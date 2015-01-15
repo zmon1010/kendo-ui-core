@@ -28,7 +28,7 @@ echo $monthPicker->render();
 ?>
     </div>
 </div>
-<style scoped>
+<style>
     #example h2 {
         font-weight: normal;
     }

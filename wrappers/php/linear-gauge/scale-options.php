@@ -64,7 +64,7 @@ $(document).ready(function() {
 });
 </script>
 
-<style scoped>
+<style>
     #gauge-container {
         text-align: center;
         margin-left: 30px;

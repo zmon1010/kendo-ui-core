@@ -12,7 +12,7 @@
 %>
 </div>
 
-<style scoped>
+<style>
     .k-datetimepicker 
     {
         width: 200px;

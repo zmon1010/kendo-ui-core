@@ -124,7 +124,7 @@ require_once '../lib/Kendo/Autoload.php';
     });
 </script>
 
-<style scoped>
+<style>
     .configuration .k-textbox {
         width: 40px;
     }

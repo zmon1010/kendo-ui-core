@@ -84,7 +84,7 @@ for (int i = 0; i < model.size(); i++) {
     </table>
 </div>
 
-<style scoped>
+<style>
         .chart-wrapper {
             padding: 10px 0;
             height: 450px;

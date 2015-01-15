@@ -18,7 +18,7 @@
         .Render();
 %>
 
-<style scoped>
+<style>
     #zoomable-explanation {
         position: absolute;
         width: 200px;

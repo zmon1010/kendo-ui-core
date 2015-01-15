@@ -80,7 +80,7 @@
     });
 </script>
 
-<style scoped>
+<style>
     .demo-section {
         width: 185px;
     }

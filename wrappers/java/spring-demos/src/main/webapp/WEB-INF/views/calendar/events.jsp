@@ -29,7 +29,7 @@
         }
     </script>
     
-    <style scoped="scoped">
+    <style>
 	    .reports {
 	        width: 265px;
 	        height: 247px;

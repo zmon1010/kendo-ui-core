@@ -11,7 +11,7 @@ echo $calendar->render();
 ?>
 </div>
 
-<style scoped>
+<style>
     #background {
         width: 254px;
         height: 250px;

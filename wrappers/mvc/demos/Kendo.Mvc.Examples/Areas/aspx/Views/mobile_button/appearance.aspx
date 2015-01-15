@@ -101,7 +101,7 @@
         .Render();
 %>
 
-<style scoped>
+<style>
     .buttonAppearance .km-button:not(.km-back)
     {
         width: 90%;

@@ -72,7 +72,7 @@
     )
 %>
 
-<style scoped>
+<style>
     .employeeID,
     .country {
         font-size: 50px;

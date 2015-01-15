@@ -179,7 +179,7 @@ echo $grid->render();
     }
 </script>
 
-<style scoped="scoped">
+<style>
     .employee-details ul
     {
         list-style:none;

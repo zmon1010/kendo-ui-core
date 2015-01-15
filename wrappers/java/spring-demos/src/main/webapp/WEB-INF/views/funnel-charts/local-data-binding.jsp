@@ -38,7 +38,7 @@
          </kendo:chart>
     </div>
 
-    <style scoped>
+    <style>
         .chart-wrapper {
             height: 400px;
         }

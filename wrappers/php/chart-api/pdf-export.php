@@ -83,7 +83,7 @@ $chart->title(array('text' => 'Gross domestic product growth \n /GDP annual %/')
 echo $chart->render();
 ?>
 
-<style scoped="scoped">
+<style>
     #chart {
         background: center no-repeat url('../content/shared/styles/world-map.png');
     }

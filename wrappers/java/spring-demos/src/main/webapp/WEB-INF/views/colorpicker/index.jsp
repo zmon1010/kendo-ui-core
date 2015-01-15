@@ -28,7 +28,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .demo-section {
         width: 600px;
         height: 600px;

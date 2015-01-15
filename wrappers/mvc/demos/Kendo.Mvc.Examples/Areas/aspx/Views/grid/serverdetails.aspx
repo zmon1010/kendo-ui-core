@@ -75,7 +75,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
-    <style scoped="scoped">
+    <style>
         .employee-details ul
         {
             list-style: none;

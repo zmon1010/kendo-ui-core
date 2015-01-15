@@ -112,7 +112,7 @@
 
 </script>
 
-<style scoped>
+<style>
 
     .k-qrcode {
         margin: 20px auto;

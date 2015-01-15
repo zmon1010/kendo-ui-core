@@ -80,7 +80,7 @@ $panelbar->addItem($communication);
 ?>
 </div>
 
-<style scoped="scoped">
+<style>
     #organizer {
         width: 300px;
         margin: 0 auto;

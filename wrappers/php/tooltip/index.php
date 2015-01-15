@@ -30,7 +30,7 @@ echo $tooltip->render();
         });
     </script>
 
-    <style scoped="scoped">
+    <style>
 
         .demo-section {
             width: 692px;

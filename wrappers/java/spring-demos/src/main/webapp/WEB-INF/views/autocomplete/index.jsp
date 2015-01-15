@@ -71,7 +71,7 @@
 		<div class="hint">Start typing the name of an European country</div>
 	    
     </div>
-	<style scoped="scoped">
+	<style>
 		.info {
 			display: block;
 			line-height: 22px;

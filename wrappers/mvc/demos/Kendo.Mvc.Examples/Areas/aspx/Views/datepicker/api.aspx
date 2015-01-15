@@ -72,7 +72,7 @@
     });
 </script>
 
-<style scoped>
+<style>
 	.demo-section{
 		width:155px;
 	}

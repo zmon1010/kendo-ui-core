@@ -69,7 +69,7 @@
         .Render();
 %>
 
-<style scoped>
+<style>
     #switch-home h2 {
         display: inline-block;
         font-size: 1.1em;

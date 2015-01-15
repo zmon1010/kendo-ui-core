@@ -46,7 +46,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     #example .k-datepicker {
         vertical-align: middle;
     }

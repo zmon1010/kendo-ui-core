@@ -84,7 +84,7 @@ for ($i = 0; $i < count($months); $i++) {
     </table>
 </div>
 
-<style scoped>
+<style>
     .chart-wrapper {
         height: 370px;
     }

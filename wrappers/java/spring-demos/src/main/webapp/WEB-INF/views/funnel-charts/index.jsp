@@ -101,7 +101,7 @@
         });
     </script>
 
-    <style scoped>
+    <style>
         .config-section
         {
             width:125px;

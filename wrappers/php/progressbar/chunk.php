@@ -85,7 +85,7 @@ require_once '../include/header.php';
         });
     </script>
 
-    <style scoped>
+    <style>
         .demo-section {
             width: 400px;
             padding: 30px;

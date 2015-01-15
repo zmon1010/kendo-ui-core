@@ -158,7 +158,7 @@
 	});
 </script>
 
-<style scoped>
+<style>
     #vertical {
         height: 200px;
         width: 700px;

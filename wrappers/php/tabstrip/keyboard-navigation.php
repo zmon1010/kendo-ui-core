@@ -143,7 +143,7 @@ require_once '../lib/Kendo/Autoload.php';
     });
 </script>
 
-<style scoped>
+<style>
     .sunny, .cloudy, .rainy {
         display: inline-block;
         margin: 20px 0 20px 10px;

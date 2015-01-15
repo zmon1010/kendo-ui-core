@@ -184,7 +184,7 @@
     </li>
 </ul>
 
-<style scoped>
+<style>
     .demo-section {
         width: 204px;
     }

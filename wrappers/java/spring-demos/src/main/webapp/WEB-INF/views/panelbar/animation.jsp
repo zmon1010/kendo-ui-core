@@ -76,7 +76,7 @@
 	<div id="bottom"></div>
 </div>
 
-<style scoped>
+<style>
     .history {
         width: 252px;
         margin: 20px auto;

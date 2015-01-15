@@ -35,7 +35,7 @@ $window->title('Rams\'s Ten Principles of Good Design')
     });
 </script>
 
-<style scoped>
+<style>
     #example {
         min-height: 840px;
     }

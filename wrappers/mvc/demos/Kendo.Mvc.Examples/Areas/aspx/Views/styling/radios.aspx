@@ -33,7 +33,7 @@
             </ul>
         </div>
     </div>
-    <style scoped>
+    <style>
 	.demo-section.k-header {
 	    background-image: url('/Content/web/tabstrip/bmw.png');
 	    background-repeat: no-repeat;

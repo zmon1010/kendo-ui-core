@@ -84,7 +84,7 @@ echo $comboBox->render();
         </span>
     </li>
 </ul>
-<style scoped>
+<style>
     .demo-section {
         width: 250px;
         margin: 35px auto 50px;

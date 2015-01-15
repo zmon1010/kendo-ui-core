@@ -9,7 +9,7 @@
 
 <demo:header />
 
-<style scoped>
+<style>
     /*
         Use the DejaVu Sans font for display and embedding in the PDF file.
         The standard PDF fonts have no support for Unicode characters.
@@ -80,7 +80,7 @@
         </tr>
     </script>
     
-<style scoped="scoped">
+<style>
    .employeeID,
    .country {
        font-size: 42px;

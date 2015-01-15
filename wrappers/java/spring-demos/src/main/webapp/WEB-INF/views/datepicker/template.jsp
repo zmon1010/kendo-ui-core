@@ -52,7 +52,7 @@
         </kendo:datePicker>
     </div>
 	
-    <style scoped>          
+    <style>          
         .demo-section {
             width: 185px;
         }

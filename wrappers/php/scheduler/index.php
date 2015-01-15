@@ -205,7 +205,7 @@ echo $scheduler->render();
     });
 </script>
 
-<style scoped>
+<style>
     #scheduler {
         font-size: 14px;    
     }

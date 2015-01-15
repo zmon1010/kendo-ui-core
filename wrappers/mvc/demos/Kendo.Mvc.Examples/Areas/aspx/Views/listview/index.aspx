@@ -24,7 +24,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.ProductV
 %>
 </div>
 
-<style scoped>
+<style>
     .demo-section {
         padding: 30px;
         width: 577px;

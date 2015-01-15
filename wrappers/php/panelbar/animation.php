@@ -102,7 +102,7 @@ require_once '../lib/Kendo/Autoload.php';
     });
 </script>
 
-<style scoped>
+<style>
     .history {
         width: 252px;
         margin: 20px auto;

@@ -60,7 +60,7 @@ $after->title(array('text' => 'After optimization'))
     <?php echo $after->render();?>
 </div>
 
-<style scoped>
+<style>
     .chart-wrapper {
         height: 400px;
         width:730px;

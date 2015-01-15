@@ -45,7 +45,7 @@
        <h3 class="title">Console log</h3>
        <div class="console"></div>
    </div>
-   <style scoped="scoped">
+   <style>
        .demo-section {
            width: 600px;
        }

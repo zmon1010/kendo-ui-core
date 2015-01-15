@@ -82,7 +82,7 @@ function createSlider($name, $value){
     });
 </script>
 
-<style scoped>
+<style>
     #gauge-container {
         text-align: center;
         margin: 0 auto;

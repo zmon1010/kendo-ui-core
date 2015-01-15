@@ -66,7 +66,7 @@ $(document).ready(function() {
     });
 });
 </script>
-<style scoped>
+<style>
 	.demo-section{
 		width:155px;
 	}

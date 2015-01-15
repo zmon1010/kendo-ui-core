@@ -54,7 +54,7 @@ $autoComplete->dataSource($dataSource)
 echo $autoComplete->render();
 ?>
 </div>
-<style scoped>
+<style>
     .demo-section {
         width: 250px;
         margin: 35px auto 50px;

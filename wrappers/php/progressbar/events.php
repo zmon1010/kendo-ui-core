@@ -58,7 +58,7 @@ require_once '../include/header.php';
         }
     </script>
 
-    <style scoped>
+    <style>
         #progressBar {
             width: 440px;
             margin-bottom: 10px;

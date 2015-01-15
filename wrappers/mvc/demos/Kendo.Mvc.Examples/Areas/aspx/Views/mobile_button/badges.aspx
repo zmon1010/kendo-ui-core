@@ -34,7 +34,7 @@
         .Render();
 %>
 
-<style scoped>
+<style>
     .button {
         margin: 0 0 0 .5em;
         text-align: center;

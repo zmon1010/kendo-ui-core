@@ -95,7 +95,7 @@ require_once '../lib/Kendo/Autoload.php';
     ?>
 </div>
 
-<style scoped>
+<style>
     #vertical {
         height: 380px;
         width: 700px;

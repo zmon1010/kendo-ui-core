@@ -24,7 +24,7 @@
     });
 </script>
 
-<style scoped>
+<style>
     #example {
         min-height: 340px;
     }

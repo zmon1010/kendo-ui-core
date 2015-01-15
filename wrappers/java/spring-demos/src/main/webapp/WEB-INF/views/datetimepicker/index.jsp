@@ -8,7 +8,7 @@
     <div id="to-do">
         <kendo:dateTimePicker name="datetimepicker" value="${today}"></kendo:dateTimePicker>
     </div>
-    <style scoped>
+    <style>
         .k-datetimepicker 
         {
             width: 200px;

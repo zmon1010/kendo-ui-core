@@ -144,7 +144,7 @@
        .Render();
 %>
 
-<style scoped>
+<style>
     #layoutView .km-view-title
     {
         visibility: inherit;

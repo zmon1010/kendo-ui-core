@@ -71,7 +71,7 @@
     });
 </script>
 
-<style scoped>
+<style>
     #example 
     {
         min-height:500px;

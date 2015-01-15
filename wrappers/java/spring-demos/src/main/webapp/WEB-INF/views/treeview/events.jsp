@@ -106,6 +106,6 @@
         }
     </script>
 
-    <style scoped>
+    <style>
     </style>
 <demo:footer />

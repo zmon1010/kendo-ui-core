@@ -120,7 +120,7 @@ require_once '../lib/Kendo/Autoload.php';
     });
 </script>
 
-<style scoped>
+<style>
     #customValue {
         line-height: 16px;
         width: 60px;

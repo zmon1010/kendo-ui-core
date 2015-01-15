@@ -28,7 +28,7 @@
          </kendo:chart>
     </div>
     
-    <style scoped>
+    <style>
         .chart-wrapper .k-chart {
             width: 400px;
             margin: 0 auto;

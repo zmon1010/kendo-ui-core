@@ -146,7 +146,7 @@
 	    var menu = $("#menu").css({ marginRight: "220px" }).data("kendoMenu");
 	});
 </script>
-<style scoped>
+<style>
 	.configuration .k-textbox {
 	    width: 40px;
 	}

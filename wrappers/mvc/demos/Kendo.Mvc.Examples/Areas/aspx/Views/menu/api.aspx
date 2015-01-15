@@ -165,7 +165,7 @@
         var menu = $("#menu").data("kendoMenu");
     });
 </script>
-<style scoped>
+<style>
     .configuration .k-textbox {
         width: 40px;
     }

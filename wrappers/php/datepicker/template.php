@@ -59,7 +59,7 @@ echo $datePicker->render();
     }
 </script>
 
-<style scoped>
+<style>
     .demo-section {
         margin: 0 0;
     }

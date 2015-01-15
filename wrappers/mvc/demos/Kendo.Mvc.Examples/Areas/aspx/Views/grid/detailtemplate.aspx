@@ -71,7 +71,7 @@
         }
     </script>
 
-    <style scoped="scoped">
+    <style>
         .k-detail-cell .k-tabstrip .k-content {
             padding: 0.2em;
         }

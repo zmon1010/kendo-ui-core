@@ -153,7 +153,7 @@ function refresh() {
 }
 </script>
 
-<style scoped>
+<style>
     .chart-wrapper #chart {
         width: 400px;
         height: 410px;

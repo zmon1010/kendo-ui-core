@@ -40,7 +40,7 @@ require_once '../lib/Kendo/Autoload.php';
     </p>
 </div>
 
-<style scoped>
+<style>
     .wrapper {
         width: 310px;
         height: 400px;

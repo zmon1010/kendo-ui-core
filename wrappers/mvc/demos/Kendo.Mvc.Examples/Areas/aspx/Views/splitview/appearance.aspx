@@ -100,7 +100,7 @@
     });
 </script>
 
-<style scoped>
+<style>
     #bottom-panel {
         height: 140px;
     }

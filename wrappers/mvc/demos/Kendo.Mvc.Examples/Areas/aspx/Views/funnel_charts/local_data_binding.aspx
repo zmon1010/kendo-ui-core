@@ -53,7 +53,7 @@
         )
     %>
 </div>
-<style scoped>
+<style>
     .chart-wrapper {
         height: 400px;
         width:730px;

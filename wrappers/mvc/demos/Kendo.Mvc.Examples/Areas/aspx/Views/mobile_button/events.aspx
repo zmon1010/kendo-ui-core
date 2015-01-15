@@ -41,7 +41,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .km-root .console {
         background-color: transparent;
         border: 0;

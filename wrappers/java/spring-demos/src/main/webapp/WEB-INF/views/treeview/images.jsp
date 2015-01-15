@@ -64,7 +64,7 @@
 	    </kendo:treeView>
     </div>
 
-    <style scoped>
+    <style>
         .treeview-back
         {
             float: left;

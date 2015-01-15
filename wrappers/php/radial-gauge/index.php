@@ -29,7 +29,7 @@ $slider->min(0)
 
 </script>
 
-<style scoped>
+<style>
 	#gauge-container {
         background: transparent url("../content/dataviz/gauge/gauge-container-partial.png") no-repeat 50% 50%;
         width: 386px;

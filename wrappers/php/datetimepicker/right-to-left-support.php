@@ -13,7 +13,7 @@ echo $dateTimePicker->render();
 ?>
     </div>
 </div>
-<style scoped>
+<style>
     .demo-section {
         width: 400px;
         text-align: center;

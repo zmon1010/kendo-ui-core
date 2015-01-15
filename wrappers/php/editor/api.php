@@ -71,7 +71,7 @@ require_once '../lib/Kendo/Autoload.php';
     });
 </script>
 
-<style scoped>
+<style>
     .configuration {
         height: 376px;
         width: 200px;

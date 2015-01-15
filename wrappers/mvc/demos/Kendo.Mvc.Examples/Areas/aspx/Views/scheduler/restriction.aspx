@@ -183,7 +183,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .invalid-slot {
         background: red !important;
         cursor: no-drop;

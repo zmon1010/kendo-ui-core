@@ -51,7 +51,7 @@
     %>
 </div>
 
-<style scoped>
+<style>
     #forecast {
         width: 360px;
         height: 337px;

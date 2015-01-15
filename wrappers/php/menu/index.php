@@ -93,7 +93,7 @@ require_once '../lib/Kendo/Autoload.php';
 ?>
 </div>
 
-<style scoped>
+<style>
     #megaStore {
         width: 600px;
         margin: 30px auto;

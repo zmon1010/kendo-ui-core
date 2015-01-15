@@ -118,7 +118,7 @@ echo $grid->render();
   </tr>
 </script>
 
-<style scoped="scoped">
+<style>
   .photo {
   width: 140px;
   }

@@ -5,7 +5,7 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
-<style scoped>
+<style>
 
 .k-button .k-image
 {

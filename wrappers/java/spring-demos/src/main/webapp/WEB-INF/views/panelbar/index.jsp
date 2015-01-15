@@ -66,7 +66,7 @@
 	<div id="bottom"></div>
 </div>
 
-<style scoped="scoped">
+<style>
     #organizer {
         width: 300px;
         margin: 0 auto;

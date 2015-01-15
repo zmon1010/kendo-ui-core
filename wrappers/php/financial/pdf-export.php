@@ -89,7 +89,7 @@ $chart->pdf($pdf)
 echo $chart->render();
 ?>
 
-<style scoped>
+<style>
 .k-chart {
     height: 600px;
 }

@@ -18,7 +18,7 @@ echo $timePicker->render();
         </span>
     </div>
 </div>
-<style scoped>
+<style>
     #alarm-settings {
         height: 135px;
         width: 395px;

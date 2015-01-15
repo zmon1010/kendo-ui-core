@@ -73,7 +73,7 @@ echo $multiselect->render();
     <h3 class="title">Console log</h3>
     <div class="console"></div>
 </div>
-<style scoped>
+<style>
     .demo-section {
         width: 500px;
         text-align: center;

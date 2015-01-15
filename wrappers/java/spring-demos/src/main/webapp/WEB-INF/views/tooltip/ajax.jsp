@@ -52,7 +52,7 @@
 		}
 	</script>
 	
-	<style scoped="scoped">
+	<style>
 	   .demo-section {
            height: 460px;
        }
