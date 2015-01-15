@@ -2913,19 +2913,6 @@ var __meta__ = {
         }
     });
 
-    var PassthroughVisualMixin = {
-        extend: function(proto) {
-            proto.createVisual = this.createVisual;
-            proto.appendVisual = this.appendVisual;
-        },
-
-        createVisual: noop,
-
-        appendVisual: function(childVisual) {
-            this.parent.appendVisual(childVisual);
-        }
-    };
-
     var ClusterLayout = ChartElement.extend({
         options: {
             vertical: false,
@@ -2963,7 +2950,6 @@ var __meta__ = {
             }
         }
     });
-    PassthroughVisualMixin.extend(ClusterLayout.fn);
 
     var StackWrap = ChartElement.extend({
         options: {
@@ -2997,7 +2983,6 @@ var __meta__ = {
             }
         }
     });
-    PassthroughVisualMixin.extend(StackWrap.fn);
 
     var PointEventsMixin = {
         click: function(chart, e) {
@@ -3297,13 +3282,10 @@ var __meta__ = {
 
     var BarChartAnimationMixin = {
         extend: function(proto) {
-            if (proto.createVisual !== noop) {
-                throw new Error("Refusing to override existing createVisual");
-            }
-
-            proto.appendVisual = this.appendVisual;
-            proto.createVisual = this.createVisual;
+            proto.createAnimation = this.createAnimation;
+            proto._setChildrenAnimation = this._setChildrenAnimation;
             proto._setAnimationOptions = this._setAnimationOptions;
+            proto.createVisual = ChartElement.fn.createVisual;
 
             deepExtend(proto.options, {
                 animation: {
@@ -3312,27 +3294,35 @@ var __meta__ = {
             });
         },
 
-        createVisual: function() {
+        createAnimation: function() {
             this._setAnimationOptions();
-            ChartElement.fn.createVisual.call(this);
+            ChartElement.fn.createAnimation.call(this);
+            if (anyHasZIndex(this.options.series)) {
+                this._setChildrenAnimation();
+            }
         },
 
-        appendVisual: function(childVisual) {
-            if (defined(childVisual.options.zIndex)) {
-                childVisual.chartElement.options.animation =
-                    this.options.animation;
-            }
+        _setChildrenAnimation: function() {
+            var points = this.points;
+            var point, pointVisual;
 
-            ChartElement.fn.appendVisual.call(this, childVisual);
+            for (var idx = 0; idx < points.length; idx++) {
+                point = points[idx];
+                pointVisual = point.visual;
+                if (pointVisual && defined(pointVisual.options.zIndex)) {
+                    point.options.animation = this.options.animation;
+                    point.createAnimation();
+                }
+            }
         },
 
         _setAnimationOptions: function() {
             var options = this.options;
+            var animation = options.animation || {};
             var origin = this.categoryAxis.getSlot(0);
 
-            options.animation = options.animation || {};
-            options.animation.origin = new geom.Point(origin.x1, origin.y1);
-            options.animation.vertical = !this.options.invertAxes;
+            animation.origin = new geom.Point(origin.x1, origin.y1);
+            animation.vertical = !options.invertAxes;
         }
     };
 
@@ -5219,7 +5209,7 @@ var __meta__ = {
             var box = this.options.box;
             this._setEnd(interpolate(box.x1, box.x2, pos));
         },
-        
+
         _setEnd: function(x) {
             var element = this.element;
             var segments = element.segments;
@@ -11902,6 +11892,14 @@ var __meta__ = {
 
     function returnSelf() {
         return this;
+    }
+
+    function anyHasZIndex(elements) {
+        for (var idx = 0; idx < elements.length; idx++) {
+            if (defined(elements[idx].zIndex)) {
+                return true;
+            }
+        }
     }
 
     // Exports ================================================================
