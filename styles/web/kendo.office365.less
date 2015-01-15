@@ -156,7 +156,7 @@
 @slider-border-radius: 0;
 
 /* Icons */
-@default-icon-opacity: .5;
+@default-icon-opacity: .6;
 
 @calendar-border-radius: 0;
 @calendar-content-text-color: @widget-text-color;
@@ -309,6 +309,40 @@
 @radio-disabled-background-color-before: @widget-background-color;
 
 @import "theme-template.less";
+
+.k-button:hover .k-icon,
+.k-tool-icon:hover,
+.k-state-hover .k-tool-icon,
+.k-state-selected .k-tool-icon,
+.k-state-focused .k-tool-icon,
+.k-button:hover .k-tool-icon,
+.k-splitbar.k-splitbar-horizontal-hover .k-icon,
+.k-splitbar.k-splitbar-vertical-hover .k-icon,
+div.k-splitbar.k-state-focused .k-icon,
+.k-textbox:hover > .k-icon,
+.k-grouping-header .k-group-delete,
+.k-grouping-header .k-button-icon:hover > .k-icon.k-group-delete,
+.k-grouping-header .k-si-arrow-n,
+.k-grouping-header .k-link:hover > .k-icon.k-si-arrow-n,
+.k-grouping-header .k-si-arrow-s,
+.k-grouping-header .k-link:hover > .k-icon.k-si-arrow-s,
+.k-grid-toolbar .k-i-pdf,
+.k-grid-toolbar .k-button:hover > .k-i-pdf,
+.k-grid-toolbar .k-i-excel,
+.k-grid-toolbar .k-button:hover > .k-i-excel,
+.k-grid-toolbar .k-icon,
+.k-scheduler-toolbar .k-icon,
+.k-scheduler-footer .k-icon,
+.k-scheduler-content .k-icon,
+.k-gantt-toolbar .k-icon,
+.k-field-actions .k-icon,
+.k-notification .k-icon,
+.k-pivot-configurator-settings .k-icon:hover
+{
+    opacity:.8;
+}
+
+
 
 .k-button:active,
 .k-button.k-state-active {
@@ -574,6 +608,13 @@ input.k-textbox:focus {
 	.k-toggle-button:active:hover {
 		background-color: @selected-background-color;
 		border-color: @selected-border-color;
+	}
+
+	.k-toggle-button:active,
+	.k-toggle-button.k-state-active,
+	.k-toggle-button:active:hover,
+	.k-toggle-button.k-state-active:hover {
+		color: @widget-text-color;
 	}
 }
 
