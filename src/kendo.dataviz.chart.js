@@ -3970,6 +3970,8 @@ var __meta__ = {
     });
 
     var BarChart = CategoricalChart.extend({
+        options: {},
+
         render: function() {
             var chart = this;
 
@@ -4258,6 +4260,8 @@ var __meta__ = {
 
             CategoricalChart.fn.init.call(chart, plotArea, options);
         },
+
+        options: {},
 
         wrapData: function(options) {
             var series = options.series,
