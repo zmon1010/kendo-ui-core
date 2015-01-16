@@ -5961,8 +5961,23 @@ var __meta__ = {
         formatPointValue: function(point, format) {
             var value = point.value;
             return autoFormat(format, value.x, value.y);
+        },
+
+        animationPoints: function() {
+            var seriesPoints = this.points;
+            var points = [];
+            var idx;
+
+            for (idx = 0; idx < seriesPoints.length; idx++) {
+                if (seriesPoints[idx].marker) {
+                    points.push(seriesPoints[idx].marker);
+                }
+            }
+            return points;
         }
     });
+
+    deepExtend(ScatterChart.fn, ClipAnimationMixin);
 
     var ScatterLineChart = ScatterChart.extend({
         render: function() {
@@ -6124,6 +6139,7 @@ var __meta__ = {
             return autoFormat(format, value.x, value.y, value.size, point.category);
         },
 
+        createAnimation: noop,
         createVisual: noop
     });
 
