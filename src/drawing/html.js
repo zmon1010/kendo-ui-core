@@ -24,11 +24,18 @@
 
     var IMAGE_CACHE = {};
 
+    var nodeInfo = {};
+    nodeInfo._root = nodeInfo;
+
     /* -----[ exports ]----- */
 
-    function drawDOM(element) {
+    function drawDOM(element, options) {
         var defer = $.Deferred();
         element = $(element)[0];
+
+        if (!element) {
+            return defer.reject("No element to export");
+        }
 
         if (typeof window.getComputedStyle != "function") {
             throw new Error("window.getComputedStyle is missing.  You are using an unsupported browser, or running in IE8 compatibility mode.  Drawing HTML is supported in Chrome, Firefox, Safari and IE9+.");
@@ -38,29 +45,43 @@
             kendo.pdf.defineFont(getFontFaces());
         }
 
-        if (element) {
-            cacheImages(element, function(){
-                var group = new drawing.Group();
+        function doOne(element) {
+            var group = new drawing.Group();
 
-                // translate to start of page
-                var pos = element.getBoundingClientRect();
-                setTransform(group, [ 1, 0, 0, 1, -pos.left, -pos.top ]);
+            // translate to start of page
+            var pos = element.getBoundingClientRect();
+            setTransform(group, [ 1, 0, 0, 1, -pos.left, -pos.top ]);
 
-                nodeInfo._clipbox = false;
-                nodeInfo._matrix = geo.Matrix.unit();
-                nodeInfo._stackingContext = {
-                    element: element,
-                    group: group
-                };
+            nodeInfo._clipbox = false;
+            nodeInfo._matrix = geo.Matrix.unit();
+            nodeInfo._stackingContext = {
+                element: element,
+                group: group
+            };
 
-                $(element).addClass("k-pdf-export");
-                renderElement(element, group);
-                $(element).removeClass("k-pdf-export");
-                defer.resolve(group);
-            });
-        } else {
-            defer.reject("No element to export");
+            $(element).addClass("k-pdf-export");
+            renderElement(element, group);
+            $(element).removeClass("k-pdf-export");
+
+            return group;
         }
+
+        cacheImages(element, function(){
+            var forceBreak = options && options.forcePageBreak;
+            if (forceBreak) {
+                var group = new drawing.Group({
+                    pdf: { multiPage: true }
+                });
+                var x = handlePageBreaks(element, forceBreak);
+                x.pages.forEach(function(page){
+                    group.append(doOne(page));
+                });
+                x.container.parentNode.removeChild(x.container);
+                defer.resolve(group);
+            } else {
+                defer.resolve(doOne(element));
+            }
+        });
 
         return defer.promise();
     }
@@ -69,8 +90,35 @@
 
     drawDOM.getFontFaces = getFontFaces;
 
-    var nodeInfo = {};
-    nodeInfo._root = nodeInfo;
+    function handlePageBreaks(element, forceBreak) {
+        var doc = element.ownerDocument;
+        var pages = [];
+        var copy = element.cloneNode(true);
+        var cont = document.createElement("KENDO-PDF-DOCUMENT");
+        cont.appendChild(copy);
+        element.parentNode.insertBefore(cont, element);
+        (function split(node) {
+            for (var el = node.firstChild; el; el = el.nextSibling) {
+                if (el.nodeType == 1) {
+                    if ($(el).is(forceBreak)) {
+                        var page = doc.createElement("KENDO-PDF-PAGE");
+                        var range = doc.createRange();
+                        range.setStartBefore(copy);
+                        range.setEndBefore(el);
+                        page.appendChild(range.extractContents());
+                        pages.push(page);
+                        copy.parentNode.insertBefore(page, copy);
+                    } else {
+                        split(el);
+                    }
+                }
+            }
+        })(copy);
+        if (!(pages.length > 0 && copy.children.length === 0)) {
+            pages.push(copy);
+        }
+        return { pages: pages, container: cont };
+    }
 
     var parseGradient = (function(){
         var tok_linear_gradient  = /^((-webkit-|-moz-|-o-|-ms-)?linear-gradient\s*)\(/;
@@ -456,6 +504,7 @@
                 next();
             };
             img.src = url;
+            // XXX.  revisit similar change in core.js
             // hack from https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
             // make sure the load event fires for cached images too
             if (img.complete || img.complete === undefined) {
@@ -527,7 +576,7 @@
             });
         }
 
-        if (createsStackingContext(element)) {
+        if (createsStackingContext(style)) {
             nodeInfo._stackingContext = {
                 element: element,
                 group: group
@@ -550,8 +599,7 @@
         }
     }
 
-    function createsStackingContext(element) {
-        var style = getComputedStyle(element);
+    function createsStackingContext(style) {
         function prop(name) { return getPropertyValue(style, name); }
         if (prop("transform") != "none" ||
             (prop("position") != "static" && prop("z-index") != "auto") ||
