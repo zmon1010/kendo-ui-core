@@ -1,5 +1,6 @@
 (function() {
     var dataviz = kendo.dataviz,
+        draw = kendo.drawing,
         Box2D = dataviz.Box2D,
         chartBox = new Box2D(0, 0, 800, 600),
         scatterLineChart,
@@ -293,6 +294,67 @@
 
         test("sets line dashType", function() {
             equal(getSegmentPath().options.stroke.dashType, "dot");
+        });
+
+        test("creates visual", function() {
+            ok(scatterLineChart.visual);
+        });
+
+        test("creates clip animation", function() {
+            ok(scatterLineChart.animation);
+            ok(scatterLineChart.animation instanceof dataviz.ClipAnimation);
+            sameBox(scatterLineChart.animation.options.box, scatterLineChart.box);
+            sameLinePath(scatterLineChart.animation.element, draw.Path.fromRect(scatterLineChart.box.toRect()));
+        });
+
+        test("does not set clip on points markers by default", function() {
+            var points = scatterLineChart.points;
+            for (var idx = 0; idx < points.length; idx++) {
+                ok(!points[idx].marker.visual.clip());
+            }
+        });
+
+        test("does not set clip on segments by default", function() {
+            var segments = scatterLineChart._segments;
+            for (var idx = 0; idx < segments.length; idx++) {
+                ok(!segments[idx].visual.clip());
+            }
+        });
+
+        test("sets animation clip path to points markers with zIndex", function() {
+            plotArea = new PlotAreaStub();
+            setupScatterLineChart(plotArea, {
+                series: [{
+                    type: "scatterLine",
+                    data: [[0, 1]]
+                }, {
+                    type: "scatterLine",
+                    data: [[1, 2]],
+                    zIndex: 1
+                }]
+            });
+
+            var clip = scatterLineChart.seriesPoints[1][0].marker.visual.clip();
+            ok(clip);
+            ok(clip === scatterLineChart.animation.element);
+        });
+
+        test("sets animation clip path to segments with zIndex", function() {
+            plotArea = new PlotAreaStub();
+            setupScatterLineChart(plotArea, {
+                series: [{
+                    type: "scatterLine",
+                    data: [[0, 1], [1, 2]]
+                }, {
+                    type: "scatterLine",
+                    data: [[1, 2], [2, 3]],
+                    zIndex: 1
+                }]
+            });
+
+            var clip = scatterLineChart._segments[1].visual.clip();
+            ok(clip);
+            ok(clip === scatterLineChart.animation.element);
         });
 
         // ------------------------------------------------------------

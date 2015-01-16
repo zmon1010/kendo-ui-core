@@ -5999,6 +5999,11 @@ var __meta__ = {
             }
 
             return new pointType(linePoints, currentSeries, seriesIx);
+        },
+
+        animationPoints: function() {
+            var points = ScatterChart.fn.animationPoints.call(this);
+            return points.concat(this._segments);
         }
     });
     deepExtend(ScatterLineChart.fn, LineChartMixin);
