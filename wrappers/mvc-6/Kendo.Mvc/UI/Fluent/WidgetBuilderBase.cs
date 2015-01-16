@@ -106,9 +106,9 @@ namespace Kendo.Mvc.UI.Fluent
             //Component.Render();
         }
 
-        public virtual HtmlString ToHtmlString()
+        public virtual string ToHtmlString()
         {
-            return new HtmlString(ToComponent().ToHtmlString());
+            return ToComponent().ToHtmlString();
         }
 
         public override void WriteTo(TextWriter writer)

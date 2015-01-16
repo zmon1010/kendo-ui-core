@@ -137,7 +137,11 @@ namespace Kendo.Mvc.UI
 
         public string ToHtmlString()
         {
-            return "";
+            using (var output = new StringWriter())
+            {
+                WriteHtml(output);
+                return output.ToString();
+            }
         }
 
         public string SanitizeId(string id)
