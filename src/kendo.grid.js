@@ -4480,6 +4480,16 @@ var __meta__ = {
                         }) : false;
 
                         filterable = options.filterable && column.filterable !== false && columnMenu.filterable !== false ? extend({ pane: that.pane }, column.filterable, options.filterable) : false;
+
+                        if (column.filterable && column.filterable.dataSource) {
+                            filterable.forceUnique = false;
+                            filterable.checkSource = column.filterable.dataSource;
+                        }
+
+                        if (filterable) {
+                            filterable.format = column.format;
+                        }
+
                         menuOptions = {
                             dataSource: that.dataSource,
                             values: column.values,

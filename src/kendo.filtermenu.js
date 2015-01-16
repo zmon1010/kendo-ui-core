@@ -791,7 +791,11 @@ var __meta__ = {
                     }
                 }
             }
-            this._createLink();
+            if (!options.appendToElement) {
+                this._createLink();
+            } else {
+                this._init();
+            }
 
             this._refreshHandler = proxy(this.refresh, this);
             this.dataSource.bind("change", this._refreshHandler);
@@ -822,21 +826,19 @@ var __meta__ = {
             this.trigger(INIT, { field: this.field, container: this.form });
         },
         _createForm: function() {
-            if (this.options.values) {
-                this.createItems();
-            } else {
-                this.checkSource.fetch(proxy(this.createItems, this));
-            }
-        },
-        createItems: function() {
             var options = this.options;
             var html = "<div class='multicheck-container'></div><button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
             html += "<button type='reset' class='k-button'>" + options.messages.clear + "</button>";
-            this.form = $('<form class="k-filter-menu"/>');
-            this.popup = this.form.html(html).kendoPopup({
-                anchor: this._link
-            }).data("kendoPopup");
+            this.form = $('<form class="k-filter-menu"/>').html(html);
 
+            if (!options.appendToElement) {
+                this.popup = this.form.kendoPopup({
+                    anchor: this._link
+                }).data("kendoPopup");
+            } else {
+                this.popup = this.element.closest(".k-popup").data(POPUP);
+                this.element.append(this.form);
+            }
             this.container = this.form.find(".multicheck-container");
 
             if (options.checkAll) {
@@ -844,10 +846,11 @@ var __meta__ = {
                 this.container.on("change" + multiCheckNS, ":checkbox", proxy(this.updateCheckAllState, this))
             }
 
+            this.refresh();
+
             this.form.on("keydown" + multiCheckNS, proxy(this._keydown, this))
                         .on("submit" + multiCheckNS, proxy(this._filter, this))
                         .on("reset" + multiCheckNS, proxy(this._reset, this));
-            this.refresh();
         },
         createCheckAllItem: function () {
             options = this.options;
@@ -864,17 +867,32 @@ var __meta__ = {
             this.checkBoxAll.prop("checked", state);
         },
         refresh: function() {
-            var ds = this.dataSource;
-            var expression = $.extend(true, {}, { filters: [], logic: "and" }, ds.filter());
-            filterValuesForField(expression, this.field) || [];
-            var flatValues = flatFilterValues(expression);
-            this._link.toggleClass("k-state-active", flatValues.length != 0);
+            var filters = this.getFilterArray();
+            if (this._link) {
+                this._link.toggleClass("k-state-active", filters.length != 0);
+            }
 
             if (this.form) {
-                this.createCheckBoxes();
-                this.checkValues(flatValues);
+                if (this.container.is(":empty")) {
+                    if (this.options.values) {
+                        this.createCheckBoxes();
+                    } else {
+                        this.checkSource.fetch(proxy(function() {
+                            this.createCheckBoxes()
+                            this.checkValues(this.getFilterArray());
+                            this.trigger("refresh");
+                        }, this));
+                    }
+                }
+                this.checkValues(filters);
                 this.trigger("refresh");
             }
+        },
+        getFilterArray: function() {
+            var expression = $.extend(true, {}, { filters: [], logic: "and" }, this.dataSource.filter());
+            filterValuesForField(expression, this.field) || [];
+            var flatValues = flatFilterValues(expression);
+            return flatValues;
         },
         createCheckBoxes: function() {
             var options = this.options;
@@ -966,6 +984,7 @@ var __meta__ = {
                     "#</label></div>";
             },
             checkAll: true,
+            appendToElement: false,
             messages: {
                 checkAll: "Select All",
                 clear: "clear",
