@@ -1,6 +1,7 @@
 (function() {
 
     var dataviz = kendo.dataviz,
+        draw = kendo.drawing,
         Box2D = dataviz.Box2D,
         categoriesCount = dataviz.categoriesCount,
         chartBox = new Box2D(0, 0, 800, 600),
@@ -285,12 +286,37 @@
             equal(pointBody.options.fill.color, "color");
         });
 
-        // test("creates animation", function() {
-            // var group = view.findInLog("group", function(item) {
-                // return item.options.animation;
-            // });
-            // equal(group.options.animation.type, "clip");
-        // });
+        test("creates visual", function() {
+            ok(candlestickChart.visual);
+        });
+
+        test("creates clip animation", function() {
+            ok(candlestickChart.animation);
+            ok(candlestickChart.animation instanceof dataviz.ClipAnimation);
+            sameBox(candlestickChart.animation.options.box, candlestickChart.box);
+            sameLinePath(candlestickChart.animation.element, draw.Path.fromRect(candlestickChart.box.toRect()));
+        });
+
+        test("does not set clip on points by default", function() {
+            var points = candlestickChart.points;
+            for (var idx = 0; idx < points.length; idx++) {
+                ok(!points[idx].visual.clip());
+            }
+        });
+
+        test("sets animation clip path to points with zIndex", function() {
+            setupCandlestickChart(plotArea, {
+                series: [{
+                    type: "candlestick",
+                    data: [[3,4,1,2]],
+                    zIndex: 1
+                }]
+            });
+
+            var clip = candlestickChart.points[0].visual.clip();
+            ok(clip);
+            ok(clip === candlestickChart.animation.element);
+        });
 
         // ------------------------------------------------------------
         module("Candlestick Chart / Rendering / Highlight", {

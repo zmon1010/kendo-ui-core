@@ -6453,8 +6453,14 @@ var __meta__ = {
                 value.open, value.high,
                 value.low, value.close, point.category
             );
+        },
+
+        animationPoints: function() {
+            return this.points;
         }
     });
+
+    deepExtend(CandlestickChart.fn, ClipAnimationMixin);
 
     var OHLCPoint = Candlestick.extend({
         reflow: function(box) {
