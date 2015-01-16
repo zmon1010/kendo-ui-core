@@ -85,4 +85,31 @@
         equal(tds.eq(0).text(), "2");
         equal(tds.eq(1).text(), "bar");
     });
+
+    ngTest("repaint templates after column reorder", 1, function() {
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: {
+                    data: [
+                        { id: 1, parentId: null, text: "foo" }
+                    ]
+                },
+                columns: [
+                    { field: "id" },
+                    { template: "{{dataItem.text}}" }
+                ]
+            };
+        });
+
+        $("<div ng-controller=mine><div kendo-treelist='tree' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function() {
+        var treeList = QUnit.fixture.find('[data-role=treelist]').getKendoTreeList();
+
+        treeList.reorderColumn(0, treeList.columns[1]);
+
+        var tds = treeList.content.find("td");
+        equal(tds.eq(0).text(), "foo");
+    });
 })();

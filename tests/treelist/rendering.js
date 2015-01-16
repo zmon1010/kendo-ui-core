@@ -146,6 +146,39 @@
         equal(instance.header.find("th:last").text(), "Foo");
     });
 
+    test("renders column field as data attribute", function() {
+        createTreeList({
+            columns: [
+                "id",
+                { field: "parentId", title: "Foo" }
+            ]
+        });
+
+        equal(instance.header.find("th:last").attr(kendo.attr("field")), "parentId");
+    });
+
+    test("renders column title as data attribute", function() {
+        createTreeList({
+            columns: [
+                "id",
+                { field: "parentId", title: "Foo" }
+            ]
+        });
+
+        equal(instance.header.find("th:last").attr(kendo.attr("title")), "Foo");
+    });
+
+    test("do not render data attribute for title if title is not set", function() {
+        createTreeList({
+            columns: [
+                "id",
+                { field: "parentId" }
+            ]
+        });
+
+        equal(instance.header.find("th:last").attr(kendo.attr("title")), undefined);
+    });
+
     test("does not render expand arrows when hasChildren is false", function() {
         createTreeList({
             dataSource: {

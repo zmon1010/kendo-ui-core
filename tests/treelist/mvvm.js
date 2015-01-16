@@ -75,4 +75,19 @@
         var rows = instance.content.find("tr");
         equal(rows.eq(1).find(".content").text(), "qux");
     });
+
+    test("template is updated on column reorder", function() {
+        var observable = kendo.observable({ items: [
+            { id: 1, text: "foo", parentId: null }
+        ] });
+
+        bindHtml("<div data-role='treelist' " +
+                 "data-columns='[{ field: \"id\", template: \"" + mvvmTemplate + "\" }, \"text\"]' " +
+                 "data-bind='source:items' />", observable);
+
+        instance.reorderColumn(0, instance.columns[1]);
+
+        var rows = instance.content.find("tr");
+        equal(rows.eq(0).find(".content").text(), "foo");
+    });
 })();
