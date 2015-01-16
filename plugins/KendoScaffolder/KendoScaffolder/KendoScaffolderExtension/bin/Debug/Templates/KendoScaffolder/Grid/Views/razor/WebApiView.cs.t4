@@ -1,17 +1,17 @@
 ﻿﻿<#@ template language="C#" HostSpecific="True" #>
 <#@ output extension=".cshtml" #>
-<#@ include file="ImportsGridView.include.t4" #>
+<#@ include file="..\ImportsGridView.include.t4" #>
 <#
     var entitySetName = ModelMetadata.EntitySetName;
     var batchEditMode = "InCell";
 #>
-/* Important! Register the following route if it's not existing in the RouteTable
+@* Important! Register the following route if it's not existing in the RouteTable
 config.Routes.MapHttpRoute(
     name: "DefaultApi",
     routeTemplate: "api/{controller}/{id}",
     defaults: new { id = RouteParameter.Optional }
 );
-*/
+*@
 
 @(Html.Kendo().Grid<<#= ViewDataTypeName #>>()
       .Name("grid")

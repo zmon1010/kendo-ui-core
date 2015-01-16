@@ -7,19 +7,21 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace KendoScaffolder
 {
-    public class CustomCodeGenerator : CodeGenerator
+    public class KendoScaffolder : CodeGenerator
     {
         GridConfigurationViewModel _viewModel;
+        public static readonly string PathSeparator = Path.DirectorySeparatorChar.ToString();
 
         /// <summary>
         /// Constructor for the custom code generator
         /// </summary>
         /// <param name="context">Context of the current code generation operation based on how scaffolder was invoked(such as selected project/folder) </param>
         /// <param name="information">Code generation information that is defined in the factory class.</param>
-        public CustomCodeGenerator(CodeGenerationContext context, CodeGeneratorInformation information)
+        public KendoScaffolder(CodeGenerationContext context, CodeGeneratorInformation information)
             : base(context, information)
         {
             _viewModel = new GridConfigurationViewModel(Context);
@@ -40,6 +42,7 @@ namespace KendoScaffolder
         
         public override void GenerateCode()
         {
+
             var modelType = _viewModel.SelectedModelType.CodeType;
             bool useViewModel = _viewModel.UseViewModel;
             bool editable = _viewModel.Editable;
@@ -77,11 +80,17 @@ namespace KendoScaffolder
             string modelTypeVariable = GetTypeVariable(modelType.Name);
             string bindAttributeIncludeText = GetBindAttributeIncludeText(efMetadata);
 
+            string areaName = GetAreaName(GetSelectionRelativePath());
             string controllerName = _viewModel.ControllerName;
             string controllerRootName = controllerName.Replace("Controller", "");
+            string controllerPath = Path.Combine("Controllers", controllerName) ;
+            
+            if(areaName != String.Empty) {
+                controllerPath = Path.Combine("Areas", areaName, controllerPath);
+            }
 
             Dictionary<string, object> controllerParameters = new Dictionary<string, object>(){
-                {"AreaName", string.Empty},
+                {"AreaName", areaName},
                 {"BindAttributeIncludeText", bindAttributeIncludeText}, 
                 {"ContextTypeName", dbContext.Name},
                 {"ControllerName", controllerName }, 
@@ -123,14 +132,7 @@ namespace KendoScaffolder
             switch (dataSourceType)
             {
                 case "Ajax":
-                    if (editMode == "InCell")
-                    {
-                        controllerTemplate = "AjaxBatchController";
-                    }
-                    else
-                    {
-                        controllerTemplate = "AjaxController";
-                    }
+                    controllerTemplate = (editMode == "InCell") ? "AjaxBatchController" : "AjaxController";
                     break;
                 case "Server":
                     controllerTemplate = "ServerController";
@@ -144,8 +146,7 @@ namespace KendoScaffolder
 
             // Generate Controller
             // TODO output path?
-            // template = template
-            this.AddFileFromTemplate(Context.ActiveProject, Path.Combine("Controllers", controllerName), controllerTemplate, controllerParameters, skipIfExists: false);
+            this.AddFileFromTemplate(Context.ActiveProject, controllerPath, controllerTemplate, controllerParameters, skipIfExists: false);
 
             // Generate View
             string viewDataTypeName = modelType.Namespace.FullName + "." + modelType.Name;
@@ -187,29 +188,99 @@ namespace KendoScaffolder
                 viewParameters.Add("EditableDestroy", _viewModel.EditableDestroy);
             }
 
+            string viewPath = Path.Combine("Views", controllerRootName, "Index");
+
+            if (areaName != String.Empty)
+	        {
+                viewPath = Path.Combine("Areas", areaName, viewPath);
+	        }
+
             this.AddFolder(Context.ActiveProject, Path.Combine("Views", controllerRootName));
-
-            string viewTemplate = string.Empty;
-            switch (dataSourceType)
-            {
-                case "Ajax":
-                case "Server":
-                    viewTemplate = "AjaxView";
-                    break;
-                case "WebApi":
-                    viewTemplate = "WebApiView";
-                    break;
-                default:
-                    break;
-            }
-
-            // Add the custom scaffolding item from T4 template.
-            this.AddFileFromTemplate(Context.ActiveProject, Path.Combine("Views", controllerRootName, "Index"), viewTemplate, viewParameters, skipIfExists: false);
+            this.AddFileFromTemplate(Context.ActiveProject, viewPath, dataSourceType + "View", viewParameters, skipIfExists: false);
         }
 
         private ICodeTypeService GetService<T1>()
         {
             return (ICodeTypeService)Context.ServiceProvider.GetService(typeof(ICodeTypeService));
+        }
+
+        private string GetAreaName(string relativePath)
+        {
+            string[] dirs = relativePath.Split(new char[1] { '\\' });
+            return dirs[0].Equals("Areas") ? dirs[1] : String.Empty;
+        }
+
+        protected string GetSelectionRelativePath()
+        {
+            return Context.ActiveProjectItem == null ? String.Empty : GetProjectRelativePath(Context.ActiveProjectItem);
+        }
+
+        public static string GetProjectRelativePath(ProjectItem projectItem)
+        {
+            Project project = projectItem.ContainingProject;
+            string projRelativePath = null;
+
+            string rootProjectDir = project.GetFullPath();
+            rootProjectDir = EnsureTrailingBackSlash(rootProjectDir);
+            string fullPath = projectItem.GetFullPath();
+
+            if (!String.IsNullOrEmpty(rootProjectDir) && !String.IsNullOrEmpty(fullPath))
+            {
+                projRelativePath = MakeRelativePath(fullPath, rootProjectDir);
+            }
+
+            return projRelativePath;
+        }
+
+        public static string EnsureTrailingBackSlash(string path)
+        {
+            if (path != null && !path.EndsWith(PathSeparator, StringComparison.Ordinal))
+            {
+                path += PathSeparator;
+            }
+            return path;
+        }
+
+        public static string MakeRelativePath(string fullPath, string basePath)
+        {
+            string tempBasePath = basePath;
+            string tempFullPath = fullPath;
+            StringBuilder relativePath = new StringBuilder();
+
+            if (!tempBasePath.EndsWith(PathSeparator, StringComparison.OrdinalIgnoreCase))
+            {
+                tempBasePath += PathSeparator;
+            }
+
+            while (!String.IsNullOrEmpty(tempBasePath))
+            {
+                if (tempFullPath.StartsWith(tempBasePath, StringComparison.OrdinalIgnoreCase))
+                {
+                    relativePath.Append(fullPath.Remove(0, tempBasePath.Length));
+                    if (String.Equals(relativePath.ToString(), PathSeparator, StringComparison.OrdinalIgnoreCase))
+                    {
+                        relativePath.Clear();
+                    }
+                    return relativePath.ToString();
+                }
+                else
+                {
+                    tempBasePath = tempBasePath.Remove(tempBasePath.Length - 1);
+                    int lastIndex = tempBasePath.LastIndexOf(PathSeparator, StringComparison.OrdinalIgnoreCase);
+                    if (-1 != lastIndex)
+                    {
+                        tempBasePath = tempBasePath.Remove(lastIndex + 1);
+                        relativePath.Append("..");
+                        relativePath.Append(PathSeparator);
+                    }
+                    else
+                    {
+                        return fullPath;
+                    }
+                }
+            }
+
+            return fullPath;
         }
 
         protected string GetDefaultNamespace()

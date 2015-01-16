@@ -1,0 +1,66 @@
+﻿﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="..\ImportsGridView.include.t4" #>
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+    var batchEditMode = "InCell";
+#>
+@model IEnumerable<<#= ViewDataTypeName #>>
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+<#
+if(Editable) {
+        if(EditableCreate || EditMode.Equals(batchEditMode)) {
+#>
+      .ToolBar(toolbar => {
+<#
+        if(EditableCreate){
+#>
+            toolbar.Create();
+<#
+        }
+        if(EditMode.Equals(batchEditMode)){
+#>
+            toolbar.Save();
+<#
+        }
+#>
+      })
+<#       
+    }
+#>
+      .Editable(editable => editable.Mode(GridEditMode.<#= EditMode #>))
+<#
+}
+#>
+      .Pageable()
+<#
+if(Editable) {
+#>
+      .DataSource(dataSource => dataSource
+        .Server()
+        .Model(model => model.Id(p => p.<#= PrimaryKeyName #>))
+        .Read(read => read.Action("Index", "<#= ControllerRootName #>"))
+<#
+    if(EditableCreate) {
+#>
+        .Create("Create", "<#= ControllerRootName #>")
+<#
+    }
+    if(EditableUpdate) {
+#>
+        .Update("Update", "<#= ControllerRootName #>")
+<#
+    }
+    if(EditableDestroy) {
+#>
+        .Destroy("Destroy", "<#= ControllerRootName #>")
+<#
+    }
+#>
+      )
+<#
+}
+#>
+)

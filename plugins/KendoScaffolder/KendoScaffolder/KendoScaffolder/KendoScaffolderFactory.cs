@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 namespace KendoScaffolder
 {
     [Export(typeof(CodeGeneratorFactory))]
-    public class CustomCodeGeneratorFactory : CodeGeneratorFactory
+    public class KendoScaffolderFactory : CodeGeneratorFactory
     {
         /// <summary>
         ///  Information about the code generator goes here.
@@ -21,15 +21,16 @@ namespace KendoScaffolder
             description: "Kendo UI Scaffolder.",
             author: "Telerik",
             version: new Version(1, 0, 0, 0),
-            id: typeof(CustomCodeGenerator).Name,
+            id: typeof(KendoScaffolder).Name,
             icon: ToImageSource(Resources._TemplateIconSample),
             gestures: new[] { "Controller", "View", "Area" },
             categories: new[] { Categories.Common, Categories.MvcController, Categories.Other });
 
-        public CustomCodeGeneratorFactory()
+        public KendoScaffolderFactory()
             : base(_info)
         {
         }
+
         /// <summary>
         /// This method creates the code generator instance.
         /// </summary>
@@ -37,7 +38,7 @@ namespace KendoScaffolder
         /// <returns>Instance of CodeGenerator.</returns>
         public override ICodeGenerator CreateInstance(CodeGenerationContext context)
         {
-            return new CustomCodeGenerator(context, Information);
+            return new KendoScaffolder(context, Information);
         }
 
         /// <summary>
@@ -54,6 +55,7 @@ namespace KendoScaffolder
 
             return true;
         }
+
         /// <summary>
         /// Helper method to convert Icon to Imagesource.
         /// </summary>

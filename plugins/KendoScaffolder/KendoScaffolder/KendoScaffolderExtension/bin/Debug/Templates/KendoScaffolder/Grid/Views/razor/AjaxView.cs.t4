@@ -1,6 +1,6 @@
 ﻿﻿<#@ template language="C#" HostSpecific="True" #>
 <#@ output extension=".cshtml" #>
-<#@ include file="ImportsGridView.include.t4" #>
+<#@ include file="..\ImportsGridView.include.t4" #>
 <#
     var entitySetName = ModelMetadata.EntitySetName;
     var batchEditMode = "InCell";

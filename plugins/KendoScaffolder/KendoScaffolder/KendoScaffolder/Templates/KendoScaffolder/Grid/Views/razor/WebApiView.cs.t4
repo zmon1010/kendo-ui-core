@@ -1,10 +1,18 @@
 ﻿﻿<#@ template language="C#" HostSpecific="True" #>
 <#@ output extension=".cshtml" #>
-<#@ include file="ImportsGridView.include.t4" #>
+<#@ include file="..\ImportsGridView.include.t4" #>
 <#
     var entitySetName = ModelMetadata.EntitySetName;
     var batchEditMode = "InCell";
 #>
+@* Important! Register the following route if it's not existing in the RouteTable
+config.Routes.MapHttpRoute(
+    name: "DefaultApi",
+    routeTemplate: "api/{controller}/{id}",
+    defaults: new { id = RouteParameter.Optional }
+);
+*@
+
 @(Html.Kendo().Grid<<#= ViewDataTypeName #>>()
       .Name("grid")
       .Columns(columns =>
@@ -66,35 +74,28 @@ if(Editable) {
 #>
       .Pageable()
       .DataSource(dataSource => dataSource
-          .Ajax()
-<#
-if(Editable) {
-   if(EditMode.Equals(batchEditMode)) {
-#>
-          .Batch(true)
-<#
-}
-#>
+          .WebApi()
           .Model(model => model.Id(p => p.<#= PrimaryKeyName #>))
-<#
-}
-#>
-          .Read(read => read.Action("Products_Read", "<#= ControllerRootName #>"))
+          .Read(read => read.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))
+          //.Read(read => read.Url(Url.Content("~/api/<#= entitySetName #>")))
 <#
 if(Editable) {
     if(EditableCreate) {
 #>
-          .Create(create => create.Action("<#= entitySetName #>_Create", "<#= ControllerRootName #>"))
+          .Create(create => create.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))  
+          //.Create(create => create.Url(Url.Content("~/api/<#= entitySetName #>")))
 <#
     }
     if(EditableUpdate) {
 #>
-          .Update(update => update.Action("<#= entitySetName #>_Update", "<#= ControllerRootName #>"))
+          .Update(update => update.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
+          //.Update(update => update.Url(Url.Content("~/api/<#= entitySetName #>/{0}")))
 <#
     }
     if(EditableDestroy) {
 #>
-          .Destroy(destroy => destroy.Action("<#= entitySetName #>_Destroy", "<#= ControllerRootName #>"))
+          .Destroy(destroy => destroy.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
+          //.Destroy(destroy => destroy.Url(Url.Content("~/api/<#= entitySetName #>/{0}")))
 <#
     }
 }
