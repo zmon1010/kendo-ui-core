@@ -822,7 +822,11 @@ var __meta__ = {
             this.trigger(INIT, { field: this.field, container: this.form });
         },
         _createForm: function() {
-            this.checkSource.fetch(proxy(this.createItems, this));
+            if (this.options.values) {
+                this.createItems();
+            } else {
+                this.checkSource.fetch(proxy(this.createItems, this));
+            }
         },
         createItems: function() {
             var options = this.options;
@@ -861,20 +865,26 @@ var __meta__ = {
         },
         refresh: function() {
             var ds = this.dataSource;
+            var expression = $.extend(true, {}, { filters: [], logic: "and" }, ds.filter());
+            filterValuesForField(expression, this.field) || [];
+            var flatValues = flatFilterValues(expression);
+            this._link.toggleClass("k-state-active", flatValues.length != 0);
+
             if (this.form) {
                 this.createCheckBoxes();
-                var expression = $.extend(true, {}, { filters: [], logic: "and" }, ds.filter());
-                filterValuesForField(expression, this.field) || [];
-                var flatValues = flatFilterValues(expression);
                 this.checkValues(flatValues);
                 this.trigger("refresh");
-                this._link.toggleClass("k-state-active", flatValues.length != 0);
             }
         },
         createCheckBoxes: function() {
             var options = this.options;
             var template = kendo.template(options.itemTemplate(this.field, options.format));
-            var itemsHtml = kendo.render(template, this.checkSource.data());
+            var data = this.checkSource.data();
+            if (options.values) {
+                data = options.values;
+                template = kendo.template(options.itemTemplate("text", options.format, "value"));
+            }
+            var itemsHtml = kendo.render(template, data);
             this.container.html(itemsHtml);
 
         },
@@ -921,6 +931,14 @@ var __meta__ = {
                     that.popup = null;
                 }
                 that.form = null;
+                if (that.container) {
+                    that.container.unbind(multiCheckNS);
+                    that.container = null;
+                }
+
+                if (that.checkBoxAll) {
+                    that.checkBoxAll.unbind(multiCheckNS);
+                }
             }
 
             if (that.view) {
@@ -935,16 +953,15 @@ var __meta__ = {
                 that.dataSource = null;
             }
 
-            if (that.checkBoxAll) {
-                that.checkBoxAll.unbind(multiCheckNS);
-            }
-
             that.element = that.container = that.checkBoxAll = that._link = that._refreshHandler = that.checkAllHandler = null;
         },
         options: {
             name: "FilterMultiCheck",
-            itemTemplate: function(field, format) {
-                return "<div><label><input type='checkbox' value='#:"+ field + " #'/>#:" +
+            itemTemplate: function(field, format, valueField) {
+                if (valueField === undefined) {
+                    valueField = field;
+                }
+                return "<div><label><input type='checkbox' value='#:"+ valueField + " #'/>#:" +
                     "kendo.format('" + ( format ?  format  : "{0}" ) + "', "  + field + ")" +
                     "#</label></div>";
             },
