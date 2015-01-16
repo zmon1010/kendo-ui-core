@@ -1372,7 +1372,7 @@ if (datetime[0].type == "datetime-local") {
 
         deepEqual(viewModel.foo[0], kendo.parseDate("2015-02-13T01:00:00", ["yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm"]));
     });
-    
+
     test("changing radiobutton datetime-local value updates the view model", function() {
         var dom = $('<input type="radio" data-type="datetime-local" value="2015-02-13T01:00:00"  data-bind="checked:foo"/>');
 

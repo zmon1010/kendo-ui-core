@@ -1741,7 +1741,6 @@ if (kendo.support.input.datetimelocal) {
 
         equal(dom.val(), "2013-06-03T20:30:52");
     });
-    
 
     test("checked binding adding a datetime-local item should check the checkbox", function() {
         var dom = $('<input type="checkbox" value="2013-06-05T23:13:40" data-type="datetime-local" data-bind="checked:selectedItems"/>');
