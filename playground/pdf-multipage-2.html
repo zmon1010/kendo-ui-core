@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+
+    <script src="./pako.min.js"></script>
+
+    <style>
+      body {
+        font-family: "DejaVu Serif";
+      }
+      kendo-page-break {
+        display: block;
+      }
+      .test {
+        width: 560px;
+        padding: 1em;
+        border: 1px solid red;
+      }
+      .k-pdf-export hr {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+
+    <button onclick="multipagePDF('.test')">Get PDF</button>
+
+    <div class="test">
+      Page 1
+      <hr/>
+      Page 2
+      <hr/>
+      Page 3
+      <hr/>
+      Page 4
+      <hr/>
+      Page 5
+      <hr/>
+      Page 6
+      <hr/>
+      <div id="grid"></div>
+    </div>
+
+    <script id="rowTemplate" type="x/kendo-template">
+      <tr data-uid="#= uid #" class="#= (id%10 == 0 ? 'page-break' : '') #">
+        <td>#: title #</td>
+        <td>#: id #</td>
+      </tr>
+    </script>
+
+    <script id="altRowTemplate" type="x/kendo-template">
+      <tr data-uid="#= uid #" class="k-alt #= (id%10 == 0 ? 'page-break' : '') #">
+        <td>#: title #</td>
+        <td>#: id #</td>
+      </tr>
+    </script>
+
+    <script>
+      var data = [];
+      for (var i = 1; i < 50; ++i) {
+        data.push({ title: "Item " + i, id: i+"" });
+      }
+      $("#grid").kendoGrid({
+        dataSource: data,
+        rowTemplate: $("#rowTemplate").html(),
+        altRowTemplate: $("#altRowTemplate").html(),
+        columns: [
+          { field: "title", title: "Title" },
+          { field: "id", title: "ID" }
+        ]
+      });
+    </script>
+
+    <script>
+      function multipagePDF(sel) {
+        var drawing = kendo.drawing;
+        drawing.drawDOM($(sel), {
+          forcePageBreak: "hr, .page-break"
+        }).then(function(group){
+          group.options.set("pdf.multiPage", true);
+          drawing.pdf.saveAs(group, "kendo.pdf", "http://kendo.local:7569/");
+        });
+      }
+    </script>
+
+  </body>
+</html>
