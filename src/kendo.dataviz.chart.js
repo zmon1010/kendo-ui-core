@@ -5224,7 +5224,19 @@ var __meta__ = {
         },
 
         animationPoints: function() {
-            return this._segments;
+            var series = this.seriesOptions;
+            var points = [];
+            var seriesPoints;
+            var pointsIdx, idx;
+            for (idx = 0; idx < series.length; idx++) {
+                if (series[idx].markers.visible) {
+                    seriesPoints = this.seriesPoints[idx];
+                    for (pointsIdx = 0; pointsIdx < seriesPoints.length; pointsIdx++) {
+                        points.push(seriesPoints[pointsIdx].marker);
+                    }
+                }
+            }
+            return points.concat(this._segments);
         }
     });
     deepExtend(LineChart.fn, LineChartMixin, ClipAnimationMixin);

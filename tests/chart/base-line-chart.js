@@ -126,6 +126,28 @@ function baseLineChartTests(seriesName, TChart) {
             ok(clip === chart.animation.element);
         });
 
+        test("sets animation clip path to points markers", function() {
+            createChart({
+                series: [{
+                    data: [0, 1]
+                }, {
+                    data: [1, 2],
+                    zIndex: 1,
+                    markers: {
+                        visible: true
+                    }
+                }]
+            });
+
+            var points = chart.seriesPoints[1];
+            var clip;
+            for (var idx = 0; idx < points.length; idx++) {
+                clip = points[idx].marker.visual.clip();
+                ok(clip);
+                ok(clip === chart.animation.element);
+            }
+        });
+
     })();
 
     (function() {
