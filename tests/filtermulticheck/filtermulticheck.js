@@ -218,4 +218,23 @@
             }
         });
     });
+
+    test("checkboxes use values when provided", function() {
+        setup({
+            values: [
+                { text: "foo", value: "bar"},
+                { text: "baz", value: "trqs"},
+            ],
+            dataSource: dataSource(),
+            field: "foo",
+            refresh: function () {
+                var chkbxs = this.container.find(":checkbox");
+                equal(chkbxs.length, 2);
+                equal(chkbxs.eq(0).val(), "bar");
+                equal(chkbxs.eq(0).closest("label").text(), "foo");
+                equal(chkbxs.eq(1).val(), "trqs");
+                equal(chkbxs.eq(1).closest("label").text(), "baz");
+            }
+        });
+    });
 })();
