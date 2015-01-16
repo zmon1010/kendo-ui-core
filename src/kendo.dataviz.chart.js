@@ -5103,6 +5103,33 @@ var __meta__ = {
         }
     };
 
+    var ClipAnimationMixin = {
+        createAnimation: function() {
+            var box = this.box;
+            var clipPath = draw.Path.fromRect(box.toRect());
+            this.visual.clip(clipPath);
+            this.animation = new ClipAnimation(clipPath, {
+                box: box
+            });
+            if (anyHasZIndex(this.options.series)) {
+                this._setChildrenAnimation(clipPath);
+            }
+        },
+
+        _setChildrenAnimation: function(clipPath) {
+            var points = this.animationPoints();
+            var point, pointVisual;
+
+            for (var idx = 0; idx < points.length; idx++) {
+                point = points[idx];
+                pointVisual = point.visual;
+                if (pointVisual && defined(pointVisual.options.zIndex)) {
+                    pointVisual.clip(clipPath);
+                }
+            }
+        }
+    };
+
     var LineChart = CategoricalChart.extend({
         render: function() {
             var chart = this;
@@ -5194,9 +5221,13 @@ var __meta__ = {
             }
 
             return new pointType(linePoints, currentSeries, seriesIx);
+        },
+
+        animationPoints: function() {
+            return this._segments;
         }
     });
-    deepExtend(LineChart.fn, LineChartMixin);
+    deepExtend(LineChart.fn, LineChartMixin, ClipAnimationMixin);
 
     var ClipAnimation = draw.Animation.extend({
         options: {
