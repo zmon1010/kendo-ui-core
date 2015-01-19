@@ -3,39 +3,36 @@
 
 /* ActionSheet */
 
-.km-material .km-actionsheet > li > a
+.km-fiori .km-actionsheet > li > a
 {
+    font-size: 1.4em;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 
-.km-material .km-actionsheet > li > a
-{	
-	padding: .7em 1em; 
+.km-fiori li.km-actionsheet-cancel > a
+{
+    color: @fiori-second-color;
+}
+
+.km-fiori .km-actionsheet > li > a
+{
     display: block;
-    margin: 0;
 }
 
-.km-material .km-actionsheet > li:last-child > a
+.km-fiori .km-actionsheet > li:last-child > a
 {
     border: 0;
 }
 
-.km-material .km-shim li.km-actionsheet-title,
-.km-material .km-popup li.km-actionsheet-title
+.km-fiori .km-shim li.km-actionsheet-title,
+.km-fiori .km-popup li.km-actionsheet-title
 {
     display: none;
 }
 
-.km-material .km-actionsheet-wrapper.km-popup
+.km-fiori .km-actionsheet-wrapper.km-popup
 {
     padding: 2px 0;
 }
 
-.km-material .km-widget.km-actionsheet-wrapper
-{
-    width: 100%;
-    .box-shadow(none);
-    border: 0;
-    padding: .55em 0;
-}

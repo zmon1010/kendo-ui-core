@@ -4,19 +4,18 @@
 
 /* Button */
 
-.km-material .km-button
+.km-fiori .km-button
 {
-    padding: .714em 1.143em;
+    padding: .5em .8em;
     border-style: solid;
-    border-width: @material-border-width;
-    border-radius: @material-border-radius;
-    text-transform: uppercase;
+    border-width: @fiori-border-width;
+    border-radius: @fiori-border-radius;
 }
 
 /* Badges and Details */
 
-.km-material .km-badge,
-.km-material .km-detail
+.km-fiori .km-badge,
+.km-fiori .km-detail
 {
     border: 0;
     min-width: 1.8em;
@@ -25,56 +24,31 @@
     border-radius: 5em;
 }
 
-.km-material .km-detail
+.km-fiori .km-detail
 {
     min-width: 1.4em;
     height: 1.4em;
     line-height: 1.4em;
-    border-width: @material-border-width;
+    border-width: @fiori-border-width;
     border-style: solid;
 }
 
-.km-material .km-detaildisclose
+.km-fiori .km-detaildisclose
 {
-    min-width: 1.4em;
-    height: 1.4em;
-    line-height: 1.4em;
+    min-width: 1.8em;
+    height: 1.8em;
+    line-height: 1.8em;
 }
 
-.km-material .km-detaildisclose:after,
-.km-material .km-detaildisclose:before
+.km-fiori .km-detaildisclose:after,
+.km-fiori .km-detaildisclose:before
 {
     left: .1em;
     top: 0.35em;
 }
 
-.km-material .km-detail .km-icon:before
+.km-fiori .km-detail .km-icon:before
 {
     display: none;
 }
 
-.km-material .km-button {
-    font-size: .875em;
-    font-weight: 500;
-}
-
-.km-material .km-navbar .km-button {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.km-material .km-navbar .km-back:before
-{
-    content: "\a0";
-    display: inline-block;
-    color: currentcolor;
-    width: .8em;
-    height: .8em;
-    border-width: 0;
-    box-shadow: inset .25rem -.25rem 0 currentcolor;
-    .transform(rotate(45deg));
-}
-
-.km-material .km-navbar .km-back .km-text {
-    display: none;    
-}
