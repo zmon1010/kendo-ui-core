@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,9 +17,28 @@ namespace Kendo.Mvc.UI
         {
             get;
             set;
-        }
+		}
 
-        public override void WriteInitializationScript(TextWriter writer)
+		protected override void WriteHtml(TextWriter writer)
+		{
+			var tag = new TagBuilder("input");
+
+			tag.GenerateId(Id, "_"); // HtmlHelper.IdAttributeDotReplacement
+			tag.MergeAttribute("name", Name);
+
+			/*, type = InputType */
+			//tag.MergeAttribute("value", value, value.HasValue())
+			//.Attributes(Component.GetUnobtrusiveValidationAttributes())
+			//.ToggleAttribute("disabled", "disabled", !Component.Enabled)
+			//.Attributes(Component.HtmlAttributes)
+			//.ToggleClass("input-validation-error", !Component.IsValid());
+
+			writer.Write(tag.ToString(TagRenderMode.SelfClosing));
+
+			base.WriteHtml(writer);
+		}
+
+		public override void WriteInitializationScript(TextWriter writer)
         {
             var options = new Dictionary<string, object>(Events);
 
@@ -26,5 +46,5 @@ namespace Kendo.Mvc.UI
 
             base.WriteInitializationScript(writer);
         }
-    }
+	}
 }
