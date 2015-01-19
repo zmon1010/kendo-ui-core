@@ -703,6 +703,7 @@ var __meta__ = {
             this._toolbar();
             this._scrollable();
             this._reorderable();
+            this._columnMenu();
 
             if (this.options.autoBind) {
                 this.dataSource.fetch();
@@ -901,6 +902,7 @@ var __meta__ = {
             sortable: false,
             toolbar: null,
             height: null,
+            columnMenu: false,
             messages: {
                 noRows: "No records to display",
                 loading: "Loading...",
@@ -2020,6 +2022,67 @@ var __meta__ = {
             dom.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
 
             this.refresh();
+        },
+
+        _columnMenu: function() {
+            var ths = this.header.find("th");
+            var columns = this.columns;
+            var options = this.options;
+            var columnMenu = options.columnMenu;
+            var column, menu, menuOptions, sortable, filterable;
+
+            if (!columnMenu) {
+                return;
+            }
+
+            if (typeof columnMenu == "boolean") {
+                columnMenu = {};
+            }
+
+            for (var i = 0; i < ths.length; i++) {
+                column = columns[i];
+                if (!column.field) {
+                    continue;
+                }
+
+                menu = ths.eq(i).data("kendoColumnMenu");
+                if (menu) {
+                    menu.destroy();
+                }
+
+                sortable = false;
+                if (column.sortable !== false && columnMenu.sortable !== false && options.sortable !== false) {
+                    sortable = extend({}, options.sortable, { compare: (column.sortable || {}).compare });
+                }
+
+                filterable = false;
+                if (options.filterable && column.filterable !== false && columnMenu.filterable !== false) {
+                    filterable = extend({ pane: this.pane }, column.filterable, options.filterable);
+                }
+
+                menuOptions = {
+                    dataSource: this.dataSource,
+                    values: column.values,
+                    columns: columnMenu.columns,
+                    sortable: sortable,
+                    filterable: filterable,
+                    messages: columnMenu.messages,
+                    owner: this,
+                    closeCallback: $.noop,
+                    init: this._columnMenuInit,
+                    pane: this.pane,
+                    lockedColumns: false
+                };
+
+                if (options.$angular) {
+                    menuOptions.$angular = options.$angular;
+                }
+
+                ths.eq(i).kendoColumnMenu(menuOptions);
+            }
+        },
+
+        _columnMenuInit: function() {
         }
     });
 
