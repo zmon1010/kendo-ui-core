@@ -167,6 +167,8 @@
                 commonFile = "common-bootstrap";
             } else if (/fiori/i.test(themeName) && !/fiori/i.test(commonFile)) {
                 commonFile = "common-fiori";
+            } else if (/office365/i.test(themeName) && !/office365/i.test(commonFile)) {
+                commonFile = "common-office365";
             } else if (!/material|bootstrap|fiori/i.test(themeName)) {
                 commonFile = "common";
             }
