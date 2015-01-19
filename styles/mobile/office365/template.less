@@ -1,0 +1,351 @@
+@flat-main-color: #4c5356;
+@flat-second-color: #bababa;
+@flat-background: #f4f4f4;
+@flat-dark-background: #363940;
+@flat-list-background: #fcfcfc;
+@flat-button-background: rgba(0,0,0,.1);
+@flat-border-color: rgba(0,0,0,.1);
+@flat-active-color: #fff;
+@flat-active-background: #10c4b2;
+@flat-second-active-background: #da2228;
+@flat-light-shadow: rgba(255,255,255,.2);
+@flat-overlay-background: rgba(0,0,0,.4);
+
+.km-office365,
+.km-office365 .km-navbar,
+.km-office365 .k-toolbar,
+.km-office365 .km-detail,
+.km-office365 .km-content
+{
+    color: @flat-main-color;
+    background-color: @flat-background;
+}
+
+/* Button */
+
+.km-office365 .km-button
+{
+    background: @flat-button-background;
+    border-color: @flat-border-color;
+}
+
+/* Badges and Details */
+
+.km-office365 .km-detail,
+.km-office365 .k-toolbar
+{
+    border-color: @flat-border-color;
+}
+
+/* Switch */
+
+.km-office365 .km-switch-wrapper
+{
+    background-color: @flat-second-color;
+}
+
+.km-office365 .km-switch-background,
+.km-office365 .k-slider-selection
+{
+    .linear-gradient-image(top, @flat-second-color, @flat-second-color);
+}
+
+.km-office365 .km-switch-handle
+{
+    background: @flat-background;
+    border-color: rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 1px 0 1px currentcolor, 0 -1px 0 1px currentcolor;
+    box-shadow:0 1px 0 1px currentcolor, 0 -1px 0 1px currentcolor;
+}
+
+.km-office365 .km-switch-off .km-switch-handle
+{
+    -webkit-box-shadow: 0 1px 0 1px @flat-second-color, 0 -1px 0 1px @flat-second-color;
+    box-shadow: 0 1px 0 1px @flat-second-color, 0 -1px 0 1px @flat-second-color;
+}
+
+.km-office365 .km-switch-container,
+.km-office365 .km-switch-wrapper
+{
+    border-color: #f0f0f0;
+}
+
+/* Slider */
+
+.km-office365 .k-slider-track
+{
+    background-color: @flat-second-color;
+}
+
+/* ListView */
+
+.km-office365 .km-list > li
+{
+    background: @flat-list-background;
+    border-color: @flat-border-color;
+    .box-shadow(inset 0 @flat-border-width 0 @flat-light-shadow);
+}
+
+.km-office365 .km-listinset > li:first-child,
+.km-office365 .km-listgroupinset .km-list > li:first-child
+{
+    border-color: @flat-border-color;
+}
+
+.km-office365 .km-listinset > li:last-child,
+.km-office365 .km-listgroupinset .km-list > li:last-child
+{
+    border-color: @flat-border-color;
+}
+
+.km-office365 .km-listview-link:after
+{
+    color: lighten(@flat-main-color, 30);
+    border-color: currentcolor;
+}
+
+.km-office365 .km-group-title
+{
+    background: @flat-background;
+    border-color: @flat-border-color;
+}
+
+.km-office365 .km-filter-wrap:before,
+.km-office365 .km-filter-reset .km-clear
+{
+	color: @flat-main-color;
+}
+
+.km-office365 .km-filter-wrap > input
+{
+    color: @flat-main-color;
+    border-color: @flat-border-color;
+}
+
+.km-office365 .km-filter-wrap > input:focus
+{
+    border-color: #000;
+}
+
+/* ScrollView */
+
+.km-office365 .km-pages li
+{
+    background: @flat-border-color;
+}
+
+/* Forms */
+
+.km-office365 .km-list input[type=password],
+.km-office365 .km-list input[type=search],
+.km-office365 .km-list input[type=number],
+.km-office365 .km-list input[type=tel],
+.km-office365 .km-list input[type=url],
+.km-office365 .km-list input[type=email],
+.km-office365 .km-list input[type=month],
+.km-office365 .km-list input[type=color],
+.km-office365 .km-list input[type=week],
+.km-office365 .km-list input[type=date],
+.km-office365 .km-list input[type=time],
+.km-office365 .km-list input[type=datetime],
+.km-office365 .km-list input[type=datetime-local],
+.km-office365 .km-list input[type=text]:not(.k-input),
+.km-office365 .km-list select:not([multiple]),
+.km-office365 .km-list .k-dropdown-wrap,
+.km-office365 .km-list textarea,
+.km-office365 .km-list .k-dropdown-wrap .k-input
+{
+    color: @flat-main-color;
+}
+
+.km-office365 .km-list select:not([multiple]) option
+{
+    color: #333;
+}
+
+.km-office365 .km-content .km-list .km-state-active input[type=password],
+.km-office365 .km-content .km-list .km-state-active input[type=search],
+.km-office365 .km-content .km-list .km-state-active input[type=number],
+.km-office365 .km-content .km-list .km-state-active input[type=tel],
+.km-office365 .km-content .km-list .km-state-active input[type=url],
+.km-office365 .km-content .km-list .km-state-active input[type=email],
+.km-office365 .km-content .km-list .km-state-active input[type=month],
+.km-office365 .km-content .km-list .km-state-active input[type=color],
+.km-office365 .km-content .km-list .km-state-active input[type=week],
+.km-office365 .km-content .km-list .km-state-active input[type=date],
+.km-office365 .km-content .km-list .km-state-active input[type=time],
+.km-office365 .km-content .km-list .km-state-active input[type=datetime],
+.km-office365 .km-content .km-list .km-state-active input[type=datetime-local],
+.km-office365 .km-content .km-list .km-state-active input[type=text]:not(.k-input),
+.km-office365 .km-content .km-list .km-state-active select:not([multiple]),
+.km-office365 .km-content .km-list .km-state-active textarea
+{
+    color: @flat-active-color;
+}
+
+/* Checkboxes and Radios */
+
+.km-office365 .km-listview-label input[type=radio],
+.km-office365 .km-listview-label input[type=checkbox]
+{
+    border-color: @flat-border-color;
+    background: @flat-background;
+}
+
+.km-office365 .km-listview-label input[type=checkbox]:checked:after
+{
+    color: #eee;
+}
+
+/* Shim */
+
+.km-office365 .km-shim,
+.km-phone .km-office365 .km-actionsheet-wrapper
+{
+    background: rgba(0,0,0,.4);
+}
+
+/* PopUp */
+
+.km-office365 .km-popup .k-item,
+.km-office365 .km-actionsheet > li > a
+{
+    background: @flat-dark-background;
+    border-bottom-color: @flat-light-shadow;
+}
+
+.km-office365 .km-popup
+{
+    background: @flat-overlay-background;
+}
+
+.km-office365 .km-actionsheet-wrapper,
+.km-office365 .km-popup .k-list-container
+{
+    background: @flat-overlay-background;
+    border-top-color: @flat-light-shadow;
+}
+
+.km-office365 .km-popup.km-pane,
+.km-tablet .km-office365 .km-actionsheet-wrapper
+{
+    background-color: @flat-dark-background;
+}
+
+.km-office365 .km-popup-arrow:after
+{
+    border-color: @flat-dark-background transparent;
+}
+
+.km-office365 .km-left .km-popup-arrow:after,
+.km-office365 .km-right .km-popup-arrow:after
+{
+    border-color: transparent @flat-dark-background;
+}
+
+/* Loader & Pull-to-refresh */
+
+.km-office365 .km-loader
+{
+    background: rgba(0,0,0,.05);
+}
+
+.km-office365 .km-loader h1
+{
+    color: @flat-main-color;
+}
+
+
+
+
+
+/* Active States */
+
+.km-office365 .km-detail:active,
+.km-office365 .km-state-active .km-detail,
+.km-office365 .km-state-active[style*=background]
+{
+    .box-shadow(inset 0 0 0 1000px rgba(0,0,0,.2));
+}
+
+/* Active States */
+
+.km-office365 .km-badge,
+.km-office365 .km-rowinsert,
+.km-office365 .km-rowdelete,
+.km-office365 .km-state-active,
+.km-office365 .km-switch-label-on,
+.km-office365 .km-switch-label-off,
+.km-office365 .km-tabstrip .km-button,
+.km-office365 .km-popup .k-item,
+.km-office365 .km-actionsheet > li > a,
+.km-office365 .km-tabstrip .km-state-active,
+.km-office365 .k-slider .k-draghandle,
+.km-office365 .k-slider .k-draghandle:hover,
+.km-office365 .km-scroller-pull .km-icon,
+.km-office365 .km-popup.km-pane .km-navbar,
+.km-office365 .km-popup.km-pane .k-toolbar,
+.km-office365 .km-popup.km-pane .km-tabstrip,
+.km-office365 .km-popup .k-state-hover,
+.km-office365 .km-popup .k-state-focused,
+.km-office365 .km-popup .k-state-selected,
+.km-office365 .km-actionsheet > li > a:active,
+.km-office365 .km-actionsheet > li > a:hover,
+.km-office365 .km-actionsheet > li > .km-state-active,
+.km-office365 li.km-state-active .km-listview-link,
+.km-office365 li.km-state-active .km-listview-label,
+.km-office365 .km-state-active .km-listview-link:after
+{
+    color: @flat-active-color;
+}
+
+.km-office365 .km-loader > *:not(h1),
+.km-office365 .km-filter-wrap > input,
+.km-office365 .km-switch-handle.km-state-active,
+.km-root .km-office365 .km-scroller-refresh span:not(.km-template)
+{
+    background: @flat-active-color;
+}
+
+.km-office365 .km-switch-handle,
+.km-office365 .k-slider-selection,
+.km-office365 .km-switch-background
+{
+    color: @flat-active-background;
+}
+
+.km-office365 .km-rowinsert,
+.km-office365 .km-state-active,
+.km-office365 .km-scroller-pull,
+.km-office365 .km-loader:before,
+.km-office365 .k-slider-selection,
+.km-office365 .km-touch-scrollbar,
+.km-office365 .km-pages .km-current-page,
+.km-office365 .k-slider .k-draghandle,
+.km-office365 .k-slider .k-draghandle:hover,
+.km-office365 .km-tabstrip .km-state-active,
+.km-office365 .km-scroller-refresh.km-load-more,
+.km-office365 .km-popup .k-state-hover,
+.km-office365 .km-popup .k-state-focused,
+.km-office365 .km-popup .k-state-selected,
+.km-office365 .km-actionsheet > li > a:active,
+.km-office365 .km-actionsheet > li > a:hover,
+.km-office365 .km-actionsheet > li > .km-state-active,
+.km-office365 li.km-state-active .km-listview-link,
+.km-office365 li.km-state-active .km-listview-label,
+.km-office365 .km-listview-label input[type=radio]:checked,
+.km-office365 .km-listview-label input[type=checkbox]:checked
+{
+    background: @flat-active-background;
+}
+
+.km-office365 .km-filter-wrap > input:focus
+{
+    border-color: @flat-active-background;
+}
+
+.km-office365 .km-badge,
+.km-office365 .km-rowdelete
+{
+    background: @flat-second-active-background;
+}

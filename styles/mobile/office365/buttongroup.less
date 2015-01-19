@@ -1,0 +1,31 @@
+@import "../common/icons.less";
+@import "../common/buttongroup.less";
+@import "base.less";
+
+/* ButtonGroup */
+
+.km-office365 .km-buttongroup > *:not(:first-child):not(:last-child)
+{
+    border-radius: 0;
+}
+
+.km-office365 .km-buttongroup > *:first-child
+{
+    border-radius: @flat-border-radius 0 0 @flat-border-radius;
+}
+
+.km-office365 .km-buttongroup > *:last-child
+{
+    border-radius: 0 @flat-border-radius @flat-border-radius 0;
+}
+
+.km-office365 .km-buttongroup > *.km-state-active
+{
+    border-right-width: 1px;
+}
+
+.km-office365 .km-buttongroup > *.km-state-active + *
+{
+    border-left-width: 0;
+}
+
