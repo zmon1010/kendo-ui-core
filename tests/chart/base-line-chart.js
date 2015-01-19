@@ -1,5 +1,6 @@
 function baseLineChartTests(seriesName, TChart) {
     var dataviz = kendo.dataviz,
+        draw = kendo.drawing,
         Box2D = dataviz.Box2D,
         categoriesCount = dataviz.categoriesCount,
         chartBox = new Box2D(0, 0, 800, 600),
@@ -61,6 +62,93 @@ function baseLineChartTests(seriesName, TChart) {
             this.options = options;
         };
     }
+
+    (function() {
+        var series
+        var plotArea = stubPlotArea(
+            function(categoryIndex) {
+                return new Box2D();
+            },
+            function(value) {
+                return new Box2D();
+            },
+            {
+                categoryAxis: { }
+            }
+        );
+
+        function createChart(options) {
+            setupChart(plotArea, options || {
+                series: [{
+                    data: [0, 1]
+                }]
+            });
+        }
+
+        // ------------------------------------------------------------
+        module(chartName + " / Rendering", {
+            setup: function() {
+                createChart();
+            }
+        });
+
+        test("creates visual", function() {
+            ok(chart.visual);
+        });
+
+        test("creates clip animation", function() {
+            ok(chart.animation);
+            ok(chart.animation instanceof dataviz.ClipAnimation);
+            sameBox(chart.animation.options.box, chart.box);
+            sameLinePath(chart.animation.element, draw.Path.fromRect(chart.box.toRect()));
+        });
+
+        test("does not set clip on segments by default", function() {
+            var segments = chart._segments;
+            for (var idx = 0; idx < segments.length; idx++) {
+                ok(!segments[idx].visual.clip());
+            }
+        });
+
+        test("sets animation clip path to segments with zIndex", function() {
+            createChart({
+                series: [{
+                    data: [0, 1]
+                }, {
+                    data: [1, 2],
+                    zIndex: 1
+                }]
+            });
+
+            var clip = chart._segments[1].visual.clip();
+            ok(!chart._segments[0].visual.clip());
+            ok(clip);
+            ok(clip === chart.animation.element);
+        });
+
+        test("sets animation clip path to points markers", function() {
+            createChart({
+                series: [{
+                    data: [0, 1]
+                }, {
+                    data: [1, 2],
+                    zIndex: 1,
+                    markers: {
+                        visible: true
+                    }
+                }]
+            });
+
+            var points = chart.seriesPoints[1];
+            var clip;
+            for (var idx = 0; idx < points.length; idx++) {
+                clip = points[idx].marker.visual.clip();
+                ok(clip);
+                ok(clip === chart.animation.element);
+            }
+        });
+
+    })();
 
     (function() {
         var positiveSeries = { data: [1, 2], labels: {} },

@@ -1,5 +1,6 @@
 (function() {
     var dataviz = kendo.dataviz,
+        draw = kendo.drawing,
         Box2D = dataviz.Box2D,
         chartBox = new Box2D(0, 0, 800, 600),
         plotArea,
@@ -564,6 +565,75 @@
 
             equal(note.label.content, "name");
         });
+    })();
+
+    (function() {
+
+        function PlotAreaStub() { }
+
+        $.extend(PlotAreaStub.prototype, {
+            axisX: {
+                getSlot: function(value) {
+                    return new Box2D();
+                }
+            },
+            axisY: {
+                getSlot: function(categoryIndex) {
+                    return new Box2D();
+                }
+            }
+        });
+
+        function createChart(options) {
+            setupScatterChart(new PlotAreaStub(), options || {
+                series: [{
+                    type: "scatter",
+                    data: [[1, 1]]
+                }]
+            });
+        }
+
+        module("Scatter Chart / Rendering", {
+            setup: function() {
+                createChart();
+            }
+        });
+
+        test("creates visual", function() {
+            ok(scatterChart.visual);
+        });
+
+        test("creates clip animation", function() {
+            ok(scatterChart.animation);
+            ok(scatterChart.animation instanceof dataviz.ClipAnimation);
+            sameBox(scatterChart.animation.options.box, scatterChart.box);
+            sameLinePath(scatterChart.animation.element, draw.Path.fromRect(scatterChart.box.toRect()));
+        });
+
+        test("does not set clip on points markers by default", function() {
+            var points = scatterChart.points;
+            for (var idx = 0; idx < points.length; idx++) {
+                ok(!points[idx].marker.visual.clip());
+            }
+        });
+
+        test("sets animation clip path to points markers with zIndex", function() {
+            createChart({
+                series: [{
+                    type: "scatter",
+                    data: [[0, 1]]
+                }, {
+                    type: "scatter",
+                    data: [[1, 2]],
+                    zIndex: 1
+                }]
+            });
+            var clip = scatterChart.seriesPoints[1][0].marker.visual.clip();
+            ok(clip);
+            ok(clip === scatterChart.animation.element);
+            ok(!scatterChart.seriesPoints[0][0].marker.visual.clip());
+        });
+
     })();
 
     // ------------------------------------------------------------

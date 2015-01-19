@@ -1,6 +1,7 @@
 (function() {
 
     var dataviz = kendo.dataviz,
+        draw = kendo.drawing,
         Box2D = dataviz.Box2D,
         categoriesCount = dataviz.categoriesCount,
         chartBox = new Box2D(0, 0, 800, 600),
@@ -205,12 +206,37 @@
             equal(firstLine.options.stroke.dashType, "dot");
         });
 
-        // test("sets group animation", function() {
-            // var group = view.findInLog("group", function(item) {
-                // return item.options.animation;
-            // });
-            // equal(group.options.animation.type, "clip");
-        // });
+        test("creates visual", function() {
+            ok(ohlcChart.visual);
+        });
+
+        test("creates clip animation", function() {
+            ok(ohlcChart.animation);
+            ok(ohlcChart.animation instanceof dataviz.ClipAnimation);
+            sameBox(ohlcChart.animation.options.box, ohlcChart.box);
+            sameLinePath(ohlcChart.animation.element, draw.Path.fromRect(ohlcChart.box.toRect()));
+        });
+
+        test("does not set clip on points by default", function() {
+            var points = ohlcChart.points;
+            for (var idx = 0; idx < points.length; idx++) {
+                ok(!points[idx].visual.clip());
+            }
+        });
+
+        test("sets animation clip path to points with zIndex", function() {
+            setupOHLCChart(plotArea, {
+                series: [{
+                    type: "ohlc",
+                    data: [[3,4,1,2]],
+                    zIndex: 1
+                }]
+            });
+
+            var clip = ohlcChart.points[0].visual.clip();
+            ok(clip);
+            ok(clip === ohlcChart.animation.element);
+        });
 
         // ------------------------------------------------------------
         module("OHLC Chart / Rendering / Highlight", {

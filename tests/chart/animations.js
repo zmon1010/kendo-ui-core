@@ -208,4 +208,54 @@
             }, 100);
         });
     })();
+
+    (function() {
+        var anim,
+            path,
+            clip,
+            box;
+
+        function createAnim() {
+            box = Box2D(10, 20, 100, 200);
+            path = draw.Path.fromRect(box.toRect());
+            anim = draw.Animation.create(path, {
+                type: "clip",
+                box: box.clone(),
+                duration: 50
+            });
+        }
+
+        // ------------------------------------------------------------
+        module("PieAnimation", {
+            setup: function() {
+                createAnim();
+            }
+        });
+
+        test("setup updates clip path to have zero width", function() {
+            anim.setup();
+            box.x2 = box.x1;
+            sameLinePath(path, draw.Path.fromRect(box.toRect()));
+        });
+
+        test("step expands clip path based on progress", function() {
+            anim.setup();
+            anim.step(0.5);
+            box.x2 = box.x1 + (box.x2 - box.x1) * 0.5;
+            sameLinePath(path, draw.Path.fromRect(box.toRect()));
+        });
+
+        asyncTest("animates clip path to the size of the box", function() {
+            anim.setup();
+            anim.play();
+
+            setTimeout(function() {
+                sameLinePath(path, draw.Path.fromRect(box.toRect()));
+
+                start();
+            }, 100);
+        });
+
+    })();
+
 })();

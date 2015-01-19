@@ -2913,19 +2913,6 @@ var __meta__ = {
         }
     });
 
-    var PassthroughVisualMixin = {
-        extend: function(proto) {
-            proto.createVisual = this.createVisual;
-            proto.appendVisual = this.appendVisual;
-        },
-
-        createVisual: noop,
-
-        appendVisual: function(childVisual) {
-            this.parent.appendVisual(childVisual);
-        }
-    };
-
     var ClusterLayout = ChartElement.extend({
         options: {
             vertical: false,
@@ -2963,7 +2950,6 @@ var __meta__ = {
             }
         }
     });
-    PassthroughVisualMixin.extend(ClusterLayout.fn);
 
     var StackWrap = ChartElement.extend({
         options: {
@@ -2997,7 +2983,6 @@ var __meta__ = {
             }
         }
     });
-    PassthroughVisualMixin.extend(StackWrap.fn);
 
     var PointEventsMixin = {
         click: function(chart, e) {
@@ -3297,13 +3282,10 @@ var __meta__ = {
 
     var BarChartAnimationMixin = {
         extend: function(proto) {
-            if (proto.createVisual !== noop) {
-                throw new Error("Refusing to override existing createVisual");
-            }
-
-            proto.appendVisual = this.appendVisual;
-            proto.createVisual = this.createVisual;
+            proto.createAnimation = this.createAnimation;
+            proto._setChildrenAnimation = this._setChildrenAnimation;
             proto._setAnimationOptions = this._setAnimationOptions;
+            proto.createVisual = ChartElement.fn.createVisual;
 
             deepExtend(proto.options, {
                 animation: {
@@ -3312,27 +3294,35 @@ var __meta__ = {
             });
         },
 
-        createVisual: function() {
+        createAnimation: function() {
             this._setAnimationOptions();
-            ChartElement.fn.createVisual.call(this);
+            ChartElement.fn.createAnimation.call(this);
+            if (anyHasZIndex(this.options.series)) {
+                this._setChildrenAnimation();
+            }
         },
 
-        appendVisual: function(childVisual) {
-            if (defined(childVisual.options.zIndex)) {
-                childVisual.chartElement.options.animation =
-                    this.options.animation;
-            }
+        _setChildrenAnimation: function() {
+            var points = this.points;
+            var point, pointVisual;
 
-            ChartElement.fn.appendVisual.call(this, childVisual);
+            for (var idx = 0; idx < points.length; idx++) {
+                point = points[idx];
+                pointVisual = point.visual;
+                if (pointVisual && defined(pointVisual.options.zIndex)) {
+                    point.options.animation = this.options.animation;
+                    point.createAnimation();
+                }
+            }
         },
 
         _setAnimationOptions: function() {
             var options = this.options;
+            var animation = options.animation || {};
             var origin = this.categoryAxis.getSlot(0);
 
-            options.animation = options.animation || {};
-            options.animation.origin = new geom.Point(origin.x1, origin.y1);
-            options.animation.vertical = !this.options.invertAxes;
+            animation.origin = new geom.Point(origin.x1, origin.y1);
+            animation.vertical = !options.invertAxes;
         }
     };
 
@@ -3974,12 +3964,12 @@ var __meta__ = {
 
         pointValue: function(data) {
             return data.valueFields.value;
-        },
-
-        createVisual: noop
+        }
     });
 
     var BarChart = CategoricalChart.extend({
+        options: {},
+
         render: function() {
             var chart = this;
 
@@ -4268,6 +4258,8 @@ var __meta__ = {
 
             CategoricalChart.fn.init.call(chart, plotArea, options);
         },
+
+        options: {},
 
         wrapData: function(options) {
             var series = options.series,
@@ -5111,6 +5103,33 @@ var __meta__ = {
         }
     };
 
+    var ClipAnimationMixin = {
+        createAnimation: function() {
+            var box = this.box;
+            var clipPath = draw.Path.fromRect(box.toRect());
+            this.visual.clip(clipPath);
+            this.animation = new ClipAnimation(clipPath, {
+                box: box
+            });
+            if (anyHasZIndex(this.options.series)) {
+                this._setChildrenAnimation(clipPath);
+            }
+        },
+
+        _setChildrenAnimation: function(clipPath) {
+            var points = this.animationPoints();
+            var point, pointVisual;
+
+            for (var idx = 0; idx < points.length; idx++) {
+                point = points[idx];
+                pointVisual = point.visual;
+                if (pointVisual && defined(pointVisual.options.zIndex)) {
+                    pointVisual.clip(clipPath);
+                }
+            }
+        }
+    };
+
     var LineChart = CategoricalChart.extend({
         render: function() {
             var chart = this;
@@ -5202,9 +5221,52 @@ var __meta__ = {
             }
 
             return new pointType(linePoints, currentSeries, seriesIx);
+        },
+
+        animationPoints: function() {
+            var series = this.seriesOptions;
+            var points = [];
+            var seriesPoints;
+            var pointsIdx, idx;
+            for (idx = 0; idx < series.length; idx++) {
+                if (series[idx].markers.visible) {
+                    seriesPoints = this.seriesPoints[idx];
+                    for (pointsIdx = 0; pointsIdx < seriesPoints.length; pointsIdx++) {
+                        points.push(seriesPoints[pointsIdx].marker);
+                    }
+                }
+            }
+            return points.concat(this._segments);
         }
     });
-    deepExtend(LineChart.fn, LineChartMixin);
+    deepExtend(LineChart.fn, LineChartMixin, ClipAnimationMixin);
+
+    var ClipAnimation = draw.Animation.extend({
+        options: {
+            duration: INITIAL_ANIMATION_DURATION
+        },
+
+        setup: function() {
+            this._setEnd(this.options.box.x1);
+        },
+
+        step: function(pos) {
+            var box = this.options.box;
+            this._setEnd(interpolate(box.x1, box.x2, pos));
+        },
+
+        _setEnd: function(x) {
+            var element = this.element;
+            var segments = element.segments;
+            var topRight = segments[1].anchor();
+            var bottomRight = segments[2].anchor();
+            element.suspend();
+            topRight.setX(x);
+            element.resume();
+            bottomRight.setX(x);
+        }
+    });
+    draw.AnimationFactory.current.register(CLIP, ClipAnimation);
 
     var StepLineSegment = LineSegment.extend({
         points: function(visualPoints) {
@@ -5901,8 +5963,21 @@ var __meta__ = {
             return autoFormat(format, value.x, value.y);
         },
 
-        createVisual: noop
+        animationPoints: function() {
+            var seriesPoints = this.points;
+            var points = [];
+            var idx;
+
+            for (idx = 0; idx < seriesPoints.length; idx++) {
+                if (seriesPoints[idx].marker) {
+                    points.push(seriesPoints[idx].marker);
+                }
+            }
+            return points;
+        }
     });
+
+    deepExtend(ScatterChart.fn, ClipAnimationMixin);
 
     var ScatterLineChart = ScatterChart.extend({
         render: function() {
@@ -5924,6 +5999,11 @@ var __meta__ = {
             }
 
             return new pointType(linePoints, currentSeries, seriesIx);
+        },
+
+        animationPoints: function() {
+            var points = ScatterChart.fn.animationPoints.call(this);
+            return points.concat(this._segments);
         }
     });
     deepExtend(ScatterLineChart.fn, LineChartMixin);
@@ -6062,7 +6142,10 @@ var __meta__ = {
         formatPointValue: function(point, format) {
             var value = point.value;
             return autoFormat(format, value.x, value.y, value.size, point.category);
-        }
+        },
+
+        createAnimation: noop,
+        createVisual: noop
     });
 
     var Candlestick = ChartElement.extend({
@@ -6403,8 +6486,14 @@ var __meta__ = {
                 value.open, value.high,
                 value.low, value.close, point.category
             );
+        },
+
+        animationPoints: function() {
+            return this.points;
         }
     });
+
+    deepExtend(CandlestickChart.fn, ClipAnimationMixin);
 
     var OHLCPoint = Candlestick.extend({
         reflow: function(box) {
@@ -11877,6 +11966,14 @@ var __meta__ = {
         return this;
     }
 
+    function anyHasZIndex(elements) {
+        for (var idx = 0; idx < elements.length; idx++) {
+            if (defined(elements[idx].zIndex)) {
+                return true;
+            }
+        }
+    }
+
     // Exports ================================================================
     dataviz.ui.plugin(Chart);
 
@@ -11984,6 +12081,7 @@ var __meta__ = {
         CategoricalPlotArea: CategoricalPlotArea,
         CategoryAxis: CategoryAxis,
         ChartContainer: ChartContainer,
+        ClipAnimation: ClipAnimation,
         ClusterLayout: ClusterLayout,
         Crosshair: Crosshair,
         CrosshairTooltip: CrosshairTooltip,
