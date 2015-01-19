@@ -5027,6 +5027,19 @@
         }
       },
       {
+        "text": "Column reordering",
+        "url": "treelist/column-reordering",
+        "new": true,
+        "title": {
+            "kendo-ui": "Columns reordering in Kendo UI TreeList control | Kendo UI Web demo",
+            "aspnet-mvc": "Column Reordering in Telerik ASP.NET MVC TreeList"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows column moving and reordering feature of KendoTreeList control.",
+            "aspnet-mvc": "In this demo you can see how simple it is to reorder columns in Telerik ASP.NET MVC TreeList."
+        }
+      },
+      {
         "text": "Aggregates",
         "url": "treelist/aggregates",
         "title": {
