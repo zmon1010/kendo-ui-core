@@ -549,6 +549,7 @@
             domain: null,
             serialization: {
                 entities: true,
+                semantic: true,
                 scripts: false
             },
             stylesheets: [],

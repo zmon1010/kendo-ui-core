@@ -18,9 +18,9 @@ function verifyCycle(html, options) {
 }
 
 test('value reciprocity', function() {
-    editor.value("<p>and now, for something completely different</p>");
+    editor.value("<p>foo</p>");
 
-    equal(editor.value(), "<p>and now, for something completely different</p>");
+    equal(editor.value(), "<p>foo</p>");
 });
 
 test('closes empty tags', function() {
@@ -126,7 +126,7 @@ test('u converted to span with underline style', function() {
 
 test('font converted to span', function() {
     editor.value('<font color="#ff0000" face="verdana" size="5">foo</font>');
-    equal(editor.value(), '<span style="color:#ff0000;font-face:verdana;font-size:x-large;">foo</span>');
+    equal(editor.value(), '<span style="color:#ff0000;font-family:verdana;font-size:x-large;">foo</span>');
 });
 
 test('script tag is removed', function() {
@@ -447,6 +447,48 @@ test("absolute background-image values are properly serialized", function() {
     equal(editor.value(), '<div style="background-image:url(http://example.com/foo.gif);">foo</div>');
 });
 
+test("strong / em tags can be converted to presentational", function() {
+    editor.value("<strong>foo</strong><em>bar</em>");
+    editor.setOptions({ serialization: { semantic: false } })
+
+    equal(editor.value(), "<b>foo</b><i>bar</i>");
+});
+
+test("underline span can be converted to presentational u", function() {
+    editor.value('<span style="text-decoration:underline;">foo</span>');
+    editor.setOptions({ serialization: { semantic: false } })
+
+    equal(editor.value(), "<u>foo</u>");
+});
+
+test("font properties from spans are converted to presentational font tags", function() {
+    editor.value('<span style="color:#ff0000;font-family:verdana;font-size:x-large;">foo</span>');
+    editor.setOptions({ serialization: { semantic: false } })
+
+    equal(editor.value(), '<font color="#ff0000" face="verdana" size="5">foo</font>');
+});
+
+test("span attributes are persisted when outputting presentational tags", function() {
+    editor.value('<span class="red">foo</span>');
+    editor.setOptions({ serialization: { semantic: false } })
+
+    equal(editor.value(), '<span class="red">foo</span>');
+});
+
+test("presentational span attributes are not duplicated", function() {
+    editor.value('<span class="red" style="text-decoration: underline;">foo</span>');
+    editor.setOptions({ serialization: { semantic: false } })
+
+    equal(editor.value(), '<span class="red"><u>foo</u></span>');
+});
+
+test("presentational tags are nested properly", function() {
+    editor.value('<span style="text-decoration: underline;font-family: verdana; color: #f00" class="red">foo</span>');
+    editor.setOptions({ serialization: { semantic: false } })
+
+    equal(editor.value(), '<span class="red"><u><font color="#ff0000" face="verdana">foo</font></u></span>');
+});
+
 module("editor content parsing");
 
 test("removes onerror attribute", function() {
@@ -538,5 +580,12 @@ test("script contents are not HTML-encoded", function() {
     verifyCycle('<script>$.load("foo?bar=1&baz=2");</script>', { scripts: true });
 });
 
+test('presentational tags are persisted', function() {
+    verifyCycle('<b>bold</b>', { semantic: false });
+    verifyCycle('<i>italic</i>', { semantic: false });
+    verifyCycle('<u>underline</u>', { semantic: false });
+    verifyCycle('<font color="#ff0000" face="verdana" size="5">bold</font>', { semantic: false });
+    verifyCycle('<script src="foo"><\/script>', { semantic: false, scripts: true });
+});
 
 }());

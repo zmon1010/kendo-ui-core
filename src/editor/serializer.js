@@ -156,29 +156,99 @@ var Serializer = {
 
     domToXhtml: function(root, options) {
         var result = [];
+
+        function semanticFilter(attributes) {
+            return $.grep(attributes, function(attr) {
+                return attr.name != "style";
+            });
+        }
+
         var tagMap = {
+            iframe: {
+                start: function (node) { result.push('<iframe'); attr(node); result.push('>'); },
+                end: function () { result.push('</iframe>'); }
+            },
             'k:script': {
                 start: function (node) { result.push('<script'); attr(node); result.push('>'); },
                 end: function () { result.push('</script>'); },
                 skipEncoding: true
             },
+            span: {
+                semantic: true,
+                start: function(node) {
+                    var style = node.style;
+                    var attributes = specifiedAttributes(node);
+                    var semanticAttributes = semanticFilter(attributes);
+
+                    if (semanticAttributes.length) {
+                        result.push("<span"); attr(node, semanticAttributes); result.push(">");
+                    }
+
+                    if (style.textDecoration == "underline") {
+                        result.push("<u>");
+                    }
+
+                    var font = [];
+                    if (style.color) {
+                        font.push('color="' + dom.toHex(style.color) + '"');
+                    }
+
+                    if (style.fontFamily) {
+                        font.push('face="' + style.fontFamily + '"');
+                    }
+
+                    if (style.fontSize) {
+                        var size = $.inArray(style.fontSize, fontSizeMappings);
+                        font.push('size="' + size + '"');
+                    }
+
+                    if (font.length) {
+                        result.push("<font " + font.join(" ") + ">");
+                    }
+                },
+                end: function(node) {
+                    var style = node.style;
+
+                    if (style.color || style.fontFamily || style.fontSize) {
+                        result.push("</font>");
+                    }
+
+                    if (style.textDecoration == "underline") {
+                        result.push("</u>");
+                    }
+
+                    if (semanticFilter(specifiedAttributes(node)).length) {
+                        result.push("</span>");
+                    }
+                }
+            },
+            strong: {
+                semantic: true,
+                start: function () { result.push('<b>'); },
+                end: function () { result.push('</b>'); }
+            },
+            em: {
+                semantic: true,
+                start: function () { result.push('<i>'); },
+                end: function () { result.push('</i>'); }
+            },
             b: {
+                semantic: false,
                 start: function () { result.push('<strong>'); },
                 end: function () { result.push('</strong>'); }
             },
             i: {
+                semantic: false,
                 start: function () { result.push('<em>'); },
                 end: function () { result.push('</em>'); }
             },
             u: {
+                semantic: false,
                 start: function () { result.push('<span style="text-decoration:underline;">'); },
                 end: function () { result.push('</span>'); }
             },
-            iframe: {
-                start: function (node) { result.push('<iframe'); attr(node); result.push('>'); },
-                end: function () { result.push('</iframe>'); }
-            },
             font: {
+                semantic: false,
                 start: function (node) {
                     result.push('<span style="');
 
@@ -193,7 +263,7 @@ var Serializer = {
                     }
 
                     if (face) {
-                        result.push('font-face:');
+                        result.push('font-family:');
                         result.push(face);
                         result.push(';');
                     }
@@ -216,13 +286,17 @@ var Serializer = {
 
         options = options || {};
 
-        function styleAttr(cssText) {
-            // In IE < 8 the style attribute does not return proper nodeValue
+        if (typeof options.semantic == "undefined") {
+            options.semantic = true;
+        }
+
+        function cssProperties(cssText) {
             var trim = $.trim;
             var css = trim(cssText).split(';');
-            var i, length = css.length;
             var match;
             var property, value;
+            var properties = [];
+            var i, length;
 
             for (i = 0, length = css.length; i < length; i++) {
                 if (!css[i].length) {
@@ -251,34 +325,29 @@ var Serializer = {
                     value = value.replace(quoteRe, "");
                 }
 
-                result.push(property);
+                properties.push({ property: property, value: value });
+            }
+
+            return properties;
+        }
+
+        function styleAttr(cssText) {
+            var properties = cssProperties(cssText);
+            var i, length = properties.length;
+
+            for (i = 0; i < properties.length; i++) {
+                result.push(properties[i].property);
                 result.push(':');
-                result.push(value);
+                result.push(properties[i].value);
                 result.push(';');
             }
         }
 
-        function attr(node) {
-            var specifiedAttributes = [];
+        function specifiedAttributes(node) {
+            var result = [];
             var attributes = node.attributes;
             var attribute, i, l;
             var name, value, specified;
-
-            if (dom.is(node, 'img')) {
-                var width = node.style.width,
-                    height = node.style.height,
-                    $node = $(node);
-
-                if (width && pixelRe.test(width)) {
-                    $node.attr('width', parseInt(width, 10));
-                    dom.unstyle(node, { width: undefined });
-                }
-
-                if (height && pixelRe.test(height)) {
-                    $node.attr('height', parseInt(height, 10));
-                    dom.unstyle(node, { height: undefined });
-                }
-            }
 
             for (i = 0, l = attributes.length; i < l; i++) {
                 attribute = attributes[i];
@@ -309,20 +378,44 @@ var Serializer = {
                 }
 
                 if (specified) {
-                    specifiedAttributes.push(attribute);
+                    result.push(attribute);
                 }
             }
 
-            if (!specifiedAttributes.length) {
+            return result;
+        }
+
+        function attr(node, attributes) {
+            var i, l, attribute, name, value;
+
+            attributes = attributes || specifiedAttributes(node);
+
+            if (dom.is(node, 'img')) {
+                var width = node.style.width,
+                    height = node.style.height,
+                    $node = $(node);
+
+                if (width && pixelRe.test(width)) {
+                    $node.attr('width', parseInt(width, 10));
+                    dom.unstyle(node, { width: undefined });
+                }
+
+                if (height && pixelRe.test(height)) {
+                    $node.attr('height', parseInt(height, 10));
+                    dom.unstyle(node, { height: undefined });
+                }
+            }
+
+            if (!attributes.length) {
                 return;
             }
 
-            specifiedAttributes.sort(function (a, b) {
+            attributes.sort(function (a, b) {
                 return a.nodeName > b.nodeName ? 1 : a.nodeName < b.nodeName ? -1 : 0;
             });
 
-            for (i = 0, l = specifiedAttributes.length; i < l; i++) {
-                attribute = specifiedAttributes[i];
+            for (i = 0, l = attributes.length; i < l; i++) {
+                attribute = attributes[i];
                 name = attribute.nodeName;
                 value = attribute.value;
 
@@ -381,10 +474,13 @@ var Serializer = {
                 mapper = tagMap[tagName];
 
                 if (mapper) {
-                    mapper.start(node);
-                    children(node, false, mapper.skipEncoding);
-                    mapper.end(node);
-                    return;
+                    if (typeof mapper.semantic == "undefined" ||
+                        (options.semantic ^ mapper.semantic)) {
+                        mapper.start(node);
+                        children(node, false, mapper.skipEncoding);
+                        mapper.end(node);
+                        return;
+                    }
                 }
 
                 result.push('<');
