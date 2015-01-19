@@ -3597,224 +3597,216 @@ var __meta__ = {
         });
     })();
 
-    registerTheme("office365", {
-       chart: {
-            title: {
-                color: "#fff"
-            },
-            legend: {
-                labels: {
-                    color: "#fff"
-                },
-                inactiveItems: {
-                    labels: {
-                        color: "#CBCBCB"
-                    },
-                    markers: {
-                        color: "#CBCBCB"
-                    }
-                }
-            },
-            seriesDefaults: {
-                labels: {
-                    color: "#fff"
-                },
-                errorBars: {
-                    color: "#fff"
-                },
-                notes: {
-                    icon: {
-                        background: "transparent",
-                        border: {
-                            color: "#e5e5e5"
-                        }
-                    },
-                    label: {
-                        color: "#fff"
-                    },
-                    line: {
-                        color: "#e5e5e5"
-                    }
-                },
-                candlestick: {
-                    downColor: "#c7c7c7",
-                    line: {
-                        color: "#787878"
-                    }
-                },
-                area: {
-                    opacity: 0.9
-                },
-                waterfall: {
-                    line: {
-                        color: "#4d4d4d"
-                    }
-                },
-                horizontalWaterfall: {
-                    line: {
-                        color: "#4d4d4d"
-                    }
-                },
-                overlay: {
-                    gradient: "none"
-                },
-                border: {
-                    _brightness: 1
-                }
-            },
-            chartArea: {
-                background: "#1c1c1c"
-            },
-            seriesColors: ["#3f51b5", "#03a9f4", "#4caf50", "#f9ce1d", "#ff9800", "#ff5722"],
-            axisDefaults: {
-                line: {
-                    color: "#4d4d4d"
-                },
-                labels: {
-                    color: "#fff"
-                },
-                minorGridLines: {
-                    color: "#4d4d4d"
-                },
-                majorGridLines: {
-                    color: "#4d4d4d"
-                },
-                title: {
-                    color: "#fff"
-                },
-                crosshair: {
-                    color: "#7f7f7f"
-                },
-                notes: {
-                    icon: {
-                        background: "transparent",
-                        border: {
-                            color: "#4d4d4d"
-                        }
-                    },
-                    label: {
-                        color: "#fff"
-                    },
-                    line: {
-                        color: "#4d4d4d"
-                    }
-                }
-            }
-        },
-        gauge: {
-            pointer: {
-                color: "#3f51b5"
-            },
-            scale: {
-                rangePlaceholderColor: "#4d4d4d",
+    (function() {
+        var TEXT            = "#4e4e4e";
+        var INACTIVE        = "#7f7f7f";
+        var INACTIVE_SHAPE  = "#bdbdbd";
+        var AXIS            = "#c8c8c8";
+        var AXIS_MINOR      = "#e5e5e5";
+        var SERIES          = ["#0072c6", "#5db2ff", "#008a17", "#82ba00", "#ff8f32", "#ac193d"];
+        var SERIES_LIGHT    = ["#cbe2f3", "#deeffe", "#cbe7d0", "#e5f0cb", "#fee8d5", "#eed0d7"];
+        var PRIMARY         = SERIES[0];
+        var DIAGRAM_HOVER   = WHITE;
 
-                labels: {
-                    color: "#fff"
+        function noteStyle() {
+            return {
+                icon: {
+                    background: "#00b0ff",
+                    border: {
+                        color: "#00b0ff"
+                    }
                 },
-                minorTicks: {
-                    color: "#fff"
-                },
-                majorTicks: {
-                    color: "#fff"
+                label: {
+                    color: "#ffffff"
                 },
                 line: {
-                    color: "#fff"
+                    color: AXIS
                 }
-            }
-        },
-        diagram: {
-            shapeDefaults: {
-                fill: {
-                    color: "#3f51b5"
+            };
+        }
+
+        registerTheme("office365", {
+            chart: {
+                title: {
+                    color: TEXT
                 },
-                connectorDefaults: {
-                    fill: {
-                        color: "#7f7f7f"
+                legend: {
+                    labels: {
+                        color: TEXT
                     },
-                    stroke: {
-                        color: WHITE
-                    },
-                    hover: {
-                        fill: {
-                            color: WHITE
+                    inactiveItems: {
+                        labels: {
+                            color: INACTIVE
                         },
-                        stroke: {
-                            color: "#7f7f7f"
+                        markers: {
+                            color: INACTIVE
                         }
                     }
                 },
-                content: {
-                    color: "#fff"
+                seriesDefaults: {
+                    labels: {
+                        color: TEXT
+                    },
+                    errorBars: {
+                        color: TEXT
+                    },
+                    notes: noteStyle(),
+                    candlestick: {
+                        downColor: AXIS,
+                        line: {
+                            color: INACTIVE_SHAPE
+                        }
+                    },
+                    area: {
+                        opacity: 0.8
+                    },
+                    waterfall: {
+                        line: {
+                            color: AXIS
+                        }
+                    },
+                    horizontalWaterfall: {
+                        line: {
+                            color: AXIS
+                        }
+                    },
+                    overlay: {
+                        gradient: "none"
+                    },
+                    border: {
+                        _brightness: 1
+                    }
+                },
+                seriesColors: SERIES,
+                axisDefaults: {
+                    line: {
+                        color: AXIS
+                    },
+                    labels: {
+                        color: TEXT
+                    },
+                    minorGridLines: {
+                        color: AXIS_MINOR
+                    },
+                    majorGridLines: {
+                        color: AXIS
+                    },
+                    title: {
+                        color: TEXT
+                    },
+                    crosshair: {
+                        color: INACTIVE
+                    },
+                    notes: noteStyle()
                 }
             },
-            editable: {
-                resize: {
-                    handles: {
+            gauge: {
+                pointer: {
+                    color: PRIMARY
+                },
+                scale: {
+                    rangePlaceholderColor: AXIS,
+                    labels: {
+                        color: TEXT
+                    },
+                    minorTicks: {
+                        color: TEXT
+                    },
+                    majorTicks: {
+                        color: TEXT
+                    },
+                    line: {
+                        color: TEXT
+                    }
+                }
+            },
+            diagram: {
+                shapeDefaults: {
+                    fill: {
+                        color: PRIMARY
+                    },
+                    connectorDefaults: {
                         fill: {
-                            color: WHITE
+                            color: TEXT
                         },
                         stroke: {
-                            color: "#fff"
+                            color: DIAGRAM_HOVER
                         },
                         hover: {
                             fill: {
-                                color: "#fff"
+                                color: DIAGRAM_HOVER
                             },
                             stroke: {
-                                color: "#fff"
+                                color: TEXT
+                            }
+                        }
+                    },
+                    content: {
+                        color: TEXT
+                    }
+                },
+                editable: {
+                    resize: {
+                        handles: {
+                            fill: {
+                                color: DIAGRAM_HOVER
+                            },
+                            stroke: {
+                                color: INACTIVE_SHAPE
+                            },
+                            hover: {
+                                fill: {
+                                    color: INACTIVE_SHAPE
+                                },
+                                stroke: {
+                                    color: INACTIVE_SHAPE
+                                }
+                            }
+                        }
+                    },
+                    rotate: {
+                        thumb: {
+                            stroke: {
+                                color: INACTIVE_SHAPE
+                            },
+                            fill: {
+                                color: INACTIVE_SHAPE
                             }
                         }
                     }
                 },
-                rotate: {
-                    thumb: {
-                        stroke: {
-                            color: "#fff"
-                        },
-                        fill: {
-                            color: "#fff"
-                        }
-                    }
-                }
-            },
-            selectable: {
-                stroke: {
-                    color: "#fff"
-                }
-            },
-            connectionDefaults: {
-                stroke: {
-                    color: "#7f7f7f"
-                },
-                content: {
-                    color: "#fff"
-                },
-                selection: {
-                    handles: {
-                        fill: {
-                            color: WHITE
-                        },
-                        stroke: {
-                            color: "#fff"
-                        }
-                    },
+                selectable: {
                     stroke: {
-                        color: "#fff"
+                        color: INACTIVE_SHAPE
+                    }
+                },
+                connectionDefaults: {
+                    stroke: {
+                        color: INACTIVE_SHAPE
+                    },
+                    content: {
+                        color: INACTIVE_SHAPE
+                    },
+                    selection: {
+                        handles: {
+                            fill: {
+                                color: DIAGRAM_HOVER
+                            },
+                            stroke: {
+                                color: INACTIVE_SHAPE
+                            }
+                        },
+                        stroke: {
+                            color: INACTIVE_SHAPE
+                        }
                     }
                 }
+            },
+            treeMap: {
+                colors: fuse(SERIES, SERIES_LIGHT)
             }
-        },
-        treeMap: {
-            colors: [
-                ["#3f51b5", "#cff3f0"],
-                ["#03a9f4", "#e5f6fe"],
-                ["#4caf50", "#edf7ed"],
-                ["#f9ce1d", "#fefae8"],
-                ["#ff9800", "#fff4e5"],
-                ["#ff5722", "#ffeee8"]
-            ]
-        }
-    });
+        });
+    })();
 
     function fuse(arr1, arr2) {
         return $.map(arr1, function(item, index) {
