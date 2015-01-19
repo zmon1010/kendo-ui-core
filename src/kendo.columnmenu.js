@@ -520,7 +520,7 @@ var __meta__ = {
             if (options.filterable !== false) {
 
                 if (options.filterable.multi) {
-                    widget = "kendoFilterMultiCheck"
+                    widget = "kendoFilterMultiCheck";
                 }
                 that.filterMenu = that.wrapper.find(".k-filterable")[widget](
                     extend(true, {}, {

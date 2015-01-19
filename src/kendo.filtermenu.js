@@ -760,7 +760,7 @@ var __meta__ = {
 
     var DataSource = kendo.data.DataSource;
 
-    FilterMultiCheck = Widget.extend({
+    var FilterMultiCheck = Widget.extend({
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
             options = this.options;
@@ -803,7 +803,7 @@ var __meta__ = {
         },
         _createLink: function() {
             var element = this.element;
-            link = element.addClass("k-with-icon k-filterable").find(".k-grid-filter");
+            var link = element.addClass("k-with-icon k-filterable").find(".k-grid-filter");
 
             if (!link[0]) {
                 link = element.prepend('<a class="k-grid-filter" href="#"><span class="k-icon k-filter"/></a>').find(".k-grid-filter");
@@ -843,7 +843,7 @@ var __meta__ = {
 
             if (options.checkAll) {
                 this.createCheckAllItem();
-                this.container.on("change" + multiCheckNS, ":checkbox", proxy(this.updateCheckAllState, this))
+                this.container.on("change" + multiCheckNS, ":checkbox", proxy(this.updateCheckAllState, this));
             }
 
             this.refresh();
@@ -853,9 +853,9 @@ var __meta__ = {
                         .on("reset" + multiCheckNS, proxy(this._reset, this));
         },
         createCheckAllItem: function () {
-            options = this.options;
+            var options = this.options;
             var template = kendo.template(options.itemTemplate("all"));
-            var checkAllContainer = $(template({ all: options.messages.checkAll }))
+            var checkAllContainer = $(template({ all: options.messages.checkAll }));
             this.form.prepend(checkAllContainer);
 
             this.checkBoxAll = checkAllContainer.find(":checkbox").eq(0).addClass("checkAll");
@@ -869,7 +869,7 @@ var __meta__ = {
         refresh: function() {
             var filters = this.getFilterArray();
             if (this._link) {
-                this._link.toggleClass("k-state-active", filters.length != 0);
+                this._link.toggleClass("k-state-active", filters.length !== 0);
             }
 
             if (this.form) {
@@ -878,7 +878,7 @@ var __meta__ = {
                         this.createCheckBoxes();
                     } else {
                         this.checkSource.fetch(proxy(function() {
-                            this.createCheckBoxes()
+                            this.createCheckBoxes();
                             this.checkValues(this.getFilterArray());
                             this.trigger("refresh");
                         }, this));
@@ -890,7 +890,7 @@ var __meta__ = {
         },
         getFilterArray: function() {
             var expression = $.extend(true, {}, { filters: [], logic: "and" }, this.dataSource.filter());
-            filterValuesForField(expression, this.field) || [];
+            filterValuesForField(expression, this.field);
             var flatValues = flatFilterValues(expression);
             return flatValues;
         },
