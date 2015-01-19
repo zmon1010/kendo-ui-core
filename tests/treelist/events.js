@@ -26,10 +26,83 @@
         instance = dom.data("kendoTreeList");
     }
 
+    function controlledRead() {
+        var queue = [];
+
+        var read = function(options) {
+            var deferred = $.Deferred();
+
+            deferred.then(options.success, options.error);
+
+            queue.push(deferred);
+        };
+
+        read.resolve = function(value) {
+            if (!queue.length) {
+                throw new Error("Tried to resolve a request that hasn't been executed.");
+            }
+            queue.shift().resolve(value);
+        };
+
+        read.reject = function(value) {
+            queue.shift().reject(value);
+        };
+
+        return read;
+    }
+
     test("dataBound is fired upon refresh", function() {
         createTreeList({
             dataBound: handler
         });
+
+        equal(handler.calls, 1);
+    });
+
+    test("dataBound is not triggered when expanding loaded item", function() {
+        createTreeList({
+            dataBound: handler
+        });
+
+        instance.content.find(".k-i-expand").mousedown();
+
+        equal(handler.calls, 1);
+    });
+
+    test("dataBound is triggered once per remote loading", function() {
+        var read = controlledRead();
+
+        createTreeList({
+            dataSource: { transport: { read: read } },
+            dataBound: handler
+        });
+
+        read.resolve([ { id: 1, hasChildren: true } ]);
+
+        equal(handler.calls, 1);
+
+        instance.content.find(".k-i-expand").mousedown();
+
+        equal(handler.calls, 1);
+
+        read.resolve([ { id: 2, parentId: 1 } ]);
+
+        equal(handler.calls, 2);
+    });
+
+    test("dataBound is not triggered upon error when loading item", function() {
+        var read = controlledRead();
+
+        createTreeList({
+            dataSource: { transport: { read: read } },
+            dataBound: handler
+        });
+
+        read.resolve([ { id: 1, hasChildren: true } ]);
+
+        instance.content.find(".k-i-expand").mousedown();
+
+        read.reject();
 
         equal(handler.calls, 1);
     });

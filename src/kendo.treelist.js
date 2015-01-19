@@ -964,10 +964,12 @@ var __meta__ = {
 
             if (!loaded) {
                 this.dataSource.load(model)
-                    .always(proxy(this.refresh, this));
+                    .always(proxy(function() {
+                        this._render();
+                    }, this));
             }
 
-            this.refresh();
+            this._render();
         },
 
         expand: function(row) {
