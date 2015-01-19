@@ -1337,11 +1337,11 @@ var __meta__ = {
                     attr["aria-expanded"] = !!model.expanded;
                 }
 
-                if (this._absoluteIndex % 2 !== 0) {
-                    className.push(classNames.alt);
-                }
-
                 if (options.visible) {
+                    if (this._absoluteIndex % 2 !== 0) {
+                        className.push(classNames.alt);
+                    }
+
                     this._absoluteIndex++;
                 } else {
                     attr.style = { display: "none" };
@@ -1355,7 +1355,7 @@ var __meta__ = {
                     className.push("k-grid-edit-row");
                 }
 
-                attr.className = className.join(" ") || undefined;
+                attr.className = className.join(" ");
 
                 rows.push(this._tds({
                     model: model,
