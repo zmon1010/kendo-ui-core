@@ -1594,7 +1594,7 @@ var __meta__ = {
             var filterable = this.options.filterable;
             var idx, length, column, cell, filterMenuInstance;
 
-            if (!filterable) {
+            if (!filterable || this.options.columnMenu) {
                 return;
             }
 

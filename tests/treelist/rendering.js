@@ -1004,4 +1004,28 @@
 
         equal(dom.find("th[style]").css("text-align"), "center");
     });
+
+    test("columMenu option renders column menu icons", function() {
+        createTreeList({
+            columnMenu: true,
+            columns: [ { field: "id" } ]
+        });
+
+        var columnMenuLink = dom.find("th.k-header a.k-header-column-menu");
+        equal(columnMenuLink.length, 1);
+    });
+
+    test("filter icon is not rendered when column menu is enabled", function() {
+        createTreeList({
+            columnMenu: true,
+            filterable: true,
+            columns: [ { field: "id" } ]
+        });
+
+        var filterButton = dom.find("th.k-header a.k-grid-filter");
+        equal(filterButton.length, 0, "filter icon is still rendered");
+
+        var columnMenuLink = dom.find("th.k-header a.k-header-column-menu");
+        equal(columnMenuLink.length, 1);
+    });
 })();
