@@ -2179,4 +2179,53 @@
         equal(grid.thead.find("th:first").attr("data-kendo-index"), "0");
     });
 
+    test("column fields are correct when created from html table (mvc wrapper) with multiple columns", function() {
+        var columns = [];
+        var element = $('<div class="k-widget k-grid" style="height:100%;"><div class="k-grid-header"><div class="k-grid-header-wrap"><table><colgroup><col><col style="width:25%"><col></colgroup><thead class="k-grid-header"><tr><th class="k-header" data-kendo-field="ItemNumber" data-kendo-index="0" data-title="SKU" rowspan="2" scope="col"><a class="k-link" href="/razor/grid?StockManagementGrid-sort=ItemNumber-asc">SKU</a></th><th class="k-header" data-kendo-field="Name" data-kendo-index="1" data-title="Name" rowspan="2" scope="col"><a class="k-link" href="/razor/grid?StockManagementGrid-sort=Name-asc">Name</a></th><th class="k-header" colspan="3" data-colspan="3" scope="col"><span class="k-link">Sales</span></th></tr><tr><th class="k-header" data-kendo-field="TotalSales" data-kendo-index="2" data-title="$" scope="col"><a class="k-link" href="/razor/grid?StockManagementGrid-sort=TotalSales-asc">$</a></th><th class="k-header" data-kendo-field="TotalSalesCount" data-kendo-index="3" data-title="Count" scope="col"><a class="k-link" href="/razor/grid?StockManagementGrid-sort=TotalSalesCount-asc">Count</a></th><th class="k-header" data-kendo-field="DailySales" data-kendo-index="4" data-title="Daily" scope="col"><a class="k-link" href="/razor/grid?StockManagementGrid-sort=DailySales-asc">Daily</a></th></tr></thead></table></div></div><div class="k-grid-content" style="height:200px"><table><colgroup><col><col style="width:25%"><col></colgroup><tbody><tr class="k-no-data"><td colspan="5"></td></tr></tbody></table></div></div>').appendTo(QUnit.fixture);
+
+        var grid = new Grid(element, {
+            "columns": [{
+                "title": "SKU",
+                "field": "ItemNumber"
+            }, {
+                "title": "Name",
+                "width": "25%",
+                "field": "Name"
+            }, {
+                "title": "Sales",
+                "columns": [{
+                    "title": "$",
+                    "field": "TotalSales"
+                }, {
+                    "title": "Count",
+                    "field": "TotalSalesCount"
+                }, {
+                    "title": "Daily",
+                    "field": "DailySales"
+                }]
+            }],
+            "sortable": true,
+            "dataSource": {
+                "data": []
+            }
+        });
+
+        var trs = grid.thead.find("tr");
+
+        equal(trs.first().find("th").eq(0).attr("data-kendo-index"), "0");
+        equal(trs.first().find("th").eq(0).attr("data-kendo-field"), "ItemNumber");
+
+        equal(trs.first().find("th").eq(1).attr("data-kendo-index"), "1");
+        equal(trs.first().find("th").eq(1).attr("data-kendo-field"), "Name");
+
+        equal(trs.last().find("th").eq(0).attr("data-kendo-index"), "2");
+        equal(trs.last().find("th").eq(0).attr("data-kendo-field"), "TotalSales");
+
+        equal(trs.last().find("th").eq(1).attr("data-kendo-index"), "3");
+        equal(trs.last().find("th").eq(1).attr("data-kendo-field"), "TotalSalesCount");
+
+        equal(trs.last().find("th").eq(2).attr("data-kendo-index"), "4");
+        equal(trs.last().find("th").eq(2).attr("data-kendo-field"), "DailySales");
+    });
+
 })();

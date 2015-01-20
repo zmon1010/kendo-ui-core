@@ -959,9 +959,22 @@ var __meta__ = {
 
         var indexAttr = kendo.attr("index");
         cells.sort(function(a, b) {
-            a = parseInt($(a).attr(indexAttr), 10);
-            b = parseInt($(b).attr(indexAttr), 10);
-            return a > b ? 1 : (a < b ? -1 : 0);
+            a = $(a);
+            b = $(b);
+
+            var indexA = a.attr(indexAttr);
+            var indexB = b.attr(indexAttr);
+
+            if (indexA === undefined) {
+                indexA = $(a).index();
+            }
+            if (indexB === undefined) {
+                indexB = $(b).index();
+            }
+
+            indexA = parseInt(indexA, 10);
+            indexB = parseInt(indexB, 10);
+            return indexA > indexB ? 1 : (indexA < indexB ? -1 : 0);
         });
 
         return cells;
@@ -5389,10 +5402,6 @@ var __meta__ = {
 
                    tr = $(html);
                }
-            } else {
-                tr.children().attr(kendo.attr("index"), function() {
-                    return $(this).index();
-                });
             }
 
             if (hasFilterRow) {
@@ -5431,7 +5440,6 @@ var __meta__ = {
             }
 
             tr.find("script").remove().end().prependTo(thead);
-
 
             if (that.thead) {
                 that._destroyColumnAttachments();
@@ -5474,6 +5482,8 @@ var __meta__ = {
 
                 that._applyLockedContainersWidth();
             }
+
+            that._updateColumnCellIndex();
 
             that._updateFirstColumnClass();
 
