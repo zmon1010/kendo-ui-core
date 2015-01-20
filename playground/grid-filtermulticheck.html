@@ -47,6 +47,10 @@
             html {
                 font: 12px sans-serif;
             }
+            .k-multicheck-wrap {
+                max-height: 55px;
+                overflow: auto;
+            }
         </style>
     </head>
     <body>
@@ -55,7 +59,7 @@
         <script>
             $(function() {
                 var feature = $("#grid").kendoGrid({
-                    mobile: "phone",
+                    //mobile: "phone",
                     sortable: true,
                     filterable: {
                         mode: "row, menu",
@@ -160,7 +164,7 @@
                     resizable: true,
                     navigatable: true,
                     reorderable: true,
-                    columnMenu: true,
+                    columnMenu: false,
                     scrollable:true,
                     //detailTemplate: "foo",
                     dataSource: {
