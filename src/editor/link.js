@@ -33,16 +33,11 @@ var LinkFormatter = Class.extend({
 
     apply: function (range, attributes) {
         var nodes = textNodes(range);
-        var markers;
-        var doc;
-        var formatter;
-        var a;
-        var parent;
+        var markers, doc, formatter, a, parent;
 
         if (attributes.innerHTML) {
-            markers = RangeUtils.getMarkers(range);
-
             doc = RangeUtils.documentFromRange(range);
+            markers = RangeUtils.getMarkers(range);
 
             range.deleteContents();
             a = dom.create(doc, "a", attributes);
@@ -57,10 +52,18 @@ var LinkFormatter = Class.extend({
                 dom.remove(parent);
             }
 
-            if (markers.length > 1) {
-                dom.insertAfter(markers[markers.length - 1], a);
-                dom.insertAfter(markers[1], a);
-                dom[nodes.length > 0 ? "insertBefore" : "insertAfter"](markers[0], a);
+            // move range and markers after inserted link
+            var ref = a;
+            for (var i = 0; i < markers.length; i++) {
+                dom.insertAfter(markers[i], ref);
+                ref = markers[i];
+            }
+
+            if (markers.length) {
+                dom.insertBefore(doc.createTextNode("\ufeff"), markers[1]);
+                dom.insertAfter(doc.createTextNode("\ufeff"), markers[1]);
+                range.setStartBefore(markers[0]);
+                range.setEndAfter(markers[markers.length-1]);
             }
         } else {
             formatter = new InlineFormatter([{ tags: ["a"]}], attributes);
@@ -84,13 +87,13 @@ var UnlinkCommand = Command.extend({
 
 var LinkCommand = Command.extend({
     init: function(options) {
-        var cmd = this;
-        cmd.options = options;
-        Command.fn.init.call(cmd, options);
-        cmd.formatter = new LinkFormatter();
+        this.options = options;
+        Command.fn.init.call(this, options);
+        this.formatter = new LinkFormatter();
+
         if (!options.url) {
-            cmd.attributes = null;
-            cmd.async = true;
+            this.attributes = null;
+            this.async = true;
         } else {
             this.exec = function() {
                 this.formatter.apply(options.range, {
@@ -155,20 +158,22 @@ var LinkCommand = Command.extend({
             visible: false
         });
 
+        if (a) {
+            this._range.selectNodeContents(a);
+            nodes = textNodes(this._range);
+        }
+
+        this._initialText = this.linkText(nodes);
+
         dialog
             .find(".k-dialog-insert").click(proxy(this._apply, this)).end()
             .find(".k-dialog-close").click(proxy(this._close, this)).end()
             .find(".k-edit-field input").keydown(proxy(this._keydown, this)).end()
             .find("#k-editor-link-url").val(this.linkUrl(a)).end()
-            .find("#k-editor-link-text").val(this.linkText(nodes)).end()
+            .find("#k-editor-link-text").val(this._initialText).end()
             .find("#k-editor-link-title").val(a ? a.title : "").end()
             .find("#k-editor-link-target").attr("checked", a ? a.target == "_blank" : false).end()
             .find(".k-editor-link-text-row").toggle(!img);
-
-
-        if (nodes.length > 0 && !collapsed) {
-            this._initialText = $("#k-editor-link-text", dialog).val();
-        }
 
         this._dialog = dialog.data("kendoWindow").center().open();
 
@@ -246,11 +251,10 @@ var LinkCommand = Command.extend({
 
     linkText: function (nodes) {
         var text = "";
+        var i;
 
-        if (nodes.length == 1) {
-            text = nodes[0].nodeValue;
-        } else if (nodes.length) {
-            text = nodes[0].nodeValue + nodes[1].nodeValue;
+        for (i = 0; i < nodes.length; i++) {
+            text += nodes[i].nodeValue;
         }
 
         return dom.stripBom(text || "");

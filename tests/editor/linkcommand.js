@@ -414,13 +414,35 @@ function createLink(range, text, url, newWindow) {
     $(".k-dialog-insert").click();
 }
 
-test("inserting links sequentially does not render invalid markup", function() {
+test("selection is moved after link after inserting it", function() {
+    editor.value("");
+
+    createLink(editor.getRange(), "foo", "foo");
+    editor.getRange().insertNode(editor.document.createElement("em"));
+
+    equal(editor.value(), '<a href="foo">foo</a><em></em>');
+});
+
+test("sequentially creating links via UI", function() {
     editor.value("");
 
     createLink(editor.getRange(), "foo", "foo");
     createLink(editor.getRange(), "bar", "bar");
+    editor.getRange().insertNode(editor.document.createElement("em"));
 
-    equal(editor.value(), '<a href="foo">foo</a><a href="bar">bar</a>');
+    equal(editor.value(), '<a href="foo">foo</a><a href="bar">bar</a><em></em>');
+});
+
+test("selection is moved after link after editing it", function() {
+    var range = createRangeFromText(editor, "<a href='#top'>f||oo</a>");
+    execLinkCommandOnRange(range);
+
+    $("#k-editor-link-text").val("bar");
+    $(".k-dialog-insert").click();
+
+    editor.getRange().insertNode(editor.document.createElement("em"));
+
+    equal(editor.value(), '<a href="#top">bar</a><em></em>');
 });
 
 test("link dialog allows users to remove target='_blank' attribute", function() {
@@ -517,6 +539,23 @@ test("exec over image selection", function() {
 
 test("change link text does not leave ghost nodes", function() {
     var range = createRangeFromText(editor, "<a href='#top'>f||oo</a>");
+    execLinkCommandOnRange(range);
+
+    $("#k-editor-link-text").val("bar");
+    $(".k-dialog-insert").click();
+
+    equal(editor.value(), '<a href="#top">bar</a>');
+});
+
+test("exec from caret wraps over complete node", function() {
+    var range = createRangeFromText(editor, "<a href='#top'>f||oo bar</a>");
+    execLinkCommandOnRange(range);
+
+    equal($("#k-editor-link-text").val(), "foo bar");
+});
+
+test("change link text when a complete node is wrapped", function() {
+    var range = createRangeFromText(editor, "<a href='#top'>f||oo bar</a>");
     execLinkCommandOnRange(range);
 
     $("#k-editor-link-text").val("bar");
