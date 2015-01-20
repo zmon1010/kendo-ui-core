@@ -837,7 +837,35 @@ declare module kendo.data {
 
     interface DataSourceTransport {
         parameterMap?(data: DataSourceTransportParameterMapData, type: string): any;
+        create?: DataSourceTransportCreate;
+        destroy?: DataSourceTransportDestroy;
+        push?: Function;
+        read?: DataSourceTransportRead;
+        signalr?: DataSourceTransportSignalr;
+        update?: DataSourceTransportUpdate;
     }
+
+    interface DataSourceTransportSignalrClient {
+        create?: string;
+        destroy?: string;
+        read?: string;
+        update?: string;
+    }
+
+    interface DataSourceTransportSignalrServer {
+        create?: string;
+        destroy?: string;
+        read?: string;
+        update?: string;
+    }
+
+    interface DataSourceTransportSignalr {
+        client?: DataSourceTransportSignalrClient;
+        hub?: any;
+        promise?: any;
+        server?: DataSourceTransportSignalrServer;
+    }
+
 
     interface DataSourceParameterMapDataAggregate {
         field?: string;
@@ -1081,13 +1109,6 @@ declare module kendo.data {
         dataType?: string;
         type?: string;
         url?: any;
-    }
-
-    interface DataSourceTransport {
-        create?: any;
-        destroy?: any;
-        read?: any;
-        update?: any;
     }
 
     interface DataSourceTransportWithObjectOperations extends DataSourceTransport {
