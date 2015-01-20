@@ -83,4 +83,14 @@
         ok(!th.eq(1).data("kendoColumnMenu"));
         ok(!th.eq(2).data("kendoColumnMenu"));
     });
+
+    test("columnMenuInit event is triggered", 1, function() {
+        createTreeList({
+            columnMenuInit: function(e) {
+                equal(e.field, "id");
+            }
+        });
+
+        dom.find(".k-header-column-menu").first().click();
+    });
 })();

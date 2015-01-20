@@ -78,6 +78,7 @@ var __meta__ = {
     var COLUMNSHOW = "columnShow";
     var HEADERCELLS = "th.k-header";
     var COLUMNREORDER = "columnReorder";
+    var COLUMNMENUINIT = "columnMenuInit";
 
     var classNames = {
         wrapper: "k-treelist k-grid k-widget",
@@ -940,7 +941,8 @@ var __meta__ = {
             FILTERMENUINIT,
             COLUMNHIDE,
             COLUMNSHOW,
-            COLUMNREORDER
+            COLUMNREORDER,
+            COLUMNMENUINIT
         ],
 
         _toggle: function(model, expand) {
@@ -2030,6 +2032,7 @@ var __meta__ = {
             var options = this.options;
             var columnMenu = options.columnMenu;
             var column, menu, menuOptions, sortable, filterable;
+            var initHandler = proxy(this._columnMenuInit, this);
 
             if (!columnMenu) {
                 return;
@@ -2069,7 +2072,7 @@ var __meta__ = {
                     messages: columnMenu.messages,
                     owner: this,
                     closeCallback: $.noop,
-                    init: this._columnMenuInit,
+                    init: initHandler,
                     pane: this.pane,
                     lockedColumns: false
                 };
@@ -2082,7 +2085,8 @@ var __meta__ = {
             }
         },
 
-        _columnMenuInit: function() {
+        _columnMenuInit: function(e) {
+            this.trigger(COLUMNMENUINIT, { field: e.field, container: e.container });
         }
     });
 
