@@ -1916,6 +1916,12 @@ var __meta__ = {
             this._adjustTablesWidth();
 
             this.trigger(hidden ? COLUMNHIDE : COLUMNSHOW, { column: column });
+
+            if (!hidden && !column.width) {
+                this.content.closest("table")
+                    .add(this.header.closest("table"))
+                    .width("");
+            }
         },
 
         _findColumn: function(column) {
