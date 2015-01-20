@@ -1,5 +1,6 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.Infrastructure;
+using Kendo.Mvc.Rendering;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
@@ -69,10 +70,13 @@ namespace Kendo.Mvc.UI
         public IDictionary<string, object> HtmlAttributes
         {
             get;
-            private set;
+            set;
         }
 
-        public ModelMetadata ModelMetadata
+		[Activate]
+		protected internal IKendoHtmlGenerator Generator { get; set; }
+
+		public ModelMetadata ModelMetadata
         {
             get;
             set;
@@ -118,13 +122,10 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
-        [Activate]
-        protected internal IHtmlGenerator Generator { get; set; }
-
-        /// <summary>
-        /// Renders the component.
-        /// </summary>
-        public void Render()
+		/// <summary>
+		/// Renders the component.
+		/// </summary>
+		public void Render()
         {
             WriteHtml(ViewContext.Writer);
         }
@@ -266,5 +267,5 @@ namespace Kendo.Mvc.UI
 
             return true;
         }
-    }
+	}
 }

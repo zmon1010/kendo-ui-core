@@ -1,19 +1,64 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Kendo.Mvc.Extensions;
+using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace Kendo.Mvc.UI
 {
-    public class DateTimePicker : WidgetBase
+    public class DateTimePicker : WidgetBase, IInputComponent<DateTime>
     {
         public DateTimePicker(ViewContext viewContext) : base(viewContext)
         {
+			Value = null;
+			Enabled = true;
+		}
 
-        }
+		public string Culture
+		{
+			get;
+			set;
+		}
 
-        public DateTime? Value
+		public CultureInfo CultureInfo
+		{
+			get
+			{
+				CultureInfo info = null;
+				if (Culture.HasValue())
+				{
+					info = new CultureInfo(Culture);
+				}
+				else
+				{
+					info = CultureInfo.CurrentCulture;
+				}
+
+				return info;
+			}
+		}
+
+		public IList<DateTime> Dates
+		{
+			get;
+			set;
+		}
+
+		public bool Enabled
+		{
+			get;
+			set;
+		}
+
+		public string Format
+		{
+			get;
+			set;
+		}
+
+		public DateTime? Value
         {
             get;
             set;
@@ -21,17 +66,12 @@ namespace Kendo.Mvc.UI
 
 		protected override void WriteHtml(TextWriter writer)
 		{
-			var tag = new TagBuilder("input");
+			var tag = Generator.GenerateDateInput(ViewContext, ModelMetadata, Name, Value, Format, HtmlAttributes);
 
-			tag.GenerateId(Id, "_"); // HtmlHelper.IdAttributeDotReplacement
-			tag.MergeAttribute("name", Name);
-
-			/*, type = InputType */
-			//tag.MergeAttribute("value", value, value.HasValue())
-			//.Attributes(Component.GetUnobtrusiveValidationAttributes())
-			//.ToggleAttribute("disabled", "disabled", !Component.Enabled)
-			//.Attributes(Component.HtmlAttributes)
-			//.ToggleClass("input-validation-error", !Component.IsValid());
+			if (Enabled)
+			{
+				tag.MergeAttribute("disabled", "disabled");
+			}
 
 			writer.Write(tag.ToString(TagRenderMode.SelfClosing));
 
@@ -45,6 +85,6 @@ namespace Kendo.Mvc.UI
             writer.Write(Initializer.Initialize(Selector, "DateTimePicker", options));
 
             base.WriteInitializationScript(writer);
-        }
+		}
 	}
 }

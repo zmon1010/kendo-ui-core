@@ -73,7 +73,19 @@ namespace Kendo.Mvc.UI.Fluent
         /// <returns></returns>
         public virtual TBuilder HtmlAttributes(object attributes)
         {
-            return this as TBuilder;
+			IDictionary<string, object> htmlAttributeDictionary = null;
+			if (attributes != null)
+			{
+				htmlAttributeDictionary = attributes as IDictionary<string, object>;
+				if (htmlAttributeDictionary == null)
+				{
+					htmlAttributeDictionary = HtmlHelper.AnonymousObjectToHtmlAttributes(attributes);
+				}
+			}
+
+			Component.HtmlAttributes = htmlAttributeDictionary;
+
+			return this as TBuilder;
         }
 
         /// <summary>
@@ -83,12 +95,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// <returns></returns>
         public virtual TBuilder HtmlAttributes(IDictionary<string, object> attributes)
         {
-            // TODO
+			Component.HtmlAttributes = attributes;
 
-            // Component.HtmlAttributes.Clear();
-            // Component.HtmlAttributes.Merge(attributes);
-
-            return this as TBuilder;
+			return this as TBuilder;
         }
 
         public TBuilder ModelMetadata(ModelMetadata modelMetadata)
