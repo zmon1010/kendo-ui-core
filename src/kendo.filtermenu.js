@@ -17,6 +17,8 @@ var __meta__ = {
         proxy = $.proxy,
         POPUP = "kendoPopup",
         INIT = "init",
+        REFRESH = "refresh",
+        CHANGE = "change",
         NS = ".kendoFilterMenu",
         EQ = "Is equal to",
         NEQ = "Is not equal to",
@@ -292,7 +294,7 @@ var __meta__ = {
 
             that._refreshHandler = proxy(that.refresh, that);
 
-            that.dataSource.bind("change", that._refreshHandler);
+            that.dataSource.bind(CHANGE, that._refreshHandler);
 
             if (options.appendToElement) { // force creation if used in column menu
                 that._init();
@@ -475,7 +477,7 @@ var __meta__ = {
             that.link.unbind(NS);
 
             if (that._refreshHandler) {
-                that.dataSource.unbind("change", that._refreshHandler);
+                that.dataSource.unbind(CHANGE, that._refreshHandler);
                 that.dataSource = null;
             }
 
@@ -798,7 +800,7 @@ var __meta__ = {
             }
 
             this._refreshHandler = proxy(this.refresh, this);
-            this.dataSource.bind("change", this._refreshHandler);
+            this.dataSource.bind(CHANGE, this._refreshHandler);
 
         },
         _createLink: function() {
@@ -811,60 +813,74 @@ var __meta__ = {
 
             this._link = link.attr("tabindex", -1).on("click" + NS, proxy(this._click, this));
         },
-        _click: function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            if (!this.popup && !this.pane) {
-                this._init();
-            }
-
-            this.popup.toggle();
-        },
         _init: function() {
-            this._createForm();
-            this.trigger(INIT, { field: this.field, container: this.form });
-        },
-        _createForm: function() {
             var options = this.options;
-            var html = "<div class='multicheck-container'></div><button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
-            html += "<button type='reset' class='k-button'>" + options.messages.clear + "</button>";
-            this.form = $('<form class="k-filter-menu"/>').html(html);
+            this.pane = options.pane;
 
-            if (!options.appendToElement) {
-                this.popup = this.form.kendoPopup({
-                    anchor: this._link
-                }).data("kendoPopup");
-            } else {
-                this.popup = this.element.closest(".k-popup").data(POPUP);
-                this.element.append(this.form);
+            if (this.pane) {
+                this._isMobile = true;
             }
-            this.container = this.form.find(".multicheck-container");
 
-            if (options.checkAll) {
-                this.createCheckAllItem();
-                this.container.on("change" + multiCheckNS, ":checkbox", proxy(this.updateCheckAllState, this));
-            }
+            this._createForm();
 
             this.refresh();
 
             this.form.on("keydown" + multiCheckNS, proxy(this._keydown, this))
                         .on("submit" + multiCheckNS, proxy(this._filter, this))
                         .on("reset" + multiCheckNS, proxy(this._reset, this));
+
+            this.trigger(INIT, { field: this.field, container: this.form });
+        },
+        _createForm: function() {
+            var options = this.options;
+            var html = "<ul class='k-reset k-multicheck-wrap'></ul><button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
+            html += "<button type='reset' class='k-button'>" + options.messages.clear + "</button>";
+            this.form = $('<form class="k-filter-menu"/>').html(html);
+            this.container = this.form.find(".k-multicheck-wrap");
+
+            if (this._isMobile) {
+                this.view = this.pane.append(this.form.addClass('k-mobile-list').wrap("<div/>").parent().html());
+                var element = this.view.element;
+                this.form = element.find("form");
+                this.container = element.find(".k-multicheck-wrap");
+
+                var that = this;
+                element
+                    .on("click", ".k-primary", function(e) {
+                        that.form.submit();
+                        e.preventDefault();
+                    })
+                    .on("click", "[type=reset]", function(e) {
+                        that._reset();
+                        e.preventDefault();
+                    });
+            } else {
+                if (!options.appendToElement) {
+                    this.popup = this.form.kendoPopup({
+                        anchor: this._link
+                    }).data(POPUP);
+                } else {
+                    this.popup = this.element.closest(".k-popup").data(POPUP);
+                    this.element.append(this.form);
+                }
+            }
+
         },
         createCheckAllItem: function () {
             var options = this.options;
-            var template = kendo.template(options.itemTemplate("all"));
-            var checkAllContainer = $(template({ all: options.messages.checkAll }));
-            this.form.prepend(checkAllContainer);
+            var template = kendo.template(options.itemTemplate({ field: "all", mobile: this._isMobile }));
+            var checkAllContainer = $(template({ all: options.messages.checkAll}));
+            this.container.prepend(checkAllContainer);
 
-            this.checkBoxAll = checkAllContainer.find(":checkbox").eq(0).addClass("checkAll");
+            this.checkBoxAll = checkAllContainer.find(":checkbox").eq(0).addClass("k-check-all");
             this.checkAllHandler = proxy(this.checkAll, this);
-            this.checkBoxAll.on("change" + multiCheckNS, this.checkAllHandler);
+            this.checkBoxAll.on(CHANGE+ multiCheckNS, this.checkAllHandler);
         },
         updateCheckAllState: function() {
-            var state = this.container.find(":checkbox").length == this.container.find(":checked").length;
-            this.checkBoxAll.prop("checked", state);
+            if (this.checkBoxAll) {
+                var state = this.container.find(":checkbox:not(.k-check-all)").length == this.container.find(":checked:not(.k-check-all)").length;
+                this.checkBoxAll.prop("checked", state);
+            }
         },
         refresh: function() {
             var filters = this.getFilterArray();
@@ -873,11 +889,15 @@ var __meta__ = {
             }
 
             if (this.form) {
-                if (this.container.is(":empty")) {
+                if (!this._isFetched) {
                     if (this.options.values) {
+                        this._isFetched = true;
                         this.createCheckBoxes();
                     } else {
+                        ui.progress(this.container, true);
                         this.checkSource.fetch(proxy(function() {
+                            ui.progress(this.container, false);
+                            this._isFetched = true;
                             this.createCheckBoxes();
                             this.checkValues(this.getFilterArray());
                             this.trigger("refresh");
@@ -885,7 +905,7 @@ var __meta__ = {
                     }
                 }
                 this.checkValues(filters);
-                this.trigger("refresh");
+                this.trigger(REFRESH);
             }
         },
         getFilterArray: function() {
@@ -896,14 +916,21 @@ var __meta__ = {
         },
         createCheckBoxes: function() {
             var options = this.options;
-            var template = kendo.template(options.itemTemplate(this.field, options.format));
+            var templateOptions = { field: this.field, format: options.format, mobile: this._isMobile };
+            var template = kendo.template(options.itemTemplate(templateOptions));
             var data = this.checkSource.data();
             if (options.values) {
                 data = options.values;
-                template = kendo.template(options.itemTemplate("text", options.format, "value"));
+                templateOptions.valueField = "value";
+                templateOptions.field = "text";
+                template = kendo.template(options.itemTemplate(templateOptions));
             }
             var itemsHtml = kendo.render(template, data);
-            this.container.html(itemsHtml);
+            if (options.checkAll) {
+                this.createCheckAllItem();
+                this.container.on(CHANGE+ multiCheckNS, ":checkbox", proxy(this.updateCheckAllState, this));
+            }
+            this.container.append(itemsHtml);
 
         },
         checkAll: function() {
@@ -923,7 +950,7 @@ var __meta__ = {
             var expression = { logic: "or" };
 
             var that = this;
-            expression.filters = $.map(this.form.find(":checkbox:checked"), function (item) {
+            expression.filters = $.map(this.form.find(":checkbox:checked:not(.k-check-all)"), function (item) {
                 return { value: $(item).val(), operator: "eq", field: that.field };
             });
 
@@ -967,7 +994,7 @@ var __meta__ = {
             that._link.unbind(NS);
 
             if (that._refreshHandler) {
-                that.dataSource.unbind("change", that._refreshHandler);
+                that.dataSource.unbind(CHANGE, that._refreshHandler);
                 that.dataSource = null;
             }
 
@@ -975,27 +1002,40 @@ var __meta__ = {
         },
         options: {
             name: "FilterMultiCheck",
-            itemTemplate: function(field, format, valueField) {
+            itemTemplate: function(options) {
+                var field = options.field;
+                var format = options.format;
+                var valueField = options.valueField;
+                var mobile = options.mobile;
+
                 if (valueField === undefined) {
                     valueField = field;
                 }
-                return "<div><label><input type='checkbox' value='#:"+ valueField + " #'/>#:" +
-                    "kendo.format('" + ( format ?  format  : "{0}" ) + "', "  + field + ")" +
-                    "#</label></div>";
+                return "<li class='k-item'>" +
+                          "<label class='k-label'>" +
+                              "<input type='checkbox' class='" + (mobile? "k-check" : "") +"'  value='#:"+ valueField + " #'/>" +
+                                 "#:kendo.format('" + ( format ?  format  : "{0}" ) + "', "  + field + ")#" +
+                          "</label>" +
+                        "</li>";
             },
             checkAll: true,
             appendToElement: false,
             messages: {
                 checkAll: "Select All",
-                clear: "clear",
-                filter: "filter"
+                clear: "Clear",
+                filter: "Filter"
             },
-            forceUnique: true
+            forceUnique: true,
+            animations: {
+                left: "slide",
+                right: "slide:right"
+            }
         },
-        events: [ INIT, "refresh" ]
+        events: [ INIT, REFRESH]
     });
 
     $.extend(FilterMultiCheck.fn, {
+        _click: FilterMenu.fn._click,
         _keydown: FilterMenu.fn._keydown,
         _reset: FilterMenu.fn._reset,
         _closeForm: FilterMenu.fn._closeForm,

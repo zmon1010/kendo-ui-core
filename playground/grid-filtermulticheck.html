@@ -36,6 +36,13 @@
         <script src="../src/kendo.menu.js"></script>
         <script src="../src/kendo.columnmenu.js"></script>
 
+        <script src="../src/kendo.view.js"></script>
+        <script src="../src/kendo.fx.js"></script>
+        <script src="../src/kendo.mobile.scroller.js"></script>
+        <script src="../src/kendo.mobile.view.js"></script>
+        <script src="../src/kendo.mobile.loader.js"></script>
+        <script src="../src/kendo.mobile.pane.js"></script>
+
         <style>
             html {
                 font: 12px sans-serif;
@@ -48,9 +55,10 @@
         <script>
             $(function() {
                 var feature = $("#grid").kendoGrid({
+                    mobile: "phone",
                     sortable: true,
                     filterable: {
-                        mode: "menu",
+                        mode: "row, menu",
                         operators: {
                             date: {
                                 eq: "IS EQUAL"
@@ -58,6 +66,22 @@
                         }
                     },
                     columns: [
+                        {
+                            field: "Name",
+                            locked: true,
+                            width: 300,
+                            filterable: {
+                                multi: true
+                            }
+                        },
+                        {
+                            field: "Name",
+                            locked: true,
+                            width: 300,
+                            filterable: {
+                                multi: true
+                            }
+                        },
                         {
                             field: "Grade",
                             locked: true,
@@ -146,55 +170,57 @@
                         //pageSize:2,
                         transport: {
                             read: function(options) {
-                                options.success({ dd:[
-                                    {
-                                        Id: 1,
-                                        Name: "foo",
-                                        Position: 1 ,
-                                        Grade: 1 ,
-                                        Male: false,
-                                        ContractDate : new Date('1996/12/12')
-                                    },
-                                    {
-                                        Id: 2,
-                                        Name: "bar",
-                                        Position: 2 ,
-                                        Grade: 1 ,
-                                        Male: true,
-                                        ContractDate : new Date('2012/5/4')
-                                    },
-                                    {
-                                        Id: 3,
-                                        Name: "baz",
-                                        Position: 3 ,
-                                        Grade: 2 ,
-                                        Male: false,
-                                        ContractDate : new Date()
-                                    },
-                                    {
-                                        Id: 4,
-                                        Name: "baz",
-                                        Position: 3 ,
-                                        Grade: 3 ,
-                                        Male: true,
-                                        ContractDate : new Date()
-                                    },
-                                    {
-                                        Id: 4,
-                                        Name: "bat",
-                                        Position: 3 ,
-                                        Grade: 3 ,
-                                        ContractDate : new Date()
-                                    },
-                                    {
-                                        Id: 5,
-                                        Name: "vat",
-                                        Position: 3 ,
-                                        Grade: 2 ,
-                                        Male: false,
-                                        ContractDate : new Date('2012/5/4')
-                                    }
-                                ] })
+                                setTimeout(function() {
+                                    options.success({ dd:[
+                                        {
+                                            Id: 1,
+                                            Name: "foo",
+                                            Position: 1 ,
+                                            Grade: 1 ,
+                                            Male: false,
+                                            ContractDate : new Date('1996/12/12')
+                                        },
+                                        {
+                                            Id: 2,
+                                            Name: "bar",
+                                            Position: 2 ,
+                                            Grade: 1 ,
+                                            Male: true,
+                                            ContractDate : new Date('2012/5/4')
+                                        },
+                                        {
+                                            Id: 3,
+                                            Name: "baz",
+                                            Position: 3 ,
+                                            Grade: 2 ,
+                                            Male: false,
+                                            ContractDate : new Date()
+                                        },
+                                        {
+                                            Id: 4,
+                                            Name: "baz",
+                                            Position: 3 ,
+                                            Grade: 3 ,
+                                            Male: true,
+                                            ContractDate : new Date()
+                                        },
+                                        {
+                                            Id: 4,
+                                            Name: "bat",
+                                            Position: 3 ,
+                                            Grade: 3 ,
+                                            ContractDate : new Date()
+                                        },
+                                        {
+                                            Id: 5,
+                                            Name: "vat",
+                                            Position: 3 ,
+                                            Grade: 2 ,
+                                            Male: false,
+                                            ContractDate : new Date('2012/5/4')
+                                        }
+                                    ] })
+                                }, 2000);
                             }
                         },
                         schema: {

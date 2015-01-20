@@ -78,7 +78,7 @@
             dataSource: dataSource()
         });
         menu.one("refresh" , function () {
-            var chkbxs = menu.container.find(":checkbox");
+            var chkbxs = menu.container.find(":checkbox:not(.k-check-all)");
             equal(chkbxs.length, 2);
             equal(chkbxs.eq(0).val(), "some string");
             equal(chkbxs.eq(1).val(), "some other");
@@ -94,7 +94,7 @@
                     data: [{ foo: "some string", bar: 22, baz: kendo.parseDate("12/12/12", "dd/MM/yy"), boo: true }]
                 }),
                 refresh: function () {
-                    var chkbxs = this.container.find(":checkbox");
+                    var chkbxs = this.container.find(":checkbox:not(.k-check-all)");
                     equal(chkbxs.length, 1);
                     equal(chkbxs.eq(0).val(), "some string");
                     equal(chkbxs.eq(0).closest("label").text(), "some string");
@@ -111,7 +111,7 @@
                     ]
                 }),
                 refresh: function () {
-                    var chkbxs = this.container.find(":checkbox");
+                    var chkbxs = this.container.find(":checkbox:not(.k-check-all)");
                     equal(chkbxs.length, 1);
                     equal(chkbxs.eq(0).val(), "some string");
                     equal(chkbxs.eq(0).closest("label").text(), "some string");
@@ -125,7 +125,7 @@
                     group: { field: "foo"}
                 }),
                 refresh: function () {
-                    var chkbxs = this.container.find(":checkbox");
+                    var chkbxs = this.container.find(":checkbox:not(.k-check-all)");
                     equal(chkbxs.length, 2);
                     equal(chkbxs.eq(0).val(), "some string");
                     equal(chkbxs.eq(0).closest("label").text(), "some string");
@@ -137,7 +137,7 @@
         setup({
                 dataSource: dataSource({ pageSize: 1 }),
                 refresh: function () {
-                    var chkbxs = this.container.find(":checkbox");
+                    var chkbxs = this.container.find(":checkbox:not(.k-check-all)");
                     equal(chkbxs.length, 1);
                     equal(chkbxs.eq(0).val(), "some string");
                     equal(chkbxs.eq(0).closest("label").text(), "some string");
@@ -150,7 +150,7 @@
                 dataSource: dataSource(),
                 field: "bar",
                 refresh: function () {
-                    var chkbxs = this.container.find(":checkbox");
+                    var chkbxs = this.container.find(":checkbox:not(.k-check-all)");
                     equal(chkbxs.length, 2);
                     equal(chkbxs.eq(0).val(), "22");
                     equal(chkbxs.eq(0).closest("label").text(), "22");
@@ -166,7 +166,7 @@
                 field: "baz",
                 format: "{0:dd/MM}",
                 refresh: function () {
-                    var chkbxs = this.container.find(":checkbox");
+                    var chkbxs = this.container.find(":checkbox:not(.k-check-all)");
                     equal(chkbxs.length, 2);
                     equal(chkbxs.eq(0).val(), "Wed Dec 12 2012 00:00:00 GMT+0200 (EET)");
                     equal(chkbxs.eq(0).closest("label").text(), "12/12");
@@ -181,7 +181,7 @@
                 dataSource: new kendo.data.DataSource({ data: [{foo: "some"}, {}] }),
                 field: "foo",
                 refresh: function () {
-                    var chkbxs = this.container.find(":checkbox");
+                    var chkbxs = this.container.find(":checkbox:not(.k-check-all)");
                     equal(chkbxs.length, 1);
                     equal(chkbxs.eq(0).val(), "some");
                     equal(chkbxs.eq(0).closest("label").text(), "some");
@@ -194,7 +194,7 @@
                 dataSource: new kendo.data.DataSource({ data: [{foo: true}, {foo: false}, {foo: undefined}, {}] }),
                 field: "foo",
                 refresh: function () {
-                    var chkbxs = this.container.find(":checkbox");
+                    var chkbxs = this.container.find(":checkbox:not(.k-check-all)");
                     equal(chkbxs.length, 2);
                     equal(chkbxs.eq(0).val(), "true");
                     equal(chkbxs.eq(0).closest("label").text(), "true");
@@ -207,8 +207,9 @@
     test("template is used and options for template are available", function() {
         setup({
             dataSource: dataSource(),
-            itemTemplate: function (field) {
-                return "<span class='foo' id='#=" + field + "#'>" + field + "</span>";
+            checkAll: false,
+            itemTemplate: function (options) {
+                return "<span class='foo' id='#=" + options.field + "#'>" + options.field + "</span>";
             },
             field: "foo",
             refresh: function () {
@@ -228,7 +229,7 @@
             dataSource: dataSource(),
             field: "foo",
             refresh: function () {
-                var chkbxs = this.container.find(":checkbox");
+                var chkbxs = this.container.find(":checkbox:not(.k-check-all)");
                 equal(chkbxs.length, 2);
                 equal(chkbxs.eq(0).val(), "bar");
                 equal(chkbxs.eq(0).closest("label").text(), "foo");
