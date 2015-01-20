@@ -327,6 +327,23 @@
         ok(!instance.columns[2].hidden);
     });
 
+    test("hideColumn accepts column as argument", function() {
+        createTreeList();
+
+        instance.hideColumn(instance.columns[2]);
+
+        ok(instance.columns[2].hidden);
+    });
+
+    test("showColumn accepts column as argument", function() {
+        createTreeList();
+
+        instance.hideColumn("text");
+        instance.showColumn(instance.columns[2]);
+
+        ok(!instance.columns[2].hidden);
+    });
+
     test("hideColumn triggers event", 2, function() {
         createTreeList({
             columnHide: function(e) {

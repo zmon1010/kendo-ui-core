@@ -57,6 +57,7 @@ var __meta__ = {
     var proxy = $.proxy;
     var map = $.map;
     var grep = $.grep;
+    var isPlainObject = $.isPlainObject;
     var STRING = "string";
     var CHANGE = "change";
     var ERROR = "error";
@@ -1920,6 +1921,10 @@ var __meta__ = {
         _findColumn: function(column) {
             if (typeof column == "number") {
                 column = this.columns[column];
+            } else if (isPlainObject(column)) {
+                column = grep(this.columns, function(item) {
+                    return item === column;
+                })[0];
             } else {
                 column = grep(this.columns, function(item) {
                     return item.field === column;
