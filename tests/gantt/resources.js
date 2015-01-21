@@ -1241,13 +1241,13 @@
         }
     });
 
-    test("updates assignment dataSource - all resources cleared", function() {
+    test("updates assignment dataSource - all assignments cleared", function() {
         gantt._updateAssignments(gantt.dataSource.at(0).get("id"), []);
 
         equal(gantt.assignments.dataSource.total(), 1);
     });
 
-    test("updates assignment dataSource - all resources added", function() {
+    test("updates assignment dataSource - all assignments added", function() {
         var resources = [
            new ObservableObject({ id: 0, value: 1 }),
            new ObservableObject({ id: 1, value: 1 })
@@ -1258,11 +1258,27 @@
         equal(gantt.assignments.dataSource.total(), 4);
     });
 
+    test("updates assignment dataSource - all assignments added with correct values", function() {
+        var resources = [
+           new ObservableObject({ id: 0, value: 1 }),
+           new ObservableObject({ id: 1, value: 1 })
+        ];
+        var assignments = gantt.assignments;
+        var dataSource = assignments.dataSource;
+
+        gantt._updateAssignments(gantt.dataSource.at(1).get("id"), resources);
+
+        equal(dataSource.at(3).get(assignments.dataTaskIdField), 1);
+        equal(dataSource.at(3).get(assignments.dataResourceIdField), 0);
+        equal(dataSource.at(3).get(assignments.dataValueField), 1);
+    });
+
     test("updates assignment dataSource - update existing resources", 3, function() {
         var resources = [
            new ObservableObject({ id: 0, value: 4 }),
            new ObservableObject({ id: 1, value: 4 })
         ];
+
         var assignments = gantt.assignments.dataSource;
 
         gantt._updateAssignments(gantt.dataSource.at(0).get("id"), resources);

@@ -1333,7 +1333,7 @@ var __meta__ = {
                         model: {
                             id: "id",
                             fields: {
-                                id: { from: "id", type: "number" },
+                                id: { from: "id" },
                                 name: { from: "name", type: "string", editable: false},
                                 value: { from: "value", type: "number", defaultValue: "" },
                                 format: { from: "format", type: "string" }
@@ -2199,7 +2199,6 @@ var __meta__ = {
             var dataSource = this.assignments.dataSource;
             var taskId = this.assignments.dataTaskIdField;
             var resourceId = this.assignments.dataResourceIdField;
-            var resourceValue = this.assignments.dataValueField;
             var hasMatch = false;
             var assignments = new Query(dataSource.view())
                 .filter({
@@ -2219,7 +2218,7 @@ var __meta__ = {
 
                     if (assignment.get(resourceId) === resource.get("id")) {
                         value = resources[i].get("value");
-                        assignment.set(resourceValue, value);
+                        this._updateAssignment(assignment, value);
                         resources.splice(i, 1);
                         hasMatch = true;
                         break;
@@ -2227,7 +2226,7 @@ var __meta__ = {
                 }
 
                 if (!hasMatch) {
-                    dataSource.remove(assignment);
+                    this._removeAssignment(assignment);
                 }
 
                 hasMatch = false;
@@ -2237,11 +2236,7 @@ var __meta__ = {
 
             for (var j = 0, newLength = resources.length; j < newLength; j++) {
                 resource = resources[j];
-                assignment = dataSource._createNewModel();
-                assignment[taskId] = id;
-                assignment[resourceId] = resource.get("id");
-                assignment[resourceValue] = resource.get("value");
-                dataSource.add(assignment);
+                this._createAssignment(resource, id);
             }
 
             dataSource.sync();
@@ -2301,6 +2296,12 @@ var __meta__ = {
             }
         },
 
+        _updateAssignment: function(assignment, value) {
+            var resourceValueField = this.assignments.dataValueField;
+
+            assignment.set(resourceValueField, value);
+        },
+
         removeTask: function(uid) {
             var that = this;
             var task = typeof uid === "string" ? this.dataSource.getByUid(uid) : uid;
@@ -2352,6 +2353,21 @@ var __meta__ = {
             }
         },
 
+        _createAssignment: function(resource, id) {
+            var assignments = this.assignments;
+            var dataSource = assignments.dataSource;
+            var taskId = assignments.dataTaskIdField;
+            var resourceId = assignments.dataResourceIdField;
+            var resourceValue = assignments.dataValueField;
+            var assignment = dataSource._createNewModel();
+
+            assignment[taskId] = id;
+            assignment[resourceId] = resource.get("id");
+            assignment[resourceValue] = resource.get("value");
+
+            dataSource.add(assignment);
+        },
+
         removeDependency: function(uid) {
             var that = this;
             var dependency = typeof uid === "string" ? this.dependencies.getByUid(uid) : uid;
@@ -2379,7 +2395,7 @@ var __meta__ = {
             this.dependencies.sync();
         },
 
-        _removeResourceAssignments: function(task) {
+        _removeTaskAssignments: function(task) {
             var dataSource = this.assignments.dataSource;
             var assignments = dataSource.view();
             var filter = {
@@ -2409,7 +2425,7 @@ var __meta__ = {
                 dependencies: dependencies
             })) {
                 this._removeTaskDependencies(task, dependencies);
-                this._removeResourceAssignments(task);
+                this._removeTaskAssignments(task);
 
                 this._preventRefresh = true;
 
@@ -2430,6 +2446,10 @@ var __meta__ = {
                     this.dependencies.sync();
                 }
             }
+        },
+
+        _removeAssignment: function(assignment) {
+            this.assignments.dataSource.remove(assignment);
         },
 
         _taskConfirm: function(callback, task) {
