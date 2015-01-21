@@ -57,6 +57,7 @@ var __meta__ = {
     var proxy = $.proxy;
     var map = $.map;
     var grep = $.grep;
+    var isPlainObject = $.isPlainObject;
     var STRING = "string";
     var CHANGE = "change";
     var ERROR = "error";
@@ -78,6 +79,7 @@ var __meta__ = {
     var COLUMNSHOW = "columnShow";
     var HEADERCELLS = "th.k-header";
     var COLUMNREORDER = "columnReorder";
+    var COLUMNMENUINIT = "columnMenuInit";
 
     var classNames = {
         wrapper: "k-treelist k-grid k-widget",
@@ -703,6 +705,7 @@ var __meta__ = {
             this._toolbar();
             this._scrollable();
             this._reorderable();
+            this._columnMenu();
 
             if (this.options.autoBind) {
                 this.dataSource.fetch();
@@ -901,6 +904,7 @@ var __meta__ = {
             sortable: false,
             toolbar: null,
             height: null,
+            columnMenu: false,
             messages: {
                 noRows: "No records to display",
                 loading: "Loading...",
@@ -938,7 +942,8 @@ var __meta__ = {
             FILTERMENUINIT,
             COLUMNHIDE,
             COLUMNSHOW,
-            COLUMNREORDER
+            COLUMNREORDER,
+            COLUMNMENUINIT
         ],
 
         _toggle: function(model, expand) {
@@ -1589,7 +1594,7 @@ var __meta__ = {
             var filterable = this.options.filterable;
             var idx, length, column, cell, filterMenuInstance;
 
-            if (!filterable) {
+            if (!filterable || this.options.columnMenu) {
                 return;
             }
 
@@ -1911,11 +1916,21 @@ var __meta__ = {
             this._adjustTablesWidth();
 
             this.trigger(hidden ? COLUMNHIDE : COLUMNSHOW, { column: column });
+
+            if (!hidden && !column.width) {
+                this.content.closest("table")
+                    .add(this.header.closest("table"))
+                    .width("");
+            }
         },
 
         _findColumn: function(column) {
             if (typeof column == "number") {
                 column = this.columns[column];
+            } else if (isPlainObject(column)) {
+                column = grep(this.columns, function(item) {
+                    return item === column;
+                })[0];
             } else {
                 column = grep(this.columns, function(item) {
                     return item.field === column;
@@ -2020,6 +2035,69 @@ var __meta__ = {
             dom.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
 
             this.refresh();
+        },
+
+        _columnMenu: function() {
+            var ths = this.header.find("th");
+            var columns = this.columns;
+            var options = this.options;
+            var columnMenu = options.columnMenu;
+            var column, menu, menuOptions, sortable, filterable;
+            var initHandler = proxy(this._columnMenuInit, this);
+
+            if (!columnMenu) {
+                return;
+            }
+
+            if (typeof columnMenu == "boolean") {
+                columnMenu = {};
+            }
+
+            for (var i = 0; i < ths.length; i++) {
+                column = columns[i];
+                if (!column.field) {
+                    continue;
+                }
+
+                menu = ths.eq(i).data("kendoColumnMenu");
+                if (menu) {
+                    menu.destroy();
+                }
+
+                sortable = false;
+                if (column.sortable !== false && columnMenu.sortable !== false && options.sortable !== false) {
+                    sortable = extend({}, options.sortable, { compare: (column.sortable || {}).compare });
+                }
+
+                filterable = false;
+                if (options.filterable && column.filterable !== false && columnMenu.filterable !== false) {
+                    filterable = extend({ pane: this.pane }, column.filterable, options.filterable);
+                }
+
+                menuOptions = {
+                    dataSource: this.dataSource,
+                    values: column.values,
+                    columns: columnMenu.columns,
+                    sortable: sortable,
+                    filterable: filterable,
+                    messages: columnMenu.messages,
+                    owner: this,
+                    closeCallback: $.noop,
+                    init: initHandler,
+                    pane: this.pane,
+                    lockedColumns: false
+                };
+
+                if (options.$angular) {
+                    menuOptions.$angular = options.$angular;
+                }
+
+                ths.eq(i).kendoColumnMenu(menuOptions);
+            }
+        },
+
+        _columnMenuInit: function(e) {
+            this.trigger(COLUMNMENUINIT, { field: e.field, container: e.container });
         }
     });
 
