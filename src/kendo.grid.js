@@ -3682,10 +3682,10 @@ var __meta__ = {
                 }
 
                 if (canHandle && key == keys.UP) {
-                    currentProxy(moveVertical(current, e.currentTarget, table, headerTable, true));
+                    currentProxy(moveVertical(current, e.currentTarget, table, headerTable, true, lockedColumns(that.columns).length));
                     handled = true;
                 } else if (canHandle && key == keys.DOWN) {
-                    currentProxy(moveVertical(current, e.currentTarget, table, headerTable));
+                    currentProxy(moveVertical(current, e.currentTarget, table, headerTable, false, lockedColumns(that.columns).length));
                     handled = true;
                 } else if (canHandle && key == (isRtl ? keys.RIGHT : keys.LEFT)) {
                     currentProxy(moveLeft(current, e.currentTarget, table, headerTable, relatedRow));
@@ -6560,7 +6560,7 @@ var __meta__ = {
                    downTable.eq(0) : downTable.eq(1);
    }
 
-   function moveVertical(current, currentTable, dataTable, headerTable, up) {
+   function moveVertical(current, currentTable, dataTable, headerTable, up, lockedColumns) {
        var row, index;
        var nextFn = up ? "prevAll" : "nextAll";
 
@@ -6585,6 +6585,8 @@ var __meta__ = {
                    index = current.attr(kendo.attr("index"));
                    if (index === undefined || up) {
                        index = current.index();
+                   } else if (currentTable.parent().prev().hasClass("k-grid-content-locked")){
+                       index -= lockedColumns;
                    }
                    current = row.children().eq(index);
                }
