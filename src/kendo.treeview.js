@@ -1257,9 +1257,9 @@ var __meta__ = {
         },
 
         _updateNodes: function(items, field) {
-            var that = this, i, node, item,
-                isChecked, isCollapsed,
-                context = { treeview: that.options, item: item };
+            var that = this;
+            var i, node, item, isChecked, isCollapsed;
+            var context = { treeview: that.options, item: item };
 
             function setCheckedState(root, state) {
                 root.find(".k-checkbox :checkbox")
@@ -1282,15 +1282,19 @@ var __meta__ = {
 
                 node.attr(ARIASELECTED, !!item[field]);
             } else {
+                var elements = $.map(items, function(item) {
+                    return that.findByUid(item.uid);
+                });
+
+                that.angular("cleanup", function() { return { elements: elements }; });
 
                 for (i = 0; i < items.length; i++) {
                     context.item = item = items[i];
+                    node = elements[i];
 
-                    that.findByUid(item.uid).find(">div>.k-in").html(that.templates.itemContent(context));
+                    node.find(">div>.k-in").html(that.templates.itemContent(context));
 
                     if (field == CHECKED) {
-                        node = that.findByUid(item.uid);
-
                         isChecked = item[field];
 
                         setCheckedState(node.children("div"), isChecked);
@@ -1303,10 +1307,8 @@ var __meta__ = {
                             that._bubbleIndeterminate(node);
                         }
                     } else if (field == "expanded") {
-                        that._toggle(that.findByUid(item.uid), item, item[field]);
+                        that._toggle(node, item, item[field]);
                     } else if (field == "enabled") {
-                        node = that.findByUid(item.uid);
-
                         node.find(".k-checkbox :checkbox").prop("disabled", !item[field]);
 
                         isCollapsed = !nodeContents(node).is(VISIBLE);
@@ -1330,6 +1332,15 @@ var __meta__ = {
                         that._updateNodeClasses(node, {}, { enabled: item[field], expanded: !isCollapsed });
                     }
                 }
+
+                that.angular("compile", function(){
+                    return {
+                        elements: elements,
+                        data: $.map(items, function(item) {
+                            return [{ dataItem: item }];
+                        })
+                    };
+                });
             }
         },
 
