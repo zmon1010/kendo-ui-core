@@ -4480,6 +4480,16 @@ var __meta__ = {
                         }) : false;
 
                         filterable = options.filterable && column.filterable !== false && columnMenu.filterable !== false ? extend({ pane: that.pane }, column.filterable, options.filterable) : false;
+
+                        if (column.filterable && column.filterable.dataSource) {
+                            filterable.forceUnique = false;
+                            filterable.checkSource = column.filterable.dataSource;
+                        }
+
+                        if (filterable) {
+                            filterable.format = column.format;
+                        }
+
                         menuOptions = {
                             dataSource: that.dataSource,
                             values: column.values,
@@ -4550,6 +4560,7 @@ var __meta__ = {
                             {
                                 dataSource: that.dataSource,
                                 values: columns[idx].values,
+                                format: columns[idx].format,
                                 closeCallback: closeCallback,
                                 init: filterInit,
                                 pane: that.pane
@@ -4559,8 +4570,16 @@ var __meta__ = {
                         if (columnFilterable && columnFilterable.messages) {
                             options.messages = extend(true, {}, filterable.messages, columnFilterable.messages);
                         }
+                        if (columnFilterable && columnFilterable.dataSource) {
+                            options.forceUnique = false;
+                            options.checkSource = columnFilterable.dataSource;
+                        }
 
-                        cell.kendoFilterMenu(options);
+                        if (columnFilterable && columnFilterable.multi) {
+                            cell.kendoFilterMultiCheck(options);
+                        } else {
+                            cell.kendoFilterMenu(options);
+                        }
                     }
                 }
             }
