@@ -6,6 +6,7 @@
 var __meta__ = {
     id: "pdf",
     name: "PDF export",
+    description: "PDF Generation framework",
     category: "framework",
     depends: [ "core", "drawing" ]
 };
