@@ -124,7 +124,7 @@ ClearIndent();
             }
 
             return Json(new[] { <#= ModelVariable #> }.ToDataSourceResult(request, ModelState));
-        } 
+        }
 <# } #>
 <# if(EditableDestroy) { #>
 

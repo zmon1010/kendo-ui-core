@@ -33,25 +33,57 @@ namespace KendoScaffolder.UI
             this.DialogResult = true;
         }
 
-        private void Editable_Clicked(object sender, RoutedEventArgs e)
+        private void Selectable_Clicked(object sender, RoutedEventArgs e)
         {
-            if (EditMode.Visibility == Visibility.Visible)
+            if (SelectionModeWrapPanel.Visibility == Visibility.Visible)
             {
-                EditMode.Visibility = Visibility.Hidden;
-                EditModeLabel.Visibility = Visibility.Hidden;
-                CrudOperationsLabel.Visibility = Visibility.Hidden;
-                EditableCreate.Visibility = Visibility.Hidden;
-                EditableUpdate.Visibility = Visibility.Hidden;
-                EditableDestroy.Visibility = Visibility.Hidden;
+                SelectionModeWrapPanel.Visibility = Visibility.Collapsed;
+                SelectionTypeWrapPanel.Visibility = Visibility.Collapsed;
             }
             else
             {
-                EditMode.Visibility = Visibility.Visible;
-                EditModeLabel.Visibility = Visibility.Visible;
-                CrudOperationsLabel.Visibility = Visibility.Visible;
-                EditableCreate.Visibility = Visibility.Visible;
-                EditableUpdate.Visibility = Visibility.Visible;
-                EditableDestroy.Visibility = Visibility.Visible;
+                SelectionModeWrapPanel.Visibility = Visibility.Visible;
+                SelectionTypeWrapPanel.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Sortable_Clicked(object sender, RoutedEventArgs e)
+        {
+            if (SortableAllowUnsort.Visibility == Visibility.Visible)
+            {
+                SortableAllowUnsort.Visibility = Visibility.Collapsed;
+                SortableModeWrapPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                SortableAllowUnsort.Visibility = Visibility.Visible;
+                SortableModeWrapPanel.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Filterable_Clicked(object sender, RoutedEventArgs e)
+        {
+            if (FilterableLabel.Visibility == Visibility.Visible)
+            {
+                FilterableWrapPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                FilterableWrapPanel.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Editable_Clicked(object sender, RoutedEventArgs e)
+        {
+            if (EditModeWrapPanel.Visibility == Visibility.Visible)
+            {
+                EditModeWrapPanel.Visibility = Visibility.Collapsed;
+                CrudOperationsWrapPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                EditModeWrapPanel.Visibility = Visibility.Visible;
+                CrudOperationsWrapPanel.Visibility = Visibility.Visible;
             }
         }
 
@@ -59,8 +91,8 @@ namespace KendoScaffolder.UI
         {
             if (ViewModelType.Visibility == Visibility.Visible)
             {
-                ViewModelType.Visibility = Visibility.Hidden;
-                ViewModelTypeLabel.Visibility = Visibility.Hidden;
+                ViewModelType.Visibility = Visibility.Collapsed;
+                ViewModelTypeLabel.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -75,6 +107,27 @@ namespace KendoScaffolder.UI
             current.Text = "GridController";
             current.Focus();
             current.Select(0, 4);
+        }
+
+        private void ViewName_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            TextBox current = ((TextBox)sender);
+            current.Text = "Index";
+        }
+    }
+
+    public class RadioButtonCheckedConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            return value.Equals(parameter);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            return value.Equals(true) ? parameter : Binding.DoNothing;
         }
     }
 }

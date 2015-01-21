@@ -6,9 +6,11 @@ using System.Linq;
 
 namespace KendoScaffolder.UI
 {
-    /// <summary>
-    /// View model for code types so that it can be displayed on the UI.
-    /// </summary>
+    public enum FilterMode { Menu, Row }
+    public enum SortMode { Multiple, Single }
+    public enum SelectionMode { Multiple, Single }
+    public enum SelectionType { Row, Cell }
+
     public class GridConfigurationViewModel
     {
         public CodeGenerationContext Context { get; private set; }
@@ -21,6 +23,7 @@ namespace KendoScaffolder.UI
         public string SelectedDataSourceType { get; set; }
 
         public string ControllerName { get; set; }
+        public string ViewName { get; set; }
 
         public bool Editable { get; set; }
         public bool EditableCreate { get; set; }
@@ -29,11 +32,27 @@ namespace KendoScaffolder.UI
         public string EditMode { get; set; }
 
         public bool ColumnMenu { get; set; }
+
         public bool Filterable { get; set; }
+        public FilterMode FilterMode { get; set; }
+
         public bool Groupable { get; set; }
+        public bool Navigatable { get; set; }
+        public bool Pageable { get; set; }
+        public bool Reorderable { get; set; }
         public bool Scrollable { get; set; }
+
+        public bool Selectable { get; set; }
+        public SelectionMode SelectionMode { get; set; }
+        public SelectionType SelectionType { get; set; }
+
         public bool Sortable { get; set; }
-        
+        public bool AllowUnsort { get; set; }
+        public SortMode SortMode { get; set; }
+
+        public bool ExcelExport { get; set; }
+        public bool PdfExport { get; set; }
+
         public GridConfigurationViewModel(CodeGenerationContext context)
         {
             Context = context;
@@ -88,12 +107,5 @@ namespace KendoScaffolder.UI
                 return new List<string> { "InCell", "InLine", "PopUp" };
             }
         }
-        //public IEnumerable<DataSourceType> DataSourceTypes
-        //{
-        //    get
-        //    {
-        //        return Enum.GetValues(typeof(DataSourceType)).Cast<DataSourceType>().ToList();
-        //    }
-        //}
     }
 }

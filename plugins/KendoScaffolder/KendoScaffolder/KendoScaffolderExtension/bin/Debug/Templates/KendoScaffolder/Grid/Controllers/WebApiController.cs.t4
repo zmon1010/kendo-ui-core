@@ -46,7 +46,7 @@ namespace <#= Namespace #>
 
     public class <#= entitySetName #>Controller : ApiController
     {
-        private <#= ContextTypeName #> db = new <#= ContextTypeName #>();
+        
 
         public DataSourceResult Get<#= entitySetName #>([System.Web.Http.ModelBinding.ModelBinder(typeof(WebApiDataSourceRequestModelBinder))]DataSourceRequest request)
         {
