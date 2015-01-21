@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.core", "./pdf/core", "./pdf/ttf", "./kendo.drawing", "./drawing/pdf" ], f);
+    define([ "./kendo.core", "./pdf/core", "./pdf/ttf", "./pdf/drawing", "./kendo.drawing" ], f);
 
 }) (function(){
 
