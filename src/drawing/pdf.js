@@ -2,8 +2,7 @@
     define([
         "../kendo.core",
         "../kendo.color",
-        "../kendo.pdf",
-        "./shapes"
+        "../kendo.drawing"
     ], f);
 })(function(){
 

@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.core", "./pdf/core", "./pdf/ttf" ], f);
+    define([ "./kendo.core", "./pdf/core", "./pdf/ttf", "./kendo.drawing", "./drawing/pdf" ], f);
 
 }) (function(){
 
@@ -7,8 +7,7 @@ var __meta__ = {
     id: "pdf",
     name: "PDF export",
     category: "framework",
-    advanced: true,
-    depends: [ "core" ]
+    depends: [ "core", "drawing" ]
 };
 
 (function(kendo){
