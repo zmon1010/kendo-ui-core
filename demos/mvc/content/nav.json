@@ -1876,6 +1876,16 @@
             "kendo-ui": "In this example we will learn how to enable the filter row of Kendo UI Grid component."
         }
       },
+	  {
+        "text": "Filter Multi Checkboxes",
+        "url": "grid/filter-multi-checkboxes",
+        "title": {
+            "kendo-ui": "Filter multi-check in Kendo UI Grid | Kendo UI Web Demo"
+        },
+        "meta": {
+            "kendo-ui": "In this example we will learn how to enable the filter multi-check of Kendo UI Grid component."
+        }
+      },
       {
         "text": "Server aggregates",
         "url": "grid/serveraggregates",
