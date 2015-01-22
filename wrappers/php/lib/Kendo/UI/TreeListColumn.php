@@ -47,7 +47,7 @@ class TreeListColumn extends \Kendo\SerializableObject {
     }
 
     /**
-    * If set to true the column will show the icons that are used for exapdning and collapsing of child rows. By default, the first column of the TreeList is expandable.
+    * If set to true the column will show the icons that are used for expanding and collapsing child rows. By default, the first column of the TreeList is expandable.
     * @param boolean $value
     * @return \Kendo\UI\TreeListColumn
     */
@@ -63,6 +63,16 @@ The field name should be a valid Javascript identifier and should contain no spa
     */
     public function field($value) {
         return $this->setProperty('field', $value);
+    }
+
+    /**
+    * If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed
+for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.
+    * @param boolean|\Kendo\UI\TreeListColumnFilterable|array $value
+    * @return \Kendo\UI\TreeListColumn
+    */
+    public function filterable($value) {
+        return $this->setProperty('filterable', $value);
     }
 
     /**
@@ -183,13 +193,21 @@ Each table row consists of table cells (<td>) which represent the treelist colum
     }
 
     /**
-    * If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed
-for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.
-    * @param boolean|\Kendo\UI\TreeListColumnFilterable|array $value
+    * If set to true the column will not be displayed in the treelist. By default all columns are displayed.
+    * @param boolean $value
     * @return \Kendo\UI\TreeListColumn
     */
-    public function filterable($value) {
-        return $this->setProperty('filterable', $value);
+    public function hidden($value) {
+        return $this->setProperty('hidden', $value);
+    }
+
+    /**
+    * If set to true the column will be visible in the grid column menu. By default the column menu includes all data-bound columns (ones that have their field set).
+    * @param boolean $value
+    * @return \Kendo\UI\TreeListColumn
+    */
+    public function menu($value) {
+        return $this->setProperty('menu', $value);
     }
 
 //<< Properties
