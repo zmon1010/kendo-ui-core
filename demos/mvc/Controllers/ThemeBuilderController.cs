@@ -44,6 +44,8 @@ namespace Kendo.Controllers
             ViewBag.scripts = Kendo.Models.ScriptGroups.All;
             ViewBag.styles = Kendo.Models.StyleGroups.Mobile;
 
+            SetTheme();
+
             return View();
         }
     }
