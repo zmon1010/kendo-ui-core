@@ -26,13 +26,16 @@ namespace Kendo.Mvc.UI
             IsSelfInitialized = true;
             Initializer = new JavaScriptInitializer();
             ViewContext = viewContext;
-        }
 
-        /// <summary>
-        /// Gets the client events of the widget.
-        /// </summary>
-        /// <value>The client events.</value>
-        public IDictionary<string, object> Events {
+			var activator = (IViewComponentActivator)ViewContext.HttpContext.ApplicationServices.GetService(typeof(IViewComponentActivator));
+			activator.Activate(this, ViewContext);
+		}
+
+		/// <summary>
+		/// Gets the client events of the widget.
+		/// </summary>
+		/// <value>The client events.</value>
+		public IDictionary<string, object> Events {
             get;
             private set;
         }
@@ -74,7 +77,7 @@ namespace Kendo.Mvc.UI
         }
 
 		[Activate]
-		protected internal IKendoHtmlGenerator Generator { get; set; }
+		protected IKendoHtmlGenerator Generator { get; set; }
 
 		public ModelMetadata ModelMetadata
         {
