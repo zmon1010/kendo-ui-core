@@ -1,14 +1,14 @@
 (function(f, define){
-    define([ "./kendo.core", "./pdf/core", "./pdf/ttf" ], f);
+    define([ "./kendo.core", "./pdf/core", "./pdf/ttf", "./pdf/drawing", "./kendo.drawing" ], f);
 
 }) (function(){
 
 var __meta__ = {
     id: "pdf",
     name: "PDF export",
+    description: "PDF Generation framework",
     category: "framework",
-    advanced: true,
-    depends: [ "core" ]
+    depends: [ "core", "drawing" ]
 };
 
 (function(kendo){

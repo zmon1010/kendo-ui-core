@@ -12,7 +12,6 @@
         "./drawing/svg",
         "./drawing/canvas",
         "./drawing/vml",
-        "./drawing/pdf",
         "./drawing/html",
         "./drawing/animation"
     ], f);
@@ -23,13 +22,7 @@
         name: "Drawing API",
         category: "framework",
         description: "The Kendo UI low-level drawing API",
-        depends: [ "core", "color" ],
-        features: [{
-            id: "drawing-pdf",
-            name: "PDF export",
-            description: "Export drawings as PDF",
-            depends: [ "pdf" ]
-        }]
+        depends: [ "core", "color" ]
     };
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
