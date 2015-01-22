@@ -138,7 +138,7 @@
                 dataSource: dataSource({ pageSize: 1 }),
                 refresh: function () {
                     var chkbxs = this.container.find(":checkbox:not(.k-check-all)");
-                    equal(chkbxs.length, 1);
+                    equal(chkbxs.length, 2);
                     equal(chkbxs.eq(0).val(), "some string");
                     equal(chkbxs.eq(0).closest("label").text(), "some string");
                 }
