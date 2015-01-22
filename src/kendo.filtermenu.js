@@ -771,6 +771,7 @@ var __meta__ = {
             var checkSource = options.checkSource;
             if (options.forceUnique) {
                 checkSource = options.dataSource.options;
+				delete checkSource.pageSize;
                 this.checkSource = DataSource.create(checkSource);
                 this.checkSource.reader.data = removeDuplicates(this.checkSource.reader.data, this.field);
             } else {
