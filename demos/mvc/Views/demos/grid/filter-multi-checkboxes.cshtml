@@ -1,0 +1,50 @@
+
+        <div id="example">
+            <div id="grid"></div>
+            <script>
+                $(document).ready(function() {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "odata",
+                            transport: {
+                                read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Employees"
+                            },
+                            pageSize: 20,
+                            serverPaging: true,
+                            serverSorting: true,
+                            serverFiltering: true,
+                        },
+                        filterable: true,
+                        pageable: true,                        
+                        columns: [
+                            {
+                                field: "FirstName",
+                                title: "First Name",
+                                filterable: { multi: true },
+                                width: "220px"
+                            },
+                            {
+                                field: "LastName",
+                                filterable: { multi: true },
+                                title: "Last Name",
+                                width: "220px"
+                            },
+                            {
+                                field: "Country",
+                                filterable: { multi: true },
+                                width: "220px"
+                            },
+                            {
+                                field: "City",
+                                filterable: { multi: true },
+                                width: "220px"
+                            },
+                            {
+                                filterable: { multi: true },
+                                field: "Title"
+                            }
+                        ]
+                    });
+                });
+            </script>
+        </div>
