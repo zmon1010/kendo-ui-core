@@ -1049,6 +1049,24 @@ var WebkitFormatCleaner = Cleaner.extend({
     }
 });
 
+var PrintCommand = Command.extend({
+    init: function(options) {
+        Command.fn.init.call(this, options);
+
+        this.managesUndoRedo = true;
+    },
+
+    exec: function() {
+        var editor = this.editor;
+
+        if (kendo.support.browser.msie) {
+            editor.document.execCommand("print", false, null);
+        } else if (editor.window.print) {
+            editor.window.print();
+        }
+    }
+});
+
 extend(editorNS, {
     Command: Command,
     GenericCommand: GenericCommand,
@@ -1062,10 +1080,12 @@ extend(editorNS, {
     Clipboard: Clipboard,
     Cleaner: Cleaner,
     MSWordFormatCleaner: MSWordFormatCleaner,
-    WebkitFormatCleaner: WebkitFormatCleaner
+    WebkitFormatCleaner: WebkitFormatCleaner,
+    PrintCommand: PrintCommand
 });
 
 registerTool("insertHtml", new InsertHtmlTool({template: new ToolTemplate({template: EditorUtils.dropDownListTemplate, title: "Insert HTML", initialValue: "Insert HTML"})}));
+registerTool("print", new Tool({ command: PrintCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Print"})}));
 
 })(window.kendo.jQuery);
 
