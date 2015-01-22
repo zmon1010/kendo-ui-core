@@ -196,12 +196,11 @@ test("remove keeps order with mixed inline and block children", function () {
 test("remove unwraps", function () {
     editor.value('<ul><li>foo</li></ul>');
 
-
     formatter.remove([editor.body.firstChild.firstChild.firstChild]);
     equal(editor.value(), '<p>foo</p>');
 });
 
-test("split", function() {
+test("split single li from list", function() {
     var range = createRangeFromText(editor, '<ul><li>|foo|</li><li>bar</li></ul>');
 
     formatter.split(range);
@@ -496,6 +495,32 @@ test("formatting text node in inline editor does not change the inline element",
     var range = createRangeFromText(inline, "f|o|o");
     formatter.toggle(range);
     equal(inline.value(), "<ul><li>foo</li></ul>");
+});
+
+var ul, inlineDom, inline;
+
+module("ListFormatter : inline editor", {
+    setup: function() {
+        ul = $("<ul><li><div /></li></ul>").appendTo(QUnit.fixture);
+        inlineDom = ul.find("div");
+        inline = new kendo.ui.Editor(inlineDom);
+    },
+    teardown: function() {
+        kendo.destroy(QUnit.fixture);
+    }
+});
+test("split does not break out of inline editor", function() {
+    var range = createRangeFromText(inline, '<ul><li>|foo|</li></ul>');
+
+    formatter.split(range);
+    equal(QUnit.fixture.find("ul div[contentEditable]").length, 1);
+});
+
+test("toggle does not break out of inline editor", function() {
+    var range = createRangeFromText(inline, '<ul><li>|foo|</li></ul>');
+
+    formatter.toggle(range);
+    equal(QUnit.fixture.find("ul div[contentEditable]").length, 1);
 });
 
 }());

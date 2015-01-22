@@ -1,11 +1,12 @@
 (function(){
 
 var editor;
+var inlineDom;
 
 editor_module("editor list format finder", {
     setup: function() {
         editor = $("#editor-fixture").data("kendoEditor");
-        QUnit.fixture.append('<textarea id="inline"></textarea>');
+        inlineDom = $('<div id="inline"></div>').appendTo(QUnit.fixture);
     },
     teardown: function() {
         kendo.destroy(QUnit.fixture);
@@ -89,7 +90,19 @@ test('findSuitable returns null when ul is nested in ol', function() {
 });
 
 test("findSuitable returns null for inline editor container", function() {
-    var inline = new kendo.ui.Editor("#inline");
+    var inline = new kendo.ui.Editor(inlineDom);
+    inline.value("foo");
+
+    var finder = new ListFormatFinder('ul');
+
+    ok(!finder.findSuitable([inline.body.firstChild]));
+});
+
+test("findSuitable returns null when list elements are found outside editor", function() {
+    var ul = $("<ul><li /></ul>").appendTo(QUnit.fixture);
+    inlineDom.appendTo(ul.find("li:first"));
+
+    var inline = new kendo.ui.Editor(inlineDom);
     inline.value("foo");
 
     var finder = new ListFormatFinder('ul');

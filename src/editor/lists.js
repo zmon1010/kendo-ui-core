@@ -28,10 +28,13 @@ var ListFormatFinder = BlockFormatFinder.extend({
     },
 
     isFormatted: function (nodes) {
-        var formatNodes = [], formatNode;
+        var formatNodes = [];
+        var formatNode, i;
 
-        for (var i = 0; i < nodes.length; i++) {
-            if ((formatNode = this.findFormat(nodes[i])) && dom.name(formatNode) == this.tag) {
+        for (i = 0; i < nodes.length; i++) {
+            formatNode = this.findFormat(nodes[i]);
+
+            if (formatNode && dom.name(formatNode) == this.tag) {
                 formatNodes.push(formatNode);
             }
         }
@@ -59,7 +62,7 @@ var ListFormatFinder = BlockFormatFinder.extend({
     },
 
     findSuitable: function (nodes) {
-        var candidate = dom.parentOfType(nodes[0], this.tags);
+        var candidate = this.findFormat(nodes[0]);
 
         if (candidate && dom.name(candidate) == this.tag) {
             return candidate;
@@ -156,9 +159,15 @@ var ListFormatter = Class.extend({
         return this.containsAny(candidate, nodes) || dom.isInline(candidate) || candidate.nodeType == 3;
     },
 
+    _parentLists: function(node) {
+        var editable = dom.closestEditable(node);
+
+        return $(node).parentsUntil(editable, "ul,ol");
+    },
+
     split: function (range) {
-        var nodes = textNodes(range),
-            start, end;
+        var nodes = textNodes(range);
+        var start, end, parents;
 
         if (nodes.length) {
             start = dom.parentOfType(nodes[0], ['li']);
@@ -169,8 +178,8 @@ var ListFormatter = Class.extend({
             for (var i = 0, l = nodes.length; i < l; i++) {
                 var formatNode = this.finder.findFormat(nodes[i]);
                 if (formatNode) {
-                    var parents = $(formatNode).parents("ul,ol");
-                    if (parents[0]) {
+                    parents = this._parentLists(formatNode);
+                    if (parents.length) {
                         RangeUtils.split(range, parents.last()[0], true);
                     } else {
                         RangeUtils.split(range, formatNode, true);
@@ -359,7 +368,7 @@ var ListFormatter = Class.extend({
             }
         }
 
-        parents = $(ul).parents('ul,ol');
+        parents = this._parentLists(ul);
 
         if (parents[0]) {
             dom.insertAfter(fragment, parents.last()[0]);
