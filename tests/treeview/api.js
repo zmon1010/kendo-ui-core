@@ -627,6 +627,28 @@
         equal(treeview.find("div").length, 1);
     });
 
+    test("remove(node) does not load its children", function() {
+        createTreeView([
+            { text: "foo", expanded: true, items: [
+                { text: "bar", expanded: true, items: [
+                    { text: "baz" }
+                ] }
+            ] }
+        ]);
+
+        var bar = treeviewObject.findByText("bar");
+
+        bar = treeviewObject.dataItem(bar);
+
+        bar.load = function() {
+            ok(false);
+        };
+
+        bar.parent().remove(bar);
+
+        ok(true);
+    });
+
     test("remove(node) updates classes", function() {
         createTreeView([
             { text: "foo", items: [
