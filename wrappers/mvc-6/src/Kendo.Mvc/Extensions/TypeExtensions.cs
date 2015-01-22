@@ -43,24 +43,40 @@ namespace Kendo.Mvc.Extensions
             return false;
         }
 
+        internal static bool IsGenericType(this Type type)
+        {
+            return type.GetTypeInfo().IsGenericType;
+        }
+        internal static bool IsInterface(this Type type)
+        {
+            return type.GetTypeInfo().IsInterface;
+        }
+
         internal static bool IsDynamicObject(this Type type)
         {
             return type == typeof(object) || type.IsCompatibleWith(typeof(System.Dynamic.IDynamicMetaObjectProvider));
         }
         internal static bool IsNullableType(this Type type)
         {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+            return type.IsGenericType() && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
+
         internal static Type GetNonNullableType(this Type type)
         {
             return IsNullableType(type) ? type.GetGenericArguments()[0] : type;
         }
+
+        internal static bool IsValueType(this Type type)
+        {
+            return type.GetTypeInfo().IsValueType;
+        }
+
         internal static Type FindGenericType(this Type type, Type genericType)
         {
             while (type != null && type != typeof(object))
             {
-                if (type.IsGenericType && type.GetGenericTypeDefinition() == genericType) return type;
-                if (genericType.IsInterface)
+                if (type.IsGenericType() && type.GetGenericTypeDefinition() == genericType) return type;
+                if (genericType.IsInterface())
                 {
                     foreach (Type intfType in type.GetInterfaces())
                     {
@@ -68,7 +84,7 @@ namespace Kendo.Mvc.Extensions
                         if (found != null) return found;
                     }
                 }
-                type = type.BaseType;
+                type = type.GetTypeInfo().BaseType;
             }
             return null;
         }
@@ -89,15 +105,18 @@ namespace Kendo.Mvc.Extensions
                 (staticAccess ? BindingFlags.Static : BindingFlags.Instance);
             foreach (Type t in type.SelfAndBaseTypes())
             {
-                MemberInfo[] members = t.FindMembers(MemberTypes.Property | MemberTypes.Field,
-                    flags, Type.FilterNameIgnoreCase, memberName);
+                var members = t.GetProperties(flags)
+                    .OfType<MemberInfo>()
+                    .Concat(t.GetFields(flags).OfType<MemberInfo>())
+                    .Where(m => m.Name.IsCaseInsensitiveEqual(memberName)).ToArray();
+
                 if (members.Length != 0) return members[0];
             }
             return null;
         }
         internal static IEnumerable<Type> SelfAndBaseTypes(this Type type)
         {
-            if (type.IsInterface)
+            if (type.IsInterface())
             {
                 List<Type> types = new List<Type>();
                 AddInterface(types, type);
@@ -110,7 +129,7 @@ namespace Kendo.Mvc.Extensions
             while (type != null)
             {
                 yield return type;
-                type = type.BaseType;
+                type = type.GetTypeInfo().BaseType;
             }
         }
         static void AddInterface(List<Type> types, Type type)
@@ -158,124 +177,66 @@ namespace Kendo.Mvc.Extensions
         internal static bool IsCompatibleWith(this Type source, Type target)
         {
             if (source == target) return true;
-            if (!target.IsValueType) return target.IsAssignableFrom(source);
+            if (!target.IsValueType()) return target.IsAssignableFrom(source);
             Type st = source.GetNonNullableType();
             Type tt = target.GetNonNullableType();
             if (st != source && tt == target) return false;
-            TypeCode sc = st.IsEnum ? TypeCode.Object : Type.GetTypeCode(st);
-            TypeCode tc = tt.IsEnum ? TypeCode.Object : Type.GetTypeCode(tt);
-            switch (sc)
+
+            if (st.IsEnumType() || tt.IsEnumType())
             {
-                case TypeCode.SByte:
-                    switch (tc)
-                    {
-                        case TypeCode.SByte:
-                        case TypeCode.Int16:
-                        case TypeCode.Int32:
-                        case TypeCode.Int64:
-                        case TypeCode.Single:
-                        case TypeCode.Double:
-                        case TypeCode.Decimal:
-                            return true;
-                    }
-                    break;
-                case TypeCode.Byte:
-                    switch (tc)
-                    {
-                        case TypeCode.Byte:
-                        case TypeCode.Int16:
-                        case TypeCode.UInt16:
-                        case TypeCode.Int32:
-                        case TypeCode.UInt32:
-                        case TypeCode.Int64:
-                        case TypeCode.UInt64:
-                        case TypeCode.Single:
-                        case TypeCode.Double:
-                        case TypeCode.Decimal:
-                            return true;
-                    }
-                    break;
-                case TypeCode.Int16:
-                    switch (tc)
-                    {
-                        case TypeCode.Int16:
-                        case TypeCode.Int32:
-                        case TypeCode.Int64:
-                        case TypeCode.Single:
-                        case TypeCode.Double:
-                        case TypeCode.Decimal:
-                            return true;
-                    }
-                    break;
-                case TypeCode.UInt16:
-                    switch (tc)
-                    {
-                        case TypeCode.UInt16:
-                        case TypeCode.Int32:
-                        case TypeCode.UInt32:
-                        case TypeCode.Int64:
-                        case TypeCode.UInt64:
-                        case TypeCode.Single:
-                        case TypeCode.Double:
-                        case TypeCode.Decimal:
-                            return true;
-                    }
-                    break;
-                case TypeCode.Int32:
-                    switch (tc)
-                    {
-                        case TypeCode.Int32:
-                        case TypeCode.Int64:
-                        case TypeCode.Single:
-                        case TypeCode.Double:
-                        case TypeCode.Decimal:
-                            return true;
-                    }
-                    break;
-                case TypeCode.UInt32:
-                    switch (tc)
-                    {
-                        case TypeCode.UInt32:
-                        case TypeCode.Int64:
-                        case TypeCode.UInt64:
-                        case TypeCode.Single:
-                        case TypeCode.Double:
-                        case TypeCode.Decimal:
-                            return true;
-                    }
-                    break;
-                case TypeCode.Int64:
-                    switch (tc)
-                    {
-                        case TypeCode.Int64:
-                        case TypeCode.Single:
-                        case TypeCode.Double:
-                        case TypeCode.Decimal:
-                            return true;
-                    }
-                    break;
-                case TypeCode.UInt64:
-                    switch (tc)
-                    {
-                        case TypeCode.UInt64:
-                        case TypeCode.Single:
-                        case TypeCode.Double:
-                        case TypeCode.Decimal:
-                            return true;
-                    }
-                    break;
-                case TypeCode.Single:
-                    switch (tc)
-                    {
-                        case TypeCode.Single:
-                        case TypeCode.Double:
-                            return true;
-                    }
-                    break;
-                default:
-                    if (st == tt) return true;
-                    break;
+               return st == tt;
             }
+
+            if (st == typeof(SByte))
+            {
+                return tt == typeof(SByte) || tt == typeof(Int16) || 
+                    tt == typeof(Int32) || tt == typeof(Int64) || 
+                    tt == typeof(Single) || tt == typeof(Double) || tt == typeof(Decimal);
+            }
+            else if (st == typeof(Byte))
+            {
+                return tt == typeof(Byte) || tt == typeof(Int16) || tt == typeof(UInt16) || tt == typeof(Int32) ||
+                    tt == typeof(UInt32) || tt == typeof(Int64) || tt == typeof(UInt64) || tt == typeof(Single) ||
+                    tt == typeof(Double) || tt == typeof(Decimal);
+            }
+            else if (st == typeof(Int16))
+            {
+                return tt == typeof(Int16) || tt == typeof(Int32) ||
+                    tt == typeof(Int64) || tt == typeof(Single) ||
+                    tt == typeof(Double) || tt == typeof(Decimal);
+            }
+            else if (st == typeof(UInt16))
+            {
+                return tt == typeof(UInt16) || tt == typeof(Int32) || tt == typeof(UInt32) ||
+                    tt == typeof(Int64) || tt == typeof(UInt64) || tt == typeof(Single) ||
+                    tt == typeof(Double) || tt == typeof(Decimal);
+            }
+            else if (st == typeof(Int32))
+            {
+                return tt == typeof(Int32) || tt == typeof(Int64) ||
+                    tt == typeof(Single) || tt == typeof(Double) ||
+                    tt == typeof(Decimal);
+            }
+            else if (st == typeof(UInt32))
+            {
+                return tt == typeof(UInt32) || tt == typeof(Int64) || tt == typeof(UInt64) ||
+                    tt == typeof(Single) || tt == typeof(Double) ||
+                    tt == typeof(Decimal);
+            }
+            else if (st == typeof(Int64))
+            {
+                return tt == typeof(Int64) || tt == typeof(Single) ||
+                    tt == typeof(Double) || tt == typeof(Decimal);
+            }
+            else if (st == typeof(UInt64))
+            {
+                return tt == typeof(UInt64) || tt == typeof(Single) ||
+                       tt == typeof(Double) || tt == typeof(Decimal);
+            }
+            else if (st == typeof(Single)) {
+                return tt == typeof(Single) || tt == typeof(Double);
+            }
+
             return false;
         }
         internal static string FirstSortableProperty(this Type type)
@@ -292,26 +253,20 @@ namespace Kendo.Mvc.Extensions
 
         internal static object DefaultValue(this Type type)
         {
-            if (type.IsValueType)
+            if (type.IsValueType())
                 return Activator.CreateInstance(type);
             return null;
         }
         internal static bool IsEnumType(this Type type)
         {
-            return GetNonNullableType(type).IsEnum;
+            return GetNonNullableType(type).GetTypeInfo().IsEnum;
         }
+
         internal static bool IsNumericType(this Type type)
         {
             return GetNumericTypeKind(type) != 0;
         }
-        internal static bool IsSignedIntegralType(this Type type)
-        {
-            return GetNumericTypeKind(type) == 2;
-        }
-        internal static bool IsUnsignedIntegralType(this Type type)
-        {
-            return GetNumericTypeKind(type) == 3;
-        }
+
         internal static int GetNumericTypeKind(this Type type)
         {
             if (type == null)
@@ -321,31 +276,19 @@ namespace Kendo.Mvc.Extensions
 
             type = GetNonNullableType(type);
 
-            if (type.IsEnum)
+            if (type.IsEnumType())
             {
                 return 0;
             }
 
-            switch (Type.GetTypeCode(type))
-            {
-                case TypeCode.Char:
-                case TypeCode.Single:
-                case TypeCode.Double:
-                case TypeCode.Decimal:
-                    return 1;
-                case TypeCode.SByte:
-                case TypeCode.Int16:
-                case TypeCode.Int32:
-                case TypeCode.Int64:
-                    return 2;
-                case TypeCode.Byte:
-                case TypeCode.UInt16:
-                case TypeCode.UInt32:
-                case TypeCode.UInt64:
-                    return 3;
-                default:
-                    return 0;
+            if (type == typeof(char) || type == typeof(Single) || type == typeof(Double) || type == typeof(Decimal)) { 
+                return 1;
+            } else if (type == typeof(SByte) || type == typeof(Int16) || type == typeof(Int64)) {
+                return 2;
+            } else if (type == typeof(Byte) || type == typeof(UInt16) || type == typeof(UInt32) || type == typeof(UInt64)) {
+                return 3;
             }
+            return 0;
         }
     }
 }

@@ -100,7 +100,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
 
         private static bool ShouldGenerateCondition(Type type)
         {
-            return !type.IsValueType || type.IsNullableType();
+            return !type.IsValueType() || type.IsNullableType();
         }
 
         private static Expression CreateConditionExpression(Expression instance, Expression memberAccess, Expression defaultValue)

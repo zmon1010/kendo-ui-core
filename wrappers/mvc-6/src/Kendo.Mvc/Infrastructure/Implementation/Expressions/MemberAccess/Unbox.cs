@@ -3,23 +3,24 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
     using System;
     using System.Globalization;
     using System.Reflection;
+    using Kendo.Mvc.Extensions;
 
     internal static class UnboxT<T>
     {
-        internal static readonly Converter<object, T> Unbox = Create(typeof(T));
+        internal static readonly Func<object, T> Unbox = Create(typeof(T));
 
-        private static Converter<object, T> Create(Type type)
+        private static Func<object, T> Create(Type type)
         {
-            if (!type.IsValueType)
+            if (!type.IsValueType())
             {
                 return ReferenceField;
             }
-            if ((type.IsGenericType && !type.IsGenericTypeDefinition) && (typeof(Nullable<>) == type.GetGenericTypeDefinition()))
+            if ((type.IsGenericType() && !type.GetTypeInfo().IsGenericTypeDefinition) && (typeof(Nullable<>) == type.GetGenericTypeDefinition()))
             {
                 MethodInfo nullableFieldMethod = typeof(UnboxT<T>).GetMethod("NullableField", BindingFlags.NonPublic | BindingFlags.Static);
                 MethodInfo genericMethod = nullableFieldMethod.MakeGenericMethod(new[] { type.GetGenericArguments()[0] });
                 
-                return (Converter<object, T>) Delegate.CreateDelegate(typeof(Converter<object, T>), genericMethod);
+                return (Func<object, T>)genericMethod.CreateDelegate(typeof(Func<object, T>));
             }
             return ValueField;
         }

@@ -12,11 +12,6 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
         {
             memberType = memberType ?? typeof(object);
 
-            if (elementType.IsCompatibleWith(typeof(ICustomTypeDescriptor)))
-            {
-                return new CustomTypeDescriptorPropertyAccessExpressionBuilder(elementType, memberType, memberName);
-            }
-
             if (elementType.IsCompatibleWith(typeof(XmlNode)))
             {
                 return new XmlNodeChildElementAccessExpressionBuilder(memberName);

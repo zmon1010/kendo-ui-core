@@ -49,7 +49,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
                 throw new ArgumentException("Provided type is not IEnumerable<>", "type");
             }
 
-            return enumerableType.GetGenericArguments().First();
+            return enumerableType.GenericTypeArguments.First();
         }
     }
 }

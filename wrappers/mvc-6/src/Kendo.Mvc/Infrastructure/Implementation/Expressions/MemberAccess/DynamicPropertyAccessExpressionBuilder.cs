@@ -50,15 +50,15 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
                                                                 CSharpArgumentInfoFlags.UseCompileTimeType, null)
                                                         });
 
-            return Expression.Dynamic(binder, typeof(object), new[] { instance, indexerToken.Arguments.Select(Expression.Constant).First() });
+            return DynamicExpression.MakeDynamic(typeof(object), binder, new[] { instance, indexerToken.Arguments.Select(Expression.Constant).First() });
         }
 
         private Expression CreatePropertyAccessExpression(Expression instance, string propertyName)
-        {
+        {            
             CallSiteBinder binder = Binder.GetMember(CSharpBinderFlags.None, propertyName,
                 typeof(DynamicPropertyAccessExpressionBuilder), new[] { CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null) });
 
-            return Expression.Dynamic(binder, typeof(object), new[] { instance });
+            return DynamicExpression.MakeDynamic(typeof(object), binder, new[] { instance });
         }
     }
 }

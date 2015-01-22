@@ -81,7 +81,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
 
         private static MemberInfo GetMemberInfoFromPropertyToken(PropertyToken token, Type targetType)
         {
-            return targetType.GetTypeInfo().FindPropertyOrField(token.PropertyName);
+            return targetType.FindPropertyOrField(token.PropertyName);
         }
 
         private static MemberInfo GetMemberInfoFromIndexerToken(IndexerToken token, Type targetType)

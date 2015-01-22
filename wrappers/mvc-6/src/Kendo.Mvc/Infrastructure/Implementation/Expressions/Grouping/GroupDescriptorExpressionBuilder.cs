@@ -2,7 +2,6 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -218,7 +217,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
             // Our Key property is of type object so we need to box if the value is ValueType.
             // EF did not support convert so did not call it.
             // Note: We can fix all this if our group is generic type similar to IGrouping<TKey, TElement>
-            if (keyPropertyExpression.Type.IsValueType &&
+            if (keyPropertyExpression.Type.IsValueType() &&
                 !this.Queryable.Provider.IsEntityFrameworkProvider())
             {
                 keyPropertyExpression = Expression.Convert(keyPropertyExpression, typeof(object));
@@ -278,7 +277,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
         private NewExpression CreateProjectionNewExpression(IEnumerable<Expression> propertyValuesExpressions)
         {
             throw new NotImplementedException();
-            //TODO: Implement Group item creantion and binding
+            //TODO: Implement Group item creation and binding
 
             //var properties = this.groupDescriptor.AggregateFunctions.Consolidate(
             //    propertyValuesExpressions, (f, e) => new DynamicProperty(f.FunctionName, e.Type));

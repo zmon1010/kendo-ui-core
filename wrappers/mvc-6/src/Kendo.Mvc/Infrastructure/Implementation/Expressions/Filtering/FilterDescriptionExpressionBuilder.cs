@@ -2,6 +2,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
 {
     using System.Linq.Expressions;
     using System.Reflection;
+    using Kendo.Mvc.Extensions;
 
     internal class FilterDescriptionExpressionBuilder : FilterExpressionBuilder
     {
@@ -39,7 +40,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
         {
             Expression dataItemExpression = this.ParameterExpression;
 
-            if (dataItemExpression.Type.IsValueType)
+            if (dataItemExpression.Type.IsValueType())
             {
                 dataItemExpression = Expression.Convert(dataItemExpression, typeof(object));
             }

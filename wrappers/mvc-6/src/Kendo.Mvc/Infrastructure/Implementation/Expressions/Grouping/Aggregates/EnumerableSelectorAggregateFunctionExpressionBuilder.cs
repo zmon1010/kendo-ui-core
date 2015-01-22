@@ -91,18 +91,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
 
         private static bool ShouldConvertTypeToInteger(Type type)
         {
-            switch (Type.GetTypeCode(type))
-            {
-                case TypeCode.SByte:
-                case TypeCode.Int16:
-                case TypeCode.Byte:
-                case TypeCode.UInt16:
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return type == typeof(SByte) || type == typeof(Int16) || type == typeof(Byte) || type == typeof(UInt16);
         }
     }
 }

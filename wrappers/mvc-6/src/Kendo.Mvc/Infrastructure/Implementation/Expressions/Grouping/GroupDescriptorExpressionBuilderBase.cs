@@ -1,6 +1,5 @@
 namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
 {
-    using System.ComponentModel;
     using System.Linq;
     using System.Linq.Expressions;
 

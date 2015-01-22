@@ -3,7 +3,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
     using System;
     using System.Globalization;
     using System.Linq.Expressions;
-
+    using System.Reflection;
     using Extensions;
 
     internal class FilterDescriptorExpressionBuilder : FilterExpressionBuilder
@@ -111,7 +111,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
 
         private static Expression CreateValueExpression(Type targetType, object value, CultureInfo culture)
         {
-            if (((targetType != typeof(string)) && (!targetType.IsValueType || targetType.IsNullableType())) &&
+            if (((targetType != typeof(string)) && (!targetType.IsValueType() || targetType.IsNullableType())) &&
                 (string.Compare(value as string, "null", StringComparison.OrdinalIgnoreCase) == 0))
             {
                 value = null;
@@ -121,17 +121,13 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
                 Type nonNullableTargetType = targetType.GetNonNullableType();
                 if (value.GetType() != nonNullableTargetType)
                 {
-                    if (nonNullableTargetType.IsEnum)
+                    if (nonNullableTargetType.IsEnumType())
                     {
                         value = Enum.Parse(nonNullableTargetType, value.ToString(), true);
                     }
                     else if (nonNullableTargetType == typeof(Guid))
                     {
                         value = new Guid(value.ToString());
-                    }
-                    else if (value is IConvertible)
-                    {
-                        value = Convert.ChangeType(value, nonNullableTargetType, culture);
                     }
                 }
             }
@@ -146,13 +142,13 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
                 return expr;
             }
             var ce = expr as ConstantExpression;
-            if (((ce != null) && (ce == ExpressionConstants.NullLiteral)) && !(type.IsValueType && !type.IsNullableType()))
+            if (((ce != null) && (ce == ExpressionConstants.NullLiteral)) && !(type.IsValueType() && !type.IsNullableType()))
             {
                 return Expression.Constant(null, type);
             }
             if (expr.Type.IsCompatibleWith(type))
             {
-                if (type.IsValueType || exact)
+                if (type.IsValueType() || exact)
                 {
                     return Expression.Convert(expr, type);
                 }
@@ -165,9 +161,9 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
         {
             if (memberExpression.Type != valueExpression.Type)
             {
-                if (!memberExpression.Type.IsAssignableFrom(valueExpression.Type))
+                if (!memberExpression.Type.GetTypeInfo().IsAssignableFrom(valueExpression.Type.GetTypeInfo()))
                 {
-                    if (!valueExpression.Type.IsAssignableFrom(memberExpression.Type))
+                    if (!valueExpression.Type.GetTypeInfo().IsAssignableFrom(memberExpression.Type.GetTypeInfo()))
                     {
                         return false;
                     }
@@ -226,7 +222,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
             bool isEqualityOperator = descriptor.Operator == FilterOperator.IsEqualTo ||
                                       descriptor.Operator == FilterOperator.IsNotEqualTo;
 
-            return isEqualityOperator && !memberExpression.Type.IsValueType && !valueExpression.Type.IsValueType;
+            return isEqualityOperator && !memberExpression.Type.IsValueType() && !valueExpression.Type.IsValueType();
         }
     }
 }

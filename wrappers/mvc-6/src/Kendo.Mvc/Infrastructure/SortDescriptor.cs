@@ -1,6 +1,5 @@
 namespace Kendo.Mvc
 {
-    using System.ComponentModel;
     using System.Linq;
     using Kendo.Mvc.Extensions;
 
