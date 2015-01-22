@@ -275,7 +275,7 @@ var __meta__ = {
             contentTable = this.content.find(DOT + styles.rowsTable);
 
             this._contentHeight = contentTable.height();
-            this._rowHeight = contentTable.find("tr").height();
+            this._rowHeight = this._contentHeight / contentTable.find("tr").length;
 
             this.content.find(DOT + styles.columnsTable).height(this._contentHeight);
 
