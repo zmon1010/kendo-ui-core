@@ -53,6 +53,18 @@
         equal(instance.calls("angular"), 0);
     });
 
+    test("cancelRow rebinds angular templates", function() {
+        createTreeList({ editable: true });
+
+        instance.editRow(instance.content.find("tr:first"));
+
+        spy(instance, "angular");
+
+        instance.cancelRow();
+
+        equal(instance.calls("angular"), 2);
+    });
+
     ngTest("repaint templates when changing data source", 2, function() {
         angular.module("kendo.tests").controller("mine", function($scope) {
             $scope.options = {

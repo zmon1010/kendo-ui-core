@@ -764,17 +764,11 @@ var __meta__ = {
                 return;
             }
 
-            this._angularItems("cleanup");
-            this._angularFooters("cleanup");
-
             this._cancelEditor();
 
             this._render();
 
             this._adjustHeight();
-
-            this._angularItems("compile");
-            this._angularFooters("compile");
 
             this.trigger(DATABOUND);
         },
@@ -1216,6 +1210,9 @@ var __meta__ = {
 
             this._absoluteIndex = 0;
 
+            this._angularItems("cleanup");
+            this._angularFooters("cleanup");
+
             if (options.error) {
                 // root-level error message
                 this._showStatus(kendo.template(
@@ -1238,6 +1235,9 @@ var __meta__ = {
                     level: 0
                 }));
             }
+
+            this._angularItems("compile");
+            this._angularFooters("compile");
         },
 
         _ths: function() {

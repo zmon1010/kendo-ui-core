@@ -24,21 +24,16 @@
                     }
                 },
                 sortable: true,
-                columns: [{
-                    field: "FirstName",
-                    title: "First Name",
-                    width: "150px"
-                },{
-                    field: "LastName",
-                    title: "Last Name",
-                    width: "150px"
-                },{
-                    field: "Title"
-                },{
-                    field: "Country"
-                },{
-                    field: "City"
-                }]
-            };    
+                editable: true,
+                columns: [
+                    { field: "FirstName", title: "First Name", width: "150px" },
+                    { field: "LastName", title: "Last Name", width: "150px" },
+                    { field: "Title" },
+                    { title: "Location",
+                      template: "{{ dataItem.City }}, {{ dataItem.Country }}"
+                    },
+                    { command: ["edit"] }
+                ]
+            };
         })
 </script>
