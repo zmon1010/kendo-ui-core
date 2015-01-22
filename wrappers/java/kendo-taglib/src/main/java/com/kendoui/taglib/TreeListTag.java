@@ -47,6 +47,10 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
         return "treeList";
     }
 
+    public void setColumnMenu(com.kendoui.taglib.treelist.ColumnMenuTag value) {
+        setProperty("columnMenu", value);
+    }
+
     public void setColumns(ColumnsTag value) {
 
         setProperty("columns", value.columns());
@@ -59,10 +63,6 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
 
     public void setExcel(com.kendoui.taglib.treelist.ExcelTag value) {
         setProperty("excel", value);
-    }
-
-    public void setFilterable(com.kendoui.taglib.treelist.FilterableTag value) {
-        setProperty("filterable", value);
     }
 
     public void setMessages(com.kendoui.taglib.treelist.MessagesTag value) {
@@ -93,6 +93,22 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
 
     public void setCollapse(CollapseFunctionTag value) {
         setEvent("collapse", value.getBody());
+    }
+
+    public void setColumnHide(ColumnHideFunctionTag value) {
+        setEvent("columnHide", value.getBody());
+    }
+
+    public void setColumnMenuInit(ColumnMenuInitFunctionTag value) {
+        setEvent("columnMenuInit", value.getBody());
+    }
+
+    public void setColumnReorder(ColumnReorderFunctionTag value) {
+        setEvent("columnReorder", value.getBody());
+    }
+
+    public void setColumnShow(ColumnShowFunctionTag value) {
+        setEvent("columnShow", value.getBody());
     }
 
     public void setDataBinding(DataBindingFunctionTag value) {
@@ -139,6 +155,14 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
         setProperty("autoBind", value);
     }
 
+    public boolean getColumnMenu() {
+        return (boolean)getProperty("columnMenu");
+    }
+
+    public void setColumnMenu(boolean value) {
+        setProperty("columnMenu", value);
+    }
+
     public void setDataSource(DataSourceTag dataSource) {
         setProperty("dataSource", dataSource);
     }
@@ -151,11 +175,11 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
         setProperty("editable", value);
     }
 
-    public boolean getFilterable() {
-        return (boolean)getProperty("filterable");
+    public java.lang.Object getFilterable() {
+        return (java.lang.Object)getProperty("filterable");
     }
 
-    public void setFilterable(boolean value) {
+    public void setFilterable(java.lang.Object value) {
         setProperty("filterable", value);
     }
 
@@ -165,6 +189,14 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
 
     public void setHeight(java.lang.Object value) {
         setProperty("height", value);
+    }
+
+    public boolean getReorderable() {
+        return (boolean)getProperty("reorderable");
+    }
+
+    public void setReorderable(boolean value) {
+        setProperty("reorderable", value);
     }
 
     public java.lang.Object getScrollable() {
@@ -233,6 +265,54 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
 
     public void setCollapse(String value) {
         setProperty("collapse", new Function(value));
+    }
+
+    public String getColumnHide() {
+        Function property = ((Function)getProperty("columnHide"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setColumnHide(String value) {
+        setProperty("columnHide", new Function(value));
+    }
+
+    public String getColumnMenuInit() {
+        Function property = ((Function)getProperty("columnMenuInit"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setColumnMenuInit(String value) {
+        setProperty("columnMenuInit", new Function(value));
+    }
+
+    public String getColumnReorder() {
+        Function property = ((Function)getProperty("columnReorder"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setColumnReorder(String value) {
+        setProperty("columnReorder", new Function(value));
+    }
+
+    public String getColumnShow() {
+        Function property = ((Function)getProperty("columnShow"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setColumnShow(String value) {
+        setProperty("columnShow", new Function(value));
     }
 
     public String getDataBinding() {

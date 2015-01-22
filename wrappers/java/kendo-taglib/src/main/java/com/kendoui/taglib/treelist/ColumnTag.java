@@ -164,6 +164,22 @@ public class ColumnTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("headerTemplate", value);
     }
 
+    public boolean getHidden() {
+        return (boolean)getProperty("hidden");
+    }
+
+    public void setHidden(boolean value) {
+        setProperty("hidden", value);
+    }
+
+    public boolean getMenu() {
+        return (boolean)getProperty("menu");
+    }
+
+    public void setMenu(boolean value) {
+        setProperty("menu", value);
+    }
+
     public boolean getSortable() {
         return (boolean)getProperty("sortable");
     }
