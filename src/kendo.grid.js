@@ -652,9 +652,16 @@ var __meta__ = {
         var allColumns = columns;
         columns = leafColumns(columns);
 
+        var cells = {}
+        var rows = thead.find(">tr:not(.k-filter-row)");
+
         for (var idx = 0, length = columns.length; idx < length; idx++) {
             position = columnPosition(columns[idx], allColumns);
-            cell = thead.find(">tr:not(.k-filter-row)").eq(position.row).find(".k-header:not(.k-group-cell,.k-hierarchy-cell)").eq(position.cell);
+            if (!cells[position.row]) {
+                cells[position.row] = rows.eq(position.row).find(".k-header:not(.k-group-cell,.k-hierarchy-cell)");
+            }
+
+            cell = cells[position.row].eq(position.cell);
             cell.attr(kendo.attr("index"), offset + idx);
         }
 
