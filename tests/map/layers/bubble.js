@@ -19,19 +19,33 @@
         }])
     }
 
+    function createLayer(map, options) {
+        destroyLayer();
+        layer = new BubbleLayer(map, options);
+    }
+
+    function destroyLayer() {
+        if (layer) {
+            layer.destroy();
+        }
+
+        layer = null;
+    }
+
     // ------------------------------------------------------------
     (function() {
         module("Bubble Layer", {
             setup: function() {
                 map = new MapMock();
-                layer = new BubbleLayer(map, {
+                createLayer(map, {
                     style: {
                         fill: {
                             color: "foo"
                         }
                     }
                 });
-            }
+            },
+            teardown: destroyLayer
         });
 
         test("creates circle symbols by default", function() {
@@ -77,7 +91,7 @@
         module("Bubble Layer / Squares", {
             setup: function() {
                 map = new MapMock();
-                layer = new BubbleLayer(map, {
+                createLayer(map, {
                     symbol: "square",
                     style: {
                         fill: {
@@ -85,7 +99,8 @@
                         }
                     }
                 });
-            }
+            },
+            teardown: destroyLayer
         });
 
         test("creates square symbols", function() {
@@ -131,11 +146,12 @@
         module("Bubble Layer / Custom Symbol", {
             setup: function() {
                 map = new MapMock();
-                layer = new BubbleLayer(map, {
+                createLayer(map, {
                     symbol: "foo",
                     style: "bar"
                 });
-            }
+            },
+            teardown: destroyLayer
         });
 
         test("uses custom named symbol", function() {
@@ -151,7 +167,7 @@
         });
 
         test("uses custom symbol function", function() {
-            layer = new BubbleLayer(map, {
+            createLayer(map, {
                 symbol: function() {
                     return { foo: true };
                 },
@@ -233,8 +249,9 @@
         module("Bubble Layer / Scale", {
             setup: function() {
                 map = new MapMock();
-                layer = new BubbleLayer(map);
-            }
+                createLayer(map);
+            },
+            teardown: destroyLayer
         });
 
         test("undefined values are ignored", 1, function() {
@@ -254,7 +271,7 @@
                 };
             };
 
-            layer = new BubbleLayer(map, {
+            createLayer(map, {
                 scale: "foo"
             });
 
@@ -262,7 +279,7 @@
         });
 
         test("initializes custom scale", function() {
-            layer = new BubbleLayer(map, {
+            createLayer(map, {
                 scale: function(domain, range) {
                     deepEqual(domain, [0, 10]);
                     deepEqual(range, [0, 100]);
@@ -284,7 +301,7 @@
                 };
             };
 
-            layer = new BubbleLayer(map, {
+            createLayer(map, {
                 scale: "foo"
             });
 
@@ -297,18 +314,20 @@
         module("Bubble Layer / Data binding", {
             setup: function() {
                 map = new MapMock();
-                layer = new BubbleLayer(map, {
+                createLayer(map, {
                     dataSource: {
                         data: [{
                             "location": [42, 45], "value": 10
                         }]
                     }
                 });
-            }
+            },
+            teardown: destroyLayer
         });
 
         test("binds to empty data source", 0, function() {
-            layer = new BubbleLayer(map, {
+            layer.destroy();
+            createLayer(map, {
                 dataSource: {
                     data: []
                 }
@@ -337,8 +356,9 @@
         module("Bubble Layer / Events", {
             setup: function() {
                 map = new MapMock();
-                layer = new BubbleLayer(map);
-            }
+                createLayer(map);
+            },
+            teardown: destroyLayer
         });
 
         test("fires shapeCreated", function() {
