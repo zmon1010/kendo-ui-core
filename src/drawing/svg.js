@@ -79,10 +79,12 @@
         },
 
         draw: function(element) {
+            d.Surface.fn.draw.call(this, element);
             this._root.load([element]);
         },
 
         clear: function() {
+            d.Surface.fn.clear.call(this);
             this._root.clear();
         },
 

@@ -3,6 +3,8 @@ function baseLayerTests(name, TLayer) {
         d = kendo.drawing,
         m = dataviz.map;
 
+    var layer;
+
     function assertUnbind() {
         map.unbind = function(name, handler) {
             if (name === "reset") {
@@ -15,11 +17,18 @@ function baseLayerTests(name, TLayer) {
         };
     }
 
+    function destroyLayer() {
+        if (layer) {
+            layer.destroy();
+        }
+    }
+
     // ------------------------------------------------------------
     module(name + " / styles", {
         setup: function() {
             map = new MapMock();
-        }
+        },
+        teardown: destroyLayer
     });
 
     test("zIndex", function() {
@@ -37,7 +46,8 @@ function baseLayerTests(name, TLayer) {
         setup: function() {
             map = new MapMock();
             layer = new TLayer(map);
-        }
+        },
+        teardown: destroyLayer
     });
 
     test(name + " / hide hides element", function() {
@@ -48,6 +58,8 @@ function baseLayerTests(name, TLayer) {
     test("detaches map event handlers", 2, function() {
         assertUnbind();
         layer.hide();
+
+        map.unbind = $.noop;
     });
 
     // ------------------------------------------------------------
@@ -56,7 +68,8 @@ function baseLayerTests(name, TLayer) {
             map = new MapMock();
             layer = new TLayer(map);
             layer.hide();
-        }
+        },
+        teardown: destroyLayer
     });
 
     test("shows element", function() {
@@ -98,7 +111,8 @@ function baseLayerTests(name, TLayer) {
     module(name + " / extent", {
         setup: function() {
             map = new MapMock();
-        }
+        },
+        teardown: destroyLayer
     });
 
     test("layer is hidden when zoom < minZoom", function() {
@@ -259,7 +273,8 @@ function baseLayerTests(name, TLayer) {
         setup: function() {
             map = new MapMock();
             layer = new TLayer(map);
-        }
+        },
+        teardown: destroyLayer
     });
 
     test("reset triggers _beforeReset handler", function() {
@@ -268,7 +283,7 @@ function baseLayerTests(name, TLayer) {
     });
 
     test("reset triggers _reset handler", function() {
-        layer._reset = function() { ok(true) };
+        layer._reset = function() { ok(true), TLayer.fn._reset.call(this); };
         layer.reset();
     });
 }

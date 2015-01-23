@@ -46,11 +46,13 @@
                 surface = new Surface(container);
             },
             teardown: function() {
+                surface.destroy();
                 container.remove();
             }
         });
 
         test("reports actual surface type", function() {
+            surface.destroy();
             surface = new Surface(container, { type: "foo" });
             equal(surface.type, "vml");
         });

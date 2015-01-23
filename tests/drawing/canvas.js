@@ -47,18 +47,27 @@
 
         baseSurfaceTests("Canvas", Surface);
 
-        module("Surface", {
+        function createSurface(options) {
+            if (surface) {
+                surface.destroy();
+            }
+
+            surface = new Surface(container, options);
+        }
+
+        module("Surface / Canvas", {
             setup: function() {
                 container = $("<div>").appendTo(QUnit.fixture);
-                surface = new Surface(container);
+                createSurface();
             },
             teardown: function() {
+                surface.destroy();
                 container.remove();
             }
         });
 
         test("reports actual surface type", function() {
-            surface = new Surface(container, { type: "foo" });
+            createSurface({ type: "foo" });
             equal(surface.type, "canvas");
         });
 
@@ -67,12 +76,12 @@
         });
 
         test("sets actual width on root element", function() {
-            surface = new Surface(container, { width: "500px" });
+            createSurface({ width: "500px" });
             equal(surface._rootElement.width, 500);
         });
 
         test("sets actual height on root element", function() {
-            surface = new Surface(container, { height: "500px" });
+            createSurface({ height: "500px" });
             equal(surface._rootElement.height, 500);
         });
 
@@ -1347,6 +1356,8 @@
 
             surface.draw(group);
             surface.image();
+
+            surface.destroy();
         });
 
         asyncTest("throws an error if the canvas becomes tainted", function() {

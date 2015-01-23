@@ -27,21 +27,30 @@
         var container,
             surface;
 
+        function createSurface(options) {
+            if (surface) {
+                surface.destroy();
+            }
+
+            surface = new Surface(container, options);
+        }
+
         baseSurfaceTests("SVG", Surface);
         baseSurfaceEventTests("SVG", Surface);
 
         module("Surface", {
             setup: function() {
                 container = $("<div>").appendTo(QUnit.fixture);
-                surface = new Surface(container);
+                createSurface();
             },
             teardown: function() {
+                surface.destroy();
                 container.remove();
             }
         });
 
         test("reports actual surface type", function() {
-            surface = new Surface(container, { type: "foo" });
+            createSurface({ type: "foo" });
             equal(surface.type, "svg");
         });
 

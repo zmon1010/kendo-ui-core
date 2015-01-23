@@ -6,19 +6,28 @@ function baseSurfaceTests(name, TSurface) {
     var container;
     var surface;
 
+    function createSurface(options) {
+        if (surface) {
+            surface.destroy();
+        }
+
+        surface = new TSurface(container, options);
+    }
+
     // ------------------------------------------------------------
     module("Surface Base Tests / " + name, {
         setup: function() {
             container = $("<div>").appendTo(QUnit.fixture);
-            surface = new TSurface(container);
+            createSurface();
         },
         teardown: function() {
+            surface.destroy();
             container.remove();
         }
     });
 
     test("sets initial options", function() {
-        surface = new TSurface(container, { foo: true });
+        createSurface({ foo: true });
         ok(surface.options.foo);
     });
 
@@ -27,7 +36,7 @@ function baseSurfaceTests(name, TSurface) {
     });
 
     test("sets initial width", function() {
-        surface = new TSurface(container, { width: "500px" });
+        createSurface({ width: "500px" });
         equal(surface.element[0].style.width, "500px");
     });
 
@@ -36,7 +45,7 @@ function baseSurfaceTests(name, TSurface) {
     });
 
     test("sets initial height", function() {
-        surface = new TSurface(container, { height: "500px" });
+        createSurface({ height: "500px" });
         equal(surface.element[0].style.height, "500px");
     });
 
@@ -47,12 +56,43 @@ function baseSurfaceTests(name, TSurface) {
         deepEqual(surface._root.childNodes[0].srcElement, group);
     });
 
+    test("draw attaches element to export visual", function() {
+        var group = new Group();
+        surface.draw(group);
+
+        equal(surface.exportVisual().children[0], group);
+    });
+
+    test("draw appends element to export visual", function() {
+        surface.draw(new Group());
+        surface.draw(new Group());
+
+        equal(surface.exportVisual().children.length, 2);
+    });
+
+    test("draw doesn't reparent visual", function() {
+        var parent = new Group();
+        var child = new Group();
+        parent.append(child);
+
+        surface.draw(parent);
+
+        equal(child.parent, parent);
+    });
+
     test("clear removes element from root node", function() {
         var group = new Group();
         surface.draw(group);
         surface.clear();
 
         equal(surface._root.childNodes.length, 0);
+    });
+
+    test("clear removes elements from export visual", function() {
+        surface.draw(new Group());
+        surface.clear();
+
+        equal(surface.exportVisual().children.length, 0);
     });
 
     test("size returns element dimensions", function() {
@@ -100,19 +140,28 @@ function baseSurfaceEventTests(name, TSurface) {
     var container;
     var surface;
 
+    function createSurface(options) {
+        if (surface) {
+            surface.destroy();
+        }
+
+        surface = new TSurface(container, options);
+    }
+
     // ------------------------------------------------------------
     module("Surface Base Tests / " + name + " /Events", {
         setup: function() {
             container = $("<div>").appendTo(QUnit.fixture);
-            surface = new TSurface(container);
+            createSurface();
         },
         teardown: function() {
+            surface.destroy();
             container.remove();
         }
     });
 
     test("binds initial handlers", function() {
-        surface = new TSurface(container, {
+        createSurface({
             click: function() { ok(true); }
         });
 
@@ -141,11 +190,12 @@ function baseSurfaceEventTests(name, TSurface) {
     module("Surface Base Tests / " + name + " / Events / eventTarget", {
         setup: function() {
             container = $("<div>").appendTo(QUnit.fixture);
-            surface = new TSurface(container);
+            createSurface();
             surface.draw(new Group());
             node = surface._root.childNodes[0];
         },
         teardown: function() {
+            surface.destroy();
             container.remove();
         }
     });

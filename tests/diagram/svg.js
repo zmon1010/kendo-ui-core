@@ -1777,6 +1777,7 @@
         }
 
         function teardown() {
+            canvas.destroy();
             element.off();
             element.remove();
         }
@@ -1952,6 +1953,7 @@
         test("destroy destroys surface", function() {
             canvas.surface.destroy = function() {
                 ok(true);
+                kendo.drawing.Surface.fn.destroy.call(this);
             };
             canvas.destroy();
         });

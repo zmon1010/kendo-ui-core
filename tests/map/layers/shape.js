@@ -9,12 +9,19 @@
     var map;
     var layer;
 
+    function destroyLayer() {
+        if (layer) {
+            layer.destroy();
+        }
+    }
+
     // ------------------------------------------------------------
     module("Shape Layer / Positioning", {
         setup: function() {
             map = new MapMock();
             layer = new ShapeLayer(map);
-        }
+        },
+        teardown: destroyLayer
     });
 
     test("Movable is attached to surface element", function() {
@@ -32,7 +39,8 @@
             map = new MapMock();
             map.markers = new m.layers.MarkerLayer(map);
             layer = new ShapeLayer(map);
-        }
+        },
+        teardown: destroyLayer
     });
 
     test("adds marker when parsing points", function() {
@@ -118,12 +126,14 @@
         setup: function() {
             map = new MapMock();
             layer = new ShapeLayer(map);
-        }
+        },
+        teardown: destroyLayer
     });
 
     test("destroys surface", function() {
         layer.surface.destroy = function() {
             ok(true);
+            kendo.drawing.Surface.fn.destroy.call(this);
         };
 
         layer.destroy();
@@ -141,7 +151,8 @@
                     }]
                 }
             });
-        }
+        },
+        teardown: destroyLayer
     });
 
     test("redraws GeoJSON primitives on reset", function() {
@@ -189,7 +200,8 @@
         setup: function() {
             map = new MapMock();
             layer = new ShapeLayer(map);
-        }
+        },
+        teardown: destroyLayer
     });
 
     test("surface is cleared before reset", function() {
