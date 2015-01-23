@@ -514,15 +514,10 @@ var __meta__ = {
 
         _filter: function() {
             var that = this,
-                widget = FILTERMENU,
                 options = that.options;
 
             if (options.filterable !== false) {
-
-                if (options.filterable.multi) {
-                    widget = "kendoFilterMultiCheck";
-                }
-                that.filterMenu = that.wrapper.find(".k-filterable")[widget](
+                that.filterMenu = that.wrapper.find(".k-filterable")[FILTERMENU](
                     extend(true, {}, {
                         appendToElement: true,
                         dataSource: options.dataSource,
@@ -530,7 +525,7 @@ var __meta__ = {
                         field: that.field
                     },
                     options.filterable)
-                    ).data(widget);
+                    ).data(FILTERMENU);
 
                 if (that._isMobile) {
                     that.menu.bind(SELECT, function(e) {

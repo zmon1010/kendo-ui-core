@@ -231,6 +231,20 @@
         menu.wrapper.find("[type=checkbox]").eq(0).click();
     });
 
+    test("sortable as empty object does not append sort expressions", function() {
+        var menu = setup({ field: "foo", sortable: {} });
+
+        dataSource.sort({ field: "bar", dir: "desc" });
+
+        menu.wrapper.find(".k-sort-asc").click();
+
+        var sort = dataSource.sort();
+
+        equal(sort.length, 1);
+        equal(sort[0].field, "foo");
+        equal(sort[0].dir, "asc");
+    });
+
     test("selecting sort asc item sorts the dataSource", function() {
         var menu = setup({ field: "foo" });
 
