@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Telerik.UI.for.AspNet.Mvc5</id>
+    <version><%= VERSION %></version>
+    <title>Telerik UI for ASP.NET MVC 5</title>
+    <authors>Telerik</authors>
+    <owners>Telerik</owners>
+    <licenseUrl>http://www.telerik.com/purchase/license-agreement/aspnet-mvc</licenseUrl>
+    <projectUrl>http://www.telerik.com/aspnet-mvc</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Telerik UI for ASP.NET MVC provides server-side helpers for Kendo UI's JavaScript framework. It enables developers comfortable with the ASP.NET MVC framework to easily configure and work with Kendo UI via familiar server-side programming instead of relying solely on hand-coding of HTML and JavaScript.</description>
+    <summary>Telerik UI for ASP.NET MVC provides server-side helpers for Kendo UI's JavaScript framework. It enables developers comfortable with the ASP.NET MVC framework to easily configure and work with Kendo UI via familiar server-side programming instead of relying solely on hand-coding of HTML and JavaScript.</summary>
+    <language>en-US</language>
+    <dependencies>
+      <dependency id="jQuery" version="1.9.1" />
+    </dependencies>
+    <references>
+      <reference file="Kendo.Mvc.dll" />
+    </references>
+  </metadata>
+  <files>
+      <file src="aspnetmvc.commercial/wrappers/aspnetmvc/Binaries/Mvc5/**/*" target="lib" />
+      <file src="aspnetmvc.commercial/wrappers/aspnetmvc/EditorTemplates/**/*" target="content/Content/kendo/<%= VERSION %>" />
+
+      <file src="aspnetmvc.commercial/js/**/*" target="content/Scripts/kendo/<%= VERSION %>" />
+      <file src="aspnetmvc.commercial/styles/**/*" target="content/Content/kendo/<%= VERSION %>" />
+
+      <file src="nuspec/Mvc5/Web.config.install.xdt" target="content/Web.config.install.xdt" />
+      <file src="nuspec/Mvc5/Views.Web.config.install.xdt" target="content/Views/Web.config.install.xdt" />
+  </files>
+</package>

@@ -1,5 +1,6 @@
 require 'release_build_upload'
 require 'beta_build_upload'
+require 'erb'
 
 def description(name)
     name = name.split(/\W/).map { |c| c.capitalize }.join(' ')

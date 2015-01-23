@@ -1014,6 +1014,21 @@ namespace :build do
     WEB_ROOT = "/var/www"
     TOMCAT_ROOT = "/var/lib/tomcat7/webapps"
 
+    def nuget_targets(destination)
+        nugets = []
+
+        NUGETS.each do |nuget|
+            dest = File.join(ARCHIVE_ROOT, destination, nuget.pathmap("%n") + VERSION + ".nupkg")
+            source = File.join("dist/bundles",  nuget.pathmap("%n") + VERSION + ".nupkg")
+
+            file_copy :to => dest, :from => source
+
+            nugets.push(dest)
+        end
+
+        nugets
+    end
+
     def zip_targets(destination)
         zip_bundles = []
 
@@ -1239,8 +1254,10 @@ namespace :build do
             :get_binaries,
             'bundles:all',
             'demos:production',
+            'nuget:default',
             'download_builder:bundle',
             zip_targets("Stable"),
+            nuget_targets("Stable"),
             xml_changelogs("Stable")
         ].flatten
 
