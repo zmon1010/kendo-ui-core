@@ -68,7 +68,7 @@ namespace Kendo.Mvc.UI
 		{
 			var tag = Generator.GenerateDateInput(ViewContext, ModelMetadata, Name, Value, Format, HtmlAttributes);
 
-			if (Enabled)
+			if (!Enabled)
 			{
 				tag.MergeAttribute("disabled", "disabled");
 			}
