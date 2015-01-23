@@ -33,13 +33,13 @@ namespace Kendo.Mvc.UI
 
 //>> Initialization
         
+            ColumnMenu = new TreeListColumnMenuSettings();
+                
             Columns = new List<TreeListColumn>();
                 
             Editable = new TreeListEditableSettings<T>();
                 
             Excel = new TreeListExcelSettings();
-                
-            Filterable = new TreeListFilterableSettings();
                 
             Messages = new TreeListMessagesSettings();
                 
@@ -60,13 +60,37 @@ namespace Kendo.Mvc.UI
 
 //>> Fields
         
+        public bool? AutoBind { get; set; }
+        
         public List<TreeListColumn> Columns
         {
             get;
             set;
         }
         
-        public bool? AutoBind { get; set; }
+        public bool? Reorderable { get; set; }
+        
+        public TreeListColumnMenuSettings ColumnMenu
+        {
+            get;
+            set;
+        }
+        
+        public TreeListEditableSettings<T> Editable
+        {
+            get;
+            set;
+        }
+        
+        public TreeListExcelSettings Excel
+        {
+            get;
+            set;
+        }
+        
+        public bool? Filterable { get; set; }
+        
+        public double? Height { get; set; }
         
         public TreeListMessagesSettings Messages
         {
@@ -96,26 +120,6 @@ namespace Kendo.Mvc.UI
             set;
         }
         
-        public double? Height { get; set; }
-        
-        public TreeListFilterableSettings Filterable
-        {
-            get;
-            set;
-        }
-        
-        public TreeListEditableSettings<T> Editable
-        {
-            get;
-            set;
-        }
-        
-        public TreeListExcelSettings Excel
-        {
-            get;
-            set;
-        }
-        
         //<< Fields
 
         public override void WriteInitializationScript(TextWriter writer)
@@ -128,14 +132,50 @@ namespace Kendo.Mvc.UI
 
 //>> Serialization
         
+            if (AutoBind.HasValue)
+            {
+                json["autoBind"] = AutoBind;
+            }
+                
             var columns = Columns.ToJson();
             if (columns.Any())
             {
                 json["columns"] = columns;
             }
-            if (AutoBind.HasValue)
+            if (Reorderable.HasValue)
             {
-                json["autoBind"] = AutoBind;
+                json["reorderable"] = Reorderable;
+            }
+                
+            var columnMenu = ColumnMenu.ToJson();
+            if (columnMenu.Any())
+            {
+                json["columnMenu"] = columnMenu;
+            } else if (ColumnMenu.Enabled != false) {
+                json["columnMenu"] = ColumnMenu.Enabled;
+            }
+
+            var editable = Editable.ToJson();
+            if (editable.Any())
+            {
+                json["editable"] = editable;
+            } else if (Editable.Enabled != false) {
+                json["editable"] = Editable.Enabled;
+            }
+
+            var excel = Excel.ToJson();
+            if (excel.Any())
+            {
+                json["excel"] = excel;
+            }
+            if (Filterable.HasValue)
+            {
+                json["filterable"] = Filterable;
+            }
+                
+            if (Height.HasValue)
+            {
+                json["height"] = Height;
             }
                 
             var messages = Messages.ToJson();
@@ -170,32 +210,6 @@ namespace Kendo.Mvc.UI
             if (toolbar.Any())
             {
                 json["toolbar"] = toolbar;
-            }
-            if (Height.HasValue)
-            {
-                json["height"] = Height;
-            }
-                
-            var filterable = Filterable.ToJson();
-            if (filterable.Any())
-            {
-                json["filterable"] = filterable;
-            } else if (Filterable.Enabled != false) {
-                json["filterable"] = Filterable.Enabled;
-            }
-
-            var editable = Editable.ToJson();
-            if (editable.Any())
-            {
-                json["editable"] = editable;
-            } else if (Editable.Enabled != false) {
-                json["editable"] = Editable.Enabled;
-            }
-
-            var excel = Excel.ToJson();
-            if (excel.Any())
-            {
-                json["excel"] = excel;
             }
         //<< Serialization
 

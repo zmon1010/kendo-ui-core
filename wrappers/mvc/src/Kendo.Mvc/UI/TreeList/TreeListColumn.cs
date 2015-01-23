@@ -43,6 +43,12 @@ namespace Kendo.Mvc.UI
         
         public string Field { get; set; }
         
+        public TreeListColumnFilterableSettings Filterable
+        {
+            get;
+            set;
+        }
+        
         public string FooterTemplate { get; set; }
 
         public string FooterTemplateId { get; set; }
@@ -69,11 +75,9 @@ namespace Kendo.Mvc.UI
         
         public string Width { get; set; }
         
-        public TreeListColumnFilterableSettings Filterable
-        {
-            get;
-            set;
-        }
+        public bool? Hidden { get; set; }
+        
+        public bool? Menu { get; set; }
         
         //<< Fields
 
@@ -111,6 +115,14 @@ namespace Kendo.Mvc.UI
                 json["field"] = Field;
             }
             
+            var filterable = Filterable.ToJson();
+            if (filterable.Any())
+            {
+                json["filterable"] = filterable;
+            } else if (Filterable.Enabled != true) {
+                json["filterable"] = Filterable.Enabled;
+            }
+
             if (!string.IsNullOrEmpty(FooterTemplateId))
             {
                 json["footerTemplate"] = new ClientHandlerDescriptor {
@@ -181,14 +193,16 @@ namespace Kendo.Mvc.UI
                 json["width"] = Width;
             }
             
-            var filterable = Filterable.ToJson();
-            if (filterable.Any())
+            if (Hidden.HasValue)
             {
-                json["filterable"] = filterable;
-            } else if (Filterable.Enabled != true) {
-                json["filterable"] = Filterable.Enabled;
+                json["hidden"] = Hidden;
             }
-
+                
+            if (Menu.HasValue)
+            {
+                json["menu"] = Menu;
+            }
+                
         //<< Serialization
         }
     }

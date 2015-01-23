@@ -43,7 +43,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The configuration of the column command(s). If set the column would display a button for every command. Commands can be custom or built-in ("edit", "destroy" or "createChild").The "edit" built-in command switches the current table row in edit mode.The "createChild" built-in command adds new child item to the current table row and switches in edit mode.The "destroy" built-in command removes the data item to which the current table row is bound.Custom commands are supported by specifying the click option.
+        /// The configuration of the column command(s). If set the column would display a button for every command. Commands can be custom or built-in ("edit", "createChild" or "destroy"):Custom commands are supported by specifying the click option.
         /// </summary>
         /// <param name="configurator">The action that configures the command.</param>
         public TreeListColumnBuilder<T> Command(Action<TreeListColumnCommandFactory<T>> configurator)
@@ -75,7 +75,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// If set to true the column will show the icons that are used for exapdning and collapsing of child rows. By default, the first column of the TreeList is expandable.
+        /// If set to true the column will show the icons that are used for expanding and collapsing child rows. By default, the first column of the TreeList is expandable.
         /// </summary>
         /// <param name="value">The value that configures the expandable.</param>
         public TreeListColumnBuilder<T> Expandable(bool value)
@@ -126,6 +126,32 @@ namespace Kendo.Mvc.UI.Fluent
         {
             container.Field = value;
 
+            return this;
+        }
+        
+
+        /// <summary>
+        /// If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed
+		/// for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the filterable option.</param>
+        public TreeListColumnBuilder<T> Filterable(bool enabled)
+        {
+            container.Filterable.Enabled = enabled;
+            return this;
+        }
+
+        
+        /// <summary>
+        /// If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed
+		/// for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.
+        /// </summary>
+        /// <param name="configurator">The action that configures the filterable.</param>
+        public TreeListColumnBuilder<T> Filterable(Action<TreeListColumnFilterableSettingsBuilder<T>> configurator)
+        {
+            container.Filterable.Enabled = true;
+            
+            configurator(new TreeListColumnFilterableSettingsBuilder<T>(container.Filterable));
             return this;
         }
         
@@ -279,29 +305,25 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
-
         /// <summary>
-        /// If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed
-		/// for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.
+        /// If set to true the column will not be displayed in the treelist. By default all columns are displayed.
         /// </summary>
-        /// <param name="enabled">Enables or disables the filterable option.</param>
-        public TreeListColumnBuilder<T> Filterable(bool enabled)
+        /// <param name="value">The value that configures the hidden.</param>
+        public TreeListColumnBuilder<T> Hidden(bool value)
         {
-            container.Filterable.Enabled = enabled;
+            container.Hidden = value;
+
             return this;
         }
-
         
         /// <summary>
-        /// If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed
-		/// for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.
+        /// If set to true the column will be visible in the grid column menu. By default the column menu includes all data-bound columns (ones that have their field set).
         /// </summary>
-        /// <param name="configurator">The action that configures the filterable.</param>
-        public TreeListColumnBuilder<T> Filterable(Action<TreeListColumnFilterableSettingsBuilder<T>> configurator)
+        /// <param name="value">The value that configures the menu.</param>
+        public TreeListColumnBuilder<T> Menu(bool value)
         {
-            container.Filterable.Enabled = true;
-            
-            configurator(new TreeListColumnFilterableSettingsBuilder<T>(container.Filterable));
+            container.Menu = value;
+
             return this;
         }
         

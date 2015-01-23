@@ -16,6 +16,28 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Handlers
         
         /// <summary>
+        /// Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the cancel event.</param>
+        public TreeListEventBuilder Cancel(string handler)
+        {
+            Handler("cancel", handler);
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Fired when the user selects a table row or cell in the treelist.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>
+        public TreeListEventBuilder Change(string handler)
+        {
+            Handler("change", handler);
+
+            return this;
+        }
+        
+        /// <summary>
         /// Fired when an item is about to be collapsed.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the collapse event.</param>
@@ -49,6 +71,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Fired when the user edits or creates a data item.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the edit event.</param>
+        public TreeListEventBuilder Edit(string handler)
+        {
+            Handler("edit", handler);
+
+            return this;
+        }
+        
+        /// <summary>
         /// Fired when the user clicks the "Export to Excel" toolbar button.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the excelExport event.</param>
@@ -66,6 +99,17 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeListEventBuilder Expand(string handler)
         {
             Handler("expand", handler);
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Fired when the treelist filter menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the filterMenuInit event.</param>
+        public TreeListEventBuilder FilterMenuInit(string handler)
+        {
+            Handler("filterMenuInit", handler);
 
             return this;
         }
@@ -93,17 +137,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Fired when the user edits or creates a data item.The event handler function context (available via the this keyword) will be set to the widget instance.
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the edit event.</param>
-        public TreeListEventBuilder Edit(string handler)
-        {
-            Handler("edit", handler);
-
-            return this;
-        }
-        
-        /// <summary>
         /// Fired when a data item is saved.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the save event.</param>
@@ -115,34 +148,45 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user shows a column.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the cancel event.</param>
-        public TreeListEventBuilder Cancel(string handler)
+        /// <param name="handler">The name of the JavaScript function that will handle the columnShow event.</param>
+        public TreeListEventBuilder ColumnShow(string handler)
         {
-            Handler("cancel", handler);
+            Handler("columnShow", handler);
 
             return this;
         }
         
         /// <summary>
-        /// Fired when the user selects a table row or cell in the treelist.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user hides a column.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>
-        public TreeListEventBuilder Change(string handler)
+        /// <param name="handler">The name of the JavaScript function that will handle the columnHide event.</param>
+        public TreeListEventBuilder ColumnHide(string handler)
         {
-            Handler("change", handler);
+            Handler("columnHide", handler);
 
             return this;
         }
         
         /// <summary>
-        /// Fired when the treelist filter menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user changes the order of a column.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the filterMenuInit event.</param>
-        public TreeListEventBuilder FilterMenuInit(string handler)
+        /// <param name="handler">The name of the JavaScript function that will handle the columnReorder event.</param>
+        public TreeListEventBuilder ColumnReorder(string handler)
         {
-            Handler("filterMenuInit", handler);
+            Handler("columnReorder", handler);
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Fired when the column menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the columnMenuInit event.</param>
+        public TreeListEventBuilder ColumnMenuInit(string handler)
+        {
+            Handler("columnMenuInit", handler);
 
             return this;
         }
