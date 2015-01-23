@@ -652,7 +652,7 @@ var __meta__ = {
         var allColumns = columns;
         columns = leafColumns(columns);
 
-        var cells = {}
+        var cells = {};
         var rows = thead.find(">tr:not(.k-filter-row)");
 
         for (var idx = 0, length = columns.length; idx < length; idx++) {
