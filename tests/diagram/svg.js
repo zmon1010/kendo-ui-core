@@ -1777,6 +1777,7 @@
         }
 
         function teardown() {
+            canvas.destroy();
             element.off();
             element.remove();
         }
