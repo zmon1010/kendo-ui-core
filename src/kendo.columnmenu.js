@@ -384,9 +384,7 @@ var __meta__ = {
                 item.addClass(ACTIVE);
             }
 
-            if (sortable === true || sortable.mode === "single") {
-                sort = [ { field: that.field, dir: dir, compare: compare} ];
-            } else {
+            if (sortable.mode === "multiple") {
                 for (idx = 0, length = sort.length; idx < length; idx++) {
                     if (sort[idx].field === that.field) {
                         sort.splice(idx, 1);
@@ -394,6 +392,8 @@ var __meta__ = {
                     }
                 }
                 sort.push({ field: that.field, dir: dir, compare: compare });
+            } else {
+                sort = [ { field: that.field, dir: dir, compare: compare} ];
             }
 
             dataSource.sort(sort);
