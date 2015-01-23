@@ -2,7 +2,8 @@
     define([
         "../kendo.core",
         "../kendo.color",
-        "../kendo.drawing"
+        "../kendo.drawing",
+        "./core"
     ], f);
 })(function(){
 
