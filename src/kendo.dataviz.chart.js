@@ -544,10 +544,7 @@ var __meta__ = {
         },
 
         exportVisual: function() {
-            var model = this._getModel();
-            model.renderVisual();
-
-            return model.visual;
+            return this.surface.exportVisual();
         },
 
         _sharedTooltip: function() {
