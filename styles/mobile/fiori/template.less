@@ -52,7 +52,7 @@
 @fiori-inverse-text: #fff; /*also listview and button selected text*/
 @fiori-inverse-border: #7b7b7c;
 
-@switch-color: #979797;
+@switch-color: @fiori-inverse-text;
 
 @fiori-shadow: rgba(0,0,0,.2);
 
@@ -82,12 +82,50 @@
     color: @fiori-secondary-text;
 }
 
+/* ActionSheet, Footer */
+
+.km-fiori .km-footer,
+.km-fiori .km-actionsheet > li > a
+{
+    background: @fiori-inverse-background;
+    color: @fiori-inverse-text;
+}
+
+.km-fiori .km-footer .km-tabstrip .km-button:hover,
+.km-fiori .km-actionsheet > li > a:active,
+.km-fiori .km-actionsheet > li > a:hover,
+.km-fiori .km-actionsheet > li > .km-state-active
+{
+    background: @fiori-inverse-hover-background;
+}
+
+.km-fiori .km-footer .km-tabstrip .km-button,
+.km-fiori .km-actionsheet > li > a
+{
+    border-color: @fiori-inverse-border;
+}
+
+.km-fiori .km-actionsheet > .km-actionsheet-cancel > a
+{
+    background: @fiori-button-primary-background;
+}
+
 /* Button */
 
 .km-fiori .km-button
 {
     background: @fiori-button-background;
-    border-color: @fiori-border-color;
+    border-color: @fiori-button-border;
+}
+
+.km-fiori .km-button:hover
+{
+    background: @fiori-button-hover-background;
+}
+
+.km-fiori .km-button.km-state-active
+{
+    background: @fiori-button-selected-background;
 }
 
 /* Badges and Details */
@@ -95,7 +133,7 @@
 .km-fiori .km-detail,
 .km-fiori .k-toolbar
 {
-    border-color: @fiori-border-color;
+    border-color: @fiori-button-border;
 }
 
 /* Switch */
@@ -131,20 +169,20 @@
 .km-fiori .km-list > li
 {
     background: @fiori-list-background;
-    border-color: @fiori-border-color;
-    .box-shadow(inset 0 @fiori-border-width 0 @fiori-shadow);
+    border-color: @fiori-button-border;
+    .box-shadow(inset 0 1px 0 @fiori-shadow);
 }
 
 .km-fiori .km-listinset > li:first-child,
 .km-fiori .km-listgroupinset .km-list > li:first-child
 {
-    border-color: @fiori-border-color;
+    border-color: @fiori-button-border;
 }
 
 .km-fiori .km-listinset > li:last-child,
 .km-fiori .km-listgroupinset .km-list > li:last-child
 {
-    border-color: @fiori-border-color;
+    border-color: @fiori-button-border;
 }
 
 .km-fiori .km-listview-link:after
@@ -159,6 +197,11 @@
     border-color: #a4bdd4;
 }
 
+.km-fiori .km-listview .km-state-active > .km-listview-link
+{
+    color: @fiori-text;
+}
+
 .km-fiori .km-filter-wrap:before,
 .km-fiori .km-filter-reset .km-clear
 {
@@ -168,7 +211,7 @@
 .km-fiori .km-filter-wrap > input
 {
     color: @fiori-text;
-    border-color: @fiori-border-color;
+    border-color: @fiori-button-border;
 }
 
 .km-fiori .km-filter-wrap > input:focus
@@ -180,7 +223,7 @@
 
 .km-fiori .km-pages li
 {
-    background: @fiori-border-color;
+    background: @fiori-button-border;
 }
 
 /* Forms */
@@ -212,26 +255,6 @@
     color: #333;
 }
 
-.km-fiori .km-content .km-list .km-state-active input[type=password],
-.km-fiori .km-content .km-list .km-state-active input[type=search],
-.km-fiori .km-content .km-list .km-state-active input[type=number],
-.km-fiori .km-content .km-list .km-state-active input[type=tel],
-.km-fiori .km-content .km-list .km-state-active input[type=url],
-.km-fiori .km-content .km-list .km-state-active input[type=email],
-.km-fiori .km-content .km-list .km-state-active input[type=month],
-.km-fiori .km-content .km-list .km-state-active input[type=color],
-.km-fiori .km-content .km-list .km-state-active input[type=week],
-.km-fiori .km-content .km-list .km-state-active input[type=date],
-.km-fiori .km-content .km-list .km-state-active input[type=time],
-.km-fiori .km-content .km-list .km-state-active input[type=datetime],
-.km-fiori .km-content .km-list .km-state-active input[type=datetime-local],
-.km-fiori .km-content .km-list .km-state-active input[type=text]:not(.k-input),
-.km-fiori .km-content .km-list .km-state-active select:not([multiple]),
-.km-fiori .km-content .km-list .km-state-active textarea
-{
-    color: @fiori-active-color;
-}
-
 /* Checkboxes and Radios */
 
 .km-fiori .km-listview-label input[type=radio],
@@ -255,13 +278,6 @@
 }
 
 /* PopUp */
-
-/*.km-fiori .km-popup .k-item,*/
-.km-fiori .km-actionsheet > li > a
-{
-    background: @fiori-inverse-background;
-    border-bottom-color: @fiori-shadow;
-}
 
 .km-fiori .km-popup
 {
@@ -304,10 +320,6 @@
     color: @fiori-text;
 }
 
-
-
-
-
 /* Active States */
 
 .km-fiori .km-detail:active,
@@ -338,14 +350,11 @@
 .km-fiori .km-popup .k-state-hover,
 .km-fiori .km-popup .k-state-focused,
 .km-fiori .km-popup .k-state-selected,
-.km-fiori .km-actionsheet > li > a:active,
-.km-fiori .km-actionsheet > li > a:hover,
-.km-fiori .km-actionsheet > li > .km-state-active,
 .km-fiori li.km-state-active .km-listview-link,
 .km-fiori li.km-state-active .km-listview-label,
 .km-fiori .km-state-active .km-listview-link:after
 {
-    color: @fiori-active-color;
+    color: @fiori-inverse-text;
 }
 
 .km-fiori .km-loader > *:not(h1),
@@ -353,14 +362,14 @@
 .km-fiori .km-switch-handle.km-state-active,
 .km-root .km-fiori .km-scroller-refresh span:not(.km-template)
 {
-    background: @fiori-active-color;
+    background: @fiori-button-selected-background;
 }
 
 .km-fiori .km-switch-handle,
 .km-fiori .k-slider-selection,
 .km-fiori .km-switch-background
 {
-    color: @fiori-active-background;
+    color: @fiori-button-selected-background;
 }
 
 .km-fiori .km-rowinsert,
@@ -377,24 +386,21 @@
 .km-fiori .km-popup .k-state-hover,
 .km-fiori .km-popup .k-state-focused,
 .km-fiori .km-popup .k-state-selected,
-.km-fiori .km-actionsheet > li > a:active,
-.km-fiori .km-actionsheet > li > a:hover,
-.km-fiori .km-actionsheet > li > .km-state-active,
 .km-fiori li.km-state-active .km-listview-link,
 .km-fiori li.km-state-active .km-listview-label,
 .km-fiori .km-listview-label input[type=radio]:checked,
 .km-fiori .km-listview-label input[type=checkbox]:checked
 {
-    background: @fiori-active-background;
+    background: @fiori-list-selected-background;
 }
 
 .km-fiori .km-filter-wrap > input:focus
 {
-    border-color: @fiori-active-background;
+    border-color: @fiori-button-selected-background;
 }
 
 .km-fiori .km-badge,
 .km-fiori .km-rowdelete
 {
-    background: @fiori-second-active-background;
+    background: @fiori-button-primary-background;
 }
