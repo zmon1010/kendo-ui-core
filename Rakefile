@@ -1018,8 +1018,8 @@ namespace :build do
         nugets = []
 
         NUGETS.each do |nuget|
-            dest = File.join(ARCHIVE_ROOT, destination, nuget.pathmap("%n") + VERSION + ".nupkg")
-            source = File.join("dist/bundles",  nuget.pathmap("%n") + VERSION + ".nupkg")
+            dest = File.join(ARCHIVE_ROOT, destination, nuget.pathmap("%n") + "." + VERSION + ".nupkg")
+            source = File.join("dist/bundles",  nuget.pathmap("%n") + "." + VERSION + ".nupkg")
 
             file_copy :to => dest, :from => source
 
