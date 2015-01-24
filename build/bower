@@ -1,68 +1,34 @@
 #!/bin/sh
 
-VERSION_YEAR=`ruby -e "require '$PWD/build/version.rb'; puts VERSION_YEAR;"`
-VERSION_Q=`ruby -e "require '$PWD/build/version.rb'; puts VERSION_Q;"`
-VERSION=`ruby -e "require '$PWD/build/version.rb'; puts VERSION;"`
-VERSION_HUMAN="${VERSION_YEAR}.Q${VERSION_Q}"
+# Script should not be called directly, use rake bower:push
 
-echo "This script will build the current repo and publish it to bower."
-echo "The release will be labeled '${VERSION_HUMAN}' and tagged '$VERSION'."
-while true; do
-    read -p "Are you sure you want to continue (N/y)? " yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer Y or N.";;
-    esac
-done
+bowergit="git --work-tree=$2 --git-dir=$2/.git"
 
-
-echo "Building distribution..."
-
-# core
-BOWER_ORIGIN="git@github.com:kendo-labs/bower-kendo-ui.git"
-BOWER_CLONE="bower-core-repo"
-DIST="dist/bundles/core"
-bundle exec rake bundles:core
-
-# professional?
-#bundle exec rake bundles:bower:professional
-#BOWER_ORIGIN=""
-#BOWER_CLONE="bower-pro-repo"
-#DIST="dist/bundles/bower.professional"
-
-
-
-echo "Fetching bower repo..."
-
-alias bowergit="git --work-tree=$BOWER_CLONE --git-dir=$BOWER_CLONE/.git"
-
-if [ ! -d $BOWER_CLONE ]; then
-    git clone $BOWER_ORIGIN $BOWER_CLONE
+if [ ! -d $2 ]; then
+    git clone $1 $2
 else
-    bowergit fetch
-    bowergit reset --hard origin/master
-    bowergit clean -dfx
+    $bowergit fetch
+    $bowergit reset --hard origin/master
+    $bowergit clean -dfx
 fi;
 
+rm -rf $2/{js,styles,src}
+cp -rf $3/js $2
+cp -rf $3/src $2
+cp -rf $3/styles $2
 
-echo "Copy build artifacts..."
+mv $2/src/src $2/src/js
 
-rm -rf $BOWER_CLONE/{js,styles,src}
-cp -rf $DIST/js $BOWER_CLONE
-cp -rf $DIST/src $BOWER_CLONE
-cp -rf $DIST/styles $BOWER_CLONE
+# OS X sed is quite peculiar - use gnu sed if present
+if which gsed; then
+   sed_bin="gsed"
+else
+   sed_bin="sed"
+fi
 
-mv $BOWER_CLONE/src/src $BOWER_CLONE/src/js
+$sed_bin -i "s/\"[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+\"/\"$VERSION\"/" $2/bower.json
 
-
-echo "Update bower package version..."
-
-sed -i "s/\"[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+\"/\"$VERSION\"/" $BOWER_CLONE/bower.json
-
-bowergit add --all .
-bowergit commit -m "Update to $VERSION_HUMAN"
-bowergit tag -a $VERSION -m $VERSION
-bowergit push origin $VERSION
-
-unalias bowergit
+$bowergit add --all .
+$bowergit commit -m "Update to $VERSION"
+$bowergit tag -a "$TAG" -m "$VERSION"
+$bowergit push origin "$TAG"

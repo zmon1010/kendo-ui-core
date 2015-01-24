@@ -138,6 +138,7 @@ require 'cdn'
 require 'tests'
 require 'codegen'
 require 'nuget'
+require 'bower'
 require 'winrm_tools' unless RUBY_PLATFORM =~ /darwin/
 require 'playground'
 require 'vs_plugin'
@@ -1297,3 +1298,4 @@ task :bundles =>  "bundles:all"
 
 task :default => :bundles
 
+task "internal_builds:upload" => [ "internal_builds:bundles:all", "internal_builds:uncheck_previous", "bower:push", "bower:push_core"  ]

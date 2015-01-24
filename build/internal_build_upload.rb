@@ -80,12 +80,12 @@ class TelerikInternalBuildBot
     def read_changelog(path)
         return File.read(path)
         rescue
-        screenshot("Failed_To_Read_Changelog")    
+        screenshot("Failed_To_Read_Changelog")
     end
     def uncheck_version(checkbox)
         driver.execute_script 'arguments[0].click()', checkbox
         rescue
-        screenshot("Unable_To_Uncheck_Version_Checkbox")  
+        screenshot("Unable_To_Uncheck_Version_Checkbox")
     end
     def list_versions(name)
         execute_script <<-SCRIPT
@@ -100,7 +100,7 @@ class TelerikInternalBuildBot
         1.upto(rows_length) do |index|
             checkbox = find(".rgMasterTable tbody tr:nth-child(#{index}) td:nth-child(2) input[type=checkbox]")
             name_anchor = find(".rgMasterTable tbody tr:nth-child(#{index}) td:nth-child(3) a")
-            
+
             if name_anchor.text.index("#{VERSION}") == nil && name_anchor.text.index("#{VERSION_YEAR}.#{VERSION_Q}") != nil && checkbox.selected?
                  uncheck_version(checkbox)
                  Thread.current.send :sleep, 4
@@ -159,6 +159,7 @@ desc "Upload all internal builds on kendoui.com"
 task "internal_builds:bundles:all"
 
 desc "Hide all internal builds for current version"
+
 task "internal_builds:uncheck_previous" do
     bot = TelerikInternalBuildBot.instance
 
@@ -169,6 +170,3 @@ task "internal_builds:uncheck_previous" do
     bot.list_versions("jsp")
     bot.list_versions("php")
 end
-
-task "internal_builds:upload" => [ "internal_builds:bundles:all" ]
-task "internal_builds:uncheck_previous" => ["internal_builds:upload"]
