@@ -8,7 +8,7 @@ def push_bower(repository_url, work_dir, bundle_path, meta = nil)
     sh({ 'VERSION' => VERSION, 'TAG' => tag }, "build/bower", repository_url, work_dir, bundle_path)
 end
 
-namespace: bower do
+namespace :bower do
     task :push do
        push_bower "git@github.com:telerik/bower-kendo-ui.git", "dist/bower-repo", "dist/bundles/professional.commercial"
     end
