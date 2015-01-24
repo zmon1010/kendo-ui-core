@@ -45,7 +45,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>./build/run-build-task appbuilder_builds:bundles:all</command>
+      <command>DOCS_BRANCH=production ./build/run-build-task appbuilder_builds:bundles:all</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>

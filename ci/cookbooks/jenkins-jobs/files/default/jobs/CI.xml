@@ -76,7 +76,7 @@
       <executeOn>BOTH</executeOn>
     </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
     <hudson.tasks.BuildTrigger>
-      <childProjects>TZ-CI</childProjects>
+      <childProjects>TZ-CI, jquery-CI, Firefox-CI</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

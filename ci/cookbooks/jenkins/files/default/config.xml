@@ -25,7 +25,7 @@
       <name>kendobuild-slave1</name>
       <description>Slave #1</description>
       <remoteFS>/var/lib/jenkins/</remoteFS>
-      <numExecutors>3</numExecutors>
+      <numExecutors>5</numExecutors>
       <mode>NORMAL</mode>
       <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
       <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.5">
@@ -53,7 +53,7 @@
       <name>kendobuild-slave2</name>
       <description>Slave #1</description>
       <remoteFS>/var/lib/jenkins/</remoteFS>
-      <numExecutors>3</numExecutors>
+      <numExecutors>5</numExecutors>
       <mode>NORMAL</mode>
       <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
       <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.5">
@@ -107,9 +107,11 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>admin-tools</string>
+        <string>bower-upload</string>
         <string>nuget-upload</string>
         <string>production-CI-DownloadBuilder</string>
         <string>production-upload-appbuilder</string>
+        <string>selenium2-experimental-iis</string>
         <string>stable-upload-release</string>
         <string>sync-from-core-production</string>
       </jobNames>
