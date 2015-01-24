@@ -211,7 +211,7 @@ var CleanFormatCommand = Command.extend({
                 node.removeAttribute("class");
             }
 
-            if (remove.indexOf(dom.name(node)) > -1) {
+            if ($.inArray(dom.name(node), remove) > -1) {
                 dom.unwrap(node);
             }
         });
