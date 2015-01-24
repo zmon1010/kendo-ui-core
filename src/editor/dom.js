@@ -190,13 +190,16 @@ var Dom = {
     },
 
     splitDataNode: function(node, offset) {
-        var newNode = node.cloneNode(false),
-            denormalizedText = "",
-            iterator = node;
+        var newNode = node.cloneNode(false);
+        var denormalizedText = "";
+        var iterator = node.nextSibling;
+        var temp;
 
-        while (iterator.nextSibling && iterator.nextSibling.nodeType == 3 && iterator.nextSibling.nodeValue) {
-            denormalizedText += iterator.nextSibling.nodeValue;
+        while (iterator && iterator.nodeType == 3 && iterator.nodeValue) {
+            denormalizedText += iterator.nodeValue;
+            temp = iterator;
             iterator = iterator.nextSibling;
+            Dom.remove(temp);
         }
 
         node.deleteData(offset, node.length);
