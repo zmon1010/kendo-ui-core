@@ -1167,9 +1167,11 @@ namespace :build do
         task :bundles => [
             :get_binaries,
             'bundles:all',
+            'nuget:default',
             'demos:production',
             'download_builder:bundle',
             zip_targets("Production"),
+            nuget_targets("Production"),
             xml_changelogs("Production"),
             changelog
         ].flatten
