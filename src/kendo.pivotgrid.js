@@ -4822,7 +4822,6 @@ var __meta__ = {
         },
         options: {
             proxyURL: "",
-            allPages: false,
             filterable: false,
             fileName: "Export.xlsx"
         },
