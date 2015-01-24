@@ -885,19 +885,19 @@ var __meta__ = {
             var eventBottomOffset = this._getBottomRowOffset();
 
             groupsCount = this._isVerticallyGrouped() ? groupsCount : 1;
+
             for (var groupIndex = 0; groupIndex < groupsCount; groupIndex++) {
                 var rowsCount = this._isVerticallyGrouped() ? eventGroups[groupIndex].maxRowCount : maxRowCount;
 
                 rowsCount = rowsCount ? rowsCount : 1;
 
                 var rowHeight = ((eventHeight + 2) * rowsCount) + eventBottomOffset;
-                var timesRow = this.times.find(kendo.format("tr:nth-child({0})",  groupIndex + 1));
-                var row = this.content.find(kendo.format("tr:nth-child({0})",  groupIndex + 1));
+                var timesRow = $(this.times.find("tr")[groupIndex]);
+                var row = $(this.content.find("tr")[groupIndex]);
 
                 timesRow.height(rowHeight);
                 row.height(rowHeight);
             }
-
 
             this._setContentWidth();
             this.refreshLayout();
