@@ -26,3 +26,8 @@ namespace :nuget do
         task :default => nuget
     end
 end
+
+desc 'Publish a NuGet package for Kendo UI Core on nuget.org'
+task :core_nuget_upload do
+  navigate_and_upload \
+end
