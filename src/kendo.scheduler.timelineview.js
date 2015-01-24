@@ -356,6 +356,7 @@ var __meta__ = {
             workWeekEnd: 5,
             majorTick: 60,
             eventHeight: 25,
+            eventMinWidth: 0,
             columnWidth: 100,
             groupHeaderTemplate: "#=text#",
             majorTimeHeaderTemplate: "#=kendo.toString(date, 't')#",
@@ -931,15 +932,27 @@ var __meta__ = {
 
             var rect = eventObject.slotRange.innerRect(eventObject.start, eventObject.end, false);
 
+            var left = rect.left;
+            if (this._isRtl) {
+                left -= (this.content[0].scrollWidth - this.content[0].offsetWidth);
+            }
+
             var width = rect.right - rect.left - 2;
 
             if (width < 0) {
                 width = 0;
             }
 
-            var left = rect.left;
-            if (this._isRtl) {
-                left -= (this.content[0].scrollWidth - this.content[0].offsetWidth);
+            if (width < this.options.eventMinWidth) {
+                var slotsCollection = eventObject.slotRange.collection;
+                var lastSlot = slotsCollection._slots[slotsCollection._slots.length-1];
+                var offsetRight = lastSlot.offsetLeft + lastSlot.offsetWidth;
+
+                width = this.options.eventMinWidth;
+
+                if (offsetRight < left + width) {
+                    width = offsetRight - rect.left - 2
+                }
             }
 
             eventObject.element.css({
@@ -1190,15 +1203,16 @@ var __meta__ = {
             var endIndex = slotRange.end.index;
 
             var rect = eventObject.slotRange.innerRect(eventObject.start, eventObject.end, false);
+            var rectRight = rect.right + this.options.eventMinWidth;
 
-            var events = collidingEvents(slotRange.events(), rect.left, rect.right);
+            var events = collidingEvents(slotRange.events(), rect.left, rectRight);
 
             slotRange.addEvent({
                 slotIndex: startIndex,
                 start: startIndex,
                 end: endIndex,
                 rectLeft: rect.left,
-                rectRight: rect.right,
+                rectRight: rectRight,
                 element: eventObject.element,
                 uid: eventObject.uid
             });

@@ -434,7 +434,7 @@
         equal(timeElementsCount,1);
     });
 
-    test("event is rendered correctly", function() {
+    test("non-overlapping events are not rendered on different rows", function() {
         var view = setup({ date: new Date(2013, 1, 2) });
 
         view.render([new SchedulerEvent({
@@ -459,6 +459,80 @@
 
         equal(firstEventTop, secondEventTop);
         equal(view.element.find(".k-event").length, 2);
+    });
+
+    test("non-overlapping events with zero duration are rendered on different rows when eventMinWidth is set", function() {
+        var minWidth = 20;
+        var view = setup({ date: new Date(2013, 1, 2), eventMinWidth: minWidth});
+
+        view.render([new SchedulerEvent({
+            uid: "foo",
+            title: "",
+            start: new Date(2013, 1, 2, 2, 10, 0),
+            end: new Date(2013, 1, 2, 2, 10, 0),
+            isAllDay: false,
+            id: "2"
+        }), new SchedulerEvent({
+            uid: "bar",
+            title: "",
+            start: new Date(2013, 1, 2, 2, 12, 0),
+            end: new Date(2013, 1, 2, 2, 12, 0),
+            isAllDay: false,
+            id: "3"
+        })]);
+
+        var events = view.groups[0].getTimeSlotCollection(0).events();
+        var firstEventTop = events[0].element.offset().top;
+        var secondEventTop = events[1].element.offset().top;
+
+        notEqual(firstEventTop, secondEventTop);
+        equal(view.element.find(".k-event").length, 2);
+    });
+
+    test("event with zero duration is rendered according eventMinWidth", function() {
+        var minWidth = 21;
+        var view = setup({ date: new Date(2013, 1, 2), eventMinWidth: minWidth});
+
+        view.render([new SchedulerEvent({
+            uid: "foo",
+            title: "",
+            start: new Date(2013, 1, 2, 2, 0, 0),
+            end: new Date(2013, 1, 2, 2, 0, 0),
+            isAllDay: false,
+            id: "2"
+        })]);
+
+        var events = view.groups[0].getTimeSlotCollection(0).events();
+
+        equal(events[0].element.width(), minWidth);
+        equal(view.element.find(".k-event").length, 1);
+    });
+
+    test("event with zero duration and min width is not rendered outside the Scheduler", function() {
+        var minWidth = 21;
+        var view = setup({
+            date: new Date(2013, 1, 2),
+            eventMinWidth: minWidth,
+            startTime: new Date(2013, 1, 2, 10, 0, 0),
+            endTime: new Date(2013, 1, 2, 12, 0, 0)
+        });
+
+        view.render([new SchedulerEvent({
+            uid: "foo",
+            title: "",
+            start: new Date(2013, 1, 2, 11, 59, 0),
+            end: new Date(2013, 1, 2, 11, 59, 0),
+            isAllDay: false,
+            id: "2"
+        })]);
+
+        var eventElement = $(".k-event")[0];
+        var eventRightOffset =  eventElement.offsetLeft + eventElement.offsetWidth;
+        var lastSlot = view.content.find("td[role=gridcell]:last")[0];
+        var lastSlotRightOffset = lastSlot.offsetLeft + lastSlot.offsetWidth;
+
+        equal(lastSlotRightOffset, eventRightOffset);
+        equal(view.element.find(".k-event").length, 1);
     });
 
     module("Timeline View rendering without slot holes", {
