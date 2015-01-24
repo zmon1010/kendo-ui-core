@@ -566,6 +566,34 @@ test("toXML creates 'autoFilter' element when the filter option is set", functio
     equal(dom.find("autoFilter").attr("ref"), "B1:C1");
 });
 
+test("toXML creates 'autoFilter' element for the first row is freezePane rowSplit is zero", function() {
+    var worksheet = Worksheet({
+        freezePane: {
+            rowSplit: 0
+        },
+        columns: [ {}, {}, {} ],
+        filter: { from: 1, to: 2 }
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("autoFilter").attr("ref"), "B1:C1");
+});
+
+test("toXML creates 'autoFilter' element for the last row of the freezed pane", function() {
+    var worksheet = Worksheet({
+        freezePane: {
+            rowSplit: 3
+        },
+        columns: [ {}, {}, {} ],
+        filter: { from: 1, to: 2 }
+    });
+
+    var dom = $(worksheet.toXML());
+
+    equal(dom.find("autoFilter").attr("ref"), "B3:C3");
+});
+
 test("toXML offsets cells if first has merged rows", function() {
     var worksheet = Worksheet({
         rows: [ {

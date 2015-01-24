@@ -322,12 +322,14 @@ var Worksheet = kendo.Class.extend({
             data.push(this._row(rows, spans, rows[i], i));
         }
 
+        var filterRowIndex = ((this.options.freezePane || {}).rowSplit || 1) - 1;
+
         return WORKSHEET({
             freezePane: this.options.freezePane,
             columns: this.options.columns,
             data: data,
             mergeCells: this._mergeCells,
-            filter: filter ? { from: ref(0, filter.from), to: ref(0, filter.to) } : null
+            filter: filter ? { from: ref(filterRowIndex, filter.from), to: ref(filterRowIndex, filter.to) } : null
         });
     },
     _row: function(rows, spans, row, rowIndex) {
