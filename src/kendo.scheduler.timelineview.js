@@ -951,7 +951,7 @@ var __meta__ = {
                 width = this.options.eventMinWidth;
 
                 if (offsetRight < left + width) {
-                    width = offsetRight - rect.left - 2
+                    width = offsetRight - rect.left - 2;
                 }
             }
 
