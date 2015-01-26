@@ -8,6 +8,8 @@
 
 <c:url value="/pivotgrid/excel-export/save" var="saveUrl" />
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
+
 <demo:header />
 
 	<button id="export" class="k-button k-button-icontext"><span class="k-icon k-i-excel"></span>Export to Excel</button>
@@ -36,7 +38,7 @@
 			</kendo:pivotDataSource-transport>
 		</kendo:pivotDataSource>
 	</kendo:pivotGrid>
-	
+
 	<script>
 		$(function() {
 			$("#export").click(function() {
