@@ -16,7 +16,7 @@ namespace Kendo.Mvc.UI
     using Kendo.Mvc.Resources;
     using Kendo.Mvc.UI.Fluent;
     using Kendo.Mvc.UI.Html;
-    using System.Text.RegularExpressions;
+    using System.Text.RegularExpressions;    
 
     /// <summary>
     /// The server side wrapper for Kendo UI Grid
@@ -1446,9 +1446,18 @@ namespace Kendo.Mvc.UI
             {
                 var cellBuilderFactory = new GridCellBuilderFactory();
 
+                var fields = DataSource.Schema.Model.Fields;
                 
+                var isDynamic = dataItem.GetType().IsDynamicObject();
+
                 VisibleColumns.LeafColumns().OfType<GridColumnBase<T>>().Each(column =>
                 {
+                    var field = fields.FirstOrDefault(f => f.Member == column.Member);
+                    if (isDynamic && field != null && !field.IsEditable)
+                    {
+                        return;
+                    }
+
                     var cellBuilder = cellBuilderFactory.CreateEditCellBuilder(column, htmlHelper);
                     var editor = cellBuilder.CreateCell(dataItem);
                     var editorHtml = editor.InnerHtml;
@@ -1460,6 +1469,7 @@ namespace Kendo.Mvc.UI
                         });
                     }
                     column.EditorHtml = editorHtml;
+
                 });
             }
 
