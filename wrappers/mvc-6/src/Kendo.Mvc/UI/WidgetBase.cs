@@ -27,7 +27,7 @@ namespace Kendo.Mvc.UI
             Initializer = new JavaScriptInitializer();
             ViewContext = viewContext;
 
-			var activator = (IViewComponentActivator)ViewContext.HttpContext.ApplicationServices.GetService(typeof(IViewComponentActivator));
+			var activator = (IViewComponentActivator)ViewContext.HttpContext.RequestServices.GetService(typeof(IViewComponentActivator));
 			activator.Activate(this, ViewContext);
 		}
 
