@@ -13,7 +13,7 @@ class MaskedTextBox extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * Specifies whether the widget will replace the prompt characters with spaces on blur. Prompt chars will be shown again on focus.
+    * Specifies whether the widget will replace the prompt characters with spaces on blur. Prompt chars will be shown again on focus (available since Q2 2014 SP1).
     * @param boolean $value
     * @return \Kendo\UI\MaskedTextBox
     */
