@@ -98,4 +98,6 @@ echo $pivotgrid->render();
         padding: 0 0 10px 1px;
     }
 </style>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 <?php require_once '../include/footer.php'; ?>
