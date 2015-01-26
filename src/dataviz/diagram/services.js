@@ -1547,21 +1547,6 @@
                         }
                     }
                 }
-                if(editable && editable.rotate !== false && this.diagram.options.readOnly !== true) {
-                    var thumbOptions = deepExtend({},
-                        {
-                            // orginal icon data: "M6.50012,0C8.21795,2.56698e-009 9.78015,0.666358 10.9423,1.75469L11.0482,1.85645L12.6557,0.541992L12.697,6.41699L7,5.16667L8.69918,3.77724L8.68162,3.76281C8.08334,3.28539 7.32506,3 6.50012,3C4.56709,3 3.00006,4.567 3.00006,6.5C3.00006,8.433 4.56709,10 6.50012,10C7.82908,10 8.98505,9.25935 9.57775,8.16831L9.59433,8.13594L12.333,9.37087L12.2891,9.45914C11.2124,11.5613 9.02428,13 6.50012,13C2.9102,13 -7.45058e-008,10.0899 0,6.5C-7.45058e-008,2.91015 2.9102,2.93369e-009 6.50012,0z",
-                            y: -40,
-                            width: 10,
-                            height: 10,
-                            fill:"White",
-                            stroke:"Black"
-                        }, editable.rotate
-                    );
-                    item = new Circle(thumbOptions);
-                    this.visual.append(item);
-                    this.rotationThumb = item;
-                }
             },
 
             bounds: function (value) {

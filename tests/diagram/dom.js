@@ -1826,34 +1826,4 @@
     test("should create editor with type shape", function () {
         equal(d.editor.options.type, "connection");
     });
-
-    // ------------------------------------------------------------
-    module("Editing / Rotation", {
-        setup: function() {
-            createDiagram({
-                shapes: [{
-                    id: "id1",
-                    type: "Rectangle",
-                    x: 0,
-                    y: 0,
-                    width: 100,
-                    height: 100
-                }],
-                editable: false
-            });
-        },
-
-        teardown: function() {
-            diagram.destroy();
-            QUnit.fixture.closest("body").find(".k-window-content").each(function(idx, element) {
-                $(element).data("kendoWindow").destroy();
-            });
-            QUnit.fixture.closest("body").find(".k-overlay").remove();
-        }
-    });
-    test("disable rotation", function() {
-        diagram.options.editable.rotate = false;
-        diagram.shapes[0].select(true);
-        ok(!kendo.util.defined(diagram._resizingAdorner.rotationThumb));
-    });
 })();
