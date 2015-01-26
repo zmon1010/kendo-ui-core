@@ -954,6 +954,37 @@ div[name="recurrenceRule"] > .k-dropdown
     margin: .5em 0 .7em;
 }
 
+/* responsive styles  */
+
+@media (max-width: 1000px) {
+    .k-scheduler-toolbar > ul.k-scheduler-views > li
+    {
+        display: none;
+    }
+    .k-scheduler-toolbar > ul.k-scheduler-views > li.k-state-selected
+    {
+        display: inline-block;
+        border-width:1px;
+    }
+    
+    .k-scheduler-views > li.k-state-selected > .k-link
+    {
+        position: relative;
+        padding-right: 2.5em;
+    }
+    
+    .k-scheduler-views > li.k-state-selected > .k-link:after
+    {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 50%;
+        margin-top: -0.6665em;
+        right: 0.333em;
+        width: 1.333em;
+        height: 1.333em;
+    }
+}
 /* Remove scrollbars during PDF export */
 
 .k-scheduler-pdf-export {

@@ -385,14 +385,16 @@ html .km-pane-wrapper .k-header
 .k-state-selected .k-icon,
 .k-state-focused .k-icon,
 .k-column-menu .k-state-hover .k-sprite,
-.k-column-menu .k-state-active .k-sprite
+.k-column-menu .k-state-active .k-sprite,
+.k-scheduler-toolbar > ul.k-scheduler-views > li.k-state-selected.k-state-hover > .k-link:after
 {
     opacity:1;
 }
 
 .k-icon,
 .k-state-disabled .k-icon,
-.k-column-menu .k-sprite
+.k-column-menu .k-sprite,
+.k-scheduler-toolbar > ul.k-scheduler-views > li.k-state-selected > .k-link:after
 {
     opacity: @default-icon-opacity;
 }
@@ -415,7 +417,8 @@ html .km-pane-wrapper .k-header
 .k-drop-hint,
 .k-column-menu .k-sprite,
 .k-grid-mobile .k-resize-handle-inner:before,
-.k-grid-mobile .k-resize-handle-inner:after
+.k-grid-mobile .k-resize-handle-inner:after,
+.k-scheduler-toolbar > ul.k-scheduler-views > li.k-state-selected > .k-link:after
 {
     background-image: @sprite-image;
     border-color: transparent;
@@ -2321,4 +2324,29 @@ html .km-pane-wrapper .km-widget,
 .ktb-radio-disabled + .ktb-radio-label-active-before {
     background: @radio-disabled-background-color-after;
     border-color: @checkbox-disabled-border-color-before;
+}
+
+/* Responsive styles */
+
+@media (max-width: 1000px) {
+    .k-scheduler-toolbar > ul.k-scheduler-views > li.k-state-selected
+    {
+        border-radius: @main-border-radius;
+        .composite-background(@widget-gradient);
+        background-position: 50% 50%;
+        background-color: @header-background-color;
+        border-color: @widget-border-color;
+    }
+    
+    .k-scheduler-toolbar > ul.k-scheduler-views > li.k-state-selected.k-state-hover
+    {
+        border-color: @hover-border-color;
+        .composite-background(@hover-gradient);
+        background-color: @hover-background-color;
+    }
+    
+    .k-scheduler-toolbar > ul.k-scheduler-views > li.k-state-selected > .k-link
+    {
+        color: @widget-text-color;
+    }
 }
