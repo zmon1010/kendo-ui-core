@@ -20,8 +20,8 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// The name of the toolbar command. Either a built-in ("create", "pdf", "excel") or custom. The name is reflected in one of the CSS classes, which is applied to the button - k-grid-name.
-		/// This class can be used to obtain reference to the button after TreeList initialization and attach click handlers.
+        /// The name of the toolbar command. Either a built-in ("create", "excel", "pdf") or custom. The name is reflected in one of the CSS classes, which is applied to the button - k-grid-name.
+		/// This class can be used to get a reference to the button (after TreeList initialization) and attach click handlers.
         /// </summary>
         /// <param name="value">The value that configures the name.</param>
         public TreeListToolbarBuilder<T> Name(string value)

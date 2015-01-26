@@ -20,23 +20,33 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
+        /// Defines the text for the command buttons used across the widget.
+        /// </summary>
+        /// <param name="configurator">The action that configures the commands.</param>
+        public TreeListMessagesSettingsBuilder<T> Commands(Action<TreeListMessagesCommandsSettingsBuilder<T>> configurator)
+        {
+            configurator(new TreeListMessagesCommandsSettingsBuilder<T>(container.Commands));
+            return this;
+        }
+        
+        /// <summary>
+        /// Defines the text of the "Loading..." message when the widget loads its root-level items.
+        /// </summary>
+        /// <param name="value">The value that configures the loading.</param>
+        public TreeListMessagesSettingsBuilder<T> Loading(string value)
+        {
+            container.Loading = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// Defines the text of "No records to display" message when the widget does not show any items.
         /// </summary>
         /// <param name="value">The value that configures the norows.</param>
         public TreeListMessagesSettingsBuilder<T> NoRows(string value)
         {
             container.NoRows = value;
-
-            return this;
-        }
-        
-        /// <summary>
-        /// Defines the text of "Loading..." message when the widget loads its root-level items.
-        /// </summary>
-        /// <param name="value">The value that configures the loading.</param>
-        public TreeListMessagesSettingsBuilder<T> Loading(string value)
-        {
-            container.Loading = value;
 
             return this;
         }
@@ -60,16 +70,6 @@ namespace Kendo.Mvc.UI.Fluent
         {
             container.Retry = value;
 
-            return this;
-        }
-        
-        /// <summary>
-        /// Defines the text for the command buttons used across the widget.
-        /// </summary>
-        /// <param name="configurator">The action that configures the commands.</param>
-        public TreeListMessagesSettingsBuilder<T> Commands(Action<TreeListMessagesCommandsSettingsBuilder<T>> configurator)
-        {
-            configurator(new TreeListMessagesCommandsSettingsBuilder<T>(container.Commands));
             return this;
         }
         

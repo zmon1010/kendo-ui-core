@@ -19,13 +19,13 @@ namespace Kendo.Mvc.UI
 
         //>> Fields
         
-        public string Name { get; set; }
-        
-        public string Text { get; set; }
-        
         public string ClassName { get; set; }
         
         public ClientHandlerDescriptor Click { get; set; }
+        
+        public string Name { get; set; }
+        
+        public string Text { get; set; }
         
         //<< Fields
 
@@ -33,16 +33,6 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
-            if (Name.HasValue())
-            {
-                json["name"] = Name;
-            }
-            
-            if (Text.HasValue())
-            {
-                json["text"] = Text;
-            }
-            
             if (ClassName.HasValue())
             {
                 json["className"] = ClassName;
@@ -51,6 +41,16 @@ namespace Kendo.Mvc.UI
             if (Click.HasValue())
             {
                 json["click"] = Click;
+            }
+            
+            if (Name.HasValue())
+            {
+                json["name"] = Name;
+            }
+            
+            if (Text.HasValue())
+            {
+                json["text"] = Text;
             }
             
         //<< Serialization

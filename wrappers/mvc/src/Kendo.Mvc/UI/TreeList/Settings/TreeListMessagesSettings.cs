@@ -19,19 +19,19 @@ namespace Kendo.Mvc.UI
 
         //>> Fields
         
-        public string NoRows { get; set; }
-        
-        public string Loading { get; set; }
-        
-        public string RequestFailed { get; set; }
-        
-        public string Retry { get; set; }
-        
         public TreeListMessagesCommandsSettings Commands
         {
             get;
             set;
         }
+        
+        public string Loading { get; set; }
+        
+        public string NoRows { get; set; }
+        
+        public string RequestFailed { get; set; }
+        
+        public string Retry { get; set; }
         
         //<< Fields
 
@@ -39,14 +39,19 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
-            if (NoRows.HasValue())
+            var commands = Commands.ToJson();
+            if (commands.Any())
             {
-                json["noRows"] = NoRows;
+                json["commands"] = commands;
             }
-            
             if (Loading.HasValue())
             {
                 json["loading"] = Loading;
+            }
+            
+            if (NoRows.HasValue())
+            {
+                json["noRows"] = NoRows;
             }
             
             if (RequestFailed.HasValue())
@@ -59,11 +64,6 @@ namespace Kendo.Mvc.UI
                 json["retry"] = Retry;
             }
             
-            var commands = Commands.ToJson();
-            if (commands.Any())
-            {
-                json["commands"] = commands;
-            }
         //<< Serialization
         }
     }

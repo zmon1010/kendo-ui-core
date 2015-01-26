@@ -20,28 +20,6 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// The name of the command. The built-in commands are "edit", "createChild" and "destroy". When set to a custom value, it is rendered as a data-command attribute.
-        /// </summary>
-        /// <param name="value">The value that configures the name.</param>
-        public TreeListColumnCommandBuilder<T> Name(string value)
-        {
-            container.Name = value;
-
-            return this;
-        }
-        
-        /// <summary>
-        /// The text displayed by the command button. If not set the name option is used as the button text.
-        /// </summary>
-        /// <param name="value">The value that configures the text.</param>
-        public TreeListColumnCommandBuilder<T> Text(string value)
-        {
-            container.Text = value;
-
-            return this;
-        }
-        
-        /// <summary>
         /// The CSS class applied to the command button.
         /// </summary>
         /// <param name="value">The value that configures the classname.</param>
@@ -70,6 +48,28 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeListColumnCommandBuilder<T> Click(string handler)
         {
             container.Click.HandlerName = handler;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The name of the command. The built-in commands are "edit", "createChild" and "destroy". When set to a custom value, it is rendered as a data-command attribute.
+        /// </summary>
+        /// <param name="value">The value that configures the name.</param>
+        public TreeListColumnCommandBuilder<T> Name(string value)
+        {
+            container.Name = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The text displayed by the command button. If not set the name option is used as the button text.
+        /// </summary>
+        /// <param name="value">The value that configures the text.</param>
+        public TreeListColumnCommandBuilder<T> Text(string value)
+        {
+            container.Text = value;
 
             return this;
         }

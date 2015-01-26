@@ -134,11 +134,31 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// If set to true the user can filter the data source using the treelist filter menu. Filtering is disabled by default.Can be set to a JavaScript object which represents the filter menu configuration.
         /// </summary>
-        /// <param name="value">The value that configures the filterable.</param>
-        public TreeListBuilder<T> Filterable(bool value)
+        public TreeListBuilder<T> Filterable()
         {
-            container.Filterable = value;
+            return Filterable(true);
+        }
 
+        /// <summary>
+        /// If set to true the user can filter the data source using the treelist filter menu. Filtering is disabled by default.Can be set to a JavaScript object which represents the filter menu configuration.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the filterable option.</param>
+        public TreeListBuilder<T> Filterable(bool enabled)
+        {
+            container.Filterable.Enabled = enabled;
+            return this;
+        }
+
+        
+        /// <summary>
+        /// If set to true the user can filter the data source using the treelist filter menu. Filtering is disabled by default.Can be set to a JavaScript object which represents the filter menu configuration.
+        /// </summary>
+        /// <param name="configurator">The action that configures the filterable.</param>
+        public TreeListBuilder<T> Filterable(Action<TreeListFilterableSettingsBuilder<T>> configurator)
+        {
+            container.Filterable.Enabled = true;
+            
+            configurator(new TreeListFilterableSettingsBuilder<T>(container.Filterable));
             return this;
         }
         

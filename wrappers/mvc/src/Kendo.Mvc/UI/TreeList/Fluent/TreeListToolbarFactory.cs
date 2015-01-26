@@ -42,11 +42,11 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Adds an item for the pdf action.
+        /// Adds an item for the excel action.
         /// </summary>
-        public virtual TreeListToolbarBuilder<T> Pdf()
+        public virtual TreeListToolbarBuilder<T> Excel()
         {
-            var item = new TreeListToolbar() { Name = "pdf" };
+            var item = new TreeListToolbar() { Name = "excel" };
 
             container.Add(item);
 
@@ -54,11 +54,11 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Adds an item for the excel action.
+        /// Adds an item for the pdf action.
         /// </summary>
-        public virtual TreeListToolbarBuilder<T> Excel()
+        public virtual TreeListToolbarBuilder<T> Pdf()
         {
-            var item = new TreeListToolbar() { Name = "excel" };
+            var item = new TreeListToolbar() { Name = "pdf" };
 
             container.Add(item);
 

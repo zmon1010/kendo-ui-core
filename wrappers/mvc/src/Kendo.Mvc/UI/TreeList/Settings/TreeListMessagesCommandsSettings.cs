@@ -17,10 +17,6 @@ namespace Kendo.Mvc.UI
 
         //>> Fields
         
-        public string Edit { get; set; }
-        
-        public string Update { get; set; }
-        
         public string Canceledit { get; set; }
         
         public string Create { get; set; }
@@ -29,9 +25,13 @@ namespace Kendo.Mvc.UI
         
         public string Destroy { get; set; }
         
+        public string Edit { get; set; }
+        
         public string Excel { get; set; }
         
         public string Pdf { get; set; }
+        
+        public string Update { get; set; }
         
         //<< Fields
 
@@ -39,16 +39,6 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
-            if (Edit.HasValue())
-            {
-                json["edit"] = Edit;
-            }
-            
-            if (Update.HasValue())
-            {
-                json["update"] = Update;
-            }
-            
             if (Canceledit.HasValue())
             {
                 json["canceledit"] = Canceledit;
@@ -69,6 +59,11 @@ namespace Kendo.Mvc.UI
                 json["destroy"] = Destroy;
             }
             
+            if (Edit.HasValue())
+            {
+                json["edit"] = Edit;
+            }
+            
             if (Excel.HasValue())
             {
                 json["excel"] = Excel;
@@ -77,6 +72,11 @@ namespace Kendo.Mvc.UI
             if (Pdf.HasValue())
             {
                 json["pdf"] = Pdf;
+            }
+            
+            if (Update.HasValue())
+            {
+                json["update"] = Update;
             }
             
         //<< Serialization

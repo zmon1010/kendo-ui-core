@@ -86,7 +86,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Set to true to reverse the paper dimensions if needed such that width is the larger edge.
+        /// Set to true to reverse the paper dimensions such that width is the larger edge.
         /// </summary>
         /// <param name="value">The value that configures the landscape.</param>
         public TreeListPdfSettingsBuilder<T> Landscape(bool value)
@@ -109,7 +109,7 @@ namespace Kendo.Mvc.UI.Fluent
         
         /// <summary>
         /// Specifies the paper size of the PDF document.
-		/// The default "auto" means paper size is determined by content.Supported values:
+		/// The default "auto" means the paper size is determined by the content.Supported values:
         /// </summary>
         /// <param name="value">The value that configures the papersize.</param>
         public TreeListPdfSettingsBuilder<T> PaperSize(string value)
@@ -121,7 +121,8 @@ namespace Kendo.Mvc.UI.Fluent
         
         /// <summary>
         /// The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
-		/// Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.
+		/// Such browsers are IE version 9 and lower, and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+		/// attachment; filename="&lt;fileName.pdf&gt;".
         /// </summary>
         /// <param name="value">The value that configures the proxyurl.</param>
         public TreeListPdfSettingsBuilder<T> ProxyURL(string value)

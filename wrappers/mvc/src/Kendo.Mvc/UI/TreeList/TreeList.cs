@@ -41,6 +41,8 @@ namespace Kendo.Mvc.UI
                 
             Excel = new TreeListExcelSettings();
                 
+            Filterable = new TreeListFilterableSettings();
+                
             Messages = new TreeListMessagesSettings();
                 
             Pdf = new TreeListPdfSettings();
@@ -88,7 +90,11 @@ namespace Kendo.Mvc.UI
             set;
         }
         
-        public bool? Filterable { get; set; }
+        public TreeListFilterableSettings Filterable
+        {
+            get;
+            set;
+        }
         
         public double? Height { get; set; }
         
@@ -168,11 +174,14 @@ namespace Kendo.Mvc.UI
             {
                 json["excel"] = excel;
             }
-            if (Filterable.HasValue)
+            var filterable = Filterable.ToJson();
+            if (filterable.Any())
             {
-                json["filterable"] = Filterable;
+                json["filterable"] = filterable;
+            } else if (Filterable.Enabled != false) {
+                json["filterable"] = Filterable.Enabled;
             }
-                
+
             if (Height.HasValue)
             {
                 json["height"] = Height;
