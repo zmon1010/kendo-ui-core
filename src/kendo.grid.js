@@ -5978,15 +5978,16 @@ var __meta__ = {
                     }
                 }
 
-                tables = $(">.k-grid-header table:first,>.k-grid-footer table:first",that.wrapper)
-                .add(that.table);
+                tables = $(">.k-grid-header table:first,>.k-grid-footer table:first",that.wrapper).add(that.table);
                 that._footerWidth = null;
 
                 if (width) {
-                    tables.width(width);
+                    tables.each(function() {
+                        this.style.width = width + "px";
+                    });
+
                     that._footerWidth = width;
                 }
-
                 if(browser.msie && browser.version == 8) {
                     tables.css("display", "inline-table");
                     setTimeout(function() {
@@ -6139,7 +6140,9 @@ var __meta__ = {
 
                     that._footerWidth = null;
                     if (width) {
-                        tables.width(width);
+                        tables.each(function() {
+                            this.style.width = width + "px";
+                        });
                         that._footerWidth = width;
                     }
                 }
