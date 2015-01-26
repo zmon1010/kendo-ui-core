@@ -39,7 +39,7 @@ namespace <#= Namespace #>
             this.db = db;
         }
 
-        public IEnumerable<ProductViewModel> Read()
+        public IEnumerable<<#= modelTypeName #>> Read()
         {
 <# if(UseViewModel) { #>
             return db.<#= entitySetName #>.Select(c => new <#= ViewModelTypeName #>
@@ -79,7 +79,7 @@ namespace <#= Namespace #>
             base.Dispose(disposing);
         }
 
-        public ActionResult <#= ViewPrefix #>Index()
+        public ActionResult <#= ViewPrefix #><#= ViewName #>()
         {
             return View(<#= ModelVariable #>Service.Read());
         }

@@ -48,31 +48,87 @@ if(Editable) {
 #>
       })
 <#
-if(Editable) {
-        if(EditableCreate || EditMode.Equals(batchEditMode)) {
+if(Editable || ExcelExport || PdfExport) {
 #>
-      .ToolBar(toolbar => {
+      .ToolBar(toolbar => {     
 <#
         if(EditableCreate){
 #>
             toolbar.Create();
 <#
         }
-        if(EditMode.Equals(batchEditMode)){
+        if(Editable && EditMode.Equals(batchEditMode)){
 #>
             toolbar.Save();
+<#
+        }
+        if(ExcelExport) {
+#>
+            toolbar.Excel();
+<#
+        }
+        if(PdfExport) {
+#>
+            toolbar.Pdf();
 <#
         }
 #>
       }) 
 <#       
     }
+    if(ColumnMenu) {
+#>
+      .ColumnMenu()
+<#
+    }
+    if(Editable){
 #>
       .Editable(editable => editable.Mode(GridEditMode.<#= EditMode #>))
 <#
-}
+    }
+    if(Pageable){
 #>
       .Pageable()
+<#
+    }
+    if(Navigatable){
+#>
+      .Navigatable()
+<#
+    }
+    if(Selectable){
+#>
+      .Selectable(selectable => {
+            selectable.Mode(GridSelectionMode.<#= SelectionMode #>);
+            selectable.Type(GridSelectionType.<#= SelectionType #>);
+      })
+<#
+    }
+    if(Sortable) {
+#>
+      .Sortable(sortable => {
+          sortable.SortMode(GridSortMode.<#= SortMode #>);
+<# 
+        if(!AllowUnsort){
+#>
+          sortable.AllowUnsort(false);
+<#
+        }
+#>
+      })
+<#
+    }
+    if(Filterable){
+#>
+        .Filterable(<# if (FilterMode.ToString() == "Row") { #>filterable => filterable.Mode(GridFilterMode.Row)<# } #>)
+<#
+    }
+    if(!Scrollable){
+#>
+      .Scrollable(scrollable => scrollable.Enabled(false))
+<#
+    }
+#>
       .DataSource(dataSource => dataSource
           .WebApi()
           .Model(model => model.Id(p => p.<#= PrimaryKeyName #>))

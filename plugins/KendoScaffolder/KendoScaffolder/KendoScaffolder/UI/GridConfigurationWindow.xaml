@@ -5,14 +5,19 @@
              xmlns:src="clr-namespace:KendoScaffolder.UI"
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              x:Class="KendoScaffolder.UI.GridConfigurationWindow"
-             mc:Ignorable="d" Height="800" Width="800" Title="Kendo UI Grid Configuration">
+             mc:Ignorable="d" Height="700" Width="700" ResizeMode="NoResize" Title="Kendo UI Grid Configuration">
     <Window.Resources>
         <src:RadioButtonCheckedConverter x:Key="RadioButtonCheckedConverter" />
     </Window.Resources>
+    
     <Grid>
-        <telerik:RadTabControl SelectedIndex="0" TabStripPlacement="Left" TabOrientation="Vertical" HorizontalAlignment="Stretch" Margin="39,19,61,68" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="630"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <telerik:RadTabControl SelectedIndex="0" TabStripPlacement="Left" TabOrientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0">
             <telerik:RadTabItem Width="50" Height="150"  Header="Model Options" >
-                <Grid>
+                <Grid Margin="20, 20, 0, 0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
@@ -47,7 +52,7 @@
                 </Grid>
             </telerik:RadTabItem>
             <telerik:RadTabItem Width="50" Height="150" Header="Grid options" >
-                <Grid>
+                <Grid Margin="20, 20, 0, 0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
@@ -68,7 +73,6 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="120"/>
@@ -77,13 +81,13 @@
 
                     <Label Grid.Row="0" Content="DataSource Type:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="179"/>
                     <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"
-                  ItemsSource="{Binding DataSourceTypes}" SelectedItem="{Binding SelectedDataSourceType, Mode=OneWayToSource}" />
+                  ItemsSource="{Binding DataSourceTypes}" SelectedItem="{Binding SelectedDataSourceType, Mode=TwoWay}" />
 
                     <CheckBox Grid.Row="1" Grid.Column="0"  Content="Editable" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Editable_Clicked" IsChecked="{Binding Editable, Mode=OneWayToSource}" />
                     <WrapPanel Grid.Row="2" Grid.Column="1" Name="EditModeWrapPanel" Visibility="Collapsed">
                         <Label   Name="EditModeLabel" Content="Edit Mode:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <ComboBox Name="EditMode" Margin="15, 0, 0, 0"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="101"
-              ItemsSource="{Binding EditModes}" SelectedItem="{Binding EditMode, Mode=OneWayToSource}" />
+              ItemsSource="{Binding EditModes}" SelectedItem="{Binding EditMode, Mode=TwoWay}" />
                     </WrapPanel>
                     <WrapPanel Grid.Row="3" Grid.Column="1" Name="CrudOperationsWrapPanel" Visibility="Collapsed">
                         <Label Name="CrudOperationsLabel" Content="Operations:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -95,9 +99,9 @@
                     <WrapPanel Grid.Row="5" Grid.Column="1" Name="FilterableWrapPanel" Visibility="Collapsed">
                         <Label Name="FilterableLabel" Content="Mode:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <RadioButton GroupName="FilterableModeGroup" Name="FilterableModeMenu" Margin="15, 0, 0, 0" Content="Menu" HorizontalAlignment="Left" VerticalAlignment="Center"
-                     IsChecked="{Binding FilterMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:FilterMode.Menu }}"/>
+                     IsChecked="{Binding GridFilterMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:GridFilterMode.Menu }}"/>
                         <RadioButton GroupName="FilterableModeGroup" Name="FilterableModeRow" Margin="15, 0, 0, 0" Content="Row" HorizontalAlignment="Left" VerticalAlignment="Center"
-                     IsChecked="{Binding FilterMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:FilterMode.Row }}"/>
+                     IsChecked="{Binding GridFilterMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:GridFilterMode.Row }}"/>
                     </WrapPanel>
                     <CheckBox Grid.Row="6" Content="Column Menu" IsChecked="{Binding ColumnMenu, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center" />
                     <CheckBox Grid.Row="7" Content="Navigatable" IsChecked="{Binding Navigatable, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -109,16 +113,16 @@
                     <WrapPanel Grid.Row="12" Grid.Column="1" Name="SelectionModeWrapPanel" Visibility="Collapsed">
                         <Label Name="SelectionMode" Content="Mode:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <RadioButton GroupName="SelectionModeGroup" Name="SelectionModeSingle" Margin="15, 0, 0, 0" Content="Single" HorizontalAlignment="Left" VerticalAlignment="Center"
-                     IsChecked="{Binding SelectionMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:SelectionMode.Single }}"/>
+                     IsChecked="{Binding GridSelectionMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:GridSelectionMode.Single }}"/>
                         <RadioButton GroupName="SelectionModeGroup" Name="SelectionModeMultiple" Margin="15, 0, 0, 0" Content="Multiple" HorizontalAlignment="Left" VerticalAlignment="Center"
-                     IsChecked="{Binding SelectionMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:SelectionMode.Multiple }}"/>
+                     IsChecked="{Binding GridSelectionMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:GridSelectionMode.Multiple }}"/>
                     </WrapPanel>
                     <WrapPanel Grid.Row="13" Grid.Column="1" Name="SelectionTypeWrapPanel" Visibility="Collapsed">
                         <Label Name="SelectionType" Content="Type:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <RadioButton Name="SelectionTypeRow" Content="Row" HorizontalAlignment="Left" Margin="15, 0, 0, 0" VerticalAlignment="Center"
-                     IsChecked="{Binding SelectionType, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:SelectionType.Row }}"/>
+                     IsChecked="{Binding GridSelectionType, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:GridSelectionType.Row }}"/>
                         <RadioButton Name="SelectionTypeCell" Content="Cell" HorizontalAlignment="Left" Margin="15, 0, 0, 0" VerticalAlignment="Center"
-                     IsChecked="{Binding SelectionType, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:SelectionType.Cell }}"/>
+                     IsChecked="{Binding GridSelectionType, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:GridSelectionType.Cell }}"/>
                     </WrapPanel>
                     
                     <CheckBox Grid.Row="14" Name="Sortable" Content="Sortable" IsChecked="{Binding Sortable, Mode=OneWayToSource}" Click="Sortable_Clicked" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -126,20 +130,20 @@
                     <WrapPanel Grid.Row="16" Grid.Column="1" Name="SortableModeWrapPanel" Visibility="Collapsed">
                         <Label Name="SortableMode" Content="Mode:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <RadioButton GroupName="SortableModeGroup" Name="SortableSingle" Margin="15, 0, 0, 0" Content="Single" HorizontalAlignment="Left" VerticalAlignment="Center"
-                     IsChecked="{Binding SortMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:SortMode.Single }}"/>
+                     IsChecked="{Binding GridSortMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:GridSortMode.SingleColumn }}"/>
                         <RadioButton GroupName="SortableModeGroup" Name="SortableMultiple" Margin="15, 0, 0, 0" Content="Multiple" HorizontalAlignment="Left" VerticalAlignment="Center"
-                     IsChecked="{Binding SortMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:SortMode.Multiple }}"/>
+                     IsChecked="{Binding GridSortMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:GridSortMode.MultipleColumn }}"/>
                     </WrapPanel>
                     <CheckBox Grid.Row="17" Content="Excel Export" Name="ExcelExport" IsChecked="{Binding ExcelExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <CheckBox Grid.Row="18" Content="PDF Export" Name="PdfExport" IsChecked="{Binding PdfExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <WrapPanel Grid.Row="19" Grid.Column="1">
-                        <Button Content="Add" IsDefault="True" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Click="AddButton_Click"/>
-                        <Button Content="Cancel" IsCancel="True" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Margin="15, 0, 0, 0"/>
-                    </WrapPanel>
+                    <CheckBox Grid.Row="18" Content="PDF Export" Name="PdfExport" IsChecked="{Binding PdfExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/> 
                     </Grid>
             </telerik:RadTabItem>
             <telerik:RadTabItem Width="50" Height="150" Header="Events" >
             </telerik:RadTabItem>
         </telerik:RadTabControl>
+        <WrapPanel Grid.Row="1" HorizontalAlignment="Center">
+            <Button Content="Add" IsDefault="True" VerticalAlignment="Center" Width="75" Click="AddButton_Click"/>
+            <Button Content="Cancel" IsCancel="True" VerticalAlignment="Center" Width="75" Margin="15, 0, 0, 0"/>
+        </WrapPanel>
     </Grid>
 </Window>

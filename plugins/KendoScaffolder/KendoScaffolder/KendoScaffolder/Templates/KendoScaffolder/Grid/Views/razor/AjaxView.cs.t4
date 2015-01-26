@@ -20,28 +20,27 @@ foreach (PropertyMetadata property in properties) {
                 foreach (EnvDTE.CodeElement child in ViewModelTypeChildren) { 
                     if(child.Name.Equals(property.PropertyName)) {
 #>
-        columns.Bound(c => c.<#= property.PropertyName#>).Width(140);
+        columns.Bound(c => c.<#= property.PropertyName#>);
 <#
                         break;
                     }
                 }  
             }  else {
 #>
-        columns.Bound(c => c.<#= property.PropertyName#>).Width(140);
+        columns.Bound(c => c.<#= property.PropertyName#>);
 <#
             }
     }
 }
-if(Editable) {
+if(Editable && EditMode != batchEditMode) {
 #>
-        columns.Command(command => { <# if (EditMode != batchEditMode) { #> command.Edit(); <# } #> <# if (EditableDestroy) { #> command.Destroy(); <# } #> }).Width(172);
+        columns.Command(command => {<# if (EditMode != batchEditMode) { #> command.Edit(); <# } #> <# if (EditableDestroy) { #>command.Destroy(); <# } #>}).Width(172);
 <#
 }
 #>
       })
 <#
-if(Editable) {
-        if(EditableCreate || EditMode.Equals(batchEditMode)) {
+if((Editable && EditMode.Equals(batchEditMode)) || ExcelExport || PdfExport) {
 #>
       .ToolBar(toolbar => {
 <#
@@ -50,21 +49,78 @@ if(Editable) {
             toolbar.Create();
 <#
         }
-        if(EditMode.Equals(batchEditMode)){
+        if(Editable && EditMode.Equals(batchEditMode)){
 #>
             toolbar.Save();
+<#
+        }
+        if(ExcelExport) {
+#>
+            toolbar.Excel();
+<#
+        }
+        if(PdfExport) {
+#>
+            toolbar.Pdf();
 <#
         }
 #>
       }) 
 <#       
     }
+    if(ColumnMenu) {
+#>
+      .ColumnMenu()
+<#
+    }
+    if(Editable){
 #>
       .Editable(editable => editable.Mode(GridEditMode.<#= EditMode #>))
 <#
-}
+    }
+    if(Pageable){
 #>
       .Pageable()
+<#
+    }
+    if(Navigatable){
+#>
+      .Navigatable()
+<#
+    }
+    if(Selectable){
+#>
+      .Selectable(selectable => {
+            selectable.Mode(GridSelectionMode.<#= SelectionMode #>);
+            selectable.Type(GridSelectionType.<#= SelectionType #>);
+      })
+<#
+    }
+    if(Sortable) {
+#>
+      .Sortable(sortable => {
+          sortable.SortMode(GridSortMode.<#= SortMode #>);
+<# 
+        if(!AllowUnsort){
+#>
+          sortable.AllowUnsort(false);
+<#
+        }
+#>
+      })
+<#
+    }
+    if(Filterable){
+#>
+        .Filterable(<# if (FilterMode.ToString() == "Row") { #>filterable => filterable.Mode(GridFilterMode.Row)<# } #>)
+<#
+    }
+    if(!Scrollable){
+#>
+      .Scrollable(scrollable => scrollable.Enabled(false))
+<#
+    }
+#>
       .DataSource(dataSource => dataSource
           .Ajax()
 <#

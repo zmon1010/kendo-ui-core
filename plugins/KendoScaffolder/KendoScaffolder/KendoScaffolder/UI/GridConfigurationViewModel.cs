@@ -6,10 +6,10 @@ using System.Linq;
 
 namespace KendoScaffolder.UI
 {
-    public enum FilterMode { Menu, Row }
-    public enum SortMode { Multiple, Single }
-    public enum SelectionMode { Multiple, Single }
-    public enum SelectionType { Row, Cell }
+    public enum GridFilterMode { Menu, Row }
+    public enum GridSortMode { MultipleColumn, SingleColumn }
+    public enum GridSelectionMode { Multiple, Single }
+    public enum GridSelectionType { Row, Cell }
 
     public class GridConfigurationViewModel
     {
@@ -34,7 +34,7 @@ namespace KendoScaffolder.UI
         public bool ColumnMenu { get; set; }
 
         public bool Filterable { get; set; }
-        public FilterMode FilterMode { get; set; }
+        public GridFilterMode FilterMode { get; set; }
 
         public bool Groupable { get; set; }
         public bool Navigatable { get; set; }
@@ -43,12 +43,12 @@ namespace KendoScaffolder.UI
         public bool Scrollable { get; set; }
 
         public bool Selectable { get; set; }
-        public SelectionMode SelectionMode { get; set; }
-        public SelectionType SelectionType { get; set; }
+        public GridSelectionMode SelectionMode { get; set; }
+        public GridSelectionType SelectionType { get; set; }
 
         public bool Sortable { get; set; }
         public bool AllowUnsort { get; set; }
-        public SortMode SortMode { get; set; }
+        public GridSortMode SortMode { get; set; }
 
         public bool ExcelExport { get; set; }
         public bool PdfExport { get; set; }
@@ -56,6 +56,13 @@ namespace KendoScaffolder.UI
         public GridConfigurationViewModel(CodeGenerationContext context)
         {
             Context = context;
+            ViewName = "Index";
+            EditMode = "InLine";
+            FilterMode = GridFilterMode.Menu;
+            SelectionMode = GridSelectionMode.Single;
+            SelectionType = GridSelectionType.Row;
+            SortMode = GridSortMode.SingleColumn;
+            SelectedDataSourceType = "Ajax";
         }
 
         /// <summary>

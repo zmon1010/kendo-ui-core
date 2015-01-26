@@ -14,6 +14,10 @@ namespace KendoScaffolder
     public class KendoScaffolder : CodeGenerator
     {
         GridConfigurationViewModel _viewModel;
+        Dictionary<string, object> CommonParameters { get; set; }
+        Dictionary<string, object> ControllerParameters { get; set; }
+        Dictionary<string, object> ViewParameters { get; set; }
+
         public static readonly string PathSeparator = Path.DirectorySeparatorChar.ToString();
 
         /// <summary>
@@ -25,8 +29,10 @@ namespace KendoScaffolder
             : base(context, information)
         {
             _viewModel = new GridConfigurationViewModel(Context);
+            //CommonParameters = new Dictionary<string, object>();
+            //ControllerParameters = new Dictionary<string, object>();
+            //ViewParameters = new Dictionary<string, object>();
         }
-
 
         /// <summary>
         /// Any UI to be displayed after the scaffolder has been selected from the Add Scaffold dialog.
@@ -39,116 +45,126 @@ namespace KendoScaffolder
             bool? showDialog = window.ShowDialog();
             return showDialog ?? false;
         }
-        
-        public override void GenerateCode()
+
+        private void BuildControllerParameters(CodeType modelType, CodeType viewModelType, bool useViewModel, bool editable, 
+                                               string editMode, string areaName, string controllerName, string dbContextName)
         {
-
-            var modelType = _viewModel.SelectedModelType.CodeType;
-            bool useViewModel = _viewModel.UseViewModel;
-            bool editable = _viewModel.Editable;
-
-            CodeType viewModelType = null;
+            ControllerParameters = new Dictionary<string, object>(CommonParameters);
+            ControllerParameters.Add("AreaName", areaName);
+            ControllerParameters.Add("ContextTypeName", dbContextName);
+            ControllerParameters.Add("ControllerName", controllerName);
+            ControllerParameters.Add("ModelTypeName", modelType.Name);
+            ControllerParameters.Add("Namespace", GetDefaultNamespace());
+            ControllerParameters.Add("RequiredNamespaces", new HashSet<string>() { modelType.Namespace.FullName });
 
             if (useViewModel)
             {
-                //validation for SelectedViewModelType
-                viewModelType = _viewModel.SelectedViewModelType.CodeType;
+                ControllerParameters.Add("ViewModelTypeName", viewModelType.Name);
+                ControllerParameters.Add("ViewModelTypeChildren", viewModelType.Children);
             }
+
+            if (editable)
+            {
+                ControllerParameters.Add("EditMode", editMode);
+                ControllerParameters.Add("EditableCreate", _viewModel.EditableCreate);
+                ControllerParameters.Add("EditableUpdate", _viewModel.EditableUpdate);
+                ControllerParameters.Add("EditableDestroy", _viewModel.EditableDestroy);
+            }
+        }
+
+        public override void GenerateCode()
+        {
+            CodeType modelType = _viewModel.SelectedModelType.CodeType;
+            bool useViewModel = _viewModel.UseViewModel;
+            CodeType viewModelType = useViewModel ? _viewModel.SelectedViewModelType.CodeType : null;
 
             // Ensure the Data Context
             string dbContextTypeName = _viewModel.SelectedDbContextType.TypeName;
             IEntityFrameworkService efService = (IEntityFrameworkService)Context.ServiceProvider.GetService(typeof(IEntityFrameworkService));
-            
-            
+
             ModelMetadata efMetadata = efService.AddRequiredEntity(Context, dbContextTypeName, modelType.FullName);
-
-
-            // Get the dbContext
             ICodeTypeService codeTypeService = GetService<ICodeTypeService>();
             CodeType dbContext = codeTypeService.GetCodeType(Context.ActiveProject, dbContextTypeName);
 
             // Get the dbContext namespace
-            string dbContextNamespace = dbContext.Namespace != null ? dbContext.Namespace.FullName : String.Empty;
+            //string dbContextNamespace = dbContext.Namespace != null ? dbContext.Namespace.FullName : String.Empty;
 
-            // Get the primary key of the model
             PropertyMetadata primaryKey = efMetadata.PrimaryKeys.FirstOrDefault();
             string pluralizedName = efMetadata.EntitySetName;
             string modelNameSpace = modelType.Namespace != null ? modelType.Namespace.FullName : String.Empty;
             string relativePath = string.Empty;
 
-            var defaultNamespace = GetDefaultNamespace();
             string modelTypeVariable = GetTypeVariable(modelType.Name);
-            string bindAttributeIncludeText = GetBindAttributeIncludeText(efMetadata);
 
             string areaName = GetAreaName(GetSelectionRelativePath());
-            string controllerName = _viewModel.ControllerName;
+            string controllerName = (_viewModel.ControllerName != String.Empty) ? _viewModel.ControllerName : KendoConstants.DefaultGridControllerName;
             string controllerRootName = controllerName.Replace("Controller", "");
-            string controllerPath = Path.Combine("Controllers", controllerName) ;
-            
-            if(areaName != String.Empty) {
-                controllerPath = Path.Combine("Areas", areaName, controllerPath);
-            }
+            string viewName = (_viewModel.ViewName != String.Empty) ? _viewModel.ViewName : KendoConstants.DefaultGridViewName;
+            string editMode = _viewModel.EditMode;
+            bool editable = _viewModel.Editable;
 
-            Dictionary<string, object> controllerParameters = new Dictionary<string, object>(){
-                {"AreaName", areaName},
-                {"BindAttributeIncludeText", bindAttributeIncludeText}, 
-                {"ContextTypeName", dbContext.Name},
-                {"ControllerName", controllerName }, 
+            CommonParameters = new Dictionary<string, object>() 
+            {
                 {"ControllerRootName" , controllerRootName},
-                {"IsOverpostingProtectionRequired", true}, 
-                {"ModelTypeName", modelType.Name},
+                {"ExcelExport", _viewModel.ExcelExport},
                 {"ModelVariable", modelTypeVariable},
                 {"ModelMetadata", efMetadata},
-                {"Namespace", defaultNamespace},
-                {"OverpostingWarningMessage", "To protect from overposting attacks, please enable the specific properties you want to bind to, for more details see http://go.microsoft.com/fwlink/?LinkId=317598."}, 
+                {"PdfExport", _viewModel.PdfExport},
                 {"PrimaryKeyMetadata", primaryKey},
                 {"PrimaryKeyName", primaryKey.PropertyName},
                 {"PrimaryKeyType", primaryKey.ShortTypeName},
-                {"RequiredNamespaces", new HashSet<string>(){modelType.Namespace.FullName}}, 
-                {"UseAsync", false}, 
                 {"UseViewModel", useViewModel},
+                {"ViewName", viewName},
                 {"ViewPrefix", ""}
             };
 
-            string editMode = _viewModel.EditMode;
+            BuildControllerParameters(modelType, viewModelType, useViewModel, editable, editMode, areaName, controllerName, dbContext.Name);
+            string controllerTemplate = DetermineControllerTemplate(editMode);
+            string controllerPath = DetermineControllerPath(controllerName, areaName);
 
-            if (useViewModel)
-            {
-                controllerParameters.Add("ViewModelTypeName", viewModelType.Name);
-                controllerParameters.Add("ViewModelTypeChildren", viewModelType.Children);
-            }
+            BuildViewParameters(modelType, viewModelType, useViewModel, editable, editMode);
+            string viewPath = BuildViewPath(areaName, controllerRootName, viewName);
+            string viewTemplate = DetermineViewTemplate();
 
-            if (editable)
-            {
-                controllerParameters.Add("EditMode", editMode);
-                controllerParameters.Add("EditableCreate", _viewModel.EditableCreate);
-                controllerParameters.Add("EditableUpdate", _viewModel.EditableUpdate);
-                controllerParameters.Add("EditableDestroy", _viewModel.EditableDestroy);
-            }
+            this.AddFileFromTemplate(Context.ActiveProject, controllerPath, controllerTemplate, ControllerParameters, skipIfExists: false);
+            this.AddFolder(Context.ActiveProject, Path.Combine("Views", controllerRootName));
+            this.AddFileFromTemplate(Context.ActiveProject, viewPath, viewTemplate, ViewParameters, skipIfExists: false);
+        }
 
-            var dataSourceType = _viewModel.SelectedDataSourceType;
+        private string DetermineControllerTemplate(string editMode)
+        {
+            string dataSourceType = _viewModel.SelectedDataSourceType;
 
-            string controllerTemplate = string.Empty;
             switch (dataSourceType)
             {
                 case "Ajax":
-                    controllerTemplate = (editMode == "InCell") ? "AjaxBatchController" : "AjaxController";
-                    break;
+                    return (editMode == "InCell") ? "AjaxBatchController" : "AjaxController";
                 case "Server":
-                    controllerTemplate = "ServerController";
-                    break;
+                    return "ServerController";
                 case "WebApi":
-                    controllerTemplate = "WebApiController";
-                    break;
+                    return "WebApiController";
                 default:
-                    break;
+                    return "";
+            }
+        }
+
+        private string DetermineControllerPath(string controllerName, string areaName)
+        {
+            string controllerPath = Path.Combine("Controllers", controllerName);
+            if (areaName != String.Empty)
+            {
+                controllerPath = Path.Combine("Areas", areaName, controllerPath);
             }
 
-            // Generate Controller
-            // TODO output path?
-            this.AddFileFromTemplate(Context.ActiveProject, controllerPath, controllerTemplate, controllerParameters, skipIfExists: false);
+            return controllerPath;
+        }
 
-            // Generate View
+        private void BuildViewParameters(CodeType modelType, CodeType viewModelType, bool useViewModel, bool editable,string editMode)
+        {
+            bool filterable = _viewModel.Filterable;
+            bool scrollable = _viewModel.Scrollable;
+            bool selectable = _viewModel.Selectable;
+            bool sortable = _viewModel.Sortable;
             string viewDataTypeName = modelType.Namespace.FullName + "." + modelType.Name;
 
             if (useViewModel && viewModelType != null)
@@ -156,47 +172,68 @@ namespace KendoScaffolder
                 viewDataTypeName = viewModelType.Namespace.FullName + "." + viewModelType.Name;
             }
 
-            Dictionary<string, object> viewParameters = new Dictionary<string, object>(){
-                {"ControllerRootName" , controllerRootName},
-                {"Editable", editable},
-                {"IsBundleConfigPresent", true},
-                {"IsLayoutPageSelected", true}, 
-                {"IsPartialView" , false},
-                {"LayoutPageFile", ""},
-                {"ModelMetadata", efMetadata},
-                {"ModelVariable", modelTypeVariable},
-                {"PrimaryKeyMetadata", primaryKey},
-                {"PrimaryKeyName", primaryKey.PropertyName},
-                {"PrimaryKeyType", primaryKey.ShortTypeName},
-                {"ReferenceScriptLibraries", false},
-                {"UseViewModel", useViewModel},
-                {"ViewName", "Index"}, 
-                {"ViewDataTypeName", viewDataTypeName},
-                {"ViewPrefix", ""}
-            };
+            ViewParameters = new Dictionary<string, object>(CommonParameters);
+            ViewParameters.Add("ColumnMenu", _viewModel.ColumnMenu);
+            ViewParameters.Add("Editable", editable);
+            ViewParameters.Add("Filterable", filterable);
+            ViewParameters.Add("IsBundleConfigPresent", true);
+            ViewParameters.Add("IsLayoutPageSelected", true);
+            ViewParameters.Add("IsPartialView", false);
+            ViewParameters.Add("LayoutPageFile", "");
+            ViewParameters.Add("Navigatable", _viewModel.Navigatable);
+            ViewParameters.Add("Pageable", _viewModel.Pageable);
+            ViewParameters.Add("Reorderable", _viewModel.Reorderable);
+            ViewParameters.Add("Scrollable", scrollable);
+            ViewParameters.Add("Selectable", selectable);
+            ViewParameters.Add("Sortable", sortable);
+            ViewParameters.Add("ViewDataTypeName", viewDataTypeName);
 
             if (useViewModel)
             {
-                viewParameters.Add("ViewModelTypeChildren", viewModelType.Children);
+                ViewParameters.Add("ViewModelTypeChildren", viewModelType.Children);
             }
 
             if (editable)
             {
-                viewParameters.Add("EditMode", editMode);
-                viewParameters.Add("EditableCreate", _viewModel.EditableCreate);
-                viewParameters.Add("EditableUpdate", _viewModel.EditableUpdate);
-                viewParameters.Add("EditableDestroy", _viewModel.EditableDestroy);
+                ViewParameters.Add("EditMode", editMode);
+                ViewParameters.Add("EditableCreate", _viewModel.EditableCreate);
+                ViewParameters.Add("EditableUpdate", _viewModel.EditableUpdate);
+                ViewParameters.Add("EditableDestroy", _viewModel.EditableDestroy);
             }
 
-            string viewPath = Path.Combine("Views", controllerRootName, "Index");
+            if (filterable)
+            {
+                ViewParameters.Add("FilterMode", _viewModel.FilterMode);
+            }
+
+            if (selectable)
+            {
+                ViewParameters.Add("SelectionMode", _viewModel.SelectionMode);
+                ViewParameters.Add("SelectionType", _viewModel.SelectionType);
+            }
+
+            if (sortable)
+            {
+                ViewParameters.Add("SortMode", _viewModel.SortMode);
+            }
+        }
+
+        private string BuildViewPath(string areaName, string controllerRootName, string viewName)
+        {
+            string viewPath = Path.Combine("Views", controllerRootName, viewName);
 
             if (areaName != String.Empty)
 	        {
                 viewPath = Path.Combine("Areas", areaName, viewPath);
 	        }
 
-            this.AddFolder(Context.ActiveProject, Path.Combine("Views", controllerRootName));
-            this.AddFileFromTemplate(Context.ActiveProject, viewPath, dataSourceType + "View", viewParameters, skipIfExists: false);
+            return viewPath;
+        }
+
+        private string DetermineViewTemplate()
+        {
+            string dataSourceType = _viewModel.SelectedDataSourceType;
+            return dataSourceType + "View";
         }
 
         private ICodeTypeService GetService<T1>()
@@ -293,17 +330,6 @@ namespace KendoScaffolder
         private string GetTypeVariable(string typeName)
         {
             return typeName.Substring(0, 1).ToLower() + typeName.Substring(1, typeName.Length - 1);
-        }
-
-        private string GetBindAttributeIncludeText(ModelMetadata efMetadata)
-        {
-            string result = "";
-            foreach (PropertyMetadata metadata in efMetadata.Properties)
-            {
-                result += "," + metadata.PropertyName;
-            }
-                
-            return result.Substring(1);
         }
     }
 }

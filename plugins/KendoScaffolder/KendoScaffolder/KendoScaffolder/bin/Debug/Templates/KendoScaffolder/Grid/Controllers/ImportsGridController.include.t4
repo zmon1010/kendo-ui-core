@@ -15,6 +15,8 @@
 <#@ parameter type="System.Boolean" name="EditableCreate" #>
 <#@ parameter type="System.Boolean" name="EditableUpdate" #>
 <#@ parameter type="System.Boolean" name="EditableDestroy" #>
+<#@ parameter type="System.Boolean" name="ExcelExport" #>
+<#@ parameter type="System.Boolean" name="PdfExport" #>
 <#@ parameter type="System.String" name="ModelVariable" #>
 <#@ parameter type="Microsoft.AspNet.Scaffolding.Core.Metadata.ModelMetadata" name="ModelMetadata" #>
 <#@ parameter type="System.String" name="ModelTypeName" #>
@@ -24,4 +26,5 @@
 <#@ parameter type="System.String" name="Namespace" #>
 <#@ parameter type="System.Collections.Generic.HashSet<System.String>" name="RequiredNamespaces" #>
 <#@ parameter type="System.Boolean" name="UseViewModel" #>
+<#@ parameter type="System.String" name ="ViewName" #>
 <#@ parameter type="System.String" name ="ViewPrefix" #>

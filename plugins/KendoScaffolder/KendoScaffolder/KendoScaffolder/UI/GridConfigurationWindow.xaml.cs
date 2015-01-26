@@ -63,7 +63,7 @@ namespace KendoScaffolder.UI
 
         private void Filterable_Clicked(object sender, RoutedEventArgs e)
         {
-            if (FilterableLabel.Visibility == Visibility.Visible)
+            if (FilterableWrapPanel.Visibility == Visibility.Visible)
             {
                 FilterableWrapPanel.Visibility = Visibility.Collapsed;
             }
@@ -120,7 +120,7 @@ namespace KendoScaffolder.UI
     {
         public object Convert(object value, Type targetType, object parameter,
             System.Globalization.CultureInfo culture)
-        {
+        {   
             return value.Equals(parameter);
         }
 

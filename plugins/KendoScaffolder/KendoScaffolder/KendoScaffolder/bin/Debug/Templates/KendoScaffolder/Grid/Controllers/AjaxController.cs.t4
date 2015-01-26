@@ -35,8 +35,7 @@ namespace <#= Namespace #>
 #>
     public class <#= ControllerName #> : Controller
     {
-        // GET: <#= routePrefix #>/<#= ViewPrefix #>Index
-        public ActionResult <#= ViewPrefix #>Index()
+        public ActionResult <#= ViewPrefix #><#= ViewName #>()
         {
             return View();
         }
@@ -156,6 +155,27 @@ ClearIndent();
             }
 
             return Json(new[] { <#= ModelVariable #> }.ToDataSourceResult(request, ModelState));
+        }
+<# } #>
+<# if(ExcelExport) { #>
+
+        [HttpPost]
+        public ActionResult Excel_Export_Save(string contentType, string base64, string fileName)
+        {
+            var fileContents = Convert.FromBase64String(base64);
+
+            return File(fileContents, contentType, fileName);
+        }
+<# } #>
+
+<# if(PdfExport) { #>
+    
+        [HttpPost]
+        public ActionResult Pdf_Export_Save(string contentType, string base64, string fileName)
+        {
+            var fileContents = Convert.FromBase64String(base64);
+
+            return File(fileContents, contentType, fileName);
         }
 <# } #>
     }
