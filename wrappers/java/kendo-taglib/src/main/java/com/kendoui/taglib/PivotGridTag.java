@@ -47,8 +47,16 @@ public class PivotGridTag extends WidgetTag /* interfaces */implements DataBound
         return "pivotGrid";
     }
 
+    public void setExcel(com.kendoui.taglib.pivotgrid.ExcelTag value) {
+        setProperty("excel", value);
+    }
+
     public void setMessages(com.kendoui.taglib.pivotgrid.MessagesTag value) {
         setProperty("messages", value);
+    }
+
+    public void setPdf(com.kendoui.taglib.pivotgrid.PdfTag value) {
+        setProperty("pdf", value);
     }
 
     public void setSortable(com.kendoui.taglib.pivotgrid.SortableTag value) {
@@ -67,8 +75,16 @@ public class PivotGridTag extends WidgetTag /* interfaces */implements DataBound
         setEvent("dataBound", value.getBody());
     }
 
+    public void setExcelExport(ExcelExportFunctionTag value) {
+        setEvent("excelExport", value.getBody());
+    }
+
     public void setExpandMember(ExpandMemberFunctionTag value) {
         setEvent("expandMember", value.getBody());
+    }
+
+    public void setPdfExport(PdfExportFunctionTag value) {
+        setEvent("pdfExport", value.getBody());
     }
 
     public boolean getAutoBind() {
@@ -199,6 +215,18 @@ public class PivotGridTag extends WidgetTag /* interfaces */implements DataBound
         setProperty("dataBound", new Function(value));
     }
 
+    public String getExcelExport() {
+        Function property = ((Function)getProperty("excelExport"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setExcelExport(String value) {
+        setProperty("excelExport", new Function(value));
+    }
+
     public String getExpandMember() {
         Function property = ((Function)getProperty("expandMember"));
         if (property != null) {
@@ -209,6 +237,18 @@ public class PivotGridTag extends WidgetTag /* interfaces */implements DataBound
 
     public void setExpandMember(String value) {
         setProperty("expandMember", new Function(value));
+    }
+
+    public String getPdfExport() {
+        Function property = ((Function)getProperty("pdfExport"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setPdfExport(String value) {
+        setProperty("pdfExport", new Function(value));
     }
 
 //<< Attributes

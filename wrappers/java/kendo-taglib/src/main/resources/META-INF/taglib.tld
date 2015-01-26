@@ -2020,7 +2020,9 @@ body of the chart.</description>
 
 
     <tag>
-        <description>The selected axis range. If set, axis selection will be enabled.The range units are:</description>
+        <description>The selected axis range. If set, axis selection will be enabled.The range is index based, starting from 0.
+Categories with indexes in the range [select.from, select.to) will be selected.
+That is, the last category in the range will not be included in the selection.If the categories are dates, the range must also be specified with date values.</description>
         <name>chart-categoryAxisItem-select</name>
         <tag-class>com.kendoui.taglib.chart.CategoryAxisItemSelectTag</tag-class>
         <body-content>JSP</body-content>
@@ -11535,7 +11537,7 @@ makes a HTTP request for every CRUD operation.</description>
         </attribute>
         <attribute>
             <description>If set the data source will use a predefined transport and/or schema.
-The supported values are "odata" which supports the OData v.2 protocol, "odata-v4" which partially supports 
+The supported values are "odata" which supports the OData v.2 protocol, "odata-v4" which partially supports
 odata version 4 and "signalr".</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
@@ -12816,7 +12818,7 @@ data source is fired. By default the widget will bind to the data source specifi
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The name of the tool. The built-in tools are "edit" and "delete". Can be set to a custom value.</description>
+            <description>The name of the tool. The built-in tools are "edit" and "delete".</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -13029,7 +13031,7 @@ data source is fired. By default the widget will bind to the data source specifi
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The name of the tool. The built-in tools are "edit" and "delete". Can be set to a custom value.</description>
+            <description>The name of the tool. The built-in tools are "edit" and "delete".</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -13473,7 +13475,7 @@ data source is fired. By default the widget will bind to the data source specifi
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The name of the tool. The built-in tools are "edit", "createShape", "createConnection", "undo", "redo", "rotateClockwise" and "rotateAnticlockwise". Can be set to a custom value.</description>
+            <description>The name of the tool. The built-in tools are "edit", "createShape", "createConnection", "undo", "redo", "rotateClockwise" and "rotateAnticlockwise".</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -14015,7 +14017,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The name of the tool. The built-in tools are "edit", "delete", "rotateClockwise" and "rotateAnticlockwise". Can be set to a custom value.</description>
+            <description>The name of the tool. The built-in tools are "edit", "delete", "rotateClockwise" and "rotateAnticlockwise".</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -14357,7 +14359,7 @@ See visual.</description>
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The name of the tool. The built-in tools are "edit", "delete", "rotateClockwise" and "rotateAnticlockwise". Can be set to a custom value.</description>
+            <description>The name of the tool. The built-in tools are "edit", "delete", "rotateClockwise" and "rotateAnticlockwise".</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -15180,7 +15182,7 @@ and a contenteditable iframe is generated.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The URL responsible for serving the original file. A file name placeholder should be specified.</description>
+            <description>The URL responsible for serving the original file. A file name placeholder should be specified. By default the placeholder value is URL encoded. If this is not desired, use a function.</description>
             <name>fileUrl</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -15373,7 +15375,7 @@ Refer to the jQuery.ajax documentation for further info.</description>
     </tag>
 
     <tag>
-        <description>The URL responsible for serving the original file. A file name placeholder should be specified.</description>
+        <description>The URL responsible for serving the original file. A file name placeholder should be specified. By default the placeholder value is URL encoded. If this is not desired, use a function.</description>
         <name>editor-fileBrowser-transport-fileUrl</name>
         <tag-class>com.kendoui.taglib.editor.FileBrowserTransportFileUrlFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -15628,7 +15630,7 @@ Refer to the jQuery.ajax documentation for further info.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The URL responsible for serving the original image. A file name placeholder should be specified.</description>
+            <description>The URL responsible for serving the original image. A file name placeholder should be specified. By default the placeholder value is URL encoded. If this is not desired, use a function.</description>
             <name>imageUrl</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -15835,7 +15837,7 @@ If function is assigned, the current path and image name will be provided.</desc
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The URL responsible for serving the original image. A file name placeholder should be specified.</description>
+        <description>The URL responsible for serving the original image. A file name placeholder should be specified. By default the placeholder value is URL encoded. If this is not desired, use a function.</description>
         <name>editor-imageBrowser-transport-imageUrl</name>
         <tag-class>com.kendoui.taglib.editor.ImageBrowserTransportImageUrlFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -16222,6 +16224,13 @@ If function is assigned, the current path and image name will be provided.</desc
         <attribute>
             <description>Indicates whether inline scripts will be serialized and posted to the server.</description>
             <name>scripts</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Indicates whether the font styles will be saved as semantic (strong / em / span) tags,
+or as presentational (b / i / u / font) tags. Used for outputting content for legacy systems.</description>
+            <name>semantic</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
@@ -17445,7 +17454,7 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>If set to true the user would be able to edit the data to which the grid is bound to. By default editing is disabled.Can be set to a string ("inline", "incell" or "popup") to specify the editing mode. The default editing mode is "incell".Can be set to a JavaScript object which represents the editing configuration.</description>
+            <description>If set to true the user would be able to edit the data to which the grid is bound. By default editing is disabled.Can be set to a string ("inline", "incell" or "popup") to specify the editing mode. The default editing mode is "incell".Can be set to a JavaScript object which represents the editing configuration.</description>
             <name>editable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -17524,8 +17533,8 @@ The grid uses same layout for both phone and tablet.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole Grid Toolbar,
-and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Grid Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the Grid Toolbar. Commands can be custom or built-in ("cancel", "create", "save", "excel", "pdf").The "cancel" built-in command reverts any data changes done by the end user.The "create" command adds an empty data item to the grid.The "save" command persists any data changes done by the end user.The "excel" command exports the grid data in MS Excel format.The "pdf" command exports the grid data in PDF format.</description>
+            <description>If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole grid Toolbar,
+and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Grid Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the grid's Toolbar. Commands can be custom or built-in ("cancel", "create", "save", "excel", "pdf").The "cancel" built-in command reverts any data changes done by the end user.The "create" command adds an empty data item to the grid.The "save" command persists any data changes done by the end user.The "excel" command exports the grid data in MS Excel format.The "pdf" command exports the grid data in PDF format.</description>
             <name>toolbar</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18125,7 +18134,7 @@ Each table row consists of table cells (&lt;td&gt;) which represent the grid col
     </tag>
 
     <tag>
-        <description>If set to true the user would be able to edit the data to which the grid is bound to. By default editing is disabled.Can be set to a string ("inline", "incell" or "popup") to specify the editing mode. The default editing mode is "incell".Can be set to a JavaScript object which represents the editing configuration.</description>
+        <description>If set to true the user would be able to edit the data to which the grid is bound. By default editing is disabled.Can be set to a string ("inline", "incell" or "popup") to specify the editing mode. The default editing mode is "incell".Can be set to a JavaScript object which represents the editing configuration.</description>
         <name>grid-editable</name>
         <tag-class>com.kendoui.taglib.grid.EditableTag</tag-class>
         <body-content>JSP</body-content>
@@ -18237,7 +18246,8 @@ which field to update. The other option is to use MVVM bindings in order to bind
         </attribute>
         <attribute>
             <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
-Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.</description>
+Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+attachment; filename="&lt;fileName.xslx&gt;".</description>
             <name>proxyURL</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18254,7 +18264,7 @@ Such browsers are IE version 9 and lower and Safari.The developer is responsible
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>If set to true the filter menu allows the user to input a second criteria.</description>
+            <description>If set to true the filter menu allows the user to input a second criterion.</description>
             <name>extra</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -18571,49 +18581,49 @@ Such browsers are IE version 9 and lower and Safari.The developer is responsible
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Defines the text of "Cancel Changes" button located in the toolbar of the widget.</description>
+            <description>Defines the text of the "Cancel Changes" button located in the toolbar of the widget.</description>
             <name>cancel</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Cancel" button that is rendered in inline or popup editing mode.</description>
+            <description>Defines the text of the "Cancel" button that is rendered in inline or popup editing mode.</description>
             <name>canceledit</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Add new record" button located in the toolbar of the widget.</description>
+            <description>Defines the text of the "Add new record" button located in the toolbar of the widget.</description>
             <name>create</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Delete" button rendered in inline or popup editing mode.</description>
+            <description>Defines the text of the "Delete" button rendered in inline or popup editing mode.</description>
             <name>destroy</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Edit" button that is rendered in inline or popup editing mode.</description>
+            <description>Defines the text of the "Edit" button that is rendered in inline or popup editing mode.</description>
             <name>edit</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Export to Excel" button of the grid toolbar.</description>
+            <description>Defines the text of the "Export to Excel" button of the grid toolbar.</description>
             <name>excel</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Save Changes" button located in the toolbar of the widget.</description>
+            <description>Defines the text of the "Save Changes" button located in the toolbar of the widget.</description>
             <name>save</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Update" button that is rendered in inline or popup editing mode.</description>
+            <description>Defines the text of the "Update" button that is rendered in inline or popup editing mode.</description>
             <name>update</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18818,8 +18828,8 @@ The default "auto" means paper size is determined by content.Supported values:</
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
-Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.</description>
+            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+attachment; filename="&lt;fileName.pdf&gt;".</description>
             <name>proxyURL</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18906,7 +18916,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The sorting mode. If set to "single" the user can sort by one column. If set to "multiple" the user can sort by one column.</description>
+            <description>The sorting mode. If set to "single" the user can sort by one column. If set to "multiple" the user can sort by multiple columns.</description>
             <name>mode</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -18917,16 +18927,16 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
 
     <tag>
-        <description>If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole Grid Toolbar,
-and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Grid Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the Grid Toolbar. Commands can be custom or built-in ("cancel", "create", "save", "excel", "pdf").The "cancel" built-in command reverts any data changes done by the end user.The "create" command adds an empty data item to the grid.The "save" command persists any data changes done by the end user.The "excel" command exports the grid data in MS Excel format.The "pdf" command exports the grid data in PDF format.</description>
+        <description>If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole grid Toolbar,
+and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Grid Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the grid's Toolbar. Commands can be custom or built-in ("cancel", "create", "save", "excel", "pdf").The "cancel" built-in command reverts any data changes done by the end user.The "create" command adds an empty data item to the grid.The "save" command persists any data changes done by the end user.The "excel" command exports the grid data in MS Excel format.The "pdf" command exports the grid data in PDF format.</description>
         <name>grid-toolbar</name>
         <tag-class>com.kendoui.taglib.grid.ToolbarTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole Grid Toolbar,
-and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Grid Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the Grid Toolbar. Commands can be custom or built-in ("cancel", "create", "save", "excel", "pdf").The "cancel" built-in command reverts any data changes done by the end user.The "create" command adds an empty data item to the grid.The "save" command persists any data changes done by the end user.The "excel" command exports the grid data in MS Excel format.The "pdf" command exports the grid data in PDF format.</description>
+        <description>If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole grid Toolbar,
+and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the Grid Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the grid's Toolbar. Commands can be custom or built-in ("cancel", "create", "save", "excel", "pdf").The "cancel" built-in command reverts any data changes done by the end user.The "create" command adds an empty data item to the grid.The "save" command persists any data changes done by the end user.The "excel" command exports the grid data in MS Excel format.The "pdf" command exports the grid data in PDF format.</description>
         <name>grid-toolbarItem</name>
         <tag-class>com.kendoui.taglib.grid.ToolbarItemTag</tag-class>
 
@@ -22798,8 +22808,55 @@ About the data item structure review this help topic.</description>
             <name>collapseMember</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+        <attribute>
+            <description>Fired when saveAsExcel method is called.</description>
+            <name>excelExport</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user clicks the "Export to PDF" toolbar button.</description>
+            <name>pdfExport</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
         <dynamic-attributes>true</dynamic-attributes>
     </tag>
+
+    <tag>
+        <description>Configures the Kendo UI PivotGrid Excel export settings.</description>
+        <name>pivotGrid-excel</name>
+        <tag-class>com.kendoui.taglib.pivotgrid.ExcelTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Specifies the file name of the exported Excel file.</description>
+            <name>fileName</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Enables or disables column filtering in the Excel file. Not to be mistaken with the pivotgrid filtering feature.</description>
+            <name>filterable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.</description>
+            <name>forceProxy</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
+Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+attachment; filename="&lt;fileName.xslx&gt;".</description>
+            <name>proxyURL</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
 
     <tag>
         <description>The text messages displayed in the fields sections.</description>
@@ -22947,6 +23004,120 @@ About the data item structure review this help topic.</description>
 
 
     <tag>
+        <description>Configures the Kendo UI PivotGrid PDF export settings.</description>
+        <name>pivotGrid-pdf</name>
+        <tag-class>com.kendoui.taglib.pivotgrid.PdfTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The author of the PDF document.</description>
+            <name>author</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The creator of the PDF document.</description>
+            <name>creator</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The date when the PDF document is created. Defaults to new Date().</description>
+            <name>date</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the file name of the exported PDF file.</description>
+            <name>fileName</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.</description>
+            <name>forceProxy</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the keywords of the exported PDF file.</description>
+            <name>keywords</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Set to true to reverse the paper dimensions if needed such that width is the larger edge.</description>
+            <name>landscape</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the paper size of the PDF document.
+The default "auto" means paper size is determined by content.Supported values:</description>
+            <name>paperSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+attachment; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyURL</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the subject of the PDF file.</description>
+            <name>subject</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the title of the PDF file.</description>
+            <name>title</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>Specifies the margins of the page (numbers or strings with units). Supported
+units are "mm", "cm", "in" and "pt" (default).</description>
+        <name>pivotGrid-pdf-margin</name>
+        <tag-class>com.kendoui.taglib.pivotgrid.PdfMarginTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The bottom margin. Numbers are considered as "pt" units.</description>
+            <name>bottom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The left margin. Numbers are considered as "pt" units.</description>
+            <name>left</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The right margin. Numbers are considered as "pt" units.</description>
+            <name>right</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The top margin. Numbers are considered as "pt" units.</description>
+            <name>top</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+
+    </tag>
+
+
+
+
+    <tag>
         <description>If set to true the user could sort the pivotgrid by clicking the dimension fields. By default sorting is disabled.Can be set to a JavaScript object which represents the sorting configuration.</description>
         <name>pivotGrid-sortable</name>
         <tag-class>com.kendoui.taglib.pivotgrid.SortableTag</tag-class>
@@ -22985,6 +23156,18 @@ About the data item structure review this help topic.</description>
         <description>Fired before column or row field is collapsed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>pivotGrid-collapseMember</name>
         <tag-class>com.kendoui.taglib.pivotgrid.CollapseMemberFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when saveAsExcel method is called.</description>
+        <name>pivotGrid-excelExport</name>
+        <tag-class>com.kendoui.taglib.pivotgrid.ExcelExportFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user clicks the "Export to PDF" toolbar button.</description>
+        <name>pivotGrid-pdfExport</name>
+        <tag-class>com.kendoui.taglib.pivotgrid.PdfExportFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -37891,14 +38074,21 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The data source of the widget which is used render table rows. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
-instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.</description>
+            <description>If set to true the treelist will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
+By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.</description>
+            <name>columnMenu</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The data source of the widget which is used to render table rows. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
+instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance, the widget will use that instance and will not initialize a new one.</description>
             <name>dataSource</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>If set to true the user would be able to edit the data to which the treelist is bound to. By default editing is disabled.Can be set to a string ("inline" or "popup") to specify the editing mode. The default editing mode is "inline".Can be set to a JavaScript object which represents the editing configuration.</description>
+            <description>If set to true the user would be able to edit the data to which the treelist is bound. By default editing is disabled.Can be set to a string ("inline" or "popup") to specify the editing mode. The default editing mode is "inline".Can be set to a JavaScript object which represents the editing configuration.</description>
             <name>editable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -37941,10 +38131,20 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
         </attribute>
         <attribute>
             <description>If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole treelist Toolbar,
-and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the treelist Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the treelist Toolbar. Commands can be custom or built-in ("create", "pdf", "excel").The "create" command adds an empty data item to the treelist.The "excel" command exports the treelist data in MS Excel format.The "pdf" command exports the treelist data in PDF format.</description>
+and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the treelist Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the treelist Toolbar. Commands can be custom or built-in ("create", "excel", "pdf").</description>
             <name>toolbar</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>cancel</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user selects a table row or cell in the treelist.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>change</name>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <description>Fired when an item is about to be collapsed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
@@ -37959,6 +38159,11 @@ and the string value will be passed as an argument to a kendo.template() functio
         <attribute>
             <description>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>dataBound</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user edits or creates a data item.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>edit</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -38112,7 +38317,7 @@ field to which the column is bound. The treelist will create a column for every 
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the column will show the icons that are used for exapdning and collapsing of child rows. By default, the first column of the TreeList is expandable.</description>
+            <description>If set to true the column will show the icons that are used for expanding and collapsing child rows. By default, the first column of the TreeList is expandable.</description>
             <name>expandable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -38198,14 +38403,14 @@ Each table row consists of table cells (&lt;td&gt;) which represent the treelist
     </tag>
 
     <tag>
-        <description>The configuration of the column command(s). If set the column would display a button for every command. Commands can be custom or built-in ("edit", "destroy" or "createChild").The "edit" built-in command switches the current table row in edit mode.The "createChild" built-in command adds new child item to the current table row and switches in edit mode.The "destroy" built-in command removes the data item to which the current table row is bound.Custom commands are supported by specifying the click option.</description>
+        <description>The configuration of the column command(s). If set the column would display a button for every command. Commands can be custom or built-in ("edit", "createChild" or "destroy"):Custom commands are supported by specifying the click option.</description>
         <name>treeList-column-command</name>
         <tag-class>com.kendoui.taglib.treelist.ColumnCommandTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 
     <tag>
-        <description>The configuration of the column command(s). If set the column would display a button for every command. Commands can be custom or built-in ("edit", "destroy" or "createChild").The "edit" built-in command switches the current table row in edit mode.The "createChild" built-in command adds new child item to the current table row and switches in edit mode.The "destroy" built-in command removes the data item to which the current table row is bound.Custom commands are supported by specifying the click option.</description>
+        <description>The configuration of the column command(s). If set the column would display a button for every command. Commands can be custom or built-in ("edit", "createChild" or "destroy"):Custom commands are supported by specifying the click option.</description>
         <name>treeList-column-commandItem</name>
         <tag-class>com.kendoui.taglib.treelist.ColumnCommandItemTag</tag-class>
 
@@ -38318,7 +38523,7 @@ Each table row consists of table cells (&lt;td&gt;) which represent the treelist
     </tag>
 
     <tag>
-        <description>If set to true the user would be able to edit the data to which the treelist is bound to. By default editing is disabled.Can be set to a string ("inline" or "popup") to specify the editing mode. The default editing mode is "inline".Can be set to a JavaScript object which represents the editing configuration.</description>
+        <description>If set to true the user would be able to edit the data to which the treelist is bound. By default editing is disabled.Can be set to a string ("inline" or "popup") to specify the editing mode. The default editing mode is "inline".Can be set to a JavaScript object which represents the editing configuration.</description>
         <name>treeList-editable</name>
         <tag-class>com.kendoui.taglib.treelist.EditableTag</tag-class>
         <body-content>JSP</body-content>
@@ -38330,14 +38535,14 @@ Each table row consists of table cells (&lt;td&gt;) which represent the treelist
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The template which renders popup editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the treelist will know
+            <description>The template which renders the popup editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the treelist will know
 which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Configures the Kendo UI Window instance, which is used when the TreeLsit edit mode is "popup". The configuration is optional.For more information, please refer to the Window configuration API.</description>
+            <description>Configures the Kendo UI Window instance, which is used when the TreeList edit mode is "popup". The configuration is optional.For more information, please refer to the Window configuration API.</description>
             <name>window</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -38347,7 +38552,7 @@ which field to update. The other option is to use MVVM bindings in order to bind
 
 
     <tag>
-        <description>The template which renders popup editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the treelist will know
+        <description>The template which renders the popup editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the treelist will know
 which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.</description>
         <name>treeList-editable-template</name>
         <tag-class>com.kendoui.taglib.treelist.EditableTemplateFunctionTag</tag-class>
@@ -38379,8 +38584,9 @@ which field to update. The other option is to use MVVM bindings in order to bind
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
-Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.</description>
+            <description>The URL of the server-side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
+Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+attachment; filename="&lt;fileName.xslx&gt;".</description>
             <name>proxyURL</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -38414,7 +38620,7 @@ Such browsers are IE version 9 and lower and Safari.The developer is responsible
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Defines the text of "Loading..." message when the widget loads its root-level items.</description>
+            <description>Defines the text of the "Loading..." message when the widget loads its root-level items.</description>
             <name>loading</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -38447,49 +38653,49 @@ Such browsers are IE version 9 and lower and Safari.The developer is responsible
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Defines the text of "Cancel" button that discards the changes during editing.</description>
+            <description>Defines the text of the "Cancel" button that discards the changes during editing.</description>
             <name>canceledit</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Add new record" button that adds new data rows.</description>
+            <description>Defines the text of the "Add new record" button that adds new data rows.</description>
             <name>create</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Add child record" button that adds new child data rows.</description>
+            <description>Defines the text of the "Add child record" button that adds new child data rows.</description>
             <name>createchild</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Delete" button that deletes a data row.</description>
+            <description>Defines the text of the "Delete" button that deletes a data row.</description>
             <name>destroy</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Edit" button that shows the editable fields for the row.</description>
+            <description>Defines the text of the "Edit" button that shows the editable fields for the row.</description>
             <name>edit</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Export to Excel" button that exports the widget data in spreadsheet format.</description>
+            <description>Defines the text of the "Export to Excel" button that exports the widget data in spreadsheet format.</description>
             <name>excel</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Export to PDF" button that exports the widget data in PDF format.</description>
+            <description>Defines the text of the "Export to PDF" button that exports the widget data in PDF format.</description>
             <name>pdf</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Defines the text of "Update" button that applies the changes during editing.</description>
+            <description>Defines the text of the "Update" button that applies the changes during editing.</description>
             <name>update</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -38543,21 +38749,22 @@ Such browsers are IE version 9 and lower and Safari.The developer is responsible
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Set to true to reverse the paper dimensions if needed such that width is the larger edge.</description>
+            <description>Set to true to reverse the paper dimensions such that width is the larger edge.</description>
             <name>landscape</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
             <description>Specifies the paper size of the PDF document.
-The default "auto" means paper size is determined by content.Supported values:</description>
+The default "auto" means the paper size is determined by the content.Supported values:</description>
             <name>paperSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
-Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.</description>
+Such browsers are IE version 9 and lower, and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+attachment; filename="&lt;fileName.pdf&gt;".</description>
             <name>proxyURL</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -38621,13 +38828,13 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>If set to true the user can get the treelist in unsorted state by clicking the sorted column header.</description>
+            <description>If set to true the user can get the treelist in its unsorted state by clicking the sorted column header.</description>
             <name>allowUnsort</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The sorting mode. If set to "single" the user can sort by one column. If set to "multiple" the user can sort by one column.</description>
+            <description>The sorting mode. If set to "single" the user can sort by one column. If set to "multiple" the user can sort by multiple columns.</description>
             <name>mode</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -38639,7 +38846,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
     <tag>
         <description>If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole treelist Toolbar,
-and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the treelist Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the treelist Toolbar. Commands can be custom or built-in ("create", "pdf", "excel").The "create" command adds an empty data item to the treelist.The "excel" command exports the treelist data in MS Excel format.The "pdf" command exports the treelist data in PDF format.</description>
+and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the treelist Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the treelist Toolbar. Commands can be custom or built-in ("create", "excel", "pdf").</description>
         <name>treeList-toolbar</name>
         <tag-class>com.kendoui.taglib.treelist.ToolbarTag</tag-class>
         <body-content>JSP</body-content>
@@ -38647,14 +38854,14 @@ and the string value will be passed as an argument to a kendo.template() functio
 
     <tag>
         <description>If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole treelist Toolbar,
-and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the treelist Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the treelist Toolbar. Commands can be custom or built-in ("create", "pdf", "excel").The "create" command adds an empty data item to the treelist.The "excel" command exports the treelist data in MS Excel format.The "pdf" command exports the treelist data in PDF format.</description>
+and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the treelist Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the treelist Toolbar. Commands can be custom or built-in ("create", "excel", "pdf").</description>
         <name>treeList-toolbarItem</name>
         <tag-class>com.kendoui.taglib.treelist.ToolbarItemTag</tag-class>
 
         <body-content>empty</body-content>
         <attribute>
-            <description>The name of the toolbar command. Either a built-in ("create", "pdf", "excel") or custom. The name is reflected in one of the CSS classes, which is applied to the button - k-grid-name.
-This class can be used to obtain reference to the button after TreeList initialization and attach click handlers.</description>
+            <description>The name of the toolbar command. Either a built-in ("create", "excel", "pdf") or custom. The name is reflected in one of the CSS classes, which is applied to the button - k-grid-name.
+This class can be used to get a reference to the button (after TreeList initialization) and attach click handlers.</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -38669,6 +38876,18 @@ This class can be used to obtain reference to the button after TreeList initiali
 
 
 
+    <tag>
+        <description>Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>treeList-cancel</name>
+        <tag-class>com.kendoui.taglib.treelist.CancelFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user selects a table row or cell in the treelist.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>treeList-change</name>
+        <tag-class>com.kendoui.taglib.treelist.ChangeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>Fired when an item is about to be collapsed.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>treeList-collapse</name>
@@ -38688,6 +38907,12 @@ This class can be used to obtain reference to the button after TreeList initiali
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>Fired when the user edits or creates a data item.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>treeList-edit</name>
+        <tag-class>com.kendoui.taglib.treelist.EditFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>Fired when the user clicks the "Export to Excel" toolbar button.</description>
         <name>treeList-excelExport</name>
         <tag-class>com.kendoui.taglib.treelist.ExcelExportFunctionTag</tag-class>
@@ -38697,6 +38922,12 @@ This class can be used to obtain reference to the button after TreeList initiali
         <description>Fired when an item is about to be expanded.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>treeList-expand</name>
         <tag-class>com.kendoui.taglib.treelist.ExpandFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the treelist filter menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>treeList-filterMenuInit</name>
+        <tag-class>com.kendoui.taglib.treelist.FilterMenuInitFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -38920,6 +39151,11 @@ Note: when initializing the widget from an array (rather than from a Hierarchica
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Triggered when the selection has changed (either by the user or through the select method).</description>
+            <name>change</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Triggered after the user has checked or unchecked a checkbox.
 If checkChildren is true, the event is triggered after all checked states are updated.
 This event has been introduced in internal builds after 2014.2.828.</description>
@@ -38962,18 +39198,13 @@ This event has been introduced in internal builds after 2014.2.828.</description
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Triggered when the selection has changed (either by the user or through the select method).</description>
-            <name>change</name>
+            <description>Triggered when the user moves the focus on another node</description>
+            <name>navigate</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <description>Triggered when a node is being selected by the user. Cancellable.</description>
             <name>select</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <description>Triggered when the user moves the focus on another node</description>
-            <name>navigate</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <dynamic-attributes>true</dynamic-attributes>
@@ -39183,6 +39414,12 @@ additional information along the TreeView checkboxes.The fields which can be use
 
 
     <tag>
+        <description>Triggered when the selection has changed (either by the user or through the select method).</description>
+        <name>treeView-change</name>
+        <tag-class>com.kendoui.taglib.treeview.ChangeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>Triggered after the user has checked or unchecked a checkbox.
 If checkChildren is true, the event is triggered after all checked states are updated.
 This event has been introduced in internal builds after 2014.2.828.</description>
@@ -39233,21 +39470,15 @@ This event has been introduced in internal builds after 2014.2.828.</description
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Triggered when the selection has changed (either by the user or through the select method).</description>
-        <name>treeView-change</name>
-        <tag-class>com.kendoui.taglib.treeview.ChangeFunctionTag</tag-class>
+        <description>Triggered when the user moves the focus on another node</description>
+        <name>treeView-navigate</name>
+        <tag-class>com.kendoui.taglib.treeview.NavigateFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
         <description>Triggered when a node is being selected by the user. Cancellable.</description>
         <name>treeView-select</name>
         <tag-class>com.kendoui.taglib.treeview.SelectFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
-        <description>Triggered when the user moves the focus on another node</description>
-        <name>treeView-navigate</name>
-        <tag-class>com.kendoui.taglib.treeview.NavigateFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

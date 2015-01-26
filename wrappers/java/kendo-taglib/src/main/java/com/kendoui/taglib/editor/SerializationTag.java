@@ -69,6 +69,14 @@ public class SerializationTag extends  BaseTag  /* interfaces */ /* interfaces *
         setProperty("scripts", value);
     }
 
+    public boolean getSemantic() {
+        return (boolean)getProperty("semantic");
+    }
+
+    public void setSemantic(boolean value) {
+        setProperty("semantic", value);
+    }
+
 //<< Attributes
 
 }

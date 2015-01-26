@@ -65,6 +65,10 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
         setProperty("excel", value);
     }
 
+    public void setFilterable(com.kendoui.taglib.treelist.FilterableTag value) {
+        setProperty("filterable", value);
+    }
+
     public void setMessages(com.kendoui.taglib.treelist.MessagesTag value) {
         setProperty("messages", value);
     }
@@ -175,11 +179,11 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
         setProperty("editable", value);
     }
 
-    public java.lang.Object getFilterable() {
-        return (java.lang.Object)getProperty("filterable");
+    public boolean getFilterable() {
+        return (boolean)getProperty("filterable");
     }
 
-    public void setFilterable(java.lang.Object value) {
+    public void setFilterable(boolean value) {
         setProperty("filterable", value);
     }
 
