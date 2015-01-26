@@ -4,7 +4,7 @@
       .Name("map")
       .Center(30.2681, -97.7448)
       .Zoom(3)
-      .Layers(layers => 
+      .Layers(layers =>
        {
            layers.Add()
               .Style(style => style.Fill(fill => fill.Opacity(0.7)))
@@ -33,7 +33,7 @@
         var users = shape.dataItem.properties.users;
         if (users) {
             var color = scale(users).hex();
-            shape.fill(color);
+            shape.options.fill.set("color", color);
         }
     }
 

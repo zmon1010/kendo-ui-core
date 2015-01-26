@@ -34,7 +34,7 @@ function onShapeCreated(e) {
     var users = shape.dataItem.properties.users;
     if (users) {
         var color = scale(users).hex();
-        shape.fill(color);
+        shape.options.fill.set("color", color);
     }
 }
 
