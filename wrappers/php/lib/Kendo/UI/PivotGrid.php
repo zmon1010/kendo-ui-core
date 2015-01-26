@@ -37,6 +37,24 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
+    * Configures the Kendo UI PivotGrid Excel export settings.
+    * @param \Kendo\UI\PivotGridExcel|array $value
+    * @return \Kendo\UI\PivotGrid
+    */
+    public function excel($value) {
+        return $this->setProperty('excel', $value);
+    }
+
+    /**
+    * Configures the Kendo UI PivotGrid PDF export settings.
+    * @param \Kendo\UI\PivotGridPdf|array $value
+    * @return \Kendo\UI\PivotGrid
+    */
+    public function pdf($value) {
+        return $this->setProperty('pdf', $value);
+    }
+
+    /**
     * If set to true the user will be able to filter by using the field menu.
     * @param boolean $value
     * @return \Kendo\UI\PivotGrid
@@ -251,6 +269,34 @@ About the data item structure review this help topic.
         }
 
         return $this->setProperty('collapseMember', $value);
+    }
+
+    /**
+    * Sets the excelExport event of the PivotGrid.
+    * Fired when saveAsExcel method is called.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\PivotGrid
+    */
+    public function excelExport($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('excelExport', $value);
+    }
+
+    /**
+    * Sets the pdfExport event of the PivotGrid.
+    * Fired when the user clicks the "Export to PDF" toolbar button.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\PivotGrid
+    */
+    public function pdfExport($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('pdfExport', $value);
     }
 
 
