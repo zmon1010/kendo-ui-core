@@ -2631,9 +2631,9 @@
 
         function createPaneRect(options) {
             pane = new Pane(options);
-            pane.renderGridLines = function() {};
+            pane.createGridLines = function() {};
             pane.reflow(chartBox);
-            pane.createVisual();
+            pane.renderVisual();
 
             rect = pane.visual.children[0];
         }
@@ -2701,6 +2701,18 @@
             });
 
             equal(paneTitle.options.align, "right");
+        });
+
+        test("rendered after refresh", function() {
+            createPaneRect({
+                title: {
+                    text: "Foo"
+                }
+            });
+
+            pane.refresh();
+
+            ok(pane.visual.children[0] === pane.title.visual);
         });
 
     })();

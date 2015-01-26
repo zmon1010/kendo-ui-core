@@ -8013,6 +8013,10 @@ var __meta__ = {
             this.content.renderVisual();
             this.content.parent = this;
 
+            if (this.title) {
+                this.visual.append(this.title.visual);
+            }
+
             this.visual.append(this.content.visual);
 
             this.renderComplete();
