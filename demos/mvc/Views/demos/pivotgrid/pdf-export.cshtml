@@ -1,0 +1,48 @@
+<div id="example">
+    <button id="export" class="k-button k-button-icontext"><span class="k-icon k-i-pdf"></span>Export to PDF</button>
+    <div id="pivotgrid"></div>
+
+    <script>
+        $(document).ready(function () {
+            var pivotgrid = $("#pivotgrid").kendoPivotGrid({
+                pdf: {
+                    fileName: "Kendo UI PivotGrid Export.pdf",
+                    proxyURL: "http://demos.telerik.com/kendo-ui/service/export"
+                },
+                filterable: true,
+                sortable: true,
+                columnWidth: 200,
+                height: 580,
+                dataSource: {
+                    type: "xmla",
+                    columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Product].[Category]" } ],
+                    rows: [{ name: "[Geography].[City]" }],
+                    measures: ["[Measures].[Reseller Freight Cost]"],
+                    transport: {
+                        connection: {
+                            catalog: "Adventure Works DW 2008R2",
+                            cube: "Adventure Works"
+                        },
+                        read: "http://demos.telerik.com/olap/msmdpump.dll"
+                    },
+                    schema: {
+                        type: "xmla"
+                    },
+                    error: function (e) {
+                        alert("error: " + kendo.stringify(e.errors[0]));
+                    }
+                }
+            }).data("kendoPivotGrid");
+
+            $("#export").click(function() {
+                pivotgrid.saveAsPDF();
+            });
+        });
+    </script>
+    <style>
+        #export
+        {
+            margin: 0 0 10px 1px;
+        }
+    </style>
+</div>

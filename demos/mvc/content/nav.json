@@ -2360,6 +2360,34 @@
         }
       },
       {
+          "text": "Export to Excel",
+          "url": "pivotgrid/excel-export",
+          "new": true,
+          "title": {
+              "kendo-ui": "Exporting to MS Excel"
+          },
+          "meta": {
+              "kendo-ui": "Export Kendo UI PivotGrid as Microsoft Excel file"
+          },
+          "packages": [
+              "!offline"
+          ]
+      },
+      {
+          "text": "Export to PDF",
+          "url": "pivotgrid/pdf-export",
+          "new": true,
+          "title": {
+              "kendo-ui": "Exporting to PDF"
+          },
+          "meta": {
+              "kendo-ui": "Export Kendo UI PivotGrid as PDF"
+          },
+          "packages": [
+              "!offline"
+          ]
+      },
+      {
         "text": "AngularJS",
         "url": "pivotgrid/angular",
         "title": {
