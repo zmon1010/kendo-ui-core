@@ -760,7 +760,7 @@
         test("path shape should be translated to the origin", function() {
             shape = diagram.addShape({
                 id: "pathShape",
-                path: "M0,0 L 300,300" // a line
+                path: "M100,100 L 300,300"
             });
             var bbox = shape.shapeVisual.drawingContainer().clippedBBox(null);
 
@@ -1855,44 +1855,5 @@
         diagram.options.editable.rotate = false;
         diagram.shapes[0].select(true);
         ok(!kendo.util.defined(diagram._resizingAdorner.rotationThumb));
-    });
-
-    /*-----------------------------------------------*/
-    module("Editing / connection routing", {
-        setup: function() {
-            diagram = $('<div id="diagram" />')
-                .appendTo("#qunit-fixture")
-                .kendoDiagram({
-                    editable: false
-                })
-                .getKendoDiagram();
-            for(var k = 0; k < 4; k++) {
-                diagram.addShape({x: k * 150, y: k * 150});
-            }
-            var straight = new kendo.dataviz.diagram.Connection(diagram.shapes[0], diagram.shapes[1]);
-            diagram.addConnection(straight);
-            var cascade = new kendo.dataviz.diagram.Connection(diagram.shapes[1], diagram.shapes[2], {type: "cascading"});
-            diagram.addConnection(cascade);
-            var poly = new kendo.dataviz.diagram.Connection(diagram.shapes[2], diagram.shapes[3], {
-                type: "polyline",
-                points: [new Point(270, 510)]
-            });
-
-            diagram.addConnection(poly);
-        },
-        teardown: function() {
-            diagram.destroy();
-        }
-    });
-
-    test("straight connection by default", function() {
-        var straight = diagram.connections[0];
-        var cascade = diagram.connections[1];
-        var poly = diagram.connections[2];
-        ok(straight.points().length===0);
-        ok(cascade.points().length >0);
-        ok(poly.points().length===1);
-        ok(poly.points()[0].x===270 && poly.points()[0].y===510);
-
     });
 })();

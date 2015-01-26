@@ -1313,10 +1313,7 @@
                 var type = (this.options.type || "").toLowerCase();
                 if (type == CASCADING) {
                     this._router = new CascadingRouter(this);
-                } else if(type === POLYLINE) {
-                    this._router = new PolylineRouter(this);
                 } else {
-                    // default to a straight line
                     this._router = new PolylineRouter(this);
                 }
             },
@@ -3630,17 +3627,6 @@
                 wrap.children.push(root);
 
                 return wrap;
-            },
-
-            /**
-             * Generates a random diagram.
-             * @param shapeCount The number of shapes the random diagram should contain.
-             * @param maxIncidence The maximum degree the shapes can have.
-             * @param isTree Whether the generated diagram should be a tree
-             * @param layoutType The optional layout type to apply after the diagram is generated.
-             */
-            randomDiagram: function(shapeCount, maxIncidence, isTree, randomSize) {
-                kendo.dataviz.diagram.Graph.Utils.randomDiagram(this, shapeCount, maxIncidence, isTree, randomSize);
             }
         });
 
