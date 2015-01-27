@@ -152,7 +152,7 @@ namespace :generate do
 
             desc 'Generate MVC Mobile wrappers'
             task :wrappers do
-                markdown = FileList['docs/api/javascript/mobile/ui/*.md'].exclude(/listview|swipe|loader|pane|touch|scroller|mobilewidget/)
+                markdown = FileList['docs/api/javascript/mobile/ui/*.md', 'docs/api/javascript/mobile/application.md'].exclude(/listview|swipe|loader|pane|touch|scroller|mobilewidget/)
 
                 components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC::Wrappers::Mobile::Component) }
                     .sort { |a, b| a.name <=> b.name }
