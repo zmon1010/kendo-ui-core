@@ -208,7 +208,9 @@
     <Compile Include="Controllers\Linear_Gauge\ExportController.cs" />
     <Compile Include="Controllers\Linear_Gauge\Multiple_PointersController.cs" />
     <Compile Include="Controllers\Menu\Context_MenuController.cs" />
+    <Compile Include="Controllers\PivotGrid\Excel_ExportController.cs" />
     <Compile Include="Controllers\PivotGrid\KPIController.cs" />
+    <Compile Include="Controllers\PivotGrid\Pdf_ExportController.cs" />
     <Compile Include="Controllers\PivotGrid\TemplatesController.cs" />
     <Compile Include="Controllers\PivotGrid\Local_Flat_Data_BindingController.cs" />
     <Compile Include="Controllers\PivotGrid\Remote_Flat_Data_BindingController.cs" />
@@ -894,6 +896,8 @@
     <Content Include="Areas\aspx\Views\linear_gauge\export.aspx" />
     <Content Include="Areas\aspx\Views\linear_gauge\multiple_pointers.aspx" />
     <Content Include="Areas\aspx\Views\menu\context_menu.aspx" />
+    <Content Include="Areas\aspx\Views\pivotgrid\pdf_export.aspx" />
+    <Content Include="Areas\aspx\Views\pivotgrid\excel_export.aspx" />
     <Content Include="Areas\aspx\Views\pivotgrid\kpi.aspx" />
     <Content Include="Areas\aspx\Views\pivotgrid\local_flat_data_binding.aspx" />
     <Content Include="Areas\aspx\Views\pivotgrid\remote_flat_data_binding.aspx" />
@@ -2669,6 +2673,7 @@
     <Content Include="Areas\razor\Views\styling\radios.cshtml" />
     <Content Include="Areas\razor\Views\treelist\column_reordering.cshtml" />
     <Content Include="Areas\razor\Views\treelist\column_menu.cshtml" />
+    <Content Include="Areas\razor\Views\pivotgrid\excel_export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
