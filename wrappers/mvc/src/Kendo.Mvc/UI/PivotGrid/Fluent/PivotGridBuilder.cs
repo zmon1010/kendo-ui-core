@@ -63,6 +63,52 @@
         }
 
         /// <summary>
+        /// Configures the Excel export settings.
+        /// </summary>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().PivotGrid()
+        ///     .Name(&quot;pivotgrid&quot;)
+        ///     .Excel(excel => excel.FileName(&quot;PivotGridExport.xlsx&quot))
+        /// )
+        /// </code>
+        /// <code lang="ASPX">
+        /// &lt;%:Html.Kendo().PivotGrid()
+        ///     .Name(&quot;pivotgrid&quot;)
+        ///     .Excel(excel => excel.FileName(&quot;PivotGridExport.xlsx&quot))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public PivotGridBuilder<TModel> Excel(Action<PivotGridExcelBuilder> configurator)
+        {
+            configurator(new PivotGridExcelBuilder(Component.Excel));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the PDF export settings.
+        /// </summary>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().PivotGrid()
+        ///     .Name(&quot;pivotgrid&quot;)
+        ///     .Pdf(pdf => pdf.FileName(&quot;PivotGridExport.pdf&quot))
+        /// )
+        /// </code>
+        /// <code lang="ASPX">
+        /// &lt;%:Html.Kendo().PivotGrid()
+        ///     .Name(&quot;pivotgrid&quot;)
+        ///     .Pdf(pdf => pdf.FileName(&quot;PivotGridExport.pdf&quot))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public PivotGridBuilder<TModel> Pdf(Action<PDFSettingsBuilder> configurator)
+        {
+            configurator(new PDFSettingsBuilder(Component.Pdf));
+
+            return this;
+        }
+
+        /// <summary>
         /// If set to false the user will not be able to add/close/reorder current fields for columns/rows/measures.
         /// </summary>
         /// <param name="reorderable">The reorderable</param>

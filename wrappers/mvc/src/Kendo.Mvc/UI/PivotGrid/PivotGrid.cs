@@ -30,6 +30,9 @@
             Reorderable = true;
             Messages = new PivotGridMessages();
             Sortable = new PivotGridSortableSettings();
+
+            Excel = new PivotGridExcelSettings();
+            Pdf = new PDFSettings();
         }
 
         public PivotDataSource DataSource
@@ -52,6 +55,18 @@
         {
             get;
             internal set;
+        }
+
+        public PivotGridExcelSettings Excel
+        {
+            get;
+            private set;
+        }
+
+        public PDFSettings Pdf
+        {
+            get;
+            private set;
         }
 
         public string Configurator
@@ -190,6 +205,20 @@
             {
                 var sorting = Sortable.ToJson();
                 options["sortable"] = sorting.Any() ? (object)sorting : true;
+            }
+
+            var excel = Excel.ToJson();
+
+            if (excel.Any())
+            {
+                options["excel"] = excel;
+            }
+
+            var pdf = Pdf.ToJson();
+
+            if (pdf.Any())
+            {
+                options["pdf"] = pdf;
             }
 
             var messages = Messages.ToJson();
