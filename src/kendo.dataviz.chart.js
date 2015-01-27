@@ -3477,6 +3477,7 @@ var __meta__ = {
                 var categoryIx = point.categoryIx;
                 var categoryPts = this.categoryPoints[categoryIx];
                 var categorySum = 0;
+                var otherValues = [];
 
                 for (var i = 0; i < categoryPts.length; i++) {
                     var other = categoryPts[i];
@@ -3490,12 +3491,24 @@ var __meta__ = {
 
                         if (isNumber(other.value)) {
                             categorySum += math.abs(other.value);
+                            otherValues.push(math.abs(other.value));
                         }
                     }
                 }
 
                 if (categorySum > 0) {
-                    return point.value / categorySum;
+                    var pct = point.value / categorySum;
+
+                    if (last(categoryPts) === point) {
+                        var pctSum = 0;
+                        for (i = 0; i < otherValues.length; i++) {
+                            pctSum += otherValues[i] / categorySum;
+                        }
+
+                        pct += 1 - pctSum;
+                    }
+
+                    return pct;
                 }
             }
 

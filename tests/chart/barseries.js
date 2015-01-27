@@ -725,6 +725,32 @@
             equal(series.valueAxisRanges[undefined].max, 1);
         });
 
+        test("rounds sum to 100%", function() {
+            setupBarChart(plotArea, {
+                series: [{
+                    data: [98.07039]
+                }, {
+                    data: [99.21937]
+                }, {
+                    data: [98.25632]
+                }, {
+                    data: [96.74904]
+                }, {
+                    data: [96.4993439]
+                }, {
+                    data: [99.1569748]
+                }],
+                isStacked: true, isStacked100: true }
+            );
+
+            var pctSum = 0;
+            for (var i = 0; i < series.points.length; i++) {
+                pctSum += series.plotValue(series.points[i]);
+            }
+
+            equal(pctSum, 1);
+        });
+
         // ------------------------------------------------------------
         module("Bar Chart / 100% Stacked / Negative Values", {
             setup: function() {
