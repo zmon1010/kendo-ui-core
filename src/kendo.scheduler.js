@@ -91,6 +91,7 @@ var __meta__ = {
                '<li class="k-state-default k-nav-current"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-calendar"></span><span data-#=ns#bind="text: formattedDate"></span></a></li>' +
             '</ul>' +
             '<ul class="k-reset k-header k-scheduler-views">' +
+                '<li class="k-state-selected k-current-view k-view-timeline" data-name="timeline"><a role="button" href="\\#" class="k-link">timeline</a></li>' +
                 '#for(var view in views){#' +
                     '<li class="k-state-default k-view-#= view.toLowerCase() #" data-#=ns#name="#=view#"><a role="button" href="\\#" class="k-link">${views[view].title}</a></li>' +
                 '#}#'  +
@@ -3521,8 +3522,13 @@ var __meta__ = {
 
                 if (!that.trigger("navigate", { view: name, action: "changeView", date: that.date() })) {
                     that.view(name);
+                    that.element.find(".k-state-expanded").removeClass("k-state-expanded"); 
                 }
             });
+            
+            toolbar.on(CLICK + NS, ".k-scheduler-views li.k-current-view", function(e) {
+                that.element.find(".k-scheduler-views").toggleClass("k-state-expanded");          
+                });
 
             toolbar.find("li").hover(function(){
                     $(this).addClass("k-state-hover");
