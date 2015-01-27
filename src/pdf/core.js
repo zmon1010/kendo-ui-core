@@ -348,7 +348,7 @@
                 Size: objects.length + 1,
                 Root: catalog,
                 Info: new PDFDictionary({
-                    Producer     : new PDFString("Kendo UI PDF Generator"),
+                    Producer     : new PDFString(getOption("producer", "Kendo UI PDF Generator")),
                     Title        : new PDFString(getOption("title", "")),
                     Author       : new PDFString(getOption("author", "")),
                     Subject      : new PDFString(getOption("subject", "")),

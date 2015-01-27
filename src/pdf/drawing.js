@@ -81,6 +81,7 @@
             }
 
             var pdf = new (kendo.pdf.Document)({
+                producer  : getOption("producer"),
                 title     : getOption("title"),
                 author    : getOption("author"),
                 subject   : getOption("subject"),
