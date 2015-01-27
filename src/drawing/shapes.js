@@ -36,7 +36,8 @@
         splice = [].splice,
         shift = [].shift,
         slice = [].slice,
-        unshift = [].unshift;
+        unshift = [].unshift,
+        defId = 1;
 
     // Drawing primitives =====================================================
     var Element = Class.extend({
@@ -57,7 +58,7 @@
             }
 
             if (clip && !clip.id) {
-                clip.id = kendo.guid();
+                clip.id = generateDefinitionId();
             }
 
             this.options = new OptionsStore(options);
@@ -127,7 +128,7 @@
             var options = this.options;
             if (defined(clip)) {
                 if (clip && !clip.id) {
-                    clip.id = kendo.guid();
+                    clip.id = generateDefinitionId();
                 }
                 options.set("clip", clip);
                 return this;
@@ -929,7 +930,7 @@
             this.stops = new StopsArray(this._createStops(options.stops));
             this.stops.addObserver(this);
             this._userSpace = options.userSpace;
-            this.id = kendo.guid();
+            this.id = generateDefinitionId();
         },
 
         userSpace: function(value) {
@@ -1125,6 +1126,10 @@
                 return this.options.get(name);
             }
         };
+    }
+
+    function generateDefinitionId() {
+        return "kdef" + defId++;
     }
 
     // Exports ================================================================
