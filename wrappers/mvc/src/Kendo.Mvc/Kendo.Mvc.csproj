@@ -727,6 +727,10 @@
     <Compile Include="UI\Gauge\GaugeLinearPointerFactory.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramEditableResizeSettingsBuilder.cs" />
     <Compile Include="UI\Diagram\Settings\DiagramEditableResizeSettings.cs" />
+    <Compile Include="UI\MobileCollapsible\Fluent\MobileCollapsibleBuilder.cs" />
+    <Compile Include="UI\MobileCollapsible\Fluent\MobileCollapsibleEventBuilder.cs" />
+    <Compile Include="UI\MobileCollapsible\Html\MobileCollapsibleHtmlBuilder.cs" />
+    <Compile Include="UI\MobileCollapsible\MobileCollapsible.cs" />
     <Compile Include="UI\PivotDataSource\Fluent\PivotDataSourceMeasureDescriptorFactory.cs" />
     <Compile Include="UI\PivotDataSource\Fluent\PivotDataSourceMeasureDescriptorBuilder.cs" />
     <Compile Include="UI\PivotDataSource\PivotDataSourceMeasureDescriptor.cs" />
@@ -2393,4 +2397,22 @@
     <Compile Include="UI\Gantt\Settings\GanttCurrentTimeMarkerSettings.cs" />
     <Compile Include="UI\Gantt\Fluent\GanttCurrentTimeMarkerSettingsBuilder.cs" />
   </ItemGroup>
-<ItemGroup><Compile Include="UI\Diagram\Settings\DiagramEditableRotateSettings.cs" /><Compile Include="UI\Diagram\Fluent\DiagramEditableRotateSettingsBuilder.cs" /><Compile Include="UI\Diagram\Settings\DiagramEditableRotateFillSettings.cs" /><Compile Include="UI\Diagram\Fluent\DiagramEditableRotateFillSettingsBuilder.cs" /><Compile Include="UI\Diagram\Settings\DiagramEditableRotateStrokeSettings.cs" /><Compile Include="UI\Diagram\Fluent\DiagramEditableRotateStrokeSettingsBuilder.cs" /></ItemGroup><ItemGroup><Compile Include="UI\Gantt\Settings\GanttTooltipSettings.cs" /><Compile Include="UI\Gantt\Fluent\GanttTooltipSettingsBuilder.cs" /></ItemGroup><ItemGroup><Compile Include="UI\TreeList\Settings\TreeListColumnMenuSettings.cs" /><Compile Include="UI\TreeList\Fluent\TreeListColumnMenuSettingsBuilder.cs" /><Compile Include="UI\TreeList\Settings\TreeListColumnMenuMessagesSettings.cs" /><Compile Include="UI\TreeList\Fluent\TreeListColumnMenuMessagesSettingsBuilder.cs" /></ItemGroup></Project>
+  <ItemGroup>
+    <Compile Include="UI\Diagram\Settings\DiagramEditableRotateSettings.cs" />
+    <Compile Include="UI\Diagram\Fluent\DiagramEditableRotateSettingsBuilder.cs" />
+    <Compile Include="UI\Diagram\Settings\DiagramEditableRotateFillSettings.cs" />
+    <Compile Include="UI\Diagram\Fluent\DiagramEditableRotateFillSettingsBuilder.cs" />
+    <Compile Include="UI\Diagram\Settings\DiagramEditableRotateStrokeSettings.cs" />
+    <Compile Include="UI\Diagram\Fluent\DiagramEditableRotateStrokeSettingsBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Gantt\Settings\GanttTooltipSettings.cs" />
+    <Compile Include="UI\Gantt\Fluent\GanttTooltipSettingsBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\TreeList\Settings\TreeListColumnMenuSettings.cs" />
+    <Compile Include="UI\TreeList\Fluent\TreeListColumnMenuSettingsBuilder.cs" />
+    <Compile Include="UI\TreeList\Settings\TreeListColumnMenuMessagesSettings.cs" />
+    <Compile Include="UI\TreeList\Fluent\TreeListColumnMenuMessagesSettingsBuilder.cs" />
+  </ItemGroup>
+</Project>

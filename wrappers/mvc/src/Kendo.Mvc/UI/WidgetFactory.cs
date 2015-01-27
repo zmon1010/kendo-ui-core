@@ -1542,9 +1542,8 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return new MobileActionSheetBuilder(new MobileActionSheet(ViewContext, Initializer, UrlGenerator));
         }
-
+        
         /// <summary>
-         /// <summary>
         /// Creates a <see cref="MobileApplication"/>
         /// </summary>
         /// <example>
@@ -1558,7 +1557,7 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return new MobileApplicationBuilder(new MobileApplication(ViewContext, Initializer, UrlGenerator));
         }
-
+        
         /// <summary>
         /// Creates a <see cref="MobileBackButton"/>
         /// </summary>
@@ -1602,6 +1601,21 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual MobileButtonGroupBuilder MobileButtonGroup()
         {
             return new MobileButtonGroupBuilder(new MobileButtonGroup(ViewContext, Initializer, UrlGenerator));
+        }
+        
+        /// <summary>
+        /// Creates a <see cref="MobileCollapsible"/>
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().MobileCollapsible()
+        ///             .Name("MobileCollapsible")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public virtual MobileCollapsibleBuilder MobileCollapsible()
+        {
+            return new MobileCollapsibleBuilder(new MobileCollapsible(ViewContext, Initializer, UrlGenerator));
         }
         
         /// <summary>

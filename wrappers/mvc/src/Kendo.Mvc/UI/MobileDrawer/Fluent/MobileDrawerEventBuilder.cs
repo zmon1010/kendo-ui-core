@@ -16,6 +16,17 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Handlers
         
         /// <summary>
+        /// Fired after the mobile Drawer has been hidden.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the afterHide event.</param>
+        public MobileDrawerEventBuilder AfterHide(string handler)
+        {
+            Handler("after-hide", handler);
+
+            return this;
+        }
+        
+        /// <summary>
         /// Fires before the mobile Drawer is revealed. The event can be prevented by calling the preventDefault method of the event parameter.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the beforeShow event.</param>

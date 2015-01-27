@@ -34,6 +34,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Configuration options to be passed to the scroller instance instantiated by the view. For more details, check the scroller configuration options.
+        /// </summary>
+        /// <param name="value">The value that configures the scroller.</param>
+        public MobileViewBuilder Scroller(object value)
+        {
+            container.Scroller = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// If set to true, the view will stretch its child contents to occupy the entire view, while disabling kinetic scrolling.
 		/// Useful if the view contains an image or a map.
         /// </summary>

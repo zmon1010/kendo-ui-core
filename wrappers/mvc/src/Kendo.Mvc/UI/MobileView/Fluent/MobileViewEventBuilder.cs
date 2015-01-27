@@ -81,6 +81,28 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
+        /// <summary>
+        /// Fires when the mobile view transition starts.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the transitionStart event.</param>
+        public MobileViewEventBuilder TransitionStart(string handler)
+        {
+            Handler("transition-start", handler);
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Fires after the mobile view transition container has its k-fx-end class set. Setting CSS properties to the view at the event handler will animate them.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the transitionEnd event.</param>
+        public MobileViewEventBuilder TransitionEnd(string handler)
+        {
+            Handler("transition-end", handler);
+
+            return this;
+        }
+        
         //<< Handlers
     }
 }

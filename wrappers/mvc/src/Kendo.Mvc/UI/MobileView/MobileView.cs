@@ -28,6 +28,8 @@ namespace Kendo.Mvc.UI
         
         public bool Reload { get; set; }
         
+        public object Scroller { get; set; }
+        
         public bool Stretch { get; set; }
         
         public string Title { get; set; }

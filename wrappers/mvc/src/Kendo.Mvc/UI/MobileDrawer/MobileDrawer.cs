@@ -26,7 +26,11 @@ namespace Kendo.Mvc.UI
 
 //>> Fields
         
+        public string Container { get; set; }
+        
         public bool SwipeToOpen { get; set; }
+        
+        public string[] SwipeToOpenViews { get; set; }
         
         public string Title { get; set; }
         

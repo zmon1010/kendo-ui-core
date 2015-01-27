@@ -16,6 +16,17 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Handlers
         
         /// <summary>
+        /// Fires before the ModalView is shown. calling preventDefault on the event argument will cancel the open.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the beforeOpen event.</param>
+        public MobileModalViewEventBuilder BeforeOpen(string handler)
+        {
+            Handler("before-open", handler);
+
+            return this;
+        }
+        
+        /// <summary>
         /// Fired when the mobile ModalView is closed by the user.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the close event.</param>

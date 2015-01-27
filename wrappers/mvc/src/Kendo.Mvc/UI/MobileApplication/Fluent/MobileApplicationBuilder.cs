@@ -23,23 +23,35 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
+        /// Introduced in the 2014 Q3 release. If set to false, the navigation will not update or read the browser location fragment.
+        /// </summary>
+        /// <param name="value">The value that configures the browserhistory.</param>
+        public MobileApplicationBuilder BrowserHistory(bool value)
+        {
+            container.BrowserHistory = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Introduced in the 2014 Q1 Service Pack 1 release. If set to true, the navigation will parse and prefix the url fragment value with !,
+		/// which should be SEO friendly.
+        /// </summary>
+        /// <param name="value">The value that configures the hashbang.</param>
+        public MobileApplicationBuilder HashBang(bool value)
+        {
+            container.HashBang = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// Whether to hide the browser address bar. Supported only in iPhone and iPod. Doesn't affect standalone mode as there the address bar is always hidden.
         /// </summary>
         /// <param name="value">The value that configures the hideaddressbar.</param>
         public MobileApplicationBuilder HideAddressBar(bool value)
         {
             container.HideAddressBar = value;
-
-            return this;
-        }
-        
-        /// <summary>
-        /// Whether to update the document title.
-        /// </summary>
-        /// <param name="value">The value that configures the updatedocumenttitle.</param>
-        public MobileApplicationBuilder UpdateDocumentTitle(bool value)
-        {
-            container.UpdateDocumentTitle = value;
 
             return this;
         }
@@ -78,12 +90,35 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// The view model scope. By default, the views will try to resolve their models from the global scope (window).
+        /// </summary>
+        /// <param name="value">The value that configures the modelscope.</param>
+        public MobileApplicationBuilder ModelScope(object value)
+        {
+            container.ModelScope = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// Which platform look to force on the application. Supported values are "ios" (meaning iOS 6 look), "ios7","android", "blackberry" and "wp".
+		/// You can also set platform variants with it ("android-light" or "android-dark"), but keep in mind that it will still override the platform. If this is not desired, use the skin option.
         /// </summary>
         /// <param name="value">The value that configures the platform.</param>
         public MobileApplicationBuilder Platform(string value)
         {
             container.Platform = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Applicable if pushState is used and the application is deployed to a path different than /. If the application start page is hosted on http://foo.com/myapp/, the root option should be set to /myapp/.
+        /// </summary>
+        /// <param name="value">The value that configures the root.</param>
+        public MobileApplicationBuilder Root(string value)
+        {
+            container.Root = value;
 
             return this;
         }
@@ -100,7 +135,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The skin to apply to the application. Currently, Kendo UI Mobile ships with a flat skin in addition to the native looking ones.
+        /// The skin to apply to the application. Currently, Kendo UI Mobile ships with flat, material-light and material-dark skins in addition to the native looking ones. You can also set platform variants with it ("android-light" or "android-dark").Note: The Material themes are renamed to material-light and material-dark with 2014 Q3 SP1. With 2014 Q3 (v2014.3.1119) material and materialblack skins should be used.
         /// </summary>
         /// <param name="value">The value that configures the skin.</param>
         public MobileApplicationBuilder Skin(string value)
@@ -122,12 +157,35 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The default View transition.
+        /// The default View transition. For a list of supported transitions, check the Getting Started help topic.
         /// </summary>
         /// <param name="value">The value that configures the transition.</param>
         public MobileApplicationBuilder Transition(string value)
         {
             container.Transition = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Whether to update the document title.
+        /// </summary>
+        /// <param name="value">The value that configures the updatedocumenttitle.</param>
+        public MobileApplicationBuilder UpdateDocumentTitle(bool value)
+        {
+            container.UpdateDocumentTitle = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// By default, the mobile application uses flexbox for the mobile views layout. The content element is made scrollable, either by initializing a mobile scroller or with the browser supported overflow: auto and -webkit-overflow-scrolling: touch CSS declarations.
+		/// When the useNativeScrolling configuration option is set to true, the view header and footer are positioned using position: fixed CSS declaration. The view content vertical padding is adjusted to match the header and footer height; The default browser scroller is utilized for the content scrolling.For more information regarding native scrolling check this article.
+        /// </summary>
+        /// <param name="value">The value that configures the usenativescrolling.</param>
+        public MobileApplicationBuilder UseNativeScrolling(bool value)
+        {
+            container.UseNativeScrolling = value;
 
             return this;
         }

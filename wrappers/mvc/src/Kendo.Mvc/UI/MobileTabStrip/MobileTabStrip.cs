@@ -30,7 +30,7 @@ namespace Kendo.Mvc.UI
         public List<MobileTabStripItem> Items
         {
             get;
-            private set;
+            set;
         }
         
         //<< Fields

@@ -27,6 +27,8 @@ namespace Kendo.Mvc.UI
 
 //>> Fields
         
+        public bool Enable { get; set; }
+        
         public int Index { get; set; }
         
         public string SelectOn { get; set; }
@@ -34,7 +36,7 @@ namespace Kendo.Mvc.UI
         public List<MobileButtonGroupItem> Items
         {
             get;
-            private set;
+            set;
         }
         
         //<< Fields

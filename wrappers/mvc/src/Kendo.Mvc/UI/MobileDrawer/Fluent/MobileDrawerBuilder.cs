@@ -23,12 +23,35 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
+        /// Specifies the content element to shift when the drawer appears. Required if the drawer is used outside of a mobile application.
+        /// </summary>
+        /// <param name="value">The value that configures the container.</param>
+        public MobileDrawerBuilder Container(string value)
+        {
+            container.Container = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// If set to false, swiping the view will not activate the drawer. In this case, the drawer will only be open by a designated button
         /// </summary>
         /// <param name="value">The value that configures the swipetoopen.</param>
         public MobileDrawerBuilder SwipeToOpen(bool value)
         {
             container.SwipeToOpen = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// A list of the view ids on which the drawer will appear when the view is swiped. If omitted, the swipe gesture will work on all views.
+		/// The option has effect only if swipeToOpen is set to true.
+        /// </summary>
+        /// <param name="value">The value that configures the swipetoopenviews.</param>
+        public MobileDrawerBuilder SwipeToOpenViews(params string[] value)
+        {
+            container.SwipeToOpenViews = value;
 
             return this;
         }

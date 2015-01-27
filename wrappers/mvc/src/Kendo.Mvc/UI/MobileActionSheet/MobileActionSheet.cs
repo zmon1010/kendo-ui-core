@@ -34,13 +34,13 @@ namespace Kendo.Mvc.UI
         public MobileActionSheetPopupSettings Popup
         {
             get;
-            private set;
+            set;
         }
         
         public List<MobileActionSheetItem> Items
         {
             get;
-            private set;
+            set;
         }
         
         public MobileActionSheetType Type { get; set; }

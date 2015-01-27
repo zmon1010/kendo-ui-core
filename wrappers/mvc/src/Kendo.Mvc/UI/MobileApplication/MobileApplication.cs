@@ -33,9 +33,11 @@ namespace Kendo.Mvc.UI
 
         //>> Fields
         
-        public bool HideAddressBar { get; set; }
+        public bool BrowserHistory { get; set; }
         
-        public bool UpdateDocumentTitle { get; set; }
+        public bool HashBang { get; set; }
+        
+        public bool HideAddressBar { get; set; }
         
         public string Initial { get; set; }
         
@@ -43,7 +45,11 @@ namespace Kendo.Mvc.UI
         
         public string Loading { get; set; }
         
+        public object ModelScope { get; set; }
+        
         public string Platform { get; set; }
+        
+        public string Root { get; set; }
         
         public bool ServerNavigation { get; set; }
         
@@ -52,6 +58,10 @@ namespace Kendo.Mvc.UI
         public string StatusBarStyle { get; set; }
         
         public string Transition { get; set; }
+        
+        public bool UpdateDocumentTitle { get; set; }
+        
+        public bool UseNativeScrolling { get; set; }
         
         public bool WebAppCapable { get; set; }
         

@@ -30,7 +30,7 @@ namespace Kendo.Mvc.UI
         public List<MobileSplitViewPane> Panes
         {
             get;
-            private set;
+            set;
         }
         
         //<< Fields

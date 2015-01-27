@@ -23,6 +23,17 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
+        /// Defines if the widget is initially enabled or disabled.
+        /// </summary>
+        /// <param name="value">The value that configures the enable.</param>
+        public MobileButtonGroupBuilder Enable(bool value)
+        {
+            container.Enable = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// Defines the initially selected Button (zero based index).
         /// </summary>
         /// <param name="value">The value that configures the index.</param>
