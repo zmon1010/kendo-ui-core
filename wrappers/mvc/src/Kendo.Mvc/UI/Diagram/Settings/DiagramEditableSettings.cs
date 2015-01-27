@@ -126,7 +126,7 @@ namespace Kendo.Mvc.UI
         //<< Serialization
             SerializeEditTemplates(json);
 
-            if (Resize != null)
+            if (Resize != null && Resize.Enabled)
             {
                 var resize = Resize.ToJson();
                 if (resize.Any())
