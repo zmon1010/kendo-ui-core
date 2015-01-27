@@ -3690,7 +3690,7 @@ var __meta__ = {
             }
 
             contentTable.add(this.columnsHeader.children("table"))
-                        .css("min-width", minWidth + "%");
+                        .css("width", minWidth + "%");
 
         },
 
