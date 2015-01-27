@@ -3277,52 +3277,6 @@ var __meta__ = {
     });
     draw.AnimationFactory.current.register(BAR, BarChartAnimation);
 
-    var BarChartAnimationMixin = {
-        extend: function(proto) {
-            proto.createAnimation = this.createAnimation;
-            proto._setChildrenAnimation = this._setChildrenAnimation;
-            proto._setAnimationOptions = this._setAnimationOptions;
-            proto.createVisual = ChartElement.fn.createVisual;
-
-            deepExtend(proto.options, {
-                animation: {
-                    type: BAR
-                }
-            });
-        },
-
-        createAnimation: function() {
-            this._setAnimationOptions();
-            ChartElement.fn.createAnimation.call(this);
-            if (anyHasZIndex(this.options.series)) {
-                this._setChildrenAnimation();
-            }
-        },
-
-        _setChildrenAnimation: function() {
-            var points = this.points;
-            var point, pointVisual;
-
-            for (var idx = 0; idx < points.length; idx++) {
-                point = points[idx];
-                pointVisual = point.visual;
-                if (pointVisual && defined(pointVisual.options.zIndex)) {
-                    point.options.animation = this.options.animation;
-                    point.createAnimation();
-                }
-            }
-        },
-
-        _setAnimationOptions: function() {
-            var options = this.options;
-            var animation = options.animation || {};
-            var origin = this.categoryAxis.getSlot(0);
-
-            animation.origin = new geom.Point(origin.x1, origin.y1);
-            animation.vertical = !options.invertAxes;
-        }
-    };
-
     var FadeInAnimation = draw.Animation.extend({
         options: {
             duration: 200,
@@ -3965,7 +3919,11 @@ var __meta__ = {
     });
 
     var BarChart = CategoricalChart.extend({
-        options: {},
+        options: {
+            animation: {
+                type: BAR
+            }
+        },
 
         render: function() {
             var chart = this;
@@ -4111,9 +4069,39 @@ var __meta__ = {
             for (i = 0; i < childrenLength; i++) {
                 children[i].reflow(categorySlots[i]);
             }
+        },
+
+        createAnimation: function() {
+            this._setAnimationOptions();
+            ChartElement.fn.createAnimation.call(this);
+            if (anyHasZIndex(this.options.series)) {
+                this._setChildrenAnimation();
+            }
+        },
+
+        _setChildrenAnimation: function() {
+            var points = this.points;
+            var point, pointVisual;
+
+            for (var idx = 0; idx < points.length; idx++) {
+                point = points[idx];
+                pointVisual = point.visual;
+                if (pointVisual && defined(pointVisual.options.zIndex)) {
+                    point.options.animation = this.options.animation;
+                    point.createAnimation();
+                }
+            }
+        },
+
+        _setAnimationOptions: function() {
+            var options = this.options;
+            var animation = options.animation || {};
+            var origin = this.categoryAxis.getSlot(0);
+
+            animation.origin = new geom.Point(origin.x1, origin.y1);
+            animation.vertical = !options.invertAxes;
         }
     });
-    BarChartAnimationMixin.extend(BarChart.fn);
 
     var RangeBar = Bar.extend({
         defaults: {
@@ -4256,7 +4244,11 @@ var __meta__ = {
             CategoricalChart.fn.init.call(chart, plotArea, options);
         },
 
-        options: {},
+        options: {
+            animation: {
+                type: BAR
+            }
+        },
 
         wrapData: function(options) {
             var series = options.series,
@@ -4359,9 +4351,23 @@ var __meta__ = {
             var value = point.value.current;
 
             return value > 0;
-        }
+        },
+
+        createAnimation: function() {
+            var points = this.points;
+            var point, pointVisual;
+
+            this._setAnimationOptions();
+
+            for (var idx = 0; idx < points.length; idx++) {
+                point = points[idx];
+                point.options.animation = this.options.animation;
+                point.createAnimation();
+            }
+        },
+
+        _setAnimationOptions: BarChart.fn._setAnimationOptions
     });
-    BarChartAnimationMixin.extend(BulletChart.fn);
 
     var Bullet = ChartElement.extend({
         init: function(value, options) {
@@ -4473,21 +4479,18 @@ var __meta__ = {
                 });
             }
 
+            this.bodyVisual = body;
+
             alignPathToPixel(body);
             this.visual.append(body);
         },
 
         createAnimation: function() {
-            var options = this.options;
-
-            deepExtend(options, {
-                animation: {
-                    aboveAxis: this.aboveAxis,
-                    vertical: options.vertical
-                }
-            });
-
-            ChartElement.fn.createAnimation.call(this);
+            if (this.bodyVisual) {
+                this.animation = draw.Animation.create(
+                    this.bodyVisual, this.options.animation
+                );
+            }
         },
 
         tooltipAnchor: function(tooltipWidth, tooltipHeight) {
