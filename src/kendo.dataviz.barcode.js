@@ -1607,23 +1607,24 @@ var __meta__ = {
             visual.append(that._getBackground(size));
 
             if (textOptions.visible) {
+                textHeight = draw.util.measureText(value, { font: textOptions.font }).height;
+                barHeight -= textHeight + textMargin.top + textMargin.bottom;
+            }
+
+            result = encoding.encode(value, contentBox.width(), barHeight);
+
+            if (textOptions.visible) {
                 textToDisplay = value;
                 if (options.checksum && defined(encoding.checksum)) {
                     textToDisplay += " " + encoding.checksum;
                 }
 
-                var text = that._getText(textToDisplay);
-                textHeight = text.bbox().height();
-                barHeight -= textHeight + textMargin.top + textMargin.bottom;
-
-                visual.append(text);
+                visual.append(that._getText(textToDisplay));
             }
 
-            result = encoding.encode(value, contentBox.width(), barHeight);
-
             that.barHeight = barHeight;
-
-            visual.append(this._getBands(result.pattern, result.baseUnit));
+            this._bandsGroup = this._getBands(result.pattern, result.baseUnit);
+            visual.append(this._bandsGroup);
 
             return visual;
         },
@@ -1724,7 +1725,7 @@ var __meta__ = {
         _getText: function(value) {
             var that = this,
                 textOptions = that.options.text,
-                text = new TextBox(value, {
+                text = that._textbox = new TextBox(value, {
                     font: textOptions.font,
                     color: textOptions.color,
                     align: "center",

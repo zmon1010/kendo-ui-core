@@ -1,11 +1,10 @@
 (function() {
-return;
-
     var barcode;
-    var view;
     var encodingStub;
     var dataviz = kendo.dataviz;
-    var measureText = kendo.drawing.util.measureText;
+    var geom = kendo.geometry;
+    var draw = kendo.drawing;
+    var measureText = draw.util.measureText;
     var Barcode = dataviz.ui.Barcode;
 
     var EncodingStub = function(pattern) {
@@ -27,16 +26,10 @@ return;
 
         barcode = $("#container").data("kendoBarcode");
 
-        view = new ViewStub();
-        view.options = {};
-        view.renderTo = function() {};
-
-        barcode.view =  view;
         if (encoding) {
             barcode.encoding = encodingStub = encoding;
+            barcode.redraw();
         }
-
-        barcode.redraw();
     }
 
     function teardown() {
@@ -49,16 +42,19 @@ return;
         module("rendering / background", {
             setup: function() {
                 createBarcode({
+                    type: "code128",
                     width: 200,
                     height: 100,
                     background: "red",
                     border: {
                         width: 2,
                         color: "blue",
-                        dashType: "dots"
-                    }
+                        dashType: "dot"
+                    },
+                    value: "FOO"
                 });
-                background = view.log.rect[0];
+
+                background = barcode.visual.children[0];
             },
             teardown: teardown
         });
@@ -68,26 +64,23 @@ return;
         });
 
         test("renders background with specified width and height without half border", function() {
-            equal(background.x1, 1);
-            equal(background.x2, 199);
-            equal(background.y1, 1);
-            equal(background.y2, 99);
+            sameLinePath(background, draw.Path.fromPoints([[1, 1], [199, 1], [199, 99], [1, 99]]).close());
         });
 
         test("sets color", function() {
-            equal(background.style.fill, "red");
+            equal(background.options.fill.color, "red");
         });
 
         test("sets border color", function() {
-            equal(background.style.stroke, "blue");
+            equal(background.options.stroke.color, "blue");
         });
 
         test("sets border width", function() {
-            equal(background.style.strokeWidth, 2);
+            equal(background.options.stroke.width, 2);
         });
 
         test("sets border dashType", function() {
-            equal(background.style.dashType, "dots");
+            equal(background.options.stroke.dashType, "dot");
         });
 
     })();
@@ -128,7 +121,8 @@ return;
                         margin: 5
                     }
                 }, encodingStub);
-                bars = view.log.rect.slice(1);
+
+                bars = barcode._bandsGroup.children;
             },
             teardown: teardown
         });
@@ -143,34 +137,39 @@ return;
 
         test("does not render white bars", 2, function() {
             for (var i = 0; i < bars.length; i++) {
-                equal(bars[i].style.fill, "red");
+                equal(bars[i].options.fill.color, "red");
             }
         });
 
         test("bars are rendered in content box with white bars width added to position", function() {
-            equal(bars[0].x1, 21);
-            equal(bars[0].x2, 33);
+            var bbox = bars[0].bbox();
+            equal(bbox.origin.x, 21);
+            equal(bbox.size.width, 12);
         });
 
         test("pattern width is taken from width field if pattern is an object", function() {
-            equal(bars[1].x1, 42);
-            equal(bars[1].x2, 48);
+            var bbox = bars[1].bbox();
+            equal(bbox.origin.x, 42);
+            equal(bbox.topRight().x, 48);
         });
 
         test("bars start vertically after padding and border", function() {
-            equal(bars[0].y1, 7);
-            equal(bars[0].y2, 7 + barHeight);
+            var bbox = bars[0].bbox();
+            equal(bbox.origin.y, 7);
+            equal(bbox.bottomLeft().y, 7 + barHeight);
         });
 
         test("y1 and y2 positions are taken from pattern if pattern is an object", function() {
-            equal(bars[1].y1, 12);
-            equal(bars[1].y2, 27);
+            var bbox = bars[1].bbox();
+            equal(bbox.origin.y, 12);
+            equal(bbox.bottomLeft().y, 27);
         });
 
     })();
 
     (function() {
         var textSize = measureText("foo", {font: SANS12});
+        var textbox;
         var text;
 
         function createBarcodeWithText(options) {
@@ -186,7 +185,11 @@ return;
                     color: "red"
                 }
             }, options));
-            text = view.log.text[0];
+
+            textbox = barcode._textbox;
+            if (textbox) {
+                text = textbox.visual.children[0];
+            }
         }
 
         module("rendering / text", {
@@ -196,7 +199,7 @@ return;
 
         test("renders text", function() {
             createBarcodeWithText();
-            ok(text);
+            ok(textbox);
         });
 
         test("does not render text if visible is set to false", function() {
@@ -205,12 +208,12 @@ return;
                     visible: false
                 }
             });
-            equal(view.log.text.length, 0);
+            ok(!textbox);
         });
 
         test("sets text to value", function() {
             createBarcodeWithText();
-            equal(text.content, "foo");
+            equal(text.content(), "foo");
         });
 
         test("adds checksum to text if checksum is set to true and encoding has checksum", function() {
@@ -218,7 +221,7 @@ return;
                 checksum: true
             });
 
-            equal(text.content, "foo 54");
+            equal(text.content(), "foo 54");
         });
 
         test("does not change text value if checksum is set to true and encoding has no checksum", function() {
@@ -228,17 +231,17 @@ return;
                 checksum: true
             });
 
-            equal(text.content, "FOO");
+            equal(text.content(), "FOO");
         });
 
         test("sets text color", function() {
             createBarcodeWithText();
-            equal(text.style.color, "red");
+            equal(text.options.fill.color, "red");
         });
 
         test("sets text font", function() {
             createBarcodeWithText();
-            equal(text.style.font, SANS12);
+            equal(text.options.font, SANS12);
         });
     })();
 })();
