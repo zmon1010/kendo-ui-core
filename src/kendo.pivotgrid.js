@@ -2574,7 +2574,7 @@ var __meta__ = {
             command += "}";
         } else {
             command += "Filter(";
-            command += field + ".Children";
+            command += field + ".MEMBERS";
             command += kendo.format(filterFunctionFormats[operator], field, value);
             command += ")";
         }
