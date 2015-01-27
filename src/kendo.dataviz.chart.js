@@ -3497,18 +3497,7 @@ var __meta__ = {
                 }
 
                 if (categorySum > 0) {
-                    var pct = point.value / categorySum;
-
-                    if (last(categoryPts) === point) {
-                        var pctSum = 0;
-                        for (i = 0; i < otherValues.length; i++) {
-                            pctSum += otherValues[i] / categorySum;
-                        }
-
-                        pct += 1 - pctSum;
-                    }
-
-                    return pct;
+                    return point.value / categorySum;
                 }
             }
 
@@ -3551,6 +3540,10 @@ var __meta__ = {
                         prevValue += otherValue;
                         plotValue += otherValue;
                         isStackedBar = true;
+
+                        if (this.options.isStacked100) {
+                            plotValue = math.min(plotValue, 1);
+                        }
                     }
                 }
 

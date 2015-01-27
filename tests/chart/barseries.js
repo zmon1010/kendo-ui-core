@@ -725,30 +725,25 @@
             equal(series.valueAxisRanges[undefined].max, 1);
         });
 
-        test("rounds sum to 100%", function() {
-            setupBarChart(plotArea, {
-                series: [{
-                    data: [98.07039]
-                }, {
-                    data: [99.21937]
-                }, {
-                    data: [98.25632]
-                }, {
-                    data: [96.74904]
-                }, {
-                    data: [96.4993439]
-                }, {
-                    data: [99.1569748]
-                }],
-                isStacked: true, isStacked100: true }
-            );
+        test("rounds plot values sum to 100%", function() {
+            var sets = [
+                [98.07039, 99.21937, 98.25632, 96.74904, 96.4993439, 99.1569748],
+                [1100941, 810169, 395533, 152171, 36724]
+            ];
 
-            var pctSum = 0;
-            for (var i = 0; i < series.points.length; i++) {
-                pctSum += series.plotValue(series.points[i]);
-            }
+            $.each(sets, function(i, data) {
+                setupBarChart(plotArea, {
+                    series: $.map(data, function(value) {
+                        return {
+                            data: [value]
+                        };
+                    }),
+                    isStacked: true, isStacked100: true
+                });
 
-            equal(pctSum, 1);
+                var plotRange = series.plotRange(kendo.util.last(series.points));
+                close(plotRange[1], 1, 1e-12, "Set: " + data.join(","));
+            });
         });
 
         // ------------------------------------------------------------
