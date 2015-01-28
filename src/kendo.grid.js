@@ -655,15 +655,24 @@ var __meta__ = {
         var cells = {};
         var rows = thead.find(">tr:not(.k-filter-row)");
 
+        var filter = function() {
+            var el = $(this);
+            return !el.hasClass("k-group-cell") && !el.hasClass("k-hierarchy-cell");
+        };
+
         for (var idx = 0, length = columns.length; idx < length; idx++) {
             position = columnPosition(columns[idx], allColumns);
+
             if (!cells[position.row]) {
-                cells[position.row] = rows.eq(position.row).find(".k-header:not(.k-group-cell,.k-hierarchy-cell)");
+                cells[position.row] = rows.eq(position.row)
+                    .find(".k-header")
+                    .filter(filter);
             }
 
             cell = cells[position.row].eq(position.cell);
             cell.attr(kendo.attr("index"), offset + idx);
         }
+
 
         return columns.length;
     }
@@ -956,13 +965,19 @@ var __meta__ = {
     function leafDataCells(container) {
         var rows = container.find(">tr:not(.k-filter-row)");
 
+        var filter = function() {
+            var el = $(this);
+            return !el.hasClass("k-group-cell") && !el.hasClass("k-hierarchy-cell");
+        };
+
         var cells = $();
         if (rows.length > 1) {
-            cells = rows.find("th:not(.k-group-cell,.k-hierarchy-cell)")
+            cells = rows.find("th")
+                .filter(filter)
                 .filter(function() { return this.rowSpan > 1; });
         }
 
-        cells = cells.add(rows.last().find("th:not(.k-group-cell,.k-hierarchy-cell)"));
+        cells = cells.add(rows.last().find("th").filter(filter));
 
         var indexAttr = kendo.attr("index");
         cells.sort(function(a, b) {
