@@ -394,7 +394,7 @@
             }
         });
 
-        equal(instance.header.find(".foo").length, 1);
+        equal(instance.thead.find(".foo").length, 1);
     });
 
     test("column header template on sortable column does not encode HTML", function() {
