@@ -801,9 +801,7 @@ var __meta__ = {
         _angularFooters: function(command) {
             var i, footer, aggregates;
             var allAggregates = this.dataSource.aggregates();
-            var footerRows = this.tbody.find("tr").filter(function() {
-                return $(this).hasClass(classNames.footerTemplate);
-            });
+            var footerRows = this._footerItems();
 
             for (i = 0; i < footerRows.length; i++) {
                 footer = footerRows.eq(i);
@@ -829,9 +827,41 @@ var __meta__ = {
         },
 
         items: function() {
-            return this.tbody.find("tr").filter(function() {
+            if (this._hasLockedColumns) {
+                return this._items(this.tbody).add(this._items(this.lockedTable));
+            } else {
+                return this._items(this.tbody);
+            }
+        },
+
+        _items: function(container) {
+            return container.find("tr").filter(function() {
                 return !$(this).hasClass(classNames.footerTemplate);
             });
+        },
+
+        _footerItems: function() {
+            var container = this.tbody;
+            if (this._hasLockedColumns) {
+                container = container.add(this.lockedTable);
+            }
+
+            return container.find("tr").filter(function() {
+                return $(this).hasClass(classNames.footerTemplate);
+            });
+        },
+
+        dataItems: function() {
+            var dataItems = kendo.ui.DataBoundWidget.fn.dataItems.call(this);
+            if (this._hasLockedColumns) {
+                var n = dataItems.length, tmp = new Array(2 * n);
+                for (var i = n; --i >= 0;) {
+                    tmp[i] = tmp[i + n] = dataItems[i];
+                }
+                dataItems = tmp;
+            }
+
+            return dataItems;
         },
 
         _showStatus: function(message) {
@@ -1153,8 +1183,8 @@ var __meta__ = {
         },
 
         _layout: function () {
-            var element = this.element;
             var columns = this.columns;
+            var element = this.element;
             var layout = "";
 
             this.wrapper = element.addClass(classNames.wrapper);
@@ -1228,13 +1258,14 @@ var __meta__ = {
             if (this._hasLockedColumns) {
                 this.lockedHeader = header.first().closest(".k-grid-header-locked");
                 this.lockedContent = element.find(".k-grid-content-locked");
+                this.lockedTable = this.lockedContent.children();
             }
 
             this._initVirtualTrees();
 
             this._renderCols();
             this._renderHeader();
-            header = this.thead;
+
             this.angular("compile", function() {
                 return {
                     elements: header.find("th.k-header").get(),
@@ -1252,9 +1283,9 @@ var __meta__ = {
 
             if (this.lockedHeader){
                 this._lockedHeaderColsTree = new kendoDom.Tree(this.lockedHeader.find("colgroup")[0]);
-                this._lockedContentColsTree = new kendoDom.Tree(this.lockedContent.find("colgroup")[0]);
+                this._lockedContentColsTree = new kendoDom.Tree(this.lockedTable.find(">colgroup")[0]);
                 this._lockedHeaderTree = new kendoDom.Tree(this.lockedHeader.find("thead")[0]);
-                this._lockedContentTree = new kendoDom.Tree(this.lockedContent.find("tbody")[0]);
+                this._lockedContentTree = new kendoDom.Tree(this.lockedTable.find(">tbody")[0]);
             }
         },
 
