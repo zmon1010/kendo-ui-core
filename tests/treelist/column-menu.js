@@ -41,7 +41,7 @@
     test("column menu is initialized in each header", function() {
         createTreeList();
 
-        var th = instance.header.find("th");
+        var th = instance.thead.find("th");
         ok(th.eq(0).data("kendoColumnMenu") instanceof kendo.ui.ColumnMenu);
         ok(th.eq(1).data("kendoColumnMenu") instanceof kendo.ui.ColumnMenu);
         ok(th.eq(2).data("kendoColumnMenu") instanceof kendo.ui.ColumnMenu);
@@ -57,7 +57,7 @@
             ]
         });
 
-        var th = instance.header.find("th");
+        var th = instance.thead.find("th");
         ok(!th.eq(3).data("kendoColumnMenu"));
     });
 
@@ -71,14 +71,14 @@
             ]
         });
 
-        var th = instance.header.find("th");
+        var th = instance.thead.find("th");
         ok(!th.eq(3).data("kendoColumnMenu"));
     });
 
     test("column menu is not initialized when disabled", function() {
         createTreeList({ columnMenu: false });
 
-        var th = instance.header.find("th");
+        var th = instance.thead.find("th");
         ok(!th.eq(0).data("kendoColumnMenu"));
         ok(!th.eq(1).data("kendoColumnMenu"));
         ok(!th.eq(2).data("kendoColumnMenu"));

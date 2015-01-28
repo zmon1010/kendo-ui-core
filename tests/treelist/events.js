@@ -136,7 +136,7 @@
             filterMenuInit: handler
         });
 
-        instance.header.find(".k-grid-filter:first").click();
+        instance.thead.find(".k-grid-filter:first").click();
 
         equal(handler.calls, 1);
     });

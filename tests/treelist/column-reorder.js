@@ -127,8 +127,8 @@
 
         instance.reorderColumn(1, instance.columns[2]);
 
-        var headerCols = instance.header.prev().children();
-        var contentCols = instance.content.prev().children();
+        var headerCols = instance.thead.prev().children();
+        var contentCols = instance.tbody.prev().children();
 
         equal(headerCols[0].style.width, "10px");
         equal(headerCols[1].style.width, "30px");
@@ -144,7 +144,7 @@
 
         instance.reorderColumn(1, instance.columns[2]);
 
-        var headerCols = instance.header.prev().children();
+        var headerCols = instance.thead.prev().children();
 
         equal(headerCols[0].style.width, "10px");
         equal(headerCols[1].style.width, "30px");
@@ -168,7 +168,7 @@
 
         instance.reorderColumn(1, instance.columns[2]);
 
-        var ths = instance.header.find("tr:first").children();
+        var ths = instance.thead.find("tr:first").children();
 
         equal(ths.eq(0).text(), "id");
         equal(ths.eq(1).text(), "text");
@@ -180,7 +180,7 @@
 
         instance.reorderColumn(0, instance.columns[1]);
 
-        var ths = instance.header.find("tr:first").children();
+        var ths = instance.thead.find("tr:first").children();
 
         equal(ths.eq(0).text(), "parentId");
         equal(ths.eq(1).text(), "id");
@@ -198,7 +198,7 @@
         });
         instance.reorderColumn(0, instance.columns[1]);
 
-        var ths = instance.header.find("tr:first").children();
+        var ths = instance.thead.find("tr:first").children();
 
         equal(ths.eq(0).text(), "parentId");
         ok(ths.eq(0).find(".k-i-arrow-n")[0]);
@@ -216,12 +216,12 @@
         equal(columns[1].field, "text");
         equal(columns[2].field, "parentId");
 
-        var headerCols = instance.header.prev().children();
+        var headerCols = instance.thead.prev().children();
         equal(headerCols[0].style.width, "10px");
         equal(headerCols[1].style.width, "30px");
         equal(headerCols[2].style.width, "20px");
 
-        var ths = instance.header.find("tr").children();
+        var ths = instance.thead.find("tr").children();
         equal(ths.length, 3);
         equal(ths.eq(0).text(), "id");
         equal(ths.eq(1).text(), "text");

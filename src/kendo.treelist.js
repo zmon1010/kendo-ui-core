@@ -721,9 +721,9 @@ var __meta__ = {
 
             this._columns();
             this._layout();
+            this._selectable();
             this._sortable();
             this._filterable();
-            this._selectable();
             this._attachEvents();
             this._toolbar();
             this._scrollable();
@@ -741,13 +741,15 @@ var __meta__ = {
 
         _scrollable: function() {
             if (this.options.scrollable) {
-                var scrollables = this.header.closest(".k-grid-header-wrap");
-                this.content.closest(".k-grid-content").bind("scroll" + NS, function() {
+                var scrollables = this.thead.closest(".k-grid-header-wrap");
+
+                this.content = this.element.find(DOT + classNames.gridContentWrap);
+                this.content.bind("scroll" + NS, function() {
                     scrollables.scrollLeft(this.scrollLeft);
                 });
 
 
-                var touchScroller = kendo.touchScroller(this.content.closest("div"));
+                var touchScroller = kendo.touchScroller(this.content);
 
                 if (touchScroller && touchScroller.movable) {
                     this._touchScroller = touchScroller;
@@ -758,7 +760,7 @@ var __meta__ = {
         _progress: function() {
             var messages = this.options.messages;
 
-            if (!this.content.find("tr").length) {
+            if (!this.tbody.find("tr").length) {
                 this._showStatus(
                     kendo.template(
                         "<span class='#= className #' /> #: messages.loading #"
@@ -799,7 +801,7 @@ var __meta__ = {
         _angularFooters: function(command) {
             var i, footer, aggregates;
             var allAggregates = this.dataSource.aggregates();
-            var footerRows = this.content.find("tr").filter(function() {
+            var footerRows = this.tbody.find("tr").filter(function() {
                 return $(this).hasClass(classNames.footerTemplate);
             });
 
@@ -827,7 +829,7 @@ var __meta__ = {
         },
 
         items: function() {
-            return this.content.find("tr").filter(function() {
+            return this.tbody.find("tr").filter(function() {
                 return !$(this).hasClass(classNames.footerTemplate);
             });
         },
@@ -841,14 +843,11 @@ var __meta__ = {
 
             this._contentTree.render([]);
 
-            this.content.closest(DOT + classNames.gridContent).hide();
-
             status.html(message);
         },
 
         _hideStatus: function() {
             this.element.find(".k-status").remove();
-            this.content.closest(DOT + classNames.gridContent).show();
         },
 
         _adjustHeight: function() {
@@ -909,8 +908,10 @@ var __meta__ = {
 
             this._refreshHandler = this._errorHandler = this._progressHandler = null;
 
-            this.header =
+            this.thead =
                 this.content =
+                this.tbody =
+                this.table =
                 this.element =
                 this.lockedHeader =
                 this.lockedContent = null;
@@ -1214,23 +1215,26 @@ var __meta__ = {
             this.toolbar = element.find(DOT + classNames.gridToolbar);
 
             var header = element.find(DOT + classNames.gridHeader).find("thead").addBack().filter("thead");
-            this.header = header.last();
+            this.thead = header.last();
 
-            this.content = element.find(DOT + classNames.gridContentWrap).find("tbody");
-            if (!this.content.length) {
-                this.content = element.find("tbody");
+            var content = element.find(DOT + classNames.gridContentWrap);
+            if (!content.length) {
+                content = element;
             }
 
+            this.table = content.find(">table");
+            this.tbody = this.table.find(">tbody");
+
             if (this._hasLockedColumns) {
-                this.lockedHeader = header.first();
-                this.lockedContent = element.find(".k-grid-content-locked").find("tbody");
+                this.lockedHeader = header.first().closest(".k-grid-header-locked");
+                this.lockedContent = element.find(".k-grid-content-locked");
             }
 
             this._initVirtualTrees();
 
             this._renderCols();
             this._renderHeader();
-            header = this.header;
+            header = this.thead;
             this.angular("compile", function() {
                 return {
                     elements: header.find("th.k-header").get(),
@@ -1240,17 +1244,17 @@ var __meta__ = {
         },
 
         _initVirtualTrees: function() {
-            this._headerColsTree = new kendoDom.Tree(this.header.prev()[0]);
-            this._contentColsTree = new kendoDom.Tree(this.content.prev()[0]);
-            this._headerTree = new kendoDom.Tree(this.header[0]);
-            this._contentTree = new kendoDom.Tree(this.content[0]);
+            this._headerColsTree = new kendoDom.Tree(this.thead.prev()[0]);
+            this._contentColsTree = new kendoDom.Tree(this.tbody.prev()[0]);
+            this._headerTree = new kendoDom.Tree(this.thead[0]);
+            this._contentTree = new kendoDom.Tree(this.tbody[0]);
             this._statusTree = new kendoDom.Tree(this.element.children(".k-status")[0]);
 
-            if (this.lockedHeader) {
-                this._lockedHeaderColsTree = new kendoDom.Tree(this.lockedHeader.prev()[0]);
-                this._lockedContentColsTree = new kendoDom.Tree(this.lockedContent.prev()[0]);
-                this._lockedHeaderTree = new kendoDom.Tree(this.lockedHeader[0]);
-                this._lockedContentTree = new kendoDom.Tree(this.lockedContent[0]);
+            if (this.lockedHeader){
+                this._lockedHeaderColsTree = new kendoDom.Tree(this.lockedHeader.find("colgroup")[0]);
+                this._lockedContentColsTree = new kendoDom.Tree(this.lockedContent.find("colgroup")[0]);
+                this._lockedHeaderTree = new kendoDom.Tree(this.lockedHeader.find("thead")[0]);
+                this._lockedContentTree = new kendoDom.Tree(this.lockedContent.find("tbody")[0]);
             }
         },
 
@@ -1678,7 +1682,7 @@ var __meta__ = {
             var columns = this.columns;
             var column;
             var sortableInstance;
-            var cells = this.header.find("th");
+            var cells = this.thead.find("th");
             var cell, idx, length;
             var fieldAttr = kendo.attr("field");
             var sortable = this.options.sortable;
@@ -1709,7 +1713,7 @@ var __meta__ = {
         },
 
         _filterable: function() {
-            var cells = this.header.find("th");
+            var cells = this.thead.find("th");
             var filterable = this.options.filterable;
             var idx, length, column, cell, filterMenuInstance;
 
@@ -1758,7 +1762,7 @@ var __meta__ = {
                     filter = filter + ">td";
                 }
 
-                this.selectable = new kendo.ui.Selectable(this.content, {
+                this.selectable = new kendo.ui.Selectable(this.tbody, {
                     filter: filter,
                     aria: true,
                     multiple: selectable.multiple,
@@ -1832,7 +1836,7 @@ var __meta__ = {
             var model;
 
             if (typeof row === STRING) {
-                row = this.content.find(row);
+                row = this.tbody.find(row);
             }
 
             model = this.dataItem(row);
@@ -1923,7 +1927,7 @@ var __meta__ = {
         _insertAt: function(model, index) {
             model = this.dataSource.insert(index, model);
 
-            var row = this.content.find("[" + kendo.attr("uid") + "=" + model.uid + "]");
+            var row = this.tbody.find("[" + kendo.attr("uid") + "=" + model.uid + "]");
 
             this.editRow(row);
         },
@@ -1967,7 +1971,7 @@ var __meta__ = {
         },
 
         _createEditor: function(model) {
-            var row = this.content.find("[" + kendo.attr("uid") + "=" + model.uid + "]");
+            var row = this.tbody.find("[" + kendo.attr("uid") + "=" + model.uid + "]");
 
             var mode = this._editMode();
 
@@ -2037,8 +2041,8 @@ var __meta__ = {
             this.trigger(hidden ? COLUMNHIDE : COLUMNSHOW, { column: column });
 
             if (!hidden && !column.width) {
-                this.content.closest("table")
-                    .add(this.header.closest("table"))
+                this.table
+                    .add(this.thead.closest("table"))
                     .width("");
             }
         },
@@ -2061,7 +2065,7 @@ var __meta__ = {
 
         _adjustTablesWidth: function() {
             var idx, length;
-            var cols = this.header.prev().children();
+            var cols = this.thead.prev().children();
             var colWidth, width = 0;
 
             for (idx = 0, length = cols.length; idx < length; idx++ ) {
@@ -2076,8 +2080,8 @@ var __meta__ = {
 
 
             if (width) {
-                this.content.closest("table")
-                    .add(this.header.closest("table"))
+                this.table
+                    .add(this.thead.closest("table"))
                     .width(width);
             }
         },
@@ -2146,7 +2150,7 @@ var __meta__ = {
             this._renderCols();
 
             //reorder column header manually
-            var ths = this.header.find("th");
+            var ths = this.thead.find("th");
             ths.eq(sourceIndex)[before ? "insertBefore" : "insertAfter"](ths.eq(destIndex));
 
             var dom = this._headerTree.children[0].children;
@@ -2157,7 +2161,7 @@ var __meta__ = {
         },
 
         _columnMenu: function() {
-            var ths = this.header.find("th");
+            var ths = this.thead.find("th");
             var columns = this.columns;
             var options = this.options;
             var columnMenu = options.columnMenu;

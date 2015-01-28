@@ -31,7 +31,7 @@
     test("sortable adds data-field attribute to column header", function() {
         createTreeList();
 
-        var header = instance.header.find("th");
+        var header = instance.thead.find("th");
         equal(header.eq(0).attr(fieldAttr), "id");
         equal(header.eq(1).attr(fieldAttr), "parentId");
     });
@@ -39,7 +39,7 @@
     test("instanciate ColumnSorter on column header", function() {
         createTreeList();
 
-        var header = instance.header.find("th");
+        var header = instance.thead.find("th");
         ok(header.eq(0).data("kendoColumnSorter"));
         ok(header.eq(1).data("kendoColumnSorter"));
     });
@@ -49,7 +49,7 @@
             sortable: false
         });
 
-        var header = instance.header.find("th");
+        var header = instance.thead.find("th");
         ok(!header.eq(0).data("kendoColumnSorter"));
         ok(!header.eq(1).data("kendoColumnSorter"));
     });
@@ -59,7 +59,7 @@
             columns: [ "id", { field: "parentId", sortable: false } ]
         });
 
-        var header = instance.header.find("th");
+        var header = instance.thead.find("th");
         ok(header.eq(0).data("kendoColumnSorter"));
         ok(!header.eq(1).data("kendoColumnSorter"));
     });
@@ -69,7 +69,7 @@
             columns: [ "id", "parentId", { command: [ "foo" ] } ]
         });
 
-        var header = instance.header.find("th");
+        var header = instance.thead.find("th");
         ok(header.eq(0).data("kendoColumnSorter"));
         ok(header.eq(1).data("kendoColumnSorter"));
         ok(!header.eq(2).data("kendoColumnSorter"));
@@ -80,7 +80,7 @@
             columns: [ "id", "parentId", { template: "foo" } ]
         });
 
-        var header = instance.header.find("th");
+        var header = instance.thead.find("th");
         ok(header.eq(0).data("kendoColumnSorter"));
         ok(header.eq(1).data("kendoColumnSorter"));
         ok(!header.eq(2).data("kendoColumnSorter"));
@@ -95,7 +95,7 @@
             }
         });
 
-        instance.header.find("th").first().click();
+        instance.thead.find("th").first().click();
     });
 
     test("setting column compare function", 1, function() {
@@ -110,6 +110,6 @@
             }]
         });
 
-        instance.header.find("th").first().click();
+        instance.thead.find("th").first().click();
     });
 })();

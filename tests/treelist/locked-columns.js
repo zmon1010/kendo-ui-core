@@ -65,8 +65,8 @@
     test("header col elements rendering", function() {
         createTreeList();
 
-        var lockedCols = instance.lockedHeader.prev().children();
-        var cols = instance.header.prev().children();
+        var lockedCols = instance.lockedHeader.find("col");
+        var cols = instance.thead.prev().children();
 
         equal(lockedCols.length, 1);
         equal(lockedCols[0].style.width, "10px");
@@ -79,8 +79,8 @@
     test("content col elements rendering", function() {
         createTreeList();
 
-        var lockedCols = instance.lockedContent.prev().children();
-        var cols = instance.content.prev().children();
+        var lockedCols = instance.lockedContent.find("col");
+        var cols = instance.tbody.prev().children();
 
         equal(lockedCols.length, 1);
         equal(lockedCols[0].style.width, "10px");
@@ -94,7 +94,7 @@
         createTreeList();
 
         var lockedCells = instance.lockedHeader.find("th");
-        var cells = instance.header.find("th");
+        var cells = instance.thead.find("th");
 
         equal(lockedCells.length, 1);
         equal(lockedCells.eq(0).text(), "id");
