@@ -1244,7 +1244,7 @@ var __meta__ = {
             var columns = this.columns;
             var filterable = this.options.filterable;
             var ths = [];
-            var column, title, children, cellClasses, attr;
+            var column, title, children, cellClasses, attr, headerContent;
 
             for (var i = 0, length = columns.length; i < length; i++) {
                 column = columns[i];
@@ -1257,14 +1257,18 @@ var __meta__ = {
                     title = column.title || column.field || "";
                 }
 
+                if (column.headerTemplate) {
+                    headerContent = kendoHtmlElement(title);
+                } else {
+                    headerContent = kendoTextElement(title);
+                }
+
                 if (column.sortable) {
                     children.push(kendoDomElement("a", { href: "#", className: classNames.link }, [
-                        kendoTextElement(title)
+                        headerContent
                     ]));
-                } else if (column.headerTemplate) {
-                    children.push(kendoHtmlElement(title));
                 } else {
-                    children.push(kendoTextElement(title));
+                    children.push(headerContent);
                 }
 
                 attr = {
