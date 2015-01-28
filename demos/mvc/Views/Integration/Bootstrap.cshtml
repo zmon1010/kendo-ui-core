@@ -38,13 +38,13 @@
         <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
         <!-- End Google Tag Manager -->
         <header>
-            <div class="container" class="row">
+            <div class="container">
                 <h1 class="col-sm-3 hidden-sm">Kendo UI &hearts; Bootstrap</h1>
                 <h1 class="col-sm-3 visible-sm">Kendo UI &hearts;<br/> Bootstrap</h1>
 
-                <button id="configure" class="visible-xs"><span class="glyphicon glyphicon-align-justify"></span></button>
+                <button id="configure" class="k-rpanel-toggle"><span class="glyphicon glyphicon-align-justify"></span></button>
 
-                <div id="configurator-wrap" class="col-sm-9 hidden-xs">
+                <div id="configurator-wrap" class="col-sm-9">
                     <div id="configurator" class="row">
                         <label class="col-sm-4">
                             <div class="description">Dimensions</div>
@@ -354,9 +354,10 @@
 
             $("#theme-list, #dimensions-list, #font-size-list").addClass("ra-list");
 
-            $("#configure").on("click", function(e) {
-                $("#configurator-wrap").toggleClass("hidden-xs");
-                e.preventDefault();
+            $("#configurator-wrap").kendoResponsivePanel({
+                breakpoint: 768,
+                autoClose: false,
+                orientation: "top"
             });
 
             // init sample widgets
