@@ -48,6 +48,8 @@ namespace Kendo.Mvc.Rendering
 			tagBuilder.MergeAttribute("name", fullName);
 			tagBuilder.MergeAttributes(htmlAttributes, replaceExisting: true);
 
+			tagBuilder.GenerateId(fullName, IdAttributeDotReplacement);
+
 			var valueParameter = FormatValue(value, format);
 			var useViewData = metadata == null && value == null;
             var attributeValue = (string) GetModelStateValue(viewContext, fullName, typeof(string));
@@ -57,7 +59,6 @@ namespace Kendo.Mvc.Rendering
 			}
 
 			tagBuilder.MergeAttribute("value", attributeValue, true);
-			tagBuilder.GenerateId(fullName, IdAttributeDotReplacement);
 
 			// If there are any errors for a named field, we add the CSS attribute.
 			ModelState modelState;
@@ -71,37 +72,18 @@ namespace Kendo.Mvc.Rendering
 			return tagBuilder;
 		}
 
-		internal static string GetFullHtmlFieldName(ViewContext viewContext, string name)
+		public virtual TagBuilder GenerateDateTimeInput(
+			ViewContext viewContext,
+			ModelMetadata metadata,
+			string name,
+			object value,
+			string format,
+			IDictionary<string, object> htmlAttributes)
 		{
-			var fullName = viewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
-			return fullName;
-		}
+			var tagBuilder = GenerateDateInput(viewContext, metadata, name, value, format, htmlAttributes);
+			tagBuilder.MergeAttribute("type", "datetime", replaceExisting: true);
 
-		internal static object GetModelStateValue(ViewContext viewContext, string key, Type destinationType)
-		{
-			ModelState modelState;
-			if (viewContext.ViewData.ModelState.TryGetValue(key, out modelState) && modelState.Value != null)
-			{
-				return modelState.Value.ConvertTo(destinationType, culture: null);
-			}
-
-			return null;
-		}
-
-		private static string EvalString(ViewContext viewContext, string key)
-		{
-			return Convert.ToString(viewContext.ViewData.Eval(key), CultureInfo.CurrentCulture);
-		}
-
-		internal static string EvalString(ViewContext viewContext, string key, string format)
-		{
-			return Convert.ToString(viewContext.ViewData.Eval(key, format), CultureInfo.CurrentCulture);
-		}
-
-		/// <inheritdoc />
-		public static string FormatValue(object value, string format)
-		{
-			return ViewDataDictionary.FormatValue(value, format);
+			return tagBuilder;
 		}
 
 		// Only render attributes if client-side validation is enabled, and then only if we've
@@ -129,7 +111,7 @@ namespace Kendo.Mvc.Rendering
 			return UnobtrusiveValidationAttributesGenerator.GetValidationAttributes(clientRules);
 		}
 
-		public IEnumerable<ModelClientValidationRule> GetClientValidationRules(
+		protected virtual IEnumerable<ModelClientValidationRule> GetClientValidationRules(
 			ViewContext viewContext,
 			ModelMetadata metadata,
 			string name)
@@ -144,6 +126,38 @@ namespace Kendo.Mvc.Rendering
 				.OfType<IClientModelValidator>()
 				.SelectMany(v => v.GetClientValidationRules(
 					new ClientModelValidationContext(metadata, _metadataProvider)));
+		}
+
+		private static string GetFullHtmlFieldName(ViewContext viewContext, string name)
+		{
+			var fullName = viewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
+			return fullName;
+		}
+
+		private static object GetModelStateValue(ViewContext viewContext, string key, Type destinationType)
+		{
+			ModelState modelState;
+			if (viewContext.ViewData.ModelState.TryGetValue(key, out modelState) && modelState.Value != null)
+			{
+				return modelState.Value.ConvertTo(destinationType, culture: null);
+			}
+
+			return null;
+		}
+
+		private static string EvalString(ViewContext viewContext, string key)
+		{
+			return Convert.ToString(viewContext.ViewData.Eval(key), CultureInfo.CurrentCulture);
+		}
+
+		private static string EvalString(ViewContext viewContext, string key, string format)
+		{
+			return Convert.ToString(viewContext.ViewData.Eval(key, format), CultureInfo.CurrentCulture);
+		}
+
+		private static string FormatValue(object value, string format)
+		{
+			return ViewDataDictionary.FormatValue(value, format);
 		}
 	}
 }

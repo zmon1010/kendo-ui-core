@@ -10,7 +10,10 @@ namespace Kendo.Mvc.UI
 {
     public class DateTimePicker : WidgetBase, IInputComponent<DateTime>
     {
-        public DateTimePicker(ViewContext viewContext) : base(viewContext)
+		static internal DateTime defaultMinDate = new DateTime(1800, 1, 1);
+		static internal DateTime defaultMaxDate = new DateTime(2099, 12, 31);
+
+		public DateTimePicker(ViewContext viewContext) : base(viewContext)
         {
 			Value = null;
 			Enabled = true;
@@ -66,7 +69,7 @@ namespace Kendo.Mvc.UI
 
 		protected override void WriteHtml(TextWriter writer)
 		{
-			var tag = Generator.GenerateDateInput(ViewContext, ModelMetadata, Name, Value, Format, HtmlAttributes);
+			var tag = Generator.GenerateDateTimeInput(ViewContext, ModelMetadata, Name, Value, Format, HtmlAttributes);
 
 			if (!Enabled)
 			{
