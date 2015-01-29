@@ -734,7 +734,12 @@ var __meta__ = {
                 this.dataSource.fetch();
             }
 
-            this._adjustHeight();
+            if (this._hasLockedColumns) {
+                var widget = this;
+                this.wrapper.addClass("k-grid-lockedcolumns");
+                this._resizeHandler = function()  { widget.resize(); };
+                $(window).on("resize" + NS, this._resizeHandler);
+            }
 
             kendo.notify(this);
         },
@@ -884,6 +889,8 @@ var __meta__ = {
             var contentWrap = element.find(DOT + classNames.gridContentWrap);
             var header = element.find(DOT + classNames.gridHeader);
             var toolbar = element.find(DOT + classNames.gridToolbar);
+            var height;
+            var scrollbar = kendo.support.scrollbar();
 
             element.height(this.options.height);
 
@@ -904,8 +911,19 @@ var __meta__ = {
             };
 
             if (isHeightSet(element)) {
-                contentWrap.height(element.height() - header.outerHeight() - toolbar.outerHeight());
+                height = element.height() - header.outerHeight() - toolbar.outerHeight();
+                contentWrap.height(height);
+
+                if (this._hasLockedColumns) {
+                    scrollbar = this.table[0].offsetWidth > this.table.parent()[0].clientWidth ? scrollbar : 0;
+                    this.lockedContent.height(height - scrollbar);
+                }
             }
+        },
+
+        _resize: function() {
+            this._applyLockedContainersWidth();
+            this._adjustHeight();
         },
 
         destroy: function() {
@@ -916,6 +934,10 @@ var __meta__ = {
             dataSource.unbind(CHANGE, this._refreshHandler);
             dataSource.unbind(ERROR, this._errorHandler);
             dataSource.unbind(PROGRESS, this._progressHandler);
+
+            if (this._resizeHandler) {
+                $(window).off("resize" + NS, this._resizeHandler);
+            }
 
             if (this.reorderable) {
                 this.reorderable.destroy();
@@ -1473,6 +1495,10 @@ var __meta__ = {
         },
 
         _applyLockedContainersWidth: function() {
+            if (!this._hasLockedColumns) {
+                return;
+            }
+
             var lockedWidth = columnsWidth(this.lockedHeader.find(">table>colgroup>col"));
 
             var headerTable = this.thead.parent();

@@ -23,6 +23,7 @@
                     { id: 2, text: "baz", parentId: 1 }
                 ]
             },
+            height: 100,
             columns: [
                 { field: "id", width: 10, locked: true },
                 { field: "parentId", width: 20 },
@@ -164,5 +165,18 @@
         var expectedWidth = dom.width() - 2 - lockedColumnWidth;
         equal(instance.thead.closest(".k-grid-header-wrap").width(), expectedWidth - kendo.support.scrollbar());
         equal(instance.content.width(), expectedWidth);
+    });
+
+    test("set height of the locked content", function() {
+        createTreeList();
+
+        equal(instance.lockedContent.height(), instance.content.height());
+    });
+
+    test("set height of the locked content when horizontal scrollbar over non-locked content", function() {
+        dom.width(20);
+        createTreeList();
+
+        equal(instance.lockedContent.height(), instance.content.height() - kendo.support.scrollbar());
     });
 })();
