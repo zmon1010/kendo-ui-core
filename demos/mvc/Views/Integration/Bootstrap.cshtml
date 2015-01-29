@@ -8,7 +8,7 @@
         <title>Kendo UI &hearts; Twitter Bootstrap: Responsive demo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" href="@Url.Content("~/content/integration/bootstrap-integration/css/bootstrap.min.css")" />
+        <link rel="stylesheet" href="@Url.Content("~/content/integration/bootstrap/css/bootstrap.min.css")" />
         @foreach (string styleName in Kendo.Models.StyleGroups.Bootstrap) {
         <link href="@Url.Style(styleName)" rel="@(styleName.ToLowerInvariant().EndsWith("less") ? "stylesheet/less" : "stylesheet")" />
         }
@@ -23,11 +23,11 @@
 
         <script src="@Url.Content("~/content/shared/js/theme-chooser.js")"></script>
 
-        <link rel="stylesheet" href="@Url.Content("~/content/integration/bootstrap-integration/styles.css")" />
+        <link rel="stylesheet" href="@Url.Content("~/content/integration/bootstrap/styles.css")" />
 
         <!--[if lt IE 9]>
-        <script src="@Url.Content("~/content/integration/bootstrap-integration/html5shiv.js")"></script>
-        <script src="@Url.Content("~/content/integration/bootstrap-integration/respond.min.js")"></script>
+        <script src="@Url.Content("~/content/integration/bootstrap/html5shiv.js")"></script>
+        <script src="@Url.Content("~/content/integration/bootstrap/respond.min.js")"></script>
         <![endif]-->
     </head>
     <body>
@@ -38,13 +38,13 @@
         <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
         <!-- End Google Tag Manager -->
         <header>
-            <div class="container" class="row">
+            <div class="container">
                 <h1 class="col-sm-3 hidden-sm">Kendo UI &hearts; Bootstrap</h1>
                 <h1 class="col-sm-3 visible-sm">Kendo UI &hearts;<br/> Bootstrap</h1>
 
-                <button id="configure" class="visible-xs"><span class="glyphicon glyphicon-align-justify"></span></button>
+                <button id="configure" class="k-rpanel-toggle"><span class="glyphicon glyphicon-align-justify"></span></button>
 
-                <div id="configurator-wrap" class="col-sm-9 hidden-xs">
+                <div id="configurator-wrap" class="col-sm-9">
                     <div id="configurator" class="row">
                         <label class="col-sm-4">
                             <div class="description">Dimensions</div>
@@ -94,7 +94,7 @@
 
                         <div class="row">
                             <div class="col-lg-5 col-sm-2">
-                                <img src="@Url.Content("~/content/integration/bootstrap-integration/avatar.jpg")" class="ra-avatar img-responsive" />
+                                <img src="@Url.Content("~/content/integration/bootstrap/avatar.jpg")" class="ra-avatar img-responsive" />
                             </div>
 
                             <div class="col-lg-7 col-sm-2">
@@ -227,7 +227,7 @@
                 <script id="listview-template" type="x-kendo-template">
                     <li class="col-xs-6 col-md-4 col-lg-2">
                         <figure>
-                            <img src="@Url.Content("~/content/integration/bootstrap-integration/photos/#= id #.jpg")" class="img-responsive" />
+                            <img src="@Url.Content("~/content/integration/bootstrap/photos/#= id #.jpg")" class="img-responsive" />
                             <figcaption class="hidden-xs">
                                 <h4>#: title #</h4>
                                 <p class="hidden-sm">
@@ -354,9 +354,10 @@
 
             $("#theme-list, #dimensions-list, #font-size-list").addClass("ra-list");
 
-            $("#configure").on("click", function(e) {
-                $("#configurator-wrap").toggleClass("hidden-xs");
-                e.preventDefault();
+            $("#configurator-wrap").kendoResponsivePanel({
+                breakpoint: 768,
+                autoClose: false,
+                orientation: "top"
             });
 
             // init sample widgets
