@@ -13,6 +13,8 @@
 
         public string ParentId { get; set; }
 
+        public object Expanded { get; set; }
+
         protected override void Serialize(IDictionary<string, object> json)
         {
             if (Id != null)
@@ -23,6 +25,11 @@
             var fields = new Dictionary<string, object>();
             json["fields"] = fields;
 
+            if (Expanded is bool)
+            {
+                json["expanded"] = (bool)Expanded;
+            }
+
             Fields.Each(prop =>
             {
                 var field = new Dictionary<string, object>();
@@ -32,6 +39,11 @@
                 if (ParentId.HasValue() && currentMember == ParentId)
                 {
                     fields["parentId"] = field;
+                    field["from"] = currentMember;
+                }
+                else if (currentMember == (Expanded as string))
+                {
+                    fields["expanded"] = field;
                     field["from"] = currentMember;
                 }
                 else
