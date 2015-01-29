@@ -1835,7 +1835,7 @@ var __meta__ = {
             var columns = this.columns;
             var column;
             var sortableInstance;
-            var cells = this.thead.find("th");
+            var cells = $(this.lockedHeader).add(this.thead).find("th");
             var cell, idx, length;
             var fieldAttr = kendo.attr("field");
             var sortable = this.options.sortable;
@@ -1866,7 +1866,7 @@ var __meta__ = {
         },
 
         _filterable: function() {
-            var cells = this.thead.find("th");
+            var cells = $(this.lockedHeader).add(this.thead).find("th");
             var filterable = this.options.filterable;
             var idx, length, column, cell, filterMenuInstance;
 
@@ -2314,7 +2314,7 @@ var __meta__ = {
         },
 
         _columnMenu: function() {
-            var ths = this.thead.find("th");
+            var ths = $(this.lockedHeader).add(this.thead).find("th");
             var columns = this.columns;
             var options = this.options;
             var columnMenu = options.columnMenu;

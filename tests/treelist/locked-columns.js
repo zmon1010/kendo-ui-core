@@ -197,4 +197,28 @@
         instance.content.scrollTop(10).trigger("scroll");
         equal(instance.lockedContent.scrollTop(), instance.content.scrollTop());
     });
+
+    test("sortable is initialized in locked column headers", function() {
+        createTreeList({
+            sortable: true
+        });
+
+        ok(instance.lockedHeader.find("th").data("kendoColumnSorter"));
+    });
+
+    test("filter menu is initialized in locked column headers", function() {
+        createTreeList({
+            filterable: true
+        });
+
+        ok(instance.lockedHeader.find("th").data("kendoFilterMenu"));
+    });
+
+    test("column menu is initialized in locked column headers", function() {
+        createTreeList({
+            columnMenu: true
+        });
+
+        ok(instance.lockedHeader.find("th").data("kendoColumnMenu"));
+    });
 })();
