@@ -358,6 +358,33 @@
         ok(subGroup.find(".k-icon").hasClass("k-i-expand"));
     });
 
+    test("expand parent group shows the footers of subgroups that are visible", function() {
+        var grid = new Grid(table(), {
+            groupable: {
+                showFooter: true,
+            },
+            dataSource:[{foo: "foo", bar: "bar" }, {foo: "foo", bar: "baz"}],
+            columns: [{ field:"foo", groupFooterTemplate: "<span class='my-class'></span>"}, { field:"bar" }],
+        }),
+        tbody,
+        masterGroup,
+        subGroup;
+
+        grid.dataSource.group([{field: "foo"}, {field: "bar"}]);
+        tbody = grid.tbody;
+        masterGroup = tbody.find(".k-grouping-row:first");
+        firstSubGroup = tbody.find(".k-grouping-row").eq(1);
+        secondSubGroup = tbody.find(".k-grouping-row").eq(2);
+
+        grid.collapseGroup(firstSubGroup);
+        grid.collapseGroup(secondSubGroup);
+
+        grid.collapseGroup(masterGroup);
+        grid.expandGroup(masterGroup);
+
+        equal(tbody.find(".my-class:visible").length, 3);
+    });
+
     test("grouping non-groupable grid updates html", function() {
         var grid = new Grid(table(), {
             dataSource:[{foo: "foo", bar: "bar"}, {foo: "foo", bar: "baz"}],

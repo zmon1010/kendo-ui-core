@@ -5771,12 +5771,14 @@ var __meta__ = {
             group = $(group);
 
             var that = this,
+                showFooter = that.options.groupable.showFooter,
                 level,
                 tr,
                 offset,
                 relatedGroup = $(),
                 idx,
                 length,
+                footersVisibility = [],
                 groupsCount = 1;
 
             if (this._isLocked()) {
@@ -5815,10 +5817,16 @@ var __meta__ = {
                 }
 
                 if (tr.hasClass("k-grouping-row")) {
+                    if (showFooter) {
+                        footersVisibility.push(tr.is(":visible"));
+                    }
                     groupsCount ++;
                 }
 
                 if (tr.hasClass("k-group-footer")) {
+                    if (showFooter) {
+                        tr.toggle(footersVisibility.pop());
+                    }
                     if (groupsCount == 1) {
                         tr.show();
                         relatedGroup.eq(idx).show();
