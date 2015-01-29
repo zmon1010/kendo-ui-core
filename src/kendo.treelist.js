@@ -743,7 +743,6 @@ var __meta__ = {
             if (this.options.scrollable) {
                 var scrollables = this.thead.closest(".k-grid-header-wrap");
 
-                this.content = this.element.find(DOT + classNames.gridContentWrap);
                 this.content.bind("scroll" + NS, function() {
                     scrollables.scrollLeft(this.scrollLeft);
                 });
@@ -1250,6 +1249,8 @@ var __meta__ = {
             var content = element.find(DOT + classNames.gridContentWrap);
             if (!content.length) {
                 content = element;
+            } else {
+                this.content = content;
             }
 
             this.table = content.find(">table");
@@ -1467,7 +1468,32 @@ var __meta__ = {
             if (this._hasLockedColumns) {
                 columns = this._lockedColumns();
                 this._lockedHeaderTree.render([kendoDomElement("tr", { "role": "row" }, this._ths(columns))]);
+                this._applyLockedContainersWidth();
             }
+        },
+
+        _applyLockedContainersWidth: function() {
+            var lockedWidth = columnsWidth(this.lockedHeader.find(">table>colgroup>col"));
+
+            var headerTable = this.thead.parent();
+            var nonLockedWidth = columnsWidth(headerTable.find(">colgroup>col"));
+
+            var wrapperWidth = this.wrapper[0].clientWidth;
+            var scrollbar = kendo.support.scrollbar();
+
+            if (lockedWidth >= wrapperWidth) {
+                lockedWidth = wrapperWidth - 3 * scrollbar;
+            }
+
+            this.lockedHeader
+                .add(this.lockedContent)
+                .width(lockedWidth);
+
+            headerTable.add(this.table).width(nonLockedWidth);
+
+            var width = wrapperWidth - lockedWidth - 2;
+            this.content.width(width);
+            headerTable.parent().width(width - scrollbar);
         },
 
         _trs: function(options) {

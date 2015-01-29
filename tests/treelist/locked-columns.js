@@ -117,4 +117,52 @@
         equal(cells.eq(0).text(), "null");
         equal(cells.eq(1).text(), "foo");
     });
+
+    test("locked containers width is set to the sum of locked columns", function() {
+        createTreeList();
+
+        equal(instance.lockedHeader.width(), 10);
+        equal(instance.lockedContent.width(), 10);
+
+        equal(instance.lockedHeader.find("table")[0].style.width, "");
+        equal(instance.lockedTable[0].style.width, "");
+    });
+
+    test("locked containers width when locked columns width is larget then the wrapper", function() {
+        dom.width(200);
+        createTreeList({
+            columns: [
+                { field: "id", width: 200, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        var expectedWidth = 200 - 3 * kendo.support.scrollbar();
+        equal(instance.lockedHeader.width(), expectedWidth);
+        equal(instance.lockedContent.width(), expectedWidth);
+    });
+
+    test("non-locked containers width is set to the sum of non-locked columns", function() {
+        createTreeList();
+
+        equal(instance.thead.parent().width(), 50);
+        equal(instance.table.width(), 50);
+    });
+
+    test("set width of header wrap and content elements", function() {
+        var lockedColumnWidth = 100;
+        dom.width(200);
+        createTreeList({
+            columns: [
+                { field: "id", width: lockedColumnWidth, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        var expectedWidth = dom.width() - 2 - lockedColumnWidth;
+        equal(instance.thead.closest(".k-grid-header-wrap").width(), expectedWidth - kendo.support.scrollbar());
+        equal(instance.content.width(), expectedWidth);
+    });
 })();
