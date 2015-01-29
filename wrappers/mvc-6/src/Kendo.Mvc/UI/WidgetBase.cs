@@ -7,7 +7,6 @@ using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -27,8 +26,7 @@ namespace Kendo.Mvc.UI
             Initializer = new JavaScriptInitializer();
             ViewContext = viewContext;
 
-			var activator = (IViewComponentActivator)ViewContext.HttpContext.RequestServices.GetService(typeof(IViewComponentActivator));
-			activator.Activate(this, ViewContext);
+			Activate();
 		}
 
 		/// <summary>
@@ -224,9 +222,17 @@ namespace Kendo.Mvc.UI
             var scripts = new StringWriter();
             WriteInitializationScript(scripts);
             AppendScriptToContext(scripts.ToString());
-        }
+		}
 
-        private void AppendScriptToContext(string script)
+		private void Activate()
+		{
+			var serviceProvider = ViewContext.HttpContext.RequestServices;
+			var activator = (IViewComponentActivator)serviceProvider.GetService(typeof(IViewComponentActivator));
+
+			activator.Activate(this, ViewContext);
+		}
+
+		private void AppendScriptToContext(string script)
         {
             var items = ViewContext.HttpContext.Items;
 
