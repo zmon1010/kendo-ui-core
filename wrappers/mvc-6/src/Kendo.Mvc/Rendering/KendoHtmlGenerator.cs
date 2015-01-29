@@ -26,12 +26,10 @@ namespace Kendo.Mvc.Rendering
 			_metadataProvider = metadataProvider;
 		}
 
-		/// <inheritdoc />
-		public string IdAttributeDotReplacement { get; set; } = "_";
-
 		public virtual TagBuilder GenerateDateInput(
 			ViewContext viewContext,
 			ModelMetadata metadata,
+			string id,
 			string name,
 			object value,
 			string format,
@@ -45,10 +43,9 @@ namespace Kendo.Mvc.Rendering
 
 			var tagBuilder = new TagBuilder("input");
 			tagBuilder.MergeAttribute("type", "date");
+			tagBuilder.MergeAttribute("id", id);
 			tagBuilder.MergeAttribute("name", fullName);
 			tagBuilder.MergeAttributes(htmlAttributes, replaceExisting: true);
-
-			tagBuilder.GenerateId(fullName, IdAttributeDotReplacement);
 
 			var valueParameter = FormatValue(value, format);
 			var useViewData = metadata == null && value == null;
@@ -75,12 +72,13 @@ namespace Kendo.Mvc.Rendering
 		public virtual TagBuilder GenerateDateTimeInput(
 			ViewContext viewContext,
 			ModelMetadata metadata,
+			string id,
 			string name,
 			object value,
 			string format,
 			IDictionary<string, object> htmlAttributes)
 		{
-			var tagBuilder = GenerateDateInput(viewContext, metadata, name, value, format, htmlAttributes);
+			var tagBuilder = GenerateDateInput(viewContext, metadata, id, name, value, format, htmlAttributes);
 			tagBuilder.MergeAttribute("type", "datetime", replaceExisting: true);
 
 			return tagBuilder;

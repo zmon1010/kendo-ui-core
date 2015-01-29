@@ -69,8 +69,7 @@ namespace Kendo.Mvc.UI
 
 		protected override void WriteHtml(TextWriter writer)
 		{
-			var tag = Generator.GenerateDateTimeInput(ViewContext, ModelMetadata, Name, Value, Format, HtmlAttributes);
-
+			var tag = Generator.GenerateDateTimeInput(ViewContext, ModelMetadata, Id, Name, Value, Format, HtmlAttributes);
 			if (!Enabled)
 			{
 				tag.MergeAttribute("disabled", "disabled");

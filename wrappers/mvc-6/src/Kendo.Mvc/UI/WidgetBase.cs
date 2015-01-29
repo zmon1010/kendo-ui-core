@@ -46,13 +46,24 @@ namespace Kendo.Mvc.UI
         {
             get
             {
-                // Return from htmlattributes if user has specified
-                // otherwise build it from name
-                return this.SanitizeId(HtmlAttributes.ContainsKey("id") ? (string)HtmlAttributes["id"] : Name);
+				// Return HtmlAttributes["id"] or name
+				return this.SanitizeId(HtmlAttributes.ContainsKey("id") ? (string)HtmlAttributes["id"] : Name);
             }
-        }
+		}
 
-        public bool IsSelfInitialized
+		public IJavaScriptInitializer Initializer
+		{
+			get;
+			set;
+		}
+
+		public bool IsInClientTemplate
+		{
+			get;
+			private set;
+		}
+
+		public bool IsSelfInitialized
         {
             get;
             set;
@@ -74,9 +85,6 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-		[Activate]
-		protected IKendoHtmlGenerator Generator { get; set; }
-
 		public ModelMetadata ModelMetadata
         {
             get;
@@ -91,27 +99,15 @@ namespace Kendo.Mvc.UI
         {
             get;
             set;
-        }
+		}
 
-        public IJavaScriptInitializer Initializer
-        {
-            get;
-            set;
-        }
-
-        public bool IsInClientTemplate
-        {
-            get;
-            private set;
-        }
-
-        public string Selector
-        {
-            get
-            {
-                return (IsInClientTemplate ? "\\#" : "#") + Id;
-            }
-        }
+		public string Selector
+		{
+			get
+			{
+				return (IsInClientTemplate ? "\\#" : "#") + Id;
+			}
+		}
 
         /// <summary>
         /// Gets or sets the view context to rendering a view.
@@ -121,7 +117,10 @@ namespace Kendo.Mvc.UI
         {
             get;
             private set;
-        }
+		}
+
+		[Activate]
+		protected IKendoHtmlGenerator Generator { get; set; }
 
 		/// <summary>
 		/// Renders the component.

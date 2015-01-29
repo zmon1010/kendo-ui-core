@@ -10,6 +10,7 @@ namespace Kendo.Mvc.Rendering
 		TagBuilder GenerateDateInput(
 			ViewContext viewContext,
 			ModelMetadata metadata,
+			string id,
 			string name,
 			object value,
 			string format,
@@ -18,6 +19,7 @@ namespace Kendo.Mvc.Rendering
 		TagBuilder GenerateDateTimeInput(
 			ViewContext viewContext,
 			ModelMetadata metadata,
+			string id,
 			string name,
 			object value,
 			string format,
