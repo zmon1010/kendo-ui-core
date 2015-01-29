@@ -382,7 +382,7 @@
         grid.collapseGroup(masterGroup);
         grid.expandGroup(masterGroup);
 
-        equal(tbody.find(".my-class:visible").length, 3);
+        equal(tbody.find(".k-group-footer").length, 3);
     });
 
     test("grouping non-groupable grid updates html", function() {
