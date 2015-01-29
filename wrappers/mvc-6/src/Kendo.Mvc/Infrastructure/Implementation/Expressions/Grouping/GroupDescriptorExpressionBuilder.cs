@@ -276,14 +276,11 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
 
         private NewExpression CreateProjectionNewExpression(IEnumerable<Expression> propertyValuesExpressions)
         {
-            throw new NotImplementedException();
-            //TODO: Implement Group item creation and binding
+            var properties = this.groupDescriptor.AggregateFunctions.Consolidate(
+                propertyValuesExpressions, (f, e) => new DynamicProperty(f.FunctionName, e.Type));
+            var projectionType = ClassFactory.Instance.GetDynamicClass(properties);
 
-            //var properties = this.groupDescriptor.AggregateFunctions.Consolidate(
-            //    propertyValuesExpressions, (f, e) => new DynamicProperty(f.FunctionName, e.Type));
-            //var projectionType = ClassFactory.Instance.GetDynamicClass(properties);
-
-            //return Expression.New(projectionType);
+            return Expression.New(projectionType);
         }
 
         private IEnumerable<MemberBinding> CreateProjectionMemberBindings(Type projectionType, IEnumerable<Expression> propertyValuesExpressions)
