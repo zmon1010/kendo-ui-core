@@ -2,174 +2,112 @@ namespace Kendo.Mvc.Infrastructure.Implementation
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Reflection;
-    using System.Reflection.Emit;
     using System.Threading;
-    
-    internal class ClassFactory
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
+    using Microsoft.CodeAnalysis.Emit;
+    using Microsoft.Framework.Runtime;
+    using Microsoft.Framework.Runtime.Infrastructure;
+
+    internal class ClassFactory 
     {
-        /*
-        public static readonly ClassFactory Instance = new ClassFactory();
+        private readonly IAssemblyLoadContext loader;
+        private int classCount;
 
-        static ClassFactory() { }  // Trigger lazy initialization of static fields
+        public static readonly ClassFactory Instance = new ClassFactory((IAssemblyLoadContextAccessor)CallContextServiceLocator.Locator.ServiceProvider.GetService(typeof(IAssemblyLoadContextAccessor)));
 
-        ModuleBuilder module;
-        Dictionary<Signature, Type> classes;
-        int classCount;
-        ReaderWriterLock rwLock;
-        
-        private ClassFactory()
+        private readonly ReaderWriterLockSlim rwLock;
+
+        static ClassFactory() { }
+
+        private ClassFactory(IAssemblyLoadContextAccessor loaderAccessor)
         {
-            AssemblyName name = new AssemblyName("DynamicClasses");
-            AssemblyBuilder assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(name, AssemblyBuilderAccess.Run);
-            try
-            {
-                module = assembly.DefineDynamicModule("Module");
-            }
-            finally
-            {
-            }
-            classes = new Dictionary<Signature, Type>();
-            rwLock = new ReaderWriterLock();
+            loader = loaderAccessor.GetLoadContext(typeof(ClassFactory).GetTypeInfo().Assembly);
+            rwLock = new ReaderWriterLockSlim();
         }
 
         public Type GetDynamicClass(IEnumerable<DynamicProperty> properties)
         {
-            rwLock.AcquireReaderLock(Timeout.Infinite);
+            string typeName = "DynamicClass" + (classCount + 1);
+
+            var compilationUnit = SyntaxFactory.CompilationUnit()
+              .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.IdentifierName("System")));
+            var baseTypeName = SyntaxFactory.ParseTypeName(typeof(DynamicClass).FullName);
+
+            var c = SyntaxFactory.ClassDeclaration(typeName)
+                .AddBaseListTypes(SyntaxFactory.SimpleBaseType(baseTypeName))
+                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+
+            foreach (var prop in properties)
+            {
+                c = c.AddMembers(CreateDynamicProperty(prop));
+            }
+
+            compilationUnit = compilationUnit.AddMembers(c);
+
+            var compilation = Compilation(compilationUnit.SyntaxTree);
+
+            rwLock.EnterWriteLock();
             try
             {
-                Signature signature = new Signature(properties);
-                Type type;
-                if (!classes.TryGetValue(signature, out type))
-                {
-                    type = CreateDynamicClass(signature.properties);
-                    classes.Add(signature, type);
-                }
-                return type;
+                classCount++;
             }
             finally
             {
-                rwLock.ReleaseReaderLock();
+                rwLock.ExitWriteLock();
             }
-        }
 
-        Type CreateDynamicClass(DynamicProperty[] properties)
-        {
-            LockCookie cookie = rwLock.UpgradeToWriterLock(Timeout.Infinite);
-            try
+            using (var ms = new MemoryStream())
             {
-                string typeName = "DynamicClass" + (classCount + 1);
-                try
+                EmitResult result;
+                result = compilation.Emit(ms);
+
+                if (result.Success)
                 {
-                    TypeBuilder tb = this.module.DefineType(typeName, TypeAttributes.Class |
-                        TypeAttributes.Public, typeof(DynamicClass));
-                    FieldInfo[] fields = GenerateProperties(tb, properties);
-                    GenerateEquals(tb, fields);
-                    GenerateGetHashCode(tb, fields);
-                    Type result = tb.CreateType();
-                    classCount++;
-                    return result;
+                    ms.Seek(0, SeekOrigin.Begin);
+
+                    var assembly = loader.LoadStream(ms, assemblySymbols: null);
+                    
+                    return assembly.GetType(typeName);
                 }
-                finally
+                else
                 {
+                    throw new Exception("Unable to build type" + typeName);
                 }
             }
-            finally
-            {
-                rwLock.DowngradeFromWriterLock(ref cookie);
-            }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        FieldInfo[] GenerateProperties(TypeBuilder tb, DynamicProperty[] properties)
+
+        private CSharpCompilation Compilation(SyntaxTree syntaxTree)
         {
-            FieldInfo[] fields = new FieldBuilder[properties.Length];
-            for (int i = 0; i < properties.Length; i++)
-            {
-                DynamicProperty dp = properties[i];
-                FieldBuilder fb = tb.DefineField("_" + dp.Name, dp.Type, FieldAttributes.Private);
-                PropertyBuilder pb = tb.DefineProperty(dp.Name, PropertyAttributes.HasDefault, dp.Type, null);
-                MethodBuilder mbGet = tb.DefineMethod("get_" + dp.Name,
-                    MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig,
-                    dp.Type, Type.EmptyTypes);
-                ILGenerator genGet = mbGet.GetILGenerator();
-                genGet.Emit(OpCodes.Ldarg_0);
-                genGet.Emit(OpCodes.Ldfld, fb);
-                genGet.Emit(OpCodes.Ret);
-                MethodBuilder mbSet = tb.DefineMethod("set_" + dp.Name,
-                    MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig,
-                    null, new Type[] { dp.Type });
-                ILGenerator genSet = mbSet.GetILGenerator();
-                genSet.Emit(OpCodes.Ldarg_0);
-                genSet.Emit(OpCodes.Ldarg_1);
-                genSet.Emit(OpCodes.Stfld, fb);
-                genSet.Emit(OpCodes.Ret);
-                pb.SetGetMethod(mbGet);
-                pb.SetSetMethod(mbSet);
-                fields[i] = fb;
-            }
-            return fields;
+            var assemblyName = "DynamicClasses" + classCount;
+            return CSharpCompilation.Create(assemblyName,
+                        options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary),
+                        syntaxTrees: new[] { syntaxTree },
+                        references: new MetadataReference[] {
+#if ASPNETCORE50
+                            MetadataReference.CreateFromAssembly(typeof(object).GetTypeInfo().Assembly)
+#else
+                            MetadataReference.CreateFromAssembly(typeof(object).Assembly)
+#endif
+                        });
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        void GenerateEquals(TypeBuilder tb, FieldInfo[] fields)
+        private static PropertyDeclarationSyntax CreateDynamicProperty(DynamicProperty property)
         {
-            MethodBuilder mb = tb.DefineMethod("Equals",
-                MethodAttributes.Public | MethodAttributes.ReuseSlot |
-                MethodAttributes.Virtual | MethodAttributes.HideBySig,
-                typeof(bool), new Type[] { typeof(object) });
-            ILGenerator gen = mb.GetILGenerator();
-            LocalBuilder other = gen.DeclareLocal(tb);
-            Label next = gen.DefineLabel();
-            gen.Emit(OpCodes.Ldarg_1);
-            gen.Emit(OpCodes.Isinst, tb);
-            gen.Emit(OpCodes.Stloc, other);
-            gen.Emit(OpCodes.Ldloc, other);
-            gen.Emit(OpCodes.Brtrue_S, next);
-            gen.Emit(OpCodes.Ldc_I4_0);
-            gen.Emit(OpCodes.Ret);
-            gen.MarkLabel(next);
-            foreach (FieldInfo field in fields)
-            {
-                Type ft = field.FieldType;
-                Type ct = typeof(EqualityComparer<>).MakeGenericType(ft);
-                next = gen.DefineLabel();
-                gen.EmitCall(OpCodes.Call, ct.GetMethod("get_Default"), null);
-                gen.Emit(OpCodes.Ldarg_0);
-                gen.Emit(OpCodes.Ldfld, field);
-                gen.Emit(OpCodes.Ldloc, other);
-                gen.Emit(OpCodes.Ldfld, field);
-                gen.EmitCall(OpCodes.Callvirt, ct.GetMethod("Equals", new Type[] { ft, ft }), null);
-                gen.Emit(OpCodes.Brtrue_S, next);
-                gen.Emit(OpCodes.Ldc_I4_0);
-                gen.Emit(OpCodes.Ret);
-                gen.MarkLabel(next);
-            }
-            gen.Emit(OpCodes.Ldc_I4_1);
-            gen.Emit(OpCodes.Ret);
+            return SyntaxFactory.PropertyDeclaration(SyntaxFactory.ParseTypeName(property.Type.FullName), property.Name)
+                .WithAccessorList(
+                    SyntaxFactory.AccessorList(
+                        SyntaxFactory.List(new[] {
+                            SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration)
+                                .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)),
+                            SyntaxFactory.AccessorDeclaration(SyntaxKind.SetAccessorDeclaration)
+                                .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
+                            })
+                ));
         }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        void GenerateGetHashCode(TypeBuilder tb, FieldInfo[] fields)
-        {
-            MethodBuilder mb = tb.DefineMethod("GetHashCode",
-                MethodAttributes.Public | MethodAttributes.ReuseSlot |
-                MethodAttributes.Virtual | MethodAttributes.HideBySig,
-                typeof(int), Type.EmptyTypes);
-            ILGenerator gen = mb.GetILGenerator();
-            gen.Emit(OpCodes.Ldc_I4_0);
-            foreach (FieldInfo field in fields)
-            {
-                Type ft = field.FieldType;
-                Type ct = typeof(EqualityComparer<>).MakeGenericType(ft);
-                gen.EmitCall(OpCodes.Call, ct.GetMethod("get_Default"), null);
-                gen.Emit(OpCodes.Ldarg_0);
-                gen.Emit(OpCodes.Ldfld, field);
-                gen.EmitCall(OpCodes.Callvirt, ct.GetMethod("GetHashCode", new Type[] { ft }), null);
-                gen.Emit(OpCodes.Xor);
-            }
-            gen.Emit(OpCodes.Ret);
-        }
-        */
     }
 }
