@@ -38,7 +38,6 @@ namespace Kendo.Mvc.Infrastructure.Implementation
             var baseTypeName = SyntaxFactory.ParseTypeName(typeof(DynamicClass).FullName);
 
             var c = SyntaxFactory.ClassDeclaration(typeName)
-                .AddBaseListTypes(SyntaxFactory.SimpleBaseType(baseTypeName))
                 .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
 
             foreach (var prop in properties)
@@ -99,6 +98,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
         private static PropertyDeclarationSyntax CreateDynamicProperty(DynamicProperty property)
         {
             return SyntaxFactory.PropertyDeclaration(SyntaxFactory.ParseTypeName(property.Type.FullName), property.Name)
+                .WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword)))
                 .WithAccessorList(
                     SyntaxFactory.AccessorList(
                         SyntaxFactory.List(new[] {
