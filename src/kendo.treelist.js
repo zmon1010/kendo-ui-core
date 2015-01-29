@@ -747,9 +747,12 @@ var __meta__ = {
         _scrollable: function() {
             if (this.options.scrollable) {
                 var scrollables = this.thead.closest(".k-grid-header-wrap");
+                var lockedContent = $(this.lockedContent)
+                    .bind("DOMMouseScroll" + NS + " mousewheel" + NS, proxy(this._wheelScroll, this));
 
                 this.content.bind("scroll" + NS, function() {
                     scrollables.scrollLeft(this.scrollLeft);
+                    lockedContent.scrollTop(this.scrollTop);
                 });
 
 
@@ -758,6 +761,22 @@ var __meta__ = {
                 if (touchScroller && touchScroller.movable) {
                     this._touchScroller = touchScroller;
                 }
+            }
+        },
+
+        _wheelScroll: function (e) {
+            if (e.ctrlKey) {
+                return;
+            }
+
+            var delta = kendo.wheelDeltaY(e);
+
+            if (delta) {
+                e.preventDefault();
+                //In Firefox DOMMouseScroll event cannot be canceled
+                $(e.currentTarget).one("wheel" + NS, false);
+
+                this.content.scrollTop(this.content.scrollTop() + (-delta));
             }
         },
 
@@ -1396,6 +1415,57 @@ var __meta__ = {
 
             this._angularItems("compile");
             this._angularFooters("compile");
+
+            if (this._hasLockedColumns) {
+                this._adjustRowsHeight(this.table, this.lockedTable);
+            }
+        },
+
+        _adjustRowsHeight: function(table1, table2) {
+            var rows = table1[0].rows,
+            length = rows.length,
+            idx,
+            rows2 = table2[0].rows,
+            containers = table1.add(table2),
+            containersLength = containers.length,
+            heights = [];
+
+            for (idx = 0; idx < length; idx++) {
+                if (!rows2[idx]) {
+                    break;
+                }
+
+                if (rows[idx].style.height) {
+                    rows[idx].style.height = rows2[idx].style.height = "";
+                }
+
+                var offsetHeight1 = rows[idx].offsetHeight;
+                var offsetHeight2 = rows2[idx].offsetHeight;
+                var height = 0;
+
+                if (offsetHeight1 > offsetHeight2) {
+                    height = offsetHeight1;
+                } else if (offsetHeight1 < offsetHeight2) {
+                    height = offsetHeight2;
+                }
+
+                heights.push(height);
+            }
+
+            for (idx = 0; idx < containersLength; idx++) {
+                containers[idx].style.display = "none";
+            }
+
+            for (idx = 0; idx < length; idx++) {
+                if (heights[idx]) {
+                    //add one to resolve row misalignment in IE
+                    rows[idx].style.height = rows2[idx].style.height = (heights[idx] + 1) + "px";
+                }
+            }
+
+            for (idx = 0; idx < containersLength; idx++) {
+                containers[idx].style.display = "";
+            }
         },
 
         _ths: function(columns) {

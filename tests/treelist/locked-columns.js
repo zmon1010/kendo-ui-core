@@ -179,4 +179,22 @@
 
         equal(instance.lockedContent.height(), instance.content.height() - kendo.support.scrollbar());
     });
+
+    test("synchronize row width", function() {
+        createTreeList();
+
+        var lockedRows = instance.lockedTable.find("tr");
+        var nonLockedRows = instance.table.find("tr");
+
+        equal(lockedRows.eq(0).height(), nonLockedRows.eq(0).height());
+        equal(lockedRows.eq(1).height(), nonLockedRows.eq(1).height());
+        equal(lockedRows.eq(2).height(), nonLockedRows.eq(2).height());
+    });
+
+    test("vertical scroll the locked content on scroll of non-locked", function() {
+        createTreeList({ height: 50 });
+
+        instance.content.scrollTop(10).trigger("scroll");
+        equal(instance.lockedContent.scrollTop(), instance.content.scrollTop());
+    });
 })();
