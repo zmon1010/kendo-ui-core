@@ -4300,11 +4300,15 @@ var __meta__ = {
                     relatedRow.replaceWith(tmp);
                 }
 
+                that.angular("cleanup", function(){ return { elements: selectableRow.get() }; });
+
                 tmp = (isAlt ? that.altRowTemplate : that.rowTemplate)(model);
 
                 row.replaceWith(tmp);
 
                 tmp = that._items(tbody).eq(idx);
+
+                var angularData = [ { dataItem: model } ];
 
                 if (isLocked) {
                     row = row.add(relatedRow);
@@ -4313,7 +4317,15 @@ var __meta__ = {
                     adjustRowHeight(tmp[0], relatedRow);
 
                     tmp = tmp.add(relatedRow);
+                    angularData.push({ dataItem: model });
                 }
+
+                that.angular("compile", function(){
+                    return {
+                        elements: tmp.get(),
+                        data: angularData
+                     };
+                });
 
                 selectable = that.options.selectable;
                 if (selectable && row.hasClass("k-state-selected")) {

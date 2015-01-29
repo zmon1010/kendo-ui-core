@@ -68,8 +68,78 @@
 
         equal(grid.tbody.find("tr").eq(0).find("td").eq(1).text(), "|3|");
         equal(grid.tbody.find("tr").eq(1).find("td").eq(1).text(), "|4|");
-    }
-    );
+    });
+
+    ngTest("Grid cell templates after edit - inline edit mode", 1, function() {
+
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: new kendo.data.DataSource({
+                    data: fixtureData
+                }),
+                columns: [
+                    { field: "text", template: "|{{dataItem.text}}|" },
+                    { field: "id", template: "|{{dataItem.id}}|" },
+                    { command: [ "edit",
+                         { template: "<div class='command-template'>{{dataItem.text}}/{{dataItem.id}}</div>" } ]
+                    }
+                ],
+                editable: "popup"
+            };
+        });
+
+        $("<div ng-controller='mine'><div kendo-grid='grid' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function() {
+        var grid = QUnit.fixture.find('[data-role=grid]').getKendoGrid();
+        var el = grid.element;
+        var tbody = grid.tbody;
+        var rows = tbody.find("tr");
+        var scope = grid.element.scope();
+
+        grid.editRow(grid.tbody.find("tr").eq(0));
+
+        grid.dataItem(grid.tbody.find("tr").eq(0)).set("id", 3);
+
+        equal(grid.tbody.find("tr").eq(0).find("td").eq(1).text(), "|3|");
+    });
+
+    ngTest("Grid locked cell templates after edit - inline edit mode", 1, function() {
+
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: new kendo.data.DataSource({
+                    data: fixtureData
+                }),
+                columns: [
+                    { field: "text", template: "|{{dataItem.text}}|" },
+                    { field: "id", template: "|{{dataItem.id}}|", locked: true },
+                    { command: [ "edit",
+                         { template: "<div class='command-template'>{{dataItem.text}}/{{dataItem.id}}</div>" } ]
+                    }
+                ],
+                editable: "popup"
+            };
+        });
+
+        $("<div ng-controller='mine'><div kendo-grid='grid' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function() {
+        var grid = QUnit.fixture.find('[data-role=grid]').getKendoGrid();
+        var el = grid.element;
+        var tbody = grid.tbody;
+        var rows = tbody.find("tr");
+        var scope = grid.element.scope();
+
+        grid.editRow(grid.tbody.find("tr").eq(0));
+
+        grid.dataItem(grid.tbody.find("tr").eq(0)).set("id", 3);
+
+        equal(grid.lockedTable.find("tr").eq(0).find("td").eq(0).text(), "|3|");
+    });
+
 
     ngTest("Grid cell templates", 4, function(){
         angular.module("kendo.tests").controller("mine", function($scope) {
