@@ -244,4 +244,24 @@
         ok(row.hasClass("k-state-selected"));
         ok(instance.lockedTable.find("tr").eq(0).hasClass("k-state-selected"));
     });
+
+    test("render inline editor spans over locked and non-locked row", function() {
+        createTreeList({
+            editable: "inline"
+        });
+
+        instance.editRow(instance.table.find("tr").first());
+
+        var lockedRow = instance.lockedTable.find("tr").first();
+        var row = instance.table.find("tr").first();
+
+        ok(lockedRow.hasClass("k-grid-edit-row"));
+        equal(lockedRow.find("td[data-container-for]").length, 1, "doesn't have container for locked cells");
+        equal(lockedRow.find("input:visible").length, 1, "doesn't have input for locked cells");
+
+        ok(row.hasClass("k-grid-edit-row"));
+        equal(row.find("td[data-container-for]").length, 2, "doesn't have container for non-locked cells");
+        equal(row.find("input:visible").length, 2, "doesn't have input for non-locked cells");
+    });
+
 })();

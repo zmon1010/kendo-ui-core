@@ -2193,6 +2193,8 @@ var __meta__ = {
         _createEditor: function(model) {
             var row = this.tbody.find("[" + kendo.attr("uid") + "=" + model.uid + "]");
 
+            row = row.add(this._relatedRow(row));
+
             var mode = this._editMode();
 
             var options = {
