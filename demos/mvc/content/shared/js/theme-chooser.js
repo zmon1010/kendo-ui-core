@@ -135,7 +135,8 @@
             { name: "WP8 Dark", value: "wp-dark", colors: [ "#01abaa", "#ffffff", "#000000" ]  },
             { name: "Flat Skin", value: "flat", colors: [ "#10c4b2", "#dcdcdc", "#f4f4f4" ]  },
             { name: "Material Light", value: "material-light", colors: [ "#3f51b5", "#283593", "#fff" ]  },
-            { name: "Material Dark", value: "material-dark", colors: [ "#3f51b5", "#1c1c1c", "#4d4d4d" ]  }
+            { name: "Material Dark", value: "material-dark", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] },
+            { name: "Fiori", value: "fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] }
         ],
         sizes: [
             { name: "Standard", value: "common" },
