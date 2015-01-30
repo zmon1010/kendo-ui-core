@@ -1349,6 +1349,8 @@ var __meta__ = {
 
             that._selectable();
 
+            that._clipboard();
+
             that._details();
 
             that._editable();
@@ -1506,6 +1508,15 @@ var __meta__ = {
 
             if (that.selectable && that.selectable.element) {
                 that.selectable.destroy();
+
+                that.clearArea();
+
+                if (that.copyHandler) {
+                    that.wrapper.off("keydown", that.copyHandler);
+                }
+                if (that.clearAreaHandler) {
+                    that.wrapper.off("keyup", that.clearAreaHandler);
+                }
             }
 
             that.selectable = null;
@@ -3508,6 +3519,73 @@ var __meta__ = {
                         }
                     });
                 }
+            }
+        },
+
+        _clipboard: function() {
+            var selectable = this.options.selectable;
+            if (selectable) {
+                this.copyHandler = proxy(this.copySelection, this);
+                this.wrapper.on("keydown", this.copyHandler);
+                this.clearAreaHandler = proxy(this.clearArea, this);
+                this.wrapper.on("keyup", this.clearAreaHandler);
+            }
+        },
+
+        copySelection: function(e) {
+            if (!(e.ctrlKey || e.metaKey) ||
+                $(e.target).is("input:visible,textarea:visible") ||
+                (window.getSelection && window.getSelection().toString()) ||
+                (document.selection && document.selection.createRange().text) ) {
+                return;
+            }
+
+            var selected = this.select();
+            if (selected.length) {
+                if (selected.eq(0).is("tr")) {
+                    selected = selected.find("td");
+                }
+                var text = "";
+                var result = [];
+
+                $.each(selected, function (idx, val) {
+                    val = $(val);
+                    var tr = val.closest("tr");
+                    var rowIndex = tr.index();
+                    var cellText = val.text();
+                    if (result[rowIndex]) {
+                        result[rowIndex].push(cellText);
+                    } else {
+                        result[rowIndex] = [cellText];
+                    }
+
+                });
+
+                result = $.grep(result, function (val) { return val; });
+
+                $.each(result, function (idx, val) {
+                    text += val.join("\t") + "\r\n";
+                });
+
+                var txtArea = this.areaClipBoard;
+                if (txtArea && txtArea.remove) {
+                    txtArea.remove();
+                }
+
+                txtArea = this.areaClipBoard =
+                    $("<textarea />")
+                        .val(text)
+                        .css({ position: "absolute", opacity: 0 })
+                        .appendTo(this.wrapper)
+                        .focus()
+                        .select();
+            }
+
+        },
+
+        clearArea: function(e) {
+            if (this.areaClipBoard) {
+                this.areaClipBoard.remove();
             }
         },
 
