@@ -122,8 +122,7 @@
             { value: "moonlight", name: "Moonlight", colors: [ "#ee9f05", "#40444f", "#212a33" ]  },
             { value: "flat", name: "Flat", colors: [ "#363940", "#2eb3a6", "#fff" ]  },
             { value: "material", name: "Material", colors: [ "#3f51b5", "#283593", "#fff" ]  },
-            { value: "materialblack", name: "Material Black", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] },
-            { value: "fiori", name: "Fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] }
+            { value: "materialblack", name: "Material Black", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] }
         ],
         mobileThemes: [
             { name: "iOS7", value:"ios7", colors: [ "#007aff", "#f5f5f5", "#ffffff" ]  },
@@ -135,14 +134,12 @@
             { name: "WP8 Dark", value: "wp-dark", colors: [ "#01abaa", "#ffffff", "#000000" ]  },
             { name: "Flat Skin", value: "flat", colors: [ "#10c4b2", "#dcdcdc", "#f4f4f4" ]  },
             { name: "Material Light", value: "material-light", colors: [ "#3f51b5", "#283593", "#fff" ]  },
-            { name: "Material Dark", value: "material-dark", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] },
-            { name: "Fiori", value: "fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] }
+            { name: "Material Dark", value: "material-dark", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] }
         ],
         sizes: [
             { name: "Standard", value: "common" },
             { name: "Bootstrap", value: "common-bootstrap", relativity: "larger" },
-            { name: "Material", value: "common-material", relativity: "bold" },
-            { name: "Fiori", value: "common-fiori", relativity: "larger" }
+            { name: "Material", value: "common-material", relativity: "bold" }
         ],
 
         selectedTheme: window.kendoTheme,
@@ -163,9 +160,7 @@
                 commonFile = "common-material";
             } else if (/bootstrap/i.test(themeName) && !/bootstrap/i.test(commonFile)) {
                 commonFile = "common-bootstrap";
-            } else if (/fiori/i.test(themeName) && !/fiori/i.test(commonFile)) {
-                commonFile = "common-fiori";
-            } else if (!/material|bootstrap|fiori/i.test(themeName)) {
+            } else if (!/material|bootstrap/i.test(themeName)) {
                 commonFile = "common";
             }
 
