@@ -174,6 +174,8 @@ var __meta__ = {
                 .on(CLICK + NS , "a", proxy(that._click, that))
                 .addClass("k-pager-wrap k-widget");
 
+            that.element.on(CLICK + NS , ".k-current-page", proxy(that._toggleActive, that))
+
             if (options.autoBind) {
                 that.refresh();
             }
@@ -242,9 +244,9 @@ var __meta__ = {
                 idx,
                 end,
                 start = 1,
-                html = "",
                 reminder,
                 page = that.page(),
+                html = "<li class=k-current-page><span class=k-link k-pager-nav>" + page + "</span></li>",
                 options = that.options,
                 pageSize = that.pageSize(),
                 total = that.dataSource.total(),
@@ -281,7 +283,7 @@ var __meta__ = {
                     html = that.selectTemplate({ text: 0 });
                 }
 
-                that.list.html(html);
+                that.list.removeClass("k-state-expanded").html(html);
             }
 
             if (options.info) {
@@ -356,6 +358,10 @@ var __meta__ = {
             if (!isNaN(pageSize)){
                this.dataSource.pageSize(pageSize);
             }
+        },
+
+        _toggleActive: function(e) {
+            this.list.toggleClass("k-state-expanded");
         },
 
         _click: function(e) {
