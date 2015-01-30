@@ -1988,10 +1988,16 @@ var __meta__ = {
         select: function(value) {
             var selectable = this.selectable;
 
-            if (typeof value !== "undefined" && !selectable.options.multiple) {
-                selectable.clear();
+            if (typeof value !== "undefined") {
+                if (!selectable.options.multiple) {
+                    selectable.clear();
 
-                value = value.first();
+                    value = value.first();
+                }
+
+                if (this._hasLockedColumns) {
+                    value = value.add($.map(value, proxy(this._relatedRow, this)));
+                }
             }
 
             return selectable.value(value);

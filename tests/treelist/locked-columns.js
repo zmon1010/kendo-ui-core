@@ -221,4 +221,27 @@
 
         ok(instance.lockedHeader.find("th").data("kendoColumnMenu"));
     });
+
+    test("single cell selection", function() {
+        createTreeList({
+            selectable: "cell"
+        });
+
+        var cell = instance.table.find("td").eq(0);
+        instance.select(cell);
+
+        ok(cell.hasClass("k-state-selected"));
+    });
+
+    test("single row selection", function() {
+        createTreeList({
+            selectable: "row"
+        });
+
+        var row = instance.table.find("tr").eq(0);
+        instance.select(row);
+
+        ok(row.hasClass("k-state-selected"));
+        ok(instance.lockedTable.find("tr").eq(0).hasClass("k-state-selected"));
+    });
 })();
