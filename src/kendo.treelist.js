@@ -57,7 +57,9 @@ var __meta__ = {
     var proxy = $.proxy;
     var map = $.map;
     var grep = $.grep;
+    var inArray = $.inArray;
     var isPlainObject = $.isPlainObject;
+    var push = Array.prototype.push;
     var STRING = "string";
     var CHANGE = "change";
     var ERROR = "error";
@@ -1905,23 +1907,82 @@ var __meta__ = {
         _selectable: function() {
             var selectable = this.options.selectable;
             var filter;
+            var element = this.table;
+            var useAllItems;
 
             if (selectable) {
                 selectable = kendo.ui.Selectable.parseOptions(selectable);
 
-                filter = ">tr:not(.k-footer-template)";
+                if (this._hasLockedColumns) {
+                    element = element.add(this.lockedTable);
+                    useAllItems = selectable.multiple && selectable.cell;
+                }
+
+                filter = ">tbody>tr:not(.k-footer-template)";
 
                 if (selectable.cell) {
                     filter = filter + ">td";
                 }
 
-                this.selectable = new kendo.ui.Selectable(this.tbody, {
+                this.selectable = new kendo.ui.Selectable(element, {
                     filter: filter,
                     aria: true,
                     multiple: selectable.multiple,
-                    change: proxy(this._change, this)
+                    change: proxy(this._change, this),
+                    useAllItems: useAllItems,
+                    continuousItems: proxy(this._continuousItems, this, filter, selectable.cell),
+                    relatedTarget: !selectable.cell && this._hasLockedColumns ? proxy(this._selectableTarget, this) : undefined
                 });
             }
+        },
+
+        _continuousItems: function(filter, cell) {
+            if (!this.lockedContent) {
+                return;
+            }
+
+            var lockedItems = $(filter, this.lockedTable);
+            var nonLockedItems = $(filter, this.table);
+            var columns = cell ? this._lockedColumns().length : 1;
+            var nonLockedColumns = cell ? this.columns.length - columns : 1;
+            var result = [];
+
+            for (var idx = 0; idx < lockedItems.length; idx += columns) {
+                push.apply(result, lockedItems.slice(idx, idx + columns));
+                push.apply(result, nonLockedItems.splice(0, nonLockedColumns));
+            }
+
+            return result;
+        },
+
+        _selectableTarget: function(items) {
+            var related;
+            var result = $();
+            for (var idx = 0, length = items.length; idx < length; idx ++) {
+                related = this._relatedRow(items[idx]);
+
+                if (inArray(related[0], items) < 0) {
+                    result = result.add(related);
+                }
+            }
+
+            return result;
+        },
+
+        _relatedRow: function(row) {
+            var lockedTable = this.lockedTable;
+            row = $(row);
+
+            if (!lockedTable) {
+                return row;
+            }
+
+            var table = row.closest(this.table.add(this.lockedTable));
+            var index = table.find(">tbody>tr").index(row);
+
+            table = table[0] === this.table[0] ? lockedTable : this.table;
+
+            return table.find(">tbody>tr").eq(index);
         },
 
         select: function(value) {
@@ -2287,7 +2348,7 @@ var __meta__ = {
 
         reorderColumn: function(destIndex, column, before) {
             var columns = this.columns;
-            var sourceIndex = $.inArray(column, columns);
+            var sourceIndex = inArray(column, columns);
 
             if (sourceIndex === destIndex) {
                 return;
