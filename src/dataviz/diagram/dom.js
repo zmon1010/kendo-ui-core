@@ -3236,7 +3236,6 @@
                 this._dataMap = {};
                 this._connectionsDataMap = {};
                 this._inactiveShapeItems = [];
-                this._inactiveConnectionItems = [];
                 this.undoRedoService = new UndoRedoService();
                 this.id = diagram.randomId();
             },
@@ -3407,10 +3406,9 @@
                 if (e.action === "remove") {
                     this._removeConnections(e.items);
                 } else if (e.action === "add") {
-                    this._inactiveConnectionItems = this._inactiveConnectionItems.concat(e.items);
                     this._addConnections(e.items);
                 } else if (e.action === "sync") {
-                    this._syncConnections(e.items);
+                    //TO DO: include logic to update the connections with different values returned from the server.
                 } else if (e.action === "itemchange") {
                     if (this._shouldRefresh) {
                         this._updateConnections(e.items);
@@ -3425,24 +3423,6 @@
                     this.remove(this._connectionsDataMap[items[i].uid], false);
                     this._connectionsDataMap[items[i].uid] = null;
                 }
-            },
-
-            _syncConnections: function(items) {
-                var inactiveItems = [],
-                    i, y, item, inactiveConnection, isActive = false;
-
-                for (y = 0; y < this._inactiveConnectionItems.length; y++) {
-                    inactiveConnection = this._inactiveConnectionItems[y];
-                    for (i = 0; i < items.length; i++) {
-                        item = items[i];
-                        if (inactiveConnection.uid === item.uid) {
-                            this._addConnectionDataItem(item);
-                            inactiveItems.push(inactiveConnection);
-                            break;
-                        }
-                    }
-                }
-                this._inactiveConnectionDataMaps = inactiveItems;
             },
 
             _updateConnections: function(items) {
