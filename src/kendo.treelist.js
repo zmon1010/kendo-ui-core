@@ -1401,6 +1401,7 @@ var __meta__ = {
                 }));
 
                 if (this._hasLockedColumns) {
+                    this._absoluteIndex = 0;
                     this._lockedContentTree.render(this._trs({
                         columns: this._lockedColumns(),
                         aggregates: options.aggregates,

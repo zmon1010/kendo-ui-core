@@ -264,4 +264,16 @@
         equal(row.find("input:visible").length, 2, "doesn't have input for non-locked cells");
     });
 
+    test("alt row rendering", function() {
+        createTreeList();
+
+        var lockedRows = instance.lockedTable.find("tr");
+        var rows = instance.table.find("tr");
+
+        ok(!lockedRows.eq(0).hasClass("k-alt"));
+        ok(lockedRows.eq(1).hasClass("k-alt"));
+
+        ok(!rows.eq(0).hasClass("k-alt"));
+        ok(rows.eq(1).hasClass("k-alt"));
+    });
 })();
