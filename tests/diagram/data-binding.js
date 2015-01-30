@@ -375,7 +375,7 @@
         test("inactive item callbacks are executed after an item is synced with the dataItem as parameter", 1, function() {            
             item = dataSource.add({});
             var inactiveItem = diagram._inactiveShapeItems.getByUid(item.uid);
-            inactiveItem.addCallback(function(e) {
+            inactiveItem.onActivate(function(e) {
                 ok(item === e);
             });
             dataSource.sync();            
@@ -384,7 +384,7 @@
         test("deferreds are resolved after an item is synced", 1, function() {            
             item = dataSource.add({});
             var inactiveItem = diagram._inactiveShapeItems.getByUid(item.uid);
-            var deferred = inactiveItem.addCallback(function() {});
+            var deferred = inactiveItem.onActivate(function() {});
             $.when(deferred).then(function() {
                 ok(true);
             });

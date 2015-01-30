@@ -4204,7 +4204,7 @@
         }
 
         InactiveItem.fn = InactiveItem.prototype = {
-            addCallback: function(callback) {
+            onActivate: function(callback) {
                 var deffered = $.Deferred();
                 this.callbacks.push({
                     callback: callback,
