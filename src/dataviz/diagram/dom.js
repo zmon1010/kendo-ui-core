@@ -4223,6 +4223,59 @@
             }
         }
 
+        function InactiveItem(dataItem) {
+            this.dataItem = dataItem;
+            this.callbacks = [];
+        }
+
+        InactiveItem.fn = InactiveItem.prototype = {
+            addCallback: function(callback) {
+                var deffered = $.Deferred();
+                this.callbacks.push({
+                    callback: callback,
+                    deferred: deffered
+                });
+                return deffered;
+            },
+
+            activate: function() {
+                var callbacks = this.callbacks;
+                var item;
+                for (var idx = 0; idx < callbacks.length; idx++) {
+                    item = this.callbacks[idx];
+                    item.callback(this.dataItem);
+                    item.deferred.resolve();
+                }
+                this.callbacks = [];
+            }
+        };
+
+        function InactiveItemsCollection() {
+            this.items = {};
+        }
+
+        InactiveItemsCollection.fn = InactiveItemsCollection.prototype = {
+            add: function(items) {
+                for(var idx = 0; idx < items.length; idx++) {
+                    this.items[items[idx].uid] = new InactiveItem(items[idx]);
+                }
+            },
+
+            forEach: function(callback){
+                for (var uid in this.items) {
+                    callback(this.items[uid]);
+                }
+            },
+
+            getByUid: function(uid) {
+                return this.items[uid];
+            },
+
+            remove: function(item) {
+                delete this.items[item.uid];
+            }
+        };
+
         dataviz.ui.plugin(Diagram);
 
         deepExtend(diagram, {
