@@ -321,6 +321,77 @@
         var shape = diagram._dataMap[item.id];
         equal(shape.dataItem.foo, "bar");
     });
+    (function() {
+        var dataSource, item;
+        function setupDataSource() {
+            var items = [{id: 1}];
+            dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: function(options) {
+                        options.success(items);
+                    },
+                    update: function(options) {
+                        options.success();
+                    },
+                    create: function(options) {
+                        var newItem = options.data;
+                        newItem.id = items.length + 1;
+                        items.push(newItem);
+                        options.success([newItem]);
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "id"
+                    }
+                }
+            });
+            return dataSource;
+        }
+        // ------------------------------------------------------------
+        module("Diagram / Shapes / Inactive items", {
+            setup: function() {
+                diagram = createDiagram({
+                    dataSource: setupDataSource(),
+                    connectionsDataSource: { }
+                });
+            },
+            teardown: destroyDiagram
+        });
+
+        test("adding new item to the to the dataSource should add the item to the inactive items", function() {
+            item = dataSource.add({});
+            ok(diagram._inactiveShapeItems.getByUid(item.uid));
+        });
+
+        test("inactive item is removed after it has been synced", 0, function() {
+            item = dataSource.add({});
+            dataSource.sync();
+            diagram._inactiveShapeItems.forEach(function() {
+                ok(false);
+            });
+        });
+
+        test("inactive item callbacks are executed after an item is synced with the dataItem as parameter", 1, function() {            
+            item = dataSource.add({});
+            var inactiveItem = diagram._inactiveShapeItems.getByUid(item.uid);
+            inactiveItem.addCallback(function(e) {
+                ok(item === e);
+            });
+            dataSource.sync();            
+        });
+
+        test("deferreds are resolved after an item is synced", 1, function() {            
+            item = dataSource.add({});
+            var inactiveItem = diagram._inactiveShapeItems.getByUid(item.uid);
+            var deferred = inactiveItem.addCallback(function() {});
+            $.when(deferred).then(function() {
+                ok(true);
+            });
+            dataSource.sync();            
+        });
+
+    })();
 
     // ------------------------------------------------------------
     module("Diagram / Connections / Data Binding", {

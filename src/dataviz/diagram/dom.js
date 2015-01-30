@@ -3235,7 +3235,7 @@
                 this.connections = [];
                 this._dataMap = {};
                 this._connectionsDataMap = {};
-                this._inactiveShapeItems = [];
+                this._inactiveShapeItems = new InactiveItemsCollection();
                 this.undoRedoService = new UndoRedoService();
                 this.id = diagram.randomId();
             },
@@ -3323,7 +3323,7 @@
                 } else if (e.action === "itemchange") {
                     this._updateShapes(e.items, e.field);
                 } else if (e.action === "add") {
-                    this._inactiveShapeItems = this._inactiveShapeItems.concat(e.items);
+                    this._inactiveShapeItems.add(e.items);
                 } else if (e.action === "sync") {
                     this._syncShapes(e.items);
                 } else {
@@ -3370,21 +3370,16 @@
             },
 
             _syncShapes: function(items) {
-                var inactiveItems = [],
-                    i, y, item, inactiveShapeItem, isActive = false;
-
-                for (y = 0; y < this._inactiveShapeItems.length; y++) {
-                    inactiveShapeItem = this._inactiveShapeItems[y];
-                    for (i = 0; i < items.length; i++) {
-                        item = items[i];
-                        if (inactiveShapeItem.uid === item.uid) {
-                            this._addDataItem(item);
-                            inactiveItems.push(inactiveShapeItem);
-                            break;
-                        }
+                var diagram = this;
+                var inactiveItems = diagram._inactiveShapeItems;
+                inactiveItems.forEach(function(inactiveItem) {
+                    var dataItem = inactiveItem.dataItem;
+                    if (!dataItem.isNew()) {
+                        diagram._addDataItem(dataItem);
+                        inactiveItem.activate();
+                        inactiveItems.remove(dataItem);
                     }
-                }
-                this._inactiveShapeItems = inactiveItems;
+                });
             },
 
             _updateShapes: function(items, field) {
