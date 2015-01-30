@@ -2295,15 +2295,17 @@ var __meta__ = {
         createLine: function() {
             var options = this.options.line;
 
-            var path = draw.Path.fromPoints(this.linePoints, {
-                stroke: {
-                    color: options.color,
-                    width: options.width,
-                    dashType: options.dashType
-                }
-            });
+            if (this.linePoints) {
+                var path = draw.Path.fromPoints(this.linePoints, {
+                    stroke: {
+                        color: options.color,
+                        width: options.width,
+                        dashType: options.dashType
+                    }
+                });
 
-            this.visual.append(path);
+                this.visual.append(path);
+            }
         },
 
         click: function(widget, e) {
