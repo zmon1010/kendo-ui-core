@@ -10,9 +10,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+//using Microsoft.VisualStudio.PlatformUI;
 
 namespace KendoScaffolder.UI
 {
@@ -25,7 +25,26 @@ namespace KendoScaffolder.UI
         {
             InitializeComponent();
 
+            GridEventsListBox.SelectionChanged += GridEventsListBoxSelectionChanged;
+            //var a  = Microsoft.VisualStudio.PlatformUI.VSColorTheme;
+
             DataContext = viewModel;
+        }
+
+        private static void GridEventsListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var gridEventsListBox = sender as ListBox;
+            if (gridEventsListBox == null) return;
+
+            var viewModel = gridEventsListBox.DataContext as GridConfigurationViewModel;
+            if (viewModel == null) return;
+
+            viewModel.SelectedGridEvents.Clear();
+
+            foreach (CheckBoxListItem item in gridEventsListBox.SelectedItems)
+            {
+                viewModel.SelectedGridEvents.Add(item.Text);
+            }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -99,6 +118,7 @@ namespace KendoScaffolder.UI
                 ViewModelType.Visibility = Visibility.Visible;
                 ViewModelTypeLabel.Visibility = Visibility.Visible;
             }
+            ToggleAddButtonState();
         }
 
         private void ControllerName_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -113,6 +133,52 @@ namespace KendoScaffolder.UI
         {
             TextBox current = ((TextBox)sender);
             current.Text = "Index";
+        }
+
+        private void RequiredField_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ToggleAddButtonState();
+        }
+
+        private void ToggleAddButtonState()
+        {
+            bool useViewModel = UseViewModel.IsChecked ?? false;
+            if (ModelType.SelectedValue != null && DataContextClass.SelectedValue != null)
+            {
+                if (!useViewModel || (useViewModel && ViewModelType.SelectedValue != null))
+                {
+                    AddButton.IsEnabled = true;
+                }
+                else
+                {
+                    AddButton.IsEnabled = false;
+                }
+            }
+            else
+            {
+                AddButton.IsEnabled = false;
+            }
+        }
+
+        private void GridEvents_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+            //SelectedGridEvents = lb.SelectedItems.OfType<TestEnum>().ToList();
+        }
+
+        private void GridEventsCheckbox_Clicked(object sender, RoutedEventArgs e)
+        {
+            CheckBox cb = sender as CheckBox;
+            var item = cb.DataContext;
+
+            if (cb.IsChecked.Value)
+            {
+                GridEventsListBox.SelectedItems.Add(item);
+            }
+            else
+            {
+                GridEventsListBox.SelectedItems.Remove(item);
+            }
         }
     }
 

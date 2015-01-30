@@ -14,6 +14,7 @@ else
 #>
 using System;
 using System.Linq;
+using System.Data;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -29,6 +30,7 @@ namespace <#= Namespace #>
     var entitySetVar = ModelVariable ?? (String.IsNullOrEmpty(entitySetName) ? entitySetName : (entitySetName.Substring(0, length:1).ToLowerInvariant() + entitySetName.Substring(1)));
     var modelTypeName = UseViewModel ? ViewModelTypeName : ModelTypeName;
     var relatedProperties = ModelMetadata.RelatedEntities.ToDictionary(item => item.AssociationPropertyName);
+    var batchEditMode = "InCell";
 #>
     public class <#= ModelTypeName #>Service : IDisposable
     {
@@ -47,14 +49,77 @@ namespace <#= Namespace #>
 <# var last = ViewModelTypeChildren.Item(ViewModelTypeChildren.Count);#>
 <# foreach (EnvDTE.CodeElement child in ViewModelTypeChildren) { 
     if (child.Equals(last)) { #>
-                    <#= child.Name #> = c.<#= child.Name #>
+                <#= child.Name #> = c.<#= child.Name #>
 <# } else { #>
-                    <#= child.Name #> = c.<#= child.Name #>,
+                <#= child.Name #> = c.<#= child.Name #>,
 <# } } #>
             });
 <# } else { #>
             return db.<#= entitySetName #>;  
 <# } #>
+        }
+
+        public void Create(<#= modelTypeName #> <#= ModelVariable #>)
+        {
+            var entity = new <#= ModelTypeName #>
+            {
+<#
+PushIndent(new string(' ', 16));
+    if(UseViewModel) {
+        ListViewModelEntityProperties();
+    } else {
+        ListModelEntityProperties();
+    }
+ClearIndent();
+#>
+            };
+
+            db.<#= entitySetName #>.Add(entity);
+            db.SaveChanges();
+
+            <#= ModelVariable #>.<#= PrimaryKeyName #> = entity.<#= PrimaryKeyName #>;
+        }
+
+        public void Update(<#= modelTypeName #> <#= ModelVariable #>)
+        {
+            var entity = new <#= ModelTypeName #>
+            {
+                <#= PrimaryKeyName #> = <#= ModelVariable #>.<#= PrimaryKeyName #>,
+<#
+PushIndent(new string(' ', 16));
+    if(UseViewModel) {
+        ListViewModelEntityProperties();
+    } else {
+        ListModelEntityProperties();
+    }
+ClearIndent();
+#>
+            };
+
+            db.<#= entitySetName #>.Attach(entity);
+            db.Entry(entity).State = EntityState.Modified;
+            db.SaveChanges(); 
+        }
+
+        public void Destroy(<#= modelTypeName #> <#= ModelVariable #>)
+        {
+            var entity = new <#= ModelTypeName #>
+            {
+                <#= PrimaryKeyName #> = <#= ModelVariable #>.<#= PrimaryKeyName #>,
+<#
+PushIndent(new string(' ', 16));
+if(UseViewModel) {
+    ListViewModelEntityProperties();
+} else {
+    ListModelEntityProperties();
+}
+ClearIndent();
+#>
+            };
+
+            db.<#= entitySetName #>.Attach(entity);
+            db.<#= entitySetName #>.Remove(entity);
+            db.SaveChanges();
         }
 
         public void Dispose()
@@ -83,56 +148,62 @@ namespace <#= Namespace #>
         {
             return View(<#= ModelVariable #>Service.Read());
         }
-<# if(EditableCreate) { #>
+<# if(EditableCreate && EditMode != batchEditMode) { #>
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult <#= entitySetName #>_Create(<#= modelTypeName #> <#= ModelVariable #>)
         {
             if (ModelState.IsValid)
             {
-<# if(UseViewModel) { #>
-                var entity = new <#= ModelTypeName #>
-                {
-<#
-PushIndent(new string(' ', 20));
-    if(UseViewModel) {
-        ListViewModelEntityProperties();
-    } else {
-        ListModelEntityProperties();
-    }
-ClearIndent();
-#>
-                };
-<# } else { #>
-
-<# } #>
-
-                db.<#= entitySetName #>.Add(entity);
-                db.SaveChanges();
-
-                <#= ModelVariable #>.<#= PrimaryKeyName #> = entity.<#= PrimaryKeyName #>;
+                <#= ModelVariable #>Service.Create(<#= ModelVariable #>);
 
                 RouteValueDictionary routeValues = this.GridRouteValues();
-                return RedirectToAction("Index", routeValues);
+                return RedirectToAction("<#= ViewName #>", routeValues);
             }
 
-            
+            return View("<#= ViewName #>", <#= ModelVariable #>Service.Read());
         }
 <# } #>      
-<# if(EditableUpdate) { #>
+<# if(EditableUpdate && EditMode != batchEditMode) { #>
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult <#= entitySetName #>_Update(<#= modelTypeName #> <#= ModelVariable #>)
         {
+            if (ModelState.IsValid)
+            {
+                <#= ModelVariable #>Service.Update(<#= ModelVariable #>);
+
+                RouteValueDictionary routeValues = this.GridRouteValues();
+                return RedirectToAction("<#= ViewName #>", routeValues);
+            }
+
+            return View("<#= ViewName #>", <#= ModelVariable #>Service.Read());
         }
 <# } #>   
-<# if(EditableDestroy) { #>
+<# if(EditableDestroy && EditMode != batchEditMode) { #>
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult <#= entitySetName #>_Destroy(int idto)
+        public ActionResult <#= entitySetName #>_Destroy(<#= modelTypeName #> <#= ModelVariable #>)
         {
+            RouteValueDictionary routeValues;
+
+            <#= ModelVariable #>Service.Destroy(<#= ModelVariable #>);
+
+            routeValues = this.GridRouteValues();
+
+            return RedirectToAction("<#= ViewName #>", routeValues);
         }
-<# } #>   
+<# } #> 
+<# if(PdfExport) { #>
+
+        [HttpPost]
+        public ActionResult Pdf_Export_Save(string contentType, string base64, string fileName)
+        {
+            var fileContents = Convert.FromBase64String(base64);
+
+            return File(fileContents, contentType, fileName);
+        }    
+<# } #> 
     }
 }
 <#+

@@ -8,8 +8,10 @@
 <#@ import namespace="System.Data.Linq.Mapping" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="Microsoft.AspNet.Scaffolding.Core.Metadata" #>
+<#@ parameter type="System.String" name="ControllerName" #>
 <#@ parameter type="System.String" name="ControllerRootName" #>
 <#@ parameter type="System.String" name="ViewDataTypeName" #>
+<#@ parameter type="System.Collections.Generic.List<string>" name="GridEvents" #>
 <#@ parameter type="System.Boolean" name="ColumnMenu" #>
 <#@ parameter type="System.Boolean" name="Editable" #>
 <#@ parameter type="System.String" name="EditMode" #>

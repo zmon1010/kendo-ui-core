@@ -1,8 +1,10 @@
 ﻿using EnvDTE;
+using EnvDTE80;
 using KendoScaffolder.UI;
 using Microsoft.AspNet.Scaffolding;
 using Microsoft.AspNet.Scaffolding.Core.Metadata;
 using Microsoft.AspNet.Scaffolding.EntityFramework;
+using Microsoft.VisualStudio.Shell;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -43,6 +45,10 @@ namespace KendoScaffolder
         {
             GridConfigurationWindow window = new GridConfigurationWindow(_viewModel);
             bool? showDialog = window.ShowDialog();
+
+            //GridConfigurationViewModel a = (GridConfigurationViewModel)window.DataContext;
+            //_viewModel.SelectedGridEvents = 
+
             return showDialog ?? false;
         }
 
@@ -52,7 +58,6 @@ namespace KendoScaffolder
             ControllerParameters = new Dictionary<string, object>(CommonParameters);
             ControllerParameters.Add("AreaName", areaName);
             ControllerParameters.Add("ContextTypeName", dbContextName);
-            ControllerParameters.Add("ControllerName", controllerName);
             ControllerParameters.Add("ModelTypeName", modelType.Name);
             ControllerParameters.Add("Namespace", GetDefaultNamespace());
             ControllerParameters.Add("RequiredNamespaces", new HashSet<string>() { modelType.Namespace.FullName });
@@ -72,17 +77,34 @@ namespace KendoScaffolder
             }
         }
 
+        private void BuildProject(Project project)
+        {
+            var dte = Package.GetGlobalService(typeof(DTE)) as DTE2;
+            var config = dte.Solution.SolutionBuild.ActiveConfiguration.Name;
+            dte.Solution.SolutionBuild.BuildProject(config, project.FullName, true);
+        }
+
         public override void GenerateCode()
         {
             CodeType modelType = _viewModel.SelectedModelType.CodeType;
             bool useViewModel = _viewModel.UseViewModel;
             CodeType viewModelType = useViewModel ? _viewModel.SelectedViewModelType.CodeType : null;
 
+            BuildProject(Context.ActiveProject);
+
             // Ensure the Data Context
             string dbContextTypeName = _viewModel.SelectedDbContextType.TypeName;
             IEntityFrameworkService efService = (IEntityFrameworkService)Context.ServiceProvider.GetService(typeof(IEntityFrameworkService));
+            ModelMetadata efMetadata = null;
+            try
+            {
+                efMetadata = efService.AddRequiredEntity(Context, dbContextTypeName, modelType.FullName);
+            }
+            catch (InvalidOperationException ex)
+            {
+                //handle ex
+            }
 
-            ModelMetadata efMetadata = efService.AddRequiredEntity(Context, dbContextTypeName, modelType.FullName);
             ICodeTypeService codeTypeService = GetService<ICodeTypeService>();
             CodeType dbContext = codeTypeService.GetCodeType(Context.ActiveProject, dbContextTypeName);
 
@@ -105,6 +127,7 @@ namespace KendoScaffolder
 
             CommonParameters = new Dictionary<string, object>() 
             {
+                {"ControllerName", controllerName},
                 {"ControllerRootName" , controllerRootName},
                 {"ExcelExport", _viewModel.ExcelExport},
                 {"ModelVariable", modelTypeVariable},
@@ -118,17 +141,24 @@ namespace KendoScaffolder
                 {"ViewPrefix", ""}
             };
 
-            BuildControllerParameters(modelType, viewModelType, useViewModel, editable, editMode, areaName, controllerName, dbContext.Name);
-            string controllerTemplate = DetermineControllerTemplate(editMode);
-            string controllerPath = DetermineControllerPath(controllerName, areaName);
+            try
+            {
+                BuildControllerParameters(modelType, viewModelType, useViewModel, editable, editMode, areaName, controllerName, dbContext.Name);
+                string controllerTemplate = DetermineControllerTemplate(editMode);
+                string controllerPath = DetermineControllerPath(controllerName, areaName);
 
-            BuildViewParameters(modelType, viewModelType, useViewModel, editable, editMode);
-            string viewPath = BuildViewPath(areaName, controllerRootName, viewName);
-            string viewTemplate = DetermineViewTemplate();
+                BuildViewParameters(modelType, viewModelType, useViewModel, editable, editMode);
+                string viewPath = BuildViewPath(areaName, controllerRootName, viewName);
+                string viewTemplate = DetermineViewTemplate();
 
-            this.AddFileFromTemplate(Context.ActiveProject, controllerPath, controllerTemplate, ControllerParameters, skipIfExists: false);
-            this.AddFolder(Context.ActiveProject, Path.Combine("Views", controllerRootName));
-            this.AddFileFromTemplate(Context.ActiveProject, viewPath, viewTemplate, ViewParameters, skipIfExists: false);
+                this.AddFileFromTemplate(Context.ActiveProject, controllerPath, controllerTemplate, ControllerParameters, skipIfExists: false);
+                this.AddFolder(Context.ActiveProject, Path.Combine("Views", controllerRootName));
+                this.AddFileFromTemplate(Context.ActiveProject, viewPath, viewTemplate, ViewParameters, skipIfExists: false);
+            }
+            catch (Exception ex)
+            {
+                //TODO
+            }
         }
 
         private string DetermineControllerTemplate(string editMode)
@@ -187,6 +217,11 @@ namespace KendoScaffolder
             ViewParameters.Add("Selectable", selectable);
             ViewParameters.Add("Sortable", sortable);
             ViewParameters.Add("ViewDataTypeName", viewDataTypeName);
+
+            if (_viewModel.SelectedGridEvents.Count > 0)
+            {
+                ViewParameters.Add("GridEvents", _viewModel.SelectedGridEvents);
+            }
 
             if (useViewModel)
             {

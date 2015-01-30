@@ -24,7 +24,7 @@ foreach (PropertyMetadata property in properties) {
 <#
                         break;
                     }
-                }  
+                }
             }  else {
 #>
         columns.Bound(c => c.<#= property.PropertyName#>);
@@ -32,15 +32,15 @@ foreach (PropertyMetadata property in properties) {
             }
     }
 }
-if(Editable && EditMode != batchEditMode) {
+if(Editable && (EditableCreate || EditableUpdate || EditableDestroy)) {
 #>
-        columns.Command(command => {<# if (EditMode != batchEditMode) { #> command.Edit(); <# } #> <# if (EditableDestroy) { #>command.Destroy(); <# } #>}).Width(172);
+        columns.Command(command => {<# if (EditMode != batchEditMode && (EditableCreate||EditableUpdate)) { #> command.Edit(); <# } #><# if (EditableDestroy) { #>command.Destroy(); <# } #>}).Width(172);
 <#
 }
 #>
       })
 <#
-if((Editable && EditMode.Equals(batchEditMode)) || ExcelExport || PdfExport) {
+if(EditableCreate || ExcelExport || PdfExport) {
 #>
       .ToolBar(toolbar => {
 <#
@@ -112,12 +112,26 @@ if((Editable && EditMode.Equals(batchEditMode)) || ExcelExport || PdfExport) {
     }
     if(Filterable){
 #>
-        .Filterable(<# if (FilterMode.ToString() == "Row") { #>filterable => filterable.Mode(GridFilterMode.Row)<# } #>)
+      .Filterable(<# if (FilterMode.ToString() == "Row") { #>filterable => filterable.Mode(GridFilterMode.Row)<# } #>)
 <#
     }
     if(!Scrollable){
 #>
       .Scrollable(scrollable => scrollable.Enabled(false))
+<#
+    }
+    if(GridEvents.Count > 0){
+#>
+      .Events(events => {
+<#
+       foreach (string ev in GridEvents)
+       {
+#>
+            events.<#= ev #>("on<#= ev #>");
+<#
+       }
+#>
+      })
 <#
     }
 #>
@@ -135,7 +149,7 @@ if(Editable) {
 <#
 }
 #>
-          .Read(read => read.Action("Products_Read", "<#= ControllerRootName #>"))
+          .Read(read => read.Action("<#= entitySetName #>_Read", "<#= ControllerRootName #>"))
 <#
 if(Editable) {
     if(EditableCreate) {
@@ -157,3 +171,20 @@ if(Editable) {
 #>
       )
 )
+
+<# if(GridEvents.Count > 0){ #>
+<script>
+
+<#
+    foreach (string ev in GridEvents)
+    {
+#>
+    function on<#= ev #>(e){
+        //Implement the event handler for <#= ev #>
+    }
+
+<#
+    }
+#>
+</script>     
+<# } #>

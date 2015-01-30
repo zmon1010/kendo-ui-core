@@ -40,15 +40,15 @@ foreach (PropertyMetadata property in properties) {
             }
     }
 }
-if(Editable) {
+if(Editable && (EditableCreate || EditableUpdate || EditableDestroy)) {
 #>
-        columns.Command(command => { <# if (EditMode != batchEditMode) { #> command.Edit(); <# } #> <# if (EditableDestroy) { #> command.Destroy(); <# } #> }).Width(172);
+        columns.Command(command => {<# if (EditMode != batchEditMode && (EditableCreate||EditableUpdate)) { #> command.Edit(); <# } #><# if (EditableDestroy) { #>command.Destroy(); <# } #>}).Width(172);
 <#
 }
 #>
       })
 <#
-if(Editable || ExcelExport || PdfExport) {
+if(EditableCreate || ExcelExport || PdfExport) {
 #>
       .ToolBar(toolbar => {
 <#
@@ -120,7 +120,7 @@ if(Editable || ExcelExport || PdfExport) {
     }
     if(Filterable){
 #>
-        .Filterable(<# if (FilterMode.ToString() == "Row") { #>filterable => filterable.Mode(GridFilterMode.Row)<# } #>)
+      .Filterable(<# if (FilterMode.ToString() == "Row") { #>filterable => filterable.Mode(GridFilterMode.Row)<# } #>)
 <#
     }
     if(!Scrollable){
@@ -128,33 +128,77 @@ if(Editable || ExcelExport || PdfExport) {
       .Scrollable(scrollable => scrollable.Enabled(false))
 <#
     }
+    if(ExcelExport) {
+#>
+      .Excel(excel => excel
+          .FileName("Kendo UI Grid Export.xlsx")
+          .Filterable(true)
+          .ProxyURL(Url.Action("Excel_Export_Save", "<#= ControllerRootName #>"))
+      )
+<#
+    }
+    if(PdfExport) {
+#>
+      .Pdf(pdf => pdf
+          .FileName("Kendo UI Grid Export.pdf")
+          .ProxyURL(Url.Action("Pdf_Export_Save", "<#= ControllerRootName #>"))
+      )
+<#
+    }
+    if(GridEvents.Count > 0) {
+#>
+      .Events(events => {
+<#
+      foreach (string ev in GridEvents)
+      {
+#>
+          events.<#= ev #>("on<#= ev #>");
+<#
+      }
+#>
+      })
+<#
+    }
 #>
       .DataSource(dataSource => dataSource
           .WebApi()
           .Model(model => model.Id(p => p.<#= PrimaryKeyName #>))
           .Read(read => read.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))
-          //.Read(read => read.Url(Url.Content("~/api/<#= entitySetName #>")))
 <#
 if(Editable) {
     if(EditableCreate) {
 #>
           .Create(create => create.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))  
-          //.Create(create => create.Url(Url.Content("~/api/<#= entitySetName #>")))
 <#
     }
     if(EditableUpdate) {
 #>
           .Update(update => update.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
-          //.Update(update => update.Url(Url.Content("~/api/<#= entitySetName #>/{0}")))
 <#
     }
     if(EditableDestroy) {
 #>
           .Destroy(destroy => destroy.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
-          //.Destroy(destroy => destroy.Url(Url.Content("~/api/<#= entitySetName #>/{0}")))
 <#
     }
 }
 #>
       )
 )
+
+<# if(GridEvents.Count > 0){ #>
+<script>
+
+<#
+    foreach (string ev in GridEvents)
+    {
+#>
+    function on<#= ev #>(e){
+        //Implement the event handler for <#= ev #>
+    }
+
+<#
+    }
+#>
+</script>     
+<# } #>

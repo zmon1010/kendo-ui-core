@@ -35,7 +35,8 @@ namespace <#= Namespace #>
 #>
     public class <#= ControllerName #> : Controller
     {
-        // GET: <#= routePrefix #>/<#= ViewPrefix #>Index
+        private <#= ContextTypeName #> db = new <#= ContextTypeName #>();
+
         public ActionResult <#= ViewPrefix #>Index()
         {
             return View();
@@ -43,25 +44,23 @@ namespace <#= Namespace #>
 
         public ActionResult <#= entitySetName #>_Read([DataSourceRequest]DataSourceRequest request)
         {
-            using(var db = new <#= ContextTypeName #>())
-            {
-                IQueryable<<#= ModelTypeName #>> <#= entitySetName.ToLower() #> = db.<#= entitySetName #>;
+            IQueryable<<#= ModelTypeName #>> <#= entitySetName.ToLower() #> = db.<#= entitySetName #>;
 <# if(UseViewModel) { #>
-                DataSourceResult result = <#= entitySetName.ToLower() #>.ToDataSourceResult(request, c => new <#= ViewModelTypeName #> 
-                {
+            DataSourceResult result = <#= entitySetName.ToLower() #>.ToDataSourceResult(request, c => new <#= ViewModelTypeName #> 
+            {
 <# var last = ViewModelTypeChildren.Item(ViewModelTypeChildren.Count);#>
 <# foreach (EnvDTE.CodeElement child in ViewModelTypeChildren) { 
     if (child.Equals(last)) { #>
-                    <#= child.Name #> = c.<#= child.Name #>
+                <#= child.Name #> = c.<#= child.Name #>
 <# } else { #>
-                    <#= child.Name #> = c.<#= child.Name #>,
+                <#= child.Name #> = c.<#= child.Name #>,
 <# } } #>
-                });
+            });
 <# } else { #>
-                DataSourceResult result = <#= entitySetName.ToLower() #>.ToDataSourceResult(request);
+            DataSourceResult result = <#= entitySetName.ToLower() #>.ToDataSourceResult(request);
 <# } #>
-                return Json(result);
-            }
+
+            return Json(result);
         }
 <# if(EditableCreate) { #>
 
@@ -71,28 +70,25 @@ namespace <#= Namespace #>
             var entities = new List<<#= ModelTypeName #>>();
             if (<#= entitySetName.ToLower() #> != null && ModelState.IsValid)
             {
-                using(var db = new <#= ContextTypeName #>())
+                foreach(var <#= ModelVariable #> in <#= entitySetName.ToLower() #>)
                 {
-                    foreach(var <#= ModelVariable #> in <#= entitySetName.ToLower() #>)
+                    var entity = new <#= ModelTypeName #>
                     {
-                        var entity = new <#= ModelTypeName #>
-                        {
 <#
 PushIndent(new string(' ', 28));
-    if(UseViewModel) {
-        ListViewModelEntityProperties();
-    } else {
-        ListModelEntityProperties();
-    }
+if(UseViewModel) {
+    ListViewModelEntityProperties();
+} else {
+    ListModelEntityProperties();
+}
 ClearIndent();
 #>
-                        };
+                    };
 
-                        db.<#= entitySetName #>.Add(entity);
-                        entities.Add(entity);
-                    }
-                    db.SaveChanges();
+                    db.<#= entitySetName #>.Add(entity);
+                    entities.Add(entity);
                 }
+                db.SaveChanges();
             }
 
 <# if(UseViewModel) { #>
@@ -117,30 +113,27 @@ ClearIndent();
             var entities = new List<<#= ModelTypeName #>>();
             if (<#= entitySetName.ToLower() #> != null && ModelState.IsValid)
             {
-                using(var db = new <#= ContextTypeName #>())
+                foreach(var <#= ModelVariable #> in <#= entitySetName.ToLower() #>)
                 {
-                    foreach(var <#= ModelVariable #> in <#= entitySetName.ToLower() #>)
+                    var entity = new <#= ModelTypeName #>
                     {
-                        var entity = new <#= ModelTypeName #>
-                        {
-                            <#= PrimaryKeyName #> = <#= ModelVariable #>.<#= PrimaryKeyName #>,
+                        <#= PrimaryKeyName #> = <#= ModelVariable #>.<#= PrimaryKeyName #>,
 <#
-PushIndent(new string(' ', 28));
-    if(UseViewModel) {
-        ListViewModelEntityProperties();
-    } else {
-        ListModelEntityProperties();
-    }
+PushIndent(new string(' ', 24));
+if(UseViewModel) {
+    ListViewModelEntityProperties();
+} else {
+    ListModelEntityProperties();
+}
 ClearIndent();
 #>
-                        };
+                    };
 
-                        entities.Add(entity);
-                        db.<#= entitySetName #>.Attach(entity);
-                        db.Entry(entity).State = EntityState.Modified;                        
-                    }
-                    db.SaveChanges();
+                    entities.Add(entity);
+                    db.<#= entitySetName #>.Attach(entity);
+                    db.Entry(entity).State = EntityState.Modified;                        
                 }
+                db.SaveChanges();
             }
 
 <# if(UseViewModel) { #>
@@ -165,15 +158,13 @@ ClearIndent();
             var entities = new List<<#= ModelTypeName #>>();
             if (ModelState.IsValid)
             {
-                using(var db = new <#= ContextTypeName #>())
+                foreach(var <#= ModelVariable #> in <#= entitySetName.ToLower() #>)
                 {
-                    foreach(var <#= ModelVariable #> in <#= entitySetName.ToLower() #>)
+                    var entity = new <#= ModelTypeName #>
                     {
-                        var entity = new <#= ModelTypeName #>
-                        {
-                            <#= PrimaryKeyName #> = <#= ModelVariable #>.<#= PrimaryKeyName #>,
+                        <#= PrimaryKeyName #> = <#= ModelVariable #>.<#= PrimaryKeyName #>,
 <#
-PushIndent(new string(' ', 28));
+PushIndent(new string(' ', 24));
 if(UseViewModel) {
     ListViewModelEntityProperties();
 } else {
@@ -181,14 +172,13 @@ if(UseViewModel) {
 }
 ClearIndent();
 #>
-                        };
+                    };
 
-                        entities.Add(entity);
-                        db.<#= entitySetName #>.Attach(entity);
-                        db.<#= entitySetName #>.Remove(entity);
-                    }
-                    db.SaveChanges();
+                    entities.Add(entity);
+                    db.<#= entitySetName #>.Attach(entity);
+                    db.<#= entitySetName #>.Remove(entity);
                 }
+                db.SaveChanges();
             }
 
 <# if(UseViewModel) { #>
@@ -205,6 +195,12 @@ ClearIndent();
 <# } #>
         }
 <# } #>
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }
 <#+

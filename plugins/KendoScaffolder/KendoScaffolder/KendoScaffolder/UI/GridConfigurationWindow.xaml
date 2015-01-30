@@ -3,55 +3,65 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:src="clr-namespace:KendoScaffolder.UI"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:vsfx="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.12.0"
              x:Class="KendoScaffolder.UI.GridConfigurationWindow"
-             mc:Ignorable="d" Height="700" Width="700" ResizeMode="NoResize" Title="Kendo UI Grid Configuration">
+             mc:Ignorable="d" Height="900" Width="800" ResizeMode="NoResize" Title="Add Kendo UI Grid">
     <Window.Resources>
-        <src:RadioButtonCheckedConverter x:Key="RadioButtonCheckedConverter" />
+        <ResourceDictionary>            
+            <src:RadioButtonCheckedConverter x:Key="RadioButtonCheckedConverter" />
+        </ResourceDictionary>
     </Window.Resources>
-    
-    <Grid>
+    <Grid Background="#F0F0F0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="62" />
             <RowDefinition Height="630"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <telerik:RadTabControl SelectedIndex="0" TabStripPlacement="Left" TabOrientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0">
-            <telerik:RadTabItem Width="50" Height="150"  Header="Model Options" >
-                <Grid Margin="20, 20, 0, 0">
+        <DockPanel Height="62" Background="#fff">
+            <Image Source="/KendoScaffolder;component/Resources/Images/grid-icon.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20, 0, 10, 0" />
+            <TextBlock Text="Kendo UI Grid" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" />
+            <Image Source="/KendoScaffolder;component/Resources/Images/telerik-logo.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20, 0" />
+        </DockPanel>
+        <TabControl Grid.Row="1" Background="#F0F0F0" BorderBrush="#E0E0E0" SelectedIndex="0" TabStripPlacement="Left" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Padding="4">
+            <TabItem Height="36" Width="220" Header="Model Options" Background="#F0F0F0" BorderBrush="#E0E0E0">
+                <Grid Margin="20, 20, 0, 0" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Content="Controller Name:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Name="ControllerName" Loaded="ControllerName_Loaded" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="311" Text="{Binding ControllerName}" />
+                    <Label Grid.Row="0" Content="Controller Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                    <TextBox Grid.Row="1" Name="ControllerName" Loaded="ControllerName_Loaded" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ControllerName}" />
 
-                    <Label Grid.Row="1" Content="View Name:" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Name="ViewName" Loaded="ViewName_Loaded" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Width="311" Text="{Binding ViewName}" />
+                    <Label Grid.Row="2" Content="View Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                    <TextBox Grid.Row="3" Name="ViewName" Loaded="ViewName_Loaded" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ViewName}" />
 
 
-                    <Label Grid.Row="2" Content="Model Class:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
-                    <ComboBox Grid.Row="2" Grid.Column="1" Name="ModelType" Width="311" Height="23" HorizontalAlignment="Left"  VerticalAlignment="Center"
-                              ItemsSource="{Binding ModelTypes}" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedModelType, Mode=OneWayToSource}" />
+                    <Label Grid.Row="4" Content="Model Class:" HorizontalAlignment="Left"  VerticalAlignment="Bottom"/>
+                    <ComboBox Grid.Row="5" Name="ModelType" Width="311" Height="23" HorizontalAlignment="Left"  VerticalAlignment="Top" 
+                              ItemsSource="{Binding ModelTypes}" SelectionChanged="RequiredField_SelectionChanged" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedModelType, Mode=OneWayToSource}" />
 
-                    <CheckBox Grid.Row="3" Content="Use an existing ViewModel" HorizontalAlignment="Left" VerticalAlignment="Center" Click="UseViewModel_Clicked" IsChecked="{Binding UseViewModel, Mode=OneWayToSource}" />
-                    <Label Grid.Row="4" x:Name="ViewModelTypeLabel" Content="ViewModel Class:" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="4" Grid.Column="2" x:Name="ViewModelType" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Center" Width="311" Height="23"
-                        	ItemsSource="{Binding ModelTypes}" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedViewModelType, Mode=OneWayToSource}" />
+                    <CheckBox Grid.Row="6" Content="Use an existing ViewModel" Name="UseViewModel" HorizontalAlignment="Left" VerticalAlignment="Center" Click="UseViewModel_Clicked" IsChecked="{Binding UseViewModel, Mode=TwoWay}" />
+                    <Label Grid.Row="7" x:Name="ViewModelTypeLabel" Content="ViewModel Class:" Visibility="Collapsed" VerticalAlignment="Bottom" />
+                    <ComboBox Grid.Row="8" x:Name="ViewModelType" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="top" Width="311" Height="23"
+                        	ItemsSource="{Binding ModelTypes}" SelectionChanged="RequiredField_SelectionChanged" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedViewModelType, Mode=OneWayToSource}" />
 
-                    <Label Grid.Row="5" Content="Data Context Class:" VerticalAlignment="Center" />
-                    <ComboBox Grid.Row="5" Grid.Column="1" Width="311" Height="23" HorizontalAlignment="Left"  VerticalAlignment="Center"
-                    		ItemsSource="{Binding DbContextTypes}" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedDbContextType, Mode=OneWayToSource}" />
+                    <Label Grid.Row="9" Content="Data Context Class:" VerticalAlignment="Bottom" />
+                    <ComboBox Grid.Row="10" Grid.Column="1" Width="311" Height="23" Name="DataContextClass" HorizontalAlignment="Left"  VerticalAlignment="Top"
+                    		ItemsSource="{Binding DbContextTypes}" SelectionChanged="RequiredField_SelectionChanged" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedDbContextType, Mode=OneWayToSource}" />
                 </Grid>
-            </telerik:RadTabItem>
-            <telerik:RadTabItem Width="50" Height="150" Header="Grid options" >
+            </TabItem>
+            <TabItem Height="36" Width="220" Header="Grid options" Background="#F0F0F0" BorderBrush="#E0E0E0">
                 <Grid Margin="20, 20, 0, 0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"/>
@@ -124,7 +134,7 @@
                         <RadioButton Name="SelectionTypeCell" Content="Cell" HorizontalAlignment="Left" Margin="15, 0, 0, 0" VerticalAlignment="Center"
                      IsChecked="{Binding GridSelectionType, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:GridSelectionType.Cell }}"/>
                     </WrapPanel>
-                    
+
                     <CheckBox Grid.Row="14" Name="Sortable" Content="Sortable" IsChecked="{Binding Sortable, Mode=OneWayToSource}" Click="Sortable_Clicked" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <CheckBox Grid.Row="15" Grid.Column="1" Name="SortableAllowUnsort" Visibility="Collapsed" Margin="6, 0, 0, 0" Content="Allow Unsort" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <WrapPanel Grid.Row="16" Grid.Column="1" Name="SortableModeWrapPanel" Visibility="Collapsed">
@@ -135,14 +145,48 @@
                      IsChecked="{Binding GridSortMode, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={x:Static src:GridSortMode.MultipleColumn }}"/>
                     </WrapPanel>
                     <CheckBox Grid.Row="17" Content="Excel Export" Name="ExcelExport" IsChecked="{Binding ExcelExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <CheckBox Grid.Row="18" Content="PDF Export" Name="PdfExport" IsChecked="{Binding PdfExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/> 
-                    </Grid>
-            </telerik:RadTabItem>
-            <telerik:RadTabItem Width="50" Height="150" Header="Events" >
-            </telerik:RadTabItem>
-        </telerik:RadTabControl>
-        <WrapPanel Grid.Row="1" HorizontalAlignment="Center">
-            <Button Content="Add" IsDefault="True" VerticalAlignment="Center" Width="75" Click="AddButton_Click"/>
+                    <CheckBox Grid.Row="18" Content="PDF Export" Name="PdfExport" IsChecked="{Binding PdfExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Grid>
+            </TabItem>
+            <TabItem Height="36" Width="220" Header="Events" Background="#F0F0F0" BorderBrush="#E0E0E0" BorderThickness="0" Margin="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="335"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="Grid Events:" VerticalAlignment="Center" />
+                    <WrapPanel Grid.Row="1">
+                        <ListBox Name="GridEventsListBox" SelectionMode="Multiple" ItemsSource="{Binding GridEvents}">
+                            <ListBox.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                            </ListBox.Resources>
+                            <ListBox.Template>
+                                <ControlTemplate>
+                                    <ItemsPresenter />
+                                </ControlTemplate>
+                            </ListBox.Template>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="35" Width="140">
+                                        <CheckBox  Content="{Binding Text}" IsChecked="{Binding Checked , Mode=TwoWay}" Click="GridEventsCheckbox_Clicked" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Width="450" Height="500"></WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </WrapPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0, 0, 20, 0">
+            <Button Content="Add" Name="AddButton" IsDefault="True" IsEnabled="False" VerticalAlignment="Center" Width="75" Click="AddButton_Click"/>
             <Button Content="Cancel" IsCancel="True" VerticalAlignment="Center" Width="75" Margin="15, 0, 0, 0"/>
         </WrapPanel>
     </Grid>

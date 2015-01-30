@@ -35,6 +35,8 @@ namespace <#= Namespace #>
 #>
     public class <#= ControllerName #> : Controller
     {
+        private <#= ContextTypeName #> db = new <#= ContextTypeName #>();
+
         public ActionResult <#= ViewPrefix #><#= ViewName #>()
         {
             return View();
@@ -42,25 +44,23 @@ namespace <#= Namespace #>
 
         public ActionResult <#= entitySetName #>_Read([DataSourceRequest]DataSourceRequest request)
         {
-            using(var db = new <#= ContextTypeName #>())
-            {
-                IQueryable<<#= ModelTypeName #>> <#= entitySetName.ToLower() #> = db.<#= entitySetName #>;
+            IQueryable<<#= ModelTypeName #>> <#= entitySetName.ToLower() #> = db.<#= entitySetName #>;
 <# if(UseViewModel) { #>
-                DataSourceResult result = <#= entitySetName.ToLower() #>.ToDataSourceResult(request, c => new <#= ViewModelTypeName #> 
-                {
+            DataSourceResult result = <#= entitySetName.ToLower() #>.ToDataSourceResult(request, c => new <#= ViewModelTypeName #> 
+            {
 <# var last = ViewModelTypeChildren.Item(ViewModelTypeChildren.Count);#>
 <# foreach (EnvDTE.CodeElement child in ViewModelTypeChildren) { 
     if (child.Equals(last)) { #>
-                    <#= child.Name #> = c.<#= child.Name #>
+                <#= child.Name #> = c.<#= child.Name #>
 <# } else { #>
-                    <#= child.Name #> = c.<#= child.Name #>,
+                <#= child.Name #> = c.<#= child.Name #>,
 <# } } #>
-                });
+            });
 <# } else { #>
-                DataSourceResult result = <#= entitySetName.ToLower() #>.ToDataSourceResult(request);
+            DataSourceResult result = <#= entitySetName.ToLower() #>.ToDataSourceResult(request);
 <# } #>
-                return Json(result);
-            }
+
+            return Json(result);
         }
 <# if(EditableCreate) { #>
 
@@ -69,12 +69,10 @@ namespace <#= Namespace #>
         {
             if (ModelState.IsValid)
             {
-                using(var db = new <#= ContextTypeName #>())
+                var entity = new <#= ModelTypeName #>
                 {
-                    var entity = new <#= ModelTypeName #>
-                    {
 <#
-PushIndent(new string(' ', 24));
+PushIndent(new string(' ', 20));
     if(UseViewModel) {
         ListViewModelEntityProperties();
     } else {
@@ -82,12 +80,11 @@ PushIndent(new string(' ', 24));
     }
 ClearIndent();
 #>
-                    };
+                };
 
-                    db.<#= entitySetName #>.Add(entity);
-                    db.SaveChanges();
-                    <#= ModelVariable #>.<#= PrimaryKeyName #> = entity.<#= PrimaryKeyName #>;
-                }
+                db.<#= entitySetName #>.Add(entity);
+                db.SaveChanges();
+                <#= ModelVariable #>.<#= PrimaryKeyName #> = entity.<#= PrimaryKeyName #>;
             }
 
             return Json(new[] { <#= ModelVariable #> }.ToDataSourceResult(request, ModelState));
@@ -100,13 +97,11 @@ ClearIndent();
         {
             if (ModelState.IsValid)
             {
-                using(var db = new <#= ContextTypeName #>())
+                var entity = new <#= ModelTypeName #>
                 {
-                    var entity = new <#= ModelTypeName #>
-                    {
-                        <#= PrimaryKeyName #> = <#= ModelVariable #>.<#= PrimaryKeyName #>,
+                    <#= PrimaryKeyName #> = <#= ModelVariable #>.<#= PrimaryKeyName #>,
 <#
-PushIndent(new string(' ', 24));
+PushIndent(new string(' ', 20));
     if(UseViewModel) {
         ListViewModelEntityProperties();
     } else {
@@ -114,12 +109,11 @@ PushIndent(new string(' ', 24));
     }
 ClearIndent();
 #>
-                    };
+                };
 
-                    db.<#= entitySetName #>.Attach(entity);
-                    db.Entry(entity).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
+                db.<#= entitySetName #>.Attach(entity);
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
             }
 
             return Json(new[] { <#= ModelVariable #> }.ToDataSourceResult(request, ModelState));
@@ -132,13 +126,11 @@ ClearIndent();
         {
             if (ModelState.IsValid)
             {
-                using(var db = new <#= ContextTypeName #>())
+                var entity = new <#= ModelTypeName #>
                 {
-                    var entity = new <#= ModelTypeName #>
-                    {
-                        <#= PrimaryKeyName #> = <#= ModelVariable #>.<#= PrimaryKeyName #>,
+                    <#= PrimaryKeyName #> = <#= ModelVariable #>.<#= PrimaryKeyName #>,
 <#
-PushIndent(new string(' ', 24));
+PushIndent(new string(' ', 20));
 if(UseViewModel) {
     ListViewModelEntityProperties();
 } else {
@@ -146,12 +138,11 @@ if(UseViewModel) {
 }
 ClearIndent();
 #>
-                    };
+                };
 
-                    db.<#= entitySetName #>.Attach(entity);
-                    db.<#= entitySetName #>.Remove(entity);
-                    db.SaveChanges();
-                }
+                db.<#= entitySetName #>.Attach(entity);
+                db.<#= entitySetName #>.Remove(entity);
+                db.SaveChanges();
             }
 
             return Json(new[] { <#= ModelVariable #> }.ToDataSourceResult(request, ModelState));
@@ -167,7 +158,6 @@ ClearIndent();
             return File(fileContents, contentType, fileName);
         }
 <# } #>
-
 <# if(PdfExport) { #>
     
         [HttpPost]
@@ -178,6 +168,12 @@ ClearIndent();
             return File(fileContents, contentType, fileName);
         }
 <# } #>
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }
 <#+

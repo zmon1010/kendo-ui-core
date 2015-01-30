@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Scaffolding.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace KendoScaffolder.UI
@@ -10,6 +11,29 @@ namespace KendoScaffolder.UI
     public enum GridSortMode { MultipleColumn, SingleColumn }
     public enum GridSelectionMode { Multiple, Single }
     public enum GridSelectionType { Row, Cell }
+    public enum GridEvents
+    {
+        Cancel, Change, ColumnHide, ColumnLock, ColumnMenuInit, ColumnReorder, ColumnResize, ColumnShow,
+        ColumnUnlock, DataBinding, DataBound, DetailCollapse, DetailExpand, DetailInit,
+        Edit, ExcelExport, FilterMenuInit, PdfExport, Remove, Save, SaveChanges
+    }
+
+    public class CheckBoxListItem
+    {
+        public bool Checked { get; set; }
+        public string Text { get; set; }
+
+        public CheckBoxListItem(bool ch, string text)
+        {
+            Checked = ch;
+            Text = text;
+        }
+
+        public CheckBoxListItem()
+        {
+            Checked = false;
+        }
+    }
 
     public class GridConfigurationViewModel
     {
@@ -53,6 +77,8 @@ namespace KendoScaffolder.UI
         public bool ExcelExport { get; set; }
         public bool PdfExport { get; set; }
 
+        public List<string> SelectedGridEvents { get; set; }
+
         public GridConfigurationViewModel(CodeGenerationContext context)
         {
             Context = context;
@@ -63,6 +89,7 @@ namespace KendoScaffolder.UI
             SelectionType = GridSelectionType.Row;
             SortMode = GridSortMode.SingleColumn;
             SelectedDataSourceType = "Ajax";
+            SelectedGridEvents = new List<string>();
         }
 
         /// <summary>
@@ -112,6 +139,20 @@ namespace KendoScaffolder.UI
             get
             {
                 return new List<string> { "InCell", "InLine", "PopUp" };
+            }
+        }
+
+        public IEnumerable<CheckBoxListItem> GridEvents
+        {
+            get
+            {
+                return Enum.GetValues(typeof(GridEvents))
+                           .Cast<GridEvents>()
+                           .Select(ev => new CheckBoxListItem
+                           {
+                               Checked = false,
+                               Text = ev.ToString()
+                           });
             }
         }
     }

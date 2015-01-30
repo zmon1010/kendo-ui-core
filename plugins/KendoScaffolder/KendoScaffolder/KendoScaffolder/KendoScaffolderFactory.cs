@@ -22,7 +22,7 @@ namespace KendoScaffolder
             author: "Telerik",
             version: new Version(1, 0, 0, 0),
             id: typeof(KendoScaffolder).Name,
-            icon: ToImageSource(Resources._TemplateIconSample),
+            icon: ToImageSource(Resources.__TemplateIcon),
             gestures: new[] { "Controller", "View", "Area" },
             categories: new[] { Categories.Common, Categories.MvcController, Categories.Other });
 
