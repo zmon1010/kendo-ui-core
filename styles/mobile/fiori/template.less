@@ -143,6 +143,7 @@
     background-color: @switch-color;
 }
 
+.km-modalview,
 .km-fiori .km-switch-background/*,
 .km-fiori .k-slider-selection*/
 {
@@ -170,7 +171,12 @@
 {
     background: @fiori-list-background;
     border-color: @fiori-button-border;
-    .box-shadow(inset 0 1px 0 @fiori-shadow);
+}
+
+.km-fiori .km-list > li:hover,
+.km-navbar .km-view-title
+{
+    background-color: @fiori-list-hover-background;
 }
 
 .km-fiori .km-listinset > li:first-child,
@@ -194,7 +200,8 @@
 .km-fiori .km-group-title
 {
     background: #f7f7f7;
-    border-color: #a4bdd4;
+    border-color: @fiori-list-border transparent #a4bdd4;
+    color: @fiori-list-group-text;
 }
 
 .km-fiori .km-listview .km-state-active > .km-listview-link
@@ -383,15 +390,13 @@
 .km-fiori .k-slider .k-draghandle:hover,
 .km-fiori .km-tabstrip .km-state-active,
 .km-fiori .km-scroller-refresh.km-load-more,
-.km-fiori .km-popup .k-state-hover,
-.km-fiori .km-popup .k-state-focused,
 .km-fiori .km-popup .k-state-selected,
 .km-fiori li.km-state-active .km-listview-link,
 .km-fiori li.km-state-active .km-listview-label,
 .km-fiori .km-listview-label input[type=radio]:checked,
 .km-fiori .km-listview-label input[type=checkbox]:checked
 {
-    background: @fiori-list-selected-background;
+    background: @fiori-button-selected-background;
 }
 
 .km-fiori .km-filter-wrap > input:focus
