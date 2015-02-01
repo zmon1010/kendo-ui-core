@@ -386,4 +386,20 @@ var ngTestModule = $.noop, ngTest = $.noop, ngScope;
             }, 100);
         });
     }
+
+    ngTest2 = function(name, assertions, theTest) {
+        test(name, assertions, function() {
+            var root = $('<div ng-controller=main></div>').appendTo(QUnit.fixture);
+
+            var scopeSetup = $.noop;
+
+            angular.module('kendo.tests').controller('main', function($scope) {
+                scopeSetup($scope);
+            });
+
+            theTest(root, function(setup) { scopeSetup = setup }, function() { angular.bootstrap(root, [ 'kendo.tests' ]); });
+            kendo.destroy(root);
+            root.remove();
+        });
+    }
 })();
