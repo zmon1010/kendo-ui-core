@@ -56,7 +56,7 @@
             equal(tree.dragging._draggable.hint.text(), "Foo/1");
     });
 
-    ngTest("item template is recompiled upon", 1, function() {
+    ngTest("item template is recompiled upon expanding", 1, function() {
         angular.module("kendo.tests").controller("mine", function($scope) {
             $scope.options = {
                 dataSource: fixtureData,
@@ -69,6 +69,22 @@
             tree.dataSource.get(1).set("expanded", true);
 
             equal(tree.element.find(".k-in:first").text(), "Foo");
+    });
+
+    ngTest("item template is compiled against wrapping element", 1, function() {
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: fixtureData,
+                template: "<b ng-if='dataItem.id != 1'>{{dataItem.text}}</b>"
+            };
+        });
+        $("<div ng-controller=mine><div kendo-treeview='tree' k-options='options'></div></div>").appendTo(QUnit.fixture);
+        }, function () {
+            var tree = QUnit.fixture.find('[data-role=treeview]').getKendoTreeView();
+
+            tree.expand(".k-item");
+
+            equal(tree.element.find("b").length, 2);
     });
 
 })();

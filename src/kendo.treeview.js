@@ -1283,14 +1283,14 @@ var __meta__ = {
                 node.attr(ARIASELECTED, !!item[field]);
             } else {
                 var elements = $.map(items, function(item) {
-                    return that.findByUid(item.uid);
+                    return that.findByUid(item.uid).children("div");
                 });
 
                 that.angular("cleanup", function() { return { elements: elements }; });
 
                 for (i = 0; i < items.length; i++) {
                     context.item = item = items[i];
-                    node = elements[i];
+                    node = elements[i].parent();
 
                     node.find(">div>.k-in").html(that.templates.itemContent(context));
 
