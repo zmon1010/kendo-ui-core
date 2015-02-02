@@ -15,7 +15,7 @@ namespace Kendo.Mvc.Infrastructure
         /// Gets a value indicating whether this instance has any sub groups.
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if this instance has sub groups; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance has sub groups; otherwise, <c>false</c>.
         /// </value>
         public bool HasSubgroups { get; set; }
 

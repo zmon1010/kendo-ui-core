@@ -85,9 +85,9 @@ namespace Kendo.Mvc.Extensions
             }
 
             Type genericType = typeof(GenericEnumerable<>).MakeGenericType(elementType);
-        	object[] constructorParameters = new object[] { source };
+            object[] constructorParameters = new object[] { source };
 
-        	return (IEnumerable) Activator.CreateInstance(genericType, constructorParameters);
+            return (IEnumerable) Activator.CreateInstance(genericType, constructorParameters);
         }
 
         internal static int IndexOf(this IEnumerable source, object item)

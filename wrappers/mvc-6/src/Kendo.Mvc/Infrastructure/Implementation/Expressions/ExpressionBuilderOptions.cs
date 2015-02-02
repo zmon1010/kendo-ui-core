@@ -7,7 +7,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
         /// by this builder should be lifted to null. The default value is true;
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if member access should be lifted to null; otherwise, <c>false</c>.
+        ///     <c>true</c> if member access should be lifted to null; otherwise, <c>false</c>.
         /// </value>
         public bool LiftMemberAccessToNull { get; set; }
 

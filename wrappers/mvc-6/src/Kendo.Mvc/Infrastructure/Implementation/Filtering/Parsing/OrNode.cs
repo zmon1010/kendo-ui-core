@@ -13,14 +13,14 @@ namespace Kendo.Mvc.Infrastructure.Implementation
             get; 
             set; 
         }
-		
+        
         public FilterCompositionLogicalOperator LogicalOperator
-		{
-			get
-			{
+        {
+            get
+            {
                 return FilterCompositionLogicalOperator.Or;
-			}
-		}
+            }
+        }
 
         public void Accept(IFilterNodeVisitor visitor)
         {

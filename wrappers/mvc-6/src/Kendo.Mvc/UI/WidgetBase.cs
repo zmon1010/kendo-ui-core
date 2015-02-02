@@ -19,21 +19,21 @@ namespace Kendo.Mvc.UI
         private static readonly Regex UnicodeEntityExpression = new Regex(@"\\+u(\d+)\\*#(\d+;)", RegexOptions.Compiled);
 
         public WidgetBase(ViewContext viewContext)
-        {            
+        {
             Events = new Dictionary<string, object>();
             HtmlAttributes = new RouteValueDictionary();
             IsSelfInitialized = true;
             Initializer = new JavaScriptInitializer();
             ViewContext = viewContext;
 
-			Activate();
-		}
+            Activate();
+        }
 
-		/// <summary>
-		/// Gets the client events of the widget.
-		/// </summary>
-		/// <value>The client events.</value>
-		public IDictionary<string, object> Events {
+        /// <summary>
+        /// Gets the client events of the widget.
+        /// </summary>
+        /// <value>The client events.</value>
+        public IDictionary<string, object> Events {
             get;
             private set;
         }
@@ -46,24 +46,24 @@ namespace Kendo.Mvc.UI
         {
             get
             {
-				// Return HtmlAttributes["id"] or name
-				return this.SanitizeId(HtmlAttributes.ContainsKey("id") ? (string)HtmlAttributes["id"] : Name);
+                // Return HtmlAttributes["id"] or name
+                return this.SanitizeId(HtmlAttributes.ContainsKey("id") ? (string)HtmlAttributes["id"] : Name);
             }
-		}
+        }
 
-		public IJavaScriptInitializer Initializer
-		{
-			get;
-			set;
-		}
+        public IJavaScriptInitializer Initializer
+        {
+            get;
+            set;
+        }
 
-		public bool IsInClientTemplate
-		{
-			get;
-			private set;
-		}
+        public bool IsInClientTemplate
+        {
+            get;
+            private set;
+        }
 
-		public bool IsSelfInitialized
+        public bool IsSelfInitialized
         {
             get;
             set;
@@ -85,7 +85,7 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-		public ModelMetadata ModelMetadata
+        public ModelMetadata ModelMetadata
         {
             get;
             set;
@@ -99,15 +99,15 @@ namespace Kendo.Mvc.UI
         {
             get;
             set;
-		}
+        }
 
-		public string Selector
-		{
-			get
-			{
-				return (IsInClientTemplate ? "\\#" : "#") + Id;
-			}
-		}
+        public string Selector
+        {
+            get
+            {
+                return (IsInClientTemplate ? "\\#" : "#") + Id;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the view context to rendering a view.
@@ -117,15 +117,15 @@ namespace Kendo.Mvc.UI
         {
             get;
             private set;
-		}
+        }
 
-		[Activate]
-		protected IKendoHtmlGenerator Generator { get; set; }
+        [Activate]
+        protected IKendoHtmlGenerator Generator { get; set; }
 
-		/// <summary>
-		/// Renders the component.
-		/// </summary>
-		public void Render()
+        /// <summary>
+        /// Renders the component.
+        /// </summary>
+        public void Render()
         {
             WriteHtml(ViewContext.Writer);
         }
@@ -191,7 +191,7 @@ namespace Kendo.Mvc.UI
         /// <param name="writer">The writer.</param>
         public virtual void WriteInitializationScript(TextWriter writer)
         {
-            
+
         }
 
         /// <summary>
@@ -221,17 +221,17 @@ namespace Kendo.Mvc.UI
             var scripts = new StringWriter();
             WriteInitializationScript(scripts);
             AppendScriptToContext(scripts.ToString());
-		}
+        }
 
-		private void Activate()
-		{
-			var serviceProvider = ViewContext.HttpContext.RequestServices;
-			var activator = (IViewComponentActivator)serviceProvider.GetService(typeof(IViewComponentActivator));
+        private void Activate()
+        {
+            var serviceProvider = ViewContext.HttpContext.RequestServices;
+            var activator = (IViewComponentActivator)serviceProvider.GetService(typeof(IViewComponentActivator));
 
-			activator.Activate(this, ViewContext);
-		}
+            activator.Activate(this, ViewContext);
+        }
 
-		private void AppendScriptToContext(string script)
+        private void AppendScriptToContext(string script)
         {
             var items = ViewContext.HttpContext.Items;
 
@@ -275,5 +275,5 @@ namespace Kendo.Mvc.UI
 
             return true;
         }
-	}
+    }
 }

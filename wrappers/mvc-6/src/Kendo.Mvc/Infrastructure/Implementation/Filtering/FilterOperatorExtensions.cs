@@ -147,7 +147,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
         }
 
         private static Expression GenerateCaseInsensitiveStringMethodCall(MethodInfo methodInfo, Expression left, Expression right, bool liftMemberAccess)
-		{
+        {
             var leftToLower = GenerateToLowerCall(left, liftMemberAccess);
             var rightToLower = GenerateToLowerCall(right, liftMemberAccess);
 
@@ -157,7 +157,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
             }
 
             return Expression.Call(leftToLower, methodInfo, rightToLower);
-		}
+        }
 
         private static Expression GenerateToLowerCall(Expression stringExpression, bool liftMemberAccess)
         {

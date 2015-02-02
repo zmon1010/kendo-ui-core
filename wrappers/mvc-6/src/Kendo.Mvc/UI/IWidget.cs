@@ -3,14 +3,14 @@ using Microsoft.AspNet.Mvc.ModelBinding;
 
 namespace Kendo.Mvc.UI
 {
-	public interface IWidget : IHtmlAttributesContainer
-	{
-		string Id { get; }
+    public interface IWidget : IHtmlAttributesContainer
+    {
+        string Id { get; }
 
-		string Name { get; }
+        string Name { get; }
 
-		ModelMetadata ModelMetadata { get; }
+        ModelMetadata ModelMetadata { get; }
 
-		ViewContext ViewContext { get; }
-	}
+        ViewContext ViewContext { get; }
+    }
 }

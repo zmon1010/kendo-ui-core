@@ -4,42 +4,42 @@ using System;
 
 namespace Kendo.Mvc.Extensions
 {
-	public static class InputComponentExtensions
-	{
-		public static T? GetValue<T>(this IInputComponent<T> instance, Func<object, T?> converter) where T : struct
-		{
-			T? value = null;
+    public static class InputComponentExtensions
+    {
+        public static T? GetValue<T>(this IInputComponent<T> instance, Func<object, T?> converter) where T : struct
+        {
+            T? value = null;
 
-			object valueFromViewData = instance.ViewContext.ViewData.Eval(instance.Name);
+            object valueFromViewData = instance.ViewContext.ViewData.Eval(instance.Name);
 
-			if (instance.Value != null)
-			{
-				value = instance.Value;
-			}
-			else if (valueFromViewData != null)
-			{
-				value = converter(valueFromViewData);
-			}
+            if (instance.Value != null)
+            {
+                value = instance.Value;
+            }
+            else if (valueFromViewData != null)
+            {
+                value = converter(valueFromViewData);
+            }
 
-			instance.Value = value;
+            instance.Value = value;
 
-			return value;
-		}
+            return value;
+        }
 
-		public static string GetAttemptedValue<T>(this IInputComponent<T> instance) where T : struct
-		{
-			return (string) instance.GetModelStateValue(instance.Name, typeof(string));
-		}
+        public static string GetAttemptedValue<T>(this IInputComponent<T> instance) where T : struct
+        {
+            return (string) instance.GetModelStateValue(instance.Name, typeof(string));
+        }
 
-		internal static object GetModelStateValue<T>(this IInputComponent<T> instance, string key, Type destinationType) where T : struct
-		{
-			ModelState modelState;
-			if (instance.ViewContext.ViewData.ModelState.TryGetValue(key, out modelState) && modelState.Value != null)
-			{
-				return modelState.Value.ConvertTo(destinationType, culture: null);
-			}
+        internal static object GetModelStateValue<T>(this IInputComponent<T> instance, string key, Type destinationType) where T : struct
+        {
+            ModelState modelState;
+            if (instance.ViewContext.ViewData.ModelState.TryGetValue(key, out modelState) && modelState.Value != null)
+            {
+                return modelState.Value.ConvertTo(destinationType, culture: null);
+            }
 
-			return null;
-		}
-	}
+            return null;
+        }
+    }
 }

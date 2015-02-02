@@ -7,11 +7,11 @@ namespace Kendo.Mvc
 {
     public class KendoServices
     {
-		public static IEnumerable<IServiceDescriptor> GetServices(IConfiguration configuration = null)
-		{
-			var describe = new ServiceDescriber(configuration);
+        public static IEnumerable<IServiceDescriptor> GetServices(IConfiguration configuration = null)
+        {
+            var describe = new ServiceDescriber(configuration);
 
-			yield return describe.Transient<IKendoHtmlGenerator, KendoHtmlGenerator>();
-		}
-	}
+            yield return describe.Transient<IKendoHtmlGenerator, KendoHtmlGenerator>();
+        }
+    }
 }
