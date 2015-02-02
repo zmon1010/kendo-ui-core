@@ -7,7 +7,7 @@
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              xmlns:vsfx="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.12.0"
              x:Class="KendoScaffolder.UI.GridConfigurationWindow"
-             mc:Ignorable="d" Height="900" Width="800" ResizeMode="NoResize" Title="Add Kendo UI Grid">
+             mc:Ignorable="d" Height="765" Width="800" ResizeMode="NoResize" Title="Add Kendo UI Grid">
     <Window.Resources>
         <ResourceDictionary>            
             <src:RadioButtonCheckedConverter x:Key="RadioButtonCheckedConverter" />
@@ -25,7 +25,42 @@
             <Image Source="/KendoScaffolder;component/Resources/Images/telerik-logo.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20, 0" />
         </DockPanel>
         <TabControl Grid.Row="1" Background="#F0F0F0" BorderBrush="#E0E0E0" SelectedIndex="0" TabStripPlacement="Left" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Padding="4">
-            <TabItem Height="36" Width="220" Header="Model Options" Background="#F0F0F0" BorderBrush="#E0E0E0">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Grid Name="Panel">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        ContentSource="Header"
+                                        Margin="20, 0, 0, 0"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Panel" Property="Background" Value="#0072C6" />
+                                        <Setter TargetName="Panel" Property="TextElement.Foreground" Value="#fff" />
+                                        <Setter TargetName="Panel" Property="TextElement.FontWeight" Value="Bold" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Panel" Property="Background" Value="#F0F0F0" />
+                                        <Setter TargetName="Panel" Property="TextElement.FontWeight" Value="Bold" />
+                                    </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsSelected" Value="False"/>
+                                            <Condition Property="IsMouseOver" Value="True"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter TargetName="Panel" Property="Background" Value="#EAEAEA" />
+                                    </MultiTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Height="36" Width="220" Header="Model Options" >
                 <Grid Margin="20, 20, 0, 0" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
@@ -61,7 +96,7 @@
                     		ItemsSource="{Binding DbContextTypes}" SelectionChanged="RequiredField_SelectionChanged" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedDbContextType, Mode=OneWayToSource}" />
                 </Grid>
             </TabItem>
-            <TabItem Height="36" Width="220" Header="Grid options" Background="#F0F0F0" BorderBrush="#E0E0E0">
+            <TabItem Height="36" Width="220" Header="Grid options">
                 <Grid Margin="20, 20, 0, 0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"/>
@@ -117,7 +152,7 @@
                     <CheckBox Grid.Row="7" Content="Navigatable" IsChecked="{Binding Navigatable, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <CheckBox Grid.Row="8" Content="Pageable" IsChecked="{Binding Pageable, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <CheckBox Grid.Row="9"  Content="Reorderable" IsChecked="{Binding Reorderable, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <CheckBox Grid.Row="10" Content="Scrollable" IsChecked="{Binding Scrollable, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox Grid.Row="10" Content="Scrollable" IsChecked="{Binding Scrollable, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                     <CheckBox Grid.Row="11" Name="Selectable" Content="Selectable" IsChecked="{Binding Selectable, Mode=OneWayToSource}" Click="Selectable_Clicked" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <WrapPanel Grid.Row="12" Grid.Column="1" Name="SelectionModeWrapPanel" Visibility="Collapsed">
@@ -148,7 +183,7 @@
                     <CheckBox Grid.Row="18" Content="PDF Export" Name="PdfExport" IsChecked="{Binding PdfExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </Grid>
             </TabItem>
-            <TabItem Height="36" Width="220" Header="Events" Background="#F0F0F0" BorderBrush="#E0E0E0" BorderThickness="0" Margin="0">
+            <TabItem Height="36" Width="220" Header="Events">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"/>
@@ -157,7 +192,7 @@
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Content="Grid Events:" VerticalAlignment="Center" />
                     <WrapPanel Grid.Row="1">
-                        <ListBox Name="GridEventsListBox" SelectionMode="Multiple" ItemsSource="{Binding GridEvents}">
+                        <ListBox Name="GridEventsListBox" SelectionMode="Multiple" ItemsSource="{Binding GridEvents}" Margin="20, 0, 0, 0">
                             <ListBox.Resources>
                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />

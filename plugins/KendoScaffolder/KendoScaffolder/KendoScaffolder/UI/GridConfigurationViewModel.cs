@@ -84,6 +84,7 @@ namespace KendoScaffolder.UI
             Context = context;
             ViewName = "Index";
             EditMode = "InLine";
+            Scrollable = true;
             FilterMode = GridFilterMode.Menu;
             SelectionMode = GridSelectionMode.Single;
             SelectionType = GridSelectionType.Row;
@@ -105,6 +106,7 @@ namespace KendoScaffolder.UI
                 return codeTypeService
                     .GetAllCodeTypes(Context.ActiveProject)
                     .Where(codeType => codeType.IsValidWebProjectEntityType())
+                    .OrderBy(codeType => codeType.Name)
                     .Select(codeType => new ModelType(codeType));
             }
         }
@@ -122,6 +124,7 @@ namespace KendoScaffolder.UI
                 return codeTypeService
                     .GetAllCodeTypes(Context.ActiveProject)
                     .Where(codeType => codeType.IsValidDbContextType())
+                    .OrderBy(codeType => codeType.Name)
                     .Select(codeType => new ModelType(codeType));
             }
         }

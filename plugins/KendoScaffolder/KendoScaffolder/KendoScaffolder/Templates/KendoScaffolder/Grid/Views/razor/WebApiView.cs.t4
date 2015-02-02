@@ -123,11 +123,9 @@ if(EditableCreate || ExcelExport || PdfExport) {
       .Filterable(<# if (FilterMode.ToString() == "Row") { #>filterable => filterable.Mode(GridFilterMode.Row)<# } #>)
 <#
     }
-    if(!Scrollable){
 #>
-      .Scrollable(scrollable => scrollable.Enabled(false))
+      .Scrollable(<# if(!Scrollable) { #>scrollable => scrollable.Enabled(false)<# } #>)
 <#
-    }
     if(ExcelExport) {
 #>
       .Excel(excel => excel

@@ -102,7 +102,7 @@ namespace KendoScaffolder
             }
             catch (InvalidOperationException ex)
             {
-                //handle ex
+                throw new InvalidOperationException("Invalid model configuration", ex);
             }
 
             ICodeTypeService codeTypeService = GetService<ICodeTypeService>();
@@ -155,9 +155,9 @@ namespace KendoScaffolder
                 this.AddFolder(Context.ActiveProject, Path.Combine("Views", controllerRootName));
                 this.AddFileFromTemplate(Context.ActiveProject, viewPath, viewTemplate, ViewParameters, skipIfExists: false);
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
-                //TODO
+                throw new InvalidOperationException("An unknown error occurred during generation", ex);
             }
         }
 
@@ -217,11 +217,7 @@ namespace KendoScaffolder
             ViewParameters.Add("Selectable", selectable);
             ViewParameters.Add("Sortable", sortable);
             ViewParameters.Add("ViewDataTypeName", viewDataTypeName);
-
-            if (_viewModel.SelectedGridEvents.Count > 0)
-            {
-                ViewParameters.Add("GridEvents", _viewModel.SelectedGridEvents);
-            }
+            ViewParameters.Add("GridEvents", _viewModel.SelectedGridEvents);
 
             if (useViewModel)
             {
