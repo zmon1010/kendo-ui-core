@@ -714,11 +714,9 @@
             rotate: function (angle, center, undoable) { // we assume the center is always the center of the shape.
                 var rotate = this.visual.rotate();
                 if (angle !== undefined) {
-                    if (undoable !== false) {
-                        if (this.diagram && this.diagram.undoRedoService) {
-                            this.diagram.undoRedoService.add(
-                                new diagram.RotateUnit(this.diagram._resizingAdorner, [this], [rotate.angle]), false);
-                        }
+                    if (undoable !== false && this.diagram && this.diagram.undoRedoService && angle !== rotate.angle) {
+                        this.diagram.undoRedoService.add(
+                            new diagram.RotateUnit(this.diagram._resizingAdorner, [this], [rotate.angle]), false);
                     }
 
                     var b = this.bounds(),

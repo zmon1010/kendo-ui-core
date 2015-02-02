@@ -1035,6 +1035,36 @@
             });
         })();
 
+        // ------------------------------------------------------------
+        (function() {
+            module("Shape / rotate", {
+                setup: function() {
+                    setup();
+                    shape = diagram.addShape({
+                        id: "visualShape",
+                        type: "rectangle",
+                        x: 10,
+                        y: 40,
+                        width: 100,
+                        height: 100,
+                        rotation: {
+                            angle: 30
+                        }
+                    });
+                },
+                teardown: teardown
+            });
+
+            test("Adds RotationUnit only if angle has changed", function() {
+                var stackCount = diagram.undoRedoService.count();
+                shape.rotate(30);
+                equal(diagram.undoRedoService.count(), stackCount);
+                shape.rotate(40);
+                equal(diagram.undoRedoService.count(), stackCount + 1);
+            });
+
+        })();
+
         (function() {
 
             // ------------------------------------------------------------
