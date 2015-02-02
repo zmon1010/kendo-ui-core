@@ -276,4 +276,78 @@
         ok(!rows.eq(0).hasClass("k-alt"));
         ok(rows.eq(1).hasClass("k-alt"));
     });
+
+    test("reorderColumn sets column as locked in columns collection", function() {
+        createTreeList();
+
+        var column = instance.columns[2];
+        instance.reorderColumn(0, column, false);
+
+        ok(instance.columns[1].field, "text");
+        ok(instance.columns[1].locked);
+    });
+
+    test("reorderColumn sets column as non-locked in columns collection", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30, locked: true }
+            ]
+        });
+
+        var column = instance.columns[1];
+        instance.reorderColumn(2, column, true);
+
+        ok(instance.columns[1].field, "text");
+        ok(!instance.columns[1].locked);
+    });
+
+    test("reorder column to locked container repaints the header", function() {
+        createTreeList();
+
+        var column = instance.columns[2];
+        instance.reorderColumn(0, column, false);
+
+        var lockedCells = instance.lockedHeader.find("th");
+        var cells = instance.thead.find("th");
+
+        equal(lockedCells.length, 2);
+        equal(cells.length, 1);
+        equal(lockedCells.eq(0).text(), "id");
+        equal(lockedCells.eq(1).text(), "text");
+        equal(cells.eq(0).text(), "parentId");
+    });
+
+    test("reorder column to non-locked container repaints the header", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30, locked: true }
+            ]
+        });
+
+        var column = instance.columns[1];
+        instance.reorderColumn(2, column, true);
+
+        var lockedCells = instance.lockedHeader.find("th");
+        var cells = instance.thead.find("th");
+
+        equal(lockedCells.length, 1);
+        equal(cells.length, 2);
+        equal(lockedCells.eq(0).text(), "id");
+        equal(cells.eq(0).text(), "text");
+        equal(cells.eq(1).text(), "parentId");
+    });
+
+    test("header width is re-calculated on column reorder", function() {
+        createTreeList();
+
+        var column = instance.columns[2];
+        instance.reorderColumn(0, column, false);
+
+        equal(instance.lockedHeader.width(), 40);
+        equal(instance.thead.parent().width(), 20);
+    });
 })();

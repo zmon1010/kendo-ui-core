@@ -2366,6 +2366,8 @@ var __meta__ = {
         reorderColumn: function(destIndex, column, before) {
             var columns = this.columns;
             var sourceIndex = inArray(column, columns);
+            var destColumn = columns[destIndex];
+            var isLocked = !!destColumn.locked;
 
             if (sourceIndex === destIndex) {
                 return;
@@ -2375,18 +2377,21 @@ var __meta__ = {
                 before = destIndex < sourceIndex;
             }
 
+            column.locked = isLocked;
             columns.splice(before ? destIndex : destIndex + 1, 0, column);
             columns.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
 
             this._renderCols();
 
             //reorder column header manually
-            var ths = this.thead.find("th");
+            var ths = $(this.lockedHeader).add(this.thead).find("th");
             ths.eq(sourceIndex)[before ? "insertBefore" : "insertAfter"](ths.eq(destIndex));
 
             var dom = this._headerTree.children[0].children;
             dom.splice(before ? destIndex : destIndex + 1, 0, dom[sourceIndex]);
             dom.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
+
+            this._applyLockedContainersWidth();
 
             this.refresh();
         },
