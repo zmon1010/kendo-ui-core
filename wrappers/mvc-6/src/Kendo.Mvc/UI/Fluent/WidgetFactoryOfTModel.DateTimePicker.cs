@@ -18,13 +18,24 @@ namespace Kendo.Mvc.UI.Fluent
             var metadata = GetModelMetadata(expression);
             var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
 
-            return DateTimePicker()
+            var widget = DateTimePicker()
                     .Name(GetExpressionName(expression))
                     .ModelMetadata(metadata)
                     .Format(ExtractEditFormat(metadata.EditFormatString))
-                    .Value(metadata.Model as DateTime?)
-                    .Min(GetRangeValidationParameter<DateTime>(rules, MinimumValidator) ?? Kendo.Mvc.UI.DateTimePicker.defaultMinDate)
-                    .Max(GetRangeValidationParameter<DateTime>(rules, MaximumValidator) ?? Kendo.Mvc.UI.DateTimePicker.defaultMaxDate);
+                    .Value(metadata.Model as DateTime?);
+            
+            var min = GetRangeValidationParameter<DateTime>(rules, MinimumValidator);
+            if (min.HasValue) {
+                widget.Min(min.Value);
+            }
+
+            var max = GetRangeValidationParameter<DateTime>(rules, MaximumValidator);
+            if (max.HasValue)
+            {
+                widget.Max(max.Value);
+            }
+
+            return widget;
         }
 
 

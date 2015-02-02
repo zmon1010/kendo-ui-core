@@ -10,13 +10,15 @@ namespace Kendo.Mvc.UI
 {
     public partial class DateTimePicker : WidgetBase, IInputComponent<DateTime>
     {
-        static internal DateTime defaultMinDate = new DateTime(1800, 1, 1);
-        static internal DateTime defaultMaxDate = new DateTime(2099, 12, 31);
+        private static readonly DateTime DefaultMinDate = new DateTime(1800, 1, 1);
+        private static readonly DateTime DefaultMaxDate = new DateTime(2099, 12, 31);
 
         public DateTimePicker(ViewContext viewContext) : base(viewContext)
         {
-            Value = null;
             Enabled = true;
+            Max = DefaultMaxDate;
+            Min = DefaultMinDate;
+            Value = null;
         }
 
         public CultureInfo CultureInfo
