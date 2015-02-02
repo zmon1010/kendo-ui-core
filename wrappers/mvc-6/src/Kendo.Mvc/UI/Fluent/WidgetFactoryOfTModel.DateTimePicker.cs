@@ -16,15 +16,15 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual DateTimePickerBuilder DateTimePickerFor(Expression<Func<TModel, DateTime>> expression)
         {
             var metadata = GetModelMetadata(expression);
-            //IEnumerable<ModelValidator> validators = metadata.GetValidators(HtmlHelper.ViewContext.Controller.ControllerContext);
+            var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
 
             return DateTimePicker()
                     .Name(GetExpressionName(expression))
                     .ModelMetadata(metadata)
                     .Format(ExtractEditFormat(metadata.EditFormatString))
-                    .Value(metadata.Model as DateTime?);
-                    //.Min(GetRangeValidationParameter<DateTime>(validators, minimumValidator) ?? Kendo.Mvc.UI.DateTimePicker.defaultMinDate)
-                    //.Max(GetRangeValidationParameter<DateTime>(validators, maximumValidator) ?? Kendo.Mvc.UI.DateTimePicker.defaultMaxDate);
+                    .Value(metadata.Model as DateTime?)
+                    .Min(GetRangeValidationParameter<DateTime>(rules, MinimumValidator) ?? Kendo.Mvc.UI.DateTimePicker.defaultMinDate)
+                    .Max(GetRangeValidationParameter<DateTime>(rules, MaximumValidator) ?? Kendo.Mvc.UI.DateTimePicker.defaultMaxDate);
         }
 
 

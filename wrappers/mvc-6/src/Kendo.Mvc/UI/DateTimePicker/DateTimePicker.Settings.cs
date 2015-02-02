@@ -23,6 +23,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public DateTime? Min
+        {
+            get;
+            set;
+        }
+
+        public DateTime? Max
+        {
+            get;
+            set;
+        }
+
         public DateTime? Value
         {
             get;
