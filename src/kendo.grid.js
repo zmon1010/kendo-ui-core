@@ -1616,11 +1616,11 @@ var __meta__ = {
                 var mobileWrapper = wrapper.closest(kendo.roleSelector("pane")).parent();
                 mobileWrapper.after(wrapper);
                 mobileWrapper.remove();
+                wrapper.removeClass("k-grid-mobile");
             }
             if (wrapper[0] !== element[0]) {
                 wrapper.before(element);
                 wrapper.remove();
-                wrapper.removeClass("k-grid-mobile");
             }
             element.empty();
 
