@@ -1556,7 +1556,6 @@
                 that.zoom(that.options.zoom);
 
                 that.canvas.draw();
-                this._shouldRefresh = true;
             },
 
             options: {
@@ -3319,9 +3318,13 @@
 
             _refreshShapes: function(e) {
                 if (e.action === "remove") {
-                    this._removeShapes(e.items);
+                    if (this._shouldRefresh()) {
+                        this._removeShapes(e.items);
+                    }
                 } else if (e.action === "itemchange") {
-                    this._updateShapes(e.items, e.field);
+                    if (this._shouldRefresh()) {
+                        this._updateShapes(e.items, e.field);
+                    }
                 } else if (e.action === "add") {
                     this._inactiveShapeItems.add(e.items);
                 } else if (e.action === "sync") {
@@ -3329,6 +3332,18 @@
                 } else {
                     this.refresh();
                 }
+            },
+
+            _shouldRefresh: function() {
+                return !this._suspended;
+            },
+
+            _suspendModelRefresh: function() {
+                this._suspended = (this._suspended || 0) + 1;
+            },
+
+            _resumeModelRefresh: function() {
+                this._suspended = math.max((this._suspended || 0) - 1, 0);
             },
 
             refresh: function() {
@@ -3399,13 +3414,15 @@
 
             _refreshConnections: function(e) {
                 if (e.action === "remove") {
-                    this._removeConnections(e.items);
+                    if (this._shouldRefresh()) {
+                        this._removeConnections(e.items);
+                    }
                 } else if (e.action === "add") {
                     this._addConnections(e.items);
                 } else if (e.action === "sync") {
                     //TO DO: include logic to update the connections with different values returned from the server.
                 } else if (e.action === "itemchange") {
-                    if (this._shouldRefresh) {
+                    if (this._shouldRefresh()) {
                         this._updateConnections(e.items);
                     }
                 } else {
