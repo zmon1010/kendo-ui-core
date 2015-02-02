@@ -85,6 +85,9 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        [Activate]
+        protected IHtmlHelper HtmlHelper { get; set; }
+
         public ModelMetadata ModelMetadata
         {
             get;
@@ -266,8 +269,7 @@ namespace Kendo.Mvc.UI
                 }
                 else
                 {
-                    builder.Append("_");
-                    // TODO:  HtmlHelper.IdAttributeDotReplacement is no longer static
+                    builder.Append(HtmlHelper.IdAttributeDotReplacement);
                 }
             }
         }
