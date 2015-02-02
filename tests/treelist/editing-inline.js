@@ -349,7 +349,7 @@
         createTreeList({
             save: function(e) {
                 strictEqual(e.model, model);
-                ok(e.container);
+                ok(e.container.hasClass("k-grid-edit-row"));
             }
         });
 
@@ -712,7 +712,7 @@
         createTreeList({
             cancel: function(e) {
                 equal(e.model, this.editor.model);
-                equal(e.container[0], this.editor.element[0]);
+                ok(e.container.hasClass("k-grid-edit-row"));
             },
             columns: [ "id", "parentId", { command: [ "edit" ] } ]
         });

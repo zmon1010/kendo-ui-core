@@ -1737,7 +1737,7 @@ var __meta__ = {
             this._createEditor(model);
 
             this.trigger(EDIT, {
-                container: this.editor.element,
+                container: this.editor.wrapper,
                 model: model
             });
         },
@@ -1771,7 +1771,7 @@ var __meta__ = {
 
             args = {
                 model: editor.model,
-                container: editor.element
+                container: editor.wrapper
             };
 
             if (editor.end() && !this.trigger(SAVE, args)) {

@@ -148,7 +148,7 @@
         createTreeList({
             cancel: function(e) {
                 equal(e.model, this.editor.model);
-                equal(e.container[0], this.editor.wrapper[0]);
+                ok(e.container.hasClass("k-popup-edit-form"));
             },
             columns: [ "id", "parentId", { command: [ "edit" ] } ]
         });
@@ -286,5 +286,35 @@
         instance.editRow(instance.content.find("tr").first());
 
         equal(instance.editor.wrapper.find("#foo").val(), "bar");
+    });
+
+    test("saveRow triggers save event", 2, function() {
+        var model;
+
+        createTreeList({
+            save: function(e) {
+                strictEqual(e.model, model);
+                ok(e.container.hasClass("k-popup-edit-form"));
+            }
+        });
+
+        instance.editRow("tr:first");
+        model = instance.dataItem(instance.content.find("tr:first"));
+        instance.saveRow();
+    });
+
+    test("edit event argumetns", 2, function() {
+        var model;
+
+        createTreeList({
+            edit: function(e) {
+                strictEqual(e.model, model);
+                ok(e.container.hasClass("k-popup-edit-form"));
+            }
+        });
+
+        var row = instance.content.find("tr:first");
+        model = instance.dataItem(row);
+        instance.editRow(row);
     });
 })();
