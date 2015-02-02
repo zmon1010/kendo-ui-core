@@ -340,4 +340,7 @@ The request for '{0}' has found the following matching controllers:{2}</value>
   <data name="ExcelExportNotSupportedInServerBinding" xml:space="preserve">
     <value>Excel export is not supported in server binding mode.</value>
   </data>
+  <data name="YouCannotOverrideModelExpressionName" xml:space="preserve">
+    <value>You cannot override component name when bound to a model expression.</value>
+  </data>
 </root>

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNet.Mvc.ModelBinding;
+﻿using Kendo.Mvc.Resources;
+using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Razor;
 using Microsoft.AspNet.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -29,6 +31,8 @@ namespace Kendo.Mvc.UI.Fluent
             set;
         }
 
+        private bool HasModelExpression { get; set; } = false;
+
         public static implicit operator TViewComponent(WidgetBuilderBase<TViewComponent, TBuilder> builder)
         {
             return builder.ToComponent();
@@ -48,8 +52,26 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <param name="componentName">The name.</param>
         /// <returns></returns>
+        public virtual TBuilder Expression(string modelExpression)
+        {
+            Component.Name = modelExpression;
+            HasModelExpression = true;
+
+            return this as TBuilder;
+        }
+
+        /// <summary>
+        /// Sets the name of the component.
+        /// </summary>
+        /// <param name="componentName">The name.</param>
+        /// <returns></returns>
         public virtual TBuilder Name(string componentName)
         {
+            if (HasModelExpression)
+            {
+                throw new InvalidOperationException(Exceptions.YouCannotOverrideModelExpressionName);
+            }
+
             Component.Name = componentName;
 
             return this as TBuilder;

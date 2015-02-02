@@ -722,5 +722,13 @@ namespace Kendo.Mvc.Resources {
                 return ResourceManager.GetString("YouMustHaveToCallStartPriorCallingThisMethod", resourceCulture);
             }
         }
+
+        internal static string YouCannotOverrideModelExpressionName
+        {
+            get
+            {
+                return ResourceManager.GetString("YouCannotOverrideModelExpressionName", resourceCulture);
+            }
+        }
     }
 }

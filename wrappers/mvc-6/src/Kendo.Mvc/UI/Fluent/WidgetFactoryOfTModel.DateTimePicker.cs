@@ -19,7 +19,7 @@ namespace Kendo.Mvc.UI.Fluent
             var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
 
             var widget = DateTimePicker()
-                    .Name(GetExpressionName(expression))
+                    .Expression(GetExpressionName(expression))
                     .Format(ExtractEditFormat(metadata.EditFormatString))
                     .Value(metadata.Model as DateTime?);
             
