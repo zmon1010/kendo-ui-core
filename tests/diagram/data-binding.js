@@ -551,4 +551,85 @@
 
     })();
 
+    (function() {
+        var shapesItem, pointsItem, shapesConnection, pointsConnection;
+
+        // ------------------------------------------------------------
+        module("Diagram / Connections / UpdateModel", {
+            setup: function() {
+                diagram = createDiagram({
+                    dataSource: [{id: 1}, {id: 2}, {id: 3}],
+                    connectionsDataSource: setupDataSource({
+                        schema: {
+                            model: {
+                                fields: {
+                                    from: { type: "number" },
+                                    to: { type: "number" },
+                                    fromX: { type: "number" },
+                                    fromY: { type: "number" },
+                                    toX: { type: "number" },
+                                    toY: { type: "number" }
+                                }
+                            }
+                        }
+                    }, [{id: 1, from: 1, to: 2}, {id: 2, fromX: 100, fromY: 100, toX: 200, toY: 200}])
+                });
+                shapesItem = diagram.connectionsDataSource.at(0);
+                pointsItem = diagram.connectionsDataSource.at(1);
+                shapesConnection = diagram.connections[0];
+                pointsConnection = diagram.connections[1];
+            },
+            teardown: destroyDiagram
+        });
+
+        test("updates from and to values in model", 2, function() {
+            shapesConnection.options.from = 2;
+            shapesConnection.options.to = 3;
+            shapesItem.bind("change", function(e) {
+                if (e.field == "from") {
+                    equal(this.from, 2);
+                } else if (e.field == "to") {
+                    equal(this.to, 3);
+                }
+            });
+            shapesConnection.updateModel();
+        });
+
+        test("updates fromX and fromY values in model", 2, function() {
+            pointsConnection.options.fromX = 5;
+            pointsConnection.options.fromY = 10;
+            pointsItem.bind("change", function(e) {
+                if (e.field == "fromX") {
+                    equal(this.fromX, 5);
+                } else if (e.field == "fromY") {
+                    equal(this.fromY, 10);
+                }
+            });
+            pointsConnection.updateModel();
+        });
+
+        test("updates toX and toY values in model", 2, function() {
+            pointsConnection.options.toX = 5;
+            pointsConnection.options.toY = 10;
+            pointsItem.bind("change", function(e) {
+                if (e.field == "toX") {
+                    equal(this.toX, 5);
+                } else if (e.field == "toY") {
+                    equal(this.toY, 10);
+                }
+            });
+            pointsConnection.updateModel();
+        });
+
+        test("does not update options from model", 0, function() {
+            shapesConnection.options.from = 2;
+            shapesConnection.options.to = 3;
+            shapesConnection.updateOptionsFromModel = function() {
+                ok(false);
+            };
+            shapesConnection.updateModel();
+        });
+
+    })();
+
 })();

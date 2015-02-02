@@ -1036,38 +1036,34 @@
                 }
             },
 
-            updateModel: function(shouldRefresh) {
+            updateModel: function() {
                 if (this.diagram && this.diagram._isEditable) {
                     if (this.diagram.connectionsDataSource) {
                         var model = this.diagram.connectionsDataSource.getByUid(this.dataItem.uid);
                         if (model) {
-                            this.diagram._shouldRefresh = false;
+                            this.diagram._suspendModelRefresh();
                             if (defined(this.options.fromX) && this.options.fromX !== null) {
-                                model._set("from", null);
-                                model._set("fromX", this.options.fromX);
-                                model._set("fromY", this.options.fromY);
+                                model.set("from", null);
+                                model.set("fromX", this.options.fromX);
+                                model.set("fromY", this.options.fromY);
                             } else  {
-                                model._set("from", this.options.from);
-                                model._set("fromX", null);
-                                model._set("fromY", null);
+                                model.set("from", this.options.from);
+                                model.set("fromX", null);
+                                model.set("fromY", null);
                             }
 
                             if (defined(this.options.toX) && this.options.toX !== null) {
-                                model._set("to", null);
-                                model._set("toX", this.options.toX);
-                                model._set("toY", this.options.toY);
+                                model.set("to", null);
+                                model.set("toX", this.options.toX);
+                                model.set("toY", this.options.toY);
                             } else {
-                                model._set("to", this.options.to);
-                                model._set("toX", null);
-                                model._set("toY", null);
+                                model.set("to", this.options.to);
+                                model.set("toX", null);
+                                model.set("toY", null);
                             }
 
                             this.dataItem = model;
-
-                            if (shouldRefresh !== false) {
-                                this.diagram._shouldRefresh = true;
-                                model.trigger("change");
-                            }
+                            this.diagram._resumeModelRefresh();
                         }
                     }
                 }
