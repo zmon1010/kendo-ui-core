@@ -189,9 +189,15 @@ namespace Kendo.Mvc.UI
         /// Writes the initialization script.
         /// </summary>
         /// <param name="writer">The writer.</param>
-        public virtual void WriteInitializationScript(TextWriter writer)
-        {
+        public abstract void WriteInitializationScript(TextWriter writer);
 
+        /// <summary>
+        /// Serialize manual settings here
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Dictionary<string, object> SerializeSettings()
+        {
+            return new Dictionary<string, object>(Events);
         }
 
         /// <summary>
