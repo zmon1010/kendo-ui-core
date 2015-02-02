@@ -497,8 +497,8 @@
                 if (this.diagram && this.diagram._isEditable) {
                     var modelOptions = filterShapeDataItem(model || this.dataItem);
 
-                    if (model) {
-                        if (field && !dataviz.inArray(field, ["x", "y", "width", "height"])) {
+                    if (model && field) {
+                        if (!dataviz.inArray(field, ["x", "y", "width", "height"])) {
                             if (this.options.visual) {
                                 this.redrawVisual();
                             } else if (modelOptions.type) {
@@ -510,6 +510,10 @@
                                 this._template();
                                 this.content(this.options.content);
                             }
+                        } else {
+                            var bounds = this.bounds();
+                            bounds[field] = model[field];
+                            this.bounds(bounds);
                         }
                     } else {
                         this.options = deepExtend({}, this.options, modelOptions);

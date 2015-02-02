@@ -476,6 +476,18 @@
             equal(shape._contentVisual.options.text, "baz");
         });
 
+        test("updates bounds when a bounds model field is changed", function() {
+            item.set("x", 200);
+            item.set("y", 200);
+            item.set("width", 200);
+            item.set("height", 200);
+            var bounds = shape.bounds();
+            equal(bounds.x, 200);
+            equal(bounds.y, 200);
+            equal(bounds.width, 200);
+            equal(bounds.height, 200);
+        });
+
     })();
 
     (function() {
