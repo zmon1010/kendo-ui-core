@@ -758,7 +758,14 @@
         },
 
         paste: function (html, options) {
-            this.clipboard.paste(html, options);
+            var command = new kendo.ui.editor.InsertHtmlCommand($.extend({
+                range: this.getRange(),
+                html: html
+            }, options));
+
+            command.editor = this;
+
+            command.exec();
         },
 
         exec: function (name, params) {

@@ -227,4 +227,43 @@ test("selectedHtml returns selected whitespace", function() {
     equal(editor.selectedHtml(), " bar");
 });
 
+test("paste method inserts content", function() {
+    var editor = new kendo.ui.Editor("#editor", { tools: [] });
+
+    editor.value("");
+
+    editor.paste("<p>foo</p>");
+
+    equal(editor.value(), "<p>foo</p>");
+});
+
+test("paste method allows content insertion without splitting", function() {
+    var editor = new kendo.ui.Editor("#editor", { tools: [] });
+
+    editor.value("<em>foobar</em>");
+
+    var range = editor.getRange();
+
+    range.setStart(editor.body.firstChild.firstChild, 3);
+    range.collapse(true);
+
+    editor.selectRange(range);
+
+    editor.paste("<strong>baz</strong>", { split: false });
+
+    equal(editor.value(), "<em>foo<strong>baz</strong>bar</em>");
+});
+
+test("paste method is pushed to undo/redo stack", function() {
+    var editor = new kendo.ui.Editor("#editor", { tools: [] });
+
+    editor.value("");
+
+    editor.paste("<p>foo</p>");
+
+    editor.exec("undo");
+
+    equal(editor.value(), "");
+});
+
 })();
