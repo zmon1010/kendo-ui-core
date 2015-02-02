@@ -46,8 +46,7 @@ namespace Kendo.Mvc.UI
         {
             get
             {
-                // Return HtmlAttributes["id"] or name
-                return this.SanitizeId(HtmlAttributes.ContainsKey("id") ? (string)HtmlAttributes["id"] : Name);
+                return SanitizeId(HtmlAttributes.ContainsKey("id") ? (string) HtmlAttributes["id"] : Name);
             }
         }
 
@@ -133,6 +132,15 @@ namespace Kendo.Mvc.UI
             WriteHtml(ViewContext.Writer);
         }
 
+        /// <summary>
+        /// Serialize manual settings here
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Dictionary<string, object> SerializeSettings()
+        {
+            return new Dictionary<string, object>(Events);
+        }
+
         public HtmlString ToClientTemplate()
         {
             // TODO
@@ -146,31 +154,6 @@ namespace Kendo.Mvc.UI
                 WriteHtml(output);
                 return output.ToString();
             }
-        }
-
-        public string SanitizeId(string id)
-        {
-            if (string.IsNullOrWhiteSpace(id))
-            {
-                return string.Empty;
-            }
-
-            StringBuilder builder = new StringBuilder(id.Length);
-            int startSharpIndex = id.IndexOf("#");
-            int endSharpIndex = id.LastIndexOf("#");
-
-            if (endSharpIndex > startSharpIndex)
-            {
-                ReplaceInvalidCharacters(id.Substring(0, startSharpIndex), builder);
-                builder.Append(id.Substring(startSharpIndex, endSharpIndex - startSharpIndex + 1));
-                ReplaceInvalidCharacters(id.Substring(endSharpIndex + 1), builder);
-            }
-            else
-            {
-                ReplaceInvalidCharacters(id, builder);
-            }
-
-            return builder.ToString();
         }
 
         public virtual void VerifySettings()
@@ -193,15 +176,6 @@ namespace Kendo.Mvc.UI
         /// </summary>
         /// <param name="writer">The writer.</param>
         public abstract void WriteInitializationScript(TextWriter writer);
-
-        /// <summary>
-        /// Serialize manual settings here
-        /// </summary>
-        /// <returns></returns>
-        protected virtual Dictionary<string, object> SerializeSettings()
-        {
-            return new Dictionary<string, object>(Events);
-        }
 
         /// <summary>
         /// Writes the HTML.
@@ -258,6 +232,16 @@ namespace Kendo.Mvc.UI
             scripts.Add(new KeyValuePair<string, string>(Name, script));
         }
 
+        private bool IsValidCharacter(char c)
+        {
+            if (c == '?' || c == '!' || c == '#' || c == '.' || c == '[' || c == ']')
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private void ReplaceInvalidCharacters(string part, StringBuilder builder)
         {
             for (int i = 0; i < part.Length; i++)
@@ -274,14 +258,29 @@ namespace Kendo.Mvc.UI
             }
         }
 
-        private bool IsValidCharacter(char c)
+        private string SanitizeId(string id)
         {
-            if (c == '?' || c == '!' || c == '#' || c == '.' || c == '[' || c == ']')
+            if (string.IsNullOrWhiteSpace(id))
             {
-                return false;
+                return string.Empty;
             }
 
-            return true;
+            var builder = new StringBuilder(id.Length);
+            int startSharpIndex = id.IndexOf("#");
+            int endSharpIndex = id.LastIndexOf("#");
+
+            if (endSharpIndex > startSharpIndex)
+            {
+                ReplaceInvalidCharacters(id.Substring(0, startSharpIndex), builder);
+                builder.Append(id.Substring(startSharpIndex, endSharpIndex - startSharpIndex + 1));
+                ReplaceInvalidCharacters(id.Substring(endSharpIndex + 1), builder);
+            }
+            else
+            {
+                ReplaceInvalidCharacters(id, builder);
+            }
+
+            return builder.ToString();
         }
     }
 }
