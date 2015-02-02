@@ -1,10 +1,4 @@
-﻿/*
-    Generated file
-
-    Modify the generation scripts, documentation or a partial file.
-*/
-
-using System;
+﻿using System;
 using System.IO;
 
 namespace Kendo.Mvc.UI

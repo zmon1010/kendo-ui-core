@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
-using System;
+﻿using Microsoft.AspNet.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,7 +6,7 @@ using System.Text;
 
 namespace Kendo.Mvc.UI.Fluent
 {
-    public class WidgetFactory
+    public partial class WidgetFactory
     {
         public WidgetFactory(IHtmlHelper htmlHelper)
         {
@@ -86,21 +84,6 @@ namespace Kendo.Mvc.UI.Fluent
             }
 
             return HtmlString.Empty;
-        }
-
-        /// <summary>
-        /// Creates a new <see cref="DateTimePicker"/>.
-        /// </summary>
-        /// <example>
-        /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().DateTimePicker()
-        ///             .Name("DateTimePicker")
-        /// %&gt;
-        /// </code>
-        /// </example>
-        public virtual DateTimePickerBuilder DateTimePicker()
-        {
-            return new DateTimePickerBuilder(new DateTimePicker(HtmlHelper.ViewContext));
         }
     }
 }
