@@ -20,7 +20,6 @@ namespace Kendo.Mvc.UI.Fluent
 
             var widget = DateTimePicker()
                     .Name(GetExpressionName(expression))
-                    .ModelMetadata(metadata)
                     .Format(ExtractEditFormat(metadata.EditFormatString))
                     .Value(metadata.Model as DateTime?);
             

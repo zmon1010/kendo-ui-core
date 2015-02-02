@@ -38,7 +38,7 @@ namespace Kendo.Mvc.Rendering
             var fullName = GetFullHtmlFieldName(viewContext, name);
             if (string.IsNullOrEmpty(fullName))
             {
-                throw new ArgumentException("Argument name cannot be null", "name");
+                throw new InvalidOperationException(Resources.Exceptions.NameCannotBeBlank);
             }
 
             var tagBuilder = new TagBuilder("input");

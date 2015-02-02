@@ -100,13 +100,6 @@ namespace Kendo.Mvc.UI.Fluent
             return this as TBuilder;
         }
 
-        public TBuilder ModelMetadata(ModelMetadata modelMetadata)
-        {
-            Component.ModelMetadata = modelMetadata;
-
-            return this as TBuilder;
-        }
-
         /// <summary>
         /// Renders the component.
         /// </summary>

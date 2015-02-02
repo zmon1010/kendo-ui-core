@@ -1,6 +1,7 @@
 ﻿using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.Rendering.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,14 +11,9 @@ namespace Kendo.Mvc.UI
 {
     public partial class DateTimePicker : WidgetBase, IInputComponent<DateTime>
     {
-        private static readonly DateTime DefaultMinDate = new DateTime(1800, 1, 1);
-        private static readonly DateTime DefaultMaxDate = new DateTime(2099, 12, 31);
-
         public DateTimePicker(ViewContext viewContext) : base(viewContext)
         {
             Enabled = true;
-            Max = DefaultMaxDate;
-            Min = DefaultMinDate;
             Value = null;
         }
 
@@ -47,7 +43,8 @@ namespace Kendo.Mvc.UI
 
         protected override void WriteHtml(TextWriter writer)
         {
-            var tag = Generator.GenerateDateTimeInput(ViewContext, ModelMetadata, Id, Name, Value, Format, HtmlAttributes);
+            var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
+            var tag = Generator.GenerateDateTimeInput(ViewContext, metadata, Id, Name, Value, Format, HtmlAttributes);
 
             if (!Enabled)
             {

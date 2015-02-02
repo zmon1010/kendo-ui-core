@@ -87,12 +87,6 @@ namespace Kendo.Mvc.UI
         [Activate]
         protected IHtmlHelper HtmlHelper { get; set; }
 
-        public ModelMetadata ModelMetadata
-        {
-            get;
-            set;
-        }
-
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
@@ -158,11 +152,6 @@ namespace Kendo.Mvc.UI
 
         public virtual void VerifySettings()
         {
-            if (string.IsNullOrEmpty(Name))
-            {
-                throw new InvalidOperationException(Resources.Exceptions.NameCannotBeBlank);
-            }
-
             if (!Name.Contains("<#=") && Name.IndexOf(" ") != -1)
             {
                 throw new InvalidOperationException(Resources.Exceptions.NameCannotContainSpaces);
@@ -212,6 +201,8 @@ namespace Kendo.Mvc.UI
             var activator = (IViewComponentActivator)serviceProvider.GetService(typeof(IViewComponentActivator));
 
             activator.Activate(this, ViewContext);
+
+            ((ICanHasViewContext)HtmlHelper).Contextualize(ViewContext);
         }
 
         private void AppendScriptToContext(string script)

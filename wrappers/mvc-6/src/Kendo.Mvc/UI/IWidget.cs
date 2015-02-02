@@ -9,8 +9,6 @@ namespace Kendo.Mvc.UI
 
         string Name { get; }
 
-        ModelMetadata ModelMetadata { get; }
-
         ViewContext ViewContext { get; }
     }
 }
