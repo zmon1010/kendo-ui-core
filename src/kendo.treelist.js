@@ -2338,6 +2338,10 @@ var __meta__ = {
 
             this.reorderable = new ui.Reorderable(this.wrapper, {
                 draggable: this._draggableInstance,
+                dragOverContainers: proxy(this._allowDragOverContainers, this),
+                inSameContainer: function(e) {
+                    return $(e.source).parent()[0] === $(e.target).parent()[0];
+                },
                 change: function(e) {
                     var newIndex = e.newIndex;
                     var oldIndex = e.oldIndex;
@@ -2353,6 +2357,10 @@ var __meta__ = {
                     that.reorderColumn(newIndex, column, before);
                 }
             });
+        },
+
+        _allowDragOverContainers: function(index) {
+            return this.columns[index].lockable !== false;
         },
 
         reorderColumn: function(destIndex, column, before) {
