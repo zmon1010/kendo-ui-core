@@ -1612,9 +1612,15 @@ var __meta__ = {
 
             this.destroy();
             this.options = null;
+            if (this._isMobile) {
+                var mobileWrapper = wrapper.closest(kendo.roleSelector("pane")).parent();
+                mobileWrapper.after(wrapper);
+                mobileWrapper.remove();
+            }
             if (wrapper[0] !== element[0]) {
                 wrapper.before(element);
                 wrapper.remove();
+                wrapper.removeClass("k-grid-mobile");
             }
             element.empty();
 

@@ -251,6 +251,15 @@
         ok(grid.wrapper.prev()[0] === $("#before")[0]);
     });
 
+    test("removes the pane and view markup when grid is mobile and setOptions is used", function() {
+        var grid = setup({
+            mobile: "phone"
+        });
+        grid.setOptions({ sortable: true })
+        equal(grid.wrapper.parents(kendo.roleSelector("pane")).length, 1);
+        equal(grid.wrapper.parents(kendo.roleSelector("view")).length, 1);
+    });
+
     test("even when new DS instance is passed it gets options from it and preserves older one", function() {
 
         var grid = setup({
