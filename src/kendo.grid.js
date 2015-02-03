@@ -1513,6 +1513,11 @@ var __meta__ = {
 
                 if (that.copyHandler) {
                     that.wrapper.off("keydown", that.copyHandler);
+                    that.unbind(that.copyHandler);
+                }
+                if (that.updateClipBoardState) {
+                    that.unbind(that.updateClipBoardState);
+                    that.updateClipBoardState = null;
                 }
                 if (that.clearAreaHandler) {
                     that.wrapper.off("keyup", that.clearAreaHandler);
@@ -3525,67 +3530,106 @@ var __meta__ = {
         _clipboard: function() {
             var selectable = this.options.selectable;
             if (selectable) {
-                this.copyHandler = proxy(this.copySelection, this);
-                this.wrapper.on("keydown", this.copyHandler);
-                this.clearAreaHandler = proxy(this.clearArea, this);
-                this.wrapper.on("keyup", this.clearAreaHandler);
+                var grid = this;
+                grid.copyHandler = proxy(grid.copySelection, grid);
+                grid.updateClipBoardState = function () {
+                    if (grid.areaClipBoard) {
+                        grid.areaClipBoard.val(grid.getTSV()).focus().select();
+                    }
+                };
+                grid.bind("change",grid.updateClipBoardState);
+                grid.wrapper.on("keydown", grid.copyHandler);
+                grid.clearAreaHandler = proxy(grid.clearArea, grid);
+                grid.wrapper.on("keyup", grid.clearAreaHandler);
             }
         },
 
         copySelection: function(e) {
-            if (!(e.ctrlKey || e.metaKey) ||
+            if ((e instanceof jQuery.Event && !(e.ctrlKey || e.metaKey)) ||
                 $(e.target).is("input:visible,textarea:visible") ||
                 (window.getSelection && window.getSelection().toString()) ||
                 (document.selection && document.selection.createRange().text) ) {
                 return;
             }
 
-            var selected = this.select();
-            if (selected.length) {
-                if (selected.eq(0).is("tr")) {
-                    selected = selected.find("td");
-                }
-                var text = "";
-                var result = [];
 
-                $.each(selected, function (idx, val) {
-                    val = $(val);
-                    var tr = val.closest("tr");
-                    var rowIndex = tr.index();
-                    var cellText = val.text();
-                    if (result[rowIndex]) {
-                        result[rowIndex].push(cellText);
-                    } else {
-                        result[rowIndex] = [cellText];
-                    }
-
-                });
-
-                result = $.grep(result, function (val) { return val; });
-
-                $.each(result, function (idx, val) {
-                    text += val.join("\t") + "\r\n";
-                });
-
-                var txtArea = this.areaClipBoard;
-                if (txtArea && txtArea.remove) {
-                    txtArea.remove();
-                }
-
-                txtArea = this.areaClipBoard =
+            if (!this.areaClipBoard) {
+                this.areaClipBoard =
                     $("<textarea />")
-                        .val(text)
-                        .css({ position: "absolute", opacity: 0 })
-                        .appendTo(this.wrapper)
-                        .focus()
-                        .select();
+                    .css({ position: "absolute", opacity: 0, width: 0, height: 0})
+                    .appendTo(this.wrapper);
             }
+
+            this._currentState = this.current();
+            this.areaClipBoard.val(this.getTSV()).focus().select();
 
         },
 
+        getTSV: function() {
+            var grid = this;
+            var selected = grid.select();
+            var text = "";
+            if (selected.length) {
+                if (selected.eq(0).is("tr")) {
+                    selected = selected.find("td:not(.k-group-cell)");
+                }
+
+                var result = [];
+                var cellsOffset = this.columns.length;
+                var lockedCols = grid._isLocked() && lockedColumns(grid.columns).length;
+                var inLockedArea = true;
+
+                $.each(selected, function (idx, cell) {
+                    cell = $(cell);
+                    var tr = cell.closest("tr");
+                    var rowIndex = tr.index();
+                    var cellIndex = cell.index();
+                    if (lockedCols && inLockedArea) {
+                        inLockedArea = $.contains(grid.lockedTable[0], cell[0]);
+                    }
+                    if (grid._groups() && inLockedArea) {
+                        cellIndex -= grid._groups();
+                    }
+                    cellIndex = inLockedArea ? cellIndex : (cellIndex + lockedCols );
+                    if (cellsOffset > cellIndex) {
+                        cellsOffset = cellIndex;
+                    }
+                    var cellText = cell.text();
+                    if (!result[rowIndex]) {
+                        result[rowIndex] = [];
+                    }
+                    result[rowIndex][cellIndex] = cellText;
+
+                });
+
+                var rowsOffset = result.length;
+                result = $.each(result, function (idx, val) {
+                    if (val) {
+                        result[idx] = val.slice(cellsOffset);
+                        if (rowsOffset > idx) {
+                            rowsOffset = idx;
+                        }
+                    }
+                });
+
+                $.each(result.slice(rowsOffset), function (idx, val) {
+                    if (val) {
+                        text += val.join("\t") + "\r\n";
+                    } else {
+                        text +=  "\r\n";
+                    }
+                });
+            }
+            return text;
+        },
+
         clearArea: function(e) {
+            if (this.options.navigatable && this.areaClipBoard && e.target === this.areaClipBoard[0]) {
+                $(this.current()).closest("table").focus();
+            }
             if (this.areaClipBoard) {
                 this.areaClipBoard.remove();
+                this.areaClipBoard = null;
             }
         },
 
