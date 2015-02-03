@@ -420,4 +420,36 @@
         ok(instance.lockedContent.is(":visible"));
         ok(instance.content.is(":visible"));
     });
+
+    test("move column to locked container triggers event", 1, function() {
+        createTreeList({
+            columnLock: function(e) {
+                equal(e.column.field, "parentId");
+            },
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        var columns = instance.columns;
+        instance.reorderColumn(0, columns[1], false);
+    });
+
+    test("move column to non-locked container triggers event", 1, function() {
+        createTreeList({
+            columnUnlock: function(e) {
+                equal(e.column.field, "parentId");
+            },
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20, locked: true },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        var columns = instance.columns;
+        instance.reorderColumn(2, columns[1], true);
+    });
 })();

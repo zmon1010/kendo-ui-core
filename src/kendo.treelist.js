@@ -82,6 +82,8 @@ var __meta__ = {
     var HEADERCELLS = "th.k-header";
     var COLUMNREORDER = "columnReorder";
     var COLUMNMENUINIT = "columnMenuInit";
+    var COLUMNLOCK = "columnLock";
+    var COLUMNUNLOCK = "columnUnlock";
 
     var classNames = {
         wrapper: "k-treelist k-grid k-widget",
@@ -1053,7 +1055,9 @@ var __meta__ = {
             COLUMNHIDE,
             COLUMNSHOW,
             COLUMNREORDER,
-            COLUMNMENUINIT
+            COLUMNMENUINIT,
+            COLUMNLOCK,
+            COLUMNUNLOCK
         ],
 
         _toggle: function(model, expand) {
@@ -2372,6 +2376,7 @@ var __meta__ = {
         },
 
         reorderColumn: function(destIndex, column, before) {
+            var lockChanged;
             var columns = this.columns;
             var sourceIndex = inArray(column, columns);
             var destColumn = columns[destIndex];
@@ -2394,6 +2399,9 @@ var __meta__ = {
                 before = destIndex < sourceIndex;
             }
 
+            lockChanged = !!column.locked;
+            lockChanged = lockChanged != isLocked;
+
             column.locked = isLocked;
             columns.splice(before ? destIndex : destIndex + 1, 0, column);
             columns.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
@@ -2411,6 +2419,20 @@ var __meta__ = {
             this._applyLockedContainersWidth();
 
             this.refresh();
+
+            if(!lockChanged) {
+                return;
+            }
+
+            if (isLocked) {
+                this.trigger(COLUMNLOCK, {
+                    column: column
+                });
+            } else {
+                this.trigger(COLUMNUNLOCK, {
+                    column: column
+                });
+            }
         },
 
         _columnMenu: function() {
