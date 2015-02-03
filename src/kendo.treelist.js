@@ -891,6 +891,7 @@ var __meta__ = {
 
         _showStatus: function(message) {
             var status = this.element.find(".k-status");
+            var content = $(this.content).add(this.lockedContent);
 
             if (!status.length) {
                 status = $("<div class='k-status' />").appendTo(this.element);
@@ -901,11 +902,15 @@ var __meta__ = {
                 this._lockedContentTree.render([]);
             }
 
+            content.hide();
+
             status.html(message);
         },
 
         _hideStatus: function() {
             this.element.find(".k-status").remove();
+
+            $(this.content).add(this.lockedContent).show();
         },
 
         _adjustHeight: function() {

@@ -401,4 +401,23 @@
         equal(instance.lockedTable.find("tr").length, 0, "locked rows are not cleared");
         equal(instance.table.find("tr").length, 0, "non-locked rows are not cleared");
     });
+
+    test("filter without result hides content elements", function() {
+        createTreeList();
+
+        instance.dataSource.filter({ field: "id", operator: "eq", value: -1 });
+
+        ok(!instance.lockedContent.is(":visible"));
+        ok(!instance.content.is(":visible"));
+    });
+
+    test("showing results after empty grid shows content", function() {
+        createTreeList();
+
+        instance.dataSource.filter({ field: "id", operator: "eq", value: -1 });
+        instance.dataSource.filter({});
+
+        ok(instance.lockedContent.is(":visible"));
+        ok(instance.content.is(":visible"));
+    });
 })();
