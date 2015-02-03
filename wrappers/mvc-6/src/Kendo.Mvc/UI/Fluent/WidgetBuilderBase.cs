@@ -123,11 +123,11 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Renders the component.
+        /// Renders the component in place.
         /// </summary>
         public virtual void Render()
         {
-            //Component.Render();
+            Component.Render();
         }
 
         public virtual string ToHtmlString()
