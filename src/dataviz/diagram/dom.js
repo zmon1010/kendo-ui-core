@@ -531,14 +531,16 @@
             },
 
             updateModel: function() {
-                if (this.diagram && this.diagram._isEditable) {
+                var diagram = this.diagram;
+                if (diagram && diagram._isEditable) {
                     var bounds = this._bounds;
                     var model;
                     if (this.dataItem) {
-                        model = this.diagram.dataSource.getByUid(this.dataItem.uid);
+                        model = diagram.dataSource.getByUid(this.dataItem.uid);
                     }
 
                     if (model) {
+                        diagram._suspendModelRefresh();
                         if (defined(model.x) && bounds.x !== model.x) {
                             model.set("x", bounds.x);
                         }
@@ -556,6 +558,7 @@
                         }
 
                         this.dataItem = model;
+                        diagram._resumeModelRefresh();
                     }
                 }
             },
