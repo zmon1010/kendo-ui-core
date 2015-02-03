@@ -1908,7 +1908,7 @@
                     if (this._rotating) {
                         unit = new RotateUnit(this, this.shapes, this.initialRotates);
                         this._rotating = false;
-                    } else {
+                    } else if (this._diffStates()) {
                         if (this.diagram.ruler) {
                             for (i = 0; i < this.shapes.length; i++) {
                                 shape = this.shapes[i];
@@ -1931,6 +1931,18 @@
                 this._internalChange = undefined;
                 this._rotating = undefined;
                 return unit;
+            },
+
+            _diffStates: function() {
+                var shapes = this.shapes;
+                var states = this.shapeStates;
+                var bounds;
+                for (var idx = 0; idx < shapes.length; idx++) {
+                    if (!shapes[idx].bounds().equals(states[idx])) {
+                        return true;
+                    }
+                }
+                return false;
             },
 
             refreshBounds: function () {
