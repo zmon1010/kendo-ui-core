@@ -452,4 +452,246 @@
         var columns = instance.columns;
         instance.reorderColumn(2, columns[1], true);
     });
+
+    test("lockColumn locks column by index", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.lockColumn(1);
+
+        var columns = instance.columns;
+        ok(columns[0].locked);
+        ok(columns[1].locked);
+        ok(!columns[2].locked);
+    });
+
+    test("lockColumn locks column by field", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.lockColumn("parentId");
+
+        var columns = instance.columns;
+        ok(columns[0].locked);
+        ok(columns[1].locked);
+        ok(!columns[2].locked);
+    });
+
+    test("lockColumn with invalid column", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.lockColumn(-1);
+
+        var columns = instance.columns;
+        ok(columns[0].locked);
+        ok(!columns[1].locked);
+        ok(!columns[2].locked);
+    });
+
+    test("lockColumn with alredy locked column column", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.lockColumn(0);
+
+        var columns = instance.columns;
+        ok(columns[0].locked);
+        ok(!columns[1].locked);
+        ok(!columns[2].locked);
+    });
+
+    test("lockColumn with alredy locked column doesn't trigger event", function() {
+        var wasCalled = false;
+        createTreeList({
+            columnLock: function() {
+                wasCalled = true;
+            },
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.lockColumn(0);
+
+        ok(!wasCalled);
+    });
+
+    test("lockColumn with hidden column doesn't trigger event", function() {
+        var wasCalled = false;
+        createTreeList({
+            columnLock: function() {
+                wasCalled = true;
+            },
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20, hidden: true },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.lockColumn(1);
+
+        ok(!wasCalled);
+    });
+
+    test("unlockColumn unlocks column by index", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20, locked: true },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.unlockColumn(1);
+
+        var columns = instance.columns;
+        ok(columns[0].locked);
+        ok(!columns[1].locked);
+        ok(!columns[2].locked);
+    });
+
+    test("unlockColumn unlocks column by field", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20, locked: true },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.unlockColumn("parentId");
+
+        var columns = instance.columns;
+        ok(columns[0].locked);
+        ok(!columns[1].locked);
+        ok(!columns[2].locked);
+    });
+
+    test("unlockColumn with invalid column", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.unlockColumn(-1);
+
+        var columns = instance.columns;
+        ok(columns[0].locked);
+        ok(!columns[1].locked);
+        ok(!columns[2].locked);
+    });
+
+    test("unlockColumn with alredy unlocked column column", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.unlockColumn(1);
+
+        var columns = instance.columns;
+        ok(columns[0].locked);
+        ok(!columns[1].locked);
+        ok(!columns[2].locked);
+    });
+
+    test("unlockColumn with alredy unlocked column doesn't trigger event", function() {
+        var wasCalled = false;
+        createTreeList({
+            columnUnlock: function() {
+                wasCalled = true;
+            },
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.unlockColumn(1);
+
+        ok(!wasCalled);
+    });
+
+    test("unlockColumn with hidden column doesn't trigger event", function() {
+        var wasCalled = false;
+        createTreeList({
+            columnUnlock: function() {
+                wasCalled = true;
+            },
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20, locked: true, hidden: true },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.unlockColumn(1);
+
+        ok(!wasCalled);
+    });
+
+    test("lockColumn makes column last in locked columns", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.lockColumn(2);
+
+        var columns = instance.columns;
+        equal(columns[0].field, "id");
+        equal(columns[1].field, "text");
+        equal(columns[2].field, "parentId");
+    });
+
+    test("unlockColumn makes column first in non-locked columns", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20, locked: true },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.unlockColumn(0);
+
+        var columns = instance.columns;
+        equal(columns[0].field, "parentId");
+        equal(columns[1].field, "id");
+        equal(columns[2].field, "text");
+    });
 })();

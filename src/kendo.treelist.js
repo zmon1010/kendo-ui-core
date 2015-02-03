@@ -2435,6 +2435,44 @@ var __meta__ = {
             }
         },
 
+        lockColumn: function(column) {
+            var columns = this.columns;
+
+            if (typeof column == "number") {
+                column = columns[column];
+            } else {
+                column = grep(columns, function(item) {
+                    return item.field === column;
+                })[0];
+            }
+
+            if (!column || column.hidden) {
+                return;
+            }
+
+            var index = this._lockedColumns().length - 1;
+            this.reorderColumn(index, column, false);
+        },
+
+        unlockColumn: function(column) {
+            var columns = this.columns;
+
+            if (typeof column == "number") {
+                column = columns[column];
+            } else {
+                column = grep(columns, function(item) {
+                    return item.field === column;
+                })[0];
+            }
+
+            if (!column || column.hidden) {
+                return;
+            }
+
+            var index = this._lockedColumns().length;
+            this.reorderColumn(index, column, true);
+        },
+
         _columnMenu: function() {
             var ths = $(this.lockedHeader).add(this.thead).find("th");
             var columns = this.columns;
