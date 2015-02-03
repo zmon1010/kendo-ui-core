@@ -14,8 +14,28 @@
         QUnit.fixture.empty();
     }
 
-    function setupDataSource(options, data) {
+    function setupDataSource(type, options, data) {
         var items = data || [{id: 1}];
+        var fields;
+        if (type == "shape") {
+            fields = {
+                width: { type: "number" },
+                height: { type: "number" },
+                x: { type: "number" },
+                y: { type: "number" },
+                text: { type: "string" },
+                type: { type: "string" }
+            };
+        } else {
+            fields = {
+                from: { type: "number" },
+                to: { type: "number" },
+                fromX: { type: "number" },
+                fromY: { type: "number" },
+                toX: { type: "number" },
+                toY: { type: "number" }
+            };
+        }
         dataSource = new kendo.data.DataSource($.extend({
             transport: {
                 read: function(options) {
@@ -36,6 +56,7 @@
                     id: "id"
                 }
             }
+        }, {
         }, options));
         return dataSource;
     }
@@ -368,7 +389,7 @@
         module("Diagram / Shapes / Inactive items", {
             setup: function() {
                 diagram = createDiagram({
-                    dataSource: setupDataSource(),
+                    dataSource: setupDataSource("shape"),
                     connectionsDataSource: { }
                 });
             },
@@ -421,21 +442,7 @@
                             template: "#:foo#"
                         }
                     },
-                    dataSource: setupDataSource({
-                        schema: {
-                            model: {
-                                fields: {
-                                    width: { type: "number" },
-                                    height: { type: "number" },
-                                    x: { type: "number" },
-                                    y: { type: "number" },
-                                    text: { type: "string" },
-                                    type: { type: "string" },
-                                    foo: { type: "string" }
-                                }
-                            }
-                        }
-                    }, [{id: 1, width: 100, height: 100, x: 10, y: 10, text: "foo", foo: "bar", type: "circle"}]),
+                    dataSource: setupDataSource("shape", {}, [{id: 1, width: 100, height: 100, x: 10, y: 10, text: "foo", foo: "bar", type: "circle"}]),
                     connectionsDataSource: { }
                 });
                 item =  diagram.dataSource.at(0);
@@ -564,27 +571,14 @@
     })();
 
     (function() {
-        var shapesItem, pointsItem, shapesConnection, pointsConnection;
+        var shapeItem, connectionItem, shape, connection;
 
         // ------------------------------------------------------------
         module("Diagram / Connections / UpdateModel", {
             setup: function() {
                 diagram = createDiagram({
-                    dataSource: [{id: 1}, {id: 2}, {id: 3}],
-                    connectionsDataSource: setupDataSource({
-                        schema: {
-                            model: {
-                                fields: {
-                                    from: { type: "number" },
-                                    to: { type: "number" },
-                                    fromX: { type: "number" },
-                                    fromY: { type: "number" },
-                                    toX: { type: "number" },
-                                    toY: { type: "number" }
-                                }
-                            }
-                        }
-                    }, [{id: 1, from: 1, to: 2}, {id: 2, fromX: 100, fromY: 100, toX: 200, toY: 200}])
+                    dataSource: setupDataSource("shape", {}, [{id: 1}, {id: 2}, {id: 3}]),
+                    connectionsDataSource: setupDataSource("connection", {}, [{id: 1, from: 1, to: 2}, {id: 2, fromX: 100, fromY: 100, toX: 200, toY: 200}])
                 });
                 shapesItem = diagram.connectionsDataSource.at(0);
                 pointsItem = diagram.connectionsDataSource.at(1);
@@ -643,5 +637,66 @@
         });
 
     })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var dataSource, connectionsDataSource;
+        module("Diagram / Sync", {
+            setup: function() {
+                dataSource = setupDataSource("shape", {}, [{id: 1}, {id: 2}, {id: 3}]);
+                connectionsDataSource = setupDataSource("connection", {}, [{id: 1, from: 1, to: 2}, {id: 2, fromX: 100, fromY: 100, toX: 200, toY: 200}]);
+                diagram = createDiagram({
+                    dataSource: dataSource,
+                    connectionsDataSource:connectionsDataSource
+                });
+            },
+            teardown: destroyDiagram
+        });
+
+        test("_syncShapeChanges syncs dataSource", function() {
+            dataSource.at(0).dirty = true;
+            dataSource.one("sync", function() {
+                ok(true);
+            });
+            diagram._syncShapeChanges();
+        });
+
+        test("_syncConnectionChanges syncs connectionsDataSource", function() {
+            connectionsDataSource.at(0).dirty = true;
+            connectionsDataSource.one("sync", function() {
+                ok(true);
+            });
+            diagram._syncConnectionChanges();
+        });
+
+        test("_syncConnectionChanges syncs connectionsDataSource after the deferred connection updates are resolved", function() {
+            var deferred = $.Deferred();
+            diagram._deferredConnectionUpdates.push(deferred);
+            connectionsDataSource.at(0).dirty = true;
+            connectionsDataSource.sync = function() {
+                ok(false);
+            };
+            diagram._syncConnectionChanges();
+
+            connectionsDataSource.sync = function() {
+                ok(true);
+            };
+            deferred.resolve();
+        });
+
+        test("_syncChanges syncs dataSource and connectionsDataSource", 2, function() {
+            dataSource.at(0).dirty = true;
+            connectionsDataSource.at(0).dirty = true;
+            dataSource.one("sync", function() {
+                ok(true);
+            });
+            connectionsDataSource.one("sync", function() {
+                ok(true);
+            });
+            diagram._syncChanges();
+        });
+
+    })();
+
 
 })();

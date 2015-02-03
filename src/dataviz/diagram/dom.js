@@ -3248,6 +3248,7 @@
                 this._dataMap = {};
                 this._connectionsDataMap = {};
                 this._inactiveShapeItems = new InactiveItemsCollection();
+                this._deferredConnectionUpdates = [];
                 this.undoRedoService = new UndoRedoService();
                 this.id = diagram.randomId();
             },
@@ -3632,6 +3633,27 @@
                 wrap.children.push(root);
 
                 return wrap;
+            },
+
+            _syncChanges: function() {
+                this._syncShapeChanges();
+                this._syncConnectionChanges();
+            },
+
+            _syncShapeChanges: function() {
+                if (this.dataSource && this._isEditable) {
+                    this.dataSource.sync();
+                }
+            },
+
+            _syncConnectionChanges: function() {
+                var that = this;
+                if (that.connectionsDataSource && that._isEditable) {
+                    $.when.apply($, that._deferredConnectionUpdates).then(function() {
+                        that.connectionsDataSource.sync();
+                    });
+                    that.deferredConnectionUpdates = [];
+                }
             }
         });
 
