@@ -965,8 +965,6 @@
         var backgroundOrigin = splitProperty( getPropertyValue(style, "background-origin") );
         var backgroundSize = splitProperty( getPropertyValue(style, "background-size") );
 
-        var link = element.tagName == "A" ? element.href : null;
-
         if (browser.msie && browser.version < 10) {
             // IE9 hacks.  getPropertyValue won't return the correct
             // value.  Sucks that we have to do it here, I'd prefer to
@@ -1181,9 +1179,9 @@
             setClipping(background, roundBox(box, rTL, rTR, rBR, rBL));
             group.append(background);
 
-            if (link) {
+            if (element.tagName == "A" && element.href && !/^#?$/.test($(element).attr("href"))) {
                 background._pdfLink = {
-                    url    : link,
+                    url    : element.href,
                     top    : box.top,
                     right  : box.right,
                     bottom : box.bottom,
