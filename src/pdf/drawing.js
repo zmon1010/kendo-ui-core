@@ -491,6 +491,9 @@
     }
 
     function drawGroup(element, page, pdf) {
+        if (element._pdfLink) {
+            page.addLink(element._pdfLink.url, element._pdfLink);
+        }
         var children = element.children;
         for (var i = 0; i < children.length; ++i) {
             drawElement(children[i], page, pdf);
@@ -644,7 +647,8 @@
                     Group: function(shape) {
                         var el = new drawing.Group(shape.options);
                         el.children = optArray(shape.children);
-                        if (shape !== root && el.children.length === 0) {
+                        el._pdfLink = shape._pdfLink;
+                        if (shape !== root && el.children.length === 0 && !shape._pdfLink) {
                             return change(null);
                         }
                         return el;

@@ -1302,6 +1302,7 @@
         this._shResources = {};
         this._opacity = 1;
         this._matrix = [ 1, 0, 0, 1, 0, 0 ];
+        this._annotations = [];
 
         this._font = null;
         this._fontSize = null;
@@ -1324,13 +1325,14 @@
             Pattern   : new PDFDictionary(this._patResources),
             Shading   : new PDFDictionary(this._shResources)
         });
+        props.Annots = this._annotations;
     }, {
         _out: function() {
             this._content.data.apply(null, arguments);
         },
         transform: function(a, b, c, d, e, f) {
             if (!isIdentityMatrix(arguments)) {
-                this._matrix = mmul(this._matrix, arguments);
+                this._matrix = mmul(arguments, this._matrix);
                 this._out(a, " ", b, " ", c, " ", d, " ", e, " ", f, " cm");
                 // XXX: debug
                 // this._out(" % current matrix: ", this._matrix);
@@ -1395,6 +1397,21 @@
         showTextNL: function(text) {
             this._requireFont();
             this._out(this._font.encodeText(text), " '", NL);
+        },
+        addLink: function(uri, box) {
+            var ll = this._toPage({ x: box.left, y: box.bottom });
+            var ur = this._toPage({ x: box.right, y: box.top });
+            this._annotations.push(new PDFDictionary({
+                Type    : _("Annot"),
+                Subtype : _("Link"),
+                Rect    : [ ll.x, ll.y, ur.x, ur.y ],
+                Border  : [ 0, 0, 1 ],
+                A       : new PDFDictionary({
+                    Type : _("Action"),
+                    S    : _("URI"),
+                    URI  : new PDFString(uri)
+                })
+            }));
         },
         setStrokeColor: function(r, g, b) {
             this._out(r, " ", g, " ", b, " RG", NL);
@@ -1564,6 +1581,15 @@
                     matrix: this._matrix
                 };
             }
+        },
+
+        _toPage: function(p) {
+            var m = this._matrix;
+            var a = m[0], b = m[1], c = m[2], d = m[3], e = m[4], f = m[5];
+            return {
+                x: a*p.x + c*p.y + e,
+                y: b*p.x + d*p.y + f
+            };
         }
     }, PDFDictionary);
 
