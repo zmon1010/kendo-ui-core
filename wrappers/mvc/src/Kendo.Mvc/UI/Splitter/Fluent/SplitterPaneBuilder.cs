@@ -8,6 +8,9 @@ namespace Kendo.Mvc.UI.Fluent
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
 
+    /// <summary>
+    /// Defines the fluent interface for configuring the splitter panes (<see cref="SplitterPane"/>).
+    /// </summary>
     public class SplitterPaneBuilder : IHideObjectMembers
     {
         private readonly SplitterPane pane;

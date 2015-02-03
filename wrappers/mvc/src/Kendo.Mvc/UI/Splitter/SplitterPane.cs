@@ -5,6 +5,9 @@ namespace Kendo.Mvc.UI
     using System.Web.Routing;
     using Kendo.Mvc.Infrastructure;
 
+    /// <summary>
+    /// The class that represents splitter panes.
+    /// </summary>
     public class SplitterPane : IAsyncContentContainer, IHtmlAttributesContainer
     {
         public SplitterPane()
