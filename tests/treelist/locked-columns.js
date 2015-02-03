@@ -350,4 +350,46 @@
         equal(instance.lockedHeader.width(), 40);
         equal(instance.thead.parent().width(), 20);
     });
+
+    test("column is not moved to locked container if is last non-locked", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20, locked: true },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        var columns = instance.columns;
+        instance.reorderColumn(0, columns[2]);
+
+        ok(columns[0].locked);
+        ok(columns[1].locked);
+        ok(!columns[2].locked);
+
+        equal(columns[0].field, "id");
+        equal(columns[1].field, "parentId");
+        equal(columns[2].field, "text");
+    });
+
+    test("column is not moved to non-locked container if is last locked", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true },
+                { field: "parentId", width: 20 },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        var columns = instance.columns;
+        instance.reorderColumn(1, columns[0]);
+
+        ok(columns[0].locked);
+        ok(!columns[1].locked);
+        ok(!columns[2].locked);
+
+        equal(columns[0].field, "id");
+        equal(columns[1].field, "parentId");
+        equal(columns[2].field, "text");
+    });
 })();

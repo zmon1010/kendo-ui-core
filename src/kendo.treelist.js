@@ -2368,8 +2368,17 @@ var __meta__ = {
             var sourceIndex = inArray(column, columns);
             var destColumn = columns[destIndex];
             var isLocked = !!destColumn.locked;
+            var nonLockedColumnsLength = this._nonLockedColumns().length;
 
             if (sourceIndex === destIndex) {
+                return;
+            }
+
+            if (isLocked && !column.locked && nonLockedColumnsLength == 1) {
+                return;
+            }
+
+            if (!isLocked && column.locked && (columns.length - nonLockedColumnsLength == 1)) {
                 return;
             }
 
