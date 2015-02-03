@@ -1101,21 +1101,17 @@
                             if (this.sourceConnector) {
                                 this._sourcePoint = this._resolvedSourceConnector.position();
                                 this._clearSourceConnector();
+                                this._setFromOptions(null, this._sourcePoint);
                             }
                         } else if (source instanceof Connector) {
                             dataItem = source.shape.dataItem;
                             if (dataItem) {
-                                this.options.from = dataItem.id;
-                                this.options.fromX = null;
-                                this.options.fromY = null;
+                                this._setFromOptions(dataItem.id);
                             }
                             this.sourceConnector = source;
                             this.sourceConnector.connections.push(this);
-
                         } else if (source instanceof Point) {
-                            this.options.fromX = source.x;
-                            this.options.fromY = source.y;
-                            this.options.from = null;
+                            this._setFromOptions(null, source);
                             this._sourcePoint = source;
                             if (this.sourceConnector) {
                                 this._clearSourceConnector();
@@ -1124,9 +1120,7 @@
                         } else if (source instanceof Shape) {
                             dataItem = source.dataItem;
                             if (dataItem) {
-                                this.options.from = dataItem.id;
-                                this.options.fromX = null;
-                                this.options.fromY = null;
+                                this._setFromOptions(dataItem.id);
                             }
                             this.sourceConnector = source.getConnector(AUTO);// source.getConnector(this.targetPoint());
                             this.sourceConnector.connections.push(this);
@@ -1136,6 +1130,17 @@
                     }
                 }
                 return this.sourceConnector ? this.sourceConnector : this._sourcePoint;
+            },
+
+            _setFromOptions: function(from, fromPoint) {
+                this.options.from = from;
+                if (fromPoint)  {
+                    this.options.fromX = fromPoint.x;
+                    this.options.fromY = fromPoint.y;
+                } else {
+                    this.options.fromX = null;
+                    this.options.fromY = null;
+                }
             },
 
             /**
@@ -1186,20 +1191,17 @@
                             if (this.targetConnector) {
                                 this._targetPoint = this._resolvedTargetConnector.position();
                                 this._clearTargetConnector();
+                                this._setToOptions(null, this._targetPoint);
                             }
                         } else if (target instanceof Connector) {
                             dataItem = target.shape.dataItem;
                             if (dataItem) {
-                                this.options.to = dataItem.id;
-                                this.options.toX = null;
-                                this.options.toY = null;
+                                this._setToOptions(dataItem.id);
                             }
                             this.targetConnector = target;
                             this.targetConnector.connections.push(this);
                         } else if (target instanceof Point) {
-                            this.options.toX = target.x;
-                            this.options.toY = target.y;
-                            this.options.to = null;
+                            this._setToOptions(null, target);
                             this._targetPoint = target;
                             if (this.targetConnector) {
                                 this._clearTargetConnector();
@@ -1207,9 +1209,7 @@
                         } else if (target instanceof Shape) {
                             dataItem = target.dataItem;
                             if (dataItem) {
-                                this.options.to = dataItem.id;
-                                this.options.toX = null;
-                                this.options.toY = null;
+                                this._setToOptions(dataItem.id);
                             }
                             this.targetConnector = target.getConnector(AUTO);// target.getConnector(this.sourcePoint());
                             this.targetConnector.connections.push(this);
@@ -1220,6 +1220,18 @@
                 }
                 return this.targetConnector ? this.targetConnector : this._targetPoint;
             },
+
+            _setToOptions: function(to, toPoint) {
+                this.options.to = to;
+                if (toPoint)  {
+                    this.options.toX = toPoint.x;
+                    this.options.toY = toPoint.y;
+                } else {
+                    this.options.toX = null;
+                    this.options.toY = null;
+                }
+            },
+
             /**
              * Gets or sets the PathDefiner of the targetPoint.
              * The right part of this definer is always null since it defines the target tangent.
