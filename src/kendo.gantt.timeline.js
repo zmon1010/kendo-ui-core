@@ -1108,15 +1108,17 @@ var __meta__ = {
             var styles = GanttView.styles;
             var options = this.options;
             var content = this.content;
-            var contentOffset = this.content.offset();
+            var contentOffset = content.offset();
+            var contentWidth = content.width();
+            var contentScrollLeft = content.scrollLeft();
             var row = $(element).parents("tr").first();
             var rowOffset = row.offset();
             var template = (options.tooltip && options.tooltip.template) ? kendo.template(options.tooltip.template) : TASK_TOOLTIP_TEMPLATE;
             var left = mouseLeft - (contentOffset.left - content.scrollLeft());
             var top = (rowOffset.top + row.outerHeight() - contentOffset.top) + content.scrollTop();
-
             var tooltip = this._taskTooltip = $('<div style="z-index: 100002;" class="' +styles.tooltipWrapper + '" >' +
                                    '<div class="' + styles.taskContent + '"></div></div>');
+            var tooltipWidth;
 
             tooltip
                 .css({
@@ -1135,8 +1137,16 @@ var __meta__ = {
                 tooltip.css("top", ((rowOffset.top - contentOffset.top) - tooltip.outerHeight()) + content.scrollTop());
             }
 
-            if ((tooltip.outerWidth() + left) - content.scrollLeft() > content.width()) {
-                tooltip.css("left", left - tooltip.outerWidth());
+            tooltipWidth = tooltip.outerWidth();
+
+            if ((tooltipWidth + left) - contentScrollLeft > contentWidth) {
+                left -= tooltipWidth;
+
+                if (left < contentScrollLeft) {
+                    left = (contentScrollLeft + contentWidth) - (tooltipWidth + 17);
+                }
+
+                tooltip.css("left", left);
             }
 
         },
