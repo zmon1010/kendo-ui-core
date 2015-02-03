@@ -1405,7 +1405,7 @@
                 Type    : _("Annot"),
                 Subtype : _("Link"),
                 Rect    : [ ll.x, ll.y, ur.x, ur.y ],
-                Border  : [ 0, 0, 1 ],
+                Border  : [ 0, 0, 0 ],
                 A       : new PDFDictionary({
                     Type : _("Action"),
                     S    : _("URI"),
