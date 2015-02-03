@@ -2480,6 +2480,7 @@ var __meta__ = {
             var columnMenu = options.columnMenu;
             var column, menu, menuOptions, sortable, filterable;
             var initHandler = proxy(this._columnMenuInit, this);
+            var lockedColumnsLength = this._lockedColumns().length;
 
             if (!columnMenu) {
                 return;
@@ -2521,7 +2522,7 @@ var __meta__ = {
                     closeCallback: $.noop,
                     init: initHandler,
                     pane: this.pane,
-                    lockedColumns: false
+                    lockedColumns: column.lockable !== false && lockedColumnsLength > 0
                 };
 
                 if (options.$angular) {
