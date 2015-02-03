@@ -897,6 +897,9 @@ var __meta__ = {
             }
 
             this._contentTree.render([]);
+            if (this._hasLockedColumns) {
+                this._lockedContentTree.render([]);
+            }
 
             status.html(message);
         },

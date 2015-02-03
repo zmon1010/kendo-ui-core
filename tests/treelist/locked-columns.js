@@ -392,4 +392,13 @@
         equal(columns[1].field, "parentId");
         equal(columns[2].field, "text");
     });
+
+    test("filter without result clear rows in locked and non locked tables", function() {
+        createTreeList();
+
+        instance.dataSource.filter({ field: "id", operator: "eq", value: -1 });
+
+        equal(instance.lockedTable.find("tr").length, 0, "locked rows are not cleared");
+        equal(instance.table.find("tr").length, 0, "non-locked rows are not cleared");
+    });
 })();
