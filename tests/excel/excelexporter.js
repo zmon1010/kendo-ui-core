@@ -399,6 +399,20 @@ test("uses groupHeaderTemplate for the group cell value", function() {
     });
 });
 
+test("uses groupHeaderTemplate for the group cell value when the column is hidden", function() {
+    dataSource = new DataSource({
+       data: [
+           { foo: "foo", bar: "bar" },
+           { foo: "boo", bar: "baz" }
+       ],
+       group: { field: "foo", aggregates: [ { field: "foo", aggregate: "count" }]  }
+    });
+
+    testWorkbook({ columns: [ { title: "Foo", field: "foo", groupHeaderTemplate: "Foo=#=value#,count=#=count#", hidden: true }, { field: "bar" } ], dataSource: dataSource }, function(book) {
+        equal(book.sheets[0].rows[1].cells[0].value, "Foo=boo,count=1");
+    });
+});
+
 test("creates row when groupFooterTemplate is set", function() {
     dataSource = new DataSource({
        data: [

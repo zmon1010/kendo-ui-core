@@ -18,7 +18,9 @@ kendo.ExcelExporter = kendo.Class.extend({
     init: function(options) {
         options.columns = this._trimColumns(options.columns || []);
 
-        this.columns = $.map(this._leafColumns(options.columns || []), this._prepareColumn);
+        this.allColumns = $.map(this._leafColumns(options.columns || []), this._prepareColumn);
+
+        this.columns = $.grep(this.allColumns, function(column) { return !column.hidden;});
 
         this.options = options;
 
@@ -51,7 +53,7 @@ kendo.ExcelExporter = kendo.Class.extend({
     _trimColumns: function(columns) {
         var that = this;
         return $.grep(columns, function(column) {
-            var result = !(!column.field || column.hidden);
+            var result = !(!column.field);
             if (!result && column.columns) {
                 result = that._trimColumns(column.columns).length > 0;
             }
@@ -90,7 +92,7 @@ kendo.ExcelExporter = kendo.Class.extend({
         }, this)).promise();
     },
     _prepareColumn: function(column) {
-        if (!column.field || column.hidden) {
+        if (!column.field) {
             return;
         }
 
@@ -146,7 +148,7 @@ kendo.ExcelExporter = kendo.Class.extend({
 
         // grouped
         if (depth && dataItem.items) {
-            var column = $.grep(this.columns, function(column) {
+            var column = $.grep(this.allColumns, function(column) {
                 return column.field == dataItem.field;
             })[0];
 
