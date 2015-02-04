@@ -386,6 +386,12 @@ var Dom = {
         elementTop = element.offset().top;
         elementHeight = element[0].offsetHeight;
 
+        if (Dom.is(element[0], "p")) {
+            elementHeight = parseInt(element.css("line-height"), 10) ||
+                            Math.ceil(1.2 * parseInt(element.css("font-size"), 10)) ||
+                            15;
+        }
+
         if (elementHeight + elementTop > scrollContainer.scrollTop + windowHeight) {
             scrollContainer.scrollTop = elementHeight + elementTop - windowHeight;
         }
