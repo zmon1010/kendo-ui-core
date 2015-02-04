@@ -2235,21 +2235,23 @@
 
             _addShape: function(shape, options) {
                 var that = this;
+                var newItem, dataItem;
                 if (this.dataSource && this._isEditable) {
-                    if (!this.trigger("add", { shape: shape.dataItem })) {
-                        var dataItem = this.dataSource.add(shape.dataItem);
-                        this.dataSource.one("sync", function() {
-                            for (var i = 0; i < that.shapes.length; i++) {
-                                var element = that.shapes[i];
-                                if (element.dataItem.uid === dataItem.uid) {
-                                    element.redraw(shape.options);
-                                }
-                            }
-                        });
+                    newItem = cloneDataItem(shape.dataItem);
+                    if (!this.trigger("add", { shape: newItem })) {
+                        dataItem = this.dataSource.add(newItem);
+                        var updateShape = function() {
+                            var element = that._dataMap[dataItem.id];
+                            element.redraw(shape.options);
+                        };
+                        var inactiveItem = this._inactiveShapeItems.getByUid(dataItem.uid);
                         shape.dataItem = dataItem;
-                        this.dataSource.sync();
-                    } else {
-                        this._remove(shape, false);
+                        shape.updateModel();
+                        if (inactiveItem) {
+                            inactiveItem.onActivate(updateShape);
+                        } else {
+                            updateShape();
+                        }
                     }
                 } else {
                     return this.addShape(shape, options);
