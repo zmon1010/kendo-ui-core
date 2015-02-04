@@ -89,6 +89,7 @@ namespace KendoScaffolder.UI
             SelectionMode = GridSelectionMode.Single;
             SelectionType = GridSelectionType.Row;
             SortMode = GridSortMode.SingleColumn;
+            AllowUnsort = true;
             SelectedDataSourceType = "Ajax";
             SelectedGridEvents = new List<string>();
         }

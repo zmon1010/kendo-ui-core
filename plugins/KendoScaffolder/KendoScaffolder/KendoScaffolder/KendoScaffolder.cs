@@ -245,6 +245,7 @@ namespace KendoScaffolder
 
             if (sortable)
             {
+                ViewParameters.Add("AllowUnsort", _viewModel.AllowUnsort);
                 ViewParameters.Add("SortMode", _viewModel.SortMode);
             }
         }

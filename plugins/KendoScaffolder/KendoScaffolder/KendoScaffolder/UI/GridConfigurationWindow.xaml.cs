@@ -160,12 +160,6 @@ namespace KendoScaffolder.UI
             }
         }
 
-        private void GridEvents_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
-            //SelectedGridEvents = lb.SelectedItems.OfType<TestEnum>().ToList();
-        }
-
         private void GridEventsCheckbox_Clicked(object sender, RoutedEventArgs e)
         {
             CheckBox cb = sender as CheckBox;
@@ -182,16 +176,14 @@ namespace KendoScaffolder.UI
         }
     }
 
-    public class RadioButtonCheckedConverter : IValueConverter
+    public class EnumToBooleanConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter,
-            System.Globalization.CultureInfo culture)
-        {   
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
             return value.Equals(parameter);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter,
-            System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             return value.Equals(true) ? parameter : Binding.DoNothing;
         }
