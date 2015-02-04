@@ -2264,10 +2264,16 @@
              * @param items DiagramElement, Array of Items.
              * @param undoable.
              */
-            remove: function(items, undoable) {
-                var isMultiple = isArray(items);
 
-                if (isUndefined(undoable)) {
+           remove: function(items, undoable) {
+                if (!isArray(items)) {
+                    items = [items];
+                }
+                var elements = splitDiagramElements(items);
+                var shapes = elements.shapes;
+                var connections = elements.connections;
+
+                if (!defined(undoable)) {
                     undoable = true;
                 }
 
@@ -2275,50 +2281,59 @@
                     this.undoRedoService.begin();
                 }
 
-                if (isMultiple) {
-                    items = items.slice(0);
-                    for (var i = 0; i < items.length; i++) {
-                        this._removeItem(items[i], undoable);
-                    }
-                } else if (items instanceof Shape || items instanceof Connection) {
-                    this._removeItem(items, undoable);
+                this._suspendModelRefresh();
+                for (var i = shapes.length - 1; i >= 0; i--) {
+                   this._removeItem(shapes[i], undoable, connections);
                 }
 
+                for (var i = connections.length - 1; i >= 0; i--) {
+                    this._removeItem(connections[i], undoable);
+                }
+
+                this._resumeModelRefresh();
+
                 if (undoable) {
-                    this.undoRedoService.commit();
+                    this.undoRedoService.commit(false);
                 }
 
                 this.trigger(CHANGE, {
                     added: [],
-                    removed: isMultiple ? items : [items]
+                    removed: items
                 });
             },
 
-            _remove: function(item, undoable) {
-                var eventArgs = {};
-                var dataSource;
+            _removeShapeDataItem: function(item) {
                 if (this._isEditable) {
-                    if (item.length) {
-                        this._destroyToolBar();
-                    } else {
-                        if (item instanceof Connection) {
-                            if (this.connectionsDataSource) {
-                                dataSource = this.connectionsDataSource;
-                                eventArgs.connection = item.dataItem;
-                            }
-                        } else if (this.dataSource) {
-                            dataSource = this.dataSource;
-                            eventArgs.shape = item.dataItem;
-                        }
+                    this.dataSource.remove(item.dataItem);
+                }
+            },
 
-                        if (dataSource && !this.trigger("remove", eventArgs)) {
-                            dataSource.remove(item.dataItem);
-                            dataSource.sync();
+            _removeConnectionDataItem: function(item) {
+                if (this._isEditable) {
+                    this.connectionsDataSource.remove(item.dataItem);
+                }
+            },
+
+            _triggerRemove: function(items){                
+                if (this._isEditable) {
+                    var toRemove = [];
+                    var item, args;
+
+                    for (var idx = 0; idx < items.length; idx++) {
+                        item = items[idx];
+                        if (item instanceof Shape) {
+                            args = { shape: item.dataItem };
+                        } else {
+                            args = { connection: item.dataItem };
+                        }
+                        if (!this.trigger("remove", args)) {
+                            toRemove.push(item);
                         }
                     }
+                    return toRemove;
+                } else {
+                    return items;
                 }
-
-                this.remove(item, undoable);
             },
 
             /**
@@ -2982,19 +2997,20 @@
                 return result;
             },
 
-            _removeItem: function (item, undoable) {
+            _removeItem: function (item, undoable, removedConnections) {
                 item.select(false);
                 if (item instanceof Shape) {
-                    this._removeShape(item, undoable);
+                    this._removeShapeDataItem(item);
+                    this._removeShape(item, undoable, removedConnections);
                 } else if (item instanceof Connection) {
+                    this._removeConnectionDataItem(item);
                     this._removeConnection(item, undoable);
                 }
 
-                if (!undoable) {
-                    this.mainLayer.remove(item.visual);
-                }
+                this.mainLayer.remove(item.visual);
             },
-            _removeShape: function (shape, undoable) {
+
+            _removeShape: function (shape, undoable, removedConnections) {
                 var i, connection, connector,
                     sources = [], targets = [];
                 this.toolService._removeHover();
@@ -3002,26 +3018,29 @@
                 if (undoable) {
                     this.undoRedoService.addCompositeItem(new DeleteShapeUnit(shape));
                 }
-                else {
-                    Utils.remove(this.shapes, shape);
-                }
+                Utils.remove(this.shapes, shape);
+
                 for (i = 0; i < shape.connectors.length; i++) {
                     connector = shape.connectors[i];
                     for (var j = 0; j < connector.connections.length; j++) {
                         connection = connector.connections[j];
-                        if (connection.sourceConnector == connector) {
-                            sources.push(connection);
-                        } else if (connection.targetConnector == connector) {
-                            targets.push(connection);
+                        if (!removedConnections || !dataviz.inArray(connection, removedConnections)) {
+                            if (connection.sourceConnector == connector) {
+                                sources.push(connection);
+                            } else if (connection.targetConnector == connector) {
+                                targets.push(connection);
+                            }
                         }
                     }
                 }
 
                 for (i = 0; i < sources.length; i++) {
                     sources[i].source(null, undoable);
+                    sources[i].updateModel();
                 }
                 for (i = 0; i < targets.length; i++) {
                     targets[i].target(null, undoable);
+                    targets[i].updateModel();
                 }
             },
 
@@ -4020,7 +4039,12 @@
             },
 
             "delete": function() {
-                this.diagram.remove(this.selectedElements(), true);
+                var diagram = this.diagram;
+                var toRemove = diagram._triggerRemove(this.selectedElements());
+                if (toRemove.length) {
+                    this.diagram.remove(toRemove, true);
+                    this.diagram._syncChanges();
+                }
             },
 
             edit: function() {

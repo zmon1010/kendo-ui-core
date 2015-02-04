@@ -254,7 +254,7 @@
                 this.diagram._addConnection(this.connection, false);
             },
             redo: function () {
-                this.diagram._remove(this.connection, false);
+                this.diagram.remove(this.connection, false);
             }
         });
 
@@ -270,7 +270,7 @@
             },
             redo: function () {
                 this.shape.select(false);
-                this.diagram._remove(this.shape, false);
+                this.diagram.remove(this.shape, false);
             }
         });
         /**
@@ -327,7 +327,7 @@
             },
 
             undo: function () {
-                this.diagram._remove(this.connection, false);
+                this.diagram.remove(this.connection, false);
             },
 
             redo: function () {
@@ -344,7 +344,7 @@
 
             undo: function () {
                 this.diagram.deselect();
-                this.diagram._remove(this.shape, false);
+                this.diagram.remove(this.shape, false);
             },
 
             redo: function () {
@@ -931,8 +931,13 @@
                         diagram.paste();
                     }
                 } else if (key === 46 || key === 8) {// del: deletion
-                    diagram.remove(diagram.select(), true);
-                    diagram._destroyToolBar();
+                    var toRemove = this.diagram._triggerRemove(diagram.select());
+                    if (toRemove.length) {
+                        this.diagram.remove(toRemove, true);
+                        this.diagram._syncChanges();
+                        this.diagram._destroyToolBar();
+                    }
+
                     return true;
                 } else if (key === 27) {// ESC: stop any action
                     this._discardNewConnection();

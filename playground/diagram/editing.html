@@ -182,6 +182,9 @@ function findIdx(data, id) {
                     content: {
                         template: "#:text#"
                     }
+                },
+                remove: function() {
+                    console.log("remove");
                 }
             }).data("kendoDiagram");
             
