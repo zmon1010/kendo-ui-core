@@ -19,6 +19,48 @@
         diagram.destroy();
     }
 
+    function setupDataSource(options, data) {
+        var items = data || [{id: 1}];
+
+        dataSource = new kendo.data.DataSource($.extend({
+            transport: {
+                read: function(options) {
+                    options.success(items);
+                },
+                update: function(options) {
+                    options.success();
+                },
+                create: function(options) {
+                    var newItem = options.data;
+                    newItem.id = items.length + 1;
+                    items.push(newItem);
+                    options.success([newItem]);
+                }
+            },
+            schema: {
+                model: {
+                    id: "id",
+                    fields: {
+                        width: { type: "number" },
+                        height: { type: "number" },
+                        x: { type: "number" },
+                        y: { type: "number" },
+                        text: { type: "string" },
+                        type: { type: "string" },
+                        from: { type: "number" },
+                        to: { type: "number" },
+                        fromX: { type: "number" },
+                        fromY: { type: "number" },
+                        toX: { type: "number" },
+                        toY: { type: "number" }
+                    }
+                }
+            }
+        }, {
+        }, options));
+        return dataSource;
+    }
+
     // ------------------------------------------------------------
     module("Diagram", {
         setup: setup,
@@ -1637,36 +1679,6 @@
         var Shape = dataviz.diagram.Shape;
         var Connection = dataviz.diagram.Connection;
         var connection, shape;
-        function setupDataSource(options, data) {
-            var items = data || [{id: 1}];
-            dataSource = new kendo.data.DataSource($.extend({
-                transport: {
-                    read: function(options) {
-                        options.success(items);
-                    },
-                    update: function(options) {
-                        options.success();
-                    },
-                    create: function(options) {
-                        var newItem = options.data;
-                        newItem.id = items.length + 1;
-                        items.push(newItem);
-                        options.success([newItem]);
-                    }
-                },
-                schema: {
-                    model: {
-                        id: "id",
-                        fields: {
-                            from: { type: "number" },
-                            to: { type: "number" }
-                        }
-                    }
-                }
-            }, {
-            }, options));
-            return dataSource;
-        }
 
         function isConnected(connection, connector, name) {
             ok($.inArray(connection, connector.connections) >= 0);
@@ -1836,6 +1848,144 @@
         equal(cons, d.connections.length);
     });
 
+    (function() {
+        function pasteShape() {
+            var shape = diagram.shapes[0];
+            shape.select(true);
+            diagram.copy();
+            diagram.paste();
+        }
+
+        // ------------------------------------------------------------
+        module("Editing / Paste / Shapes", {
+            setup: function() {
+                createDiagram({
+                    dataSource: setupDataSource({}, [{id: 1, width: 300, height: 300, text: "foo"}]),
+                    connectionsDataSource: setupDataSource()
+                });
+
+            },
+            teardown: teardown
+        });
+
+        test("Paste should insert shape", function () {
+            pasteShape();
+            equal(diagram.dataSource.data().length, 2);
+            equal(diagram.shapes.length, 2);
+        });
+
+        test("Paste should sync dataSource", function () {
+            diagram.dataSource.bind("sync", function() {
+                ok(true);
+            });
+            pasteShape();
+        });
+
+        test("Paste should set new shape position", function () {
+            pasteShape();
+            var shape = diagram.shapes[1];
+            var item = shape.dataItem;
+            var bounds = shape.bounds();
+            equal(item.x, 20);
+            equal(item.y, 20);
+            equal(bounds.x, 20);
+            equal(bounds.y, 20);
+        });
+
+        test("Paste should set original shape options to new shape", function () {
+            pasteShape();
+            var shape = diagram.shapes[1];
+            var item = shape.dataItem;
+            var bounds = shape.bounds();
+
+            equal(item.width, 300);
+            equal(item.height, 300);
+            equal(item.text, "foo");
+
+            equal(bounds.width, 300);
+            equal(bounds.height, 300);
+        });
+
+    })();
+
+    (function() {
+        function pasteConnection() {
+            var connection = diagram.connections[0];
+            connection.select(true);
+            diagram.copy();
+            diagram.paste();
+        }
+
+        // ------------------------------------------------------------
+        module("Editing / Paste / Connections", {
+            setup: function() {
+                createDiagram({
+                    dataSource: setupDataSource({}, [{id: 1}, {id: 2}]),
+                    connectionsDataSource: setupDataSource({}, [
+                        {id: 1, fromX: 10, fromY: 10, toX: 20, toY: 20, text: "foo"},
+                        {id: 1, from: 1, to: 2, text: "bar"}
+                    ])
+                });
+            },
+            teardown: teardown
+        });
+
+        test("Paste should insert connection", function () {
+            pasteConnection();
+            equal(diagram.connectionsDataSource.data().length, 3);
+            equal(diagram.connections.length, 3);
+        });
+
+        test("Paste should sync connectionsDataSource", function () {
+            diagram.connectionsDataSource.bind("sync", function() {
+                ok(true);
+            });
+            pasteConnection();
+        });
+
+        test("Paste should set new connection position", function () {
+            pasteConnection();
+            var connection = diagram.connections[2];
+            var offsetX = diagram.options.copy.offsetX;
+            var offsetY = diagram.options.copy.offsetX;
+            var item = connection.dataItem;
+            var source = connection.source();
+            var target = connection.target();
+
+            equal(source.x, 10 + offsetX);
+            equal(source.y, 10 + offsetY);
+            equal(target.x, 20 + offsetX);
+            equal(target.y, 20 + offsetY);
+        });
+
+        test("Paste should set original connection options to new connection", function () {
+            pasteConnection();
+            var connection = diagram.connections[2];
+            equal(connection.dataItem.text, "foo");
+        });
+
+        test("Paste should set connected shapes to new connection", function () {
+            var originalConnection = diagram.connections[1];
+            originalConnection.select(true);
+            diagram.shapes[0].select();
+            diagram.shapes[1].select();
+            diagram.copy();
+            diagram.paste();
+
+            var connection = diagram.connections[2];
+            var sourceShape = diagram.shapes[2];
+            var targetShape = diagram.shapes[3];
+            var source = connection.source();
+            var target = connection.target();
+            var item = connection.dataItem;
+            equal(item.from, sourceShape.dataItem.id);
+            equal(item.to, targetShape.dataItem.id);
+            ok(source.shape === sourceShape);
+            ok(target.shape === targetShape);
+        });
+
+    })();
+
     // ------------------------------------------------------------
     module("Editing / Shape data source", {
         setup: function () {
@@ -1903,6 +2053,7 @@
         equal(d.editor.options.type, "shape");
     });
 
+    // ------------------------------------------------------------
     module("Editing / Connections data source", {
         setup: function () {
             d = setupEditableDiagram();

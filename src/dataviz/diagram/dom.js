@@ -2252,6 +2252,7 @@
                         } else {
                             updateShape();
                         }
+                        return that._dataMap[dataItem.id];
                     }
                 } else {
                     return this.addShape(shape, options);
@@ -2652,61 +2653,71 @@
                     this.remove(this._clipboard, true);
                 }
             },
-            paste: function () {
-                var offsetX, offsetY, item, copied, connector, shape, i;
-                if (this._clipboard.length > 0) {
-                    var mapping = new Dictionary();
 
-                    offsetX = this._copyOffset * this.options.copy.offsetX;
-                    offsetY = this._copyOffset * this.options.copy.offsetY;
+            paste: function () {
+                if (this._clipboard.length > 0) {
+                    var item, copied, i;
+                    var mapping = {};
+                    var elements = splitDiagramElements(this._clipboard);
+                    var connections = elements.connections;
+                    var shapes = elements.shapes;
+                    var offset = {
+                        x: this._copyOffset * this.options.copy.offsetX,
+                        y: this._copyOffset * this.options.copy.offsetY
+                    };
                     this.deselect();
                     // first the shapes
-                    for (i = 0; i < this._clipboard.length; i++) {
-                        item = this._clipboard[i];
-                        if (item instanceof Connection) {
-                            continue;
-                        }
+                    for (i = 0; i < shapes.length; i++) {
+                        item = shapes[i];
                         copied = item.clone();
-                        mapping.set(item.id, copied.id);
-                        copied.position(new Point(item.options.x + offsetX, item.options.y + offsetY));
+                        mapping[item.id] = copied;
+                        copied.position(new Point(item.options.x + offset.x, item.options.y + offset.y));
                         copied.diagram = this;
-                        this._addShape(copied);
-                        copied.select();
-                        copied.updateModel();
+                        copied = this._addShape(copied);
+                        if (copied) {
+                            copied.select();
+                        }
                     }
                     // then the connections
-                    for (i = 0; i < this._clipboard.length; i++) {
-                        item = this._clipboard[i];
-                        if (item instanceof Shape) {
-                            continue;
+                    for (i = 0; i < connections.length; i++) {
+                        item = connections[i];
+                        copied = this._addConnection(item.clone());
+                        if (copied) {
+                            this._updateCopiedConnection(copied, item, "source", mapping, offset);
+                            this._updateCopiedConnection(copied, item, "target", mapping, offset);
+
+                            copied.select(true);
+                            copied.updateModel();
                         }
-                        copied = item.clone();
-                        if (item.source() instanceof Connector) { // if Point then it's a floating end
-                            connector = item.source();
-                            if (mapping.containsKey(connector.shape.id)) { // occurs when an attached connection is pasted with unselected shape parents
-                                shape = this.getShapeById(mapping.get(connector.shape.id));
-                                copied.source(shape.getConnector(connector.options.name));
-                            } else {
-                                copied.source(new Point(item.sourcePoint().x + offsetX, item.sourcePoint().y + offsetY));
-                            }
-                        }
-                        if (item.target() instanceof Connector) {
-                            connector = item.target();
-                            if (mapping.containsKey(connector.shape.id)) {
-                                shape = this.getShapeById(mapping.get(connector.shape.id));
-                                copied.target(shape.getConnector(connector.options.name));
-                            } else {
-                                copied.target(new Point(item.targetPoint().x + offsetX, item.targetPoint().y + offsetY));
-                            }
-                        }
-                        copied.diagram = this;
-                        this._addConnection(copied);
-                        copied.position(new Point(item.options.x + offsetX, item.options.y + offsetY));
-                        copied.select(true);
-                        copied.updateModel();
                     }
 
+                    this._syncChanges();
+
                     this._copyOffset += 1;
+                }
+            },
+
+            _updateCopiedConnection: function(connection, sourceConnection, connectorName, mapping, offset) {
+                var onActivate, inactiveItem, targetShape;
+                var target = sourceConnection[connectorName]();
+                var diagram = this;
+                if (target instanceof Connector && mapping[target.shape.id]) {
+                    targetShape = mapping[target.shape.id];
+                    if (diagram.getShapeById(targetShape.id)) {
+                        connection[connectorName](targetShape.getConnector(target.options.name));
+                    } else {
+                        inactiveItem = diagram._inactiveShapeItems.getByUid(targetShape.dataItem.uid);
+                        if (inactiveItem) {
+                            onActivate = function(item) {
+                                targetShape = diagram._dataMap[item.id];
+                                connection[connectorName](targetShape.getConnector(target.options.name));
+                                connection.updateModel();
+                            };
+                            diagram._deferredConnectionUpdates.push(inactiveItem.onActivate(onActivate));
+                        }
+                    }
+                } else {
+                    connection[connectorName](new Point(sourceConnection[connectorName + "Point"]().x + offset.x, sourceConnection[connectorName + "Point"]().y + offset.y));
                 }
             },
             /**
@@ -4336,6 +4347,24 @@
                 result[dataItem.idField] = dataItem._defaultId;
             }
             return result;
+        }
+
+        function splitDiagramElements(elements) {
+            var connections = [];
+            var shapes = [];
+            var element, idx;
+            for (idx = 0; idx < elements.length; idx++) {
+                element = elements[idx];
+                if (element instanceof Shape) {
+                    shapes.push(element);
+                } else {
+                    connections.push(element);
+                }
+            }
+            return {
+                shapes: shapes,
+                connections: connections
+            };
         }
 
         dataviz.ui.plugin(Diagram);
