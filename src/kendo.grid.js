@@ -6210,8 +6210,8 @@ var __meta__ = {
 
         _resize: function() {
             if (this.content) {
-                this._setContentHeight();
                 this._setContentWidth();
+                this._setContentHeight();
             }
             if (this.virtualScrollable) {
                 this.virtualScrollable.repaintScrollbar();
