@@ -469,9 +469,9 @@
             /**
              * Commits a batch of units.
              */
-            commit: function () {
+            commit: function (execute) {
                 if (this.composite.units.length > 0) {
-                    this._restart(this.composite);
+                    this._restart(this.composite, execute);
                 }
                 this.composite = undefined;
             },
@@ -529,7 +529,7 @@
                 // throw away anything beyond this point if this is a new branch
                 this.stack.splice(this.index, this.stack.length - this.index);
                 this.stack.push(composite);
-                if (isUndefined(execute) || (execute && (execute === true))) {
+                if (execute !== false) {
                     this.redo();
                 } else {
                     this.index++;
