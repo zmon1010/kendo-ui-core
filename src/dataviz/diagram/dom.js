@@ -2174,26 +2174,21 @@
             },
 
             _addConnection: function (connection, undoable) {
-                var that = this;
+                var newConnection, newItem, dataItem;
                 if (this.connectionsDataSource && this._isEditable) {
-                    if (!this.trigger("add", { connection: connection.dataItem })) {
-                        var dataItem = this.connectionsDataSource.add(connection.dataItem);
-                        this.connectionsDataSource.one("sync", function() {
-                            for (var i = 0; i < that.connections.length; i++) {
-                                var element = that.connections[i];
-                                if (element.dataItem.uid === dataItem.uid) {
-                                    element.redraw(connection.options);
-                                }
-                            }
-                        });
-                        connection.dataItem = dataItem;
-                        this.connectionsDataSource.sync();
-                    } else {
-                        this._remove(connection, false);
-                    }
+                    newItem = cloneDataItem(connection.dataItem);
+                    dataItem = this.connectionsDataSource.add(newItem);
+                    newConnection = this._connectionsDataMap[dataItem.uid];
+                    newConnection.redraw(connection.options);
+                    newConnection._updateConnector(connection.source(), "source");
+                    newConnection._updateConnector(connection.target(), "target");
                 } else {
-                    return this.addConnection(connection, undoable);
+                    newConnection = this.addConnection(connection, undoable);
+                    newConnection.source(connection.source());
+                    newConnection.target(connection.target());
                 }
+
+                return newConnection;
             },
 
             /**
@@ -3015,6 +3010,7 @@
                     targets[i].target(null, undoable);
                 }
             },
+
             _removeConnection: function (connection, undoable) {
                 if (connection.sourceConnector) {
                     Utils.remove(connection.sourceConnector.connections, connection);
