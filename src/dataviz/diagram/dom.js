@@ -1255,6 +1255,36 @@
                 }
             },
 
+            _updateConnectors: function() {
+                this._updateConnector(this.source(), "source");
+                this._updateConnector(this.target(), "target");
+            },
+
+            _updateConnector: function(instance, name) {
+                var that = this;
+                var diagram = that.diagram;
+                if (instance instanceof Connector && !diagram.getShapeById(instance.shape.id)) {
+                    var dataItem = instance.shape.dataItem;
+                    var connectorName = instance.options.name;
+                    var setNewTarget = function() {
+                        var shape = diagram._dataMap[dataItem.id];
+                        instance = shape.getConnector(connectorName);
+                        that[name](instance, false);
+                        that.updateModel();
+                    }
+                    if (diagram._dataMap[dataItem.id]) {
+                       setNewTarget();
+                    } else {
+                        var inactiveItem = diagram._inactiveShapeItems.getByUid(dataItem.uid);
+                        if (inactiveItem) {
+                            diagram._deferredConnectionUpdates.push(inactiveItem.onActivate(setNewTarget));
+                        }
+                    }
+                } else if (instance !== that[name]()) {
+                    that[name](instance, false);
+                }
+            },
+
             content: function(content) {
                 return this._content(content);
             },

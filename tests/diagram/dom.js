@@ -1551,6 +1551,7 @@
             ok(connection._contentVisual);
         });
 
+        // ------------------------------------------------------------
         module("Connection / redraw", {
             setup: function() {
                 setupConnection({
@@ -1628,6 +1629,113 @@
             equal(distance, 50);
             distance = Geometry.distanceToPolyline(new Point(57,50), polyline);
             equal(distance, 43);
+        });
+
+    })();
+
+    (function() {
+        var Shape = dataviz.diagram.Shape;
+        var Connection = dataviz.diagram.Connection;
+        var connection, shape;
+        function setupDataSource(options, data) {
+            var items = data || [{id: 1}];
+            dataSource = new kendo.data.DataSource($.extend({
+                transport: {
+                    read: function(options) {
+                        options.success(items);
+                    },
+                    update: function(options) {
+                        options.success();
+                    },
+                    create: function(options) {
+                        var newItem = options.data;
+                        newItem.id = items.length + 1;
+                        items.push(newItem);
+                        options.success([newItem]);
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "id",
+                        fields: {
+                            from: { type: "number" },
+                            to: { type: "number" }
+                        }
+                    }
+                }
+            }, {
+            }, options));
+            return dataSource;
+        }
+
+        function isConnected(connection, connector, name) {
+            ok($.inArray(connection, connector.connections) >= 0);
+            ok(connection[name + "Connector"] === connector);
+            if (name == "source") {
+                equal(connection.options.from, connector.shape.dataItem.id);
+            } else {
+                equal(connection.options.to, connector.shape.dataItem.id);
+            }
+        }
+
+        // ------------------------------------------------------------
+        module("Connection / _updateConnector", {
+            setup: function() {
+                createDiagram({
+                    dataSource: setupDataSource({}),
+                    connectionsDataSource: setupDataSource()
+                });
+                connection = diagram.connections[0];
+            },
+            teardown: teardown
+        });
+
+        test("Sets target if the connector shape is existing one", function() {
+            var connector = diagram.shapes[0].getConnector("auto");
+            connection._updateConnector(connector, "target");
+            isConnected(connection, connector, "target");
+        });
+
+        test("Sets source if the connector shape is existing one", function() {
+            var connector = diagram.shapes[0].getConnector("auto");
+            connection._updateConnector(connector, "source");
+            isConnected(connection, connector, "source");
+        });
+
+        test("Sets target if the shape does not exist but its dataItem is used for existing shape", function() {
+            var shape = new Shape();
+            shape.dataItem = diagram.dataSource.at(0);
+            var connector = shape.getConnector("left");
+            connection._updateConnector(connector, "target");
+            isConnected(connection, diagram.shapes[0].getConnector("left"), "target");
+        });
+
+        test("Sets source if the shape does not exist but its dataItem is used for existing shape", function() {
+            var shape = new Shape();
+            shape.dataItem = diagram.dataSource.at(0);
+            var connector = shape.getConnector("left");
+            connection._updateConnector(connector, "source");
+            isConnected(connection, diagram.shapes[0].getConnector("left"), "source");
+        });
+
+        test("Sets target if the shape does not exist but its dataItem is for inactive shape", function() {
+            var dataItem = diagram.dataSource.add({});
+            var shape = new Shape();
+            shape.dataItem = dataItem;
+            var connector = shape.getConnector("left");
+            connection._updateConnector(connector, "target");
+            diagram.dataSource.sync();
+            isConnected(connection, diagram._dataMap[dataItem.id].getConnector("left"), "target");
+        });
+
+        test("Sets source if the shape does not exist but its dataItem is for inactive shape", function() {
+            var dataItem = diagram.dataSource.add({});
+            var shape = new Shape();
+            shape.dataItem = dataItem;
+            var connector = shape.getConnector("left");
+            connection._updateConnector(connector, "source");
+            diagram.dataSource.sync();
+            isConnected(connection, diagram._dataMap[dataItem.id].getConnector("left"), "source");
         });
     })();
 
