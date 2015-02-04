@@ -549,7 +549,12 @@ var __meta__ = {
 
         destroy: function() {
             this.editable.destroy();
-            this.editable.element.find("[" + kendo.attr("container-for") + "]").empty();
+            this.editable.element
+                .find("[" + kendo.attr("container-for") + "]")
+                .empty()
+                .end()
+                .removeAttr(kendo.attr("role"));
+
             this.model = this.wrapper = this.element = this.columns = this.editable = null;
         }
     });

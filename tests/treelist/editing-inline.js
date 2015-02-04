@@ -243,6 +243,15 @@
         equal(row.children().eq(0).text(), "1");
     });
 
+    test("closing editor removes data-role=editable attribute", function() {
+        createTreeList();
+
+        instance.editRow("tr:first");
+        instance.cancelRow();
+
+        equal(instance.content.find("[" + kendo.attr("role") + "=editable]").length, 0);
+    });
+
     test("edit another row repaints the previous row", function() {
         createTreeList();
 
