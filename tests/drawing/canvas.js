@@ -420,6 +420,27 @@
 
             equal(ctx.globalAlpha, 0.25);
         });
+
+        test("does not render if source group is not visible", 0, function() {
+            var ctx = mockContext({
+                save: function(mx) {
+                    ok(false);
+                }
+            });
+
+            group.visible(false);
+
+            node.renderTo(ctx);
+        });
+
+        test("does not render children if group is not visible", 0, function() {
+            var childGroup = new d.Group({ visible: false });
+            node.load([childGroup]);
+            node.childNodes[0].renderTo = function() { ok(false); };
+
+            var ctx = mockContext();
+            node.renderTo(ctx);
+        });
     })();
 
     function paintTests(TShape, TNode, nodeName) {

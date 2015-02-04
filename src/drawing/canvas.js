@@ -204,13 +204,19 @@
                 value *= ctx.globalAlpha;
             }
             ctx.globalAlpha = value;
+        },
+
+        visible: function() {
+            var src = this.srcElement;
+            return !src || (src && src.options.visible !== false);
         }
     });
 
     var GroupNode = Node.extend({
         renderTo: function(ctx) {
-            var childNodes = this.childNodes,
-                i;
+            if (!this.visible()) {
+                return;
+            }
 
             ctx.save();
 
@@ -218,8 +224,12 @@
             this.setClip(ctx);
             this.setOpacity(ctx);
 
-            for (i = 0; i < childNodes.length; i++) {
-                childNodes[i].renderTo(ctx);
+            var childNodes = this.childNodes;
+            for (var i = 0; i < childNodes.length; i++) {
+                var child = childNodes[i];
+                if (child.visible()) {
+                    child.renderTo(ctx);
+                }
             }
 
             ctx.restore();
