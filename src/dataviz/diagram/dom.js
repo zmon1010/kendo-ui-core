@@ -679,8 +679,7 @@
                 json.options.id = diagram.randomId();
 
                 if (this.diagram && this.diagram._isEditable && defined(this.dataItem)) {
-                    json.options.dataItem = this.dataItem.toJSON();
-                    json.options.dataItem[this.dataItem.idField] = this.dataItem._defaultId;
+                    json.options.dataItem = cloneDataItem(this.dataItem);
                 }
 
                 return new Shape(json.options);
@@ -1455,8 +1454,7 @@
                 var json = this.serialize();
 
                 if (this.diagram && this.diagram._isEditable && defined(this.dataItem)) {
-                    json.options.dataItem = this.dataItem.toJSON();
-                    json.options.dataItem[this.dataItem.idField] = this.dataItem._defaultId;
+                    json.options.dataItem = cloneDataItem(this.dataItem);
                 }
 
                 return new Connection(this.from, this.to, json.options);
@@ -4332,6 +4330,15 @@
                 delete this.items[item.uid];
             }
         };
+
+        function cloneDataItem(dataItem) {
+            var result = dataItem;
+            if (dataItem instanceof kendo.data.Model) {
+                result = dataItem.toJSON();
+                result[dataItem.idField] = dataItem._defaultId;
+            }
+            return result;
+        }
 
         dataviz.ui.plugin(Diagram);
 
