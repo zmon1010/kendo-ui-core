@@ -1092,41 +1092,41 @@
                 if (isDefined(source)) {
                     if (undoable && this.diagram) {
                         this.diagram.undoRedoService.addCompositeItem(new diagram.ConnectionEditUnit(this, source));
-                    } else {
-                        if (source !== undefined) {
-                            this.from = source;
-                        }
-                        if (source === null) { // detach
-                            if (this.sourceConnector) {
-                                this._sourcePoint = this._resolvedSourceConnector.position();
-                                this._clearSourceConnector();
-                                this._setFromOptions(null, this._sourcePoint);
-                            }
-                        } else if (source instanceof Connector) {
-                            dataItem = source.shape.dataItem;
-                            if (dataItem) {
-                                this._setFromOptions(dataItem.id);
-                            }
-                            this.sourceConnector = source;
-                            this.sourceConnector.connections.push(this);
-                        } else if (source instanceof Point) {
-                            this._setFromOptions(null, source);
-                            this._sourcePoint = source;
-                            if (this.sourceConnector) {
-                                this._clearSourceConnector();
-                            }
-
-                        } else if (source instanceof Shape) {
-                            dataItem = source.dataItem;
-                            if (dataItem) {
-                                this._setFromOptions(dataItem.id);
-                            }
-                            this.sourceConnector = source.getConnector(AUTO);// source.getConnector(this.targetPoint());
-                            this.sourceConnector.connections.push(this);
-                        }
-
-                        this.refresh();
                     }
+                    if (source !== undefined) {
+                        this.from = source;
+                    }
+                    if (source === null) { // detach
+                        if (this.sourceConnector) {
+                            this._sourcePoint = this._resolvedSourceConnector.position();
+                            this._clearSourceConnector();
+                            this._setFromOptions(null, this._sourcePoint);
+                        }
+                    } else if (source instanceof Connector) {
+                        dataItem = source.shape.dataItem;
+                        if (dataItem) {
+                            this._setFromOptions(dataItem.id);
+                        }
+                        this.sourceConnector = source;
+                        this.sourceConnector.connections.push(this);
+                    } else if (source instanceof Point) {
+                        this._setFromOptions(null, source);
+                        this._sourcePoint = source;
+                        if (this.sourceConnector) {
+                            this._clearSourceConnector();
+                        }
+
+                    } else if (source instanceof Shape) {
+                        dataItem = source.dataItem;
+                        if (dataItem) {
+                            this._setFromOptions(dataItem.id);
+                        }
+                        this.sourceConnector = source.getConnector(AUTO);// source.getConnector(this.targetPoint());
+                        this.sourceConnector.connections.push(this);
+                    }
+
+                    this.refresh();
+
                 }
                 return this.sourceConnector ? this.sourceConnector : this._sourcePoint;
             },
@@ -1181,39 +1181,40 @@
                 if (isDefined(target)) {
                     if (undoable && this.diagram) {
                         this.diagram.undoRedoService.addCompositeItem(new diagram.ConnectionEditUnit(this, target));
-                    } else {
-                        if (target !== undefined) {
-                            this.to = target;
-                        }
-
-                        if (target === null) { // detach
-                            if (this.targetConnector) {
-                                this._targetPoint = this._resolvedTargetConnector.position();
-                                this._clearTargetConnector();
-                                this._setToOptions(null, this._targetPoint);
-                            }
-                        } else if (target instanceof Connector) {
-                            dataItem = target.shape.dataItem;
-                            if (dataItem) {
-                                this._setToOptions(dataItem.id);
-                            }
-                            this.targetConnector = target;
-                            this.targetConnector.connections.push(this);
-                        } else if (target instanceof Point) {
-                            this._setToOptions(null, target);
-                            this._targetPoint = target;
-                            if (this.targetConnector) {
-                                this._clearTargetConnector();
-                            }
-                        } else if (target instanceof Shape) {
-                            dataItem = target.dataItem;
-                            if (dataItem) {
-                                this._setToOptions(dataItem.id);
-                            }
-                            this.targetConnector = target.getConnector(AUTO);// target.getConnector(this.sourcePoint());
-                            this.targetConnector.connections.push(this);
-                        }
                     }
+
+                    if (target !== undefined) {
+                        this.to = target;
+                    }
+
+                    if (target === null) { // detach
+                        if (this.targetConnector) {
+                            this._targetPoint = this._resolvedTargetConnector.position();
+                            this._clearTargetConnector();
+                            this._setToOptions(null, this._targetPoint);
+                        }
+                    } else if (target instanceof Connector) {
+                        dataItem = target.shape.dataItem;
+                        if (dataItem) {
+                            this._setToOptions(dataItem.id);
+                        }
+                        this.targetConnector = target;
+                        this.targetConnector.connections.push(this);
+                    } else if (target instanceof Point) {
+                        this._setToOptions(null, target);
+                        this._targetPoint = target;
+                        if (this.targetConnector) {
+                            this._clearTargetConnector();
+                        }
+                    } else if (target instanceof Shape) {
+                        dataItem = target.dataItem;
+                        if (dataItem) {
+                            this._setToOptions(dataItem.id);
+                        }
+                        this.targetConnector = target.getConnector(AUTO);// target.getConnector(this.sourcePoint());
+                        this.targetConnector.connections.push(this);
+                    }
+
 
                     this.refresh();
                 }
