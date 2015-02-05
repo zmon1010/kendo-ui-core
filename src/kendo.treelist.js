@@ -1241,6 +1241,10 @@ var __meta__ = {
                 }));
             }
 
+            if (this._touchScroller) {
+                this._touchScroller.contentResized();
+            }
+
             this._angularItems("compile");
             this._angularFooters("compile");
         },
