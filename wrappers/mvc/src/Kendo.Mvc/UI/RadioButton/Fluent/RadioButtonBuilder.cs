@@ -12,7 +12,7 @@
         /// <summary>
         /// Checkes or unchecks the radio button.
         /// </summary>
-        /// <param name="isChecked"></param>
+        /// <param name="isChecked">Indicates whether the radio button will be rendered checked</param>
         /// <returns></returns>
         public RadioButtonBuilder Checked(bool isChecked)
         {
@@ -33,9 +33,26 @@
             return this;
         }
 
+        /// <summary>
+        /// Shown label
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public RadioButtonBuilder Label(string text)
         {
             Component.Label = text;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the value of the radio button
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public RadioButtonBuilder Value(object value)
+        {
+            Component.Value = value;
 
             return this;
         }

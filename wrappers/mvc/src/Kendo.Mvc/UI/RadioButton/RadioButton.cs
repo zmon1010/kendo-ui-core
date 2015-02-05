@@ -11,7 +11,7 @@
             Enabled = true;
         }
 
-        public bool Value
+        public object Value
         {
             get;
             set;

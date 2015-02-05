@@ -22,7 +22,6 @@
 
             RadioButton().AppendTo(fragment);
             Label().AppendTo(fragment);
-            HiddenInput().AppendTo(fragment);
 
             return fragment;
         }
@@ -47,7 +46,7 @@
                     name = Component.Name,
                     id = Component.Id,
                     type = "radio",
-                    value = "true",
+                    value = value,
                     @class = "k-radio"
                 })
                 .ToggleAttribute("checked", "checked", Component.Checked)
@@ -66,17 +65,6 @@
                     @class = "k-radio-label"
                 })
                 .Text(Component.Label);            
-        }
-
-        public IHtmlNode HiddenInput()
-        {
-            return new HtmlElement("input", TagRenderMode.SelfClosing)
-                .Attributes(new
-                {
-                    name = Component.Name,
-                    value = "false",
-                    type = "hidden"
-                });
         }
     }
 }
