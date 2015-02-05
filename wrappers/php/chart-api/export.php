@@ -72,6 +72,14 @@ require_once '../include/header.php';
 </script>
 
 <?php
+$title = new \Kendo\Dataviz\UI\ChartTitle();
+$title->text('Hybrid car mileage report')
+      ->font('bold 16px "DejaVu Sans"');
+
+$legend = new \Kendo\Dataviz\UI\ChartLegend();
+$legend->position('top')
+       ->labels(array('font' =>'12px "DejaVu Sans"'));
+
 $battery = new \Kendo\Dataviz\UI\ChartSeriesItem();
 $battery->type('column')
         ->data(array(20, 40, 45, 30, 50))
@@ -131,8 +139,8 @@ $categoryAxis->categories(array('Mon', 'Tue', 'Wed', 'Thu', 'Fri'))
              ->axisCrossingValue(array(0, 0, 10, 10));
 
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
-$chart->title(array('text' => 'Hybrid car mileage report'))
-      ->legend(array('position' => 'top'))
+$chart->title($title)
+      ->legend($legend)
       ->addSeriesItem($battery, $gas, $mpg, $l100km)
       ->addValueAxisItem($milesAxis, $kmAxis, $mpgAxis, $l100kmAxis)
       ->addCategoryAxisItem($categoryAxis);

@@ -18,42 +18,42 @@
             <button class='export-svg k-button'>Export as SVG</button>
         </div>
     </div>
-    <script>    
-	    $(".export-pdf").click(function() {
-	        var chart = $("#chart").getKendoChart();
-	        chart.exportPDF({ paperSize: "auto", margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" } }).done(function(data) {
-	            kendo.saveAs({
-	                dataURI: data,
-	                fileName: "chart.pdf",
-	                proxyURL: "${proxyUrl}"
-	            });
-	        });
-	    });
-	
-	    $(".export-img").click(function() {
-	        var chart = $("#chart").getKendoChart();
-	        chart.exportImage().done(function(data) {
-	            kendo.saveAs({
-	                dataURI: data,
-	                fileName: "chart.png",
-	                proxyURL: "${proxyUrl}"	
-	            });
-	        });
-	    });
-	
-	    $(".export-svg").click(function() {
-	        var chart = $("#chart").getKendoChart();
-	        chart.exportSVG().done(function(data) {
-	            kendo.saveAs({
-	                dataURI: data,
-	                fileName: "chart.svg",
-	                proxyURL: "${proxyUrl}"
-	            });
-	        });
-	    });
+    <script>
+        $(".export-pdf").click(function() {
+            var chart = $("#chart").getKendoChart();
+            chart.exportPDF({ paperSize: "auto", margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" } }).done(function(data) {
+                kendo.saveAs({
+                    dataURI: data,
+                    fileName: "chart.pdf",
+                    proxyURL: "${proxyUrl}"
+                });
+            });
+        });
+
+        $(".export-img").click(function() {
+            var chart = $("#chart").getKendoChart();
+            chart.exportImage().done(function(data) {
+                kendo.saveAs({
+                    dataURI: data,
+                    fileName: "chart.png",
+                    proxyURL: "${proxyUrl}"
+                });
+            });
+        });
+
+        $(".export-svg").click(function() {
+            var chart = $("#chart").getKendoChart();
+            chart.exportSVG().done(function(data) {
+                kendo.saveAs({
+                    dataURI: data,
+                    fileName: "chart.svg",
+                    proxyURL: "${proxyUrl}"
+                });
+            });
+        });
     </script>
     <div class="chart-wrapper">
-         <% 
+         <%
             String[] categories = {
                 "Mon", "Tue",
                 "Wed", "Thu",
@@ -61,8 +61,11 @@
             };
          %>
          <kendo:chart name="chart">
-             <kendo:chart-title text="Hybrid car mileage report" />
-             <kendo:chart-legend position="top" />
+             <kendo:chart-title text="Hybrid car mileage report"
+                            font="bold 16px 'DejaVu Sans'" />
+             <kendo:chart-legend position="top">
+                <kendo:chart-legend-labels font="12px 'DejaVu Sans'" />
+             </kendo:chart-legend>
              <kendo:chart-series>
                 <kendo:chart-seriesItem type="column" stack="true" color="#cc6e38" data="<%= new int[] { 20, 40, 45, 30, 50 } %>" name="on battery" />
                 <kendo:chart-seriesItem type="column" stack="true" color="#ef955f" data="<%= new int[] { 20, 30, 35, 35, 40 } %>" name="on gas" />

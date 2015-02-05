@@ -1,5 +1,12 @@
 ﻿@using Kendo.Mvc.Examples.Models;
 
+@section HeadContent {
+<style>
+    <!-- Load Pako ZLIB library to enable PDF compression -->
+    <script src="@Url.Content("~/Scripts/pako.min.js")"></script>
+</style>
+}
+
 <div class="box">
     <h4>Advanced Export options</h4>
     <div class="box-col">
@@ -51,9 +58,13 @@
 <div class="chart-wrapper">
     @(Html.Kendo().Chart()
         .Name("chart")
-        .Title("Hybrid car mileage report")
+        .Title(title => title
+            .Text("Hybrid car mileage report")
+            .Font("bold 16px 'DejaVu Sans'")
+        )
         .Legend(legend => legend
             .Position(ChartLegendPosition.Top)
+            .Labels(labels => labels.Font("12px 'DejaVu Sans'"));
         )
         .Series(series =>
         {

@@ -37,6 +37,10 @@ require_once '../include/header.php';
 </script>
 
 <?php
+$title = new \Kendo\Dataviz\UI\ChartTitle();
+$title->text('Gross domestic product growth \n /GDP annual %/')
+      ->font('bold 16px "DejaVu Sans"');
+
 $pdf = new \Kendo\Dataviz\UI\ChartPdf();
 $pdf->fileName('Kendo UI Chart Export.pdf')
     ->proxyURL('pdf-export.php?type=save');
@@ -70,7 +74,7 @@ $tooltip->visible(true)
         ->template('#= series.name #: #= value #');
 
 $chart = new \Kendo\Dataviz\UI\Chart('chart');
-$chart->title(array('text' => 'Gross domestic product growth \n /GDP annual %/'))
+$chart->title($title)
       ->pdf($pdf)
       ->chartArea(array('background' => 'transparent'))
       ->legend(array('position' => 'bottom'))
@@ -88,5 +92,8 @@ echo $chart->render();
         background: center no-repeat url('../content/shared/styles/world-map.png');
     }
 </style>
+
+<!-- Load Pako ZLIB library to enable PDF compression -->
+<script src="../content/shared/js/pako.min.js"></script>
 
 <?php require_once '../include/footer.php'; ?>

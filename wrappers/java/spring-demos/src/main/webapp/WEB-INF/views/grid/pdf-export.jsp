@@ -24,7 +24,7 @@
 
     <kendo:grid name="grid" style="width:900px;" rowTemplate="row-template" altRowTemplate="alt-row-template">
         <kendo:grid-toolbar>
-        	<kendo:grid-toolbarItem name="pdf" />
+            <kendo:grid-toolbarItem name="pdf" />
         </kendo:grid-toolbar>
         <kendo:grid-pdf proxyURL="${saveUrl}" fileName="Kendo UI Grid Export.pdf" />
         <kendo:grid-columns>
@@ -34,16 +34,16 @@
             <kendo:grid-column title="ID" field="employeeId" />
         </kendo:grid-columns>
         <kendo:dataSource serverPaging="true" serverSorting="true" serverFiltering="true">
-            <kendo:dataSource-transport>            	
-                <kendo:dataSource-transport-read url="${transportReadUrl}" type="POST"  contentType="application/json"/>  
+            <kendo:dataSource-transport>
+                <kendo:dataSource-transport-read url="${transportReadUrl}" type="POST"  contentType="application/json"/>
                 <kendo:dataSource-transport-parameterMap>
-                	function(options){return JSON.stringify(options);}
-                </kendo:dataSource-transport-parameterMap>              
+                    function(options){return JSON.stringify(options);}
+                </kendo:dataSource-transport-parameterMap>
             </kendo:dataSource-transport>
             <kendo:dataSource-schema data="data" total="total" />
-        </kendo:dataSource>        
+        </kendo:dataSource>
     </kendo:grid>
-    
+
     <script id="row-template" type="text/x-kendo-template">
         <tr data-uid="#: uid #">
             <td class="photo">
@@ -53,15 +53,15 @@
                <span class="name">#: firstName# #: lastName# </span>
                <span class="title">Title: #: title #</span>
             </td>
-			<td class="country">
-			   #: country #
-			</td>
+            <td class="country">
+               #: country #
+            </td>
             <td class="employeeID">
                #: employeeId #
             </td>
         </tr>
     </script>
-    
+
     <script id="alt-row-template" type="text/x-kendo-template">
         <tr class="k-alt" data-uid="#: uid #">
             <td class="photo">
@@ -71,15 +71,15 @@
                <span class="name">#: firstName# #: lastName# </span>
                <span class="title">Title: #: title #</span>
             </td>
-			<td class="country">
-			   #: country #
-			</td>
+            <td class="country">
+               #: country #
+            </td>
             <td class="employeeID">
                #: employeeId #
             </td>
         </tr>
     </script>
-    
+
 <style>
    .employeeID,
    .country {
@@ -118,5 +118,5 @@
        background: -ms-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
        background: linear-gradient(to bottom,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
    }
-</style>      
+</style>
 <demo:footer />

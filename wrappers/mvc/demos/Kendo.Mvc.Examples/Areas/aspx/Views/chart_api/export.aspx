@@ -1,5 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
+<asp:Content ContentPlaceHolderID="HeadContent" runat="server">
+<style>
+    <!-- Load Pako ZLIB library to enable PDF compression -->
+    <script src="@Url.Content("~/Scripts/pako.min.js")"></script>
+</style>
+</asp:Content>
+
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 <div class="box">
     <h4>Advanced Export options</h4>
@@ -52,9 +59,13 @@ $(".export-svg").click(function () {
 <div class="chart-wrapper">
     <%= Html.Kendo().Chart()
         .Name("chart")
-        .Title("Hybrid car mileage report")
+        .Title(title => title
+            .Text("Hybrid car mileage report")
+            .Font("bold 16px 'DejaVu Sans'")
+        )
         .Legend(legend => legend
             .Position(ChartLegendPosition.Top)
+            .Labels(labels => labels.Font("12px 'DejaVu Sans'"));
         )
         .Series(series =>
         {

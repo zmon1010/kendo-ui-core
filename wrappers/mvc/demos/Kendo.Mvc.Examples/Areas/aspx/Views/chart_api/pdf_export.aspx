@@ -6,6 +6,9 @@
         background: center no-repeat url('@Url.Content("~/Content/shared/world-map.png")');
         height: 430px;
     }
+
+    <!-- Load Pako ZLIB library to enable PDF compression -->
+    <script src="@Url.Content("~/Scripts/pako.min.js")"></script>
 </style>
 </asp:Content>
 
@@ -30,7 +33,10 @@
         .ProxyURL(Url.Action("Pdf_Export_Save", "Chart_Api"))
     )
     .Name("chart")
-    .Title("Gross domestic product growth \n /GDP annual %/")
+    .Title(title => title
+        .Text("Gross domestic product growth \n /GDP annual %/")
+        .Font("bold 16px 'DejaVu Sans'")
+    )
     .Legend(legend => legend
         .Position(ChartLegendPosition.Bottom)
     )
