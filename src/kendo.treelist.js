@@ -386,8 +386,13 @@ var __meta__ = {
 
         load: function(model) {
             var method = "_query";
+            var remote = this.options.serverSorting || this.options.serverPaging || this.options.serverFiltering || this.options.serverGrouping || this.options.serverAggregates;
 
-            if (!model.loaded() && model.hasChildren) {
+            if (model.loaded()) {
+                if (remote) {
+                    return $.Deferred().resolve().promise();
+                }
+            } else if (model.hasChildren) {
                 method = "read";
             }
 

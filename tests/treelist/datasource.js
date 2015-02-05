@@ -173,6 +173,28 @@
         equal(calls, 2);
     });
 
+    test("load does not call transport.read when model is loaded and server operations", function() {
+        var calls = 0;
+
+        var ds = new TreeListDataSource({
+            serverSorting: true,
+            transport: {
+                read: function(options) {
+                    options.success([
+                        { id: ++calls, hasChildren: true }
+                    ]);
+                }
+            }
+        });
+
+        ds.read();
+
+        ds.load(ds.at(0));
+        ds.load(ds.at(0));
+
+        equal(calls, 2);
+    });
+
     test("load sets model loaded flag", function() {
         var calls = 0;
 
