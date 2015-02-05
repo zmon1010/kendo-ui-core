@@ -65,7 +65,7 @@ $(".export-svg").click(function () {
         )
         .Legend(legend => legend
             .Position(ChartLegendPosition.Top)
-            .Labels(labels => labels.Font("12px 'DejaVu Sans'"));
+            .Labels(labels => labels.Font("12px 'DejaVu Sans'"))
         )
         .Series(series =>
         {
