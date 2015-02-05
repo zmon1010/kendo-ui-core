@@ -4746,7 +4746,7 @@ var __meta__ = {
                             left: 5,
                             right: 5
                         },
-                        zIndex: this.series.zIndex
+                        zIndex: valueOrDefault(labels.zIndex, this.series.zIndex)
                     }, labels)
                 );
                 point.append(point.label);
@@ -4784,7 +4784,7 @@ var __meta__ = {
                 background: options.background,
                 border: this.markerBorder(),
                 opacity: options.opacity,
-                zIndex: this.series.zIndex,
+                zIndex: valueOrDefault(options.zIndex, this.series.zIndex),
                 animation: options.animation
             });
 
@@ -6116,15 +6116,18 @@ var __meta__ = {
                 for (pointIx = 0; pointIx < seriesPoints.length; pointIx++) {
                     var point = seriesPoints[pointIx],
                         area = math.abs(point.value.size) * areaRatio,
-                        r = math.sqrt((minArea + area) / math.PI);
+                        r = math.sqrt((minArea + area) / math.PI),
+                        baseZIndex = valueOrDefault(point.options.zIndex, 0),
+                        zIndex = baseZIndex + (1 - r / maxR);
 
                     deepExtend(point.options, {
+                        zIndex: zIndex,
                         markers: {
                             size: r * 2,
-                            zIndex: maxR - r
+                            zIndex: zIndex
                         },
                         labels: {
-                            zIndex: maxR - r + 1
+                            zIndex: zIndex + 1
                         }
                     });
                 }

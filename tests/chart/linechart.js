@@ -503,7 +503,7 @@
 
             point.category = CATEGORY;
             point.dataItem = { value: VALUE };
-            point.series = { name: SERIES_NAME };
+            point.series = { name: SERIES_NAME, zIndex: 100 };
             point.percentage = 0.5;
 
             point.owner = {
@@ -557,6 +557,26 @@
         test("sets marker rotation", function() {
             createPoint({ markers: { rotation: 90 } });
             equal(marker.options.rotation, 90);
+        });
+
+        test("sets marker zIndex", function() {
+            createPoint({ markers: { zIndex: 3 } });
+            equal(marker.options.zIndex, 3);
+        });
+
+        test("sets marker zIndex from series", function() {
+            createPoint({ labels: { visible: true } });
+            equal(marker.options.zIndex, 100);
+        });
+
+        test("sets labels zIndex", function() {
+            createPoint({ labels: { visible: true, zIndex: 3 } });
+            equal(label.options.zIndex, 3);
+        });
+
+        test("sets labels zIndex from series", function() {
+            createPoint({ labels: { visible: true } });
+            equal(label.options.zIndex, 100);
         });
 
         test("doesn't create marker if size is 0", function() {
