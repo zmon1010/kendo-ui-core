@@ -694,4 +694,29 @@
         equal(columns[1].field, "id");
         equal(columns[2].field, "text");
     });
+
+    test("lock column with hidden locked column", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10, locked: true, hidden: true },
+                { field: "parentId", width: 20, locked: true },
+                { field: "text", width: 30 },
+                { title: "template", template: "template", width: 30 }
+            ]
+        });
+
+        instance.lockColumn(2);
+        instance.showColumn(0);
+
+        var th = instance.thead.find("th");
+        var lockedTh = instance.lockedHeader.find("th");
+
+        equal(lockedTh.length, 3);
+        equal(lockedTh.eq(0).text(), "id");
+        equal(lockedTh.eq(1).text(), "parentId");
+        equal(lockedTh.eq(2).text(), "text");
+
+        equal(th.length, 1);
+        equal(th.eq(0).text(), "template");
+    });
 })();

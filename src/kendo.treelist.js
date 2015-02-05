@@ -2413,8 +2413,15 @@ var __meta__ = {
             ths.eq(sourceIndex)[before ? "insertBefore" : "insertAfter"](ths.eq(destIndex));
 
             var dom = this._headerTree.children[0].children;
+            if (this._hasLockedColumns) {
+                dom = this._lockedHeaderTree.children[0].children.concat(dom);
+            }
             dom.splice(before ? destIndex : destIndex + 1, 0, dom[sourceIndex]);
             dom.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
+            if (this._hasLockedColumns) {
+                this._lockedHeaderTree.children[0].children = dom.splice(0, this._lockedColumns());
+                this._headerTree.children[0].children = dom;
+            }
 
             this._applyLockedContainersWidth();
 
