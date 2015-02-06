@@ -1857,6 +1857,7 @@
                     }
                 }
 
+                this._syncHandler = proxy(that._syncChanges, that);
                 that._resizeHandler = proxy(that.resize, that);
                 kendo.onResize(that._resizeHandler);
                 this.bind(ZOOM_START, proxy(that._destroyToolBar, that));
@@ -3306,7 +3307,10 @@
                 this._connectionsDataMap = {};
                 this._inactiveShapeItems = new InactiveItemsCollection();
                 this._deferredConnectionUpdates = [];
-                this.undoRedoService = new UndoRedoService();
+                this.undoRedoService = new UndoRedoService({
+                    undone: this._syncHandler,
+                    redone: this._syncHandler
+                });
                 this.id = diagram.randomId();
             },
 

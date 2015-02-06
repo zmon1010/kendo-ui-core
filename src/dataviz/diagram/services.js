@@ -453,12 +453,16 @@
         /**
          * Undo-redo service.
          */
-        var UndoRedoService = Class.extend({
-            init: function () {
+        var UndoRedoService = kendo.Observable.extend({
+            init: function (options) {
+                kendo.Observable.fn.init.call(this, options);
+                this.bind(this.events, options);
                 this.stack = [];
                 this.index = 0;
                 this.capacity = 100;
             },
+
+            events: ["undone", "redone"],
 
             /**
              * Starts the collection of units. Add those with
@@ -521,6 +525,7 @@
                 if (this.index > 0) {
                     this.index--;
                     this.stack[this.index].undo();
+                    this.trigger("undone");
                 }
             },
 
@@ -531,6 +536,7 @@
                 if (this.stack.length > 0 && this.index < this.stack.length) {
                     this.stack[this.index].redo();
                     this.index++;
+                    this.trigger("redone");
                 }
             },
 
