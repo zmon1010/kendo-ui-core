@@ -396,6 +396,7 @@
                     if (shape.hasOwnProperty("layout")) {
                         shape.layout(shape);
                     }
+                    shape.updateModel();
                 }
                 if (this.adorner) {
                     this.adorner._initialize();
@@ -410,6 +411,7 @@
                     if (shape.hasOwnProperty("layout")) {
                         shape.layout(shape);
                     }
+                    shape.updateModel();
                 }
                 if (this.adorner) {
                     this.adorner._initialize();
