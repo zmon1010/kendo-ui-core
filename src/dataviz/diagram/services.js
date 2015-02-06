@@ -807,7 +807,7 @@
                     nc.target(hi);
                 }
 
-                nc.updateModel();
+                nc.updateModel(true);
 
                 this.toolService._connectionManipulation();
             },
@@ -1381,9 +1381,7 @@
                     this.connection.target(target);
                 }
 
-                if (this.handle) {
-                    this.connection.updateModel();
-                }
+                this.connection.updateModel(true);
 
                 this.handle = undefined;
                 this._ts._connectionManipulation();
