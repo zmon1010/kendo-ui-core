@@ -1250,7 +1250,9 @@ var __meta__ = {
                     value: value
                 });
             }
-        }
+        },
+
+        createCrosshairs: $.noop
     });
 
     var PolarPlotArea = PolarPlotAreaBase.extend({
@@ -1366,7 +1368,9 @@ var __meta__ = {
                     y: yValue
                 });
             }
-        }
+        },
+
+        createCrosshairs: $.noop
     });
 
     // Helpers ================================================================
