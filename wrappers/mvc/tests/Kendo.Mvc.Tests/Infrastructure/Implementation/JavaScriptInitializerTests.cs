@@ -39,6 +39,14 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Tests
         }
 
         [Fact]
+        public void Should_serialize_char()
+        {
+            char foo = 'a';
+            data["foo"] = foo;
+            initializer.Serialize(data).ShouldEqual("{\"foo\":\"a\"}");
+        }
+
+        [Fact]
         public void Should_serialize_guid()
         {
             Guid foo = new Guid("76c360e8-c796-4906-a611-45401ee0df7c");

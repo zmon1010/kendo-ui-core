@@ -146,7 +146,7 @@ namespace Kendo.Mvc.Infrastructure
                     continue;
                 }
 
-                if (value.GetType().IsPrimitive || value is decimal)
+                if (!(value is Char) && (value.GetType().IsPrimitive || value is decimal))
                 {
                     AppendConvertible(output, value);
                     continue;
