@@ -194,31 +194,36 @@
                 this.item = item;
                 this._redoSource = redoSource;
                 this._redoTarget = redoTarget;
-                this._undoSource = item.source();
-                this._undoTarget = item.target();
+                if (defined(redoSource)) {
+                    this._undoSource = item.source();
+                }
+
+                if (defined(redoTarget)) {
+                    this._undoTarget = item.target();
+                }
                 this.title = "Connection Editing";
             },
             undo: function () {
                 if (this._undoSource !== undefined) {
-                    this.item.source(this._undoSource, false);
+                    this.item._updateConnector(this._undoSource, "source");
                 }
 
                 if (this._undoTarget !== undefined) {
-                    this.item.target(this._undoTarget, false);
+                    this.item._updateConnector(this._undoTarget, "target");
                 }
 
-                this.item.updateModel(this._undoSource, this._undoTarget);
+                this.item.updateModel();
             },
             redo: function () {
                 if (this._redoSource !== undefined) {
-                    this.item.source(this._redoSource, false);
+                    this.item._updateConnector(this._redoSource, "source");
                 }
 
                 if (this._redoTarget !== undefined) {
-                    this.item.target(this._redoTarget, false);
+                    this.item._updateConnector(this._redoTarget, "target");
                 }
 
-                this.item.updateModel(this._undoSource, this._undoTarget);
+                this.item.updateModel();
             }
         });
 
@@ -232,14 +237,14 @@
                 this.title = "Connection Editing";
             },
             undo: function () {
-                this.item.source(this._undoSource, false);
-                this.item.target(this._undoTarget, false);
-                this.item.updateModel(this._undoSource, this._undoTarget);
+                this.item._updateConnector(this._undoSource, "source");
+                this.item._updateConnector(this._undoTarget, "target");
+                this.item.updateModel();
             },
             redo: function () {
-                this.item.source(this._redoSource, false);
-                this.item.target(this._redoTarget, false);
-                this.item.updateModel(this._undoSource, this._undoTarget);
+                this.item._updateConnector(this._redoSource, "source");
+                this.item._updateConnector(this._redoTarget, "target");
+                this.item.updateModel();
             }
         });
 
