@@ -530,7 +530,7 @@
                 this.updateBounds();
             },
 
-            updateModel: function() {
+            updateModel: function(syncChanges) {
                 var diagram = this.diagram;
                 if (diagram && diagram._isEditable) {
                     var bounds = this._bounds;
@@ -559,6 +559,10 @@
 
                         this.dataItem = model;
                         diagram._resumeModelRefresh();
+
+                        if (syncChanges) {
+                            diagram._syncShapeChanges();
+                        }
                     }
                 }
             },
@@ -1040,7 +1044,7 @@
                 }
             },
 
-            updateModel: function() {
+            updateModel: function(syncChanges) {
                 if (this.diagram && this.diagram._isEditable) {
                     if (this.diagram.connectionsDataSource) {
                         var model = this.diagram.connectionsDataSource.getByUid(this.dataItem.uid);
@@ -1068,6 +1072,10 @@
 
                             this.dataItem = model;
                             this.diagram._resumeModelRefresh();
+
+                            if (syncChanges) {
+                                this.diagram._syncConnectionChanges();
+                            }
                         }
                     }
                 }
