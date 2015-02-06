@@ -2129,7 +2129,8 @@
                     connection = this._connectionsDataMap[dataItem.uid];
                     connection.source(source);
                     connection.target(target);
-                    this.connectionsDataSource.sync();
+                    connection.redraw(options);
+                    connection.updateModel();
                 } else {
                     connection = new Connection(source, target,
                         deepExtend({ }, this.options.connectionDefaults, options));
@@ -2315,7 +2316,7 @@
                 }
             },
 
-            _triggerRemove: function(items){                
+            _triggerRemove: function(items){
                 if (this._isEditable) {
                     var toRemove = [];
                     var item, args;
