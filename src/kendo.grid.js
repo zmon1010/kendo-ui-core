@@ -1444,6 +1444,7 @@ var __meta__ = {
             scrollable: true,
             sortable: false,
             selectable: false,
+            allowCopy: false,
             navigatable: false,
             pageable: false,
             editable: false,
@@ -3528,8 +3529,9 @@ var __meta__ = {
         },
 
         _clipboard: function() {
-            var selectable = this.options.selectable;
-            if (selectable) {
+            var options = this.options;
+            var selectable = options.selectable;
+            if (selectable && options.allowCopy) {
                 var grid = this;
                 grid.copyHandler = proxy(grid.copySelection, grid);
                 grid.updateClipBoardState = function () {
@@ -3568,6 +3570,11 @@ var __meta__ = {
         getTSV: function() {
             var grid = this;
             var selected = grid.select();
+            var delimeter = "\t";
+            var allowCopy = grid.options.allowCopy;
+            if ($.isPlainObject(allowCopy) && allowCopy.delimeter) {
+                delimeter = allowCopy.delimeter;
+            }
             var text = "";
             if (selected.length) {
                 if (selected.eq(0).is("tr")) {
@@ -3614,7 +3621,7 @@ var __meta__ = {
 
                 $.each(result.slice(rowsOffset), function (idx, val) {
                     if (val) {
-                        text += val.join("\t") + "\r\n";
+                        text += val.join(delimeter) + "\r\n";
                     } else {
                         text +=  "\r\n";
                     }

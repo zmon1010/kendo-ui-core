@@ -63,5 +63,100 @@
         equal(grid.getTSV().trim(),"foo\tbar\tbaz\r\nplqs\tmlqs\ttrqs");
     });
 
+    test("getTSV uses the provided delimeter", function() {
+        var grid = setup({
+            allowCopy: {
+                delimeter: "|"
+            }
+        });
+        grid.select(grid.tbody.find("td"));
+
+        var ev = jQuery.Event("keydown");
+        ev.ctrlKey = true;
+
+        grid.copySelection(ev);
+        equal(grid.getTSV(),"foo|bar|baz\r\nplqs|mlqs|trqs\r\n");
+    });
+
+    test("handles the diagonal case", function() {
+        var grid = setup({
+            dataSource: {
+                data : [
+                    { foo: "1", bar: "2", baz: "3" },
+                    { foo: "4", bar: "5", baz: "6" },
+                    { foo: "7", bar: "8", baz: "9" }
+                ],
+           }
+            });
+        grid.select(grid.tbody.find(":contains(5),:contains(9)"));
+
+        var ev = jQuery.Event("keydown");
+        ev.ctrlKey = true;
+
+        grid.copySelection(ev);
+        equal(grid.getTSV(),"5\r\n\t9\r\n");
+    });
+
+    test("handles the oposite diagonal case", function() {
+        var grid = setup({
+            dataSource: {
+                data : [
+                    { foo: "1", bar: "2", baz: "3" },
+                    { foo: "4", bar: "5", baz: "6" },
+                    { foo: "7", bar: "8", baz: "9" }
+                ],
+           }
+            });
+        grid.select(grid.tbody.find(":contains(6),:contains(8)"));
+
+        var ev = jQuery.Event("keydown");
+        ev.ctrlKey = true;
+
+        grid.copySelection(ev);
+        equal(grid.getTSV(),"\t6\r\n8\r\n");
+    });
+
+    test("handles mosaic selection", function() {
+        var grid = setup({
+            allowCopy: {
+                delimeter: "|"
+            },
+            dataSource: {
+                data : [
+                    { foo: "1", bar: "2", baz: "3" },
+                    { foo: "4", bar: "5", baz: "6" },
+                    { foo: "7", bar: "8", baz: "9" }
+                ],
+           }
+            });
+        grid.select(grid.tbody.find(":contains(1),:contains(3),:contains(5),:contains(7),:contains(9)"));
+
+        var ev = jQuery.Event("keydown");
+        ev.ctrlKey = true;
+
+        grid.copySelection(ev);
+        equal(grid.getTSV(),"1||3\r\n|5\r\n7||9\r\n");
+    });
+
+    test("copyHandlers are not attached when allowCopy is set to false", function() {
+        var grid = setup({ });
+        grid.select(grid.tbody.find("td"));
+
+        var ev = jQuery.Event("keydown");
+        ev.ctrlKey = true;
+
+        equal(grid.copyHandler, undefined);
+    });
+
+    test("copyHandlers are attached when allowCopy is set to true", function() {
+        var grid = setup({ allowCopy: true});
+        grid.select(grid.tbody.find("td"));
+
+        var ev = jQuery.Event("keydown");
+        ev.ctrlKey = true;
+
+        equal(typeof(grid.copyHandler), "function");
+    });
+
 
 })();
