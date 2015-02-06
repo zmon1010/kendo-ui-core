@@ -301,6 +301,7 @@
                     if (shape.hasOwnProperty("layout")) {
                         shape.layout(shape, this.redoStates[i], this.undoStates[i]);
                     }
+                    shape.updateModel();
                 }
                 if (this.adorner) {
                     this.adorner.refreshBounds();
@@ -315,6 +316,7 @@
                     if (shape.hasOwnProperty("layout")) {
                         shape.layout(shape, this.undoStates[i], this.redoStates[i]);
                     }
+                    shape.updateModel();
                 }
 
                 if (this.adorner) {
