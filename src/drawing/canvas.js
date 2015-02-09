@@ -340,7 +340,7 @@
 
         setStroke: function(ctx) {
             var stroke = this.srcElement.options.stroke;
-            if (stroke && !isTransparent(stroke.color)) {
+            if (stroke && !isTransparent(stroke.color) && stroke.width > 0) {
                 ctx.strokeStyle = stroke.color;
                 ctx.lineWidth = valueOrDefault(stroke.width, 1);
 

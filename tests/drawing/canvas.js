@@ -511,6 +511,18 @@
             node.renderTo(ctx);
         });
 
+        test("does not render stroke if width is not positive", 0, function() {
+            shape.options.set("stroke.width", 0);
+
+            var ctx = mockContext({
+                stroke: function() {
+                    ok(false);
+                }
+            });
+
+            node.renderTo(ctx);
+        });
+
         test("renders stroke width", function() {
             var ctx = mockContext({
                 stroke: function() {
@@ -1173,7 +1185,7 @@
         });
 
         test("strokes text", function() {
-            text.stroke("red");
+            text.stroke("red", 1);
 
             var ctx = mockContext({
                 strokeText: function(content, x, y) {
