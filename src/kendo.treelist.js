@@ -2419,7 +2419,7 @@ var __meta__ = {
             dom.splice(before ? destIndex : destIndex + 1, 0, dom[sourceIndex]);
             dom.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
             if (this._hasLockedColumns) {
-                this._lockedHeaderTree.children[0].children = dom.splice(0, this._lockedColumns());
+                this._lockedHeaderTree.children[0].children = dom.splice(0, this._lockedColumns().length);
                 this._headerTree.children[0].children = dom;
             }
 
