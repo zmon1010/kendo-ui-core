@@ -3123,7 +3123,7 @@
                 }
             },
 
-            _addDataItem: function(dataItem, options) {
+            _addDataItem: function(dataItem, undoable) {
                 if (!defined(dataItem)) {
                     return;
                 }
@@ -3133,10 +3133,10 @@
                     return shape;
                 }
 
-                options = deepExtend({}, this.options.shapeDefaults, options);
+                options = deepExtend({}, this.options.shapeDefaults);
                 options.dataItem = dataItem;
                 shape = new Shape(options, this);
-                this.addShape(shape);
+                this.addShape(shape, { undoable: undoable !== false });
                 this._dataMap[dataItem.id] = shape;
                 return shape;
             },
@@ -3461,7 +3461,7 @@
                 this.clear();
                 this._addShapes(this.dataSource.view());
                 if (this.connectionsDataSource) {
-                    this._addConnections(this.connectionsDataSource.view());
+                    this._addConnections(this.connectionsDataSource.view(), false);
                 }
 
                 if (this.options.layout) {
@@ -3476,7 +3476,7 @@
 
                 this.trigger("dataBound");
 
-                this._addConnections(this.connectionsDataSource.view());
+                this._addConnections(this.connectionsDataSource.view(), false);
 
                 if (this.options.layout) {
                     this.layout(this.options.layout);
@@ -3521,7 +3521,7 @@
 
             _addShapes: function(dataItems) {
                 for (var i = 0; i < dataItems.length; i++) {
-                    this._addDataItem(dataItems[i]);
+                    this._addDataItem(dataItems[i], false);
                 }
             },
 
@@ -3569,16 +3569,16 @@
                 }
             },
 
-            _addConnections: function(connections) {
+            _addConnections: function(connections, undoable) {
                 var length = connections.length;
 
                 for (var i = 0; i < length; i++) {
                     var dataItem = connections[i];
-                    this._addConnectionDataItem(dataItem);
+                    this._addConnectionDataItem(dataItem, undoable);
                 }
             },
 
-            _addConnectionDataItem: function(dataItem) {
+            _addConnectionDataItem: function(dataItem, undoable) {
                 if (!this._connectionsDataMap[dataItem.uid]) {
                     var from = this._validateConnector(dataItem.from);
                     if (!defined(from) || from === null) {
@@ -3596,7 +3596,7 @@
                         var connection = new Connection(from, to, options);
                         connection.type(options.type || CASCADING);
                         this._connectionsDataMap[dataItem.uid] = connection;
-                        this.addConnection(connection);
+                        this.addConnection(connection, undoable);
                     }
                 }
             },
