@@ -39,7 +39,7 @@
 
         equal(dom.find(".k-grid-header").length, 1);
         equal(dom.find(".k-grid-header-wrap").length, 1);
-        ok(instance.header);
+        ok(instance.thead);
     });
 
     test("renders dataSource items initially", function() {
@@ -51,7 +51,7 @@
     test("renders header cells for every column", function() {
         createTreeList();
 
-        equal(instance.header.find("th").length, 2);
+        equal(instance.thead.find("th").length, 2);
     });
 
     test("renders data within cells", function() {
@@ -143,7 +143,7 @@
             ]
         });
 
-        equal(instance.header.find("th:last").text(), "Foo");
+        equal(instance.thead.find("th:last").text(), "Foo");
     });
 
     test("renders column field as data attribute", function() {
@@ -154,7 +154,7 @@
             ]
         });
 
-        equal(instance.header.find("th:last").attr(kendo.attr("field")), "parentId");
+        equal(instance.thead.find("th:last").attr(kendo.attr("field")), "parentId");
     });
 
     test("renders column title as data attribute", function() {
@@ -165,7 +165,7 @@
             ]
         });
 
-        equal(instance.header.find("th:last").attr(kendo.attr("title")), "Foo");
+        equal(instance.thead.find("th:last").attr(kendo.attr("title")), "Foo");
     });
 
     test("do not render data attribute for title if title is not set", function() {
@@ -176,7 +176,7 @@
             ]
         });
 
-        equal(instance.header.find("th:last").attr(kendo.attr("title")), undefined);
+        equal(instance.thead.find("th:last").attr(kendo.attr("title")), undefined);
     });
 
     test("does not render expand arrows when hasChildren is false", function() {
@@ -330,7 +330,7 @@
             }
         });
 
-        equal(instance.header.find("tr>th:last").text(), "foo");
+        equal(instance.thead.find("tr>th:last").text(), "foo");
     });
 
     test("column field is rendered when no title is specified", function() {
@@ -346,7 +346,7 @@
             }
         });
 
-        equal(instance.header.find("tr>th:first").text(), "id");
+        equal(instance.thead.find("tr>th:first").text(), "id");
     });
 
     test("render empty string for column title", function() {
@@ -362,7 +362,7 @@
             }
         });
 
-        equal(instance.header.find("tr>th:first").text(), "");
+        equal(instance.thead.find("tr>th:first").text(), "");
     });
 
     test("column header template as string", function() {
@@ -378,7 +378,7 @@
             }
         });
 
-        equal(instance.header.find("tr>th:last").text(), "Header template");
+        equal(instance.thead.find("tr>th:last").text(), "Header template");
     });
 
     test("column header template does not encode HTML", function() {
@@ -394,7 +394,7 @@
             }
         });
 
-        equal(instance.header.find(".foo").length, 1);
+        equal(instance.thead.find(".foo").length, 1);
     });
 
     test("column header template on sortable column does not encode HTML", function() {
@@ -410,7 +410,7 @@
             }
         });
 
-        equal(instance.header.find(".foo").length, 1);
+        equal(instance.thead.find(".foo").length, 1);
     });
 
     test("column header template as function", function() {
@@ -430,7 +430,7 @@
             }
         });
 
-        equal(instance.header.find("tr>th:last").text(), "Header template");
+        equal(instance.thead.find("tr>th:last").text(), "Header template");
     });
 
     test("footer template as function is rendered", function() {

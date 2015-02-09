@@ -57,7 +57,9 @@ var __meta__ = {
     var proxy = $.proxy;
     var map = $.map;
     var grep = $.grep;
+    var inArray = $.inArray;
     var isPlainObject = $.isPlainObject;
+    var push = Array.prototype.push;
     var STRING = "string";
     var CHANGE = "change";
     var ERROR = "error";
@@ -80,6 +82,8 @@ var __meta__ = {
     var HEADERCELLS = "th.k-header";
     var COLUMNREORDER = "columnReorder";
     var COLUMNMENUINIT = "columnMenuInit";
+    var COLUMNLOCK = "columnLock";
+    var COLUMNUNLOCK = "columnUnlock";
 
     var classNames = {
         wrapper: "k-treelist k-grid k-widget",
@@ -485,6 +489,19 @@ var __meta__ = {
         return spans;
     }
 
+    function columnsWidth(cols) {
+        var colWidth, width = 0;
+
+        for (var idx = 0, length = cols.length; idx < length; idx++) {
+            colWidth = cols[idx].style.width;
+            if (colWidth && colWidth.indexOf("%") == -1) {
+                width += parseInt(colWidth, 10);
+            }
+        }
+
+        return width;
+    }
+
     var Editor = kendo.Observable.extend({
         init: function(element, options) {
             kendo.Observable.fn.init.call(this);
@@ -708,9 +725,9 @@ var __meta__ = {
 
             this._columns();
             this._layout();
+            this._selectable();
             this._sortable();
             this._filterable();
-            this._selectable();
             this._attachEvents();
             this._toolbar();
             this._scrollable();
@@ -721,20 +738,29 @@ var __meta__ = {
                 this.dataSource.fetch();
             }
 
-            this._adjustHeight();
+            if (this._hasLockedColumns) {
+                var widget = this;
+                this.wrapper.addClass("k-grid-lockedcolumns");
+                this._resizeHandler = function()  { widget.resize(); };
+                $(window).on("resize" + NS, this._resizeHandler);
+            }
 
             kendo.notify(this);
         },
 
         _scrollable: function() {
             if (this.options.scrollable) {
-                var scrollables = this.header.closest(".k-grid-header-wrap");
-                this.content.closest(".k-grid-content").bind("scroll" + NS, function() {
+                var scrollables = this.thead.closest(".k-grid-header-wrap");
+                var lockedContent = $(this.lockedContent)
+                    .bind("DOMMouseScroll" + NS + " mousewheel" + NS, proxy(this._wheelScroll, this));
+
+                this.content.bind("scroll" + NS, function() {
                     scrollables.scrollLeft(this.scrollLeft);
+                    lockedContent.scrollTop(this.scrollTop);
                 });
 
 
-                var touchScroller = kendo.touchScroller(this.content.closest("div"));
+                var touchScroller = kendo.touchScroller(this.content);
 
                 if (touchScroller && touchScroller.movable) {
                     this._touchScroller = touchScroller;
@@ -742,10 +768,26 @@ var __meta__ = {
             }
         },
 
+        _wheelScroll: function (e) {
+            if (e.ctrlKey) {
+                return;
+            }
+
+            var delta = kendo.wheelDeltaY(e);
+
+            if (delta) {
+                e.preventDefault();
+                //In Firefox DOMMouseScroll event cannot be canceled
+                $(e.currentTarget).one("wheel" + NS, false);
+
+                this.content.scrollTop(this.content.scrollTop() + (-delta));
+            }
+        },
+
         _progress: function() {
             var messages = this.options.messages;
 
-            if (!this.content.find("tr").length) {
+            if (!this.tbody.find("tr").length) {
                 this._showStatus(
                     kendo.template(
                         "<span class='#= className #' /> #: messages.loading #"
@@ -786,9 +828,7 @@ var __meta__ = {
         _angularFooters: function(command) {
             var i, footer, aggregates;
             var allAggregates = this.dataSource.aggregates();
-            var footerRows = this.content.find("tr").filter(function() {
-                return $(this).hasClass(classNames.footerTemplate);
-            });
+            var footerRows = this._footerItems();
 
             for (i = 0; i < footerRows.length; i++) {
                 footer = footerRows.eq(i);
@@ -814,28 +854,65 @@ var __meta__ = {
         },
 
         items: function() {
-            return this.content.find("tr").filter(function() {
+            if (this._hasLockedColumns) {
+                return this._items(this.tbody).add(this._items(this.lockedTable));
+            } else {
+                return this._items(this.tbody);
+            }
+        },
+
+        _items: function(container) {
+            return container.find("tr").filter(function() {
                 return !$(this).hasClass(classNames.footerTemplate);
             });
         },
 
+        _footerItems: function() {
+            var container = this.tbody;
+            if (this._hasLockedColumns) {
+                container = container.add(this.lockedTable);
+            }
+
+            return container.find("tr").filter(function() {
+                return $(this).hasClass(classNames.footerTemplate);
+            });
+        },
+
+        dataItems: function() {
+            var dataItems = kendo.ui.DataBoundWidget.fn.dataItems.call(this);
+            if (this._hasLockedColumns) {
+                var n = dataItems.length, tmp = new Array(2 * n);
+                for (var i = n; --i >= 0;) {
+                    tmp[i] = tmp[i + n] = dataItems[i];
+                }
+                dataItems = tmp;
+            }
+
+            return dataItems;
+        },
+
         _showStatus: function(message) {
             var status = this.element.find(".k-status");
+            var content = $(this.content).add(this.lockedContent);
 
             if (!status.length) {
                 status = $("<div class='k-status' />").appendTo(this.element);
             }
 
             this._contentTree.render([]);
+            if (this._hasLockedColumns) {
+                this._lockedContentTree.render([]);
+            }
 
-            this.content.closest(DOT + classNames.gridContent).hide();
+            content.hide();
 
             status.html(message);
         },
 
         _hideStatus: function() {
             this.element.find(".k-status").remove();
-            this.content.closest(DOT + classNames.gridContent).show();
+
+            $(this.content).add(this.lockedContent).show();
         },
 
         _adjustHeight: function() {
@@ -843,6 +920,8 @@ var __meta__ = {
             var contentWrap = element.find(DOT + classNames.gridContentWrap);
             var header = element.find(DOT + classNames.gridHeader);
             var toolbar = element.find(DOT + classNames.gridToolbar);
+            var height;
+            var scrollbar = kendo.support.scrollbar();
 
             element.height(this.options.height);
 
@@ -863,8 +942,19 @@ var __meta__ = {
             };
 
             if (isHeightSet(element)) {
-                contentWrap.height(element.height() - header.outerHeight() - toolbar.outerHeight());
+                height = element.height() - header.outerHeight() - toolbar.outerHeight();
+                contentWrap.height(height);
+
+                if (this._hasLockedColumns) {
+                    scrollbar = this.table[0].offsetWidth > this.table.parent()[0].clientWidth ? scrollbar : 0;
+                    this.lockedContent.height(height - scrollbar);
+                }
             }
+        },
+
+        _resize: function() {
+            this._applyLockedContainersWidth();
+            this._adjustHeight();
         },
 
         destroy: function() {
@@ -875,6 +965,10 @@ var __meta__ = {
             dataSource.unbind(CHANGE, this._refreshHandler);
             dataSource.unbind(ERROR, this._errorHandler);
             dataSource.unbind(PROGRESS, this._progressHandler);
+
+            if (this._resizeHandler) {
+                $(window).off("resize" + NS, this._resizeHandler);
+            }
 
             if (this.reorderable) {
                 this.reorderable.destroy();
@@ -895,8 +989,22 @@ var __meta__ = {
             }
 
             this._refreshHandler = this._errorHandler = this._progressHandler = null;
-            this.header = this.content = this.element = null;
-            this._statusTree = this._headerTree = this._contentTree = null;
+
+            this.thead =
+                this.content =
+                this.tbody =
+                this.table =
+                this.element =
+                this.lockedHeader =
+                this.lockedContent = null;
+
+            this._statusTree =
+                this._headerTree =
+                this._contentTree =
+                this._lockedHeaderColsTree =
+                this._lockedContentColsTree =
+                this._lockedHeaderTree =
+                this._lockedContentTree = null;
         },
 
         options: {
@@ -947,7 +1055,9 @@ var __meta__ = {
             COLUMNHIDE,
             COLUMNSHOW,
             COLUMNREORDER,
-            COLUMNMENUINIT
+            COLUMNMENUINIT,
+            COLUMNLOCK,
+            COLUMNUNLOCK
         ],
 
         _toggle: function(model, expand) {
@@ -1067,6 +1177,12 @@ var __meta__ = {
                 return c.expandable;
             });
 
+            var lockedColumns = this._lockedColumns();
+            if (lockedColumns.length > 0) {
+                this._hasLockedColumns = true;
+                this.columns = lockedColumns.concat(this._nonLockedColumns());
+            }
+
             if (this.columns.length && !expandableColumns.length) {
                 this.columns[0].expandable = true;
             }
@@ -1121,26 +1237,46 @@ var __meta__ = {
         },
 
         _layout: function () {
+            var columns = this.columns;
             var element = this.element;
             var layout = "";
 
             this.wrapper = element.addClass(classNames.wrapper);
 
-            layout =
-                "<div class='#= gridHeader #' style=\"padding-right: " + kendo.support.scrollbar() + "px;\">" +
-                    "<div class='#= gridHeaderWrap #'>" +
-                        "<table role='grid'>" +
-                            "<colgroup></colgroup>"+
-                            "<thead role='rowgroup' />" +
-                        "</table>" +
-                    "</div>" +
-                "</div>" +
-                "<div class='#= gridContentWrap #'>" +
-                    "<table role='treegrid' tabindex='0'>" +
-                        "<colgroup></colgroup>"+
-                        "<tbody />" +
-                    "</table>" +
-                "</div>";
+            layout = "<div class='#= gridHeader #' style=\"padding-right: " + kendo.support.scrollbar() + "px;\">";
+
+            if (this._hasLockedColumns) {
+                layout += "<div class='k-grid-header-locked'>" +
+                                "<table role='grid'>" +
+                                    "<colgroup></colgroup>"+
+                                    "<thead role='rowgroup' />" +
+                                "</table>" +
+                            "</div>";
+            }
+
+            layout += "<div class='#= gridHeaderWrap #'>" +
+                            "<table role='grid'>" +
+                                "<colgroup></colgroup>"+
+                                "<thead role='rowgroup' />" +
+                            "</table>" +
+                        "</div>"+
+                        "</div>";
+
+            if (this._hasLockedColumns) {
+                layout += "<div class='k-grid-content-locked'>" +
+                                "<table role='treegrid' tabindex='0'>" +
+                                    "<colgroup></colgroup>"+
+                                    "<tbody />" +
+                                "</table>" +
+                            "</div>";
+            }
+
+            layout += "<div class='#= gridContentWrap #'>" +
+                            "<table role='treegrid' tabindex='0'>" +
+                                "<colgroup></colgroup>"+
+                                "<tbody />" +
+                            "</table>" +
+                        "</div>";
 
             if (!this.options.scrollable) {
                 layout =
@@ -1162,22 +1298,29 @@ var __meta__ = {
 
             this.toolbar = element.find(DOT + classNames.gridToolbar);
 
-            var header = this.header = element.find(DOT + classNames.gridHeader).find("thead").addBack().filter("thead");
+            var header = element.find(DOT + classNames.gridHeader).find("thead").addBack().filter("thead");
+            this.thead = header.last();
 
-            this.content = element.find(DOT + classNames.gridContentWrap).find("tbody");
-
-            if (!this.content.length) {
-                this.content = element.find("tbody");
+            var content = element.find(DOT + classNames.gridContentWrap);
+            if (!content.length) {
+                content = element;
+            } else {
+                this.content = content;
             }
 
-            this._headerColsTree = new kendoDom.Tree(header.prev()[0]);
-            this._contentColsTree = new kendoDom.Tree(this.content.prev()[0]);
+            this.table = content.find(">table");
+            this.tbody = this.table.find(">tbody");
+
+            if (this._hasLockedColumns) {
+                this.lockedHeader = header.first().closest(".k-grid-header-locked");
+                this.lockedContent = element.find(".k-grid-content-locked");
+                this.lockedTable = this.lockedContent.children();
+            }
+
+            this._initVirtualTrees();
+
             this._renderCols();
-
-            this._headerTree = new kendoDom.Tree(this.header[0]);
-            this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
-
-            var columns = this.columns;
+            this._renderHeader();
 
             this.angular("compile", function() {
                 return {
@@ -1185,10 +1328,21 @@ var __meta__ = {
                     data: map(columns, function(col) { return { column: col }; })
                 };
             });
+        },
 
-            this._contentTree = new kendoDom.Tree(this.content[0]);
-
+        _initVirtualTrees: function() {
+            this._headerColsTree = new kendoDom.Tree(this.thead.prev()[0]);
+            this._contentColsTree = new kendoDom.Tree(this.tbody.prev()[0]);
+            this._headerTree = new kendoDom.Tree(this.thead[0]);
+            this._contentTree = new kendoDom.Tree(this.tbody[0]);
             this._statusTree = new kendoDom.Tree(this.element.children(".k-status")[0]);
+
+            if (this.lockedHeader){
+                this._lockedHeaderColsTree = new kendoDom.Tree(this.lockedHeader.find("colgroup")[0]);
+                this._lockedContentColsTree = new kendoDom.Tree(this.lockedTable.find(">colgroup")[0]);
+                this._lockedHeaderTree = new kendoDom.Tree(this.lockedHeader.find("thead")[0]);
+                this._lockedContentTree = new kendoDom.Tree(this.lockedTable.find(">tbody")[0]);
+            }
         },
 
         _toolbar: function() {
@@ -1208,6 +1362,18 @@ var __meta__ = {
 
             this.angular("compile", function() {
                 return { elements: toolbar.get() };
+            });
+        },
+
+        _lockedColumns: function() {
+            return grep(this.columns, function(column) {
+                return column.locked;
+            });
+        },
+
+        _nonLockedColumns: function() {
+            return grep(this.columns, function(column) {
+                return !column.locked;
             });
         },
 
@@ -1239,11 +1405,23 @@ var __meta__ = {
                 // render rows
                 this._hideStatus();
                 this._contentTree.render(this._trs({
+                    columns: this._nonLockedColumns(),
                     aggregates: options.aggregates,
                     data: data,
                     visible: true,
                     level: 0
                 }));
+
+                if (this._hasLockedColumns) {
+                    this._absoluteIndex = 0;
+                    this._lockedContentTree.render(this._trs({
+                        columns: this._lockedColumns(),
+                        aggregates: options.aggregates,
+                        data: data,
+                        visible: true,
+                        level: 0
+                    }));
+                }
             }
 
             if (this._touchScroller) {
@@ -1252,10 +1430,60 @@ var __meta__ = {
 
             this._angularItems("compile");
             this._angularFooters("compile");
+
+            if (this._hasLockedColumns) {
+                this._adjustRowsHeight(this.table, this.lockedTable);
+            }
         },
 
-        _ths: function() {
-            var columns = this.columns;
+        _adjustRowsHeight: function(table1, table2) {
+            var rows = table1[0].rows,
+            length = rows.length,
+            idx,
+            rows2 = table2[0].rows,
+            containers = table1.add(table2),
+            containersLength = containers.length,
+            heights = [];
+
+            for (idx = 0; idx < length; idx++) {
+                if (!rows2[idx]) {
+                    break;
+                }
+
+                if (rows[idx].style.height) {
+                    rows[idx].style.height = rows2[idx].style.height = "";
+                }
+
+                var offsetHeight1 = rows[idx].offsetHeight;
+                var offsetHeight2 = rows2[idx].offsetHeight;
+                var height = 0;
+
+                if (offsetHeight1 > offsetHeight2) {
+                    height = offsetHeight1;
+                } else if (offsetHeight1 < offsetHeight2) {
+                    height = offsetHeight2;
+                }
+
+                heights.push(height);
+            }
+
+            for (idx = 0; idx < containersLength; idx++) {
+                containers[idx].style.display = "none";
+            }
+
+            for (idx = 0; idx < length; idx++) {
+                if (heights[idx]) {
+                    //add one to resolve row misalignment in IE
+                    rows[idx].style.height = rows2[idx].style.height = (heights[idx] + 1) + "px";
+                }
+            }
+
+            for (idx = 0; idx < containersLength; idx++) {
+                containers[idx].style.display = "";
+            }
+        },
+
+        _ths: function(columns) {
             var filterable = this.options.filterable;
             var ths = [];
             var column, title, children, cellClasses, attr, headerContent;
@@ -1301,8 +1529,7 @@ var __meta__ = {
             return ths;
         },
 
-        _cols: function() {
-            var columns = this.columns;
+        _cols: function(columns) {
             var cols = [];
             var width, attr;
 
@@ -1327,12 +1554,57 @@ var __meta__ = {
         },
 
         _renderCols: function() {
-            this._headerColsTree.render(this._cols());
+            var columns = this._nonLockedColumns();
+            this._headerColsTree.render(this._cols(columns));
 
             if (this.options.scrollable) {
-                this._contentColsTree.render(this._cols());
+                this._contentColsTree.render(this._cols(columns));
             }
 
+            if (this._hasLockedColumns) {
+                columns = this._lockedColumns();
+                this._lockedHeaderColsTree.render(this._cols(columns));
+                this._lockedContentColsTree.render(this._cols(columns));
+            }
+        },
+
+        _renderHeader: function() {
+            var columns = this._nonLockedColumns();
+            this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths(columns))]);
+
+            if (this._hasLockedColumns) {
+                columns = this._lockedColumns();
+                this._lockedHeaderTree.render([kendoDomElement("tr", { "role": "row" }, this._ths(columns))]);
+                this._applyLockedContainersWidth();
+            }
+        },
+
+        _applyLockedContainersWidth: function() {
+            if (!this._hasLockedColumns) {
+                return;
+            }
+
+            var lockedWidth = columnsWidth(this.lockedHeader.find(">table>colgroup>col"));
+
+            var headerTable = this.thead.parent();
+            var nonLockedWidth = columnsWidth(headerTable.find(">colgroup>col"));
+
+            var wrapperWidth = this.wrapper[0].clientWidth;
+            var scrollbar = kendo.support.scrollbar();
+
+            if (lockedWidth >= wrapperWidth) {
+                lockedWidth = wrapperWidth - 3 * scrollbar;
+            }
+
+            this.lockedHeader
+                .add(this.lockedContent)
+                .width(lockedWidth);
+
+            headerTable.add(this.table).width(nonLockedWidth);
+
+            var width = wrapperWidth - lockedWidth - 2;
+            this.content.width(width);
+            headerTable.parent().width(width - scrollbar);
         },
 
         _trs: function(options) {
@@ -1342,6 +1614,7 @@ var __meta__ = {
             var data = options.data;
             var dataSource = this.dataSource;
             var aggregates = dataSource.aggregates() || {};
+            var columns = options.columns;
 
             for (i = 0, length = data.length; i < length; i++) {
                 className = [];
@@ -1384,10 +1657,11 @@ var __meta__ = {
                     model: model,
                     attr: attr,
                     level: level
-                }, proxy(this._td, this)));
+                }, columns, proxy(this._td, this)));
 
                 if (hasChildren) {
                     rows = rows.concat(this._trs({
+                        columns: columns,
                         parentId: model.id,
                         aggregates: aggregates,
                         visible: options.visible && !!model.expanded,
@@ -1413,7 +1687,7 @@ var __meta__ = {
                     model: aggregates[parentId],
                     attr: attr,
                     level: level
-                }, this._footerTd));
+                }, columns, this._footerTd));
             }
 
             return rows;
@@ -1451,9 +1725,8 @@ var __meta__ = {
             }).length;
         },
 
-        _tds: function(options, renderer) {
+        _tds: function(options, columns, renderer) {
             var children = [];
-            var columns = this.columns;
             var column;
 
             for (var i = 0, l = columns.length; i < l; i++) {
@@ -1577,7 +1850,7 @@ var __meta__ = {
             var columns = this.columns;
             var column;
             var sortableInstance;
-            var cells = this.header.find("th");
+            var cells = $(this.lockedHeader).add(this.thead).find("th");
             var cell, idx, length;
             var fieldAttr = kendo.attr("field");
             var sortable = this.options.sortable;
@@ -1608,7 +1881,7 @@ var __meta__ = {
         },
 
         _filterable: function() {
-            var cells = this.header.find("th");
+            var cells = $(this.lockedHeader).add(this.thead).find("th");
             var filterable = this.options.filterable;
             var idx, length, column, cell, filterMenuInstance;
 
@@ -1647,32 +1920,97 @@ var __meta__ = {
         _selectable: function() {
             var selectable = this.options.selectable;
             var filter;
+            var element = this.table;
+            var useAllItems;
 
             if (selectable) {
                 selectable = kendo.ui.Selectable.parseOptions(selectable);
 
-                filter = ">tr:not(.k-footer-template)";
+                if (this._hasLockedColumns) {
+                    element = element.add(this.lockedTable);
+                    useAllItems = selectable.multiple && selectable.cell;
+                }
+
+                filter = ">tbody>tr:not(.k-footer-template)";
 
                 if (selectable.cell) {
                     filter = filter + ">td";
                 }
 
-                this.selectable = new kendo.ui.Selectable(this.content, {
+                this.selectable = new kendo.ui.Selectable(element, {
                     filter: filter,
                     aria: true,
                     multiple: selectable.multiple,
-                    change: proxy(this._change, this)
+                    change: proxy(this._change, this),
+                    useAllItems: useAllItems,
+                    continuousItems: proxy(this._continuousItems, this, filter, selectable.cell),
+                    relatedTarget: !selectable.cell && this._hasLockedColumns ? proxy(this._selectableTarget, this) : undefined
                 });
             }
+        },
+
+        _continuousItems: function(filter, cell) {
+            if (!this.lockedContent) {
+                return;
+            }
+
+            var lockedItems = $(filter, this.lockedTable);
+            var nonLockedItems = $(filter, this.table);
+            var columns = cell ? this._lockedColumns().length : 1;
+            var nonLockedColumns = cell ? this.columns.length - columns : 1;
+            var result = [];
+
+            for (var idx = 0; idx < lockedItems.length; idx += columns) {
+                push.apply(result, lockedItems.slice(idx, idx + columns));
+                push.apply(result, nonLockedItems.splice(0, nonLockedColumns));
+            }
+
+            return result;
+        },
+
+        _selectableTarget: function(items) {
+            var related;
+            var result = $();
+            for (var idx = 0, length = items.length; idx < length; idx ++) {
+                related = this._relatedRow(items[idx]);
+
+                if (inArray(related[0], items) < 0) {
+                    result = result.add(related);
+                }
+            }
+
+            return result;
+        },
+
+        _relatedRow: function(row) {
+            var lockedTable = this.lockedTable;
+            row = $(row);
+
+            if (!lockedTable) {
+                return row;
+            }
+
+            var table = row.closest(this.table.add(this.lockedTable));
+            var index = table.find(">tbody>tr").index(row);
+
+            table = table[0] === this.table[0] ? lockedTable : this.table;
+
+            return table.find(">tbody>tr").eq(index);
         },
 
         select: function(value) {
             var selectable = this.selectable;
 
-            if (typeof value !== "undefined" && !selectable.options.multiple) {
-                selectable.clear();
+            if (typeof value !== "undefined") {
+                if (!selectable.options.multiple) {
+                    selectable.clear();
 
-                value = value.first();
+                    value = value.first();
+                }
+
+                if (this._hasLockedColumns) {
+                    value = value.add($.map(value, proxy(this._relatedRow, this)));
+                }
             }
 
             return selectable.value(value);
@@ -1731,7 +2069,7 @@ var __meta__ = {
             var model;
 
             if (typeof row === STRING) {
-                row = this.content.find(row);
+                row = this.tbody.find(row);
             }
 
             model = this.dataItem(row);
@@ -1822,7 +2160,7 @@ var __meta__ = {
         _insertAt: function(model, index) {
             model = this.dataSource.insert(index, model);
 
-            var row = this.content.find("[" + kendo.attr("uid") + "=" + model.uid + "]");
+            var row = this.tbody.find("[" + kendo.attr("uid") + "=" + model.uid + "]");
 
             this.editRow(row);
         },
@@ -1866,7 +2204,9 @@ var __meta__ = {
         },
 
         _createEditor: function(model) {
-            var row = this.content.find("[" + kendo.attr("uid") + "=" + model.uid + "]");
+            var row = this.tbody.find("[" + kendo.attr("uid") + "=" + model.uid + "]");
+
+            row = row.add(this._relatedRow(row));
 
             var mode = this._editMode();
 
@@ -1928,7 +2268,7 @@ var __meta__ = {
 
             column.hidden = hidden;
             this._renderCols();
-            this._headerTree.render([kendoDomElement("tr", { "role": "row" }, this._ths())]);
+            this._renderHeader();
             this._render();
 
             this._adjustTablesWidth();
@@ -1936,8 +2276,8 @@ var __meta__ = {
             this.trigger(hidden ? COLUMNHIDE : COLUMNSHOW, { column: column });
 
             if (!hidden && !column.width) {
-                this.content.closest("table")
-                    .add(this.header.closest("table"))
+                this.table
+                    .add(this.thead.closest("table"))
                     .width("");
             }
         },
@@ -1960,7 +2300,7 @@ var __meta__ = {
 
         _adjustTablesWidth: function() {
             var idx, length;
-            var cols = this.header.prev().children();
+            var cols = this.thead.prev().children();
             var colWidth, width = 0;
 
             for (idx = 0, length = cols.length; idx < length; idx++ ) {
@@ -1975,8 +2315,8 @@ var __meta__ = {
 
 
             if (width) {
-                this.content.closest("table")
-                    .add(this.header.closest("table"))
+                this.table
+                    .add(this.thead.closest("table"))
                     .width(width);
             }
         },
@@ -2010,6 +2350,10 @@ var __meta__ = {
 
             this.reorderable = new ui.Reorderable(this.wrapper, {
                 draggable: this._draggableInstance,
+                dragOverContainers: proxy(this._allowDragOverContainers, this),
+                inSameContainer: function(e) {
+                    return $(e.source).parent()[0] === $(e.target).parent()[0];
+                },
                 change: function(e) {
                     var newIndex = e.newIndex;
                     var oldIndex = e.oldIndex;
@@ -2027,11 +2371,27 @@ var __meta__ = {
             });
         },
 
+        _allowDragOverContainers: function(index) {
+            return this.columns[index].lockable !== false;
+        },
+
         reorderColumn: function(destIndex, column, before) {
+            var lockChanged;
             var columns = this.columns;
-            var sourceIndex = $.inArray(column, columns);
+            var sourceIndex = inArray(column, columns);
+            var destColumn = columns[destIndex];
+            var isLocked = !!destColumn.locked;
+            var nonLockedColumnsLength = this._nonLockedColumns().length;
 
             if (sourceIndex === destIndex) {
+                return;
+            }
+
+            if (isLocked && !column.locked && nonLockedColumnsLength == 1) {
+                return;
+            }
+
+            if (!isLocked && column.locked && (columns.length - nonLockedColumnsLength == 1)) {
                 return;
             }
 
@@ -2039,29 +2399,95 @@ var __meta__ = {
                 before = destIndex < sourceIndex;
             }
 
+            lockChanged = !!column.locked;
+            lockChanged = lockChanged != isLocked;
+
+            column.locked = isLocked;
             columns.splice(before ? destIndex : destIndex + 1, 0, column);
             columns.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
 
             this._renderCols();
 
             //reorder column header manually
-            var ths = this.header.find("th");
+            var ths = $(this.lockedHeader).add(this.thead).find("th");
             ths.eq(sourceIndex)[before ? "insertBefore" : "insertAfter"](ths.eq(destIndex));
 
             var dom = this._headerTree.children[0].children;
+            if (this._hasLockedColumns) {
+                dom = this._lockedHeaderTree.children[0].children.concat(dom);
+            }
             dom.splice(before ? destIndex : destIndex + 1, 0, dom[sourceIndex]);
             dom.splice(sourceIndex < destIndex ? sourceIndex : sourceIndex + 1, 1);
+            if (this._hasLockedColumns) {
+                this._lockedHeaderTree.children[0].children = dom.splice(0, this._lockedColumns().length);
+                this._headerTree.children[0].children = dom;
+            }
+
+            this._applyLockedContainersWidth();
 
             this.refresh();
+
+            if(!lockChanged) {
+                return;
+            }
+
+            if (isLocked) {
+                this.trigger(COLUMNLOCK, {
+                    column: column
+                });
+            } else {
+                this.trigger(COLUMNUNLOCK, {
+                    column: column
+                });
+            }
+        },
+
+        lockColumn: function(column) {
+            var columns = this.columns;
+
+            if (typeof column == "number") {
+                column = columns[column];
+            } else {
+                column = grep(columns, function(item) {
+                    return item.field === column;
+                })[0];
+            }
+
+            if (!column || column.hidden) {
+                return;
+            }
+
+            var index = this._lockedColumns().length - 1;
+            this.reorderColumn(index, column, false);
+        },
+
+        unlockColumn: function(column) {
+            var columns = this.columns;
+
+            if (typeof column == "number") {
+                column = columns[column];
+            } else {
+                column = grep(columns, function(item) {
+                    return item.field === column;
+                })[0];
+            }
+
+            if (!column || column.hidden) {
+                return;
+            }
+
+            var index = this._lockedColumns().length;
+            this.reorderColumn(index, column, true);
         },
 
         _columnMenu: function() {
-            var ths = this.header.find("th");
+            var ths = $(this.lockedHeader).add(this.thead).find("th");
             var columns = this.columns;
             var options = this.options;
             var columnMenu = options.columnMenu;
             var column, menu, menuOptions, sortable, filterable;
             var initHandler = proxy(this._columnMenuInit, this);
+            var lockedColumnsLength = this._lockedColumns().length;
 
             if (!columnMenu) {
                 return;
@@ -2103,7 +2529,7 @@ var __meta__ = {
                     closeCallback: $.noop,
                     init: initHandler,
                     pane: this.pane,
-                    lockedColumns: false
+                    lockedColumns: column.lockable !== false && lockedColumnsLength > 0
                 };
 
                 if (options.$angular) {

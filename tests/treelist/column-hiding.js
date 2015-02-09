@@ -42,8 +42,8 @@
             ]
         });
 
-        var headerCols = instance.header.prev().children();
-        var contentCols = instance.content.prev().children();
+        var headerCols = instance.thead.prev().children();
+        var contentCols = instance.tbody.prev().children();
 
         equal(headerCols.length, 2);
         equal(headerCols[0].style.width, "20px");
@@ -64,7 +64,7 @@
             ]
         });
 
-        var headerCols = instance.header.prev().children();
+        var headerCols = instance.thead.prev().children();
 
         equal(headerCols.length, 2);
         equal(headerCols[0].style.width, "20px");
@@ -84,8 +84,8 @@
 
         instance.hideColumn(1);
 
-        var headerCols = instance.header.prev().children();
-        var contentCols = instance.content.prev().children();
+        var headerCols = instance.thead.prev().children();
+        var contentCols = instance.tbody.prev().children();
 
         equal(headerCols.length, 2);
         equal(headerCols[0].style.width, "10px");
@@ -105,7 +105,7 @@
             ]
         });
 
-        var headerCells = instance.header.find("th");
+        var headerCells = instance.thead.find("th");
 
         equal(headerCells.length, 3);
         ok(!headerCells.eq(0).is(":visible"));
@@ -117,7 +117,7 @@
         createTreeList();
 
         instance.hideColumn(1);
-        var headerCells = instance.header.find("th");
+        var headerCells = instance.thead.find("th");
 
         equal(headerCells.length, 3);
         ok(headerCells.eq(0).is(":visible"));
@@ -209,8 +209,8 @@
 
         instance.showColumn(0);
 
-        var headerCols = instance.header.prev().children();
-        var contentCols = instance.content.prev().children();
+        var headerCols = instance.thead.prev().children();
+        var contentCols = instance.tbody.prev().children();
 
         equal(headerCols.length, 3);
         equal(headerCols[0].style.width, "10px");
@@ -234,7 +234,7 @@
         });
 
         instance.showColumn(0);
-        var headerCols = instance.header.prev().children();
+        var headerCols = instance.thead.prev().children();
 
         equal(headerCols.length, 3);
         equal(headerCols[0].style.width, "10px");
@@ -248,8 +248,8 @@
         instance.hideColumn(1);
         instance.showColumn(1);
 
-        var headerCols = instance.header.prev().children();
-        var contentCols = instance.content.prev().children();
+        var headerCols = instance.thead.prev().children();
+        var contentCols = instance.tbody.prev().children();
 
         equal(headerCols.length, 3);
         equal(headerCols[0].style.width, "10px");
@@ -268,7 +268,7 @@
         instance.hideColumn(1);
         instance.showColumn(1);
 
-        var headerCells = instance.header.find("th");
+        var headerCells = instance.thead.find("th");
 
         equal(headerCells.length, 3);
         ok(headerCells.eq(0).is(":visible"));

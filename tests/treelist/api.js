@@ -76,9 +76,9 @@
         instance.destroy();
 
         ok(!instance.element);
-        ok(!instance.header);
+        ok(!instance.thead);
         ok(!instance.content);
-        ok(!instance.headerTree);
+        ok(!instance.theadTree);
         ok(!instance.contentTree);
     });
 
@@ -177,13 +177,13 @@
             sortable: true
         });
 
-        var sortable = instance.header.find("th:first").data("kendoColumnSorter");
+        var sortable = instance.thead.find("th:first").data("kendoColumnSorter");
 
         var ds = TreeListDataSource.create([ { id: 3, parentId: null } ]);
 
         instance.setDataSource(ds);
 
-        ok(instance.header.find("th:first").data("kendoColumnSorter") != sortable, "sorter instance is not changed");
+        ok(instance.thead.find("th:first").data("kendoColumnSorter") != sortable, "sorter instance is not changed");
     });
 
     test("setDataSource reinitializes filterable", function() {
@@ -191,13 +191,13 @@
             filterable: true
         });
 
-        var filterMenu = instance.header.find("th:first").data("kendoFilterMenu");
+        var filterMenu = instance.thead.find("th:first").data("kendoFilterMenu");
 
         var ds = TreeListDataSource.create([ { id: 3, parentId: null } ]);
 
         instance.setDataSource(ds);
 
-        ok(instance.header.find("th:first").data("kendoFilterMenu") != filterMenu, "filter menu instance is not changed");
+        ok(instance.thead.find("th:first").data("kendoFilterMenu") != filterMenu, "filter menu instance is not changed");
     });
 
     test("select calls selectable.value as getter", function() {

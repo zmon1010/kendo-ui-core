@@ -124,4 +124,79 @@
         var tds = treeList.content.find("td");
         equal(tds.eq(0).text(), "foo");
     });
+
+    ngTest("render headerTemplate with locked columns", 2, function() {
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: {
+                    data: [
+                        { id: 1, parentId: null, text: "foo" }
+                    ]
+                },
+                columns: [
+                    { field: "id", headerTemplate: "{{dataItem}}", locked: true },
+                    { field: "text", headerTemplate: "{{dataItem}}" }
+                ]
+            };
+        });
+
+        $("<div ng-controller=mine><div kendo-treelist='tree' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function() {
+        var treeList = QUnit.fixture.find('[data-role=treelist]').getKendoTreeList();
+
+        equal(treeList.thead.find("th").eq(0).text(), "");
+        equal(treeList.lockedHeader.find("th").eq(0).text(), "");
+    });
+
+    ngTest("render template with locked columns", 2, function() {
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: {
+                    data: [
+                        { id: 1, parentId: null, text: "foo" }
+                    ]
+                },
+                columns: [
+                    { template: "{{dataItem.id}}", locked: true },
+                    { template: "{{dataItem.text}}" }
+                ]
+            };
+        });
+
+        $("<div ng-controller=mine><div kendo-treelist='tree' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function() {
+        var treeList = QUnit.fixture.find('[data-role=treelist]').getKendoTreeList();
+
+        equal(treeList.tbody.find("td").eq(0).text(), "foo");
+        equal(treeList.lockedContent.find("td").eq(0).text(), "1");
+    });
+
+    ngTest("render footerTemplate with locked columns", 2, function() {
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: {
+                    data: [
+                        { id: 1, parentId: null, text: "foo" }
+                    ]
+                },
+                columns: [
+                    { field: "id", footerTemplate: "{{dataItem}}", locked: true },
+                    { field: "text", footerTemplate: "{{dataItem}}" }
+                ]
+            };
+        });
+
+        $("<div ng-controller=mine><div kendo-treelist='tree' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function() {
+        var treeList = QUnit.fixture.find('[data-role=treelist]').getKendoTreeList();
+
+        equal(treeList.tbody.find(".k-footer-template td").eq(0).text(), "");
+        equal(treeList.lockedContent.find(".k-footer-template td").eq(0).text(), "");
+    });
 })();
