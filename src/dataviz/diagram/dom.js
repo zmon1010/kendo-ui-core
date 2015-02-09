@@ -1704,11 +1704,7 @@
                     var view = this.dataSource.view() || [];
                     var index = view.length;
                     var model = this.dataSource.insert(index, {});
-                    this.dataSource.one("sync", function() {
-                        var shape = that._dataMap[model.id];
-                        that.edit(shape);
-                    });
-                    this.dataSource.sync();
+                    that.editModel(model, "shape");
                 }
             },
 
@@ -1723,17 +1719,15 @@
                 }
             },
 
-            edit: function(item) {
+            editModel: function(dataItem, editorType) {
                 this.cancelEdit();
-                var editorType, editors, template;
+                var editors, template;
                 var editable = this.options.editable;
 
-                if (item instanceof Shape) {
-                    editorType = "shape";
+                if (editorType == "shape") {
                     editors = editable.shapeEditors;
                     template = editable.shapeTemplate;
-                } else if (item instanceof Connection) {
-                    editorType = "connection";
+                } else if (editorType == "connection") {
                     var connectionSelectorHandler = proxy(connectionSelector, this);
                     editors = deepExtend({}, { from: connectionSelectorHandler, to: connectionSelectorHandler }, editable.connectionEditors);
                     template = editable.connectionTemplate;
@@ -1741,18 +1735,23 @@
                     return;
                 }
 
-                if (item.dataItem) {
-                    this.editor = new PopupEditor(this.element, {
-                        update: proxy(this._update, this),
-                        cancel: proxy(this._cancel, this),
-                        model: item.dataItem,
-                        type: editorType,
-                        target: this,
-                        editors: editors,
-                        template: template
-                    });
+                this.editor = new PopupEditor(this.element, {
+                    update: proxy(this._update, this),
+                    cancel: proxy(this._cancel, this),
+                    model: dataItem,
+                    type: editorType,
+                    target: this,
+                    editors: editors,
+                    template: template
+                });
 
-                    this.trigger("edit", this._editArgs());
+                this.trigger("edit", this._editArgs());
+            },
+
+            edit: function(item) {
+                if (item.dataItem) {
+                    var editorType = item instanceof Shape ? "shape" : "connection";
+                    this.editModel(item.dataItem, editorType);
                 }
             },
 
@@ -3462,9 +3461,14 @@
             },
 
             _removeShapes: function(items) {
-                for (var i = 0; i < items.length; i++) {
-                    this.remove(this._dataMap[items[i].id], false);
-                    this._dataMap[items[i].id] = null;
+                var dataMap = this._dataMap;
+                var item, i;
+                for (i = 0; i < items.length; i++) {
+                    item = items[i];
+                    if (dataMap[item.id]) {
+                        this.remove(dataMap[item.id], false);
+                        dataMap[item.id] = null;
+                    }
                 }
             },
 
@@ -3486,7 +3490,9 @@
                     var dataItem = items[i];
 
                     var shape = this._dataMap[dataItem.id];
-                    shape.updateOptionsFromModel(dataItem, field);
+                    if (shape) {
+                        shape.updateOptionsFromModel(dataItem, field);
+                    }
                 }
             },
 
