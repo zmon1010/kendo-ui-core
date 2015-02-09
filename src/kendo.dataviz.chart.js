@@ -970,7 +970,7 @@ var __meta__ = {
 
                 highlight.show(point);
 
-                return true;
+                return point.tooltipTracking;
             }
         },
 
