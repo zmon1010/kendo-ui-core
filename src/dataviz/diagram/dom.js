@@ -1295,7 +1295,7 @@
                         instance = shape.getConnector(connectorName);
                         that[name](instance, false);
                         that.updateModel();
-                    }
+                    };
                     if (diagram._dataMap[dataItem.id]) {
                        setNewTarget();
                     } else {
@@ -2302,6 +2302,7 @@
                 var elements = splitDiagramElements(items);
                 var shapes = elements.shapes;
                 var connections = elements.connections;
+                var i;
 
                 if (!defined(undoable)) {
                     undoable = true;
@@ -2312,11 +2313,11 @@
                 }
 
                 this._suspendModelRefresh();
-                for (var i = shapes.length - 1; i >= 0; i--) {
+                for (i = shapes.length - 1; i >= 0; i--) {
                    this._removeItem(shapes[i], undoable, connections);
                 }
 
-                for (var i = connections.length - 1; i >= 0; i--) {
+                for (i = connections.length - 1; i >= 0; i--) {
                     this._removeItem(connections[i], undoable);
                 }
 
@@ -3132,7 +3133,7 @@
                     return shape;
                 }
 
-                options = deepExtend({}, this.options.shapeDefaults);
+                var options = deepExtend({}, this.options.shapeDefaults);
                 options.dataItem = dataItem;
                 shape = new Shape(options, this);
                 this.addShape(shape, { undoable: undoable !== false });
