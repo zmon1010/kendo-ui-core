@@ -4347,7 +4347,8 @@
                         dataValueField: model.idField,
                         dataTextField: textField,
                         dataSource: this.dataSource.data().toJSON(),
-                        optionLabel: " "
+                        optionLabel: " ",
+                        valuePrimitive: true
                     });
             }
         }
