@@ -1942,6 +1942,7 @@
                             shape.updateModel();
                         }
                         unit = new TransformUnit(this.shapes, this.shapeStates, this);
+                        this.diagram._syncShapeChanges();
                     }
                 }
 
