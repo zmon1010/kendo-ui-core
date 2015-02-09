@@ -1019,17 +1019,18 @@
 
             updateOptionsFromModel: function(model) {
                 if (this.diagram && this.diagram._isEditable) {
+                    var dataMap = this.diagram._dataMap;
                     var options = filterConnectionDataItem(model || this.dataItem);
 
                     if (model) {
                         if (defined(options.from)) {
-                            this.source(options.from);
+                            this.source(dataMap[options.from]);
                         } else if (defined(options.fromX) && defined(options.fromY)) {
                             this.source(new Point(options.fromX, options.fromY));
                         }
 
                         if (defined(options.to)) {
-                            this.target(options.to);
+                            this.target(dataMap[options.to]);
                         } else if (defined(options.toX) && defined(options.toY)) {
                             this.target(new Point(options.toX, options.toY));
                         }
