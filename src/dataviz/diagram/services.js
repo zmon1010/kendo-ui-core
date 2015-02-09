@@ -194,31 +194,36 @@
                 this.item = item;
                 this._redoSource = redoSource;
                 this._redoTarget = redoTarget;
-                this._undoSource = item.source();
-                this._undoTarget = item.target();
+                if (defined(redoSource)) {
+                    this._undoSource = item.source();
+                }
+
+                if (defined(redoTarget)) {
+                    this._undoTarget = item.target();
+                }
                 this.title = "Connection Editing";
             },
             undo: function () {
                 if (this._undoSource !== undefined) {
-                    this.item.source(this._undoSource, false);
+                    this.item._updateConnector(this._undoSource, "source");
                 }
 
                 if (this._undoTarget !== undefined) {
-                    this.item.target(this._undoTarget, false);
+                    this.item._updateConnector(this._undoTarget, "target");
                 }
 
-                this.item.updateModel(this._undoSource, this._undoTarget);
+                this.item.updateModel();
             },
             redo: function () {
                 if (this._redoSource !== undefined) {
-                    this.item.source(this._redoSource, false);
+                    this.item._updateConnector(this._redoSource, "source");
                 }
 
                 if (this._redoTarget !== undefined) {
-                    this.item.target(this._redoTarget, false);
+                    this.item._updateConnector(this._redoTarget, "target");
                 }
 
-                this.item.updateModel(this._undoSource, this._undoTarget);
+                this.item.updateModel();
             }
         });
 
@@ -232,14 +237,14 @@
                 this.title = "Connection Editing";
             },
             undo: function () {
-                this.item.source(this._undoSource, false);
-                this.item.target(this._undoTarget, false);
-                this.item.updateModel(this._undoSource, this._undoTarget);
+                this.item._updateConnector(this._undoSource, "source");
+                this.item._updateConnector(this._undoTarget, "target");
+                this.item.updateModel();
             },
             redo: function () {
-                this.item.source(this._redoSource, false);
-                this.item.target(this._redoTarget, false);
-                this.item.updateModel(this._undoSource, this._undoTarget);
+                this.item._updateConnector(this._redoSource, "source");
+                this.item._updateConnector(this._redoTarget, "target");
+                this.item.updateModel();
             }
         });
 
@@ -254,7 +259,7 @@
                 this.diagram._addConnection(this.connection, false);
             },
             redo: function () {
-                this.diagram._remove(this.connection, false);
+                this.diagram.remove(this.connection, false);
             }
         });
 
@@ -270,7 +275,7 @@
             },
             redo: function () {
                 this.shape.select(false);
-                this.diagram._remove(this.shape, false);
+                this.diagram.remove(this.shape, false);
             }
         });
         /**
@@ -296,6 +301,7 @@
                     if (shape.hasOwnProperty("layout")) {
                         shape.layout(shape, this.redoStates[i], this.undoStates[i]);
                     }
+                    shape.updateModel();
                 }
                 if (this.adorner) {
                     this.adorner.refreshBounds();
@@ -310,6 +316,7 @@
                     if (shape.hasOwnProperty("layout")) {
                         shape.layout(shape, this.undoStates[i], this.redoStates[i]);
                     }
+                    shape.updateModel();
                 }
 
                 if (this.adorner) {
@@ -327,7 +334,7 @@
             },
 
             undo: function () {
-                this.diagram._remove(this.connection, false);
+                this.diagram.remove(this.connection, false);
             },
 
             redo: function () {
@@ -344,7 +351,7 @@
 
             undo: function () {
                 this.diagram.deselect();
-                this.diagram._remove(this.shape, false);
+                this.diagram.remove(this.shape, false);
             },
 
             redo: function () {
@@ -389,6 +396,7 @@
                     if (shape.hasOwnProperty("layout")) {
                         shape.layout(shape);
                     }
+                    shape.updateModel();
                 }
                 if (this.adorner) {
                     this.adorner._initialize();
@@ -403,6 +411,7 @@
                     if (shape.hasOwnProperty("layout")) {
                         shape.layout(shape);
                     }
+                    shape.updateModel();
                 }
                 if (this.adorner) {
                     this.adorner._initialize();
@@ -444,12 +453,16 @@
         /**
          * Undo-redo service.
          */
-        var UndoRedoService = Class.extend({
-            init: function () {
+        var UndoRedoService = kendo.Observable.extend({
+            init: function (options) {
+                kendo.Observable.fn.init.call(this, options);
+                this.bind(this.events, options);
                 this.stack = [];
                 this.index = 0;
                 this.capacity = 100;
             },
+
+            events: ["undone", "redone"],
 
             /**
              * Starts the collection of units. Add those with
@@ -469,9 +482,9 @@
             /**
              * Commits a batch of units.
              */
-            commit: function () {
+            commit: function (execute) {
                 if (this.composite.units.length > 0) {
-                    this._restart(this.composite);
+                    this._restart(this.composite, execute);
                 }
                 this.composite = undefined;
             },
@@ -512,6 +525,7 @@
                 if (this.index > 0) {
                     this.index--;
                     this.stack[this.index].undo();
+                    this.trigger("undone");
                 }
             },
 
@@ -522,6 +536,7 @@
                 if (this.stack.length > 0 && this.index < this.stack.length) {
                     this.stack[this.index].redo();
                     this.index++;
+                    this.trigger("redone");
                 }
             },
 
@@ -529,7 +544,7 @@
                 // throw away anything beyond this point if this is a new branch
                 this.stack.splice(this.index, this.stack.length - this.index);
                 this.stack.push(composite);
-                if (isUndefined(execute) || (execute && (execute === true))) {
+                if (execute !== false) {
                     this.redo();
                 } else {
                     this.index++;
@@ -792,7 +807,7 @@
                     nc.target(hi);
                 }
 
-                nc.updateModel();
+                nc.updateModel(true);
 
                 this.toolService._connectionManipulation();
             },
@@ -931,8 +946,13 @@
                         diagram.paste();
                     }
                 } else if (key === 46 || key === 8) {// del: deletion
-                    diagram.remove(diagram.select(), true);
-                    diagram._destroyToolBar();
+                    var toRemove = this.diagram._triggerRemove(diagram.select());
+                    if (toRemove.length) {
+                        this.diagram.remove(toRemove, true);
+                        this.diagram._syncChanges();
+                        this.diagram._destroyToolBar();
+                    }
+
                     return true;
                 } else if (key === 27) {// ESC: stop any action
                     this._discardNewConnection();
@@ -1361,9 +1381,7 @@
                     this.connection.target(target);
                 }
 
-                if (this.handle) {
-                    this.connection.updateModel();
-                }
+                this.connection.updateModel(true);
 
                 this.handle = undefined;
                 this._ts._connectionManipulation();
@@ -1908,7 +1926,7 @@
                     if (this._rotating) {
                         unit = new RotateUnit(this, this.shapes, this.initialRotates);
                         this._rotating = false;
-                    } else {
+                    } else if (this._diffStates()) {
                         if (this.diagram.ruler) {
                             for (i = 0; i < this.shapes.length; i++) {
                                 shape = this.shapes[i];
@@ -1924,6 +1942,7 @@
                             shape.updateModel();
                         }
                         unit = new TransformUnit(this.shapes, this.shapeStates, this);
+                        this.diagram._syncShapeChanges();
                     }
                 }
 
@@ -1931,6 +1950,18 @@
                 this._internalChange = undefined;
                 this._rotating = undefined;
                 return unit;
+            },
+
+            _diffStates: function() {
+                var shapes = this.shapes;
+                var states = this.shapeStates;
+                var bounds;
+                for (var idx = 0; idx < shapes.length; idx++) {
+                    if (!shapes[idx].bounds().equals(states[idx])) {
+                        return true;
+                    }
+                }
+                return false;
             },
 
             refreshBounds: function () {

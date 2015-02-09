@@ -99,6 +99,22 @@
         ok(c.targetConnector !== undefined, "Connection is attached to the target.");
     });
 
+    test("Dragging shapes does not add undo unit if the shapes positions have not changed", function () {
+        var shape1 = d.shapes[0], shape2 = d.shapes[1];
+        var stackCount = d.undoRedoService.count();
+
+        shape1.select(true);
+        shape2.select(true);
+
+        var shape1Center = shape1.bounds().center().minus(new diagram.Point(5, 5));
+
+        d.toolService.start(shape1Center);
+        d.toolService.move(shape1.bounds().center());
+        d.toolService.end(shape1Center);
+
+        equal(d.undoRedoService.count(), stackCount);
+    });
+
     (function() {
         var adorner;
         var visual;
