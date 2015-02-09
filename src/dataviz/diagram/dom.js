@@ -493,6 +493,17 @@
 
             options: diagram.shapeDefaults(),
 
+            _setOptionsFromModel: function(model) {
+                var modelOptions = filterShapeDataItem(model || this.dataItem);
+                this.options = deepExtend({}, this.options, modelOptions);
+
+                this.redrawVisual();
+                if (this.options.content) {
+                    this._template();
+                    this.content(this.options.content);
+                }
+            },
+
             updateOptionsFromModel: function(model, field) {
                 if (this.diagram && this.diagram._isEditable) {
                     var modelOptions = filterShapeDataItem(model || this.dataItem);
@@ -1015,6 +1026,10 @@
                 endCap: NONE,
                 points: [],
                 selectable: true
+            },
+
+            _setOptionsFromModel: function(model) {
+                this.updateOptionsFromModel(model || this.dataItem);
             },
 
             updateOptionsFromModel: function(model) {
@@ -1781,7 +1796,12 @@
 
             _cancel: function() {
                 if (this.editor && !this.trigger("cancel", this._editArgs())) {
-                    this._getEditDataSource().cancelChanges(this.editor.model);
+                    var model = this.editor.model;
+                    this._getEditDataSource().cancelChanges(model);
+                    var element = this._connectionsDataMap[model.uid] || this._dataMap[model.id];
+                    if (element) {
+                        element._setOptionsFromModel(model);
+                    }
                     this._destroyEditor();
                 }
             },
