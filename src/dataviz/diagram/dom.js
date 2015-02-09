@@ -3086,9 +3086,8 @@
                 if (undoable) {
                     this.undoRedoService.addCompositeItem(new DeleteConnectionUnit(connection));
                 }
-                else {
-                    Utils.remove(this.connections, connection);
-                }
+
+                Utils.remove(this.connections, connection);
             },
 
             _removeDataItems: function(items, recursive) {
