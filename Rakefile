@@ -35,13 +35,13 @@ ARCHIVE_ROOT = File.join(RELEASE_ROOT, "Builds")
 
 if ENV['DRY_RUN']
     ADMIN_URL = 'http://integrationadmin.telerik.com/'
-    ADMIN_RELEASE_UPLOAD_LOGIN = 'stefan.rahnev@telerik.local'
+    ADMIN_RELEASE_UPLOAD_LOGIN = 'KendoBuildUser@telerik.local'
 
     SITE_URL = "http://wwwsit.telerik.com"
     SITE_LOGIN = "stefan.rahnev@telerik.local"
 else
     ADMIN_URL = 'http://admin.telerik.com/'
-    ADMIN_RELEASE_UPLOAD_LOGIN = 'stefan.rahnev@telerik.com'
+    ADMIN_RELEASE_UPLOAD_LOGIN = 'KendoBuildUser@telerik.com'
 
     SITE_URL = "http://www1.telerik.com"
     SITE_LOGIN = "stefan.rahnev@telerik.com"
@@ -49,7 +49,7 @@ else
     NUGET_SITE_LOGIN = "stefan.rahnev@telerik.com"
 end
 
-ADMIN_RELEASE_UPLOAD_PASS = "t3l3r1k@dm1n"
+ADMIN_RELEASE_UPLOAD_PASS = "Kend0Tf$UseR"
 SITE_DOWNLOAD_BUILDER_UPLOAD_PASS = "t3l3r1kc0m"
 NUGET_UPLOAD_PASS = "nug3t0rg"
 
