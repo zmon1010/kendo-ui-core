@@ -50,10 +50,20 @@ class MarkdownParser
 
         end
 
+        class_methods = class_methods_section(root)
+        each_section(class_methods) do |method, index|
+            method = component.add_class_method(:name => section_name(method),
+                                                :result => method_result(index, class_methods),
+                                                :description => section_description(index, class_methods))
+
+            parameters = class_methods.slice(index + 1, class_methods.size)
+
+            add_parameters(method, parameters)
+
+        end
+
         methods = methods_section(root)
-
         each_section(methods) do |method, index|
-
             method = component.add_method(:name => section_name(method),
                                           :result => method_result(index, methods),
                                           :description => section_description(index, methods))
@@ -163,6 +173,15 @@ class MarkdownParser
         start_index = child_index(element, 'Methods')
 
         end_index = child_index(element, 'Events')
+
+        element.children.slice(start_index..end_index)
+    end
+
+    def class_methods_section(element)
+        start_index = child_index(element, 'Class methods')
+
+        end_index = child_index(element, 'Configuration')
+        end_index = child_index(element, 'Methods') if end_index == element.children.size
 
         element.children.slice(start_index..end_index)
     end

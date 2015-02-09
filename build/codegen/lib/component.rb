@@ -19,7 +19,7 @@ module CodeGen
     class Component
         include Options
 
-        attr_reader :full_name, :name, :options, :events, :methods, :fields
+        attr_reader :full_name, :name, :options, :events, :methods, :class_methods, :fields
 
         def initialize(settings)
             @full_name = settings[:name]
@@ -29,6 +29,7 @@ module CodeGen
             @events = []
             @fields = []
             @methods = []
+            @class_methods = []
             @content = false
         end
 
@@ -87,6 +88,16 @@ module CodeGen
             method = method_class.new(settings)
 
             @methods.push(method)
+
+            method
+        end
+
+        def add_class_method(settings)
+            settings[:owner] = self
+
+            method = method_class.new(settings)
+
+            @class_methods.push(method)
 
             method
         end

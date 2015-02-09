@@ -35,6 +35,11 @@
         <%= declaration %>
 % end
 % end
+% class_methods.each do |class_method|
+% class_method.type_script_declarations.each do |declaration|
+        static <%= declaration %>
+% end
+% end
 % fields.each do |field|
 % if (field.name != 'dataSource' && field.name != "options")
         <%= field.type_script_declaration %>
