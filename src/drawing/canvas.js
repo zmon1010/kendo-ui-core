@@ -484,6 +484,7 @@
 
             this.onLoad = $.proxy(this.onLoad, this);
             this.onError = $.proxy(this.onError, this);
+            this.loading = $.Deferred();
 
             var img = this.img = new Image();
 
@@ -491,18 +492,14 @@
                 img.crossOrigin = cors;
             }
 
-            img.onload = this.onLoad;
-            img.onerror = this.onError;
             var src = img.src = srcElement.src();
 
-            // Make sure the load event fires for cached images too
-            // See https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
-            if (img.complete || img.complete === undefined) {
-                img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-                img.src = src;
+            if (img.complete) {
+                this.onLoad();
+            } else {
+                img.onload = this.onLoad;
+                img.onerror = this.onError;
             }
-
-            this.loading = $.Deferred();
         },
 
         renderTo: function(ctx) {

@@ -498,18 +498,18 @@
         }
         urls.forEach(function(url){
             var img = IMAGE_CACHE[url] = new Image();
-            img.onload = next;
-            img.onerror = function() {
-                IMAGE_CACHE[url] = null;
-                next();
-            };
+            if (!(/^data:/i.test(url))) {
+                img.crossOrigin = "Anonymous";
+            }
             img.src = url;
-            // XXX.  revisit similar change in core.js
-            // hack from https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
-            // make sure the load event fires for cached images too
-            if (img.complete || img.complete === undefined) {
-                img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-                img.src = url;
+            if (img.complete) {
+                next();
+            } else {
+                img.onload = next;
+                img.onerror = function() {
+                    IMAGE_CACHE[url] = null;
+                    next();
+                };
             }
         });
     }
