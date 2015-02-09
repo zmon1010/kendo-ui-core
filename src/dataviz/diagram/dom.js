@@ -1204,7 +1204,7 @@
                 var dataItem;
                 if (isDefined(target)) {
                     if (undoable && this.diagram) {
-                        this.diagram.undoRedoService.addCompositeItem(new diagram.ConnectionEditUnit(this, target));
+                        this.diagram.undoRedoService.addCompositeItem(new diagram.ConnectionEditUnit(this, undefined, target));
                     }
 
                     if (target !== undefined) {
@@ -2335,12 +2335,14 @@
             _removeShapeDataItem: function(item) {
                 if (this._isEditable) {
                     this.dataSource.remove(item.dataItem);
+                    delete this._dataMap[item.dataItem.id];
                 }
             },
 
             _removeConnectionDataItem: function(item) {
                 if (this._isEditable) {
                     this.connectionsDataSource.remove(item.dataItem);
+                    delete this._connectionsDataMap[item.dataItem.uid];
                 }
             },
 
