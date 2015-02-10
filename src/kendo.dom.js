@@ -21,6 +21,19 @@ var __meta__ = {
         }
     };
 
+    function NullNode() {
+    }
+
+    NullNode.prototype = {
+        nodeName: "#null",
+        attr: {},
+        children: [],
+        remove: function() {
+        }
+    };
+
+    var NULL_NODE = new NullNode();
+
     function Element(nodeName, attr, children) {
         this.nodeName = nodeName;
 
@@ -33,103 +46,125 @@ var __meta__ = {
 
     Element.prototype = new Node();
 
-    Element.prototype.render = function(parent, cached) {
-        var node;
-
-        var index;
+    Element.prototype.appendTo = function(parent) {
+        var node = document.createElement(this.nodeName);
 
         var children = this.children;
 
-        var length = children.length;
+        for (var index = 0; index < children.length; index++) {
+            children[index].render(node, NULL_NODE);
+        }
 
-        if (!cached || cached.nodeName !== this.nodeName) {
-            if (cached) {
-                cached.remove();
-                cached = null;
-            }
+        parent.appendChild(node);
 
-            node = document.createElement(this.nodeName);
+        return node;
+    };
 
-            for (index = 0; index < length; index++) {
-                children[index].render(node, null);
-            }
+    Element.prototype.render = function(parent, cached) {
+        var node;
 
-            parent.appendChild(node);
+        if (cached.nodeName !== this.nodeName) {
+            cached.remove();
+
+            node = this.appendTo(parent);
         } else {
             node = cached.node;
 
+            var index;
+
+            var children = this.children;
+
+            var length = children.length;
+
             var cachedChildren = cached.children;
 
-            if (Math.abs(cachedChildren.length - length) > 2) {
+            var cachedLength = cachedChildren.length;
+
+            if (Math.abs(cachedLength - length) > 2) {
                 this.render({
                     appendChild: function(node) {
                         parent.replaceChild(node, cached.node);
                     }
-                }, null);
+                }, NULL_NODE);
 
                 return;
             }
 
             for (index = 0; index < length; index++) {
-                children[index].render(node, cachedChildren[index]);
+                children[index].render(node, cachedChildren[index] || NULL_NODE);
             }
 
-            for (index = length, length = cachedChildren.length; index < length; index++) {
+            for (index = length; index < cachedLength; index++) {
                 cachedChildren[index].remove();
             }
         }
 
-        var attr = this.attr;
-        var attrName;
-
-        for (attrName in attr) {
-            if (!cached || attr[attrName] !== cached.attr[attrName]) {
-                if (node[attrName] !== undefined) {
-                    if (attrName !== "style") {
-                        node[attrName] = attr[attrName];
-                    } else {
-                        var cssText = "";
-
-                        var style = attr[attrName];
-
-                        for (var key in style) {
-                            cssText += key;
-                            cssText += ":";
-                            cssText += style[key];
-                            cssText += ";";
-                        }
-
-                        if (!cached || cached.cssText !== cssText) {
-                            node.style.cssText = cssText;
-                        }
-
-                        this.cssText = cssText;
-                    }
-                } else {
-                    node.setAttribute(attrName, attr[attrName]);
-                }
-            }
-        }
-
-        if (cached) {
-            for (attrName in cached.attr) {
-                if (attr[attrName] === undefined) {
-                    if (node[attrName] !== undefined) {
-                        if (attrName === "style") {
-                            node.style.cssText = "";
-                        } else if (attrName === "className") {
-                            node[attrName] = "";
-                        } else {
-                            node.removeAttribute(attrName);
-                        }
-                    } else {
-                        node.removeAttribute(attrName);
-                    }
-                }
-            }
-        }
-
         this.node = node;
+
+        this.syncAttributes(cached.attr);
+
+        this.removeAttributes(cached.attr);
+    };
+
+    Element.prototype.syncAttributes = function(cachedAttr) {
+        var attr = this.attr;
+
+        for (var name in attr) {
+            var value = attr[name];
+
+            var cachedValue = cachedAttr[name];
+
+            if (value !== cachedValue) {
+                this.setAttribute(name, value, cachedValue);
+            }
+        }
+    };
+
+    Element.prototype.removeAttributes = function(cachedAttr) {
+        var attr = this.attr;
+
+        for (var cachedAttrName in cachedAttr) {
+            if (attr[cachedAttrName] === undefined) {
+                this.removeAttribute(cachedAttrName);
+            }
+        }
+    };
+
+    Element.prototype.removeAttribute = function(name) {
+        var node = this.node;
+
+        if (name === "style") {
+            node.style.cssText = "";
+        } else if (name === "className") {
+            node.className = "";
+        } else {
+            node.removeAttribute(name);
+        }
+    };
+
+    Element.prototype.setAttribute = function(name, value, cachedValue) {
+        var node = this.node;
+
+        if (name === "style") {
+            var cssText = "";
+
+            for (var key in value) {
+                cssText += key;
+                cssText += ":";
+                cssText += value[key];
+                cssText += ";";
+            }
+
+            if (cachedValue !== cssText) {
+                node.style.cssText = cssText;
+            }
+
+            this.cssText = cssText;
+        } else if (node[name] !== undefined) {
+            node[name] = value;
+        } else {
+            node.setAttribute(name, value);
+        }
     };
 
     function TextNode(nodeValue) {
@@ -143,10 +178,9 @@ var __meta__ = {
     TextNode.prototype.render = function(parent, cached) {
         var node;
 
-        if (!cached || cached.nodeName !== this.nodeName) {
-            if (cached) {
-                cached.remove();
-            }
+        if (cached.nodeName !== this.nodeName) {
+            cached.remove();
+
             node = document.createTextNode(this.nodeValue);
 
             parent.appendChild(node);
@@ -167,16 +201,15 @@ var __meta__ = {
 
     HtmlNode.prototype = {
        nodeName: "#html",
+       attr: {},
        remove: function() {
            for (var index = 0; index < this.nodes.length; index++) {
                this.nodes[index].parentNode.removeChild(this.nodes[index]);
            }
        },
        render: function(parent, cached) {
-           if (!cached || cached.nodeName !== this.nodeName || cached.html !== this.html) {
-               if (cached) {
-                   cached.remove();
-               }
+           if (cached.nodeName !== this.nodeName || cached.html !== this.html) {
+               cached.remove();
 
                var lastChild = parent.lastChild;
 
@@ -222,7 +255,7 @@ var __meta__ = {
             var length;
 
             for (index = 0, length = children.length; index < length; index++) {
-               children[index].render(this.root, cachedChildren[index]);
+               children[index].render(this.root, cachedChildren[index] || NULL_NODE);
             }
 
             for (index = length; index < cachedChildren.length; index++) {

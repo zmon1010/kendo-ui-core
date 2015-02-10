@@ -1,0 +1,437 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="loader.js"></script>
+        <script>
+          requireSync([
+            "../src/jquery.js",
+            "../src/kendo.dom.js"
+          ]);
+        </script>
+        <style>
+            #wrapper {
+                border: 1px solid black;
+                width: 800px;
+                height: 600px;
+                overflow: scroll;
+            }
+
+            #area {
+                height: 1000000px;
+                width: 1000000px;
+            }
+
+            #container {
+                position: fixed;
+                overflow: hidden;
+            }
+
+            #area table {
+                table-layout: fixed;
+                position: absolute;
+                border-collapse: collapse;
+                box-sizing: border-box;
+            }
+
+            #container table {
+                width: 100%;
+                height: 100%;
+            }
+
+            #area table td {
+                border: 1px solid gray;
+                /*
+                overflow: hidden;
+                box-sizing: border-box;
+                */
+                font-size: 11px;
+            }
+
+            .cell {
+                box-sizing: border-box;
+                border: 1px solid gray;
+                overflow: hidden;
+                font-size: 11px;
+                position: absolute;
+            }
+
+            form {
+                float: right;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <p>
+                <label>FPS:<span id="fps"></span></label>
+            </p>
+            <p>
+            <label>Virtual DOM:<span id="virtual"></span></label>
+            </p>
+            <p>
+            <label>Table:<span id="table"></span></label>
+            </p>
+            <p>
+            <label>innerHTML:<span id="innerHTML"></span></label>
+            </p>
+            <p>
+            <label>translate:<span id="translate"></span></label>
+            </p>
+            <p>
+            <label>translate3d:<span id="translate3d"></span></label>
+            </p>
+            <p>
+            <label>requestAnimationFrame:<span id="raf"></span></label>
+            </p>
+        </form>
+        <div id="wrapper">
+            <div id="area">
+                <div id="container"></div>
+            </div>
+        </div>
+
+        <script>
+            var COLUMNS = 16384;
+            var ROWS = 1048576;
+            var COLUMN_WIDTH = 64;
+            var ROW_HEIGHT = 20;
+
+            var wrapper = document.getElementById("wrapper");
+            var container = document.getElementById("container");
+            var area = document.getElementById("area");
+
+
+            var viewportWidth = wrapper.clientWidth;
+            container.style.width = viewportWidth + "px";
+            var viewportHeight = wrapper.clientHeight;
+            container.style.height = viewportHeight + "px";
+            var maxWidth = wrapper.scrollWidth - (wrapper.offsetWidth - viewportWidth);
+            var maxHeight = wrapper.scrollHeight - (wrapper.offsetHeight - viewportHeight);
+            var widths = { 1: 120, 50: 200 };
+            var heights = { 1: 120, 50: 200 };
+
+            //kendo.support.kineticScrollNeeded = true;
+
+            if (kendo.support.kineticScrollNeeded) {
+                area.removeChild(container);
+                area.style.position = "relative";
+                container = area;
+            }
+
+            var virtual = true;
+            var table = true;
+            var innerHTML = !virtual;
+            var raf = false;
+            var translate = false;
+            var translate3d = false;
+
+            document.getElementById("virtual").innerHTML = virtual;
+            document.getElementById("table").innerHTML = table;
+            document.getElementById("innerHTML").innerHTML = innerHTML;
+            document.getElementById("translate").innerHTML = translate;
+            document.getElementById("translate3d").innerHTML = translate3d;
+            document.getElementById("raf").innerHTML = raf;
+
+            function heightForRowAtIndex(index) {
+                return heights[index] || ROW_HEIGHT;
+            }
+
+            function widthForColumnAtIndex(index) {
+                return widths[index] || COLUMN_WIDTH;
+            }
+
+            var tree = new kendo.dom.Tree(container);
+
+            function visibleRange(measure, start, end, max) {
+                var value = 0;
+                var index = 0;
+                var indexes = [];
+                var offset = 0;
+                var size = 0;
+
+                while (start > value) {
+                    size = measure(index);
+
+                    if (value + size > start) {
+                        offset = start - value;
+                    } else {
+                        index ++;
+                    }
+                    value += size;
+                }
+
+                if (end < max) {
+                    end += size;
+                } else {
+                    end += offset;
+                }
+
+                while (value <= end) {
+                    value += measure(index);
+                    indexes.push(index);
+                    index ++;
+                }
+
+                return {
+                    offset: offset,
+                    indexes: indexes
+                };
+            }
+
+            wrapper.onscroll = scroll;
+
+            var start = new Date();
+
+            function drawTable(left, right, top, bottom) {
+                var rowRange = visibleRange(heightForRowAtIndex, top, bottom, maxHeight);
+                var rows = rowRange.indexes;
+
+                var columnRange = visibleRange(widthForColumnAtIndex, left, right, maxWidth);
+                var columns = columnRange.indexes;
+
+                var x = -columnRange.offset - 1;
+                var y = -rowRange.offset - 1;
+
+                if (kendo.support.kineticScrollNeeded) {
+                    x += left;
+                    y += top;
+                }
+
+                if (innerHTML) {
+                    var html = '<table style="left:';
+                    html += x;
+                    html += "px;top:";
+                    html += y;
+                    html += 'px">'
+
+                    html += "<colgroup>"
+
+                    for (var ci = 0; ci < columns.length; ci++) {
+                        html += '<col style="width:';
+                        html += widthForColumnAtIndex(columns[ci]);
+                        html += 'px">'
+                    }
+
+                    html += "</colgroup>"
+                    html += "<tbody>"
+                    for (var ri = 0; ri < rows.length; ri++) {
+                        html += '<tr style="height:';
+                        html += heightForRowAtIndex(rows[ri]);
+                        html += 'px">'
+                        for (var ci = 0; ci < columns.length; ci++) {
+                            html += "<td>";
+                            html += rows[ri];
+                            html += ":";
+                            html += columns[ci];
+                            html += "</td>"
+                        }
+                        html += "</tr>";
+                    }
+                    html += "</tbody>"
+
+                    html += "</table>";
+                    container.innerHTML = html;
+                } else if (virtual) {
+                    var cols = [];
+
+                    for (var ci = 0; ci < columns.length; ci++) {
+                        cols.push(tree.element("col", { style: { width: widthForColumnAtIndex(columns[ci]) + "px" } }));
+                    }
+
+                    var tr = [];
+
+                    for (var ri = 0; ri < rows.length; ri++) {
+                        var height = heightForRowAtIndex(rows[ri]);
+                        var cells = [];
+
+                        for (var ci = 0; ci < columns.length; ci++) {
+                            cells.push(tree.element("td", null, [ tree.text(rows[ri] + ":" + columns[ci]) ] ));
+                        }
+
+                        tr.push(tree.element("tr", { style: { height: height + "px" } }, cells));
+                    }
+
+                    tree.render([
+                        tree.element("table", { style: { left: x + "px", top: y + "px" } },
+                        [
+                            tree.element("colgroup", null, cols),
+                            tree.element("tbody", null, tr)
+                        ])
+                    ]);
+                }
+
+                var end = new Date();
+
+                var fps = Math.round(1000/(end-start));
+                document.getElementById("fps").innerHTML = fps;
+
+                start = new Date();
+            }
+
+            function draw(left, right, top, bottom) {
+                var rowRange = visibleRange(heightForRowAtIndex, top, bottom, maxHeight);
+                var rows = rowRange.indexes;
+
+                var columnRange = visibleRange(widthForColumnAtIndex, left, right, maxWidth);
+                var columns = columnRange.indexes;
+
+                //var y = top - rowRange.offset;
+                var y = -rowRange.offset;
+
+                if (kendo.support.kineticScrollNeeded) {
+                    y += top;
+                }
+                var cells = [];
+                var html = "";
+
+                var childIndex = 0;
+
+                for (var ri = 0; ri < rows.length; ri++) {
+                    var height = heightForRowAtIndex(rows[ri]);
+
+                    //var x = left - columnRange.offset;
+                    var x = -columnRange.offset;
+
+                if (kendo.support.kineticScrollNeeded) {
+                    x += left;
+                }
+                    for (var ci = 0; ci < columns.length; ci++) {
+                        var width = widthForColumnAtIndex(columns[ci]);
+
+                        if (virtual) {
+                            var style = {
+                                width: width + "px",
+                                height: height + "px",
+                            };
+
+                            if (translate) {
+                                if (translate3d) {
+                                    style.transform = "translate3d(" + x + "px," + y + "px,0)";
+                                } else {
+                                    style["-webkit-transform"] = "translate(" + x + "px," + y + "px)";
+                                }
+                            } else {
+                                style.top = y + "px";
+                                style.left =  x + "px";
+                            }
+                            var cell = tree.element("div", {
+                                class: "cell",
+                                style: style,
+                            }, [ tree.text(rows[ri] + ":" + columns[ci]) ]);
+
+                            cells.push(cell);
+                        } else if(innerHTML) {
+                            html += '<div class="cell" style="width:';
+                            html += width;
+                            html += "px;height:";
+                            html += height;
+                            html += "px;"
+                            if (translate) {
+                                html += "-webkit-transform:"
+                                if (translate3d) {
+                                    html += "translate3d(";
+                                    html += x;
+                                    html += "px,";
+                                    html += y;
+                                    html += "px,0)"
+                                } else {
+                                    html += "translate(";
+                                    html += x;
+                                    html += "px,";
+                                    html += y;
+                                    html += "px)"
+                                }
+                            } else {
+                                html += "left:";
+                                html += x;
+                                html += "px;top:";
+                                html += y;
+                                html += "px";
+                            }
+                            html += '">';
+                            html += rows[ri];
+                            html += ":";
+                            html += columns[ci];
+                            html += "</div>";
+                        } else {
+                            var cell = container.childNodes[childIndex++];
+                            var existing = !!cell;
+
+                            if (!existing) {
+                                cell = document.createElement("div");
+                                cell.className = "cell";
+                            }
+                            var cssText = "width:";
+                            cssText += width;
+                            cssText += "px;height:";
+                            cssText += height;
+                            cssText += "px;";
+                            if (translate) {
+                                cssText += "-webkit-transform:"
+                                if (translate3d) {
+                                    cssText += "translate3d(" + x + "px, " + y + "px,0)";
+                                } else {
+                                    cssText += "translate(" + x + "px, " + y + "px)";
+                                }
+                            } else {
+                                cssText += "top:";
+                                cssText += y;
+                                cssText += "px;left:";
+                                cssText += x;
+                                cssText += "px";
+                            }
+                            //cell.style.transform = "translate(" + x + "px, " + y + "px)";
+                            //cell.style.webkitTransform = "translate(" + x + "px, " + y + "px)";
+                            cell.innerHTML = rows[ri] + ":" + columns[ci];
+                            cell.style.cssText = cssText;
+                            if (!existing) {
+                                container.appendChild(cell);
+                            }
+                        }
+
+                        x += width;
+                    }
+
+                    y += height;
+                }
+
+                if (virtual) {
+                    tree.render(cells);
+                } else if (innerHTML) {
+                    container.innerHTML = html;
+                }
+
+                var end = new Date();
+
+                var fps = Math.round(1000/(end-start));
+                document.getElementById("fps").innerHTML = fps;
+
+                start = new Date();
+            }
+
+            if (table) {
+                drawTable(0, viewportWidth, 0, viewportHeight);
+            } else {
+                draw(0, viewportWidth, 0, viewportHeight);
+            }
+
+            function scroll() {
+                if (raf) {
+                    requestAnimationFrame(function() {
+                        if (table) {
+                            drawTable(wrapper.scrollLeft, wrapper.scrollLeft + viewportWidth, wrapper.scrollTop, wrapper.scrollTop + viewportHeight);
+                        } else {
+                            draw(wrapper.scrollLeft, wrapper.scrollLeft + viewportWidth, wrapper.scrollTop, wrapper.scrollTop + viewportHeight);
+                        }
+                    });
+                } else {
+                    if (table) {
+                        drawTable(wrapper.scrollLeft, wrapper.scrollLeft + viewportWidth, wrapper.scrollTop, wrapper.scrollTop + viewportHeight);
+                    } else {
+                        draw(wrapper.scrollLeft, wrapper.scrollLeft + viewportWidth, wrapper.scrollTop, wrapper.scrollTop + viewportHeight);
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
