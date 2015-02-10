@@ -210,6 +210,24 @@ Each table row consists of table cells (<td>) which represent the treelist colum
         return $this->setProperty('menu', $value);
     }
 
+    /**
+    * If set to true the column will be displayed as locked in the treelist. Also see Frozen Columns.
+    * @param boolean $value
+    * @return \Kendo\UI\TreeListColumn
+    */
+    public function locked($value) {
+        return $this->setProperty('locked', $value);
+    }
+
+    /**
+    * If set to false the column will remain in the side of the treelist into which its own locked configuration placed it.
+    * @param boolean $value
+    * @return \Kendo\UI\TreeListColumn
+    */
+    public function lockable($value) {
+        return $this->setProperty('lockable', $value);
+    }
+
 //<< Properties
 }
 

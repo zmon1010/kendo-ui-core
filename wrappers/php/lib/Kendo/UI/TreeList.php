@@ -75,7 +75,7 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
 
     /**
     * If set to true the user can filter the data source using the treelist filter menu. Filtering is disabled by default.Can be set to a JavaScript object which represents the filter menu configuration.
-    * @param boolean| $value
+    * @param boolean|\Kendo\UI\TreeListFilterable|array $value
     * @return \Kendo\UI\TreeList
     */
     public function filterable($value) {
@@ -367,6 +367,34 @@ By default the column menu is not enabled.Can be set to a JavaScript object whic
         }
 
         return $this->setProperty('columnMenuInit', $value);
+    }
+
+    /**
+    * Sets the columnLock event of the TreeList.
+    * Fired when the user lock a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\TreeList
+    */
+    public function columnLock($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('columnLock', $value);
+    }
+
+    /**
+    * Sets the columnUnlock event of the TreeList.
+    * Fired when the user unlock a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\TreeList
+    */
+    public function columnUnlock($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('columnUnlock', $value);
     }
 
 
