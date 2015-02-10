@@ -115,7 +115,10 @@
             }
         })(copy);
         if (!(pages.length > 0 && copy.children.length === 0)) {
-            pages.push(copy);
+            var page = doc.createElement("KENDO-PDF-PAGE");
+            copy.parentNode.insertBefore(page, copy);
+            page.appendChild(copy);
+            pages.push(page);
         }
         return { pages: pages, container: cont };
     }
