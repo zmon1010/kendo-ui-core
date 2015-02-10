@@ -43,32 +43,17 @@
           <a href="http://www.telerik.com/forums/">feedback</a>!
         </p>
       </textarea>
-      <style>
-        .k-editor-output {
-          position: absolute;
-          left: -4000px;
-        }
-        .a4 { width: 595.28px; }
-        .k-editor-page {
-          margin: 1cm;
-        }
-      </style>
       <script>
 
         function exportToPDF(){
             var editor = $("#editor").getKendoEditor();
-            var container = $("<div class='k-editor-output a4'><div class='k-editor-page'>");
-            var output = $(".k-editor-page", container);
             var drawing = kendo.drawing;
 
-            output.html($(editor.body).html());
-            $(document.body).append(container);
 
-            drawing.drawDOM(output, {
+            drawing.drawDOM(editor.body, {
                 forcePageBreak: ".pageBreak"
             })
             .then(function(root) {
-                container.remove();
                 return drawing.exportPDF(root, {
                     multiPage: true,
                     paperSize: "a4"
