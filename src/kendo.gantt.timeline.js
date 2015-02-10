@@ -188,6 +188,8 @@ var __meta__ = {
         destroy: function() {
             Widget.fn.destroy.call(this);
 
+            clearTimeout(this._tooltipTimeout);
+
             this.headerRow = null;
             this.header = null;
             this.content = null;
