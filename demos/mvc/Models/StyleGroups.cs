@@ -84,5 +84,18 @@ namespace Kendo.Models
             "kendo.dataviz.bootstrap.min.css"
 #endif
         };
+
+        public static readonly IList<string> MobileThemeBuilder = new string[]
+        {
+#if DEBUG
+            "web/kendo.common.less",
+            "web/kendo.default.less",
+            "mobile/kendo.mobile.all.less",
+#else
+            "kendo.common.min.css",
+            "kendo.default.min.css",
+            "kendo.mobile.all.min.css",
+#endif
+        };
     }
 }

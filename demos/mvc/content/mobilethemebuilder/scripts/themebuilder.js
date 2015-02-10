@@ -992,6 +992,7 @@ if (kendo.support.browser.webkit || kendo.support.browser.mozilla || (kendo.supp
                 },
                 updateDocumentTitle: false
             });
+            kendo.mobile.application.element = device;
             engineTool = device.kendoStyleEngine({ restoreFromStorage: true, platform: that }).data("kendoStyleEngine");
 
             device.toggleClass("hiddenOS", !checkbox.checked);

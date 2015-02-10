@@ -520,6 +520,11 @@ body > label
     vertical-align: middle;
 }
 
+.header > div
+{
+    height: 100% !important;
+}
+
 .tools
 {
     border: 0;
@@ -1502,4 +1507,35 @@ input.k-checkbox
 .km-wp .km-tabstrip .km-state-active .km-icon
 {
     color: #fff;
+}
+
+.device.km-wp-light .km-content,
+.device.km-wp-light .km-button,
+.device.km-wp-light .km-navbar,
+.device.km-wp-light .k-toolbar,
+.device.km-wp-light .km-detail,
+.device.km-wp-light *:not(.k-label) > input:not(.k-input),
+.device.km-wp-light .k-dropdown,
+.device.km-wp-light *:not(.k-label) > textarea,
+.device.km-wp-light *:not(.k-label) > select
+{
+    background: #fff;
+}
+
+.device.km-wp-dark .km-content,
+.device.km-wp-dark .km-button,
+.device.km-wp-dark .km-navbar,
+.device.km-wp-dark .k-toolbar,
+.device.km-wp-dark .km-detail,
+.device.km-wp-dark *:not(.k-label) > input:not(.k-input),
+.device.km-wp-dark .k-dropdown,
+.device.km-wp-dark *:not(.k-label) > textarea,
+.device.km-wp-dark *:not(.k-label) > select
+{
+    background: #000;
+}
+
+.km-wp .km-tabstrip > .km-button
+{
+    background: none;
 }

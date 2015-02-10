@@ -42,7 +42,7 @@ namespace Kendo.Controllers
 #endif
 
             ViewBag.scripts = Kendo.Models.ScriptGroups.All;
-            ViewBag.styles = Kendo.Models.StyleGroups.Mobile;
+            ViewBag.styles = Kendo.Models.StyleGroups.MobileThemeBuilder;
 
             SetTheme();
 
