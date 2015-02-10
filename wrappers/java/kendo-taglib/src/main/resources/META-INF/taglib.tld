@@ -38216,6 +38216,16 @@ and the string value will be passed as an argument to a kendo.template() functio
             <name>columnMenuInit</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+        <attribute>
+            <description>Fired when the user lock a column.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>columnLock</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user unlock a column.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>columnUnlock</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
         <dynamic-attributes>true</dynamic-attributes>
     </tag>
 
@@ -38365,6 +38375,18 @@ is displayed in the column header cell.</description>
         <attribute>
             <description>If set to true the column will not be displayed in the treelist. By default all columns are displayed.</description>
             <name>hidden</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the column will remain in the side of the treelist into which its own locked configuration placed it.</description>
+            <name>lockable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the column will be displayed as locked in the treelist. Also see Frozen Columns.</description>
+            <name>locked</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
@@ -38970,6 +38992,18 @@ This class can be used to get a reference to the button (after TreeList initiali
         <description>Fired when the column menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>treeList-columnMenuInit</name>
         <tag-class>com.kendoui.taglib.treelist.ColumnMenuInitFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user lock a column.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>treeList-columnLock</name>
+        <tag-class>com.kendoui.taglib.treelist.ColumnLockFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user unlock a column.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>treeList-columnUnlock</name>
+        <tag-class>com.kendoui.taglib.treelist.ColumnUnlockFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
