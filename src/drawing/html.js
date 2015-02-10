@@ -360,7 +360,8 @@
             } else {
                 // Internet Explorer
                 // XXX: this is gross.  should work though for valid CSS.
-                return [ getFontURL(rule.cssText) ];
+                var font = getFontURL(rule.cssText);
+                return font ? [ font ] : [];
             }
         }
         function addRules(styleSheet, rules) {
