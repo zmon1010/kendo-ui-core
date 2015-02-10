@@ -100,8 +100,10 @@ kendo.ExcelExporter = kendo.Class.extend({
             return dataItem.get(column.field);
         };
 
+        var values = null;
+
         if (column.values) {
-            var values = {};
+            values = {};
 
             $.each(column.values, function(item) {
                values[this.value] = this.text;
@@ -114,6 +116,7 @@ kendo.ExcelExporter = kendo.Class.extend({
 
         return $.extend({}, column, {
             value: value,
+            values: values,
             groupHeaderTemplate: kendo.template(column.groupHeaderTemplate || "${title}: ${value}"),
             groupFooterTemplate: column.groupFooterTemplate ? kendo.template(column.groupFooterTemplate) : null,
             footerTemplate: column.footerTemplate ? kendo.template(column.footerTemplate) : null
@@ -158,7 +161,7 @@ kendo.ExcelExporter = kendo.Class.extend({
             var group = $.extend({
                     title: title,
                     field: dataItem.field,
-                    value: dataItem.value,
+                    value: column && column.values ? column.values[dataItem.value] : dataItem.value,
                     aggregates: dataItem.aggregates
                 }, dataItem.aggregates[dataItem.field]);
 

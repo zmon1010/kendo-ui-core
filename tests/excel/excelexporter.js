@@ -89,6 +89,17 @@ test("uses the text instead of the value when values is set", 1, function() {
     });
 });
 
+test("uses the text during grouping instead of the value when values is set", 1, function() {
+    var dataSource = {
+       data: [{ foo: 1 }],
+       group: { field: "foo" }
+    };
+
+    testWorkbook({ columns: [ { field: "foo", values: [ { value: 1, text: "bar" }] } ], dataSource: dataSource }, function(book) {
+        equal(book.sheets[0].rows[1].cells[0].value, "foo: bar");
+    });
+});
+
 test("the type of data rows is set to 'data'", function() {
     testWorkbook({ columns: [ { field: "foo" } ], dataSource: [{ foo: "bar" }] }, function(book) {
         equal(book.sheets[0].rows[1].type, "data");
