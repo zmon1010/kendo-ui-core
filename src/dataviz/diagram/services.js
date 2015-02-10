@@ -1076,7 +1076,7 @@
                 hit = this.diagram._resizingAdorner._hitTest(point);
                 if (hit) {
                     this.hoveredAdorner = d._resizingAdorner;
-                    if (hit.x !== 0 && hit.y !== 0) { // hit testing for resizers or rotator, otherwise if (0,0) than pass through.
+                    if (hit.x !== 0 || hit.y !== 0) { // hit testing for resizers or rotator, otherwise if (0,0) than pass through.
                         return;
                     }
                     hit = undefined;

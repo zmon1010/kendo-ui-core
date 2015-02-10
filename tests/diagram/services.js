@@ -507,6 +507,33 @@
     })();
 
     (function() {
+        var toolservice;
+        var shape1, shape2;
+
+        function setupTool(options) {
+            setupDiagram(options);
+            toolservice = d.toolService;
+        }
+
+        module("ToolService", {
+            teardown: teardown
+        });
+
+        test("does not set hoveredItem if there is a hovered adorner on the same position", function() {
+            setupTool({});
+            shape1 = d.addShape({ x: 10, y: 20, data: "Rectangle", dataItem: {}, width: 100, height: 100 });
+            shape2 = d.addShape({ x: 30, y: 20, data: "Rectangle", dataItem: {}, width: 100, height: 100 });
+
+            shape1.select(true);
+            var handleBounds = d._resizingAdorner._getHandleBounds({x: 1, y: 0});
+            handleBounds.offset(d._resizingAdorner._bounds.x, d._resizingAdorner._bounds.y);
+            var point = new Point(handleBounds.x + handleBounds.width / 2, handleBounds.y + + handleBounds.height / 2);
+            toolservice.start(point, {});
+            ok(!toolservice.hoveredItem);
+        });
+    })();
+
+    (function() {
         var Selector = diagram.Selector;
         var selector;
         module("Selector", {});
