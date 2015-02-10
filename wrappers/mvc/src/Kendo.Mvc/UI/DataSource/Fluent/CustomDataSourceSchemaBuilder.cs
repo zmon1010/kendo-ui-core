@@ -18,6 +18,11 @@
         /// </summary>
         public virtual CustomDataSourceSchemaBuilder<TModel> Model(Action<CustomDataSourceModelDescriptorFactory<TModel>> configurator)
         {
+            if (schema.Model == null)
+            {
+                schema.Model = new ModelDescriptor(typeof(TModel));
+            }
+
             configurator(new CustomDataSourceModelDescriptorFactory<TModel>(schema.Model));
 
             return this;
