@@ -3632,6 +3632,7 @@ var __meta__ = {
 
         _resize: function() {
             var columnTable = this.columnsHeader.children("table");
+            var contentTable = this.content.children("table");
 
             if (this.content[0].firstChild) {
                 this._setSectionsWidth();
@@ -3640,10 +3641,12 @@ var __meta__ = {
                 this._setContentHeight();
 
                 columnTable.css("table-layout", AUTO);
+                contentTable.css("table-layout", AUTO);
 
                 clearTimeout(this._layoutTimeout);
                 this._layoutTimeout = setTimeout(function() {
                     columnTable.css("table-layout", "fixed");
+                    contentTable.css("table-layout", "fixed");
                 });
             }
         },
@@ -3691,7 +3694,6 @@ var __meta__ = {
 
             contentTable.add(this.columnsHeader.children("table"))
                         .css("width", minWidth + "%");
-
         },
 
         _setContentHeight: function() {
