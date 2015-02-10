@@ -224,6 +224,7 @@
     <Compile Include="Controllers\TreeList\AggregatesController.cs" />
     <Compile Include="Controllers\TreeList\Column_ReorderingController.cs" />
     <Compile Include="Controllers\TreeList\Column_MenuController.cs" />
+    <Compile Include="Controllers\TreeList\Frozen_ColumnsController.cs" />
     <Compile Include="Controllers\TreeList\EventsController.cs" />
     <Compile Include="Controllers\TreeList\Remote_Data_BindingController.cs" />
     <Compile Include="Controllers\TreeList\Editing_PopupController.cs" />
@@ -911,6 +912,7 @@
     <Content Include="Areas\aspx\Views\treelist\aggregates.aspx" />
     <Content Include="Areas\aspx\Views\treelist\column_reordering.aspx" />
     <Content Include="Areas\aspx\Views\treelist\column_menu.aspx" />
+    <Content Include="Areas\aspx\Views\treelist\frozen_columns.aspx" />
     <Content Include="Areas\aspx\Views\treelist\editing_popup.aspx" />
     <Content Include="Areas\aspx\Views\treelist\editing.aspx" />
     <Content Include="Areas\aspx\Views\treelist\events.aspx" />
@@ -2677,6 +2679,7 @@
     <Content Include="Areas\razor\Views\pivotgrid\pdf_export.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Areas\razor\Views\treelist\frozen_columns.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
