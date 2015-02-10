@@ -1067,6 +1067,23 @@ var PrintCommand = Command.extend({
     }
 });
 
+var PdfExportCommand = Command.extend({
+    init: function(options) {
+        Command.fn.init.call(this, options);
+
+        this.managesUndoRedo = true;
+    },
+
+    exec: function() {
+        var editor = this.editor;
+
+        if (kendo.support.browser.msie) {
+            //noop
+        } else if (editor.window.print) {
+            alert("exporting");
+        }
+    }
+});
 extend(editorNS, {
     Command: Command,
     GenericCommand: GenericCommand,
@@ -1081,11 +1098,13 @@ extend(editorNS, {
     Cleaner: Cleaner,
     MSWordFormatCleaner: MSWordFormatCleaner,
     WebkitFormatCleaner: WebkitFormatCleaner,
-    PrintCommand: PrintCommand
+    PrintCommand: PrintCommand,
+    PdfExportCommand: PdfExportCommand
 });
 
 registerTool("insertHtml", new InsertHtmlTool({template: new ToolTemplate({template: EditorUtils.dropDownListTemplate, title: "Insert HTML", initialValue: "Insert HTML"})}));
 registerTool("print", new Tool({ command: PrintCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Print"})}));
+registerTool("exportPdf", new Tool({ command: PdfExportCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Export PDF"})}));
 
 })(window.kendo.jQuery);
 
