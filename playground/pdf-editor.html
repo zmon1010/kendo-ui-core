@@ -20,7 +20,7 @@
     <div id="example">
       <div id="target"></div>
       <textarea id="editor" rows="10" cols="30" style="height:440px">
-        <p><img src="http://demos.telerik.com/kendo-ui/content/web/editor/kendo-ui-web.png" alt="Editor for ASP.NET MVC logo" style="display:block;margin-left:auto;margin-right:auto;" /></p>
+        <p><img src="kendo-ui-web.png" alt="Editor for ASP.NET MVC logo" style="display:block;margin-left:auto;margin-right:auto;" /></p>
         <p>
           Kendo UI Editor allows your users to edit HTML in a familiar, user-friendly way.<br />
           In this version, the Editor provides the core HTML editing engine, which includes basic text formatting, hyperlinks, lists,
@@ -43,54 +43,51 @@
           <a href="http://www.telerik.com/forums/">feedback</a>!
         </p>
       </textarea>
-<!--       <style>
-        .k-editor-output{
+      <style>
+        .k-editor-output {
           position: absolute;
           left: -4000px;
         }
-
-      </style> -->
+        .a4 { width: 595.28px; }
+        .k-editor-page {
+          margin: 1cm;
+        }
+      </style>
       <script>
 
         function exportToPDF(){
-          var editor = $("#editor").getKendoEditor();
-          var output = $("<div class='k-editor-output'/>");
-          var drawing = kendo.drawing;
+            var editor = $("#editor").getKendoEditor();
+            var container = $("<div class='k-editor-output a4'><div class='k-editor-page'>");
+            var output = $(".k-editor-page", container);
+            var drawing = kendo.drawing;
 
-          output.html($(editor.body).html());
-          editor.wrapper.find(".k-editable-area").prepend(output);
+            output.html($(editor.body).html());
+            $(document.body).append(container);
 
-          drawing.drawDOM(output, {forcePageBreak: ".pageBreak"})
-          .then(function(root) {
-            output.remove();
-
-            //root.options.set("pdf", {paperSize: "A4"});
-
-            return drawing.exportPDF(root,{
-              paperSize: "A4",
-              margin: {
-                left: "1cm",
-                top: "1cm",
-                right: "1cm",
-                bottom: "1cm"
-              },
-              multiPage : true
+            drawing.drawDOM(output, {
+                forcePageBreak: ".pageBreak"
+            })
+            .then(function(root) {
+                container.remove();
+                return drawing.exportPDF(root, {
+                    multiPage: true,
+                    paperSize: "a4"
+                });
+            })
+            .done(function(data) {
+                kendo.saveAs({
+                    dataURI: data,
+                    fileName: "editor.pdf"
+                });
             });
-
-          }).done(function(data) {
-            kendo.saveAs({
-              dataURI: data,
-              fileName: "editor.pdf"
-            });
-          });
         }
 
         $("button").click(function() {
-          exportToPDF()
+            exportToPDF();
         });
 
         $(document).ready(function() {
-          $("#editor").kendoEditor();
+            $("#editor").kendoEditor();
         });
       </script>
     </div>
