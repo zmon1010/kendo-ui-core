@@ -29,6 +29,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.TreeList
             .Model(m => {
                 m.Id(f => f.EmployeeId);
                 m.ParentId(f => f.ReportsTo);
+                m.Expanded(true);
                 m.Field(f => f.FirstName);
                 m.Field(f => f.LastName);
                 m.Field(f => f.ReportsTo);
