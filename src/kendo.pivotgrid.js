@@ -1677,7 +1677,7 @@ var __meta__ = {
             }
 
             for (; idx < length; idx++) {
-                if (rowIndexes[parseInt(idx / columnsLength, 10)] !== undefined) {
+                while (rowIndexes[parseInt(idx / columnsLength, 10)] !== undefined) {
                     for (i = 0; i < columnsLength; i++) {
                         result[idx] = { value: "", fmtValue: "", ordinal: idx };
                         idx += 1;
