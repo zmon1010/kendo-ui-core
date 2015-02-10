@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js"
+      ]);
+    </script>
+    <style>
+      body {
+        font-family: "DejaVu Sans";
+      }
+      .k-grid-content tbody tr td {
+        padding-top: 40px;
+        padding-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="grid"></div>
+    <script>
+      $(document).ready(function () {
+          $("#grid").kendoGrid({
+              dataSource: {
+                  type: "odata",
+                  transport: {
+                      read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                  },
+                  pageSize: 20
+              },
+              toolbar: [ "pdf" ],
+              groupable: true,
+              sortable: true,
+              pageable: {
+                  refresh: true,
+                  pageSizes: true,
+                  buttonCount: 5
+              },
+              columns: [{
+                  field: "ContactName",
+                  title: "Contact Name",
+                  width: 200
+              }, {
+                  field: "ContactTitle",
+                  title: "Contact Title"
+              }, {
+                  field: "CompanyName",
+                  title: "Company Name"
+              }, {
+                  field: "Country",
+                  width: 150
+              }],
+              pdf: {
+                  proxyURL: "http://kendo.local:7569/"
+              }
+          });
+      });
+    </script>
+  </body>
+</html>
