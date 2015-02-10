@@ -79,6 +79,10 @@ namespace Kendo.Mvc.UI
         
         public bool? Menu { get; set; }
         
+        public bool? Locked { get; set; }
+        
+        public bool? Lockable { get; set; }
+        
         //<< Fields
 
         protected override void Serialize(IDictionary<string, object> json)
@@ -201,6 +205,16 @@ namespace Kendo.Mvc.UI
             if (Menu.HasValue)
             {
                 json["menu"] = Menu;
+            }
+                
+            if (Locked.HasValue)
+            {
+                json["locked"] = Locked;
+            }
+                
+            if (Lockable.HasValue)
+            {
+                json["lockable"] = Lockable;
             }
                 
         //<< Serialization

@@ -191,6 +191,28 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
+        /// <summary>
+        /// Fired when the user lock a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the columnLock event.</param>
+        public TreeListEventBuilder ColumnLock(string handler)
+        {
+            Handler("columnLock", handler);
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Fired when the user unlock a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the columnUnlock event.</param>
+        public TreeListEventBuilder ColumnUnlock(string handler)
+        {
+            Handler("columnUnlock", handler);
+
+            return this;
+        }
+        
         //<< Handlers
     }
 }
