@@ -1067,7 +1067,7 @@ var PrintCommand = Command.extend({
     }
 });
 
-var PdfExportCommand = Command.extend({
+var ExportPdfCommand = Command.extend({
     init: function(options) {
         Command.fn.init.call(this, options);
 
@@ -1077,11 +1077,28 @@ var PdfExportCommand = Command.extend({
     exec: function() {
         var editor = this.editor;
 
-        if (kendo.support.browser.msie) {
-            //noop
-        } else if (editor.window.print) {
-            alert("exporting");
-        }
+        //check browser support?
+        var container = $("<div class='k-editor-output'><div class='k-editor-page a4'>");
+        var output = $(".k-editor-page", container);
+        var drawing = kendo.drawing;
+        output.html($(editor.body).html());
+        $(document.body).append(container);
+        
+        drawing.drawDOM(output, { forcePageBreak: ".k-page-break" })
+        .then(function(root) {
+            output.remove();
+            container.remove();
+            return drawing.exportPDF(root, {
+                multiPage: true,
+                paperSize: "a4"
+            });
+        })
+        .done(function(data) {
+            kendo.saveAs({
+                dataURI: data,
+                fileName: "editor.pdf"
+            });
+        });
     }
 });
 extend(editorNS, {
@@ -1099,12 +1116,12 @@ extend(editorNS, {
     MSWordFormatCleaner: MSWordFormatCleaner,
     WebkitFormatCleaner: WebkitFormatCleaner,
     PrintCommand: PrintCommand,
-    PdfExportCommand: PdfExportCommand
+    ExportPdfCommand: ExportPdfCommand
 });
 
 registerTool("insertHtml", new InsertHtmlTool({template: new ToolTemplate({template: EditorUtils.dropDownListTemplate, title: "Insert HTML", initialValue: "Insert HTML"})}));
 registerTool("print", new Tool({ command: PrintCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Print"})}));
-registerTool("exportPdf", new Tool({ command: PdfExportCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Export PDF"})}));
+registerTool("pdf", new Tool({ command: ExportPdfCommand, template: new ToolTemplate({template: EditorUtils.buttonTemplate, title: "Export PDF"})}));
 
 })(window.kendo.jQuery);
 
