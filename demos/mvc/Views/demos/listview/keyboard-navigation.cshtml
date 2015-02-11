@@ -12,8 +12,8 @@
     <script type="text/x-kendo-tmpl" id="template">
         <div class="product-view k-widget">
             <div class="edit-buttons">
-                <a class="k-button k-button-icontext k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-                <a class="k-button k-button-icontext k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+                <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+                <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
             </div>
             <dl>
                 <dt>Product Name</dt>
@@ -31,8 +31,8 @@
     <script type="text/x-kendo-tmpl" id="editTemplate">
         <div class="product-view k-widget">
             <div class="edit-buttons">
-                <a class="k-button k-button-icontext k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-                <a class="k-button k-button-icontext k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+                <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+                <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
             </div>
             <dl>
                 <dt>Product Name</dt>
@@ -242,8 +242,8 @@
         {
             float: left;
             position: relative;
-            width: 349px;
-            margin: 0 -1px -1px 0;
+            box-sizing: border-box;
+            width: 350px;
         }
 
         .product-view dl
@@ -272,7 +272,7 @@
         }
         .k-listview
         {
-            border: 0;
+            border-width: 1px 0 0;
             padding: 0;
             min-width: 605px;
             min-height: 298px;
@@ -290,15 +290,15 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 26px;
             height: 170px;
             padding: 2px 2px 0 3px;
             background-color: rgba(0,0,0,0.1);
         }
         .edit-buttons .k-button
         {
-            width: 26px;
-            margin-bottom: 1px;
+            display: block;
+            clear: both;
+            margin-bottom: 3px;
         }
         .k-pager-wrap
         {
