@@ -161,6 +161,7 @@
     });
 
     test("renders dates and respect format", function() {
+        var counter = 0;
         setup({
                 dataSource: dataSource(),
                 field: "baz",
@@ -168,12 +169,14 @@
                 refresh: function () {
                     var chkbxs = this.container.find(":checkbox:not(.k-check-all)");
                     equal(chkbxs.length, 2);
-                    equal(chkbxs.eq(0).val(), "Wed Dec 12 2012 00:00:00 GMT+0200 (EET)");
+                    equal(chkbxs.eq(0).val().indexOf("2012-12-12T00:00:00"), 0);
                     equal(chkbxs.eq(0).closest("label").text(), "12/12");
-                    equal(chkbxs.eq(1).val(), "Fri Nov 11 2011 00:00:00 GMT+0200 (EET)");
+
+                    equal(chkbxs.eq(1).val().indexOf("2011-11-11T00:00:00"), 0);
                     equal(chkbxs.eq(1).closest("label").text(), "11/11");
                 }
         });
+
     });
 
     test("does not render items for undefined values", function() {

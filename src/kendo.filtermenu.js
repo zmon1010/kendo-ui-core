@@ -1014,7 +1014,7 @@ var __meta__ = {
                 }
                 return "<li class='k-item'>" +
                           "<label class='k-label'>" +
-                              "<input type='checkbox' class='" + (mobile? "k-check" : "") +"'  value='#:"+ valueField + " #'/>" +
+                              "<input type='checkbox' class='" + (mobile? "k-check" : "") +"'  value='#:kendo.toString("+ valueField + ", 'yyyy-MM-ddTHH:mm:sszzz') #'/>" +
                                  "#:kendo.format('" + ( format ?  format  : "{0}" ) + "', "  + field + ")#" +
                           "</label>" +
                         "</li>";
