@@ -1876,7 +1876,8 @@
             "kendo-ui": "In this example we will learn how to enable the filter row of Kendo UI Grid component."
         }
       },
-	  {
+      {
+        "new": true,
         "text": "Filter Multi Checkboxes",
         "url": "grid/filter-multi-checkboxes",
         "title": {
