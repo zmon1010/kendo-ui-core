@@ -22,7 +22,8 @@
       }
       .a4 { width: 595.28px; }
       .k-editor-page {
-        margin: 1cm;
+        box-sizing: border-box;
+        padding: 1cm;
       }
     </style>
   </head>
@@ -60,7 +61,7 @@
 
         function exportToPDF(){
             var editor = $("#editor").getKendoEditor();
-            var container = $("<div class='k-editor-output a4'><div class='k-editor-page'>");
+            var container = $("<div class='k-editor-output'><div class='k-editor-page a4'>");
             var output = $(".k-editor-page", container);
             var drawing = kendo.drawing;
 
