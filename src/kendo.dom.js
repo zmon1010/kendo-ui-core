@@ -26,7 +26,7 @@ var __meta__ = {
 
     NullNode.prototype = {
         nodeName: "#null",
-        attr: {},
+        attr: { style: {} },
         children: [],
         remove: function() {
         }
@@ -114,8 +114,20 @@ var __meta__ = {
 
             var cachedValue = cachedAttr[name];
 
-            if (value !== cachedValue) {
+            if (name === "style") {
+                this.setStyle(value, cachedValue);
+            } else if (value !== cachedValue) {
                 this.setAttribute(name, value, cachedValue);
+            }
+        }
+    };
+
+    Element.prototype.setStyle = function(style, cachedValue) {
+        var nodeStyle = this.node.style;
+
+        for (var key in style) {
+            if (style[key] !== cachedValue[key]) {
+                nodeStyle[key] = style[key];
             }
         }
     };
@@ -145,22 +157,7 @@ var __meta__ = {
     Element.prototype.setAttribute = function(name, value, cachedValue) {
         var node = this.node;
 
-        if (name === "style") {
-            var cssText = "";
-
-            for (var key in value) {
-                cssText += key;
-                cssText += ":";
-                cssText += value[key];
-                cssText += ";";
-            }
-
-            if (cachedValue !== cssText) {
-                node.style.cssText = cssText;
-            }
-
-            this.cssText = cssText;
-        } else if (node[name] !== undefined) {
+        if (node[name] !== undefined) {
             node[name] = value;
         } else {
             node.setAttribute(name, value);
