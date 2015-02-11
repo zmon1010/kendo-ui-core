@@ -110,12 +110,13 @@ def create_version(bot, options)
 
       bot.click_and_wait("Administration", "administration")
       bot.click_and_wait("Product Versions", "product")
-      bot.click_and_wait("Product Name", "product")
 
-      #needed for integrationadmin
-      if product_name.start_with?('UI')
-         bot.click_and_wait("Product Name", "product")
-      end
+      bot.execute_script <<-SCRIPT
+         var masterTable = $find($telerik.$('[id$=\"_dgProducts\"]').attr('id')).get_masterTableView();
+         masterTable.filter("TemplateColumn", "#{product_name}", Telerik.Web.UI.GridFilterFunction.Contains);
+      SCRIPT
+
+      Thread.current.send :sleep, 7
 
       bot.click_and_wait product_name, "administration"
       bot.click_and_wait "Manage Versions", "administration"
