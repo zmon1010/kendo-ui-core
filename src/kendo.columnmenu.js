@@ -102,6 +102,10 @@ var __meta__ = {
 
             that._angularItems("compile");
 
+            that._refreshHandler = proxy(that.refresh, that);
+
+            that.dataSource.bind(CHANGE, that._refreshHandler);
+
             that._sort();
 
             that._columns();
@@ -340,10 +344,6 @@ var __meta__ = {
 
             if (that.options.sortable) {
                 that.refresh();
-
-                that._refreshHandler = proxy(that.refresh, that);
-
-                that.dataSource.bind(CHANGE, that._refreshHandler);
 
                 that.menu.bind(SELECT, function(e) {
                     var item = $(e.item),
@@ -606,6 +606,31 @@ var __meta__ = {
                    that.wrapper.find(".k-sort-" + descriptor.dir).addClass(ACTIVE);
                }
             }
+
+            that.link[that._filterExist(that.dataSource.filter()) ? "addClass" : "removeClass"]("k-state-active");
+        },
+
+        _filterExist: function(filters) {
+            var found = false;
+            var filter;
+
+            if (!filters) {
+                return;
+            }
+
+            filters = filters.filters;
+
+            for (var idx = 0, length = filters.length; idx < length; idx++) {
+                filter = filters[idx];
+
+                if (filter.field == this.field) {
+                    found = true;
+                } else if (filter.filters) {
+                    found = found || this._filterExist(filter);
+                }
+            }
+
+            return found;
         }
     });
 

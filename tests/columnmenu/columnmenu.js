@@ -846,4 +846,29 @@
 
         owner.trigger("columnHide");
     });
+
+    test("filter by menu field highlights the link element", function() {
+        var menu = setup();
+
+        dataSource.filter({ field: "foo", operator: "eq", value: "bar" });
+
+        ok(menu.link.hasClass("k-state-active"));
+    });
+
+    test("remove filter clears linka active class", function() {
+        var menu = setup();
+
+        dataSource.filter({ field: "foo", operator: "eq", value: "bar" });
+        dataSource.filter({});
+
+        ok(!menu.link.hasClass("k-state-active"));
+    });
+
+    test("filter by menu field highlights the link element with disabled sorting", function() {
+        var menu = setup({ sortable: false });
+
+        dataSource.filter({ field: "foo", operator: "eq", value: "bar" });
+
+        ok(menu.link.hasClass("k-state-active"));
+    });
 })();
