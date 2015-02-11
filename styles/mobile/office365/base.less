@@ -1,8 +1,8 @@
 @import "../common/base.less";
 
-@flat-border-width: 1px;
-@flat-border-radius: 3px;
-@flat-inline-border-radius: @flat-border-radius - 1px;
+@office365-border-width: 1px;
+@office365-border-radius: 2px;
+@office365-inline-border-radius: @office365-border-radius - 1px;
 
 .km-office365
 {
@@ -53,7 +53,7 @@
     text-decoration: none;
     padding: .5em .6em;
     border-radius: 0;
-    border-width: 0 0 @flat-border-width;
+    border-width: 0 0 @office365-border-width;
     border-style: solid;
     .box-sizing(border-box);
 }
@@ -83,7 +83,7 @@
 .km-office365 .km-popup .k-list-container
 {
     bottom: 0;
-    border-width: @flat-border-width 0 0;
+    border-width: @office365-border-width 0 0;
     border-style: solid;
     border-radius: 0;
     .box-sizing(border-box);
@@ -104,7 +104,7 @@
 .km-office365 .km-popup.km-pane,
 .km-office365 .km-actionsheet-wrapper.km-popup
 {
-    border-radius: @flat-border-radius;
+    border-radius: @office365-border-radius;
 }
 
 /* Loader & Pull-to-refresh */
@@ -212,7 +212,7 @@
     margin-left: -.8em;
     margin-top: -.5em;
     border-radius: 1em;
-    .animation(km-flatload .6s infinite linear);
+    .animation(km-fioriload .6s infinite linear);
     -webkit-background-clip: none;
 }
 
@@ -236,7 +236,7 @@
     margin-top: -.3em;
     margin-left: -.6em;
     width: .25em;
-    .animation(km-flatrefresh .6s infinite linear);
+    .animation(km-fiorirefresh .6s infinite linear);
 }
 
 .km-office365 .km-scroller-pull .km-icon:after
@@ -272,42 +272,42 @@
     margin-left: .28em;
 }
 
-@keyframes km-flatload
+@keyframes km-fioriload
 {
     0% { height: 1em; margin-top: -.5em; }
     33% { height: 2em; margin-top: -1em; }
     66% { height: 1em; margin-top: -.5em; }
 }
 
-@-moz-keyframes km-flatload
+@-moz-keyframes km-fioriload
 {
     0% { height: 1em; margin-top: -.5em; }
     33% { height: 2em; margin-top: -1em; }
     66% { height: 1em; margin-top: -.5em; }
 }
 
-@-webkit-keyframes km-flatload
+@-webkit-keyframes km-fioriload
 {
     0% { height: 1em; margin-top: -.5em; }
     33% { height: 2em; margin-top: -1em; }
     66% { height: 1em; margin-top: -.5em; }
 }
 
-@keyframes km-flatrefresh
+@keyframes km-fiorirefresh
 {
     0% { height: .6em; margin-top: -.3em; }
     33% { height: 1.2em; margin-top: -.6em; }
     66% { height: .6em; margin-top: -.3em; }
 }
 
-@-moz-keyframes km-flatrefresh
+@-moz-keyframes km-fiorirefresh
 {
     0% { height: .6em; margin-top: -.3em; }
     33% { height: 1.2em; margin-top: -.6em; }
     66% { height: .6em; margin-top: -.3em; }
 }
 
-@-webkit-keyframes km-flatrefresh
+@-webkit-keyframes km-fiorirefresh
 {
     0% { height: .6em; margin-top: -.3em; }
     33% { height: 1.2em; margin-top: -.6em; }
