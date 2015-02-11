@@ -4,9 +4,6 @@
 [submodule "build/timezone-js"]
     path = build/timezone-js
     url = git@github.com:mde/timezone-js.git
-[submodule "tests/qunit"]
-    path = tests/qunit
-    url = git@github.com:jquery/qunit.git
 [submodule "docs"]
     path = docs
     url = git@github.com:telerik/kendo-docs.git
