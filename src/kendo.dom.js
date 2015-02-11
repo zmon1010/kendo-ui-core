@@ -39,8 +39,6 @@ var __meta__ = {
 
         this.attr = attr || {};
 
-        this.cssText = null;
-
         this.children = children || [];
     }
 
