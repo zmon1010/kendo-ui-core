@@ -73,11 +73,13 @@
                     pdf: { multiPage: true }
                 });
                 var x = handlePageBreaks(element, forceBreak);
-                x.pages.forEach(function(page){
-                    group.append(doOne(page));
-                });
-                x.container.parentNode.removeChild(x.container);
-                defer.resolve(group);
+                setTimeout(function(){
+                    x.pages.forEach(function(page){
+                        group.append(doOne(page));
+                    });
+                    x.container.parentNode.removeChild(x.container);
+                    defer.resolve(group);
+                }, 0);
             } else {
                 defer.resolve(doOne(element));
             }
@@ -95,6 +97,11 @@
         var pages = [];
         var copy = element.cloneNode(true);
         var cont = doc.createElement("KENDO-PDF-DOCUMENT");
+        $(cont).css({
+            position : "absolute",
+            left     : "-10000px",
+            top      : "-10000px"
+        });
         cont.appendChild(copy);
         element.parentNode.insertBefore(cont, element);
         (function split(node) {
