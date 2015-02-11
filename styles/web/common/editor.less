@@ -11,6 +11,7 @@ table.k-editor
     border-spacing: 4px;
     font-size: 100%;
     vertical-align: top;
+    position: relative;
 }
 
 .k-editor-inline
@@ -408,3 +409,15 @@ table.k-editor
     .disable-high-contrast();
 }
 
+.k-editor .k-resize-handle {
+    position: absolute;
+    padding: 5px;
+    right: 0;
+    bottom: 0;
+}
+
+.k-editor .k-overlay {
+    position: absolute;
+    background-color: #fff;
+    opacity: 0;
+}

@@ -1,6 +1,6 @@
 (function(f, define){
     define([
-        "./kendo.combobox", "./kendo.dropdownlist", "./kendo.window", "./kendo.colorpicker", "./kendo.imagebrowser",
+        "./kendo.combobox", "./kendo.dropdownlist", "./kendo.resizable", "./kendo.window", "./kendo.colorpicker", "./kendo.imagebrowser",
 
         "./editor/main",
         "./editor/dom",
@@ -34,6 +34,11 @@
             name: "Image Browser",
             description: "Support for uploading and inserting images",
             depends: [ "imagebrowser" ]
+        }, {
+            id: "editor-resizable",
+            name: "Resize handle",
+            description: "Support for resizing the content area via a resize handle",
+            depends: [ "resizable" ]
         } ]
     };
 

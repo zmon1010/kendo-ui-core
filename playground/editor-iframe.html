@@ -7,13 +7,22 @@
 
     <meta name="viewport" content="width=device-width,user-scalable=1,initial-scale=1.0" />
 
-    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <!--[if gte IE 9]>-->
+    <link rel="stylesheet/less" href="../styles/web/kendo.common.less">
+    <link rel="stylesheet/less" href="../styles/web/kendo.default.less">
+    <script>less = { env: "development" };</script>
+    <script src="../demos/mvc/content/shared/js/less.js"></script>
+    <!--<![endif]-->
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css">
     <link rel="stylesheet" href="../dist/styles/web/kendo.default.css">
+    <![endif]-->
 
     <script src="../src/jquery.js"></script>
     <script src="../src/kendo.core.js"></script>
     <script src="../src/kendo.data.js"></script>
     <script src="../src/kendo.userevents.js"></script>
+    <script src="../src/kendo.resizable.js"></script>
     <script src="../src/kendo.draganddrop.js"></script>
     <script src="../src/kendo.binder.js"></script>
     <script src="../src/kendo.popup.js"></script>
@@ -62,6 +71,10 @@
     <script>
         $("#editor").kendoEditor({
             tools: kendo.ui.Editor.fn.options.tools.concat(["cleanFormatting"]),
+            resizable: {
+                min: 100,
+                max: 500
+            },
             paste: function(e) {
                 console.log(e.html);
             }

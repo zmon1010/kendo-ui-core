@@ -214,6 +214,7 @@
                 });
             }
 
+            that._resizable();
             that._initializeContentElement(that);
 
             that.keyboard = new editorNS.Keyboard([
@@ -264,6 +265,33 @@
             this._selectionStarted = false;
             this.saveSelection();
             this.trigger("select", {});
+        },
+
+        _resizable: function() {
+            if (this.options.resizable && this.textarea) {
+                $("<div class='k-resize-handle'><span class='k-icon k-resize-se' /></div>")
+                    .insertAfter(this.textarea);
+
+                this.wrapper.kendoResizable(extend({}, this.options.resizable, {
+                    start: function(e) {
+                        var editor = this.editor = $(e.currentTarget).closest(".k-editor");
+                        this.initialSize = editor.height();
+                        editor.find("td:last").append("<div class='k-overlay' />");
+                    },
+                    resize: function(e) {
+                        var delta = e.y.initialDelta;
+                        var newSize = this.initialSize + delta;
+
+                        newSize = Math.min(this.options.max, Math.max(this.options.min, newSize));
+
+                        this.editor.height(newSize);
+                    },
+                    resizeend: function(e) {
+                        this.editor.find(".k-overlay").remove();
+                        this.editor = null;
+                    }
+                }));
+            }
         },
 
         _wrapTextarea: function() {
