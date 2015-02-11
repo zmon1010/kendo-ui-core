@@ -42,7 +42,7 @@
         }
 
         if (kendo.pdf) {
-            kendo.pdf.defineFont(getFontFaces());
+            kendo.pdf.defineFont(getFontFaces(element.ownerDocument));
         }
 
         function doOne(element) {
@@ -94,7 +94,7 @@
         var doc = element.ownerDocument;
         var pages = [];
         var copy = element.cloneNode(true);
-        var cont = document.createElement("KENDO-PDF-DOCUMENT");
+        var cont = doc.createElement("KENDO-PDF-DOCUMENT");
         cont.appendChild(copy);
         element.parentNode.insertBefore(cont, element);
         (function split(node) {
@@ -333,10 +333,13 @@
         };
     })();
 
-    function getFontFaces() {
+    function getFontFaces(doc) {
+        if (doc == null) {
+            doc = document;
+        }
         var result = {};
-        for (var i = 0; i < document.styleSheets.length; ++i) {
-            doStylesheet(document.styleSheets[i]);
+        for (var i = 0; i < doc.styleSheets.length; ++i) {
+            doStylesheet(doc.styleSheets[i]);
         }
         return result;
         function doStylesheet(ss) {
@@ -927,7 +930,7 @@
         function pseudo(kind, place) {
             var style = getComputedStyle(element, kind);
             if (style.content && style.content != "normal" && style.content != "none") {
-                var psel = document.createElement(KENDO_PSEUDO_ELEMENT);
+                var psel = element.ownerDocument.createElement(KENDO_PSEUDO_ELEMENT);
                 psel.style.cssText = getCssText(style);
                 psel.textContent = evalPseudoElementContent(element, style.content);
                 element.insertBefore(psel, place);
@@ -1353,7 +1356,7 @@
             function _drawBullet(f) {
                 saveStyle(element, function(){
                     element.style.position = "relative";
-                    var bullet = document.createElement(KENDO_PSEUDO_ELEMENT);
+                    var bullet = element.ownerDocument.createElement(KENDO_PSEUDO_ELEMENT);
                     bullet.style.position = "absolute";
                     bullet.style.boxSizing = "border-box";
                     if (listStylePosition == "outside") {
