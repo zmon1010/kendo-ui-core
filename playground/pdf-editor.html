@@ -14,7 +14,19 @@
       ]);
     </script>
 
+    <style>
+      .k-editor-output {
+        position: absolute;
+        left: -4000px;
+        top: -10000px;
+      }
+      .a4 { width: 595.28px; }
+      .k-editor-page {
+        margin: 1cm;
+      }
+    </style>
   </head>
+
   <body>
     <button>Export to PDF</button>
     <div id="example">
@@ -43,16 +55,7 @@
           <a href="http://www.telerik.com/forums/">feedback</a>!
         </p>
       </textarea>
-      <style>
-        .k-editor-output {
-          position: absolute;
-          //left: -4000px;
-        }
-        .a4 { width: 595.28px; }
-        .k-editor-page {
-          margin: 1cm;
-        }
-      </style>
+
       <script>
 
         function exportToPDF(){
@@ -64,24 +67,22 @@
             output.html($(editor.body).html());
             $(document.body).append(container);
 
-            setTimeout(function(){
-                drawing.drawDOM(output, {
-                    forcePageBreak: ".pageBreak"
-                })
-                .then(function(root) {
-                    container.remove();
-                    return drawing.exportPDF(root, {
-                        multiPage: true,
-                        paperSize: "a4"
-                    });
-                })
-                .done(function(data) {
-                    kendo.saveAs({
-                        dataURI: data,
-                        fileName: "editor.pdf"
-                    });
+            drawing.drawDOM(output, {
+                forcePageBreak: ".pageBreak"
+            })
+            .then(function(root) {
+                container.remove();
+                return drawing.exportPDF(root, {
+                    multiPage: true,
+                    paperSize: "a4"
                 });
-            }, 100);
+            })
+            .done(function(data) {
+                kendo.saveAs({
+                    dataURI: data,
+                    fileName: "editor.pdf"
+                });
+            });
         }
 
         $("button").click(function() {
