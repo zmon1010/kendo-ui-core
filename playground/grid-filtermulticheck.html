@@ -49,7 +49,7 @@
                 font: 12px sans-serif;
             }
             .k-multicheck-wrap {
-                max-height: 55px;
+                //max-height: 55px;
                 overflow: auto;
             }
         </style>
@@ -71,6 +71,29 @@
                         }
                     },
                     columns: [
+                        {
+                            field: "Male",
+                            locked: true,
+                            width: 300,
+                            filterable: {
+                                multi: true
+                            }
+                        },
+                        {
+                            field: "ContractDate",
+                            width: 400,
+                            locked: true,
+                            format: "{0:MM/dd/yyyy}",
+                            filterable: {
+                                multi: true,
+                                operators: {
+                                    date: {
+                                        eq: "col level equal"
+                                    }
+
+                                }
+                            }
+                        },
                         {
                             field: "Name",
                             locked: true,
@@ -130,34 +153,12 @@
                             }
                         },
                         {
-                            field: "Male",
-                            locked: false,
-                            width: 300,
-                            filterable: {
-                                multi: true
-                            }
-                        },
-                        {
                             field: "Position",
                             filterable: {
                                 multi: true
                             },
                             locked: true,
                             width: 300
-                        },
-                        {
-                            field: "ContractDate",
-                            width: 400,
-                            format: "{0:MM/dd/yyyy}",
-                            filterable: {
-                                multi: true,
-                                operators: {
-                                    date: {
-                                        eq: "col level equal"
-                                    }
-
-                                }
-                            }
                         },
                         { field: "ContractDate", width: 400, format: "{0:MM/dd/yyyy}" }
                     ],
@@ -227,7 +228,7 @@
                                             ContractDate : new Date('2012/5/4')
                                         }
                                     ] })
-                                }, 2000);
+                                }, 200);
                             }
                         },
                         schema: {

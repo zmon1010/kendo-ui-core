@@ -731,7 +731,7 @@ var __meta__ = {
                 return flatFilterValues(filter);
             });
         } else if (expression.value !== null && expression.value !== undefined) {
-            return [expression.value + ""];
+            return [expression.value];
         } else {
             return [];
         }
@@ -771,7 +771,7 @@ var __meta__ = {
             var checkSource = options.checkSource;
             if (options.forceUnique) {
                 checkSource = options.dataSource.options;
-				delete checkSource.pageSize;
+                delete checkSource.pageSize;
                 this.checkSource = DataSource.create(checkSource);
                 this.checkSource.reader.data = removeDuplicates(this.checkSource.reader.data, this.field);
             } else {
@@ -792,6 +792,7 @@ var __meta__ = {
                     if (field.parse) {
                         this._parse = proxy(field.parse, field);
                     }
+                    this.type = field.type || "string";
                 }
             }
             if (!options.appendToElement) {
@@ -939,8 +940,24 @@ var __meta__ = {
             this.container.find(":checkbox").prop("checked", state);
         },
         checkValues: function(values) {
+            var that = this;
+
             $($.grep(this.container.find(":checkbox").prop("checked", false), function(ele) {
-                return $.inArray($(ele).val(), values) != -1;
+                var found = false;
+                if ($(ele).is(".k-check-all")) {
+                    return;
+                }
+                var checkBoxVal = that._parse($(ele).val());
+                for (var i = 0; i < values.length; i++) {
+                    if (that.type == "date") {
+                        found = values[i].getTime() == checkBoxVal.getTime();
+                    } else {
+                        found = values[i] == checkBoxVal;
+                    }
+                    if (found) {
+                        return found;
+                    }
+                }
             })).prop("checked", true);
             this.updateCheckAllState();
         },
