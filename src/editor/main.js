@@ -281,8 +281,10 @@
                     resize: function(e) {
                         var delta = e.y.initialDelta;
                         var newSize = this.initialSize + delta;
+                        var min = this.options.min || 0;
+                        var max = this.options.max || Infinity;
 
-                        newSize = Math.min(this.options.max, Math.max(this.options.min, newSize));
+                        newSize = Math.min(max, Math.max(min, newSize));
 
                         this.editor.height(newSize);
                     },
