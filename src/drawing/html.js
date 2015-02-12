@@ -1889,33 +1889,25 @@
                 start++;
             }
             range.setStart(node, start);
-            var len = 0;
+            var len = 0, bottom = null, box;
             while (++start <= end) {
                 ++len;
                 range.setEnd(node, start);
 
                 // for justified text we must split at each space, as
-                // space has variable width.  otherwise we can
-                // optimize and split only at end of line (i.e. when a
-                // new rectangle would be created).
-                if (len > 1 && ((isJustified && /\s/.test(text.charAt(start - 1))) || range.getClientRects().length > 1)) {
-                    //
-                    // In IE, getClientRects for a <li> element will return an additional rectangle for the bullet, but
-                    // *only* when only the first char in the LI is selected.  Checking if len > 1 above appears to be a
-                    // good workaround.
-                    //
-                    //// DEBUG
-                    // Array.prototype.slice.call(range.getClientRects()).concat([ range.getBoundingClientRect() ]).forEach(function(r){
-                    //     $("<div>").css({
-                    //         position  : "absolute",
-                    //         left      : r.left + "px",
-                    //         top       : r.top + "px",
-                    //         width     : r.right - r.left + "px",
-                    //         height    : r.bottom - r.top + "px",
-                    //         boxSizing : "border-box",
-                    //         border    : "1px solid red"
-                    //     }).appendTo(document.body);
-                    // });
+                // space has variable width.
+                if (len > 1 && isJustified && /\s/.test(text.charAt(start - 1))) {
+                    range.setEnd(node, --start);
+                    break;
+                }
+
+                // otherwise we can optimize and split only at end of
+                // line.  To detect that, we're going to look for a
+                // change in the bounding box's bottom side.
+                box = range.getBoundingClientRect();
+                if (bottom == null) {
+                    bottom = box.bottom;
+                } else if (box.bottom != bottom) {
                     range.setEnd(node, --start);
                     break;
                 }
@@ -1923,7 +1915,14 @@
 
             // another workaround for IE: if we rely on getBoundingClientRect() we'll overlap with the bullet for LI
             // elements.  Calling getClientRects() and using the *first* rect appears to give us the correct location.
-            var box = range.getClientRects()[0];
+            if (browser.msie) {
+                box = range.getClientRects()[0];
+            } else {
+                // Sometimes, Chrome stupidly include a zero-width rect from the previous line
+                // (happens consistently when we work in a foreign DOM, such as the Editor iframe).
+                // getBoundingClientRect is more reliable for non-IE (possibly faster too).
+                box = range.getBoundingClientRect();
+            }
 
             var str = range.toString().replace(/\s+$/, "");
             drawText(str, box);
@@ -2122,11 +2121,10 @@
 
         popNodeInfo();
 
-        //drawDebugBox(element, container);
+        //drawDebugBox(element.getBoundingClientRect(), container);
     }
 
-    function drawDebugBox(element, group) {
-        var box = element.getBoundingClientRect();
+    function drawDebugBox(box, group) {
         var path = drawing.Path.fromRect(new geo.Rect([ box.left, box.top ], [ box.width, box.height ]));
         group.append(path);
     }
