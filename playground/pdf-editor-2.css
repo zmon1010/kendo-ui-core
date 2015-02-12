@@ -1,0 +1,20 @@
+@import url("../dist/styles/web/kendo.common-fiori.css"); /* for deja-vu fonts */
+
+body {
+  font-family: "DejaVu Serif";
+  font-size: 12px;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+code, pre {
+  font-family: "DejaVu Mono";
+  font-size: 95%;
+}
+
+kendo-pdf-page {
+  display: block;
+  width: 595.28px;
+  padding: 20px;
+  box-sizing: border-box;
+}
