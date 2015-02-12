@@ -218,6 +218,7 @@ namespace KendoScaffolder
             ViewParameters.Add("Sortable", sortable);
             ViewParameters.Add("ViewDataTypeName", viewDataTypeName);
             ViewParameters.Add("GridEvents", _viewModel.SelectedGridEvents);
+            ViewParameters.Add("ServerOperation", _viewModel.ServerOperation);
 
             if (useViewModel)
             {

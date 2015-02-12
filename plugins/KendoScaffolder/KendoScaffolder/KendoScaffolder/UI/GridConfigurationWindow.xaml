@@ -78,8 +78,7 @@
 
                     <Label Grid.Row="2" Content="View Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
                     <TextBox Grid.Row="3" Name="ViewName" Loaded="ViewName_Loaded" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ViewName}" />
-
-
+                    
                     <Label Grid.Row="4" Content="Model Class:" HorizontalAlignment="Left"  VerticalAlignment="Bottom"/>
                     <ComboBox Grid.Row="5" Name="ModelType" Width="311" Height="23" HorizontalAlignment="Left"  VerticalAlignment="Top" 
                               ItemsSource="{Binding ModelTypes}" SelectionChanged="RequiredField_SelectionChanged" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedModelType, Mode=OneWayToSource}" />
@@ -123,9 +122,13 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Row="0" Content="DataSource Type:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="179"/>
-                    <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"
+                    <WrapPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+                        <ComboBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"
                   ItemsSource="{Binding DataSourceTypes}" SelectedItem="{Binding SelectedDataSourceType, Mode=TwoWay}" />
-
+                        <CheckBox Content="Server Operation" VerticalAlignment="Center" Margin="20, 0, 0, 0" IsChecked="{Binding ServerOperation, Mode=TwoWay}" />
+                    </WrapPanel>
+                    
+                    
                     <CheckBox Grid.Row="1" Grid.Column="0"  Content="Editable" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Editable_Clicked" IsChecked="{Binding Editable, Mode=OneWayToSource}" />
                     <WrapPanel Grid.Row="2" Grid.Column="1" Name="EditModeWrapPanel" Visibility="Collapsed">
                         <Label   Name="EditModeLabel" Content="Edit Mode:" HorizontalAlignment="Left" VerticalAlignment="Center"/>

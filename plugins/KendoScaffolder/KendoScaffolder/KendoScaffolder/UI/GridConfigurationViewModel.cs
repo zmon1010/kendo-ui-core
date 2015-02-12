@@ -42,6 +42,7 @@ namespace KendoScaffolder.UI
         public ModelType SelectedModelType { get; set; }
         public ModelType SelectedViewModelType { get; set; }
         public ModelType SelectedDbContextType { get; set; }
+        public bool ServerOperation { get; set; }
         public bool UseViewModel { get; set; }
 
         public string SelectedDataSourceType { get; set; }
@@ -92,6 +93,7 @@ namespace KendoScaffolder.UI
             AllowUnsort = true;
             SelectedDataSourceType = "Ajax";
             SelectedGridEvents = new List<string>();
+            ServerOperation = true;
         }
 
         /// <summary>

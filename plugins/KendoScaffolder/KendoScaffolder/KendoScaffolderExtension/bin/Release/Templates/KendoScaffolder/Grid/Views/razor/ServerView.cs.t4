@@ -5,8 +5,10 @@
     var entitySetName = ModelMetadata.EntitySetName;
     var batchEditMode = "InCell";
 #>
-@(Html.Kendo().Grid<<#= ViewDataTypeName #>>()
-      .Name("grid")
+@model IEnumerable<<#= ViewDataTypeName #>>
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
       .Columns(columns =>
       {
 <#
@@ -24,7 +26,7 @@ foreach (PropertyMetadata property in properties) {
 <#
                         break;
                     }
-                }
+                }  
             }  else {
 #>
         columns.Bound(c => c.<#= property.PropertyName#>);
@@ -56,7 +58,7 @@ if(EditableCreate || ExcelExport || PdfExport) {
         }
         if(ExcelExport) {
 #>
-            toolbar.Excel();
+            //Excel Export is not supported in server binding mode
 <#
         }
         if(PdfExport) {
@@ -73,9 +75,13 @@ if(EditableCreate || ExcelExport || PdfExport) {
       .ColumnMenu()
 <#
     }
-    if(Editable){
+    if(Editable && EditMode != batchEditMode){
 #>
       .Editable(editable => editable.Mode(GridEditMode.<#= EditMode #>))
+<#
+    } else {
+#>
+      //InCell editing mode is not supported in server binding mode
 <#
     }
     if(Pageable){
@@ -118,64 +124,60 @@ if(EditableCreate || ExcelExport || PdfExport) {
 #>
       .Scrollable(<# if(!Scrollable) { #>scrollable => scrollable.Enabled(false)<# } #>)
 <#
+    if(PdfExport) {
+#>
+      .Pdf(pdf => pdf
+          .FileName("Kendo UI Grid Export.pdf")
+          .ProxyURL(Url.Action("Pdf_Export_Save", "<#= ControllerRootName #>"))
+      )
+<#
+    }
     if(GridEvents.Count > 0){
 #>
       .Events(events => {
 <#
-       foreach (string ev in GridEvents)
-       {
+      foreach (string ev in GridEvents)
+      {
 #>
-            events.<#= ev #>("on<#= ev #>");
+          events.<#= ev #>("on<#= ev #>");
 <#
-       }
+      }
 #>
-      })
+      }) 
 <#
     }
 #>
+<#
+if(Editable) {
+#>
       .DataSource(dataSource => dataSource
-          .Ajax()
+        .Server()
+        .Model(model => model.Id(p => p.<#= PrimaryKeyName #>))
+        .Read(read => read.Action("Index", "<#= ControllerRootName #>"))
 <#
-if(!ServerOperation){
-#>
-          .ServerOperation(false)
-<#
-}
-if(Editable) {
-   if(EditMode.Equals(batchEditMode)) {
-#>
-          .Batch(true)
-<#
-}
-#>
-          .Model(model => model.Id(p => p.<#= PrimaryKeyName #>))
-<#
-}
-#>
-          .Read(read => read.Action("<#= entitySetName #>_Read", "<#= ControllerRootName #>"))
-<#
-if(Editable) {
     if(EditableCreate) {
 #>
-          .Create(create => create.Action("<#= entitySetName #>_Create", "<#= ControllerRootName #>"))
+        .Create("<#= entitySetName #>_Create", "<#= ControllerRootName #>")
 <#
     }
     if(EditableUpdate) {
 #>
-          .Update(update => update.Action("<#= entitySetName #>_Update", "<#= ControllerRootName #>"))
+        .Update("<#= entitySetName #>_Update", "<#= ControllerRootName #>")
 <#
     }
     if(EditableDestroy) {
 #>
-          .Destroy(destroy => destroy.Action("<#= entitySetName #>_Destroy", "<#= ControllerRootName #>"))
+        .Destroy("<#= entitySetName #>_Destroy", "<#= ControllerRootName #>")
 <#
     }
-}
 #>
       )
+<#
+}
+#>
 )
-<# if(GridEvents.Count > 0){ #>
 
+<# if(GridEvents.Count > 0){ #>
 <script>
 
 <#

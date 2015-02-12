@@ -136,6 +136,11 @@ if(EditableCreate || ExcelExport || PdfExport) {
       .DataSource(dataSource => dataSource
           .Ajax()
 <#
+if(!ServerOperation){
+#>
+          .ServerOperation(false)
+<#
+}
 if(Editable) {
    if(EditMode.Equals(batchEditMode)) {
 #>

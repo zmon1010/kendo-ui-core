@@ -160,6 +160,13 @@ if(EditableCreate || ExcelExport || PdfExport) {
 #>
       .DataSource(dataSource => dataSource
           .WebApi()
+<#
+if(!ServerOperation){
+#>
+          .ServerOperation(false)
+<#
+}
+#>
           .Model(model => model.Id(p => p.<#= PrimaryKeyName #>))
           .Read(read => read.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))
 <#
