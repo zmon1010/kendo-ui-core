@@ -16,6 +16,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.TreeList
         .Filterable(true)
         .ColumnMenu()
         .DataSource(dataSource => dataSource
+            .ServerOperation(false)
             .Read(read => read.Action("Index", "EmployeeDirectory"))
             .Model(m => {
                 m.Id(f => f.EmployeeId);

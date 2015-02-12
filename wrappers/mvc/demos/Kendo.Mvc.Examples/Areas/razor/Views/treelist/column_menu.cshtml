@@ -10,8 +10,9 @@
         })        
         .Sortable()
         .Filterable(true)
-        .ColumnMenu()
+        .ColumnMenu()        
         .DataSource(dataSource => dataSource
+            .ServerOperation(false)
             .Read(read => read.Action("Index", "EmployeeDirectory"))
             .Model(m => {
                 m.Id(f => f.EmployeeId);
