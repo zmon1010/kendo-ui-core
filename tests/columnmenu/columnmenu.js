@@ -690,6 +690,33 @@
         ok(!menu.wrapper.find(".k-unlock").hasClass("k-state-disabled"));
     });
 
+    test("unlocking column updated disabled state on already opened menu", function() {
+        var owner = new kendo.ui.Widget({
+        });
+
+        owner.columns = [
+            { field: "foo", locked: true },
+            { field: "bar", hidden: false, locked: true },
+            { field: "baz" }
+        ];
+
+        var menu = setup({
+            lockedColumns: true,
+            owner: owner
+        });
+
+        menu.link.click();
+        owner.columns[1].locked = false;
+        owner.trigger("columnUnlock");
+
+
+        var locked = menu.wrapper.find(".k-lock");
+        var unlocked = menu.wrapper.find(".k-unlock");
+
+        ok(locked.hasClass("k-state-disabled"));
+        ok(!unlocked.hasClass("k-state-disabled"));
+    });
+
     test("only one visible locked column - multiple unlocked columns", function() {
         var menu = setup({
             owner: {

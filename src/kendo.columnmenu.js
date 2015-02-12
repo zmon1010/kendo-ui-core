@@ -238,9 +238,16 @@ var __meta__ = {
                 that.dataSource.unbind(CHANGE, that._refreshHandler);
             }
 
-            if (that.options.columns && that.owner && that._updateColumnsMenuHandler) {
-                that.owner.unbind("columnShow", that._updateColumnsMenuHandler);
-                that.owner.unbind("columnHide", that._updateColumnsMenuHandler);
+            if (that.options.columns && that.owner) {
+                if (that._updateColumnsMenuHandler) {
+                    that.owner.unbind("columnShow", that._updateColumnsMenuHandler);
+                    that.owner.unbind("columnHide", that._updateColumnsMenuHandler);
+                }
+
+                if (that._updateColumnsLockedStateHandler) {
+                    that.owner.unbind("columnLock", that._updateColumnsLockedStateHandler);
+                    that.owner.unbind("columnUnlock", that._updateColumnsLockedStateHandler);
+                }
             }
 
             if (that.menu) {
@@ -409,6 +416,10 @@ var __meta__ = {
                 that._updateColumnsMenuHandler = proxy(that._updateColumnsMenu, that);
 
                 that.owner.bind(["columnHide", "columnShow"], that._updateColumnsMenuHandler);
+
+                that._updateColumnsLockedStateHandler = proxy(that._updateColumnsLockedState, that);
+
+                that.owner.bind(["columnUnlock", "columnLock" ], that._updateColumnsLockedStateHandler);
 
                 that.menu.bind(SELECT, function(e) {
                     var item = $(e.item),
