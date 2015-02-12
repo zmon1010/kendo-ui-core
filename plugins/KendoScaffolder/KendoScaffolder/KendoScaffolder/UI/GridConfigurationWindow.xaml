@@ -124,8 +124,8 @@
                     <Label Grid.Row="0" Content="DataSource Type:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="179"/>
                     <WrapPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
                         <ComboBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"
-                  ItemsSource="{Binding DataSourceTypes}" SelectedItem="{Binding SelectedDataSourceType, Mode=TwoWay}" />
-                        <CheckBox Content="Server Operation" VerticalAlignment="Center" Margin="20, 0, 0, 0" IsChecked="{Binding ServerOperation, Mode=TwoWay}" />
+                  ItemsSource="{Binding DataSourceTypes}" SelectedItem="{Binding SelectedDataSourceType, Mode=TwoWay}" SelectionChanged="SelectedDataSourceType_Changed" />
+                        <CheckBox Name="ServerOperation" Content="Server Operation" VerticalAlignment="Center" Margin="20, 0, 0, 0" IsChecked="{Binding ServerOperation, Mode=TwoWay}" />
                     </WrapPanel>
                     
                     
@@ -185,7 +185,7 @@
                 </Grid>
             </TabItem>
             <TabItem Height="36" Width="220" Header="Events">
-                <Grid>
+                <Grid Margin="20, 20, 0, 0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="335"/>
@@ -193,7 +193,7 @@
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Content="Grid Events:" VerticalAlignment="Center" />
                     <WrapPanel Grid.Row="1">
-                        <ListBox Name="GridEventsListBox" SelectionMode="Multiple" ItemsSource="{Binding GridEvents}" Margin="20, 0, 0, 0">
+                        <ListBox Name="GridEventsListBox" SelectionMode="Multiple" ItemsSource="{Binding GridEvents}">
                             <ListBox.Resources>
                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />

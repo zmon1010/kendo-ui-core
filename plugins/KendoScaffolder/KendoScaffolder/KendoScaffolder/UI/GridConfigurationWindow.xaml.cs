@@ -174,6 +174,13 @@ namespace KendoScaffolder.UI
                 GridEventsListBox.SelectedItems.Remove(item);
             }
         }
+
+        private void SelectedDataSourceType_Changed(object sender, RoutedEventArgs e)
+        {
+            ComboBox cb = sender as ComboBox;
+            string item = cb.SelectedItem.ToString();
+            ServerOperation.Visibility = (item.Equals("Server")) ? Visibility.Hidden : Visibility.Visible;
+        }
     }
 
     public class EnumToBooleanConverter : IValueConverter
