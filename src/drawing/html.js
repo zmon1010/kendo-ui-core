@@ -79,7 +79,7 @@
                     });
                     x.container.parentNode.removeChild(x.container);
                     defer.resolve(group);
-                }, 0);
+                }, 10);
             } else {
                 defer.resolve(doOne(element));
             }
