@@ -15,6 +15,17 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Handlers
         
         /// <summary>
+        /// Triggered when the selection has changed (either by the user or through the select method).
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>
+        public TreeViewEventBuilder Change(string handler)
+        {
+            Handler("change", handler);
+
+            return this;
+        }
+        
+        /// <summary>
         /// Triggered after the user has checked or unchecked a checkbox.
 		/// If checkChildren is true, the event is triggered after all checked states are updated.
 		/// This event has been introduced in internal builds after 2014.2.828.
@@ -105,12 +116,12 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Triggered when the selection has changed (either by the user or through the select method).
+        /// Triggered when the user moves the focus on another node
         /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the change event.</param>
-        public TreeViewEventBuilder Change(string handler)
+        /// <param name="handler">The name of the JavaScript function that will handle the navigate event.</param>
+        public TreeViewEventBuilder Navigate(string handler)
         {
-            Handler("change", handler);
+            Handler("navigate", handler);
 
             return this;
         }
@@ -122,17 +133,6 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeViewEventBuilder Select(string handler)
         {
             Handler("select", handler);
-
-            return this;
-        }
-        
-        /// <summary>
-        /// Triggered when the user moves the focus on another node
-        /// </summary>
-        /// <param name="handler">The name of the JavaScript function that will handle the navigate event.</param>
-        public TreeViewEventBuilder Navigate(string handler)
-        {
-            Handler("navigate", handler);
 
             return this;
         }

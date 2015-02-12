@@ -31,23 +31,23 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The text message shown in the retry button.
-        /// </summary>
-        /// <param name="value">The value that configures the retry.</param>
-        public TreeViewMessagesSettingsBuilder Retry(string value)
-        {
-            container.Retry = value;
-
-            return this;
-        }
-        
-        /// <summary>
         /// The text message shown when an error occurs while fetching the content.
         /// </summary>
         /// <param name="value">The value that configures the requestfailed.</param>
         public TreeViewMessagesSettingsBuilder RequestFailed(string value)
         {
             container.RequestFailed = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The text message shown in the retry button.
+        /// </summary>
+        /// <param name="value">The value that configures the retry.</param>
+        public TreeViewMessagesSettingsBuilder Retry(string value)
+        {
+            container.Retry = value;
 
             return this;
         }

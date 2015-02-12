@@ -6,22 +6,24 @@ namespace Kendo.Mvc.UI
     using System.Web.Routing;
     using Kendo.Mvc.Extensions;
 
-    public class TreeViewMessagesSettings : JsonObject
+    public class EditorResizableSettings : JsonObject
     {
-        public TreeViewMessagesSettings()
+        public EditorResizableSettings()
         {
+            Enabled = false;
+        
             //>> Initialization
         
         //<< Initialization
         }
 
+        public bool Enabled { get; set; }
+
         //>> Fields
         
-        public string Loading { get; set; }
+        public double? Min { get; set; }
         
-        public string RequestFailed { get; set; }
-        
-        public string Retry { get; set; }
+        public double? Max { get; set; }
         
         //<< Fields
 
@@ -29,21 +31,16 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
-            if (Loading.HasValue())
+            if (Min.HasValue)
             {
-                json["loading"] = Loading;
+                json["min"] = Min;
             }
-            
-            if (RequestFailed.HasValue())
+                
+            if (Max.HasValue)
             {
-                json["requestFailed"] = RequestFailed;
+                json["max"] = Max;
             }
-            
-            if (Retry.HasValue())
-            {
-                json["retry"] = Retry;
-            }
-            
+                
         //<< Serialization
         }
     }

@@ -21,6 +21,8 @@ namespace Kendo.Mvc.UI
         
         public bool? Scripts { get; set; }
         
+        public bool? Semantic { get; set; }
+        
         //<< Fields
 
         protected override void Serialize(IDictionary<string, object> json)
@@ -35,6 +37,11 @@ namespace Kendo.Mvc.UI
             if (Scripts.HasValue)
             {
                 json["scripts"] = Scripts;
+            }
+                
+            if (Semantic.HasValue)
+            {
+                json["semantic"] = Semantic;
             }
                 
         //<< Serialization

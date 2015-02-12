@@ -244,6 +244,37 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// If enabled, the editor renders a resize handle to allow users to resize it.
+        /// </summary>
+        public EditorBuilder Resizable()
+        {
+            return Resizable(true);
+        }
+
+        /// <summary>
+        /// If enabled, the editor renders a resize handle to allow users to resize it.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the resizable option.</param>
+        public EditorBuilder Resizable(bool enabled)
+        {
+            container.Resizable.Enabled = enabled;
+            return this;
+        }
+
+        
+        /// <summary>
+        /// If enabled, the editor renders a resize handle to allow users to resize it.
+        /// </summary>
+        /// <param name="configurator">The action that configures the resizable.</param>
+        public EditorBuilder Resizable(Action<EditorResizableSettingsBuilder> configurator)
+        {
+            container.Resizable.Enabled = true;
+            
+            configurator(new EditorResizableSettingsBuilder(container.Resizable));
+            return this;
+        }
+        
+        /// <summary>
         /// Allows setting of serialization options.
         /// </summary>
         /// <param name="configurator">The action that configures the serialization.</param>

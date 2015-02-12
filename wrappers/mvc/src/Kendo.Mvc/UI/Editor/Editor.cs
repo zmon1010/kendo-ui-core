@@ -41,6 +41,8 @@ namespace Kendo.Mvc.UI
 
             //>> Initialization
         
+            Resizable = new EditorResizableSettings();
+                
             Serialization = new EditorSerializationSettings();
                 
         //<< Initialization
@@ -49,6 +51,12 @@ namespace Kendo.Mvc.UI
         //>> Fields
         
         public string Domain { get; set; }
+        
+        public EditorResizableSettings Resizable
+        {
+            get;
+            set;
+        }
         
         public EditorSerializationSettings Serialization
         {
@@ -148,6 +156,14 @@ namespace Kendo.Mvc.UI
                 json["domain"] = Domain;
             }
             
+            var resizable = Resizable.ToJson();
+            if (resizable.Any())
+            {
+                json["resizable"] = resizable;
+            } else if (Resizable.Enabled != false) {
+                json["resizable"] = Resizable.Enabled;
+            }
+
             var serialization = Serialization.ToJson();
             if (serialization.Any())
             {
