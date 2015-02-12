@@ -11,6 +11,10 @@
             var form = $('<form method="post" action="' + dojo.configuration.url + '" target="_blank" />').hide().appendTo(document.body);
             $("<input name='snippet'>").val(window.btoa(snippet)).appendTo(form);
 
+            if ($("#mobile-application-container").length) {
+                $("<input name='mode'>").val("ios7").appendTo(form);
+            }
+
             form.submit();
         },
         replaceCommon: function(code, common) {
