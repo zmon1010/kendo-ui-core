@@ -29,7 +29,7 @@
         public string Phone { get; set; }
 
         [Required]
-        [Range(1000, 9999)]
+        [Range(0, 9999)]         
         [DataType("Integer")]
         public int? Extension { get; set; }
 

@@ -35,7 +35,7 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.TreeList
                 m.Field(f => f.ReportsTo);
                 m.Field(f => f.HireDate);
                 m.Field(f => f.BirthDate);
-                m.Field(f => f.Extension);
+                m.Field(f => f.Extension).DefaultValue(0);
                 m.Field(f => f.Position);
             })
         )
