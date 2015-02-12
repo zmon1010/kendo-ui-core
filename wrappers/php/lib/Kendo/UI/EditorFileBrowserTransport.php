@@ -24,7 +24,7 @@ class EditorFileBrowserTransport extends \Kendo\SerializableObject {
     }
 
     /**
-    * The URL responsible for serving the original file. A file name placeholder should be specified.
+    * The URL responsible for serving the original file. A file name placeholder should be specified. By default the placeholder value is URL encoded. If this is not desired, use a function.
     * @param string|\Kendo\JavaScriptFunction $value
     * @return \Kendo\UI\EditorFileBrowserTransport
     */

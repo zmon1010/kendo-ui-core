@@ -68,6 +68,10 @@ public class EditorTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("messages", value);
     }
 
+    public void setResizable(com.kendoui.taglib.editor.ResizableTag value) {
+        setProperty("resizable", value);
+    }
+
     public void setSerialization(com.kendoui.taglib.editor.SerializationTag value) {
         setProperty("serialization", value);
     }
@@ -124,6 +128,14 @@ public class EditorTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setEncoded(boolean value) {
         setProperty("encoded", value);
+    }
+
+    public boolean getResizable() {
+        return (boolean)getProperty("resizable");
+    }
+
+    public void setResizable(boolean value) {
+        setProperty("resizable", value);
     }
 
     public java.lang.Object getStylesheets() {

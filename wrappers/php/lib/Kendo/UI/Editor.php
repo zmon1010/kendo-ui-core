@@ -63,6 +63,15 @@ This property has been introduced in internal builds after 2014.1.319.
     }
 
     /**
+    * If enabled, the editor renders a resize handle to allow users to resize it.
+    * @param boolean|\Kendo\UI\EditorResizable|array $value
+    * @return \Kendo\UI\Editor
+    */
+    public function resizable($value) {
+        return $this->setProperty('resizable', $value);
+    }
+
+    /**
     * Allows setting of serialization options.
     * @param \Kendo\UI\EditorSerialization|array $value
     * @return \Kendo\UI\Editor

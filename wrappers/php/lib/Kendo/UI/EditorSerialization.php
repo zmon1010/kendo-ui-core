@@ -23,6 +23,16 @@ class EditorSerialization extends \Kendo\SerializableObject {
         return $this->setProperty('scripts', $value);
     }
 
+    /**
+    * Indicates whether the font styles will be saved as semantic (strong / em / span) tags,
+or as presentational (b / i / u / font) tags. Used for outputting content for legacy systems.
+    * @param boolean $value
+    * @return \Kendo\UI\EditorSerialization
+    */
+    public function semantic($value) {
+        return $this->setProperty('semantic', $value);
+    }
+
 //<< Properties
 }
 

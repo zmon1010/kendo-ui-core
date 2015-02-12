@@ -14889,6 +14889,12 @@ This property has been introduced in internal builds after 2014.1.319.</descript
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>If enabled, the editor renders a resize handle to allow users to resize it.</description>
+            <name>resizable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Allows custom stylesheets to be included within the editing area. This setting is applicable only when the Editor is initialized from a textarea
 and a contenteditable iframe is generated.</description>
             <name>stylesheets</name>
@@ -16203,6 +16209,29 @@ If function is assigned, the current path and image name will be provided.</desc
             <name>viewHtml</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
+        <description>If enabled, the editor renders a resize handle to allow users to resize it.</description>
+        <name>editor-resizable</name>
+        <tag-class>com.kendoui.taglib.editor.ResizableTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The maximum height that the editor can be resized to.</description>
+            <name>max</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The minimum height that the editor can be resized to.</description>
+            <name>min</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
         </attribute>
 
     </tag>

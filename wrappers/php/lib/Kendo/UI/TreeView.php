@@ -56,7 +56,7 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
-    * Sets the field of the data item that provides the image URL of the treeview nodes.
+    * Sets the field of the data item that provides the image URL of the TreeView nodes.
     * @param string $value
     * @return \Kendo\UI\TreeView
     */
@@ -112,8 +112,8 @@ If an array, each level uses the field that is at the same index in the array, o
     }
 
     /**
-    * Indicates whether the child datasources should be fetched lazily when parent groups get expanded.
-Setting this to false causes all child dataSources to be loaded at initialization time.
+    * Indicates whether the child DataSources should be fetched lazily when parent groups get expanded.
+Setting this to false causes all child DataSources to be loaded at initialization time.
 Note: when initializing the widget from an array (rather than from a HierarchicalDataSource instance), this option defaults to false, rather than true.
     * @param boolean $value
     * @return \Kendo\UI\TreeView
@@ -160,6 +160,20 @@ Note: when initializing the widget from an array (rather than from a Hierarchica
     */
     public function addItem($value) {
         return $this->add('items', func_get_args());
+    }
+
+    /**
+    * Sets the change event of the TreeView.
+    * Triggered when the selection has changed (either by the user or through the select method).
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\TreeView
+    */
+    public function change($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('change', $value);
     }
 
     /**
@@ -277,17 +291,17 @@ This event has been introduced in internal builds after 2014.2.828.
     }
 
     /**
-    * Sets the change event of the TreeView.
-    * Triggered when the selection has changed (either by the user or through the select method).
+    * Sets the navigate event of the TreeView.
+    * Triggered when the user moves the focus on another node
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\TreeView
     */
-    public function change($value) {
+    public function navigate($value) {
         if (is_string($value)) {
             $value = new \Kendo\JavaScriptFunction($value);
         }
 
-        return $this->setProperty('change', $value);
+        return $this->setProperty('navigate', $value);
     }
 
     /**
@@ -302,20 +316,6 @@ This event has been introduced in internal builds after 2014.2.828.
         }
 
         return $this->setProperty('select', $value);
-    }
-
-    /**
-    * Sets the navigate event of the TreeView.
-    * Triggered when the user moves the focus on another node
-    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
-    * @return \Kendo\UI\TreeView
-    */
-    public function navigate($value) {
-        if (is_string($value)) {
-            $value = new \Kendo\JavaScriptFunction($value);
-        }
-
-        return $this->setProperty('navigate', $value);
     }
 
 

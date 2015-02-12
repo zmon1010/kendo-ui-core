@@ -25,7 +25,7 @@ If function is assigned, the current path and image name will be provided.
     }
 
     /**
-    * The URL which will handle the upload of the new images. If not specified the Upload button will not be displayed.
+    * The URL which will handle the upload of the new images. If not specified the Upload button will not be displayed.The requirements for this handler are the same as for the save handler in the Upload widget.
     * @param string $value
     * @return \Kendo\UI\EditorImageBrowserTransport
     */
@@ -34,7 +34,7 @@ If function is assigned, the current path and image name will be provided.
     }
 
     /**
-    * The URL responsible for serving the original image. A file name placeholder should be specified.
+    * The URL responsible for serving the original image. A file name placeholder should be specified. By default the placeholder value is URL encoded. If this is not desired, use a function.
     * @param string|\Kendo\JavaScriptFunction $value
     * @return \Kendo\UI\EditorImageBrowserTransport
     */
