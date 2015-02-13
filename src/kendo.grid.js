@@ -3717,9 +3717,9 @@ var __meta__ = {
                             that._scrollTo(element.parent()[0], that.content[0]);
                         } else if (content.is(".k-grid-content-locked")) {
                             that._scrollTo(that._relatedRow(element.parent())[0], that.content[0]);
-                      //      if (!scrollable.virtual) {
+                            if (!scrollable.virtual) {
                                 that.lockedContent[0].scrollTop = that.content[0].scrollTop;
-                       //     }
+                            }
                         }
 
                         if (!content.is(".k-grid-content-locked,.k-grid-header-locked")) {
