@@ -1599,12 +1599,19 @@ var __meta__ = {
         },
 
         getOptions: function() {
+            var options = this.options;
+            options.dataSource = null;
+
             var result = extend(true, {}, this.options);
             result.columns = kendo.deepExtend([], this.columns);
+
             var dataSource = this.dataSource;
 
-            result.dataSource = $.extend( true, {}, dataSource.options);
+            var initialData = dataSource.options.data && dataSource._data;
+            dataSource.options.data = null;
+            result.dataSource = $.extend(true, {}, dataSource.options);
 
+            result.dataSource.data = initialData;
             result.dataSource.page = dataSource.page();
             result.dataSource.filter = dataSource.filter();
             result.dataSource.pageSize = dataSource.pageSize();
