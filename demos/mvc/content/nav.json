@@ -1560,7 +1560,6 @@
       {
           "text": "Export to Excel",
           "url": "grid/excel-export",
-          "new": true,
           "title": {
               "kendo-ui": "Exporting to MS Excel"
           },
@@ -1574,7 +1573,6 @@
       {
           "text": "Export to PDF",
           "url": "grid/pdf-export",
-          "new": true,
           "title": {
               "kendo-ui": "Exporting to PDF"
           },
@@ -1933,7 +1931,6 @@
       {
         "text": "Multi-column headers",
         "url": "grid/multicolumnheaders",
-        "new": true,
         "title": {
             "kendo-ui": "Multiple column headers in Kendo UI Grid control | Kendo UI Web demo"
         },
@@ -2044,7 +2041,6 @@
        {
         "text": "Persist state",
         "url": "grid/persist-state",
-        "new": true,
         "title": {
             "kendo-ui": "KendoGrid Persist State API Demo"
         },
