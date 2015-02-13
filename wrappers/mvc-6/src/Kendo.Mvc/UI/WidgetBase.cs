@@ -85,7 +85,7 @@ namespace Kendo.Mvc.UI
         }
 
         [Activate]
-        protected IHtmlHelper HtmlHelper { get; set; }
+        public IHtmlHelper HtmlHelper { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
