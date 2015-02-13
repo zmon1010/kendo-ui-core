@@ -266,7 +266,10 @@ var __meta__ = {
                 fileEntry.addClass("k-file-success").data("files", [ files[idx] ]);
 
                 $(".k-progress", fileEntry).width('100%');
-                $(".k-upload-status", fileEntry).prepend("<span class='k-upload-pct'>100%</span>");
+
+                if (!that.options.template) {
+                    $(".k-upload-status", fileEntry).prepend("<span class='k-upload-pct'>100%</span>");
+                }
 
                 if (that._supportsRemove()){
                     that._fileAction(fileEntry, REMOVE);
