@@ -394,6 +394,10 @@
             equal(items.eq(0).text(), "foo");
             equal(items.eq(1).text(), "bar");
             equal(items.eq(2).text(), "baz");
+
+            viewModel.items[0].set("expanded", false);
+
+            equal(dom.find(".text:first").text(), "foo");
         });
 
     })();

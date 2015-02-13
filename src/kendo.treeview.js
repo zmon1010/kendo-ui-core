@@ -1331,6 +1331,8 @@ var __meta__ = {
 
                         that._updateNodeClasses(node, {}, { enabled: item[field], expanded: !isCollapsed });
                     }
+
+                    this.trigger("itemChange", { item: node, data: item, ns: ui });
                 }
 
                 that.angular("compile", function(){
