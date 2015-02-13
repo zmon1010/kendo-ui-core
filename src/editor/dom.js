@@ -289,8 +289,8 @@ var Dom = {
         return node.className == "k-marker" || (Dom.is(node, 'br') && (node.className == "k-br" || attr._moz_dirty || attr._moz_editor_bogus_node));
     },
 
-    emptyNode: function(node) {
-        var significantNodes = $.grep(node.childNodes, function(child) {
+    significantNodes: function(nodes) {
+        return $.grep(nodes, function(child) {
             if (Dom.is(child, 'br')) {
                 return false;
             } else if (Dom.insignificant(child)) {
@@ -303,8 +303,10 @@ var Dom = {
 
             return true;
         });
+    },
 
-        return !significantNodes.length;
+    emptyNode: function(node) {
+        return !Dom.significantNodes(node.childNodes).length;
     },
 
     name: function (node) {

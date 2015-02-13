@@ -177,7 +177,7 @@ var ParagraphCommand = Command.extend({
         if (node) {
             var siblings = false;
             while (node.firstChild && node.firstChild.nodeType == 1) {
-                siblings = siblings || (node.childNodes.length > 1);
+                siblings = siblings || (dom.significantNodes(node.childNodes).length > 1);
                 node = node.firstChild;
             }
 
