@@ -6,9 +6,10 @@
 
 .km-office365 .km-list > li
 {
+    font-size: 1.125em;
     border-style: solid;
     border-width: 0 0 @office365-border-width 0;
-    line-height: 2.2em;
+    line-height: 2em;
 }
 
 .km-office365 .km-listinset > li:first-child,
@@ -79,9 +80,13 @@
 
 .km-office365 .km-group-title
 {
+    font-size: .875em;
+    font-weight: normal;
+    text-transform: uppercase;
     border-style: solid;
     border-width: @office365-border-width 0;
     line-height: 1.6;
+    padding: 1.286em 0 .429em 0;
 }
 
 .km-office365 .km-scroll-header .km-group-title
@@ -91,8 +96,14 @@
 
 .km-office365 .km-listgroupinset .km-group-title
 {
-    border: 0;
+    //border: 0;
     //background: none;
+    margin-top: 0;
+}
+
+.km-office365 .km-listinset, 
+.km-office365 .km-listgroupinset {
+    margin: .64em 0;   
 }
 
 .km-office365 .km-listview .km-switch
@@ -136,4 +147,13 @@
     border-style: solid;
 }
 
+.km-office365 .km-list > li,
+.km-office365 .km-widget .km-listview-link,
+.km-office365 .km-widget .km-listview-label {
+    padding: .278em .7em;
+}
 
+.km-office365 .km-widget .km-listview-link,
+.km-office365 .km-widget .km-listview-label {
+    margin: -0.278em -0.7em;
+}
