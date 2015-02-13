@@ -175,11 +175,13 @@ var ParagraphCommand = Command.extend({
         }
 
         if (node) {
+            var siblings = false;
             while (node.firstChild && node.firstChild.nodeType == 1) {
+                siblings = siblings || (node.childNodes.length > 1);
                 node = node.firstChild;
             }
 
-            if (!dom.isEmpty(node) && /^\s*$/.test(node.innerHTML)) {
+            if (!dom.isEmpty(node) && /^\s*$/.test(node.innerHTML) && !siblings) {
                 node.innerHTML = editorNS.emptyElementContent;
             }
 

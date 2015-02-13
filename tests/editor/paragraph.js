@@ -494,4 +494,12 @@ test("paragraph inside list link cleans link on new list item", function() {
     equal(editor.value(), '<ul><li><a href="http://foo">foo</a></li><li></li></ul>');
 });
 
+test("paragraph after formatted text leaves only one system line break", function() {
+    var range = createRangeFromText(editor, '<p>foo <strong>bar||</strong>baz</p>');
+
+    createParagraphCommand(range).exec();
+
+    equal($("p:last .k-br", editor.body).length, 1);
+});
+
 }());
