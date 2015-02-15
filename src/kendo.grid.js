@@ -6610,6 +6610,51 @@ var __meta__ = {
 
    if (kendo.PDFMixin) {
        kendo.PDFMixin.extend(Grid.prototype);
+
+       Grid.prototype._drawPDF = function(progress) {
+           var result = new $.Deferred();
+           var grid = this;
+
+           // This group will be our document containing all pages
+           var doc = new kendo.drawing.Group();
+
+           var startingPage = this.dataSource.page();
+           this.dataSource.bind("change", function handler() {
+                var dataSource = this;
+
+                grid._drawPDFShadow()
+                .done(function(group) {
+                    // Format the current page
+                    var pageNum = dataSource.page() || 1;
+                    var totalPages = dataSource.totalPages();
+
+                    var args = {
+                        content: group,
+                        page: pageNum,
+                        total: totalPages,
+                        progress: pageNum / totalPages
+                    };
+
+                    progress.notify(args);
+                    doc.append(args.content);
+
+                    if (pageNum < totalPages) {
+                        // Move to the next page
+                        dataSource.page(pageNum + 1);
+                    } else {
+                        // Last page processed reached
+                        dataSource.unbind("change", handler);
+                        dataSource.page(startingPage);
+                        result.resolve(doc);
+                    }
+                });
+            });
+
+            // Read the first page
+            this.dataSource.fetch();
+
+            return result.promise();
+       }
    }
 
    function syncTableHeight(table1, table2) {
