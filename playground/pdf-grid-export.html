@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js"
+      ]);
+    </script>
+    <style>
+        /* Hide the Grid header during export */
+        .k-pdf-export .k-grid-toolbar
+        {
+            display: none;
+        }
+    </style>
+  </head>
+  <body>
+      <div id="grid"></div>
+      <script>
+          $(document).ready(function () {
+              $("#grid").kendoGrid({
+                  toolbar: ["pdf"],
+                  pdf: {
+                      allPages: true,
+                      pageSize: "A4",
+                      margin: "1cm",
+                      landscape: true
+                  },
+                  pdfExport: function(e) {
+                      e.promise.progress(function(e) {
+                          //e.content = formatPage(e.content);
+                          console.log(kendo.format("{0:P}", e.progress));
+                      });
+                  },
+                  dataSource: {
+                      type: "odata",
+                      transport: {
+                          read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                      },
+                      pageSize: 20
+                  },
+                  height: 550,
+                  groupable: true,
+                  sortable: true,
+                  pageable: {
+                      refresh: true,
+                      pageSizes: true,
+                      buttonCount: 5
+                  },
+                  columns: [{
+                      field: "ContactName",
+                      title: "Contact Name",
+                      width: 200
+                      }, {
+                      field: "ContactTitle",
+                      title: "Contact Title"
+                      }, {
+                      field: "CompanyName",
+                      title: "Company Name"
+                      }, {
+                      field: "Country",
+                      width: 150
+                  }]
+              });
+          });
+
+// Import Drawing API namespaces
+var draw = kendo.drawing;
+var geom = kendo.geometry;
+
+// PDF Output is fixed at 72 DPI
+// This gives us a fixed mm/px ratio
+var MM_TO_PX = 2.8347;
+
+// A4 Sheet with 1 cm borders, landscape
+var PAPER_RECT = new geom.Rect(
+    [0, 0], [(297 - 20) * MM_TO_PX, (210 - 20) * MM_TO_PX]
+);
+
+function formatPage(content) {
+    // Fit the content in the available space
+    content = fit(content, PAPER_RECT)
+
+    // Center the content
+    content = hAlign(content, PAPER_RECT, "center")
+
+    // Add a frame to fix the page size
+    var frame = draw.Path.fromRect(PAPER_RECT, {
+        stroke: null
+    });
+
+    var page = new draw.Group();
+    page.append(frame, content);
+
+    return page;
+}
+
+// Transform the content to fit into the specified size
+function fit(content, rect) {
+    var bbox = content.clippedBBox();
+    var size = rect.size;
+    var scale = Math.min(
+        size.width / bbox.width(),
+        size.height / bbox.height()
+    );
+
+    // We apply the actual transformation on a wrapper
+    // so its applied before any existing transformations
+    var wrap = new draw.Group({
+        transform: geom.transform().scale(scale, scale)
+    });
+
+    wrap.append(content);
+
+    return wrap;
+}
+
+// Horizontally aligns an element within a rectangle
+// Supported aligments are "left", "center" and "right"
+function hAlign(element, rect, pos) {
+    var offset = 0;
+    var anchor = "topLeft";
+
+    if (pos === "center") {
+        anchor = "center";
+    } else if (pos === "right") {
+        anchor = "topRight";
+    }
+
+    var offset = rect[anchor]().x - element.clippedBBox()[anchor]().x;
+
+    // We apply the actual transformation on a wrapper
+    // so its applied before any existing transformations
+    var wrap = new draw.Group({
+        transform: geom.transform().translate(offset, 0)
+    });
+
+    wrap.append(element);
+
+    return wrap;
+}
+      </script>
+  </body>
+</html>

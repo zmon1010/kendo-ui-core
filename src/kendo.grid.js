@@ -6615,11 +6615,13 @@ var __meta__ = {
            var result = new $.Deferred();
            var grid = this;
 
+           this._initPDFProgress(progress);
+
            // This group will be our document containing all pages
            var doc = new kendo.drawing.Group();
-
            var startingPage = this.dataSource.page();
-           this.dataSource.bind("change", function handler() {
+
+           function exportPage() {
                 var dataSource = this;
 
                 grid._drawPDFShadow()
@@ -6643,18 +6645,53 @@ var __meta__ = {
                         dataSource.page(pageNum + 1);
                     } else {
                         // Last page processed reached
-                        dataSource.unbind("change", handler);
-                        dataSource.page(startingPage);
+                        restore();
                         result.resolve(doc);
                     }
                 });
+            }
+
+            function restore() {
+                grid.dataSource.unbind("change", exportPage);
+                grid.dataSource.page(startingPage);
+            }
+
+            progress.fail(function() {
+                restore();
+                result.reject(new Error("Export operation aborted"))
             });
+
+            this.dataSource.bind("change", exportPage);
 
             // Read the first page
             this.dataSource.fetch();
 
             return result.promise();
-       }
+        };
+
+        Grid.prototype._initPDFProgress = function(deferred) {
+           kendo.ui.progress(this.wrapper, true);
+           var loading = $(".k-loading-mask", this.wrapper);
+
+           $(".k-loading-image", loading).remove();
+
+           var pb = $("<div class='k-pdf-export-progress'>")
+           .appendTo(loading)
+           .kendoProgressBar({
+               type: "chunk",
+               chunkCount: 10,
+               min: 0,
+               max: 1,
+               value: 0
+           }).data("kendoProgressBar");
+
+           deferred.progress(function(e) {
+               pb.value(e.progress);
+           })
+           .always(function() {
+               loading.remove();
+           });
+        }
    }
 
    function syncTableHeight(table1, table2) {
