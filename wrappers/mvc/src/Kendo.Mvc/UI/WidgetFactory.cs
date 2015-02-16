@@ -2022,18 +2022,11 @@ namespace Kendo.Mvc.UI.Fluent
         /// </example>
         public virtual RadioButtonBuilder RadioButtonFor<TProperty>(Expression<Func<TModel, TProperty>> expression)
         {
-            bool checkedValue = false;
             object model = ModelMetadata.FromLambdaExpression(expression, HtmlHelper.ViewData).Model;
-
-            if (model != null && model.GetType().IsPredefinedType())
-            {
-                checkedValue = Convert.ToBoolean(model);
-            }
 
             return RadioButton()
                         .Name(GetName(expression))
-                        .ModelMetadata(ModelMetadata.FromLambdaExpression(expression, HtmlHelper.ViewData))
-                        .Checked(checkedValue);
+                        .ModelMetadata(ModelMetadata.FromLambdaExpression(expression, HtmlHelper.ViewData));
         }
 
         /// <summary>

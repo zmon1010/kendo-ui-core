@@ -28,28 +28,35 @@
 
         public IHtmlNode RadioButton()
         {
+            string checkedValue = "";
             string value = "";
             ModelState state;
 
+            if (Component.Value != null)
+            {
+                value = Component.Value.ToString();
+            }
+
             if (Component.ViewData.ModelState.TryGetValue(Component.Name, out state) && state.Value != null)
             {
-                Component.Value = false;
-                value = state.Value.ConvertTo(typeof(string), null) as string;
+                checkedValue = state.Value.ConvertTo(typeof(string), null) as string;
             }
             else
             {
-                value = Component.GetValue(Component.Name, Component.Value);
+                checkedValue = Component.GetValue<string>(Component.Name, null);
             }
+
+            bool modelChecked = checkedValue.HasValue() && checkedValue == value;
 
             return new HtmlElement("input", TagRenderMode.SelfClosing)
                 .Attributes(new {
                     name = Component.Name,
-                    id = Component.Id,
+                    id = RenderId(),
                     type = "radio",
                     value = value,
                     @class = "k-radio"
                 })
-                .ToggleAttribute("checked", "checked", Component.Checked)
+                .ToggleAttribute("checked", "checked", Component.Checked || modelChecked)
                 .Attributes(Component.GetUnobtrusiveValidationAttributes())
                 .ToggleAttribute("disabled", "disabled", !Component.Enabled)
                 .Attributes(Component.HtmlAttributes)
@@ -61,10 +68,15 @@
             return new HtmlElement("label")
                 .Attributes(new
                 {
-                    @for = Component.Id,
+                    @for = RenderId(),
                     @class = "k-radio-label"
                 })
-                .Text(Component.Label);            
+                .Text(Component.Label);
+        }
+
+        private string RenderId()
+        {
+            return Component.Id + "_" + Component.Value;
         }
     }
 }
