@@ -2500,7 +2500,7 @@ var __meta__ = {
                 max = min == max ? 0 : max;
 
                 diff = math.abs((max - min) / max);
-                if(!narrow && diff > ZERO_THRESHOLD) {
+                if(narrow === false || (!narrow && diff > ZERO_THRESHOLD)) {
                     return 0;
                 }
 
@@ -2525,7 +2525,7 @@ var __meta__ = {
                 min = min == max ? 0 : min;
 
                 diff = (max - min) / max;
-                if(!narrow && diff > ZERO_THRESHOLD) {
+                if(narrow === false || (!narrow && diff > ZERO_THRESHOLD)) {
                     return 0;
                 }
 

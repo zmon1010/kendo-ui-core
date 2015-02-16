@@ -329,6 +329,18 @@
             equal(numericAxis.options.max, 0);
         });
 
+        test("setting narrowRange to false forces axis minimum to 0 for any delta", function() {
+            numericAxis = new NumericAxis(100, 100.1, { narrowRange: false });
+
+            equal(numericAxis.options.min, 0);
+        });
+
+        test("setting narrowRange to false forces axis maximum to 0 for any delta", function() {
+            numericAxis = new NumericAxis(-100.1, -100, { narrowRange: false });
+
+            equal(numericAxis.options.max, 0);
+        });
+
         test("Automatic maximum is rounded to set major unit", function() {
             numericAxis = new NumericAxis(0, 3, { majorUnit: 1 });
             equal(numericAxis.options.max, 4);
