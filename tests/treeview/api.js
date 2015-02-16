@@ -1114,6 +1114,16 @@
         });
     });
 
+    test("expandPath does not fail if node does not exist", function() {
+        createTreeView([
+            { id: 1, text: "foo" }
+        ]);
+
+        treeviewObject.expandPath([ 100 ], function() {
+            equal(this, treeviewObject);
+        });
+    });
+
     test("expandTo expands up to model", function() {
         createTreeView([
             { text: "foo", items: [

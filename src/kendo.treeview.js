@@ -1895,8 +1895,16 @@ var __meta__ = {
             var node = dataSource.get(path[0]);
             complete = complete || $.noop;
 
+            function tryExpand(node, complete, context) {
+                if (node && !node.loaded()) {
+                    node.set("expanded", true);
+                } else {
+                    complete.call(context);
+                }
+            }
+
             // expand loaded nodes
-            while (path.length > 0 && (node.expanded || node.loaded())) {
+            while (path.length > 0 && node && (node.expanded || node.loaded())) {
                 node.set("expanded", true);
                 path.shift();
                 node = dataSource.get(path[0]);
@@ -1919,18 +1927,14 @@ var __meta__ = {
                     if (path.length) {
                         node = dataSource.get(path[0]);
 
-                        if (node && !node.loaded()) {
-                            node.set("expanded", true);
-                        } else {
-                            complete.call(treeview);
-                        }
+                        tryExpand(node, complete, treeview);
                     } else {
                         complete.call(treeview);
                     }
                 }
             });
 
-            node.set("expanded", true);
+            tryExpand(node, complete, treeview);
         },
 
         _parents: function(node) {
