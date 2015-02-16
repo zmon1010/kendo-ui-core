@@ -820,7 +820,7 @@
         test("value ranges are correctly updated for stacked column data when there are only positive totals", function() {
           var chart = createCategoricalChart([[10, 15],[10, 15]], COLUMN, true),
                 valueRanges = chart.valueAxisRanges.axisName,
-                expectedStackedMinRange = 0,
+                expectedStackedMinRange = 10,
                 expectedStackedMaxRange = 33;
 
             equal(valueRanges.min, expectedStackedMinRange, "Min range is correctly updated");
@@ -831,7 +831,7 @@
           var chart = createCategoricalChart([[-10, -15],[-10, -15]], COLUMN, true),
                 valueRanges = chart.valueAxisRanges.axisName,
                 expectedStackedMinRange = -33,
-                expectedStackedMaxRange = 0;
+                expectedStackedMaxRange = -10;
 
             equal(valueRanges.min, expectedStackedMinRange, "Min range is correctly updated");
             equal(valueRanges.max, expectedStackedMaxRange, "Max range is correctly updated")

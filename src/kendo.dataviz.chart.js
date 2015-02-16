@@ -3952,8 +3952,6 @@ var __meta__ = {
 
         stackLimits: function(axisName, stackName) {
             var limits = CategoricalChart.fn.stackLimits.call(this, axisName, stackName);
-            limits.min = math.min(0, limits.min);
-            limits.max = math.max(0, limits.max);
 
             return limits;
         },
