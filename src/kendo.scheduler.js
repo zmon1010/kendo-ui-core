@@ -3188,12 +3188,13 @@ var __meta__ = {
                     that.toolbar.find(".k-scheduler-views").prepend(viewButton);
                 }
 
-                that.toolbar
-                    .find(".k-scheduler-views li")
-                    .removeClass("k-state-selected")
-                    .end()
-                    .find(".k-view-" + name.replace(/\./g, "\\.").toLowerCase())
-                    .addClass("k-state-selected");
+                var viewButtons =  that.toolbar.find(".k-scheduler-views li")
+                    .removeClass("k-state-selected");
+
+                if (that.options.views.length > 1) {
+                    viewButtons.end().find(".k-view-" + name.replace(/\./g, "\\.").toLowerCase())
+                        .addClass("k-state-selected");
+                }
             }
         },
 

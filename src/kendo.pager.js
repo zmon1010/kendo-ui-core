@@ -174,7 +174,7 @@ var __meta__ = {
                 .on(CLICK + NS , "a", proxy(that._click, that))
                 .addClass("k-pager-wrap k-widget");
 
-            that.element.on(CLICK + NS , ".k-current-page", proxy(that._toggleActive, that))
+            that.element.on(CLICK + NS , ".k-current-page", proxy(that._toggleActive, that));
 
             if (options.autoBind) {
                 that.refresh();

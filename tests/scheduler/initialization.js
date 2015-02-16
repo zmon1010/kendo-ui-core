@@ -204,16 +204,25 @@
 
     test("first view is selected", function() {
         var scheduler = new Scheduler(container, {
-            views: ["day"]
+            views: ["day", "week"]
         });
 
         ok(scheduler.toolbar.find(".k-view-day").hasClass("k-state-selected"));
         equal(scheduler.view().name, "day");
     });
 
+    test("first view is not selected when only one view is available", function() {
+        var scheduler = new Scheduler(container, {
+            views: ["day"]
+        });
+
+        ok(!scheduler.toolbar.find(".k-view-day").hasClass("k-state-selected"));
+        equal(scheduler.view().name, "day");
+    });
+
     test("work week view is selected", function() {
         var scheduler = new Scheduler(container, {
-            views: ["workWeek"]
+            views: ["day", {type: "workWeek", selected: true}]
         });
 
         ok(scheduler.toolbar.find(".k-view-workweek").hasClass("k-state-selected"));
