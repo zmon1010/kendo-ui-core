@@ -862,4 +862,23 @@
             ok(false, "Error is thrown!");
         }
     });
+
+    test("responsive view button is correctly selected", function() {
+        var scheduler = new Scheduler(container, {
+            views: ["day", { type: "week", selected: true }]
+        });
+
+        ok(scheduler.toolbar.find(".k-current-view"));
+        equal(scheduler.view().name, scheduler.toolbar.find(".k-current-view").text().toLowerCase());
+    });
+
+    test("responsive view button is correctly rendered", function() {
+
+        var scheduler = new Scheduler(container, {
+            views: ["day"]
+        });
+
+        ok(scheduler.toolbar.find(".k-current-view"));
+        ok(scheduler.toolbar.find(".k-view-day"));
+    });
 })();

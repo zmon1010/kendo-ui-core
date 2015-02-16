@@ -78,6 +78,7 @@ var __meta__ = {
         DELETERECURRING = "Do you want to delete only this event occurrence or the whole series?",
         EDITRECURRING = "Do you want to edit only this event occurrence or the whole series?",
         COMMANDBUTTONTMPL = '<a class="k-button #=className#" #=attr# href="\\#">#=text#</a>',
+        VIEWBUTTONTEMPLATE = kendo.template('<li class="k-current-view" data-#=ns#name="#=view#"><a role="button" href="\\#" class="k-link">${views[view].title}</a></li>'),
         TOOLBARTEMPLATE = kendo.template('<div class="k-floatwrap k-header k-scheduler-toolbar">' +
            '# if (pdf) { #' +
            '<ul class="k-reset k-scheduler-tools">' +
@@ -91,7 +92,6 @@ var __meta__ = {
                '<li class="k-state-default k-nav-current"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-calendar"></span><span data-#=ns#bind="text: formattedDate"></span></a></li>' +
             '</ul>' +
             '<ul class="k-reset k-header k-scheduler-views">' +
-                '<li class="k-state-selected k-current-view k-view-timeline" data-name="timeline"><a role="button" href="\\#" class="k-link">timeline</a></li>' +
                 '#for(var view in views){#' +
                     '<li class="k-state-default k-view-#= view.toLowerCase() #" data-#=ns#name="#=view#"><a role="button" href="\\#" class="k-link">${views[view].title}</a></li>' +
                 '#}#'  +
@@ -3179,6 +3179,15 @@ var __meta__ = {
                 that._selectedView = that._renderView(name);
                 that._selectedViewName = name;
 
+                var viewButton = VIEWBUTTONTEMPLATE({views: that.views, view: name, ns: kendo.ns});
+                var firstButton = that.toolbar.find(".k-scheduler-views li:first-child");
+
+                if (firstButton.is(".k-current-view")) {
+                    firstButton.replaceWith(viewButton);
+                } else {
+                    that.toolbar.find(".k-scheduler-views").prepend(viewButton);
+                }
+
                 that.toolbar
                     .find(".k-scheduler-views li")
                     .removeClass("k-state-selected")
@@ -3470,6 +3479,7 @@ var __meta__ = {
             }
 
             var template = this._isMobilePhoneView() ? MOBILETOOLBARTEMPLATE : TOOLBARTEMPLATE;
+
             var toolbar = $(template({
                     messages: options.messages,
                     pdf: $.grep(commands, function(item) {
@@ -3527,8 +3537,8 @@ var __meta__ = {
             });
             
             toolbar.on(CLICK + NS, ".k-scheduler-views li.k-current-view", function(e) {
-                that.element.find(".k-scheduler-views").toggleClass("k-state-expanded");          
-                });
+                that.element.find(".k-scheduler-views").toggleClass("k-state-expanded");
+            });
 
             toolbar.find("li").hover(function(){
                     $(this).addClass("k-state-hover");
