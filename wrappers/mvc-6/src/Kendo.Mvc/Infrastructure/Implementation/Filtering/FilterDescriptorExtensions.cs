@@ -5,7 +5,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
     using System.Linq;
     using Kendo.Mvc.Extensions;
 
-    internal static class FilterDescriptorExtensions
+    public static class FilterDescriptorExtensions
     {
         internal static bool IsActive(this FilterDescriptor filter)
         {
@@ -19,7 +19,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
             return valueAsString == null || !string.IsNullOrEmpty(valueAsString);
         }
 
-        internal static IEnumerable<FilterDescriptor> SelectMemberDescriptors(this IEnumerable<IFilterDescriptor> descriptors)
+        public static IEnumerable<FilterDescriptor> SelectMemberDescriptors(this IEnumerable<IFilterDescriptor> descriptors)
         {
             return descriptors.SelectRecursive(f => GetChildDescriptors(f)).OfType<FilterDescriptor>();
         }
@@ -33,7 +33,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
             return null;
         }
 
-        internal static void SetMemberTypeFrom(this FilterDescriptor descriptor, object item)
+        public static void SetMemberTypeFrom(this FilterDescriptor descriptor, object item)
         {
             if (!descriptor.Member.HasValue())
                 return;
@@ -41,7 +41,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
             descriptor.MemberType = BindingHelper.ExtractMemberTypeFromObject(item, descriptor.Member);
         }
 
-        internal static IEnumerable<IFilterDescriptor> SetMemberTypeFrom(this IEnumerable<IFilterDescriptor> descriptors, object item)
+        public static IEnumerable<IFilterDescriptor> SetMemberTypeFrom(this IEnumerable<IFilterDescriptor> descriptors, object item)
         {
             if (item  != null)
             {
