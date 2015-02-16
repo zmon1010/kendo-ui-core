@@ -45,6 +45,7 @@
                 box-sizing: border-box;
                 */
                 font-size: 11px;
+                height: 20px;
             }
 
             .cell {
@@ -248,7 +249,13 @@
                             cells.push(tree.element("td", null, [ tree.text(rows[ri] + ":" + columns[ci]) ] ));
                         }
 
-                        tr.push(tree.element("tr", { style: { height: height + "px" } }, cells));
+                        var attr = null;
+
+                        if (height != ROW_HEIGHT) {
+                            attr = { style: { height: height + "px" } };
+                        }
+
+                        tr.push(tree.element("tr", attr, cells));
                     }
 
                     tree.render([

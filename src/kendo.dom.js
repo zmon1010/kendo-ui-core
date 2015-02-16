@@ -121,11 +121,18 @@ var __meta__ = {
     };
 
     Element.prototype.setStyle = function(style, cachedValue) {
-        var nodeStyle = this.node.style;
+        var node = this.node;
+        var key;
 
-        for (var key in style) {
-            if (style[key] !== cachedValue[key]) {
-                nodeStyle[key] = style[key];
+        if (cachedValue) {
+            for (key in style) {
+                if (style[key] !== cachedValue[key]) {
+                    node.style[key] = style[key];
+                }
+            }
+        } else {
+            for (key in style) {
+                node.style[key] = style[key];
             }
         }
     };
