@@ -1,6 +1,6 @@
 namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
 {
-    internal class ExpressionBuilderOptions
+    public class ExpressionBuilderOptions
     {
         /// <summary>
         /// Gets or sets a value indicating whether member access expression used

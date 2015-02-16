@@ -3,7 +3,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
     using System;
     using System.Linq.Expressions;
 
-    internal abstract class ExpressionBuilderBase
+    public abstract class ExpressionBuilderBase
     {
         private readonly ExpressionBuilderOptions options;
         private readonly Type itemType;
@@ -31,7 +31,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
             }
         }
 
-        protected internal ParameterExpression ParameterExpression
+        public ParameterExpression ParameterExpression
         {
             get
             {

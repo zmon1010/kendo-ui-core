@@ -6,7 +6,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
     using System.Runtime.CompilerServices;
     using Microsoft.CSharp.RuntimeBinder;
 
-    internal class DynamicPropertyAccessExpressionBuilder : MemberAccessExpressionBuilderBase
+    public class DynamicPropertyAccessExpressionBuilder : MemberAccessExpressionBuilderBase
     {
         public DynamicPropertyAccessExpressionBuilder(Type itemType, string memberName)
             : base(itemType, memberName)

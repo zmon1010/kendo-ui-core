@@ -3,7 +3,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
     using System;
     using System.Linq.Expressions;
 
-    internal abstract class MemberAccessExpressionBuilderBase : ExpressionBuilderBase
+    public abstract class MemberAccessExpressionBuilderBase : ExpressionBuilderBase
     {
         private readonly string memberName;
 
