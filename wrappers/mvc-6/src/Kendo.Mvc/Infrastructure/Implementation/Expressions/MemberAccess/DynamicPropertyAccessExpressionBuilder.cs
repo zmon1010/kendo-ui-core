@@ -49,8 +49,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
                                                                 CSharpArgumentInfoFlags.Constant |
                                                                 CSharpArgumentInfoFlags.UseCompileTimeType, null)
                                                         });
-
-            return DynamicExpression.MakeDynamic(typeof(object), binder, new[] { instance, indexerToken.Arguments.Select(Expression.Constant).First() });
+            return DynamicExpression.Dynamic(binder, typeof(object), new[] { instance, indexerToken.Arguments.Select(Expression.Constant).First() });         
         }
 
         private Expression CreatePropertyAccessExpression(Expression instance, string propertyName)
@@ -58,7 +57,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
             CallSiteBinder binder = Binder.GetMember(CSharpBinderFlags.None, propertyName,
                 typeof(DynamicPropertyAccessExpressionBuilder), new[] { CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null) });
 
-            return DynamicExpression.MakeDynamic(typeof(object), binder, new[] { instance });
+            return DynamicExpression.Dynamic(binder, typeof(object), new[] { instance });
         }
     }
 }
