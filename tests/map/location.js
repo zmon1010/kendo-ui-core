@@ -17,8 +17,8 @@
         }
     });
 
-    test("toString format is lng, lat", function() {
-        equal(loc.toString(), "80.112305,51.937117");
+    test("toString format is lat, lng", function() {
+        equal(loc.toString(), "51.937117,80.112305");
     });
 
     test("toArray returns lat, lng array", function() {

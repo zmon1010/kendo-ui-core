@@ -179,7 +179,7 @@
 
     // IE < 9 doesn't allow to override toString on definition
     Location.fn.toString = function() {
-        return kendo.format(this.FORMAT, this.lng, this.lat);
+        return kendo.format(this.FORMAT, this.lat, this.lng);
     };
 
     Location.fromLngLat = function(ll) {
