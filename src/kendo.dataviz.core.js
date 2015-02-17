@@ -656,6 +656,15 @@ var __meta__ = {
 
             this.createVisual();
 
+            this.addVisual();
+
+            this.renderChildren();
+
+            this.createAnimation();
+            this.renderComplete();
+        },
+
+        addVisual: function() {
             if (this.visual) {
                 this.visual.chartElement = this;
 
@@ -663,14 +672,13 @@ var __meta__ = {
                     this.parent.appendVisual(this.visual);
                 }
             }
+        },
 
+        renderChildren: function() {
             var children = this.children;
             for (var i = 0; i < children.length; i++) {
                 children[i].renderVisual();
             }
-
-            this.createAnimation();
-            this.renderComplete();
         },
 
         createVisual: function() {
