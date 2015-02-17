@@ -1135,7 +1135,7 @@ namespace :build do
     { :production => "Production", :master => "Stable" }.each do |env, destination|
         namespace env do
             desc 'Build and publish ASP.NET MVC DLLs for #{destination} distribution'
-            task :aspnetmvc_binaries => [ "mvc:binaries", "tests:aspnetmvc", 'vs_plugin:build' ] do
+            task :aspnetmvc_binaries => [ "mvc:binaries", "tests:aspnetmvc", 'vs_plugin:build', 'vs_scaffold:build' ] do
                 map_archive_root 'L:'
 
                 target_dir = "L:\\#{destination}\\binaries\\"
@@ -1144,6 +1144,7 @@ namespace :build do
                 sh "xcopy dist\\binaries\\* #{target_dir} /E /Y"
 
                 sh "xcopy plugins\\KendoBootstrapper\\KendoBootstrapper\\bin\\*.vsix L:\\#{destination}\\ /E /Y"
+                sh "xcopy plugins\\KendoScaffolder\\KendoScaffolder\\KendoScaffolderExtension\\bin\\*.vsix L:\\#{destination}\\ /E /Y"
             end
 
             desc 'Copy ASP.NET MVC DLLs from distribution archive'
