@@ -56,7 +56,7 @@ namespace Kendo.Mvc.Extensions
             }
         }
 
-        internal static IEnumerable AsGenericEnumerable(this IEnumerable source)
+        public static IEnumerable AsGenericEnumerable(this IEnumerable source)
         {
             Type elementType = typeof(Object);
 
@@ -90,7 +90,7 @@ namespace Kendo.Mvc.Extensions
             return (IEnumerable) Activator.CreateInstance(genericType, constructorParameters);
         }
 
-        internal static int IndexOf(this IEnumerable source, object item)
+        public static int IndexOf(this IEnumerable source, object item)
         {
             int index = 0;
             foreach (object i in source)
@@ -134,7 +134,7 @@ namespace Kendo.Mvc.Extensions
         }
 
         //Source: http://work.j832.com/2008/01/selectrecursive-if-3rd-times-charm-4th.html
-        internal static IEnumerable<TSource> SelectRecursive<TSource>(this IEnumerable<TSource> source, 
+        public static IEnumerable<TSource> SelectRecursive<TSource>(this IEnumerable<TSource> source, 
             Func<TSource, IEnumerable<TSource>> recursiveSelector)
         {
             Stack<IEnumerator<TSource>> stack = new Stack<IEnumerator<TSource>>();
@@ -191,7 +191,7 @@ namespace Kendo.Mvc.Extensions
         }
 
 
-        internal static ReadOnlyCollection<T> ToReadOnlyCollection<T>(this IEnumerable<T> sequence)
+        public static ReadOnlyCollection<T> ToReadOnlyCollection<T>(this IEnumerable<T> sequence)
         {
             if (sequence == null)
             {
