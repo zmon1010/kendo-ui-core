@@ -1077,26 +1077,32 @@ var ExportPdfCommand = Command.extend({
     exec: function() {
         var editor = this.editor;
 
-        //check browser support?
-        var container = $("<div class='k-editor-output'><div class='k-editor-page a4'>");
-        var output = $(".k-editor-page", container);
+        //TODO: check browser support
+        var drawOptions = editor.options.pdf && editor.options.pdf.multiPage ? { forcePageBreak: ".k-page-break" } : null;
+        var paperSize = editor.options.pdf && editor.options.pdf.paperSize;
         var drawing = kendo.drawing;
-        output.html($(editor.body).html());
-        $(document.body).append(container);
-        
-        drawing.drawDOM(output, { forcePageBreak: ".k-page-break" })
-        .then(function(root) {
-            output.remove();
-            container.remove();
-            return drawing.exportPDF(root, {
-                multiPage: true,
-                paperSize: "a4"
-            });
-        })
-        .done(function(data) {
-            kendo.saveAs({
-                dataURI: data,
-                fileName: "editor.pdf"
+        var stylesheet = editor.document.styleSheets[0];
+        //TODO: handle user-defined paaper sizes and margins
+        var div = $("<div/>").addClass("k-paper-" + paperSize.toLowerCase()).appendTo(document.body);
+        var pageStyles = div.css(["width", "display"]);
+        pageStyles["box-sizing"] = "border-box";
+        pageStyles["padding"] = "20px";
+
+        div.remove();
+        //TODO: prevent rule duplication
+        stylesheet.insertRule(drawOptions ? "kendo-pdf-page " : "html" + JSON.stringify(pageStyles).replace(/,/g, ";").replace(/"/g, "") , stylesheet.cssRules.length);
+
+        //TODO: bigger timeout or a workaround
+        setTimeout(function() {
+            drawing.drawDOM(editor.body, drawOptions)
+            .then(function(root) {
+                return drawing.exportPDF(root, editor.options.pdf);
+            })
+            .done(function(data) {
+                kendo.saveAs({
+                    dataURI: data,
+                    fileName: "editor.pdf"
+                });
             });
         });
     }
