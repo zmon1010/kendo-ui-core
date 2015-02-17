@@ -8,14 +8,14 @@ namespace Kendo.Mvc.UI.Tests.Chart
 
     public class ChartDateCategoryAxisBuilderTests
     {
-        protected IChartCategoryAxis axis;
+        protected IChartDateCategoryAxis axis;
         protected ChartDateCategoryAxisBuilder<SalesData> builder;
 
         public ChartDateCategoryAxisBuilderTests()
         {
             var chart = ChartTestHelper.CreateChart<SalesData>();
             axis = new ChartCategoryAxis<SalesData>(chart);
-            chart.CategoryAxes.Add(axis);
+            chart.CategoryAxes.Add((IChartCategoryAxis) axis);
             chart.Data = SalesDataBuilder.GetCollection();
             builder = new ChartDateCategoryAxisBuilder<SalesData>(chart, axis);
         }

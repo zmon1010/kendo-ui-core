@@ -35,7 +35,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// %&gt;
         /// </code>
         /// </example>        
-        public ChartPlotBandsBuilder From(double from)
+        public ChartPlotBandsBuilder From(object from)
         {
             item.From = from;
             return this;
@@ -58,7 +58,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// %&gt;
         /// </code>
         /// </example>        
-        public ChartPlotBandsBuilder To(double to)
+        public ChartPlotBandsBuilder To(object to)
         {
             item.To = to;
             return this;

@@ -36,7 +36,7 @@ namespace Kendo.Mvc.UI.Fluent
 
         public ChartDateCategoryAxisBuilder<TModel> Date()
         {
-            return new ChartDateCategoryAxisBuilder<TModel>(Container, Axis);
+            return new ChartDateCategoryAxisBuilder<TModel>(Container, (IChartDateCategoryAxis) Axis);
         }
 
         /// <summary>

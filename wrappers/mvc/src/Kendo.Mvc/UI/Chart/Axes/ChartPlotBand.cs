@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI
         /// <value>
         /// The start position of the plot band.
         /// </value>
-        public double? From
+        public object From
         {
             get;
             set;
@@ -27,7 +27,7 @@ namespace Kendo.Mvc.UI
         /// <value>
         /// The end position of the plot band.
         /// </value>
-        public double? To
+        public object To
         {
             get;
             set;

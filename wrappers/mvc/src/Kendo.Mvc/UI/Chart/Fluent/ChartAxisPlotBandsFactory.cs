@@ -56,5 +56,21 @@ namespace Kendo.Mvc.UI.Fluent
 
             return new ChartPlotBandsBuilder(item);
         }
+
+        /// <summary>
+        /// Defines a item.
+        /// </summary>
+        /// <returns></returns>
+        public ChartPlotBandsBuilder Add(TValue from, TValue to, string color)
+        {
+            var item = new ChartPlotBand();
+
+            Axis.PlotBands.Add(item);
+            item.From = from;
+            item.To = to;
+            item.Color = color;
+
+            return new ChartPlotBandsBuilder(item);
+        }
     }
 }

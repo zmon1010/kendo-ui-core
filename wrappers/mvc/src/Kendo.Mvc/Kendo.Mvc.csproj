@@ -376,6 +376,7 @@
     <Compile Include="UI\Chart\Axes\ChartAxisCrosshairTooltip.cs" />
     <Compile Include="UI\Chart\Axes\ChartAxisSelection.cs" />
     <Compile Include="UI\Chart\Axes\ChartSelectionMousewheel.cs" />
+    <Compile Include="UI\Chart\Axes\IChartDateCategoryAxis.cs" />
     <Compile Include="UI\Chart\Axes\IChartAxis.cs" />
     <Compile Include="UI\Chart\Axes\IChartDateAxis.cs" />
     <Compile Include="UI\Chart\Axes\IChartAxisDefaults.cs" />
@@ -2417,4 +2418,8 @@
     <Compile Include="UI\TreeList\Settings\TreeListColumnMenuMessagesSettings.cs" />
     <Compile Include="UI\TreeList\Fluent\TreeListColumnMenuMessagesSettingsBuilder.cs" />
   </ItemGroup>
-<ItemGroup><Compile Include="UI\Editor\Settings\EditorResizableSettings.cs" /><Compile Include="UI\Editor\Fluent\EditorResizableSettingsBuilder.cs" /></ItemGroup></Project>
+  <ItemGroup>
+    <Compile Include="UI\Editor\Settings\EditorResizableSettings.cs" />
+    <Compile Include="UI\Editor\Fluent\EditorResizableSettingsBuilder.cs" />
+  </ItemGroup>
+</Project>
