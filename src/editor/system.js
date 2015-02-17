@@ -1086,15 +1086,15 @@ var ExportPdfCommand = Command.extend({
         var div = $("<div/>").addClass("k-paper-" + paperSize.toLowerCase()).appendTo(document.body);
         var pageStyles = div.css(["width", "display"]);
         pageStyles["box-sizing"] = "border-box";
-        pageStyles["padding"] = "20px";
+        pageStyles.padding = "20px";
 
         div.remove();
         //TODO: prevent rule duplication
-        stylesheet.insertRule(drawOptions ? "kendo-pdf-page " : "html" + JSON.stringify(pageStyles).replace(/,/g, ";").replace(/"/g, "") , stylesheet.cssRules.length);
+        pageStyles = JSON.stringify(pageStyles).replace(/,/g, ";").replace(/"/g, "");
+        stylesheet.insertRule((drawOptions ? "kendo-pdf-page " : "body ") + pageStyles,
+                              stylesheet.cssRules.length);
 
-        //TODO: bigger timeout or a workaround
-        setTimeout(function() {
-            drawing.drawDOM(editor.body, drawOptions)
+        drawing.drawDOM(editor.body, drawOptions)
             .then(function(root) {
                 return drawing.exportPDF(root, editor.options.pdf);
             })
@@ -1104,7 +1104,6 @@ var ExportPdfCommand = Command.extend({
                     fileName: "editor.pdf"
                 });
             });
-        });
     }
 });
 extend(editorNS, {
