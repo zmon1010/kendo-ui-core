@@ -24,7 +24,7 @@ namespace KendoScaffolder
             id: typeof(KendoScaffolder).Name,
             icon: ToImageSource(Resources.__TemplateIcon),
             gestures: new[] { "Controller", "View", "Area" },
-            categories: new[] { Categories.Common, Categories.MvcController, Categories.Other });
+            categories: new[] { Categories.Common, Categories.MvcController, Categories.MvcView, Categories.Other });
 
         public KendoScaffolderFactory()
             : base(_info)

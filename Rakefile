@@ -142,6 +142,7 @@ require 'bower'
 require 'winrm_tools' unless RUBY_PLATFORM =~ /darwin/
 require 'playground'
 require 'vs_plugin'
+require 'vs_scaffold'
 require './build/localization'
 
 MVC_BINARIES = {
