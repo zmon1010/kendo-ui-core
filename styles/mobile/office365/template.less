@@ -23,7 +23,7 @@
 @office365-inverse-text: #333; /*also listview and button selected text*/
 @office365-inverse-border: #e5e5e5;
 
-@switch-color: @office365-inverse-text;
+@switch-color: rgba(102, 102, 102, .8);
 
 @office365-shadow: rgba(0,0,0,.2);
 
@@ -62,7 +62,6 @@
 
 /* ActionSheet, Footer */
 
-.km-office365 .km-footer,
 .km-office365 .km-actionsheet > li > a
 {
     background: @office365-background;
@@ -89,17 +88,33 @@
 
 /* Button */
 
+.km-office365 .km-tabstrip,
 .km-office365 .km-button
 {
     background: @office365-button-background;
     border-color: @office365-button-border;
 }
 
+.km-office365 .km-tabstrip .km-button,
+.km-office365 .km-tabstrip .km-state-active {
+    color: @switch-color;
+}
+
 .km-office365 .km-buttongroup .km-button {
     border-color: @office365-border-color;
 }
 
-.km-office365 .km-button:hover
+.km-office365 .km-widget.km-navbar .km-buttongroup .km-button {  
+    border-color: @office365-background;
+}
+
+.km-office365 .km-widget.km-navbar .km-buttongroup .km-state-active {
+    color: @office365-button-selected-border;
+    background-color: @office365-background;
+}
+
+.km-office365 .km-button:hover,
+.km-office365 .km-footer .km-tabstrip .km-button:hover
 {
     background: @office365-button-hover-background;
 }
@@ -189,7 +204,6 @@
 .km-office365 .km-buttongroup {
     border-color: @office365-border-color;
 }
-
 
 .km-office365 .km-listview .km-state-active > .km-listview-link
 {
@@ -331,10 +345,8 @@
 .km-office365 .km-state-active,
 .km-office365 .km-switch-label-on,
 .km-office365 .km-switch-label-off,
-.km-office365 .km-tabstrip .km-button,
 .km-office365 .km-popup .k-item,
 .km-office365 .km-actionsheet > li > a,
-.km-office365 .km-tabstrip .km-state-active,
 .km-office365 .k-slider .k-draghandle,
 .km-office365 .k-slider .k-draghandle:hover,
 .km-office365 .km-scroller-pull .km-icon,
@@ -375,7 +387,6 @@
 .km-office365 .km-pages .km-current-page,
 .km-office365 .k-slider .k-draghandle,
 .km-office365 .k-slider .k-draghandle:hover,
-.km-office365 .km-tabstrip .km-state-active,
 .km-office365 .km-scroller-refresh.km-load-more,
 .km-office365 .km-popup .k-state-selected,
 .km-office365 li.km-state-active .km-listview-label,
@@ -386,7 +397,8 @@
     border-color: @office365-button-selected-background;
 }
 
-.km-office365 li.km-state-active .km-listview-link {
+.km-office365 li.km-state-active .km-listview-link,
+.km-office365 .km-tabstrip .km-state-active {
     background: @office365-list-selected-background;
 }
 
