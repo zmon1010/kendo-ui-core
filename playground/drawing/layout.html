@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link type="text/css" href="../../styles/web/kendo.common.css" rel="stylesheet/less"/>
+    <link type="text/css" href="../../styles/web/kendo.silver.css" rel="stylesheet/less"/>
+    <link type="text/css" href="../../styles/dataviz/kendo.dataviz.css" rel="stylesheet/less"/>
+    <link type="text/css" href="../../styles/dataviz/kendo.dataviz.silver.css" rel="stylesheet"/>
+    <script src="../../src/jquery.js"></script>
+    <script src="../../src/kendo.core.js"></script>
+    <script src="../../src/kendo.color.js"></script>
+    <script src="../../src/util/main.js"></script>
+    <script src="../../src/mixins/observers.js"></script>
+    <script src="../../src/geometry/main.js"></script>
+    <script src="../../src/drawing/core.js"></script>
+    <script src="../../src/drawing/mixins.js"></script>
+    <script src="../../src/drawing/text-metrics.js"></script>
+    <script src="../../src/drawing/shapes.js"></script>
+    <script src="../../src/drawing/animation.js"></script>
+    <script src="../../src/drawing/parser.js"></script>
+    <script src="../../src/drawing/svg.js"></script>
+    <script src="../../src/drawing/canvas.js"></script>
+    <script src="../../src/drawing/vml.js"></script>
+  </head>
+  <body>
+  <div id="container"></div>
+  <script>
+    //test curve M100 100 c 50 50 100 0 200 0 200 10 0 100 -50 100
+    //test arc M275 386.6 A 50 100 0 0 0 350 300
+    var dataviz = kendo.dataviz,
+        g = kendo.geometry,
+        d = kendo.drawing,
+        gCircle = g.Circle,
+        Circle = d.Circle,
+        Path = d.Path,
+        Text = d.Text,
+        Group = d.Group,
+        Layout = d.Layout,
+        Rect = g.Rect,
+        Point = g.Point,
+        Surface = d.Surface,
+        surface = Surface.create(document.getElementById("container"), {width: 2000, height: 1000, type: "svg"});
+
+    var rect = new Rect([300, 200], [400, 500]);
+    var circle = new Circle(new gCircle([500, 100], 100));
+    var otherCircle =  new Circle(new gCircle([500, 100], 50));
+    // circle.transform(g.transform().scale(1.5));
+    // var path = new Path().moveTo(150, 56).lineTo(200, 400).lineTo(100, 50).close();
+    // path.transform(g.transform().rotate(30));
+    var group = new Group();
+    // group.append().append(circle);
+    var layout = new Layout(rect, {
+        spacing: 10,
+        orientation: "horizontal",
+        alignContent: "center",
+        justifyContent: "start",
+        alignItems: "center",
+        wrap: false
+    });
+    var options = {font: "20px sans-serif"};
+    layout.append(new Circle(new gCircle([500, 100], 80)), new Circle(new gCircle([500, 100], 100)), new Circle(new gCircle([500, 100], 50)), new Circle(new gCircle([500, 100], 100)));
+    // layout.append(new Text("Foooooooooooooooooooooooooooo", [0, 0], options),
+        // new Text("yoyoyoyoyoyoyoyoyo", [300, 0], options),
+        // new Text("Barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", [0, 300], options),
+        // new Text("Bazzzzzzzzzzzzzzzzzzzzzz", [300, 300], options),
+        // new Text("Barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", [0, 300], options)
+    // );
+
+    layout.reflow();
+    surface.draw(layout);
+    surface.draw(Path.fromRect(rect));
+    // var groups = wrap([new Circle(new gCircle([500, 100], 80)), new Circle(new gCircle([500, 100], 100)), new Circle(new gCircle([500, 100], 50)), new Circle(new gCircle([500, 100], 100))], rect, "top");
+    // group.append.apply(group, groups);
+    // surface.draw(group);
+    // surface.draw(Path.fromRect(rect));
+    // surface.draw(new Path().moveTo(80, 0).lineTo(80, 2000));
+    // surface.draw(new Path().moveTo(0, 200).lineTo(2000, 200));
+
+    // surface.draw(Path.fromRect(rect));
+    function align(elements, rect, direction) {
+        var bbox, element, startX;
+        for (var idx = 0; idx < elements.length; idx++) {
+            element = elements[idx];
+            bbox = element.bbox();
+            if (direction == "left") {
+                translateTo("x", rect.origin.x - bbox.origin.x, element);
+            } else if (direction == "right") {
+                translateTo("x", (rect.origin.x + rect.size.width) - (bbox.origin.x + bbox.size.width), element);
+            } else if (direction == "middle"){
+                translateTo("x", (rect.origin.x + (rect.size.width - bbox.size.width) / 2) - bbox.origin.x, element);
+            } else if (direction == "top") {
+                translateTo("y", rect.origin.y - bbox.origin.y, element);
+            } else if (direction == "bottom") {
+                translateTo("y", (rect.origin.y + rect.size.height) - (bbox.origin.y + bbox.size.height), element);
+            } else {
+                translateTo("y", (rect.origin.y + (rect.size.height - bbox.size.height) / 2) - bbox.origin.y, element);
+            }
+        }
+    }
+
+    function wrap(elements, rect, direction) {
+        var previousBBox, bbox, rowBounds, element, startY, groups = [];
+        var rowGroup = new Group();
+        element = elements[0];
+        rowGroup.append(element);
+        groups.push(rowGroup);
+        rowBounds = bbox = element.bbox();
+        startY = bbox.origin.y;
+        translateTo("x", rect.origin.x - bbox.origin.x, element);
+        rowBounds.origin.x += rect.origin.x - bbox.origin.x;
+        for (var idx = 1; idx < elements.length; idx++) {
+            element = elements[idx];
+            bbox = element.bbox();
+            if (rowBounds.size.width + bbox.size.width > rect.size.width) {
+                startY = rowBounds.bottomLeft().y;
+                translate(rect.origin.x - bbox.origin.x, startY - bbox.origin.y, element);
+                rowBounds = bbox;
+                rowBounds.origin.x+= rect.origin.x - bbox.origin.x;
+                rowBounds.origin.y+= startY;
+                rowGroup = new Group();
+                groups.push(rowGroup);
+            } else {
+                translate(rowBounds.topRight().x - bbox.origin.x, startY - bbox.origin.y, element);
+                rowBounds.size.width+= bbox.size.width;
+                rowBounds.size.height = Math.max(rowBounds.size.height, bbox.height());
+            }
+            rowGroup.append(element);
+        }
+        return groups;
+    }
+
+    function stack(elements) {
+        var previousBBox, bbox, rowBounds, element;
+        element = elements[0];
+        bbox = previousBBox = element.bbox();
+        for (var idx = 1; idx < elements.length; idx++) {
+            element = elements[idx];
+            bbox = element.bbox();
+            translate(previousBBox.origin.x - bbox.origin.x, previousBBox.origin.y - bbox.origin.y, element);
+        }
+    }
+
+    function translateTo(axis, value, element) {
+        var matrix = (element.transform() || g.transform()).matrix();
+        matrix[axis === "x" ? "e" : "f"] += value;
+        element.transform(g.transform(matrix));
+    }
+
+    function translate(x, y, element) {
+        var matrix = (element.transform() || g.transform()).matrix();
+        matrix["e"] += x;
+        matrix["f"] += y;
+        element.transform(g.transform(matrix));
+    }
+
+    function translateToPoint(point, bbox, element) {
+        translate(point.x - bbox.origin.x, point.y - bbox.origin.y, element);
+    }
+
+    function getCoordinate(direction, rect) {
+        var coordinate;
+        if (direction == "left") {
+            coordinate = rect.x;
+        } else if (direction == "right") {
+            coordinate = rect.x + rect.size.width;
+        } else {
+
+        }
+    }
+
+    </script>
+
+  </body>
+</html>

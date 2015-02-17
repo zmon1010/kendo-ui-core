@@ -37,7 +37,11 @@
         shift = [].shift,
         slice = [].slice,
         unshift = [].unshift,
-        defId = 1;
+        defId = 1,
+
+        START = "start",
+        END = "end",
+        HORIZONTAL = "horizontal";
 
     // Drawing primitives =====================================================
     var Element = Class.extend({
@@ -1025,6 +1029,170 @@
 
     definePointAccessors(RadialGradient.fn, ["center"]);
 
+    var Layout = Group.extend({
+        init: function(rect, options) {
+            Group.fn.init.call(this, kendo.deepExtend({}, this._defaults, options));
+            this._rect = rect;
+            this._fieldMap = {};
+        },
+
+        _defaults: {
+            alignContent: START,
+            justifyContent: START,
+            alignItems: START,
+            spacing: 0,
+            orientation: HORIZONTAL,
+            lineSpacing: 0,
+            wrap: true
+        },
+
+        rect: function(value) {
+            if (value)  {
+                this._rect = value;
+                return this;
+            } else {
+                return this._rect;
+            }
+        },
+
+        _initMap: function() {
+            var options = this.options;
+            var fieldMap = this._fieldMap;
+            if (options.orientation == HORIZONTAL) {
+                fieldMap.sizeField = "width";
+                fieldMap.groupsSizeField = "height";
+                fieldMap.groupAxis = "x";
+                fieldMap.groupsAxis = "y";
+            } else {
+                fieldMap.sizeField = "height";
+                fieldMap.groupsSizeField = "width";
+                fieldMap.groupAxis = "y";
+                fieldMap.groupsAxis = "x";
+            }
+        },
+
+        reflow: function() {
+            if (!this._rect || this.children.length === 0) {
+                return;
+            }
+            this._initMap();
+
+            if (this.options.transform) {
+                this.transform(null);
+            }
+
+            var options = this.options;
+            var fieldMap = this._fieldMap;
+            var rect = this._rect;
+            var groupOptions =  this._initGroups();
+            var groups = groupOptions.groups;
+            var groupsSize = groupOptions.groupsSize;
+            var sizeField = fieldMap.sizeField;
+            var groupsSizeField = fieldMap.groupsSizeField;
+            var groupAxis = fieldMap.groupAxis;
+            var groupsAxis = fieldMap.groupsAxis;
+            var groupStart = alignStart(groupsSize, rect, options.alignContent, groupsAxis, groupsSizeField);
+            var groupOrigin = new Point();
+            var elementOrigin = new Point();
+            var size = new g.Size();
+            var elementStart, bbox, element, group, groupBox;
+
+            for (var groupIdx = 0; groupIdx < groups.length; groupIdx++) {
+                group = groups[groupIdx];
+                groupOrigin[groupAxis] = elementStart = alignStart(group.size, rect, options.justifyContent, groupAxis, sizeField);
+                groupOrigin[groupsAxis] = groupStart;
+                size[sizeField] = group.size;
+                size[groupsSizeField] = group.lineSize;
+                groupBox = new Rect(groupOrigin, size);
+                for (var idx = 0; idx < group.bboxes.length; idx++) {
+                    element = group.elements[idx];
+                    bbox = group.bboxes[idx];
+                    elementOrigin[groupAxis] = elementStart;
+                    elementOrigin[groupsAxis] = alignStart(bbox.size[groupsSizeField], groupBox, options.alignItems, groupsAxis, groupsSizeField);
+                    translateToPoint(elementOrigin, bbox, element);
+                    elementStart+= bbox.size[sizeField] + options.spacing;
+                }
+                groupStart += group.lineSize + options.lineSpacing;
+            }
+
+            if (!options.wrap && group.size > rect.size[sizeField]) {
+                var scale = rect.size[sizeField] / groupBox.size[sizeField];
+                var scaledStart = groupBox.topLeft().scale(scale, scale);
+                var scaledSize = groupBox.size[groupsSizeField] * scale;
+                var newStart = alignStart(scaledSize, rect, options.alignContent, groupsAxis, groupsSizeField)
+                var transform = g.transform();
+                if (groupAxis === "x") {
+                    transform.translate(rect.origin.x - scaledStart.x, newStart - scaledStart.y);
+                } else {
+                    transform.translate(newStart - scaledStart.x, rect.origin.y - scaledStart.y);
+                }
+                transform.scale(scale, scale);
+
+                this.transform(transform);
+            }
+        },
+
+        _initGroups: function() {
+            var options = this.options;
+            var children = this.children;
+            var lineSpacing = options.lineSpacing;
+            var sizeField = this._fieldMap.sizeField;
+            var groupsSize = -lineSpacing;
+            var groups = [];
+            var group = this._newGroup();
+            var addGroup = function() {
+                groups.push(group);
+                groupsSize+= group.lineSize + lineSpacing;
+            };
+            var bbox, element;
+
+            for (var idx = 0; idx < children.length; idx++) {
+                element = children[idx];
+                bbox = children[idx].clippedBBox();
+                if (element.visible() && bbox) {
+                    if (options.wrap && group.size + bbox.size[sizeField] + options.spacing > this._rect.size[sizeField]) {
+                        if (group.bboxes.length === 0) {
+                            this._addToGroup(group, bbox, element);
+                            addGroup();
+                            group = this._newGroup();
+                        } else {
+                            addGroup();
+                            group = this._newGroup();
+                            this._addToGroup(group, bbox, element);
+                        }
+                    } else {
+                        this._addToGroup(group, bbox, element);
+                    }
+                }
+            }
+
+            if (group.bboxes.length)  {
+                addGroup();
+            }
+
+            return {
+                groups: groups,
+                groupsSize: groupsSize
+            };
+        },
+
+        _addToGroup: function(group, bbox, element) {
+            group.size += bbox.size[this._fieldMap.sizeField] + this.options.spacing;
+            group.lineSize = Math.max(bbox.size[this._fieldMap.groupsSizeField], group.lineSize);
+            group.bboxes.push(bbox);
+            group.elements.push(element);
+        },
+
+        _newGroup: function() {
+            return {
+                lineSize: 0,
+                size: -this.options.spacing,
+                bboxes: [],
+                elements: []
+            };
+        }
+    });
+
     // Helper functions ===========================================
     function elementsBoundingBox(elements, applyTransform, transformation) {
         var boundingBox;
@@ -1132,6 +1300,31 @@
         return "kdef" + defId++;
     }
 
+    function alignStart(size, rect, align, axis, sizeField) {
+        var start;
+        if (align == START) {
+            start = rect.origin[axis];
+        } else if (align == END) {
+            start = rect.origin[axis] + rect.size[sizeField] - size;
+        } else {
+           start = rect.origin[axis] + (rect.size[sizeField] - size) / 2;
+        }
+
+        return start;
+    }
+
+    function translate(x, y, element) {
+        var transofrm = element.transform() || g.transform();
+        var matrix = transofrm.matrix();
+        matrix.e += x;
+        matrix.f += y;
+        element.transform(transofrm);
+    }
+
+    function translateToPoint(point, bbox, element) {
+        translate(point.x - bbox.origin.x, point.y - bbox.origin.y, element);
+    }
+
     // Exports ================================================================
     deepExtend(drawing, {
         Arc: Arc,
@@ -1142,6 +1335,7 @@
         GradientStop: GradientStop,
         Group: Group,
         Image: Image,
+        Layout: Layout,
         LinearGradient: LinearGradient,
         MultiPath: MultiPath,
         Path: Path,
