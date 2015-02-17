@@ -21,7 +21,7 @@ module CodeGen::MVC6::Wrappers
         end
 
         def write_settings(component)
-            filename = "#{@path}/#{component.path}/Fluent/#{component.csharp_class}.Settings.cs"
+            filename = "#{@path}/#{component.path}/Fluent/#{component.csharp_builder_class}.Settings.cs"
 
             write_file(filename, component.to_settings(filename))
         end
