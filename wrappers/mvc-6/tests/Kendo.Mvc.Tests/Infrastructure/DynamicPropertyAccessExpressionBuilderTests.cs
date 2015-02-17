@@ -5,7 +5,7 @@ namespace Kendo.Mvc.UI.Tests.Data
     using System.Dynamic;
     using System.Linq.Expressions;
     using System;
-    using System.ComponentModel.DataAnnotations;
+    using Kendo.Mvc.Tests;
 
     public class DynamicPropertyAccessExpressionBuilderTests
     {
@@ -110,56 +110,5 @@ namespace Kendo.Mvc.UI.Tests.Data
                                                                      .Compile().Invoke(aDynamicObject);
             return result;
         }
-    }
-
-    public class Customer
-    {
-        public int Id
-        {
-            get;
-            set;
-        }
-
-        public string Name
-        {
-            get;
-            set;
-        }
-        [Required]
-        public string Address
-        {
-            get;
-            set;
-        }
-
-        public DateTime RegisterAt
-        {
-            get;
-            set;
-        }
-
-        public decimal Balance
-        {
-            get;
-            set;
-        }
-
-        public bool IsActive
-        {
-            get;
-            set;
-        }
-
-        public Gender Gender
-        {
-            get;
-            set;
-        }
-    }
-
-    public enum Gender
-    {
-        Female,
-        Male
-    }
+    }    
 }
