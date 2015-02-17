@@ -172,11 +172,21 @@ var __meta__ = {
             var chart = this,
                 navigator = chart._navigator;
 
-            if (navigator && navigator.dataSource) {
+            if (!this._dirty() && navigator && navigator.dataSource) {
                 navigator.redrawSlaves();
             } else {
                 chart._fullRedraw();
             }
+        },
+
+        _dirty: function() {
+            var options = this.options;
+            var series = [].concat(options.series, options.navigator.series);
+            var seriesCount = $.grep(series, function(s) { return s && s.visible; }).length;
+            var dirty = this._seriesCount !== seriesCount;
+            this._seriesCount = seriesCount;
+
+            return dirty;
         },
 
         _fullRedraw: function() {

@@ -12,22 +12,28 @@
                 dataSource: {
                     data: [{
                         date: new Date("2012/09/01"),
-                        sales: 100
+                        sales: 100,
+                        symbol: "A"
                     }, {
                         date: new Date("2012/09/02"),
-                        sales: 110
+                        sales: 110,
+                        symbol: "A"
                     }, {
                         date: new Date("2012/09/03"),
-                        sales: 105
+                        sales: 105,
+                        symbol: "A"
                     }, {
                         date: new Date("2012/09/04"),
-                        sales: 100
+                        sales: 100,
+                        symbol: "A"
                     }, {
                         date: new Date("2012/09/05"),
-                        sales: 110
+                        sales: 110,
+                        symbol: "A"
                     }, {
                         date: new Date("2012/09/06"),
-                        sales: 105
+                        sales: 105,
+                        symbol: "A"
                     }],
                     serverFiltering: true,
                     schema: {
@@ -129,6 +135,26 @@
                     }
                 });
                 chart.dataSource.fetch();
+            });
+        });
+
+        test("chart redrawn fully on main DS groups change", 2, function() {
+            stubMethod(Chart.fn, "_redraw", function() {
+                ok(true);
+                Chart.fn._stubbed._redraw.call(this);
+            }, function() {
+                createStockChart({
+                    dataSource: {
+                        group: {
+                            field: "symbol"
+                        }
+                    }
+                });
+                chart.dataSource.add({
+                    date: new Date("2012/09/01"),
+                    sales: 100,
+                    symbol: "B"
+                });
             });
         });
 
