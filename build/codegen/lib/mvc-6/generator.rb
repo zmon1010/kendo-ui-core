@@ -9,6 +9,7 @@ module CodeGen::MVC6::Wrappers
 
         def component(component)
             write_events(component)
+            write_settings(component)
         end
 
         def write_events(component)
@@ -19,6 +20,12 @@ module CodeGen::MVC6::Wrappers
             write_file(filename, component.to_events(filename))
         end
 
+        def write_settings(component)
+            filename = "#{@path}/#{component.path}/Fluent/#{component.csharp_class}.Settings.cs"
+
+            write_file(filename, component.to_settings(filename))
+        end
+
         def write_file(filename, content)
             $stderr.puts("Updating #{filename}") if VERBOSE
 
@@ -27,5 +34,4 @@ module CodeGen::MVC6::Wrappers
             File.write(filename, content.dos)
         end
     end
-
 end

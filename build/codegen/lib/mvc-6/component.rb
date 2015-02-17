@@ -4,17 +4,10 @@ require 'codegen/lib/mvc-6/event'
 module CodeGen::MVC6::Wrappers
 
     EVENT = ERB.new(File.read("build/codegen/lib/mvc-6/event-builder.erb"), 0, '%<>')
+    SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/component-settings.erb"), 0, '%<>')
 
     class Component < CodeGen::Component
         include Options
-
-        attr_accessor :files
-
-        def initialize *args
-            super
-
-            @files = []
-        end
 
         def path
             name
@@ -24,14 +17,20 @@ module CodeGen::MVC6::Wrappers
             name
         end
 
+        def csharp_builder_class
+            "#{csharp_class}Builder"
+        end
+
         def event_class
             Event
         end
 
         def to_events(filename)
-            @files.push(filename)
-
             EVENT.result(binding)
+        end
+
+        def to_settings(filename)
+            SETTINGS.result(binding)
         end
 
         def enum_options

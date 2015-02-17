@@ -1,0 +1,33 @@
+using System;
+
+namespace Kendo.Mvc.UI.Fluent
+{
+    /// <summary>
+    /// Defines the fluent API for configuring the Kendo UI <%= csharp_class %>
+    /// </summary>
+    public partial class <%= csharp_builder_class %>
+    {
+        <% unless events.empty? %>
+        /// <summary>
+        /// Configures the client-side events.
+        /// </summary>
+        /// <param name="configurator">The client events action.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().<%= csharp_class %>()
+        ///             .Name("<%= csharp_class %>")
+        ///             .Events(events => events
+        ///                 .<%= events[0].csharp_name%>("on<%= events[0].csharp_name%>")
+        ///             )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public <%= csharp_builder_class %> Events(Action<<%= csharp_class %>EventBuilder> configurator)
+        {
+            configurator(new <%= csharp_class %>EventBuilder(Component.Events));
+            return this;
+        }
+        <% end %>
+    }
+}
+

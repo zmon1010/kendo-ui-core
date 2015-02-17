@@ -6,7 +6,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring the Kendo UI DateTimePicker for ASP.NET MVC events.
     /// </summary>
-    public class DateTimePickerEventBuilder: EventBuilder, IHideObjectMembers
+    public class DateTimePickerEventBuilder: EventBuilder
     {
         public DateTimePickerEventBuilder(IDictionary<string, object> events)
             : base(events)
