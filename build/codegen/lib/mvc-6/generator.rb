@@ -8,8 +8,18 @@ module CodeGen::MVC6::Wrappers
         end
 
         def component(component)
+            write_component(component)
             write_events(component)
-            write_settings(component)
+            write_builder(component)
+            write_builder_settings(component)
+        end
+
+        def write_component(component)
+            filename = "#{@path}/#{component.path}/#{component.csharp_class}.cs"
+
+            unless File.exists?(filename)
+                write_file(filename, component.to_component(filename))
+            end
         end
 
         def write_events(component)
@@ -20,10 +30,18 @@ module CodeGen::MVC6::Wrappers
             write_file(filename, component.to_events(filename))
         end
 
-        def write_settings(component)
+        def write_builder(component)
+            filename = "#{@path}/#{component.path}/Fluent/#{component.csharp_builder_class}.cs"
+
+            unless File.exists?(filename)
+                write_file(filename, component.to_builder(filename))
+            end
+        end
+
+        def write_builder_settings(component)
             filename = "#{@path}/#{component.path}/Fluent/#{component.csharp_builder_class}.Settings.cs"
 
-            write_file(filename, component.to_settings(filename))
+            write_file(filename, component.to_builder_settings(filename))
         end
 
         def write_file(filename, content)

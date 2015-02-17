@@ -24,5 +24,12 @@ namespace Kendo.Mvc.Rendering
             object value,
             string format,
             IDictionary<string, object> htmlAttributes);
+
+        TagBuilder GenerateTag(
+            string tagName,
+            ViewContext viewContext,
+            string id,
+            string name,
+            IDictionary<string, object> htmlAttributes);
     }
 }

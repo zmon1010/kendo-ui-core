@@ -1,4 +1,4 @@
-﻿using Kendo.Mvc.Extensions;
+using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.Rendering.Expressions;
@@ -9,6 +9,9 @@ using System.IO;
 
 namespace Kendo.Mvc.UI
 {
+    /// <summary>
+    /// Kendo UI DateTimePicker component
+    /// </summary>
     public partial class DateTimePicker : WidgetBase, IInputComponent<DateTime>
     {
         public DateTimePicker(ViewContext viewContext) : base(viewContext)
@@ -66,3 +69,4 @@ namespace Kendo.Mvc.UI
         }
     }
 }
+

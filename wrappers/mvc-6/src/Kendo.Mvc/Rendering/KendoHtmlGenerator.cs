@@ -35,18 +35,10 @@ namespace Kendo.Mvc.Rendering
             string format,
             IDictionary<string, object> htmlAttributes)
         {
-            var fullName = GetFullHtmlFieldName(viewContext, name);
-            if (string.IsNullOrEmpty(fullName))
-            {
-                throw new InvalidOperationException(Resources.Exceptions.NameCannotBeBlank);
-            }
-
-            var tagBuilder = new TagBuilder("input");
+            var tagBuilder = GenerateTag("input", viewContext, id, name, htmlAttributes);
             tagBuilder.MergeAttribute("type", "date");
-            tagBuilder.MergeAttribute("id", id);
-            tagBuilder.MergeAttribute("name", fullName);
-            tagBuilder.MergeAttributes(htmlAttributes, replaceExisting: true);
 
+            var fullName = tagBuilder.Attributes["name"];
             var valueParameter = FormatValue(value, format);
             var useViewData = metadata == null && value == null;
             var attributeValue = (string) GetModelStateValue(viewContext, fullName, typeof(string));
@@ -80,6 +72,27 @@ namespace Kendo.Mvc.Rendering
         {
             var tagBuilder = GenerateDateInput(viewContext, metadata, id, name, value, format, htmlAttributes);
             tagBuilder.MergeAttribute("type", "datetime", replaceExisting: true);
+
+            return tagBuilder;
+        }
+
+        public virtual TagBuilder GenerateTag(
+            string tagName,
+            ViewContext viewContext,
+            string id,
+            string name,
+            IDictionary<string, object> htmlAttributes)
+        {
+            var fullName = GetFullHtmlFieldName(viewContext, name);
+            if (string.IsNullOrEmpty(fullName))
+            {
+                throw new InvalidOperationException(Resources.Exceptions.NameCannotBeBlank);
+            }
+
+            var tagBuilder = new TagBuilder(tagName);
+            tagBuilder.MergeAttribute("id", id);
+            tagBuilder.MergeAttribute("name", fullName);
+            tagBuilder.MergeAttributes(htmlAttributes, replaceExisting: true);
 
             return tagBuilder;
         }
