@@ -605,7 +605,7 @@ var __meta__ = {
                     end: slotRange.end
                 });
 
-                this.content[0].appendChild(element[0]);
+                element.appendTo(this.content);
             }
         },
 

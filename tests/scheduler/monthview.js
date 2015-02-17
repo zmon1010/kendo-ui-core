@@ -109,9 +109,20 @@
     test("day slots are created", function() {
         var view = setup();
 
-
         equal(view.content.find("tr").length, 6);
         equal(view.content.find("td").length, 42);
+    });
+
+    test("scripts nested inside eventTemplate are executed", function() {
+        var view = setup({
+            eventTemplate: "<div class='elementForRemove'>Text</div><script>$('.elementForRemove').remove();</script>"
+        });
+
+        view.render([
+            new kendo.data.SchedulerEvent({ start: new Date(2013, 1, 5), end: new Date(2013, 1, 5), title: "one day event" })
+        ]);
+
+        equal(view.content.find(".elementForRemove").length, 0);
     });
 
     test("today class is added", function() {
