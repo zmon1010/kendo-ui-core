@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     var TESTS = require(grunt.file.expand('./build/grunt/test-paths-*.js')[0]);
 
     function addSrc(f) {
-        return PATH.join("src", f);
+        return PATH.join(KENDO_SRC_DIR, f);
     }
 
     var browsers = ['Chrome'];
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     var browserOption = grunt.option('browser');
     var testsOption = grunt.option('tests');
     var jqueryOption = grunt.option('jquery');
-    var jquery = 'src/jquery.js';
+    var jquery = PATH.join(KENDO_SRC_DIR, 'jquery.js');
 
     if (testsOption) {
         tests = [ testsOption ];
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 
     TESTS.beforeTestFiles.push(jquery);
     TESTS.beforeTestFiles.push('tests/jquery.mockjax.js');
-    TESTS.beforeTestFiles.push('src/angular.js');
+    TESTS.beforeTestFiles.push(PATH.join(KENDO_SRC_DIR, 'angular.js'));
     TESTS.beforeTestFiles.push('tests/angular-route.js');
 
     if (browserOption) {
@@ -173,7 +173,7 @@ module.exports = function(grunt) {
             jquery: {
                 files: [{
                     expand: true,
-                    cwd: "src/",
+                    cwd: KENDO_SRC_DIR,
                     src: [ "jquery.*" ],
                     dest: '<%= kendo.options.jsDestDir %>/',
                 }]
@@ -181,7 +181,7 @@ module.exports = function(grunt) {
             angular: {
                 files: [{
                     expand: true,
-                    cwd: "src/",
+                    cwd: KENDO_SRC_DIR,
                     src: [ "angular.*" ],
                     dest: '<%= kendo.options.jsDestDir %>/',
                 }]
@@ -189,7 +189,7 @@ module.exports = function(grunt) {
             jszip: {
                 files: [{
                     expand: true,
-                    cwd: "src/",
+                    cwd: KENDO_SRC_DIR,
                     src: [ "jszip.*" ],
                     dest: '<%= kendo.options.jsDestDir %>/',
                 }]
@@ -197,7 +197,7 @@ module.exports = function(grunt) {
             pako: {
                 files: [{
                     expand: true,
-                    cwd: "src/",
+                    cwd: KENDO_SRC_DIR,
                     src: [ "pako*.*" ],
                     dest: '<%= kendo.options.jsDestDir %>/',
                 }]
@@ -205,7 +205,7 @@ module.exports = function(grunt) {
             timezones: {
                 files: [{
                     expand: true,
-                    cwd: "src/",
+                    cwd: KENDO_SRC_DIR,
                     src: "kendo.timezones.js" ,
                     dest: '<%= kendo.options.jsDestDir %>/',
                 }]
@@ -237,13 +237,13 @@ module.exports = function(grunt) {
                 ext: ".js",
             },
             cultures: {
-                src: [ "src/cultures/kendo.culture.*.js",
-                       "!src/cultures/kendo.culture.*.min.js" ],
+                src: [ PATH.join(KENDO_SRC_DIR, "cultures/kendo.culture.*.js"),
+                       "!" + KENDO_SRC_DIR + "/cultures/kendo.culture.*.min.js" ],
                 dest: "<%= kendo.options.jsDestDir %>/cultures",
             },
             messages: {
-                src: [ "src/messages/kendo.messages.*.js",
-                       "!src/messages/kendo.messages.*.min.js" ],
+                src: [ PATH.join(KENDO_SRC_DIR, "messages/kendo.messages.*.js"),
+                       "!" + KENDO_SRC_DIR + "/messages/kendo.messages.*.min.js" ],
                 dest: "<%= kendo.options.jsDestDir %>/messages",
             }
         },

@@ -6,7 +6,7 @@ module.exports = function(grunt) {
     grunt.loadTasks('build/grunt/tasks');
 
     var mainKendoFiles = META.listKendoFiles().map(function(f) {
-        return PATH.join("src", f);
+        return PATH.join(KENDO_SRC_DIR, f);
     });
 
     grunt.initConfig({

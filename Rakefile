@@ -57,7 +57,7 @@ ROOT_MAP = {
     '.' => /(dist\/js|dist\/styles\/.+?)\//,
     'js' => DIST_JS_ROOT,
     'styles' => /dist\/styles\/.+?\//,
-    'src/src' => DIST_JS_ROOT,
+    'src/js' => DIST_JS_ROOT,
     'src/styles' => /dist\/styles\//,
     'src/Kendo.Mvc/Kendo.Mvc' => 'wrappers/mvc/src/Kendo.Mvc/',
     'src/Kendo.Mvc/packages' => 'wrappers/mvc/packages/',
@@ -271,7 +271,7 @@ bundle :name => 'professional.commercial',
        :contents => {
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
-            'src/src' => COMPLETE_SRC_JS,
+            'src/js' => COMPLETE_SRC_JS,
             'src/styles' => SRC_CSS
        }
 
@@ -370,7 +370,7 @@ bundle :name => 'web.commercial',
        :contents => {
             'js' => WEB_MIN_JS + WEB_MIN_JS_MAP + JQUERY_MAP,
             'styles' => WEB_MIN_CSS,
-            'src/src' => WEB_SRC_JS,
+            'src/js' => WEB_SRC_JS,
             'src/styles' => WEB_SRC_CSS
        }
 #Kendo UI Web GPL (obsolete)
@@ -387,7 +387,7 @@ bundle :name => 'web.open-source',
        :contents => {
             'js' => WEB_MIN_JS + WEB_MIN_JS_MAP + JQUERY_MAP,
             'styles' => WEB_MIN_CSS,
-            'src/src' => WEB_SRC_JS,
+            'src/js' => WEB_SRC_JS,
             'src/styles' => WEB_SRC_CSS
        }
 
@@ -407,7 +407,7 @@ bundle :name => 'mobile.commercial',
        :contents => {
             'js' => MOBILE_MIN_JS + MOBILE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MOBILE_MIN_CSS,
-            'src/src' => MOBILE_SRC_JS,
+            'src/js' => MOBILE_SRC_JS,
             'src/styles' => MOBILE_SRC_CSS
        }
 
@@ -427,7 +427,7 @@ bundle :name => 'dataviz.commercial',
        :contents => {
             'js' => DATAVIZ_MIN_JS + DATAVIZ_MIN_JS_MAP + JQUERY_MAP,
             'styles' => DATAVIZ_MIN_CSS + WEB_MIN_CSS,
-            'src/src' => DATAVIZ_SRC_JS,
+            'src/js' => DATAVIZ_SRC_JS,
             'src/styles' => DATAVIZ_SRC_CSS
        }
 
@@ -647,7 +647,7 @@ bundle :name => 'aspnetmvc.commercial',
        :contents => {
             'js' => MVC_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
-            'src/src' => MVC_SRC_JS,
+            'src/js' => MVC_SRC_JS,
             'src/styles' => SRC_CSS,
             'src/Kendo.Mvc/packages' => FileList['wrappers/mvc/packages/**/*.*'],
             'src/Kendo.Mvc/Kendo.Mvc' => FileList['wrappers/mvc/src/Kendo.Mvc/**/*']
@@ -687,7 +687,7 @@ bundle :name => 'aspnetmvc.internal.commercial',
             'wrappers/aspnetmvc/EditorTemplates/ascx' => MVC_ASCX_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/LegacyThemes' => FileList['wrappers/mvc/legacy-themes/**/*'],
-            'src/src' => MVC_SRC_JS,
+            'src/js' => MVC_SRC_JS,
             'src/styles' => SRC_CSS,
             'src/Kendo.Mvc/packages' => FileList['wrappers/mvc/packages/**/*.*'],
             'src/Kendo.Mvc/Kendo.Mvc' => FileList['wrappers/mvc/src/Kendo.Mvc/**/*']
@@ -870,7 +870,7 @@ bundle :name => 'jsp.commercial',
        :contents => {
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
-            'src/src' => COMPLETE_SRC_JS,
+            'src/js' => COMPLETE_SRC_JS,
             'src/styles' => SRC_CSS,
             'src/kendo-taglib' => JSP_TAGLIB_SRC.exclude('**/test/**/*')
        }.merge(JSP_CONTENT),
@@ -955,7 +955,7 @@ bundle :name => 'php.commercial',
        :contents => {
             'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
-            'src/src' => COMPLETE_SRC_JS,
+            'src/js' => COMPLETE_SRC_JS,
             'src/styles' => SRC_CSS,
             'src/php' => PHP_LIB_SRC
        }.merge(PHP_CONTENT),
@@ -988,7 +988,7 @@ bundle :name => 'core',
        :contents => {
             'js' => CORE_MIN_JS + CORE_MIN_JS_MAP + JQUERY_MAP,
             'styles' => CORE_MIN_CSS_RESOURCES,
-            'src/src' => CORE_SRC_JS,
+            'src/js' => CORE_SRC_JS,
             'src/styles' => CORE_SRC_CSS
        }
 
