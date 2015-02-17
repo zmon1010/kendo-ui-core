@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.dom", "./kendo.data", "./kendo.columnsorter", "./kendo.editable", "./kendo.window", "./kendo.filtermenu", "./kendo.selectable" ], f);
+    define([ "./kendo.dom", "./kendo.data", "./kendo.columnsorter", "./kendo.editable", "./kendo.window", "./kendo.filtermenu", "./kendo.selectable", "./kendo.resizable" ], f);
 })(function(){
 
 var __meta__ = {
@@ -28,6 +28,11 @@ var __meta__ = {
         name: "Selection",
         description: "Support for row selection",
         depends: [ "selectable" ]
+    }, {
+        id: "grid-column-resize",
+        name: "Column resizing",
+        description: "Support for column resizing",
+        depends: [ "resizable" ]
     }, {
         id: "treelist-excel-export",
         name: "Excel export",
@@ -728,6 +733,7 @@ var __meta__ = {
             this._layout();
             this._selectable();
             this._sortable();
+            this._resizable();
             this._filterable();
             this._attachEvents();
             this._toolbar();
@@ -1037,6 +1043,7 @@ var __meta__ = {
             excel: {
                 hierarchy: true
             },
+            resizable: false,
             filterable: false,
             editable: false,
             reorderable: false
@@ -1845,6 +1852,80 @@ var __meta__ = {
                     className: [ "k-button", "k-button-icontext", command.className ].join(" ")
                 }, icon.concat([ kendoTextElement(command.text || command.name) ])
             );
+        },
+
+        _positionResizeHandle: function(e) {
+            var th = $(e.currentTarget);
+            var indicatorWidth = 3;
+            var resizeHandle = this.resizeHandle;
+            var position = th.position();
+            var left = position.left;
+            var container = th.closest("div");
+
+            if (!resizeHandle) {
+                resizeHandle = this.resizeHandle = $(
+                    '<div class="k-resize-handle"><div class="k-resize-handle-inner" /></div>'
+                );
+
+                container.append(resizeHandle);
+            }
+
+            var show = th.length && left > indicatorWidth && left < container.width();
+
+            resizeHandle
+                .toggle(show)
+                .css({
+                    top: position.top,
+                    left: left - indicatorWidth - 1,
+                    height: th.outerHeight(),
+                    width: indicatorWidth * 3
+                })
+                .data("th", th);
+        },
+
+        _resizable: function() {
+            if (!this.options.resizable) {
+                return;
+            }
+
+            if (this.resizable) {
+                this.resizable.destroy();
+            }
+
+            this.thead.on("mousemove" + NS, "th", $.proxy(this._positionResizeHandle, this));
+
+            this.resizable = new kendo.ui.Resizable(this.wrapper, {
+                handle: ".k-resize-handle",
+                treelist: this,
+                start: function(e) {
+                    var th = $(e.currentTarget).data("th");
+                    var colSelector = "col:eq(" + th.index() + ")";
+                    var treelist = this.options.treelist;
+                    var lockedTable = treelist.lockedTable || $();
+
+                    this.col = treelist.table.children("colgroup").find(colSelector);
+
+                    if (treelist.options.scrollable) {
+                        this.col = this.col
+                            .add(treelist.thead.parent().find(colSelector))
+                            .add(lockedTable.children("colgroup").find(colSelector));
+                    }
+
+                    this.startLocation = e.x.location;
+                    this.columnWidth = th.outerWidth();
+                    this.table = this.col.closest("table");
+                    this.totalWidth = this.table.width();
+                },
+                resize: function(e) {
+                    var delta = e.x.location - this.startLocation;
+
+                    this.table.width(this.totalWidth + delta);
+                    this.col.width(this.columnWidth + delta);
+                },
+                resizeend: function() {
+                    this.col = null;
+                }
+            });
         },
 
         _sortable: function() {
