@@ -17,6 +17,47 @@
         NS = ".kendoEditor",
         keys = kendo.keys;
 
+    var CSS_PAPER_SIZES = [
+        ".k-paper-a0        {width: 2383.94px;}",
+        ".k-paper-a1        {width: 1683.78px;}",
+        ".k-paper-a2        {width: 1190.55px;}",
+        ".k-paper-a3        {width: 841.89px;}",
+        ".k-paper-a4        {width: 595.28px;}",
+        ".k-paper-a5        {width: 419.53px;}",
+        ".k-paper-a6        {width: 297.64px;}",
+        ".k-paper-a7        {width: 209.76px;}",
+        ".k-paper-a8        {width: 147.40px;}",
+        ".k-paper-a9        {width: 104.88px;}",
+        ".k-paper-a10       {width: 73.70px;}",
+        ".k-paper-b0        {width: 2834.65px;}",
+        ".k-paper-b1        {width: 2004.09px;}",
+        ".k-paper-b2        {width: 1417.32px;}",
+        ".k-paper-b3        {width: 1000.63px;}",
+        ".k-paper-b4        {width: 708.66px;}",
+        ".k-paper-b5        {width: 498.90px;}",
+        ".k-paper-b6        {width: 354.33px;}",
+        ".k-paper-b7        {width: 249.45px;}",
+        ".k-paper-b8        {width: 175.75px;}",
+        ".k-paper-b9        {width: 124.72px;}",
+        ".k-paper-b10       {width: 87.87px;}",
+        ".k-paper-c0        {width: 2599.37px;}",
+        ".k-paper-c1        {width: 1836.85px;}",
+        ".k-paper-c2        {width: 1298.27px;}",
+        ".k-paper-c3        {width: 918.43px;}",
+        ".k-paper-c4        {width: 649.13px;}",
+        ".k-paper-c5        {width: 459.21px;}",
+        ".k-paper-c6        {width: 323.15px;}",
+        ".k-paper-c7        {width: 229.61px;}",
+        ".k-paper-c8        {width: 161.57px;}",
+        ".k-paper-c9        {width: 113.39px;}",
+        ".k-paper-c10       {width: 79.37px;}",
+        ".k-paper-executive {width: 521.86px;}",
+        ".k-paper-folio     {width: 612.00px;}",
+        ".k-paper-legal     {width: 612.00px;}",
+        ".k-paper-letter    {width: 612.00px;}",
+        ".k-paper-tabloid   {width: 792.00px;}"
+    ].join("\n");
+
     // options can be: template (as string), cssClass, title, defaultValue
     var ToolTemplate = Class.extend({
         init: function(options) {
@@ -379,6 +420,7 @@
                     ".k-table td{min-width:1px;padding:.2em .3em;}" +
                     ".k-table,.k-table td{outline:0;border: 1px dotted #ccc;}" +
                     ".k-table p{margin:0;padding:0;}" +
+                    CSS_PAPER_SIZES +
                 "</style>" +
                 domainScript +
                 "<script>(function(d,c){d[c]('header'),d[c]('article'),d[c]('nav'),d[c]('section'),d[c]('footer');})(document, 'createElement');</script>" +

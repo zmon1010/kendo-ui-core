@@ -1076,27 +1076,19 @@ var ExportPdfCommand = Command.extend({
 
     exec: function() {
         var editor = this.editor;
+        var pdfOptions = editor.options.pdf || {};
 
         //TODO: check browser support
-        var drawOptions = editor.options.pdf && editor.options.pdf.multiPage ? { forcePageBreak: ".k-page-break" } : null;
-        var paperSize = editor.options.pdf && editor.options.pdf.paperSize;
-        var drawing = kendo.drawing;
-        var stylesheet = editor.document.styleSheets[0];
         //TODO: handle user-defined paaper sizes and margins
-        var div = $("<div/>").addClass("k-paper-" + paperSize.toLowerCase()).appendTo(document.body);
-        var pageStyles = div.css(["width", "display"]);
-        pageStyles["box-sizing"] = "border-box";
-        pageStyles.padding = "20px";
-
-        div.remove();
-        //TODO: prevent rule duplication
-        pageStyles = JSON.stringify(pageStyles).replace(/,/g, ";").replace(/"/g, "");
-        stylesheet.insertRule((drawOptions ? "kendo-pdf-page " : "body ") + pageStyles,
-                              stylesheet.cssRules.length);
-
+        var paperSize = pdfOptions.paperSize || "A4";
+        var drawOptions = {
+            forcePageBreak: pdfOptions.multiPage ? ".k-page-break" : "-",
+            pageClassName: "k-paper-" + paperSize.toLowerCase()
+        };
+        var drawing = kendo.drawing;
         drawing.drawDOM(editor.body, drawOptions)
             .then(function(root) {
-                return drawing.exportPDF(root, editor.options.pdf);
+                return drawing.exportPDF(root, pdfOptions);
             })
             .done(function(data) {
                 kendo.saveAs({
