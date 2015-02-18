@@ -390,6 +390,10 @@ var __meta__ = {
 
         toRect: function() {
             return new geom.Rect([this.x1, this.y1], [this.width(), this.height()]);
+        },
+
+        hasSize: function() {
+            return this.width() > 0 && this.height() > 0;
         }
     };
 
@@ -3783,6 +3787,12 @@ var __meta__ = {
         return currentStops;
     }
 
+    function rectToBox(rect) {
+        var origin = rect.origin;
+        var bottomRight = rect.bottomRight();
+        return new Box2D(origin.x, origin.y, bottomRight.x, bottomRight.y);
+    }
+
     decodeEntities._element = document.createElement("span");
 
     // Exports ================================================================
@@ -3829,6 +3839,7 @@ var __meta__ = {
         inArray: inArray,
         interpolateValue: interpolateValue,
         mwDelta: mwDelta,
+        rectToBox: rectToBox,
         rotatePoint: rotatePoint,
         round: round,
         ceil: ceil,

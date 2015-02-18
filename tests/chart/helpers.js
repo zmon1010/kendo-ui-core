@@ -276,6 +276,16 @@
         close(box.y2, 45.4, 0.1);
     });
 
+    test("hasSize returns true if box has positive width and height", function() {
+        box = Box2D(10, 10, 30, 40);
+        equal(box.hasSize(), true);
+    });
+
+    test("hasSize returns true if box has positive width and height", function() {
+        box = Box2D(10, 10, 10, 10);
+        equal(box.hasSize(), false);
+    });
+
     // ------------------------------------------------------------
     var point;
 
@@ -1112,6 +1122,16 @@
 
     test("getSpacing replaces missing values with default", function() {
         deepEqual(getSpacing({ top: 1 }, 2), { top: 1, left: 2, right: 2, bottom: 2 });
+    });
+
+    test("rectToBox returns Box2D from the passed geometry Rect", function() {
+        var rect = new kendo.geometry.Rect([10, 20], [30, 40]);
+        var box = dataviz.rectToBox(rect);
+        ok(box instanceof Box2D);
+        equal(box.x1, 10);
+        equal(box.y1, 20);
+        equal(box.x2, 40);
+        equal(box.y2, 60);
     });
 
     // ------------------------------------------------------------
