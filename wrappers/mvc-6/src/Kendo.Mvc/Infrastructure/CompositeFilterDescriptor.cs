@@ -3,6 +3,7 @@ namespace Kendo.Mvc
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Linq.Expressions;
+    using Extensions;
     using Infrastructure.Implementation;
     using Infrastructure.Implementation.Expressions;
 
@@ -76,12 +77,13 @@ namespace Kendo.Mvc
         protected override void Serialize(System.Collections.Generic.IDictionary<string, object> json)
         {
             base.Serialize(json);
-                        
-            //json["logic"] = LogicalOperator.ToString().ToLowerInvariant();
 
-            //if (FilterDescriptors.Any()) {
-            //    json["filters"] = FilterDescriptors.OfType<JsonObject>().ToJson();
-            //}
+            json["logic"] = LogicalOperator.ToString().ToLowerInvariant();
+
+            if (FilterDescriptors.Any())
+            {
+                json["filters"] = FilterDescriptors.OfType<JsonObject>().ToJson();
+            }
         }
 
         partial void SubscribeForFilterDescriptorCollectionEvents();

@@ -8,7 +8,7 @@ namespace Kendo.Mvc
     /// Base class for all <see cref="IFilterDescriptor"/> used for 
     /// handling the logic for property changed notifications.
     /// </summary>
-    public class FilterDescriptorBase : IFilterDescriptor
+    public class FilterDescriptorBase : JsonObject, IFilterDescriptor
     {
         /// <summary>
         /// Creates a filter expression by delegating its creation to 
@@ -55,7 +55,7 @@ namespace Kendo.Mvc
         }
 
 
-        protected virtual void Serialize(System.Collections.Generic.IDictionary<string, object> json)
+        protected override void Serialize(System.Collections.Generic.IDictionary<string, object> json)
         {
             //TODO: Serialize IFilterDescriptor   
         }

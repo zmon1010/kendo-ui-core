@@ -7,7 +7,7 @@ namespace Kendo.Mvc
     ///<summary>
     /// Represents an aggregate function.
     ///</summary>
-    public abstract class AggregateFunction 
+    public abstract class AggregateFunction : JsonObject
     {
         public abstract string AggregateMethodName { get; }
 
@@ -90,6 +90,10 @@ namespace Kendo.Mvc
         {
             return string.Format(CultureInfo.InvariantCulture, "{0}_{1}", this.GetType().Name, this.GetHashCode());
         }
-
+        protected override void Serialize(System.Collections.Generic.IDictionary<string, object> json)
+        {
+            json["field"] = SourceField;
+            json["aggregate"] = FunctionName.Split('_')[0].ToLowerInvariant();
+        }
     }
 }

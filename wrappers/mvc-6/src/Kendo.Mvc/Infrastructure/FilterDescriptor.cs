@@ -153,20 +153,20 @@ namespace Kendo.Mvc
         {
             base.Serialize(json);
 
-            //json["field"] = Member;
-            //json["operator"] = Operator.ToToken();
+            json["field"] = Member;
+            json["operator"] = Operator.ToToken();
 
-            //if (Value != null && Value.GetType().GetNonNullableType().IsEnum)
-            //{
-            //    var type = Value.GetType().GetNonNullableType();
-            //    var underlyingType = Enum.GetUnderlyingType(type);
+            if (Value != null && Value.GetType().IsEnumType())
+            {
+                var type = Value.GetType().GetNonNullableType();
+                var underlyingType = Enum.GetUnderlyingType(type);
 
-            //    json["value"] = Convert.ChangeType(Value, underlyingType);
-            //}
-            //else
-            //{
-            //    json["value"] = Value;
-            //}
+                json["value"] = Convert.ChangeType(Value, underlyingType);
+            }
+            else
+            {
+                json["value"] = Value;
+            }
         }
     }
 }
