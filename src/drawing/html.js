@@ -85,50 +85,58 @@
             }
         });
 
+        function handlePageBreaks(element, forceBreak) {
+            var doc = element.ownerDocument;
+            var pages = [];
+            var copy = element.cloneNode(true);
+            var cont = doc.createElement("KENDO-PDF-DOCUMENT");
+            $(cont).css({
+                position : "absolute",
+                left     : "-10000px",
+                top      : "-10000px"
+            });
+            function makePage() {
+                var page = doc.createElement("KENDO-PDF-PAGE");
+                if (options && options.pageClassName) {
+                    page.className = options.pageClassName;
+                }
+                pages.push(page);
+                return page;
+            }
+            cont.appendChild(copy);
+            element.parentNode.insertBefore(cont, element);
+            if (forceBreak != "-") {
+                (function split(node) {
+                    for (var el = node.firstChild; el; el = el.nextSibling) {
+                        if (el.nodeType == 1) {
+                            if ($(el).is(forceBreak)) {
+                                var page = makePage();
+                                var range = doc.createRange();
+                                range.setStartBefore(copy);
+                                range.setEndBefore(el);
+                                page.appendChild(range.extractContents());
+                                copy.parentNode.insertBefore(page, copy);
+                            } else {
+                                split(el);
+                            }
+                        }
+                    }
+                })(copy);
+            }
+            if (!(pages.length > 0 && copy.children.length === 0)) {
+                var page = makePage();
+                copy.parentNode.insertBefore(page, copy);
+                page.appendChild(copy);
+            }
+            return { pages: pages, container: cont };
+        }
+
         return defer.promise();
     }
 
     drawing.drawDOM = drawDOM;
 
     drawDOM.getFontFaces = getFontFaces;
-
-    function handlePageBreaks(element, forceBreak) {
-        var doc = element.ownerDocument;
-        var pages = [];
-        var copy = element.cloneNode(true);
-        var cont = doc.createElement("KENDO-PDF-DOCUMENT");
-        $(cont).css({
-            position : "absolute",
-            left     : "-10000px",
-            top      : "-10000px"
-        });
-        cont.appendChild(copy);
-        element.parentNode.insertBefore(cont, element);
-        (function split(node) {
-            for (var el = node.firstChild; el; el = el.nextSibling) {
-                if (el.nodeType == 1) {
-                    if ($(el).is(forceBreak)) {
-                        var page = doc.createElement("KENDO-PDF-PAGE");
-                        var range = doc.createRange();
-                        range.setStartBefore(copy);
-                        range.setEndBefore(el);
-                        page.appendChild(range.extractContents());
-                        pages.push(page);
-                        copy.parentNode.insertBefore(page, copy);
-                    } else {
-                        split(el);
-                    }
-                }
-            }
-        })(copy);
-        if (!(pages.length > 0 && copy.children.length === 0)) {
-            var page = doc.createElement("KENDO-PDF-PAGE");
-            copy.parentNode.insertBefore(page, copy);
-            page.appendChild(copy);
-            pages.push(page);
-        }
-        return { pages: pages, container: cont };
-    }
 
     var parseGradient = (function(){
         var tok_linear_gradient  = /^((-webkit-|-moz-|-o-|-ms-)?linear-gradient\s*)\(/;
