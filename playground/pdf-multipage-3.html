@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!-- ticket 898551 -->
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+
+    <script src="./pako.min.js"></script>
+  </head>
+  <body>
+    <p>
+      <button onclick="exportPDF('#test')">Export</button>
+    </p>
+    <div id="test" style="display: inline-block; border: 1px solid red; padding: 20px;">
+      <div id="chart1" style="width: 500px; height: 500px;"></div>
+      <div class="page-break"></div>
+      <div id="chart2" style="width: 500px; height: 500px;"></div>
+    </div>
+
+    <script>
+    function exportPDF(selector) {
+      kendo.drawing.drawDOM($(selector), {
+        forcePageBreak: ".page-break"
+      }).then(function(group){
+        group.options.set("pdf.margin", "1cm");
+        kendo.drawing.pdf.saveAs(group, "test.pdf");
+      });
+    }
+    $("#chart1").kendoChart({
+        title: {
+            position: "bottom",
+            text: "Share of Internet Population Growth, 2007 - 2012"
+        },
+        legend: {
+            visible: false
+        },
+        chartArea: {
+            background: ""
+        },
+        seriesDefaults: {
+            labels: {
+                visible: true,
+                background: "transparent",
+                template: "#= category #: \n #= value#%"
+            }
+        },
+        series: [{
+            type: "pie",
+            startAngle: 150,
+            data: [{
+                category: "Asia",
+                value: 53.8,
+                color: "#9de219"
+            },{
+                category: "Europe",
+                value: 16.1,
+                color: "#90cc38"
+            },{
+                category: "Latin America",
+                value: 11.3,
+                color: "#068c35"
+            },{
+                category: "Africa",
+                value: 9.6,
+                color: "#006634"
+            },{
+                category: "Middle East",
+                value: 5.2,
+                color: "#004d38"
+            },{
+                category: "North America",
+                value: 3.6,
+                color: "#033939"
+            }]
+        }],
+        tooltip: {
+            visible: true,
+            format: "{0}%"
+        }
+    });
+    $("#chart2").kendoChart({
+        title: {
+            text: "Gross domestic product growth \n /GDP annual %/"
+        },
+        legend: {
+            position: "bottom"
+        },
+        seriesDefaults: {
+            type: "area",
+            area: {
+                line: {
+                    style: "smooth"
+                }
+            }
+        },
+        series: [{
+            name: "Haiti",
+            data: [-0.253, 0.362, -3.519, 1.799, 2.252, 3.343, 0.843, 2.877, -5.416, 5.590]
+        }, {
+            name: "World",
+            data: [1.988, 2.733, 3.994, 3.464, 4.001, 3.939, 1.333, -2.245, 4.339, 2.727]
+        }, {
+            name: "India",
+            data: [3.907, 7.943, 7.848, 9.284, 9.263, 9.801, 3.890, 8.238, 9.552, 6.855]
+        }],
+        valueAxis: {
+            labels: {
+                format: "{0}%"
+            },
+            line: {
+                visible: false
+            },
+            axisCrossingValue: -10
+        },
+        categoryAxis: {
+            categories: [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011],
+            majorGridLines: {
+                visible: false
+            }
+        },
+        tooltip: {
+            visible: true,
+            format: "{0}%",
+            template: "#= series.name #: #= value #"
+        }
+    });
+    </script>
+  </body>
+</html>
