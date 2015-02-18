@@ -2483,8 +2483,40 @@ var __meta__ = {
             return element;
         },
 
+        createElement: function() {
+            var that = this;
+            var customVisual = that.options.visual;
+            var visual;
+            if (customVisual) {
+                visual = customVisual({
+                    rect: that.box.toRect(),
+                    options: that.visualOptions(),
+                    createVisual: function() {
+                        return that.getElement()
+                    }
+                });
+            } else {
+                visual = that.getElement();
+            }
+
+            return visual;
+        },
+
+        visualOptions: function() {
+            var options = this.options;
+            return {
+                background: options.background,
+                border: options.border,
+                margin: options.margin,
+                padding: options.padding,
+                type: options.type,
+                size: options.width,
+                visible: options.visible
+            };
+        },
+
         createVisual: function() {
-            this.visual = this.getElement();
+            this.visual = this.createElement();
         }
     });
 

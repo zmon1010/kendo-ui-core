@@ -3044,5 +3044,53 @@
             ok(!shape.visual);
         });
 
+        // ------------------------------------------------------------
+        var customVisual = new draw.Path();
+        module("ShapeElement / custom visual");
+
+        test("creates custom visual if visual option is set", function() {
+            createShape({
+                visual: function() {
+                    return customVisual;
+                }
+            });
+            ok(visual === customVisual);
+        });
+
+        test("passes rect as parameter", function() {
+            createShape({
+                visual: function(e) {
+                   ok(e.rect.equals(shape.box.toRect()));
+                }
+            });
+        });
+
+        test("passes shapeelement options", function() {
+            createShape({
+                visual: function(e) {
+                   var options = shape.options;
+                   deepEqual(e.options, {
+                        background: options.background,
+                        border: options.border,
+                        margin: options.margin,
+                        padding: options.padding,
+                        type: options.type,
+                        size: options.width,
+                        visible: options.visible
+                   });
+                }
+            });
+        });
+
+        test("passes function that returns the default visual", function() {
+            createShape({
+                type: "circle",
+                visual: function(e) {
+                   var defaultVisual = e.createVisual();
+                   ok(defaultVisual instanceof draw.Circle);
+                }
+            });
+        });
+
     })();
 })();
