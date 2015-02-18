@@ -18,7 +18,7 @@ namespace :nuget do
         end
 
         file nuget => nuspec do |f|
-            sh "nuget pack -BasePath dist/bundles -OutputDirectory dist/bundles #{nuspec}"
+            sh "cd dist/bundles && nuget pack #{nuspec.pathmap("%f")}"
         end
 
         NUGETS << nuget
