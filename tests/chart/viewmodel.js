@@ -1391,6 +1391,12 @@
             equal(title.options.flag, true);
         });
 
+        test("sets visualSize to true", function() {
+            title = Title.buildTitle("Title", parent, { flag: true });
+
+            equal(title.children[0].options.visualSize, true);
+        });
+
     })();
 
     (function() {
@@ -1710,6 +1716,16 @@
         });
 
         // ------------------------------------------------------------
+        module("TextBox / reflow / custom visual", {
+            setup: function() {
+                createTextBoxMock({content: "foo"}, Box2D(0,0,20,30));
+            }
+        });
+
+        // test("horizontal center", function() {
+        // });
+
+        // ------------------------------------------------------------
         function renderTextBox(options, text) {
             createTextBox(options, text);
             textBox.renderVisual();
@@ -1798,6 +1814,215 @@
             equal(rect.options.fill.color, "green");
             equal(rect.options.fill.opacity, 0.7);
         });
+
+        // ------------------------------------------------------------
+        (function() {
+            var BOX = new Box2D(10, 20, 30, 40);
+            var RECT = BOX.toRect();
+            var customVisual = draw.Path.fromRect(new geom.Rect([0,0], [100, 200]));
+
+            function renderTextBox(options,box) {
+                createTextBox(options);
+                textBox.reflow(box || BOX);
+                textBox.renderVisual();
+            }
+
+            module("TextBox / rendering / visual", {
+                setup: function() {
+                    moduleSetup();
+                }
+            });
+
+            test("renders custom visual if visual option is set", function() {
+                renderTextBox({
+                    visual: function() {
+                        return customVisual;
+                    }
+                });
+                ok(textBox.visual === customVisual);
+            });
+
+            test("appends custom visual", function() {
+                createTextBox({
+                    visual: function() {
+                        return customVisual;
+                    }
+                });
+
+                textBox.parent = {
+                    appendVisual: function(visual) {
+                        ok(visual === customVisual);
+                    }
+                };
+                textBox.renderVisual();
+            });
+
+            test("does not render default visual if visual function returns nothing", function() {
+                renderTextBox({
+                    visual: function() {}
+                });
+                ok(!textBox.visual);
+            });
+
+            test("passes the textbox initial box as rect", function() {
+                 renderTextBox({
+                    visual: function(e) {
+                        ok(e.rect.equals(RECT));
+                    }
+                });
+            });
+
+            test("passes a createVisual function that returns the default visual", function() {
+                 renderTextBox({
+                    visual: function(e) {
+                        var defaultVisual = e.createVisual();
+                        ok(defaultVisual instanceof draw.Group);
+                    }
+                });
+            });
+
+            test("passes the text options", function() {
+                var textBoxOptions = {
+                    background: "red",
+                    border: {
+                        width: 3,
+                        color: "blue"
+                    },
+                    color: "green",
+                    font: "foo",
+                    margin: {
+                        left: 2,
+                        top: 2,
+                        botom: 2,
+                        right: 2
+                    },
+                    padding: {
+                        left: 3,
+                        top: 3,
+                        botom: 3,
+                        right: 3
+                    },
+                    visible: false,
+                    text: TEXT
+                };
+
+                renderTextBox(kendo.deepExtend({}, textBoxOptions, {
+                    visual: function(e) {
+                        deepEqual(e.options, textBoxOptions);
+                    }
+                }));
+            });
+
+            // ------------------------------------------------------------
+            module("TextBox / rendering / visual / visualSize", {
+                setup: function() {
+                    moduleSetup();
+                }
+            });
+
+            test("renders custom visual if the visual option is set", 2, function() {
+                renderTextBox({
+                    visualSize: true,
+                    visual: function() {
+                        ok(true);
+                        return customVisual;
+                    }
+                });
+                ok(textBox.visual === customVisual);
+            });
+
+            test("appends custom visual", 2, function() {
+                createTextBox({
+                    visualSize: true,
+                    visual: function() {
+                        ok(true);
+                        return customVisual;
+                    }
+                });
+
+                textBox.parent = {
+                    appendVisual: function(visual) {
+                        ok(visual === customVisual);
+                    }
+                };
+                textBox.reflow(BOX);
+                textBox.renderVisual();
+            });
+
+            test("does not render default visual if visual function returns nothing", function() {
+                renderTextBox({
+                    visualSize: true,
+                    visual: function() {}
+                });
+                ok(!textBox.visual);
+            });
+
+            test("passes the textbox initial box as rect", 1, function() {
+                 renderTextBox({
+                    visualSize: true,
+                    visual: function(e) {
+                        ok(e.rect.equals(RECT));
+                    }
+                });
+            });
+
+            test("the createVisual function returns the reflowed visual", function() {
+                createTextBox({
+                    visualSize: true,
+                    visual: function(e) {
+                        var defaultVisual = e.createVisual();
+                        ok(defaultVisual.bbox().equals(new geom.Rect([10, 20], [120, 15])));
+                    }
+                }, Box2D(0, 0, 10, 10));
+
+                textBox.reflow(BOX);
+                textBox.renderVisual();
+            });
+
+            test("sets the textbox box based on the visual bbox", function() {
+                 renderTextBox({
+                    visualSize: true,
+                    visual: function(e) {
+                        return customVisual;
+                    }
+                });
+                ok(textBox.box.toRect().equals(customVisual.bbox()));
+            });
+
+            test("passes the text options", function() {
+                var textBoxOptions = {
+                    background: "red",
+                    border: {
+                        width: 3,
+                        color: "blue"
+                    },
+                    color: "green",
+                    font: "foo",
+                    margin: {
+                        left: 2,
+                        top: 2,
+                        botom: 2,
+                        right: 2
+                    },
+                    padding: {
+                        left: 3,
+                        top: 3,
+                        botom: 3,
+                        right: 3
+                    },
+                    visible: false,
+                    text: TEXT
+                };
+
+                renderTextBox(kendo.deepExtend({}, textBoxOptions, {
+                    visualSize: true,
+                    visual: function(e) {
+                        deepEqual(e.options, textBoxOptions);
+                    }
+                }));
+            });
+
+        })();
 
     })();
 

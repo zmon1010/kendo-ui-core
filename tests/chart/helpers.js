@@ -276,12 +276,12 @@
         close(box.y2, 45.4, 0.1);
     });
 
-    test("hasSize returns true if box has positive width and height", function() {
+    test("hasSize returns true if box has non zero width and height", function() {
         box = Box2D(10, 10, 30, 40);
         equal(box.hasSize(), true);
     });
 
-    test("hasSize returns true if box has positive width and height", function() {
+    test("hasSize returns false if box has zero width and height", function() {
         box = Box2D(10, 10, 10, 10);
         equal(box.hasSize(), false);
     });

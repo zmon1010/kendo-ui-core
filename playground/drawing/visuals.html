@@ -49,16 +49,63 @@
 
     
     function initLineChart() {
+        var grandSlam = [{
+            "year": "2003",
+            "win": 13,
+            "extremum": "MIN: 13",
+            "loss": 3
+        },{
+            "year": "2004",
+            "win": 22,
+            "loss": 1
+        },{
+            "year": "2005",
+            "win": 24,
+            "loss": 2
+        },{
+            "year": "2006",
+            "win": 27,
+            "extremum": "MAX: 27",
+            "loss": 1
+        },{
+            "year": "2007",
+            "win": 26,
+            "loss": 1
+        },{
+            "year": "2008",
+            "win": 24,
+            "loss": 3
+        },{
+            "year": "2009",
+            "win": 26,
+            "loss": 2
+        },{
+            "year": "2010",
+            "win": 20,
+            "loss": 3
+        },{
+            "year": "2011",
+            "win": 20,
+            "loss": 4
+        },{
+            "year": "2012",
+            "win": 19,
+            "loss": 3
+        }];
 
         $("#line").kendoChart({
             dataSource: {
                 data: grandSlam
             },
             title: {
-                text: "Roger Federer Grand Slam tournament performance"
+                text: "Roger Federer Grand Slam tournament performance",
+                visual: titleVisual
             },
             legend: {
-                position: "bottom"
+                position: "top",
+                labels: {
+                    visual: labelsVisual
+                }
             },
             seriesDefaults: {
                 type: "line",
@@ -82,16 +129,44 @@
                     value: "stddev"
                 }
             }],
+            panes: [{
+                title: {
+                    text: "KOR",
+                    visual: function(e) {
+                        return titleVisual(e);
+                    }
+                }
+            }],
             valueAxis: {
                 line: {
                     visible: false
+                },
+                labels: {
+                    visual: labelsVisual
+                },
+                title: {
+                    text: "KOR",
+                    visual: function(e) {
+                        e.options.background = "red";
+                        return verticalTitleVisual(e);
+                    }
                 }
             },
             categoryAxis: {
                 field: "year",
                 majorGridLines: {
                     visible: false
-                }
+                },
+                labels: {
+                    visual: labelsVisual
+                },
+                title: {
+                    text: "HOI",
+                    visual: function(e) {
+                        e.options.background = "red";
+                        return titleVisual(e);
+                    }
+                }                
             },
             tooltip: {
                 visible: true,
@@ -104,21 +179,22 @@
         $("#bar").kendoChart({
             title: {
                 text: "Site Visitors Stats \n /thousands/",
-                visual: labelsVisual
+                visual: titleVisual
             },
             legend: {
-                visible: false
+                visible: true
             },
             seriesDefaults: {
                 type: "bar",
                 labels: {
                     visible: true,
-                    visual: labelsVisual
+                    visual: function(e) {
+                    return labelsVisual(e)
+                    }
                 },
                 stack: true,                   
                 visual: customVisual
             },
-            panes: [{clip: false}],
             series: [{
                 name: "Total Visits",
                 data: [10000, 56000]                    
@@ -135,6 +211,13 @@
                 },
                 minorGridLines: {
                     visible: true
+                },
+                title: {
+                    text: "Value Axis",
+                    visual: function(e) {
+                        e.options.background = "red";
+                        return titleVisual(e);
+                    }
                 }
             },
             categoryAxis: {
@@ -144,6 +227,13 @@
                 },
                 labels: {
                     visual: labelsVisual
+                },
+                    title: {
+                    text: "Category Axis",
+                    visual: function(e) {
+                        e.options.background = "red";
+                        return verticalTitleVisual(e);
+                    }
                 }
             },
             tooltip: {
@@ -156,27 +246,40 @@
 
     function labelsVisual(args) {
         var visual = args.createVisual();
-        createArcs(args.box, visual);
+        visual.transform(null);
+        createArcs(args.rect, visual, args.options.background);
         return visual;
     }
     
+    function verticalTitleVisual(args) {
+        args.rect.size.width = 200;
+        return labelsVisual(args);
+    }
+
+    function titleVisual(args) {
+        args.rect.size.height = 100;
+        return labelsVisual(args);
+    }
+
     function customVisual(args) {
         var drawing = kendo.drawing;
         var geometry = kendo.geometry;
 
         var group = new drawing.Group();
-        createArcs(args.box, group, args.options.background);
+        createArcs(args.rect, group, args.options.background);
       
         return group;
     }
-    
-    function createArcs(box, visual, color) {
 
-        var width = box.width();            
-        var height = box.height();
+    function createArcs(rect, visual, color) {
+
+        var width = rect.width();            
+        var height = rect.height();
         var thirdWidth = width / 3;
         var thirdHeight = height / 3;
-        var center = box.center();
+        var center = rect.center();
+        var origin = rect.origin;
+        var bottomRight = rect.bottomRight();
         var ballsRadius; 
         var ball1Center;
         var ball2Center;
@@ -189,24 +292,24 @@
             korRadiusY = height / 2;
             ballsRadius = thirdWidth / 2;
             ball1Center = {
-                x: box.x1 + korRadiusX,
-                y: box.y2 - thirdHeight / 2
+                x: origin.x + korRadiusX,
+                y: bottomRight.y - thirdHeight / 2
             };
             ball2Center = {
-                x: box.x2 - korRadiusX,
-                y: box.y2 - thirdHeight / 2
+                x: bottomRight.x - korRadiusX,
+                y: bottomRight.y - thirdHeight / 2
             };
         } else {
             korRadiusX = width / 2;
             korRadiusY = thirdHeight / 2;
             ballsRadius = thirdHeight / 2;
             ball1Center = {
-                x: box.x1 + korRadiusY,
-                y: box.y1 + thirdHeight / 2
+                x: origin.x + korRadiusY,
+                y: origin.y + thirdHeight / 2
             };
             ball2Center = {
-                x: box.x1 + korRadiusY,
-                y: box.y2 - thirdHeight / 2
+                x: origin.x + korRadiusY,
+                y: bottomRight.y - thirdHeight / 2
             };
         }
 
@@ -247,37 +350,7 @@
     </style>
   </head>
   <body>
-        <div id="area"></div>
-      <div id="donut"></div>
-      <div id="pie"></div>
+        <div id="line"></div>
       <div id="bar"></div>
-      <div id="column"></div>
-      <div id="boxplot"></div>
-      <div id="stock-chart"></div>
-      <div id="water"></div>
-      <div id="range"></div>
-      <div id="bullet"></div>
-      <div id="bubble"></div>
-      <button>redraw</button><br />
-      PDF:
-      <button onclick="pdf('#donut')"       >donut</button>
-      <button onclick="pdf('#pie')"         >pie</button>
-      <button onclick="pdf('#column')"      >column</button>
-      <button onclick="pdf('#boxplot')"     >boxplot</button>
-      <button onclick="pdf('#stock-chart')" >stock-chart</button>
-      <button onclick="pdf('#water')"       >water</button>
-      <button onclick="pdf('#range')"       >range</button>
-      <button onclick="pdf('body')">page</button>
-      <script>
-        function pdf(sel) {
-            kendo.drawing.drawDOM($(sel))
-            .then(function(group) {
-                return kendo.drawing.exportPDF(group);
-            })
-            .done(function(data){
-                kendo.saveAs({ dataURI: data, fileName: "kendo.pdf" });
-            });
-        }
-      </script>
   </body>
 </html>
