@@ -1780,6 +1780,8 @@ var __meta__ = {
                     }
 
                     children.push(kendoDomElement("span", { className: iconClass.join(" ") }));
+
+                    attr.style["white-space"] = "nowrap";
                 }
 
                 if (column.attributes) {
@@ -1860,17 +1862,23 @@ var __meta__ = {
             var resizeHandle = this.resizeHandle;
             var position = th.position();
             var left = position.left;
-            var container = th.closest("div");
+            var cellWidth = th.outerWidth();
 
             if (!resizeHandle) {
                 resizeHandle = this.resizeHandle = $(
                     '<div class="k-resize-handle"><div class="k-resize-handle-inner" /></div>'
                 );
 
-                container.append(resizeHandle);
+                th.closest("div").append(resizeHandle);
             }
 
-            var show = th.length && left > indicatorWidth && left < container.width();
+            if (e.clientX > left + cellWidth/2) {
+                left += cellWidth;
+            } else {
+                th = th.prev();
+            }
+
+            var show = !!th.length && left > indicatorWidth && left < this.wrapper.width();
 
             resizeHandle
                 .toggle(show)
@@ -1892,7 +1900,8 @@ var __meta__ = {
                 this.resizable.destroy();
             }
 
-            this.thead.on("mousemove" + NS, "th", $.proxy(this._positionResizeHandle, this));
+            $(this.lockedHeader).find("thead").add(this.thead)
+                .on("mousemove" + NS, "th", $.proxy(this._positionResizeHandle, this));
 
             this.resizable = new kendo.ui.Resizable(this.wrapper, {
                 handle: ".k-resize-handle",
@@ -1901,14 +1910,15 @@ var __meta__ = {
                     var th = $(e.currentTarget).data("th");
                     var colSelector = "col:eq(" + th.index() + ")";
                     var treelist = this.options.treelist;
-                    var lockedTable = treelist.lockedTable || $();
+
+                    treelist.wrapper.addClass("k-grid-column-resizing");
 
                     this.col = treelist.table.children("colgroup").find(colSelector);
 
                     if (treelist.options.scrollable) {
                         this.col = this.col
                             .add(treelist.thead.parent().find(colSelector))
-                            .add(lockedTable.children("colgroup").find(colSelector));
+                            .add($(treelist.lockedTable).children("colgroup").find(colSelector));
                     }
 
                     this.startLocation = e.x.location;
@@ -1917,13 +1927,19 @@ var __meta__ = {
                     this.totalWidth = this.table.width();
                 },
                 resize: function(e) {
+                    var minColumnWidth = 11;
                     var delta = e.x.location - this.startLocation;
+
+                    if (this.columnWidth + delta < minColumnWidth) {
+                        delta = minColumnWidth - this.columnWidth;
+                    }
 
                     this.table.width(this.totalWidth + delta);
                     this.col.width(this.columnWidth + delta);
                 },
                 resizeend: function() {
-                    this.col = null;
+                    this.options.treelist.wrapper.removeClass("k-grid-column-resizing");
+                    this.table = this.col = null;
                 }
             });
         },

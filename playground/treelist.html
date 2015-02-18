@@ -80,13 +80,13 @@
             $("#list").kendoTreeList({
                 toolbar: ["create"],
                 dataSource: listDS,
-                filterable: true,
                 resizable: true,
+                filterable: true,
                 editable: "popup",
                 columns: [
-                    { field: "FirstName", title: "First Name" },
-                    { field: "LastName", title: "Last Name", sortable: true },
-                    { command: ["edit", "destroy", { name: "addChild", text: "Add Child", click: cmd }] }
+                    { field: "FirstName", title: "First Name", locked: true, width: 200 },
+                    { field: "LastName", title: "Last Name", sortable: true, width: 200 },
+                    { command: ["edit", "destroy", { name: "addChild", text: "Add Child", click: cmd }], width: 2000 }
                 ]
             });
 
@@ -107,6 +107,16 @@ var treelist = $("#list").data("kendoTreeList");
                 listDS.filter({});
             });
         </script>
+
+        <style>
+            .k-grid-column-resizing,
+            .k-grid-column-resizing .k-grid-filter,
+            .k-grid-column-resizing .k-link,
+            .k-grid-column-resizing .k-button
+            {
+                cursor: col-resize;
+            }
+        </style>
     </body>
 </html>
 
