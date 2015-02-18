@@ -16,4 +16,8 @@ namespace :vs_scaffold do
 
     desc 'Builds the VS Scaffolder extension'
     task :build => VS_SCAFFOLD_OUTPUT
+
+    file "plugins/KendoScaffolder/KendoScaffolderExtension.vsix" => "dist/binaries/scaffolding/KendoScaffolderExtension.vsix" do |t|
+       cp t.prerequisites.first, t.name
+    end 
 end

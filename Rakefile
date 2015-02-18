@@ -68,6 +68,7 @@ ROOT_MAP = {
     'wrappers/aspnetmvc/Binaries/Mvc3' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC3/',
     'wrappers/aspnetmvc/Binaries/Mvc4' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Binaries/Mvc5' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC5/',
+    'wrappers/aspnetmvc/Scaffolding' => 'plugins/KendoScaffolder/',
     'wrappers/jsp/kendo-taglib' => 'wrappers/java/kendo-taglib/target/',
     'src/kendo-taglib' => 'wrappers/java/kendo-taglib/',
     'src/php' => 'wrappers/php/',
@@ -530,10 +531,12 @@ bundle :name => 'aspnetmvc.trial',
        :contents => {
             'js' => TRIAL_MIN_JS + MVC_MIN_JS_MAP + JQUERY_MAP,
             'styles' => MIN_CSS_RESOURCES,
+            'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }
        .merge(MVC_CONTENT),
        :prerequisites => [
            'mvc:assets',
+           'plugins/KendoScaffolder/KendoScaffolderExtension.vsix',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples.sln',
            'dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/Kendo.Mvc.Examples.csproj',
@@ -655,10 +658,12 @@ bundle :name => 'aspnetmvc.commercial',
                 .exclude('**/bin/**/*')
                 .exclude('**/obj/**/*')
                 .exclude('**/*.csproj'),
+            'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }.merge(MVC_CONTENT),
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test',
+           'plugins/KendoScaffolder/KendoScaffolderExtension.vsix',
            'dist/bundles/aspnetmvc.commercial/src/Kendo.Mvc/Kendo.Mvc.sln',
            'dist/bundles/aspnetmvc.commercial/src/Kendo.Mvc/Kendo.Mvc/Kendo.snk',
            'dist/bundles/aspnetmvc.commercial/src/Kendo.Mvc/Kendo.Mvc/CommonAssemblyInfo.cs',
@@ -1144,7 +1149,7 @@ namespace :build do
                 sh "xcopy dist\\binaries\\* #{target_dir} /E /Y"
 
                 sh "xcopy plugins\\KendoBootstrapper\\KendoBootstrapper\\bin\\*.vsix L:\\#{destination}\\ /E /Y"
-                sh "xcopy plugins\\KendoScaffolder\\KendoScaffolder\\KendoScaffolderExtension\\bin\\Release\\*.vsix L:\\#{destination}\\Scaffold\\ /Y"
+                sh "xcopy plugins\\KendoScaffolder\\KendoScaffolder\\KendoScaffolderExtension\\bin\\Release\\*.vsix L:\\#{destination}\\binaries\\scaffolding\\ /Y"
             end
 
             desc 'Copy ASP.NET MVC DLLs from distribution archive'
