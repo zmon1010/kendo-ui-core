@@ -4783,7 +4783,8 @@ var __meta__ = {
                 border: this.markerBorder(),
                 opacity: options.opacity,
                 zIndex: valueOrDefault(options.zIndex, this.series.zIndex),
-                animation: options.animation
+                animation: options.animation,
+                visual: options.visual
             });
 
             return marker;

@@ -638,6 +638,17 @@
             deepEqual(marker.options.opacity, point.options.markers.opacity);
         });
 
+        test("sets marker visual", function() {
+            var visual = function() {};
+
+            createPoint({
+                markers: {
+                    visual: visual
+                }
+            });
+            ok(visual === marker.options.visual);
+        });
+
         test("createHighlight returns marker outline", function() {
             createPoint({ markers: { type: "circle" }});
             var marker = point.marker.visual.geometry();

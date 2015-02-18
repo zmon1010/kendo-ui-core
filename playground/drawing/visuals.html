@@ -110,7 +110,9 @@
             seriesDefaults: {
                 type: "line",
                 markers: {
-                    visual: customVisual
+                    visual: function(e) {
+                        return customVisual(e);
+                    }
                 }
             },
             series: [{
@@ -189,7 +191,7 @@
                 labels: {
                     visible: true,
                     visual: function(e) {
-                    return labelsVisual(e)
+                        return labelsVisual(e)
                     }
                 },
                 stack: true,                   
