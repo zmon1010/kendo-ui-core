@@ -12,7 +12,20 @@ module CodeGen::MVC6::Wrappers::Options
         name.to_csharp_name + postfix
     end
 
+    def csharp_generic
+        CodeGen::MVC6::Wrappers::GENERIC_ARGS[full_name.downcase.to_sym]
+    end
+
     def csharp_generic_args
+        generics = csharp_generic
+        return '' if generics.nil?
+        '<' + generics.map { |item| item[:name] }.join(', ') + '>'
+    end
+
+    def csharp_generic_constraints
+        generics = csharp_generic
+        return '' if generics.nil?
+        generics.map { |item| "where #{item[:name]} : #{item[:constraint]} "}.join(' ')
     end
 
     def to_initialization
