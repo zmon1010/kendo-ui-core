@@ -66,6 +66,35 @@ test("toDataUrl creates sheet element for every sheet in workbook.xml", function
     equal(dom.find("> sheets > sheet").length, 2);
 });
 
+test("toDataUrl creates definedName for every sheet with autoFilter", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [
+            {
+                columns: [ {}, {} ],
+                filter: { from: 0, to: 1 }
+            },
+            {
+
+            },
+            {
+                title: "Foo",
+                columns: [ {}, {} , {}],
+                filter: { from: 1, to: 2 }
+            }
+        ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["workbook.xml"]);
+    equal(dom.find("definedNames > definedName").length, 2);
+    equal(dom.find("definedNames > definedName").attr("name"), "_xlnm._FilterDatabase");
+    equal(dom.find("definedNames > definedName").eq(0).attr("localSheetId"), "0");
+    equal(dom.find("definedNames > definedName").eq(0).text(), "Sheet1!$A$1:$B$1");
+    equal(dom.find("definedNames > definedName").eq(1).attr("localSheetId"), "2");
+    equal(dom.find("definedNames > definedName").eq(1).text(), "Foo!$B$1:$C$1");
+});
+
 test("toDataUrl sets the name of the sheet element to the title option", function() {
     var workbook = new kendo.ooxml.Workbook({
         sheets: [ { title: "foo"} ]

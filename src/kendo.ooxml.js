@@ -97,6 +97,15 @@ var WORKBOOK = kendo.template(
       '# } #' +
   '# } #' +
   '</sheets>' +
+  '# if (definedNames.length) { #' +
+  '<definedNames>' +
+  ' # for (var di = 0; di < definedNames.length; di++) { #' +
+  '<definedName name="_xlnm._FilterDatabase" hidden="1" localSheetId="${definedNames[di].localSheetId}">' +
+  '${definedNames[di].name}!$${definedNames[di].from.split("").join("$")}:$${definedNames[di].to.split("").join("$")}' +
+  '</definedName>' +
+  ' # } #' +
+  '</definedNames>' +
+  '# } #' +
   '<calcPr calcId="145621" />' +
 '</workbook>');
 
@@ -300,6 +309,10 @@ function ref(rowIndex, colIndex) {
     return numChar(colIndex) + (rowIndex + 1);
 }
 
+function filterRowIndex(options) {
+    return ((options.freezePane || {}).rowSplit || 1) - 1;
+}
+
 var DATE_EPOCH = kendo.timezone.remove(new Date(1900, 0, 0), "Etc/UTC");
 
 var Worksheet = kendo.Class.extend({
@@ -322,14 +335,12 @@ var Worksheet = kendo.Class.extend({
             data.push(this._row(rows, spans, rows[i], i));
         }
 
-        var filterRowIndex = ((this.options.freezePane || {}).rowSplit || 1) - 1;
-
         return WORKSHEET({
             freezePane: this.options.freezePane,
             columns: this.options.columns,
             data: data,
             mergeCells: this._mergeCells,
-            filter: filter ? { from: ref(filterRowIndex, filter.from), to: ref(filterRowIndex, filter.to) } : null
+            filter: filter ? { from: ref(filterRowIndex(this.options), filter.from), to: ref(filterRowIndex(this.options), filter.to) } : null
         });
     },
     _row: function(rows, spans, row, rowIndex) {
@@ -603,7 +614,21 @@ var Workbook = kendo.Class.extend({
         var xlRels = xl.folder("_rels");
         xlRels.file("workbook.xml.rels", WORKBOOK_RELS({ count: sheetCount }));
 
-        xl.file("workbook.xml", WORKBOOK({ sheets: this._sheets }));
+        xl.file("workbook.xml", WORKBOOK({
+            sheets: this._sheets,
+            definedNames: $.map(this._sheets, function(sheet, index) {
+                var options = sheet.options;
+                var filter = options.filter;
+                if (filter) {
+                    return {
+                        localSheetId: index,
+                        name: (options.title || "Sheet" + (index + 1)),
+                        from: ref(filterRowIndex(options), filter.from),
+                        to: ref(filterRowIndex(options), filter.to)
+                    };
+                }
+            })
+        }));
 
         var worksheets = xl.folder("worksheets");
 
