@@ -8,6 +8,8 @@ module CodeGen::MVC6::Wrappers
     BUILDER = ERB.new(File.read("build/codegen/lib/mvc-6/component-builder.erb"), 0, '%<>')
     BUILDER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/component-builder-settings.erb"), 0, '%<>')
 
+    GENERIC_ARGS = YAML.load(File.read("build/codegen/lib/mvc-6/generics.yml"))
+
     class Component < CodeGen::Component
         include Options
 

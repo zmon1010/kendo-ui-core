@@ -1,0 +1,16 @@
+:diagram:
+    - :name: TShapeModel
+      :constraint: class
+    - :name: TConnectionModel
+      :constraint: class
+
+:gantt:
+    - :name: TTaskModel
+      :constraint: class, IGanttTask
+    - :name: TDependenciesModel
+      :constraint: class, IGanttDependency
+
+:treelist:
+    - :name: T
+      :constraint: class
+
