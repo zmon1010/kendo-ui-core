@@ -1,4 +1,23 @@
 module CodeGen::MVC6::Wrappers::Options
+    def component_class
+        Component
+    end
+
+    def composite_option_class
+        CompositeOption
+    end
+
+    def option_class
+        Option
+    end
+
+    def event_class
+        Event
+    end
+
+    def array_option_class
+        ArrayOption
+    end
 
     def unique_options
         composite = composite_options.map { |o| o.name }
