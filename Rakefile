@@ -1144,7 +1144,7 @@ namespace :build do
                 sh "xcopy dist\\binaries\\* #{target_dir} /E /Y"
 
                 sh "xcopy plugins\\KendoBootstrapper\\KendoBootstrapper\\bin\\*.vsix L:\\#{destination}\\ /E /Y"
-                sh "xcopy plugins\\KendoScaffolder\\KendoScaffolder\\KendoScaffolderExtension\\bin\\*.vsix L:\\#{destination}\\Scaffold\\ /E /Y"
+                sh "xcopy plugins\\KendoScaffolder\\KendoScaffolder\\KendoScaffolderExtension\\bin\\*.vsix L:\\#{destination}\\Scaffold\\ /Y"
             end
 
             desc 'Copy ASP.NET MVC DLLs from distribution archive'
