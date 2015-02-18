@@ -319,6 +319,7 @@ var __meta__ = {
             var options = that.options;
             var template = options.template;
             var templateData;
+            var removeEventArgs;
 
             if (fileList.length === 0) {
                 fileList = $("<ul class='k-upload-files k-reset'></ul>").appendTo(that.wrapper);
@@ -358,8 +359,9 @@ var __meta__ = {
             }
 
             if (!that.multiple && existingFileEntries.length > 0) {
-                if (!that.trigger(REMOVE, { files: existingFileEntries.data("fileNames") })) {
-                    that._module.onRemove({target : $(existingFileEntries, that.wrapper)});
+                removeEventArgs = { files: existingFileEntries.data("fileNames") };
+                if (!that.trigger(REMOVE, removeEventArgs)) {
+                    that._module.onRemove({target : $(existingFileEntries, that.wrapper)}, removeEventArgs.data);
                 }
             }
 

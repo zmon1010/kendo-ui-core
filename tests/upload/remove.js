@@ -156,6 +156,27 @@ function uploadRemoveEvent(params) {
         equal($(".k-file", uploadInstance.wrapper).length, 2);
     });
 
+    test("user data set in remove event is sent to server when removing previous file", 1, function() {
+        var uploadInstance = createUpload({ remove:
+            function(e) {
+                e.data = { id: 1 };
+            }
+        });
+
+        simulateUpload();
+
+        $.mockjax(function(s) {
+            equal(s.data.id, 1);
+            return {
+                url: "/removeAction",
+                responseTime: 0,
+                responseText: ""
+            };
+        });
+
+        simulateRemove();
+    });
+
     // -----------------------------------------------------------------------------------
     // -----------------------------------------------------------------------------------
     //Remove tests for initial files
