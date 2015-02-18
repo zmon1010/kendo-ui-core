@@ -88,7 +88,7 @@
         function handlePageBreaks(element, forceBreak) {
             var doc = element.ownerDocument;
             var pages = [];
-            var copy = element.cloneNode(true);
+            var copy = $(element).clone(true, true)[0];
             var cont = doc.createElement("KENDO-PDF-DOCUMENT");
             $(cont).css({
                 position : "absolute",
