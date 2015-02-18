@@ -9,6 +9,7 @@ module CodeGen::MVC6::Wrappers
 
         def component(component)
             write_component(component)
+            write_component_settings(component)
             write_events(component)
             write_builder(component)
             write_builder_settings(component)
@@ -20,6 +21,12 @@ module CodeGen::MVC6::Wrappers
             unless File.exists?(filename)
                 write_file(filename, component.to_component(filename))
             end
+        end
+
+        def write_component_settings(component)
+            filename = "#{@path}/#{component.path}/#{component.csharp_class}.Settings.cs"
+
+            write_file(filename, component.to_component_settings(filename))
         end
 
         def write_events(component)

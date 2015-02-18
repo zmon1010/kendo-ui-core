@@ -4,6 +4,7 @@ require 'codegen/lib/mvc-6/event'
 module CodeGen::MVC6::Wrappers
 
     COMPONENT = ERB.new(File.read("build/codegen/lib/mvc-6/component.erb"), 0, '%<>')
+    COMPONENT_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/component-settings.erb"), 0, '%<>')
     EVENT = ERB.new(File.read("build/codegen/lib/mvc-6/event-builder.erb"), 0, '%<>')
     BUILDER = ERB.new(File.read("build/codegen/lib/mvc-6/component-builder.erb"), 0, '%<>')
     BUILDER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/component-builder-settings.erb"), 0, '%<>')
@@ -31,6 +32,10 @@ module CodeGen::MVC6::Wrappers
 
         def to_component(filename)
             COMPONENT.result(binding)
+        end
+
+        def to_component_settings(filename)
+            COMPONENT_SETTINGS.result(binding)
         end
 
         def to_events(filename)
