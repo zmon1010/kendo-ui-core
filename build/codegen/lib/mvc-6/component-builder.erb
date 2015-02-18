@@ -5,9 +5,10 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring the Kendo UI <%= csharp_class %>
     /// </summary>
-    public partial class <%= csharp_builder_class %> : WidgetBuilderBase<<%= csharp_class %>, <%= csharp_builder_class %>>
+    public partial class <%= csharp_builder_class %><%= csharp_generic_args %>: WidgetBuilderBase<<%= csharp_class %><%= csharp_generic_args %>, <%= csharp_builder_class %><%= csharp_generic_args %>>
+        <%= csharp_generic_constraints %>
     {
-        public <%= csharp_builder_class %>(<%= csharp_class %> component) : base(component)
+        public <%= csharp_builder_class %>(<%= csharp_class %><%= csharp_generic_args %> component) : base(component)
         {
         }
 

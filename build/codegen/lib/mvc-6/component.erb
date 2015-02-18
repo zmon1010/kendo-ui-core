@@ -9,7 +9,8 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI <%= csharp_class %> component
     /// </summary>
-    public partial class <%= csharp_class %> : WidgetBase
+    public partial class <%= csharp_class %><%= csharp_generic_args %> : WidgetBase
+        <%= csharp_generic_constraints %>
     {
         public <%= csharp_class %>(ViewContext viewContext) : base(viewContext)
         {

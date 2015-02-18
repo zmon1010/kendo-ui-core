@@ -5,7 +5,8 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring the Kendo UI <%= csharp_class %>
     /// </summary>
-    public partial class <%= csharp_builder_class %>
+    public partial class <%= csharp_builder_class %><%= csharp_generic_args %>
+        <%= csharp_generic_constraints %>
     {
         <% unless events.empty? %>
         /// <summary>
@@ -22,7 +23,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// %&gt;
         /// </code>
         /// </example>
-        public <%= csharp_builder_class %> Events(Action<<%= csharp_class %>EventBuilder> configurator)
+        public <%= csharp_builder_class %><%= csharp_generic_args %> Events(Action<<%= csharp_class %>EventBuilder> configurator)
         {
             configurator(new <%= csharp_class %>EventBuilder(Component.Events));
             return this;
