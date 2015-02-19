@@ -1716,16 +1716,6 @@
         });
 
         // ------------------------------------------------------------
-        module("TextBox / reflow / custom visual", {
-            setup: function() {
-                createTextBoxMock({content: "foo"}, Box2D(0,0,20,30));
-            }
-        });
-
-        // test("horizontal center", function() {
-        // });
-
-        // ------------------------------------------------------------
         function renderTextBox(options, text) {
             createTextBox(options, text);
             textBox.renderVisual();
@@ -1864,6 +1854,14 @@
                 ok(!textBox.visual);
             });
 
+            test("passes the text", function() {
+                 renderTextBox({
+                    visual: function(e) {
+                        equal(e.text, TEXT);
+                    }
+                });
+            });
+
             test("passes the textbox initial box as rect", function() {
                  renderTextBox({
                     visual: function(e) {
@@ -1902,8 +1900,7 @@
                         botom: 3,
                         right: 3
                     },
-                    visible: false,
-                    text: TEXT
+                    visible: false
                 };
 
                 renderTextBox(kendo.deepExtend({}, textBoxOptions, {
@@ -1957,8 +1954,17 @@
                 ok(!textBox.visual);
             });
 
+            test("passes the text", function() {
+                renderTextBox({
+                    visualSize: true,
+                    visual: function(e) {
+                        equal(e.text, TEXT);
+                    }
+                });
+            });
+
             test("passes the textbox initial box as rect", 1, function() {
-                 renderTextBox({
+                renderTextBox({
                     visualSize: true,
                     visual: function(e) {
                         ok(e.rect.equals(RECT));
@@ -2010,8 +2016,7 @@
                         botom: 3,
                         right: 3
                     },
-                    visible: false,
-                    text: TEXT
+                    visible: false
                 };
 
                 renderTextBox(kendo.deepExtend({}, textBoxOptions, {

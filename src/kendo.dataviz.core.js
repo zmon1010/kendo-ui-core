@@ -1321,6 +1321,7 @@ var __meta__ = {
 
             if (visual && options.visualSize && targetBox.hasSize()) {
                 textbox.visual = visual({
+                    text: textbox.content,
                     rect: targetBox.toRect(),
                     options: textbox.visualOptions(),
                     createVisual: function() {
@@ -1381,6 +1382,7 @@ var __meta__ = {
             if (visual) {
                 if (!options.visualSize) {
                     that.visual = visual({
+                        text: that.content,
                         rect: (this.initialBox || Box2D()).toRect(),
                         options: this.visualOptions(),
                         createVisual: function() {
@@ -1404,7 +1406,6 @@ var __meta__ = {
                 font: options.font,
                 margin: options.margin,
                 padding: options.padding,
-                text: options.text,
                 visible: options.visible
             };
         },
