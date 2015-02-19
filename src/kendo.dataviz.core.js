@@ -2363,6 +2363,7 @@ var __meta__ = {
                     }
                 }
                 note.contentBox = contentBox;
+                note.targetBox = targetBox;
                 note.box = box || contentBox;
             }
         },
@@ -2372,6 +2373,42 @@ var __meta__ = {
 
             if (this.options.visible) {
                 this.createLine();
+            }
+        },
+
+        renderVisual: function() {
+            var that = this;
+            var options = that.options;
+            var customVisual = options.visual;
+            if (options.visible && customVisual) {
+                var targetPoint = that.targetPoint;
+                that.visual = customVisual({
+                    dataItem: that.dataItem,
+                    category: that.category,
+                    value: that.value,
+                    text: that.text,
+                    series: that.series,
+                    rect: that.targetBox.toRect(),
+                    options: {
+                        background: options.background,
+                        border: options.background,
+                        icon: options.icon,
+                        label: options.label,
+                        line: options.line,
+                        position: options.position,
+                        visible: options.visible
+                    },
+                    createVisual: function() {
+                        that.createVisual();
+                        that.renderChildren();
+                        var defaultVisual = that.visual;
+                        delete that.visual;
+                        return defaultVisual
+                    }
+                });
+                that.addVisual();
+            } else {
+                BoxElement.fn.renderVisual.call(that);
             }
         },
 

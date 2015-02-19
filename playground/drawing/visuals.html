@@ -42,6 +42,8 @@
     <script src="../../src/kendo.dataviz.stock.js"></script>
     <script src="../../src/kendo.dataviz.themes.js"></script>
     <script>
+    var drawing = kendo.drawing;
+    var geometry = kendo.geometry;
     $(function() {
         initLineChart();
         initBarChart();
@@ -121,7 +123,14 @@
                 name: "Wins",
                 noteTextField: "extremum",
                 notes: {
-                    visual: customVisual,
+                    visual: function(e) {
+                        e.targetPoint = e.rect.center();
+                        var visual = new drawing.Group();
+                        visual.append(new drawing.Circle(new geometry.Circle(e.targetPoint, 10)));
+                        visual.append(new drawing.Path().moveTo(e.targetPoint.x, e.targetPoint.y).lineTo(e.targetPoint.x, e.targetPoint.y + 30));
+                        // return visual;
+                        return e.createVisual();
+                    },
                     position: "bottom"
                 }
             },{
@@ -166,6 +175,15 @@
                 labels: {
                     visual: labelsVisual
                 },
+                notes: {
+                    position: "top",
+                    visual: function(e) {
+                       var visual = new drawing.Group();
+           
+                        return drawing.Path.fromRect(e.rect);
+                    },
+                    data: [{value: 2}]
+                }
                 // title: {
                     // text: "HOI",
                     // visual: function(e) {
@@ -325,8 +343,7 @@
     }
     
     function createArc(color, center, radiusX, radiusY) {
-        var drawing = kendo.drawing;
-        var geometry = kendo.geometry;
+
         var arcGeometry = new geometry.Arc([center.x, center.y], {
             radiusX: radiusX,
             radiusY: radiusY,

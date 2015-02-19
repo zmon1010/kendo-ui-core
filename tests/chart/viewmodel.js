@@ -3113,6 +3113,107 @@
                 }
             });
         });
+    })();
+
+    (function() {
+        var Note = dataviz.Note;
+        var customVisual;
+        var box;
+        var note;
+        var visual;
+
+        function createNote(options) {
+            note = new Note(1, "foo", "bar", "baz", "qux", options);
+
+            box = new Box2D(0, 0, 10, 10);
+            note.reflow(box);
+
+            note.renderVisual();
+            visual = note.visual;
+        }
+
+        // ------------------------------------------------------------
+        module("Note", {
+            setup: function() {
+                customVisual = new draw.Path();
+            }
+        });
+
+        test("creates custom visual if visual option is set", function() {
+            createNote({
+                visual: function() {
+                    return customVisual;
+                }
+            });
+            ok(visual === customVisual);
+        });
+
+        test("appends custom visual", function() {
+            createNote({
+                visual: function() {
+                    return customVisual;
+                }
+            });
+            note.parent = {
+                appendVisual: function(visual) {
+                    ok(visual === customVisual);
+                }
+            };
+            note.renderVisual();
+        });
+
+        test("does not create default visual if custom visual function returns nothing", function() {
+            createNote({
+                visual: function() {
+                }
+            });
+            ok(!note.visual);
+        });
+
+        test("passes rect as parameter", function() {
+            createNote({
+                visual: function(e) {
+                   ok(e.rect.equals(note.targetBox.toRect()));
+                }
+            });
+        });
+
+        test("passes dataItem, category, value, text, series", function() {
+            createNote({
+                visual: function(e) {
+                    equal(e.value, 1);
+                    equal(e.text, "foo");
+                    equal(e.dataItem, "bar");
+                    equal(e.category, "baz");
+                    equal(e.series, "qux");
+                }
+            });
+        });
+
+        test("passes options", function() {
+            createNote({
+                visual: function(e) {
+                   var options = note.options;
+                   deepEqual(e.options, {
+                        background: options.background,
+                        border: options.background,
+                        icon: options.icon,
+                        label: options.label,
+                        line: options.line,
+                        position: options.position,
+                        visible: options.visible
+                   });
+                }
+            });
+        });
+
+        test("passes function that returns the default visual", function() {
+            createNote({
+                visual: function(e) {
+                   ok(e.createVisual() instanceof draw.Group);
+                }
+            });
+        });
 
     })();
 })();
