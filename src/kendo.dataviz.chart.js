@@ -1792,18 +1792,18 @@ var __meta__ = {
         },
 
         createMarker: function() {
-            var item = this,
-                options = item.options,
-                markerColor = options.markerColor,
-                markers = options.markers,
-                markerOptions = deepExtend({}, markers, {
-                    background: markerColor,
-                    border: {
-                        color: markerColor
-                    }
-                });
+            this.container.append(new ShapeElement(this.markerOptions()));
+        },
 
-            item.container.append(new ShapeElement(markerOptions));
+        markerOptions: function() {
+            var options = this.options;
+            var markerColor = options.markerColor;
+            return deepExtend({}, options.markers, {
+                background: markerColor,
+                border: {
+                    color: markerColor
+                }
+            });
         },
 
         createLabel: function() {
@@ -1865,6 +1865,32 @@ var __meta__ = {
                 seriesIndex: options.series.index,
                 pointIndex: options.pointIndex
             };
+        },
+
+        renderVisual: function() {
+            var that = this;
+            var options = that.options;
+            var customVisual = options.visual;
+
+            if (customVisual) {
+                that.visual = customVisual({
+                    active: options.active,
+                    series: options.series,
+                    options: {
+                        markers: that.markerOptions(),
+                        labels: options.labels
+                    },
+                    createVisual: function() {
+                        ChartElement.fn.renderVisual.call(that);
+                        var defaultVisual = that.visual;
+                        delete that.visual;
+                        return defaultVisual;
+                    }
+                });
+                this.addVisual();
+            } else {
+                ChartElement.fn.renderVisual.call(that);
+            }
         }
     });
 

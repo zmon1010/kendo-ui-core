@@ -2622,6 +2622,95 @@
         });
 
         // ------------------------------------------------------------
+        (function() {
+            var box = new Box2D(0, 0, 100, 100);
+            var customVisual;
+
+            function renderLegendItem(options) {
+                createLegendItem(options);
+                legendItem.reflow(box);
+                legendItem.renderVisual();
+            }
+
+            module("LegendItem / custom visual", {
+                setup: function() {
+                    customVisual = new draw.Path();
+                }
+            });
+
+            test("creates custom visual if visual option is set", function() {
+                renderLegendItem({
+                    visual: function() {
+                        return customVisual;
+                    }
+                });
+                ok(legendItem.visual === customVisual);
+            });
+
+            test("appends custom visual", function() {
+                createLegendItem({
+                    visual: function() {
+                        return customVisual;
+                    }
+                });
+                legendItem.reflow(box);
+                legendItem.parent = {
+                    appendVisual: function(visual) {
+                        ok(visual === customVisual);
+                    }
+                };
+                legendItem.renderVisual();
+            });
+
+            test("does not create default visual if custom visual function returns nothing", function() {
+                renderLegendItem({
+                    visual: function() {
+                    }
+                });
+                ok(!legendItem.visual);
+            });
+
+            test("passes active as parameter", function() {
+                renderLegendItem({
+                    visual: function(e) {
+                       ok(e.active);
+                    }
+                });
+            });
+
+            test("passes series as parameter", function() {
+                renderLegendItem({
+                    visual: function(e) {
+                        deepEqual(e.series, legendItem.options.series);
+                    }
+                });
+            });
+
+            test("passes options", function() {
+                renderLegendItem({
+                    visual: function(e) {
+                       var options = legendItem.options;
+                       deepEqual(e.options, {
+                            labels: legendItem.options.labels,
+                            markers: legendItem.markerOptions()
+                       });
+                    }
+                });
+            });
+
+            test("passes function that returns the default visual", function() {
+                renderLegendItem({
+                    visual: function(e) {
+                       var defaultVisual = e.createVisual();
+                       ok(defaultVisual.children[0] instanceof draw.Path);
+                       ok(defaultVisual.children[1].children[0] instanceof draw.Text);
+                       ok(defaultVisual.children[2] instanceof draw.Path);
+                    }
+                });
+            });
+        })();
+
+        // ------------------------------------------------------------
         var chart,
             legend,
             legendItemOverlay;
