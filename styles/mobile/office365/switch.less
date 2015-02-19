@@ -33,7 +33,7 @@
 
 .km-office365 .km-switch-handle
 {
-    width: 2em;
+    width: 1em;
     margin: 0 4px 0 0;
     border-width: @office365-border-width;
     border-style: solid;
@@ -46,40 +46,47 @@
 
 .km-office365 .km-switch-label-on
 {
-    left: -2.8em;
+    /*left: -2.8em;*/
 }
 
 .km-office365 .km-switch-label-on,
 .km-office365 .km-switch-label-off
 {
-    text-shadow: none;
+    display: none;
+    /*text-shadow: none;
     width: 185%;
     font-size: 1em;
     line-height: 2em;
-    vertical-align: middle;
+    vertical-align: middle;*/
 }
 
 .km-office365 .km-switch-wrapper,
 .km-office365 .km-switch-container,
 .km-office365 .km-switch-background
 {
-    border-radius: 1.1rem;
+    border-radius: 0;
 }
 
 .km-office365 .km-switch-handle
 {
-    border-radius: 50%;
+    border-radius: 0;
 }
 
 .km-office365 .km-switch-container,
 .km-office365 .km-switch-wrapper
 {
     .box-sizing(border-box);
-    border-width: @office365-border-width;
+    //border-width: 3px;
     border-style: solid;
     background-clip: content-box;
 }
 
+.km-office365 .km-switch-container {
+    //border-width: 3px;
+}
 
+.km-office365 .km-switch-wrapper {
+    border-width: 3px;
+}
 
 
