@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js"
+      ]);
+    </script>
+    <style>
+      body {
+        font-size: 12px;
+        font-family: "DejaVu Serif";
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="example">
+      <div id="grid"></div>
+      <script>
+        $(document).ready(function() {
+            $("#grid").kendoGrid({
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+                    },
+                    schema: {
+                        model: {
+                            fields: {
+                                CategoryID: { type: "number" },
+                                Picture: { type: "string" }
+                            }
+                        }
+                    },
+                    pageSize: 20,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true
+                },
+                height: 550,
+                filterable: true,
+                sortable: true,
+                pageable: true,
+                columns: [{
+                    field:"CategoryID",
+                    filterable: false
+                }, {
+                    field: "Picture",
+                    //template: "#: Picture.substr(0, 100) #"
+                }
+                         ],
+                toolbar: ["pdf"]
+            });
+        });
+      </script>
+    </div>
+
+
+  </body>
+</html>
