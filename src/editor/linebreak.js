@@ -182,6 +182,7 @@ var ParagraphCommand = Command.extend({
             }
 
             if (!dom.isEmpty(node) && /^\s*$/.test(node.innerHTML) && !siblings) {
+                $(root).find(".k-br").remove();
                 node.innerHTML = editorNS.emptyElementContent;
             }
 

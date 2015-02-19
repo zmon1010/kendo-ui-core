@@ -239,6 +239,15 @@ test("adds breaks to content that ends with non-system line break", function() {
     equal(dom.find("br.k-br").length, 1);
 });
 
+test("does not add break if there is one present", function() {
+    var dom = $("<p><strong><br class='k-br' /></strong></p>");
+
+    Dom.ensureTrailingBreak(dom[0]);
+
+    equal(dom.find("br").length, 1);
+    equal(dom.find("br.k-br").length, 1);
+});
+
 test("adds break to empty paragraph", function() {
     var dom = $("<p></p>");
 

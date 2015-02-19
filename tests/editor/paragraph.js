@@ -502,4 +502,12 @@ test("paragraph after formatted text leaves only one system line break", functio
     equal($("p:last .k-br", editor.body).length, 1);
 });
 
+test("paragraph in empty formatted paragraph leaves only one system line break", function() {
+    var range = createRangeFromText(editor, '<p><strong>||</strong></p>');
+
+    createParagraphCommand(range).exec();
+
+    equal($("strong:last .k-br", editor.body).length, 1);
+});
+
 }());

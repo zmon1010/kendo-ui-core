@@ -770,6 +770,10 @@ var Dom = {
         var name = lastChild && Dom.name(lastChild);
         var br;
 
+        if ($(node).find(".k-br").length) {
+            return;
+        }
+
         if (!name ||
             (name != "br" && name != "img") ||
             (name == "br" && lastChild.className != "k-br")) {
