@@ -45,7 +45,7 @@
     var drawing = kendo.drawing;
     var geometry = kendo.geometry;
     $(function() {
-       // initLineChart();
+        initLineChart();
         initBarChart();
     });
 
@@ -103,12 +103,31 @@
                 text: "Roger Federer Grand Slam tournament performance",
                 // visual: titleVisual
             },
-            legend: {
-                position: "top",
-                labels: {
-                    visual: labelsVisual
-                }
-            },
+                legend: {
+                // offsetX: 200,
+             // offsetY: 20,
+                 position: "top",
+                // orientation: "horizontal",
+                // width: 300,
+                // height: 300,
+                    background: "red",
+                    margin: 10,
+                    padding: 10,
+                    border: {
+                        width: 10,
+                        color: "black"
+                    },
+                    item: {
+                        visual: function(e) {                       
+                           return customVisual({
+                                box: new kendo.dataviz.Box2D(0, 0, 50, 100),
+                                options: {
+                                background: e.options.active ? "blue": "grey"
+                               }
+                           });
+                        }
+                    }
+                },
             seriesDefaults: {
                 type: "line",
                 markers: {

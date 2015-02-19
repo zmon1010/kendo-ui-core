@@ -2400,20 +2400,18 @@
             teardown: destroyChart
         });
 
-        test("uses float element to align items", function() {
-            ok(legend.container.children[0] instanceof dataviz.FloatElement);
+        test("uses LegendLayout to align items", function() {
+            ok(legend.container.children[0] instanceof dataviz.LegendLayout);
         });
 
         test("sets float element options", function() {
-            var floatElementOptions = legend.container.children[0].options;
-            equal(floatElementOptions.wrap, true);
-            equal(floatElementOptions.spacing, legend.options.spacing);
-            equal(floatElementOptions.vertical, true);
+            var layoutOptions = legend.container.children[0].options;
+            equal(layoutOptions.spacing, legend.options.spacing);
+            equal(layoutOptions.vertical, true);
             createLegendWithItems({position: "top"});
-            floatElementOptions = legend.container.children[0].options;
-            equal(floatElementOptions.wrap, true);
-            equal(floatElementOptions.spacing, legend.options.spacing);
-            equal(floatElementOptions.vertical, false);
+            layoutOptions = legend.container.children[0].options;
+            equal(layoutOptions.spacing, legend.options.spacing);
+            equal(layoutOptions.vertical, false);
         });
 
         test("appends items to float element", function() {

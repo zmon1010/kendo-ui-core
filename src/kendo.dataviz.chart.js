@@ -1865,9 +1865,7 @@ var __meta__ = {
                 seriesIndex: options.series.index,
                 pointIndex: options.pointIndex
             };
-        },
-
-        createVisual: noop
+        }
     });
 
     var LegendLayout = ChartElement.extend({
@@ -1995,7 +1993,7 @@ var __meta__ = {
                 vertical = legend.isVertical(),
                 innerElement, i, item;
 
-            innerElement = new FloatElement({
+            innerElement = new LegendLayout({
                 vertical: vertical,
                 spacing: options.spacing
             });
@@ -2012,6 +2010,8 @@ var __meta__ = {
                     labels: options.labels
                 }, options.item, item)));
             }
+            innerElement.render();
+
             legend.container.append(innerElement);
         },
 
