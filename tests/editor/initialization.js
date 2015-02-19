@@ -17,10 +17,17 @@ function setup(content, options) {
     editor = textarea.val(content).kendoEditor(options).data("kendoEditor");
 }
 
-test("editor value is get from textarea", function() {
+test("editor gets its value from textarea", function() {
     setup("foo");
 
     equal(editor.value(), "foo");
+});
+
+test("editor uses defaultValue if encoded and has encoded value", function() {
+    textarea[0].defaultValue = "<strong>foo</strong>";
+    setup("&lt;strong&gt;foo&lt;/strong&gt;", { encoded: true });
+
+    equal(editor.value(), "<strong>foo</strong>");
 });
 
 test("color tools react to palette definition", function() {

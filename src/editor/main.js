@@ -162,6 +162,8 @@
                 toolbarContainer,
                 toolbarOptions,
                 type;
+            var domElement;
+            var dom = editorNS.Dom;
 
             /* suppress initialization in mobile webkit devices (w/o proper contenteditable support) */
             if (!supportedBrowser) {
@@ -173,8 +175,9 @@
             that.options = deepExtend({}, that.options, options);
 
             element = that.element;
+            domElement = element[0];
 
-            type = editorNS.Dom.name(element[0]);
+            type = dom.name(domElement);
 
             element.closest("form").on("submit" + NS, function () {
                 that.update();
@@ -188,8 +191,8 @@
 
                 toolbarContainer = that.wrapper.find(".k-editor-toolbar");
 
-                if (element[0].id) {
-                    toolbarContainer.attr("aria-controls", element[0].id);
+                if (domElement.id) {
+                    toolbarContainer.attr("aria-controls", domElement.id);
                 }
             } else {
                 that.element.attr("contenteditable", true).addClass("k-widget k-editor k-editor-inline");
@@ -231,9 +234,16 @@
                 value = options.value;
             } else if (that.textarea) {
                 // indented HTML introduces problematic ranges in IE
-                value = element.val().replace(/[\r\n\v\f\t ]+/ig, " ");
+                value = domElement.value;
+
+                // revert encoding of value when content is fetched from cache
+                if (that.options.encoded && $.trim(domElement.defaultValue).length) {
+                    value = domElement.defaultValue;
+                }
+
+                value = value.replace(/[\r\n\v\f\t ]+/ig, " ");
             } else {
-                value = element[0].innerHTML;
+                value = domElement.innerHTML;
             }
 
             that.value(value);
