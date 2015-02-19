@@ -2403,7 +2403,7 @@ var __meta__ = {
                         that.renderChildren();
                         var defaultVisual = that.visual;
                         delete that.visual;
-                        return defaultVisual
+                        return defaultVisual;
                     }
                 });
                 that.addVisual();
@@ -2539,7 +2539,7 @@ var __meta__ = {
                     rect: that.box.toRect(),
                     options: that.visualOptions(),
                     createVisual: function() {
-                        return that.getElement()
+                        return that.getElement();
                     }
                 });
             } else {
