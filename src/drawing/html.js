@@ -1892,6 +1892,10 @@
         var align = getPropertyValue(style, "text-align");
         var isJustified = align == "justify";
 
+        // Render a chunk of text, typically one line (but for justified text we render each word as
+        // a separate Text object, because spacing is variable).  Returns true when it finished the
+        // current node.  After each chunk it updates `start` to just after the last rendered
+        // character.
         function doChunk() {
             var box, pos = text.substr(start).search(/\S/);
             start += pos;
@@ -1923,11 +1927,12 @@
             }
 
             if (!found) {
-                // This code does two things: (1) it selects one line of text in `range` and (2) it
-                // leaves the bounding rect of that line in `box`.  We know where the line starts
-                // (`start`) but we don't know where it ends.  To figure this out, we select a piece
-                // of text and look at the bottom of the bounding box.  If it changes, we have more
-                // than one line selected and should retry with a smaller selection.
+                // This code does three things: (1) it selects one line of text in `range`, (2) it
+                // leaves the bounding rect of that line in `box` and (3) it updates `start` to
+                // point just after the line.  We know where the line starts (`start`) but we don't
+                // know where it ends.  To figure this out, we select a piece of text and look at
+                // the bottom of the bounding box.  If it changes, we have more than one line
+                // selected and should retry with a smaller selection.
                 //
                 // To speed things up, we first try to select all text in the node (`start` ->
                 // `end`).  If there's more than one line there, then select only half of it.  And
@@ -1942,10 +1947,10 @@
                     range.setEnd(node, end);
                     var r = range.getBoundingClientRect();
                     if (r.bottom != box.bottom) {
-                        findEOL(start + Math.floor((end - start) / 2), end);
-                    } else if (r.right > box.right) {
+                        findEOL((start + end) >> 1, end);
+                    } else if (r.right != box.right) {
                         box = r;
-                        findEOL(Math.floor((end + max) / 2), max);
+                        findEOL((end + max) >> 1, max);
                     } else {
                         start = end;
                     }
