@@ -6668,7 +6668,6 @@ var __meta__ = {
 
             // Read the first page
             this.dataSource.page(1);
-            this.dataSource.fetch();
 
             return result.promise();
         };
