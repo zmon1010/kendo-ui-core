@@ -5,7 +5,7 @@ namespace Kendo.Mvc.UI
     using System.Linq;
     using Kendo.Mvc.Extensions;
 
-    public class GridDescriptorSerializer
+    public class DataSourceDescriptorSerializer
     {
         private const string ColumnDelimiter = "~";
         

@@ -14,7 +14,7 @@ namespace Kendo.Mvc.UI
 
             await Task.WhenAll(
                 TryGetValue(bindingContext, GridUrlParameters.Sort, (string sort) =>
-                    request.Sorts = GridDescriptorSerializer.Deserialize<SortDescriptor>(sort)
+                    request.Sorts = DataSourceDescriptorSerializer.Deserialize<SortDescriptor>(sort)
                 ),
                 TryGetValue(bindingContext, GridUrlParameters.Page, (int currentPage) => request.Page = currentPage),
                 TryGetValue(bindingContext, GridUrlParameters.PageSize, (int pageSize) => request.PageSize = pageSize),
@@ -22,10 +22,10 @@ namespace Kendo.Mvc.UI
                     request.Filters = FilterDescriptorFactory.Create(filter)
                 ),
                 TryGetValue(bindingContext, GridUrlParameters.Group, (string group) =>
-                    request.Groups = GridDescriptorSerializer.Deserialize<GroupDescriptor>(group)
+                    request.Groups = DataSourceDescriptorSerializer.Deserialize<GroupDescriptor>(group)
                 ),
                 TryGetValue(bindingContext, GridUrlParameters.Aggregates, (string aggregates) =>
-                    request.Aggregates = GridDescriptorSerializer.Deserialize<AggregateDescriptor>(aggregates)
+                    request.Aggregates = DataSourceDescriptorSerializer.Deserialize<AggregateDescriptor>(aggregates)
                 )
             );
 

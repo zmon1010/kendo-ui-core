@@ -290,5 +290,50 @@ namespace Kendo.Mvc.Extensions
             }
             return 0;
         }
+
+        internal static string ToJavaScriptType(this Type type)
+        {
+            if (type == null)
+            {
+                return "Object";
+            }
+
+            if (type == typeof(char) || type == typeof(char?))
+            {
+                return "String";
+            }
+
+            if (IsNumericType(type))
+            {
+                return "Number";
+            }
+
+            if (type == typeof(DateTime) || type == typeof(DateTime?))
+            {
+                return "Date";
+            }
+
+            if (type == typeof(string))
+            {
+                return "String";
+            }
+
+            if (type == typeof(bool) || type == typeof(bool?))
+            {
+                return "Boolean";
+            }
+
+            if (type.IsEnumType())
+            {
+                return "Number";
+            }
+
+            if (type.GetNonNullableType() == typeof(Guid))
+            {
+                return "String";
+            }
+
+            return "Object";
+        }
     }
 }
