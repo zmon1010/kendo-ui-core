@@ -1870,6 +1870,44 @@ var __meta__ = {
         createVisual: noop
     });
 
+    var LegendLayout = ChartElement.extend({
+        render: function() {
+            var legendItem, items = this.children;
+            var options = this.options;
+            var vertical = options.vertical;
+            var spacing = options.spacing;
+
+            var visual = this.visual = new draw.Layout(null, {
+                spacing: vertical ? 0 : options.spacing,
+                lineSpacing: vertical ? options.spacing : 0,
+                orientation: vertical ? "vertical" : "horizontal"
+            });
+
+            for (var idx = 0; idx < items.length; idx++) {
+                legendItem = items[idx];
+                legendItem.reflow(new Box2D());
+                legendItem.renderVisual();
+            }
+        },
+
+        reflow: function(box) {
+            this.visual.rect(box.toRect());
+            this.visual.reflow();
+            var bbox = this.visual.clippedBBox();
+            if (bbox) {
+                this.box = dataviz.rectToBox(bbox);
+            } else {
+                this.box = new Box2D();
+            }
+        },
+
+        renderVisual: function() {
+            this.addVisual();
+        },
+
+        createVisual: noop
+    });
+
     var Legend = ChartElement.extend({
         init: function(options) {
             var legend = this;
@@ -12175,6 +12213,7 @@ var __meta__ = {
         SharedTooltip: SharedTooltip,
         Legend: Legend,
         LegendItem: LegendItem,
+        LegendLayout: LegendLayout,
         LineChart: LineChart,
         LinePoint: LinePoint,
         LineSegment: LineSegment,

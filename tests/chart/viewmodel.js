@@ -2750,6 +2750,108 @@
         });
     })();
 
+    // ------------------------------------------------------------
+    (function() {
+        var box = new Box2D(10, 20 , 30, 40);
+        var LegendLayout = dataviz.LegendLayout;
+        var layout;
+
+        function createLayout(options) {
+            layout = new LegendLayout(kendo.deepExtend({
+                spacing: 5,
+                vertical: true
+            }, options));
+        }
+
+        module("LegendLayout", {
+            setup: function() {
+                createLayout();
+            }
+        });
+
+        test("render creates drawing Layout visual", function() {
+            layout.render();
+            ok(layout.visual instanceof draw.Layout);
+        });
+
+        test("sets spacing based on the orientation", function() {
+            layout.render();
+            equal(layout.visual.options.spacing, 0);
+            equal(layout.visual.options.lineSpacing, 5);
+            layout.options.vertical = false;
+            layout.render();
+            equal(layout.visual.options.spacing, 5);
+            equal(layout.visual.options.lineSpacing, 0);
+        });
+
+        test("sets orientation", function() {
+            layout.render();
+            equal(layout.visual.options.orientation, "vertical");
+            layout.options.vertical = false;
+            layout.render();
+             equal(layout.visual.options.orientation, "horizontal");
+        });
+
+        test("render reflows and renders children", 2, function() {
+            layout.children.push({
+                reflow: function() {
+                    ok(true);
+                },
+                renderVisual: function() {
+                    ok(true);
+                }
+            })
+            layout.render();
+        });
+
+        // ------------------------------------------------------------
+        module("LegendLayout / reflow", {
+            setup: function() {
+                createLayout();
+                layout.render();
+            }
+        });
+
+        test("reflow sets rect to layout", function() {
+            layout.reflow(box);
+            ok(layout.visual.rect().equals(box.toRect()));
+        });
+
+        test("reflow sets reflows visual", function() {
+            layout.visual.reflow = function() {
+                ok(true);
+            };
+            layout.reflow(box);
+        });
+
+        test("reflow sets box based on visual bbox", function() {
+            var rect = new geom.Rect([50, 60], [100, 200]);
+            layout.visual.clippedBBox = function() {
+                return rect;
+            };
+            layout.reflow(box);
+            ok(layout.box.toRect().equals(rect));
+        });
+
+        test("sets empty box if visual has no bbox", function() {
+            layout.visual.clippedBBox = function() {};
+            layout.reflow(box);
+            equal(layout.box.width(), 0);
+            equal(layout.box.height(), 0);
+        });
+
+        test("renderVisual appends visual", function() {
+            layout.parent = {
+                appendVisual: function() {
+                    ok(true);
+                }
+            };
+            layout.renderVisual();
+        });
+
+    })();
+
+
     (function() {
         var ring,
             ringBox;
