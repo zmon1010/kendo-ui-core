@@ -6627,7 +6627,7 @@ var __meta__ = {
                 grid._drawPDFShadow()
                 .done(function(group) {
                     // Format the current page
-                    var pageNum = dataSource.page() || 1;
+                    var pageNum = dataSource.page();
                     var totalPages = dataSource.totalPages();
 
                     var args = {
@@ -6653,6 +6653,9 @@ var __meta__ = {
 
             function restore() {
                 grid.dataSource.unbind("change", exportPage);
+                grid.dataSource.one("change", function() {
+                    progress.resolve();
+                });
                 grid.dataSource.page(startingPage);
             }
 
@@ -6664,22 +6667,28 @@ var __meta__ = {
             this.dataSource.bind("change", exportPage);
 
             // Read the first page
+            this.dataSource.page(1);
             this.dataSource.fetch();
 
             return result.promise();
         };
 
         Grid.prototype._initPDFProgress = function(deferred) {
-           kendo.ui.progress(this.wrapper, true);
-           var loading = $(".k-loading-mask", this.wrapper);
+           var loading = $("<div class='k-loading-pdf-mask'><div class='k-loading-color'/></div>");
+           loading.prepend(this.wrapper.clone().css({
+               position: "absolute",
+               top: 0,
+               left: 0
+           }));
 
-           $(".k-loading-image", loading).remove();
+           this.wrapper.append(loading);
 
-           var pb = $("<div class='k-pdf-export-progress'>")
+           var pb = $("<div class='k-loading-pdf-progress'>")
            .appendTo(loading)
            .kendoProgressBar({
                type: "chunk",
                chunkCount: 10,
+               animation: false,
                min: 0,
                max: 1,
                value: 0

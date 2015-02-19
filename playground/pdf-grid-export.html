@@ -14,7 +14,8 @@
     </script>
     <style>
         /* Hide the Grid header during export */
-        .k-pdf-export .k-grid-toolbar
+        .k-pdf-export .k-grid-toolbar,
+        .k-pdf-export .k-grouping-header
         {
             display: none;
         }
@@ -40,6 +41,7 @@
                   },
                   dataSource: {
                       type: "odata",
+                      serverPaging: true,
                       transport: {
                           read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
                       },
