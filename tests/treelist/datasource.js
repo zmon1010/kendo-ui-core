@@ -795,6 +795,26 @@
         equal(ds.get(1).loaded(), true, "item should be loaded");
     });
 
+    test("loaded return true on leaf node", function() {
+        var ds = new TreeListDataSource({
+            data: [ { id: 1, parentId: null, hasChildren: false } ]
+        });
+
+        ds.read();
+
+        ok(ds.at(0).loaded());
+    });
+
+    test("loaded return true on leaf node when hasChildren is not set", function() {
+        var ds = new TreeListDataSource({
+            data: [ { id: 1, parentId: null } ]
+        });
+
+        ds.read();
+
+        ok(ds.at(0).loaded());
+    });
+
     test("removing item removes all its children", function() {
         var ds = new TreeListDataSource({
             data: [

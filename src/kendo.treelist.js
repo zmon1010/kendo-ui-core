@@ -333,7 +333,7 @@ var __meta__ = {
             var defaultParentId = this._defaultParentId();
             var result = Query.process(data, options);
             var map = this._childrenMap(result.data);
-            var hasChildren, i, item, children;
+            var hasLoadedChildren, i, item, children;
 
             data = map[defaultParentId] || [];
 
@@ -345,17 +345,17 @@ var __meta__ = {
                 }
 
                 children = map[item.id];
-                hasChildren = !!(children && children.length);
+                hasLoadedChildren = !!(children && children.length);
 
                 if (!item.loaded()) {
-                    item.loaded(hasChildren);
+                    item.loaded(hasLoadedChildren || !item.hasChildren);
                 }
 
                 if (item.loaded() || item.hasChildren !== true) {
-                    item.hasChildren = hasChildren;
+                    item.hasChildren = hasLoadedChildren;
                 }
 
-                if (hasChildren) {
+                if (hasLoadedChildren) {
                     data.splice.apply(data, [i+1, 0].concat(children));
                 }
             }
@@ -391,10 +391,11 @@ var __meta__ = {
         load: function(model) {
             var method = "_query";
             var remote = this.options.serverSorting || this.options.serverPaging || this.options.serverFiltering || this.options.serverGrouping || this.options.serverAggregates;
+            var defaultPromise = $.Deferred().resolve().promise();
 
             if (model.loaded()) {
                 if (remote) {
-                    return $.Deferred().resolve().promise();
+                    return defaultPromise;
                 }
             } else if (model.hasChildren) {
                 method = "read";
