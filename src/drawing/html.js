@@ -1881,55 +1881,82 @@
         }
 
         var text = node.data;
+        var start = 0;
+        var end = text.search(/\S\s*$/) + 1;
+
+        if (!end) {
+            return; // whitespace-only node
+        }
+
         var range = element.ownerDocument.createRange();
         var align = getPropertyValue(style, "text-align");
         var isJustified = align == "justify";
 
-        // skip whitespace
-        var start = 0;
-        var end = /\S\s*$/.exec(node.data).index + 1;
-
         function doChunk() {
-            while (!/\S/.test(text.charAt(start))) {
-                if (start >= end) {
-                    return true;
-                }
-                start++;
+            var box, pos = text.substr(start).search(/\S/);
+            start += pos;
+            if (pos < 0 || start >= end) {
+                return true;
             }
+
+            // Select a single character to determine the height of a line of text.  The box.bottom
+            // will be essential for us to figure out where the next line begins.
             range.setStart(node, start);
-            var len = 0, bottom = null, box;
-            while (++start <= end) {
-                ++len;
-                range.setEnd(node, start);
+            range.setEnd(node, start + 1);
+            box = range.getBoundingClientRect();
 
-                // for justified text we must split at each space, as
-                // space has variable width.
-                if (len > 1 && isJustified && /\s/.test(text.charAt(start - 1))) {
-                    range.setEnd(node, --start);
-                    break;
+            // for justified text we must split at each space, because space has variable width.
+            var found = false;
+            if (isJustified) {
+                pos = text.substr(start).search(/\s/);
+                if (pos >= 0) {
+                    // we can only split there if it's on the same line, otherwise we'll fall back
+                    // to the default mechanism (see findEOL below).
+                    range.setEnd(node, start + pos);
+                    var r = range.getBoundingClientRect();
+                    if (r.bottom == box.bottom) {
+                        box = r;
+                        found = true;
+                        start += pos;
+                    }
                 }
+            }
 
-                // otherwise we can optimize and split only at end of
-                // line.  To detect that, we're going to look for a
-                // change in the bounding box's bottom side.
-                box = range.getBoundingClientRect();
-                if (bottom == null) {
-                    bottom = box.bottom;
-                } else if (box.bottom != bottom) {
-                    range.setEnd(node, --start);
-                    break;
-                }
+            if (!found) {
+                // This code does two things: (1) it selects one line of text in `range` and (2) it
+                // leaves the bounding rect of that line in `box`.  We know where the line starts
+                // (`start`) but we don't know where it ends.  To figure this out, we select a piece
+                // of text and look at the bottom of the bounding box.  If it changes, we have more
+                // than one line selected and should retry with a smaller selection.
+                //
+                // To speed things up, we first try to select all text in the node (`start` ->
+                // `end`).  If there's more than one line there, then select only half of it.  And
+                // so on.  When we find a value for `end` that fits in one line, we try increasing
+                // it (also in halves) until we get to the next line.  The algorithm stops when the
+                // right side of the bounding box does not change.
+                //
+                // One more thing to note is that everything happens in a single Text DOM node.
+                // There's no other tags inside it, therefore the left/top coordinates of the
+                // bounding box will not change.
+                (function findEOL(end, max){
+                    range.setEnd(node, end);
+                    var r = range.getBoundingClientRect();
+                    if (r.bottom != box.bottom) {
+                        findEOL(start + Math.floor((end - start) / 2), end);
+                    } else if (r.right > box.right) {
+                        box = r;
+                        findEOL(Math.floor((end + max) / 2), max);
+                    } else {
+                        start = end;
+                    }
+                })(end, end);
             }
 
             // another workaround for IE: if we rely on getBoundingClientRect() we'll overlap with the bullet for LI
             // elements.  Calling getClientRects() and using the *first* rect appears to give us the correct location.
+            // Note: not to be used in Chrome as it randomly returns a zero-width rectangle from the previous line.
             if (browser.msie) {
                 box = range.getClientRects()[0];
-            } else {
-                // Sometimes, Chrome stupidly include a zero-width rect from the previous line
-                // (happens consistently when we work in a foreign DOM, such as the Editor iframe).
-                // getBoundingClientRect is more reliable for non-IE (possibly faster too).
-                box = range.getBoundingClientRect();
             }
 
             var str = range.toString().replace(/\s+$/, "");
