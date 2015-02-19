@@ -45,7 +45,7 @@
     var drawing = kendo.drawing;
     var geometry = kendo.geometry;
     $(function() {
-        initLineChart();
+       // initLineChart();
         initBarChart();
     });
 
@@ -203,21 +203,43 @@
         $("#bar").kendoChart({
             title: {
                 text: "Site Visitors Stats \n /thousands/",
-                visual: titleVisual
+                // visual: titleVisual
             },
             legend: {
                 visible: true
             },
             seriesDefaults: {
-                type: "bar",
+                type: "column",
                 labels: {
-                    visible: true,
-                    visual: function(e) {
-                        return labelsVisual(e)
-                    }
+                    visible: false,
+                    // visual: function(e) {
+                        // return labelsVisual(e)
+                    // }
                 },
-                stack: true,                   
-                visual: customVisual
+                       stack:true,
+                visual: function(e) {
+                    var color = e.options.color;
+                    var rect = e.rect;
+                    var center = rect.center();
+                    var bottomRight = rect.bottomRight();
+                    var radiusY = 10;
+                    var radiusX = rect.width() / 2;
+
+                    var arc = createArc(color, {x: center.x, y: bottomRight.y}, radiusX, radiusY, 0 , 180);
+                    var topStart = rect.origin.y;
+                    var path = drawing.Path.fromRect(new geometry.Rect([rect.origin.x, topStart], [rect.width(), rect.height()]), {
+                        fill: {
+                            color: color
+                        },
+                        stroke: {
+                            color: "none"
+                        }
+                    });
+                    var topArc = createArc(color, {x: center.x, y: topStart}, radiusX, radiusY);
+                    var group = new drawing.Group();
+                    group.append(arc, path, topArc);
+                    return group;
+                }
             },
             series: [{
                 name: "Total Visits",
@@ -226,39 +248,46 @@
                 name: "Unique visitors",
                 data: [52000, 20000]
             }],
+            panes: [{
+                clip: false
+            }],
             valueAxis: {
                 line: {
                     visible: false
                 },
-                labels: {
-                    visual: labelsVisual
-                },
+                // labels: {
+                    // visual: labelsVisual
+                // },
                 minorGridLines: {
                     visible: true
                 },
-                title: {
-                    text: "Value Axis",
-                    visual: function(e) {
-                        e.options.background = "red";
-                        return titleVisual(e);
-                    }
-                }
+                // title: {
+                    // text: "Value Axis",
+                    // visual: function(e) {
+                        // e.options.background = "red";
+                        // return titleVisual(e);
+                    // }
+                // }
             },
             categoryAxis: {
                 categories: ["Jan"],
+                margin: 20,
                 majorGridLines: {
                     visible: false
                 },
-                labels: {
-                    visual: labelsVisual
-                },
-                    title: {
-                    text: "Category Axis",
-                    visual: function(e) {
-                        e.options.background = "red";
-                        return verticalTitleVisual(e);
-                    }
+                line: {
+                    visible: false
                 }
+                // labels: {
+                    // visual: labelsVisual
+                // },
+                    // title: {
+                    // text: "Category Axis",
+                    // visual: function(e) {
+                        // e.options.background = "red";
+                        // return verticalTitleVisual(e);
+                    // }
+                // }
             },
             tooltip: {
                 visible: true,
@@ -342,17 +371,20 @@
         visual.insertAt(createArc(color, ball2Center, ballsRadius), 2);
     }
     
-    function createArc(color, center, radiusX, radiusY) {
+    function createArc(color, center, radiusX, radiusY, startAngle, endAngle) {
 
         var arcGeometry = new geometry.Arc([center.x, center.y], {
             radiusX: radiusX,
             radiusY: radiusY,
-            startAngle: 0,
-            endAngle: 360
+            startAngle: startAngle || 0,
+            endAngle: endAngle || 360
         });
         var arc = new drawing.Arc(arcGeometry, {
             fill: {
                 color: color || "limegreen"
+            },
+            stroke: {
+                color: "grey"
             }
         });
         return arc;

@@ -3139,16 +3139,49 @@ var __meta__ = {
         },
 
         createVisual: function() {
-            var box = this.box;
-            if (this.visible !== false) {
-                ChartElement.fn.createVisual.call(this);
-                if (box.width() > 0 && box.height() > 0) {
-                    this.createRect();
+            var bar = this;
+            var box = bar.box;
+            var options = bar.options;
+            var customVisual = options.visual;
+
+            if (bar.visible !== false) {
+                ChartElement.fn.createVisual.call(bar);
+                if (customVisual) {
+                    var visual = customVisual({
+                        category: bar.category,
+                        dataItem: bar.dataItem,
+                        value: bar.value,
+                        series: bar.series,
+                        rect: box.toRect(),
+                        createVisual: function() {
+                            var group = new draw.Group();
+                            bar.createRect(group);
+                            return group;
+                        },
+                        options: {
+                            border: options.border,
+                            color: options.color,
+                            errorBars: options.errorBars,
+                            gap: options.gap,
+                            labels: options.labels,
+                            notes: options.notes,
+                            opacity: options.opacity,
+                            spacing: options.spacing,
+                            stack: options.stack,
+                            type: options.type,
+                            overlay: options.overlay
+                        }
+                    });
+                    if (visual) {
+                        bar.visual.append(visual);
+                    }
+                } else if (box.width() > 0 && box.height() > 0) {
+                    bar.createRect(bar.visual);
                 }
             }
         },
 
-        createRect: function(view) {
+        createRect: function(visual) {
             var options = this.options;
             var border = options.border;
             var strokeOpacity = defined(border.opacity) ? border.opacity : options.opacity;
@@ -3170,10 +3203,10 @@ var __meta__ = {
                 alignPathToPixel(rect);
             }
 
-            this.visual.append(rect);
+            visual.append(rect);
 
             if (hasGradientOverlay(options)) {
-                this.visual.append(this.createGradientOverlay(rect, {
+                visual.append(this.createGradientOverlay(rect, {
                         baseColor: this.color
                     }, deepExtend({
                          end: !options.vertical ? [0, 1] : undefined

@@ -2385,6 +2385,83 @@
         });
 
         // ------------------------------------------------------------
+        var customVisual;
+        module("Bar / custom visual", {
+            setup: function() {
+                customVisual = new draw.Path();
+            }
+        });
+
+        test("creates custom visual if visual option is set", function() {
+            createBar({
+                visual: function() {
+                    return customVisual;
+                }
+            });
+
+            ok(bar.visual.children[0] === customVisual);
+        });
+
+        test("does not create default visual if custom visual function returns nothing", function() {
+            createBar({
+                visual: function() {
+                }
+            });
+            equal(bar.visual.children.length, 0);
+        });
+
+        test("passes rect as parameter", function() {
+            createBar({
+                visual: function(e) {
+                   ok(e.rect.equals(bar.box.toRect()));
+                }
+            });
+        });
+
+        test("passes dataItem, category, value, series", function() {
+            createBar({
+                visual: function(e) {
+                    equal(e.value, bar.value);
+                    ok(e.dataItem === bar.dataItem);
+                    ok(e.category === bar.category);
+                    ok(e.series === bar.series);
+                }
+            });
+        });
+
+        test("passes options", function() {
+            createBar({
+                visual: function(e) {
+                   var options = bar.options;
+                   deepEqual(e.options, {
+                        border: options.border,
+                        color: options.color,
+                        errorBars: options.errorBars,
+                        gap: options.gap,
+                        labels: options.labels,
+                        notes: options.notes,
+                        opacity: options.opacity,
+                        spacing: options.spacing,
+                        stack: options.stack,
+                        type: options.type,
+                        overlay: options.overlay
+                   });
+                }
+            });
+        });
+
+        test("passes function that returns the default visual", function() {
+            createBar({
+                visual: function(e) {
+                   var group = e.createVisual();
+                   ok(group.children[0] instanceof draw.Path);
+                   ok(group.children[1] instanceof draw.Path);
+                   ok(group.children[1].options.fill instanceof draw.Gradient);
+                }
+            });
+        });
+
+        // ------------------------------------------------------------
         module("Bar / Labels / Template");
 
         function assertTemplate(template, value, format) {
