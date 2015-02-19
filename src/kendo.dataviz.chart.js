@@ -4785,6 +4785,10 @@ var __meta__ = {
                 zIndex: valueOrDefault(options.zIndex, this.series.zIndex),
                 animation: options.animation,
                 visual: options.visual
+            }, {
+                dataItem: this.dataItem,
+                value: this.value,
+                series: this.series
             });
 
             return marker;

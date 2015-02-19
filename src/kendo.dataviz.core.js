@@ -2426,6 +2426,11 @@ var __meta__ = {
     });
 
     var ShapeElement = BoxElement.extend({
+        init: function(options, pointData) {
+            this.pointData = pointData;
+            BoxElement.fn.init.call(this, options);
+        },
+
         options: {
             type: CIRCLE,
             align: CENTER,
@@ -2486,9 +2491,13 @@ var __meta__ = {
         createElement: function() {
             var that = this;
             var customVisual = that.options.visual;
+            var pointData = that.pointData || {};
             var visual;
             if (customVisual) {
                 visual = customVisual({
+                    value: pointData.value,
+                    dataItem: pointData.dataItem,
+                    series: pointData.series,
                     rect: that.box.toRect(),
                     options: that.visualOptions(),
                     createVisual: function() {

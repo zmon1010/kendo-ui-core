@@ -649,6 +649,14 @@
             ok(visual === marker.options.visual);
         });
 
+        test("passes point data", function() {
+            createPoint();
+            var pointData = marker.pointData;
+            equal(pointData.value, VALUE);
+            ok(pointData.series === point.series);
+            ok(pointData.dataItem === point.dataItem);
+        });
+
         test("createHighlight returns marker outline", function() {
             createPoint({ markers: { type: "circle" }});
             var marker = point.marker.visual.geometry();

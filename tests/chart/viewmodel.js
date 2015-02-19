@@ -2952,15 +2952,15 @@
             visual,
             box;
 
-        function createShape(options) {
+        function createShape(options, pointData) {
             shape = new ShapeElement(
                 $.extend({
                     width: SIZE,
                     height: SIZE,
                     border: { width: BORDER },
                     background: "#f00"
-                }, options)
-            );
+                }, options),
+            pointData);
 
             box = new Box2D(0, 0, SIZE, SIZE);
             shape.reflow(box);
@@ -3062,6 +3062,23 @@
                 visual: function(e) {
                    ok(e.rect.equals(shape.box.toRect()));
                 }
+            });
+        });
+
+        test("passes dataItem, value and series", function() {
+            var dataItem = "foo";
+            var series = "foo";
+            var value = 3;
+            createShape({
+                visual: function(e) {
+                   equal(e.dataItem, dataItem);
+                   equal(e.series, series);
+                   equal(e.value, value);
+                }
+            }, {
+                dataItem: dataItem,
+                series: series,
+                value: value
             });
         });
 
