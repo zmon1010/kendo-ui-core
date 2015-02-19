@@ -6614,21 +6614,21 @@ var __meta__ = {
        Grid.prototype._drawPDF = function(progress) {
            var result = new $.Deferred();
            var grid = this;
+           var dataSource = grid.dataSource;
+           var allPages = grid.options.pdf.allPages;
 
            this._initPDFProgress(progress);
 
            // This group will be our document containing all pages
            var doc = new kendo.drawing.Group();
-           var startingPage = this.dataSource.page();
+           var startingPage = dataSource.page();
 
            function exportPage() {
-                var dataSource = this;
-
                 grid._drawPDFShadow()
                 .done(function(group) {
                     // Format the current page
                     var pageNum = dataSource.page();
-                    var totalPages = dataSource.totalPages();
+                    var totalPages = allPages ? dataSource.totalPages() : 1;
 
                     var args = {
                         content: group,
@@ -6652,11 +6652,13 @@ var __meta__ = {
             }
 
             function restore() {
-                grid.dataSource.unbind("change", exportPage);
-                grid.dataSource.one("change", function() {
-                    progress.resolve();
-                });
-                grid.dataSource.page(startingPage);
+                if (allPages) {
+                    dataSource.unbind("change", exportPage);
+                    dataSource.one("change", function() {
+                        progress.resolve();
+                    });
+                    dataSource.page(startingPage);
+                }
             }
 
             progress.fail(function() {
@@ -6664,10 +6666,12 @@ var __meta__ = {
                 result.reject(new Error("Export operation aborted"))
             });
 
-            this.dataSource.bind("change", exportPage);
-
-            // Read the first page
-            this.dataSource.page(1);
+            if (allPages) {
+                dataSource.bind("change", exportPage);
+                dataSource.page(1);
+            } else {
+                exportPage.call(dataSource);
+            }
 
             return result.promise();
         };
