@@ -20,7 +20,7 @@ namespace KendoScaffolder
             displayName: "Kendo UI Scaffolder",
             description: "Kendo UI Scaffolder.",
             author: "Telerik",
-            version: new Version(1, 0, 0, 0),
+            version: new Version(2015, 1, 219),
             id: typeof(KendoScaffolder).Name,
             icon: ToImageSource(Resources.__TemplateIcon),
             gestures: new[] { "Controller", "View", "Area" },
