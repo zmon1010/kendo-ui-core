@@ -99,7 +99,7 @@
             },
             title: {
                 text: "Roger Federer Grand Slam tournament performance",
-                visual: titleVisual
+                // visual: titleVisual
             },
             legend: {
                 position: "top",
@@ -110,6 +110,7 @@
             seriesDefaults: {
                 type: "line",
                 markers: {
+                    visible: false,
                     visual: function(e) {
                         return customVisual(e);
                     }
@@ -127,16 +128,19 @@
                 field: "loss",
                 name: "Losses",
                 errorBars: {
-                    visual: customVisual,
+                    visual: function(e) {
+                        console.log(e.options);
+                        return customVisual(e);
+                    },
                     value: "stddev"
                 }
             }],
             panes: [{
                 title: {
                     text: "KOR",
-                    visual: function(e) {
-                        return titleVisual(e);
-                    }
+                    // visual: function(e) {
+                        // return titleVisual(e);
+                    // }
                 }
             }],
             valueAxis: {
@@ -146,13 +150,13 @@
                 labels: {
                     visual: labelsVisual
                 },
-                title: {
-                    text: "KOR",
-                    visual: function(e) {
-                        e.options.background = "red";
-                        return verticalTitleVisual(e);
-                    }
-                }
+                // title: {
+                    // text: "KOR",
+                    // visual: function(e) {
+                        // e.options.background = "red";
+                        // return verticalTitleVisual(e);
+                    // }
+                // }
             },
             categoryAxis: {
                 field: "year",
@@ -162,13 +166,13 @@
                 labels: {
                     visual: labelsVisual
                 },
-                title: {
-                    text: "HOI",
-                    visual: function(e) {
-                        e.options.background = "red";
-                        return titleVisual(e);
-                    }
-                }                
+                // title: {
+                    // text: "HOI",
+                    // visual: function(e) {
+                        // e.options.background = "red";
+                        // return titleVisual(e);
+                    // }
+                // }                
             },
             tooltip: {
                 visible: true,

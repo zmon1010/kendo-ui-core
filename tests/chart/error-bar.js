@@ -1246,5 +1246,80 @@
 
                 renderedLines(expectedPaths, expectedOptions);
             });
+
         })();
+
+        //-----------------------------------------------------------------------------------------
+        (function() {
+            var Path = kendo.drawing.Path;
+            var errorBar, customVisual;
+
+            function createErrorBar(options) {
+                var targetBox = new Box(5,5,9, 9);
+                var rootElement = new dataviz.RootElement();
+                errorBar = new CategoricalErrorBar(1, 2, true, categoricalChart, {}, $.extend({}, defaultOptions, options));
+                errorBar.reflow(targetBox);
+                rootElement.box = targetBox;
+                rootElement.append(errorBar);
+                rootElement.renderVisual();
+            }
+
+            var customVisual;
+
+            module("error bar / custom visual", {
+                setup: function() {
+                    customVisual = new kendo.drawing.Path();
+                }
+            });
+
+            test("renders custom visual if visual option is set", function() {
+                createErrorBar({
+                    visual: function() {
+                        return customVisual;
+                    }
+                });
+                ok(errorBar.visual === customVisual);
+            });
+
+            test("does not render default visual if visual function returns nothing", function() {
+                createErrorBar({
+                    visual: function() {}
+                });
+                ok(!errorBar.visual);
+            });
+
+            test("passes the low value", function() {
+                 createErrorBar({
+                    visual: function(e) {
+                        equal(e.low, 1);
+                    }
+                });
+            });
+
+            test("passes the high value", function() {
+                 createErrorBar({
+                    visual: function(e) {
+                        equal(e.high, 2);
+                    }
+                });
+            });
+
+            test("passes the error bar rect", function() {
+                 createErrorBar({
+                    visual: function(e) {
+                       ok(errorBar.box.toRect().equals(e.rect));
+                    }
+                });
+            });
+
+            test("passes the error bar options", function() {
+                 createErrorBar({
+                    visual: function(e) {
+                       deepEqual(defaultOptions, e.options);
+                    }
+                });
+            });
+
+        })();
+
     })();

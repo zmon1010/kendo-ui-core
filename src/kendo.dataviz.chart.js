@@ -4591,6 +4591,7 @@ var __meta__ = {
                         Point2D(capStart, valueBox.y2),
                         Point2D(capEnd, valueBox.y2));
                 }
+                errorBar.box = Box2D(capStart, valueBox.y1, capEnd, valueBox.y2);
             } else {
                 linePoints = [
                     Point2D(valueBox.x1, centerBox.y),
@@ -4602,6 +4603,7 @@ var __meta__ = {
                         Point2D(valueBox.x2, capStart),
                         Point2D(valueBox.x2, capEnd));
                 }
+                errorBar.box = Box2D(valueBox.x1, capStart, valueBox.x2, capEnd);
             }
 
             errorBar.linePoints = linePoints;
@@ -4615,6 +4617,33 @@ var __meta__ = {
         },
 
         createVisual: function() {
+            var that = this;
+            var options = that.options;
+            var visual = options.visual;
+
+            if (visual) {
+                that.visual = visual({
+                    low: that.low,
+                    high: that.high,
+                    rect: that.box.toRect(),
+                    options: {
+                        endCaps: options.endCaps,
+                        color: options.color,
+                        line: options.line
+                    },
+                    createVisual: function() {
+                        that.createDefaultVisual();
+                        var defaultVisual = that.visual;
+                        delete that.visual;
+                        return defaultVisual;
+                    }
+                });
+            } else {
+                that.createDefaultVisual();
+            }
+        },
+
+        createDefaultVisual: function() {
             var errorBar = this,
                 options = errorBar.options,
                 parent = errorBar.parent,
