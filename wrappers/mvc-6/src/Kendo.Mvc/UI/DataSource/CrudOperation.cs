@@ -5,7 +5,7 @@ using Microsoft.AspNet.Routing;
 
 namespace Kendo.Mvc.UI
 {
-    public class CrudOperation : JsonObject//, INavigatable
+    public class CrudOperation : JsonObject, INavigatable
     {
         private string routeName;
         private string controllerName;
