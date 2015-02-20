@@ -2,14 +2,9 @@ namespace Kendo.Mvc.UI
 {
     using System.Collections.Generic;
 
-    public static class GridUrlParameters
+    public static class DataSourceRequestUrlParameters
     {
-        public static string Aggregates
-        {
-            get;
-            set;
-        }
-        
+        public static string Aggregates{ get; set; }        
         public static string Filter { get; set; }
         public static string Page { get; set; }
         public static string PageSize { get; set; }
@@ -17,7 +12,7 @@ namespace Kendo.Mvc.UI
         public static string Group { get; set; }
         public static string Mode { get; set; }
         
-        static GridUrlParameters()
+        static DataSourceRequestUrlParameters()
         {
             Sort = "sort";
             Group = "group";

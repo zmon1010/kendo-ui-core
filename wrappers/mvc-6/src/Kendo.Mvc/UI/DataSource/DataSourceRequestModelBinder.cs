@@ -13,18 +13,18 @@ namespace Kendo.Mvc.UI
             DataSourceRequest request = new DataSourceRequest();
 
             await Task.WhenAll(
-                TryGetValue(bindingContext, GridUrlParameters.Sort, (string sort) =>
+                TryGetValue(bindingContext, DataSourceRequestUrlParameters.Sort, (string sort) =>
                     request.Sorts = DataSourceDescriptorSerializer.Deserialize<SortDescriptor>(sort)
                 ),
-                TryGetValue(bindingContext, GridUrlParameters.Page, (int currentPage) => request.Page = currentPage),
-                TryGetValue(bindingContext, GridUrlParameters.PageSize, (int pageSize) => request.PageSize = pageSize),
-                TryGetValue(bindingContext, GridUrlParameters.Filter, (string filter) =>
+                TryGetValue(bindingContext, DataSourceRequestUrlParameters.Page, (int currentPage) => request.Page = currentPage),
+                TryGetValue(bindingContext, DataSourceRequestUrlParameters.PageSize, (int pageSize) => request.PageSize = pageSize),
+                TryGetValue(bindingContext, DataSourceRequestUrlParameters.Filter, (string filter) =>
                     request.Filters = FilterDescriptorFactory.Create(filter)
                 ),
-                TryGetValue(bindingContext, GridUrlParameters.Group, (string group) =>
+                TryGetValue(bindingContext, DataSourceRequestUrlParameters.Group, (string group) =>
                     request.Groups = DataSourceDescriptorSerializer.Deserialize<GroupDescriptor>(group)
                 ),
-                TryGetValue(bindingContext, GridUrlParameters.Aggregates, (string aggregates) =>
+                TryGetValue(bindingContext, DataSourceRequestUrlParameters.Aggregates, (string aggregates) =>
                     request.Aggregates = DataSourceDescriptorSerializer.Deserialize<AggregateDescriptor>(aggregates)
                 )
             );
