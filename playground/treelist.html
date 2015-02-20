@@ -38,6 +38,11 @@
 
     <h3>TreeList</h3>
     <div id="list"></div>
+
+    <div id="scrollable"></div>
+
+    <div id="locked"></div>
+
         <script>
             var service = "http://demos.telerik.com/kendo-ui/service/Northwind.svc";
 
@@ -80,13 +85,42 @@
             $("#list").kendoTreeList({
                 toolbar: ["create"],
                 dataSource: listDS,
+                autoBind: false,
+                resizable: true,
+                scrollable: false,
+                filterable: true,
+                editable: "popup",
+                columns: [
+                    { field: "FirstName", title: "First Name", width: 200 },
+                    { field: "LastName", title: "Last Name", sortable: true, width: 200 },
+                    { command: ["edit", "destroy", { name: "addChild", text: "Add Child", click: cmd }] }
+                ]
+            });
+
+            $("#scrollable").kendoTreeList({
+                toolbar: ["create"],
+                dataSource: listDS,
+                autoBind: false,
                 resizable: true,
                 filterable: true,
                 editable: "popup",
                 columns: [
-                    { field: "FirstName", title: "First Name", locked: true, width: 200 },
+                    { field: "FirstName", title: "First Name", width: 200 },
                     { field: "LastName", title: "Last Name", sortable: true, width: 200 },
-                    { command: ["edit", "destroy", { name: "addChild", text: "Add Child", click: cmd }], width: 2000 }
+                    { command: ["edit", "destroy", { name: "addChild", text: "Add Child", click: cmd }] }
+                ]
+            });
+
+            $("#locked").kendoTreeList({
+                toolbar: ["create"],
+                dataSource: listDS,
+                resizable: true,
+                filterable: true,
+                editable: "popup",
+                columns: [
+                    { field: "FirstName", locked: true, title: "First Name", width: 200 },
+                    { field: "LastName", title: "Last Name", sortable: true, width: 200 },
+                    { command: ["edit", "destroy", { name: "addChild", text: "Add Child", click: cmd }], width: 1500 }
                 ]
             });
 

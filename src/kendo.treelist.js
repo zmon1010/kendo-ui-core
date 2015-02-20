@@ -1863,14 +1863,17 @@ var __meta__ = {
             var position = th.position();
             var left = position.left;
             var cellWidth = th.outerWidth();
+            var container = th.closest(".k-grid-header-wrap,.k-grid-header-locked,.k-treelist");
+
+            left += container.scrollLeft();
 
             if (!resizeHandle) {
                 resizeHandle = this.resizeHandle = $(
                     '<div class="k-resize-handle"><div class="k-resize-handle-inner" /></div>'
                 );
-
-                th.closest("div").append(resizeHandle);
             }
+
+            container.append(resizeHandle);
 
             if (e.clientX > left + cellWidth/2) {
                 left += cellWidth;
@@ -1878,7 +1881,7 @@ var __meta__ = {
                 th = th.prev();
             }
 
-            var show = !!th.length && left > indicatorWidth && left < this.wrapper.width();
+            var show = !!th.length && left > indicatorWidth;
 
             resizeHandle
                 .toggle(show)
@@ -1910,16 +1913,20 @@ var __meta__ = {
                     var th = $(e.currentTarget).data("th");
                     var colSelector = "col:eq(" + th.index() + ")";
                     var treelist = this.options.treelist;
+                    var header, contentTable;
 
                     treelist.wrapper.addClass("k-grid-column-resizing");
 
-                    this.col = treelist.table.children("colgroup").find(colSelector);
-
-                    if (treelist.options.scrollable) {
-                        this.col = this.col
-                            .add(treelist.thead.parent().find(colSelector))
-                            .add($(treelist.lockedTable).children("colgroup").find(colSelector));
+                    if (treelist.lockedHeader && $.contains(treelist.lockedHeader[0], th[0])) {
+                        header = treelist.lockedHeader;
+                        contentTable = treelist.lockedTable;
+                    } else {
+                        header = treelist.thead.parent();
+                        contentTable = treelist.table;
                     }
+
+                    this.col = contentTable.children("colgroup").find(colSelector)
+                          .add(header.find(colSelector));
 
                     this.startLocation = e.x.location;
                     this.columnWidth = th.outerWidth();
