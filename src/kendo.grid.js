@@ -6644,7 +6644,9 @@ var __meta__ = {
 
                     var args = {
                         page: group,
-                        progress: pageNum / totalPages
+                        pageNumber: pageNum,
+                        progress: pageNum / totalPages,
+                        totalPages: totalPages
                     };
 
                     progress.notify(args);
