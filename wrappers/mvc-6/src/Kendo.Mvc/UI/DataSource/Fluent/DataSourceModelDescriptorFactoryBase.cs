@@ -22,11 +22,11 @@
         /// <param name="fieldName">The member name.</param>
         protected void Id(string fieldName)
         {
-            IModelDataKey<TModel> dataKey;
+            IDataKey<TModel> dataKey;
             if (typeof(TModel).IsDynamicObject())
             {
                 var lambdaExpression = ExpressionBuilder.Expression<dynamic, object>(fieldName);
-                dataKey = (IModelDataKey<TModel>)new ModelDynamicDataKey(fieldName, lambdaExpression);
+                dataKey = (IDataKey<TModel>)new ModelDynamicDataKey(fieldName, lambdaExpression);
             }
             else
             {
@@ -38,14 +38,14 @@
             model.Id = dataKey;
         }
 
-        protected IModelDataKey<TModel> GetDataKeyForField(string fieldName)
+        protected IDataKey<TModel> GetDataKeyForField(string fieldName)
         {
             var lambdaExpression = ExpressionBuilder.Lambda<TModel>(fieldName);
             var fieldType = typeof(ModelDataKey<,>).MakeGenericType(new[] { typeof(TModel), lambdaExpression.Body.Type });   
                                  
             var constructor = fieldType.GetConstructor(new[] { lambdaExpression.GetType() });
 
-            return (IModelDataKey<TModel>)constructor.Invoke(new object[] { lambdaExpression });
+            return (IDataKey<TModel>)constructor.Invoke(new object[] { lambdaExpression });
         }
     }
 }

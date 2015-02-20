@@ -6,7 +6,7 @@ namespace Kendo.Mvc.UI
     using Extensions;
     using Microsoft.AspNet.Mvc.Rendering;
 
-    public class ModelDataKey<TModel, TValue> : IModelDataKey<TModel>
+    public class ModelDataKey<TModel, TValue> : IDataKey<TModel>
         where TModel : class
     {
         public ModelDataKey(Expression<Func<TModel, TValue>> expression)

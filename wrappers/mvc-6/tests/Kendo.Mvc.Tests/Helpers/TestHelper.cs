@@ -24,6 +24,10 @@ namespace Kendo.Mvc.Tests
             httpContext.Setup(m => m.RequestServices.GetService(typeof(IViewComponentActivator)))
                    .Returns(activator.Object);
 
+            var urlHelper = new Mock<IUrlHelper>();
+            httpContext.Setup(m => m.RequestServices.GetService(typeof(IUrlHelper)))
+                  .Returns(urlHelper.Object);
+
             var actionContext = new ActionContext(httpContext.Object, new RouteData(), new ActionDescriptor());
             var viewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary());
             var viewContext = new ViewContext(actionContext, Mock.Of<IView>(), viewData, TextWriter.Null);

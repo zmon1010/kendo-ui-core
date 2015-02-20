@@ -4,7 +4,7 @@ namespace Kendo.Mvc.UI
     using System.Linq.Expressions;
     using Microsoft.AspNet.Mvc.Rendering;
 
-    internal class ModelDynamicDataKey : IModelDataKey<object>
+    internal class ModelDynamicDataKey : IDataKey<object>
     {
         public ModelDynamicDataKey(string memberName, Expression<Func<object , object>> expression)
         {
