@@ -7,7 +7,9 @@
     <script>
       requireSync([
         "../src/jquery.js",
-        "../src/kendo.all.js"
+        "../src/kendo.all.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
       ]);
     </script>
     <style>
@@ -18,6 +20,12 @@
     </style>
   </head>
   <body>
+    Kendo:
+    <button onclick="pdf('#grid')">PDF</button>
+    <button onclick="draw('#grid', 'svg')">SVG</button>
+    <button onclick="draw('#grid', 'canvas')">Canvas</button>
+    |
+    <button onclick="h2c('#grid')">html2canvas</button>
 
     <div id="example">
       <div id="grid"></div>
@@ -52,9 +60,7 @@
                 }, {
                     field: "Picture",
                     //template: "#: Picture.substr(0, 100) #"
-                }
-                         ],
-                toolbar: ["pdf"]
+                }],
             });
         });
       </script>
