@@ -6,7 +6,7 @@ class GridMessagesCommands extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Defines the text of "Cancel Changes" button located in the ToolBar of the widget.
+    * Defines the text of the "Cancel Changes" button located in the toolbar of the widget.
     * @param string $value
     * @return \Kendo\UI\GridMessagesCommands
     */
@@ -15,7 +15,7 @@ class GridMessagesCommands extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of "Cancel" button that is rendered in inline or popup editing mode.
+    * Defines the text of the "Cancel" button that is rendered in inline or popup editing mode.
     * @param string $value
     * @return \Kendo\UI\GridMessagesCommands
     */
@@ -24,7 +24,7 @@ class GridMessagesCommands extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of "Add new record" button located in the ToolBar of the widget.
+    * Defines the text of the "Add new record" button located in the toolbar of the widget.
     * @param string $value
     * @return \Kendo\UI\GridMessagesCommands
     */
@@ -33,7 +33,7 @@ class GridMessagesCommands extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of "Delete" button rendered in inline or popup editing mode.
+    * Defines the text of the "Delete" button rendered in inline or popup editing mode.
     * @param string $value
     * @return \Kendo\UI\GridMessagesCommands
     */
@@ -42,7 +42,7 @@ class GridMessagesCommands extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of "Edit" button that is rendered in inline or popup editing mode.
+    * Defines the text of the "Edit" button that is rendered in inline or popup editing mode.
     * @param string $value
     * @return \Kendo\UI\GridMessagesCommands
     */
@@ -51,7 +51,7 @@ class GridMessagesCommands extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of "Export to Excel" button of the grid toolbar.
+    * Defines the text of the "Export to Excel" button of the grid toolbar.
     * @param string $value
     * @return \Kendo\UI\GridMessagesCommands
     */
@@ -60,7 +60,7 @@ class GridMessagesCommands extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of "Save Changes" button located in the ToolBar of the widget.
+    * Defines the text of the "Save Changes" button located in the toolbar of the widget.
     * @param string $value
     * @return \Kendo\UI\GridMessagesCommands
     */
@@ -69,7 +69,7 @@ class GridMessagesCommands extends \Kendo\SerializableObject {
     }
 
     /**
-    * Defines the text of "Update" button that is rendered in inline or popup editing mode.
+    * Defines the text of the "Update" button that is rendered in inline or popup editing mode.
     * @param string $value
     * @return \Kendo\UI\GridMessagesCommands
     */

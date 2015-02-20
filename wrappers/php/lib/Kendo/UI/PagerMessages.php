@@ -45,7 +45,7 @@ class PagerMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * The label displayed after the page size dropdown list.
+    * The label displayed after the page size DropDownList.
     * @param string $value
     * @return \Kendo\UI\PagerMessages
     */

@@ -15,7 +15,7 @@ class GridSortable extends \Kendo\SerializableObject {
     }
 
     /**
-    * The sorting mode. If set to "single" the user can sort by one column. If set to "multiple" the user can sort by one column.
+    * The sorting mode. If set to "single" the user can sort by one column. If set to "multiple" the user can sort by multiple columns.
     * @param string $value
     * @return \Kendo\UI\GridSortable
     */

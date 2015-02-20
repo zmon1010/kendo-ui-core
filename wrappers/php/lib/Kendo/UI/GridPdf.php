@@ -6,6 +6,15 @@ class GridPdf extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
+    * Exports all grid pages, starting from the first one.
+    * @param boolean $value
+    * @return \Kendo\UI\GridPdf
+    */
+    public function allPages($value) {
+        return $this->setProperty('allPages', $value);
+    }
+
+    /**
     * The author of the PDF document.
     * @param string $value
     * @return \Kendo\UI\GridPdf
@@ -89,8 +98,8 @@ The default "auto" means paper size is determined by content.Supported values:
     }
 
     /**
-    * The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
-Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.
+    * The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+attachment; filename="<fileName.pdf>".
     * @param string $value
     * @return \Kendo\UI\GridPdf
     */

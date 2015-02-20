@@ -209,8 +209,7 @@ async mode.
     /**
     * Sets the upload event of the Upload.
     * Fires when one or more files are about to be uploaded.
-Cancelling the event will prevent the upload.Note: The upload event fires only when the upload is in
-async mode.
+Canceling the event will prevent the upload.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Upload
     */
