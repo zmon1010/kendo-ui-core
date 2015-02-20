@@ -2,6 +2,7 @@
 	@(Html.Kendo().DateTimePicker()
 		.Name("datetimepicker")
 		.Value(DateTime.Now)
+		.Events(e => e.Change("onChange"))
 	)
 </div>
 
