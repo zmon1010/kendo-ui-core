@@ -780,13 +780,13 @@ var __meta__ = {
 
         renderComplete: $.noop,
 
+        hasHighlight: function() {
+            var options = (this.options || {}).highlight;
+            return !(!this.createHighlight || (options && options.visible === false));
+        },
+
         toggleHighlight: function(show) {
             var highlight = this._highlight;
-            var options = this.options.highlight;
-
-            if (!this.createHighlight || (options && options.visible === false)) {
-                return;
-            }
 
             if (!highlight) {
                 highlight = this._highlight = this.createHighlight({

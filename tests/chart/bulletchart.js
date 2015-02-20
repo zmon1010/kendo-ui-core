@@ -332,6 +332,11 @@
             var anchor = bullet.tooltipAnchor(10, 10);
             equal(anchor.y, 30);
         });
+
+        test("highlightVisual returns bodyVisual", function() {
+            createBullet({});            
+            ok(bullet.highlightVisual() === bullet.bodyVisual);
+        });
     })();
 
 })();

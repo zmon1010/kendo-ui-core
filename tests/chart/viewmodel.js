@@ -285,22 +285,6 @@
             }
         });
 
-        test("does nothing if element does not have createHighlight method", function() {
-            chartElement.toggleHighlight();
-            ok(!chartElement._highlight);
-            equal(chartElement.visual.children.length, 0);
-        });
-
-        test("does not create highlight if highlight is disabled", 0, function() {
-            chartElement.options.highlight = {
-                visible: false
-            };
-            chartElement.createHighlight = function() {
-                ok(false);
-            };
-            chartElement.toggleHighlight();
-        });
-
         test("creates highlight", function() {
             chartElement.createHighlight = function() {
                 ok(true);

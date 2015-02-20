@@ -707,6 +707,12 @@
             ok(highlight instanceof draw.Circle);
         });
 
+        test("highlightVisual returns the marker visual", function() {
+            createPoint({ markers: { visible: true, type: "circle" }});
+            ok(point.highlightVisual() instanceof draw.Circle);
+            ok(point.highlightVisual() === point.marker.visual);
+        });
+
         test("tooltipAnchor is at top right of marker / above axis", function() {
             createPoint({ aboveAxis: true });
             var anchor = point.tooltipAnchor(10, 10);

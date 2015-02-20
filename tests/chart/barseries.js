@@ -2304,6 +2304,12 @@
             equal(highlight.options.foo, "bar");
         });
 
+        test("highlightVisual returns rectVisual", function() {
+            var visual = bar.highlightVisual();
+
+            ok(visual === bar.rectVisual);
+        });
+
         test("tooltipAnchor is top right corner / vertical / above axis",
         function() {
             createBar({ vertical: true, aboveAxis: true, isStacked: false });

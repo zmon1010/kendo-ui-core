@@ -129,8 +129,18 @@
                 },
             seriesDefaults: {
                 type: "line",
+                highlight: {
+                    toggle: function(e) {
+                        e.preventDefault();
+                        var visual = e.visual;
+                        var fill = e.show ? "red" : "none";
+                        for(var idx = 0; idx < visual.children.length; idx++) {
+                            visual.children[idx].fill(fill);
+                        }
+                    }
+                },
                 markers: {
-                    visible: false,
+                    visible: true,
                     visual: function(e) {
                         return customVisual(e);
                     }
@@ -141,14 +151,14 @@
                 name: "Wins",
                 noteTextField: "extremum",
                 notes: {
-                    visual: function(e) {
-                        e.targetPoint = e.rect.center();
-                        var visual = new drawing.Group();
-                        visual.append(new drawing.Circle(new geometry.Circle(e.targetPoint, 10)));
-                        visual.append(new drawing.Path().moveTo(e.targetPoint.x, e.targetPoint.y).lineTo(e.targetPoint.x, e.targetPoint.y + 30));
+                    // visual: function(e) {
+                        // e.targetPoint = e.rect.center();
+                        // var visual = new drawing.Group();
+                        // visual.append(new drawing.Circle(new geometry.Circle(e.targetPoint, 10)));
+                        // visual.append(new drawing.Path().moveTo(e.targetPoint.x, e.targetPoint.y).lineTo(e.targetPoint.x, e.targetPoint.y + 30));
                         // return visual;
-                        return e.createVisual();
-                    },
+                        // return e.createVisual();
+                    // },
                     position: "bottom"
                 }
             },{
@@ -234,7 +244,16 @@
                         // return labelsVisual(e)
                     // }
                 },
-                       stack:true,
+                highlight: {
+                    toggle: function(e) {
+                        e.preventDefault();
+                        var visual = e.visual;
+                        var opacity = e.show ? 0.8 : 1;
+
+                        visual.opacity(opacity);
+                    }
+                },
+                stack:true,
                 visual: function(e) {
                     var color = e.options.color;
                     var rect = e.rect;
@@ -242,20 +261,36 @@
                     var bottomRight = rect.bottomRight();
                     var radiusY = 10;
                     var radiusX = rect.width() / 2;
+                    var gradient = new drawing.LinearGradient({
+                        stops: [{
+                            offset: 0,
+                            color: color
+                        }, {
+                            offset: 0.5,
+                            color: color,
+                            opacity: 0.9
+                        }, {
+                            offset: 0.5,
+                            color: color,
+                            opacity: 0.9
+                        }, {
+                            offset: 1,
+                            color: color
+                        }]
+                    });
 
                     var arc = createArc(color, {x: center.x, y: bottomRight.y}, radiusX, radiusY, 0 , 180);
                     var topStart = rect.origin.y;
-                    var path = drawing.Path.fromRect(new geometry.Rect([rect.origin.x, topStart], [rect.width(), rect.height()]), {
-                        fill: {
-                            color: color
-                        },
+                    var path = new drawing.Path({
+                        fill: gradient,
                         stroke: {
                             color: "none"
                         }
-                    });
+                    }).moveTo(rect.origin.x, topStart).lineTo(rect.origin.x, bottomRight.y).arc(180, 0, radiusX, radiusY, true)//.lineTo(bottomRight.x, bottomRight.y)
+                        .lineTo(bottomRight.x, topStart).arc(0, 180, radiusX, radiusY);
                     var topArc = createArc(color, {x: center.x, y: topStart}, radiusX, radiusY);
                     var group = new drawing.Group();
-                    group.append(arc, path, topArc);
+                    group.append(path, topArc);
                     return group;
                 }
             },
@@ -264,6 +299,9 @@
                 data: [10000, 56000]                    
             }, {
                 name: "Unique visitors",
+                data: [52000, 20000]
+            }, {
+                name: "Other",
                 data: [52000, 20000]
             }],
             panes: [{
@@ -277,8 +315,8 @@
                     // visual: labelsVisual
                 // },
                 minorGridLines: {
-                    visible: true
-                },
+                    visible: false
+                }
                 // title: {
                     // text: "Value Axis",
                     // visual: function(e) {
@@ -288,7 +326,7 @@
                 // }
             },
             categoryAxis: {
-                categories: ["Jan"],
+                categories: ["Jan", "Feb"],
                 margin: 20,
                 majorGridLines: {
                     visible: false

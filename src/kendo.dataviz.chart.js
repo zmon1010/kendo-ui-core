@@ -3211,7 +3211,7 @@ var __meta__ = {
             if (bar.visible !== false) {
                 ChartElement.fn.createVisual.call(bar);
                 if (customVisual) {
-                    var visual = customVisual({
+                    var visual = this.rectVisual = customVisual({
                         category: bar.category,
                         dataItem: bar.dataItem,
                         value: bar.value,
@@ -3249,7 +3249,7 @@ var __meta__ = {
             var options = this.options;
             var border = options.border;
             var strokeOpacity = defined(border.opacity) ? border.opacity : options.opacity;
-            var rect = draw.Path.fromRect(this.box.toRect(), {
+            var rect = this.rectVisual = draw.Path.fromRect(this.box.toRect(), {
                 fill: {
                     color: this.color,
                     opacity: options.opacity
@@ -3283,6 +3283,10 @@ var __meta__ = {
             var highlight = draw.Path.fromRect(this.box.toRect(), style);
 
             return alignPathToPixel(highlight);
+        },
+
+        highlightVisual: function() {
+            return this.rectVisual;
         },
 
         getBorderColor: function() {
@@ -3825,7 +3829,7 @@ var __meta__ = {
         },
 
         evalPointOptions: function(options, value, category, categoryIx, series, seriesIx) {
-            var state = { defaults: series._defaults, excluded: ["data", "aggregate", "_events", "tooltip", "template", "visual"] };
+            var state = { defaults: series._defaults, excluded: ["data", "aggregate", "_events", "tooltip", "template", "visual", "toggle"] };
 
             var doEval = this._evalSeries[seriesIx];
             if (!defined(doEval)) {
@@ -4626,6 +4630,10 @@ var __meta__ = {
             return draw.Path.fromRect(this.box.toRect(), style);
         },
 
+        highlightVisual: function() {
+            return this.bodyVisual;
+        },
+
         formatValue: function(format) {
             var bullet = this;
 
@@ -5020,6 +5028,10 @@ var __meta__ = {
             return shadow.getElement();
         },
 
+        highlightVisual: function() {
+            return (this.marker || {}).visual;
+        },
+
         tooltipAnchor: function(tooltipWidth, tooltipHeight) {
             var point = this,
                 markerBox = point.markerBox(),
@@ -5086,6 +5098,10 @@ var __meta__ = {
             });
 
             return overlay;
+        },
+
+        highlightVisual: function() {
+            return (this.marker || {}).visual;
         }
     });
 
@@ -5931,7 +5947,7 @@ var __meta__ = {
         evalPointOptions: function(options, value, fields) {
             var series = fields.series;
             var seriesIx = fields.seriesIx;
-            var state = { defaults: series._defaults, excluded: ["data", "tooltip", "tempate", "visual"] };
+            var state = { defaults: series._defaults, excluded: ["data", "tooltip", "tempate", "visual", "toggle"] };
 
             var doEval = this._evalSeries[seriesIx];
             if (!defined(doEval)) {
@@ -6370,9 +6386,9 @@ var __meta__ = {
 
         createVisual: function() {
             ChartElement.fn.createVisual.call(this);
-
+            this._mainVisual = this.mainVisual(this.options);
             this.visual.append(
-                this.mainVisual(this.options)
+                this._mainVisual
             );
 
             this.createOverlay();
@@ -6480,6 +6496,10 @@ var __meta__ = {
             this.color = normalColor;
 
             return overlay;
+        },
+
+        highlightVisual: function() {
+            return this._mainVisual;
         },
 
         tooltipAnchor: function() {
@@ -7204,6 +7224,10 @@ var __meta__ = {
             }));
         },
 
+        highlightVisual: function() {
+            return this.visual;
+        },
+
         tooltipAnchor: function(width, height) {
             var point = this,
                 box = point.sector.adjacentBox(TOOLTIP_OFFSET, width, height);
@@ -7373,7 +7397,7 @@ var __meta__ = {
                 dataItem: fields.dataItem,
                 category: fields.category,
                 percentage: fields.percentage
-            }, { defaults: series._defaults, excluded: ["data", "template", "visual"] });
+            }, { defaults: series._defaults, excluded: ["data", "template", "visual", "toggle"] });
         },
 
         addValue: function(value, sector, fields) {
@@ -10057,17 +10081,38 @@ var __meta__ = {
 
             for (var i = 0; i < points.length; i++) {
                 var point = points[i];
-                if (point && point.toggleHighlight) {
-                    point.toggleHighlight(true);
+                if (point && point.toggleHighlight && point.hasHighlight()) {
+                    this.togglePointHighlight(point, true);
                     this._points.push(point);
                 }
+            }
+        },
+
+        togglePointHighlight: function(point, show) {
+            var toggleHandler = (point.options.highlight || {}).toggle;
+            if (toggleHandler) {
+                var eventArgs = {
+                    category: point.category,
+                    series: point.series,
+                    dataItem: point.dataItem,
+                    value: point.value,
+                    preventDefault: preventDefault,
+                    visual: point.highlightVisual(),
+                    show: show
+                };
+                toggleHandler(eventArgs);
+                if (!eventArgs._defaultPrevented) {
+                    point.toggleHighlight(show);
+                }
+            } else {
+                point.toggleHighlight(show);
             }
         },
 
         hide: function() {
             var points = this._points;
             while (points.length) {
-                points.pop().toggleHighlight(false);
+                this.togglePointHighlight(points.pop(), false);
             }
         },
 
@@ -12114,6 +12159,10 @@ var __meta__ = {
                 return true;
             }
         }
+    }
+
+    function preventDefault() {
+        this._defaultPrevented = true;
     }
 
     // Exports ================================================================
