@@ -29,9 +29,9 @@
                   toolbar: ["pdf"],
                   pdf: {
                       allPages: true,
-                      pageSize: "A4",
+                      paperSize: "auto",
                       margin: "1cm",
-                      landscape: true
+                      landscape: false
                   },
                   pdfExport: function(e) {
                       e.promise.progress(function(e) {

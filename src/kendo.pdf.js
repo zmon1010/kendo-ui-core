@@ -75,6 +75,9 @@ kendo.PDFMixin = {
             });
 
             progress.resolve();
+        })
+        .fail(function(err) {
+            progress.reject(err);
         });
     },
 

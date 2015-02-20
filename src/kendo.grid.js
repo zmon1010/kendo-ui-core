@@ -6623,6 +6623,19 @@ var __meta__ = {
            var doc = new kendo.drawing.Group();
            var startingPage = dataSource.page();
 
+           function resolve() {
+               if (allPages) {
+                   dataSource.unbind("change", exportPage);
+                   dataSource.one("change", function() {
+                       result.resolve(doc);
+                   });
+
+                   dataSource.page(startingPage);
+               } else {
+                   result.resolve(doc);
+               }
+           }
+
            function exportPage() {
                 grid._drawPDFShadow()
                 .done(function(group) {
@@ -6645,29 +6658,19 @@ var __meta__ = {
                         dataSource.page(pageNum + 1);
                     } else {
                         // Last page processed reached
-                        restore();
-                        result.resolve(doc);
+                        resolve();
                     }
+                })
+                .fail(function(err) {
+                    result.reject(err);
                 });
             }
-
-            function restore() {
-                if (allPages) {
-                    dataSource.unbind("change", exportPage);
-                    dataSource.page(startingPage);
-                }
-            }
-
-            progress.fail(function() {
-                restore();
-                result.reject(new Error("Export operation aborted"))
-            });
 
             if (allPages) {
                 dataSource.bind("change", exportPage);
                 dataSource.page(1);
             } else {
-                exportPage.call(dataSource);
+                exportPage();
             }
 
             return result.promise();
@@ -6676,9 +6679,7 @@ var __meta__ = {
         Grid.prototype._initPDFProgress = function(deferred) {
            var loading = $("<div class='k-loading-pdf-mask'><div class='k-loading-color'/></div>");
            loading.prepend(this.wrapper.clone().css({
-               position: "absolute",
-               top: 0,
-               left: 0
+               position: "absolute", top: 0, left: 0
            }));
 
            this.wrapper.append(loading);
@@ -6688,7 +6689,6 @@ var __meta__ = {
            .kendoProgressBar({
                type: "chunk",
                chunkCount: 10,
-               animation: false,
                min: 0,
                max: 1,
                value: 0
@@ -6698,6 +6698,7 @@ var __meta__ = {
                pb.value(e.progress);
            })
            .always(function() {
+               kendo.destroy(loading);
                loading.remove();
            });
         }
