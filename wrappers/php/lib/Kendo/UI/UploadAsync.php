@@ -6,8 +6,7 @@ class UploadAsync extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The selected files will be uploaded immediately by default. You can change this behavior by setting
-autoUpload to false.
+    * The selected files will be uploaded immediately by default. You can change this behavior by setting autoUpload to false.
     * @param boolean $value
     * @return \Kendo\UI\UploadAsync
     */

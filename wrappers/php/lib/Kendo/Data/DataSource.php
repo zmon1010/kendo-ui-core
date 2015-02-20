@@ -162,7 +162,8 @@ The transport option can also be used to implement custom data loading and savin
 
     /**
     * If set the data source will use a predefined transport and/or schema.
-The supported values are "odata" which supports the OData v.2 protocol and "signalr".
+The supported values are "odata" which supports the OData v.2 protocol, "odata-v4" which partially supports
+odata version 4 and "signalr".
     * @param string $value
     * @return \Kendo\Data\DataSource
     */

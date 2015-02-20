@@ -75,7 +75,8 @@ $schema->data('data')
 $dataSource = new \Kendo\Data\DataSource();
 
 $dataSource->transport($transport)
-           ->schema($schema);
+           ->schema($schema)
+           ->pageSize(5);
 
 $picture = new \Kendo\UI\GridColumn();
 $picture->field('EmployeeID')
@@ -83,7 +84,7 @@ $picture->field('EmployeeID')
         ->title('Picture');
 
 $details = new \Kendo\UI\GridColumn();
-$details->width(400)
+$details->width(350)
         ->title('Details');
 
 $country = new \Kendo\UI\GridColumn();
@@ -94,7 +95,8 @@ $id = new \Kendo\UI\GridColumn();
 $id->title('ID');
 
 $pdf = new \Kendo\UI\GridPdf();
-$pdf->fileName('Kendo UI Grid Export.pdf')
+$pdf->allPages(true)
+    ->fileName('Kendo UI Grid Export.pdf')
     ->proxyURL('pdf-export.php?type=save');
 
 $grid = new \Kendo\UI\Grid('grid');
@@ -103,7 +105,9 @@ $grid->dataSource($dataSource)
      ->addToolbarItem(new \Kendo\UI\GridToolbarItem('pdf'))
      ->addColumn($picture, $details, $country, $id)
      ->pdf($pdf)
-     ->scrollable(false)
+     ->height(500)
+     ->scrollable(true)
+     ->pageable(true)
      ->attr('style', 'width: 900px')
      ->rowTemplateId('row-template')
      ->altRowTemplateId('alt-row-template');
@@ -118,6 +122,13 @@ echo $grid->render();
     */
     .k-grid {
         font-family: "DejaVu Sans", "Arial", sans-serif;
+    }
+
+    /* Hide the Grid header and pager during export */
+    .k-pdf-export .k-grid-toolbar,
+    .k-pdf-export .k-pager-wrap
+    {
+        display: none;
     }
 </style>
 

@@ -6,7 +6,7 @@ class GridFilterable extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * If set to true the filter menu allows the user to input a second criteria.
+    * If set to true the filter menu allows the user to input a second criterion.
     * @param boolean $value
     * @return \Kendo\UI\GridFilterable
     */

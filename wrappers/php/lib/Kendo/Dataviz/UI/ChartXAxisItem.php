@@ -156,6 +156,7 @@ If the xAxis.type is set to "log", the minorUnit value represents the number of 
 
     /**
     * If set to true the chart will prevent the automatic axis range from snapping to 0.
+Setting it to false will force the automatic axis range to snap to 0.
     * @param boolean $value
     * @return \Kendo\Dataviz\UI\ChartXAxisItem
     */

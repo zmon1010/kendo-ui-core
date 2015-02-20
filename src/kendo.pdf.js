@@ -18,6 +18,8 @@ kendo.PDFMixin = {
         proto.events.push("pdfExport");
         proto.options.pdf = this.options;
         proto.saveAsPDF = this.saveAsPDF;
+        proto._drawPDF = this._drawPDF;
+        proto._drawPDFShadow = this._drawPDFShadow;
     },
     options: {
         fileName  : "Export.pdf",
@@ -29,30 +31,39 @@ kendo.PDFMixin = {
         // by content.
         paperSize : "auto",
 
-        // pass true to reverse the paper dimensions if needed such that width is the larger edge.
-        // doesn't make much sense with "auto" paperSize.
+        // Export all pages, if applicable
+        allPages: false,
+
+        // True to reverse the paper dimensions if needed such that width is the larger edge.
         landscape : false,
 
-        // pass an object containing { left, top, bottom, right } margins (numbers of strings with
-        // units).
+        // An object containing { left, top, bottom, right } margins with units.
         margin    : null,
 
-        // optional information for the PDF Info dictionary; all strings except for the date.
+        // Optional information for the PDF Info dictionary; all strings except for the date.
         title     : null,
         author    : null,
         subject   : null,
         keywords  : null,
         creator   : "Kendo UI PDF Generator",
-        date      : null        // CreationDate; must be a Date object, defaults to new Date()
+
+        // Creation Date; defaults to new Date()
+        date      : null
     },
+
     saveAsPDF: function() {
-        if (this.trigger("pdfExport")) {
+        var progress = new $.Deferred();
+        var promise = progress.promise();
+        var args = { promise: promise };
+
+        if (this.trigger("pdfExport", args)) {
             return;
         }
 
         var options = this.options.pdf;
+        options.multiPage = options.allPages;
 
-        kendo.drawing.drawDOM(this.wrapper[0])
+        this._drawPDF(progress)
         .then(function(root) {
             return kendo.drawing.exportPDF(root, options);
         })
@@ -63,6 +74,31 @@ kendo.PDFMixin = {
                 proxyURL: options.proxyURL,
                 forceProxy: options.forceProxy
             });
+
+            progress.resolve();
+        })
+        .fail(function(err) {
+            progress.reject(err);
+        });
+
+        return promise;
+    },
+
+    _drawPDF: function() {
+        return kendo.drawing.drawDOM(this.wrapper);
+    },
+
+    _drawPDFShadow: function() {
+        var wrapper = this.wrapper;
+        var shadow = $("<div class='k-pdf-export-shadow'>").css("width", wrapper.width());
+
+        // Prepend the export container
+        wrapper.before(shadow);
+        shadow.append(wrapper.clone());
+
+        return kendo.drawing.drawDOM(shadow)
+        .done(function() {
+            shadow.remove();
         });
     }
 };

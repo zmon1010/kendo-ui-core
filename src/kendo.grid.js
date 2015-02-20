@@ -6610,6 +6610,95 @@ var __meta__ = {
 
    if (kendo.PDFMixin) {
        kendo.PDFMixin.extend(Grid.prototype);
+
+       Grid.prototype._drawPDF = function(progress) {
+           var result = new $.Deferred();
+           var grid = this;
+           var dataSource = grid.dataSource;
+           var allPages = grid.options.pdf.allPages;
+
+           this._initPDFProgress(progress);
+
+           // This group will be our document containing all pages
+           var doc = new kendo.drawing.Group();
+           var startingPage = dataSource.page();
+
+           function resolve() {
+               if (allPages) {
+                   dataSource.unbind("change", exportPage);
+                   dataSource.one("change", function() {
+                       result.resolve(doc);
+                   });
+
+                   dataSource.page(startingPage);
+               } else {
+                   result.resolve(doc);
+               }
+           }
+
+           function exportPage() {
+                grid._drawPDFShadow()
+                .done(function(group) {
+                    var pageNum = dataSource.page();
+                    var totalPages = allPages ? dataSource.totalPages() : 1;
+
+                    var args = {
+                        page: group,
+                        pageNumber: pageNum,
+                        progress: pageNum / totalPages,
+                        totalPages: totalPages
+                    };
+
+                    progress.notify(args);
+                    doc.append(args.page);
+
+                    if (pageNum < totalPages) {
+                        dataSource.page(pageNum + 1);
+                    } else {
+                        resolve();
+                    }
+                })
+                .fail(function(err) {
+                    result.reject(err);
+                });
+            }
+
+            if (allPages) {
+                dataSource.bind("change", exportPage);
+                dataSource.page(1);
+            } else {
+                exportPage();
+            }
+
+            return result.promise();
+        };
+
+        Grid.prototype._initPDFProgress = function(deferred) {
+           var loading = $("<div class='k-loading-pdf-mask'><div class='k-loading-color'/></div>");
+           loading.prepend(this.wrapper.clone().css({
+               position: "absolute", top: 0, left: 0
+           }));
+
+           this.wrapper.append(loading);
+
+           var pb = $("<div class='k-loading-pdf-progress'>")
+           .appendTo(loading)
+           .kendoProgressBar({
+               type: "chunk",
+               chunkCount: 10,
+               min: 0,
+               max: 1,
+               value: 0
+           }).data("kendoProgressBar");
+
+           deferred.progress(function(e) {
+               pb.value(e.progress);
+           })
+           .always(function() {
+               kendo.destroy(loading);
+               loading.remove();
+           });
+        }
    }
 
    function syncTableHeight(table1, table2) {

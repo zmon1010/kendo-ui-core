@@ -896,3 +896,46 @@ html .k-grid-edit-row .k-tooltip
     overflow: auto;
 }
 
+/* Remove Grid scrollbar during built-in export */
+.k-pdf-export-shadow .k-grid {
+    float: left;
+}
+
+/* Remove all sizes and scrolling */
+.k-pdf-export-shadow .k-grid,
+.k-pdf-export-shadow .k-grid-content {
+    height: auto !important;
+    overflow: visible;
+}
+
+/* Remove empty space reserved above the scrollbar */
+.k-pdf-export-shadow .k-grid-header {
+    padding-right: 0 !important;
+}
+
+.k-loading-pdf-mask {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.k-loading-pdf-mask .k-loading-color {
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}
+
+.k-loading-pdf-mask .k-loading-pdf-progress {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.k-pdf-export .k-loading-pdf-mask {
+    display: none;
+}

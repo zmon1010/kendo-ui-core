@@ -18,6 +18,26 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Exports all pages. Applicable only for the Grid.
+        /// </summary>
+        public PDFSettingsBuilder AllPages()
+        {
+            pdf.AllPages = true;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Turns the page in landscape orientation.
+        /// </summary>
+        public PDFSettingsBuilder Landscape()
+        {
+            pdf.Landscape = true;
+
+            return this;
+        }
+
+        /// <summary>
         /// Sets the file name of the PDF file.
         /// </summary>
         public PDFSettingsBuilder FileName(string fileName)

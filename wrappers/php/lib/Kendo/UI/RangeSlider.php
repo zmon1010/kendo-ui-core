@@ -130,7 +130,7 @@ arrow keys (the drag handle must be focused), or (3) drags the drag handle.
 
     /**
     * Sets the change event of the RangeSlider.
-    * Fires when the rangeSlider value changes as a result of selecting a new value with one of the drag handles or the keyboard.
+    * Fires when the RangeSlider value changes as a result of selecting a new value with one of the drag handles or the keyboard.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\RangeSlider
     */

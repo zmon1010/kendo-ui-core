@@ -6,7 +6,7 @@ class DiagramShapeDefaultsEditableTool extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The name of the tool. The built-in tools are "edit", "delete", "rotateClockwise" and "rotateAnticlockwise". Can be set to a custom value.
+    * The name of the tool. The built-in tools are "edit", "delete", "rotateClockwise" and "rotateAnticlockwise".
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsEditableTool
     */

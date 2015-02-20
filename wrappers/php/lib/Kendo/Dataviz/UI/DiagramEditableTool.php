@@ -6,7 +6,7 @@ class DiagramEditableTool extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The name of the tool. The built-in tools are "edit", "createShape", "createConnection", "undo", "redo", "rotateClockwise" and "rotateAnticlockwise". Can be set to a custom value.
+    * The name of the tool. The built-in tools are "edit", "createShape", "createConnection", "undo", "redo", "rotateClockwise" and "rotateAnticlockwise".
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramEditableTool
     */

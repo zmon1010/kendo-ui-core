@@ -241,7 +241,9 @@ The axis will be rendered in the first (default) pane if not set.
     }
 
     /**
-    * The selected axis range. If set, axis selection will be enabled.The range units are:
+    * The selected axis range. If set, axis selection will be enabled.The range is index based, starting from 0.
+Categories with indexes in the range [select.from, select.to) will be selected.
+That is, the last category in the range will not be included in the selection.If the categories are dates, the range must also be specified with date values.
     * @param \Kendo\Dataviz\UI\ChartCategoryAxisItemSelect|array $value
     * @return \Kendo\Dataviz\UI\ChartCategoryAxisItem
     */
