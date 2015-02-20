@@ -116,7 +116,6 @@ function moduleTeardown() {
 }
 
 // -----------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------
 module("Upload / FormDataUpload", {
     setup: function() {
         moduleSetup();
@@ -204,6 +203,32 @@ test("postFormData is issued when file is selected", function() {
 test("postFormData receives form data", 1, function() {
     uploadInstance._module.createFormData = function() { return formDataStub; }
     uploadInstance._module.postFormData = function(url, data) { equal(data, formDataStub); };
+
+    simulateFileSelect();
+});
+
+test("postFormData receives user data", 1, function() {
+    var myData = {};
+    uploadInstance.bind("upload", function(e) {
+        e.formData = myData;
+    });
+    uploadInstance._module.postFormData = function(url, data) { equal(data, myData); };
+
+    simulateFileSelect();
+});
+
+test("user form data is not modified", 1, function() {
+    var myData = {
+        append: function() {
+            ok(false);
+        }
+    };
+
+    uploadInstance.bind("upload", function(e) {
+        e.formData = myData;
+    });
+
+    uploadInstance._module.postFormData = function(url, data) { equal(data, myData); };
 
     simulateFileSelect();
 });

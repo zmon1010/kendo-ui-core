@@ -1104,12 +1104,16 @@ var __meta__ = {
                 upload._hideUploadButton();
                 upload._showHeaderUploadStatus();
 
-                e.data = $.extend({ }, e.data, antiForgeryTokens());
-                for (var key in e.data) {
-                    formData.append(key, e.data[key]);
-                }
+                if (e.formData) {
+                    formData = e.formData;
+                } else {
+                    e.data = $.extend({ }, e.data, antiForgeryTokens());
+                    for (var key in e.data) {
+                        formData.append(key, e.data[key]);
+                    }
 
-                this.populateFormData(formData, fileEntry.data("files"));
+                    this.populateFormData(formData, fileEntry.data("files"));
+                }
 
                 upload._fileState(fileEntry, "uploading");
                 $(fileEntry).removeClass("k-file-error").addClass("k-file-progress");
