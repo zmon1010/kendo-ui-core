@@ -977,6 +977,11 @@ var __meta__ = {
                 $(window).off("resize" + NS, this._resizeHandler);
             }
 
+            if (this.resizable) {
+                this.resizable.destroy();
+                this.resizable = null;
+            }
+
             if (this.reorderable) {
                 this.reorderable.destroy();
                 this.reorderable = null;
@@ -1927,7 +1932,7 @@ var __meta__ = {
 
                     this.col = contentTable.children("colgroup").find(colSelector)
                           .add(header.find(colSelector));
-
+                    this.th = th;
                     this.startLocation = e.x.location;
                     this.columnWidth = th.outerWidth();
                     this.table = this.col.closest("table");
@@ -1945,8 +1950,20 @@ var __meta__ = {
                     this.col.width(this.columnWidth + delta);
                 },
                 resizeend: function() {
-                    this.options.treelist.wrapper.removeClass("k-grid-column-resizing");
-                    this.table = this.col = null;
+                    // TODO: TreeList instance is not correct
+                    var treelst = this.options.treelist;
+
+                    treelist.wrapper.removeClass("k-grid-column-resizing");
+
+                    var field = this.th.attr("data-field");
+                    var column = grep(treelist.columns, function(c) {
+                        return c.field == field;
+                    });
+
+                    column[0].width = Math.floor(this.th.width());
+                    treelist.refresh();
+
+                    this.table = this.col = this.th = null;
                 }
             });
         },
