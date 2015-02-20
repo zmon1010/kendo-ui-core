@@ -78,6 +78,10 @@ kendo.PDFMixin = {
         });
     },
 
+    _drawPDF: function() {
+        return kendo.drawing.drawDOM(this.wrapper);
+    },
+
     _drawPDFShadow: function() {
         var wrapper = this.wrapper;
         var shadow = $("<div class='k-pdf-export-shadow'>").css("width", wrapper.width());
@@ -90,10 +94,6 @@ kendo.PDFMixin = {
         .done(function() {
             shadow.remove();
         });
-    },
-
-    _drawPDF: function() {
-        return kendo.drawing.drawDOM(this.wrapper[0]);
     }
 };
 

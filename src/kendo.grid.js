@@ -6654,9 +6654,6 @@ var __meta__ = {
             function restore() {
                 if (allPages) {
                     dataSource.unbind("change", exportPage);
-                    dataSource.one("change", function() {
-                        progress.resolve();
-                    });
                     dataSource.page(startingPage);
                 }
             }
