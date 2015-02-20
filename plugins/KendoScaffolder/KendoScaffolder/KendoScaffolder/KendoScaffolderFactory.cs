@@ -18,11 +18,11 @@ namespace KendoScaffolder
         /// </summary>
         private static CodeGeneratorInformation _info = new CodeGeneratorInformation(
             displayName: "Kendo UI Scaffolder",
-            description: "Kendo UI Scaffolder.",
+            description: "Generates UI for ASP.NET MVC server-side wrappers that allow using Kendo UI widgets from C# code.",
             author: "Telerik",
-            version: new Version(2015, 1, 219),
+            version: new Version(2015, 1, 220),
             id: typeof(KendoScaffolder).Name,
-            icon: ToImageSource(Resources.__TemplateIcon),
+            icon: ToImageSource(Resources.ScaffolderIcon),
             gestures: new[] { "Controller", "View", "Area" },
             categories: new[] { Categories.Common, Categories.MvcController, Categories.MvcView, Categories.Other });
 

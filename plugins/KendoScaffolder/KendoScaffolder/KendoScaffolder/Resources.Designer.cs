@@ -63,9 +63,9 @@ namespace KendoScaffolder {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon @__TemplateIcon {
+        internal static System.Drawing.Icon ScaffolderIcon {
             get {
-                object obj = ResourceManager.GetObject("__TemplateIcon", resourceCulture);
+                object obj = ResourceManager.GetObject("ScaffolderIcon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

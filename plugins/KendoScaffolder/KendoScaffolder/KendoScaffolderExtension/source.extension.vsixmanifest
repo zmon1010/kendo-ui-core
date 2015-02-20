@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="40e7bb7e-f72d-44cf-8439-2567be2590c6" Version="2015.1.219" Language="en-US" Publisher="Telerik" />
+    <Identity Id="40e7bb7e-f72d-44cf-8439-2567be2590c6" Version="2015.1.220" Language="en-US" Publisher="Telerik" />
     <DisplayName>Kendo UI Scaffolder</DisplayName>
-    <Description xml:space="preserve">Kendo UI Scaffolder</Description>
+    <Description xml:space="preserve">Generates UI for ASP.NET MVC server-side wrappers that allow using Kendo UI widgets from C# code.</Description>
+    <MoreInfo>http://docs.telerik.com/kendo-ui/aspnet-mvc/introduction</MoreInfo>
+    <Icon>Images\ScaffolderIcon.ico</Icon>
+    <PreviewImage>Images\ScaffolderPreviewImage.jpg</PreviewImage>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[12.0,14.0]" />
