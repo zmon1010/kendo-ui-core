@@ -1892,6 +1892,36 @@
         var align = getPropertyValue(style, "text-align");
         var isJustified = align == "justify";
 
+        var fontSize = getPropertyValue(style, "font-size");
+        var lineHeight = getPropertyValue(style, "line-height");
+
+        // simply getPropertyValue("font") doesn't work in Firefox :-\
+        var font = [
+            getPropertyValue(style, "font-style"),
+            getPropertyValue(style, "font-variant"),
+            getPropertyValue(style, "font-weight"),
+            fontSize, // no need for line height here; it breaks layout in FF
+            getPropertyValue(style, "font-family")
+        ].join(" ");
+
+        fontSize = parseFloat(fontSize);
+        lineHeight = parseFloat(lineHeight);
+
+        if (fontSize === 0) {
+            return;
+        }
+
+        var color = getPropertyValue(style, "color");
+
+        // A line of 500px, with a font of 12px, contains an average of 80 characters, but since we
+        // err, we'd like to guess a bigger number rather than a smaller one.  Multiplying by 5
+        // seems to be a good option.
+        var estimateLineLength = element.getBoundingClientRect().width / fontSize * 5;
+
+        while (!doChunk()) {}
+
+        return;                 // only function declarations after this line
+
         // Render a chunk of text, typically one line (but for justified text we render each word as
         // a separate Text object, because spacing is variable).  Returns true when it finished the
         // current node.  After each chunk it updates `start` to just after the last rendered
@@ -1954,7 +1984,7 @@
                     } else {
                         start = eol;
                     }
-                })(start, end, end);
+                })(start, Math.min(end, start + estimateLineLength), end);
             }
 
             // another workaround for IE: if we rely on getBoundingClientRect() we'll overlap with the bullet for LI
@@ -1967,27 +1997,6 @@
             var str = range.toString().replace(/\s+$/, "");
             drawText(str, box);
         }
-
-        var fontSize = getPropertyValue(style, "font-size");
-        var lineHeight = getPropertyValue(style, "line-height");
-
-        // simply getPropertyValue("font") doesn't work in Firefox :-\
-        var font = [
-            getPropertyValue(style, "font-style"),
-            getPropertyValue(style, "font-variant"),
-            getPropertyValue(style, "font-weight"),
-            fontSize, // no need for line height here; it breaks layout in FF
-            getPropertyValue(style, "font-family")
-        ].join(" ");
-
-        fontSize = parseFloat(fontSize);
-        lineHeight = parseFloat(lineHeight);
-
-        if (fontSize === 0) {
-            return;
-        }
-
-        var color = getPropertyValue(style, "color");
 
         function drawText(str, box) {
             str = str.replace(/[\r\n ]+/g, " ");
@@ -2045,8 +2054,6 @@
                 }
             }
         }
-
-        while (!doChunk()) {}
     }
 
     function groupInStackingContext(group, zIndex) {
