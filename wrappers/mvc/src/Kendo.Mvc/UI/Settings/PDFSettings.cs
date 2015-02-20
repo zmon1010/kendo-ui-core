@@ -7,6 +7,8 @@ namespace Kendo.Mvc.UI
 {    
     public class PDFSettings : JsonObject
     {
+        public bool? AllPages { get; set; }
+
         public string ProxyURL { get; set; }
 
         public object PaperSize { get; set; }
@@ -37,6 +39,11 @@ namespace Kendo.Mvc.UI
 
         protected override void Serialize(IDictionary<string, object> json)
         {
+            if (AllPages.HasValue)
+            {
+                json["allPages"] = ProxyURL;
+            }
+
             if (ProxyURL.HasValue())
             {
                 json["proxyURL"] = ProxyURL;

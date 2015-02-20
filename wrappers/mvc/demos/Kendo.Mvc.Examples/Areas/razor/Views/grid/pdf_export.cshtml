@@ -7,6 +7,13 @@
         .k-grid {
             font-family: "DejaVu Sans", "Arial", sans-serif;
         }
+
+        /* Hide the Grid header and pager during export */
+        .k-pdf-export .k-grid-toolbar,
+        .k-pdf-export .k-pager-wrap
+        {
+            display: none;
+        }
     </style>
 
     <!-- Load Pako ZLIB library to enable PDF compression -->
@@ -15,11 +22,11 @@
 
 @(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.EmployeeViewModel>()    
     .Name("grid")    
-    .HtmlAttributes( new { style = "width: 900px" } )
-     .Columns(columns =>
+    .HtmlAttributes( new { style = "width: 900px; height: 500px;" } )
+    .Columns(columns =>
     {
         columns.Bound(e => e.EmployeeID).Width(140).Title("Picture");
-        columns.Bound(e => e.Title).Width(400).Title("Details");
+        columns.Bound(e => e.Title).Width(350).Title("Details");
         columns.Bound(e => e.Title).Title("Country");
         columns.Bound(e=> e.EmployeeID).Title("ID");
     })
@@ -59,13 +66,17 @@
     )
     .ToolBar(tools => tools.Pdf())
     .Pdf(pdf => pdf
+        .AllPages()
         .FileName("Kendo UI Grid Export.pdf")
         .ProxyURL(Url.Action("Pdf_Export_Save", "Grid"))
     )
     .DataSource(dataSource => dataSource
         .Ajax()                 
         .Read(read => read.Action("Pdf_Export_Read", "Grid"))
+        .PageSize(5)
     )
+    .Scrollable()
+    .Pageable()
 )
 
 <style>
