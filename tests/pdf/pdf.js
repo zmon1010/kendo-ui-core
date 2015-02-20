@@ -61,7 +61,7 @@ test("saveAsPDF calls drawDOM with the widget wrapper", 1, function() {
 
 
     kendo.drawing.drawDOM = function(element) {
-        strictEqual(element, widget.wrapper[0]);
+        ok(element, widget.wrapper);
         return $.Deferred().promise();
     };
 
