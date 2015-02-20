@@ -43,6 +43,13 @@
         .k-grid {
             font-family: "DejaVu Sans", "Arial", sans-serif;
         }
+
+        /* Hide the Grid header and pager during export */
+        .k-pdf-export .k-grid-toolbar,
+        .k-pdf-export .k-pager-wrap
+        {
+            display: none;
+        }
     </style>
 
     <script>
@@ -65,6 +72,7 @@
          $("#grid").kendoGrid({
             toolbar: ["pdf"],
             pdf: {
+                allPages: true,
                 fileName: "Kendo UI Grid Export.pdf",
                 proxyURL: "http://demos.telerik.com/kendo-ui/service/export"
             },
@@ -74,17 +82,20 @@
                   read: {
                       url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Employees",
                   }
-              }
+              },
+              pageSize: 5
             },
             columns: [
                 { title: "Photo", width: 140 },
-                { title: "Details", width: 400 },
+                { title: "Details", width: 350 },
                 { title: "Country" },
                 { title: "EmployeeID" }
             ],
             rowTemplate: kendo.template($("#rowTemplate").html()),
             altRowTemplate: kendo.template($("#altRowTemplate").html()),
-            scrollable: false
+            height: 500,
+            scrollable: true,
+            pageable: true
         });
     </script>
     <style>
