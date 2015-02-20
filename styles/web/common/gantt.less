@@ -669,4 +669,39 @@
     float: left;
 }
 
+/* Gantt Chart PDF export */
+
+.k-pdf-export-shadow .k-gantt {
+    float: left;
+}
+
+/* Remove all sizes and scrolling */
+.k-pdf-export-shadow .k-gantt,
+.k-pdf-export-shadow .k-gantt-timeline,
+.k-pdf-export-shadow .k-gantt .k-grid-content
+{
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+.k-pdf-export-shadow .k-gantt-treelist
+{
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* Remove empty space reserved above the scrollbar */
+.k-pdf-export-shadow .k-gantt-timeline .k-grid-header
+{
+    padding: 0 !important;
+}
+
+/* Hide the splitter */
+.k-pdf-export-shadow .k-gantt .k-splitbar,
+.k-pdf-export-shadow .k-pdf-export
+{
+    display: none;
+}
+
 /* Gantt Chart end */

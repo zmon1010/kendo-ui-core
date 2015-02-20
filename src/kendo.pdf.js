@@ -88,18 +88,20 @@ kendo.PDFMixin = {
         return kendo.drawing.drawDOM(this.wrapper);
     },
 
-    _drawPDFShadow: function() {
+    _drawPDFShadow: function(content) {
         var wrapper = this.wrapper;
-        var shadow = $("<div class='k-pdf-export-shadow'>").css("width", wrapper.width());
+        var shadow = $("<div class='k-pdf-export-shadow'>")
+                     .css("width", wrapper.width());
 
-        // Prepend the export container
         wrapper.before(shadow);
-        shadow.append(wrapper.clone());
+        shadow.append(content || wrapper);
 
-        return kendo.drawing.drawDOM(shadow)
-        .done(function() {
+        var promise = kendo.drawing.drawDOM(shadow);
+        promise.done(function() {
             shadow.remove();
         });
+
+        return promise;
     }
 };
 

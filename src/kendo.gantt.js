@@ -2998,7 +2998,17 @@ var __meta__ = {
     });
 
     if (kendo.PDFMixin) {
-        kendo.PDFMixin.extend(Gantt.prototype);
+        kendo.PDFMixin.extend(Gantt.fn);
+
+        Gantt.fn._drawPDF = function() {
+            var listClass = "." + ganttStyles.list;
+            var listWidth = this.wrapper.find(listClass).width();
+
+            var content = this.wrapper.clone();
+            content.find(listClass).css("width", listWidth);
+
+            return this._drawPDFShadow(content);
+        };
     }
 
     kendo.ui.plugin(Gantt);
