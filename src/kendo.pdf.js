@@ -53,7 +53,8 @@ kendo.PDFMixin = {
 
     saveAsPDF: function() {
         var progress = new $.Deferred();
-        var args = { promise: progress.promise() };
+        var promise = progress.promise();
+        var args = { promise: promise };
 
         if (this.trigger("pdfExport", args)) {
             return;
@@ -79,6 +80,8 @@ kendo.PDFMixin = {
         .fail(function(err) {
             progress.reject(err);
         });
+
+        return promise;
     },
 
     _drawPDF: function() {

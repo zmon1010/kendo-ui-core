@@ -6639,25 +6639,20 @@ var __meta__ = {
            function exportPage() {
                 grid._drawPDFShadow()
                 .done(function(group) {
-                    // Format the current page
                     var pageNum = dataSource.page();
                     var totalPages = allPages ? dataSource.totalPages() : 1;
 
                     var args = {
-                        content: group,
-                        page: pageNum,
-                        total: totalPages,
+                        page: group,
                         progress: pageNum / totalPages
                     };
 
                     progress.notify(args);
-                    doc.append(args.content);
+                    doc.append(args.page);
 
                     if (pageNum < totalPages) {
-                        // Move to the next page
                         dataSource.page(pageNum + 1);
                     } else {
-                        // Last page processed reached
                         resolve();
                     }
                 })
