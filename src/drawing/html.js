@@ -1943,18 +1943,18 @@
                 // One more thing to note is that everything happens in a single Text DOM node.
                 // There's no other tags inside it, therefore the left/top coordinates of the
                 // bounding box will not change.
-                (function findEOL(end, max){
-                    range.setEnd(node, end);
+                (function findEOL(min, eol, max){
+                    range.setEnd(node, eol);
                     var r = range.getBoundingClientRect();
                     if (r.bottom != box.bottom) {
-                        findEOL((start + end) >> 1, end);
+                        findEOL(min, (min + eol) >> 1, eol);
                     } else if (r.right != box.right) {
                         box = r;
-                        findEOL((end + max) >> 1, max);
+                        findEOL(eol, (eol + max) >> 1, max);
                     } else {
-                        start = end;
+                        start = eol;
                     }
-                })(end, end);
+                })(start, end, end);
             }
 
             // another workaround for IE: if we rely on getBoundingClientRect() we'll overlap with the bullet for LI
