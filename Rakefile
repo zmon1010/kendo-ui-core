@@ -1034,8 +1034,9 @@ namespace :build do
         end
 
         NUGET_ZIPS.each do |zip|
-            dest = File.join(ARCHIVE_ROOT, destination, zip.pathmap("%n") + "." + VERSION + ".zip")
+            dest = File.join(ARCHIVE_ROOT, destination, zip.pathmap("%f"))
             file_copy :from => zip, :to => dest
+            p dest, zip
             nugets.push(dest)
         end
 
