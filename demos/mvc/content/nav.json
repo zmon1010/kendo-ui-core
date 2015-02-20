@@ -6619,6 +6619,19 @@
         }
       },
       {
+        "text": "Custom Visuals",
+        "url": "bar-charts/visuals",
+		"new": true,
+        "title": {
+            "kendo-ui": "Example of using custom visuals for the Kendo UI Bar Chart",
+            "aspnet-mvc": "Example of using custom visuals for ASP.NET MVC Bar Chart"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to use ustom visuals for the Kendo UI Bar Chart",
+            "aspnet-mvc": "This demo shows how to use ustom visuals for the ASP.NET MVC Bar Chart"
+        }
+      },
+      {
         "text": "Pan and zoom",
         "url": "bar-charts/pan-and-zoom",
         "disableInMobile": true,
@@ -7795,6 +7808,19 @@
         "meta": {
             "kendo-ui": "This demo shows how to use ErrorBars for Kendo UI Line Chart",
             "aspnet-mvc": "This demo shows how to use ErrorBars for ASP.NET MVC Line Chart"
+        }
+      },
+      {
+        "text": "Custom Visuals",
+        "url": "line-charts/visuals",
+		"new": true,
+        "title": {
+            "kendo-ui": "Example of using custom visuals for the Kendo UI Line Chart",
+            "aspnet-mvc": "Example of using custom visuals for ASP.NET MVC Line Chart"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to use ustom visuals for the Kendo UI Line Chart",
+            "aspnet-mvc": "This demo shows how to use ustom visuals for the ASP.NET MVC Line Chart"
         }
       },
       {

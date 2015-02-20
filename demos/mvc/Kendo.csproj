@@ -117,6 +117,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\dataviz\chart\images\cloudy.png" />
+    <Content Include="content\dataviz\chart\images\rainy.png" />
+    <Content Include="content\dataviz\chart\images\sunny.png" />
     <Content Include="content\integration\bootstrap\avatar.jpg" />
     <Content Include="content\integration\bootstrap\css\bootstrap-theme.css" />
     <Content Include="content\integration\bootstrap\css\bootstrap-theme.min.css" />
@@ -1169,6 +1172,7 @@
     <Content Include="Views\demos\diagram\pdf-export.cshtml" />
     <Content Include="Views\demos\linear-gauge\export.cshtml" />
     <Content Include="Views\demos\radial-gauge\export.cshtml" />
+    <Content Include="Views\demos\line-charts\visuals.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
