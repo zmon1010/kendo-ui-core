@@ -6698,7 +6698,7 @@ var __meta__ = {
                kendo.destroy(loading);
                loading.remove();
            });
-        }
+        };
    }
 
    function syncTableHeight(table1, table2) {
