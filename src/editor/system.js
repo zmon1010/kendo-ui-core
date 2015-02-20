@@ -1075,27 +1075,7 @@ var ExportPdfCommand = Command.extend({
     },
 
     exec: function() {
-        var editor = this.editor;
-        var pdfOptions = editor.options.pdf || {};
-
-        //TODO: check browser support
-        //TODO: handle user-defined paaper sizes and margins
-        var paperSize = pdfOptions.paperSize || "A4";
-        var drawOptions = {
-            forcePageBreak: pdfOptions.multiPage ? ".k-page-break" : "-",
-            pageClassName: "k-paper-" + paperSize.toLowerCase()
-        };
-        var drawing = kendo.drawing;
-        drawing.drawDOM(editor.body, drawOptions)
-            .then(function(root) {
-                return drawing.exportPDF(root, pdfOptions);
-            })
-            .done(function(data) {
-                kendo.saveAs({
-                    dataURI: data,
-                    fileName: "editor.pdf"
-                });
-            });
+        this.editor.saveAsPDF();
     }
 });
 extend(editorNS, {

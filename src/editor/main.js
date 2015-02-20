@@ -981,6 +981,13 @@
         }
     });
 
+   if (kendo.PDFMixin) {
+       kendo.PDFMixin.extend(Editor.prototype);
+       Editor.prototype._drawPDF = function() {
+           return kendo.drawing.drawDOM(this.body);
+       }
+   }
+
 })(window.jQuery);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
