@@ -521,6 +521,13 @@
             equal(highlight.options.stroke.opacity, 0.5);
         });
 
+        test("highlightVisual returns visual", function() {
+            var visual = segment.highlightVisual();
+
+            ok(visual instanceof draw.Group);
+            ok(visual === segment.visual);
+        });
+
     })();
 
     (function() {

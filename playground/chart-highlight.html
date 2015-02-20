@@ -2,25 +2,54 @@
 <html>
 <head>
     <title>Highlight</title>
-        <script src="../src/jquery.js"></script>
-        <script src="../src/kendo.core.js"></script>
-         <script src="../src/kendo.userevents.js"></script>
-        <script src="../src/kendo.data.js"></script>
-        <script src="../src/kendo.dataviz.core.js"></script>
-        <script src="../src/kendo.dataviz.chart.js"></script>
-        <script src="../src/kendo.dataviz.chart.polar.js"></script>
-        <script src="../src/kendo.dataviz.stock.js"></script>
-        <script src="../src/kendo.dataviz.sparkline.js"></script>
-        <script src="../src/kendo.dataviz.themes.js"></script>
-        <script src="../src/kendo.dataviz.vml.js"></script>
-        <script src="../src/kendo.dataviz.svg.js"></script>
-        <script src="../src/kendo.dataviz.canvas.js"></script>  
-        <link href="../dist/styles/web/kendo.common.css" rel="stylesheet">
-        <link href="../dist/styles/web/kendo.default.css" rel="stylesheet">
-        <link href="../dist/styles/dataviz/kendo.dataviz.min.css" rel="stylesheet">
-        <link href="../dist/styles/dataviz/kendo.dataviz.default.min.css" rel="stylesheet">
+    <link type="text/css" href="http://cdn.kendostatic.com/2014.3.1316/styles/kendo.common.min.css" rel="stylesheet/less"/>
+    <link type="text/css" href="http://cdn.kendostatic.com/2014.3.1316/styles/kendo.default.min.css" rel="stylesheet/less"/>    
+    <link type="text/css" href="http://cdn.kendostatic.com/2014.3.1316/styles/kendo.dataviz.min.css" rel="stylesheet/less"/>
+    <link type="text/css" href="http://cdn.kendostatic.com/2014.3.1316/styles/kendo.dataviz.default.min.css" rel="stylesheet/less"/>
+    
+    <script src="../src/jquery.js"></script>
+    <script src="../src/kendo.core.js"></script>
+    <script src="../src/kendo.color.js"></script>
+                
+    <script src="../src/kendo.data.js"></script>
+    <script src="../src/kendo.binder.js"></script>
+               
+    <script src="../src/kendo.popup.js"></script>
+    <script src="../src/kendo.userevents.js"></script>
+    <script src="../src/kendo.draganddrop.js"></script>
+    <script src="../src/kendo.slider.js"></script>
+    <script src="../src/kendo.colorpicker.js"></script>
+    <script src="../src/kendo.button.js"></script>
+    <script src="../src/kendo.numerictextbox.js"></script>
+    <script src="../src/kendo.list.js"></script>
+    <script src="../src/kendo.dropdownlist.js"></script>
+                
+    <script src="../src/util/main.js"></script>
+    <script src="../src/mixins/observers.js"></script>
+    <script src="../src/geometry/main.js"></script>
+    <script src="../src/drawing/core.js"></script>         
+    <script src="../src/drawing/mixins.js"></script>
+    <script src="../src/drawing/text-metrics.js"></script>
+    <script src="../src/drawing/shapes.js"></script>
+    <script src="../src/drawing/animation.js"></script>
+    <script src="../src/drawing/parser.js"></script>
+    <script src="../src/drawing/svg.js"></script>
+    <script src="../src/drawing/canvas.js"></script>
+    <script src="../src/drawing/vml.js"></script>
+                
+    <script src="../src/kendo.dataviz.core.js"></script>
+    <script src="../src/kendo.dataviz.chart.js"></script>
+    <script src="../src/kendo.dataviz.chart.polar.js"></script>
+    <script src="../src/kendo.dataviz.sparkline.js"></script>
+    <script src="../src/kendo.dataviz.stock.js"></script>
+    <script src="../src/kendo.dataviz.themes.js"></script>
 </head>
 <body>
+<style>
+    .k-chart {
+        height: 500px;
+    }
+</style>
  <div id="lineColumn" ></div>
  <div id="doubleColumn" ></div>
  <div id="pie"></div>
@@ -89,7 +118,14 @@
                  background: "transparent",
                  template: "#= category #: \n #= value#%",
                  rotation: 45
-             }
+             },
+             highlight: {
+                toggle: function(e) {console.log(e);
+                    e.preventDefault();
+                    var visual = e.visual;
+                    visual.opacity(e.show ? 0.5 : 1);
+                }
+            },
          },
          series: [{
              type: "pie",
@@ -141,6 +177,13 @@
             area: {
                 line: {
                     style: "smooth"
+                },
+                                highlight: {
+                    toggle: function(e) {console.log(e);
+                        e.preventDefault();
+                        var visual = e.visual;
+                        visual.opacity(e.show ? 0.8 : 1);
+                    }
                 }
             }
         },
@@ -179,6 +222,15 @@
  
  function initLineColumnChart() {
      $("#lineColumn").kendoChart({
+        seriesDefaults: {
+                highlight: {
+                    toggle: function(e) {console.log(e);
+                        e.preventDefault();
+                        var visual = e.visual;
+                        visual.opacity(e.show ? 0.8 : 1);
+                    }
+                },
+        },
          series: [{
              type: "column",
              name: "column",
@@ -229,6 +281,15 @@
          categoryAxis: {
              categories: ["a", "b", "c", "d", "e"]
          },
+        seriesDefaults: {
+                highlight: {
+                    toggle: function(e) {console.log(e);
+                        e.preventDefault();
+                        var visual = e.visual;
+                        visual.opacity(e.show ? 0.8 : 1);
+                    }
+                },
+        },
          panes: [{
              clip: true
          }],
@@ -263,6 +324,15 @@
          legend: {
              visible: false
          },
+        seriesDefaults: {
+            highlight: {
+                toggle: function(e) {console.log(e);
+                    e.preventDefault();
+                    var visual = e.visual;
+                    visual.opacity(e.show ? 0.8 : 1);
+                }
+            },
+        },
          series: [{
              type: "bullet",
              data: [
@@ -330,6 +400,15 @@
                  1, 1, 0, 0, 0
              ]
          }],
+         seriesDefaults: {
+            highlight: {
+                toggle: function(e) {console.log(e);
+                    e.preventDefault();
+                    var visual = e.visual;
+                    visual.opacity(e.show ? 0.8 : 1);
+                }
+            },
+        },
          categoryAxis: {
              categories: [
                  "Df", "Pr", "A", "C", "D", "E",
@@ -398,13 +477,31 @@
              min: 3000000,
              max: 15000000
          }],
+         seriesDefaults: {
+            highlight: {
+                toggle: function(e) {console.log(e);
+                    e.preventDefault();
+                    var visual = e.visual;
+                    visual.opacity(e.show ? 0.8 : 1);
+                }
+            },
+        },
          series: [{
              type: "candlestick",
              openField: "Open",
              highField: "High",
              lowField: "Low",
              closeField: "Close",
-             axis: "stock"
+             axis: "stock",
+              highlight: {
+                toggle: function(e) {console.log(e);
+                    e.preventDefault();
+                    var visual = e.visual;
+                    for (var idx = 0; idx < visual.children.length; idx++) {
+                        visual.children[idx].fill("blue").stroke("blue");
+                    }
+                }
+            },
 
          }, {
              type: "column",
@@ -430,6 +527,16 @@
 
  function initScatterChart() {
      $("#scatterChart").kendoChart({
+             seriesDefaults: {
+            highlight: {
+                toggle: function(e) {
+                    console.log(e);
+                    e.preventDefault();
+                    var visual = e.visual;
+                    visual.fill(e.show ? "blue" : "none");
+                }
+            },
+        },
          series: [{
              type: "scatterLine",
              data: [{
@@ -527,9 +634,16 @@
              data: [60, 1, 100, 50, 60],
              axis: "bottom"
          }],
-         seriesDefaults: {
-             stack: true
-         },
+                 seriesDefaults: {
+            highlight: {
+                toggle: function(e) {console.log(e);
+                    e.preventDefault();
+                    var visual = e.visual;
+                    visual.opacity(e.show ? 0.8 : 1);
+                }
+            },
+            stack: true
+        },
          valueAxis: [{
              min: 40,
              max: 80,
@@ -573,6 +687,13 @@
              position: "bottom"
          },
          seriesDefaults: {
+                     highlight: {
+                toggle: function(e) {console.log(e);
+                    e.preventDefault();
+                    var visual = e.visual;
+                    visual.opacity(e.show ? 0.8 : 1);
+                }
+            },
              type: "radarLine",
              style: "smooth"
          },
@@ -616,8 +737,16 @@
              text: "Polar plot"
          },
          seriesDefaults: {
+                     highlight: {
+                toggle: function(e) {console.log(e);
+                    e.preventDefault();
+                    var visual = e.visual;
+                    visual.opacity(e.show ? 0.8 : 1);
+                }
+            },
              type: "polarLine"
          },
+         
          series: [{
              data: [
                  [20, 15],
@@ -664,6 +793,13 @@
              visible: false
          },
          seriesDefaults: {
+                     highlight: {
+                toggle: function(e) {console.log(e);
+                    e.preventDefault();
+                    var visual = e.visual;
+                    visual.opacity(e.show ? 0.8 : 1);
+                }
+            },
              type: "bubble"
          },
          series: [{

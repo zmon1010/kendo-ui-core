@@ -2350,4 +2350,527 @@
         });
 
     })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var Layout = d.Layout;
+        var layout, path1, path2, path3, bbox;
+
+        function createPaths(rects) {
+            rects = rects || [];
+            path1 = d.Path.fromRect(rects[0] || new g.Rect([5, 400], [200, 50]));
+            path2 = d.Path.fromRect(rects[1] || new g.Rect([60, 10], [200, 70]));
+            path3 = d.Path.fromRect(rects[2] ||new g.Rect([150, 100], [200, 50]));
+        }
+
+        module("Layout", {});
+
+        test("sets initial rect", function() {
+            var rect = new g.Rect();
+            layout = new Layout(rect);
+            ok(layout._rect === rect);
+        });
+
+        test("sets default options", function() {
+            layout = new Layout();
+            var options = layout.options;
+            equal(options.alignContent, "start");
+            equal(options.justifyContent, "start");
+            equal(options.alignItems, "start");
+            equal(options.spacing, 0);
+            equal(options.orientation, "horizontal");
+            equal(options.lineSpacing, 0);
+            equal(options.wrap, true);
+        });
+
+        test("sets user options", function() {
+            layout = new Layout(null, {
+                alignContent: "center",
+                justifyContent: "center",
+                alignItems: "center",
+                spacing: 5,
+                orientation: "vertical",
+                lineSpacing: 5,
+                wrap: false
+            });
+
+            var options = layout.options;
+            equal(options.alignContent, "center");
+            equal(options.justifyContent, "center");
+            equal(options.alignItems, "center");
+            equal(options.spacing, 5);
+            equal(options.orientation, "vertical");
+            equal(options.lineSpacing, 5);
+            equal(options.wrap, false);
+        });
+
+        test("rect sets _rect", function() {
+            var rect = new g.Rect();
+            layout = new Layout();
+            layout.rect(rect);
+            ok(layout._rect === rect);
+        });
+
+        test("rect sets _rect", function() {
+            var rect = new g.Rect();
+            layout = new Layout(rect);
+            ok(layout.rect() === rect);
+        });
+
+        // ------------------------------------------------------------
+        module("Layout /reflow");
+
+        test("does nothing if no rect is set", function() {
+            layout = new Layout();
+            layout.reflow();
+            ok(true);
+        });
+
+        test("does nothing if there are no children", function() {
+            layout = new Layout(new g.Rect());
+            layout.reflow();
+            ok(true);
+        });
+
+        // ------------------------------------------------------------
+        module("Layout / reflow / horizontal", {
+            setup: function() {
+                layout = new Layout(new g.Rect([100, 100], [500, 300]), {
+                    orientation: "horizontal",
+                    spacing: 10
+                });
+
+                createPaths();
+
+                layout.append(path1, path2);
+            }
+        });
+
+        test("aligns content to the start", function() {
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.y, 100);
+        });
+
+        test("aligns content to the center", function() {
+            layout.options.alignContent = "center";
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.y, 215);
+        });
+
+        test("aligns content to the end", function() {
+            layout.options.alignContent = "end";
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.y, 330);
+        });
+
+        test("justifies content to the start", function() {
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.x, 100);
+        });
+
+        test("justifies content to the center", function() {
+            layout.options.justifyContent = "center";
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.x, 145);
+        });
+
+        test("justifies content to the end", function() {
+            layout.options.justifyContent = "end";
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.x, 190);
+        });
+
+        test("aligns items to the start", function() {
+            layout.reflow();
+            equal(path1.bbox().origin.y, 100);
+            equal(path2.bbox().origin.y, 100);
+        });
+
+        test("aligns items to the center", function() {
+            layout.options.alignItems = "center";
+            layout.reflow();
+            equal(path1.bbox().origin.y, 110);
+            equal(path2.bbox().origin.y, 100);
+        });
+
+        test("aligns items to the end", function() {
+            layout.options.alignItems = "end";
+            layout.reflow();
+            equal(path1.bbox().origin.y, 120);
+            equal(path2.bbox().origin.y, 100);
+        });
+
+        test("stacks items with spacing", function() {
+            layout.reflow();
+            equal(path1.bbox().origin.x, 100);
+            equal(path2.bbox().origin.x, 310);
+        });
+
+        test("skips not visible items", function() {
+            var hiddenPath = d.Path.fromRect(new g.Rect([0, 0], [1000, 100]), {
+                visible: false
+            });
+
+            layout.insertAt(hiddenPath, 1);
+            layout.reflow();
+            equal(path1.bbox().origin.x, 100);
+            equal(path2.bbox().origin.x, 310);
+        });
+
+        test("skips items without bbox", function() {
+            var emptyGroup = new d.Group();
+
+            layout.insertAt(emptyGroup, 1);
+            layout.reflow();
+            equal(path1.bbox().origin.x, 100);
+            equal(path2.bbox().origin.x, 310);
+        });
+
+        test("does not scale if wrap is set to false and the items fit in the rectangle", function() {
+            layout.options.wrap = false;
+            layout.reflow();
+            ok(!layout.transform());
+        });
+
+        // ------------------------------------------------------------
+        module("Layout / reflow / horizontal / multiline", {
+            setup: function() {
+                layout = new Layout(new g.Rect([100, 100], [500, 300]), {
+                    orientation: "horizontal",
+                    spacing: 10,
+                    lineSpacing: 10
+                });
+
+                createPaths();
+
+                layout.append(path1, path2, path3);
+            }
+        });
+
+        test("aligns content to the start", function() {
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.y, 100);
+        });
+
+        test("aligns content to the center", function() {
+            layout.options.alignContent = "center";
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.y, 185);
+        });
+
+        test("aligns content to the end", function() {
+            layout.options.alignContent = "end";
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.bottomRight().y, 400);
+        });
+
+        test("justifies lines to the start", function() {
+            layout.reflow();
+            equal(path1.bbox().origin.x, 100);
+            equal(path3.bbox().origin.x, 100);
+        });
+
+        test("justifies lines to the center", function() {
+            layout.options.justifyContent = "center";
+            layout.reflow();
+            equal(path1.bbox().origin.x, 145);
+            equal(path3.bbox().origin.x, 250);
+        });
+
+        test("justifies lines to the end", function() {
+            layout.options.justifyContent = "end";
+            layout.reflow();
+            equal(path2.bbox().bottomRight().x, 600);
+            equal(path3.bbox().bottomRight().x, 600);
+        });
+
+        test("aligns items to the start", function() {
+            layout.reflow();
+            equal(path1.bbox().origin.y, 100);
+            equal(path2.bbox().origin.y, 100);
+            equal(path3.bbox().origin.y, 180);
+        });
+
+        test("aligns items to the center", function() {
+            layout.options.alignItems = "center";
+            layout.reflow();
+            equal(path1.bbox().origin.y, 110);
+            equal(path2.bbox().origin.y, 100);
+            equal(path3.bbox().origin.y, 180);
+        });
+
+        test("aligns items to the end", function() {
+            layout.options.alignItems = "end";
+            layout.reflow();
+            equal(path1.bbox().origin.y, 120);
+            equal(path2.bbox().origin.y, 100);
+            equal(path3.bbox().origin.y, 180);
+        });
+
+        test("stacks items with spacing", function() {
+            layout.reflow();
+            equal(path1.bbox().origin.x, 100);
+            equal(path2.bbox().origin.x, 310);
+        });
+
+        test("skips not visible items", function() {
+            var hiddenPath = d.Path.fromRect(new g.Rect([0, 0], [1000, 100]), {
+                visible: false
+            });
+
+            layout.insertAt(hiddenPath, 1);
+            layout.reflow();
+            equal(path1.bbox().origin.x, 100);
+            equal(path2.bbox().origin.x, 310);
+        });
+
+        test("skips items without bbox", function() {
+            var emptyGroup = new d.Group();
+
+            layout.insertAt(emptyGroup, 1);
+            layout.reflow();
+            equal(path1.bbox().origin.x, 100);
+            equal(path2.bbox().origin.x, 310);
+        });
+
+        test("scales uniformly to fit if wrap is set to false", function() {
+            layout.options.wrap = false;
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.size.width, 500);
+            close(bbox.size.height, 70 * (500 / 620), 0.1);
+        });
+
+        // ------------------------------------------------------------
+        module("Layout / reflow / vertical", {
+            setup: function() {
+                layout = new Layout(new g.Rect([100, 100], [300, 500]), {
+                    orientation: "vertical",
+                    spacing: 10
+                });
+
+                createPaths([new g.Rect([5, 400], [50, 200]),
+                    new g.Rect([60, 10], [70, 200]),
+                    new g.Rect([150, 100], [50, 200])]);
+
+                layout.append(path1, path2);
+            }
+        });
+
+        test("aligns content to the start", function() {
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.x, 100);
+        });
+
+        test("aligns content to the center", function() {
+            layout.options.alignContent = "center";
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.x, 215);
+        });
+
+        test("aligns content to the end", function() {
+            layout.options.alignContent = "end";
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.x, 330);
+        });
+
+        test("justifies content to the start", function() {
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.y, 100);
+        });
+
+        test("justifies content to the center", function() {
+            layout.options.justifyContent = "center";
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.y, 145);
+        });
+
+        test("justifies content to the end", function() {
+            layout.options.justifyContent = "end";
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.y, 190);
+        });
+
+        test("aligns items to the start", function() {
+            layout.reflow();
+            equal(path1.bbox().origin.x, 100);
+            equal(path2.bbox().origin.x, 100);
+        });
+
+        test("aligns items to the center", function() {
+            layout.options.alignItems = "center";
+            layout.reflow();
+            equal(path1.bbox().origin.x, 110);
+            equal(path2.bbox().origin.x, 100);
+        });
+
+        test("aligns items to the end", function() {
+            layout.options.alignItems = "end";
+            layout.reflow();
+            equal(path1.bbox().origin.x, 120);
+            equal(path2.bbox().origin.x, 100);
+        });
+
+        test("stacks items with spacing", function() {
+            layout.reflow();
+            equal(path1.bbox().origin.y, 100);
+            equal(path2.bbox().origin.y, 310);
+        });
+
+        test("skips not visible items", function() {
+            var hiddenPath = d.Path.fromRect(new g.Rect([0, 0], [1000, 100]), {
+                visible: false
+            });
+
+            layout.insertAt(hiddenPath, 1);
+            layout.reflow();
+            equal(path1.bbox().origin.y, 100);
+            equal(path2.bbox().origin.y, 310);
+        });
+
+        test("skips items without bbox", function() {
+            var emptyGroup = new d.Group();
+
+            layout.insertAt(emptyGroup, 1);
+            layout.reflow();
+            equal(path1.bbox().origin.y, 100);
+            equal(path2.bbox().origin.y, 310);
+        });
+
+        test("does not scale if wrap is set to false and the items fit in the rectangle", function() {
+            layout.options.wrap = false;
+            layout.reflow();
+            ok(!layout.transform());
+        });
+
+        // ------------------------------------------------------------
+        module("Layout / reflow / horizontal / multiline", {
+            setup: function() {
+                layout = new Layout(new g.Rect([100, 100], [300, 500]), {
+                    orientation: "vertical",
+                    spacing: 10,
+                    lineSpacing: 10
+                });
+
+                createPaths([new g.Rect([5, 400], [50, 200]),
+                    new g.Rect([60, 10], [70, 200]),
+                    new g.Rect([150, 100], [50, 200])]);
+
+                layout.append(path1, path2, path3);
+            }
+        });
+
+        test("aligns content to the start", function() {
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.x, 100);
+        });
+
+        test("aligns content to the center", function() {
+            layout.options.alignContent = "center";
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.origin.x, 185);
+        });
+
+        test("aligns content to the end", function() {
+            layout.options.alignContent = "end";
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.bottomRight().x, 400);
+        });
+
+        test("justifies lines to the start", function() {
+            layout.reflow();
+            equal(path1.bbox().origin.y, 100);
+            equal(path3.bbox().origin.y, 100);
+        });
+
+        test("justifies lines to the center", function() {
+            layout.options.justifyContent = "center";
+            layout.reflow();
+            equal(path1.bbox().origin.y, 145);
+            equal(path3.bbox().origin.y, 250);
+        });
+
+        test("justifies lines to the end", function() {
+            layout.options.justifyContent = "end";
+            layout.reflow();
+            equal(path2.bbox().bottomRight().y, 600);
+            equal(path3.bbox().bottomRight().y, 600);
+        });
+
+        test("aligns items to the start", function() {
+            layout.reflow();
+            equal(path1.bbox().origin.x, 100);
+            equal(path2.bbox().origin.x, 100);
+            equal(path3.bbox().origin.x, 180);
+        });
+
+        test("aligns items to the center", function() {
+            layout.options.alignItems = "center";
+            layout.reflow();
+            equal(path1.bbox().origin.x, 110);
+            equal(path2.bbox().origin.x, 100);
+            equal(path3.bbox().origin.x, 180);
+        });
+
+        test("aligns items to the end", function() {
+            layout.options.alignItems = "end";
+            layout.reflow();
+            equal(path1.bbox().origin.x, 120);
+            equal(path2.bbox().origin.x, 100);
+            equal(path3.bbox().origin.x, 180);
+        });
+
+        test("stacks items with spacing", function() {
+            layout.reflow();
+            equal(path1.bbox().origin.y, 100);
+            equal(path2.bbox().origin.y, 310);
+        });
+
+        test("skips not visible items", function() {
+            var hiddenPath = d.Path.fromRect(new g.Rect([0, 0], [1000, 100]), {
+                visible: false
+            });
+
+            layout.insertAt(hiddenPath, 1);
+            layout.reflow();
+            equal(path1.bbox().origin.y, 100);
+            equal(path2.bbox().origin.y, 310);
+        });
+
+        test("skips items without bbox", function() {
+            var emptyGroup = new d.Group();
+
+            layout.insertAt(emptyGroup, 1);
+            layout.reflow();
+            equal(path1.bbox().origin.y, 100);
+            equal(path2.bbox().origin.y, 310);
+        });
+
+        test("scales uniformly to fit if wrap is set to false", function() {
+            layout.options.wrap = false;
+            layout.reflow();
+            bbox = layout.bbox();
+            equal(bbox.size.height, 500);
+            close(bbox.size.width, 70 * (500 / 620), 0.1);
+        });
+
+    })();
 })();

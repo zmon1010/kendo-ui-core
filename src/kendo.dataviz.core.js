@@ -390,6 +390,10 @@ var __meta__ = {
 
         toRect: function() {
             return new geom.Rect([this.x1, this.y1], [this.width(), this.height()]);
+        },
+
+        hasSize: function() {
+            return this.width() !== 0 && this.height() !== 0;
         }
     };
 
@@ -656,6 +660,15 @@ var __meta__ = {
 
             this.createVisual();
 
+            this.addVisual();
+
+            this.renderChildren();
+
+            this.createAnimation();
+            this.renderComplete();
+        },
+
+        addVisual: function() {
             if (this.visual) {
                 this.visual.chartElement = this;
 
@@ -663,14 +676,13 @@ var __meta__ = {
                     this.parent.appendVisual(this.visual);
                 }
             }
+        },
 
+        renderChildren: function() {
             var children = this.children;
             for (var i = 0; i < children.length; i++) {
                 children[i].renderVisual();
             }
-
-            this.createAnimation();
-            this.renderComplete();
         },
 
         createVisual: function() {
@@ -768,13 +780,13 @@ var __meta__ = {
 
         renderComplete: $.noop,
 
+        hasHighlight: function() {
+            var options = (this.options || {}).highlight;
+            return !(!this.createHighlight || (options && options.visible === false));
+        },
+
         toggleHighlight: function(show) {
             var highlight = this._highlight;
-            var options = this.options.highlight;
-
-            if (!this.createHighlight || (options && options.visible === false)) {
-                return;
-            }
 
             if (!highlight) {
                 highlight = this._highlight = this.createHighlight({
@@ -1302,18 +1314,45 @@ var __meta__ = {
         reflow: function(targetBox) {
             var textbox = this;
             var options = textbox.options;
+            var visual = options.visual;
             var align = options.align;
             var rotation = options.rotation;
             textbox.container.options.align = align;
-            BoxElement.fn.reflow.call(textbox, targetBox);
-            if (rotation) {
-                var margin = options.margin;
-                var box = textbox.box.unpad(margin);
-                textbox.normalBox = box.clone();
-                box.rotate(rotation);
-                box.pad(margin);
-                textbox.align(targetBox, X, align);
-                textbox.align(targetBox, Y, options.vAlign);
+
+            if (visual && options.visualSize && targetBox.hasSize()) {
+                textbox.visual = visual({
+                    text: textbox.content,
+                    rect: targetBox.toRect(),
+                    options: textbox.visualOptions(),
+                    createVisual: function() {
+                        options.visualSize = false;
+                        textbox.reflow(targetBox);
+                        options.visualSize = true;
+                        return textbox.getDefaultVisual();
+                    }
+                });
+
+                if (textbox.visual) {
+                    textbox.box = rectToBox(textbox.visual.clippedBBox() || new geom.Rect());
+                } else {
+                    textbox.box = new Box2D();
+                }
+            } else {
+                if (targetBox.hasSize()) {
+                    textbox.initialBox = targetBox.clone();
+                }
+
+                BoxElement.fn.reflow.call(textbox, targetBox);
+
+                if (rotation) {
+                    var margin = options.margin;
+                    var box = textbox.box.unpad(margin);
+                    textbox.normalBox = box.clone();
+                    box.rotate(rotation);
+                    box.pad(margin);
+                    textbox.align(targetBox, X, align);
+                    textbox.align(targetBox, Y, options.vAlign);
+                }
             }
         },
 
@@ -1334,6 +1373,49 @@ var __meta__ = {
                 var box = draw.Path.fromRect(this.paddingBox.toRect(), this.visualStyle());
                 this.visual.append(box);
             }
+        },
+
+        renderVisual: function() {
+            var that = this;
+            var options = that.options;
+            var visual = options.visual;
+            if (visual) {
+                if (!options.visualSize) {
+                    that.visual = visual({
+                        text: that.content,
+                        rect: (this.initialBox || Box2D()).toRect(),
+                        options: this.visualOptions(),
+                        createVisual: function() {
+                            return that.getDefaultVisual();
+                        }
+                    });
+                }
+
+                this.addVisual();
+            } else {
+                BoxElement.fn.renderVisual.call(this);
+            }
+        },
+
+        visualOptions: function() {
+            var options = this.options;
+            return {
+                background: options.background,
+                border: options.border,
+                color: options.color,
+                font: options.font,
+                margin: options.margin,
+                padding: options.padding,
+                visible: options.visible
+            };
+        },
+
+        getDefaultVisual: function() {
+            this.createVisual();
+            this.renderChildren();
+            var visual = this.visual;
+            delete this.visual;
+            return visual;
         },
 
         rotationTransform: function() {
@@ -1405,7 +1487,7 @@ var __meta__ = {
             options = { text: options };
         }
 
-        options = deepExtend({ visible: true }, defaultOptions, options);
+        options = deepExtend({ visible: true }, defaultOptions, options, {visualSize: true});
 
         if (options && options.visible && options.text) {
             title = new Title(options);
@@ -1653,7 +1735,8 @@ var __meta__ = {
                 titleOptions = deepExtend({
                     rotation: options.vertical ? -90 : 0,
                     text: "",
-                    zIndex: 1
+                    zIndex: 1,
+                    visualSize: true
                 }, options.title),
                 title;
 
@@ -2280,6 +2363,7 @@ var __meta__ = {
                     }
                 }
                 note.contentBox = contentBox;
+                note.targetBox = targetBox;
                 note.box = box || contentBox;
             }
         },
@@ -2289,6 +2373,42 @@ var __meta__ = {
 
             if (this.options.visible) {
                 this.createLine();
+            }
+        },
+
+        renderVisual: function() {
+            var that = this;
+            var options = that.options;
+            var customVisual = options.visual;
+            if (options.visible && customVisual) {
+                var targetPoint = that.targetPoint;
+                that.visual = customVisual({
+                    dataItem: that.dataItem,
+                    category: that.category,
+                    value: that.value,
+                    text: that.text,
+                    series: that.series,
+                    rect: that.targetBox.toRect(),
+                    options: {
+                        background: options.background,
+                        border: options.background,
+                        icon: options.icon,
+                        label: options.label,
+                        line: options.line,
+                        position: options.position,
+                        visible: options.visible
+                    },
+                    createVisual: function() {
+                        that.createVisual();
+                        that.renderChildren();
+                        var defaultVisual = that.visual;
+                        delete that.visual;
+                        return defaultVisual;
+                    }
+                });
+                that.addVisual();
+            } else {
+                BoxElement.fn.renderVisual.call(that);
             }
         },
 
@@ -2344,6 +2464,11 @@ var __meta__ = {
     });
 
     var ShapeElement = BoxElement.extend({
+        init: function(options, pointData) {
+            this.pointData = pointData;
+            BoxElement.fn.init.call(this, options);
+        },
+
         options: {
             type: CIRCLE,
             align: CENTER,
@@ -2401,8 +2526,44 @@ var __meta__ = {
             return element;
         },
 
+        createElement: function() {
+            var that = this;
+            var customVisual = that.options.visual;
+            var pointData = that.pointData || {};
+            var visual;
+            if (customVisual) {
+                visual = customVisual({
+                    value: pointData.value,
+                    dataItem: pointData.dataItem,
+                    series: pointData.series,
+                    rect: that.box.toRect(),
+                    options: that.visualOptions(),
+                    createVisual: function() {
+                        return that.getElement();
+                    }
+                });
+            } else {
+                visual = that.getElement();
+            }
+
+            return visual;
+        },
+
+        visualOptions: function() {
+            var options = this.options;
+            return {
+                background: options.background,
+                border: options.border,
+                margin: options.margin,
+                padding: options.padding,
+                type: options.type,
+                size: options.width,
+                visible: options.visible
+            };
+        },
+
         createVisual: function() {
-            this.visual = this.getElement();
+            this.visual = this.createElement();
         }
     });
 
@@ -3775,6 +3936,12 @@ var __meta__ = {
         return currentStops;
     }
 
+    function rectToBox(rect) {
+        var origin = rect.origin;
+        var bottomRight = rect.bottomRight();
+        return new Box2D(origin.x, origin.y, bottomRight.x, bottomRight.y);
+    }
+
     decodeEntities._element = document.createElement("span");
 
     // Exports ================================================================
@@ -3821,6 +3988,7 @@ var __meta__ = {
         inArray: inArray,
         interpolateValue: interpolateValue,
         mwDelta: mwDelta,
+        rectToBox: rectToBox,
         rotatePoint: rotatePoint,
         round: round,
         ceil: ceil,

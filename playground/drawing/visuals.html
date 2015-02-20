@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link type="text/css" href="../../styles/web/kendo.common.css" rel="stylesheet/less"/>
+    <link type="text/css" href="../../styles/web/kendo.silver.css" rel="stylesheet/less"/>
+    <link type="text/css" href="../../styles/dataviz/kendo.dataviz.css" rel="stylesheet/less"/>
+    <link type="text/css" href="../../styles/dataviz/kendo.dataviz.silver.css" rel="stylesheet"/>
+    
+    <script src="../../src/jquery.js"></script>
+    <script src="../../src/kendo.core.js"></script>
+    <script src="../../src/kendo.color.js"></script>
+                
+    <script src="../../src/kendo.data.js"></script>
+    <script src="../../src/kendo.binder.js"></script>
+               
+    <script src="../../src/kendo.popup.js"></script>
+    <script src="../../src/kendo.userevents.js"></script>
+    <script src="../../src/kendo.draganddrop.js"></script>
+    <script src="../../src/kendo.slider.js"></script>
+    <script src="../../src/kendo.colorpicker.js"></script>
+    <script src="../../src/kendo.button.js"></script>
+    <script src="../../src/kendo.numerictextbox.js"></script>
+    <script src="../../src/kendo.list.js"></script>
+    <script src="../../src/kendo.dropdownlist.js"></script>
+                
+    <script src="../../src/util/main.js"></script>
+    <script src="../../src/mixins/observers.js"></script>
+    <script src="../../src/geometry/main.js"></script>
+    <script src="../../src/drawing/core.js"></script>         
+    <script src="../../src/drawing/mixins.js"></script>
+    <script src="../../src/drawing/text-metrics.js"></script>
+    <script src="../../src/drawing/shapes.js"></script>
+    <script src="../../src/drawing/animation.js"></script>
+    <script src="../../src/drawing/parser.js"></script>
+    <script src="../../src/drawing/svg.js"></script>
+    <script src="../../src/drawing/canvas.js"></script>
+    <script src="../../src/drawing/vml.js"></script>
+                
+    <script src="../../src/kendo.dataviz.core.js"></script>
+    <script src="../../src/kendo.dataviz.chart.js"></script>
+    <script src="../../src/kendo.dataviz.sparkline.js"></script>
+    <script src="../../src/kendo.dataviz.stock.js"></script>
+    <script src="../../src/kendo.dataviz.themes.js"></script>
+    <script>
+    var drawing = kendo.drawing;
+    var geometry = kendo.geometry;
+    $(function() {
+        initLineChart();
+        initBarChart();
+    });
+
+    function initLineChart() {
+        var grandSlam = [{
+            "year": "2003",
+            "win": 13,
+            "extremum": "MIN: 13",
+            "loss": 3
+        },{
+            "year": "2004",
+            "win": 22,
+            "loss": 1
+        },{
+            "year": "2005",
+            "win": 24,
+            "loss": 2
+        },{
+            "year": "2006",
+            "win": 27,
+            "extremum": "MAX: 27",
+            "loss": 1
+        },{
+            "year": "2007",
+            "win": 26,
+            "loss": 1
+        },{
+            "year": "2008",
+            "win": 24,
+            "loss": 3
+        },{
+            "year": "2009",
+            "win": 26,
+            "loss": 2
+        },{
+            "year": "2010",
+            "win": 20,
+            "loss": 3
+        },{
+            "year": "2011",
+            "win": 20,
+            "loss": 4
+        },{
+            "year": "2012",
+            "win": 19,
+            "loss": 3
+        }];
+
+        $("#line").kendoChart({
+            dataSource: {
+                data: grandSlam
+            },
+            title: {
+                text: "Roger Federer Grand Slam tournament performance",
+                // visual: titleVisual
+            },
+                legend: {
+                // offsetX: 200,
+             // offsetY: 20,
+                 position: "top",
+                // orientation: "horizontal",
+                // width: 300,
+                // height: 300,
+                    background: "red",
+                    margin: 10,
+                    padding: 10,
+                    border: {
+                        width: 10,
+                        color: "black"
+                    },
+                    item: {
+                        visual: function(e) {                       
+                           return customVisual({
+                                rect: new geometry.Rect([0, 0], [50, 100]),
+                                options: {
+                                    background: e.active ? "blue": "grey"
+                                   }
+                           });
+                        }
+                    }
+                },
+            seriesDefaults: {
+                type: "line",
+                highlight: {
+                    toggle: function(e) {
+                        e.preventDefault();
+                        var visual = e.visual;
+                        var fill = e.show ? "red" : "none";
+                        for(var idx = 0; idx < visual.children.length; idx++) {
+                            visual.children[idx].fill(fill);
+                        }
+                    }
+                },
+                markers: {
+                    visible: true,
+                    visual: function(e) {
+                        return customVisual(e);
+                    }
+                }
+            },
+            series: [{
+                field: "win",
+                name: "Wins",
+                noteTextField: "extremum",
+                notes: {
+                    // visual: function(e) {
+                        // e.targetPoint = e.rect.center();
+                        // var visual = new drawing.Group();
+                        // visual.append(new drawing.Circle(new geometry.Circle(e.targetPoint, 10)));
+                        // visual.append(new drawing.Path().moveTo(e.targetPoint.x, e.targetPoint.y).lineTo(e.targetPoint.x, e.targetPoint.y + 30));
+                        // return visual;
+                        // return e.createVisual();
+                    // },
+                    position: "bottom"
+                }
+            },{
+                field: "loss",
+                name: "Losses",
+                errorBars: {
+                    visual: function(e) {
+                        console.log(e.options);
+                        return customVisual(e);
+                    },
+                    value: "stddev"
+                }
+            }],
+            panes: [{
+                title: {
+                    text: "KOR",
+                    // visual: function(e) {
+                        // return titleVisual(e);
+                    // }
+                }
+            }],
+            valueAxis: {
+                line: {
+                    visible: false
+                },
+                labels: {
+                    visual: labelsVisual
+                },
+                // title: {
+                    // text: "KOR",
+                    // visual: function(e) {
+                        // e.options.background = "red";
+                        // return verticalTitleVisual(e);
+                    // }
+                // }
+            },
+            categoryAxis: {
+                field: "year",
+                majorGridLines: {
+                    visible: false
+                },
+                labels: {
+                    visual: labelsVisual
+                },
+                notes: {
+                    position: "top",
+                    visual: function(e) {
+                       var visual = new drawing.Group();
+           
+                        return drawing.Path.fromRect(e.rect);
+                    },
+                    data: [{value: 2}]
+                }
+                // title: {
+                    // text: "HOI",
+                    // visual: function(e) {
+                        // e.options.background = "red";
+                        // return titleVisual(e);
+                    // }
+                // }                
+            },
+            tooltip: {
+                visible: true,
+                template: "#= series.name #: #= value #"
+            }
+        });      
+    }
+
+    function initBarChart() {
+        $("#bar").kendoChart({
+            title: {
+                text: "Site Visitors Stats \n /thousands/",
+                // visual: titleVisual
+            },
+            legend: {
+                visible: true
+            },
+            seriesDefaults: {
+                type: "column",
+                labels: {
+                    visible: false,
+                    // visual: function(e) {
+                        // return labelsVisual(e)
+                    // }
+                },
+                highlight: {
+                    toggle: function(e) {
+                        e.preventDefault();
+                        var visual = e.visual;
+                        var opacity = e.show ? 0.8 : 1;
+
+                        visual.opacity(opacity);
+                    }
+                },
+                stack:true,
+                visual: function(e) {
+                    var color = e.options.color;
+                    var rect = e.rect;
+                    var center = rect.center();
+                    var bottomRight = rect.bottomRight();
+                    var radiusY = 10;
+                    var radiusX = rect.width() / 2;
+                    var gradient = new drawing.LinearGradient({
+                        stops: [{
+                            offset: 0,
+                            color: color
+                        }, {
+                            offset: 0.5,
+                            color: color,
+                            opacity: 0.9
+                        }, {
+                            offset: 0.5,
+                            color: color,
+                            opacity: 0.9
+                        }, {
+                            offset: 1,
+                            color: color
+                        }]
+                    });
+
+                    var arc = createArc(color, {x: center.x, y: bottomRight.y}, radiusX, radiusY, 0 , 180);
+                    var topStart = rect.origin.y;
+                    var path = new drawing.Path({
+                        fill: gradient,
+                        stroke: {
+                            color: "none"
+                        }
+                    }).moveTo(rect.origin.x, topStart).lineTo(rect.origin.x, bottomRight.y).arc(180, 0, radiusX, radiusY, true)//.lineTo(bottomRight.x, bottomRight.y)
+                        .lineTo(bottomRight.x, topStart).arc(0, 180, radiusX, radiusY);
+                    var topArc = createArc(color, {x: center.x, y: topStart}, radiusX, radiusY);
+                    var group = new drawing.Group();
+                    group.append(path, topArc);
+                    return group;
+                }
+            },
+            series: [{
+                name: "Total Visits",
+                data: [10000, 56000]                    
+            }, {
+                name: "Unique visitors",
+                data: [52000, 20000]
+            }, {
+                name: "Other",
+                data: [52000, 20000]
+            }],
+            panes: [{
+                clip: false
+            }],
+            valueAxis: {
+                line: {
+                    visible: false
+                },
+                // labels: {
+                    // visual: labelsVisual
+                // },
+                minorGridLines: {
+                    visible: false
+                }
+                // title: {
+                    // text: "Value Axis",
+                    // visual: function(e) {
+                        // e.options.background = "red";
+                        // return titleVisual(e);
+                    // }
+                // }
+            },
+            categoryAxis: {
+                categories: ["Jan", "Feb"],
+                margin: 20,
+                majorGridLines: {
+                    visible: false
+                },
+                line: {
+                    visible: false
+                }
+                // labels: {
+                    // visual: labelsVisual
+                // },
+                    // title: {
+                    // text: "Category Axis",
+                    // visual: function(e) {
+                        // e.options.background = "red";
+                        // return verticalTitleVisual(e);
+                    // }
+                // }
+            },
+            tooltip: {
+                visible: true,
+                template: "#= series.name #: #= value #"
+            }
+        });
+        
+    }
+
+    function labelsVisual(args) {
+        var visual = args.createVisual();
+        visual.transform(null);
+        createArcs(args.rect, visual, args.options.background);
+        return visual;
+    }
+    
+    function verticalTitleVisual(args) {
+        args.rect.size.width = 200;
+        return labelsVisual(args);
+    }
+
+    function titleVisual(args) {
+        args.rect.size.height = 100;
+        return labelsVisual(args);
+    }
+
+    function customVisual(args) {
+        var drawing = kendo.drawing;
+        var geometry = kendo.geometry;
+
+        var group = new drawing.Group();
+        createArcs(args.rect, group, args.options.background);
+      
+        return group;
+    }
+
+    function createArcs(rect, visual, color) {
+
+        var width = rect.width();            
+        var height = rect.height();
+        var thirdWidth = width / 3;
+        var thirdHeight = height / 3;
+        var center = rect.center();
+        var origin = rect.origin;
+        var bottomRight = rect.bottomRight();
+        var ballsRadius; 
+        var ball1Center;
+        var ball2Center;
+        var korCenter = center;
+        var korRadiusX;
+        var korRadiusY;
+
+        if (width <= height) {
+            korRadiusX = thirdWidth / 2;
+            korRadiusY = height / 2;
+            ballsRadius = thirdWidth / 2;
+            ball1Center = {
+                x: origin.x + korRadiusX,
+                y: bottomRight.y - thirdHeight / 2
+            };
+            ball2Center = {
+                x: bottomRight.x - korRadiusX,
+                y: bottomRight.y - thirdHeight / 2
+            };
+        } else {
+            korRadiusX = width / 2;
+            korRadiusY = thirdHeight / 2;
+            ballsRadius = thirdHeight / 2;
+            ball1Center = {
+                x: origin.x + korRadiusY,
+                y: origin.y + thirdHeight / 2
+            };
+            ball2Center = {
+                x: origin.x + korRadiusY,
+                y: bottomRight.y - thirdHeight / 2
+            };
+        }
+
+        visual.insertAt(createArc(color, ball1Center, ballsRadius), 0);
+        visual.insertAt(createArc(color, korCenter, korRadiusX, korRadiusY), 1);
+        visual.insertAt(createArc(color, ball2Center, ballsRadius), 2);
+    }
+    
+    function createArc(color, center, radiusX, radiusY, startAngle, endAngle) {
+
+        var arcGeometry = new geometry.Arc([center.x, center.y], {
+            radiusX: radiusX,
+            radiusY: radiusY,
+            startAngle: startAngle || 0,
+            endAngle: endAngle || 360
+        });
+        var arc = new drawing.Arc(arcGeometry, {
+            fill: {
+                color: color || "limegreen"
+            },
+            stroke: {
+                color: "grey"
+            }
+        });
+        return arc;
+    }
+    
+    </script>
+    <style>
+        .k-chart {
+            width: 800px;
+            height: 500px;
+            float: left;
+        }
+        #surface {
+            width: 400px;
+            height: 500px;
+            float: left;
+        }
+    </style>
+  </head>
+  <body>
+        <div id="line"></div>
+      <div id="bar"></div>
+  </body>
+</html>

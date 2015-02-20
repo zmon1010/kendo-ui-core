@@ -285,22 +285,6 @@
             }
         });
 
-        test("does nothing if element does not have createHighlight method", function() {
-            chartElement.toggleHighlight();
-            ok(!chartElement._highlight);
-            equal(chartElement.visual.children.length, 0);
-        });
-
-        test("does not create highlight if highlight is disabled", 0, function() {
-            chartElement.options.highlight = {
-                visible: false
-            };
-            chartElement.createHighlight = function() {
-                ok(false);
-            };
-            chartElement.toggleHighlight();
-        });
-
         test("creates highlight", function() {
             chartElement.createHighlight = function() {
                 ok(true);
@@ -1391,6 +1375,12 @@
             equal(title.options.flag, true);
         });
 
+        test("sets visualSize to true", function() {
+            title = Title.buildTitle("Title", parent, { flag: true });
+
+            equal(title.children[0].options.visualSize, true);
+        });
+
     })();
 
     (function() {
@@ -1799,6 +1789,230 @@
             equal(rect.options.fill.opacity, 0.7);
         });
 
+        // ------------------------------------------------------------
+        (function() {
+            var BOX = new Box2D(10, 20, 30, 40);
+            var RECT = BOX.toRect();
+            var customVisual = draw.Path.fromRect(new geom.Rect([0,0], [100, 200]));
+
+            function renderTextBox(options,box) {
+                createTextBox(options);
+                textBox.reflow(box || BOX);
+                textBox.renderVisual();
+            }
+
+            module("TextBox / rendering / visual", {
+                setup: function() {
+                    moduleSetup();
+                }
+            });
+
+            test("renders custom visual if visual option is set", function() {
+                renderTextBox({
+                    visual: function() {
+                        return customVisual;
+                    }
+                });
+                ok(textBox.visual === customVisual);
+            });
+
+            test("appends custom visual", function() {
+                createTextBox({
+                    visual: function() {
+                        return customVisual;
+                    }
+                });
+
+                textBox.parent = {
+                    appendVisual: function(visual) {
+                        ok(visual === customVisual);
+                    }
+                };
+                textBox.renderVisual();
+            });
+
+            test("does not render default visual if visual function returns nothing", function() {
+                renderTextBox({
+                    visual: function() {}
+                });
+                ok(!textBox.visual);
+            });
+
+            test("passes the text", function() {
+                 renderTextBox({
+                    visual: function(e) {
+                        equal(e.text, TEXT);
+                    }
+                });
+            });
+
+            test("passes the textbox initial box as rect", function() {
+                 renderTextBox({
+                    visual: function(e) {
+                        ok(e.rect.equals(RECT));
+                    }
+                });
+            });
+
+            test("passes a createVisual function that returns the default visual", function() {
+                 renderTextBox({
+                    visual: function(e) {
+                        var defaultVisual = e.createVisual();
+                        ok(defaultVisual instanceof draw.Group);
+                    }
+                });
+            });
+
+            test("passes the text options", function() {
+                var textBoxOptions = {
+                    background: "red",
+                    border: {
+                        width: 3,
+                        color: "blue"
+                    },
+                    color: "green",
+                    font: "foo",
+                    margin: {
+                        left: 2,
+                        top: 2,
+                        botom: 2,
+                        right: 2
+                    },
+                    padding: {
+                        left: 3,
+                        top: 3,
+                        botom: 3,
+                        right: 3
+                    },
+                    visible: false
+                };
+
+                renderTextBox(kendo.deepExtend({}, textBoxOptions, {
+                    visual: function(e) {
+                        deepEqual(e.options, textBoxOptions);
+                    }
+                }));
+            });
+
+            // ------------------------------------------------------------
+            module("TextBox / rendering / visual / visualSize", {
+                setup: function() {
+                    moduleSetup();
+                }
+            });
+
+            test("renders custom visual if the visual option is set", 2, function() {
+                renderTextBox({
+                    visualSize: true,
+                    visual: function() {
+                        ok(true);
+                        return customVisual;
+                    }
+                });
+                ok(textBox.visual === customVisual);
+            });
+
+            test("appends custom visual", 2, function() {
+                createTextBox({
+                    visualSize: true,
+                    visual: function() {
+                        ok(true);
+                        return customVisual;
+                    }
+                });
+
+                textBox.parent = {
+                    appendVisual: function(visual) {
+                        ok(visual === customVisual);
+                    }
+                };
+                textBox.reflow(BOX);
+                textBox.renderVisual();
+            });
+
+            test("does not render default visual if visual function returns nothing", function() {
+                renderTextBox({
+                    visualSize: true,
+                    visual: function() {}
+                });
+                ok(!textBox.visual);
+            });
+
+            test("passes the text", function() {
+                renderTextBox({
+                    visualSize: true,
+                    visual: function(e) {
+                        equal(e.text, TEXT);
+                    }
+                });
+            });
+
+            test("passes the textbox initial box as rect", 1, function() {
+                renderTextBox({
+                    visualSize: true,
+                    visual: function(e) {
+                        ok(e.rect.equals(RECT));
+                    }
+                });
+            });
+
+            test("the createVisual function returns the reflowed visual", function() {
+                createTextBox({
+                    visualSize: true,
+                    visual: function(e) {
+                        var defaultVisual = e.createVisual();
+                        ok(defaultVisual.bbox().equals(new geom.Rect([10, 20], [120, 15])));
+                    }
+                }, Box2D(0, 0, 10, 10));
+
+                textBox.reflow(BOX);
+                textBox.renderVisual();
+            });
+
+            test("sets the textbox box based on the visual bbox", function() {
+                 renderTextBox({
+                    visualSize: true,
+                    visual: function(e) {
+                        return customVisual;
+                    }
+                });
+                ok(textBox.box.toRect().equals(customVisual.bbox()));
+            });
+
+            test("passes the text options", function() {
+                var textBoxOptions = {
+                    background: "red",
+                    border: {
+                        width: 3,
+                        color: "blue"
+                    },
+                    color: "green",
+                    font: "foo",
+                    margin: {
+                        left: 2,
+                        top: 2,
+                        botom: 2,
+                        right: 2
+                    },
+                    padding: {
+                        left: 3,
+                        top: 3,
+                        botom: 3,
+                        right: 3
+                    },
+                    visible: false
+                };
+
+                renderTextBox(kendo.deepExtend({}, textBoxOptions, {
+                    visualSize: true,
+                    visual: function(e) {
+                        deepEqual(e.options, textBoxOptions);
+                    }
+                }));
+            });
+
+        })();
+
     })();
 
     (function() {
@@ -2170,20 +2384,18 @@
             teardown: destroyChart
         });
 
-        test("uses float element to align items", function() {
-            ok(legend.container.children[0] instanceof dataviz.FloatElement);
+        test("uses LegendLayout to align items", function() {
+            ok(legend.container.children[0] instanceof dataviz.LegendLayout);
         });
 
         test("sets float element options", function() {
-            var floatElementOptions = legend.container.children[0].options;
-            equal(floatElementOptions.wrap, true);
-            equal(floatElementOptions.spacing, legend.options.spacing);
-            equal(floatElementOptions.vertical, true);
+            var layoutOptions = legend.container.children[0].options;
+            equal(layoutOptions.spacing, legend.options.spacing);
+            equal(layoutOptions.vertical, true);
             createLegendWithItems({position: "top"});
-            floatElementOptions = legend.container.children[0].options;
-            equal(floatElementOptions.wrap, true);
-            equal(floatElementOptions.spacing, legend.options.spacing);
-            equal(floatElementOptions.vertical, false);
+            layoutOptions = legend.container.children[0].options;
+            equal(layoutOptions.spacing, legend.options.spacing);
+            equal(layoutOptions.vertical, false);
         });
 
         test("appends items to float element", function() {
@@ -2394,6 +2606,95 @@
         });
 
         // ------------------------------------------------------------
+        (function() {
+            var box = new Box2D(0, 0, 100, 100);
+            var customVisual;
+
+            function renderLegendItem(options) {
+                createLegendItem(options);
+                legendItem.reflow(box);
+                legendItem.renderVisual();
+            }
+
+            module("LegendItem / custom visual", {
+                setup: function() {
+                    customVisual = new draw.Path();
+                }
+            });
+
+            test("creates custom visual if visual option is set", function() {
+                renderLegendItem({
+                    visual: function() {
+                        return customVisual;
+                    }
+                });
+                ok(legendItem.visual === customVisual);
+            });
+
+            test("appends custom visual", function() {
+                createLegendItem({
+                    visual: function() {
+                        return customVisual;
+                    }
+                });
+                legendItem.reflow(box);
+                legendItem.parent = {
+                    appendVisual: function(visual) {
+                        ok(visual === customVisual);
+                    }
+                };
+                legendItem.renderVisual();
+            });
+
+            test("does not create default visual if custom visual function returns nothing", function() {
+                renderLegendItem({
+                    visual: function() {
+                    }
+                });
+                ok(!legendItem.visual);
+            });
+
+            test("passes active as parameter", function() {
+                renderLegendItem({
+                    visual: function(e) {
+                       ok(e.active);
+                    }
+                });
+            });
+
+            test("passes series as parameter", function() {
+                renderLegendItem({
+                    visual: function(e) {
+                        deepEqual(e.series, legendItem.options.series);
+                    }
+                });
+            });
+
+            test("passes options", function() {
+                renderLegendItem({
+                    visual: function(e) {
+                       var options = legendItem.options;
+                       deepEqual(e.options, {
+                            labels: legendItem.options.labels,
+                            markers: legendItem.markerOptions()
+                       });
+                    }
+                });
+            });
+
+            test("passes function that returns the default visual", function() {
+                renderLegendItem({
+                    visual: function(e) {
+                       var defaultVisual = e.createVisual();
+                       ok(defaultVisual.children[0] instanceof draw.Path);
+                       ok(defaultVisual.children[1].children[0] instanceof draw.Text);
+                       ok(defaultVisual.children[2] instanceof draw.Path);
+                    }
+                });
+            });
+        })();
+
+        // ------------------------------------------------------------
         var chart,
             legend,
             legendItemOverlay;
@@ -2519,6 +2820,108 @@
             triggerEvent("mouseover", legendItemOverlay);
         });
     })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var box = new Box2D(10, 20 , 30, 40);
+        var LegendLayout = dataviz.LegendLayout;
+        var layout;
+
+        function createLayout(options) {
+            layout = new LegendLayout(kendo.deepExtend({
+                spacing: 5,
+                vertical: true
+            }, options));
+        }
+
+        module("LegendLayout", {
+            setup: function() {
+                createLayout();
+            }
+        });
+
+        test("render creates drawing Layout visual", function() {
+            layout.render();
+            ok(layout.visual instanceof draw.Layout);
+        });
+
+        test("sets spacing based on the orientation", function() {
+            layout.render();
+            equal(layout.visual.options.spacing, 0);
+            equal(layout.visual.options.lineSpacing, 5);
+            layout.options.vertical = false;
+            layout.render();
+            equal(layout.visual.options.spacing, 5);
+            equal(layout.visual.options.lineSpacing, 0);
+        });
+
+        test("sets orientation", function() {
+            layout.render();
+            equal(layout.visual.options.orientation, "vertical");
+            layout.options.vertical = false;
+            layout.render();
+             equal(layout.visual.options.orientation, "horizontal");
+        });
+
+        test("render reflows and renders children", 2, function() {
+            layout.children.push({
+                reflow: function() {
+                    ok(true);
+                },
+                renderVisual: function() {
+                    ok(true);
+                }
+            })
+            layout.render();
+        });
+
+        // ------------------------------------------------------------
+        module("LegendLayout / reflow", {
+            setup: function() {
+                createLayout();
+                layout.render();
+            }
+        });
+
+        test("reflow sets rect to layout", function() {
+            layout.reflow(box);
+            ok(layout.visual.rect().equals(box.toRect()));
+        });
+
+        test("reflow sets reflows visual", function() {
+            layout.visual.reflow = function() {
+                ok(true);
+            };
+            layout.reflow(box);
+        });
+
+        test("reflow sets box based on visual bbox", function() {
+            var rect = new geom.Rect([50, 60], [100, 200]);
+            layout.visual.clippedBBox = function() {
+                return rect;
+            };
+            layout.reflow(box);
+            ok(layout.box.toRect().equals(rect));
+        });
+
+        test("sets empty box if visual has no bbox", function() {
+            layout.visual.clippedBBox = function() {};
+            layout.reflow(box);
+            equal(layout.box.width(), 0);
+            equal(layout.box.height(), 0);
+        });
+
+        test("renderVisual appends visual", function() {
+            layout.parent = {
+                appendVisual: function() {
+                    ok(true);
+                }
+            };
+            layout.renderVisual();
+        });
+
+    })();
+
 
     (function() {
         var ring,
@@ -2727,15 +3130,15 @@
             visual,
             box;
 
-        function createShape(options) {
+        function createShape(options, pointData) {
             shape = new ShapeElement(
                 $.extend({
                     width: SIZE,
                     height: SIZE,
                     border: { width: BORDER },
                     background: "#f00"
-                }, options)
-            );
+                }, options),
+            pointData);
 
             box = new Box2D(0, 0, SIZE, SIZE);
             shape.reflow(box);
@@ -2817,6 +3220,172 @@
         test("does not render element when hidden (circle)", function() {
             createShape({ visible: false,  type: "circle"});
             ok(!shape.visual);
+        });
+
+        // ------------------------------------------------------------
+        var customVisual = new draw.Path();
+        module("ShapeElement / custom visual");
+
+        test("creates custom visual if visual option is set", function() {
+            createShape({
+                visual: function() {
+                    return customVisual;
+                }
+            });
+            ok(visual === customVisual);
+        });
+
+        test("passes rect as parameter", function() {
+            createShape({
+                visual: function(e) {
+                   ok(e.rect.equals(shape.box.toRect()));
+                }
+            });
+        });
+
+        test("passes dataItem, value and series", function() {
+            var dataItem = "foo";
+            var series = "foo";
+            var value = 3;
+            createShape({
+                visual: function(e) {
+                   equal(e.dataItem, dataItem);
+                   equal(e.series, series);
+                   equal(e.value, value);
+                }
+            }, {
+                dataItem: dataItem,
+                series: series,
+                value: value
+            });
+        });
+
+        test("passes shapeelement options", function() {
+            createShape({
+                visual: function(e) {
+                   var options = shape.options;
+                   deepEqual(e.options, {
+                        background: options.background,
+                        border: options.border,
+                        margin: options.margin,
+                        padding: options.padding,
+                        type: options.type,
+                        size: options.width,
+                        visible: options.visible
+                   });
+                }
+            });
+        });
+
+        test("passes function that returns the default visual", function() {
+            createShape({
+                type: "circle",
+                visual: function(e) {
+                   var defaultVisual = e.createVisual();
+                   ok(defaultVisual instanceof draw.Circle);
+                }
+            });
+        });
+    })();
+
+    (function() {
+        var Note = dataviz.Note;
+        var customVisual;
+        var box;
+        var note;
+        var visual;
+
+        function createNote(options) {
+            note = new Note(1, "foo", "bar", "baz", "qux", options);
+
+            box = new Box2D(0, 0, 10, 10);
+            note.reflow(box);
+
+            note.renderVisual();
+            visual = note.visual;
+        }
+
+        // ------------------------------------------------------------
+        module("Note", {
+            setup: function() {
+                customVisual = new draw.Path();
+            }
+        });
+
+        test("creates custom visual if visual option is set", function() {
+            createNote({
+                visual: function() {
+                    return customVisual;
+                }
+            });
+            ok(visual === customVisual);
+        });
+
+        test("appends custom visual", function() {
+            createNote({
+                visual: function() {
+                    return customVisual;
+                }
+            });
+            note.parent = {
+                appendVisual: function(visual) {
+                    ok(visual === customVisual);
+                }
+            };
+            note.renderVisual();
+        });
+
+        test("does not create default visual if custom visual function returns nothing", function() {
+            createNote({
+                visual: function() {
+                }
+            });
+            ok(!note.visual);
+        });
+
+        test("passes rect as parameter", function() {
+            createNote({
+                visual: function(e) {
+                   ok(e.rect.equals(note.targetBox.toRect()));
+                }
+            });
+        });
+
+        test("passes dataItem, category, value, text, series", function() {
+            createNote({
+                visual: function(e) {
+                    equal(e.value, 1);
+                    equal(e.text, "foo");
+                    equal(e.dataItem, "bar");
+                    equal(e.category, "baz");
+                    equal(e.series, "qux");
+                }
+            });
+        });
+
+        test("passes options", function() {
+            createNote({
+                visual: function(e) {
+                   var options = note.options;
+                   deepEqual(e.options, {
+                        background: options.background,
+                        border: options.background,
+                        icon: options.icon,
+                        label: options.label,
+                        line: options.line,
+                        position: options.position,
+                        visible: options.visible
+                   });
+                }
+            });
+        });
+
+        test("passes function that returns the default visual", function() {
+            createNote({
+                visual: function(e) {
+                   ok(e.createVisual() instanceof draw.Group);
+                }
+            });
         });
 
     })();

@@ -227,6 +227,12 @@
             equal(outline.options.stroke.opacity, 0.5);
         });
 
+        test("highlightVisual returns marker visual", function() {
+            var visual = firstPoint.highlightVisual();
+            ok(visual instanceof draw.Circle);
+            ok(visual === firstPoint.marker.visual);
+        });
+
     })();
 
     (function() {

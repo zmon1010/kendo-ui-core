@@ -638,6 +638,25 @@
             deepEqual(marker.options.opacity, point.options.markers.opacity);
         });
 
+        test("sets marker visual", function() {
+            var visual = function() {};
+
+            createPoint({
+                markers: {
+                    visual: visual
+                }
+            });
+            ok(visual === marker.options.visual);
+        });
+
+        test("passes point data", function() {
+            createPoint();
+            var pointData = marker.pointData;
+            equal(pointData.value, VALUE);
+            ok(pointData.series === point.series);
+            ok(pointData.dataItem === point.dataItem);
+        });
+
         test("createHighlight returns marker outline", function() {
             createPoint({ markers: { type: "circle" }});
             var marker = point.marker.visual.geometry();
@@ -686,6 +705,12 @@
 
             var highlight = point.createHighlight();
             ok(highlight instanceof draw.Circle);
+        });
+
+        test("highlightVisual returns the marker visual", function() {
+            createPoint({ markers: { visible: true, type: "circle" }});
+            ok(point.highlightVisual() instanceof draw.Circle);
+            ok(point.highlightVisual() === point.marker.visual);
         });
 
         test("tooltipAnchor is at top right of marker / above axis", function() {

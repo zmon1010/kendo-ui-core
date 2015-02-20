@@ -579,6 +579,8 @@
 
             root = new dataviz.RootElement();
             root.append(point);
+            root.box = box.clone();
+            root.renderVisual();
         }
 
         // ------------------------------------------------------------
@@ -610,6 +612,13 @@
             var anchor = point.tooltipAnchor(10, 10);
             deepEqual([anchor.x, anchor.y],
                  [point.box.x2 + TOOLTIP_OFFSET, 2 + TOOLTIP_OFFSET], TOLERANCE)
+        });
+
+        test("highlightVisual returns _mainVisual", function() {
+            createPoint({});
+            var visual = point.highlightVisual();
+            ok(visual instanceof draw.Group);
+            ok(visual === point._mainVisual);
         });
 
     })();
