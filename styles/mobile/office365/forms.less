@@ -1,29 +1,6 @@
 @import "../common/forms.less";
 @import "base.less";
 
-/* Slider */
-
-.km-office365 .k-slider .k-draghandle,
-.km-office365 .k-slider .k-draghandle:hover
-{
-    border: 0;
-    border-radius: 5em;
-    .box-shadow(0 0 0 3px currentcolor);
-}
-
-.km-office365 .k-slider-track
-{
-    margin: -.5em .5em 0 0;
-    .box-sizing(content-box);
-    border-radius: .5em;
-    background-color: @office365-list-hover-background;
-}
-
-.km-office365 .k-slider-selection
-{
-    margin-left: 0;
-}
-
 /* Forms */
 
 .km-office365 .km-list input[type=password],
@@ -47,7 +24,8 @@
     .appearance(none);
     font-size: 1.1rem;
     min-width: 6em;
-    border: 0;
+    border-width: 1px;
+    border-style: solid;
     padding: .4em;
     outline: none;
     background: transparent;
@@ -94,20 +72,21 @@
 .km-office365 .km-listview-label input[type=radio],
 .km-office365 .km-listview-label input[type=checkbox]
 {
-    border-width: @office365-border-width;
+    border-width: 1px;
     border-style: solid;
-    width: 1.4em;
-    height: 1.4em;
-    border-radius: @office365-border-radius;
+    width: 1.056em;
+    height: 1.111em;
+    border-radius: 0;
 }
 
 .km-office365 .km-listview-label input[type=radio]
 {
-    width: 1.2em;
-    height: 1.2em;
-    border-radius: 1em;
+    width: 1.056em;
+    height: 1.111em;
+    border-radius: 50%;
 }
 
+.km-office365 .km-listview-label input[type=radio]:checked:after,
 .km-office365 .km-listview-label input[type=checkbox]:after
 {
     content: "\a0";
@@ -118,13 +97,97 @@
     .transform-origin(10% 50%);
 }
 
+.km-office365 .km-listview-label input[type=radio]:checked:after
+{
+    margin: .21em 0 0 .2em;
+    width: .632em;
+    height: .579em;
+    border-radius: 50%;
+}
+
 .km-office365 .km-listview-label input[type=checkbox]:checked:after
 {
-    font-size: 1.4em;
+    font-size: .9em;
 }
 
-.km-office365 .km-listview-label input[type=radio]:after
+.km-office365 .km-list .km-icon.km-check {
+    font-size: 1.071em;
+}
+
+.km-office365 .k-slider-horizontal
 {
-    color: transparent;
+    margin-top: 0;
+    height: .1em;
 }
 
+/* Slider */
+.km-office365 .k-slider .k-draghandle
+{
+    width: .333em;
+    height: .667em;
+}
+
+.km-office365 .k-slider .k-draghandle,
+.km-office365 .k-slider .k-draghandle:hover
+{
+    border: 0;
+    border-radius: 0;    
+    .box-shadow(none);
+}
+
+.km-office365 .k-slider-track
+{
+    margin: -.5em .5em 0 0;
+    .box-sizing(content-box);
+    background-color: @office365-list-hover-background;
+}
+
+.km-office365 .k-slider-selection
+{
+    margin-left: 0;
+}
+
+.km-office365 .k-slider-horizontal .k-draghandle
+{
+    top: 4px;
+}
+
+.km-office365 .k-slider-vertical .k-draghandle
+{
+    left: -.5em;
+}
+
+.km-office365 .k-slider-horizontal .k-slider-selection
+{
+    margin-top: 0;
+}
+
+.km-office365 .k-slider-vertical .k-slider-selection
+{
+    margin-left: -.1em;
+    width: .2em;
+}
+
+.km-office365 .k-slider-horizontal .k-slider-track
+{
+    height: 2px;
+}
+
+.km-office365 .k-slider-vertical .k-slider-track
+{
+    width: 2px;
+}
+
+.km-office365 .k-slider-selection
+{
+    margin-left: 0;
+}
+
+.km-office365 .k-slider .k-draghandle,
+.km-office365 .k-slider .k-draghandle:hover
+{
+    margin-top: -.5em;
+    padding: 0;
+    background-clip: content-box;
+    -webkit-background-clip: content-box;
+}

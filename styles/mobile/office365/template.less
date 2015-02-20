@@ -51,10 +51,37 @@
 
 .km-office365 .k-toolbar,
 .km-office365 .km-navbar,
-.km-office365 .km-navbar .km-view-title {
+.km-office365 .km-navbar .km-view-title 
+{
     color: @office365-secondary-text;
     background-color: @office365-inverse-background;
 }
+
+.km-office365 .km-popup .km-navbar,
+.km-office365 .km-modalview .km-navbar
+{
+    border-color: @office365-background;
+}
+
+.km-office365 .km-popup .km-navbar,
+.km-office365 .km-popup .km-navbar .km-view-title,
+.km-office365 .km-modalview .km-header .km-navbar,
+.km-office365 .km-modalview .km-header .km-navbar .km-view-title 
+{
+    color: @office365-text;
+    background-color: @office365-background;   
+}
+
+.km-office365 .km-modalview .km-footer .km-rightitem  
+{
+    color: @office365-text;
+    background-color: @office365-button-background;
+ }
+
+ .km-office365 .km-modalview .km-footer .km-button.km-state-active
+ {
+    background-color: @office365-button-selected-background;
+ }
 
 .km-office365 .km-navbar
 {
@@ -259,6 +286,7 @@
 .km-office365 .km-list .k-dropdown-wrap .k-input
 {
     color: @office365-text;
+    border-color: @office365-border-color;
 }
 
 .km-office365 .km-list select:not([multiple]) option
@@ -271,13 +299,19 @@
 .km-office365 .km-listview-label input[type=radio],
 .km-office365 .km-listview-label input[type=checkbox]
 {
-    border-color: #979797;
+    border-color: @switch-color;
     background: #fff;
 }
 
+.km-office365 input:checked,
 .km-office365 .km-listview-label input[type=checkbox]:checked:after
 {
-    color: #007cc0;
+    color: @switch-color;
+}
+
+.km-office365 .km-listview-label input[type=radio]:checked:after
+{
+    background-color: @switch-color;    
 }
 
 /* Shim */
@@ -297,8 +331,8 @@
 
 .km-office365 .km-actionsheet-wrapper,
 .km-office365 .km-popup .k-list-container
-{
-    background: @office365-overlay-background;
+{   
+    background: @office365-background;
     border-top-color: @office365-background;
 }
 
@@ -310,13 +344,13 @@
 
 .km-office365 .km-popup-arrow:after
 {
-    border-color: @office365-inverse-background transparent;
+    border-color: @office365-background transparent;
 }
 
 .km-office365 .km-left .km-popup-arrow:after,
 .km-office365 .km-right .km-popup-arrow:after
 {
-    border-color: transparent @office365-inverse-background;
+    border-color: transparent @office365-background;
 }
 
 /* Loader & Pull-to-refresh */
@@ -348,7 +382,6 @@
 .km-office365 .km-state-active,
 .km-office365 .km-switch-label-on,
 .km-office365 .km-switch-label-off,
-.km-office365 .km-popup .k-item,
 .km-office365 .k-slider .k-draghandle,
 .km-office365 .k-slider .k-draghandle:hover,
 .km-office365 .km-scroller-pull .km-icon,
@@ -362,6 +395,16 @@
 .km-office365 li.km-state-active .km-listview-label,
 .km-office365 .km-state-active .km-listview-link:after
 {
+    color: @office365-secondary-text;
+}
+
+.km-office365 .km-popup .k-item
+{
+    color: @office365-text;    
+    border-bottom-color: @office365-border-color;
+}
+
+.km-office365 .km-popup .k-state-selected.k-item {
     color: @office365-secondary-text;
 }
 
@@ -398,9 +441,7 @@
 .km-office365 .k-slider .k-draghandle:hover,
 .km-office365 .km-scroller-refresh.km-load-more,
 .km-office365 .km-popup .k-state-selected,
-.km-office365 li.km-state-active .km-listview-label,
-.km-office365 .km-listview-label input[type=radio]:checked,
-.km-office365 .km-listview-label input[type=checkbox]:checked
+.km-office365 li.km-state-active .km-listview-label
 {
     background: @office365-button-selected-background;
     border-color: @office365-button-selected-background;
