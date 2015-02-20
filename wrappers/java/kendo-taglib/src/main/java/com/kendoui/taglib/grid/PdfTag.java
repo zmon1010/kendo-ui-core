@@ -57,6 +57,14 @@ public class PdfTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("margin", value);
     }
 
+    public boolean getAllPages() {
+        return (boolean)getProperty("allPages");
+    }
+
+    public void setAllPages(boolean value) {
+        setProperty("allPages", value);
+    }
+
     public java.lang.String getAuthor() {
         return (java.lang.String)getProperty("author");
     }

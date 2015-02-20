@@ -6724,7 +6724,8 @@ If the valueAxis.type is set to "log", the minorUnit value represents the number
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will prevent the automatic axis range from snapping to 0.</description>
+            <description>If set to true the chart will prevent the automatic axis range from snapping to 0.
+Setting it to false will force the automatic axis range to snap to 0.</description>
             <name>narrowRange</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -8004,7 +8005,8 @@ If the xAxis.type is set to "log", the minorUnit value represents the number of 
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will prevent the automatic axis range from snapping to 0.</description>
+            <description>If set to true the chart will prevent the automatic axis range from snapping to 0.
+Setting it to false will force the automatic axis range to snap to 0.</description>
             <name>narrowRange</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -9331,7 +9333,8 @@ If the yAxis.type is set to "log", the minorUnit value represents the number of 
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>If set to true the chart will prevent the automatic axis range from snapping to 0.</description>
+            <description>If set to true the chart will prevent the automatic axis range from snapping to 0.
+Setting it to false will force the automatic axis range to snap to 0.</description>
             <name>narrowRange</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -18807,6 +18810,12 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
         <tag-class>com.kendoui.taglib.grid.PdfTag</tag-class>
         <body-content>JSP</body-content>
 
+        <attribute>
+            <description>Exports all grid pages, starting from the first one.</description>
+            <name>allPages</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
         <attribute>
             <description>The author of the PDF document.</description>
             <name>author</name>

@@ -17,23 +17,31 @@
     .k-grid {
         font-family: "DejaVu Sans", "Arial", sans-serif;
     }
+
+    /* Hide the Grid header and pager during export */
+    .k-pdf-export .k-grid-toolbar,
+    .k-pdf-export .k-pager-wrap
+    {
+        display: none;
+    }
 </style>
 
 <!-- Load Pako ZLIB library to enable PDF compression -->
 <script src="../resources/shared/js/pako.min.js"></script>
 
-    <kendo:grid name="grid" style="width:900px;" rowTemplate="row-template" altRowTemplate="alt-row-template">
+    <kendo:grid name="grid" style="width:900px;" rowTemplate="row-template" altRowTemplate="alt-row-template"
+                height="500" scrollable="true" pageable="true">
         <kendo:grid-toolbar>
             <kendo:grid-toolbarItem name="pdf" />
         </kendo:grid-toolbar>
-        <kendo:grid-pdf proxyURL="${saveUrl}" fileName="Kendo UI Grid Export.pdf" />
+        <kendo:grid-pdf allPages="true" proxyURL="${saveUrl}" fileName="Kendo UI Grid Export.pdf" />
         <kendo:grid-columns>
             <kendo:grid-column title="Picture" width="140px" />
-            <kendo:grid-column title="Details" field="title" width="400px" />
+            <kendo:grid-column title="Details" field="title" width="350px" />
             <kendo:grid-column title="Country" field="country" />
             <kendo:grid-column title="ID" field="employeeId" />
         </kendo:grid-columns>
-        <kendo:dataSource serverPaging="true" serverSorting="true" serverFiltering="true">
+        <kendo:dataSource serverPaging="true" serverSorting="true" serverFiltering="true" pageSize="5">
             <kendo:dataSource-transport>
                 <kendo:dataSource-transport-read url="${transportReadUrl}" type="POST"  contentType="application/json"/>
                 <kendo:dataSource-transport-parameterMap>
