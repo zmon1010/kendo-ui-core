@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
@@ -8,6 +9,7 @@
       requireSync([
         "../src/jquery.js",
         "../src/kendo.pdf.js",
+        "../src/kendo.dropdownlist.js",
         "./console.time.js",
         "./test-pdf-helpers.js"
       ]);
@@ -16,9 +18,6 @@
       body {
         font-size: 12px;
         font-family: "DejaVu Serif";
-      }
-      #test1 {
-        width: 500px;
       }
     </style>
   </head>
@@ -30,7 +29,32 @@
     |
     <button onclick="h2c('#test1')">html2canvas</button>
 
-    <div id="test1">
+    <select>
+      <option value="600px">600px</option>
+      <option value="500px" selected>500px</option>
+      <option value="400px">400px</option>
+      <option value="300px">300px</option>
+      <option value="200px">200px</option>
+      <option value="100px">100px</option>
+      <option value="50px">50px</option>
+    </select>
+
+    <label>white-space: nowrap <input type="checkbox" /></label>
+
+    <script>
+      $("select").kendoDropDownList({
+        change: function() {
+          $("#test1").css({ width: this.value() });
+        }
+      });
+      $("input[type=checkbox]").click(function(){
+        $("#test1").css({
+          whiteSpace: this.checked ? "nowrap" : ""
+        });
+      });
+    </script>
+
+    <div id="test1" style="width: 500px; margin-top: 1em">
 
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis ornare ex. Sed laoreet lacinia sollicitudin. Curabitur aliquet ipsum vel risus consequat semper. Fusce iaculis rutrum cursus. Nam velit est, tempor in efficitur ac, auctor vel est. Etiam volutpat metus sed nisi efficitur, et sollicitudin tellus commodo. Vivamus euismod diam sit amet enim lacinia, in dictum tellus ornare. Nulla eget magna rutrum, suscipit ante vel, maximus lacus. Duis a mauris justo.
