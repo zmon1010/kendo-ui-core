@@ -1,6 +1,7 @@
 require 'erb'
 
 NUGETS = [];
+NUGET_ZIPS = FileList["dist/bundles/professional.nupkg.zip", "dist/bundles/trial.nupkg.zip", "dist/bundles/aspnetmvc.professional.nupkg.zip", "dist/bundles/aspnetmvc.trial.nupkg.zip"]
 namespace :nuget do
     tree :to => "dist/bundles/nuspec",
         :from => "build/nuspec/Mvc*/*.xdt",
@@ -24,5 +25,21 @@ namespace :nuget do
         NUGETS << nuget
 
         task :default => nuget
+    end
+
+    file "dist/bundles/professional.nupkg.zip" do |t|
+        sh "cd dist/bundles && zip professional.nupkg.zip KendoUIProfessional.#{VERSION}.nupkg"
+    end
+
+    file "dist/bundles/trial.nupkg.zip" do |t|
+        sh "cd dist/bundles && zip trial.nupkg.zip KendoUIProfessional.Trial.#{VERSION}.nupkg"
+    end
+
+    file "dist/bundles/aspnetmvc.professional.nupkg.zip" do |t|
+        sh "cd dist/bundles && zip aspnetmvc.commercial.nupkg.zip Telerik.UI.for.AspNet.Mvc3.#{VERSION}.nupkg Telerik.UI.for.AspNet.Mvc4.#{VERSION}.nupkg Telerik.UI.for.AspNet.Mvc5.#{VERSION}.nupkg"
+    end
+
+    file "dist/bundles/aspnetmvc.trial.nupkg.zip" do |t|
+        sh "cd dist/bundles && zip aspnetmvc.trial.nupkg.zip Telerik.UI.for.AspNet.Mvc3.Trial.#{VERSION}.nupkg Telerik.UI.for.AspNet.Mvc4.Trial.#{VERSION}.nupkg Telerik.UI.for.AspNet.Mvc5.Trial.#{VERSION}.nupkg"
     end
 end

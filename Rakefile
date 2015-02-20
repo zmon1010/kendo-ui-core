@@ -1033,6 +1033,12 @@ namespace :build do
             nugets.push(dest)
         end
 
+        NUGET_ZIPS.each do |zip|
+            dest = File.join(ARCHIVE_ROOT, destination, zip.pathmap("%n") + "." + VERSION + ".zip")
+            file_copy :from => zip, :to => dest
+            nugets.push(dest)
+        end
+
         nugets
     end
 
@@ -1265,6 +1271,7 @@ namespace :build do
             'bundles:all',
             'demos:production',
             'nuget:default',
+            NUGET_ZIPS,
             'download_builder:bundle',
             zip_targets("Stable"),
             nuget_targets("Stable"),
