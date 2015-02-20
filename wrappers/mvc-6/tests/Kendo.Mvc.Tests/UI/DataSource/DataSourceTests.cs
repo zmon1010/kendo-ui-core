@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Xunit;
+    using Microsoft.AspNet.Mvc.ModelBinding;
 
     public class DataSourceTests
     {
@@ -12,7 +13,7 @@
 
         public DataSourceTests()
         {
-            dataSource = new DataSource();            
+            dataSource = new DataSource(new EmptyModelMetadataProvider());            
         }
 
         [Fact]

@@ -45,14 +45,14 @@
         [Fact]
         public void ToJson_children_dataSource_is_serialized_if_set()
         {
-            model.ChildrenDataSource = new DataSource();
+            model.ChildrenDataSource = new DataSource(new EmptyModelMetadataProvider());
             model.ToJson().ContainsKey("children").ShouldBeTrue();
         }
 
         [Fact]
         public void ToJson_children_dataSource_is_serialized_if_both_dataSource_and_member_are_set()
         {
-            model.ChildrenDataSource = new DataSource();
+            model.ChildrenDataSource = new DataSource(new EmptyModelMetadataProvider());
             model.ChildrenMember = "items";
             model.ToJson()["children"].ShouldNotEqual("items");
         }

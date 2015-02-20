@@ -10,7 +10,7 @@ namespace Kendo.Mvc.UI
 {
     public class DataSource : JsonObject
     {
-        public DataSource()
+        public DataSource(IModelMetadataProvider modelMetaDataProvider)
         {
             Transport = new Transport();
 
@@ -24,6 +24,8 @@ namespace Kendo.Mvc.UI
             Schema = new DataSourceSchema();
 
             OfflineStorage = new Dictionary<string, object>();
+
+            ModelMetaDataProvider = modelMetaDataProvider;
         }
 
         public int TotalPages { get; set; }
@@ -237,9 +239,14 @@ namespace Kendo.Mvc.UI
             }
         }
 
-        public void ModelType(Type modelType, IModelMetadataProvider modelMetadataProvider)
+        public void ModelType(Type modelType)
         {
-            Schema.Model = new ModelDescriptor(modelType, modelMetadataProvider);
+            Schema.Model = new ModelDescriptor(modelType, ModelMetaDataProvider);
+        }
+
+        public IModelMetadataProvider ModelMetaDataProvider
+        {
+            get; private set;
         }
 
         public bool Batch

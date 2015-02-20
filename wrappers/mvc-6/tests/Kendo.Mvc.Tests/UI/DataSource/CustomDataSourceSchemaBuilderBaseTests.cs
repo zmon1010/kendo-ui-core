@@ -3,6 +3,7 @@
     using Kendo.Mvc.UI;
     using System;
     using Xunit;
+    using Microsoft.AspNet.Mvc.ModelBinding;
 
     public class CustomDataSourceSchemaBuilderBaseTests
     {
@@ -13,7 +14,7 @@
 
         public CustomDataSourceSchemaBuilderBaseTests()
         {
-            dataSource = new DataSource();
+            dataSource = new DataSource(new EmptyModelMetadataProvider());
             dataSource.Schema.Data = "";
             dataSource.Schema.Total = "";
             dataSource.Schema.Errors = "";

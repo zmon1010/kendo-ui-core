@@ -3,6 +3,7 @@
     using Kendo.Mvc.Tests;
     using Kendo.Mvc.UI.Fluent;
     using Xunit;
+    using Microsoft.AspNet.Mvc.ModelBinding;
 
     public class CustomDataSourceBuilderBaseTests
     {
@@ -11,7 +12,7 @@
 
         public CustomDataSourceBuilderBaseTests()
         {
-            dataSource = new DataSource();
+            dataSource = new DataSource(new EmptyModelMetadataProvider());
             builder = new CustomDataSourceBuilderBaseDouble(dataSource, TestHelper.CreateViewContext(), new UrlGenerator());
         }
 
