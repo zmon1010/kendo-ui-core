@@ -94,7 +94,7 @@ kendo.PDFMixin = {
                      .css("width", wrapper.width());
 
         wrapper.before(shadow);
-        shadow.append(content || wrapper);
+        shadow.append(content || wrapper.clone());
 
         var promise = kendo.drawing.drawDOM(shadow);
         promise.done(function() {
