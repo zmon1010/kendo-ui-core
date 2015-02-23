@@ -26,7 +26,7 @@
 @switch-color: #666666;
 @switch-border: #c8c8c8;
 
-@office365-shadow: rgba(0,0,0,.2);
+@office365-shadow: 0 0 10px 10px rgba(0,0,0,.2);
 
 /*listview*/
 @office365-list-background: #fff;
@@ -163,10 +163,9 @@
 }
 
 /* Switch */
-
-.km-office365 .km-switch-wrapper
+.km-office365 .km-switch-off .km-switch-wrapper
 {
-    background-color: @switch-color;
+    background-color: @office365-button-background;
 }
 
 .km-modalview,
@@ -182,29 +181,11 @@
     border-color: @switch-color;
 }
 
-/*
-.km-office365 .km-switch-off .km-switch-handle:after {
-    content: "";
-    width: 3px;
-    height: 100%;
-    background-color: red;
-    display: inline-block;
-    /* border: 1.5px solid pink; */
-    margin-top: -3px;
-    padding: 3px 0;
+.km-office365 .km-switch-off .km-switch-handle:after,
+.km-office365 .km-switch-on .km-switch-handle:after 
+{
+    background-color: @office365-background;
 }
-
-.km-office365 .km-switch-on .km-switch-handle:after {
-     content: "";
-    width: 3px;
-    height: 100%;
-    background-color: red;
-    display: inline-block;
-    /* border: 1.5px solid pink; */
-    margin-top: -3px;
-    padding: 3px 0;
-}
-*/
 
 .km-office365 .km-switch-container,
 .km-office365 .km-switch-wrapper
@@ -351,6 +332,7 @@
 .km-office365 .km-popup
 {
     background: @office365-overlay-background;
+    box-shadow: @office365-shadow;
 }
 
 .km-office365 .km-actionsheet-wrapper,
@@ -374,7 +356,7 @@
 .km-office365 .km-left .km-popup-arrow:after,
 .km-office365 .km-right .km-popup-arrow:after
 {
-    border-color: transparent @office365-background;
+  //  border-color: transparent @office365-background;
 }
 
 /* Loader & Pull-to-refresh */
