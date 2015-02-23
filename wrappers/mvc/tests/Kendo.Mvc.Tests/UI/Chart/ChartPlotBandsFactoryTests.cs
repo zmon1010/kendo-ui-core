@@ -36,14 +36,14 @@ namespace Kendo.Mvc.UI.Tests.Chart
         public void Add_should_set_From()
         {
             var builder = factory.Add(1, 2, "red");
-            axis.PlotBands[0].From.ShouldEqual(1);
+            axis.PlotBands[0].From.ShouldEqual(1.0);
         }
 
         [Fact]
         public void Add_should_set_To()
         {
             var builder = factory.Add(1, 2, "red");
-            axis.PlotBands[0].To.ShouldEqual(2);
+            axis.PlotBands[0].To.ShouldEqual(2.0);
         }
 
         [Fact]

@@ -26,14 +26,14 @@ namespace Kendo.Mvc.UI.Tests.Gauge
         public void To_should_set_to()
         {
             builder.To(2);
-            ranges.To.ShouldEqual(2);
+            ranges.To.ShouldEqual(2.0);
         }
 
         [Fact]
         public void From_should_set_from()
         {
             builder.From(2);
-            ranges.From.ShouldEqual(2);
+            ranges.From.ShouldEqual(2.0);
         }
 
         [Fact]
