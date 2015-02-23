@@ -125,11 +125,21 @@
     cursor: pointer;
 }
 
-/*fixes Chrome 38+ column resizing glitches*/
-.k-grid-column-resizing th,
-.k-grid-column-resizing td
-{
-    -webkit-transform: translateZ(0);
+.k-grid-column-resizing {
+    // fixes Chrome 38+ column resizing glitches
+    th, td
+    {
+        -webkit-transform: translateZ(0);
+    }
+
+    &,
+    .k-grid-filter,
+    .k-link,
+    .k-button,
+    .k-grid-toolbar
+    {
+        cursor: col-resize;
+    }
 }
 
 .k-grid td
