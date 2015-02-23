@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.dom", "./kendo.data", "./kendo.columnsorter", "./kendo.editable", "./kendo.window", "./kendo.filtermenu", "./kendo.selectable" ], f);
+    define([ "./kendo.dom", "./kendo.data", "./kendo.columnsorter", "./kendo.editable", "./kendo.window", "./kendo.filtermenu", "./kendo.selectable", "./kendo.resizable" ], f);
 })(function(){
 
 var __meta__ = {
@@ -28,6 +28,11 @@ var __meta__ = {
         name: "Selection",
         description: "Support for row selection",
         depends: [ "selectable" ]
+    }, {
+        id: "grid-column-resize",
+        name: "Column resizing",
+        description: "Support for column resizing",
+        depends: [ "resizable" ]
     }, {
         id: "treelist-excel-export",
         name: "Excel export",
@@ -728,6 +733,7 @@ var __meta__ = {
             this._layout();
             this._selectable();
             this._sortable();
+            this._resizable();
             this._filterable();
             this._attachEvents();
             this._toolbar();
@@ -971,6 +977,11 @@ var __meta__ = {
                 $(window).off("resize" + NS, this._resizeHandler);
             }
 
+            if (this.resizable) {
+                this.resizable.destroy();
+                this.resizable = null;
+            }
+
             if (this.reorderable) {
                 this.reorderable.destroy();
                 this.reorderable = null;
@@ -1037,6 +1048,7 @@ var __meta__ = {
             excel: {
                 hierarchy: true
             },
+            resizable: false,
             filterable: false,
             editable: false,
             reorderable: false
@@ -1433,30 +1445,32 @@ var __meta__ = {
             this._angularFooters("compile");
 
             if (this._hasLockedColumns) {
-                this._adjustRowsHeight(this.table, this.lockedTable);
+                this._adjustRowsHeight();
             }
         },
 
-        _adjustRowsHeight: function(table1, table2) {
-            var rows = table1[0].rows,
-            length = rows.length,
-            idx,
-            rows2 = table2[0].rows,
-            containers = table1.add(table2),
-            containersLength = containers.length,
-            heights = [];
+        _adjustRowsHeight: function() {
+            var table = this.table;
+            var lockedTable = this.lockedTable;
+            var rows = table[0].rows;
+            var length = rows.length;
+            var idx;
+            var lockedRows = lockedTable[0].rows;
+            var containers = table.add(lockedTable);
+            var containersLength = containers.length;
+            var heights = [];
 
             for (idx = 0; idx < length; idx++) {
-                if (!rows2[idx]) {
+                if (!lockedRows[idx]) {
                     break;
                 }
 
                 if (rows[idx].style.height) {
-                    rows[idx].style.height = rows2[idx].style.height = "";
+                    rows[idx].style.height = lockedRows[idx].style.height = "";
                 }
 
                 var offsetHeight1 = rows[idx].offsetHeight;
-                var offsetHeight2 = rows2[idx].offsetHeight;
+                var offsetHeight2 = lockedRows[idx].offsetHeight;
                 var height = 0;
 
                 if (offsetHeight1 > offsetHeight2) {
@@ -1475,7 +1489,7 @@ var __meta__ = {
             for (idx = 0; idx < length; idx++) {
                 if (heights[idx]) {
                     //add one to resolve row misalignment in IE
-                    rows[idx].style.height = rows2[idx].style.height = (heights[idx] + 1) + "px";
+                    rows[idx].style.height = lockedRows[idx].style.height = (heights[idx] + 1) + "px";
                 }
             }
 
@@ -1773,6 +1787,8 @@ var __meta__ = {
                     }
 
                     children.push(kendoDomElement("span", { className: iconClass.join(" ") }));
+
+                    attr.style["white-space"] = "nowrap";
                 }
 
                 if (column.attributes) {
@@ -1845,6 +1861,113 @@ var __meta__ = {
                     className: [ "k-button", "k-button-icontext", command.className ].join(" ")
                 }, icon.concat([ kendoTextElement(command.text || command.name) ])
             );
+        },
+
+        _positionResizeHandle: function(e) {
+            var th = $(e.currentTarget);
+            var indicatorWidth = 3;
+            var resizeHandle = this.resizeHandle;
+            var position = th.position();
+            var left = position.left;
+            var cellWidth = th.outerWidth();
+            var container = th.closest(".k-grid-header-wrap,.k-grid-header-locked,.k-treelist");
+
+            left += container.scrollLeft();
+
+            if (!resizeHandle) {
+                resizeHandle = this.resizeHandle = $(
+                    '<div class="k-resize-handle"><div class="k-resize-handle-inner" /></div>'
+                );
+            }
+
+            container.append(resizeHandle);
+
+            if (e.clientX > left + cellWidth/2) {
+                // closer to right th border, align indicator with border
+                left += cellWidth;
+            } else {
+                // closer to left th border, resize previous column
+                th = th.prev();
+            }
+
+            var show = !!th.length && left > indicatorWidth;
+
+            resizeHandle
+                .toggle(show)
+                .css({
+                    top: position.top,
+                    left: left - indicatorWidth - 1,
+                    height: th.outerHeight(),
+                    width: indicatorWidth * 3
+                })
+                .data("th", th);
+        },
+
+        _resizable: function() {
+            if (!this.options.resizable) {
+                return;
+            }
+
+            if (this.resizable) {
+                this.resizable.destroy();
+            }
+
+            var treelist = this;
+
+            $(this.lockedHeader).find("thead").add(this.thead)
+                .on("mousemove" + NS, "th", $.proxy(this._positionResizeHandle, this));
+
+            this.resizable = new kendo.ui.Resizable(this.wrapper, {
+                handle: ".k-resize-handle",
+                start: function(e) {
+                    var th = $(e.currentTarget).data("th");
+                    var colSelector = "col:eq(" + th.index() + ")";
+                    var header, contentTable;
+
+                    treelist.wrapper.addClass("k-grid-column-resizing");
+
+                    if (treelist.lockedHeader && $.contains(treelist.lockedHeader[0], th[0])) {
+                        header = treelist.lockedHeader;
+                        contentTable = treelist.lockedTable;
+                    } else {
+                        header = treelist.thead.parent();
+                        contentTable = treelist.table;
+                    }
+
+                    this.col = contentTable.children("colgroup").find(colSelector)
+                          .add(header.find(colSelector));
+                    this.th = th;
+                    this.startLocation = e.x.location;
+                    this.columnWidth = th.outerWidth();
+                    this.table = this.col.closest("table");
+                    this.totalWidth = this.table.width();
+                },
+                resize: function(e) {
+                    var minColumnWidth = 11;
+                    var delta = e.x.location - this.startLocation;
+
+                    if (this.columnWidth + delta < minColumnWidth) {
+                        delta = minColumnWidth - this.columnWidth;
+                    }
+
+                    this.table.width(this.totalWidth + delta);
+                    this.col.width(this.columnWidth + delta);
+                },
+                resizeend: function() {
+                    treelist.wrapper.removeClass("k-grid-column-resizing");
+
+                    var field = this.th.attr("data-field");
+                    var column = grep(treelist.columns, function(c) {
+                        return c.field == field;
+                    });
+
+                    column[0].width = Math.floor(this.th.outerWidth());
+                    treelist._resize();
+                    treelist._adjustRowsHeight();
+
+                    this.table = this.col = this.th = null;
+                }
+            });
         },
 
         _sortable: function() {

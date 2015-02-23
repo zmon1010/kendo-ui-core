@@ -14,6 +14,7 @@
         <script src="../src/kendo.treeview.js"></script>
         <script src="../src/kendo.userevents.js"></script>
         <script src="../src/kendo.selectable.js"></script>
+        <script src="../src/kendo.resizable.js"></script>
         <script src="../src/kendo.columnsorter.js"></script>
         <script src="../src/kendo.treelist.js"></script>
         <script src="../src/kendo.pager.js"></script>
@@ -36,7 +37,8 @@
     <button class="clear">Clear</button>
 
     <h3>TreeList</h3>
-    <div id="list"></div>
+    <div id="locked"></div>
+
         <script>
             var service = "http://demos.telerik.com/kendo-ui/service/Northwind.svc";
 
@@ -79,14 +81,47 @@
             $("#list").kendoTreeList({
                 toolbar: ["create"],
                 dataSource: listDS,
+                autoBind: false,
+                resizable: true,
+                scrollable: false,
                 filterable: true,
                 editable: "popup",
                 columns: [
-                    { field: "FirstName", title: "First Name" },
-                    { field: "LastName", title: "Last Name", sortable: true },
+                    { field: "FirstName", title: "First Name", width: 200 },
+                    { field: "LastName", title: "Last Name", sortable: true, width: 200 },
                     { command: ["edit", "destroy", { name: "addChild", text: "Add Child", click: cmd }] }
                 ]
             });
+
+            $("#scrollable").kendoTreeList({
+                toolbar: ["create"],
+                dataSource: listDS,
+                autoBind: false,
+                resizable: true,
+                filterable: true,
+                editable: "popup",
+                columns: [
+                    { field: "FirstName", title: "First Name", width: 200 },
+                    { field: "LastName", title: "Last Name", sortable: true, width: 200 },
+                    { command: ["edit", "destroy", { name: "addChild", text: "Add Child", click: cmd }] }
+                ]
+            });
+
+            $("#locked").kendoTreeList({
+                toolbar: ["create"],
+                dataSource: listDS,
+                resizable: true,
+                filterable: true,
+                sortable: true,
+                editable: "popup",
+                columns: [
+                    { field: "FirstName", locked: true, title: "First Name", width: 200 },
+                    { field: "LastName", title: "Last Name", sortable: true, width: 200 },
+                    { command: ["edit", "destroy", { name: "addChild", text: "Add Child", click: cmd }], width: 1500 }
+                ]
+            });
+
+var treelist = $("#list").data("kendoTreeList");
 
             function cmd(e) {
                 var treeList = $("#list").data("kendoTreeList");
@@ -103,6 +138,17 @@
                 listDS.filter({});
             });
         </script>
+
+        <style>
+            .k-grid-column-resizing,
+            .k-grid-column-resizing .k-grid-filter,
+            .k-grid-column-resizing .k-link,
+            .k-grid-column-resizing .k-button,
+            .k-grid-column-resizing .k-grid-toolbar
+            {
+                cursor: col-resize;
+            }
+        </style>
     </body>
 </html>
 
