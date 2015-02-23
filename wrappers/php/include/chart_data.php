@@ -713,4 +713,17 @@ function download_speeds() {
     );
 }
 
+function forecast_data() {
+    return array(
+        array('temperature' => 15, 'weather' => 'cloudy', 'day' => 'Monday'),
+        array('temperature' => 16, 'weather' => 'rainy', 'day' => 'Tuesday'),
+        array('temperature' => 20, 'weather' => 'cloudy', 'day' => 'Wednesday'),
+        array('temperature' => 23, 'weather' => 'sunny', 'day' => 'Thursday'),
+        array('temperature' => 17, 'weather' => 'cloudy', 'day' => 'Friday'),
+        array('temperature' => 20, 'weather' => 'sunny', 'day' => 'Saturday'),
+        array('temperature' => 25, 'weather' => 'sunny', 'day' => 'Sunday'),
+
+    );
+}
+
 ?>
