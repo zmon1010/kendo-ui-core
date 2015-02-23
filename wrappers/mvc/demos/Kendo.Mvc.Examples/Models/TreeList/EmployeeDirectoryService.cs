@@ -5,6 +5,8 @@
     using Kendo.Mvc.UI;
     using System;
     using System.Data;
+    using System.Data.Entity;
+    using System.Data.Objects;
     using System.Collections.Generic;    
 
     public static class EmployeeDirectoryIEnumerableExtensions
@@ -103,9 +105,24 @@
         public virtual void Delete(EmployeeDirectoryModel employee, ModelStateDictionary modelState)
         {
             var entity = employee.ToEntity();
+
             db.EmployeeDirectory.Attach(entity);
-            db.EmployeeDirectory.Remove(entity);
+
+            Delete(entity);
+
             db.SaveChanges();
+        }
+
+        private void Delete(EmployeeDirectory employee)
+        {
+            var children = db.EmployeeDirectory.Where(e => e.ReportsTo == employee.EmployeeID);            
+
+            foreach (var subordinate in children)
+            {
+                Delete(subordinate);
+            }           
+
+            db.EmployeeDirectory.Remove(employee);            
         }
 
         private bool ValidateModel(EmployeeDirectoryModel employee, ModelStateDictionary modelState)
