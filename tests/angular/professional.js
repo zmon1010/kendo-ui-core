@@ -490,8 +490,7 @@
 
     ngTest("Grid detailTemplate", 2, function() {
         var count = 2;
-        expect(count);
-        angular.module("kendo.tests").controller("mine", function($scope) {
+        angular.module("kendo.tests").controller("mine", function($scope, $timeout) {
             $scope.options = {
                 dataSource: fixtureData,
                 columns: [
@@ -502,12 +501,15 @@
                 detailInit: function(ev) {
                     var div = ev.detailCell.find(".my-detail");
                     equal( div.text(), (ev.data.text + "/" + ev.data.id) );
-                    if (--count == 0) start();
                 },
                 dataBound: function() {
                     var rows = this.tbody.find("tr.k-master-row");
-                    this.expandRow(rows.eq(0));
-                    this.expandRow(rows.eq(1));
+                    var that = this;
+                    $timeout(function() {
+                        that.expandRow(rows.eq(0));
+                        that.expandRow(rows.eq(1));
+                        start();
+                    }, 200);
                 }
             };
         });
