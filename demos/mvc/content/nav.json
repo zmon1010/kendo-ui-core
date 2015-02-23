@@ -5063,6 +5063,19 @@
         }
       },
       {
+        "text": "Column resizing",
+        "url": "treelist/column-resizing",
+        "new": true,
+        "title": {
+            "kendo-ui": "Columns resizing in Kendo UI TreeList control | Kendo UI Web demo",
+            "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC TreeList"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the column resizing feature of the KendoTreeList control.",
+            "aspnet-mvc": "In this demo you can see how simple it is to resize columns in the Telerik ASP.NET MVC TreeList."
+        }
+      },
+      {
         "text": "Column reordering",
         "url": "treelist/column-reordering",
         "new": true,

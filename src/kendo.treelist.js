@@ -1444,12 +1444,14 @@ var __meta__ = {
             this._angularItems("compile");
             this._angularFooters("compile");
 
-            if (this._hasLockedColumns) {
-                this._adjustRowsHeight();
-            }
+            this._adjustRowsHeight();
         },
 
         _adjustRowsHeight: function() {
+            if (!this._hasLockedColumns) {
+                return;
+            }
+
             var table = this.table;
             var lockedTable = this.lockedTable;
             var rows = table[0].rows;
