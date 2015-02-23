@@ -716,7 +716,7 @@ var __meta__ = {
             parsedValue : function() {
                 var dataType = this.dataType();
                 var values = [];
-                var value, option, idx;
+                var value, option, idx, length;
                 for (idx = 0, length = this.element.options.length; idx < length; idx++) {
                     option = this.element.options[idx];
 
