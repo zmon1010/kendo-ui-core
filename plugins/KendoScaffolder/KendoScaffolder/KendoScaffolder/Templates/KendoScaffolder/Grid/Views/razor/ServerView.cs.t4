@@ -36,7 +36,7 @@ foreach (PropertyMetadata property in properties) {
 }
 if(Editable && (EditableCreate || EditableUpdate || EditableDestroy)) {
 #>
-        columns.Command(command => {<# if (EditMode != batchEditMode && (EditableCreate||EditableUpdate)) { #> command.Edit(); <# } #><# if (EditableDestroy) { #>command.Destroy(); <# } #>}).Width(170);
+        columns.Command(command => {<# if (EditMode != batchEditMode && (EditableCreate||EditableUpdate)) { #> command.Edit(); <# } #><# if (EditableDestroy) { #>command.Destroy(); <# } #>}).Width(180);
 <#
 }
 #>
