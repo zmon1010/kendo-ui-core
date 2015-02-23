@@ -76,6 +76,40 @@
         ok(td.hasClass("k-state-selected"));
     });
 
+    test("select method is returning current selection when no parameter is passed", function() {
+        var eventElement = container.find(".k-event");
+
+        eventElement.trigger({
+            type: "mousedown",
+            currentTarget: eventElement
+        });
+
+        ok(eventElement.hasClass("k-state-selected"));
+        equal(scheduler.select().events.length, 1);
+    });
+
+    test("select method is selecting events by id", function() {
+        var eventElement = container.find(".k-event");
+        var event = scheduler.dataSource.data()[0];
+
+        scheduler.select({
+            events: [event.uid]
+        });
+
+        ok(eventElement.hasClass("k-state-selected"));
+    });
+
+    test("select method is selecting slots", function() {
+        var eventElement = container.find(".k-event");
+        var event = scheduler.dataSource.data()[0];
+
+        scheduler.select({
+            events: [event.uid]
+        });
+
+        ok(eventElement.hasClass("k-state-selected"));
+    });
+
     test("scheduler does not move selection on right mouse click", function() {
         var td = container.find(".k-scheduler-content td:last");
 
@@ -691,6 +725,55 @@
             type: "mousedown",
             currentTarget: event
         });
+    });
+
+    test("select method is selecting events by id and resource", function() {
+        var today = kendo.date.today();
+        var end = new Date(today);
+        end.setHours(1);
+
+        setupWidget({
+            dataSource: [
+                { roomId2: [3,4], roomId: 2, start: today, end: end, title: "Test" }
+            ],
+            group: {
+                resources: ["Rooms", "Rooms2"]
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    valuePrimitive: true,
+                    title: "Room"
+                }, {
+                    field: "roomId2",
+                    name: "Rooms2",
+                    multiple: true,
+                    dataSource: [
+                        { text: "101", value: 3, color: "#6eb3fa" },
+                        { text: "201", value: 4, color: "#f58a8a" }
+                    ],
+                    valuePrimitive: true,
+                    title: "Room2"
+                }
+            ]
+        });
+
+        var eventUid = scheduler.data()[0].uid;
+
+        scheduler.select({
+            events: [eventUid],
+            resources: {
+                roomId2: 4,
+                roomId: 2
+            }
+        });
+
+        ok(scheduler.wrapper.find("[data-uid=" + eventUid + "]").hasClass("k-state-selected"));
     });
 
     test("Scheduler raises change event with resources", function() {

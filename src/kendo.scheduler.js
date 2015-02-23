@@ -1701,6 +1701,177 @@ var __meta__ = {
             return (options.mobile === true && kendo.support.mobileOS && !kendo.support.mobileOS.tablet) || options.mobile === "phone";
         },
 
+        _groupsByResource: function(resources, groupIndex, groupsArray, parentFieldValue, parentField) {
+            if (!groupsArray) {
+                groupsArray = [];
+            }
+
+            var resource = resources[0];
+            if (resource) {
+                var group;
+                var data = resource.dataSource.view();
+                var prevIndex = 0;
+
+                for (var dataIndex = 0; dataIndex < data.length; dataIndex++) {
+                    var fieldValue = kendo.getter(resource.dataValueField)(data[dataIndex]);
+                    var currentGroupIndex = groupIndex + prevIndex + dataIndex;
+
+                    group = this._groupsByResource(resources.slice(1), currentGroupIndex, groupsArray, fieldValue, resource.field);
+                    group[resource.field] = fieldValue;
+                    prevIndex = group.groupIndex;
+
+                    if (parentField && parentFieldValue) {
+                        group[parentField] = parentFieldValue;
+                    }
+
+                    if (resources.length === 1) {
+                        group.groupIndex = groupIndex + dataIndex;
+                        groupsArray.push(group);
+                    }
+                }
+                return group;
+            } else {
+                return {};
+            }
+        },
+
+        data: function () {
+            return this._data;
+        },
+
+        select: function (options) {
+            var that = this;
+            var view = that.view();
+            var browser = kendo.support.browser;
+            var selection = that._selection;
+
+            if (options === undefined) {
+                var selectedEvents;
+                var slots = view._selectedSlots;
+
+                if(!selection) {
+                    return [];
+                }
+
+                if (selection && selection.events) {
+                    selectedEvents = that._selectedEvents();
+                }
+
+                return {
+                    start: selection.start,
+                    end: selection.end,
+                    events: selectedEvents,
+                    slots: slots,
+                    resources: view._resourceBySlot(selection)
+                };
+            }
+
+            if (!options) {
+                that._selection = null;
+                view.clearSelection();
+
+                return;
+            }
+
+            if ($.isArray(options)) {
+                options = {
+                    events: options.splice(0)
+                };
+            }
+
+            var groups;
+            if (options.resources) {
+                var fieldName;
+                var filters = [];
+                var groupsByResource = [];
+
+                if (view.groupedResources) {
+                    that._groupsByResource(view.groupedResources, 0, groupsByResource);
+                }
+
+                for (fieldName in options.resources) {
+                    filters.push({ field: fieldName, operator: "eq", value: options.resources[fieldName]});
+                }
+
+                groups = new kendo.data.Query(groupsByResource)
+                    .filter(filters)
+                    .toArray();
+            }
+
+            if (options.events && options.events.length) {
+                var idx;
+                var eventsUids = options.events;
+
+                for (idx = 0; idx < eventsUids.length; idx++) {
+                    if (groups && groups.length) {
+                        var currentGroup = that.view().groups[groups[0].groupIndex];
+                        var events = [];
+                        var collectionCount = currentGroup.timeSlotCollectionCount();
+
+                        for (var collIdx = 0; collIdx < collectionCount; collIdx++) {
+                            events = events.concat(currentGroup.getTimeSlotCollection(collIdx).events());//timeslotCollections[collIdx].events());
+                        }
+
+                        events = new kendo.data.Query(events)
+                            .filter({field: "element[0].getAttribute('data-uid')", operator:"eq", value: eventsUids[idx]})
+                            .toArray();
+
+                        if (events[0]) {
+                            that._createSelection(events[0].element);
+                        }
+                    } else {
+                        var element = view.element.find(kendo.format(".k-event[data-uid={0}]", eventsUids[idx]));
+                        that._createSelection(element[0]);
+                    }
+                }
+
+                that.wrapper.focus();
+
+                if (browser.msie && browser.version < 9) {
+                    setTimeout(function() {
+                        that.wrapper.focus();
+                    });
+                }
+            }
+
+            if (options.start && options.end) {
+                var group;
+                var ranges;
+
+                if (groups && groups.length) {
+                    group = that.view().groups[groups[0].groupIndex];
+                } else {
+                    group = that.view().groups[0];
+                }
+
+                ranges = group.ranges(options.start, options.end , options.isAllDay, false);
+
+                if (ranges.length) {
+                    if (!that._selection) {
+                        that._selection = {};
+                    }
+
+                    that._selection = {
+                        start: new Date(ranges[0].start.start),
+                        end: new Date(ranges[ranges.length-1].end.end),
+                        groupIndex: ranges[0].start.groupIndex,
+                        index: ranges[0].start.index,
+                        isAllDay: ranges[0].start.isDaySlot,
+                        events: []
+                    };
+                }
+
+                that._select();
+                that.wrapper.focus();
+
+                if (browser.msie && browser.version < 9) {
+                    setTimeout(function() {
+                        that.wrapper.focus();
+                    });
+                }
+            }
+        },
+
         _selectable: function() {
             var that = this,
                 wrapper = that.wrapper,
