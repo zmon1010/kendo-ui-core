@@ -129,6 +129,14 @@ public class PdfTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("paperSize", value);
     }
 
+    public java.lang.String getProxyTarget() {
+        return (java.lang.String)getProperty("proxyTarget");
+    }
+
+    public void setProxyTarget(java.lang.String value) {
+        setProperty("proxyTarget", value);
+    }
+
     public java.lang.String getProxyURL() {
         return (java.lang.String)getProperty("proxyURL");
     }

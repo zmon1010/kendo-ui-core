@@ -3004,6 +3004,13 @@ The default "auto" means paper size is determined by content.Supported values:</
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyTarget</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
 Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.</description>
             <name>proxyURL</name>
@@ -13715,6 +13722,13 @@ The default "auto" means paper size is determined by content.Supported values:</
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyTarget</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
 Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.</description>
             <name>proxyURL</name>
@@ -17060,6 +17074,13 @@ The default "auto" means paper size is determined by content.Supported values:</
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyTarget</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
 Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.</description>
             <name>proxyURL</name>
@@ -18864,6 +18885,13 @@ The default "auto" means paper size is determined by content.Supported values:</
             <name>paperSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyTarget</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
@@ -23097,6 +23125,13 @@ The default "auto" means paper size is determined by content.Supported values:</
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyTarget</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
 attachment; filename="&lt;fileName.pdf&gt;".</description>
             <name>proxyURL</name>
@@ -24983,6 +25018,13 @@ The default "auto" means paper size is determined by content.Supported values:</
             <name>paperSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyTarget</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
@@ -34192,6 +34234,13 @@ The default "auto" means paper size is determined by content.Supported values:</
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyTarget</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
 Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.</description>
             <name>proxyURL</name>
@@ -38820,6 +38869,13 @@ The default "auto" means the paper size is determined by the content.Supported v
             <name>paperSize</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyTarget</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.

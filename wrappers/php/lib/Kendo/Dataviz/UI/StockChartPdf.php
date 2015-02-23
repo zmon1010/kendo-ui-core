@@ -99,6 +99,16 @@ Such browsers are IE version 9 and lower and Safari.The developer is responsible
     }
 
     /**
+    * A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+the proxy should set the "Content-Disposition" header to inline; filename="<fileName.pdf>".
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\StockChartPdf
+    */
+    public function proxyTarget($value) {
+        return $this->setProperty('proxyTarget', $value);
+    }
+
+    /**
     * Sets the subject of the PDF file.
     * @param string $value
     * @return \Kendo\Dataviz\UI\StockChartPdf
