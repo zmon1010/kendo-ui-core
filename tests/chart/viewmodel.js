@@ -1375,12 +1375,6 @@
             equal(title.options.flag, true);
         });
 
-        test("sets visualSize to true", function() {
-            title = Title.buildTitle("Title", parent, { flag: true });
-
-            equal(title.children[0].options.visualSize, true);
-        });
-
     })();
 
     (function() {
@@ -1807,103 +1801,8 @@
                 }
             });
 
-            test("renders custom visual if visual option is set", function() {
-                renderTextBox({
-                    visual: function() {
-                        return customVisual;
-                    }
-                });
-                ok(textBox.visual === customVisual);
-            });
-
-            test("appends custom visual", function() {
-                createTextBox({
-                    visual: function() {
-                        return customVisual;
-                    }
-                });
-
-                textBox.parent = {
-                    appendVisual: function(visual) {
-                        ok(visual === customVisual);
-                    }
-                };
-                textBox.renderVisual();
-            });
-
-            test("does not render default visual if visual function returns nothing", function() {
-                renderTextBox({
-                    visual: function() {}
-                });
-                ok(!textBox.visual);
-            });
-
-            test("passes the text", function() {
-                 renderTextBox({
-                    visual: function(e) {
-                        equal(e.text, TEXT);
-                    }
-                });
-            });
-
-            test("passes the textbox initial box as rect", function() {
-                 renderTextBox({
-                    visual: function(e) {
-                        ok(e.rect.equals(RECT));
-                    }
-                });
-            });
-
-            test("passes a createVisual function that returns the default visual", function() {
-                 renderTextBox({
-                    visual: function(e) {
-                        var defaultVisual = e.createVisual();
-                        ok(defaultVisual instanceof draw.Group);
-                    }
-                });
-            });
-
-            test("passes the text options", function() {
-                var textBoxOptions = {
-                    background: "red",
-                    border: {
-                        width: 3,
-                        color: "blue"
-                    },
-                    color: "green",
-                    font: "foo",
-                    margin: {
-                        left: 2,
-                        top: 2,
-                        botom: 2,
-                        right: 2
-                    },
-                    padding: {
-                        left: 3,
-                        top: 3,
-                        botom: 3,
-                        right: 3
-                    },
-                    visible: false
-                };
-
-                renderTextBox(kendo.deepExtend({}, textBoxOptions, {
-                    visual: function(e) {
-                        deepEqual(e.options, textBoxOptions);
-                    }
-                }));
-            });
-
-            // ------------------------------------------------------------
-            module("TextBox / rendering / visual / visualSize", {
-                setup: function() {
-                    moduleSetup();
-                }
-            });
-
             test("renders custom visual if the visual option is set", 2, function() {
                 renderTextBox({
-                    visualSize: true,
                     visual: function() {
                         ok(true);
                         return customVisual;
@@ -1914,7 +1813,6 @@
 
             test("appends custom visual", 2, function() {
                 createTextBox({
-                    visualSize: true,
                     visual: function() {
                         ok(true);
                         return customVisual;
@@ -1932,7 +1830,6 @@
 
             test("does not render default visual if visual function returns nothing", function() {
                 renderTextBox({
-                    visualSize: true,
                     visual: function() {}
                 });
                 ok(!textBox.visual);
@@ -1940,7 +1837,6 @@
 
             test("passes the text", function() {
                 renderTextBox({
-                    visualSize: true,
                     visual: function(e) {
                         equal(e.text, TEXT);
                     }
@@ -1949,7 +1845,6 @@
 
             test("passes the textbox initial box as rect", 1, function() {
                 renderTextBox({
-                    visualSize: true,
                     visual: function(e) {
                         ok(e.rect.equals(RECT));
                     }
@@ -1958,7 +1853,6 @@
 
             test("the createVisual function returns the reflowed visual", function() {
                 createTextBox({
-                    visualSize: true,
                     visual: function(e) {
                         var defaultVisual = e.createVisual();
                         ok(defaultVisual.bbox().equals(new geom.Rect([10, 20], [120, 15])));
@@ -1971,7 +1865,6 @@
 
             test("sets the textbox box based on the visual bbox", function() {
                  renderTextBox({
-                    visualSize: true,
                     visual: function(e) {
                         return customVisual;
                     }
@@ -2004,7 +1897,6 @@
                 };
 
                 renderTextBox(kendo.deepExtend({}, textBoxOptions, {
-                    visualSize: true,
                     visual: function(e) {
                         deepEqual(e.options, textBoxOptions);
                     }

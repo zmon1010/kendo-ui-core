@@ -1319,29 +1319,24 @@ var __meta__ = {
             var rotation = options.rotation;
             textbox.container.options.align = align;
 
-            if (visual && options.visualSize && targetBox.hasSize()) {
+            if (visual && !textbox._boxReflow && targetBox.hasSize()) {
                 textbox.visual = visual({
                     text: textbox.content,
                     rect: targetBox.toRect(),
                     options: textbox.visualOptions(),
                     createVisual: function() {
-                        options.visualSize = false;
+                        textbox._boxReflow = true;
                         textbox.reflow(targetBox);
-                        options.visualSize = true;
+                        textbox._boxReflow = false;
                         return textbox.getDefaultVisual();
                     }
                 });
-
+                var visualBox = targetBox;
                 if (textbox.visual) {
-                    textbox.box = rectToBox(textbox.visual.clippedBBox() || new geom.Rect());
-                } else {
-                    textbox.box = new Box2D();
+                    visualBox = rectToBox(textbox.visual.clippedBBox() || new geom.Rect());
                 }
+                textbox.box = textbox.contentBox = textbox.paddingBox = visualBox;
             } else {
-                if (targetBox.hasSize()) {
-                    textbox.initialBox = targetBox.clone();
-                }
-
                 BoxElement.fn.reflow.call(textbox, targetBox);
 
                 if (rotation) {
@@ -1376,21 +1371,7 @@ var __meta__ = {
         },
 
         renderVisual: function() {
-            var that = this;
-            var options = that.options;
-            var visual = options.visual;
-            if (visual) {
-                if (!options.visualSize) {
-                    that.visual = visual({
-                        text: that.content,
-                        rect: (this.initialBox || Box2D()).toRect(),
-                        options: this.visualOptions(),
-                        createVisual: function() {
-                            return that.getDefaultVisual();
-                        }
-                    });
-                }
-
+            if (this.options.visual) {
                 this.addVisual();
             } else {
                 BoxElement.fn.renderVisual.call(this);
@@ -1487,7 +1468,7 @@ var __meta__ = {
             options = { text: options };
         }
 
-        options = deepExtend({ visible: true }, defaultOptions, options, {visualSize: true});
+        options = deepExtend({ visible: true }, defaultOptions, options);
 
         if (options && options.visible && options.text) {
             title = new Title(options);
