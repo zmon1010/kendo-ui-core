@@ -7,26 +7,25 @@ Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.TreeList
         .Name("treelist")
         .Columns(columns =>
         {
-            columns.Add().Field(f => f.FirstName).Width(250).Lockable(false).Locked(true);
-            columns.Add().Field(e => e.LastName).Locked(true).Width(200);
-            columns.Add().Field(e => e.Position).Width(400);
-            columns.Add().Field(e => e.Extension).Title("Ext").Format("{0:#}").Width(150).Lockable(false);
-        })        
-        .Reorderable(true)
+            columns.Add().Field(f => f.FirstName).Width(250);
+            columns.Add().Field(e => e.LastName);
+            columns.Add().Field(e => e.Position);
+            columns.Add().Field(e => e.Extension).Title("Ext").Format("{0:#}");
+        })
         .Resizable(true)
-        .Sortable()
-        .Filterable()
-        .ColumnMenu()
+        .Height(300)
         .DataSource(dataSource => dataSource
-            .Read(read => read.Action("Index", "EmployeeDirectory"))
+            .Read(read => read.Action("All", "EmployeeDirectory"))
+            .ServerOperation(false)
             .Model(m => {
                 m.Id(f => f.EmployeeId);
                 m.ParentId(f => f.ReportsTo);
+                m.Expanded(true);
                 m.Field(f => f.FirstName);
                 m.Field(f => f.LastName);
                 m.Field(f => f.ReportsTo);
             })
         )
-    %>
+     %>
 </div>
 </asp:Content>
