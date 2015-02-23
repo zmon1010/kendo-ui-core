@@ -288,7 +288,7 @@ var __meta__ = {
 
     var TypedBinder = Binder.extend({
         dataType: function() {
-            var dataType = this.element.getAttribute("data-type") || this.element.type;
+            var dataType = this.element.getAttribute("data-type") || this.element.type || "text"; 
             return dataType.toLowerCase();
         },
 
