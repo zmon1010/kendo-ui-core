@@ -195,6 +195,20 @@ class ChartSeriesDefaults extends \Kendo\SerializableObject {
     }
 
     /**
+    * Sets the visual option of the ChartSeriesDefaults.
+    * A function that can be used to create a custom visual for the points. Applicable for bar and column series. The available argument fields are:
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\ChartSeriesDefaults
+    */
+    public function visual($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('visual', $value);
+    }
+
+    /**
     * The seriesDefaults notes configuration.
     * @param \Kendo\Dataviz\UI\ChartSeriesDefaultsNotes|array $value
     * @return \Kendo\Dataviz\UI\ChartSeriesDefaults

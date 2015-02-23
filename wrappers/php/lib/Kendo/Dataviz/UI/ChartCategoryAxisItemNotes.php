@@ -50,6 +50,20 @@ class ChartCategoryAxisItemNotes extends \Kendo\SerializableObject {
         return $this->add('data', func_get_args());
     }
 
+    /**
+    * Sets the visual option of the ChartCategoryAxisItemNotes.
+    * A function that can be used to create a custom visual for the notes. The available argument fields are:
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\ChartCategoryAxisItemNotes
+    */
+    public function visual($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('visual', $value);
+    }
+
 //<< Properties
 }
 

@@ -63,6 +63,10 @@ public class ValueAxisItemTitleTag extends  BaseTag  /* interfaces *//* interfac
         setProperty("padding", value);
     }
 
+    public void setVisual(ValueAxisItemTitleVisualFunctionTag value) {
+        setEvent("visual", value.getBody());
+    }
+
     public java.lang.String getBackground() {
         return (java.lang.String)getProperty("background");
     }
@@ -133,6 +137,18 @@ public class ValueAxisItemTitleTag extends  BaseTag  /* interfaces *//* interfac
 
     public void setVisible(boolean value) {
         setProperty("visible", value);
+    }
+
+    public String getVisual() {
+        Function property = ((Function)getProperty("visual"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisual(String value) {
+        setProperty("visual", new Function(value));
     }
 
 //<< Attributes

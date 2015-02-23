@@ -127,6 +127,20 @@ class ChartSeriesItemLabels extends \Kendo\SerializableObject {
     }
 
     /**
+    * Sets the visual option of the ChartSeriesItemLabels.
+    * A function that can be used to create a custom visual for the labels. The available argument fields are:
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\ChartSeriesItemLabels
+    */
+    public function visual($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('visual', $value);
+    }
+
+    /**
     * The chart series from label configuration.
     * @param \Kendo\Dataviz\UI\ChartSeriesItemLabelsFrom|array $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItemLabels

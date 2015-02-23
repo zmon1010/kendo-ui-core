@@ -72,6 +72,10 @@ public class SeriesItemMarkersTag extends  BaseTag  /* interfaces *//* interface
         setEvent("visible", value.getBody());
     }
 
+    public void setVisual(SeriesItemMarkersVisualFunctionTag value) {
+        setEvent("visual", value.getBody());
+    }
+
     public void setRotation(SeriesItemMarkersRotationFunctionTag value) {
         setEvent("rotation", value.getBody());
     }
@@ -126,6 +130,18 @@ public class SeriesItemMarkersTag extends  BaseTag  /* interfaces *//* interface
 
     public void setVisible(boolean value) {
         setProperty("visible", value);
+    }
+
+    public String getVisual() {
+        Function property = ((Function)getProperty("visual"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisual(String value) {
+        setProperty("visual", new Function(value));
     }
 
 //<< Attributes

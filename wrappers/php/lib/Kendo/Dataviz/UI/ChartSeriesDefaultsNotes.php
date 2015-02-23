@@ -32,6 +32,20 @@ class ChartSeriesDefaultsNotes extends \Kendo\SerializableObject {
         return $this->setProperty('line', $value);
     }
 
+    /**
+    * Sets the visual option of the ChartSeriesDefaultsNotes.
+    * A function that can be used to create a custom visual for the notes. The available argument fields are:
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\ChartSeriesDefaultsNotes
+    */
+    public function visual($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('visual', $value);
+    }
+
 //<< Properties
 }
 

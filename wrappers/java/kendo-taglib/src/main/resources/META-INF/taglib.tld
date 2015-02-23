@@ -1203,6 +1203,12 @@ maxDateGroups.</description>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the labels. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -1347,6 +1353,12 @@ maxDateGroups.</description>
         <description>The template which renders the labels.The fields which can be used in the template are:</description>
         <name>chart-categoryAxisItem-labels-template</name>
         <tag-class>com.kendoui.taglib.chart.CategoryAxisItemLabelsTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>A function that can be used to create a custom visual for the labels. The available argument fields are:</description>
+        <name>chart-categoryAxisItem-labels-visual</name>
+        <tag-class>com.kendoui.taglib.chart.CategoryAxisItemLabelsVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -1578,6 +1590,12 @@ body of the chart.</description>
         <attribute>
             <description>The position of the category axis note.</description>
             <name>position</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the notes. The available argument fields are:</description>
+            <name>visual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -1980,6 +1998,12 @@ body of the chart.</description>
 
 
     <tag>
+        <description>A function that can be used to create a custom visual for the notes. The available argument fields are:</description>
+        <name>chart-categoryAxisItem-notes-visual</name>
+        <tag-class>com.kendoui.taglib.chart.CategoryAxisItemNotesVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>The plot bands of the category axis.</description>
         <name>chart-categoryAxisItem-plotBands</name>
         <tag-class>com.kendoui.taglib.chart.CategoryAxisItemPlotBandsTag</tag-class>
@@ -2137,6 +2161,12 @@ That is, the last category in the range will not be included in the selection.If
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the title. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -2237,6 +2267,12 @@ That is, the last category in the range will not be included in the selection.If
 
 
 
+    <tag>
+        <description>A function that can be used to create a custom visual for the title. The available argument fields are:</description>
+        <name>chart-categoryAxisItem-title-visual</name>
+        <tag-class>com.kendoui.taglib.chart.CategoryAxisItemTitleVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
 
     <tag>
@@ -2880,6 +2916,12 @@ Axis that don't have specified pane are placed in the top (default) pane.Series 
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the title. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -2946,6 +2988,12 @@ Axis that don't have specified pane are placed in the top (default) pane.Series 
 
 
 
+    <tag>
+        <description>A function that can be used to create a custom visual for the title. The available argument fields are:</description>
+        <name>chart-pane-title-visual</name>
+        <tag-class>com.kendoui.taglib.chart.PaneTitleVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
 
     <tag>
@@ -3545,6 +3593,12 @@ or series name (for other available series types) in the legend.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>A function that can be used to create a custom visual for the points. Applicable for bar and column series. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The line width.</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
@@ -3718,6 +3772,12 @@ For example line series will be on top with bar and area following below.</descr
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>A function that can be used to create a custom visual for the error bars. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The xAxis error bars value. See the series.errorBars.value option for a list of the supported value types.</description>
             <name>xvalue</name>
             <rtexprvalue>true</rtexprvalue>
@@ -3759,6 +3819,12 @@ For example line series will be on top with bar and area following below.</descr
         <description>The error bars value.The following value types are supported:</description>
         <name>chart-seriesItem-errorBars-value</name>
         <tag-class>com.kendoui.taglib.chart.SeriesItemErrorBarsValueFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>A function that can be used to create a custom visual for the error bars. The available argument fields are:</description>
+        <name>chart-seriesItem-errorBars-visual</name>
+        <tag-class>com.kendoui.taglib.chart.SeriesItemErrorBarsVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -3898,6 +3964,12 @@ For example line series will be on top with bar and area following below.</descr
             <type>float</type>
         </attribute>
         <attribute>
+            <description>A function that can be used to handle toggling the points highlight. The available argument fields are:</description>
+            <name>toggle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>If set to true the chart will highlight the series when the user hovers it with the mouse.
 By default chart series highlighting is enabled.</description>
             <name>visible</name>
@@ -3964,6 +4036,12 @@ By default chart series highlighting is enabled.</description>
 
 
 
+    <tag>
+        <description>A function that can be used to handle toggling the points highlight. The available argument fields are:</description>
+        <name>chart-seriesItem-highlight-toggle</name>
+        <tag-class>com.kendoui.taglib.chart.SeriesItemHighlightToggleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>The chart series label configuration.</description>
         <name>chart-seriesItem-labels</name>
@@ -4035,6 +4113,12 @@ By default chart series highlighting is enabled.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the labels. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
 
     </tag>
@@ -4637,6 +4721,12 @@ By default chart series highlighting is enabled.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>A function that can be used to create a custom visual for the labels. The available argument fields are:</description>
+        <name>chart-seriesItem-labels-visual</name>
+        <tag-class>com.kendoui.taglib.chart.SeriesItemLabelsVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>The chart line configuration options.</description>
         <name>chart-seriesItem-line</name>
         <tag-class>com.kendoui.taglib.chart.SeriesItemLineTag</tag-class>
@@ -4750,6 +4840,12 @@ By default chart series highlighting is enabled.</description>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the markers. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -4817,6 +4913,12 @@ By default chart series highlighting is enabled.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>A function that can be used to create a custom visual for the markers. The available argument fields are:</description>
+        <name>chart-seriesItem-markers-visual</name>
+        <tag-class>com.kendoui.taglib.chart.SeriesItemMarkersVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>The rotation angle of the markers.</description>
         <name>chart-seriesItem-markers-rotation</name>
         <tag-class>com.kendoui.taglib.chart.SeriesItemMarkersRotationFunctionTag</tag-class>
@@ -4853,6 +4955,12 @@ By default chart series highlighting is enabled.</description>
         <attribute>
             <description>The position of the series note.</description>
             <name>position</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the notes. The available argument fields are:</description>
+            <name>visual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -5040,6 +5148,12 @@ By default chart series highlighting is enabled.</description>
 
 
 
+    <tag>
+        <description>A function that can be used to create a custom visual for the notes. The available argument fields are:</description>
+        <name>chart-seriesItem-notes-visual</name>
+        <tag-class>com.kendoui.taglib.chart.SeriesItemNotesVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>The chart series outliers configuration.</description>
         <name>chart-seriesItem-outliers</name>
@@ -5415,6 +5529,12 @@ The function return value is displayed instead of the individual points.The supp
         <tag-class>com.kendoui.taglib.chart.SeriesItemDownColorFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
+    <tag>
+        <description>A function that can be used to create a custom visual for the points. Applicable for bar and column series. The available argument fields are:</description>
+        <name>chart-seriesItem-visual</name>
+        <tag-class>com.kendoui.taglib.chart.SeriesItemVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>The default options for all series.</description>
@@ -5524,6 +5644,12 @@ The function return value is displayed instead of the individual points.The supp
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
         </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the points. Applicable for bar and column series. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -5608,6 +5734,12 @@ The function return value is displayed instead of the individual points.The supp
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the labels. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
 
     </tag>
@@ -6036,11 +6168,23 @@ The function return value is displayed instead of the individual points.The supp
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>A function that can be used to create a custom visual for the labels. The available argument fields are:</description>
+        <name>chart-seriesDefaults-labels-visual</name>
+        <tag-class>com.kendoui.taglib.chart.SeriesDefaultsLabelsVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>The seriesDefaults notes configuration.</description>
         <name>chart-seriesDefaults-notes</name>
         <tag-class>com.kendoui.taglib.chart.SeriesDefaultsNotesTag</tag-class>
         <body-content>JSP</body-content>
 
+        <attribute>
+            <description>A function that can be used to create a custom visual for the notes. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -6226,6 +6370,12 @@ The function return value is displayed instead of the individual points.The supp
 
 
     <tag>
+        <description>A function that can be used to create a custom visual for the notes. The available argument fields are:</description>
+        <name>chart-seriesDefaults-notes-visual</name>
+        <tag-class>com.kendoui.taglib.chart.SeriesDefaultsNotesVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>The chart series overlay options.</description>
         <name>chart-seriesDefaults-overlay</name>
         <tag-class>com.kendoui.taglib.chart.SeriesDefaultsOverlayTag</tag-class>
@@ -6372,6 +6522,12 @@ The function return value is displayed instead of the individual points.The supp
         <body-content>JSP</body-content>
     </tag>
 
+    <tag>
+        <description>A function that can be used to create a custom visual for the points. Applicable for bar and column series. The available argument fields are:</description>
+        <name>chart-seriesDefaults-visual</name>
+        <tag-class>com.kendoui.taglib.chart.SeriesDefaultsVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>The chart title configuration options or text.</description>
@@ -6997,6 +7153,12 @@ Every n-th label is rendered where n is the step</description>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the labels. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -7101,6 +7263,12 @@ Every n-th label is rendered where n is the step</description>
         <description>The template which renders the labels.The fields which can be used in the template are:</description>
         <name>chart-valueAxisItem-labels-template</name>
         <tag-class>com.kendoui.taglib.chart.ValueAxisItemLabelsTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>A function that can be used to create a custom visual for the labels. The available argument fields are:</description>
+        <name>chart-valueAxisItem-labels-visual</name>
+        <tag-class>com.kendoui.taglib.chart.ValueAxisItemLabelsVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -7338,6 +7506,12 @@ body of the chart.</description>
         <attribute>
             <description>The position of the value axis note.</description>
             <name>position</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the notes. The available argument fields are:</description>
+            <name>visual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -7740,6 +7914,12 @@ body of the chart.</description>
 
 
     <tag>
+        <description>A function that can be used to create a custom visual for the notes. The available argument fields are:</description>
+        <name>chart-valueAxisItem-notes-visual</name>
+        <tag-class>com.kendoui.taglib.chart.ValueAxisItemNotesVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>The plot bands of the value axis.</description>
         <name>chart-valueAxisItem-plotBands</name>
         <tag-class>com.kendoui.taglib.chart.ValueAxisItemPlotBandsTag</tag-class>
@@ -7838,6 +8018,12 @@ body of the chart.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the title. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
 
     </tag>
@@ -7939,6 +8125,12 @@ body of the chart.</description>
 
 
 
+    <tag>
+        <description>A function that can be used to create a custom visual for the title. The available argument fields are:</description>
+        <name>chart-valueAxisItem-title-visual</name>
+        <tag-class>com.kendoui.taglib.chart.ValueAxisItemTitleVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
 
     <tag>
@@ -8289,6 +8481,12 @@ The axis will be rendered in the first (default) pane if not set.</description>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the labels. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -8433,6 +8631,12 @@ The axis will be rendered in the first (default) pane if not set.</description>
         <description>The template which renders the labels.The fields which can be used in the template are:</description>
         <name>chart-xAxisItem-labels-template</name>
         <tag-class>com.kendoui.taglib.chart.XAxisItemLabelsTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>A function that can be used to create a custom visual for the labels. The available argument fields are:</description>
+        <name>chart-xAxisItem-labels-visual</name>
+        <tag-class>com.kendoui.taglib.chart.XAxisItemLabelsVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -8666,6 +8870,12 @@ body of the chart.</description>
         <attribute>
             <description>The position of the x axis note.</description>
             <name>position</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the notes. The available argument fields are:</description>
+            <name>visual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -9068,6 +9278,12 @@ body of the chart.</description>
 
 
     <tag>
+        <description>A function that can be used to create a custom visual for the notes. The available argument fields are:</description>
+        <name>chart-xAxisItem-notes-visual</name>
+        <tag-class>com.kendoui.taglib.chart.XAxisItemNotesVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>The plot bands of the x axis.</description>
         <name>chart-xAxisItem-plotBands</name>
         <tag-class>com.kendoui.taglib.chart.XAxisItemPlotBandsTag</tag-class>
@@ -9166,6 +9382,12 @@ body of the chart.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the title. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
 
     </tag>
@@ -9267,6 +9489,12 @@ body of the chart.</description>
 
 
 
+    <tag>
+        <description>A function that can be used to create a custom visual for the title. The available argument fields are:</description>
+        <name>chart-xAxisItem-title-visual</name>
+        <tag-class>com.kendoui.taglib.chart.XAxisItemTitleVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
 
     <tag>
@@ -9611,6 +9839,12 @@ The axis will be rendered in the first (default) pane if not set.</description>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the labels. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -9755,6 +9989,12 @@ The axis will be rendered in the first (default) pane if not set.</description>
         <description>The template which renders the labels.The fields which can be used in the template are:</description>
         <name>chart-yAxisItem-labels-template</name>
         <tag-class>com.kendoui.taglib.chart.YAxisItemLabelsTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>A function that can be used to create a custom visual for the labels. The available argument fields are:</description>
+        <name>chart-yAxisItem-labels-visual</name>
+        <tag-class>com.kendoui.taglib.chart.YAxisItemLabelsVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -9988,6 +10228,12 @@ body of the chart.</description>
         <attribute>
             <description>The position of the y axis notes.</description>
             <name>position</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the notes. The available argument fields are:</description>
+            <name>visual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -10390,6 +10636,12 @@ body of the chart.</description>
 
 
     <tag>
+        <description>A function that can be used to create a custom visual for the notes. The available argument fields are:</description>
+        <name>chart-yAxisItem-notes-visual</name>
+        <tag-class>com.kendoui.taglib.chart.YAxisItemNotesVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>The plot bands of the y axis.</description>
         <name>chart-yAxisItem-plotBands</name>
         <tag-class>com.kendoui.taglib.chart.YAxisItemPlotBandsTag</tag-class>
@@ -10488,6 +10740,12 @@ body of the chart.</description>
             <name>visible</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the title. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
 
     </tag>
@@ -10589,6 +10847,12 @@ body of the chart.</description>
 
 
 
+    <tag>
+        <description>A function that can be used to create a custom visual for the title. The available argument fields are:</description>
+        <name>chart-yAxisItem-title-visual</name>
+        <tag-class>com.kendoui.taglib.chart.YAxisItemTitleVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
 
     <tag>

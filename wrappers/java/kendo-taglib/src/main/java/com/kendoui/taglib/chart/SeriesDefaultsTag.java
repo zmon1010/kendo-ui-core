@@ -77,6 +77,10 @@ public class SeriesDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces 
         setProperty("tooltip", value);
     }
 
+    public void setVisual(SeriesDefaultsVisualFunctionTag value) {
+        setEvent("visual", value.getBody());
+    }
+
     public java.lang.Object getArea() {
         return (java.lang.Object)getProperty("area");
     }
@@ -211,6 +215,18 @@ public class SeriesDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces 
 
     public void setVerticalLine(java.lang.Object value) {
         setProperty("verticalLine", value);
+    }
+
+    public String getVisual() {
+        Function property = ((Function)getProperty("visual"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisual(String value) {
+        setProperty("visual", new Function(value));
     }
 
 //<< Attributes

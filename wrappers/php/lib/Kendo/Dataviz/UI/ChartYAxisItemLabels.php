@@ -153,6 +153,20 @@ class ChartYAxisItemLabels extends \Kendo\SerializableObject {
         return $this->setProperty('visible', $value);
     }
 
+    /**
+    * Sets the visual option of the ChartYAxisItemLabels.
+    * A function that can be used to create a custom visual for the labels. The available argument fields are:
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\ChartYAxisItemLabels
+    */
+    public function visual($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('visual', $value);
+    }
+
 //<< Properties
 }
 

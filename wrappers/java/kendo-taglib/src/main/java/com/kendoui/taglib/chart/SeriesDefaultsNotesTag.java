@@ -63,6 +63,22 @@ public class SeriesDefaultsNotesTag extends  BaseTag  /* interfaces */ /* interf
         setProperty("line", value);
     }
 
+    public void setVisual(SeriesDefaultsNotesVisualFunctionTag value) {
+        setEvent("visual", value.getBody());
+    }
+
+    public String getVisual() {
+        Function property = ((Function)getProperty("visual"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisual(String value) {
+        setProperty("visual", new Function(value));
+    }
+
 //<< Attributes
 
 }

@@ -95,6 +95,20 @@ class ChartXAxisItemTitle extends \Kendo\SerializableObject {
         return $this->setProperty('visible', $value);
     }
 
+    /**
+    * Sets the visual option of the ChartXAxisItemTitle.
+    * A function that can be used to create a custom visual for the title. The available argument fields are:
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\ChartXAxisItemTitle
+    */
+    public function visual($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('visual', $value);
+    }
+
 //<< Properties
 }
 

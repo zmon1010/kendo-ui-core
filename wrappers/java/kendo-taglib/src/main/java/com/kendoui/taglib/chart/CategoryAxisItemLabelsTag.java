@@ -71,6 +71,10 @@ public class CategoryAxisItemLabelsTag extends  BaseTag  /* interfaces *//* inte
         setEvent("template", value.getBody());
     }
 
+    public void setVisual(CategoryAxisItemLabelsVisualFunctionTag value) {
+        setEvent("visual", value.getBody());
+    }
+
     public java.lang.String getBackground() {
         return (java.lang.String)getProperty("background");
     }
@@ -173,6 +177,18 @@ public class CategoryAxisItemLabelsTag extends  BaseTag  /* interfaces *//* inte
 
     public void setVisible(boolean value) {
         setProperty("visible", value);
+    }
+
+    public String getVisual() {
+        Function property = ((Function)getProperty("visual"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisual(String value) {
+        setProperty("visual", new Function(value));
     }
 
 //<< Attributes

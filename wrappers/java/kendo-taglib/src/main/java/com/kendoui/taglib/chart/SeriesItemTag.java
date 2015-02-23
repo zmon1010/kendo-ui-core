@@ -125,6 +125,10 @@ public class SeriesItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
         setEvent("downColor", value.getBody());
     }
 
+    public void setVisual(SeriesItemVisualFunctionTag value) {
+        setEvent("visual", value.getBody());
+    }
+
     public java.lang.String getAggregate() {
         return (java.lang.String)getProperty("aggregate");
     }
@@ -555,6 +559,18 @@ public class SeriesItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
 
     public void setVisibleInLegendField(java.lang.String value) {
         setProperty("visibleInLegendField", value);
+    }
+
+    public String getVisual() {
+        Function property = ((Function)getProperty("visual"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisual(String value) {
+        setProperty("visual", new Function(value));
     }
 
     public float getWidth() {

@@ -75,6 +75,10 @@ public class SeriesDefaultsLabelsTag extends  BaseTag  /* interfaces */ /* inter
         setEvent("template", value.getBody());
     }
 
+    public void setVisual(SeriesDefaultsLabelsVisualFunctionTag value) {
+        setEvent("visual", value.getBody());
+    }
+
     public java.lang.String getBackground() {
         return (java.lang.String)getProperty("background");
     }
@@ -137,6 +141,18 @@ public class SeriesDefaultsLabelsTag extends  BaseTag  /* interfaces */ /* inter
 
     public void setVisible(boolean value) {
         setProperty("visible", value);
+    }
+
+    public String getVisual() {
+        Function property = ((Function)getProperty("visual"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisual(String value) {
+        setProperty("visual", new Function(value));
     }
 
 //<< Attributes

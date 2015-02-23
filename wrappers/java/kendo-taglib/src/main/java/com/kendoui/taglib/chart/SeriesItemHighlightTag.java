@@ -59,6 +59,10 @@ public class SeriesItemHighlightTag extends  BaseTag  /* interfaces *//* interfa
         setProperty("line", value);
     }
 
+    public void setToggle(SeriesItemHighlightToggleFunctionTag value) {
+        setEvent("toggle", value.getBody());
+    }
+
     public java.lang.String getColor() {
         return (java.lang.String)getProperty("color");
     }
@@ -73,6 +77,18 @@ public class SeriesItemHighlightTag extends  BaseTag  /* interfaces *//* interfa
 
     public void setOpacity(float value) {
         setProperty("opacity", value);
+    }
+
+    public String getToggle() {
+        Function property = ((Function)getProperty("toggle"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setToggle(String value) {
+        setProperty("toggle", new Function(value));
     }
 
     public boolean getVisible() {

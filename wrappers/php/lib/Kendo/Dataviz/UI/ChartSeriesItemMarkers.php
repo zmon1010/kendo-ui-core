@@ -55,6 +55,20 @@ class ChartSeriesItemMarkers extends \Kendo\SerializableObject {
     }
 
     /**
+    * Sets the visual option of the ChartSeriesItemMarkers.
+    * A function that can be used to create a custom visual for the markers. The available argument fields are:
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\ChartSeriesItemMarkers
+    */
+    public function visual($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('visual', $value);
+    }
+
+    /**
     * The rotation angle of the markers.
     * @param float|\Kendo\JavaScriptFunction $value
     * @return \Kendo\Dataviz\UI\ChartSeriesItemMarkers

@@ -42,6 +42,20 @@ class ChartSeriesItemHighlight extends \Kendo\SerializableObject {
     }
 
     /**
+    * Sets the toggle option of the ChartSeriesItemHighlight.
+    * A function that can be used to handle toggling the points highlight. The available argument fields are:
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\ChartSeriesItemHighlight
+    */
+    public function toggle($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('toggle', $value);
+    }
+
+    /**
     * If set to true the chart will highlight the series when the user hovers it with the mouse.
 By default chart series highlighting is enabled.
     * @param boolean $value

@@ -69,12 +69,28 @@ public class CategoryAxisItemNotesTag extends  BaseTag  /* interfaces */ /* inte
         setProperty("line", value);
     }
 
+    public void setVisual(CategoryAxisItemNotesVisualFunctionTag value) {
+        setEvent("visual", value.getBody());
+    }
+
     public java.lang.String getPosition() {
         return (java.lang.String)getProperty("position");
     }
 
     public void setPosition(java.lang.String value) {
         setProperty("position", value);
+    }
+
+    public String getVisual() {
+        Function property = ((Function)getProperty("visual"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisual(String value) {
+        setProperty("visual", new Function(value));
     }
 
 //<< Attributes

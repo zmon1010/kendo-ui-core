@@ -99,6 +99,10 @@ public class SeriesItemLabelsTag extends  BaseTag  /* interfaces *//* interfaces
         setEvent("visible", value.getBody());
     }
 
+    public void setVisual(SeriesItemLabelsVisualFunctionTag value) {
+        setEvent("visual", value.getBody());
+    }
+
     public java.lang.String getAlign() {
         return (java.lang.String)getProperty("align");
     }
@@ -185,6 +189,18 @@ public class SeriesItemLabelsTag extends  BaseTag  /* interfaces *//* interfaces
 
     public void setVisible(boolean value) {
         setProperty("visible", value);
+    }
+
+    public String getVisual() {
+        Function property = ((Function)getProperty("visual"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisual(String value) {
+        setProperty("visual", new Function(value));
     }
 
 //<< Attributes

@@ -59,6 +59,10 @@ public class SeriesItemErrorBarsTag extends  BaseTag  /* interfaces */ /* interf
         setEvent("value", value.getBody());
     }
 
+    public void setVisual(SeriesItemErrorBarsVisualFunctionTag value) {
+        setEvent("visual", value.getBody());
+    }
+
     public void setXValue(SeriesItemErrorBarsXValueFunctionTag value) {
         setEvent("xValue", value.getBody());
     }
@@ -89,6 +93,18 @@ public class SeriesItemErrorBarsTag extends  BaseTag  /* interfaces */ /* interf
 
     public void setValue(java.lang.String value) {
         setProperty("value", value);
+    }
+
+    public String getVisual() {
+        Function property = ((Function)getProperty("visual"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisual(String value) {
+        setProperty("visual", new Function(value));
     }
 
     public java.lang.String getXvalue() {
