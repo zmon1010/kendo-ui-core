@@ -12,14 +12,14 @@ namespace Kendo.Mvc.UI.Fluent
     /// Configures date category axis for the <see cref="Chart{TModel}" />.
     /// </summary>
     /// <typeparam name="TModel">The type of the data item to which the chart is bound to</typeparam>
-    public class ChartDateCategoryAxisBuilder<TModel> : ChartAxisBuilderBase<IChartCategoryAxis, int, ChartDateCategoryAxisBuilder<TModel>>
+    public class ChartDateCategoryAxisBuilder<TModel> : ChartAxisBuilderBase<IChartDateCategoryAxis, DateTime, ChartDateCategoryAxisBuilder<TModel>>
         where TModel : class
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChartCategoryAxisBuilder{TModel}"/> class.
         /// </summary>
         /// <param name="chart">The chart.</param>
-        public ChartDateCategoryAxisBuilder(Chart<TModel> chart, IChartCategoryAxis axis)
+        public ChartDateCategoryAxisBuilder(Chart<TModel> chart, IChartDateCategoryAxis axis)
             : base(axis)
         {
             Container = chart;

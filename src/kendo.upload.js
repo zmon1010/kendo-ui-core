@@ -724,7 +724,10 @@ var __meta__ = {
                   traditional: true,
                   data: params,
                   success: onSuccess,
-                  error: onError
+                  error: onError,
+                  xhrFields:{
+                    withCredentials: this.options.async.withCredentials
+                  }
             });
         },
 

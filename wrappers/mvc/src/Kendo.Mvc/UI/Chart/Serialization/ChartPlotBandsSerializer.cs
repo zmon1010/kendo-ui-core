@@ -18,8 +18,8 @@ namespace Kendo.Mvc.UI
             var result = new Dictionary<string, object>();
                 
             FluentDictionary.For(result)
-                .Add("from", plotBands.From, () => plotBands.From.HasValue)
-                .Add("to", plotBands.To, () => plotBands.To.HasValue)
+                .Add("from", plotBands.From, () => plotBands.From != null)
+                .Add("to", plotBands.To, () => plotBands.To != null)
                 .Add("color", plotBands.Color, () => plotBands.Color.HasValue())
                 .Add("opacity", plotBands.Opacity, () => plotBands.Opacity.HasValue);
 

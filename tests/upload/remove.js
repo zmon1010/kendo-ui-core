@@ -52,6 +52,24 @@ function uploadRemoveEvent(params) {
         simulateRemoveClick();
     });
 
+    test("remove request sends credentials", 1, function(){
+        var uploadInstance = createUpload();
+        uploadInstance.options.async.withCredentials = false;
+
+        simulateUpload();
+
+        $.mockjax(function(s) {
+            equal(s.xhrFields.withCredentials, false);
+            return {
+                url: "/removeAction",
+                responseTime: 0,
+                responseText: ""
+            };
+        });
+
+        simulateRemoveClick();
+    });
+
     test("remove HTTP verb can be changed", 1, function() {
         var uploadInstance = createUpload();
         uploadInstance.options.async.removeVerb = "DELETE";
