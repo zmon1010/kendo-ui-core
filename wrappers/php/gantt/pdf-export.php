@@ -243,7 +243,7 @@ $endColumn->field("end")
 $pdf = new \Kendo\UI\GanttPdf();
 $pdf->fileName('Kendo UI Gantt Export.pdf')
     ->proxyURL('pdf-export.php?type=save');
-	
+
 // gantt
 $gantt = new \Kendo\UI\Gantt('gantt');
 $gantt->dataSource($tasks)
@@ -256,7 +256,7 @@ $gantt->dataSource($tasks)
       )
       ->addColumn($idColumn, $titleColumn, $startColumn, $endColumn)
       ->addToolbarItem('append', new \Kendo\UI\GanttToolbarItem('pdf'))
-	  ->pdf($pdf)
+      ->pdf($pdf)
       ->showWorkHours(false)
       ->showWorkDays(false)
       ->snap(false);
@@ -273,6 +273,12 @@ echo $gantt->render();
     */
     .k-gantt {
         font-family: "DejaVu Sans", "Arial", sans-serif;
+    }
+
+    /* Hide toolbars during export */
+    .k-pdf-export .k-gantt-toolbar
+    {
+        display: none;
     }
 </style>
 

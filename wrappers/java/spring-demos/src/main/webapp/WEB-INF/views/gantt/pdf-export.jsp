@@ -31,32 +31,38 @@
     .k-gantt {
         font-family: "DejaVu Sans", "Arial", sans-serif;
     }
+
+    /* Hide toolbars during export */
+    .k-pdf-export .k-gantt-toolbar
+    {
+        display: none;
+    }
 </style>
 
 <!-- Load Pako ZLIB library to enable PDF compression -->
 <script src="../resources/shared/js/pako.min.js"></script>
 
     <kendo:gantt name="gantt" height="700" showWorkDays="false" showWorkHours="false" snap="false">
-    	<kendo:gantt-views>
-    		<kendo:gantt-view type="day" />
-    		<kendo:gantt-view type="week" selected="true" />
-    		<kendo:gantt-view type="month"  />
-    	</kendo:gantt-views>
-    	
-    	<kendo:gantt-toolbar>
-        	<kendo:gantt-toolbarItem name="append" />
-        	<kendo:gantt-toolbarItem name="pdf" />
+        <kendo:gantt-views>
+            <kendo:gantt-view type="day" />
+            <kendo:gantt-view type="week" selected="true" />
+            <kendo:gantt-view type="month"  />
+        </kendo:gantt-views>
+
+        <kendo:gantt-toolbar>
+            <kendo:gantt-toolbarItem name="append" />
+            <kendo:gantt-toolbarItem name="pdf" />
         </kendo:gantt-toolbar>
-        
-    	<kendo:gantt-pdf proxyURL="${saveUrl}" fileName="Kendo UI Gantt Export.pdf" />
-    	
-    	<kendo:gantt-columns>
-    		<kendo:gantt-column field="id" title="ID" width="50" />
-    		<kendo:gantt-column field="title" title="Title" editable="true" />
-    		<kendo:gantt-column field="start" title="Start Time" format="{0:MM/dd/yyyy}" width="100" />
-    		<kendo:gantt-column field="end" title="End Time" format="{0:MM/dd/yyyy}" width="100" />
-    	</kendo:gantt-columns>
-    	
+
+        <kendo:gantt-pdf proxyURL="${saveUrl}" fileName="Kendo UI Gantt Export.pdf" />
+
+        <kendo:gantt-columns>
+            <kendo:gantt-column field="id" title="ID" width="50" />
+            <kendo:gantt-column field="title" title="Title" editable="true" />
+            <kendo:gantt-column field="start" title="Start Time" format="{0:MM/dd/yyyy}" width="100" />
+            <kendo:gantt-column field="end" title="End Time" format="{0:MM/dd/yyyy}" width="100" />
+        </kendo:gantt-columns>
+
         <kendo:dataSource batch="false">
              <kendo:dataSource-schema>
                 <kendo:dataSource-schema-model id="id">
@@ -79,15 +85,15 @@
                 <kendo:dataSource-transport-update url="${tasksUpdateUrl}" dataType="json" type="POST" contentType="application/json" />
                 <kendo:dataSource-transport-destroy url="${tasksDestroyUrl}" dataType="json" type="POST" contentType="application/json" />
                 <kendo:dataSource-transport-parameterMap>
-                	<script>
-	                	function parameterMap(options, type) {
-                			return JSON.stringify(options.models || [ options ]);
-	                	}
-                	</script>
-                </kendo:dataSource-transport-parameterMap>              
+                    <script>
+                        function parameterMap(options, type) {
+                            return JSON.stringify(options.models || [ options ]);
+                        }
+                    </script>
+                </kendo:dataSource-transport-parameterMap>
             </kendo:dataSource-transport>
         </kendo:dataSource>
-    	
+
         <kendo:dependencies batch="false">
              <kendo:dataSource-schema>
                 <kendo:dataSource-schema-model id="id">
@@ -105,13 +111,13 @@
                 <kendo:dataSource-transport-update url="${dependencyUpdateUrl}" dataType="json" type="POST" contentType="application/json" />
                 <kendo:dataSource-transport-destroy url="${dependencyDestroyUrl}" dataType="json" type="POST" contentType="application/json" />
                 <kendo:dataSource-transport-parameterMap>
-                	<script>
-	                	function parameterMap(options, type) { 
-                			return JSON.stringify(options.models || [ options ]);
-	                	}
-                	</script>
-                </kendo:dataSource-transport-parameterMap>              
+                    <script>
+                        function parameterMap(options, type) {
+                            return JSON.stringify(options.models || [ options ]);
+                        }
+                    </script>
+                </kendo:dataSource-transport-parameterMap>
             </kendo:dataSource-transport>
         </kendo:dependencies>
-    </kendo:gantt>    
+    </kendo:gantt>
 <demo:footer />

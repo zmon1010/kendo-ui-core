@@ -9,6 +9,16 @@
         .k-scheduler {
             font-family: "DejaVu Sans", "Arial", sans-serif;
         }
+
+        /* Hide toolbar, navigation and footer during export */
+        .k-pdf-export .k-scheduler-toolbar,
+        .k-pdf-export .k-scheduler-navigation .k-nav-today,
+        .k-pdf-export .k-scheduler-navigation .k-nav-prev,
+        .k-pdf-export .k-scheduler-navigation .k-nav-next,
+        .k-pdf-export .k-scheduler-footer
+        {
+            display: none;
+        }
     </style>
 
     <!-- Load Pako ZLIB library to enable PDF compression -->
@@ -43,10 +53,10 @@
             .DataTextField("Text")
             .DataValueField("Value")
             .DataColorField("Color")
-            .BindTo(new[] { 
+            .BindTo(new[] {
                 new { Text = "Alex", Value = 1, Color = "#f8a398" } ,
                 new { Text = "Bob", Value = 2, Color = "#51a0ed" } ,
-                new { Text = "Charlie", Value = 3, Color = "#56ca85" } 
+                new { Text = "Charlie", Value = 3, Color = "#56ca85" }
             });
     })
     .DataSource(d => d

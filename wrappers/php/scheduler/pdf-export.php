@@ -196,6 +196,16 @@ echo $scheduler->render();
     .k-scheduler {
         font-family: "DejaVu Sans", "Arial", sans-serif;
     }
+
+    /* Hide toolbar, navigation and footer during export */
+    .k-pdf-export .k-scheduler-toolbar,
+    .k-pdf-export .k-scheduler-navigation .k-nav-today,
+    .k-pdf-export .k-scheduler-navigation .k-nav-prev,
+    .k-pdf-export .k-scheduler-navigation .k-nav-next,
+    .k-pdf-export .k-scheduler-footer
+    {
+        display: none;
+    }
 </style>
 
 <!-- Load Pako ZLIB library to enable PDF compression -->
