@@ -3664,6 +3664,31 @@ var __meta__ = {
 
     if (kendo.PDFMixin) {
         kendo.PDFMixin.extend(Scheduler.prototype);
+
+        var SCHEDULER_EXPORT = "k-scheduler-pdf-export";
+        Scheduler.fn._drawPDF = function() {
+            var wrapper = this.wrapper;
+            var cssText = wrapper[0].style.cssText;
+
+            wrapper.css({
+                width: wrapper.width(),
+                height: wrapper.height()
+            });
+
+            wrapper.addClass(SCHEDULER_EXPORT);
+
+            this.resize(true);
+            var promise = this._drawPDFShadow();
+
+            var scheduler = this;
+            promise.always(function() {
+                wrapper[0].style.cssText = cssText;
+                wrapper.removeClass(SCHEDULER_EXPORT);
+                scheduler.resize(true);
+            });
+
+            return promise;
+        };
     }
 
     var TimezoneEditor = Widget.extend({
