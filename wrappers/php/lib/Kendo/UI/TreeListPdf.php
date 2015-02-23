@@ -60,7 +60,7 @@ class TreeListPdf extends \Kendo\SerializableObject {
     }
 
     /**
-    * Set to true to reverse the paper dimensions if needed such that width is the larger edge.
+    * Set to true to reverse the paper dimensions such that width is the larger edge.
     * @param boolean $value
     * @return \Kendo\UI\TreeListPdf
     */
@@ -80,7 +80,7 @@ units are "mm", "cm", "in" and "pt" (default).
 
     /**
     * Specifies the paper size of the PDF document.
-The default "auto" means paper size is determined by content.Supported values:
+The default "auto" means the paper size is determined by the content.Supported values:
     * @param string|array $value
     * @return \Kendo\UI\TreeListPdf
     */
@@ -90,12 +90,23 @@ The default "auto" means paper size is determined by content.Supported values:
 
     /**
     * The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally.
-Such browsers are IE version 9 and lower and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with set "Content-Disposition" header.
+Such browsers are IE version 9 and lower, and Safari.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+attachment; filename="<fileName.pdf>".
     * @param string $value
     * @return \Kendo\UI\TreeListPdf
     */
     public function proxyURL($value) {
         return $this->setProperty('proxyURL', $value);
+    }
+
+    /**
+    * A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+the proxy should set the "Content-Disposition" header to inline; filename="<fileName.pdf>".
+    * @param string $value
+    * @return \Kendo\UI\TreeListPdf
+    */
+    public function proxyTarget($value) {
+        return $this->setProperty('proxyTarget', $value);
     }
 
     /**
