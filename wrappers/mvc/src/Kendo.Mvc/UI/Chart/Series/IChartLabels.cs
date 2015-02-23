@@ -65,6 +65,11 @@ namespace Kendo.Mvc.UI
         /// </summary>
         double? Rotation { get; set; }
 
+        /// <summary>
+        /// Gets or sets the label visual handler.
+        /// </summary>
+        ClientHandlerDescriptor Visual { get; set; }
+
         IChartSerializer CreateSerializer();
     }
 }

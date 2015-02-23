@@ -144,5 +144,31 @@
 
             return this as TBuilder;
         }
+
+        /// <summary>
+        /// Sets the error bar visual handler
+        /// </summary>
+        /// <param name="handler">The handler name.</param>  
+        public TBuilder Visual(string handler)
+        {
+            errorBars.Visual = new ClientHandlerDescriptor
+            {
+                HandlerName = handler
+            };
+            return this as TBuilder;
+        }
+
+        /// <summary>
+        /// Sets the error bar visual handler
+        /// </summary>
+        /// <param name="handler">The handler</param>  
+        public TBuilder Visual(Func<object, object> handler)
+        {
+            errorBars.Visual = new ClientHandlerDescriptor
+            {
+                TemplateDelegate = handler
+            };
+            return this as TBuilder;
+        }
     }
 }

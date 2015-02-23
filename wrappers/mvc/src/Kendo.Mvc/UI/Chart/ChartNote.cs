@@ -48,6 +48,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the note visual handler.
+        /// </summary>
+        /// <value>
+        /// The note visual handler.
+        /// </value>
+        public ClientHandlerDescriptor Visual
+        {
+            get;
+            set;
+        }
+
         public virtual IChartSerializer CreateSerializer()
         {
             return new ChartNoteSerializer(this);

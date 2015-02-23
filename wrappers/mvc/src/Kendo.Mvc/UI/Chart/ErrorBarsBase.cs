@@ -34,6 +34,18 @@
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the error bar visual handler.
+        /// </summary>
+        /// <value>
+        /// The error bar visual handler.
+        /// </value>
+        public ClientHandlerDescriptor Visual
+        {
+            get;
+            set;
+        }
+
         public abstract IChartSerializer CreateSerializer();
     }
 }

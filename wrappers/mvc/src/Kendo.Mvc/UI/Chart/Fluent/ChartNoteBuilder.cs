@@ -104,5 +104,31 @@ namespace Kendo.Mvc.UI.Fluent
             note.Position = position;
             return this;
         }
+
+        /// <summary>
+        /// Sets the note visual handler
+        /// </summary>
+        /// <param name="handler">The handler name.</param>  
+        public ChartNoteBuilder Visual(string handler)
+        {
+            note.Visual = new ClientHandlerDescriptor
+            {
+                HandlerName = handler
+            };
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the note visual handler
+        /// </summary>
+        /// <param name="handler">The handler</param>  
+        public ChartNoteBuilder Visual(Func<object, object> handler)
+        {
+            note.Visual = new ClientHandlerDescriptor
+            {
+                TemplateDelegate = handler
+            };
+            return this;
+        }
     }
 }

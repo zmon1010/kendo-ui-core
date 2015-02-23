@@ -816,5 +816,55 @@ namespace Kendo.Mvc.Examples.Models
                 new DownloadSpeed(30, 40, 50, 70, "Sunday")
             };
         }
+
+        public static IList<Forecast> ForecastData()
+        {
+            return new List<Forecast>()
+            {
+                new Forecast 
+                {
+                    Temperature = 15,
+                    Weather = "cloudy",
+                    Day = "MonDay"
+                }, 
+                new Forecast 
+                {
+                    Temperature = 16,
+                    Weather = "rainy",
+                    Day = "TuesDay"
+                }, 
+                new Forecast 
+                {
+                    Temperature = 20,
+                    Weather = "cloudy",
+                    Day = "WednesDay"
+                }, 
+                new Forecast 
+                {
+                    Temperature = 23,
+                    Weather = "sunny",
+                    Day = "ThursDay"
+                }, 
+                new Forecast 
+                {
+                    Temperature = 17,
+                    Weather = "cloudy",
+                    Day = "FriDay"
+                }, 
+                new Forecast 
+                {
+                    Temperature = 20,
+                    Weather = "sunny",
+                    Day = "SaturDay"
+                }, 
+                new Forecast 
+                {
+                    Temperature = 25,
+                    Weather = "sunny",
+                    Day = "SunDay"
+                } 
+
+            };
+        }
     }
 }

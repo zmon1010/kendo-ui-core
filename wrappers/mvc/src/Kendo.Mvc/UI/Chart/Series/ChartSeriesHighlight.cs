@@ -66,6 +66,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the highlight toggle handler.
+        /// </summary>
+        /// <value>
+        /// The highlight toggle handler.
+        /// </value>
+        public ClientHandlerDescriptor Toggle
+        {
+            get;
+            set;
+        }
+
         public IChartSerializer CreateSerializer()
         {
             return new ChartSeriesHighlightSerializer(this);

@@ -235,5 +235,31 @@ namespace Kendo.Mvc.UI.Fluent
             lineMarkers.Rotation = rotation;
             return this;
         }
+
+        /// <summary>
+        /// Sets the marker visual handler
+        /// </summary>
+        /// <param name="handler">The handler name.</param>  
+        public ChartMarkersBuilder Visual(string handler)
+        {
+            lineMarkers.Visual = new ClientHandlerDescriptor
+            {
+                HandlerName = handler
+            };
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the marker visual handler
+        /// </summary>
+        /// <param name="handler">The handler</param>  
+        public ChartMarkersBuilder Visual(Func<object, object> handler)
+        {
+            lineMarkers.Visual = new ClientHandlerDescriptor
+            {
+                TemplateDelegate = handler
+            };
+            return this;
+        }
     }
 }

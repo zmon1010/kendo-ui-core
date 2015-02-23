@@ -1171,6 +1171,7 @@
     <Content Include="Views\demos\radial-gauge\export.cshtml" />
     <Content Include="Views\demos\line-charts\visuals.cshtml" />
     <Content Include="Views\demos\mvvm\types.cshtml" />
+    <Content Include="Views\demos\bar-charts\visuals.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

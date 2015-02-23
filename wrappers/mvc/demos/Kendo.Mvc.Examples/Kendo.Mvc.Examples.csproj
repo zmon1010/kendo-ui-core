@@ -142,6 +142,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\aspx\ASPXAreaRegistration.cs" />
     <Compile Include="Areas\razor\RazorAreaRegistration.cs" />
+    <Compile Include="Controllers\Bar_Charts\VisualsController.cs" />
     <Compile Include="Controllers\Chart_Api\ExportController.cs" />
     <Compile Include="Controllers\Chart_Api\Pdf_ExportController.cs" />
     <Compile Include="Controllers\Chart_Api\EventsController.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Controllers\Grid\Filter_Row_Controller.cs" />
     <Compile Include="Controllers\Linear_Gauge\ExportController.cs" />
     <Compile Include="Controllers\Linear_Gauge\Multiple_PointersController.cs" />
+    <Compile Include="Controllers\Line_Charts\VisualsController.cs" />
     <Compile Include="Controllers\Menu\Context_MenuController.cs" />
     <Compile Include="Controllers\PivotGrid\Excel_ExportController.cs" />
     <Compile Include="Controllers\PivotGrid\KPIController.cs" />
@@ -659,6 +661,7 @@
     <Compile Include="Models\Diagram\DiagramShapeService.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\ForeCast.cs" />
     <Compile Include="Models\GanttResource.cs">
       <DependentUpon>Sample.tt</DependentUpon>
     </Compile>
@@ -834,6 +837,7 @@
     <Content Include="App_Data\Sample_log.ldf">
       <DependentUpon>Sample.mdf</DependentUpon>
     </Content>
+    <Content Include="Areas\aspx\Views\bar_charts\visuals.aspx" />
     <Content Include="Areas\aspx\Views\chart_api\export.aspx" />
     <Content Include="Areas\aspx\Views\chart_api\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\chart_api\events.aspx" />
@@ -897,6 +901,7 @@
     <Content Include="Areas\aspx\Views\grid\multicolumnheaders.aspx" />
     <Content Include="Areas\aspx\Views\linear_gauge\export.aspx" />
     <Content Include="Areas\aspx\Views\linear_gauge\multiple_pointers.aspx" />
+    <Content Include="Areas\aspx\Views\line_charts\visuals.aspx" />
     <Content Include="Areas\aspx\Views\menu\context_menu.aspx" />
     <Content Include="Areas\aspx\Views\pivotgrid\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\pivotgrid\excel_export.aspx" />
@@ -1296,6 +1301,7 @@
     <Content Include="Areas\razor\Views\diagram\export.cshtml" />
     <Content Include="Areas\razor\Views\chart_api\pdf_export.cshtml" />
     <Content Include="Areas\razor\Views\chart_api\export.cshtml" />
+    <Content Include="Areas\razor\Views\bar_charts\visuals.cshtml" />
     <None Include="Areas\razor\Views\diagram\editing.cshtml" />
     <Content Include="Areas\razor\Views\range_bar_charts\index.cshtml" />
     <Content Include="Areas\razor\Views\diagram\index.cshtml" />
@@ -2683,6 +2689,7 @@
     </Content>
     <Content Include="Areas\razor\Views\treelist\frozen_columns.cshtml" />
     <Content Include="Areas\razor\Views\treelist\column_resizing.cshtml" />
+    <Content Include="Areas\razor\Views\line_charts\visuals.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />

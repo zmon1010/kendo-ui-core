@@ -153,6 +153,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the label visual handler.
+        /// </summary>
+        /// <value>
+        /// The label visual handler.
+        /// </value>
+        public ClientHandlerDescriptor Visual 
+        { 
+            get; 
+            set; 
+        }
+
         public abstract IChartSerializer CreateSerializer();
     }
 }

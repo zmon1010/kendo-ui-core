@@ -7,6 +7,7 @@ namespace Kendo.Mvc.UI
         /// </summary>
         public ChartLegend()
         {
+            Item = new ChartLegendItem();
             Margin = new ChartSpacing();
             Padding = new ChartSpacing();
             Border = new ChartElementBorder();
@@ -152,6 +153,15 @@ namespace Kendo.Mvc.UI
         /// Gets or sets the legend reverse 
         /// </summary>
         public bool? Reverse
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the legend item
+        /// </summary>
+        public ChartLegendItem Item
         {
             get;
             set;

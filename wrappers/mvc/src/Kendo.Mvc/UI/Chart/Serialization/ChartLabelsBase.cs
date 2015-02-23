@@ -29,7 +29,8 @@ namespace Kendo.Mvc.UI
                 .Add("format", labels.Format, () => labels.Format.HasValue())
                 .Add("rotation", labels.Rotation, () => labels.Rotation.HasValue)
                 .Add("opacity", labels.Opacity, () => labels.Opacity.HasValue)
-                .Add("visible", labels.Visible, () => labels.Visible.HasValue);
+                .Add("visible", labels.Visible, () => labels.Visible.HasValue)
+                .Add("visual", labels.Visual, () => labels.Visual != null);
 
             return result;
         }

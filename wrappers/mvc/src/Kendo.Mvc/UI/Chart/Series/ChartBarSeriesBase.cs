@@ -168,6 +168,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        /// <summary>
+        /// Gets or series visual handler.
+        /// </summary>
+        /// <value>
+        /// The series visual handler.
+        /// </value>
+        public ClientHandlerDescriptor Visual
+        {
+            get;
+            set;
+        }
+
         protected virtual void Initialize()
         {
             Orientation = ChartSeriesOrientation.Horizontal;

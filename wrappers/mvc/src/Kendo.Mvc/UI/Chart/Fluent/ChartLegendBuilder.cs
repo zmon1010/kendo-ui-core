@@ -311,5 +311,16 @@ namespace Kendo.Mvc.UI.Fluent
             legend.Reverse = reverse;
             return this;
         }
+
+        /// <summary>
+        /// Configures the legend item
+        /// </summary>
+        /// <param name="configurator">The legend item configuration action</param>
+        public ChartLegendBuilder Item(Action<ChartLegendItemBuilder> configurator)
+        {
+            configurator(new ChartLegendItemBuilder(legend.Item));
+            return this;
+        }
+
     }
 }

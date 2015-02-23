@@ -38,6 +38,11 @@ namespace Kendo.Mvc.UI
                 result.Add("line", lineData);
             }
 
+            if (note.Visual != null)
+            {
+                result.Add("visual", note.Visual);
+            }
+
             return result;
         }
     }

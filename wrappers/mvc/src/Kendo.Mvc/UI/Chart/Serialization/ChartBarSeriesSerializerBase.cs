@@ -31,7 +31,8 @@ namespace Kendo.Mvc.UI
                 .Add("border", series.Border.CreateSerializer().Serialize(), ShouldSerializeBorder)
                 .Add("colorField", series.ColorMember, () => series.ColorMember.HasValue())
                 .Add("noteTextField", series.NoteTextMember, () => series.NoteTextMember.HasValue())
-                .Add("negativeColor", series.NegativeColor, () => series.NegativeColor.HasValue());
+                .Add("negativeColor", series.NegativeColor, () => series.NegativeColor.HasValue())
+                .Add("visual", series.Visual, () => series.Visual != null);
 
             if (series.Overlay != null)
             {

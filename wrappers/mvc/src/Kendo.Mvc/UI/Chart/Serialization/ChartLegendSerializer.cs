@@ -3,6 +3,7 @@ namespace Kendo.Mvc.UI
     using System.Collections.Generic;
     using Kendo.Mvc.Infrastructure;
     using Kendo.Mvc.Extensions;
+    using System.Linq;
 
     internal class ChartLegendSerializer : IChartSerializer
     {
@@ -17,6 +18,7 @@ namespace Kendo.Mvc.UI
         {
             var result = new Dictionary<string, object>();
             var legendLabelOptions = legend.Labels.CreateSerializer().Serialize();
+            var legendItemOptions = legend.Item.CreateSerializer().Serialize();
 
             FluentDictionary.For(legendLabelOptions)
                 .Add("font", legend.Font, () => legend.Font.HasValue())
@@ -35,7 +37,8 @@ namespace Kendo.Mvc.UI
                 .Add("orientation", legend.Orientation.ToString().ToLowerInvariant(), () => legend.Orientation.HasValue)
                 .Add("width", legend.Width, () => legend.Width.HasValue)
                 .Add("height", legend.Height, () => legend.Height.HasValue)
-                .Add("reverse", legend.Reverse, () => legend.Reverse.HasValue);
+                .Add("reverse", legend.Reverse, () => legend.Reverse.HasValue)
+                .Add("item", legendItemOptions, () => legendItemOptions.Any());
 
             return result;
         }

@@ -398,5 +398,30 @@ namespace Kendo.Mvc.UI.Fluent
             labels.Rotation = rotation;
             return this as TBuilder;
         }
+
+        /// Sets the labels visual handler
+        /// </summary>
+        /// <param name="handler">The handler name.</param>  
+        public TBuilder Visual(string handler)
+        {
+            labels.Visual = new ClientHandlerDescriptor
+            {
+                HandlerName = handler
+            };
+            return this as TBuilder;
+        }
+
+        /// <summary>
+        /// Sets the labels visual handler
+        /// </summary>
+        /// <param name="handler">The handler</param>  
+        public TBuilder Visual(Func<object, object> handler)
+        {
+            labels.Visual = new ClientHandlerDescriptor
+            {
+                TemplateDelegate = handler
+            };
+            return this as TBuilder;
+        }
     }
 }

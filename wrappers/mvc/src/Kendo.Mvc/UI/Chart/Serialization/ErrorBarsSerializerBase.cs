@@ -33,6 +33,11 @@
                 result.Add("line", line);
             }
 
+            if (errorBars.Visual != null)
+            {
+                result.Add("visual", errorBars.Visual);
+            }
+
             return result;
         }
     }

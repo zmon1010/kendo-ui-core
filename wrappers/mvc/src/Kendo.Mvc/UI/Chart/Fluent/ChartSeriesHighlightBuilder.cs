@@ -35,5 +35,31 @@ namespace Kendo.Mvc.UI.Fluent
             Highlight.Visible = visible;
             return this;
         }
+
+        /// <summary>
+        /// Sets the highlight toggle handler
+        /// </summary>
+        /// <param name="handler">The toggle handler name.</param>  
+        public ChartSeriesHighlightBuilder Toggle(string handler)
+        {
+            Highlight.Toggle = new ClientHandlerDescriptor
+            {
+                HandlerName = handler
+            };
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the highlight toggle handler
+        /// </summary>
+        /// <param name="handler">The toggle handler</param>  
+        public ChartSeriesHighlightBuilder Toggle(Func<object, object> handler)
+        {
+            Highlight.Toggle = new ClientHandlerDescriptor
+            {
+                TemplateDelegate = handler
+            };
+            return this;
+        }
     }
 }

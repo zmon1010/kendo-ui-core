@@ -97,6 +97,18 @@ namespace Kendo.Mvc.UI
         }
 
         /// <summary>
+        /// Gets or series visual handler.
+        /// </summary>
+        /// <value>
+        /// The series visual handler.
+        /// </value>
+        ClientHandlerDescriptor Visual
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the series color for negative values
         /// </summary>
         string NegativeColor
