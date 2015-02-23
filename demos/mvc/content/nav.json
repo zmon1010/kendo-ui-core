@@ -9677,22 +9677,6 @@
         ]
       },
       {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "collapsible/adaptive",
-        "title": {
-            "kendo-ui": "Mobile Collapsible widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile Collapsible may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
         "text": "AngularJS",
         "disableInMobile": true,
         "mobile": true,
