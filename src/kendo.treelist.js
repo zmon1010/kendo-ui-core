@@ -1445,30 +1445,32 @@ var __meta__ = {
             this._angularFooters("compile");
 
             if (this._hasLockedColumns) {
-                this._adjustRowsHeight(this.table, this.lockedTable);
+                this._adjustRowsHeight();
             }
         },
 
-        _adjustRowsHeight: function(table1, table2) {
-            var rows = table1[0].rows,
-            length = rows.length,
-            idx,
-            rows2 = table2[0].rows,
-            containers = table1.add(table2),
-            containersLength = containers.length,
-            heights = [];
+        _adjustRowsHeight: function() {
+            var table = this.table;
+            var lockedTable = this.lockedTable;
+            var rows = table[0].rows;
+            var length = rows.length;
+            var idx;
+            var lockedRows = lockedTable[0].rows;
+            var containers = table.add(lockedTable);
+            var containersLength = containers.length;
+            var heights = [];
 
             for (idx = 0; idx < length; idx++) {
-                if (!rows2[idx]) {
+                if (!lockedRows[idx]) {
                     break;
                 }
 
                 if (rows[idx].style.height) {
-                    rows[idx].style.height = rows2[idx].style.height = "";
+                    rows[idx].style.height = lockedRows[idx].style.height = "";
                 }
 
                 var offsetHeight1 = rows[idx].offsetHeight;
-                var offsetHeight2 = rows2[idx].offsetHeight;
+                var offsetHeight2 = lockedRows[idx].offsetHeight;
                 var height = 0;
 
                 if (offsetHeight1 > offsetHeight2) {
@@ -1487,7 +1489,7 @@ var __meta__ = {
             for (idx = 0; idx < length; idx++) {
                 if (heights[idx]) {
                     //add one to resolve row misalignment in IE
-                    rows[idx].style.height = rows2[idx].style.height = (heights[idx] + 1) + "px";
+                    rows[idx].style.height = lockedRows[idx].style.height = (heights[idx] + 1) + "px";
                 }
             }
 
@@ -1881,8 +1883,10 @@ var __meta__ = {
             container.append(resizeHandle);
 
             if (e.clientX > left + cellWidth/2) {
+                // closer to right th border, align indicator with border
                 left += cellWidth;
             } else {
+                // closer to left th border, resize previous column
                 th = th.prev();
             }
 
@@ -1908,16 +1912,16 @@ var __meta__ = {
                 this.resizable.destroy();
             }
 
+            var treelist = this;
+
             $(this.lockedHeader).find("thead").add(this.thead)
                 .on("mousemove" + NS, "th", $.proxy(this._positionResizeHandle, this));
 
             this.resizable = new kendo.ui.Resizable(this.wrapper, {
                 handle: ".k-resize-handle",
-                treelist: this,
                 start: function(e) {
                     var th = $(e.currentTarget).data("th");
                     var colSelector = "col:eq(" + th.index() + ")";
-                    var treelist = this.options.treelist;
                     var header, contentTable;
 
                     treelist.wrapper.addClass("k-grid-column-resizing");
@@ -1950,9 +1954,6 @@ var __meta__ = {
                     this.col.width(this.columnWidth + delta);
                 },
                 resizeend: function() {
-                    // TODO: TreeList instance is not correct
-                    var treelst = this.options.treelist;
-
                     treelist.wrapper.removeClass("k-grid-column-resizing");
 
                     var field = this.th.attr("data-field");
@@ -1960,8 +1961,9 @@ var __meta__ = {
                         return c.field == field;
                     });
 
-                    column[0].width = Math.floor(this.th.width());
-                    treelist.refresh();
+                    column[0].width = Math.floor(this.th.outerWidth());
+                    treelist._resize();
+                    treelist._adjustRowsHeight();
 
                     this.table = this.col = this.th = null;
                 }
