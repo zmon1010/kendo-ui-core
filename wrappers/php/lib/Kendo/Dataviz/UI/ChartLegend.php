@@ -42,6 +42,15 @@ class ChartLegend extends \Kendo\SerializableObject {
     }
 
     /**
+    * The chart legend item configuration.
+    * @param \Kendo\Dataviz\UI\ChartLegendItem|array $value
+    * @return \Kendo\Dataviz\UI\ChartLegend
+    */
+    public function item($value) {
+        return $this->setProperty('item', $value);
+    }
+
+    /**
     * The chart legend label configuration.
     * @param \Kendo\Dataviz\UI\ChartLegendLabels|array $value
     * @return \Kendo\Dataviz\UI\ChartLegend

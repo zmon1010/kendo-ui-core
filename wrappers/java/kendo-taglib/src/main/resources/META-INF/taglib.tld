@@ -2530,6 +2530,28 @@ A negative value will move the legend upwards from its current position.</descri
     </tag>
 
     <tag>
+        <description>The chart legend item configuration.</description>
+        <name>chart-legend-item</name>
+        <tag-class>com.kendoui.taglib.chart.LegendItemTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>A function that can be used to create a custom visual for the legend items. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>A function that can be used to create a custom visual for the legend items. The available argument fields are:</description>
+        <name>chart-legend-item-visual</name>
+        <tag-class>com.kendoui.taglib.chart.LegendItemVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>The chart legend label configuration.</description>
         <name>chart-legend-labels</name>
         <tag-class>com.kendoui.taglib.chart.LegendLabelsTag</tag-class>
