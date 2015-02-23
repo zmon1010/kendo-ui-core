@@ -70,6 +70,8 @@ namespace Kendo.Mvc.UI
             set;
         }
         
+        public bool? Resizable { get; set; }
+        
         public bool? Reorderable { get; set; }
         
         public TreeListColumnMenuSettings ColumnMenu
@@ -148,6 +150,11 @@ namespace Kendo.Mvc.UI
             {
                 json["columns"] = columns;
             }
+            if (Resizable.HasValue)
+            {
+                json["resizable"] = Resizable;
+            }
+                
             if (Reorderable.HasValue)
             {
                 json["reorderable"] = Reorderable;

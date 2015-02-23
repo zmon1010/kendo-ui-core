@@ -43,6 +43,8 @@ namespace Kendo.Mvc.UI
         
         public string ProxyURL { get; set; }
         
+        public string ProxyTarget { get; set; }
+        
         public string Subject { get; set; }
         
         public string Title { get; set; }
@@ -101,6 +103,11 @@ namespace Kendo.Mvc.UI
             if (ProxyURL.HasValue())
             {
                 json["proxyURL"] = ProxyURL;
+            }
+            
+            if (ProxyTarget.HasValue())
+            {
+                json["proxyTarget"] = ProxyTarget;
             }
             
             if (Subject.HasValue())

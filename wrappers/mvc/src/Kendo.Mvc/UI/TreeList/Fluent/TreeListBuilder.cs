@@ -46,6 +46,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// If set to true allows users to resize columns by dragging their header borders. By default resizing is disabled.
+        /// </summary>
+        /// <param name="value">The value that configures the resizable.</param>
+        public TreeListBuilder<T> Resizable(bool value)
+        {
+            container.Resizable = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
         /// </summary>
         /// <param name="value">The value that configures the reorderable.</param>
