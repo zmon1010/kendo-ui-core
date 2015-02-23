@@ -357,6 +357,7 @@ var __meta__ = {
             var className = [styles.resource, styles.resourceAlt];
             var resourcesPosition;
             var resourcesMargin = this._calculateResourcesMargin();
+            var taskBorderWidth = this._calculateTaskBorderWidth();
 
             var addCoordinates = function(rowIndex) {
                 var taskLeft;
@@ -381,6 +382,7 @@ var __meta__ = {
                 task = tasks[i];
 
                 position = this._taskPosition(task);
+                position.borderWidth = taskBorderWidth;
 
                 row = kendoDomElement("tr", null);
 
@@ -481,6 +483,23 @@ var __meta__ = {
             return margin;
         },
 
+        _calculateTaskBorderWidth: function() {
+            var width;
+            var className = GanttView.styles.task + " " + GanttView.styles.taskSingle;
+            var task = $("<div class='" + className + "' style='visibility: hidden; position: absolute'>");
+            var computedStyle;
+
+            this.content.append(task);
+
+            computedStyle = kendo.getComputedStyles(task[0], ["border-left-width"]);
+
+            width = parseFloat(computedStyle["border-left-width"], 10);
+
+            task.remove();
+
+            return width;
+        },
+
         _renderTask: function(task, position) {
             var taskWrapper;
             var taskElement;
@@ -539,7 +558,7 @@ var __meta__ = {
                 content.children.push(kendoDomElement("span", { className: styles.taskResizeHandle + " " + styles.taskResizeHandleEast }));
             }
 
-            var element = kendoDomElement("div", { className: styles.task + " " + styles.taskSingle, "data-uid": task.uid, style: { width: Math.max((position.width - 2), 0) + "px" } }, [
+            var element = kendoDomElement("div", { className: styles.task + " " + styles.taskSingle, "data-uid": task.uid, style: { width: Math.max((position.width - position.borderWidth * 2), 0) + "px" } }, [
                 kendoDomElement("div", { className: styles.taskComplete, style: { width: progressWidth + "px" } }),
                 content
             ]);
