@@ -944,7 +944,7 @@
        kendo.PDFMixin.extend(Editor.prototype);
        Editor.prototype._drawPDF = function() {
         return kendo.drawing.drawDOM(this.body);
-       };
+       }
        Editor.prototype._drawPDFShadow = function() {
             var wrapper = this.body;
             var shadow = $("<div class='k-pdf-export-shadow'>").css("width", wrapper.width());
@@ -957,9 +957,8 @@
             .done(function() {
                shadow.remove();
             });
-        };
+        }
     }
-}
 
 })(window.jQuery);
 
