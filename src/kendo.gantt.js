@@ -1493,6 +1493,7 @@ var __meta__ = {
             },
             showWorkHours: true,
             showWorkDays: true,
+            toolbar: null,
             workDayStart: new Date(1980, 1, 1, 8, 0, 0),
             workDayEnd: new Date(1980, 1, 1, 17, 0, 0),
             workWeekStart: 1,
