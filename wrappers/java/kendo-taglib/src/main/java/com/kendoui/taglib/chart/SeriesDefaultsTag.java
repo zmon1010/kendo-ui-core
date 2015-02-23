@@ -7,6 +7,7 @@ import com.kendoui.taglib.BaseTag;
 
 
 import com.kendoui.taglib.ChartTag;
+import com.kendoui.taglib.json.Function;
 
 
 
