@@ -6812,7 +6812,12 @@ var __meta__ = {
            isInput = $(e.target).is(":button,a,:input,a>.k-icon,textarea,span.k-icon,span.k-link,.k-input,.k-multiselect-wrap"),
            currentTable = currentTarget.closest("table")[0];
 
-       if (kendo.support.touch || (isInput && currentTarget.find(kendo.roleSelector("filtercell")).length)) {
+       if (kendo.support.touch) {
+           return;
+       }
+
+       if (isInput && currentTarget.find(kendo.roleSelector("filtercell")).length) {
+           this.current(currentTarget);
            return;
        }
 
