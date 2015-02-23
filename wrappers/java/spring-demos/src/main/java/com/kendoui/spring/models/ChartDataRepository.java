@@ -4047,4 +4047,18 @@ public class ChartDataRepository {
 
         return result;
     }
+    
+    public static List<Forecast> ForecastData() {
+        List<Forecast> result = new ArrayList<Forecast>();
+
+        result.add(new Forecast("cloudy", 15, "Monday"));
+        result.add(new Forecast("rainy", 16, "Tuesday"));
+        result.add(new Forecast("cloudy", 20, "Wednesday"));
+        result.add(new Forecast("sunny", 23, "Thursday"));
+        result.add(new Forecast("cloudy", 17, "Friday"));
+        result.add(new Forecast("sunny", 20, "Saturday"));
+        result.add(new Forecast("sunny", 25, "Sunday"));
+
+        return result;
+    }
 }
