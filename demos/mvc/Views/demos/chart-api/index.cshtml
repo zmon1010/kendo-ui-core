@@ -32,6 +32,17 @@
         </div>
     </div>
     <script>
+        var series = [{
+            name: "Total Visits",
+            data: [56000, 63000, 74000, 91000, 117000, 138000],
+
+            // Line chart marker type
+            markers: { type: "square" }
+        }, {
+            name: "Unique visitors",
+            data: [52000, 34000, 23000, 48000, 67000, 83000]
+        }];
+
         function createChart() {
             $("#chart").kendoChart({
                 title: {
@@ -44,16 +55,7 @@
                     type: "column",
                     stack: true
                 },
-                series: [{
-                    name: "Total Visits",
-                    data: [56000, 63000, 74000, 91000, 117000, 138000],
-
-                    // Line chart marker type
-                    markers: { type: "square" }
-                }, {
-                    name: "Unique visitors",
-                    data: [52000, 34000, 23000, 48000, 67000, 83000]
-                }],
+                series: series,
                 valueAxis: {
                     line: {
                         visible: false
@@ -80,7 +82,6 @@
 
         function refresh() {
             var chart = $("#chart").data("kendoChart"),
-                series = chart.options.series,
                 type = $("input[name=seriesType]:checked").val(),
                 stack = $("#stack").prop("checked");
 
@@ -89,7 +90,9 @@
                 series[i].type = type;
             };
 
-            chart.refresh();
+            chart.setOptions({
+                series: series
+            });
         }
     </script>
 </div>
