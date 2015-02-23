@@ -3668,7 +3668,7 @@ var __meta__ = {
         var SCHEDULER_EXPORT = "k-scheduler-pdf-export";
         Scheduler.fn._drawPDF = function() {
             var wrapper = this.wrapper;
-            var cssText = wrapper[0].style.cssText;
+            var styles = wrapper[0].style.cssText;
 
             wrapper.css({
                 width: wrapper.width(),
@@ -3682,7 +3682,7 @@ var __meta__ = {
 
             var scheduler = this;
             promise.always(function() {
-                wrapper[0].style.cssText = cssText;
+                wrapper[0].style.cssText = styles;
                 wrapper.removeClass(SCHEDULER_EXPORT);
                 scheduler.resize(true);
             });
