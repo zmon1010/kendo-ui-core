@@ -3139,16 +3139,19 @@
             var dataItem = "foo";
             var series = "foo";
             var value = 3;
+            var category = "bar";
             createShape({
                 visual: function(e) {
                    equal(e.dataItem, dataItem);
                    equal(e.series, series);
                    equal(e.value, value);
+                   equal(e.category, category);
                 }
             }, {
                 dataItem: dataItem,
                 series: series,
-                value: value
+                value: value,
+                category: category
             });
         });
 

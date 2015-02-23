@@ -4922,7 +4922,8 @@ var __meta__ = {
             }, {
                 dataItem: this.dataItem,
                 value: this.value,
-                series: this.series
+                series: this.series,
+                category: this.category
             });
 
             return marker;
