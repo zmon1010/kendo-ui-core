@@ -2342,7 +2342,7 @@ html .km-pane-wrapper .km-widget,
     {
         .composite-background(@widget-gradient);
         background-position: 50% 50%;
-        background-color: @header-background-color;
+        background-color: @drop-down-background;
         border-color: @widget-border-color;
     }
 
@@ -2389,6 +2389,12 @@ html .km-pane-wrapper .km-widget,
     .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view > .k-link
     {
         color: @widget-text-color;
+        min-width: 75px;
+    }
+    
+    .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view:hover > .k-link
+    {
+        color: @hover-text-color;
     }
     
     .k-pager-numbers .k-current-page .k-link:after,

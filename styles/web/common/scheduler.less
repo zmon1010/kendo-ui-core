@@ -963,6 +963,7 @@ div[name="recurrenceRule"] > .k-dropdown
 /* responsive styles  */
 
 @media (max-width: 1000px) {
+    
     .k-scheduler-toolbar > ul.k-scheduler-views {
         position: absolute;
         right: 6px;
@@ -985,7 +986,8 @@ div[name="recurrenceRule"] > .k-dropdown
     {
         display: block;
         position: relative;
-        padding: 0 2.5em 0 1em;
+        padding-right: 2.5em;
+        padding-left: 1em;
     }
     
     .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view > .k-link:after
@@ -1005,14 +1007,16 @@ div[name="recurrenceRule"] > .k-dropdown
         border: 0;
         border-radius: 0;
     }
+
     .k-scheduler-toolbar > ul.k-scheduler-views.k-state-expanded {
         border: 1px solid #c5c5c5;
         background-color: #fff;
         background-image: none;
         box-shadow: 0 2px 2px 0 rgba(0,0,0,0.3);
     }
-}/* Remove scrollbars during PDF export */
+}
 
+/* Remove scrollbars during PDF export */
 .k-scheduler-pdf-export {
     overflow: hidden;
 }
