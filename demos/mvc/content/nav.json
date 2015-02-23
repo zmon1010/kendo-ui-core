@@ -6028,6 +6028,17 @@
         }
       },
       {
+        "text": "Strongly typed binding",
+        "url": "mvvm/types",
+        "new": true,
+        "title": {
+            "kendo-ui": "Strongly typed binding demo | Kendo UI MVVM"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how the View-model fields can be updated using strongly typed 'checked' and 'value' bindings"
+        }
+      },
+      {
         "text": "Remote binding",
         "url": "mvvm/remote-binding",
         "title": {
