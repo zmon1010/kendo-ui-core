@@ -211,6 +211,14 @@ public class TreeListTag extends WidgetTag /* interfaces */implements DataBoundW
         setProperty("reorderable", value);
     }
 
+    public boolean getResizable() {
+        return (boolean)getProperty("resizable");
+    }
+
+    public void setResizable(boolean value) {
+        setProperty("resizable", value);
+    }
+
     public java.lang.Object getScrollable() {
         return (java.lang.Object)getProperty("scrollable");
     }

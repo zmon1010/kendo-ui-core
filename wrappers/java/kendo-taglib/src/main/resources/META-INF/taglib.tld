@@ -12736,7 +12736,8 @@ settings are available for the depth value:</description>
             <type>java.util.Date</type>
         </attribute>
         <attribute>
-            <description>Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used. Note that value of the format option is always used.</description>
+            <description>Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used.
+ Note that value of the format option is always used. The timeFormat value also will be used if defined.</description>
             <name>parseFormats</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -15236,6 +15237,11 @@ and a contenteditable iframe is generated.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Fired when the user clicks the "Export to PDF" toolbar button.</description>
+            <name>pdfExport</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fires when the Editor selection has changed.</description>
             <name>select</name>
             <rtexprvalue>true</rtexprvalue>
@@ -16519,6 +16525,127 @@ If function is assigned, the current path and image name will be provided.</desc
 
 
     <tag>
+        <description>Configures the Kendo UI Editor PDF export settings.</description>
+        <name>editor-pdf</name>
+        <tag-class>com.kendoui.taglib.editor.PdfTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The author of the PDF document.</description>
+            <name>author</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The creator of the PDF document.</description>
+            <name>creator</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The date when the PDF document is created. Defaults to new Date().</description>
+            <name>date</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.util.Date</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the file name of the exported PDF file.</description>
+            <name>fileName</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.</description>
+            <name>forceProxy</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the keywords of the exported PDF file.</description>
+            <name>keywords</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Set to true to reverse the paper dimensions if needed such that width is the larger edge.</description>
+            <name>landscape</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the paper size of the PDF document.
+The default "auto" means paper size is determined by content.Supported values:</description>
+            <name>paperSize</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyTarget</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
+attachment; filename="&lt;fileName.pdf&gt;".</description>
+            <name>proxyURL</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the subject of the PDF file.</description>
+            <name>subject</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the title of the PDF file.</description>
+            <name>title</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>Specifies the margins of the page (numbers or strings with units). Supported
+units are "mm", "cm", "in" and "pt" (default).</description>
+        <name>editor-pdf-margin</name>
+        <tag-class>com.kendoui.taglib.editor.PdfMarginTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The bottom margin. Numbers are considered as "pt" units.</description>
+            <name>bottom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The left margin. Numbers are considered as "pt" units.</description>
+            <name>left</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The right margin. Numbers are considered as "pt" units.</description>
+            <name>right</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The top margin. Numbers are considered as "pt" units.</description>
+            <name>top</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+
+    </tag>
+
+
+
+
+    <tag>
         <description>If enabled, the editor renders a resize handle to allow users to resize it.</description>
         <name>editor-resizable</name>
         <tag-class>com.kendoui.taglib.editor.ResizableTag</tag-class>
@@ -16684,6 +16811,12 @@ Custom tools and tools that require configuration are defined as objects.The ava
         <description>Fires before the content is pasted in the Editor.</description>
         <name>editor-paste</name>
         <tag-class>com.kendoui.taglib.editor.PasteFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user clicks the "Export to PDF" toolbar button.</description>
+        <name>editor-pdfExport</name>
+        <tag-class>com.kendoui.taglib.editor.PdfExportFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -24283,6 +24416,62 @@ the RangeSlider tick labels.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
+        <description>ResponsivePanel</description>
+        <name>responsivePanel</name>
+        <tag-class>com.kendoui.taglib.ResponsivePanelTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the widget will not close when the page content is touched, after it was opened on a mobile device. You will need to call the close method when the panel needs to close.</description>
+            <name>autoClose</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the page width at which the widget will be hidden and its toggle button will become visible.</description>
+            <name>breakpoint</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the direction from which the hidden element will open up, once the toggle button has been activated. Valid values are "left", "right", and "top".</description>
+            <name>orientation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Triggered before the responsive panel is closed. Cancellable.</description>
+            <name>close</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered before the responsive panel is opened. Cancellable.</description>
+            <name>open</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+
+    <tag>
+        <description>Triggered before the responsive panel is closed. Cancellable.</description>
+        <name>responsivePanel-close</name>
+        <tag-class>com.kendoui.taglib.responsivepanel.CloseFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered before the responsive panel is opened. Cancellable.</description>
+        <name>responsivePanel-open</name>
+        <tag-class>com.kendoui.taglib.responsivepanel.OpenFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
         <description>Scheduler</description>
         <name>scheduler</name>
         <tag-class>com.kendoui.taglib.SchedulerTag</tag-class>
@@ -24334,8 +24523,8 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
         </attribute>
         <attribute>
             <description>The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd".
-The "ddd" specifier, a.k.a abbreviated name of the week day, will be localized using the current Kendo UI culture.
-If the developer wants to control the day and month order then one needs to define a custom template.The fields which can be used in the template are:</description>
+The "ddd" specifier represents the abbreviated name of the week day and will be localized using the current Kendo UI culture.
+If the developer wants to control the day and month order, then one needs to define a custom template.The fields which can be used in the template are:</description>
             <name>dateHeaderTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -24634,6 +24823,12 @@ which field to update. The other option is to use MVVM bindings in order to bind
             <name>update</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Configures the Kendo UI Window instance, which is used when the Grid edit mode is "popup". The configuration is optional.For more information, please refer to the Window configuration API.</description>
+            <name>window</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
 
     </tag>
@@ -25510,7 +25705,9 @@ By default the Kendo UI Scheduler widget displays "day" and "week" view.</descri
             <type>float</type>
         </attribute>
         <attribute>
-            <description>The template used to render the date header cells.By default the scheduler renders the date using the current culture date format.The fields which can be used in the template are:</description>
+            <description>The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd".
+The "ddd" specifier, a.k.a abbreviated name of the week day, will be localized using the current Kendo UI culture.
+If the developer wants to control the day and month order then one needs to define a custom template.The fields which can be used in the template are:</description>
             <name>dateHeaderTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -25689,7 +25886,9 @@ By default the Kendo UI Scheduler widget displays "day" and "week" view.</descri
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>The template used to render the date header cells.By default the scheduler renders the date using the current culture date format.The fields which can be used in the template are:</description>
+        <description>The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd".
+The "ddd" specifier, a.k.a abbreviated name of the week day, will be localized using the current Kendo UI culture.
+If the developer wants to control the day and month order then one needs to define a custom template.The fields which can be used in the template are:</description>
         <name>scheduler-view-dateHeaderTemplate</name>
         <tag-class>com.kendoui.taglib.scheduler.ViewDateHeaderTemplateFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -38481,6 +38680,12 @@ instance.If the dataSource option is set to a JavaScript object or array the wid
         <attribute>
             <description>If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.</description>
             <name>reorderable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true allows users to resize columns by dragging their header borders. By default resizing is disabled.</description>
+            <name>resizable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>

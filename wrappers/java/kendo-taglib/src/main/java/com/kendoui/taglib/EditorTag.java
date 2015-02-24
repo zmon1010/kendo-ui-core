@@ -68,6 +68,10 @@ public class EditorTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("messages", value);
     }
 
+    public void setPdf(com.kendoui.taglib.editor.PdfTag value) {
+        setProperty("pdf", value);
+    }
+
     public void setResizable(com.kendoui.taglib.editor.ResizableTag value) {
         setProperty("resizable", value);
     }
@@ -100,6 +104,10 @@ public class EditorTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setPaste(PasteFunctionTag value) {
         setEvent("paste", value.getBody());
+    }
+
+    public void setPdfExport(PdfExportFunctionTag value) {
+        setEvent("pdfExport", value.getBody());
     }
 
     public void setSelect(SelectFunctionTag value) {
@@ -212,6 +220,18 @@ public class EditorTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setPaste(String value) {
         setProperty("paste", new Function(value));
+    }
+
+    public String getPdfExport() {
+        Function property = ((Function)getProperty("pdfExport"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setPdfExport(String value) {
+        setProperty("pdfExport", new Function(value));
     }
 
     public String getSelect() {
