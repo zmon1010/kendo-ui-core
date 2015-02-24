@@ -495,13 +495,32 @@
             ok(connectionEditTool.tryActivate(new Point(), {}));
         });
 
-        test("does not activates if the connection is already selected and ctrl is pressed", function() {
+        test("does not activate if the connection is already selected and ctrl is pressed", function() {
             setupTool({
                 selectable: true
             });
             toolservice.hoveredItem = new diagram.Connection(new Point(), new Point());
             toolservice.hoveredItem.isSelected = true;
             ok(!connectionEditTool.tryActivate(new Point(), getMeta("ctrl")));
+        });
+
+        test("does not bomb if the connection is not selectable", function() {
+            setupTool({
+                selectable: true
+            });
+
+            var p = new Point();
+            var meta = {};
+
+            toolservice.hoveredItem = new diagram.Connection(p, p, { selectable: false });
+            toolservice.hoveredItem.diagram = d;
+
+            connectionEditTool.tryActivate(p, meta);
+            connectionEditTool.start(p, meta);
+            connectionEditTool.move(p);
+            connectionEditTool.end(p, meta);
+
+            ok(true);
         });
 
     })();

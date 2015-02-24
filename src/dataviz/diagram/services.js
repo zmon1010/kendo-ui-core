@@ -827,26 +827,37 @@
                     diagram = toolService.diagram,
                     selectable =  diagram.options.selectable,
                     item = toolService.hoveredItem,
-                    isActive = tryActivateSelection(selectable, meta) && item && item.path &&
-                        !(item.isSelected && meta.ctrlKey); // means it is connection
+                    isActive = tryActivateSelection(selectable, meta) &&
+                               item && item.path && !(item.isSelected && meta.ctrlKey);
+
                 if (isActive) {
                     this._c = item;
                 }
+
                 return isActive;
             },
             start: function (p, meta) {
                 selectSingle(this._c, meta);
-                this.handle = this._c.adorner._hitTest(p);
-                this._c.adorner.start(p);
+                var adorner = this._c.adorner;
+                if (adorner) {
+                    this.handle = adorner._hitTest(p);
+                    adorner.start(p);
+                }
             },
             move: function (p) {
-                this._c.adorner.move(this.handle, p);
-                return true;
+                var adorner = this._c.adorner;
+                if (adorner) {
+                    adorner.move(this.handle, p);
+                    return true;
+                }
             },
             end: function (p, meta) {
-                this.toolService.triggerClick({item: this._c, point: p, meta: meta});
-                var unit = this._c.adorner.stop(p);
-                this.toolService.diagram.undoRedoService.add(unit, false);
+                var adorner = this._c.adorner;
+                if (adorner) {
+                    this.toolService.triggerClick({item: this._c, point: p, meta: meta});
+                    var unit = adorner.stop(p);
+                    this.toolService.diagram.undoRedoService.add(unit, false);
+                }
             },
             getCursor: function () {
                 return Cursors.move;
