@@ -21,6 +21,7 @@ namespace Kendo.Mvc.UI
                 .Add("type", series.Orientation == ChartSeriesOrientation.Horizontal ? "bullet" : "verticalBullet")
                 .Add("gap", series.Gap, () => series.Gap.HasValue)
                 .Add("visible", series.Visible, () => series.Visible.HasValue)
+                .Add("visible", series.VisibleInLegend, () => series.VisibleInLegend.HasValue)
                 .Add("spacing", series.Spacing, () => series.Spacing.HasValue)
                 .Add("targetField", series.TargetMember, () => series.TargetMember != null)
                 .Add("currentField", series.CurrentMember, () => series.CurrentMember != null)

@@ -104,6 +104,15 @@ namespace Kendo.Mvc.UI
         }
 
         /// <summary>
+        /// Gets or sets the visibility of the series in the legend.
+        /// </summary>
+        bool? VisibleInLegend
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the series notes options
         /// </summary>
         ChartNote Notes

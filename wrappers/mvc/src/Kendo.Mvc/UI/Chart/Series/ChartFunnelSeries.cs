@@ -139,15 +139,6 @@ namespace Kendo.Mvc.UI
         }
 
         /// <summary>
-        /// Gets a function which returns the visibleInLegend of the property to which the column is bound to.
-        /// </summary>
-        public Func<TModel, bool> VisibleInLegend
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// Gets a function which returns the color of the property to which the column is bound to.
         /// </summary>
         public new Func<TModel, string> Color

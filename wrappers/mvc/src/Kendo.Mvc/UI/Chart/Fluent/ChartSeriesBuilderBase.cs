@@ -335,6 +335,25 @@ using Kendo.Mvc.Infrastructure;
         }
 
         /// <summary>
+        /// Sets the labels visibility in the legend
+        /// </summary>
+        /// <param name="visible">The series visibility in the legend.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().Chart()
+        ///           .Name("Chart")
+        ///           .Series(series => series.Bar(s => s.Sales).VisibleInLegend(false))
+        ///           .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>        
+        public TSeriesBuilder VisibleInLegend(bool visible)
+        {
+            Series.VisibleInLegend = visible;
+            return this as TSeriesBuilder;
+        }
+
+        /// <summary>
         /// Configures the series notes
         /// </summary>
         /// <param name="configurator">The configuration action.</param>

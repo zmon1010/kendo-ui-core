@@ -21,6 +21,7 @@ namespace Kendo.Mvc.UI
                   .Add("name", series.Name, string.Empty)
                   .Add("opacity", series.Opacity, () => series.Opacity.HasValue)
                   .Add("visible", series.Visible, () => series.Visible.HasValue)
+                  .Add("visibleInLegend", series.VisibleInLegend, () => series.VisibleInLegend.HasValue)
                   .Add("axis", series.Axis, string.Empty)
                   .Add("categoryAxis", series.CategoryAxis, string.Empty)
                   .Add("groupNameTemplate", series.GroupNameTemplate, string.Empty)

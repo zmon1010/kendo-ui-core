@@ -45,7 +45,7 @@ namespace Kendo.Mvc.UI
 
             if (expressionVisibleInLegend != null)
             {
-                VisibleInLegend = expressionVisibleInLegend.Compile();
+                VisibleInLegendExpr = expressionVisibleInLegend.Compile();
                 VisibleInLegendMember = expressionVisibleInLegend.MemberWithoutInstance();
             }
 
@@ -173,7 +173,7 @@ namespace Kendo.Mvc.UI
         /// <summary>
         /// Gets a function which returns the visibleInLegend of the property to which the column is bound to.
         /// </summary>
-        public Func<TModel, bool> VisibleInLegend
+        public Func<TModel, bool> VisibleInLegendExpr
         {
             get;
             private set;
