@@ -24415,62 +24415,7 @@ the RangeSlider tick labels.</description>
         <tag-class>com.kendoui.taglib.rangeslider.SlideFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
-    <tag>
-        <description>ResponsivePanel</description>
-        <name>responsivePanel</name>
-        <tag-class>com.kendoui.taglib.ResponsivePanelTag</tag-class>
-        <body-content>JSP</body-content>
-        <attribute>
-            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
-            <name>name</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>If set to false the widget will not close when the page content is touched, after it was opened on a mobile device. You will need to call the close method when the panel needs to close.</description>
-            <name>autoClose</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>boolean</type>
-        </attribute>
-        <attribute>
-            <description>Specifies the page width at which the widget will be hidden and its toggle button will become visible.</description>
-            <name>breakpoint</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>float</type>
-        </attribute>
-        <attribute>
-            <description>Specifies the direction from which the hidden element will open up, once the toggle button has been activated. Valid values are "left", "right", and "top".</description>
-            <name>orientation</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>Triggered before the responsive panel is closed. Cancellable.</description>
-            <name>close</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <description>Triggered before the responsive panel is opened. Cancellable.</description>
-            <name>open</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <dynamic-attributes>true</dynamic-attributes>
-    </tag>
 
-
-    <tag>
-        <description>Triggered before the responsive panel is closed. Cancellable.</description>
-        <name>responsivePanel-close</name>
-        <tag-class>com.kendoui.taglib.responsivepanel.CloseFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
-        <description>Triggered before the responsive panel is opened. Cancellable.</description>
-        <name>responsivePanel-open</name>
-        <tag-class>com.kendoui.taglib.responsivepanel.OpenFunctionTag</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
     <tag>
         <description>Scheduler</description>
         <name>scheduler</name>
