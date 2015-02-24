@@ -3781,6 +3781,7 @@
   {
     "text": "ResponsivePanel",
     "name": "responsivepanel",
+    "new": "true",
     "api": "web/responsivepanel",
     "documentation": {
        "kendo-ui": "getting-started/web/responsivepanel/overview",
@@ -5046,7 +5047,6 @@
     "text": "TreeList",
     "name": "treelist",
     "pro": "true",
-    "new": "true",
     "api": "web/treelist",
     "documentation": {
        "kendo-ui": "getting-started/web/treelist/overview",
@@ -5906,7 +5906,6 @@
     "packages": [ "!mvc", "!jsp", "!php" ],
     "category": "Framework",
     "text": "PDF Export",
-    "new": true,
     "name": "export",
     "spriteCssClass": "drawingIcon",
     "items": [
@@ -7198,7 +7197,6 @@
   {
     "text": "Chart API",
     "name": "chart-api",
-    "new": true,
     "pro": "true",
     "api": "dataviz/chart",
     "spriteCssClass": "chartIcon",
@@ -9678,6 +9676,7 @@
   {
     "text": "Collapsible",
     "name": "collapsible",
+    "new": "true",
     "api": "mobile/collapsible",
     "documentation": {
        "kendo-ui": "getting-started/mobile/collapsible",
