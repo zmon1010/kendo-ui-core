@@ -152,6 +152,13 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        public EditorBuilder Pdf(Action<PDFSettingsBuilder> configurator)
+        {
+            configurator(new PDFSettingsBuilder(Component.Pdf));
+
+            return this;
+        }
+
         public EditorBuilder Messages(Action<EditorMessagesBuilder> configurator)
         {
             configurator(new EditorMessagesBuilder(Component.Messages));

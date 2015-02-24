@@ -194,6 +194,7 @@
     <Compile Include="Controllers\Diagram\Pdf_ExportController.cs" />
     <Compile Include="Controllers\DropDownList\ClientFilteringController.cs" />
     <Compile Include="Controllers\DropDownList\ServerFilteringController.cs" />
+    <Compile Include="Controllers\Editor\Pdf_ExportController.cs" />
     <Compile Include="Controllers\Financial\Pdf_ExportController.cs" />
     <Compile Include="Controllers\Gantt\ApiController.cs" />
     <Compile Include="Controllers\Gantt\Pdf_ExportController.cs" />
@@ -1793,6 +1794,7 @@
     <Content Include="Content\web\editor\editorStyles.min.css" />
     <Content Include="Content\web\editor\insert-html-icon.png" />
     <Content Include="Content\web\editor\mobile.png" />
+    <Content Include="Content\web\editor\pdf-export-styles.css" />
     <Content Include="Content\web\editor\web.png" />
     <Content Include="Content\web\Employees\1.jpg" />
     <Content Include="Content\web\Employees\2.jpg" />
@@ -2690,6 +2692,7 @@
     <Content Include="Areas\razor\Views\treelist\frozen_columns.cshtml" />
     <Content Include="Areas\razor\Views\treelist\column_resizing.cshtml" />
     <Content Include="Areas\razor\Views\line_charts\visuals.cshtml" />
+    <Content Include="Areas\razor\Views\editor\pdf_export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />

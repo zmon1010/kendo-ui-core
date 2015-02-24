@@ -118,6 +118,15 @@ and a contenteditable iframe is generated.
     }
 
     /**
+    * Configuration for PDF export.
+    * @param \Kendo\UI\EditorPdf|array $value
+    * @return \Kendo\UI\Editor
+    */
+    public function pdf($value) {
+        return $this->setProperty('pdf', $value);
+    }
+    
+    /**
     * The tag that will be rendered. Defaults to "textarea". Triggers the inline edit mode if different.
     * @param string $value
     * @return \Kendo\UI\Editor

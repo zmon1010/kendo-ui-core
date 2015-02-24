@@ -1172,6 +1172,7 @@
     <Content Include="Views\demos\line-charts\visuals.cshtml" />
     <Content Include="Views\demos\mvvm\types.cshtml" />
     <Content Include="Views\demos\bar-charts\visuals.cshtml" />
+    <Content Include="Views\demos\editor\pdf-export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

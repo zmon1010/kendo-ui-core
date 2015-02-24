@@ -88,6 +88,11 @@ namespace Kendo.Mvc.UI.Fluent
             return Button("indent");
         }
 
+        public EditorToolFactory Pdf()
+        {
+            return Button("pdf");
+        }
+
         public EditorToolFactory Outdent()
         {
             return Button("outdent");

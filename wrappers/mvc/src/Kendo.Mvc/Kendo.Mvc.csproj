@@ -724,6 +724,10 @@
     <Compile Include="UI\Diagram\Settings\DiagramEditableResizeHandlesHoverStrokeSettings.cs" />
     <Compile Include="UI\Diagram\Settings\DiagramPdfMarginSettings.cs" />
     <Compile Include="UI\Diagram\Settings\DiagramPdfSettings.cs" />
+    <Compile Include="UI\Editor\Fluent\EditorPdfMarginSettingsBuilder.cs" />
+    <Compile Include="UI\Editor\Fluent\EditorPdfSettingsBuilder.cs" />
+    <Compile Include="UI\Editor\Settings\EditorPdfMarginSettings.cs" />
+    <Compile Include="UI\Editor\Settings\EditorPdfSettings.cs" />
     <Compile Include="UI\Gantt\Columns\GanttResourceColumn.cs" />
     <Compile Include="UI\Gantt\Fluent\GanttAssignmentsDataSourceBuilder.cs" />
     <Compile Include="UI\Gantt\Fluent\GanttResourceColumnBuilder.cs" />
