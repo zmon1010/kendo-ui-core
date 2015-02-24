@@ -121,57 +121,6 @@
             }
         });
 
-        function autoPageBreaks(element, forceBreak, pageHeight) {
-            var doc = element.ownerDocument;
-            var topBox = element.getBoundingClientRect();
-            var range = doc.createRange();
-            var page = 1;
-            function fallsOnMargin(thing) {
-                var box = thing.getBoundingClientRect();
-                return box.bottom - topBox.top > page * pageHeight;
-            }
-            function splitText(element, node) {
-                if (!/\S/.test(node.data)) {
-                    return;
-                }
-                var len = node.data.length;
-                range.setStart(node, 0);
-                var end = (function findEOP(min, pos, max) {
-                    if (min == pos || pos == max) {
-                        return pos;
-                    }
-                    range.setEnd(node, pos);
-                    if (fallsOnMargin(range)) {
-                        return findEOP(min, (min + pos) >> 1, pos);
-                    } else if (max < len) {
-                        return findEOP(pos, (pos + max) >> 1, max);
-                    }
-                })(0, len >> 1, len);
-
-                if (end == null) {
-                    return;     // the whole text fits on page.
-                }
-
-                var pageBreak = doc.createElement("kendo-pdf-page-break");
-                if (end < len) {
-                    var newNode = node.splitText(end);
-                    element.insertBefore(pageBreak, newNode);
-                } else {
-                    element.insertBefore(pageBreak, node.nextSibling);
-                }
-                page++;
-            }
-            (function split(element){
-                for (var el = element.firstChild; el; el = el.nextSibling) {
-                    if (el.nodeType == 1 /* Element */) {
-                        split(el);
-                    } else if (el.nodeType == 3 /* Text */) {
-                        splitText(element, el);
-                    }
-                }
-            })(element);
-        }
-
         function handlePageBreaks(element, forceBreak, pageWidth, pageHeight) {
             var doc = element.ownerDocument;
             var pages = [];
@@ -187,6 +136,7 @@
             }
             cont.appendChild(copy);
             element.parentNode.insertBefore(cont, element);
+
             function makePage() {
                 var page = doc.createElement("KENDO-PDF-PAGE");
                 if (options && options.pageClassName) {
@@ -195,17 +145,10 @@
                 pages.push(page);
                 return page;
             }
-            if (pageHeight) {
-                if (!forceBreak) {
-                    forceBreak = "kendo-pdf-page-break";
-                } else {
-                    forceBreak += ", kendo-pdf-page-break";
-                }
-                autoPageBreaks(copy, forceBreak, pageHeight);
-            }
-            if (forceBreak != "-") {
-                (function split(node) {
-                    for (var el = node.firstChild; el; el = el.nextSibling) {
+
+            if (forceBreak != "-" || pageHeight) {
+                (function split(element) {
+                    for (var el = element.firstChild; el; el = el.nextSibling) {
                         if (el.nodeType == 1) {
                             if ($(el).is(forceBreak)) {
                                 var page = makePage();
@@ -217,16 +160,60 @@
                             } else {
                                 split(el);
                             }
+                        } else if (pageHeight) {
+                            splitText(el);
                         }
                     }
                 })(copy);
             }
-            if (!(pages.length > 0 && copy.children.length === 0)) {
-                var page = makePage();
-                copy.parentNode.insertBefore(page, copy);
-                page.appendChild(copy);
-            }
+
+            // XXX: can contain only text nodes.  better risk producing
+            // an empty page than truncating the content.
+            // if (!(pages.length > 0 && copy.children.length === 0)) {
+            var page = makePage();
+            copy.parentNode.insertBefore(page, copy);
+            page.appendChild(copy);
+            // }
+
             return { pages: pages, container: cont };
+
+            function fallsOnMargin(thing) {
+                var box = thing.getBoundingClientRect();
+                return box.bottom - copy.getBoundingClientRect().top > pageHeight;
+            }
+
+            function splitText(node) {
+                var range = doc.createRange();
+                if (!/\S/.test(node.data)) {
+                    return;
+                }
+                var len = node.data.length;
+
+                range.setStart(node, 0);
+                range.setEnd(node, len);
+                if (!fallsOnMargin(range)) {
+                    return;     // the whole text fits on current page
+                }
+
+                (function findEOP(min, pos, max) {
+                    range.setEnd(node, pos);
+                    if (min == pos || pos == max) {
+                        return pos;
+                    }
+                    if (fallsOnMargin(range)) {
+                        return findEOP(min, (min + pos) >> 1, pos);
+                    } else {
+                        return findEOP(pos, (pos + max) >> 1, max);
+                    }
+                })(0, len >> 1, len);
+
+                var page = makePage();
+                range.setStartBefore(copy);
+                page.appendChild(range.extractContents());
+                copy.parentNode.insertBefore(page, copy);
+
+                splitText(node);
+            }
         }
 
         return defer.promise();
