@@ -59,7 +59,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the icon position in the header of the collapsible widget. Possible values are "left", "right", "top".
         /// </summary>
         /// <param name="value">The value that configures the iconposition.</param>
-        public MobileCollapsibleBuilder IconPosition(string value)
+        public MobileCollapsibleBuilder IconPosition(IconPosition value)
         {
             container.IconPosition = value;
 
@@ -79,7 +79,133 @@ namespace Kendo.Mvc.UI.Fluent
         
         //<< Fields
 
+        /// <summary>
+        /// Sets the HTML content which the header should display.
+        /// </summary>
+        /// <param name="value">The action which renders the header.</param>
+        /// <code lang="CS">
+        ///  &lt;% Html.Kendo().MobileCollapsible()
+        ///            .Name("Collapsible")
+        ///            .Header(() =>
+        ///                     {
+        ///                         %&gt;
+        ///                             &lt;strong&gt; Collapsible Header &lt;/strong&gt;
+        ///                         &lt;%
+        ///                     })
+        ///            .Render();
+        /// %&gt;
+        /// </code>
+        public MobileCollapsibleBuilder Header(Action value)
+        {
+            container.Header.Content = value;
 
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the HTML content which the header should display.
+        /// </summary>
+        /// <param name="value">The content wrapped in a regular HTML tag or text tag (Razor syntax).</param>
+        /// <code lang="CS">
+        ///  @(Html.Kendo().MobileCollapsible()
+        ///       .Name("Collapsible")        
+        ///        .Header(
+        ///             @&lt;text&gt;
+        ///                     Some text
+        ///                     &lt;strong&gt; Collapsible Header &lt;/strong&gt;
+        ///             &lt;/text&gt;        
+        ///       )
+        ///  )
+        /// </code>
+        public MobileCollapsibleBuilder Header(Func<object, object> value)
+        {
+            container.Header.InlineTemplate = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the HTML content which the header should display as a string.
+        /// </summary>
+        /// <param name="value">The action which renders the header.</param>
+        /// <code lang="CS">
+        ///  &lt;% Html.Kendo().MobileCollapsible()
+        ///            .Name("Collapsible")
+        ///            .Header("&lt;strong&gt; Collapsible Header &lt;/strong&gt;");        
+        ///            .Render();
+        /// %&gt;
+        /// </code>
+        public MobileCollapsibleBuilder Header(string value)
+        {
+
+            container.Header.Html = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the HTML content which the content should display.
+        /// </summary>
+        /// <param name="value">The action which renders the content.</param>
+        /// <code lang="CS">
+        ///  &lt;% Html.Kendo().MobileCollapsible()
+        ///            .Name("Collapsible")
+        ///            .Content(() =>
+        ///                     {
+        ///                         %&gt;
+        ///                             &lt;strong&gt; Collapsible Content &lt;/strong&gt;
+        ///                         &lt;%
+        ///                     })
+        ///            .Render();
+        /// %&gt;
+        /// </code>
+        public MobileCollapsibleBuilder Content(Action value)
+        {
+            container.Content.Content = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the HTML content which the content should display.
+        /// </summary>
+        /// <param name="value">The content wrapped in a regular HTML tag or text tag (Razor syntax).</param>
+        /// <code lang="CS">
+        ///  @(Html.Kendo().MobileCollapsible()
+        ///       .Name("Collapsible")        
+        ///        .Content(
+        ///             @&lt;text&gt;
+        ///                     Some text
+        ///                     &lt;strong&gt; Collapsible Content &lt;/strong&gt;
+        ///             &lt;/text&gt;        
+        ///       )
+        ///  )
+        /// </code>
+        public MobileCollapsibleBuilder Content(Func<object, object> value)
+        {
+            container.Content.InlineTemplate = value;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the HTML content which the view content should display as a string.
+        /// </summary>
+        /// <param name="value">The action which renders the view content.</param>
+        /// <code lang="CS">
+        ///  &lt;% Html.Kendo().MobileCollapsible()
+        ///            .Name("Collapsible")
+        ///            .Content("&lt;strong&gt; Collapsible Content &lt;/strong&gt;");        
+        ///            .Render();
+        /// %&gt;
+        /// </code>
+        public MobileCollapsibleBuilder Content(string value)
+        {
+
+            container.Content.Html = value;
+
+            return this;
+        }
         
         /// <summary>
         /// Configures the client-side events.

@@ -16,6 +16,13 @@ namespace Kendo.Mvc.UI
             : base(viewContext, initializer)
         {
             this.urlGenerator = urlGenerator;
+
+            Collapsed = true;
+            Animation = true;
+            Inset = false;
+
+            Header = new HtmlTemplate();
+            Content = new HtmlTemplate();
 //>> Initialization
         
         //<< Initialization
@@ -29,11 +36,25 @@ namespace Kendo.Mvc.UI
         
         public string ExpandIcon { get; set; }
         
-        public string IconPosition { get; set; }
-        
         public bool Inset { get; set; }
         
         //<< Fields
+
+        public string CollapseIcon { get; set; }
+
+        public IconPosition? IconPosition { get; set; }
+
+        public HtmlTemplate Header
+        {
+            get;
+            private set;
+        }
+
+        public HtmlTemplate Content
+        {
+            get;
+            private set;
+        }
 
         public override void WriteInitializationScript(TextWriter writer)
         {

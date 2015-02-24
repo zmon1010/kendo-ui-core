@@ -738,6 +738,7 @@
     <Compile Include="UI\MobileCollapsible\Fluent\MobileCollapsibleBuilder.cs" />
     <Compile Include="UI\MobileCollapsible\Fluent\MobileCollapsibleEventBuilder.cs" />
     <Compile Include="UI\MobileCollapsible\Html\MobileCollapsibleHtmlBuilder.cs" />
+    <Compile Include="UI\MobileCollapsible\IconPosition.cs" />
     <Compile Include="UI\MobileCollapsible\MobileCollapsible.cs" />
     <Compile Include="UI\PivotDataSource\Fluent\PivotDataSourceMeasureDescriptorFactory.cs" />
     <Compile Include="UI\PivotDataSource\Fluent\PivotDataSourceMeasureDescriptorBuilder.cs" />

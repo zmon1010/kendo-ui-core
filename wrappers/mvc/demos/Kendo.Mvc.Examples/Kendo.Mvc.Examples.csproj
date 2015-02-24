@@ -187,6 +187,9 @@
     <Compile Include="Controllers\Bullet_Charts\IndexController.cs" />
     <Compile Include="Controllers\Bullet_Charts\Local_Data_BindingController.cs" />
     <Compile Include="Controllers\Bullet_Charts\Remote_Data_BindingController.cs" />
+    <Compile Include="Controllers\Collapsible\EventsController.cs" />
+    <Compile Include="Controllers\Collapsible\IndexController.cs" />
+    <Compile Include="Controllers\Collapsible\NestedController.cs" />
     <Compile Include="Controllers\Diagram\ApiController.cs" />
     <Compile Include="Controllers\Diagram\ExportController.cs" />
     <Compile Include="Controllers\Diagram\EditingController.cs" />
@@ -1303,6 +1306,12 @@
     <Content Include="Areas\razor\Views\chart_api\pdf_export.cshtml" />
     <Content Include="Areas\razor\Views\chart_api\export.cshtml" />
     <Content Include="Areas\razor\Views\bar_charts\visuals.cshtml" />
+    <Content Include="Areas\razor\Views\collapsible\index.cshtml" />
+    <Content Include="Areas\razor\Views\collapsible\nested.cshtml" />
+    <Content Include="Areas\razor\Views\collapsible\events.cshtml" />
+    <Content Include="Areas\aspx\Views\collapsible\events.aspx" />
+    <Content Include="Areas\aspx\Views\collapsible\index.aspx" />
+    <Content Include="Areas\aspx\Views\collapsible\nested.aspx" />
     <None Include="Areas\razor\Views\diagram\editing.cshtml" />
     <Content Include="Areas\razor\Views\range_bar_charts\index.cshtml" />
     <Content Include="Areas\razor\Views\diagram\index.cshtml" />
