@@ -3779,6 +3779,51 @@
     "category": "Scheduling"
   },
   {
+    "text": "ResponsivePanel",
+    "name": "responsivepanel",
+    "api": "web/responsivepanel",
+    "documentation": {
+       "kendo-ui": "getting-started/web/responsivepanel/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/responsivepanel/mvc-responsivepanel-overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/responsivepanel/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/responsivepanel/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/responsivepanel",
+       "aspnet-mvc": "aspnet-mvc/responsivepanel",
+       "jsp-ui": "jsp/responsivepanel",
+       "php-ui": "php/responsivepanel"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/responsivepanel",
+       "aspnet-mvc": "aspnet-mvc/mvc-responsivepanel",
+       "jsp-ui": "jsp/responsivepanel",
+       "php-ui": "php/responsivepanel"
+    },
+    "spriteCssClass": "responsivePanelIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "responsivepanel/index",
+        "disableInMobile": true,
+        "title": {
+            "kendo-ui": "Kendo jQuery ResponsivePanel Control Demo",
+            "aspnet-mvc": "ASP.NET MVC ResponsivePanel Control Demo"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the basic functionality of Kendo UI ResponsivePanel widget, included in Kendo UI Web framework.",
+            "aspnet-mvc": "This demo shows the basic functionality of the Telerik ASP.NET MVC ResponsivePanel control."
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Layout"
+  },
+  {
     "text": "Scheduler",
     "name": "scheduler",
     "pro": "true",
