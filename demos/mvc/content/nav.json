@@ -1418,6 +1418,20 @@
         }
       },
       {
+        "text": "PDF Export",
+        "disableInMobile": true,
+        "new": true,
+        "url": "editor/pdf-export",
+        "title": {
+            "kendo-ui": "PDF export support in Kendo UI Editor",
+            "aspnet-mvc": "PDF export support in ASP.NET MVC Editor"
+        },
+        "meta": {
+            "kendo-ui": "With Kendo UI Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the PDF export support in the widget.",
+            "aspnet-mvc": "With ASP.NET MVC Editor you can allow end users to edit HTML5 in a user-friendly way. Check out this demo to learn more about the PDF export support in the component."
+        }
+      },
+      {
         "text": "Keyboard navigation",
         "disableInMobile": true,
         "url": "editor/keyboard-navigation",

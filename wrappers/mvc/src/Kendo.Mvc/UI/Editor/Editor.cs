@@ -23,6 +23,7 @@ namespace Kendo.Mvc.UI
             Template = new HtmlTemplate();
             Messages = new EditorMessages();
             StyleSheets = new List<string>();
+            Pdf = new PDFSettings();
 
             new EditorToolFactory(DefaultToolGroup)
                 .Formatting()
@@ -102,6 +103,12 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public PDFSettings Pdf
+        {
+            get;
+            private set;
+        }
+
         public HtmlTemplate Template
         {
             get;
@@ -162,6 +169,13 @@ namespace Kendo.Mvc.UI
                 json["resizable"] = resizable;
             } else if (Resizable.Enabled != false) {
                 json["resizable"] = Resizable.Enabled;
+            }
+
+            var pdf = Pdf.ToJson();
+
+            if (pdf.Any())
+            {
+                json["pdf"] = pdf;
             }
 
             var serialization = Serialization.ToJson();

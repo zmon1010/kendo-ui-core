@@ -1,25 +1,13 @@
-@(Html.Kendo().Editor()
+﻿@(Html.Kendo().Editor()
       .Name("editor")
-
       .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .StyleSheets(css => css
+        .Add(Url.Content("~/Content/web/Editor/pdf-export-styles.css"))
+      )
+      .Pdf(pdf=>pdf.Margin(20,20,20,20))
       .Tools(tools => tools
           .Clear()
-          .Bold().Italic().Underline().Strikethrough()
-          .JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
-          .InsertUnorderedList().InsertOrderedList()
-          .Outdent().Indent()
-          .CreateLink().Unlink()
-          .InsertImage()
-          .InsertFile()
-          .SubScript()
-          .SuperScript()
-          .TableEditing()
-          .ViewHtml()
-          .Formatting()
-          .CleanFormatting()
-          .FontName()
-          .FontSize()
-          .FontColor().BackColor()
+          .Pdf()
       )
       .Value(@<text>
             <p>
