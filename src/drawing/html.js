@@ -12,6 +12,7 @@
 
     /* jshint eqnull:true */
     /* jshint -W069 */
+    /* global console */
 
     /* -----[ local vars ]----- */
 
@@ -88,13 +89,26 @@
 
         cacheImages(element, function(){
             var forceBreak = options && options.forcePageBreak;
-            var pageHeight = options && options.pageHeight;
-            var pageWidth = options && options.pageWidth;
+            var paperOptions = options && kendo.pdf.getPaperOptions(function(key, def){
+                return key in options ? options[key] : def;
+            });
+            var pageWidth = paperOptions && paperOptions.paperSize[0];
+            var pageHeight = paperOptions && paperOptions.paperSize[1];
+            var margin = paperOptions && paperOptions.margin;
             if (forceBreak || pageHeight) {
+                if (!margin) {
+                    margin = { left: 0, top: 0, right: 0, bottom: 0 };
+                }
                 var group = new drawing.Group({
-                    pdf: { multiPage: true }
+                    pdf: {
+                        multiPage : true,
+                        paperSize : paperOptions ? paperOptions.paperSize : "auto",
+                        margin    : margin
+                    }
                 });
-                var x = handlePageBreaks(element, forceBreak, pageWidth, pageHeight);
+                var x = handlePageBreaks(element, forceBreak,
+                                         pageWidth - margin.left - margin.right,
+                                         pageHeight - margin.top - margin.bottom);
                 setTimeout(function(){
                     x.pages.forEach(function(page){
                         group.append(doOne(page));
@@ -116,7 +130,6 @@
                 var box = thing.getBoundingClientRect();
                 return box.bottom - topBox.top > page * pageHeight;
             }
-            var count = 0;
             function splitText(element, node) {
                 if (!/\S/.test(node.data)) {
                     return;
@@ -130,21 +143,16 @@
                     range.setEnd(node, pos);
                     if (fallsOnMargin(range)) {
                         return findEOP(min, (min + pos) >> 1, pos);
-                    } else {
+                    } else if (max < len) {
                         return findEOP(pos, (pos + max) >> 1, max);
                     }
                 })(0, len >> 1, len);
 
-                if (++count > 5000) {
-                    throw "CRAP";
+                if (end == null) {
+                    return;     // the whole text fits on page.
                 }
 
                 var pageBreak = doc.createElement("kendo-pdf-page-break");
-                $(pageBreak).css({
-                    "float"   : "right",
-                    "width"   : "100%",
-                    "display" : "block"
-                });
                 if (end < len) {
                     var newNode = node.splitText(end);
                     element.insertBefore(pageBreak, newNode);
@@ -172,9 +180,11 @@
             $(cont).css({
                 position : "absolute",
                 left     : "-10000px",
-                top      : "-10000px",
-                width    : pageWidth
+                top      : "-10000px"
             });
+            if (pageWidth) {
+                $(cont).css({ width: pageWidth });
+            }
             cont.appendChild(copy);
             element.parentNode.insertBefore(cont, element);
             function makePage() {
