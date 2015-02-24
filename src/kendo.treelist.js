@@ -1467,6 +1467,13 @@ var __meta__ = {
             var containersLength = containers.length;
             var heights = [];
 
+            var lockedHeaderRows = this.lockedHeader.find("tr");
+            var headerRows = this.thead.find("tr");
+
+            lockedHeaderRows.add(headerRows)
+                .height("auto")
+                .height(Math.max(lockedHeaderRows.height(), headerRows.height()));
+
             for (idx = 0; idx < length; idx++) {
                 if (!lockedRows[idx]) {
                     break;
