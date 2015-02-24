@@ -88,11 +88,13 @@
 
         cacheImages(element, function(){
             var forceBreak = options && options.forcePageBreak;
-            if (forceBreak) {
+            var pageHeight = options && options.pageHeight;
+            var pageWidth = options && options.pageWidth;
+            if (forceBreak || pageHeight) {
                 var group = new drawing.Group({
                     pdf: { multiPage: true }
                 });
-                var x = handlePageBreaks(element, forceBreak);
+                var x = handlePageBreaks(element, forceBreak, pageWidth, pageHeight);
                 setTimeout(function(){
                     x.pages.forEach(function(page){
                         group.append(doOne(page));
@@ -105,7 +107,64 @@
             }
         });
 
-        function handlePageBreaks(element, forceBreak) {
+        function autoPageBreaks(element, forceBreak, pageHeight) {
+            var doc = element.ownerDocument;
+            var topBox = element.getBoundingClientRect();
+            var range = doc.createRange();
+            var page = 1;
+            function fallsOnMargin(thing) {
+                var box = thing.getBoundingClientRect();
+                return box.bottom - topBox.top > page * pageHeight;
+            }
+            var count = 0;
+            function splitText(element, node) {
+                if (!/\S/.test(node.data)) {
+                    return;
+                }
+                var len = node.data.length;
+                range.setStart(node, 0);
+                var end = (function findEOP(min, pos, max) {
+                    if (min == pos || pos == max) {
+                        return pos;
+                    }
+                    range.setEnd(node, pos);
+                    if (fallsOnMargin(range)) {
+                        return findEOP(min, (min + pos) >> 1, pos);
+                    } else {
+                        return findEOP(pos, (pos + max) >> 1, max);
+                    }
+                })(0, len >> 1, len);
+
+                if (++count > 5000) {
+                    throw "CRAP";
+                }
+
+                var pageBreak = doc.createElement("kendo-pdf-page-break");
+                $(pageBreak).css({
+                    "float"   : "right",
+                    "width"   : "100%",
+                    "display" : "block"
+                });
+                if (end < len) {
+                    var newNode = node.splitText(end);
+                    element.insertBefore(pageBreak, newNode);
+                } else {
+                    element.insertBefore(pageBreak, node.nextSibling);
+                }
+                page++;
+            }
+            (function split(element){
+                for (var el = element.firstChild; el; el = el.nextSibling) {
+                    if (el.nodeType == 1 /* Element */) {
+                        split(el);
+                    } else if (el.nodeType == 3 /* Text */) {
+                        splitText(element, el);
+                    }
+                }
+            })(element);
+        }
+
+        function handlePageBreaks(element, forceBreak, pageWidth, pageHeight) {
             var doc = element.ownerDocument;
             var pages = [];
             var copy = $(element).clone(true, true)[0];
@@ -113,8 +172,11 @@
             $(cont).css({
                 position : "absolute",
                 left     : "-10000px",
-                top      : "-10000px"
+                top      : "-10000px",
+                width    : pageWidth
             });
+            cont.appendChild(copy);
+            element.parentNode.insertBefore(cont, element);
             function makePage() {
                 var page = doc.createElement("KENDO-PDF-PAGE");
                 if (options && options.pageClassName) {
@@ -123,8 +185,14 @@
                 pages.push(page);
                 return page;
             }
-            cont.appendChild(copy);
-            element.parentNode.insertBefore(cont, element);
+            if (pageHeight) {
+                if (!forceBreak) {
+                    forceBreak = "kendo-pdf-page-break";
+                } else {
+                    forceBreak += ", kendo-pdf-page-break";
+                }
+                autoPageBreaks(copy, forceBreak, pageHeight);
+            }
             if (forceBreak != "-") {
                 (function split(node) {
                     for (var el = node.firstChild; el; el = el.nextSibling) {
