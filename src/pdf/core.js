@@ -264,14 +264,16 @@
 
             var margin = getOption("margin");
             if (margin) {
-                if (typeof margin == "string") {
+                if (typeof margin == "string" || typeof margin == "number") {
                     margin = unitsToPoints(margin, 0);
                     margin = { left: margin, top: margin, right: margin, bottom: margin };
                 } else {
-                    margin.left = unitsToPoints(margin.left, 0);
-                    margin.top = unitsToPoints(margin.top, 0);
-                    margin.right = unitsToPoints(margin.right, 0);
-                    margin.bottom = unitsToPoints(margin.bottom, 0);
+                    margin = {
+                        left   : unitsToPoints(margin.left, 0),
+                        top    : unitsToPoints(margin.top, 0),
+                        right  : unitsToPoints(margin.right, 0),
+                        bottom : unitsToPoints(margin.bottom, 0)
+                    };
                 }
                 if (getOption("addMargin")) {
                     paperSize[0] += margin.left + margin.right;
