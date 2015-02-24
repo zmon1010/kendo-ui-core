@@ -12,6 +12,7 @@ namespace Kendo.Mvc
             var describe = new ServiceDescriber(configuration);
 
             yield return describe.Transient<IKendoHtmlGenerator, KendoHtmlGenerator>();
+            yield return describe.Transient<IUrlGenerator, UrlGenerator>();
         }
     }
 }

@@ -1,1 +1,4 @@
-﻿@(Html.Kendo().Grid<object>().Name("grid"))
+﻿@(Html.Kendo().Grid<object>()
+    .Name("grid")
+    .DataSource(dataSource => dataSource.Ajax().Read("Home", "Grid"))
+)

@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </code>
         /// </example>      
         public virtual GridBuilder<T> Grid<T>() where T : class
-        {            
+        {
             return new GridBuilder<T>(new Grid<T>(HtmlHelper.ViewContext));
         }
 
@@ -37,10 +37,10 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var builder = Grid<T>();
 
-            //builder.Component.DataSource.Data = dataSource;
+            builder.Component.DataSource.Data = dataSource;
 
             return builder;
-        }   
+        }
 
         /// <summary>
         /// Creates a new <see cref="Kendo.Mvc.UI.Grid{T}"/> bound an item in ViewData.
@@ -58,7 +58,7 @@ namespace Kendo.Mvc.UI.Fluent
         {
             var builder = Grid<T>();
 
-           // builder.Component.DataSource.Data = ViewContext.ViewData.Eval(dataSourceViewDataKey) as IEnumerable<T>;
+            builder.Component.DataSource.Data = HtmlHelper.ViewContext.ViewData.Eval(dataSourceViewDataKey) as IEnumerable<T>;
 
             return builder;
         }

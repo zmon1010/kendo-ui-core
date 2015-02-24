@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNet.Routing;
 
 namespace Kendo.Mvc.UI
 {
@@ -10,8 +13,120 @@ namespace Kendo.Mvc.UI
     public partial class Grid<T> : WidgetBase
         where T : class
     {
+        private readonly static int DefaultColumnResizeHandleWidth = 3;
+
         public Grid(ViewContext viewContext) : base (viewContext)
-        { }
+        {
+          //  this.htmlBuilderFactory = htmlBuilderFactory;
+
+            PrefixUrlParameters = true;
+          //  RowTemplate = new HtmlTemplate<T>();
+            //DetailTemplate = new HtmlTemplate<T>();
+            //Columns = new List<GridColumnBase<T>>();
+            //DataKeys = new List<IDataKey>();
+
+            Pageable = new PageableSettings();
+            //Sortable = new GridSortableSettings();
+            //Scrollable = new GridScrollableSettings();
+            //Navigatable = new GridNavigatableSettings(this);
+            //Filterable = new GridFilterableSettings();
+            //ColumnMenu = new GridColumnMenuSettings();
+
+            //Editable = new GridEditableSettings<T>(this)
+            //{
+            //    PopUp = new Window(viewContext, Initializer)
+            //    {
+            //        Modal = true,
+            //        Draggable = true
+            //    }
+            //};
+
+            //Grouping = new GridGroupableSettings();
+            //Resizable = new GridResizableSettings();
+            //Reorderable = new GridReorderableSettings();
+            //Excel = new GridExcelSettings();
+            //Pdf = new PDFSettings();
+
+            //Selectable = new GridSelectableSettings();
+
+            //ToolBar = new GridToolBarSettings<T>(this);
+            //NoRecordsTemplate = new HtmlTemplate();
+
+            AutoGenerateColumns = true;
+
+            ColumnResizeHandleWidth = DefaultColumnResizeHandleWidth;
+
+            TableHtmlAttributes = new RouteValueDictionary();
+
+            DataSource = new DataSource(ModelMetadataProvider)
+            {
+                Type = DataSourceType.Server,
+                ServerAggregates = true,
+                ServerFiltering = true,
+                ServerGrouping = true,
+                ServerPaging = true,
+                ServerSorting = true
+            };
+
+            DataSource.ModelType(typeof(T));
+        }
+
+        [Activate]
+        public IModelMetadataProvider ModelMetadataProvider
+        {
+            get;
+            set;
+        }
+
+        [Activate]
+        public IUrlGenerator UrlGenerator
+        {
+            get;
+            set;
+        }
+
+        public DataSource DataSource
+        {
+            get;
+            private set;
+        }
+
+        public int ColumnResizeHandleWidth
+        {
+            get;
+            set;
+        }
+
+        public bool AutoGenerateColumns
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets the paging configuration.
+        /// </summary>
+        public PageableSettings Pageable
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to add the <see cref="WidgetBase.Name"/> property of the grid as a prefix in url parameters.
+        /// </summary>
+        /// <value><c>true</c> if prefixing is enabled; otherwise, <c>false</c>. The default value is <c>true</c></value>
+        public bool PrefixUrlParameters
+        {
+            get;
+            set;
+        }
+
+        public IDictionary<string, object> TableHtmlAttributes
+        {
+            get;
+            private set;
+        }
 
         protected override Dictionary<string, object> SerializeSettings()
         {
@@ -19,7 +134,18 @@ namespace Kendo.Mvc.UI
 
             // Do custom serialization here
 
+            settings["dataSource"] = DataSource.ToJson();
+
             return settings;
+        }
+
+        protected override void WriteHtml(TextWriter writer)
+        {            
+            var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);            
+
+            writer.Write(tag.ToString());
+
+            base.WriteHtml(writer);
         }
     }
 }
