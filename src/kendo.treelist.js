@@ -1238,7 +1238,12 @@ var __meta__ = {
 
                     for (i = 0; i < properties.length; i++) {
                         declaration = properties[i].split(":");
-                        attr.style[declaration[0]] = declaration[1];
+
+                        var name = $.trim(declaration[0]);
+
+                        if (name) {
+                            attr.style[$.camelCase(name)] = $.trim(declaration[1]);
+                        }
                     }
                 }
             }
