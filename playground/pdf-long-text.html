@@ -23,7 +23,7 @@
   </head>
   <body>
     Kendo:
-    <button onclick="pdf('#test1')">PDF</button>
+    <button onclick="pdfPages('#test1', { pageWidth: 595.28, pageHeight: 841.99, margin: 20 })">PDF</button>
     <button onclick="draw('#test1', 'svg')">SVG</button>
     <button onclick="draw('#test1', 'canvas')">Canvas</button>
     |
@@ -54,7 +54,7 @@
       });
     </script>
 
-    <div id="test1" style="width: 500px; margin-top: 1em">
+    <div id="test1">
 
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis ornare ex. Sed laoreet lacinia sollicitudin. Curabitur aliquet ipsum vel risus consequat semper. Fusce iaculis rutrum cursus. Nam velit est, tempor in efficitur ac, auctor vel est. Etiam volutpat metus sed nisi efficitur, et sollicitudin tellus commodo. Vivamus euismod diam sit amet enim lacinia, in dictum tellus ornare. Nulla eget magna rutrum, suscipit ante vel, maximus lacus. Duis a mauris justo.
