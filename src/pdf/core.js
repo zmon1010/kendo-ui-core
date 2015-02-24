@@ -211,6 +211,49 @@
         };
     }
 
+    function getPaperOptions(getOption) {
+        var paperSize = getOption("paperSize", PAPER_SIZE.a4);
+        if (!paperSize) {
+            return {};
+        }
+        if (typeof paperSize == "string") {
+            paperSize = PAPER_SIZE[paperSize.toLowerCase()];
+            if (paperSize == null) {
+                throw new Error("Unknown paper size");
+            }
+        }
+
+        paperSize[0] = unitsToPoints(paperSize[0]);
+        paperSize[1] = unitsToPoints(paperSize[1]);
+
+        if (getOption("landscape", false)) {
+            paperSize = [
+                Math.max(paperSize[0], paperSize[1]),
+                Math.min(paperSize[0], paperSize[1])
+            ];
+        }
+
+        var margin = getOption("margin");
+        if (margin) {
+            if (typeof margin == "string" || typeof margin == "number") {
+                margin = unitsToPoints(margin, 0);
+                margin = { left: margin, top: margin, right: margin, bottom: margin };
+            } else {
+                margin = {
+                    left   : unitsToPoints(margin.left, 0),
+                    top    : unitsToPoints(margin.top, 0),
+                    right  : unitsToPoints(margin.right, 0),
+                    bottom : unitsToPoints(margin.bottom, 0)
+                };
+            }
+            if (getOption("addMargin")) {
+                paperSize[0] += margin.left + margin.right;
+                paperSize[1] += margin.top + margin.bottom;
+            }
+        }
+        return { paperSize: paperSize, margin: margin };
+    }
+
     function PDFDocument(options) {
         var self = this;
         var out = makeOutput();
@@ -239,49 +282,6 @@
         self.GRAD_OPC_FUNCTIONS = {}; // cache for opacity gradient functions
         self.GRAD_COL = {};     // cache for whole color gradient objects
         self.GRAD_OPC = {};     // cache for whole opacity gradient objects
-
-        function getPaperOptions(getOption) {
-            var paperSize = getOption("paperSize", PAPER_SIZE.a4);
-            if (!paperSize) {
-                return {};
-            }
-            if (typeof paperSize == "string") {
-                paperSize = PAPER_SIZE[paperSize.toLowerCase()];
-                if (paperSize == null) {
-                    throw new Error("Unknown paper size");
-                }
-            }
-
-            paperSize[0] = unitsToPoints(paperSize[0]);
-            paperSize[1] = unitsToPoints(paperSize[1]);
-
-            if (getOption("landscape", false)) {
-                paperSize = [
-                    Math.max(paperSize[0], paperSize[1]),
-                    Math.min(paperSize[0], paperSize[1])
-                ];
-            }
-
-            var margin = getOption("margin");
-            if (margin) {
-                if (typeof margin == "string" || typeof margin == "number") {
-                    margin = unitsToPoints(margin, 0);
-                    margin = { left: margin, top: margin, right: margin, bottom: margin };
-                } else {
-                    margin = {
-                        left   : unitsToPoints(margin.left, 0),
-                        top    : unitsToPoints(margin.top, 0),
-                        right  : unitsToPoints(margin.right, 0),
-                        bottom : unitsToPoints(margin.bottom, 0)
-                    };
-                }
-                if (getOption("addMargin")) {
-                    paperSize[0] += margin.left + margin.right;
-                    paperSize[1] += margin.top + margin.bottom;
-                }
-            }
-            return { paperSize: paperSize, margin: margin };
-        }
 
         var catalog = self.attach(new PDFCatalog());
         var pageTree = self.attach(new PDFPageTree());
@@ -1928,13 +1928,14 @@
     /// exports.
 
     kendo.pdf = {
-        Document      : PDFDocument,
-        BinaryStream  : BinaryStream,
-        defineFont    : defineFont,
-        parseFontDef  : parseFontDef,
-        getFontURL    : getFontURL,
-        loadFonts     : loadFonts,
-        loadImages    : loadImages,
+        Document        : PDFDocument,
+        BinaryStream    : BinaryStream,
+        defineFont      : defineFont,
+        parseFontDef    : parseFontDef,
+        getFontURL      : getFontURL,
+        loadFonts       : loadFonts,
+        loadImages      : loadImages,
+        getPaperOptions : getPaperOptions,
 
         TEXT_RENDERING_MODE : {
             fill           : 0,
