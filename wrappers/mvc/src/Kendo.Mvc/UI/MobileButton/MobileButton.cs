@@ -23,6 +23,8 @@ namespace Kendo.Mvc.UI
 
 //>> Fields
         
+        public string ClickOn { get; set; }
+        
         public bool Enable { get; set; }
         
         public string Icon { get; set; }

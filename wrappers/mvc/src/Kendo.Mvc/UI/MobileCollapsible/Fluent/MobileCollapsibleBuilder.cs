@@ -55,6 +55,28 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
+        /// <summary>
+        /// Sets the icon position in the header of the collapsible widget. Possible values are "left", "right", "top".
+        /// </summary>
+        /// <param name="value">The value that configures the iconposition.</param>
+        public MobileCollapsibleBuilder IconPosition(string value)
+        {
+            container.IconPosition = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Forses inset appearance - the collapsible panel is padded from the View and receives rounded corners.
+        /// </summary>
+        /// <param name="value">The value that configures the inset.</param>
+        public MobileCollapsibleBuilder Inset(bool value)
+        {
+            container.Inset = value;
+
+            return this;
+        }
+        
         //<< Fields
 
 

@@ -29,6 +29,10 @@ namespace Kendo.Mvc.UI
         
         public string ExpandIcon { get; set; }
         
+        public string IconPosition { get; set; }
+        
+        public bool Inset { get; set; }
+        
         //<< Fields
 
         public override void WriteInitializationScript(TextWriter writer)
