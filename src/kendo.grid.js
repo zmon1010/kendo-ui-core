@@ -4192,7 +4192,7 @@ var __meta__ = {
             }
         },
 
-        _setContentWidth: function() {
+        _setContentWidth: function(scrollLeft) {
             var that = this,
                 hiddenDivClass = 'k-grid-content-expander',
                 hiddenDiv = '<div class="' + hiddenDivClass + '"></div>',
@@ -4211,6 +4211,9 @@ var __meta__ = {
                     }
                     if (that.thead) {
                         expander.width(that.thead.width());
+                        if (scrollLeft) {
+                            that.content.scrollLeft(scrollLeft);
+                        }
                     }
                 } else if (expander[0]) {
                     expander.remove();
@@ -6377,6 +6380,7 @@ var __meta__ = {
                 current = $(that.current()),
                 isCurrentInHeader = false,
                 groups = (that.dataSource.group() || []).length,
+                offsetLeft = that.content && that.content.scrollLeft(),
                 colspan = groups + visibleLeafColumns(visibleColumns(that.columns)).length;
 
             if (e && e.action === "itemchange" && that.editable) { // skip rebinding if editing is in progress
@@ -6430,7 +6434,7 @@ var __meta__ = {
 
             that._setContentHeight();
 
-            that._setContentWidth();
+            that._setContentWidth(offsetLeft);
 
             if (that.lockedTable) {
                 //requires manual trigger of scroll to sync both tables
