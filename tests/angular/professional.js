@@ -328,7 +328,7 @@
             firstRow().scope().$on("$destroy", function(){ ok(true) });
             grid.wrapper.find(".k-pager-wrap li:last > a").click();
             firstRow().scope().$on("$destroy", function(){ ok(true) });
-            grid.wrapper.find(".k-pager-wrap li:first > a").click();
+            grid.wrapper.find(".k-pager-wrap li:eq(1) > a").click();
             setTimeout(start, 100);
         }
     );

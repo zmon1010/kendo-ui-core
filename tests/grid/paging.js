@@ -57,7 +57,7 @@
             pageSize: 1
         }));
 
-        equal(grid.wrapper.find(".k-pager-wrap li").length, 2)
+        equal(grid.wrapper.find(".k-pager-wrap li").length, 3);
     });
 
     test("resetting DataSource does remove previous Pager instance", 2, function() {
