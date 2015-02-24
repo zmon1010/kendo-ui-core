@@ -18,7 +18,8 @@ var __meta__ = {
     Node.prototype = {
         remove: function() {
             this.node.parentNode.removeChild(this.node);
-        }
+        },
+        attr: {}
     };
 
     function NullNode() {
@@ -137,12 +138,25 @@ var __meta__ = {
         }
     };
 
+    Element.prototype.removeStyle = function(cachedStyle) {
+        var style = this.attr.style || {};
+        var node = this.node;
+
+        for (var key in cachedStyle) {
+            if (style[key] === undefined) {
+                node.style[key] = "";
+            }
+        }
+    };
+
     Element.prototype.removeAttributes = function(cachedAttr) {
         var attr = this.attr;
 
-        for (var cachedAttrName in cachedAttr) {
-            if (attr[cachedAttrName] === undefined) {
-                this.removeAttribute(cachedAttrName);
+        for (var name in cachedAttr) {
+            if (name === "style") {
+                this.removeStyle(cachedAttr.style);
+            } else if (attr[name] === undefined) {
+                this.removeAttribute(name);
             }
         }
     };

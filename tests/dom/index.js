@@ -201,14 +201,24 @@
 
         tree.render([div]);
 
-        var cssText = div.node.style.cssText;
+        var height = div.node.style.height;
+        var width = div.node.style.width;
 
-        Object.defineProperty(div.node.style, "cssText", {
+        Object.defineProperty(div.node.style, "height", {
             set: function() {
                 ok(false);
             },
             get: function() {
-               return cssText;
+               return height;
+            }
+        });
+
+        Object.defineProperty(div.node.style, "width", {
+            set: function() {
+                ok(false);
+            },
+            get: function() {
+               return width;
             }
         });
 
@@ -220,6 +230,20 @@
         tree.render([element("div", null)]);
 
         equal(root.firstChild.style.cssText, "");
+    });
+
+    test("render removes style attribute when style is set to empty object", function() {
+        tree.render([element("div", { style: { width: "100px" } })]);
+        tree.render([element("div", { style: {} } )]);
+
+        equal(root.firstChild.style.cssText, "");
+    });
+
+    test("render removes style attribute value", function() {
+        tree.render([element("div", { style: { width: "100px", height: "100px" } })]);
+        tree.render([element("div", { style: { width: "100px" } } )]);
+
+        equal(root.firstChild.style.width, "100px");
     });
 
     test("render removes class attribute", function() {
@@ -271,6 +295,7 @@
         equal(root.firstChild.nodeName, "I");
         equal(root.firstChild.firstChild.nodeValue, "bar");
     });
+
 
     test("render removes more than one html child nodes", function() {
         tree.render([html("<b>foo</b><b>bar</b>")]);
