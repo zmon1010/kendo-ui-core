@@ -21,7 +21,7 @@
                     { type: "week", selected: true }
                 ],
                 dataSource: [
-                    { start: now, end: new Date(now + (60 * 60 * 1000)), title: "Test" }
+                    { start: now, end: new Date(now.getTime() + (60 * 60 * 1000)), title: "Test" }
                 ]
             });
 
