@@ -126,6 +126,7 @@
             var pages = [];
             var copy = $(element).clone(true, true)[0];
             var cont = doc.createElement("KENDO-PDF-DOCUMENT");
+            var adjust = 0;
             $(cont).css({
                 position : "absolute",
                 left     : "-10000px",
@@ -148,6 +149,11 @@
 
             if (forceBreak != "-" || pageHeight) {
                 (function split(element) {
+                    var style = getComputedStyle(element);
+                    var bottomPadding = parseFloat(getPropertyValue(style, "padding-bottom"));
+                    var bottomBorder = parseFloat(getPropertyValue(style, "border-bottom-width"));
+                    var saveAdjust = adjust;
+                    adjust += bottomPadding + bottomBorder;
                     for (var el = element.firstChild; el; el = el.nextSibling) {
                         if (el.nodeType == 1) {
                             if ($(el).is(forceBreak)) {
@@ -164,6 +170,7 @@
                             splitText(el);
                         }
                     }
+                    adjust = saveAdjust;
                 })(copy);
             }
 
@@ -179,7 +186,7 @@
 
             function fallsOnMargin(thing) {
                 var box = thing.getBoundingClientRect();
-                return box.bottom - copy.getBoundingClientRect().top > pageHeight;
+                return box.bottom - copy.getBoundingClientRect().top > pageHeight - adjust;
             }
 
             function splitText(node) {
