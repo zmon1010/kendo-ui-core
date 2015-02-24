@@ -34,6 +34,56 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to <c>false</c> the widget will not bind to the data source during initialization; the default value is <c>true</c>.
+        /// Setting AutoBind to <c>false</c> is supported in ajax-bound mode.
+        /// </summary>
+        /// <param name="value">If true the grid will be automatically data bound, otherwise false</param>
+        /// <example>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .AutoBind(false)
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// )
+        /// </code>        
+        /// </example>
+        public GridBuilder<T> AutoBind(bool value)
+        {
+            Component.AutoBind = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the width of the column resize handle. Apply a larger value for easier grasping.
+        /// </summary>
+        /// <param name="width">width in pixels</param>
+        /// <example>
+        /// <code lang="Razor">
+        ///  @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name("Grid")
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///          .Ajax()
+        ///          .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        ///    .ColumnResizeHandleWidth(8)
+        /// )
+        /// </code>  
+        /// </example>
+        public GridBuilder<T> ColumnResizeHandleWidth(int width)
+        {
+            Component.ColumnResizeHandleWidth = width;
+
+            return this;
+        }
+
+        /// <summary>
         /// Sets the data source configuration of the grid.
         /// </summary>
         /// <param name="configurator">The lambda which configures the data source</param>
@@ -104,6 +154,81 @@ namespace Kendo.Mvc.UI.Fluent
             Component.Pageable.Enabled = true;
 
             configurator(new PageableBuilder(Component.Pageable));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Enables grid column sorting.
+        /// </summary>
+        /// <example>
+        /// <code lang="ASPX">
+        /// &lt;%:Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .Sortable()
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// %&gt;
+        /// </code>
+        ///<code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .Sortable()
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public GridBuilder<T> Sortable()
+        {
+            Component.Sortable.Enabled = true;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the sorting configuration of the grid.
+        /// </summary>
+        /// <param name="configurator">The lambda which configures the sorting</param>
+        /// <example>
+        /// <code lang="ASPX">
+        /// &lt;%:Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .Sortable(sorting =&gt; sorting.SortMode(GridSortMode.MultipleColumn))
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// %&gt;
+        /// </code>
+        ///<code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .Sortable(sorting =&gt; sorting.SortMode(GridSortMode.MultipleColumn))
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public GridBuilder<T> Sortable(Action<GridSortSettingsBuilder<T>> configurator)
+        {
+            Component.Sortable.Enabled = true;
+
+            configurator(new GridSortSettingsBuilder<T>(Component.Sortable));
 
             return this;
         }

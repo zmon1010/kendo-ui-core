@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Routing;
@@ -26,7 +27,7 @@ namespace Kendo.Mvc.UI
             //DataKeys = new List<IDataKey>();
 
             Pageable = new PageableSettings();
-            //Sortable = new GridSortableSettings();
+            Sortable = new GridSortableSettings();
             //Scrollable = new GridScrollableSettings();
             //Navigatable = new GridNavigatableSettings(this);
             //Filterable = new GridFilterableSettings();
@@ -57,6 +58,7 @@ namespace Kendo.Mvc.UI
             ColumnResizeHandleWidth = DefaultColumnResizeHandleWidth;
 
             TableHtmlAttributes = new RouteValueDictionary();
+            ModelMetadataProvider.GetType();
 
             DataSource = new DataSource(ModelMetadataProvider)
             {
@@ -113,6 +115,16 @@ namespace Kendo.Mvc.UI
         }
 
         /// <summary>
+        /// Gets the sorting configuration.
+        /// </summary>
+        /// <value>The sorting.</value>
+        public GridSortableSettings Sortable
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether to add the <see cref="WidgetBase.Name"/> property of the grid as a prefix in url parameters.
         /// </summary>
         /// <value><c>true</c> if prefixing is enabled; otherwise, <c>false</c>. The default value is <c>true</c></value>
@@ -128,13 +140,30 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public bool? AutoBind { get; set; }
+
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
 
+            var autoBind = DataSource.Type != DataSourceType.Server && AutoBind.GetValueOrDefault(true);
+
             // Do custom serialization here
 
             settings["dataSource"] = DataSource.ToJson();
+
+            if (Pageable.Enabled)
+            {
+                Pageable.AutoBind = autoBind;
+
+                settings["pageable"] = Pageable.ToJson();
+            }
+
+            if (Sortable.Enabled)
+            {
+                var sorting = Sortable.ToJson();
+                settings["sortable"] = sorting.Any() ? (object)sorting : true;
+            }
 
             return settings;
         }
