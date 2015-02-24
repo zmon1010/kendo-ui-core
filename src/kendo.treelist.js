@@ -1164,7 +1164,7 @@ var __meta__ = {
             var button = $(e.currentTarget);
             var commandName = button.attr("data-command");
             var command = this._commandByName(commandName);
-            var row = button.closest("tr");
+            var row = button.parentsUntil(this.wrapper, "tr");
 
             row = row.length ? row : undefined;
 
