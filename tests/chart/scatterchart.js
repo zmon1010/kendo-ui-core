@@ -8,11 +8,11 @@
         root,
         TOLERANCE = 1;
 
-    function setupScatterChart(plotArea, options) {
+    function setupScatterChart(plotArea, options, rootOptions) {
 
         scatterChart = new dataviz.ScatterChart(plotArea, options);
 
-        root = new dataviz.RootElement();
+        root = new dataviz.RootElement(rootOptions);
         root.append(scatterChart);
 
         root.reflow();
@@ -606,8 +606,20 @@
         test("creates clip animation", function() {
             ok(scatterChart.animation);
             ok(scatterChart.animation instanceof dataviz.ClipAnimation);
-            sameBox(scatterChart.animation.options.box, scatterChart.box);
-            sameLinePath(scatterChart.animation.element, draw.Path.fromRect(scatterChart.box.toRect()));
+            sameBox(scatterChart.animation.options.box, root.box);
+            sameLinePath(scatterChart.animation.element, draw.Path.fromRect(root.box.toRect()));
+        });
+
+        test("does not create clip animation if transitions are disabled", function() {
+            setupScatterChart(new PlotAreaStub(), { series: [{
+                    type: "scatter",
+                    data: [[1, 1]]
+                }]}, {
+                transitions: false
+            });
+
+            ok(!scatterChart.animation);
+            ok(!scatterChart.visual.clip());
         });
 
         test("does not set clip on points markers by default", function() {

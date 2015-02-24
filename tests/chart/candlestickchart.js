@@ -12,11 +12,11 @@
         pointBody,
         TOLERANCE = 1;
 
-    function setupCandlestickChart(plotArea, options) {
+    function setupCandlestickChart(plotArea, options, rootOptions) {
 
         candlestickChart = new dataviz.CandlestickChart(plotArea, options);
 
-        root = new dataviz.RootElement();
+        root = new dataviz.RootElement(rootOptions);
         root.append(candlestickChart);
         root.box = chartBox.clone();
         candlestickChart.reflow(chartBox);
@@ -293,8 +293,17 @@
         test("creates clip animation", function() {
             ok(candlestickChart.animation);
             ok(candlestickChart.animation instanceof dataviz.ClipAnimation);
-            sameBox(candlestickChart.animation.options.box, candlestickChart.box);
-            sameLinePath(candlestickChart.animation.element, draw.Path.fromRect(candlestickChart.box.toRect()));
+            sameBox(candlestickChart.animation.options.box, root.box);
+            sameLinePath(candlestickChart.animation.element, draw.Path.fromRect(root.box.toRect()));
+        });
+
+        test("does not create clip animation if transitions are disabled", function() {
+            setupCandlestickChart(plotArea, { series: [ series ] }, {
+                transitions: false
+            });
+
+            ok(!candlestickChart.animation);
+            ok(!candlestickChart.visual.clip());
         });
 
         test("does not set clip on points by default", function() {

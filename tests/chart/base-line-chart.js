@@ -16,11 +16,11 @@ function baseLineChartTests(seriesName, TChart) {
         return (visual.children ? visual.children[0] : visual).segments;
     }
 
-    function setupChart(plotArea, options) {
+    function setupChart(plotArea, options, rootOptions) {
         var box = chartBox.clone();
         chart = new TChart(plotArea, options);
 
-        root = new dataviz.RootElement();
+        root = new dataviz.RootElement(rootOptions);
         root.append(chart);
 
         root.reflow();
@@ -99,8 +99,20 @@ function baseLineChartTests(seriesName, TChart) {
         test("creates clip animation", function() {
             ok(chart.animation);
             ok(chart.animation instanceof dataviz.ClipAnimation);
-            sameBox(chart.animation.options.box, chart.box);
-            sameLinePath(chart.animation.element, draw.Path.fromRect(chart.box.toRect()));
+            sameBox(chart.animation.options.box, root.box);
+            sameLinePath(chart.animation.element, draw.Path.fromRect(root.box.toRect()));
+        });
+
+        test("does not create clip animation if transitions are disabled", function() {
+            setupChart(plotArea, {
+                series: [{
+                    data: [0, 1]
+                }]
+            }, {
+                transitions: false
+            });
+            ok(!chart.animation);
+            ok(!chart.visual.clip());
         });
 
         test("does not set clip on segments by default", function() {

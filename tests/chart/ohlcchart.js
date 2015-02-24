@@ -11,10 +11,10 @@
         firstLine,
         TOLERANCE = 1;
 
-    function setupOHLCChart(plotArea, options) {
+    function setupOHLCChart(plotArea, options, rootOptions) {
         ohlcChart = new dataviz.OHLCChart(plotArea, options);
 
-        root = new dataviz.RootElement();
+        root = new dataviz.RootElement(rootOptions);
         root.append(ohlcChart);
 
         root.reflow();
@@ -213,8 +213,17 @@
         test("creates clip animation", function() {
             ok(ohlcChart.animation);
             ok(ohlcChart.animation instanceof dataviz.ClipAnimation);
-            sameBox(ohlcChart.animation.options.box, ohlcChart.box);
-            sameLinePath(ohlcChart.animation.element, draw.Path.fromRect(ohlcChart.box.toRect()));
+            sameBox(ohlcChart.animation.options.box, root.box);
+            sameLinePath(ohlcChart.animation.element, draw.Path.fromRect(root.box.toRect()));
+        });
+
+        test("does not create clip animation if transitions are disabled", function() {
+            setupOHLCChart(plotArea, { series: [ series ] }, {
+                transitions: false
+            });
+
+            ok(!ohlcChart.animation);
+            ok(!ohlcChart.visual.clip());
         });
 
         test("does not set clip on points by default", function() {

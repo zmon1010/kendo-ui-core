@@ -5257,14 +5257,17 @@ var __meta__ = {
 
     var ClipAnimationMixin = {
         createAnimation: function() {
-            var box = this.box;
-            var clipPath = draw.Path.fromRect(box.toRect());
-            this.visual.clip(clipPath);
-            this.animation = new ClipAnimation(clipPath, {
-                box: box
-            });
-            if (anyHasZIndex(this.options.series)) {
-                this._setChildrenAnimation(clipPath);
+            var root = this.getRoot();
+            if (root && (root.options || {}).transitions !== false) {
+                var box = root.box;
+                var clipPath = draw.Path.fromRect(box.toRect());
+                this.visual.clip(clipPath);
+                this.animation = new ClipAnimation(clipPath, {
+                    box: box
+                });
+                if (anyHasZIndex(this.options.series)) {
+                    this._setChildrenAnimation(clipPath);
+                }
             }
         },
 
