@@ -21,7 +21,10 @@
                     stack: true,
                     highlight: {
                         toggle: function (e) {
+                            // Don't create a highlight overlay,
+                            // we'll modify the existing visual instead
                             e.preventDefault();
+
                             var visual = e.visual;
                             var opacity = e.show ? 0.8 : 1;
 

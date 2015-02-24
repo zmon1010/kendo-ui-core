@@ -48,12 +48,19 @@
                     categoryField: "day",
                     highlight: {
                         toggle: function (e) {
+                            // Don't create a highlight overlay,
+                            // we'll modify the existing visual instead
                             e.preventDefault();
+
                             var visual = e.visual;
                             var transform = null;
                             if (e.show) {
-                                transform = kendo.geometry.transform().scale(1.5, 1.5, visual.rect().center());
+                                var center = visual.rect().center();
+
+                                // Uniform 1.5x scale with the center as origin
+                                transform = kendo.geometry.transform().scale(1.5, 1.5, center);
                             }
+
                             visual.transform(transform);
                         }
                     },
