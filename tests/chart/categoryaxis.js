@@ -1146,6 +1146,50 @@
         test("renders box", function() {
             sameRectPath(plotBands, [17, 0, 788, 286.5], TOLERANCE);
         });
+
+        // ------------------------------------------------------------
+        module("Category Axis / Plot Bands / Multiple Panes", {
+            setup: function() {
+                createPlotArea(lineSeriesData, {
+                    categoryAxis: [{
+                        pane: "top",
+                        categories: ["A", "B", "C"],
+                        plotBands: [{
+                            from: 0,
+                            to: 1
+                        }]
+                    }, {
+                        pane: "bottom",
+                        categories: ["A", "B", "C"],
+                        plotBands: [{
+                            from: 0,
+                            to: 1
+                        }]
+                    }],
+                    valueAxis: [{
+                        pane: "top"
+                    }, {
+                        pane: "bottom"
+                    }],
+                    panes: [{
+                        name: "top"
+                    }, {
+                        name: "bottom"
+                    }]
+                });
+            }
+        });
+
+        test("renders plot band in top pane", function() {
+            var topBand = plotArea.axes[0]._plotbandGroup.children[0];
+            sameRectPath(topBand, [33, 9, 288, 276], TOLERANCE);
+        });
+
+        test("renders plot band in bottom pane", function() {
+            var bottomBand = plotArea.axes[1]._plotbandGroup.children[0];
+            sameRectPath(bottomBand, [33, 307, 288, 576], TOLERANCE);
+        });
+
     })();
 
 

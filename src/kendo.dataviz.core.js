@@ -1912,6 +1912,10 @@ var __meta__ = {
                 zIndex: -1
             });
 
+            var altAxis = $.grep(axis.pane.axes, function(a) {
+                return a.options.vertical !== axis.options.vertical;
+            })[0];
+
             var range = this.range();
             $.each(plotBands, function(i, item) {
                 from = valueOrDefault(item.from, MIN_VALUE);
@@ -1920,11 +1924,11 @@ var __meta__ = {
 
                 if (isInRange(from, range) || isInRange(to, range)) {
                     if (vertical) {
-                        slotX = plotArea.axisX.lineBox();
+                        slotX = (altAxis || plotArea.axisX).lineBox();
                         slotY = axis.getSlot(item.from, item.to, true);
                     } else {
                         slotX = axis.getSlot(item.from, item.to, true);
-                        slotY = plotArea.axisY.lineBox();
+                        slotY = (altAxis || plotArea.axisY).lineBox();
                     }
 
                     var bandRect = new geom.Rect(
