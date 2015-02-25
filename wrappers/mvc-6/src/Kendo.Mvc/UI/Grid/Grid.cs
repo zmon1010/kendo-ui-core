@@ -29,7 +29,7 @@ namespace Kendo.Mvc.UI
             Pageable = new PageableSettings();
             Sortable = new GridSortableSettings();
             Scrollable = new GridScrollableSettings();
-            Navigatable = new GridNavigatableSettings();
+            Navigatable = new GridSettings();
             Filterable = new GridFilterableSettings();
             ColumnMenu = new GridColumnMenuSettings();
 
@@ -43,8 +43,8 @@ namespace Kendo.Mvc.UI
             //};
 
             Grouping = new GridGroupableSettings();
-            Resizable = new GridResizableSettings();
-            Reorderable = new GridReorderableSettings();
+            Resizable = new GridSettings();
+            Reorderable = new GridSettings();
             //Excel = new GridExcelSettings();
             //Pdf = new PDFSettings();
 
@@ -126,7 +126,7 @@ namespace Kendo.Mvc.UI
         /// <summary>
         /// Gets the keyboard navigation configuration.
         /// </summary>
-        public GridNavigatableSettings Navigatable
+        public GridSettings Navigatable
         {
             get;
             private set;
@@ -166,13 +166,13 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
-        public GridResizableSettings Resizable
+        public GridSettings Resizable
         {
             get;
             private set;
         }
 
-        public GridReorderableSettings Reorderable
+        public GridSettings Reorderable
         {
             get;
             private set;

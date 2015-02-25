@@ -5,9 +5,9 @@ namespace Kendo.Mvc.UI.Fluent
     /// </summary>
     public class GridResizingSettingsBuilder : IHideObjectMembers
     {
-        private readonly GridResizableSettings settings;
+        private readonly GridSettings settings;
 
-        public GridResizingSettingsBuilder(GridResizableSettings settings)
+        public GridResizingSettingsBuilder(GridSettings settings)
         {
             this.settings = settings;
         }

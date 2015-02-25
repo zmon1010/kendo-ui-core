@@ -5,9 +5,9 @@ namespace Kendo.Mvc.UI.Fluent
     /// </summary>
     public class GridReorderingSettingsBuilder: IHideObjectMembers
     {
-        private readonly GridReorderableSettings settings;
+        private readonly GridSettings settings;
 
-        public GridReorderingSettingsBuilder(GridReorderableSettings settings)
+        public GridReorderingSettingsBuilder(GridSettings settings)
         {
             this.settings = settings;
         }

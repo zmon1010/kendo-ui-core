@@ -7,13 +7,13 @@ namespace Kendo.Mvc.UI.Fluent
     /// </summary>
     public class GridNavigatableSettingsBuilder : IHideObjectMembers
     {
-        private readonly GridNavigatableSettings settings;
+        private readonly GridSettings settings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GridNavigatableSettingsBuilder"/> class.
         /// </summary>
         /// <param name="settings">The settings.</param>
-        public GridNavigatableSettingsBuilder(GridNavigatableSettings settings)
+        public GridNavigatableSettingsBuilder(GridSettings settings)
         {
             this.settings = settings;
         }

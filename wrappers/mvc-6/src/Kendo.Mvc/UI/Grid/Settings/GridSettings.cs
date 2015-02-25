@@ -1,6 +1,6 @@
-namespace Kendo.Mvc.UI
+﻿namespace Kendo.Mvc.UI
 {
-    public class GridReorderableSettings
+    public class GridSettings
     {
         public bool Enabled
         {
