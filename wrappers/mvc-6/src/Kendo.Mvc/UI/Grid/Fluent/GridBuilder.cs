@@ -427,10 +427,36 @@ namespace Kendo.Mvc.UI.Fluent
         ///    .Resizable(resizing => resizing.Columns(true))
         /// )
         /// </code>       
+        /// </example>
         public GridBuilder<T> Resizable(Action<GridResizingSettingsBuilder> configurator)
         {
 
             configurator(new GridResizingSettingsBuilder(Component.Resizable));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the reordering configuration of the grid.
+        /// </summary>
+        /// <param name="configurator">The lambda which configures the reordering</param>
+        /// <example>
+        /// <code lang="Razor">
+        ///  @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name("Grid")
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///          .Ajax()
+        ///          .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        ///    .Reorderable(reordering => reordering.Columns(true))
+        /// )
+        /// </code>       
+        /// </example>
+        public GridBuilder<T> Reorderable(Action<GridReorderingSettingsBuilder> configurator)
+        {
+            configurator(new GridReorderingSettingsBuilder(Component.Reorderable));
 
             return this;
         }
