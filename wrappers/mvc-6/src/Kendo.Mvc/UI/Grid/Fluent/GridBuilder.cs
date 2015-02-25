@@ -309,5 +309,55 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Enables the grid column menu.
+        /// </summary>
+        /// <example>        
+        ///<code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        ///     .ColumnMenu()
+        /// )
+        /// </code>
+        /// </example>
+        public GridBuilder<T> ColumnMenu()
+        {
+            Component.ColumnMenu.Enabled = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the column menu configuration of the grid.
+        /// </summary>
+        /// <param name="configurator">The lambda which configures the column menu</param>
+        /// <example>       
+        ///<code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        ///     .ColumnMenu(columnMenu =&gt; columnMenu.Enabled(true))
+        /// )
+        /// </code>
+        /// </example>
+        public GridBuilder<T> ColumnMenu(Action<GridColumnMenuSettingsBuilder> configurator)
+        {
+            Component.ColumnMenu.Enabled = true;
+
+            configurator(new GridColumnMenuSettingsBuilder(Component.ColumnMenu));
+
+            return this;
+        }
     }
 }

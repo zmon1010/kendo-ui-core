@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI
             Scrollable = new GridScrollableSettings();
             Navigatable = new GridNavigatableSettings();
             Filterable = new GridFilterableSettings();
-            //ColumnMenu = new GridColumnMenuSettings();
+            ColumnMenu = new GridColumnMenuSettings();
 
             //Editable = new GridEditableSettings<T>(this)
             //{
@@ -103,6 +103,15 @@ namespace Kendo.Mvc.UI
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets the column menu configuration.
+        /// </summary>
+        public GridColumnMenuSettings ColumnMenu
+        {
+            get;
+            private set;
         }
 
         /// <summary>
