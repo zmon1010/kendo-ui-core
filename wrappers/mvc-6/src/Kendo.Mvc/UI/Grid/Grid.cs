@@ -28,7 +28,7 @@ namespace Kendo.Mvc.UI
 
             Pageable = new PageableSettings();
             Sortable = new GridSortableSettings();
-            //Scrollable = new GridScrollableSettings();
+            Scrollable = new GridScrollableSettings();
             //Navigatable = new GridNavigatableSettings(this);
             //Filterable = new GridFilterableSettings();
             //ColumnMenu = new GridColumnMenuSettings();
@@ -103,6 +103,15 @@ namespace Kendo.Mvc.UI
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets the scrolling configuration.
+        /// </summary>
+        public GridScrollableSettings Scrollable
+        {
+            get;
+            private set;
         }
 
         /// <summary>
