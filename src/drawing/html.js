@@ -130,43 +130,29 @@
             var copy = $(element).clone(true, true)[0];
             var cont = doc.createElement("KENDO-PDF-DOCUMENT");
             var adjust = 0;
+
             $(cont).css({
+                display  : "block",
                 position : "absolute",
                 left     : "-10000px",
                 top      : "-10000px"
             });
+
+            // we need this here even though we set width individually for each page in makePage
+            // below, because the universe is expanding.  (hint: no idea, but without it the content
+            // is truncated).
             if (pageWidth) {
                 $(cont).css({ width: pageWidth });
             }
+
             cont.appendChild(copy);
             element.parentNode.insertBefore(cont, element);
 
-            setTimeout(function(){
+            // we need the timeout here, so that images dimensions are
+            // properly computed in DOM when we start our thing.
+            setTimeout(function() {
                 if (forceBreak != "-" || pageHeight) {
-                    (function split(element) {
-                        var style = getComputedStyle(element);
-                        var bottomPadding = parseFloat(getPropertyValue(style, "padding-bottom"));
-                        var bottomBorder = parseFloat(getPropertyValue(style, "border-bottom-width"));
-                        var saveAdjust = adjust;
-                        adjust += bottomPadding + bottomBorder;
-                        for (var el = element.firstChild; el; el = el.nextSibling) {
-                            if (el.nodeType == 1) {
-                                if ($(el).is(forceBreak)) {
-                                    var page = makePage();
-                                    var range = doc.createRange();
-                                    range.setStartBefore(copy);
-                                    range.setEndBefore(el);
-                                    page.appendChild(range.extractContents());
-                                    copy.parentNode.insertBefore(page, copy);
-                                } else if (fallsOnMargin(el)) {
-                                    split(el);
-                                }
-                            } else if (pageHeight) {
-                                splitText(el);
-                            }
-                        }
-                        adjust = saveAdjust;
-                    })(copy);
+                    splitElement(copy);
                 }
 
                 // XXX: can contain only text nodes.  better risk producing
@@ -177,11 +163,72 @@
                 page.appendChild(copy);
                 // }
 
-                callback({ pages: pages, container: cont });
+                // allow another timeout here to make sure the images
+                // are rendered in the new DOM nodes.
+                setTimeout(function(){
+                    callback({ pages: pages, container: cont });
+                }, 10);
             }, 10);
+
+            function splitElement(element) {
+                var style = getComputedStyle(element);
+                var bottomPadding = parseFloat(getPropertyValue(style, "padding-bottom"));
+                var bottomBorder = parseFloat(getPropertyValue(style, "border-bottom-width"));
+                var saveAdjust = adjust;
+                adjust += bottomPadding + bottomBorder;
+                var count = 0;
+                for (var el = element.firstChild; el; el = el.nextSibling) {
+                    if (el.nodeType == 1 /* Element */) {
+                        if ($(el).is(forceBreak)) {
+                            breakAtElement(el);
+                            continue;
+                        }
+                        var fall = fallsOnMargin(el);
+                        if (fall == 1) {
+                            // element starts on next page, break before anyway.
+                            breakAtElement(el);
+                        }
+                        else if (fall) {
+                            // elements ends up on next page, or possibly doesn't fit on a page at
+                            // all.  break before it anyway if it's an <img> or <tr>, otherwise
+                            // attempt to split.
+                            switch (el.tagName.toLowerCase()) {
+                              case "img":
+                              case "tr":
+                                breakAtElement(el);
+                                break;
+
+                              default:
+                                splitElement(el);
+                            }
+                        }
+                    }
+                    else if (el.nodeType == 3 /* Text */ && pageHeight) {
+                        splitText(el);
+                    }
+                }
+                adjust = saveAdjust;
+            }
+
+            function breakAtElement(el) {
+                var page = makePage();
+                var range = doc.createRange();
+                range.setStartBefore(copy);
+                range.setEndBefore(el);
+                page.appendChild(range.extractContents());
+                copy.parentNode.insertBefore(page, copy);
+            }
 
             function makePage() {
                 var page = doc.createElement("KENDO-PDF-PAGE");
+                $(page).css({
+                    display  : "block",
+                    width    : pageWidth || "auto",
+
+                    // without the following we might affect layout of subsequent pages
+                    height   : pageHeight || "auto",
+                    overflow : pageHeight || pageWidth ? "hidden" : "visible"
+                });
                 if (options && options.pageClassName) {
                     page.className = options.pageClassName;
                 }
@@ -191,7 +238,13 @@
 
             function fallsOnMargin(thing) {
                 var box = thing.getBoundingClientRect();
-                return box.bottom - copy.getBoundingClientRect().top > pageHeight - adjust;
+                var top = copy.getBoundingClientRect().top;
+                var available = pageHeight - adjust;
+                console.log(box.top, top, available);
+                return (box.height > available) ? 3
+                    : (box.top - top > available) ? 1
+                    : (box.bottom - top > available) ? 2
+                    : 0;
             }
 
             function splitText(node) {
@@ -200,29 +253,34 @@
                     return;
                 }
                 var len = node.data.length;
+                range.selectNodeContents(node);
 
-                range.setStart(node, 0);
-                range.setEnd(node, len);
-                if (!fallsOnMargin(range)) {
+                var fall = fallsOnMargin(range);
+                if (!fall) {
                     return;     // the whole text fits on current page
                 }
+                if (fall == 1) {
+                    // starts on next page, break before anyway.
+                    breakAtElement(node);
+                }
+                else {
+                    (function findEOP(min, pos, max) {
+                        range.setEnd(node, pos);
+                        if (min == pos || pos == max) {
+                            return pos;
+                        }
+                        if (fallsOnMargin(range)) {
+                            return findEOP(min, (min + pos) >> 1, pos);
+                        } else {
+                            return findEOP(pos, (pos + max) >> 1, max);
+                        }
+                    })(0, len >> 1, len);
 
-                (function findEOP(min, pos, max) {
-                    range.setEnd(node, pos);
-                    if (min == pos || pos == max) {
-                        return pos;
-                    }
-                    if (fallsOnMargin(range)) {
-                        return findEOP(min, (min + pos) >> 1, pos);
-                    } else {
-                        return findEOP(pos, (pos + max) >> 1, max);
-                    }
-                })(0, len >> 1, len);
-
-                var page = makePage();
-                range.setStartBefore(copy);
-                page.appendChild(range.extractContents());
-                copy.parentNode.insertBefore(page, copy);
+                    var page = makePage();
+                    range.setStartBefore(copy);
+                    page.appendChild(range.extractContents());
+                    copy.parentNode.insertBefore(page, copy);
+                }
 
                 splitText(node);
             }
