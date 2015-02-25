@@ -176,9 +176,11 @@
                 var bottomBorder = parseFloat(getPropertyValue(style, "border-bottom-width"));
                 var saveAdjust = adjust;
                 adjust += bottomPadding + bottomBorder;
-                var count = 0;
                 for (var el = element.firstChild; el; el = el.nextSibling) {
                     if (el.nodeType == 1 /* Element */) {
+                        if (!/^(?:static|relative)$/.test(getPropertyValue(getComputedStyle(el), "position"))) {
+                            continue;
+                        }
                         if ($(el).is(forceBreak)) {
                             breakAtElement(el);
                             continue;
