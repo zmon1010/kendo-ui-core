@@ -51,6 +51,9 @@
     /* -----[ exports ]----- */
 
     function drawDOM(element, options) {
+        if (!options) {
+            options = {};
+        }
         var defer = $.Deferred();
         element = $(element)[0];
 
