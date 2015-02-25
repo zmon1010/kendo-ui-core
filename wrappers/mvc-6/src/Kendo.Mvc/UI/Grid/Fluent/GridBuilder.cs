@@ -408,5 +408,31 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return Groupable(delegate { });
         }
+
+
+        /// <summary>
+        /// Sets the resizing configuration of the grid.
+        /// </summary>
+        /// <param name="configurator">The lambda which configures the resizing</param>
+        /// <example>
+        /// <code lang="Razor">
+        ///  @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name("Grid")
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///          .Ajax()
+        ///          .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        ///    .Resizable(resizing => resizing.Columns(true))
+        /// )
+        /// </code>       
+        public GridBuilder<T> Resizable(Action<GridResizingSettingsBuilder> configurator)
+        {
+
+            configurator(new GridResizingSettingsBuilder(Component.Resizable));
+
+            return this;
+        }
     }
 }

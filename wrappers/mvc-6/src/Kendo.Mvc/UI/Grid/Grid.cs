@@ -43,7 +43,7 @@ namespace Kendo.Mvc.UI
             //};
 
             Grouping = new GridGroupableSettings();
-            //Resizable = new GridResizableSettings();
+            Resizable = new GridResizableSettings();
             //Reorderable = new GridReorderableSettings();
             //Excel = new GridExcelSettings();
             //Pdf = new PDFSettings();
@@ -161,6 +161,12 @@ namespace Kendo.Mvc.UI
         }
 
         public GridGroupableSettings Grouping
+        {
+            get;
+            private set;
+        }
+
+        public GridResizableSettings Resizable
         {
             get;
             private set;
