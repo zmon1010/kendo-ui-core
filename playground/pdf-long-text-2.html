@@ -22,14 +22,22 @@
     </style>
   </head>
   <body>
-    Kendo:
-    <button onclick="pdfPages('#test1', { paperSize: 'A4', margin: '2cm' })">PDF</button>
-    <button onclick="draw('#test1', 'svg')">SVG</button>
-    <button onclick="draw('#test1', 'canvas')">Canvas</button>
-    |
-    <button onclick="h2c('#test1')">html2canvas</button>
+    <button>PDF</button>
 
-    <select>
+    <select class="paper">
+      <option value="A4" selected>A4</option>
+      <option value="A5">A5</option>
+      <option value="Letter">Letter</option>
+    </select>
+
+    <select class="margin">
+      <option value="1cm">1cm</option>
+      <option value="2cm" selected>2cm</option>
+      <option value="3cm">3cm</option>
+      <option value="4cm">4cm</option>
+    </select>
+
+    <select class="width">
       <option value="auto" selected>Auto</option>
       <option value="600px">600px</option>
       <option value="500px">500px</option>
@@ -43,7 +51,14 @@
     <label>white-space: nowrap <input type="checkbox" /></label>
 
     <script>
-      $("select").kendoDropDownList({
+      $("button").click(function(){
+        pdfPages('#test1', {
+          paperSize: $(".paper").val(),
+          margin: $(".margin").val(),
+          forcePageBreak: ".page-break"
+        })
+      });
+      $("select.width").kendoDropDownList({
         change: function() {
           $("#test1").css({ width: this.value() });
         }
@@ -65,13 +80,13 @@ Phasellus euismod ornare est, ut posuere lorem vestibulum vitae. Sed ut tempor e
 
 Etiam sed laoreet ligula. Duis pharetra convallis quam, sed blandit sem fermentum a. Integer nec nunc neque. Nam et lorem condimentum enim condimentum maximus. Aenean sagittis nec leo quis ultricies. Proin venenatis dolor augue, a vestibulum erat hendrerit a. Sed aliquet suscipit tellus ac facilisis. Vestibulum tempus bibendum porta. Maecenas eget leo in justo finibus condimentum sed sed leo. Aenean id ipsum quis nisl condimentum dictum sed a erat. In nec sapien massa. Morbi lorem erat, vulputate sit amet fermentum eget, eleifend eu ex. Integer euismod orci vel magna pretium condimentum. Morbi nec tristique libero, et efficitur quam. Duis sodales mi et magna iaculis, a semper ligula bibendum.
 
-<img src="images/2.jpg" width="150" style="float: left; margin: 1em 1em 1em 0" />
+<img src="images/2.jpg" height="900" style="float: left; margin: 1em 1em 1em 0" />
 
 Quisque ullamcorper malesuada lectus eget suscipit. Praesent viverra quis velit eu commodo. Nullam eu elementum lacus. Aliquam orci dolor, varius at tellus ac, placerat scelerisque magna. Pellentesque vestibulum ligula ultricies, mollis augue et, condimentum est. Duis sed lobortis orci. Vestibulum at fringilla ex, vitae ornare purus. Suspendisse commodo in lectus sit amet efficitur. Vestibulum vitae consequat lacus, at vulputate metus. Nunc ac purus consequat, luctus sapien nec, lobortis augue. Suspendisse tempor facilisis tellus, aliquet finibus sapien imperdiet ut. Cras iaculis magna urna, eget sagittis felis mattis sit amet.
 
 Phasellus pretium auctor finibus. Curabitur nec aliquam ligula, eu efficitur massa. Praesent vehicula aliquet est, mollis vehicula ipsum sagittis et. Donec vel mollis tortor. Quisque orci dolor, dignissim ac rutrum ac, scelerisque sit amet diam. Ut aliquam sed massa sit amet lobortis. Fusce convallis, enim vel blandit tincidunt, velit nunc rutrum sapien, at molestie magna dolor quis leo. Donec feugiat ante vitae enim blandit scelerisque. Quisque vehicula, lectus sit amet egestas varius, nulla massa commodo erat, ac feugiat purus sem id orci. Pellentesque commodo turpis eu enim ultricies, venenatis eleifend neque vestibulum.
 
-<img src="images/3.jpg" width="200" style="float: left; margin: 1em 1em 1em 0" />
+<img src="images/3.jpg" width="200" style="float: right; margin: 1em 0 1em 1em" />
 
 Etiam fermentum elementum magna, id volutpat erat luctus eget. Duis placerat mauris quis mauris lobortis, id consectetur turpis euismod. Duis quis magna at nulla dapibus pharetra. Ut velit nibh, tempor at dapibus ac, ultrices nec massa. Aenean eu quam dui. Vestibulum et magna eu metus egestas suscipit. Maecenas at enim vestibulum, imperdiet magna quis, fringilla diam. Praesent malesuada ex et malesuada bibendum. Aliquam non sagittis tortor. Aenean gravida mauris porta mi laoreet, vel vulputate nisl maximus. Ut auctor et dolor in semper. Sed a metus tellus. Etiam nunc nisl, egestas eu nulla id, fringilla facilisis justo. Aliquam libero mauris, mollis a libero eu, suscipit lobortis purus.
 

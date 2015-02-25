@@ -22,7 +22,6 @@
         font-family: "DejaVu Serif";
       }
       .page {
-        text-align: justify;
         border: 1px solid red;
         padding: 2em;
         box-sizing: border-box;
@@ -52,19 +51,22 @@
     </script>
   </head>
   <body>
-    Kendo:
-    <button onclick="pdfPages('#test1', {
-                       paperSize: 'A4',
-                       margin: '2cm',
-                       forcePageBreak: '.page-break'
-                     })"
-            >PDF</button>
-    <button onclick="draw('#test1', 'svg')">SVG</button>
-    <button onclick="draw('#test1', 'canvas')">Canvas</button>
-    |
-    <button onclick="h2c('#test1')">html2canvas</button>
+    <button>PDF</button>
 
-    <select>
+    <select class="paper">
+      <option value="A4" selected>A4</option>
+      <option value="A5">A5</option>
+      <option value="Letter">Letter</option>
+    </select>
+
+    <select class="margin">
+      <option value="1cm">1cm</option>
+      <option value="2cm" selected>2cm</option>
+      <option value="3cm">3cm</option>
+      <option value="4cm">4cm</option>
+    </select>
+
+    <select class="width">
       <option value="auto" selected>Auto</option>
       <option value="600px">600px</option>
       <option value="500px">500px</option>
@@ -78,7 +80,14 @@
     <label>white-space: nowrap <input type="checkbox" /></label>
 
     <script>
-      $("select").kendoDropDownList({
+      $("button").click(function(){
+        pdfPages('#test1', {
+          paperSize: $(".paper").val(),
+          margin: $(".margin").val(),
+          forcePageBreak: ".page-break"
+        })
+      });
+      $("select.width").kendoDropDownList({
         change: function() {
           $("#test1").css({ width: this.value() });
         }
@@ -104,7 +113,18 @@
 
         <p>Etiam sed laoreet ligula. Duis pharetra convallis quam, sed blandit sem fermentum a. Integer nec nunc neque. Nam et lorem condimentum enim condimentum maximus. Aenean sagittis nec leo quis ultricies. Proin venenatis dolor augue, a vestibulum erat hendrerit a. Sed aliquet suscipit tellus ac facilisis. Vestibulum tempus bibendum porta. Maecenas eget leo in justo finibus condimentum sed sed leo. Aenean id ipsum quis nisl condimentum dictum sed a erat. In nec sapien massa. Morbi lorem erat, vulputate sit amet fermentum eget, eleifend eu ex. Integer euismod orci vel magna pretium condimentum. Morbi nec tristique libero, et efficitur quam. Duis sodales mi et magna iaculis, a semper ligula bibendum.</p>
 
-        <p>Quisque ullamcorper malesuada lectus eget suscipit. Praesent viverra quis velit eu commodo. Nullam eu elementum lacus. Aliquam orci dolor, varius at tellus ac, placerat scelerisque magna. Pellentesque vestibulum ligula ultricies, mollis augue et, condimentum est. Duis sed lobortis orci. Vestibulum at fringilla ex, vitae ornare purus. Suspendisse commodo in lectus sit amet efficitur. Vestibulum vitae consequat lacus, at vulputate metus. Nunc ac purus consequat, luctus sapien nec, lobortis augue. Suspendisse tempor facilisis tellus, aliquet finibus sapien imperdiet ut. Cras iaculis magna urna, eget sagittis felis mattis sit amet.</p>
+        <p>Quisque ullamcorper malesuada lectus eget suscipit. Praesent
+        viverra quis velit eu commodo. Nullam eu elementum lacus. Aliquam
+        orci dolor, varius at tellus ac, placerat scelerisque
+        magna. Pellentesque vestibulum ligula ultricies, mollis augue et,
+        condimentum est. Duis sed lobortis orci. Vestibulum at fringilla ex,
+        vitae ornare purus. Suspendisse commodo in lectus sit amet
+        efficitur. Vestibulum vitae consequat lacus, at vulputate
+        <img style="float: left; margin: 0 1em 0 0" src="images/1.jpg" width="200" />
+        metus. Nunc ac purus consequat, luctus sapien nec, lobortis
+        augue. Suspendisse tempor facilisis tellus, aliquet finibus sapien
+        imperdiet ut. Cras iaculis magna urna, eget sagittis felis mattis
+        sit amet.</p>
 
         <p>Phasellus pretium auctor finibus. Curabitur nec aliquam ligula, eu efficitur massa. Praesent vehicula aliquet est, mollis vehicula ipsum sagittis et. Donec vel mollis tortor. Quisque orci dolor, dignissim ac rutrum ac, scelerisque sit amet diam. Ut aliquam sed massa sit amet lobortis. Fusce convallis, enim vel blandit tincidunt, velit nunc rutrum sapien, at molestie magna dolor quis leo. Donec feugiat ante vitae enim blandit scelerisque. Quisque vehicula, lectus sit amet egestas varius, nulla massa commodo erat, ac feugiat purus sem id orci. Pellentesque commodo turpis eu enim ultricies, venenatis eleifend neque vestibulum.</p>
 
@@ -129,6 +149,8 @@
         <p>Donec <em>interdum vel nibh et maximus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla non ullamcorper libero, vel bibendum purus. Sed interdum pretium odio, a tincidunt nibh pharetra in. Donec scelerisque nulla nec sagittis hendrerit. Proin et mattis purus, eget vestibulum mi. Sed interdum vulputate tortor semper dictum. Suspendisse vitae laoreet ex, vel pretium lectus. In eleifend eleifend iaculis.</em> Pellentesque ipsum risus, hendrerit sed erat a, porttitor lacinia turpis. Sed scelerisque pharetra magna vitae suscipit.</p>
 
         <p>Mauris mi nulla, commodo quis scelerisque vel, consequat non sapien. Fusce ultricies auctor lacus, ut vestibulum felis malesuada pulvinar. Fusce sed purus odio. In hendrerit magna id felis pulvinar mattis. Praesent eleifend consectetur imperdiet. Fusce egestas felis est. Morbi a enim bibendum, laoreet erat vitae, volutpat turpis. Etiam ut elit eu odio pretium dapibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis nec ornare est. Suspendisse porta consequat lorem, at auctor lacus bibendum ac. Mauris augue ligula, placerat eget rhoncus at, ultricies ut felis. Fusce lobortis mauris vel quam laoreet, sed luctus ex condimentum.</p>
+
+        <!-- <img style="float: left; margin: 0 1em 0 0" src="images/1.jpg" width="200" /> -->
 
         <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent tristique eu lorem vitae pellentesque. Cras ullamcorper lorem eget dapibus semper. Suspendisse ultrices felis nec tellus luctus sagittis. Pellentesque hendrerit, purus vitae vehicula cursus, mauris orci lacinia orci, nec finibus mi est vitae felis. Suspendisse laoreet pellentesque egestas. Pellentesque ut laoreet ligula. Fusce efficitur, tellus vel accumsan volutpat, ipsum lacus imperdiet metus, at ultrices lectus neque quis lacus. Phasellus facilisis laoreet ligula, ut aliquet dolor sagittis id. Sed sollicitudin mollis sapien, eu hendrerit lectus ultricies id. Phasellus convallis nulla sed ante mollis interdum. Vestibulum placerat convallis nisi, eu porta augue pretium eu. Nunc varius mollis nunc, ac tincidunt tortor congue at.</p>
 
