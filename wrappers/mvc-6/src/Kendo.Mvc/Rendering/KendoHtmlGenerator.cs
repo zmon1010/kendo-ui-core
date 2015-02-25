@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.Rendering.Expressions;
+using Microsoft.Framework.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -18,11 +19,11 @@ namespace Kendo.Mvc.Rendering
         /// Initializes a new instance of the <see cref="KendoHtmlGenerator"/> class.
         /// </summary>
         public KendoHtmlGenerator(
-            ActionBindingContext actionBindingContext,
+            IScopedInstance<ActionBindingContext> actionBindingContext,
             IModelMetadataProvider metadataProvider)
 
         {
-            _actionBindingContext = actionBindingContext;
+            _actionBindingContext = actionBindingContext.Value;
             _metadataProvider = metadataProvider;
         }
 
