@@ -1581,7 +1581,7 @@
                 that._initTheme();
                 that._initElements();
                 that._extendLayoutOptions(that.options);
-                that._initShapeDefaults();
+                that._initShapeDefaults(userOptions);
 
                 that._initCanvas();
 
@@ -1833,14 +1833,19 @@
                 this.scrollable = $("<div />").appendTo(this.element);
             },
 
-            _initShapeDefaults: function() {
+            _initShapeDefaults: function(userOptions) {
                 var options = this.options;
+                var userShapeDefaults = (userOptions || {}).shapeDefaults;
                 if (options.editable === false) {
                     deepExtend(options.shapeDefaults, {
                         editable: {
                             connect: false
                         }
                     });
+                }
+
+                if (userShapeDefaults && userShapeDefaults.connectors) {
+                    options.shapeDefaults.connectors = userShapeDefaults.connectors;
                 }
             },
 

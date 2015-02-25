@@ -515,6 +515,16 @@
 
             equal(shape.options.editable.connect, false);
         });
+
+        test("shapeDefaults connectors are overridden by the user options", function() {
+            setupShapeDefaults({
+                connectors: [{name: "right"}]
+            });
+            shape = diagram.addShape({id: "shape1"});
+
+            equal(shape.options.connectors.length, 1);
+            equal(shape.options.connectors[0].name, "right");
+        });
     })();
 
     // ------------------------------------------------------------
