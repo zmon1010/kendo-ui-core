@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.AspNet.PipelineCore;
+using Microsoft.AspNet.Http.Core;
 using Microsoft.AspNet.Routing;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;

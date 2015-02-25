@@ -2,7 +2,6 @@
 using Kendo.Mvc.Infrastructure;
 using Kendo.Mvc.Rendering;
 using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
 using System;

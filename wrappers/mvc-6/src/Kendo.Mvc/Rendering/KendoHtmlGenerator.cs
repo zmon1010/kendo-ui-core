@@ -11,18 +11,18 @@ namespace Kendo.Mvc.Rendering
 {
     public class KendoHtmlGenerator : IKendoHtmlGenerator
     {
-        private readonly IActionBindingContextProvider _actionBindingContextProvider;
+        private readonly ActionBindingContext _actionBindingContext;
         private readonly IModelMetadataProvider _metadataProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KendoHtmlGenerator"/> class.
         /// </summary>
         public KendoHtmlGenerator(
-            IActionBindingContextProvider actionBindingContextProvider,
+            ActionBindingContext actionBindingContext,
             IModelMetadataProvider metadataProvider)
 
         {
-            _actionBindingContextProvider = actionBindingContextProvider;
+            _actionBindingContext = actionBindingContext;
             _metadataProvider = metadataProvider;
         }
 
@@ -127,11 +127,10 @@ namespace Kendo.Mvc.Rendering
             ModelMetadata metadata,
             string name)
         {
-            var actionBindingContext = _actionBindingContextProvider.GetActionBindingContextAsync(viewContext).Result;
             metadata = metadata ??
                 ExpressionMetadataProvider.FromStringExpression(name, viewContext.ViewData, _metadataProvider);
 
-            return actionBindingContext
+            return _actionBindingContext
                 .ValidatorProvider
                 .GetValidators(metadata)
                 .OfType<IClientModelValidator>()
