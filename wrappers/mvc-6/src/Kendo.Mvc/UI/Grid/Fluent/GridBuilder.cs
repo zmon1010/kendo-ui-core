@@ -259,5 +259,55 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Enables grid filtering.
+        /// </summary>
+        /// <example>        
+        ///<code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .Filterable()
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public GridBuilder<T> Filterable()
+        {
+            Component.Filterable.Enabled = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the filtering configuration of the grid.
+        /// </summary>
+        /// <param name="configurator">The lambda which configures the filtering</param>
+        /// <example>     
+        ///<code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .Filterable(filtering =&gt; filtering.Enabled(true))
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public GridBuilder<T> Filterable(Action<GridFilterableSettingsBuilder> configurator)
+        {
+            Component.Filterable.Enabled = true;
+
+            configurator(new GridFilterableSettingsBuilder(Component.Filterable));
+
+            return this;
+        }
     }
 }

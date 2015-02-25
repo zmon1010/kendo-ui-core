@@ -30,7 +30,7 @@ namespace Kendo.Mvc.UI
             Sortable = new GridSortableSettings();
             Scrollable = new GridScrollableSettings();
             Navigatable = new GridNavigatableSettings();
-            //Filterable = new GridFilterableSettings();
+            Filterable = new GridFilterableSettings();
             //ColumnMenu = new GridColumnMenuSettings();
 
             //Editable = new GridEditableSettings<T>(this)
@@ -103,6 +103,15 @@ namespace Kendo.Mvc.UI
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets the filtering configuration.
+        /// </summary>
+        public GridFilterableSettings Filterable
+        {
+            get;
+            private set;
         }
 
         /// <summary>
