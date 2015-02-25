@@ -5,10 +5,12 @@
     <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
     <script src="loader.js"></script>
     <script src="html2canvas.min.js"></script>
+    <script src="pako.min.js"></script>
     <script>
       requireSync([
         "../src/jquery.js",
         "../src/kendo.pdf.js",
+        "../src/kendo.grid.js",
         "../src/kendo.dropdownlist.js",
         "./console.time.js",
         "./test-pdf-helpers.js"
@@ -37,6 +39,17 @@
       }
       .k-pdf-export .page-break { border-top: none }
     </style>
+    <script>
+      $(document).ready(function(){
+        var data = [];
+        for (var i = 1; i <= 100; ++i) {
+          data.push({ id: i, text: "Item " + i });
+        }
+        $("#grid").kendoGrid({
+          dataSource: data
+        });
+      });
+    </script>
   </head>
   <body>
     Kendo:
@@ -85,7 +98,7 @@
 
       <p>Phasellus euismod ornare est, ut posuere lorem vestibulum vitae. Sed ut tempor elit. Nullam in metus sit amet ex accumsan accumsan. Cras faucibus lobortis urna, quis suscipit dui accumsan at. Quisque sollicitudin, lectus non posuere euismod, diam dui porttitor orci, gravida facilisis risus urna aliquet odio. Curabitur congue arcu quis tellus porta, non hendrerit metus tincidunt. Maecenas iaculis, ante sit amet lobortis vulputate, lectus erat varius lorem, in blandit nisl mi at orci. Suspendisse tempor in velit in cursus. Pellentesque tincidunt nec lorem sed auctor. Aliquam finibus tortor eget nibh posuere faucibus.</p>
 
-      <div style="padding: 1em; border: 1px solid #000; background: #dfd;">
+      <div style="padding: 1em; border: 1px solid #000; background: #dfd; opacity: 0.6; border-radius: 10px 20px 20px 10px;">
 
         <h2>Blahissimo</h2>
 
@@ -111,9 +124,9 @@
 
         <h2>I don't know what I'm doing ☺</h2>
 
-        <p>Nam dapibus velit nisl, ut lacinia dui auctor id. In convallis erat ut dolor bibendum, non sagittis leo placerat. Mauris quis augue facilisis, molestie sem condimentum, pretium ligula. Vivamus id vestibulum tortor, vitae blandit sem. Ut non risus justo. Maecenas sit amet placerat felis. Aliquam erat volutpat. Morbi ac interdum sem, eu tristique urna. Praesent auctor molestie volutpat.</p>
+        <p>Nam <b>dapibus velit nisl</b>, ut lacinia dui auctor id. In convallis erat ut dolor bibendum, non sagittis leo placerat. Mauris quis augue facilisis, molestie sem condimentum, pretium ligula. Vivamus id vestibulum tortor, vitae blandit sem. Ut non risus justo. Maecenas sit amet placerat felis. Aliquam erat volutpat. Morbi ac interdum sem, eu tristique urna. Praesent auctor molestie volutpat.</p>
 
-        <p>Donec interdum vel nibh et maximus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla non ullamcorper libero, vel bibendum purus. Sed interdum pretium odio, a tincidunt nibh pharetra in. Donec scelerisque nulla nec sagittis hendrerit. Proin et mattis purus, eget vestibulum mi. Sed interdum vulputate tortor semper dictum. Suspendisse vitae laoreet ex, vel pretium lectus. In eleifend eleifend iaculis. Pellentesque ipsum risus, hendrerit sed erat a, porttitor lacinia turpis. Sed scelerisque pharetra magna vitae suscipit.</p>
+        <p>Donec <em>interdum vel nibh et maximus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla non ullamcorper libero, vel bibendum purus. Sed interdum pretium odio, a tincidunt nibh pharetra in. Donec scelerisque nulla nec sagittis hendrerit. Proin et mattis purus, eget vestibulum mi. Sed interdum vulputate tortor semper dictum. Suspendisse vitae laoreet ex, vel pretium lectus. In eleifend eleifend iaculis.</em> Pellentesque ipsum risus, hendrerit sed erat a, porttitor lacinia turpis. Sed scelerisque pharetra magna vitae suscipit.</p>
 
         <p>Mauris mi nulla, commodo quis scelerisque vel, consequat non sapien. Fusce ultricies auctor lacus, ut vestibulum felis malesuada pulvinar. Fusce sed purus odio. In hendrerit magna id felis pulvinar mattis. Praesent eleifend consectetur imperdiet. Fusce egestas felis est. Morbi a enim bibendum, laoreet erat vitae, volutpat turpis. Etiam ut elit eu odio pretium dapibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis nec ornare est. Suspendisse porta consequat lorem, at auctor lacus bibendum ac. Mauris augue ligula, placerat eget rhoncus at, ultricies ut felis. Fusce lobortis mauris vel quam laoreet, sed luctus ex condimentum.</p>
 
@@ -124,6 +137,8 @@
         <p>Suspendisse lobortis gravida consectetur. Proin non congue arcu, non gravida dolor. Pellentesque aliquam malesuada viverra. In blandit tortor convallis tellus malesuada, id gravida augue aliquet. Nunc molestie felis sed dui varius tincidunt. Mauris sit amet erat quis massa maximus faucibus sed iaculis est. Donec ac sem in justo blandit elementum.</p>
 
         <p>Sed et purus in nisl mollis aliquet sit amet vitae nunc. Nulla vel massa lobortis, rutrum mi sed, commodo metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas feugiat nec odio eget auctor. Donec vestibulum lobortis lacus sit amet placerat. Curabitur ullamcorper pellentesque dapibus. Aliquam at aliquam mi. Fusce pellentesque, libero ac suscipit tempor, purus ipsum lobortis odio, vitae euismod nibh nibh in enim. Nam malesuada vulputate risus sit amet placerat. Maecenas pretium aliquet augue at dignissim. Aliquam eget blandit mauris, at faucibus dui. Sed efficitur commodo ex non bibendum. Phasellus pulvinar tortor eros. Morbi maximus leo odio, nec finibus ipsum rutrum ac.</p>
+
+        <div id="grid"></div>
 
         <p>Etiam commodo tellus in mauris rhoncus, et sagittis urna gravida. Duis semper, tortor iaculis accumsan sagittis, felis turpis faucibus nibh, in scelerisque tellus risus eget eros. Vestibulum efficitur vestibulum metus vitae tincidunt. Aenean sed nisi ipsum. Mauris hendrerit ante ac nunc consectetur feugiat. Proin efficitur tincidunt enim sit amet vulputate. Donec consectetur sodales turpis. Nulla malesuada mi ut odio sodales, sed porta sem hendrerit.</p>
 
