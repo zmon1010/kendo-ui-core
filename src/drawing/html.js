@@ -92,9 +92,9 @@
             var paperOptions = options && kendo.pdf.getPaperOptions(function(key, def){
                 return key in options ? options[key] : def;
             });
-            var pageWidth = paperOptions && paperOptions.paperSize[0];
-            var pageHeight = paperOptions && paperOptions.paperSize[1];
-            var margin = paperOptions && paperOptions.margin;
+            var pageWidth = options.paperSize && paperOptions.paperSize[0];
+            var pageHeight = options.paperSize && paperOptions.paperSize[1];
+            var margin = options.margin && paperOptions.margin;
             if (forceBreak || pageHeight) {
                 if (!margin) {
                     margin = { left: 0, top: 0, right: 0, bottom: 0 };
@@ -102,7 +102,7 @@
                 var group = new drawing.Group({
                     pdf: {
                         multiPage : true,
-                        paperSize : paperOptions ? paperOptions.paperSize : "auto",
+                        paperSize : options.paperSize ? paperOptions.paperSize : "auto",
                         margin    : margin
                     }
                 });
@@ -116,8 +116,8 @@
                     },
                     element,
                     forceBreak,
-                    pageWidth - margin.left - margin.right,
-                    pageHeight - margin.top - margin.bottom
+                    pageWidth ? pageWidth - margin.left - margin.right : null,
+                    pageHeight ? pageHeight - margin.top - margin.bottom : null
                 );
             } else {
                 defer.resolve(doOne(element));
@@ -178,11 +178,16 @@
                 adjust += bottomPadding + bottomBorder;
                 for (var el = element.firstChild; el; el = el.nextSibling) {
                     if (el.nodeType == 1 /* Element */) {
-                        if (!/^(?:static|relative)$/.test(getPropertyValue(getComputedStyle(el), "position"))) {
-                            continue;
-                        }
                         if ($(el).is(forceBreak)) {
                             breakAtElement(el);
+                            continue;
+                        }
+                        if (!pageHeight) {
+                            // we're in "manual breaks mode"
+                            splitElement(el);
+                            continue;
+                        }
+                        if (!/^(?:static|relative)$/.test(getPropertyValue(getComputedStyle(el), "position"))) {
                             continue;
                         }
                         var fall = fallsOnMargin(el);
