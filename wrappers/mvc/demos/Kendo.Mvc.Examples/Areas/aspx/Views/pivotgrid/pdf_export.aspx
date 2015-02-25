@@ -4,9 +4,20 @@
  <style>
     #export
     {
-        padding: 0 0 10px 1px;
+        margin: 0 0 10px 1px;
+    }
+
+    /*
+        Use the DejaVu Sans font for display and embedding in the PDF file.
+        The standard PDF fonts have no support for Unicode characters.
+    */
+    .k-pivot {
+        font-family: "DejaVu Sans", "Arial", sans-serif;
     }
 </style>
+
+<!-- Load Pako ZLIB library to enable PDF compression -->
+<script src="<%= Url.Content("~/Scripts/pako.min.js") %>"></script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -24,9 +35,8 @@
             Xmla()
             .Columns(columns => {
                 columns.Add("[Date].[Calendar]").Expand(true);
-                columns.Add("[Product].[Category]");
             })
-            .Rows(rows => rows.Add("[Geography].[City]"))
+            .Rows(rows => rows.Add("[Product].[Category]").Expand(true))
             .Measures(measures => measures.Values(new string[]{"[Measures].[Reseller Freight Cost]"}))
             .Transport(transport => transport
                 .Connection(connection => connection

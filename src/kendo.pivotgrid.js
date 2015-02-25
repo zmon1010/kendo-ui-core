@@ -4857,6 +4857,10 @@ var __meta__ = {
 
     if (kendo.PDFMixin) {
         kendo.PDFMixin.extend(PivotGrid.prototype);
+
+        PivotGrid.fn._drawPDF = function() {
+            return this._drawPDFShadow();
+        }
     }
 
 })(window.kendo.jQuery);

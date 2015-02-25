@@ -53,15 +53,16 @@ $dateColumn = new \Kendo\Data\PivotDataSourceColumn();
 $dateColumn->name('[Date].[Calendar]')
             ->expand(true);
 
-$productColumn = new \Kendo\Data\PivotDataSourceColumn();
-$productColumn->name('[Product].[Category]');
+$productRow = new \Kendo\Data\PivotDataSourceRow();
+$productRow->name('[Product].[Category]')
+           ->expand(true);
 
 $dataSource = new \Kendo\Data\PivotDataSource();
 
 $dataSource->transport($transport)
             ->type("xmla")
-            ->addColumn($dateColumn, $productColumn)
-            ->addRow('[Geography].[City]')
+            ->addColumn($dateColumn)
+            ->addRow($productRow)
             ->addMeasure('[Measures].[Reseller Freight Cost]')
             ->schema($schema);
 
@@ -71,7 +72,7 @@ $pdf->fileName('Kendo UI Grid Export.pdf')
 
 $pivotgrid = new \Kendo\UI\PivotGrid('pivotgrid');
 $pivotgrid->dataSource($dataSource)
-     ->pdf($pdf)
+    ->pdf($pdf)
     ->columnWidth(200)
     ->configurator("#configurator")
     ->filterable(true)
@@ -94,7 +95,19 @@ echo $pivotgrid->render();
 <style>
     #export
     {
-        padding: 0 0 10px 1px;
+        margin: 0 0 10px 1px;
+    }
+
+    /*
+        Use the DejaVu Sans font for display and embedding in the PDF file.
+        The standard PDF fonts have no support for Unicode characters.
+    */
+    .k-pivot {
+        font-family: "DejaVu Sans", "Arial", sans-serif;
     }
 </style>
+
+<!-- Load Pako ZLIB library to enable PDF compression -->
+<script src="../content/shared/js/pako.min.js"></script>
+
 <?php require_once '../include/footer.php'; ?>

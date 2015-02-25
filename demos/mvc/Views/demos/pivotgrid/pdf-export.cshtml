@@ -15,8 +15,8 @@
                 height: 580,
                 dataSource: {
                     type: "xmla",
-                    columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Product].[Category]" } ],
-                    rows: [{ name: "[Geography].[City]" }],
+                    columns: [{ name: "[Date].[Calendar]", expand: true } ],
+                    rows: [{ name: "[Product].[Category]", expand: true }],
                     measures: ["[Measures].[Reseller Freight Cost]"],
                     transport: {
                         connection: {
@@ -44,5 +44,25 @@
         {
             margin: 0 0 10px 1px;
         }
+
+        /*
+            Use the DejaVu Sans font for display and embedding in the PDF file.
+            The standard PDF fonts have no support for Unicode characters.
+        */
+        .k-pivot {
+            font-family: "DejaVu Sans", "Arial", sans-serif;
+        }
     </style>
+    <script>
+        // Import DejaVu Sans font for embedding
+
+        // NOTE: Only required if the Kendo UI stylesheets are loaded
+        // from a different origin, e.g. cdn.kendostatic.com
+        kendo.pdf.defineFont({
+            "DejaVu Sans"             : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf",
+            "DejaVu Sans|Bold"        : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+            "DejaVu Sans|Bold|Italic" : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+            "DejaVu Sans|Italic"      : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
+        });
+    </script>
 </div>
