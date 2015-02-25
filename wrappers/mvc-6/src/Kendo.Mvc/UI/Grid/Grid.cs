@@ -29,7 +29,7 @@ namespace Kendo.Mvc.UI
             Pageable = new PageableSettings();
             Sortable = new GridSortableSettings();
             Scrollable = new GridScrollableSettings();
-            //Navigatable = new GridNavigatableSettings(this);
+            Navigatable = new GridNavigatableSettings();
             //Filterable = new GridFilterableSettings();
             //ColumnMenu = new GridColumnMenuSettings();
 
@@ -103,6 +103,15 @@ namespace Kendo.Mvc.UI
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets the keyboard navigation configuration.
+        /// </summary>
+        public GridNavigatableSettings Navigatable
+        {
+            get;
+            private set;
         }
 
         /// <summary>

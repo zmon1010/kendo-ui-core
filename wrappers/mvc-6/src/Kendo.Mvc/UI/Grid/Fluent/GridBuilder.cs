@@ -161,19 +161,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Enables grid column sorting.
         /// </summary>
-        /// <example>
-        /// <code lang="ASPX">
-        /// &lt;%:Html.Kendo().Grid&lt;Product&gt;()
-        ///     .Name(&quot;grid&quot;)
-        ///     .Sortable()
-        ///     .DataSource(dataSource =&gt;
-        ///         // configure the data source
-        ///         dataSource
-        ///             .Ajax()
-        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
-        ///     )
-        /// %&gt;
-        /// </code>
+        /// <example>   
         ///<code lang="Razor">
         /// @(Html.Kendo().Grid&lt;Product&gt;()
         ///     .Name(&quot;grid&quot;)
@@ -198,19 +186,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the sorting configuration of the grid.
         /// </summary>
         /// <param name="configurator">The lambda which configures the sorting</param>
-        /// <example>
-        /// <code lang="ASPX">
-        /// &lt;%:Html.Kendo().Grid&lt;Product&gt;()
-        ///     .Name(&quot;grid&quot;)
-        ///     .Sortable(sorting =&gt; sorting.SortMode(GridSortMode.MultipleColumn))
-        ///     .DataSource(dataSource =&gt;
-        ///         // configure the data source
-        ///         dataSource
-        ///             .Ajax()
-        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
-        ///     )
-        /// %&gt;
-        /// </code>
+        /// <example>  
         ///<code lang="Razor">
         /// @(Html.Kendo().Grid&lt;Product&gt;()
         ///     .Name(&quot;grid&quot;)
@@ -229,6 +205,57 @@ namespace Kendo.Mvc.UI.Fluent
             Component.Sortable.Enabled = true;
 
             configurator(new GridSortSettingsBuilder<T>(Component.Sortable));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Enables grid keyboard navigation.
+        /// </summary>
+        /// <example>    
+        ///<code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .Navigatable()
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public GridBuilder<T> Navigatable()
+        {
+            Component.Navigatable.Enabled = true;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the keyboard navigation configuration of the grid.
+        /// </summary>
+        /// <param name="configurator">The lambda which configures the keyboard navigation</param>
+        /// <example>        
+        ///<code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .Navigatable(navigation =&gt; navigation.Enabled(true))
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public GridBuilder<T> Navigatable(Action<GridNavigatableSettingsBuilder> configurator)
+        {
+            Navigatable();
+
+            configurator(new GridNavigatableSettingsBuilder(Component.Navigatable));
 
             return this;
         }
