@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
     <script src="html2canvas.min.js"></script>
     <script src="loader.js"></script>
+    <script src="pako.min.js"></script>
     <script>
       requireSync([
         "../src/jquery.js",
@@ -13,12 +14,19 @@
         "./test-pdf-helpers.js"
       ]);
     </script>
+    <style>
+      body {
+        font-size: 12px;
+        font-family: "DejaVu Serif";
+      }
+    </style>
   </head>
   <body>
+    <button onclick="pdf('#grid')">PDF</button>
     <div id="grid"></div>
     <script>
       var data = [];
-      for (var i = 1; i < 2001; ++i) {
+      for (var i = 1; i < 500; ++i) {
         data.push({ title: "Item " + i, id: i+"" });
       }
       $("#grid").kendoGrid({
