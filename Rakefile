@@ -1312,4 +1312,4 @@ task :bundles =>  "bundles:all"
 
 task :default => :bundles
 
-task "internal_builds:upload" => [ "internal_builds:bundles:all", "internal_builds:uncheck_previous", "bower:push", "bower:push_core"  ]
+task "internal_builds:upload" => [ "internal_builds:bundles:all", "internal_builds:uncheck_previous", "bower:push", "bower:push_core", "bower:push_appbuilder_core"  ]
