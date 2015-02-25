@@ -4860,7 +4860,7 @@ var __meta__ = {
 
         PivotGrid.fn._drawPDF = function() {
             return this._drawPDFShadow();
-        }
+        };
     }
 
 })(window.kendo.jQuery);
