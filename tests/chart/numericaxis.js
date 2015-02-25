@@ -1518,6 +1518,7 @@
             plotArea = new dataviz.CategoricalPlotArea([{}], { });
             plotArea.reflow(chartBox);
             axis.plotArea = plotArea;
+            axis.pane = { axes: [] };
             axis.renderVisual();
 
 
