@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
-    public class FilterableOperators : JsonObject
+    public class GridFilterableOperators : JsonObject
     {
-        public FilterableOperators()
+        public GridFilterableOperators()
         {
             Strings = new StringOperators();
             Numbers = new NumberOperators();

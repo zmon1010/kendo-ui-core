@@ -4,13 +4,13 @@ using System.Linq;
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
-    /// Defines the fluent interface for configuring the Filter menu <see cref="FilterableOperators"/>.
+    /// Defines the fluent interface for configuring the Filter menu <see cref="GridFilterableOperators"/>.
     /// </summary>
     public class FilterableOperatorsBuilder : IHideObjectMembers
     {
-        private readonly FilterableOperators operators;
+        private readonly GridFilterableOperators operators;
 
-        public FilterableOperatorsBuilder(FilterableOperators operators)
+        public FilterableOperatorsBuilder(GridFilterableOperators operators)
         {
             this.operators = operators;
         }

@@ -8,8 +8,8 @@ namespace Kendo.Mvc.UI
         {
             Extra = true;
             Mode = GridFilterMode.Menu;
-            Messages = new FilterableMessages();
-            Operators = new FilterableOperators();
+            Messages = new GridFilterableMessages();
+            Operators = new GridFilterableOperators();
         }
 
         public bool Enabled { get; set; }
@@ -18,9 +18,9 @@ namespace Kendo.Mvc.UI
 
         public GridFilterMode Mode { get; set; }
 
-        public FilterableMessages Messages { get; private set; }
+        public GridFilterableMessages Messages { get; private set; }
 
-        public FilterableOperators Operators { get; set; }
+        public GridFilterableOperators Operators { get; set; }
 
         protected override void Serialize(System.Collections.Generic.IDictionary<string, object> json)
         {

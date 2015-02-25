@@ -5,9 +5,9 @@ using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI
 {
-    public class FilterableMessages : JsonObject
+    public class GridFilterableMessages : JsonObject
     {
-        public FilterableMessages()
+        public GridFilterableMessages()
         {
             Info = Messages.Filter_Info;
             IsTrue = Messages.Filter_IsTrue;

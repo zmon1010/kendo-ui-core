@@ -8,9 +8,9 @@ namespace Kendo.Mvc.UI.Fluent
     /// </summary>
     public class FilterableMessagesBuilder : IHideObjectMembers
     {
-        private readonly FilterableMessages messages;
+        private readonly GridFilterableMessages messages;
 
-        public FilterableMessagesBuilder(FilterableMessages messages)
+        public FilterableMessagesBuilder(GridFilterableMessages messages)
         {
             this.messages = messages;
         }
