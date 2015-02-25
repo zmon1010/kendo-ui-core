@@ -238,9 +238,12 @@
 
             function fallsOnMargin(thing) {
                 var box = thing.getBoundingClientRect();
+                if (box.width === 0 || box.height === 0) {
+                    // I'd say an element with dimensions zero fits on current page.
+                    return 0;
+                }
                 var top = copy.getBoundingClientRect().top;
                 var available = pageHeight - adjust;
-                console.log(box.top, top, available);
                 return (box.height > available) ? 3
                     : (box.top - top > available) ? 1
                     : (box.bottom - top > available) ? 2
