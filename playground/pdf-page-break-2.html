@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="loader.js"></script>
+    <script src="html2canvas.min.js"></script>
+    <script src="pako.min.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js",
+        "../src/kendo.grid.js",
+        "../src/kendo.dropdownlist.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+    <style>
+      body {
+        font-size: 12px;
+        font-family: "DejaVu Serif";
+      }
+      .page {
+        border: 1px solid red;
+        padding: 2em;
+        box-sizing: border-box;
+        background-color: #fea;
+      }
+      .page :first-child {
+        margin-top: 0;
+      }
+      .page :last-child {
+        margin-bottom: 0;
+      }
+      .page-break {
+        border-top: 1px dashed #999;
+      }
+      .k-pdf-export .page-break { border-top: none }
+    </style>
+  </head>
+  <body>
+    <button>PDF</button>
+
+    <select class="paper">
+      <option value="A4" selected>A4</option>
+      <option value="A5">A5</option>
+      <option value="Letter">Letter</option>
+    </select>
+
+    <select class="margin">
+      <option value="1cm">1cm</option>
+      <option value="2cm" selected>2cm</option>
+      <option value="3cm">3cm</option>
+      <option value="4cm">4cm</option>
+    </select>
+
+    <select class="width">
+      <option value="auto" selected>Auto</option>
+      <option value="600px">600px</option>
+      <option value="500px">500px</option>
+      <option value="400px">400px</option>
+      <option value="300px">300px</option>
+      <option value="200px">200px</option>
+      <option value="100px">100px</option>
+      <option value="50px">50px</option>
+    </select>
+
+    <script>
+      $("button").click(function(){
+        pdfPages('#test1', {
+          paperSize: $(".paper").val(),
+          margin: $(".margin").val(),
+          forcePageBreak: ".page-break"
+        })
+      });
+      $("select.width").kendoDropDownList({
+        change: function() {
+          $("#test1").css({ width: this.value() });
+        }
+      });
+    </script>
+
+    <div id="test1" class="page">
+
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis
+      ornare ex. Sed laoreet lacinia sollicitudin. Curabitur aliquet ipsum
+      vel risus consequat semper. Fusce iaculis rutrum cursus. Nam velit
+      est, tempor in efficitur ac, auctor vel est. Etiam volutpat metus sed
+      nisi efficitur, et sollicitudin tellus commodo. Vivamus euismod diam
+      sit amet enim lacinia, in dictum tellus ornare. Nulla eget magna
+      rutrum, suscipit ante vel, maximus lacus. Duis a mauris justo.</p>
+
+      <div style="position: absolute; top: 800px; left: 50px; border: 1px solid red; width: 100px; height: 100px; background: rgba(255, 255, 0, 0.8)">
+        This should not break text layout.
+      </div>
+
+      <p>Phasellus euismod ornare est, ut posuere lorem vestibulum
+      vitae. Sed ut tempor elit. Nullam in metus sit amet ex accumsan
+      accumsan. Cras faucibus lobortis urna, quis suscipit dui accumsan
+      at. Quisque sollicitudin, lectus non posuere euismod, diam dui
+      porttitor orci, gravida facilisis risus urna aliquet odio. Curabitur
+      congue arcu quis tellus porta, non hendrerit metus tincidunt. Maecenas
+      iaculis, ante sit amet lobortis vulputate, lectus erat varius lorem,
+      in blandit nisl mi at orci. Suspendisse tempor in velit in
+      cursus. Pellentesque tincidunt nec lorem sed auctor. Aliquam finibus
+      tortor eget nibh posuere faucibus.</p>
+
+    </div>
+  </body>
+</html>
