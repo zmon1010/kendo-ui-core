@@ -42,7 +42,7 @@ namespace Kendo.Mvc.UI
             //    }
             //};
 
-            //Grouping = new GridGroupableSettings();
+            Grouping = new GridGroupableSettings();
             //Resizable = new GridResizableSettings();
             //Reorderable = new GridReorderableSettings();
             //Excel = new GridExcelSettings();
@@ -158,6 +158,12 @@ namespace Kendo.Mvc.UI
         {
             get;
             internal set;
+        }
+
+        public GridGroupableSettings Grouping
+        {
+            get;
+            private set;
         }
 
         /// <summary>

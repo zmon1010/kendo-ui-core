@@ -359,5 +359,54 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Sets the grouping configuration of the grid.
+        /// </summary>
+        /// <param name="configurator">The lambda which configures the grouping</param>
+        /// <example>  
+        ///<code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .Groupable(grouping =&gt; grouping.Enabled(true))
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public GridBuilder<T> Groupable(Action<GridGroupingSettingsBuilder> configurator)
+        {
+
+            Component.Grouping.Enabled = true;
+            configurator(new GridGroupingSettingsBuilder(Component.Grouping));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Enables grid grouping.
+        /// </summary>
+        /// <example>     
+        ///<code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .Groupable()
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public GridBuilder<T> Groupable()
+        {
+            return Groupable(delegate { });
+        }
     }
 }
