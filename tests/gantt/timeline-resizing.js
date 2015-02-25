@@ -310,7 +310,7 @@
     });
 
     test("resize hint created on drag", function() {
-        setupTimeline();
+        setupGantt();
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-e");
@@ -321,7 +321,7 @@
     });
 
     test("resize hint height and top are set", 2, function() {
-        setupTimeline();
+        setupGantt();
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-e");
@@ -337,7 +337,7 @@
     });
 
     test("resize hint position", 2, function() {
-        setupTimeline();
+        setupGantt();
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-e");
@@ -356,7 +356,7 @@
     });
 
     test("resize hint width when dragging east handle before west handle", function() {
-        setupTimeline();
+        setupGantt();
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-e");
@@ -371,7 +371,7 @@
     });
 
     test("resize hint removed after drop", function() {
-        setupTimeline();
+        setupGantt();
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-e");
@@ -385,7 +385,7 @@
 
 
     test("resize tooltip created on drag", function() {
-        setupTimeline();
+        setupGantt();
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-e");
@@ -396,7 +396,7 @@
     });
 
     test("resize tooltip top when space above task is available", function() {
-        setupTimeline();
+        setupGantt();
 
         timeline._render([task, task, task, task]);
 
@@ -414,7 +414,7 @@
     });
 
     test("resize tooltip top when space above task is not available", function() {
-        setupTimeline();
+        setupGantt();
 
         var content = timeline.view().content;
         var elementRow = content.find(".k-gantt-tasks tr:last");
@@ -430,7 +430,7 @@
     });
 
     test("resize tooltip position when dragging east handle", function() {
-        setupTimeline();
+        setupGantt();
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-e");
@@ -448,7 +448,7 @@
     });
 
     test("resize tooltip position when dragging east handle near end of content", function() {
-        setupTimeline();
+        setupGantt();
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-e");
@@ -465,7 +465,7 @@
     });
 
     test("resize tooltip position when dragging west handle", function() {
-        setupTimeline();
+        setupGantt();
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-w");
@@ -483,7 +483,7 @@
     });
 
     test("resize tooltip position when dragging west handle near start of content", function() {
-        setupTimeline();
+        setupGantt();
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-w");
@@ -501,7 +501,7 @@
     });
 
     test("resize tooltip text is set", 2, function() {
-        setupTimeline();
+        setupGantt();
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-e");
@@ -518,7 +518,7 @@
     });
     
     test("resize tooltip text messages are set", 2, function() {
-        setupTimeline({ messages: { views: { start: "Custom Start", end: "Custom End" } } });
+        setupGantt({ messages: { views: { start: "Custom Start", end: "Custom End" } } });
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-e");
@@ -535,7 +535,7 @@
     });
     
     test("resize tooltip date format is set", 2, function() {
-        setupTimeline({ views: [{ type: "day", resizeTooltipFormat: "ddd M/dd" }] });
+        setupGantt({ views: [{ type: "day", resizeTooltipFormat: "ddd M/dd" }] });
 
         var content = timeline.view().content;
         var handle = content.find(".k-task .k-resize-e");
