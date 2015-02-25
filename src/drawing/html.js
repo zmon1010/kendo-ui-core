@@ -106,22 +106,25 @@
                         margin    : margin
                     }
                 });
-                var x = handlePageBreaks(element, forceBreak,
-                                         pageWidth - margin.left - margin.right,
-                                         pageHeight - margin.top - margin.bottom);
-                setTimeout(function(){
-                    x.pages.forEach(function(page){
-                        group.append(doOne(page));
-                    });
-                    x.container.parentNode.removeChild(x.container);
-                    defer.resolve(group);
-                }, 10);
+                handlePageBreaks(
+                    function(x) {
+                        x.pages.forEach(function(page){
+                            group.append(doOne(page));
+                        });
+                        x.container.parentNode.removeChild(x.container);
+                        defer.resolve(group);
+                    },
+                    element,
+                    forceBreak,
+                    pageWidth - margin.left - margin.right,
+                    pageHeight - margin.top - margin.bottom
+                );
             } else {
                 defer.resolve(doOne(element));
             }
         });
 
-        function handlePageBreaks(element, forceBreak, pageWidth, pageHeight) {
+        function handlePageBreaks(callback, element, forceBreak, pageWidth, pageHeight) {
             var doc = element.ownerDocument;
             var pages = [];
             var copy = $(element).clone(true, true)[0];
@@ -138,6 +141,45 @@
             cont.appendChild(copy);
             element.parentNode.insertBefore(cont, element);
 
+            setTimeout(function(){
+                if (forceBreak != "-" || pageHeight) {
+                    (function split(element) {
+                        var style = getComputedStyle(element);
+                        var bottomPadding = parseFloat(getPropertyValue(style, "padding-bottom"));
+                        var bottomBorder = parseFloat(getPropertyValue(style, "border-bottom-width"));
+                        var saveAdjust = adjust;
+                        adjust += bottomPadding + bottomBorder;
+                        for (var el = element.firstChild; el; el = el.nextSibling) {
+                            if (el.nodeType == 1) {
+                                if ($(el).is(forceBreak)) {
+                                    var page = makePage();
+                                    var range = doc.createRange();
+                                    range.setStartBefore(copy);
+                                    range.setEndBefore(el);
+                                    page.appendChild(range.extractContents());
+                                    copy.parentNode.insertBefore(page, copy);
+                                } else if (fallsOnMargin(el)) {
+                                    split(el);
+                                }
+                            } else if (pageHeight) {
+                                splitText(el);
+                            }
+                        }
+                        adjust = saveAdjust;
+                    })(copy);
+                }
+
+                // XXX: can contain only text nodes.  better risk producing
+                // an empty page than truncating the content.
+                // if (!(pages.length > 0 && copy.children.length === 0)) {
+                var page = makePage();
+                copy.parentNode.insertBefore(page, copy);
+                page.appendChild(copy);
+                // }
+
+                callback({ pages: pages, container: cont });
+            }, 10);
+
             function makePage() {
                 var page = doc.createElement("KENDO-PDF-PAGE");
                 if (options && options.pageClassName) {
@@ -146,43 +188,6 @@
                 pages.push(page);
                 return page;
             }
-
-            if (forceBreak != "-" || pageHeight) {
-                (function split(element) {
-                    var style = getComputedStyle(element);
-                    var bottomPadding = parseFloat(getPropertyValue(style, "padding-bottom"));
-                    var bottomBorder = parseFloat(getPropertyValue(style, "border-bottom-width"));
-                    var saveAdjust = adjust;
-                    adjust += bottomPadding + bottomBorder;
-                    for (var el = element.firstChild; el; el = el.nextSibling) {
-                        if (el.nodeType == 1) {
-                            if ($(el).is(forceBreak)) {
-                                var page = makePage();
-                                var range = doc.createRange();
-                                range.setStartBefore(copy);
-                                range.setEndBefore(el);
-                                page.appendChild(range.extractContents());
-                                copy.parentNode.insertBefore(page, copy);
-                            } else {
-                                split(el);
-                            }
-                        } else if (pageHeight) {
-                            splitText(el);
-                        }
-                    }
-                    adjust = saveAdjust;
-                })(copy);
-            }
-
-            // XXX: can contain only text nodes.  better risk producing
-            // an empty page than truncating the content.
-            // if (!(pages.length > 0 && copy.children.length === 0)) {
-            var page = makePage();
-            copy.parentNode.insertBefore(page, copy);
-            page.appendChild(copy);
-            // }
-
-            return { pages: pages, container: cont };
 
             function fallsOnMargin(thing) {
                 var box = thing.getBoundingClientRect();
