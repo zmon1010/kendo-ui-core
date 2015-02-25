@@ -212,6 +212,9 @@
                                 splitElement(el);
                             }
                         }
+                        else {
+                            splitElement(el);
+                        }
                     }
                     else if (el.nodeType == 3 /* Text */ && pageHeight) {
                         splitText(el);
