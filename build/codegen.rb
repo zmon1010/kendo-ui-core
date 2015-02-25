@@ -201,6 +201,8 @@ namespace :generate do
 
             components.each do |component|
                 import_metadata(component)
+                import_metadata(component, "lib/mvc-6/")
+
                 generator = CodeGen::MVC6::Wrappers::Generator.new('wrappers/mvc-6/src/Kendo.Mvc/UI')
                 generator.component(component)
             end

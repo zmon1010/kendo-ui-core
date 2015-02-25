@@ -63,11 +63,16 @@ module CodeGen
 
             metadata[:options].each do |option|
 
-                @options.delete_if { |o| o.name == option[:name] }
+                if option[:merge]
+                    target = @options.find { |o| o.name == option[:name] }
+                    option.each { |key, value| target.send("#{key}=", value) unless key == :merge }
+                else
+                    @options.delete_if { |o| o.name == option[:name] }
 
-                option[:remove_existing] = true
+                    option[:remove_existing] = true
 
-                add_option(option)
+                    add_option(option)
+                end
 
             end
         end
