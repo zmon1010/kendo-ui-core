@@ -1690,6 +1690,46 @@
         var Connection = dataviz.diagram.Connection;
         var connection, shape;
 
+        // ------------------------------------------------------------
+        module("Connection / source");
+
+        test("source method does nothing if the passed shape does not have auto connector", function() {
+            connection = new Connection();
+            var initialSource = connection.source();
+            shape = new Shape({
+                connectors: [{name: "top"}]
+            });
+            connection.source(shape);
+            ok(connection.source() === initialSource);
+        });
+
+    })();
+
+    (function() {
+        var Shape = dataviz.diagram.Shape;
+        var Connection = dataviz.diagram.Connection;
+        var connection, shape;
+
+        // ------------------------------------------------------------
+        module("Connection / target");
+
+        test("target method does nothing if the passed shape does not have auto connector", function() {
+            connection = new Connection();
+            var initialTarget = connection.target();
+            shape = new Shape({
+                connectors: [{name: "top"}]
+            });
+            connection.target(shape);
+            ok(connection.target() === initialTarget);
+        });
+
+    })();
+
+    (function() {
+        var Shape = dataviz.diagram.Shape;
+        var Connection = dataviz.diagram.Connection;
+        var connection, shape;
+
         function isConnected(connection, connector, name) {
             ok($.inArray(connection, connector.connections) >= 0);
             ok(connection[name + "Connector"] === connector);

@@ -1114,6 +1114,12 @@
             source: function (source, undoable) {
                 var dataItem;
                 if (isDefined(source)) {
+                    var shapeSource = source instanceof Shape;
+
+                    if (shapeSource && !source.getConnector(AUTO)) {
+                        return;
+                    }
+
                     if (undoable && this.diagram) {
                         this.diagram.undoRedoService.addCompositeItem(new diagram.ConnectionEditUnit(this, source));
                     }
@@ -1140,11 +1146,12 @@
                             this._clearSourceConnector();
                         }
 
-                    } else if (source instanceof Shape) {
+                    } else if (shapeSource) {
                         dataItem = source.dataItem;
                         if (dataItem) {
                             this._setFromOptions(dataItem.id);
                         }
+
                         this.sourceConnector = source.getConnector(AUTO);// source.getConnector(this.targetPoint());
                         this.sourceConnector.connections.push(this);
                     }
@@ -1203,6 +1210,12 @@
             target: function (target, undoable) {
                 var dataItem;
                 if (isDefined(target)) {
+                    var shapeTarget = target instanceof Shape;
+
+                    if (shapeTarget && !target.getConnector(AUTO)) {
+                        return;
+                    }
+
                     if (undoable && this.diagram) {
                         this.diagram.undoRedoService.addCompositeItem(new diagram.ConnectionEditUnit(this, undefined, target));
                     }
@@ -1230,12 +1243,12 @@
                         if (this.targetConnector) {
                             this._clearTargetConnector();
                         }
-                    } else if (target instanceof Shape) {
+                    } else if (shapeTarget) {
                         dataItem = target.dataItem;
                         if (dataItem) {
                             this._setToOptions(dataItem.id);
                         }
-                        this.targetConnector = target.getConnector(AUTO);// target.getConnector(this.sourcePoint());
+                        this.targetConnector = target.getConnector(AUTO);
                         this.targetConnector.connections.push(this);
                     }
 
