@@ -16,8 +16,7 @@ namespace Kendo.Mvc.UI
 
         public string Name
         {
-            get;
-            private set;
+            get;            
         }
 
         public string RouteKey
@@ -28,14 +27,12 @@ namespace Kendo.Mvc.UI
 
         public Func<object, object> Value
         {
-            get;
-            private set;
+            get;            
         }
 
         public Expression<Func<object , object>> Expression
         {
-            get;
-            private set;
+            get;            
         }
 
         public object GetValue(object dataItem)

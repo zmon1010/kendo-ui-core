@@ -3,8 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Extensions;
-    using Infrastructure;
+    using Extensions;    
     using Microsoft.AspNet.Mvc.ModelBinding;
 
     public class ModelDescriptor : JsonObject
@@ -15,7 +14,8 @@
             Fields = Translate(metadata);
         }
 
-        public IList<ModelFieldDescriptor> Fields { get; private set; }
+        public IList<ModelFieldDescriptor> Fields { get; }
+
         public IDataKey Id { get; set; }
         public DataSource ChildrenDataSource
         {
@@ -57,8 +57,7 @@
                 json["id"] = Id.Name;
             }
 
-            FluentDictionary.For(json)
-                   .Add("hasChildren", HasChildrenMember, HasChildrenMember.HasValue);
+            json.Add("hasChildren", HasChildrenMember, HasChildrenMember.HasValue);
 
             if (ChildrenDataSource != null)
             {

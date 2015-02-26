@@ -1,35 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Kendo.Mvc.Infrastructure;
+﻿using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI
 {
-    public class DataSourceSchema : JsonObject
+	public class DataSourceSchema : JsonObject
     {
         public string Data { get; set; }
 
-        public ClientHandlerDescriptor FunctionData { get; set; }
+        public ClientHandlerDescriptor FunctionData { get; }
 
         public string Total { get; set; }
 
-        public ClientHandlerDescriptor FunctionTotal { get; set; }
+        public ClientHandlerDescriptor FunctionTotal { get; }
 
         public string Errors { get; set; }
 
-        public ClientHandlerDescriptor FunctionErrors { get; set; }
+        public ClientHandlerDescriptor FunctionErrors { get; }
 
         public string Aggregates { get; set; }
 
-        public ClientHandlerDescriptor FunctionAggregates { get; set; }
+        public ClientHandlerDescriptor FunctionAggregates { get; }
 
         public string Groups { get; set; }
 
-        public ClientHandlerDescriptor FunctionGroups { get; set; }
+        public ClientHandlerDescriptor FunctionGroups { get; }
 
         public string Type { get; set; }
 
-        public ClientHandlerDescriptor Parse { get; set; }
+        public ClientHandlerDescriptor Parse { get; }
 
         public object FunctionModel { get; set; }
 
@@ -52,8 +50,8 @@ namespace Kendo.Mvc.UI
             FunctionGroups = new ClientHandlerDescriptor();
             Parse = new ClientHandlerDescriptor();
         }
-
-        protected override void Serialize(IDictionary<string, object> json)
+		
+		protected override void Serialize(IDictionary<string, object> json)
         {
             if (FunctionData.HasValue())
             {
@@ -61,7 +59,7 @@ namespace Kendo.Mvc.UI
             }
             else
             {
-                FluentDictionary.For(json).Add("data", Data, string.Empty);
+                json.Add("data", Data, string.Empty);
             }
 
             if (FunctionTotal.HasValue())
@@ -70,7 +68,7 @@ namespace Kendo.Mvc.UI
             }
             else
             {
-                FluentDictionary.For(json).Add("total", Total, string.Empty);
+                json.Add("total", Total, string.Empty);
             }
 
             if (FunctionErrors.HasValue())
@@ -79,7 +77,7 @@ namespace Kendo.Mvc.UI
             }
             else
             {
-                FluentDictionary.For(json).Add("errors", Errors, string.Empty);
+                json.Add("errors", Errors, string.Empty);
             }
 
             if (FunctionAggregates.HasValue())
@@ -88,7 +86,7 @@ namespace Kendo.Mvc.UI
             }
             else
             {
-                FluentDictionary.For(json).Add("aggregates", Aggregates, string.Empty);
+                json.Add("aggregates", Aggregates, string.Empty);
             }
 
             if (FunctionGroups.HasValue())
@@ -97,7 +95,7 @@ namespace Kendo.Mvc.UI
             }
             else
             {
-                FluentDictionary.For(json).Add("groups", Groups, string.Empty);
+                json.Add("groups", Groups, string.Empty);
             }
 
             if (FunctionModel != null)

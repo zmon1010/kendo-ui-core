@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNet.Routing;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Kendo.Mvc.Extensions
 {
@@ -97,5 +96,22 @@ namespace Kendo.Mvc.Extensions
         {
             Merge(instance, values, true);
         }
-    }
+
+		public static void Add<T>(this IDictionary<string, object> instance, string key, T value, T defaultValue)
+			where T : IComparable
+		{
+			if (value != null && value.CompareTo(defaultValue) != 0)
+			{
+				instance[key] = value;
+			}
+		}
+
+		public static void Add<T>(this IDictionary<string, object> instance, string key, T value, Func<bool> condition)
+		{
+			if (condition())
+			{
+				instance[key] = value;
+			}
+		}
+	}
 }

@@ -18,9 +18,9 @@ namespace Kendo.Mvc.UI
 
         public GridFilterMode Mode { get; set; }
 
-        public GridFilterableMessages Messages { get; private set; }
+        public GridFilterableMessages Messages { get; }
 
-        public GridFilterableOperators Operators { get; set; }
+        public GridFilterableOperators Operators { get; }
 
         protected override void Serialize(System.Collections.Generic.IDictionary<string, object> json)
         {

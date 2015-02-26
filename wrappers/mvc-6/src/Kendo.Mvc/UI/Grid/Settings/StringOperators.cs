@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI
 {
-    public class StringOperators : JsonObject
+	public class StringOperators : JsonObject
     {
         public StringOperators()
         {

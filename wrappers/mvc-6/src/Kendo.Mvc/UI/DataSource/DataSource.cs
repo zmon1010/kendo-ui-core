@@ -29,12 +29,18 @@ namespace Kendo.Mvc.UI
         }
 
         public int TotalPages { get; set; }
+
         public int Page { get; set; }
+
         public int Total { get; set; }
+
         public string OfflineStorageKey { get; set; }
-        public IDictionary<string, object> OfflineStorage { get; set; }
-        public DataSourceSchema Schema { get; private set; }
-        public IDictionary<string, object> Events { get; private set; }
+
+        public IDictionary<string, object> OfflineStorage { get; }
+
+        public DataSourceSchema Schema { get; }
+
+        public IDictionary<string, object> Events { get; }
 
         protected override void Serialize(IDictionary<string, object> json)
         {
@@ -244,10 +250,7 @@ namespace Kendo.Mvc.UI
             Schema.Model = new ModelDescriptor(modelType, ModelMetaDataProvider);
         }
 
-        public IModelMetadataProvider ModelMetaDataProvider
-        {
-            get; private set;
-        }
+        public IModelMetadataProvider ModelMetaDataProvider { get; }
 
         public bool Batch
         {
@@ -267,29 +270,13 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-        public IList<IFilterDescriptor> Filters
-        {
-            get;
-            private set;
-        }
+        public IList<IFilterDescriptor> Filters { get; }
 
-        public IList<SortDescriptor> OrderBy
-        {
-            get;
-            private set;
-        }
+        public IList<SortDescriptor> OrderBy { get; }
 
-        public IList<GroupDescriptor> Groups
-        {
-            get;
-            private set;
-        }
+        public IList<GroupDescriptor> Groups { get; }
 
-        public IList<AggregateDescriptor> Aggregates
-        {
-            get;
-            private set;
-        }
+        public IList<AggregateDescriptor> Aggregates { get; }
 
         public int PageSize
         {
@@ -327,11 +314,7 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-        public Transport Transport
-        {
-            get;
-            protected set;
-        }
+        public Transport Transport { get; }
 
         public IDictionary<string, object> CustomTransport
         {

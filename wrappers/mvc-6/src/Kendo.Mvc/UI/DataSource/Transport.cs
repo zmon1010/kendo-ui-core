@@ -134,13 +134,13 @@ namespace Kendo.Mvc.UI
             }
         }
 
-        public CrudOperation Read { get; private set; }
+        public CrudOperation Read { get; }
 
-        public CrudOperation Update { get; private set; }
+        public CrudOperation Update { get; }
 
-        public CrudOperation Create { get; private set; }
+        public CrudOperation Create { get; }
 
-        public CrudOperation Destroy { get; private set; }
+        public CrudOperation Destroy { get; }
 
         public IDictionary<string, object> CustomRead { get; set; }
 

@@ -19,19 +19,11 @@ namespace Kendo.Mvc.UI
         public Grid(ViewContext viewContext) : base (viewContext)
         {
           //  this.htmlBuilderFactory = htmlBuilderFactory;
-
-            PrefixUrlParameters = true;
+            
 			//  RowTemplate = new HtmlTemplate<T>();
 			//DetailTemplate = new HtmlTemplate<T>();
 			//Columns = new List<GridColumnBase<T>>();
 			//DataKeys = new List<IDataKey>();			
-
-            Pageable = new PageableSettings();
-            Sortable = new GridSortableSettings();
-            Scrollable = new GridScrollableSettings();
-            Navigatable = new GridSettings();
-            Filterable = new GridFilterableSettings();
-            ColumnMenu = new GridColumnMenuSettings();
 
             //Editable = new GridEditableSettings<T>(this)
             //{
@@ -42,22 +34,8 @@ namespace Kendo.Mvc.UI
             //    }
             //};
 
-            Grouping = new GridGroupableSettings();
-            Resizable = new GridSettings();
-            Reorderable = new GridSettings();                        
-
-            Selectable = new GridSelectableSettings();
-
-            //ToolBar = new GridToolBarSettings<T>(this);
-            //NoRecordsTemplate = new HtmlTemplate();
-
-            AutoGenerateColumns = true;
-
-            ColumnResizeHandleWidth = DEFAULT_COLUMN_RESIZE_HANDLE_WIDTH;
-
-            TableHtmlAttributes = new RouteValueDictionary();
-            ModelMetadataProvider.GetType();
-
+            //ToolBar = new GridToolBarSettings<T>(this);            
+            
             DataSource = new DataSource(ModelMetadataProvider)
             {
                 Type = DataSourceType.Server,
@@ -95,113 +73,65 @@ namespace Kendo.Mvc.UI
         {
             get;
             set;
-        }
+        } = DEFAULT_COLUMN_RESIZE_HANDLE_WIDTH;
 
-        public bool AutoGenerateColumns
+		public bool AutoGenerateColumns
         {
             get;
             set;
-        }
+        } = true;
 
 		/// <summary>
 		/// Gets the selection configuration
 		/// </summary>
-		public GridSelectableSettings Selectable
-		{
-			get;
-			private set;
-		}
+		public GridSelectableSettings Selectable { get; } = new GridSelectableSettings();
 
 		/// <summary>
 		/// Gets the column menu configuration.
 		/// </summary>
-		public GridColumnMenuSettings ColumnMenu
-        {
-            get;
-            private set;
-        }
+		public GridColumnMenuSettings ColumnMenu { get; } = new GridColumnMenuSettings();
 
         /// <summary>
         /// Gets the filtering configuration.
         /// </summary>
-        public GridFilterableSettings Filterable
-        {
-            get;
-            private set;
-        }
+        public GridFilterableSettings Filterable { get; } = new GridFilterableSettings();
 
         /// <summary>
         /// Gets the keyboard navigation configuration.
         /// </summary>
-        public GridSettings Navigatable
-        {
-            get;
-            private set;
-        }
+        public GridSettings Navigatable { get; } = new GridSettings();
 
         /// <summary>
         /// Gets the scrolling configuration.
         /// </summary>
-        public GridScrollableSettings Scrollable
-        {
-            get;
-            private set;
-        }
+        public GridScrollableSettings Scrollable { get; } = new GridScrollableSettings();
 
         /// <summary>
         /// Gets the paging configuration.
         /// </summary>
-        public PageableSettings Pageable
-        {
-            get;
-            internal set;
-        }
+        public PageableSettings Pageable { get; } = new PageableSettings(); 
 
-        /// <summary>
-        /// Gets the sorting configuration.
-        /// </summary>
-        /// <value>The sorting.</value>
-        public GridSortableSettings Sortable
-        {
-            get;
-            internal set;
-        }
+		/// <summary>
+		/// Gets the sorting configuration.
+		/// </summary>
+		/// <value>The sorting.</value>
+		public GridSortableSettings Sortable { get; } = new GridSortableSettings();
 
-        public GridGroupableSettings Grouping
-        {
-            get;
-            private set;
-        }
+        public GridGroupableSettings Grouping { get; } = new GridGroupableSettings();
 
-        public GridSettings Resizable
-        {
-            get;
-            private set;
-        }
+        public GridSettings Resizable { get; } = new GridSettings();
 
-        public GridSettings Reorderable
-        {
-            get;
-            private set;
-        }
+        public GridSettings Reorderable { get; } = new GridSettings();
 
         /// <summary>
         /// Gets or sets a value indicating whether to add the <see cref="WidgetBase.Name"/> property of the grid as a prefix in url parameters.
         /// </summary>
         /// <value><c>true</c> if prefixing is enabled; otherwise, <c>false</c>. The default value is <c>true</c></value>
-        public bool PrefixUrlParameters
-        {
-            get;
-            set;
-        }
+        public bool PrefixUrlParameters { get; set; } = true;
 
-        public IDictionary<string, object> TableHtmlAttributes
-        {
-            get;
-            private set;
-        }
+        public IDictionary<string, object> TableHtmlAttributes { get; } = new RouteValueDictionary();
 
-        public bool? AutoBind { get; set; }
+		public bool? AutoBind { get; set; }
 
         protected override Dictionary<string, object> SerializeSettings()
         {

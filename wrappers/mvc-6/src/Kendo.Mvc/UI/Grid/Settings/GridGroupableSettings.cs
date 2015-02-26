@@ -18,9 +18,9 @@ namespace Kendo.Mvc.UI
 
         public bool ShowFooter { get; set; }
 
-        public IList<GroupDescriptor> Groups { get; private set; }
+        public IList<GroupDescriptor> Groups { get; }
         
-        public GridGroupableMessages Messages { get; private set; }
+        public GridGroupableMessages Messages { get; }
 
         protected override void Serialize(IDictionary<string, object> json)
         {
