@@ -118,7 +118,8 @@ namespace KendoScaffolder
 
             string modelTypeVariable = GetTypeVariable(modelType.Name);
 
-            string areaName = GetAreaName(GetSelectionRelativePath());
+            string selectionRelativePath = GetSelectionRelativePath();
+            string areaName = GetAreaName(selectionRelativePath);
             string controllerName = (_viewModel.ControllerName != String.Empty) ? _viewModel.ControllerName : KendoConstants.DefaultGridControllerName;
             string controllerRootName = controllerName.Replace("Controller", "");
             string viewName = (_viewModel.ViewName != String.Empty) ? _viewModel.ViewName : KendoConstants.DefaultGridViewName;
@@ -145,7 +146,7 @@ namespace KendoScaffolder
             {
                 BuildControllerParameters(modelType, viewModelType, useViewModel, editable, editMode, areaName, controllerName, dbContext.Name);
                 string controllerTemplate = DetermineControllerTemplate(editMode);
-                string controllerPath = DetermineControllerPath(controllerName, areaName);
+                string controllerPath = DetermineControllerPath(controllerName, selectionRelativePath);
 
                 BuildViewParameters(modelType, viewModelType, useViewModel, editable, editMode);
                 string viewPath = BuildViewPath(areaName, controllerRootName, viewName);
@@ -178,15 +179,9 @@ namespace KendoScaffolder
             }
         }
 
-        private string DetermineControllerPath(string controllerName, string areaName)
+        private string DetermineControllerPath(string controllerName, string selectionRelativePath)
         {
-            string controllerPath = Path.Combine("Controllers", controllerName);
-            if (areaName != String.Empty)
-            {
-                controllerPath = Path.Combine("Areas", areaName, controllerPath);
-            }
-
-            return controllerPath;
+            return Path.Combine(selectionRelativePath, controllerName);
         }
 
         private void BuildViewParameters(CodeType modelType, CodeType viewModelType, bool useViewModel, bool editable,string editMode)
