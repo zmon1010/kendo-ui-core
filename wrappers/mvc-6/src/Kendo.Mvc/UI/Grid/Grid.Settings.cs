@@ -9,23 +9,17 @@ namespace Kendo.Mvc.UI
     /// <typeparam name="T"></typeparam>
     public partial class Grid<T>
     {
-		protected override void InitializeSettings()
-		{
-			Excel = new GridExcelSettings();
-			Pdf = new PDFSettings();
-		}
-
 		public GridExcelSettings Excel
         {
             get;
             private set;
-        }
+        } = new GridExcelSettings();
 
 		public PDFSettings Pdf
 		{
 			get;
 			private set;
-		}
+		} = new PDFSettings();
 
 		public override void WriteInitializationScript(TextWriter writer)
         {
