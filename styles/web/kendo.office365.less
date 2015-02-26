@@ -342,7 +342,11 @@ div.k-splitbar.k-state-focused .k-icon,
     opacity:.8;
 }
 
-
+.k-state-disabled .k-icon,
+.k-button.k-state-disabled .k-icon
+{
+    opacity: .3;
+}
 
 .k-button:active,
 .k-button.k-state-active {
@@ -377,6 +381,20 @@ div.k-splitbar.k-state-focused .k-icon,
     border-color: @primary-focused-border-color;
 }
 
+.k-button[disabled],
+.k-button.k-state-disabled,
+.k-state-disabled .k-button,
+.k-state-disabled .k-button:hover,
+.k-button.k-state-disabled:hover,
+.k-state-disabled .k-button:active,
+.k-button.k-state-disabled:active
+{
+    color: @disabled-text-color;
+    border-color: @disabled-border-color;
+    background-color: @disabled-background-color;
+    .composite-background(@disabled-gradient);
+}
+
 .k-numerictextbox .k-select,
 .k-combobox .k-select,
 .k-picker-wrap .k-select {
@@ -389,6 +407,16 @@ div.k-splitbar.k-state-focused .k-icon,
 .k-dropdown-wrap.k-state-focused,
 .k-multiselect.k-header.k-state-focused {
     background-color: @widget-background-color;
+}
+
+.k-textbox.k-state-disabled,
+.k-state-disabled .k-picker-wrap,
+.k-autocomplete.k-state-disabled,
+.k-dropdown-wrap.k-state-disabled,
+.k-picker-wrap.k-state-disabled,
+.k-multiselect.k-state-disabled,
+.k-numeric-wrap.k-state-disabled {
+    border-color: @primary-disabled-border-color;
 }
 
 input.k-textbox:focus {
@@ -584,8 +612,12 @@ input.k-textbox:focus {
 	border-color: @primary-disabled-background-color;
 
 	.k-state-default {
-		border-color: @primary-disabled-border-color;
+		border-color: @primary-disabled-border-color @widget-background-color @primary-disabled-border-color;
 	}
+
+    /* {
+        border-right-color: red;
+    }*/
 
 	.k-state-selected {
 		background-color: @slider-selection-background-color;
