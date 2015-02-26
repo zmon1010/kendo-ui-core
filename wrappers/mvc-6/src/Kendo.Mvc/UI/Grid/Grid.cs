@@ -21,10 +21,12 @@ namespace Kendo.Mvc.UI
           //  this.htmlBuilderFactory = htmlBuilderFactory;
 
             PrefixUrlParameters = true;
-          //  RowTemplate = new HtmlTemplate<T>();
-            //DetailTemplate = new HtmlTemplate<T>();
-            //Columns = new List<GridColumnBase<T>>();
-            //DataKeys = new List<IDataKey>();
+			//  RowTemplate = new HtmlTemplate<T>();
+			//DetailTemplate = new HtmlTemplate<T>();
+			//Columns = new List<GridColumnBase<T>>();
+			//DataKeys = new List<IDataKey>();
+
+			InitializeSettings();
 
             Pageable = new PageableSettings();
             Sortable = new GridSortableSettings();
@@ -44,8 +46,7 @@ namespace Kendo.Mvc.UI
 
             Grouping = new GridGroupableSettings();
             Resizable = new GridSettings();
-            Reorderable = new GridSettings();
-            //Excel = new GridExcelSettings();
+            Reorderable = new GridSettings();            
             //Pdf = new PDFSettings();
 
             //Selectable = new GridSelectableSettings();
@@ -242,14 +243,7 @@ namespace Kendo.Mvc.UI
 			{
 				var filtering = Filterable.ToJson();
 				settings["filterable"] = filtering.Any() ? (object)filtering : true;
-			}
-
-			//var excel = Excel.ToJson();
-
-			//if (excel.Any())
-			//{
-			//	options["excel"] = excel;
-			//}
+			}			
 
 			//var pdf = Pdf.ToJson();
 

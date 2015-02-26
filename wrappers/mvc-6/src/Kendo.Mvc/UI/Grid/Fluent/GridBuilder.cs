@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// The fluent API for configuring Kendo UI Grid for ASP.NET MVC.
     /// </summary>
-    public class GridBuilder<T> : WidgetBuilderBase<Grid<T>, GridBuilder<T>>
+    public partial class GridBuilder<T> : WidgetBuilderBase<Grid<T>, GridBuilder<T>>
         where T : class
     {
         /// <summary>
@@ -460,5 +460,6 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-    }
+
+	}
 }
