@@ -14,7 +14,7 @@ namespace Kendo.Mvc.UI
     public partial class Grid<T> : WidgetBase
         where T : class
     {
-        private readonly static int DefaultColumnResizeHandleWidth = 3;
+        private readonly static int DEFAULT_COLUMN_RESIZE_HANDLE_WIDTH = 3;
 
         public Grid(ViewContext viewContext) : base (viewContext)
         {
@@ -55,7 +55,7 @@ namespace Kendo.Mvc.UI
 
             AutoGenerateColumns = true;
 
-            ColumnResizeHandleWidth = DefaultColumnResizeHandleWidth;
+            ColumnResizeHandleWidth = DEFAULT_COLUMN_RESIZE_HANDLE_WIDTH;
 
             TableHtmlAttributes = new RouteValueDictionary();
             ModelMetadataProvider.GetType();
@@ -200,26 +200,148 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
-            var autoBind = DataSource.Type != DataSourceType.Server && AutoBind.GetValueOrDefault(true);
+			var autoBind = DataSource.Type != DataSourceType.Server && AutoBind.GetValueOrDefault(true);
 
-            // Do custom serialization here
+		//	var columns = VisibleColumns.Select(c => c.ToJson());
 
-            settings["dataSource"] = DataSource.ToJson();
+			var idPrefix = "#";
+			if (IsInClientTemplate)
+			{
+				idPrefix = "\\" + idPrefix;
+			}
 
-            if (Pageable.Enabled)
-            {
-                Pageable.AutoBind = autoBind;
+			//if (columns.Any())
+			//{
+			//	options["columns"] = columns;
+			//}
 
-                settings["pageable"] = Pageable.ToJson();
-            }
+			if (Grouping.Enabled)
+			{
+				settings["groupable"] = Grouping.ToJson();
+			}
 
-            if (Sortable.Enabled)
-            {
-                var sorting = Sortable.ToJson();
-                settings["sortable"] = sorting.Any() ? (object)sorting : true;
-            }
+			if (Pageable.Enabled)
+			{
+				Pageable.AutoBind = autoBind;
 
-            return settings;
+				settings["pageable"] = Pageable.ToJson();
+			}
+
+			if (Sortable.Enabled)
+			{
+				var sorting = Sortable.ToJson();
+				settings["sortable"] = sorting.Any() ? (object)sorting : true;
+			}
+
+			//if (Selectable.Enabled)
+			//{
+			//	options["selectable"] = String.Format("{0}, {1}", Selectable.Mode, Selectable.Type);
+			//}
+
+			if (Filterable.Enabled)
+			{
+				var filtering = Filterable.ToJson();
+				settings["filterable"] = filtering.Any() ? (object)filtering : true;
+			}
+
+			//var excel = Excel.ToJson();
+
+			//if (excel.Any())
+			//{
+			//	options["excel"] = excel;
+			//}
+
+			//var pdf = Pdf.ToJson();
+
+			//if (pdf.Any())
+			//{
+			//	options["pdf"] = pdf;
+			//}
+
+			if (ColumnMenu.Enabled)
+			{
+				var menu = ColumnMenu.ToJson();
+				settings["columnMenu"] = menu.Any() ? (object)menu : true;
+			}
+
+			if (Resizable.Enabled)
+			{
+				settings["resizable"] = true;
+			}
+
+			if (ColumnResizeHandleWidth != DEFAULT_COLUMN_RESIZE_HANDLE_WIDTH)
+			{
+				settings["columnResizeHandleWidth"] = ColumnResizeHandleWidth;
+			}
+
+			if (Reorderable.Enabled)
+			{
+				settings["reorderable"] = true;
+			}
+
+			if (!Scrollable.Enabled)
+			{
+				settings["scrollable"] = false;
+			}
+			else
+			{
+				var scrolling = Scrollable.ToJson();
+				if (scrolling.Any())
+				{
+					settings["scrollable"] = scrolling;
+				}
+			}
+
+			//if (Editable.Enabled)
+			//{
+			//	options["editable"] = Editable.ToJson();
+			//}
+
+			//if (ToolBar.Enabled)
+			//{
+			//	options["toolbar"] = ToolBar.ToJson();
+			//}
+
+			if (autoBind == false)
+			{
+				settings["autoBind"] = autoBind;
+			}
+
+			settings["dataSource"] = DataSource.ToJson();
+
+			//if (!String.IsNullOrEmpty(ClientDetailTemplateId))
+			//{
+			//	options["detailTemplate"] = new ClientHandlerDescriptor { HandlerName = String.Format("kendo.template(jQuery('{0}{1}').html())", idPrefix, ClientDetailTemplateId) };
+			//}
+
+			//if (!String.IsNullOrEmpty(ClientRowTemplate))
+			//{
+			//	options["rowTemplate"] = ClientRowTemplate;
+			//}
+
+			//if (!String.IsNullOrEmpty(ClientAltRowTemplate))
+			//{
+			//	options["altRowTemplate"] = ClientAltRowTemplate;
+			//}
+
+			if (Navigatable.Enabled)
+			{
+				settings["navigatable"] = true;
+			}
+
+			//if (Mobile != MobileMode.Disabled)
+			//{
+			//	if (Mobile == MobileMode.Auto)
+			//	{
+			//		options["mobile"] = true;
+			//	}
+			//	else
+			//	{
+			//		options["mobile"] = Mobile.ToString().ToLowerInvariant();
+			//	}
+			//}
+
+			return settings;
         }
 
         protected override void WriteHtml(TextWriter writer)
