@@ -48,7 +48,7 @@ namespace Kendo.Mvc.UI
             Resizable = new GridSettings();
             Reorderable = new GridSettings();                        
 
-            //Selectable = new GridSelectableSettings();
+            Selectable = new GridSelectableSettings();
 
             //ToolBar = new GridToolBarSettings<T>(this);
             //NoRecordsTemplate = new HtmlTemplate();
@@ -105,10 +105,19 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-        /// <summary>
-        /// Gets the column menu configuration.
-        /// </summary>
-        public GridColumnMenuSettings ColumnMenu
+		/// <summary>
+		/// Gets the selection configuration
+		/// </summary>
+		public GridSelectableSettings Selectable
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Gets the column menu configuration.
+		/// </summary>
+		public GridColumnMenuSettings ColumnMenu
         {
             get;
             private set;

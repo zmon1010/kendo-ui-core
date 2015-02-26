@@ -461,5 +461,55 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+		/// <summary>
+		/// Enables grid row selection.
+		/// </summary>
+		/// <example>	
+		///<code lang="Razor">
+		/// @(Html.Kendo().Grid&lt;Product&gt;()
+		///     .Name(&quot;grid&quot;)
+		///     .Selectable()
+		///     .DataSource(dataSource =&gt;
+		///         // configure the data source
+		///         dataSource
+		///             .Ajax()
+		///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+		///     )
+		/// )
+		/// </code>
+		/// </example>
+		public GridBuilder<T> Selectable()
+		{
+			Component.Selectable.Enabled = true;
+
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the selection configuration of the grid.
+		/// </summary>
+		/// <param name="configurator">The lambda which configures the selection</param>
+		/// <example>
+		///<code lang="Razor">
+		/// @(Html.Kendo().Grid&lt;Product&gt;()
+		///     .Name(&quot;grid&quot;)
+		///     .Selectable(selection =&gt; selection.Enabled(true))
+		///     .DataSource(dataSource =&gt;
+		///         // configure the data source
+		///         dataSource
+		///             .Ajax()
+		///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+		///     )
+		/// )
+		/// </code>
+		/// </example>
+		public GridBuilder<T> Selectable(Action<GridSelectionSettingsBuilder> configurator)
+		{
+			Selectable();
+
+			configurator(new GridSelectionSettingsBuilder(Component.Selectable));
+
+			return this;
+		}
 	}
 }
