@@ -264,17 +264,19 @@
             }
 
             function splitText(node) {
-                var range = doc.createRange();
                 if (!/\S/.test(node.data)) {
                     return;
                 }
-                var len = node.data.length;
-                range.selectNodeContents(node);
 
+                var len = node.data.length;
+                var range = doc.createRange();
+                range.selectNodeContents(node);
                 var fall = fallsOnMargin(range);
                 if (!fall) {
                     return;     // the whole text fits on current page
                 }
+
+                var nextnode = node;
                 if (fall == 1) {
                     // starts on next page, break before anyway.
                     breakAtElement(node);
@@ -292,13 +294,17 @@
                         }
                     })(0, len >> 1, len);
 
+                    // This is only needed for IE, but it feels cleaner to do it anyway.  Without
+                    // it, IE will truncate a very long text (playground/pdf-long-text-2.html).
+                    nextnode = node.splitText(range.endOffset);
+
                     var page = makePage();
                     range.setStartBefore(copy);
                     page.appendChild(range.extractContents());
                     copy.parentNode.insertBefore(page, copy);
                 }
 
-                splitText(node);
+                splitText(nextnode);
             }
         }
 
@@ -2349,6 +2355,15 @@
     function drawDebugBox(box, group) {
         var path = drawing.Path.fromRect(new geo.Rect([ box.left, box.top ], [ box.width, box.height ]));
         group.append(path);
+    }
+
+    function dumpTextNode(node) {
+        var txt = node.data.replace(/^\s+/, "");
+        if (txt.length < 100) {
+            console.log(node.data.length + ": |" + txt);
+        } else {
+            console.log(node.data.length + ": |" + txt.substr(0, 50) + "|...|" + txt.substr(-50));
+        }
     }
 
     function mmul(a, b) {
