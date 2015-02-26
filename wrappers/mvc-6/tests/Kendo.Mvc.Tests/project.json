@@ -6,17 +6,19 @@
 	"dependencies": {
 		"Kendo.Mvc": "1.0.0-*",
 		"Moq":  "4.2.1312.1622",
-		"xunit.runner.kre": "1.0.0-beta3"
+		"xunit": "2.0.0-rc3-*",
+        "xunit.runner.aspnet": "2.0.0-rc3-*"
 	},
 	"commands": {
-		"test": "xunit.runner.kre"
+		"test": "xunit.runner.aspnet"
 	},
 	"frameworks": {
 		"aspnet50": {
 		},
-		"aspnetcore50": {
-			"dependencies": {
-			}
-		}
+		"aspnetcore50" : {
+            "dependencies": {
+                "System.Runtime": "4.0.20-beta-22416"
+            }
+        }
 	}
 }
