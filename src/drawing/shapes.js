@@ -1300,6 +1300,28 @@
         return "kdef" + defId++;
     }
 
+    function align(elements, rect, alignment) {
+       alignElements(elements, rect, alignment, "x", "width");
+    }
+
+    function vAlign(elements, rect, alignment) {
+        alignElements(elements, rect, alignment, "y", "height");
+    }
+
+    function alignElements(elements, rect, alignment, axis, sizeField) {
+        var bbox, start, point;
+        alignment = alignment || "start";
+
+        for (var idx = 0; idx < elements.length; idx++) {
+            bbox = elements[idx].clippedBBox();
+            if (bbox) {
+                point = bbox.origin.clone();
+                point[axis] = alignStart(bbox.size[sizeField], rect, alignment, axis, sizeField);
+                translateToPoint(point, bbox, elements[idx]);
+            }
+        }
+    }
+
     function alignStart(size, rect, align, axis, sizeField) {
         var start;
         if (align == START) {
@@ -1327,6 +1349,8 @@
 
     // Exports ================================================================
     deepExtend(drawing, {
+        align: align,
+        vAlign: vAlign,
         Arc: Arc,
         Circle: Circle,
         Element: Element,
