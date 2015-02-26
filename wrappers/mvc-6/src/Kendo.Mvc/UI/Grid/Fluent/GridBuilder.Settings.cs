@@ -32,5 +32,28 @@ namespace Kendo.Mvc.UI.Fluent
 
 			return this;
 		}
+
+		/// <summary>
+		/// Configures the PDF export settings.
+		/// </summary>
+		/// <code lang="Razor">
+		/// @(Html.Kendo().Grid&lt;Product&gt;()
+		///     .Name(&quot;grid&quot;)
+		///     .Pdf(pdf => pdf.FileName(&quot;GridExport.pdf&quot))
+		///     .DataSource(dataSource =&gt;
+		///         // configure the data source
+		///         dataSource
+		///             .Ajax()
+		///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+		///     )
+		/// )
+		/// </code>		
+		/// </example>
+		public GridBuilder<T> Pdf(Action<PDFSettingsBuilder> configurator)
+		{
+			configurator(new PDFSettingsBuilder(Component.Pdf));
+
+			return this;
+		}
 	}
 }

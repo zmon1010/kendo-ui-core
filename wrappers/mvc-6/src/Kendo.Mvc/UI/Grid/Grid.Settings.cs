@@ -12,6 +12,7 @@ namespace Kendo.Mvc.UI
 		protected virtual void InitializeSettings()
 		{
 			Excel = new GridExcelSettings();
+			Pdf = new PDFSettings();
 		}
 
 		public GridExcelSettings Excel
@@ -20,7 +21,13 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
-        public override void WriteInitializationScript(TextWriter writer)
+		public PDFSettings Pdf
+		{
+			get;
+			private set;
+		}
+
+		public override void WriteInitializationScript(TextWriter writer)
         {
             var settings = SerializeSettings();
 
@@ -28,6 +35,12 @@ namespace Kendo.Mvc.UI
 			if (excel.Any())
 			{
 				settings["excel"] = excel;
+			}
+
+			var pdf = Pdf.ToJson();
+			if (pdf.Any())
+			{
+				settings["pdf"] = pdf;
 			}
 
 			// TODO: Automatically serialized settings go here

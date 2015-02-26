@@ -46,8 +46,7 @@ namespace Kendo.Mvc.UI
 
             Grouping = new GridGroupableSettings();
             Resizable = new GridSettings();
-            Reorderable = new GridSettings();            
-            //Pdf = new PDFSettings();
+            Reorderable = new GridSettings();                        
 
             //Selectable = new GridSelectableSettings();
 
