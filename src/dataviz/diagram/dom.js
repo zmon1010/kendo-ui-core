@@ -2314,9 +2314,7 @@
              */
 
            remove: function(items, undoable) {
-                if (!isArray(items)) {
-                    items = [items];
-                }
+                items = isArray(items) ? items.slice(0) : [items];
                 var elements = splitDiagramElements(items);
                 var shapes = elements.shapes;
                 var connections = elements.connections;

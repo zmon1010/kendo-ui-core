@@ -1283,6 +1283,19 @@
             equal(eventShapes.length, shapes.length, "all shapes should be reported by the event handler");
         });
 
+        test("Remove selected shapes raises change event with the removed shapes as parameter", 1, function() {
+            var eventShape = null,
+                called = false,
+                shape = diagram.addShape({});
+
+            diagram.bind("change", function(args) {
+                eventShape = args.removed[0];
+                ok(eventShape === shape);
+            });
+            diagram.select(shape);
+            diagram.remove(diagram.select());
+        });
+
         // ------------------------------------------------------------
         module("Shape / bounds / zoom", {
             setup: setup,
