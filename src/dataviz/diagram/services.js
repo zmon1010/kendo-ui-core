@@ -796,18 +796,22 @@
                 this.toolService.activeConnection.target(p);
                 return true;
             },
-            end: function () {
-                var nc = this.toolService.activeConnection,
-                    hi = this.toolService.hoveredItem,
-                    connector = this.toolService._hoveredConnector;
+            end: function (p) {
+                var connection = this.toolService.activeConnection,
+                    hoveredItem = this.toolService.hoveredItem,
+                    connector = this.toolService._hoveredConnector,
+                    target;
 
-                if (connector && connector._c != nc.sourceConnector) {
-                    nc.target(connector._c);
-                } else if (hi) {
-                    nc.target(hi);
+                if (connector && connector._c != connection.sourceConnector) {
+                    target = connector._c;
+                } else if (hoveredItem && hoveredItem instanceof diagram.Shape) {
+                    target = hoveredItem.getConnector(AUTO) || hoveredItem.getConnector(p);
+                } else {
+                    target = p;
                 }
 
-                nc.updateModel(true);
+                connection.target(target);
+                connection.updateModel(true);
 
                 this.toolService._connectionManipulation();
             },
@@ -1381,7 +1385,7 @@
                 if (ts._hoveredConnector) {
                     target = ts._hoveredConnector._c;
                 } else if (item && item instanceof diagram.Shape) {
-                    target = item;
+                    target = item.getConnector(AUTO) || item.getConnector(p);
                 } else {
                     target = p;
                 }
@@ -2105,6 +2109,8 @@
             DeleteShapeUnit: DeleteShapeUnit,
             DeleteConnectionUnit: DeleteConnectionUnit,
             ConnectionEditAdorner: ConnectionEditAdorner,
+            ConnectionTool: ConnectionTool,
+            ConnectorVisual: ConnectorVisual,
             UndoRedoService: UndoRedoService,
             ResizingAdorner: ResizingAdorner,
             Selector: Selector,

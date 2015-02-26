@@ -526,6 +526,89 @@
     })();
 
     (function() {
+        var ConnectionTool = diagram.ConnectionTool;
+        var ConnectorVisual = diagram.ConnectorVisual;
+        var toolservice;
+        var connectionTool;
+
+        function moveToShape(sourceConnector, targetShape) {
+            toolservice._hoveredConnector = new ConnectorVisual(sourceConnector);
+            connectionTool.start(new Point(), {});
+            toolservice.hoveredItem = targetShape;
+            var bounds = targetShape.bounds();
+
+            connectionTool.end(new Point(bounds.x + 10, bounds.y + 10));
+        }
+
+        function setupTool(options) {
+            setupDiagram(options);
+            toolservice = d.toolService;
+            for (var i = 0; i < toolservice.tools.length; i++) {
+                if (toolservice.tools[i] instanceof ConnectionTool) {
+                    connectionTool = toolservice.tools[i];
+                    break;
+                }
+            }
+        }
+
+        module("ConnectionTool", {
+            teardown: teardown
+        });
+
+        test("sets the target shape auto connector", function() {
+            setupTool();
+            var shape1 = d.addShape({ x: 0, y: 0});
+            var shape2 = d.addShape({ x: 200, y: 200});
+            moveToShape(shape1.getConnector("auto"), shape2);
+            ok(d.connections[0].target() === shape2.getConnector("auto"));
+        });
+
+        test("sets the target shape closest connector if there is no auto connector", function() {
+            setupTool();
+            var shape1 = d.addShape({ x: 0, y: 0});
+            var shape2 = d.addShape({ x: 200, y: 200, connectors: [{name: "left"}, {name: "right"}]});
+            moveToShape(shape1.getConnector("auto"), shape2);
+            ok(d.connections[0].target() === shape2.getConnector("left"));
+        });
+    })();
+
+    (function() {
+        var ConnectionEditAdorner = diagram.ConnectionEditAdorner;
+        var toolservice;
+        var adorner;
+
+        function moveToShape(connection, shape) {
+            connection.select(true);
+            connection.adorner.start(connection.targetPoint());
+            d.toolService.hoveredItem = shape;
+            var bounds = shape.bounds();
+            connection.adorner.stop(new Point(bounds.x + 10, bounds.y + 10));
+        }
+
+        module("ConnectionEditAdorner", {
+            teardown: teardown
+        });
+
+        test("sets the target shape auto connector", function() {
+            setupDiagram();
+
+            var connection = d.connect(new Point(0, 0), new Point(10, 10));
+            var shape = d.addShape({ x: 100, y: 100});
+            moveToShape(connection, shape);
+            ok(connection.target() === shape.getConnector("auto"));
+        });
+
+        test("sets the target shape closest connector if there is no auto connector", function() {
+            setupDiagram();
+
+            var connection = d.connect(new Point(0, 0), new Point(10, 10));
+            var shape = d.addShape({ x: 100, y: 100, connectors: [{name: "left"}, {name: "right"}]});
+            moveToShape(connection, shape);
+            ok(connection.target() === shape.getConnector("left"));
+        });
+    })();
+
+    (function() {
         var toolservice;
         var shape1, shape2;
 
@@ -550,6 +633,7 @@
             toolservice.start(point, {});
             ok(!toolservice.hoveredItem);
         });
+
     })();
 
     (function() {
