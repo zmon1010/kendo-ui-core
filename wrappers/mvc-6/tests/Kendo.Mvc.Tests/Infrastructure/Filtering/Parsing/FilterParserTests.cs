@@ -11,12 +11,12 @@ namespace Kendo.Mvc.Infrastructure.Tests
 
         public FilterParserTests()
         {
-            currentCulture = CultureInfo.CurrentCulture;
+            currentCulture = CultureInfo.DefaultThreadCurrentCulture;
         }
 
         public void Dispose()
         {
-            CultureInfo.CurrentCulture = currentCulture;
+            CultureInfo.DefaultThreadCurrentCulture = currentCulture;
         }
         [Fact]
         public void Should_parse_comparison_expression_and_number()
@@ -58,7 +58,7 @@ namespace Kendo.Mvc.Infrastructure.Tests
         [Fact]
         public void Should_parse_number_when_decimal_separator_is_of_the_current_culture_is_comma()
         {
-            CultureInfo.CurrentCulture = new CultureInfo("bg-BG");
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("bg-BG");
             NumberNode result = (NumberNode)Parse("10.5");
             Assert.Equal(10.5, result.Value);
         }

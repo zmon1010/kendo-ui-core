@@ -15,12 +15,12 @@ namespace Kendo.Mvc.Infrastructure.Tests
         public FilterLexerTests()
         {
                         
-            currentCulture = CultureInfo.CurrentCulture;
+            currentCulture = CultureInfo.DefaultThreadCurrentCulture;
         }
         
         public void Dispose()
         {
-            CultureInfo.CurrentCulture = currentCulture;
+            CultureInfo.DefaultThreadCurrentCulture = currentCulture;
         }
 
         [Fact]
@@ -280,8 +280,8 @@ namespace Kendo.Mvc.Infrastructure.Tests
 
         [Fact]
         public void Tokenize_should_return_function_when_decimal_separator_is_comma()
-        {
-            CultureInfo.CurrentCulture = new CultureInfo("bg-BG");
+        {			
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("bg-BG");
             
             IList<FilterToken> tokens = Tokenize("startswith(Name,'John')");
             Assert.Equal(FilterTokenType.Function, tokens[0].TokenType);
