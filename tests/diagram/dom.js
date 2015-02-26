@@ -751,24 +751,42 @@
     // ------------------------------------------------------------
     (function() {
         module("initialization / layout", {
-            setup: function() {
-                createDiagram({ layout: {
-                        grid: {
-                            width: 600
-                        }
-                    }
-                });
-            },
             teardown: teardown
         });
 
         test("stores grid layout width option", function () {
+            createDiagram({ layout: {
+                    grid: {
+                        width: 600
+                    }
+                }
+            });
             equal(diagram.options.layout.grid.width, 600, "");
         });
 
-        // test("calls layout method", function () {
-             // eqaul(diagram.calls("layout"), 1);
-        // });
+        test("applies layout for shapes and connections added with the configuration", function () {
+            createDiagram({
+                layout: {
+                    type: "layered"
+                },
+                connections: [{
+                    from: {
+                        shapeId: "shape1"
+                    },
+                    to: {
+                        shapeId: "shape2"
+                    }
+                }],
+                shapes: [{
+                    id: "shape1"
+                }, {
+                    id: "shape2"
+                }]
+            });
+
+            ok(diagram.shapes[0].bounds().x !== 0);
+            ok(diagram.shapes[1].bounds().x !== 0);
+        });
     })();
 
     (function() {

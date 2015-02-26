@@ -1625,13 +1625,15 @@
                 // TODO: We may consider using real Clipboard API once is supported by the standard.
                 that._clipboard = [];
 
-                if (that.options.layout) {
-                    that.layout(that.options.layout);
-                }
                 that.pauseMouseHandlers = false;
 
                 that._createShapes();
                 that._createConnections();
+
+                if (that.options.layout) {
+                    that.layout(that.options.layout);
+                }
+
                 that.zoom(that.options.zoom);
 
                 that.canvas.draw();
