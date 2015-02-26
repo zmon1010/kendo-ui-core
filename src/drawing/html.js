@@ -27,6 +27,26 @@
     var nodeInfo = {};
     nodeInfo._root = nodeInfo;
 
+    /* -----[ Custom Text node to speed up rendering in PDF ]----- */
+
+    var TextRect = drawing.Text.extend({
+        nodeType: "Text",
+        init: function(str, rect, options) {
+            drawing.Text.fn.init.call(this, str, rect.getOrigin(), options);
+            this._pdfRect = rect;
+        },
+        rect: function() {
+            // this is the crux of it: we can avoid a call to
+            // measure(), which is what the base class does, since we
+            // already know the rect.  measure() is s-l-o-w.
+            return this._pdfRect;
+        },
+        rawBBox: function() {
+            // also let's avoid creating a new rectangle.
+            return this._pdfRect;
+        }
+    });
+
     /* -----[ exports ]----- */
 
     function drawDOM(element, options) {
@@ -2027,10 +2047,14 @@
             //     .close();
             // group.append(path);
 
-            var text = new drawing.Text(str, new geo.Point(box.left, box.top), {
-                font: font,
-                fill: { color: color }
-            });
+            var text = new TextRect(
+                str, new geo.Rect([ box.left, box.top ],
+                                  [ box.width, box.height ]),
+                {
+                    font: font,
+                    fill: { color: color }
+                }
+            );
             group.append(text);
             decorate(box);
         }
