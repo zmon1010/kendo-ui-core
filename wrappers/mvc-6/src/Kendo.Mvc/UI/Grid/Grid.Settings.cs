@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <typeparam name="T"></typeparam>
     public partial class Grid<T>
     {
-		protected virtual void InitializeSettings()
+		protected override void InitializeSettings()
 		{
 			Excel = new GridExcelSettings();
 			Pdf = new PDFSettings();

@@ -24,9 +24,7 @@ namespace Kendo.Mvc.UI
 			//  RowTemplate = new HtmlTemplate<T>();
 			//DetailTemplate = new HtmlTemplate<T>();
 			//Columns = new List<GridColumnBase<T>>();
-			//DataKeys = new List<IDataKey>();
-
-			InitializeSettings();
+			//DataKeys = new List<IDataKey>();			
 
             Pageable = new PageableSettings();
             Sortable = new GridSortableSettings();
