@@ -238,6 +238,9 @@
                     display  : "block",
                     width    : pageWidth || "auto",
 
+                    // allow absolutely positioned elements to be relative to current page
+                    position : "relative",
+
                     // without the following we might affect layout of subsequent pages
                     height   : pageHeight || "auto",
                     overflow : pageHeight || pageWidth ? "hidden" : "visible"
