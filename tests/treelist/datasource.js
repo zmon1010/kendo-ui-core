@@ -826,8 +826,8 @@
         ds.read();
         ds.remove(ds.get(1));
 
-        equal(ds.data().length, 0);
-        equal(ds.view().length, 0);
+        equal(ds.data().length, 0, "data collection is not cleared");
+        equal(ds.view().length, 0, "view collection is not cleared");
     });
 
     test("create with options object instantiates TreeListDataSource", function() {
@@ -1035,11 +1035,32 @@
         });
 
         ds.read();
-        ds.add({ parentId: 1 });
+        var model = ds.add({ parentId: 1 });
 
         equal(ds.rootNodes().length, 1);
         equal(ds.childNodes(ds.get(1)).length, 1);
         equal(ds.childNodes(ds.get(0)).length, 0);
+    });
+
+    test("adding new child item applies default field values", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    fields: {
+                        parentId: { defaultValue: 0, type: "number" },
+                        foo: { defaultValue: "bar" }
+                    }
+                }
+            },
+            data: [
+                { id: 1, parentId: 0, foo: "foo" }
+            ]
+        });
+
+        ds.read();
+        var model = ds.add({ parentId: 1 });
+
+        equal(model.foo, "bar");
     });
 
     var pluck = function(array, property) {

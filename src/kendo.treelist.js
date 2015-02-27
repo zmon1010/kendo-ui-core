@@ -210,6 +210,22 @@ var __meta__ = {
             }, options));
         },
 
+        _createNewModel: function(data) {
+            var model = {};
+
+            if (data instanceof Model) {
+                model = data;
+            }
+
+            model = DataSource.fn._createNewModel.call(this, model);
+
+            if (data.parentId) {
+                model.parentId = data.parentId;
+            }
+
+            return model;
+        },
+
         _readData: function(newData) {
             var result = [];
             var data = this.data();

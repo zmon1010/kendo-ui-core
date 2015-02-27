@@ -609,6 +609,27 @@
         ok(row.data("kendoEditable"));
     });
 
+    test("addRow initialize child item with default values", function() {
+        createTreeList({
+            dataSource: {
+                schema: {
+                    model: {
+                        fields: {
+                            text: { defaultValue: "foo" }
+                        }
+                    }
+                }
+            }
+        });
+
+        instance.addRow(instance.content.find("tr:first"));
+
+        var row = instance.content.find("tr").eq(1);
+        var dataItem = instance.dataItem(row);
+
+        equal(dataItem.text, "foo");
+    });
+
     test("doesn't create new item if there are is editor with validation errors", function() {
         var ds = new TreeListDataSource({
             data: [
