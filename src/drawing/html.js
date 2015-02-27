@@ -205,6 +205,14 @@
                             switch (el.tagName.toLowerCase()) {
                               case "img":
                               case "tr":
+                              case "iframe":
+                              case "svg":
+                              case "object":
+                              case "canvas":
+                              case "input":
+                              case "textarea":
+                              case "select":
+                              case "video":
                                 breakAtElement(el);
                                 break;
 
