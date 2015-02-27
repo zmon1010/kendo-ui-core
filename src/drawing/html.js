@@ -12,7 +12,6 @@
 
     /* jshint eqnull:true */
     /* jshint -W069 */
-    /* global console */
 
     /* -----[ local vars ]----- */
 
@@ -2391,19 +2390,19 @@
         //drawDebugBox(element.getBoundingClientRect(), container);
     }
 
-    function drawDebugBox(box, group) {
-        var path = drawing.Path.fromRect(new geo.Rect([ box.left, box.top ], [ box.width, box.height ]));
-        group.append(path);
-    }
+    // function drawDebugBox(box, group) {
+    //     var path = drawing.Path.fromRect(new geo.Rect([ box.left, box.top ], [ box.width, box.height ]));
+    //     group.append(path);
+    // }
 
-    function dumpTextNode(node) {
-        var txt = node.data.replace(/^\s+/, "");
-        if (txt.length < 100) {
-            console.log(node.data.length + ": |" + txt);
-        } else {
-            console.log(node.data.length + ": |" + txt.substr(0, 50) + "|...|" + txt.substr(-50));
-        }
-    }
+    // function dumpTextNode(node) {
+    //     var txt = node.data.replace(/^\s+/, "");
+    //     if (txt.length < 100) {
+    //         console.log(node.data.length + ": |" + txt);
+    //     } else {
+    //         console.log(node.data.length + ": |" + txt.substr(0, 50) + "|...|" + txt.substr(-50));
+    //     }
+    // }
 
     function mmul(a, b) {
         var a1 = a[0], b1 = a[1], c1 = a[2], d1 = a[3], e1 = a[4], f1 = a[5];
