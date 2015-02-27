@@ -105,8 +105,7 @@
                 var group = new drawing.Group({
                     pdf: {
                         multiPage : true,
-                        paperSize : options.paperSize ? paperOptions.paperSize : "auto",
-                        margin    : margin
+                        paperSize : options.paperSize ? paperOptions.paperSize : "auto"
                     }
                 });
                 handlePageBreaks(
@@ -120,14 +119,36 @@
                     element,
                     forceBreak,
                     pageWidth ? pageWidth - margin.left - margin.right : null,
-                    pageHeight ? pageHeight - margin.top - margin.bottom : null
+                    pageHeight ? pageHeight - margin.top - margin.bottom : null,
+                    margin,
+                    makeTemplate(options.template)
                 );
             } else {
                 defer.resolve(doOne(element));
             }
         });
 
-        function handlePageBreaks(callback, element, forceBreak, pageWidth, pageHeight) {
+        function makeTemplate(template) {
+            if (template != null) {
+                if (typeof template == "string") {
+                    template = kendo.template(template.replace(/^\s+|\s+$/g, ""));
+                }
+                if (typeof template == "function") {
+                    return function(data) {
+                        var el = template(data);
+                        if (el) {
+                            return $(el)[0];
+                        }
+                    };
+                }
+                // assumed jQuery object or DOM element
+                return function() {
+                    return $(template).clone()[0];
+                };
+            }
+        }
+
+        function handlePageBreaks(callback, element, forceBreak, pageWidth, pageHeight, margin, template) {
             var doc = element.ownerDocument;
             var pages = [];
             var copy = $(element).clone(true, true)[0];
@@ -165,6 +186,15 @@
                 copy.parentNode.insertBefore(page, copy);
                 page.appendChild(copy);
                 // }
+
+                if (template) {
+                    pages.forEach(function(page, i){
+                        var el = template({ pageNum: i + 1, totalPages: pages.length });
+                        if (el) {
+                            page.appendChild(el);
+                        }
+                    });
+                }
 
                 // allow another timeout here to make sure the images
                 // are rendered in the new DOM nodes.
@@ -234,13 +264,18 @@
                 $(page).css({
                     display  : "block",
                     width    : pageWidth || "auto",
+                    padding  : (margin.top + "px " +
+                                margin.right + "px " +
+                                margin.bottom + "px " +
+                                margin.left + "px"),
 
                     // allow absolutely positioned elements to be relative to current page
                     position : "relative",
 
                     // without the following we might affect layout of subsequent pages
                     height   : pageHeight || "auto",
-                    overflow : pageHeight || pageWidth ? "hidden" : "visible"
+                    overflow : pageHeight || pageWidth ? "hidden" : "visible",
+                    clear    : "both"
                 });
                 if (options && options.pageClassName) {
                     page.className = options.pageClassName;
