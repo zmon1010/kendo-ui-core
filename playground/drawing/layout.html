@@ -47,11 +47,12 @@
     var path = Path.fromRect(new Rect([200, 200], [100, 200]));
     path.transform(g.transform().rotate(30, [50, 100]));
     var group = new Group().append(circle, otherCircle, path);
-    d.vAlign(group.children, rect, "center");
+
+    d.stack(group.children);
     surface.draw(group);
-    surface.draw(Path.fromRect(rect));
-    surface.draw(new Path().moveTo(rect.origin.x, 0).lineTo(rect.origin.x, 2000));
-    surface.draw(new Path().moveTo(0, rect.origin.y).lineTo(2000, rect.origin.y));
+    // surface.draw(Path.fromRect(rect));
+    // surface.draw(new Path().moveTo(rect.origin.x, 0).lineTo(rect.origin.x, 2000));
+    // surface.draw(new Path().moveTo(0, rect.origin.y).lineTo(2000, rect.origin.y));
     // group.append().append(circle);
     // var layout = new Layout(rect, {
         // spacing: 10,

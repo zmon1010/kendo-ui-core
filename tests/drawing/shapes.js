@@ -2874,11 +2874,8 @@
 
     })();
 
-    // ------------------------------------------------------------
     (function() {
         var Rect = g.Rect;
-        var align = d.align;
-        var vAlign = d.vAlign;
         var rect = new Rect([110, 200], [500, 500]);
         var elements;
 
@@ -2900,103 +2897,187 @@
             }
         }
 
-        module("Layout primitives / align", {
-            setup: function() {
-                createPaths();
-            }
-        });
+         // ------------------------------------------------------------
+        (function() {
+            var align = d.align;
 
-        test("aligns elements to the start", function() {
-            align(elements, rect, "start");
+            module("Layout primitives / align", {
+                setup: function() {
+                    createPaths();
+                }
+            });
 
-            compareBBoxOrigin(elements, rect.origin.x);
-        });
+            test("aligns elements to the start", function() {
+                align(elements, rect, "start");
 
-        test("aligns elements to the center", function() {
-            align(elements, rect, "center");
-            compareBBoxOrigin(elements, [285, 260, 275]);
-        });
+                compareBBoxOrigin(elements, rect.origin.x);
+            });
 
-        test("aligns elements to the end", function() {
-            align(elements, rect, "end");
-            compareBBoxOrigin(elements, rect.bottomRight().x, "x", "bottomRight");
-        });
+            test("aligns elements to the center", function() {
+                align(elements, rect, "center");
+                compareBBoxOrigin(elements, [285, 260, 275]);
+            });
 
-        test("aligns elements to the start by default", function() {
-            align(elements, rect);
+            test("aligns elements to the end", function() {
+                align(elements, rect, "end");
+                compareBBoxOrigin(elements, rect.bottomRight().x, "x", "bottomRight");
+            });
 
-            compareBBoxOrigin(elements, rect.origin.x);
-        });
+            test("aligns elements to the start by default", function() {
+                align(elements, rect);
 
-        test("aligns elements if there are elements without bbox", function() {
-            align(elements.concat([new d.Group()]), rect, "start");
+                compareBBoxOrigin(elements, rect.origin.x);
+            });
 
-            compareBBoxOrigin(elements, rect.origin.x);
-        });
+            test("aligns elements if there are elements without bbox", function() {
+                align(elements.concat([new d.Group()]), rect, "start");
 
-        test("aligns elements with transformation", function() {
-            elements[0].transform(g.transform().rotate(30));
-            elements[1].transform(g.transform().scale(2, 1.5));
-            elements[2].transform(g.transform().translate(-100, -300));
-            align(elements, rect, "start");
-            compareBBoxOrigin(elements, rect.origin.x);
-        });
+                compareBBoxOrigin(elements, rect.origin.x);
+            });
 
-        test("does not change the position based on the y axis", function() {
-            var initial = [path1.clippedBBox().origin.y, path2.clippedBBox().origin.y, path3.clippedBBox().origin.y];
-            align(elements, rect);
+            test("aligns elements with transformation", function() {
+                elements[0].transform(g.transform().rotate(30));
+                elements[1].transform(g.transform().scale(2, 1.5));
+                elements[2].transform(g.transform().translate(-100, -300));
+                align(elements, rect, "start");
+                compareBBoxOrigin(elements, rect.origin.x);
+            });
 
-            compareBBoxOrigin(elements, initial, "y");
-        });
+            test("does not change the position based on the y axis", function() {
+                var initial = [path1.clippedBBox().origin.y, path2.clippedBBox().origin.y, path3.clippedBBox().origin.y];
+                align(elements, rect);
 
-        module("Layout primitives / vAlign", {
-            setup: function() {
-                createPaths();
-            }
-        });
+                compareBBoxOrigin(elements, initial, "y");
+            });
+        })();
 
-        test("aligns elements to the start", function() {
-            vAlign(elements, rect, "start");
+         // ------------------------------------------------------------
+        (function() {
+            var vAlign = d.vAlign;
 
-            compareBBoxOrigin(elements, rect.origin.y, "y");
-        });
+            module("Layout primitives / vAlign", {
+                setup: function() {
+                    createPaths();
+                }
+            });
 
-        test("aligns elements to the center", function() {
-            vAlign(elements, rect, "center");
-            compareBBoxOrigin(elements, [425, 415, 400], "y");
-        });
+            test("aligns elements to the start", function() {
+                vAlign(elements, rect, "start");
 
-        test("aligns elements to the end", function() {
-            vAlign(elements, rect, "end");
-            compareBBoxOrigin(elements, rect.bottomRight().y, "y", "bottomRight");
-        });
+                compareBBoxOrigin(elements, rect.origin.y, "y");
+            });
 
-        test("aligns elements to the start by default", function() {
-            vAlign(elements, rect);
+            test("aligns elements to the center", function() {
+                vAlign(elements, rect, "center");
+                compareBBoxOrigin(elements, [425, 415, 400], "y");
+            });
 
-            compareBBoxOrigin(elements, rect.origin.y, "y");
-        });
+            test("aligns elements to the end", function() {
+                vAlign(elements, rect, "end");
+                compareBBoxOrigin(elements, rect.bottomRight().y, "y", "bottomRight");
+            });
 
-        test("aligns elements if there are elements without bbox", function() {
-            vAlign(elements.concat([new d.Group()]), rect, "start");
+            test("aligns elements to the start by default", function() {
+                vAlign(elements, rect);
 
-            compareBBoxOrigin(elements, rect.origin.y, "y");
-        });
+                compareBBoxOrigin(elements, rect.origin.y, "y");
+            });
 
-        test("aligns elements with transformation", function() {
-            elements[0].transform(g.transform().rotate(30));
-            elements[1].transform(g.transform().scale(2, 1.5));
-            elements[2].transform(g.transform().translate(-100, -300));
-            vAlign(elements, rect, "start");
-            compareBBoxOrigin(elements, rect.origin.y, "y");
-        });
+            test("aligns elements if there are elements without bbox", function() {
+                vAlign(elements.concat([new d.Group()]), rect, "start");
 
-        test("does not change the position based on the y axis", function() {
-            var initial = [path1.clippedBBox().origin.x, path2.clippedBBox().origin.x, path3.clippedBBox().origin.x];
-            vAlign(elements, rect);
+                compareBBoxOrigin(elements, rect.origin.y, "y");
+            });
 
-            compareBBoxOrigin(elements, initial, "x");
-        });
+            test("aligns elements with transformation", function() {
+                elements[0].transform(g.transform().rotate(30));
+                elements[1].transform(g.transform().scale(2, 1.5));
+                elements[2].transform(g.transform().translate(-100, -300));
+                vAlign(elements, rect, "start");
+                compareBBoxOrigin(elements, rect.origin.y, "y");
+            });
+
+            test("does not change the position based on the y axis", function() {
+                var initial = [path1.clippedBBox().origin.x, path2.clippedBBox().origin.x, path3.clippedBBox().origin.x];
+                vAlign(elements, rect);
+
+                compareBBoxOrigin(elements, initial, "x");
+            });
+        })();
+
+         // ------------------------------------------------------------
+        (function() {
+            var stack = d.stack;
+
+            module("Layout primitives / stack", {
+                setup: function() {
+                    createPaths();
+                }
+            });
+
+            test("stacks the elements by the x axis", function() {
+                stack(elements);
+
+                compareBBoxOrigin(elements.slice(1), [path1.clippedBBox().topRight().x, path2.clippedBBox().topRight().x]);
+            });
+
+            test("does not change the elements by the y axis", function() {
+                var initial = [path1.clippedBBox().origin.y, path2.clippedBBox().origin.y, path3.clippedBBox().origin.y]
+                stack(elements);
+
+                compareBBoxOrigin(elements, initial, "y");
+            });
+
+            test("skips elements without bbox", function() {
+                stack([path1, new d.Group(), new d.Group(), path2]);
+                equal(path2.bbox().topLeft().x, path1.bbox().topRight().x);
+            });
+
+            test("starts the stack from the first element with bbox", function() {
+                var initial = path1.bbox().topLeft().x;
+                stack([new d.Group(), path1, path2]);
+                equal(path1.bbox().topLeft().x, initial);
+                equal(path2.bbox().topLeft().x, path1.bbox().topRight().x);
+            });
+
+        })();
+
+         // ------------------------------------------------------------
+        (function() {
+            var vStack = d.vStack;
+
+            module("Layout primitives / vStack", {
+                setup: function() {
+                    createPaths();
+                }
+            });
+
+            test("stacks the elements by the y axis", function() {
+                vStack(elements);
+
+                compareBBoxOrigin(elements.slice(1), [path1.clippedBBox().bottomRight().y, path2.clippedBBox().bottomRight().y], "y");
+            });
+
+            test("does not change the elements by the x axis", function() {
+                var initial = [path1.clippedBBox().origin.x, path2.clippedBBox().origin.x, path3.clippedBBox().origin.x]
+                vStack(elements);
+
+                compareBBoxOrigin(elements, initial);
+            });
+
+            test("skips elements without bbox", function() {
+                vStack([path1, new d.Group(), new d.Group(), path2]);
+                equal(path2.bbox().origin.y, path1.bbox().bottomRight().y);
+            });
+
+            test("starts the stack from the first element with bbox", function() {
+                var initial = path1.bbox().origin.y;
+                vStack([new d.Group(), path1, path2]);
+                equal(path1.bbox().origin.y, initial);
+                equal(path2.bbox().origin.y, path1.bbox().bottomRight().y);
+            });
+
+        })();
 
     })();
 })();

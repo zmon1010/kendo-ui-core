@@ -1308,6 +1308,37 @@
         alignElements(elements, rect, alignment, "y", "height");
     }
 
+    function stack(elements) {
+        stackElements(elements, "x", "y", "width");
+    }
+
+    function vStack(elements) {
+        stackElements(elements, "y", "x", "height");
+    }
+
+    function stackElements(elements, stackAxis, otherAxis, sizeField) {
+        if (elements.length > 1) {
+            var element = elements[0];
+            var previousBBox = element.clippedBBox();
+            var origin = new Point();
+            var bbox;
+
+            for (idx = 1; idx < elements.length; idx++) {
+                element = elements[idx];
+                bbox = element.clippedBBox();
+                if (bbox) {
+                    if (previousBBox) {
+                        origin[stackAxis] = previousBBox.origin[stackAxis] + previousBBox.size[sizeField];
+                        origin[otherAxis] = bbox.origin[otherAxis];
+                        translateToPoint(origin, bbox, element);
+                        bbox.origin[stackAxis] = origin[stackAxis];
+                    }
+                    previousBBox = bbox;
+                }
+            }
+        }
+    }
+
     function alignElements(elements, rect, alignment, axis, sizeField) {
         var bbox, start, point;
         alignment = alignment || "start";
@@ -1350,7 +1381,6 @@
     // Exports ================================================================
     deepExtend(drawing, {
         align: align,
-        vAlign: vAlign,
         Arc: Arc,
         Circle: Circle,
         Element: Element,
@@ -1365,7 +1395,10 @@
         Path: Path,
         RadialGradient: RadialGradient,
         Segment: Segment,
-        Text: Text
+        stack: stack,
+        Text: Text,
+        vAlign: vAlign,
+        vStack: vStack
     });
 
 })(window.kendo.jQuery);
