@@ -618,4 +618,29 @@
             setupBubbleChart(plotArea, { series: [ {data: [{x: 1, y: 1, size: 100}], type: "bubble"} ] });
         });
     })();
+
+    // ------------------------------------------------------------
+    (function() {
+        module("Bubble Chart / Multiple series", {
+            setup: function() {
+                setupBubbleChart(plotArea, {
+                    series: [{
+                        data: [{x: 1, y: 1, size: 10}, {x: 1, y: 1, size: 100}],
+                        type: "bubble"
+                    }, {
+                        data: [{x: 1, y: 1, size: 100}, {x: 1, y: 1, size: 1000}],
+                        type: "bubble"
+                    }]
+                });
+            }
+        });
+
+        test("Scale is shared across series", function() {
+            var sizes = $.map(bubbleChart.points, function(p) {
+                return p.options.markers.size;
+            });
+
+            ok(sizes[0] < sizes[1]);
+        });
+    })();
 })();
