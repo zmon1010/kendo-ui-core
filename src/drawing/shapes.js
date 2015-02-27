@@ -1316,6 +1316,86 @@
         stackElements(getStackElements(elements), "y", "x", "height");
     }
 
+    function wrap(elements, rect) {
+        var result = [];
+        var stacks = getStacks(elements, rect, "width");
+        var origin = rect.origin.clone();
+        var startElement;
+        var stack;
+        for (var idx = 0; idx < stacks.length; idx++) {
+            stack = stacks[idx];
+            startElement = stack[0];
+            origin.y = startElement.bbox.origin.y;
+            translateToPoint(origin, startElement.bbox, startElement.element);
+            startElement.bbox.origin.x = origin.x;
+            stackElements(stack, "x", "y", "width");
+            result.push([]);
+            for (var elementIdx = 0; elementIdx < stack.length; elementIdx++) {
+                result[idx].push(stack[elementIdx].element);
+            }
+        }
+        return result;
+    }
+
+    function fit (element, rect)  {
+        var bbox = element.clippedBBox();
+        var elementSize = bbox.size;
+        var rectSize = rect.size;
+        if (rectSize.width < elementSize.width || rectSize.height < elementSize.height) {
+            var scale = Math.min(rectSize.width / elementSize.width, rectSize.height / elementSize.height);
+            var transform = element.transform() || g.transform();
+            transform.scale(scale, scale);
+            element.transform(transform);
+        }
+    }
+
+    //TO DO: consider using same function for the layout with callbacks
+    function getStacks(elements, rect, sizeField) {
+        var maxSize = rect.size[sizeField];
+        var stackSize = 0;
+        var stacks = [];
+        var stack = [];
+        var element;
+        var size;
+        var bbox;
+
+        var addElementToStack = function() {
+            stack.push({
+                element: element,
+                bbox: bbox
+            });
+        };
+        for (var idx = 0; idx < elements.length; idx++) {
+            element = elements[idx];
+            bbox = element.clippedBBox();
+            if (bbox) {
+                size = bbox.size[sizeField];
+                if (stackSize + size > maxSize) {
+                    if (stack.length) {
+                        stacks.push(stack);
+                        stack = [];
+                        addElementToStack();
+                        stackSize = size;
+                    } else {
+                        addElementToStack();
+                        stacks.push(stack);
+                        stack = [];
+                        stackSize = 0;
+                    }
+                } else {
+                    addElementToStack();
+                    stackSize += size;
+                }
+            }
+        }
+
+        if (stack.length) {
+            stacks.push(stack);
+        }
+
+        return stacks;
+    }
+
     function getStackElements(elements) {
         var stackElements = [];
         var element;
@@ -1399,6 +1479,7 @@
         Circle: Circle,
         Element: Element,
         ElementsArray: ElementsArray,
+        fit: fit,
         Gradient: Gradient,
         GradientStop: GradientStop,
         Group: Group,
@@ -1412,7 +1493,8 @@
         stack: stack,
         Text: Text,
         vAlign: vAlign,
-        vStack: vStack
+        vStack: vStack,
+        wrap: wrap
     });
 
 })(window.kendo.jQuery);

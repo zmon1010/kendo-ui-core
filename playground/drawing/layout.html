@@ -22,7 +22,21 @@
     <script src="../../src/drawing/vml.js"></script>
   </head>
   <body>
+  <div>
+    var group = new Group();<br/>
+    var stacks = d.wrap(elements, rect);<br/>
+    for (var stackIdx = 0; stackIdx < stacks.length; stackIdx++) {<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;var stackGroup = new Group();<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;stackGroup.append.apply(stackGroup, stacks[stackIdx]);<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;d.vAlign(stacks[stackIdx], rect, "center");<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;group.append(stackGroup);<br/>
+    }<br/>
+    d.vStack(group.children);<br/>
+    d.vAlign([group], rect, "center");<br/>
+  </div>
   <div id="container"></div>
+
+  
   <script>
     //test curve M100 100 c 50 50 100 0 200 0 200 10 0 100 -50 100
     //test arc M275 386.6 A 50 100 0 0 0 350 300
@@ -40,19 +54,34 @@
         Surface = d.Surface,
         surface = Surface.create(document.getElementById("container"), {width: 2000, height: 1000, type: "svg"});
 
-    var rect = new Rect([300, 200], [400, 500]);
+    var rect = new Rect([300, 200], [400, 300]);
     var circle = new Circle(new gCircle([500, 100], 100));
     var otherCircle =  new Circle(new gCircle([500, 100], 50));
     circle.transform(g.transform().scale(1.5));
     var path = Path.fromRect(new Rect([200, 200], [100, 200]));
     path.transform(g.transform().rotate(30, [50, 100]));
-    var group = new Group().append(circle, otherCircle, path);
+    var elements = [circle, otherCircle, path];
+    var group = new Group();
+    var stacks = d.wrap(elements, rect);
+    for (var stackIdx = 0; stackIdx < stacks.length; stackIdx++) {
+        var stackGroup = new Group();
+        stackGroup.append.apply(stackGroup, stacks[stackIdx]);
+        d.vAlign(stacks[stackIdx], rect, "center");
+        group.append(stackGroup);
+    }
+    d.vStack(group.children);
+    d.fit(group, rect);
+    d.vAlign([group], rect, "center");
+    d.align([group], rect, "center");
 
-    d.stack(group.children);
     surface.draw(group);
-    // surface.draw(Path.fromRect(rect));
-    // surface.draw(new Path().moveTo(rect.origin.x, 0).lineTo(rect.origin.x, 2000));
-    // surface.draw(new Path().moveTo(0, rect.origin.y).lineTo(2000, rect.origin.y));
+
+    surface.draw(Path.fromRect(rect));
+    surface.draw(new Path().moveTo(rect.origin.x, 0).lineTo(rect.origin.x, 2000));
+    surface.draw(new Path().moveTo(0, rect.origin.y).lineTo(2000, rect.origin.y));
+
+
+
     // group.append().append(circle);
     // var layout = new Layout(rect, {
         // spacing: 10,
