@@ -8,7 +8,7 @@ class TelerikProductCreateBot
 
     def initialize
 
-        @driver = Selenium::WebDriver.for(:firefox)
+        @driver = Selenium::WebDriver.for(:chrome)
         @driver.navigate.to ADMIN_URL
 
         driver.find_element(:name, "UserName").send_keys ADMIN_RELEASE_UPLOAD_LOGIN
