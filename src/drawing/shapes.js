@@ -1309,32 +1309,46 @@
     }
 
     function stack(elements) {
-        stackElements(elements, "x", "y", "width");
+        stackElements(getStackElements(elements), "x", "y", "width");
     }
 
     function vStack(elements) {
-        stackElements(elements, "y", "x", "height");
+        stackElements(getStackElements(elements), "y", "x", "height");
+    }
+
+    function getStackElements(elements) {
+        var stackElements = [];
+        var element;
+        var bbox;
+        for (var idx = 0; idx < elements.length; idx++) {
+            element = elements[idx];
+            bbox = element.clippedBBox();
+            if (bbox) {
+                stackElements.push({
+                    element: element,
+                    bbox: bbox
+                });
+            }
+        }
+
+        return stackElements;
     }
 
     function stackElements(elements, stackAxis, otherAxis, sizeField) {
         if (elements.length > 1) {
-            var element = elements[0];
-            var previousBBox = element.clippedBBox();
+            var previousBBox = elements[0].bbox;
             var origin = new Point();
+            var element;
             var bbox;
 
-            for (idx = 1; idx < elements.length; idx++) {
-                element = elements[idx];
-                bbox = element.clippedBBox();
-                if (bbox) {
-                    if (previousBBox) {
-                        origin[stackAxis] = previousBBox.origin[stackAxis] + previousBBox.size[sizeField];
-                        origin[otherAxis] = bbox.origin[otherAxis];
-                        translateToPoint(origin, bbox, element);
-                        bbox.origin[stackAxis] = origin[stackAxis];
-                    }
-                    previousBBox = bbox;
-                }
+            for (var idx = 1; idx < elements.length; idx++) {
+                element = elements[idx].element;
+                bbox = elements[idx].bbox;
+                origin[stackAxis] = previousBBox.origin[stackAxis] + previousBBox.size[sizeField];
+                origin[otherAxis] = bbox.origin[otherAxis];
+                translateToPoint(origin, bbox, element);
+                bbox.origin[stackAxis] = origin[stackAxis];
+                previousBBox = bbox;
             }
         }
     }
