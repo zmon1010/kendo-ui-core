@@ -181,7 +181,8 @@
                 adjust += bottomPadding + bottomBorder;
                 for (var el = element.firstChild; el; el = el.nextSibling) {
                     if (el.nodeType == 1 /* Element */) {
-                        if ($(el).is(forceBreak)) {
+                        var jqel = $(el);
+                        if (jqel.is(forceBreak)) {
                             breakAtElement(el);
                             continue;
                         }
@@ -202,21 +203,9 @@
                             // elements ends up on next page, or possibly doesn't fit on a page at
                             // all.  break before it anyway if it's an <img> or <tr>, otherwise
                             // attempt to split.
-                            switch (el.tagName.toLowerCase()) {
-                              case "img":
-                              case "tr":
-                              case "iframe":
-                              case "svg":
-                              case "object":
-                              case "canvas":
-                              case "input":
-                              case "textarea":
-                              case "select":
-                              case "video":
+                            if (jqel.data("kendoChart") || /^(?:img|tr|iframe|svg|object|canvas|input|textarea|select|video)/i.test(el.tagName)) {
                                 breakAtElement(el);
-                                break;
-
-                              default:
+                            } else {
                                 splitElement(el);
                             }
                         }
