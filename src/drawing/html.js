@@ -189,7 +189,11 @@
 
                 if (template) {
                     pages.forEach(function(page, i){
-                        var el = template({ pageNum: i + 1, totalPages: pages.length });
+                        var el = template({
+                            element    : page,
+                            pageNum    : i + 1,
+                            totalPages : pages.length
+                        });
                         if (el) {
                             page.appendChild(el);
                         }
