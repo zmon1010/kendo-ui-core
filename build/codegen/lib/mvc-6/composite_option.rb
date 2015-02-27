@@ -7,6 +7,9 @@ module CodeGen::MVC6::Wrappers::Options
 
         def to_declaration
         end
+
+        def to_fluent
+        end
     end
 
 end

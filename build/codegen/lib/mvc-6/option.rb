@@ -6,6 +6,8 @@ module CodeGen::MVC6::Wrappers::Options
         public <%= struct? ? csharp_type + '?' : csharp_type%> <%= csharp_name %> { get; set; }
     })
 
+    FLUENT = ERB.new(File.read("build/codegen/lib/mvc-6/option-fluent.erb"), 0, '%<>')
+
     CSHARP_TYPES = {
         'Number' => 'double',
         'String' => 'string',
@@ -59,6 +61,10 @@ module CodeGen::MVC6::Wrappers::Options
 
         def to_declaration
             DECLARATION.result(binding)
+        end
+
+        def to_fluent
+            FLUENT.result(binding)
         end
     end
 

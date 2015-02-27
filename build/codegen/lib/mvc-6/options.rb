@@ -25,6 +25,10 @@ module CodeGen::MVC6::Wrappers::Options
         f = options.find_all { |o| o.composite? || !composite.include?(o.name) }
     end
 
+    def csharp_array?
+        csharp_type.match(/\[\]$/)
+    end
+
     def csharp_name
         postfix = name[/template$/i].nil? ? "" : "Id"
 
@@ -33,6 +37,10 @@ module CodeGen::MVC6::Wrappers::Options
 
     def csharp_generic
         CodeGen::MVC6::Wrappers::GENERIC_ARGS[full_name.downcase.to_sym]
+    end
+
+    def csharp_builder_name
+        "#{owner.csharp_class}Builder#{owner.csharp_generic_args}"
     end
 
     def csharp_generic_args
