@@ -26,7 +26,6 @@ module CodeGen::MVC6::Wrappers::Options
         def csharp_type
             return_type = ''
 
-            p name
             if enum_type
                 # Manually specified enum type in YML
                 return_type = enum_type
@@ -44,7 +43,7 @@ module CodeGen::MVC6::Wrappers::Options
             end
 
             if return_type.nil? || return_type.empty?
-                raise "Unknown type mapping for #{full_name}, source type is #{type[0]}"
+                raise "Unknown type mapping for #{full_name}, source type is #{type}"
             end
 
             return_type

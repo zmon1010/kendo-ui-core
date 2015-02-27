@@ -38,7 +38,7 @@ namespace Kendo.Mvc.UI
             }
         }
 
-        public IList<DateTime> Dates
+        public bool Enabled
         {
             get;
             set;
@@ -59,13 +59,13 @@ namespace Kendo.Mvc.UI
             base.WriteHtml(writer);
         }
 
-        protected override Dictionary<string, object> SerializeSettings()
+        public override void WriteInitializationScript(TextWriter writer)
         {
-            var settings = base.SerializeSettings();
+            var settings = SerializeSettings();
 
-            // Do custom serialization here
+            // TODO: Manually serialized settings go here
 
-            return settings;
+            writer.Write(Initializer.Initialize(Selector, "DateTimePicker", settings));
         }
     }
 }
