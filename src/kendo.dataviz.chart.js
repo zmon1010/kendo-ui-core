@@ -3713,10 +3713,16 @@ var __meta__ = {
                             }
                         }
 
-                        limitsCache[key] = limits;
+                        if (limits.min !== MAX_VALUE || limits.max !== MIN_VALUE) {
+                            limitsCache[key] = limits;
+                        } else {
+                            limits = null;
+                        }
                     }
 
-                    chart.valueAxisRanges[axisName] = limits;
+                    if (limits) {
+                        chart.valueAxisRanges[axisName] = limits;
+                    }
                 }
             }
         },
