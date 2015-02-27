@@ -34,6 +34,18 @@ window.pdf = function pdf(sel) {
     });
 }
 
+window.pdfPages = function(sel, options) {
+    var el = $(sel)[0];
+    console.time("pdf");
+    console.time("drawing");
+    kendo.dataviz.drawing.drawDOM(el, options).done(function(root){
+        console.timeEnd("drawing");
+        kendo.dataviz.drawing.pdf.saveAs(root, "kendo.pdf", "http://kendo.local:7569/", function(){
+            console.timeEnd("pdf");
+        });
+    });
+};
+
 window.h2c = function h2c(sel) {
     console.time("html2canvas");
     html2canvas($(sel)[0]).then(function(canvas){

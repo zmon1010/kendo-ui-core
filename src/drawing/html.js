@@ -50,6 +50,9 @@
     /* -----[ exports ]----- */
 
     function drawDOM(element, options) {
+        if (!options) {
+            options = {};
+        }
         var defer = $.Deferred();
         element = $(element)[0];
 
@@ -88,67 +91,259 @@
 
         cacheImages(element, function(){
             var forceBreak = options && options.forcePageBreak;
-            if (forceBreak) {
+            var paperOptions = options && kendo.pdf.getPaperOptions(function(key, def){
+                return key in options ? options[key] : def;
+            });
+            var pageWidth = options.paperSize && paperOptions.paperSize[0];
+            var pageHeight = options.paperSize && paperOptions.paperSize[1];
+            var margin = options.margin && paperOptions.margin;
+            if (forceBreak || pageHeight) {
+                if (!margin) {
+                    margin = { left: 0, top: 0, right: 0, bottom: 0 };
+                }
                 var group = new drawing.Group({
-                    pdf: { multiPage: true }
+                    pdf: {
+                        multiPage : true,
+                        paperSize : options.paperSize ? paperOptions.paperSize : "auto"
+                    }
                 });
-                var x = handlePageBreaks(element, forceBreak);
-                setTimeout(function(){
-                    x.pages.forEach(function(page){
-                        group.append(doOne(page));
-                    });
-                    x.container.parentNode.removeChild(x.container);
-                    defer.resolve(group);
-                }, 10);
+                handlePageBreaks(
+                    function(x) {
+                        x.pages.forEach(function(page){
+                            group.append(doOne(page));
+                        });
+                        x.container.parentNode.removeChild(x.container);
+                        defer.resolve(group);
+                    },
+                    element,
+                    forceBreak,
+                    pageWidth ? pageWidth - margin.left - margin.right : null,
+                    pageHeight ? pageHeight - margin.top - margin.bottom : null,
+                    margin,
+                    makeTemplate(options.template)
+                );
             } else {
                 defer.resolve(doOne(element));
             }
         });
 
-        function handlePageBreaks(element, forceBreak) {
+        function makeTemplate(template) {
+            if (template != null) {
+                if (typeof template == "string") {
+                    template = kendo.template(template.replace(/^\s+|\s+$/g, ""));
+                }
+                if (typeof template == "function") {
+                    return function(data) {
+                        var el = template(data);
+                        if (el) {
+                            return $(el)[0];
+                        }
+                    };
+                }
+                // assumed jQuery object or DOM element
+                return function() {
+                    return $(template).clone()[0];
+                };
+            }
+        }
+
+        function handlePageBreaks(callback, element, forceBreak, pageWidth, pageHeight, margin, template) {
             var doc = element.ownerDocument;
             var pages = [];
             var copy = $(element).clone(true, true)[0];
             var cont = doc.createElement("KENDO-PDF-DOCUMENT");
+            var adjust = 0;
+
             $(cont).css({
+                display  : "block",
                 position : "absolute",
                 left     : "-10000px",
                 top      : "-10000px"
             });
+
+            // we need this here even though we set width individually for each page in makePage
+            // below, because the universe is expanding.  (hint: no idea, but without it the content
+            // is truncated).
+            if (pageWidth) {
+                $(cont).css({ width: pageWidth });
+            }
+
+            cont.appendChild(copy);
+            element.parentNode.insertBefore(cont, element);
+
+            // we need the timeout here, so that images dimensions are
+            // properly computed in DOM when we start our thing.
+            setTimeout(function() {
+                if (forceBreak != "-" || pageHeight) {
+                    splitElement(copy);
+                }
+
+                // XXX: can contain only text nodes.  better risk producing
+                // an empty page than truncating the content.
+                // if (!(pages.length > 0 && copy.children.length === 0)) {
+                var page = makePage();
+                copy.parentNode.insertBefore(page, copy);
+                page.appendChild(copy);
+                // }
+
+                if (template) {
+                    pages.forEach(function(page, i){
+                        var el = template({
+                            element    : page,
+                            pageNum    : i + 1,
+                            totalPages : pages.length
+                        });
+                        if (el) {
+                            page.appendChild(el);
+                        }
+                    });
+                }
+
+                // allow another timeout here to make sure the images
+                // are rendered in the new DOM nodes.
+                setTimeout(function(){
+                    callback({ pages: pages, container: cont });
+                }, 10);
+            }, 10);
+
+            function splitElement(element) {
+                var style = getComputedStyle(element);
+                var bottomPadding = parseFloat(getPropertyValue(style, "padding-bottom"));
+                var bottomBorder = parseFloat(getPropertyValue(style, "border-bottom-width"));
+                var saveAdjust = adjust;
+                adjust += bottomPadding + bottomBorder;
+                for (var el = element.firstChild; el; el = el.nextSibling) {
+                    if (el.nodeType == 1 /* Element */) {
+                        var jqel = $(el);
+                        if (jqel.is(forceBreak)) {
+                            breakAtElement(el);
+                            continue;
+                        }
+                        if (!pageHeight) {
+                            // we're in "manual breaks mode"
+                            splitElement(el);
+                            continue;
+                        }
+                        if (!/^(?:static|relative)$/.test(getPropertyValue(getComputedStyle(el), "position"))) {
+                            continue;
+                        }
+                        var fall = fallsOnMargin(el);
+                        if (fall == 1) {
+                            // element starts on next page, break before anyway.
+                            breakAtElement(el);
+                        }
+                        else if (fall) {
+                            // elements ends up on next page, or possibly doesn't fit on a page at
+                            // all.  break before it anyway if it's an <img> or <tr>, otherwise
+                            // attempt to split.
+                            if (jqel.data("kendoChart") || /^(?:img|tr|iframe|svg|object|canvas|input|textarea|select|video)/i.test(el.tagName)) {
+                                breakAtElement(el);
+                            } else {
+                                splitElement(el);
+                            }
+                        }
+                        else {
+                            splitElement(el);
+                        }
+                    }
+                    else if (el.nodeType == 3 /* Text */ && pageHeight) {
+                        splitText(el);
+                    }
+                }
+                adjust = saveAdjust;
+            }
+
+            function breakAtElement(el) {
+                var page = makePage();
+                var range = doc.createRange();
+                range.setStartBefore(copy);
+                range.setEndBefore(el);
+                page.appendChild(range.extractContents());
+                copy.parentNode.insertBefore(page, copy);
+            }
+
             function makePage() {
                 var page = doc.createElement("KENDO-PDF-PAGE");
+                $(page).css({
+                    display  : "block",
+                    width    : pageWidth || "auto",
+                    padding  : (margin.top + "px " +
+                                margin.right + "px " +
+                                margin.bottom + "px " +
+                                margin.left + "px"),
+
+                    // allow absolutely positioned elements to be relative to current page
+                    position : "relative",
+
+                    // without the following we might affect layout of subsequent pages
+                    height   : pageHeight || "auto",
+                    overflow : pageHeight || pageWidth ? "hidden" : "visible",
+                    clear    : "both"
+                });
                 if (options && options.pageClassName) {
                     page.className = options.pageClassName;
                 }
                 pages.push(page);
                 return page;
             }
-            cont.appendChild(copy);
-            element.parentNode.insertBefore(cont, element);
-            if (forceBreak != "-") {
-                (function split(node) {
-                    for (var el = node.firstChild; el; el = el.nextSibling) {
-                        if (el.nodeType == 1) {
-                            if ($(el).is(forceBreak)) {
-                                var page = makePage();
-                                var range = doc.createRange();
-                                range.setStartBefore(copy);
-                                range.setEndBefore(el);
-                                page.appendChild(range.extractContents());
-                                copy.parentNode.insertBefore(page, copy);
-                            } else {
-                                split(el);
-                            }
+
+            function fallsOnMargin(thing) {
+                var box = thing.getBoundingClientRect();
+                if (box.width === 0 || box.height === 0) {
+                    // I'd say an element with dimensions zero fits on current page.
+                    return 0;
+                }
+                var top = copy.getBoundingClientRect().top;
+                var available = pageHeight - adjust;
+                return (box.height > available) ? 3
+                    : (box.top - top > available) ? 1
+                    : (box.bottom - top > available) ? 2
+                    : 0;
+            }
+
+            function splitText(node) {
+                if (!/\S/.test(node.data)) {
+                    return;
+                }
+
+                var len = node.data.length;
+                var range = doc.createRange();
+                range.selectNodeContents(node);
+                var fall = fallsOnMargin(range);
+                if (!fall) {
+                    return;     // the whole text fits on current page
+                }
+
+                var nextnode = node;
+                if (fall == 1) {
+                    // starts on next page, break before anyway.
+                    breakAtElement(node);
+                }
+                else {
+                    (function findEOP(min, pos, max) {
+                        range.setEnd(node, pos);
+                        if (min == pos || pos == max) {
+                            return pos;
                         }
-                    }
-                })(copy);
+                        if (fallsOnMargin(range)) {
+                            return findEOP(min, (min + pos) >> 1, pos);
+                        } else {
+                            return findEOP(pos, (pos + max) >> 1, max);
+                        }
+                    })(0, len >> 1, len);
+
+                    // This is only needed for IE, but it feels cleaner to do it anyway.  Without
+                    // it, IE will truncate a very long text (playground/pdf-long-text-2.html).
+                    nextnode = node.splitText(range.endOffset);
+
+                    var page = makePage();
+                    range.setStartBefore(copy);
+                    page.appendChild(range.extractContents());
+                    copy.parentNode.insertBefore(page, copy);
+                }
+
+                splitText(nextnode);
             }
-            if (!(pages.length > 0 && copy.children.length === 0)) {
-                var page = makePage();
-                copy.parentNode.insertBefore(page, copy);
-                page.appendChild(copy);
-            }
-            return { pages: pages, container: cont };
         }
 
         return defer.promise();
@@ -2195,10 +2390,19 @@
         //drawDebugBox(element.getBoundingClientRect(), container);
     }
 
-    function drawDebugBox(box, group) {
-        var path = drawing.Path.fromRect(new geo.Rect([ box.left, box.top ], [ box.width, box.height ]));
-        group.append(path);
-    }
+    // function drawDebugBox(box, group) {
+    //     var path = drawing.Path.fromRect(new geo.Rect([ box.left, box.top ], [ box.width, box.height ]));
+    //     group.append(path);
+    // }
+
+    // function dumpTextNode(node) {
+    //     var txt = node.data.replace(/^\s+/, "");
+    //     if (txt.length < 100) {
+    //         console.log(node.data.length + ": |" + txt);
+    //     } else {
+    //         console.log(node.data.length + ": |" + txt.substr(0, 50) + "|...|" + txt.substr(-50));
+    //     }
+    // }
 
     function mmul(a, b) {
         var a1 = a[0], b1 = a[1], c1 = a[2], d1 = a[3], e1 = a[4], f1 = a[5];
