@@ -3,15 +3,15 @@
   <head>
     <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
     <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <link rel="stylesheet" href="../dist/styles/dataviz/kendo.dataviz.css" />
+    <link rel="stylesheet" href="../dist/styles/dataviz/kendo.dataviz.default.css" />
     <script src="loader.js"></script>
     <script src="html2canvas.min.js"></script>
     <script src="pako.min.js"></script>
     <script>
       requireSync([
         "../src/jquery.js",
-        "../src/kendo.pdf.js",
-        "../src/kendo.grid.js",
-        "../src/kendo.dropdownlist.js",
+        "../src/kendo.all.js",
         "./console.time.js",
         "./test-pdf-helpers.js"
       ]);
@@ -80,23 +80,62 @@
     <label>white-space: nowrap <input type="checkbox" /></label>
 
     <script>
-      $("button").click(function(){
-        pdfPages('#test1', {
-          paperSize: $(".paper").val(),
-          margin: $(".margin").val(),
-          forcePageBreak: ".page-break"
-        })
-      });
-      $("select.width").kendoDropDownList({
-        change: function() {
-          $("#test1").css({ width: this.value() });
-        }
-      });
-      $("input[type=checkbox]").click(function(){
-        $("#test1").css({
-          whiteSpace: this.checked ? "nowrap" : ""
+      $(document).ready(function(){
+        $("button").click(function(){
+          pdfPages('#test1', {
+            paperSize: $(".paper").val(),
+            margin: $(".margin").val(),
+            forcePageBreak: ".page-break"
+          })
         });
+        $("select.width").kendoDropDownList({
+          change: function() {
+            $("#test1").css({ width: this.value() });
+          }
+        });
+        $("input[type=checkbox]").click(function(){
+          $("#test1").css({
+            whiteSpace: this.checked ? "nowrap" : ""
+          });
+        });
+        $("#chart1").kendoChart({
+          title: {
+              text: "Site Visitors Stats \n /thousands/"
+          },
+          legend: {
+              visible: false
+          },
+          seriesDefaults: {
+              type: "bar"
+          },
+          series: [{
+              name: "Total Visits",
+              data: [56000, 63000, 74000, 91000, 117000, 138000]
+          }, {
+              name: "Unique visitors",
+              data: [52000, 34000, 23000, 48000, 67000, 83000]
+          }],
+          valueAxis: {
+              max: 140000,
+              line: {
+                  visible: false
+              },
+              minorGridLines: {
+                  visible: true
+              }
+          },
+          categoryAxis: {
+              categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+              majorGridLines: {
+                  visible: false
+              }
+          },
+          tooltip: {
+              visible: true,
+              template: "#= series.name #: #= value #"
+          }
       });
+    });
     </script>
 
     <div id="test1" class="page">
@@ -139,6 +178,8 @@
         <p>Cras quis augue imperdiet, venenatis nisi nec, eleifend ipsum. Praesent id nisl turpis. Integer iaculis libero metus. Duis facilisis ante ac tortor facilisis, sed imperdiet ipsum auctor. In interdum mauris enim, at eleifend magna aliquet vitae. Suspendisse eget fermentum erat, eget molestie diam. Aliquam dapibus aliquet porttitor. Curabitur ligula eros, elementum varius convallis id, cursus imperdiet urna. Praesent eleifend iaculis odio. Sed vitae vehicula ante, ut viverra erat.</p>
 
         <p>Cras eu rhoncus tellus. Curabitur suscipit ipsum congue porttitor malesuada. Aenean non pellentesque tellus. Maecenas sit amet felis in tortor commodo sagittis. Aliquam at blandit diam. Nunc quis magna eu metus tincidunt dapibus. Sed bibendum urna ut elementum volutpat. Sed nisl purus, iaculis quis felis ut, pulvinar convallis ligula. Vestibulum sit amet tellus viverra, aliquet lorem ac, cursus neque. Etiam maximus orci a venenatis convallis.</p>
+
+        <div id="chart1" style="width: 400px; margin: 1em auto"></div>
 
         <p>Mauris scelerisque consequat leo at lobortis. Cras efficitur dui quis massa tempor, quis efficitur sem malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dolor turpis, pellentesque quis est vitae, sodales interdum turpis. Praesent in neque vel nulla sagittis fermentum vel quis risus. Integer sapien elit, sagittis at tellus ut, elementum malesuada enim. Nunc ut suscipit quam. Integer ut magna pulvinar risus faucibus lobortis sit amet eget nisi. In hac habitasse platea dictumst. Donec tempus dignissim sapien ut ullamcorper.</p>
 
