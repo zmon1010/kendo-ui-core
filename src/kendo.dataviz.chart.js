@@ -7359,7 +7359,7 @@ var __meta__ = {
                     value = pointData.valueFields.value;
                     plotValue = math.abs(value);
                     fields = pointData.fields;
-                    angle = round(plotValue * anglePerValue, DEFAULT_PRECISION);
+                    angle = plotValue * anglePerValue;
                     explode = data.length != 1 && !!fields.explode;
                     if (!isFn(currentSeries.color)) {
                         currentSeries.color = fields.color || colors[i % colorsCount];

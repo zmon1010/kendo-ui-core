@@ -71,6 +71,19 @@
             });
         });
 
+        test("points have set extremely small angle", function() {
+            setupDonutChart(plotArea, {
+                series: [{
+                    type: "donut",
+                    data: [10000000000, 1]
+                }]
+            });
+
+            $.each(donutChart.points, function() {
+                ok(this.sector.angle > 0);
+            });
+        });
+
         test("points have set owner", function() {
             ok(firstSegment.owner === donutChart);
         });
