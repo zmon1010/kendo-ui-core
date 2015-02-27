@@ -25,6 +25,14 @@ module CodeGen::MVC6::Wrappers::Options
         f = options.find_all { |o| o.composite? || !composite.include?(o.name) }
     end
 
+    def handler?
+        csharp_type.eql?('ClientHandlerDescriptor')
+    end
+
+    def dictionary?
+        csharp_type.match(/^IDictionary/)
+    end
+
     def csharp_array?
         csharp_type.match(/\[\]$/)
     end
@@ -55,14 +63,6 @@ module CodeGen::MVC6::Wrappers::Options
         generics.map { |item| "where #{item[:name]} : #{item[:constraint]} "}.join(' ')
     end
 
-    def to_initialization
-        type_args = csharp_generic_args if needs_generics?
-
-        ERB.new(%{
-        <%= csharp_name%> = new <%= csharp_class %><%= type_args %>();
-            }).result(binding)
-    end
-
     def uses_generic_args?
         GENERIC_BUILDER_SKIP_LIST.inject(true) do |uses_generics, field|
             uses_generics && !full_name.start_with?(field)
@@ -90,5 +90,31 @@ module CodeGen::MVC6::Wrappers::Options
 
     def values
         @values if self.respond_to?(:values)
+    end
+
+    def csharp_type
+        return_type = ''
+
+        if enum_type
+            # Manually specified enum type in YML
+            return_type = enum_type
+        elsif values
+            # Enumerable with values specified in widget YML
+            return_type = "#{owner.csharp_class.gsub(/Settings/, "")}#{csharp_name}"
+        elsif full_name.match(/attributes$/)
+            return_type = 'IDictionary<string,object>'
+        elsif type.is_a? String
+            # Manually overriden type in YML
+            return_type = type
+        else
+            # Map to C# type
+            return_type = CSHARP_TYPES[type[0]]
+        end
+
+        if return_type.nil? || return_type.empty?
+            raise "Unknown type mapping for #{full_name}, source type is #{type}"
+        end
+
+        return_type
     end
 end

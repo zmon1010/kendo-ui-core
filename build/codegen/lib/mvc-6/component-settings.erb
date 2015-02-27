@@ -2,6 +2,7 @@ using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
@@ -15,8 +16,7 @@ namespace Kendo.Mvc.UI
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
-
-            // TODO: Automatically serialized settings go here
+<%= unique_options.map { |o| o.to_serialization}.join %>
 
             return settings;
         }
