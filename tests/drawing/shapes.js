@@ -3079,5 +3079,190 @@
 
         })();
 
+        // ------------------------------------------------------------
+        (function() {
+            var wrap = d.wrap;
+            var rect;
+
+            module("Layout primitives / wrap / single stack", {
+                setup: function() {
+                    createPaths();
+                    rect = new g.Rect([100, 100], [600, 400]);
+                }
+            });
+
+            test("stacks the elements by the x axis starting from the rect origin", function() {
+                wrap(elements, rect);
+                equal(path1.clippedBBox().topLeft().x, 100);
+                compareBBoxOrigin(elements.slice(1), [path1.clippedBBox().topRight().x, path2.clippedBBox().topRight().x]);
+            });
+
+            test("returns an array with the stacks", function() {
+                var stacks = wrap(elements, rect);
+                var stack = stacks[0];
+                equal(stacks.length, 1);
+                ok(stack[0] === path1);
+                ok(stack[1] === path2);
+                ok(stack[2] === path3);
+            });
+
+            test("does not change the elements by the y axis", function() {
+                var initial = [path1.clippedBBox().origin.y, path2.clippedBBox().origin.y, path3.clippedBBox().origin.y]
+                wrap(elements, rect);
+
+                compareBBoxOrigin(elements, initial, "y");
+            });
+
+            test("skips elements without bbox", function() {
+                wrap([path1, new d.Group(), new d.Group(), path2], rect);
+                equal(path2.bbox().topLeft().x, path1.bbox().topRight().x);
+            });
+
+            test("starts the stack from the first element with bbox", function() {
+                wrap([new d.Group(), path1, path2], rect);
+                equal(path1.bbox().topLeft().x, 100);
+                equal(path2.bbox().topLeft().x, path1.bbox().topRight().x);
+            });
+
+            // ------------------------------------------------------------
+            module("Layout primitives / wrap / multiple stacks", {
+                setup: function() {
+                    createPaths();
+                    rect = new g.Rect([100, 100], [400, 400]);
+                }
+            });
+
+            test("wraps the elements in multiple stacks starting from the rect origin", function() {
+                wrap(elements, rect);
+                var bbox1 = path1.bbox();
+                var bbox2 = path2.bbox();
+                var bbox3 = path3.bbox();
+
+                equal(bbox1.topLeft().x, 100);
+                equal(bbox1.topRight().x, bbox2.topLeft().x);
+                equal(bbox3.topLeft().x, 100);
+            });
+
+            test("returns an array with the stacks", function() {
+                var stacks = wrap(elements, rect);
+                equal(stacks.length, 2);
+                ok(stacks[0][0] === path1);
+                ok(stacks[0][1] === path2);
+                ok(stacks[1][0] === path3);
+            });
+
+            test("does not change the elements by the y axis", function() {
+                var initial = [path1.bbox().origin.y, path2.bbox().origin.y, path3.bbox().origin.y]
+                wrap(elements, rect);
+
+                compareBBoxOrigin(elements, initial, "y");
+            });
+
+            test("skips elements without bbox", function() {
+                wrap([path1, new d.Group(), new d.Group(), path2], rect);
+                equal(path2.bbox().topLeft().x, path1.bbox().topRight().x);
+            });
+
+            test("starts the stack from the first element with bbox", function() {
+                wrap([new d.Group(), path1, path2, new d.Group(), path3], rect);
+                equal(path1.bbox().topLeft().x, 100);
+                equal(path2.bbox().topLeft().x, path1.bbox().topRight().x);
+                equal(path3.bbox().origin.x, 100);
+            });
+        })();
+
+// ------------------------------------------------------------
+        (function() {
+            var vWrap = d.vWrap;
+            var rect;
+
+            module("Layout primitives / vWrap / single stack", {
+                setup: function() {
+                    createPaths();
+                    rect = new g.Rect([100, 100], [400, 300]);
+                }
+            });
+
+            test("stacks the elements by the y axis starting from the rect origin", function() {
+                vWrap(elements, rect);
+                equal(path1.bbox().origin.y, 100);
+
+                compareBBoxOrigin(elements.slice(1), [path1.bbox().bottomLeft().y, path2.bbox().bottomLeft().y], "y");
+            });
+
+            test("returns an array with the stacks", function() {
+                var stacks = vWrap(elements, rect);
+                var stack = stacks[0];
+                equal(stacks.length, 1);
+                ok(stack[0] === path1);
+                ok(stack[1] === path2);
+                ok(stack[2] === path3);
+            });
+
+            test("does not change the elements by the x axis", function() {
+                var initial = [path1.bbox().origin.x, path2.bbox().origin.x, path3.bbox().origin.x]
+                vWrap(elements, rect);
+
+                compareBBoxOrigin(elements, initial, "x");
+            });
+
+            test("skips elements without bbox", function() {
+                vWrap([path1, new d.Group(), new d.Group(), path2], rect);
+                equal(path2.bbox().origin.y, path1.bbox().bottomLeft().y);
+            });
+
+            test("starts the stack from the first element with bbox", function() {
+                vWrap([new d.Group(), path1, path2], rect);
+                equal(path1.bbox().origin.y, 100);
+                equal(path2.bbox().origin.y, path1.bbox().bottomLeft().y);
+            });
+
+            // ------------------------------------------------------------
+            module("Layout primitives / vWrap / multiple stacks", {
+                setup: function() {
+                    createPaths();
+                    rect = new g.Rect([100, 100], [400, 200]);
+                }
+            });
+
+            test("wraps the elements in multiple stacks starting from the rect origin", function() {
+                vWrap(elements, rect);
+                var bbox1 = path1.bbox();
+                var bbox2 = path2.bbox();
+                var bbox3 = path3.bbox();
+
+                equal(bbox1.origin.y, 100);
+                equal(bbox1.bottomLeft().y, bbox2.origin.y);
+                equal(bbox3.origin.y, 100);
+            });
+
+            test("returns an array with the stacks", function() {
+                var stacks = vWrap(elements, rect);
+                equal(stacks.length, 2);
+                ok(stacks[0][0] === path1);
+                ok(stacks[0][1] === path2);
+                ok(stacks[1][0] === path3);
+            });
+
+            test("does not change the elements by the x axis", function() {
+                var initial = [path1.bbox().origin.x, path2.bbox().origin.x, path3.bbox().origin.x]
+                vWrap(elements, rect);
+
+                compareBBoxOrigin(elements, initial, "x");
+            });
+
+            test("skips elements without bbox", function() {
+                vWrap([path1, new d.Group(), new d.Group(), path2], rect);
+                equal(path2.bbox().origin.y, path1.bbox().bottomLeft().y);
+            });
+
+            test("starts the stack from the first element with bbox", function() {
+                vWrap([new d.Group(), path1, path2, new d.Group(), path3], rect);
+                equal(path1.bbox().origin.y, 100);
+                equal(path2.bbox().origin.y, path1.bbox().bottomLeft().y);
+                equal(path3.bbox().origin.y, 100);
+            });
+        })();
+
     })();
 })();

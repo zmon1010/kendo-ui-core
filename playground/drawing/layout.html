@@ -54,7 +54,7 @@
         Surface = d.Surface,
         surface = Surface.create(document.getElementById("container"), {width: 2000, height: 1000, type: "svg"});
 
-    var rect = new Rect([300, 200], [400, 300]);
+    var rect = new Rect([300, 200], [400, 500]);
     var circle = new Circle(new gCircle([500, 100], 100));
     var otherCircle =  new Circle(new gCircle([500, 100], 50));
     circle.transform(g.transform().scale(1.5));
@@ -62,17 +62,16 @@
     path.transform(g.transform().rotate(30, [50, 100]));
     var elements = [circle, otherCircle, path];
     var group = new Group();
-    var stacks = d.wrap(elements, rect);
+    var stacks = d.vWrap(elements, rect);
     for (var stackIdx = 0; stackIdx < stacks.length; stackIdx++) {
         var stackGroup = new Group();
         stackGroup.append.apply(stackGroup, stacks[stackIdx]);
-        d.vAlign(stacks[stackIdx], rect, "center");
+        d.align(stacks[stackIdx], rect, "start");
         group.append(stackGroup);
     }
-    d.vStack(group.children);
-    d.fit(group, rect);
-    d.vAlign([group], rect, "center");
-    d.align([group], rect, "center");
+    d.stack(group.children);
+    //d.vAlign([group], rect, "center");
+    //d.align([group], rect, "center");
 
     surface.draw(group);
 

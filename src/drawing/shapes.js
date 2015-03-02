@@ -1317,20 +1317,31 @@
     }
 
     function wrap(elements, rect) {
+        return wrapElements(elements, rect, "x", "y", "width");
+    }
+
+    function vWrap(elements, rect) {
+        return wrapElements(elements, rect, "y", "x", "height");
+    }
+
+    function wrapElements(elements, rect, axis, otherAxis, sizeField) {
         var result = [];
-        var stacks = getStacks(elements, rect, "width");
+        var stacks = getStacks(elements, rect, sizeField);
         var origin = rect.origin.clone();
         var startElement;
+        var elementIdx;
         var stack;
-        for (var idx = 0; idx < stacks.length; idx++) {
+        var idx;
+
+        for (idx = 0; idx < stacks.length; idx++) {
             stack = stacks[idx];
             startElement = stack[0];
-            origin.y = startElement.bbox.origin.y;
+            origin[otherAxis] = startElement.bbox.origin[otherAxis];
             translateToPoint(origin, startElement.bbox, startElement.element);
-            startElement.bbox.origin.x = origin.x;
-            stackElements(stack, "x", "y", "width");
+            startElement.bbox.origin[axis] = origin[axis];
+            stackElements(stack, axis, otherAxis, sizeField);
             result.push([]);
-            for (var elementIdx = 0; elementIdx < stack.length; elementIdx++) {
+            for (elementIdx = 0; elementIdx < stack.length; elementIdx++) {
                 result[idx].push(stack[elementIdx].element);
             }
         }
@@ -1342,7 +1353,7 @@
         var elementSize = bbox.size;
         var rectSize = rect.size;
         if (rectSize.width < elementSize.width || rectSize.height < elementSize.height) {
-            var scale = Math.min(rectSize.width / elementSize.width, rectSize.height / elementSize.height);
+            var scale = math.min(rectSize.width / elementSize.width, rectSize.height / elementSize.height);
             var transform = element.transform() || g.transform();
             transform.scale(scale, scale);
             element.transform(transform);
@@ -1494,6 +1505,7 @@
         Text: Text,
         vAlign: vAlign,
         vStack: vStack,
+        vWrap: vWrap,
         wrap: wrap
     });
 
