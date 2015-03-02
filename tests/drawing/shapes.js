@@ -3171,7 +3171,7 @@
             });
         })();
 
-// ------------------------------------------------------------
+        // ------------------------------------------------------------
         (function() {
             var vWrap = d.vWrap;
             var rect;
@@ -3262,6 +3262,55 @@
                 equal(path2.bbox().origin.y, path1.bbox().bottomLeft().y);
                 equal(path3.bbox().origin.y, 100);
             });
+        })();
+
+        // ------------------------------------------------------------
+        (function() {
+            var fit = d.fit;
+            var rect = new g.Rect([0, 0], [100, 100]);
+            var path;
+
+            module("Layout primitives / fit");
+
+            test("fits element in rect smaller by the x axis", function() {
+                path = d.Path.fromRect(new g.Rect([0, 0], [200, 100]));
+                fit(path, rect);
+
+                equal(path.bbox().size.width, 100);
+            });
+
+            test("fits element in rect smaller by the y axis", function() {
+                path = d.Path.fromRect(new g.Rect([0, 0], [100, 200]));
+                fit(path, rect);
+
+                equal(path.bbox().size.height, 100);
+            });
+
+            test("applies uniform scale", function() {
+                path = d.Path.fromRect(new g.Rect([0, 0], [200, 100]));
+                fit(path, rect);
+
+                equal(path.transform().matrix().d, path.transform().matrix().a);
+            });
+
+            test("fits transformed element in rect smaller by the x axis", function() {
+                path = d.Path.fromRect(new g.Rect([0, 0], [200, 100]), {
+                    transform: g.transform().rotate(45)
+                });
+                fit(path, rect);
+
+                equal(path.bbox().size.width, 100);
+            });
+
+            test("fits transformed element in rect smaller by the y axis", function() {
+                path = d.Path.fromRect(new g.Rect([0, 0], [100, 200]), {
+                    transform: g.transform().rotate(45)
+                });
+                fit(path, rect);
+
+                equal(path.bbox().size.height, 100);
+            });
+
         })();
 
     })();
