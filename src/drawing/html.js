@@ -2137,6 +2137,9 @@
         // err, we'd like to guess a bigger number rather than a smaller one.  Multiplying by 5
         // seems to be a good option.
         var estimateLineLength = element.getBoundingClientRect().width / fontSize * 5;
+        if (estimateLineLength === 0) {
+            estimateLineLength = 500;
+        }
 
         while (!doChunk()) {}
 
