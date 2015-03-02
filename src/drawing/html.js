@@ -161,11 +161,16 @@
                 top      : "-10000px"
             });
 
-            // we need this here even though we set width individually for each page in makePage
-            // below, because the universe is expanding.  (hint: no idea, but without it the content
-            // is truncated).
             if (pageWidth) {
-                $(cont).css({ width: pageWidth });
+                // subtle: if we don't set the width *and* margins
+                // here, the layout in this container will be
+                // different from the one in our final page elements,
+                // and we'll split at the wrong places.
+                $(cont).css({
+                    width        : pageWidth,
+                    paddingLeft  : margin.left,
+                    paddingRight : margin.right
+                });
             }
 
             cont.appendChild(copy);
