@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <!-- <link href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.common.min.css" rel="stylesheet" /> -->
+    <link href="../dist/styles/web/kendo.common.css" rel="stylesheet" />
+    <script src="loader.js"></script>
+    <script src="./pako.min.js"></script>
+    <script src="./html2canvas.min.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+    <script>
+      kendo.pdf.defineFont({
+          "DejaVu Sans"             : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf",
+          "DejaVu Sans|Bold"        : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+          "DejaVu Sans|Bold|Italic" : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-BoldOblique.ttf",
+          "DejaVu Sans|Italic"      : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+
+          "DejaVu Serif"             : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSerif.ttf",
+          "DejaVu Serif|Bold"        : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSerif-Bold.ttf",
+          "DejaVu Serif|Bold|Italic" : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSerif-BoldItalic.ttf",
+          "DejaVu Serif|Italic"      : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSerif-Italic.ttf",
+
+          "DejaVu Mono"             : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSansMono.ttf",
+          "DejaVu Mono|Bold"        : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSansMono-Bold.ttf",
+          "DejaVu Mono|Bold|Italic" : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSansMono-BoldOblique.ttf",
+          "DejaVu Mono|Italic"      : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSansMono-Oblique.ttf"
+      });
+    </script>
+    <style>
+      kendo-pdf-document {
+        font-family: "DejaVu Serif";
+        letter-spacing: 0;
+        font-variant-ligatures: none;
+        text-rendering: optimizeSpeed;
+        -moz-font-feature-settings: "kern" 0;
+        font-feature-settings: "kern" 0;
+        font-stretch: normal;
+      }
+      body {
+        font-family: "DejaVu Serif";
+        letter-spacing: 0;
+        font-size: 14px;
+        font-variant-ligatures: none;
+        text-rendering: optimizeSpeed;
+        -moz-font-feature-settings: "kern" 0;
+        font-feature-settings: "kern" 0;
+        font-stretch: normal;
+      }
+    </style>
+  </head>
+  <body>
+    Kendo:
+    <button onclick="pdfPages('#test1', { paperSize: 'A4', margin: '1cm' })">PDF</button>
+    <button onclick="draw('#test1', 'svg')">SVG</button>
+    <button onclick="draw('#test1', 'canvas')">Canvas</button>
+    |
+    <button onclick="h2c('#test1')">html2canvas</button>
+    <div id="test1">
+
+      <div style="font-family: 'DejaVu Serif'">
+        <p>lorem ipsum <a href="#">This is some regular text with many spaces</a> foo bar</p>
+        <p>lorem ipsum <a href="#"><b>This is some bold text with many spaces</b></a> foo bar</p>
+        <p>lorem ipsum <a href="#"><em>This is some italic text with many spaces</em></a> foo bar</p>
+        <p>lorem ipsum <a href="#"><em><b>This is some bold-italic text with many spaces</b></em></a> foo bar</p>
+      </div>
+
+      <div style="font-family: 'DejaVu Sans'">
+        <p>lorem ipsum <a href="#">This is some regular text with many spaces</a> foo bar</p>
+        <p>lorem ipsum <a href="#"><b>This is some bold text with many spaces</b></a> foo bar</p>
+        <p>lorem ipsum <a href="#"><em>This is some italic text with many spaces</em></a> foo bar</p>
+        <p>lorem ipsum <a href="#"><em><b>This is some bold-italic text with many spaces</b></em></a> foo bar</p>
+      </div>
+
+      <div style="font-family: 'DejaVu Mono'">
+        <p>lorem ipsum <a href="#">This is some regular text with many spaces</a> foo bar</p>
+        <p>lorem ipsum <a href="#"><b>This is some bold text with many spaces</b></a> foo bar</p>
+        <p>lorem ipsum <a href="#"><em>This is some italic text with many spaces</em></a> foo bar</p>
+        <p>lorem ipsum <a href="#"><em><b>This is some bold-italic text with many spaces</b></em></a> foo bar</p>
+      </div>
+
+      <div style="font-family: 'DejaVu Mono'">
+        <p>loremipsum<span>BLAHBLAHBLAHBLAH</span>foobar</p>
+        <p>loremipsum<span><b>BLAHBLAHBLAHBLAH</b></span>foobar</p>
+        <p>loremipsum<span><em>BLAHBLAHBLAHBLAH</em></span>foobar</p>
+        <p>loremipsum<span><em><b>BLAHBLAHBLAHBLAH</b></em></span>foobar</p>
+      </div>
+
+      <div style="font-family: 'DejaVu Mono'">
+        <p>l<span></span>o<span></span>r<span></span>e<span></span>m<span></span>i<span></span><span></span>p<span></span>s<span></span>u<span></span>m<span>BLAHBLAHBLAHBLAH</span>foobar</p>
+        <p>loremipsum<span><b>BLAHBLAHBLAHBLAH</b></span>foobar</p>
+        <p>loremipsum<span><em>BLAHBLAHBLAHBLAH</em></span>foobar</p>
+        <p>loremipsum<span><em><b>BLAHBLAHBLAHBLAH</b></em></span>foobar</p>
+      </div>
+
+    </div>
+  </body>
+</html>
