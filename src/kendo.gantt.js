@@ -2665,6 +2665,7 @@ var __meta__ = {
         },
 
         _resizable: function() {
+            var that = this;
             var wrapper = this.wrapper;
             var ganttStyles = Gantt.styles;
             var contentSelector = DOT + ganttStyles.gridContent;
@@ -2694,6 +2695,10 @@ var __meta__ = {
                     "resize": function(e) {
                         var delta = e.x.initialDelta;
 
+                        if (kendo.support.isRtl(wrapper)) {
+                            delta *= -1;
+                        }
+
                         if (treeListWidth + delta < 0 || timelineWidth - delta < 0) {
                             return;
                         }
@@ -2701,6 +2706,8 @@ var __meta__ = {
                         treeListWrapper.width(treeListWidth + delta);
                         timelineWrapper.width(timelineWidth - delta);
                         timelineWrapper.find(contentSelector).scrollLeft(timelineScroll + delta);
+
+                        that.timeline.view()._renderCurrentTime();
                     }
                 }).data("kendoResizable");
         },
@@ -2743,6 +2750,7 @@ var __meta__ = {
             var headerTable = this.list.header.find("table");
             var contentTable = this.list.content.find("table");
             var ganttStyles = Gantt.styles;
+            var isRtl = kendo.support.isRtl(this.wrapper);
             var timelineContent = this.timeline.element.find(DOT + ganttStyles.gridContent);
             var tables = headerTable.add(contentTable);
             var attr = selector();
@@ -2876,9 +2884,9 @@ var __meta__ = {
                             if (e.altKey) {
                                 scroll();
                             } else if (e.ctrlKey) {
-                                toggleExpandedState(expandState.expand);
+                                toggleExpandedState(isRtl ? expandState.collapse : expandState.expand);
                             } else {
-                                moveHorizontal("next");
+                                moveHorizontal(isRtl ? "prev" : "next");
                             }
                             break;
                         case keys.LEFT:
@@ -2886,9 +2894,9 @@ var __meta__ = {
                             if (e.altKey) {
                                 scroll(true);
                             } else if (e.ctrlKey) {
-                                toggleExpandedState(expandState.collapse);
+                                toggleExpandedState(isRtl ? expandState.expand : expandState.collapse);
                             } else {
-                                moveHorizontal("prev");
+                                moveHorizontal(isRtl ? "next" : "prev");
                             }
                             break;
                         case keys.UP:
@@ -2994,6 +3002,7 @@ var __meta__ = {
         _resize: function() {
             this._adjustDimensions();
             this.timeline.view()._adjustHeight();
+            this.timeline.view()._renderCurrentTime();
             this.list._adjustHeight();
         }
     });
