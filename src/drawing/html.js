@@ -217,8 +217,10 @@
                 var bottomBorder = parseFloat(getPropertyValue(style, "border-bottom-width"));
                 var saveAdjust = adjust;
                 adjust += bottomPadding + bottomBorder;
+                var isFirst = true;
                 for (var el = element.firstChild; el; el = el.nextSibling) {
                     if (el.nodeType == 1 /* Element */) {
+                        isFirst = false;
                         var jqel = $(el);
                         if (jqel.is(forceBreak)) {
                             breakAtElement(el);
@@ -252,7 +254,8 @@
                         }
                     }
                     else if (el.nodeType == 3 /* Text */ && pageHeight) {
-                        splitText(el);
+                        splitText(el, isFirst);
+                        isFirst = false;
                     }
                 }
                 adjust = saveAdjust;
@@ -306,7 +309,7 @@
                     : 0;
             }
 
-            function splitText(node) {
+            function splitText(node, isFirst) {
                 if (!/\S/.test(node.data)) {
                     return;
                 }
@@ -322,7 +325,12 @@
                 var nextnode = node;
                 if (fall == 1) {
                     // starts on next page, break before anyway.
-                    breakAtElement(node);
+                    if (isFirst) {
+                        // avoid leaving an empty <p>, <li>, etc. on previous page.
+                        breakAtElement(node.parentNode);
+                    } else {
+                        breakAtElement(node);
+                    }
                 }
                 else {
                     (function findEOP(min, pos, max) {
@@ -337,14 +345,19 @@
                         }
                     })(0, len >> 1, len);
 
-                    // This is only needed for IE, but it feels cleaner to do it anyway.  Without
-                    // it, IE will truncate a very long text (playground/pdf-long-text-2.html).
-                    nextnode = node.splitText(range.endOffset);
+                    if (!/\S/.test(range.toString()) && isFirst) {
+                        // avoid leaving an empty <p>, <li>, etc. on previous page.
+                        breakAtElement(node.parentNode);
+                    } else {
+                        // This is only needed for IE, but it feels cleaner to do it anyway.  Without
+                        // it, IE will truncate a very long text (playground/pdf-long-text-2.html).
+                        nextnode = node.splitText(range.endOffset);
 
-                    var page = makePage();
-                    range.setStartBefore(copy);
-                    page.appendChild(range.extractContents());
-                    copy.parentNode.insertBefore(page, copy);
+                        var page = makePage();
+                        range.setStartBefore(copy);
+                        page.appendChild(range.extractContents());
+                        copy.parentNode.insertBefore(page, copy);
+                    }
                 }
 
                 splitText(nextnode);
