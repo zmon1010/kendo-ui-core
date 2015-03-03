@@ -592,14 +592,13 @@ var __meta__ = {
     }
 
     module.factory('directiveFactory', [ '$compile', function(compile) {
-        var KENDO_COUNT = 0;
+        var kendoRenderedTimeout;
         var RENDERED = false;
 
         // caching $compile for the dirty hack upstairs. This is awful, but we happen to have elements outside of the bootstrapped root :(.
         $defaultCompile = compile;
 
         var create = function(role, origAttr) {
-
             return {
                 // Parse the directive for attributes and classes
                 restrict: "AC",
@@ -630,24 +629,21 @@ var __meta__ = {
                     // but we still keep the attribute without the
                     // `data-` prefix, so k-rebind would work.
                     var roleattr = role.replace(/([A-Z])/g, "-$1");
-                    var isVisible = $element.css("visibility") !== "hidden";
 
                     $element.attr(roleattr, $element.attr("data-" + roleattr));
                     $element[0].removeAttribute("data-" + roleattr);
 
-                    ++KENDO_COUNT;
-
-                    if (isVisible) {
-                        $element.css("visibility", "");
-                    }
                     var widget = createWidget(scope, element, attrs, role, origAttr, controllers);
 
                     if (!widget) {
                         return;
                     }
 
-                    --KENDO_COUNT;
-                    if (KENDO_COUNT === 0) {
+                    if (kendoRenderedTimeout) {
+                        clearTimeout(kendoRenderedTimeout);
+                    }
+
+                    kendoRenderedTimeout = setTimeout(function() {
                         scope.$emit("kendoRendered");
                         if (!RENDERED) {
                             RENDERED = true;
@@ -658,7 +654,7 @@ var __meta__ = {
                                 }
                             });
                         }
-                    }
+                    });
                 }
             };
         };

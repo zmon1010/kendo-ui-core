@@ -196,6 +196,36 @@
     equal($scope.selectedIds.length, 0);
     equal($scope.multiselect.value().length, 0);
     });
+
+   ngTest2("triggers kendoWidgetCreated", 1, function(root, controller, bootstrap) {
+        var slider = $("<input kendo-slider='slider' />").appendTo(root);
+
+        controller(function($scope) {
+            $scope.$on("kendoWidgetCreated", function(widget) {
+                equal($scope.slider, root.find("input").data("kendoSlider"));
+            });
+        })
+
+        bootstrap();
+   });
+
+   asyncTest("triggers kendoRendered", 2, function() {
+       var root = $('<div ng-controller=main></div>').appendTo(QUnit.fixture);
+
+       $("<div><div kendo-slider='slider1' id=s1></div> <div id=s2 kendo-slider='slider2'></div></div>").appendTo(root);
+
+       angular.module('kendo.tests').controller('main', function($scope) {
+            $scope.$on("kendoRendered", function() {
+                start();
+                equal($scope.slider1, root.find("#s1").data("kendoSlider"));
+                equal($scope.slider2, root.find("#s2").data("kendoSlider"));
+                kendo.destroy(root);
+                root.remove();
+            });
+       });
+
+       angular.bootstrap(root, [ 'kendo.tests' ]);
+   });
 })();
 
 withAngularTests("Angular (UI Core)", function(runTest){
@@ -1049,7 +1079,4 @@ withAngularTests("Angular (UI Core)", function(runTest){
             start();
         });
     });
-
-
-
 });
