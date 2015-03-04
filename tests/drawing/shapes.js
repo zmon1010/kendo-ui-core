@@ -2877,6 +2877,7 @@
     (function() {
         var Rect = g.Rect;
         var rect = new Rect([110, 200], [500, 500]);
+        var TOLERANCE = 0.1;
         var elements;
 
         function createPaths(rects) {
@@ -2893,7 +2894,7 @@
             axis = axis || "x";
             for (var idx = 0; idx < elements.length; idx++) {
                 bbox = elements[idx].clippedBBox();
-                equal(bbox[origin]()[axis], values[idx] || values);
+                close(bbox[origin]()[axis], values[idx] || values, TOLERANCE);
             }
         }
 
