@@ -42,7 +42,11 @@ namespace Kendo.Mvc.UI
 
             html.Attribute("data-position", component.Position.ToString().ToLower());
 
-            SerializeViews(html);
+            html.Attribute("data-swipe-to-open", component.SwipeToOpen.ToString().ToLower());            
+
+            SerializeViews(html, component.Views, "data-views");
+
+            SerializeViews(html, component.SwipeToOpenViews, "data-swipe-to-open-views");
 
             html.Attributes(component.HtmlAttributes);
 
@@ -109,16 +113,16 @@ namespace Kendo.Mvc.UI
             }
         }
 
-        private void SerializeViews(IHtmlNode html)
-        {
-            if (component.Views.Length == 0)
+        private void SerializeViews(IHtmlNode html, string[] views, string attr)
+        {            
+            if (views == null || views.Length == 0)
                 return;
 
             var output = new StringBuilder();
 
             output.Append("[");
 
-            foreach (var view in component.Views)
+            foreach (var view in views)
             {
                 output.Append("\"");
                 output.Append(HttpUtility.HtmlAttributeEncode(view));
@@ -129,7 +133,7 @@ namespace Kendo.Mvc.UI
 
             output.Append("]");
 
-            html.Attribute("data-views", output.ToString());
+            html.Attribute(attr, output.ToString());
         }
     }
 }

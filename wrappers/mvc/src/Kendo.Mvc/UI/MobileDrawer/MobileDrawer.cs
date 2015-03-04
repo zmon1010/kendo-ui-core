@@ -19,6 +19,7 @@ namespace Kendo.Mvc.UI
             Header = new HtmlTemplate();
             Content = new HtmlTemplate();
             Footer = new HtmlTemplate();
+            SwipeToOpen = true;
 //>> Initialization
         
         //<< Initialization
