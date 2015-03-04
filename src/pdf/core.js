@@ -1402,7 +1402,7 @@
         },
         showText: function(text, requestedWidth) {
             this._requireFont();
-            if (requestedWidth && this._font instanceof PDFFont) {
+            if (text.length > 1 && requestedWidth && this._font instanceof PDFFont) {
                 var outputWidth = this._font.getTextWidth(this._fontSize, text);
                 var scale = requestedWidth / outputWidth * 100;
                 this._out(scale, " Tz ");
