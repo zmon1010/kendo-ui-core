@@ -1986,6 +1986,7 @@ var __meta__ = {
         createContainer: function() {
             var legend = this,
                 options = legend.options,
+                userAlign = options.align,
                 position = options.position,
                 align = position,
                 vAlign = CENTER;
@@ -1993,8 +1994,20 @@ var __meta__ = {
             if (position == CUSTOM) {
                 align = LEFT;
             } else if (inArray(position, [TOP, BOTTOM])) {
-                align = CENTER;
+                if (userAlign == "start") {
+                    align = LEFT;
+                } else if (userAlign == "end") {
+                    align = RIGHT;
+                } else {
+                    align = CENTER;
+                }
                 vAlign = position;
+            } else if (userAlign) {
+                 if (userAlign == "start") {
+                    vAlign = TOP;
+                 } else if (userAlign == "end") {
+                    vAlign = BOTTOM;
+                 }
             }
 
             legend.container = new BoxElement({
@@ -2044,9 +2057,10 @@ var __meta__ = {
         isVertical: function() {
             var legend = this,
                 options = legend.options,
+                orientation = options.orientation,
                 position = options.position,
-                vertical = inArray(position, [ LEFT, RIGHT ]) ||
-                    (position == CUSTOM && options.orientation != HORIZONTAL);
+                vertical = (position == CUSTOM && orientation != HORIZONTAL) ||
+                   (defined(orientation) ? orientation != HORIZONTAL : inArray(position, [ LEFT, RIGHT ]));
 
             return vertical;
         },
@@ -2058,24 +2072,19 @@ var __meta__ = {
         reflow: function(targetBox) {
             var legend = this,
                 options = legend.options,
-                container = legend.container,
-                vertical = legend.isVertical(),
-                containerBox = targetBox.clone();
+                container = legend.container;
+
+            targetBox = targetBox.clone();
 
             if (!legend.hasItems()) {
-                legend.box = targetBox.clone();
+                legend.box = targetBox;
                 return;
             }
 
-            if (vertical) {
-                containerBox.y1 = 0;
-            }
-
             if (options.position === CUSTOM) {
-                legend.containerCustomReflow(containerBox);
-                legend.box = targetBox.clone();
+                legend.containerCustomReflow(targetBox);
+                legend.box = targetBox;
             } else {
-                container.reflow(containerBox);
                 legend.containerReflow(targetBox);
             }
         },
@@ -2083,10 +2092,31 @@ var __meta__ = {
         containerReflow: function(targetBox) {
             var legend = this,
                 options = legend.options,
-                pos = options.position == TOP || options.position == BOTTOM ? X : Y,
-                containerBox = legend.container.box,
-                box = containerBox.clone();
+                position = options.position,
+                pos = position == TOP || position == BOTTOM ? X : Y,
+                containerBox = targetBox.clone(),
+                container = legend.container,
+                width = options.width,
+                height = options.height,
+                vertical = legend.isVertical(),
+                alignTarget = targetBox.clone(),
+                box;
 
+            if (position == LEFT || position == RIGHT) {
+                containerBox.y1 = alignTarget.y1 = 0;
+            }
+
+            if (vertical && height) {
+                containerBox.y2 = containerBox.y1 + height;
+                containerBox.align(alignTarget, Y, container.options.vAlign);
+            } else if (!vertical && width){
+                containerBox.x2 = containerBox.x1 + width;
+                containerBox.align(alignTarget, X, container.options.align);
+            }
+
+            container.reflow(containerBox);
+            containerBox = container.box;
+            box = containerBox.clone();
             if (options.offsetX || options.offsetY) {
                 containerBox.translate(options.offsetX, options.offsetY);
                 legend.container.reflow(containerBox);

@@ -8,18 +8,38 @@
         <link href="../dist/styles/dataviz/kendo.dataviz.min.css" rel="stylesheet" />        
         <script src="../src/jquery.js"></script>
         <script src="../src/kendo.core.js"></script>
+        <script src="../src/kendo.color.js"></script>
+                    
         <script src="../src/kendo.data.js"></script>
-         <script src="../src/kendo.binder.js"></script>
+        <script src="../src/kendo.binder.js"></script>
+                   
+        <script src="../src/kendo.popup.js"></script>
         <script src="../src/kendo.userevents.js"></script>
+        <script src="../src/kendo.draganddrop.js"></script>
+        <script src="../src/kendo.slider.js"></script>
+        <script src="../src/kendo.colorpicker.js"></script>
+        <script src="../src/kendo.button.js"></script>
+        <script src="../src/kendo.numerictextbox.js"></script>
+        <script src="../src/kendo.list.js"></script>
+        <script src="../src/kendo.dropdownlist.js"></script>
+                    
+        <script src="../src/util/main.js"></script>
+        <script src="../src/mixins/observers.js"></script>
+        <script src="../src/geometry/main.js"></script>
+        <script src="../src/drawing/core.js"></script>         
+        <script src="../src/drawing/mixins.js"></script>
+        <script src="../src/drawing/text-metrics.js"></script>
+        <script src="../src/drawing/shapes.js"></script>
+        <script src="../src/drawing/animation.js"></script>
+        <script src="../src/drawing/parser.js"></script>
+        <script src="../src/drawing/svg.js"></script>
+        <script src="../src/drawing/canvas.js"></script>
+        <script src="../src/drawing/vml.js"></script>
+                    
         <script src="../src/kendo.dataviz.core.js"></script>
         <script src="../src/kendo.dataviz.chart.js"></script>
-        <script src="../src/kendo.dataviz.chart.polar.js"></script>
-        <script src="../src/kendo.dataviz.stock.js"></script>
         <script src="../src/kendo.dataviz.sparkline.js"></script>
-        <script src="../src/kendo.dataviz.themes.js"></script>
-        <script src="../src/kendo.dataviz.vml.js"></script>
-        <script src="../src/kendo.dataviz.svg.js"></script>
-        <script src="../src/kendo.dataviz.canvas.js"></script>
+        <script src="../src/kendo.dataviz.stock.js"></script>
         <script src="../src/kendo.dataviz.themes.js"></script>
     </head>
     <body>
@@ -50,59 +70,29 @@
         dateChart();
     $("#chart").kendoChart({
        // renderAs: "canvas",
-        title: {
-            text: "Site Visitors",// \n Stats /thousands/ \n asdasdas \n asdasdasd \n aaaaaaaaaaaa",
-            //rotation: 45,
-            position: "top",
-            //font: "30px arial",
-            padding: 10,
-            margin: {
-                bottom: 20
-            },
-            border: {
-                width: 3,
-                color: "red"  
-            }
+        chartArea: {
+            padding: 0
         },
-        
         legend: {
-            visible: true,                
-            labels: {
-                border: {
-                    width: 1,
-                    color: "blue"
-                },
-               // font: "15px arial, sans-serif",
-
-                //rotation: 30
-            },
-            inactiveItems: {
-                labels: {                    
-                    color: "yellow",
-                    font: "30px arial, sans-serif",
-                    template: "KUR"                    
-                }
-            },      
+            visible: true,     
             markers: {
               //  size: 15
             },
+            padding: 10,
+            //margin: 10,
             border: {
                 width: 5,
                 color: "blue"
             },
-            // padding: 5,
-            // margin: {
-                // bottom: 200
-            // },
-            background: "cyan",
-            offsetX: 200,
+            align: "start",
+            background: "lightgreen",
              // offsetY: 20,
-            position: "custom",
+            position: "top",
             orientation: "vertical",
-            width: 300,
-            height: 300
+            width: 200,
+            height: 200
         },
-        
+
         seriesDefaults: {
             labels: {
                 visible: true,               
@@ -137,6 +127,58 @@
             }
         },
         series: [{
+            name: "Total \n Visits 1",
+            data: [56000, 63000, 74000, 10000, 10000],
+            axis: "top"
+        }, {
+            name: "Unique \n visitor 2",
+            data: [52000, 34000, 23000, 10000, 10000],
+            labels: {
+                rotation: 30
+            },
+            axis: "top"
+        },{
+            name: "Total \n Visits 3",
+            data: [56000, 63000, 74000, 10000, 10000],            
+            axis: "top"
+        },{
+            name: "Total \n Visits 4",
+            data: [56000, 63000, 74000, 10000, 10000],
+            axis: "top"
+        }, {
+            name: "Unique \n visitor 5",
+            data: [52000, 34000, 23000, 10000, 10000],
+            labels: {
+                rotation: 30
+            },
+            axis: "top"
+        },{
+            name: "Total \n Visits 1",
+            data: [56000, 63000, 74000, 10000, 10000],
+            axis: "top"
+        }, {
+            name: "Unique \n visitor 2",
+            data: [52000, 34000, 23000, 10000, 10000],
+            labels: {
+                rotation: 30
+            },
+            axis: "top"
+        },{
+            name: "Total \n Visits 3",
+            data: [56000, 63000, 74000, 10000, 10000],            
+            axis: "top"
+        },{
+            name: "Total \n Visits 4",
+            data: [56000, 63000, 74000, 10000, 10000],
+            axis: "top"
+        }, {
+            name: "Unique \n visitor 5",
+            data: [52000, 34000, 23000, 10000, 10000],
+            labels: {
+                rotation: 30
+            },
+            axis: "top"
+        },{
             name: "Total \n Visits 1",
             data: [56000, 63000, 74000, 10000, 10000],
             axis: "top"
