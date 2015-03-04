@@ -1,12 +1,13 @@
 ﻿namespace Kendo.Mvc.UI.Fluent
-{    
-    using Extensions;
+{
+	using System.Reflection;
+	using Extensions;
 
-    /// <summary>
-    /// Defines the fluent interface for configuring the <see cref="DataSource"/> Model definition.
-    /// </summary>
-    /// <typeparam name="TModel">Type of the model</typeparam>
-    public abstract class DataSourceModelDescriptorFactoryBase<TModel> : IHideObjectMembers
+	/// <summary>
+	/// Defines the fluent interface for configuring the <see cref="DataSource"/> Model definition.
+	/// </summary>
+	/// <typeparam name="TModel">Type of the model</typeparam>
+	public abstract class DataSourceModelDescriptorFactoryBase<TModel> : IHideObjectMembers
         where TModel : class
     {
         protected readonly ModelDescriptor model;

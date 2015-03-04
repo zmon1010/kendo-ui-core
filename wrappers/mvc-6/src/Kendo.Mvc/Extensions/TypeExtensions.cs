@@ -1,42 +1,14 @@
 namespace Kendo.Mvc.Extensions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-    using Kendo.Mvc.Resources;
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Linq;
+	using System.Reflection;
+	using Kendo.Mvc.Resources;
 
-    internal static class TypeExtensions
+	internal static class TypeExtensions
     {
-
-#if ASPNETCORE50
-        private static bool EqualTo(this Type[] t1, Type[] t2)
-        {
-            if (t1.Length != t2.Length)
-            {
-                return false;
-            }
-
-            for (var idx = 0; idx < t1.Length; ++idx)
-            {
-                if (t1[idx] != t2[idx])
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        public static ConstructorInfo GetConstructor(this Type type, Type[] types)
-        {
-            return type.GetTypeInfo().DeclaredConstructors
-                                     .Where(c => c.IsPublic)
-                                     .SingleOrDefault(c => c.GetParameters()
-                                                            .Select(p => p.ParameterType).ToArray().EqualTo(types));
-        }
-#endif
-
         internal static readonly Type[] PredefinedTypes = {
             typeof(Object),
             typeof(Boolean),
@@ -364,5 +336,10 @@ namespace Kendo.Mvc.Extensions
 
             return "Object";
         }
-    }
+
+		internal static bool IsPlainType(this Type type)
+		{
+			return !type.IsDynamicObject();
+		}
+	}
 }

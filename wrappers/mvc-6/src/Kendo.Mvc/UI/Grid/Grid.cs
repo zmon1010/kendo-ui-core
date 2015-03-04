@@ -11,18 +11,15 @@ namespace Kendo.Mvc.UI
     /// The server side wrapper for Kendo UI Grid
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public partial class Grid<T> : WidgetBase
+    public partial class Grid<T> : WidgetBase, IGridColumnContainer<T>
         where T : class
     {
         private readonly static int DEFAULT_COLUMN_RESIZE_HANDLE_WIDTH = 3;
 
         public Grid(ViewContext viewContext) : base (viewContext)
-        {
-          //  this.htmlBuilderFactory = htmlBuilderFactory;
-            
+        {   
 			//  RowTemplate = new HtmlTemplate<T>();
-			//DetailTemplate = new HtmlTemplate<T>();
-			//Columns = new List<GridColumnBase<T>>();
+			//DetailTemplate = new HtmlTemplate<T>();			
 			//DataKeys = new List<IDataKey>();			
 
             //Editable = new GridEditableSettings<T>(this)
@@ -123,11 +120,24 @@ namespace Kendo.Mvc.UI
 
         public GridSettings Reorderable { get; } = new GridSettings();
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to add the <see cref="WidgetBase.Name"/> property of the grid as a prefix in url parameters.
-        /// </summary>
-        /// <value><c>true</c> if prefixing is enabled; otherwise, <c>false</c>. The default value is <c>true</c></value>
-        public bool PrefixUrlParameters { get; set; } = true;
+		/// <summary>
+		/// Gets the columns of the grid.
+		/// </summary>
+		public IList<GridColumnBase<T>> Columns { get; } = new List<GridColumnBase<T>>();
+		
+		public IList<GridColumnBase<T>> VisibleColumns
+		{
+			get
+			{
+				return Columns.Where(c => c.Visible).ToList();
+			}
+		}
+		
+		/// <summary>
+		/// Gets or sets a value indicating whether to add the <see cref="WidgetBase.Name"/> property of the grid as a prefix in url parameters.
+		/// </summary>
+		/// <value><c>true</c> if prefixing is enabled; otherwise, <c>false</c>. The default value is <c>true</c></value>
+		public bool PrefixUrlParameters { get; set; } = true;
 
         public IDictionary<string, object> TableHtmlAttributes { get; } = new RouteValueDictionary();
 

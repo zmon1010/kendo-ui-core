@@ -1,0 +1,74 @@
+namespace Kendo.Mvc.UI
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+
+    public interface IGridBoundColumn : IGridColumn
+    {
+        string Format 
+        { 
+            get;
+            set; 
+        }
+
+        bool Groupable
+        {
+            get;
+            set;
+        }
+        
+        bool Filterable
+        {
+            get;
+            set;
+        }        
+
+        GridBoundColumnFilterableSettings FilterableSettings
+        {
+            get;
+            set;
+        }
+
+        bool Sortable
+        {
+            get;
+            set;
+        }
+
+        string Member
+        {
+            get;
+            set;
+        }
+
+        Type MemberType
+        {
+            get;
+            set;
+        }
+
+        object AdditionalViewData 
+        { 
+            get;
+            set; 
+        }
+
+        string EditorHtml
+        {
+            get;
+        }
+
+        string EditorTemplateName
+        {
+            get; 
+            set;
+        }
+
+        string ClientGroupHeaderTemplate
+        {
+            get;
+            set;
+        }
+    }
+}
