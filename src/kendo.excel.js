@@ -183,7 +183,7 @@ kendo.ExcelExporter = kendo.Class.extend({
                 cells: cells
             });
 
-            return rows.concat(this._footer(dataItem, level+1));
+            return rows.concat(this._footer(dataItem));
         } else {
             var dataCells = [];
 
@@ -212,7 +212,7 @@ kendo.ExcelExporter = kendo.Class.extend({
 
         return rows;
     },
-    _footer: function(dataItem, level) {
+    _footer: function(dataItem) {
         var rows = [];
         var footer = false;
 
@@ -235,7 +235,7 @@ kendo.ExcelExporter = kendo.Class.extend({
         if (footer) {
             rows.push({
                 type: "group-footer",
-                cells: $.map(new Array(level), function() {
+                cells: $.map(new Array(this.dataSource.group().length), function() {
                     return {
                         background: "#dfdfdf",
                         color: "#333"
