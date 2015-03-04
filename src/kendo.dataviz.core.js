@@ -394,6 +394,25 @@ var __meta__ = {
 
         hasSize: function() {
             return this.width() !== 0 && this.height() !== 0;
+        },
+
+        align: function(targetBox, axis, alignment) {
+            var box = this,
+                c1 = axis + 1,
+                c2 = axis + 2,
+                sizeFunc = axis === X ? WIDTH : HEIGHT,
+                size = box[sizeFunc]();
+
+            if (inArray(alignment, [LEFT, TOP])) {
+                box[c1] = targetBox[c1];
+                box[c2] = box[c1] + size;
+            } else if (inArray(alignment, [RIGHT, BOTTOM])) {
+                box[c2] = targetBox[c2];
+                box[c1] = box[c2] - size;
+            } else if (alignment == CENTER) {
+                box[c1] = targetBox[c1] + (targetBox[sizeFunc]() - size) / 2;
+                box[c2] = box[c1] + size;
+            }
         }
     };
 
@@ -993,23 +1012,7 @@ var __meta__ = {
         },
 
         align: function(targetBox, axis, alignment) {
-            var element = this,
-                box = element.box,
-                c1 = axis + 1,
-                c2 = axis + 2,
-                sizeFunc = axis === X ? WIDTH : HEIGHT,
-                size = box[sizeFunc]();
-
-            if (inArray(alignment, [LEFT, TOP])) {
-                box[c1] = targetBox[c1];
-                box[c2] = box[c1] + size;
-            } else if (inArray(alignment, [RIGHT, BOTTOM])) {
-                box[c2] = targetBox[c2];
-                box[c1] = box[c2] - size;
-            } else if (alignment == CENTER) {
-                box[c1] = targetBox[c1] + (targetBox[sizeFunc]() - size) / 2;
-                box[c2] = box[c1] + size;
-            }
+            this.box.align(targetBox, axis, alignment);
         },
 
         hasBox: function() {

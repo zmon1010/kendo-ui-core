@@ -11,6 +11,13 @@
         box,
         targetBox;
 
+    function sameBox(actual, expected) {
+        equal(actual.x1, expected.x1);
+        equal(actual.x2, expected.x2);
+        equal(actual.y1, expected.y1);
+        equal(actual.y2, expected.y2);
+    }
+
     // ------------------------------------------------------------
     module("Box2D", {
         setup: function() {
@@ -284,6 +291,36 @@
     test("hasSize returns false if box has zero width and height", function() {
         box = Box2D(10, 10, 10, 10);
         equal(box.hasSize(), false);
+    });
+
+    test("align top", function() {
+        box.align(targetBox, "y", "top");
+        sameBox(box, Box2D(0, 10, 20, 30));
+    });
+
+    test("align center based on the y axis", function() {
+        box.align(targetBox, "y", "center");
+        sameBox(box, Box2D(0, 15, 20, 35));
+    });
+
+    test("align bottom", function() {
+        box.align(targetBox, "y", "bottom");
+        sameBox(box, Box2D(0, 20, 20, 40));
+    });
+
+    test("align left", function() {
+        box.align(targetBox, "x", "left");
+        sameBox(box, Box2D(10, 0, 30, 20));
+    });
+
+    test("align center based on the x axis", function() {
+        box.align(targetBox, "x", "center");
+        sameBox(box, Box2D(15, 0, 35, 20));
+    });
+
+    test("align right", function() {
+        box.align(targetBox, "x", "right");
+        sameBox(box, Box2D(20, 0, 40, 20));
     });
 
     // ------------------------------------------------------------
