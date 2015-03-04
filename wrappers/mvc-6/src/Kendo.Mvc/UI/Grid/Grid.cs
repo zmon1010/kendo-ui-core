@@ -230,7 +230,8 @@ namespace Kendo.Mvc.UI
 				{
 					settings["scrollable"] = scrolling;
 				}
-			}
+				settings["height"] = Scrollable.Height;
+            }
 
 			//if (Editable.Enabled)
 			//{
@@ -287,7 +288,7 @@ namespace Kendo.Mvc.UI
         protected override void WriteHtml(TextWriter writer)
         {            
             var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);            
-
+			
             writer.Write(tag.ToString());
 
             base.WriteHtml(writer);

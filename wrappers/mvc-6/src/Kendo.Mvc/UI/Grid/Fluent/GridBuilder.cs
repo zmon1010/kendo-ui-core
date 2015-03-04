@@ -511,5 +511,56 @@ namespace Kendo.Mvc.UI.Fluent
 
 			return this;
 		}
+
+		/// <summary>
+		/// Enables grid scrolling.
+		/// </summary>
+		/// <example>		
+		///<code lang="Razor">
+		/// @(Html.Kendo().Grid&lt;Product&gt;()
+		///     .Name(&quot;grid&quot;)
+		///     .Scrollable()
+		///     .DataSource(dataSource =&gt;
+		///         // configure the data source
+		///         dataSource
+		///             .Ajax()
+		///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+		///     )
+		/// )
+		/// </code>
+		/// </example>
+		public GridBuilder<T> Scrollable()
+		{
+			Component.Scrollable.Enabled = true;
+
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the scrolling configuration of the grid.
+		/// </summary>
+		/// <param name="configurator">The lambda which configures the scrolling</param>
+		/// <example>	
+		///<code lang="Razor">
+		/// @(Html.Kendo().Grid&lt;Product&gt;()
+		///     .Name(&quot;grid&quot;)
+		///     .Scrollable(scrolling =&gt; scrolling.Enabled(true))
+		///     .DataSource(dataSource =&gt;
+		///         // configure the data source
+		///         dataSource
+		///             .Ajax()
+		///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+		///     )
+		/// )
+		/// </code>
+		/// </example>
+		public GridBuilder<T> Scrollable(Action<GridScrollSettingsBuilder> configurator)
+		{
+			Scrollable();
+
+			configurator(new GridScrollSettingsBuilder(Component.Scrollable));
+
+			return this;
+		}
 	}
 }

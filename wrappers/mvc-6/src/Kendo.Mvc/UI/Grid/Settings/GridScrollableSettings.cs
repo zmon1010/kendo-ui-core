@@ -31,6 +31,7 @@ namespace Kendo.Mvc.UI
             {
                 json["virtual"] = Virtual;
             }
+
         }
     }
 }
