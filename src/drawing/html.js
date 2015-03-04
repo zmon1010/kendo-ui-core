@@ -1645,7 +1645,6 @@
               case "square":
                 _drawBullet(function(bullet){
                     // XXX: the science behind these values is called "trial and error".
-                    //      also, ZapfDingbats works well in PDF output, but not in SVG/Canvas.
                     bullet.style.fontSize = "60%";
                     bullet.style.lineHeight = "200%";
                     bullet.style.paddingRight = "0.5em";
