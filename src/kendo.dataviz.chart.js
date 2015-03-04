@@ -1986,6 +1986,7 @@ var __meta__ = {
         createContainer: function() {
             var legend = this,
                 options = legend.options,
+                userAlign = options.align,
                 position = options.position,
                 align = position,
                 vAlign = CENTER;
@@ -1993,8 +1994,20 @@ var __meta__ = {
             if (position == CUSTOM) {
                 align = LEFT;
             } else if (inArray(position, [TOP, BOTTOM])) {
-                align = CENTER;
+                if (userAlign == "start") {
+                    align = LEFT;
+                } else if (userAlign == "end") {
+                    align = RIGHT;
+                } else {
+                    align = CENTER;
+                }
                 vAlign = position;
+            } else if (userAlign) {
+                 if (userAlign == "start") {
+                    vAlign = TOP;
+                 } else if (userAlign == "end") {
+                    vAlign = BOTTOM;
+                 }
             }
 
             legend.container = new BoxElement({

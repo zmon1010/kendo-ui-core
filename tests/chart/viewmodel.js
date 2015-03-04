@@ -2080,6 +2080,158 @@
         });
 
         // ------------------------------------------------------------
+        module("Legend align / position top", {});
+
+        test("aligns content to the center by default", function() {
+            createLegend({
+                position: "top"
+            });
+
+            equal(legend.container.box.x1, chartBox.x1 + (chartBox.width() - legend.container.box.width()) / 2);
+        });
+
+        test("aligns content to the left if align is set to start", function() {
+            createLegend({
+                position: "top",
+                align: "start"
+            });
+
+            equal(legend.container.box.x1, chartBox.x1);
+        });
+
+       test("aligns content to the center if align is set to center", function() {
+            createLegend({
+                position: "top",
+                align: "center"
+            });
+
+            equal(legend.container.box.x1, chartBox.x1 + (chartBox.width() - legend.container.box.width()) / 2);
+        });
+
+        test("aligns content to the right if align is set to end", function() {
+            createLegend({
+                position: "top",
+                align: "end"
+            });
+
+            equal(legend.container.box.x2, chartBox.x2);
+        });
+
+        // ------------------------------------------------------------
+        module("Legend align / position bottom", {});
+
+        test("aligns content to the center by default", function() {
+            createLegend({
+                position: "bottom"
+            });
+
+            equal(legend.container.box.x1, chartBox.x1 + (chartBox.width() - legend.container.box.width()) / 2);
+        });
+
+        test("aligns content to the left if align is set to start", function() {
+            createLegend({
+                position: "bottom",
+                align: "start"
+            });
+
+            equal(legend.container.box.x1, chartBox.x1);
+        });
+
+       test("aligns content to the center if align is set to center", function() {
+            createLegend({
+                position: "bottom",
+                align: "center"
+            });
+
+            equal(legend.container.box.x1, chartBox.x1 + (chartBox.width() - legend.container.box.width()) / 2);
+        });
+
+        test("aligns content to the right if align is set to end", function() {
+            createLegend({
+                position: "bottom",
+                align: "end"
+            });
+
+            equal(legend.container.box.x2, chartBox.x2);
+        });
+
+        // ------------------------------------------------------------
+        module("Legend align / position left", {});
+
+        test("aligns content to the center by default", function() {
+            createLegend({
+                position: "left"
+            });
+
+            equal(legend.container.box.y1, (chartBox.height() + chartBox.y1 - legend.container.box.height()) / 2);
+        });
+
+        test("aligns content to the top if align is set to start", function() {
+            createLegend({
+                position: "left",
+                align: "start"
+            });
+
+            equal(legend.container.box.y1, 0);
+        });
+
+        test("aligns content to the center if align is set to center", function() {
+            createLegend({
+                position: "left",
+                align: "center"
+            });
+
+            equal(legend.container.box.y1, (chartBox.height() + chartBox.y1 - legend.container.box.height()) / 2);
+        });
+
+        test("aligns content to the bottom if align is set to end", function() {
+            createLegend({
+                position: "left",
+                align: "end"
+            });
+
+            equal(legend.container.box.y2, chartBox.y2);
+        });
+
+        // ------------------------------------------------------------
+        module("Legend align / position right", {});
+
+        test("aligns content to the center by default", function() {
+            createLegend({
+                position: "right"
+            });
+
+            equal(legend.container.box.y1, (chartBox.height() + chartBox.y1 - legend.container.box.height()) / 2);
+        });
+
+        test("aligns content to the top if align is set to start", function() {
+            createLegend({
+                position: "right",
+                align: "start"
+            });
+
+            equal(legend.container.box.y1, 0);
+        });
+
+        test("aligns content to the center if align is set to center", function() {
+            createLegend({
+                position: "right",
+                align: "center"
+            });
+
+            equal(legend.container.box.y1, (chartBox.height() + chartBox.y1 - legend.container.box.height()) / 2);
+        });
+
+        test("aligns content to the bottom if align is set to end", function() {
+            createLegend({
+                position: "right",
+                align: "end"
+            });
+
+            equal(legend.container.box.y2, chartBox.y2);
+        });
+
+        // ------------------------------------------------------------
         module("Legend custom position", {});
 
         test("sets legend box to targetBox", function() {
