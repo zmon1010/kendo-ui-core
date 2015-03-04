@@ -1300,6 +1300,164 @@
         return "kdef" + defId++;
     }
 
+    function align(elements, rect, alignment) {
+       alignElements(elements, rect, alignment, "x", "width");
+    }
+
+    function vAlign(elements, rect, alignment) {
+        alignElements(elements, rect, alignment, "y", "height");
+    }
+
+    function stack(elements) {
+        stackElements(getStackElements(elements), "x", "y", "width");
+    }
+
+    function vStack(elements) {
+        stackElements(getStackElements(elements), "y", "x", "height");
+    }
+
+    function wrap(elements, rect) {
+        return wrapElements(elements, rect, "x", "y", "width");
+    }
+
+    function vWrap(elements, rect) {
+        return wrapElements(elements, rect, "y", "x", "height");
+    }
+
+    function wrapElements(elements, rect, axis, otherAxis, sizeField) {
+        var result = [];
+        var stacks = getStacks(elements, rect, sizeField);
+        var origin = rect.origin.clone();
+        var startElement;
+        var elementIdx;
+        var stack;
+        var idx;
+
+        for (idx = 0; idx < stacks.length; idx++) {
+            stack = stacks[idx];
+            startElement = stack[0];
+            origin[otherAxis] = startElement.bbox.origin[otherAxis];
+            translateToPoint(origin, startElement.bbox, startElement.element);
+            startElement.bbox.origin[axis] = origin[axis];
+            stackElements(stack, axis, otherAxis, sizeField);
+            result.push([]);
+            for (elementIdx = 0; elementIdx < stack.length; elementIdx++) {
+                result[idx].push(stack[elementIdx].element);
+            }
+        }
+        return result;
+    }
+
+    function fit (element, rect)  {
+        var bbox = element.clippedBBox();
+        var elementSize = bbox.size;
+        var rectSize = rect.size;
+        if (rectSize.width < elementSize.width || rectSize.height < elementSize.height) {
+            var scale = math.min(rectSize.width / elementSize.width, rectSize.height / elementSize.height);
+            var transform = element.transform() || g.transform();
+            transform.scale(scale, scale);
+            element.transform(transform);
+        }
+    }
+
+    //TO DO: consider using same function for the layout with callbacks
+    function getStacks(elements, rect, sizeField) {
+        var maxSize = rect.size[sizeField];
+        var stackSize = 0;
+        var stacks = [];
+        var stack = [];
+        var element;
+        var size;
+        var bbox;
+
+        var addElementToStack = function() {
+            stack.push({
+                element: element,
+                bbox: bbox
+            });
+        };
+        for (var idx = 0; idx < elements.length; idx++) {
+            element = elements[idx];
+            bbox = element.clippedBBox();
+            if (bbox) {
+                size = bbox.size[sizeField];
+                if (stackSize + size > maxSize) {
+                    if (stack.length) {
+                        stacks.push(stack);
+                        stack = [];
+                        addElementToStack();
+                        stackSize = size;
+                    } else {
+                        addElementToStack();
+                        stacks.push(stack);
+                        stack = [];
+                        stackSize = 0;
+                    }
+                } else {
+                    addElementToStack();
+                    stackSize += size;
+                }
+            }
+        }
+
+        if (stack.length) {
+            stacks.push(stack);
+        }
+
+        return stacks;
+    }
+
+    function getStackElements(elements) {
+        var stackElements = [];
+        var element;
+        var bbox;
+        for (var idx = 0; idx < elements.length; idx++) {
+            element = elements[idx];
+            bbox = element.clippedBBox();
+            if (bbox) {
+                stackElements.push({
+                    element: element,
+                    bbox: bbox
+                });
+            }
+        }
+
+        return stackElements;
+    }
+
+    function stackElements(elements, stackAxis, otherAxis, sizeField) {
+        if (elements.length > 1) {
+            var previousBBox = elements[0].bbox;
+            var origin = new Point();
+            var element;
+            var bbox;
+
+            for (var idx = 1; idx < elements.length; idx++) {
+                element = elements[idx].element;
+                bbox = elements[idx].bbox;
+                origin[stackAxis] = previousBBox.origin[stackAxis] + previousBBox.size[sizeField];
+                origin[otherAxis] = bbox.origin[otherAxis];
+                translateToPoint(origin, bbox, element);
+                bbox.origin[stackAxis] = origin[stackAxis];
+                previousBBox = bbox;
+            }
+        }
+    }
+
+    function alignElements(elements, rect, alignment, axis, sizeField) {
+        var bbox, start, point;
+        alignment = alignment || "start";
+
+        for (var idx = 0; idx < elements.length; idx++) {
+            bbox = elements[idx].clippedBBox();
+            if (bbox) {
+                point = bbox.origin.clone();
+                point[axis] = alignStart(bbox.size[sizeField], rect, alignment, axis, sizeField);
+                translateToPoint(point, bbox, elements[idx]);
+            }
+        }
+    }
+
     function alignStart(size, rect, align, axis, sizeField) {
         var start;
         if (align == START) {
@@ -1327,10 +1485,12 @@
 
     // Exports ================================================================
     deepExtend(drawing, {
+        align: align,
         Arc: Arc,
         Circle: Circle,
         Element: Element,
         ElementsArray: ElementsArray,
+        fit: fit,
         Gradient: Gradient,
         GradientStop: GradientStop,
         Group: Group,
@@ -1341,7 +1501,12 @@
         Path: Path,
         RadialGradient: RadialGradient,
         Segment: Segment,
-        Text: Text
+        stack: stack,
+        Text: Text,
+        vAlign: vAlign,
+        vStack: vStack,
+        vWrap: vWrap,
+        wrap: wrap
     });
 
 })(window.kendo.jQuery);
