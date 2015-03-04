@@ -149,7 +149,7 @@ namespace Kendo.Mvc.UI
 
 			var autoBind = DataSource.Type != DataSourceType.Server && AutoBind.GetValueOrDefault(true);
 
-		//	var columns = VisibleColumns.Select(c => c.ToJson());
+		
 
 			var idPrefix = "#";
 			if (IsInClientTemplate)
@@ -157,10 +157,11 @@ namespace Kendo.Mvc.UI
 				idPrefix = "\\" + idPrefix;
 			}
 
-			//if (columns.Any())
-			//{
-			//	options["columns"] = columns;
-			//}
+			var columns = VisibleColumns.Select(c => c.ToJson());
+			if (columns.Any())
+			{
+				settings["columns"] = columns;
+			}
 
 			if (Grouping.Enabled)
 			{
