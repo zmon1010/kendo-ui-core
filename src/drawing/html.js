@@ -120,7 +120,7 @@
                     pageWidth ? pageWidth - margin.left - margin.right : null,
                     pageHeight ? pageHeight - margin.top - margin.bottom : null,
                     margin,
-                    makeTemplate(options.template)
+                    options
                 );
             } else {
                 defer.resolve(doOne(element));
@@ -147,14 +147,15 @@
             }
         }
 
-        function handlePageBreaks(callback, element, forceBreak, pageWidth, pageHeight, margin, template) {
+        function handlePageBreaks(callback, element, forceBreak, pageWidth, pageHeight, margin, options) {
+            var template = makeTemplate(options.template);
             var doc = element.ownerDocument;
             var pages = [];
             var copy = $(element).clone(true, true)[0];
-            var cont = doc.createElement("KENDO-PDF-DOCUMENT");
+            var container = doc.createElement("KENDO-PDF-DOCUMENT");
             var adjust = 0;
 
-            $(cont).css({
+            $(container).css({
                 display  : "block",
                 position : "absolute",
                 left     : "-10000px",
@@ -166,19 +167,27 @@
                 // here, the layout in this container will be
                 // different from the one in our final page elements,
                 // and we'll split at the wrong places.
-                $(cont).css({
+                $(container).css({
                     width        : pageWidth,
                     paddingLeft  : margin.left,
                     paddingRight : margin.right
                 });
             }
 
-            cont.appendChild(copy);
-            element.parentNode.insertBefore(cont, element);
+            container.appendChild(copy);
+            element.parentNode.insertBefore(container, element);
 
-            // we need the timeout here, so that images dimensions are
+            // we need the timeouts here, so that images dimensions are
             // properly computed in DOM when we start our thing.
-            setTimeout(function() {
+            if (options.beforePageBreak) {
+                setTimeout(function(){
+                    options.beforePageBreak(container, doPageBreak);
+                }, 10);
+            } else {
+                setTimeout(doPageBreak, 10);
+            }
+
+            function doPageBreak() {
                 if (forceBreak != "-" || pageHeight) {
                     splitElement(copy);
                 }
@@ -207,9 +216,9 @@
                 // allow another timeout here to make sure the images
                 // are rendered in the new DOM nodes.
                 setTimeout(function(){
-                    callback({ pages: pages, container: cont });
+                    callback({ pages: pages, container: container });
                 }, 10);
-            }, 10);
+            }
 
             function splitElement(element) {
                 var style = getComputedStyle(element);
