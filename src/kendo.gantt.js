@@ -629,7 +629,7 @@ var __meta__ = {
             if (!!task) {
                 taskId = task.get("id");
 
-                if (taskId === undefined || taskId === null) {
+                if (taskId === undefined || taskId === null || taskId === "") {
                     return [];
                 }
 
