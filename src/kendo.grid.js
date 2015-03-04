@@ -4660,7 +4660,7 @@ var __meta__ = {
                             compare: (column.sortable || {}).compare
                         }) : false;
 
-                        filterable = options.filterable && column.filterable !== false && columnMenu.filterable !== false ? extend({ pane: that.pane }, column.filterable, options.filterable) : false;
+                        filterable = options.filterable && column.filterable !== false && columnMenu.filterable !== false ? extend({ pane: that.pane }, options.filterable, column.filterable) : false;
 
                         if (column.filterable && column.filterable.dataSource) {
                             filterable.forceUnique = false;

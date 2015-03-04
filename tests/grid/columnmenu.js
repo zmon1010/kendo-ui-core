@@ -181,6 +181,26 @@
         equal(grid.thead.find(".k-grid-filter").length, 0);
     });
 
+    test("column filterable settings override globar filterable settings", function() {
+        var grid = setup({
+            filterable: {
+                extra: false
+            },
+            columns: [{
+                    field: "foo",
+                    filterable: {
+                        extra: true
+                    }
+                },
+                "bar"
+            ]
+        });
+
+        var menu = grid.thead.find("th:first").data("kendoColumnMenu");
+
+        ok(menu.options.filterable.extra);
+    });
+
     test("column menu init event", 1, function() {
         var grid = setup({
             columns: ["foo"],
