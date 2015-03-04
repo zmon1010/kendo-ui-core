@@ -3739,6 +3739,17 @@
         }
       },
       {
+        "text": "RTL Support",
+        "disableInMobile": true,
+        "url": "gantt/right-to-left-support",
+        "title": {
+            "kendo-ui": "Right-to-left (RTL) support of Kendo UI Gantt"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the Right-to-left (RTL) support of Kendo UI Gantt."
+        }
+      },
+      {
         "text": "MVVM",
         "url": "gantt/mvvm",
         "title": {
