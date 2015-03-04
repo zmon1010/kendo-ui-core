@@ -14,8 +14,9 @@
                             serverSorting: true,
                             serverFiltering: true,
                         },
+                        editable: true,
                         filterable: true,
-                        pageable: true,                        
+                        pageable: true,
                         columns: [
                             {
                                 field: "FirstName",
@@ -31,7 +32,7 @@
                             },
                             {
                                 field: "Country",
-                                filterable: { 
+                                filterable: {
                                     multi: true,
                                     checkAll: false,
                                     itemTemplate: function(e) {
@@ -46,9 +47,9 @@
                                 width: "220px"
                             },
                             {
-                                filterable: { 
-									                           multi: true
-								                        },
+                                filterable: {
+                                    multi: true
+                                },
                                 field: "Title"
                             }
                         ]
