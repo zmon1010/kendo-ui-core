@@ -103,7 +103,7 @@
                 }
             }
 
-            measureBox.innerHTML = text;
+            $(measureBox).text(text);
             measureBox.appendChild(baselineMarker);
             doc.body.appendChild(measureBox);
 
