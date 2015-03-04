@@ -2080,6 +2080,572 @@
         });
 
         // ------------------------------------------------------------
+       (function() {
+            var innerContainer;
+
+            function isVertical(value) {
+                innerContainer = legend.children[0].children[0];
+                equal(innerContainer.options.vertical, value);
+            }
+
+            module("Legend / orientation");
+
+            test("sets orientation to horizontal for top position by default", function() {
+                createLegend({
+                    position: "top"
+                });
+
+                isVertical(false);
+            });
+
+            test("sets orientation to horizontal for top position if orientation is set to horizontal", function() {
+                createLegend({
+                    position: "top",
+                    orientation: "horizontal"
+                });
+
+                isVertical(false);
+            });
+
+            test("sets orientation to horizontal for top position if orientation is set to vertical", function() {
+                createLegend({
+                    position: "top",
+                    orientation: "vertical"
+                });
+
+                isVertical(true);
+            });
+
+            test("sets orientation to horizontal for bottom position by default", function() {
+                createLegend({
+                    position: "bottom"
+                });
+
+                isVertical(false);
+            });
+
+            test("sets orientation to horizontal for bottom position if orientation is set to horizontal", function() {
+                createLegend({
+                    position: "bottom",
+                    orientation: "horizontal"
+                });
+
+                isVertical(false);
+            });
+
+            test("sets orientation to horizontal for bottom position if orientation is set to vertical", function() {
+                createLegend({
+                    position: "bottom",
+                    orientation: "vertical"
+                });
+
+                isVertical(true);
+            });
+
+            test("sets orientation to vertical for left position by default", function() {
+                createLegend({
+                    position: "left"
+                });
+
+                isVertical(true);
+            });
+
+            test("sets orientation to horizontal for left position if orientation is set to horizontal", function() {
+                createLegend({
+                    position: "left",
+                    orientation: "horizontal"
+                });
+
+                isVertical(false);
+            });
+
+            test("sets orientation to vertical for left position if orientation is set to vertical", function() {
+                createLegend({
+                    position: "left",
+                    orientation: "vertical"
+                });
+
+                isVertical(true);
+            });
+
+
+            test("sets orientation to vertical for right position by default", function() {
+                createLegend({
+                    position: "right"
+                });
+
+                isVertical(true);
+            });
+
+            test("sets orientation to horizontal for right position if orientation is set to horizontal", function() {
+                createLegend({
+                    position: "right",
+                    orientation: "horizontal"
+                });
+
+                isVertical(false);
+            });
+
+            test("sets orientation to vertical for right position if orientation is set to vertical", function() {
+                createLegend({
+                    position: "right",
+                    orientation: "vertical"
+                });
+
+                isVertical(true);
+            });
+
+        })();
+
+        // ------------------------------------------------------------
+       (function() {
+            function createLegend(options) {
+                legend = new dataviz.Legend($.extend({
+                    items: [ { text: "Series 1" } ],
+                    labels: {
+                        font: SANS12
+                    }
+                }, options));
+            }
+
+            module("Legend / height");
+
+            test("reflows container in a box with the specified height for top position with vertical orientation", function() {
+                createLegend({
+                    position: "top",
+                    orientation: "vertical",
+                    height: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.height(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in a box with the specified height aligned to the top for top position with vertical orientation", function() {
+                createLegend({
+                    position: "top",
+                    orientation: "vertical",
+                    height: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.y1, chartBox.y1);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in a box with the specified height for bottom position with vertical orientation", function() {
+                createLegend({
+                    position: "bottom",
+                    orientation: "vertical",
+                    height: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.height(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in a box with the specified height aligned to the bottom for bottom position with vertical orientation", function() {
+                createLegend({
+                    position: "bottom",
+                    orientation: "vertical",
+                    height: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.y2, chartBox.y2);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in a box with the specified height for left position", function() {
+                createLegend({
+                    position: "left",
+                    height: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.height(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in center aligned box with the specified height for left position", function() {
+                createLegend({
+                    position: "left",
+                    height: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.y1, (chartBox.height() +  chartBox.y1 - 100) / 2);
+                    equal(box.height(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in top aligned box with the specified height for left position with align set to start", function() {
+                createLegend({
+                    position: "left",
+                    height: 100,
+                    align: "start"
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.y1, 0);
+                    equal(box.height(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in center aligned box with the specified height for left position with align set to center", function() {
+                createLegend({
+                    position: "left",
+                    height: 100,
+                    align: "center"
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.y1, (chartBox.height() +  chartBox.y1 - 100) / 2);
+                    equal(box.height(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in bottom aligned box with the specified height for left position with align set to end", function() {
+                createLegend({
+                    position: "left",
+                    height: 100,
+                    align: "end"
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.y2, chartBox.y2);
+                    equal(box.height(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in a box with the specified height for right position", function() {
+                createLegend({
+                    position: "right",
+                    height: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.height(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in center aligned box with the specified height for right position", function() {
+                createLegend({
+                    position: "right",
+                    height: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.y1, (chartBox.height() +  chartBox.y1 - 100) / 2);
+                    equal(box.height(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in top aligned box with the specified height for right position with align set to start", function() {
+                createLegend({
+                    position: "right",
+                    height: 100,
+                    align: "start"
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.y1, 0);
+                    equal(box.height(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in center aligned box with the specified height for right position with align set to center", function() {
+                createLegend({
+                    position: "right",
+                    height: 100,
+                    align: "center"
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.y1, (chartBox.height() +  chartBox.y1 - 100) / 2);
+                    equal(box.height(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in bottom aligned box with the specified height for right position with align set to end", function() {
+                createLegend({
+                    position: "right",
+                    height: 100,
+                    align: "end"
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.y2, chartBox.y2);
+                    equal(box.height(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            // ------------------------------------------------------------
+            module("Legend / width");
+
+            test("reflows container in a box with the specified width for left position with horizontal orientation", function() {
+                createLegend({
+                    position: "left",
+                    orientation: "horizontal",
+                    width: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.width(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in a box with the specified height aligned to the left for left position with horizontal orientation", function() {
+                createLegend({
+                    position: "left",
+                    orientation: "horizontal",
+                    width: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.x1, chartBox.x1);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in a box with the specified width for right position with horizontal orientation", function() {
+                createLegend({
+                    position: "right",
+                    orientation: "horizontal",
+                    width: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.width(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in a box with the specified width aligned to the right for right position with horizontal orientation", function() {
+                createLegend({
+                    position: "right",
+                    orientation: "horizontal",
+                    width: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.x2, chartBox.x2);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+
+
+            test("reflows container in a box with the specified width for top position", function() {
+                createLegend({
+                    position: "top",
+                    width: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.width(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in center aligned box with the specified width for top position", function() {
+                createLegend({
+                    position: "top",
+                    width: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.x1,  chartBox.x1 + (chartBox.width() - 100) / 2);
+                    equal(box.width(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in left aligned box with the specified width for top position with align set to start", function() {
+                createLegend({
+                    position: "top",
+                    width: 100,
+                    align: "start"
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.x1, chartBox.x1);
+                    equal(box.width(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in center aligned box with the specified width for top position with align set to center", function() {
+                createLegend({
+                    position: "top",
+                    width: 100,
+                    align: "center"
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.x1, chartBox.x1 + (chartBox.width() - 100) / 2);
+                    equal(box.width(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in right aligned box with the specified width for top position with align set to end", function() {
+                createLegend({
+                    position: "top",
+                    width: 100,
+                    align: "end"
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.x2, chartBox.x2);
+                    equal(box.width(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in a box with the specified width for bottom position", function() {
+                createLegend({
+                    position: "bottom",
+                    width: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.width(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in center aligned box with the specified width for bottom position", function() {
+                createLegend({
+                    position: "bottom",
+                    width: 100
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.x1, chartBox.x1 + (chartBox.width() - 100) / 2);
+                    equal(box.width(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in left aligned box with the specified width for bottom position with align set to start", function() {
+                createLegend({
+                    position: "bottom",
+                    width: 100,
+                    align: "start"
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.x1, chartBox.x1);
+                    equal(box.width(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in center aligned box with the specified width for bottom position with align set to center", function() {
+                createLegend({
+                    position: "bottom",
+                    width: 100,
+                    align: "center"
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.x1, chartBox.x1 + (chartBox.width() - 100) / 2);
+                    equal(box.width(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+            test("reflows container in right aligned box with the specified width for bottom position with align set to end", function() {
+                createLegend({
+                    position: "bottom",
+                    width: 100,
+                    align: "end"
+                });
+
+                legend.container.reflow = function(box) {
+                    equal(box.x2, chartBox.x2);
+                    equal(box.width(), 100);
+                    this.box = box;
+                };
+
+                legend.reflow(chartBox);
+            });
+
+        })();
+
+        // ------------------------------------------------------------
         module("Legend align / position top", {});
 
         test("aligns content to the center by default", function() {
