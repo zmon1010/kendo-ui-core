@@ -486,7 +486,7 @@
         page.beginText();
         page.setFont(kendo.pdf.getFontURL(style), style.fontSize);
         page.setTextRenderingMode(mode);
-        page.showText(element.content());
+        page.showText(element.content(), element._pdfRect ? element._pdfRect.width() : null);
         page.endText();
     }
 

@@ -957,6 +957,14 @@
         encodeText: function(text) {
             return new PDFHexString(this._sub.encodeText(text+""));
         },
+        getTextWidth: function(fontSize, text) {
+            var width = 0, codeMap = this._font.cmap.getUnicodeEntry().codeMap;
+            for (var i = 0; i < text.length; ++i) {
+                var glyphId = codeMap[text.charCodeAt(i)];
+                width += this._font.widthOfGlyph(glyphId || 0);
+            }
+            return width * fontSize / 1000;
+        },
         beforeRender: function() {
             var self = this;
             var font = self._font;
@@ -1392,8 +1400,13 @@
             this._requireTextMode();
             this._out(mode, " Tr", NL);
         },
-        showText: function(text) {
+        showText: function(text, requestedWidth) {
             this._requireFont();
+            if (requestedWidth && this._font instanceof PDFFont) {
+                var outputWidth = this._font.getTextWidth(this._fontSize, text);
+                var scale = requestedWidth / outputWidth * 100;
+                this._out(scale, " Tz ");
+            }
             this._out(this._font.encodeText(text), " Tj", NL);
         },
         showTextNL: function(text) {
