@@ -204,6 +204,7 @@
     <Compile Include="Controllers\Gantt\EventsController.cs" />
     <Compile Include="Controllers\Gantt\Keyboard_NavigationController.cs" />
     <Compile Include="Controllers\Gantt\ResourcesController.cs" />
+    <Compile Include="Controllers\Gantt\Right_To_Left_SupportController.cs" />
     <Compile Include="Controllers\Gantt\ServerBindingController.cs" />
     <Compile Include="Controllers\Grid\Persist_StateController.cs" />
     <Compile Include="Controllers\Grid\Multicolumnheaders.cs" />
@@ -895,6 +896,7 @@
     <Content Include="Areas\aspx\Views\dropdownlist\serverfiltering.aspx" />
     <Content Include="Areas\aspx\Views\financial\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\gantt\api.aspx" />
+    <Content Include="Areas\aspx\Views\gantt\right_to_left_support.aspx" />
     <Content Include="Areas\aspx\Views\gantt\resources.aspx" />
     <Content Include="Areas\aspx\Views\gantt\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\gantt\events.aspx" />
@@ -2702,6 +2704,7 @@
     <Content Include="Areas\razor\Views\treelist\column_resizing.cshtml" />
     <Content Include="Areas\razor\Views\line_charts\visuals.cshtml" />
     <Content Include="Areas\razor\Views\editor\pdf_export.cshtml" />
+    <Content Include="Areas\razor\Views\gantt\right_to_left_support.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
