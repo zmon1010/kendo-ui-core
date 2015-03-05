@@ -5541,6 +5541,8 @@ var __meta__ = {
                 trFilter.append(that.thead.find(".k-filter-row .k-group-cell").add(filterCells));
 
                 this.lockedHeader = table.prependTo(container);
+                this.thead.find(".k-group-cell").remove();
+
                 this._syncLockedHeaderHeight();
             }
         },
