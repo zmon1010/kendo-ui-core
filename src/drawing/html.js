@@ -879,7 +879,7 @@
     function getPropertyValue(style, prop) {
         return style.getPropertyValue(prop) ||
             ( browser.webkit && style.getPropertyValue("-webkit-" + prop )) ||
-            ( browser.firefox && style.getPropertyValue("-moz-" + prop )) ||
+            ( browser.mozilla && style.getPropertyValue("-moz-" + prop )) ||
             ( browser.opera && style.getPropertyValue("-o-" + prop)) ||
             ( browser.msie && style.getPropertyValue("-ms-" + prop))
         ;
@@ -889,7 +889,7 @@
         style.setProperty(prop, value, important);
         if (browser.webkit) {
             style.setProperty("-webkit-" + prop, value, important);
-        } else if (browser.firefox) {
+        } else if (browser.mozilla) {
             style.setProperty("-moz-" + prop, value, important);
         } else if (browser.opera) {
             style.setProperty("-o-" + prop, value, important);
