@@ -2248,8 +2248,7 @@
                 box = range.getClientRects()[0];
             }
 
-            var str = range.toString().replace(/\s+$/, "");
-            drawText(str, box);
+            drawText(range.toString(), box);
         }
 
         function drawText(str, box) {
