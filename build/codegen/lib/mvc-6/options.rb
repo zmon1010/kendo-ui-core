@@ -1,4 +1,19 @@
 module CodeGen::MVC6::Wrappers::Options
+
+    CSHARP_TYPES = {
+        'Number' => 'double',
+        'String' => 'string',
+        'Boolean' => 'bool',
+        'Date' => 'DateTime'
+    }
+
+    STRUCT_TYPES = [
+        'int',
+        'double',
+        'bool',
+        'DateTime'
+    ]
+
     def component_class
         Component
     end
