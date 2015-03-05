@@ -2229,6 +2229,16 @@
                         start = eol;
                     }
                 })(start, Math.min(end, start + estimateLineLength), end);
+
+                pos = range.toString().search(/\s+$/);
+                if (pos === 0) {
+                    return; // whitespace only; we should not get here.
+                }
+                if (pos > 0) {
+                    // eliminate trailing whitespace
+                    range.setEnd(node, range.startOffset + pos);
+                    box = range.getBoundingClientRect();
+                }
             }
 
             // another workaround for IE: if we rely on getBoundingClientRect() we'll overlap with the bullet for LI
