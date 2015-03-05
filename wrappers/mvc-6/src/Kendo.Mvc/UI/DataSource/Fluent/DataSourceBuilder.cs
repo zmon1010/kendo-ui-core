@@ -57,18 +57,6 @@ namespace Kendo.Mvc.UI.Fluent
             dataSource.Type = DataSourceType.Custom;
 
             return new SignalRDataSourceBuilder<TModel>(dataSource);
-        }
-
-        /// <summary>
-        /// Use it to configure Server binding.
-        /// </summary>        
-        public ServerDataSourceBuilder<TModel> Server()
-        {
-            dataSource.Type = DataSourceType.Server;
-
-            return new ServerDataSourceBuilder<TModel>(dataSource, viewContext, urlGenerator);
-        }
-
-
+        }     
     }
 }
