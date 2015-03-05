@@ -2525,7 +2525,7 @@ var __meta__ = {
                     dataItem: pointData.dataItem,
                     series: pointData.series,
                     category: pointData.category,
-                    rect: that.box.toRect(),
+                    rect: that.paddingBox.toRect(),
                     options: that.visualOptions(),
                     createVisual: function() {
                         return that.getElement();

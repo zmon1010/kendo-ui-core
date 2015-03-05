@@ -3845,10 +3845,10 @@
             ok(visual === customVisual);
         });
 
-        test("passes rect as parameter", function() {
+        test("passes paddingBox rect as parameter", function() {
             createShape({
                 visual: function(e) {
-                   ok(e.rect.equals(shape.box.toRect()));
+                   ok(e.rect.equals(shape.paddingBox.toRect()));
                 }
             });
         });
