@@ -255,43 +255,32 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual void AutoGenerate(Action<GridColumnBase<TModel>> columnAction)
         {
             AutoGenerate(true, columnAction);
-        }
+        }		
 
-        ///// <summary>
-        ///// Defines a template column.
-        ///// </summary>
-        ///// <param name="templateAction"></param>
-        ///// <returns></returns>
-        //public virtual GridTemplateColumnBuilder<TModel> Template(Action<TModel> templateAction)
-        //{
-        //    GridTemplateColumn<TModel> column = new GridTemplateColumn<TModel>(Container, templateAction);
-        //    ColumnsContainer.Columns.Add(column);
+		public virtual GridTemplateColumnBuilder<TModel> Template(string template)
+		{
+			GridTemplateColumn<TModel> column = new GridTemplateColumn<TModel>(Container);
+			ColumnsContainer.Columns.Add(column);
 
-        //    return new GridTemplateColumnBuilder<TModel>(column);
-        //}
+			column.ClientTemplate = template;
 
-        //public virtual GridTemplateColumnBuilder<TModel> Template(Func<TModel, object> template)
-        //{
-        //    GridTemplateColumn<TModel> column = new GridTemplateColumn<TModel>(Container, template);
-        //    ColumnsContainer.Columns.Add(column);
+			return new GridTemplateColumnBuilder<TModel>(column);
+		}
 
-        //    return new GridTemplateColumnBuilder<TModel>(column);
-        //}
+		///// <summary>
+		///// Defines a command column.
+		///// </summary>
+		///// <param name="commandAction"></param>
+		///// <returns></returns>
+		//public virtual GridActionColumnBuilder Command(Action<GridActionCommandFactory<TModel>> commandAction)
+		//{
+		//    GridActionColumn<TModel> column = new GridActionColumn<TModel>(Container);
 
-        ///// <summary>
-        ///// Defines a command column.
-        ///// </summary>
-        ///// <param name="commandAction"></param>
-        ///// <returns></returns>
-        //public virtual GridActionColumnBuilder Command(Action<GridActionCommandFactory<TModel>> commandAction)
-        //{
-        //    GridActionColumn<TModel> column = new GridActionColumn<TModel>(Container);
-            
-        //    commandAction(new GridActionCommandFactory<TModel>(column));
+		//    commandAction(new GridActionCommandFactory<TModel>(column));
 
-        //    ColumnsContainer.Columns.Add(column);
+		//    ColumnsContainer.Columns.Add(column);
 
-        //    return new GridActionColumnBuilder(column);
-        //}
-    }
+		//    return new GridActionColumnBuilder(column);
+		//}
+	}
 }
