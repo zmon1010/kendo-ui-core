@@ -70,7 +70,7 @@ namespace Kendo.Mvc.UI
 
             if (HtmlAttributes.Any())
             {
-                var attributes = new Dictionary<string, object>();
+                //var attributes = new Dictionary<string, object>();
 				//TODO: encode column attributes
 
 				//var hasAntiXss = HttpEncoder.Current != null && HttpEncoder.Current.GetType().ToString().Contains("AntiXssEncoder");
@@ -83,13 +83,26 @@ namespace Kendo.Mvc.UI
 				//                }
 				//                attributes[WebUtility.HtmlAttributeEncode(attr.Key)] = value;
 				//            });
-
-				json["attributes"] = attributes;
+				
+				json["attributes"] = HtmlAttributes;
             }
 
-            if (FooterHtmlAttributes.Any())
+			if (HeaderHtmlAttributes.Any())
+			{
+				// var attributes = new Dictionary<string, object>();
+
+				//TODO: encode column attributes
+				//FooterHtmlAttributes.Each(attr =>
+				//            {
+				//                attributes[HttpUtility.HtmlAttributeEncode(attr.Key)] = HttpUtility.HtmlAttributeEncode(attr.Value.ToString());
+				//            });
+
+				json["headerAttributes"] = HeaderHtmlAttributes;
+			}
+
+			if (FooterHtmlAttributes.Any())
             {
-                var attributes = new Dictionary<string, object>();
+               // var attributes = new Dictionary<string, object>();
 
 				//TODO: encode column attributes
 				//FooterHtmlAttributes.Each(attr =>
@@ -97,7 +110,7 @@ namespace Kendo.Mvc.UI
     //                attributes[HttpUtility.HtmlAttributeEncode(attr.Key)] = HttpUtility.HtmlAttributeEncode(attr.Value.ToString());
     //            });
 
-                json["footerAttributes"] = attributes;
+                json["footerAttributes"] = FooterHtmlAttributes;
             }
 
             if (Hidden)
