@@ -263,14 +263,23 @@ span.k-tooltip {
     margin: 0;
 }
 
-.k-tabstrip-items .k-link,
 .k-panelbar .k-tabstrip-items .k-link {
     padding: .5em .786em;
 }
 
-.k-panelbar > .k-item > .k-link,
+.k-tabstrip-items .k-link {
+    font-size: .857em;
+    padding: .667em .786em;
+}
+
 .k-panel > .k-item > .k-link {
-    line-height: 3.5em;
+    font-size: 1em;
+    line-height: 3.5em;    
+}
+
+.k-panelbar > .k-item > .k-header {
+    font-size: 1.429em;
+    line-height: 2.5em;
 }
 
 .k-menu .k-item > .k-link {
@@ -295,14 +304,18 @@ span.k-tooltip {
     line-height: 2.86em;
 }
 
-.k-toolbar .k-overflow-anchor {
-    width: 2.86em;    
-    height: 2.86em;
-    line-height: inherit;
-}
-
 .k-toolbar .k-button {
     padding: .143em 1em;
+}
+
+.k-toolbar .k-overflow-anchor {
+    width: 2.143em;    
+    height: 2.143em;
+    border-width: 1px;
+    padding: 0;
+    margin: 5px;
+    line-height: inherit;
+    background: pink
 }
 
 .k-toolbar .k-button-group .k-button {
@@ -313,6 +326,11 @@ span.k-tooltip {
 .k-toolbar .k-button .k-icon {
     margin-top: -10px;
     margin-bottom: -4px;
+}
+
+.k-toolbar .k-overflow-anchor .k-icon {
+    margin-top: -15px;
+    margin-bottom: 0;
 }
 
 table.k-editor {

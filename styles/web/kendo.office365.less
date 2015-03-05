@@ -653,6 +653,26 @@ input.k-textbox:focus {
 	.k-toggle-button.k-state-active:hover {
 		color: @widget-text-color;
 	}
+
+    .k-overflow-anchor {
+        background-color: @widget-background-color;
+        border-color: @widget-border-color;
+    }
+
+    .k-overflow-anchor:hover {
+        background-color: @button-hover-background-color;
+        border-color: @button-hover-background-color;
+    }
+
+    .k-overflow-anchor.k-state-active {
+        border-color: @button-hover-background-color;
+    }
+
+    .k-overflow-anchor.k-state-border-down,
+    .k-overflow-anchor.k-state-border-up {
+        background-color: @primary-button-background-color;
+        border-color: @primary-button-background-color;
+    }
 }
 
 .k-tabstrip {
@@ -762,10 +782,24 @@ input.k-textbox:focus {
 	background-color: @widget-background-color;
 }
 
+.k-panelbar .k-state-selected.k-state-hover {
+    background-color: @selected-background-color;
+}
+
 .k-panelbar > li > .k-state-selected,
-.k-panelbar > li.k-state-default > .k-link.k-state-selected {
+.k-panelbar > li > .k-state-selected.k-state-hover,
+.k-panelbar > li.k-state-default > .k-link.k-state-selected,
+.k-panelbar > li > .k-state-focused.k-state-hover {
 	color: @inverse-text-color;
 	background-color: @select-background-color;
+}
+
+.k-panelbar.k-header,
+.k-panelbar .k-content,
+.k-panelbar .k-panel,
+.k-panelbar .k-item,
+.k-panelbar > .k-item > .k-link {
+    border-color: @menu-border-color;
 }
 
 .k-window .k-header {
