@@ -2,6 +2,7 @@
     var dataviz = kendo.dataviz,
         Box2D = dataviz.Box2D,
         draw = kendo.drawing,
+        geom = kendo.geometry,
         categoriesCount = dataviz.categoriesCount,
         chartBox = new Box2D(0, 0, 800, 600),
         lineChart,
@@ -711,6 +712,22 @@
             createPoint({ markers: { visible: true, type: "circle" }});
             ok(point.highlightVisual() instanceof draw.Circle);
             ok(point.highlightVisual() === point.marker.visual);
+        });
+
+        test("highlightVisualArgs returns an object with the options, the point marker rect and the marker visual", function() {
+            createPoint({ markers: { visible: true }});
+            var result = point.highlightVisualArgs();
+            deepEqual(result.options, point.options);
+            ok(point.marker.paddingBox.toRect().equals(result.rect));
+            ok(point.marker.visual === result.visual);
+        });
+
+        test("highlightVisualArgs returns no visual and a rect based on the box center and marker size if markers are not visible", function() {
+            createPoint({ markers: { visible: false, size: 10}});
+            var result = point.highlightVisualArgs();
+            var center = point.box.center();
+            ok(result.rect.equals(new geom.Rect([center.x - 5, center.y - 5], [10, 10])));
+            ok(result.visual === undefined );
         });
 
         test("tooltipAnchor is at top right of marker / above axis", function() {

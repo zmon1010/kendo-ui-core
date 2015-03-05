@@ -2310,6 +2310,13 @@
             ok(visual === bar.rectVisual);
         });
 
+        test("highlightVisualArgs returns an object with the options, the bar rect and the rectVisual", function() {
+             var result = bar.highlightVisualArgs();
+             deepEqual(result.options, bar.options);
+             ok(bar.box.toRect().equals(result.rect));
+             ok(bar.rectVisual === result.visual);
+        });
+
         test("tooltipAnchor is top right corner / vertical / above axis",
         function() {
             createBar({ vertical: true, aboveAxis: true, isStacked: false });

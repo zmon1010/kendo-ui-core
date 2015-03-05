@@ -3310,6 +3310,14 @@ var __meta__ = {
             return this.rectVisual;
         },
 
+        highlightVisualArgs: function() {
+            return {
+                options: this.options,
+                rect: this.box.toRect(),
+                visual: this.rectVisual
+            };
+        },
+
         getBorderColor: function() {
             var bar = this,
                 options = bar.options,
@@ -4661,6 +4669,15 @@ var __meta__ = {
             return this.bodyVisual;
         },
 
+        highlightVisualArgs: function() {
+            var options = this.options;
+            return {
+                rect: this.box.toRect(),
+                visual: this.bodyVisual,
+                options: this.options
+            };
+        },
+
         formatValue: function(format) {
             var bullet = this;
 
@@ -5060,6 +5077,27 @@ var __meta__ = {
             return (this.marker || {}).visual;
         },
 
+        highlightVisualArgs: function() {
+            var marker = this.marker;
+            var visual;
+            var rect;
+            if (marker) {
+                rect = marker.paddingBox.toRect();
+                visual = marker.visual;
+            } else {
+                var size = this.options.markers.size;
+                var halfSize = size / 2;
+                var center = this.box.center();
+                rect = new geom.Rect([center.x - halfSize, center.y - halfSize], [size, size]);
+            }
+
+            return {
+                options: this.options,
+                rect: rect,
+                visual: visual
+            };
+        },
+
         tooltipAnchor: function(tooltipWidth, tooltipHeight) {
             var point = this,
                 markerBox = point.markerBox(),
@@ -5126,10 +5164,6 @@ var __meta__ = {
             });
 
             return overlay;
-        },
-
-        highlightVisual: function() {
-            return (this.marker || {}).visual;
         }
     });
 
@@ -6524,6 +6558,14 @@ var __meta__ = {
             return this._mainVisual;
         },
 
+        highlightVisualArgs: function() {
+            return {
+                options: this.options,
+                rect: this.box.toRect(),
+                visual: this._mainVisual
+            };
+        },
+
         tooltipAnchor: function() {
             var point = this,
                 box = point.box,
@@ -7248,6 +7290,20 @@ var __meta__ = {
 
         highlightVisual: function() {
             return this.visual;
+        },
+
+        highlightVisualArgs: function() {
+            var sector = this.sector;
+
+            return {
+                options: this.options,
+                radius: sector.r,
+                innerRadius: sector.ir,
+                center: new geom.Point(sector.c.x, sector.c.y),
+                startAngle: sector.startAngle,
+                endAngle: sector.angle + sector.startAngle,
+                visual: this.visual
+            };
         },
 
         tooltipAnchor: function(width, height) {
