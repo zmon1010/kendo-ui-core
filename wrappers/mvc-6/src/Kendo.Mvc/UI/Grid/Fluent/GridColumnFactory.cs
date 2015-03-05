@@ -1,14 +1,11 @@
 namespace Kendo.Mvc.UI.Fluent
 {
 	using System;
-	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq.Expressions;
-	using System.Reflection;
 	using Kendo.Mvc.Extensions;
 	using Kendo.Mvc.UI;
 	using Microsoft.AspNet.Mvc;
-	using Microsoft.AspNet.Mvc.Rendering;
 
 
 	/// <summary>
@@ -83,22 +80,22 @@ namespace Kendo.Mvc.UI.Fluent
             return Bound(null, memberName);
         }
 
-        //public GridColumnFactory<TModel> Group(Action<GridColumnGroupBuilder<TModel>> configurator)
-        //{
-        //    var group = new GridColumnGroup<TModel>(Container);
-        //    ColumnsContainer.Columns.Add(group);
+		public GridColumnFactory<TModel> Group(Action<GridColumnGroupBuilder<TModel>> configurator)
+		{
+			var group = new GridColumnGroup<TModel>(Container);
+			ColumnsContainer.Columns.Add(group);
 
-        //    var factory = new GridColumnGroupBuilder<TModel>(group, Container, viewContext, urlGenerator);
+			var factory = new GridColumnGroupBuilder<TModel>(group, Container, viewContext, urlGenerator);
 
-        //    configurator(factory);
+			configurator(factory);
 
-        //    return this;
-        //}
+			return this;
+		}
 
-        /// <summary>
-        /// Defines a bound column.
-        /// </summary>
-        public virtual GridBoundColumnBuilder<TModel> Bound(Type memberType, string memberName)
+		/// <summary>
+		/// Defines a bound column.
+		/// </summary>
+		public virtual GridBoundColumnBuilder<TModel> Bound(Type memberType, string memberName)
         {
             const bool liftMemberAccess = false;
 
