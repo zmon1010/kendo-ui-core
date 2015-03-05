@@ -3246,25 +3246,16 @@ var __meta__ = {
                         dataItem: bar.dataItem,
                         value: bar.value,
                         series: bar.series,
+                        percentage: bar.percentage,
+                        runningTotal: bar.runningTotal,
+                        total: bar.total,
                         rect: box.toRect(),
                         createVisual: function() {
                             var group = new draw.Group();
                             bar.createRect(group);
                             return group;
                         },
-                        options: {
-                            border: options.border,
-                            color: options.color,
-                            errorBars: options.errorBars,
-                            gap: options.gap,
-                            labels: options.labels,
-                            notes: options.notes,
-                            opacity: options.opacity,
-                            spacing: options.spacing,
-                            stack: options.stack,
-                            type: options.type,
-                            overlay: options.overlay
-                        }
+                        options: options
                     });
                     if (visual) {
                         bar.visual.append(visual);

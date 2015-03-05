@@ -2424,13 +2424,14 @@
             });
         });
 
-        test("passes dataItem, category, value, series", function() {
+        test("passes dataItem, category, value, series and percentage", function() {
             createBar({
                 visual: function(e) {
                     equal(e.value, bar.value);
                     ok(e.dataItem === bar.dataItem);
                     ok(e.category === bar.category);
                     ok(e.series === bar.series);
+                    equal(e.percentage, bar.percentage);
                 }
             });
         });
@@ -2439,19 +2440,7 @@
             createBar({
                 visual: function(e) {
                    var options = bar.options;
-                   deepEqual(e.options, {
-                        border: options.border,
-                        color: options.color,
-                        errorBars: options.errorBars,
-                        gap: options.gap,
-                        labels: options.labels,
-                        notes: options.notes,
-                        opacity: options.opacity,
-                        spacing: options.spacing,
-                        stack: options.stack,
-                        type: options.type,
-                        overlay: options.overlay
-                   });
+                   deepEqual(e.options, options);
                 }
             });
         });

@@ -410,4 +410,30 @@
             ok(polyline.segments[1].anchor().equals(new dataviz.Point2D(0.5, 30.5)));
         });
     })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var segment;
+        var polyline;
+
+        module("Waterfall / point / custom visual");
+
+        test("Passes runningTotal and total", function() {
+            createChart([{
+                data: [1, 2],
+                visual: function(e) {
+                    equal(e.runningTotal, 3);
+                    equal(e.total, 3);
+                }
+            }]);
+            var point = chart.points[1];
+            point.parent = {
+                appendVisual: $.noop
+            };
+            point.reflow(new dataviz.Box2D(0, 0, 100, 100));
+            point.renderVisual();
+
+        });
+
+    })();
 })();
