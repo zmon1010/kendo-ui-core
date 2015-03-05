@@ -10,6 +10,7 @@ module CodeGen::MVC6::Wrappers
         def component(component)
             write_component(component)
             write_component_settings(component)
+            write_composite_settings(component)
             write_events(component)
             write_builder(component)
             write_builder_settings(component)
@@ -19,14 +20,49 @@ module CodeGen::MVC6::Wrappers
             filename = "#{@path}/#{component.path}/#{component.csharp_class}.cs"
 
             unless File.exists?(filename)
-                write_file(filename, component.to_component(filename))
+                write_file(filename, component.to_component())
             end
         end
 
         def write_component_settings(component)
             filename = "#{@path}/#{component.path}/#{component.csharp_class}.Settings.cs"
 
-            write_file(filename, component.to_component_settings(filename))
+            write_file(filename, component.to_component_settings())
+        end
+
+        def write_composite_settings(component)
+            options = component.composite_options
+
+            options.each do |option|
+                write_composite_option(component, option)
+            end
+        end
+
+        def write_composite_option(component, option)
+            #if option.instance_of?(component.array_option_class)
+            #    write_array(component, option)
+
+            #    return
+            #end
+
+            # write *Settings.cs file
+            filename = "#{@path}/#{component.path}/Settings/#{option.csharp_class}.cs"
+            unless File.exists?(filename)
+                write_file(filename, component.to_composite_option(option))
+            end
+
+            # write *Settings.Generated.cs file
+            filename = "#{@path}/#{component.path}/Settings/#{option.csharp_class}.Generated.cs"
+            write_file(filename, component.to_composite_option_settings(option))
+
+            # write *SettingsBuilder.cs file
+            #filename = "#{@path}/#{component.path}/Fluent/#{option.csharp_builder_class}.cs"
+
+            #write_file(filename, component.to_fluent_setting(filename, option))
+
+            option.composite_options.each do |o|
+                write_composite_option(component, o)
+            end
         end
 
         def write_events(component)
@@ -34,21 +70,21 @@ module CodeGen::MVC6::Wrappers
 
             filename = "#{@path}/#{component.path}/Fluent/#{component.csharp_class}EventBuilder.cs"
 
-            write_file(filename, component.to_events(filename))
+            write_file(filename, component.to_events())
         end
 
         def write_builder(component)
             filename = "#{@path}/#{component.path}/Fluent/#{component.csharp_builder_class}.cs"
 
             unless File.exists?(filename)
-                write_file(filename, component.to_builder(filename))
+                write_file(filename, component.to_builder())
             end
         end
 
         def write_builder_settings(component)
             filename = "#{@path}/#{component.path}/Fluent/#{component.csharp_builder_class}.Settings.cs"
 
-            write_file(filename, component.to_builder_settings(filename))
+            write_file(filename, component.to_builder_settings())
         end
 
         def write_file(filename, content)

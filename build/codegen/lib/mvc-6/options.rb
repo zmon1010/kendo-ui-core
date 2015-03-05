@@ -1,5 +1,7 @@
 module CodeGen::MVC6::Wrappers::Options
 
+    GENERIC_ARGS = YAML.load(File.read("build/codegen/lib/mvc-6/generics.yml"))
+
     CSHARP_TYPES = {
         'Number' => 'double',
         'String' => 'string',
@@ -59,7 +61,7 @@ module CodeGen::MVC6::Wrappers::Options
     end
 
     def csharp_generic
-        CodeGen::MVC6::Wrappers::GENERIC_ARGS[full_name.downcase.to_sym]
+        GENERIC_ARGS[full_name.downcase.to_sym]
     end
 
     def csharp_builder_name
@@ -131,5 +133,9 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         return_type
+    end
+
+    def get_binding
+        binding
     end
 end

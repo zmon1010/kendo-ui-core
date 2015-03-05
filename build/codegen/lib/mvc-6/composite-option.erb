@@ -1,0 +1,23 @@
+using Kendo.Mvc.Extensions;
+using Microsoft.AspNet.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Kendo.Mvc.UI
+{
+    /// <summary>
+    /// Kendo UI <%= csharp_class %> class
+    /// </summary>
+    public partial class <%= csharp_class %><%= csharp_generic_args %> <%= csharp_generic_constraints %>
+    {
+        protected Dictionary<string, object> Serialize()
+        {
+            var settings = SerializeSettings();
+
+            // Do manual serialization here
+
+            return settings;
+        }
+    }
+}
