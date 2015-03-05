@@ -3002,6 +3002,21 @@
         }
       },
       {
+        "text": "MVVM",
+        "url": "notification/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI Notification"
+        },
+        "meta": {
+            "kendo-ui": "MVVM support for Kendo UI Notification"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
         "text": "AngularJS",
         "url": "notification/angular",
         "title": {
