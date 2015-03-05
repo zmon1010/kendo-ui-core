@@ -804,6 +804,11 @@ var __meta__ = {
             this._refreshHandler = proxy(this.refresh, this);
             this.dataSource.bind(CHANGE, this._refreshHandler);
 
+            var that = this;
+            this.checkChangeHandler = function() {
+                that.createCheckBoxes();
+                that.checkValues(that.getFilterArray());
+            };
         },
         _createLink: function() {
             var element = this.element;
@@ -884,7 +889,12 @@ var __meta__ = {
                 this.checkBoxAll.prop("checked", state);
             }
         },
-        refresh: function() {
+        refresh: function(e) {
+            if (e && this.options.forceUnique && e.sender === this.dataSource &&
+                 (e.action == "itemchange" || e.action == "add" || e.action == "remove") ) {
+                this.checkSource.data(this.dataSource.data());
+                this._isFetched = false;
+            }
             var filters = this.getFilterArray();
             if (this._link) {
                 this._link.toggleClass("k-state-active", filters.length !== 0);
@@ -902,7 +912,8 @@ var __meta__ = {
                             this._isFetched = true;
                             this.createCheckBoxes();
                             this.checkValues(this.getFilterArray());
-                            this.trigger("refresh");
+                            this.trigger(REFRESH);
+                            this.checkSource.bind(CHANGE, this.checkChangeHandler);
                         }, this));
                     }
                 }
@@ -917,6 +928,7 @@ var __meta__ = {
             return flatValues;
         },
         createCheckBoxes: function() {
+            this.container.empty();
             var options = this.options;
             var templateOptions = { field: this.field, format: options.format, mobile: this._isMobile };
             var template = kendo.template(options.itemTemplate(templateOptions));
@@ -1009,14 +1021,20 @@ var __meta__ = {
                 that.view = null;
             }
 
-            that._link.unbind(NS);
+            if (that._link) {
+                that._link.unbind(NS);
+            }
 
             if (that._refreshHandler) {
                 that.dataSource.unbind(CHANGE, that._refreshHandler);
                 that.dataSource = null;
             }
 
-            that.element = that.container = that.checkBoxAll = that._link = that._refreshHandler = that.checkAllHandler = null;
+            if (that.checkChangeHandler) {
+                that.checkSource.unbind(CHANGE, that.checkChangeHandler);
+            }
+
+            that.element = that.checkSource = that.container = that.checkBoxAll = that._link = that._refreshHandler = that.checkAllHandler = null;
         },
         options: {
             name: "FilterMultiCheck",
