@@ -29,6 +29,13 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         def to_serialization
+            ERB.new(%{
+            var <%= name %> = <%= csharp_name %>.Serialize();
+            if (<%= name %>.Any())
+            {
+                settings["<%= name %>"] = <%= name %>;
+            }
+            }).result(binding)
         end
     end
 
