@@ -38,6 +38,8 @@
         },
 
         _load: function(data) {
+            this.surface.clear();
+
             if (data.length === 0) {
                 return;
             }

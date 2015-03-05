@@ -349,6 +349,14 @@
 
             layer.dataSource.add({});
         });
+
+        test("clears surface on change", function() {
+            layer.surface.clear = function() {
+                ok(true);
+            };
+
+            layer.dataSource.add({});
+        });
     })();
 
     // ------------------------------------------------------------
