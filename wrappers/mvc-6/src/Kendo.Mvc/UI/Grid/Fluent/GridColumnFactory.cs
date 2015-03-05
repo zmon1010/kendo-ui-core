@@ -1,6 +1,7 @@
 namespace Kendo.Mvc.UI.Fluent
 {
 	using System;
+	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq.Expressions;
 #if ASPNETCORE50
@@ -9,6 +10,8 @@ namespace Kendo.Mvc.UI.Fluent
 	using Kendo.Mvc.Extensions;
 	using Kendo.Mvc.UI;
 	using Microsoft.AspNet.Mvc;
+	using Microsoft.AspNet.Mvc.Rendering;
+
 
 
 	/// <summary>
@@ -130,92 +133,92 @@ namespace Kendo.Mvc.UI.Fluent
 
             return new GridBoundColumnBuilder<TModel>(column, this.viewContext, this.urlGenerator);
         }
-                
-        ///// <summary>
-        ///// Defines a foreign key column.
-        ///// </summary>
-        ///// <typeparam name="TValue">Member type</typeparam>
-        ///// <param name="expression">The member which matches the selected item</param>
-        ///// <param name="data">The foreign data</param>
-        ///// <param name="dataFieldValue">The data value field</param>
-        ///// <param name="dataFieldText">The data text field</param>
-        ///// <returns></returns>
-        //public virtual GridBoundColumnBuilder<TModel> ForeignKey<TValue>(Expression<Func<TModel, TValue>> expression, IEnumerable data, 
-        //    string dataFieldValue, string dataFieldText)
-        //{
-        //    return ForeignKey(expression, new SelectList(data, dataFieldValue, dataFieldText));
-        //}
 
-        ///// <summary>
-        ///// Defines a foreign key column.
-        ///// </summary>
-        ///// <typeparam name="TValue">Member type</typeparam>
-        ///// <param name="expression">The member which matches the selected item</param>
-        ///// <param name="data">The foreign data</param>
-        ///// <returns></returns>
-        //public virtual GridBoundColumnBuilder<TModel> ForeignKey<TValue>(Expression<Func<TModel, TValue>> expression, SelectList data)
-        //{            
-        //    GridForeignKeyColumn<TModel, TValue> column = new GridForeignKeyColumn<TModel, TValue>(Container, expression, data);
+		/// <summary>
+		/// Defines a foreign key column.
+		/// </summary>
+		/// <typeparam name="TValue">Member type</typeparam>
+		/// <param name="expression">The member which matches the selected item</param>
+		/// <param name="data">The foreign data</param>
+		/// <param name="dataFieldValue">The data value field</param>
+		/// <param name="dataFieldText">The data text field</param>
+		/// <returns></returns>
+		public virtual GridBoundColumnBuilder<TModel> ForeignKey<TValue>(Expression<Func<TModel, TValue>> expression, IEnumerable data,
+			string dataFieldValue, string dataFieldText)
+		{
+			return ForeignKey(expression, new SelectList(data, dataFieldValue, dataFieldText));
+		}
 
-        //    column.Data = data;
+		/// <summary>
+		/// Defines a foreign key column.
+		/// </summary>
+		/// <typeparam name="TValue">Member type</typeparam>
+		/// <param name="expression">The member which matches the selected item</param>
+		/// <param name="data">The foreign data</param>
+		/// <returns></returns>
+		public virtual GridBoundColumnBuilder<TModel> ForeignKey<TValue>(Expression<Func<TModel, TValue>> expression, SelectList data)
+		{
+			GridForeignKeyColumn<TModel, TValue> column = new GridForeignKeyColumn<TModel, TValue>(Container, expression, data);
 
-        //    ColumnsContainer.Columns.Add(column);
+			column.Data = data;
 
-        //    return new GridBoundColumnBuilder<TModel>(column, this.viewContext, this.urlGenerator);
-        //}
+			ColumnsContainer.Columns.Add(column);
 
-        //public virtual GridBoundColumnBuilder<TModel> ForeignKey(string memberName, IEnumerable data,
-        //    string dataFieldValue, string dataFieldText)
-        //{
-        //    return ForeignKey(null, memberName, new SelectList(data, dataFieldValue, dataFieldText));
-        //}
+			return new GridBoundColumnBuilder<TModel>(column, this.viewContext, this.urlGenerator);
+		}
 
-        //public virtual GridBoundColumnBuilder<TModel> ForeignKey(string memberName, SelectList data)
-        //{
-        //    return ForeignKey(null, memberName, data);
-        //}
+		public virtual GridBoundColumnBuilder<TModel> ForeignKey(string memberName, IEnumerable data,
+			string dataFieldValue, string dataFieldText)
+		{
+			return ForeignKey(null, memberName, new SelectList(data, dataFieldValue, dataFieldText));
+		}
 
-        //public virtual GridBoundColumnBuilder<TModel> ForeignKey(Type memberType, string memberName, IEnumerable data,
-        //    string dataFieldValue, string dataFieldText)
-        //{
-        //    return ForeignKey(memberType, memberName, new SelectList(data, dataFieldValue, dataFieldText));
-        //}
+		public virtual GridBoundColumnBuilder<TModel> ForeignKey(string memberName, SelectList data)
+		{
+			return ForeignKey(null, memberName, data);
+		}
 
-        //public virtual GridBoundColumnBuilder<TModel> ForeignKey(Type memberType, string memberName, SelectList data)
-        //{
-        //    const bool liftMemberAccess = false;
+		public virtual GridBoundColumnBuilder<TModel> ForeignKey(Type memberType, string memberName, IEnumerable data,
+			string dataFieldValue, string dataFieldText)
+		{
+			return ForeignKey(memberType, memberName, new SelectList(data, dataFieldValue, dataFieldText));
+		}
 
-        //    var lambdaExpression = ExpressionBuilder.Lambda<TModel>(memberType, memberName, liftMemberAccess);
+		public virtual GridBoundColumnBuilder<TModel> ForeignKey(Type memberType, string memberName, SelectList data)
+		{
+			const bool liftMemberAccess = false;
 
-        //    if (typeof(TModel).IsDynamicObject() && memberType != null && lambdaExpression.Body.Type.GetNonNullableType() != memberType.GetNonNullableType())
-        //    {
-        //        lambdaExpression = Expression.Lambda(Expression.Convert(lambdaExpression.Body, memberType), lambdaExpression.Parameters);
-        //    }
+			var lambdaExpression = ExpressionBuilder.Lambda<TModel>(memberType, memberName, liftMemberAccess);
 
-        //    var columnType = typeof(GridForeignKeyColumn<,>).MakeGenericType(new[] { typeof(TModel), lambdaExpression.Body.Type });
+			if (typeof(TModel).IsDynamicObject() && memberType != null && lambdaExpression.Body.Type.GetNonNullableType() != memberType.GetNonNullableType())
+			{
+				lambdaExpression = Expression.Lambda(Expression.Convert(lambdaExpression.Body, memberType), lambdaExpression.Parameters);
+			}
 
-        //    var constructor = columnType.GetConstructor(new[] { Container.GetType(), lambdaExpression.GetType(), data.GetType() });
+			var columnType = typeof(GridForeignKeyColumn<,>).MakeGenericType(new[] { typeof(TModel), lambdaExpression.Body.Type });
 
-        //    var column = (IGridBoundColumn)constructor.Invoke(new object[] { Container, lambdaExpression, data });
+			var constructor = columnType.GetConstructor(new[] { Container.GetType(), lambdaExpression.GetType(), data.GetType() });
 
-        //    column.Member = memberName;
+			var column = (IGridBoundColumn)constructor.Invoke(new object[] { Container, lambdaExpression, data });
 
-        //    if (!column.Title.HasValue())
-        //    {
-        //        column.Title = memberName.AsTitle();
-        //    }
+			column.Member = memberName;
 
-        //    if (memberType != null)
-        //    {
-        //        column.MemberType = memberType;
-        //    }
+			if (!column.Title.HasValue())
+			{
+				column.Title = memberName.AsTitle();
+			}
 
-        //    ColumnsContainer.Columns.Add((GridColumnBase<TModel>)column);
+			if (memberType != null)
+			{
+				column.MemberType = memberType;
+			}
 
-        //    return new GridBoundColumnBuilder<TModel>(column, this.viewContext, this.urlGenerator);
-        //}
+			ColumnsContainer.Columns.Add((GridColumnBase<TModel>)column);
 
-        protected virtual void AutoGenerate(bool shouldGenerate, Action<GridColumnBase<TModel>> columnAction)
+			return new GridBoundColumnBuilder<TModel>(column, this.viewContext, this.urlGenerator);
+		}
+
+		protected virtual void AutoGenerate(bool shouldGenerate, Action<GridColumnBase<TModel>> columnAction)
         {
             if (hasGeneratedColumn) return;
 
