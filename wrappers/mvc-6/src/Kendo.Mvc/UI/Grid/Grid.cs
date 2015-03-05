@@ -287,8 +287,16 @@ namespace Kendo.Mvc.UI
         }
 
         protected override void WriteHtml(TextWriter writer)
-        {            
-            var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);            
+        {
+			if (!Columns.Any() && AutoGenerateColumns)
+			{
+				foreach (GridColumnBase<T> column in new GridColumnGenerator<T>(this).GetColumns())
+				{
+					Columns.Add(column);
+				}
+			}
+
+			var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);            
 			
             writer.Write(tag.ToString());
 

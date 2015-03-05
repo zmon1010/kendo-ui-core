@@ -1,4 +1,5 @@
-﻿@(Html.Kendo().Grid<object>()
+﻿@(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.HomeModel>()
     .Name("grid")
+	.Columns(columns => columns.AutoGenerate(true))
     .DataSource(dataSource => dataSource.Ajax().Read("Home", "Grid"))
 )
