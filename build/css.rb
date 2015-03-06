@@ -42,8 +42,6 @@ CORE_SRC_CSS = FileList[SRC_CSS]
     .exclude("dist/styles/web/common/imagebrowser.less")
     .exclude("dist/styles/web/common/treeview.less")
     .exclude("dist/styles/web/common/upload.less")
-    .exclude("dist/styles/mobile/kendo.mobile.all.css")
-    .exclude("dist/styles/mobile/kendo.mobile.all.less")
 
 WIN_SRC_CSS = FileList["#{DIST_STYLES_ROOT}web/kendo.common.css"].include("#{DIST_STYLES_ROOT}dataviz/kendo.dataviz.css").include("#{DIST_STYLES_ROOT}web/kendo.rtl.css")
 WIN_MIN_CSS = FileList["#{DIST_STYLES_ROOT}web/kendo.winjs.min.css"]
