@@ -45,6 +45,12 @@ namespace Kendo
             );
 
             routes.MapRoute(
+                "Responsive",
+                "responsive/{widget}",
+                new { controller = "Responsive", action = "Index", widget = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 "html5-diagram-sample-app",
                 "html5-diagram-sample-app",
                 new { controller = "Integration", action = "Diagram" }

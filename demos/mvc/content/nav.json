@@ -6034,6 +6034,54 @@
     ],
     "category": "Framework"
   },
+    {
+    "packages": [ "!mvc", "!jsp", "!php" ],
+    "text": "Kendo UI responsive widgets",
+    "name": "responsive",
+    "items": [
+      {
+        "text": "Kendo UI responsive widgets",
+        "url": "responsive/index",
+        "title": {
+            "kendo-ui": "Kendo UI responsive widgets"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates renponsiveness of Kendo UI widgets."
+        }
+      },
+      {
+        "text": "Responsive Grid",
+        "url": "responsive/grid",
+        "title": {
+            "kendo-ui": "Responsive Kendo UI Grid"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates renponsiveness of Kendo UI Grid."
+        }
+      },
+      {
+        "text": "Responsive Scheduler",
+        "url": "responsive/scheduler",
+        "title": {
+            "kendo-ui": "Responsive Kendo UI Scheduler"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates renponsiveness of Kendo UI Scheduler."
+        }
+      },
+      {
+        "text": "Responsive Chart",
+        "url": "responsive/chart",
+        "title": {
+            "kendo-ui": "Responsive Kendo UI Chart"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates renponsiveness of Kendo UI Chart."
+        }
+      }
+    ],
+    "category": "Framework"
+  },
   {
     "packages": [ "!mvc", "!jsp", "!php" ],
     "text": "MVVM",

@@ -1,0 +1,52 @@
+body,h1,h2,h3,h4,p,ul,li,a,button
+{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+}
+
+body,
+html {
+   min-height: 100%;
+}
+
+img {
+    border:0;
+}
+
+a,
+li>a,
+h2>a,
+h3>a,
+a {
+    text-decoration:none;
+}
+
+/* Header */
+.responsive-header {
+    margin: 0;
+    color: #fff;
+    background-color: #272727;
+}
+
+.responsive-header h1 {
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.responsive-nav-buttons {
+    float: right;
+    font-size: 18px;
+}
+
+/* Clear floats */
+.responsive-header:after {
+    content: "";
+    display: block;
+    clear: both;
+}

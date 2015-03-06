@@ -1,0 +1,28 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="@ViewBag.Meta">
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")"/>
+    <link rel="stylesheet" href="@Url.Content("~/content/responsive/responsive.css")" />
+</head>
+<body>
+    <header class="responsive-header">
+        <h1>Responsive Kendo UI</h1>
+        <div class="responsive-nav-buttons">
+            <a id="responsive-about" href="#" class="btn">About</a>
+            <a id="responsive-grid" href="#" class="btn">Grid</a>
+            <a id="responsive-scheduler" href="#" class="btn">Scheduler</a>
+            <a id="responsive-chart" href="#" class="btn btn-primary">Charts</a>
+        </div>
+    </header>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
