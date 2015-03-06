@@ -64,7 +64,7 @@ module CodeGen::MVC6::Wrappers::Options
         GENERIC_ARGS[full_name.downcase.to_sym]
     end
 
-    def csharp_builder_name
+    def csharp_owner_builder_name
         "#{owner.csharp_class}Builder#{owner.csharp_generic_args}"
     end
 

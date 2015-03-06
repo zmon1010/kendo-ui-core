@@ -2,7 +2,7 @@
         /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
         /// </summary>
         /// <param name="value">The value that configures the <%= csharp_name.downcase %>.</param>
-        public <%= csharp_builder_name %> <%= csharp_name %>(<%= csharp_array? ? 'params ' : '' %><%= csharp_type %> value)
+        public <%= csharp_owner_builder_name %> <%= csharp_name %>(<%= csharp_array? ? 'params ' : '' %><%= csharp_type %> value)
         {
             Component.<%= csharp_name %> = value;
 
