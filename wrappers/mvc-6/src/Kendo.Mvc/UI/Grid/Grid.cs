@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Routing;
@@ -190,23 +189,16 @@ namespace Kendo.Mvc.UI
 				settings["sortable"] = sorting.Any() ? (object)sorting : true;
 			}
 
-			//if (Selectable.Enabled)
-			//{
-			//	options["selectable"] = String.Format("{0}, {1}", Selectable.Mode, Selectable.Type);
-			//}
+			if (Selectable.Enabled)
+			{
+				settings["selectable"] = $"{Selectable.Mode}, {Selectable.Type}";
+			}
 
 			if (Filterable.Enabled)
 			{
 				var filtering = Filterable.ToJson();
 				settings["filterable"] = filtering.Any() ? (object)filtering : true;
 			}
-
-			//var pdf = Pdf.ToJson();
-
-			//if (pdf.Any())
-			//{
-			//	options["pdf"] = pdf;
-			//}
 
 			if (ColumnMenu.Enabled)
 			{
