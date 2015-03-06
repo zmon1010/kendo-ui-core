@@ -534,6 +534,7 @@ bundle :name => 'aspnetmvc.trial',
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }
        .merge(MVC_CONTENT),
+       :post_build => 'mvc:copy_trials',
        :prerequisites => [
            'mvc:assets',
            'plugins/KendoScaffolder/KendoScaffolderExtension.vsix',
@@ -579,6 +580,7 @@ bundle :name => 'aspnetmvc.hotfix.trial',
             'wrappers/aspnetmvc/EditorTemplates/razor' => MVC_RAZOR_EDITOR_TEMPLATES,
             'wrappers/aspnetmvc/LegacyThemes' => FileList['wrappers/mvc/legacy-themes/**/*']
        }.merge(MVC_BINARIES),
+       :post_build => 'mvc:copy_trials',
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test'
