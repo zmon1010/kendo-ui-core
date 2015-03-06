@@ -512,7 +512,7 @@
     function exportPDF(group, options) {
         var defer = $.Deferred();
 
-        group.options.set("pdf", options);
+        group.options.pdf = $.extend(true, group.options.pdf || {}, options);
         drawing.pdf.toDataURL(group, defer.resolve);
 
         return defer.promise();
