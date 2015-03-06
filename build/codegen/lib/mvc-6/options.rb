@@ -1,6 +1,7 @@
 module CodeGen::MVC6::Wrappers::Options
 
-    GENERIC_ARGS = YAML.load(File.read("build/codegen/lib/mvc-6/generics.yml"))
+    GENERIC_ARGS = YAML.load(File.read("build/codegen/lib/mvc-6/config/generics.yml"))
+    IGNORED = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored.yml"))
 
     CSHARP_TYPES = {
         'Number' => 'double',
@@ -15,8 +16,6 @@ module CodeGen::MVC6::Wrappers::Options
         'bool',
         'DateTime'
     ]
-
-    IGNORED = YAML.load(File.read("build/codegen/lib/mvc-6/ignored.yml"))
 
     def component_class
         Component
