@@ -13,23 +13,23 @@ namespace Kendo.Mvc.UI
     {
 
         public string Effects { get; set; }
-                              
+
         public double? Duration { get; set; }
-                              
+
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-        
+
             if (Effects.HasValue())
             {
                 settings["effects"] = Effects;
-            } 
-        
+            }
+
             if (Duration.HasValue)
             {
                 settings["duration"] = Duration;
-            } 
+            }
 
 
             return settings;

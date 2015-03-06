@@ -13,9 +13,9 @@ namespace Kendo.Mvc.UI
     {
 
         public DateTimePickerAnimationCloseSettings Close { get; } = new DateTimePickerAnimationCloseSettings();
-        
+
         public DateTimePickerAnimationOpenSettings Open { get; } = new DateTimePickerAnimationOpenSettings();
-        
+
 
         protected Dictionary<string, object> SerializeSettings()
         {
@@ -26,13 +26,13 @@ namespace Kendo.Mvc.UI
             {
                 settings["close"] = close;
             }
-            
+
             var open = Open.Serialize();
             if (open.Any())
             {
                 settings["open"] = open;
             }
-            
+
 
             return settings;
         }

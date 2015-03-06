@@ -17,6 +17,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new DateTimePickerAnimationCloseSettingsBuilder(Container.Close));
             return this;
         }
+
         /// <summary>
         /// The animation played when the popup is opened.
         /// </summary>
@@ -26,6 +27,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new DateTimePickerAnimationOpenSettingsBuilder(Container.Open));
             return this;
         }
+
 
     }
 }

@@ -17,6 +17,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new DateTimePickerAnimationSettingsBuilder(Container.Animation));
             return this;
         }
+
         /// <summary>
         /// Specifies a template used to populate value of the aria-label attribute.
         /// </summary>
@@ -117,6 +118,7 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new DateTimePickerMonthSettingsBuilder(Container.Month));
             return this;
         }
+
         /// <summary>
         /// Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used. Note that value of the format option is always used.
         /// </summary>
