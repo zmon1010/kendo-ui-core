@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -17,20 +15,6 @@ namespace Kendo.Mvc.UI.Fluent
 		public GridBuilder(Grid<T> component)
 			: base(component)
 		{
-		}
-
-		public GridBuilder<T> TableHtmlAttributes(object attributes)
-		{
-			return TableHtmlAttributes(attributes.ToDictionary());
-		}
-
-		public GridBuilder<T> TableHtmlAttributes(IDictionary<string, object> attributes)
-		{
-
-			Component.TableHtmlAttributes.Clear();
-			Component.TableHtmlAttributes.Merge(attributes);
-
-			return this;
 		}
 
 		/// <summary>

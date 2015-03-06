@@ -142,9 +142,7 @@ namespace Kendo.Mvc.UI
 				return Columns.Where(c => c.Visible).ToList();
 			}
 		}
-
-		public IDictionary<string, object> TableHtmlAttributes { get; } = new RouteValueDictionary();
-
+		
 		public bool? AutoBind { get; set; }
 
 		/// <summary>
