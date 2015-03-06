@@ -19,6 +19,7 @@ end
 namespace :bower do
     task :push do
        push_bower "git@github.com:telerik/bower-kendo-ui.git", "dist/bower-repo", "dist/bundles/professional.commercial"
+       sh "build/sync-bower"
     end
 
     task :push_core do

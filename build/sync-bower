@@ -1,0 +1,13 @@
+#!/bin/sh
+
+HOST=nginx@bower.telerik.com
+
+ssh $HOST <<'SH'
+cd /usr/share/nginx/html
+    if [ ! -d bower-kendo-ui.git ]; then
+        git clone --bare git@github.com:telerik/bower-kendo-ui.git;
+    fi
+
+    cd bower-kendo-ui.git;
+    git fetch --tags --prune origin;
+SH
