@@ -1,5 +1,5 @@
 
-        <div id="example">
+       <div id="example">
             <div id="grid"></div>
             <script>
                 $(document).ready(function() {
@@ -34,16 +34,36 @@
                                 field: "Country",
                                 filterable: {
                                     multi: true,
-                                    checkAll: false,
+                                    checkAll: true,
                                     itemTemplate: function(e) {
-                                        return "<span><label><span>#= Country #</span><input type='checkbox' name='" + e.field + "' value='#=Country#'/></label></span>"
+                                        if (e.field == "all") {
+                                            //handle the check-all checkbox template
+                                            return "<div><label><strong><input type='checkbox' />#= all#</strong></label></div>";
+                                        } else {
+                                            //handle the other checkboxes
+                                            return "<span><label><input type='checkbox' name='" + e.field + "' value='#=Country#'/><span>#= Country #</span></label></span>"
+                                        }
                                     }
                                 },
                                 width: "220px"
                             },
                             {
                                 field: "City",
-                                filterable: { multi: true, checkAll: false },
+                                filterable: { 
+                                  multi: true, 
+                                  dataSource: [{
+                                    City: "Seattle",
+                                  },{
+                                    City: "Tacoma",
+                                  },{
+                                    City: "Kirkland",
+                                  },{
+                                    City: "Redmond",
+                                  },{
+                                    City: "London"
+                                  }],
+                                  checkAll: false 
+                                },
                                 width: "220px"
                             },
                             {
