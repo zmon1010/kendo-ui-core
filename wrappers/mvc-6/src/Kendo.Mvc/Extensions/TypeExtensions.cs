@@ -284,7 +284,7 @@ namespace Kendo.Mvc.Extensions
 
             if (type == typeof(char) || type == typeof(Single) || type == typeof(Double) || type == typeof(Decimal)) { 
                 return 1;
-            } else if (type == typeof(SByte) || type == typeof(Int16) || type == typeof(Int64)) {
+            } else if (type == typeof(SByte) || type == typeof(Int16) || type == typeof(Int32) || type == typeof(Int64)) {
                 return 2;
             } else if (type == typeof(Byte) || type == typeof(UInt16) || type == typeof(UInt32) || type == typeof(UInt64)) {
                 return 3;
