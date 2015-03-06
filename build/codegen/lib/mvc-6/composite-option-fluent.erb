@@ -4,6 +4,33 @@
         /// <param name="configurator">The configurator for the <%= csharp_name.downcase %> setting.</param>
         public <%= csharp_owner_builder_name %> <%= csharp_name %>(Action<<%= csharp_builder_class_name %>> configurator)
         {
+% if toggleable
+            Container.<%= csharp_name %>.Enabled = true;
+% end
             configurator(new <%= csharp_builder_class_name %>(Container.<%= csharp_name %>));
             return this;
         }
+
+% if toggleable
+% if default.eql?('false')
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        public <%= csharp_owner_builder_name %> <%= csharp_name %>()
+        {
+            Container.<%= csharp_name %>.Enabled = true;
+            return this;
+        }
+
+% end
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        /// <param name="enabled">Enables or disables the <%= csharp_name.downcase %> option.</param>
+        public <%= csharp_owner_builder_name %> <%= csharp_name %>(bool enabled)
+        {
+            Container.<%= csharp_name %>.Enabled = enabled;
+            return this;
+        }
+
+% end

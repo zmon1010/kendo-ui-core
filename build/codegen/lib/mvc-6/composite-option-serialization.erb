@@ -1,0 +1,11 @@
+            var <%= name %> = <%= csharp_name %>.Serialize();
+            if (<%= name %>.Any())
+            {
+                settings["<%= name %>"] = <%= name %>;
+            }
+% if toggleable
+            else if (<%= csharp_name %>.Enabled) {
+                settings["<%= name %>"] = <%= csharp_name %>.Enabled;
+            }
+%end
+

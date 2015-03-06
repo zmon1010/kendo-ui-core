@@ -17,6 +17,8 @@ module CodeGen::MVC6::Wrappers::Options
         SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option.erb"), 0, '%<>')
         SETTINGS_GENERATED = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-settings.erb"), 0, '%<>')
 
+        SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-serialization.erb"), 0, '%<>')
+
         def csharp_class
             prefix = owner.csharp_class.sub('Settings','')
                                         .sub('List<', '')
@@ -62,13 +64,7 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         def to_serialization
-            ERB.new(%{
-            var <%= name %> = <%= csharp_name %>.Serialize();
-            if (<%= name %>.Any())
-            {
-                settings["<%= name %>"] = <%= name %>;
-            }
-}).result(binding)
+            SERIALIZATION.result(binding)
         end
     end
 
