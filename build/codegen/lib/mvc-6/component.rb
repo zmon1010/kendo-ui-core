@@ -10,8 +10,6 @@ module CodeGen::MVC6::Wrappers
 
         COMPONENT = ERB.new(File.read("build/codegen/lib/mvc-6/component.erb"), 0, '%<>')
         COMPONENT_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/component-settings.erb"), 0, '%<>')
-        COMPOSITE_OPTION = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option.erb"), 0, '%<>')
-        COMPOSITE_OPTION_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-settings.erb"), 0, '%<>')
         EVENT = ERB.new(File.read("build/codegen/lib/mvc-6/event-builder.erb"), 0, '%<>')
         BUILDER = ERB.new(File.read("build/codegen/lib/mvc-6/component-builder.erb"), 0, '%<>')
         BUILDER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/component-builder-settings.erb"), 0, '%<>')
@@ -38,14 +36,6 @@ module CodeGen::MVC6::Wrappers
 
         def to_component_settings()
             COMPONENT_SETTINGS.result(binding)
-        end
-
-        def to_composite_option(option)
-            COMPOSITE_OPTION.result(option.get_binding)
-        end
-
-        def to_composite_option_settings(option)
-            COMPOSITE_OPTION_SETTINGS.result(option.get_binding)
         end
 
         def to_events()

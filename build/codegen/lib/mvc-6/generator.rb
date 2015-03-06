@@ -48,12 +48,12 @@ module CodeGen::MVC6::Wrappers
             # write *Settings.cs file
             filename = "#{@path}/#{component.path}/Settings/#{option.csharp_class}.cs"
             unless File.exists?(filename)
-                write_file(filename, component.to_composite_option(option))
+                write_file(filename, option.to_settings)
             end
 
             # write *Settings.Generated.cs file
             filename = "#{@path}/#{component.path}/Settings/#{option.csharp_class}.Generated.cs"
-            write_file(filename, component.to_composite_option_settings(option))
+            write_file(filename, option.to_settings_generated)
 
             # write *SettingsBuilder.cs file
             filename = "#{@path}/#{component.path}/Fluent/#{option.csharp_builder_class}.cs"

@@ -14,6 +14,9 @@ module CodeGen::MVC6::Wrappers::Options
 
         FLUENT = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-fluent.erb"), 0, '%<>')
 
+        SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option.erb"), 0, '%<>')
+        SETTINGS_GENERATED = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-settings.erb"), 0, '%<>')
+
         def csharp_class
             prefix = owner.csharp_class.sub('Settings','')
                                         .sub('List<', '')
@@ -48,6 +51,14 @@ module CodeGen::MVC6::Wrappers::Options
 
         def to_builder_generated
             BUILDER_GENERATED.result(binding)
+        end
+
+        def to_settings
+            SETTINGS.result(binding)
+        end
+
+        def to_settings_generated
+            SETTINGS_GENERATED.result(binding)
         end
 
         def to_serialization
