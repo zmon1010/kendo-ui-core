@@ -9,12 +9,21 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
+        /// Configures the opening and closing animations of the popups. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly.
+        /// </summary>
+        /// <param name="configurator">The configurator for the animation setting.</param>
+        public DateTimePickerBuilder Animation(Action<DateTimePickerAnimationSettingsBuilder> configurator)
+        {
+            configurator(new DateTimePickerAnimationSettingsBuilder(Container.Animation));
+            return this;
+        }
+        /// <summary>
         /// Specifies a template used to populate value of the aria-label attribute.
         /// </summary>
         /// <param name="value">The value that configures the ariatemplateid.</param>
         public DateTimePickerBuilder ARIATemplateId(string value)
         {
-            Component.ARIATemplateId = value;
+            Container.ARIATemplateId = value;
 
             return this;
         }
@@ -24,7 +33,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value that configures the culture.</param>
         public DateTimePickerBuilder Culture(string value)
         {
-            Component.Culture = value;
+            Container.Culture = value;
 
             return this;
         }
@@ -34,7 +43,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value that configures the dates.</param>
         public DateTimePickerBuilder Dates(params DateTime[] value)
         {
-            Component.Dates = value;
+            Container.Dates = value;
 
             return this;
         }
@@ -45,7 +54,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value that configures the depth.</param>
         public DateTimePickerBuilder Depth(string value)
         {
-            Component.Depth = value;
+            Container.Depth = value;
 
             return this;
         }
@@ -55,7 +64,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value that configures the footer.</param>
         public DateTimePickerBuilder Footer(string value)
         {
-            Component.Footer = value;
+            Container.Footer = value;
 
             return this;
         }
@@ -65,7 +74,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value that configures the format.</param>
         public DateTimePickerBuilder Format(string value)
         {
-            Component.Format = value;
+            Container.Format = value;
 
             return this;
         }
@@ -75,7 +84,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value that configures the interval.</param>
         public DateTimePickerBuilder Interval(double value)
         {
-            Component.Interval = value;
+            Container.Interval = value;
 
             return this;
         }
@@ -85,7 +94,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value that configures the max.</param>
         public DateTimePickerBuilder Max(DateTime value)
         {
-            Component.Max = value;
+            Container.Max = value;
 
             return this;
         }
@@ -95,8 +104,17 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value that configures the min.</param>
         public DateTimePickerBuilder Min(DateTime value)
         {
-            Component.Min = value;
+            Container.Min = value;
 
+            return this;
+        }
+        /// <summary>
+        /// Templates for the cells rendered in the calendar "month" view.
+        /// </summary>
+        /// <param name="configurator">The configurator for the month setting.</param>
+        public DateTimePickerBuilder Month(Action<DateTimePickerMonthSettingsBuilder> configurator)
+        {
+            configurator(new DateTimePickerMonthSettingsBuilder(Container.Month));
             return this;
         }
         /// <summary>
@@ -105,7 +123,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value that configures the parseformats.</param>
         public DateTimePickerBuilder ParseFormats(params string[] value)
         {
-            Component.ParseFormats = value;
+            Container.ParseFormats = value;
 
             return this;
         }
@@ -116,7 +134,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value that configures the start.</param>
         public DateTimePickerBuilder Start(string value)
         {
-            Component.Start = value;
+            Container.Start = value;
 
             return this;
         }
@@ -126,7 +144,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value that configures the timeformat.</param>
         public DateTimePickerBuilder TimeFormat(string value)
         {
-            Component.TimeFormat = value;
+            Container.TimeFormat = value;
 
             return this;
         }
@@ -136,7 +154,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value that configures the value.</param>
         public DateTimePickerBuilder Value(DateTime value)
         {
-            Component.Value = value;
+            Container.Value = value;
 
             return this;
         }
@@ -159,7 +177,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </example>
         public DateTimePickerBuilder Events(Action<DateTimePickerEventBuilder> configurator)
         {
-            configurator(new DateTimePickerEventBuilder(Component.Events));
+            configurator(new DateTimePickerEventBuilder(Container.Events));
             return this;
         }
         
