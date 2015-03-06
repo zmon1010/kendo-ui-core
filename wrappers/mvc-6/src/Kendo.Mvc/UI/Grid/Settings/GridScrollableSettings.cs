@@ -4,7 +4,7 @@ namespace Kendo.Mvc.UI
     {        
         public GridScrollableSettings()
         {            
-            Height = "200px";
+            Height = "400px";
         }
 
         public bool Enabled
