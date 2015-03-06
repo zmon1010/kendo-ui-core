@@ -1,82 +1,93 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Routing;
+using Microsoft.Framework.DependencyInjection;
 
 namespace Kendo.Mvc.UI
 {
-    /// <summary>
-    /// The server side wrapper for Kendo UI Grid
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public partial class Grid<T> : WidgetBase, IGridColumnContainer<T>
-        where T : class
-    {
-        private readonly static int DEFAULT_COLUMN_RESIZE_HANDLE_WIDTH = 3;
+	/// <summary>
+	/// The server side wrapper for Kendo UI Grid
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public partial class Grid<T> : WidgetBase, IGridColumnContainer<T>
+		where T : class
+	{
+		private readonly static int DEFAULT_COLUMN_RESIZE_HANDLE_WIDTH = 3;
 
-        public Grid(ViewContext viewContext) : base (viewContext)
-        {   
+		public Grid(ViewContext viewContext) : base(viewContext)
+		{
 			//  RowTemplate = new HtmlTemplate<T>();
 			//DetailTemplate = new HtmlTemplate<T>();			
 			//DataKeys = new List<IDataKey>();			
 
-            //Editable = new GridEditableSettings<T>(this)
-            //{
-            //    PopUp = new Window(viewContext, Initializer)
-            //    {
-            //        Modal = true,
-            //        Draggable = true
-            //    }
-            //};
+			//Editable = new GridEditableSettings<T>(this)
+			//{
+			//    PopUp = new Window(viewContext, Initializer)
+			//    {
+			//        Modal = true,
+			//        Draggable = true
+			//    }
+			//};
 
-            //ToolBar = new GridToolBarSettings<T>(this);            
-            
-            DataSource = new DataSource(ModelMetadataProvider)
-            {
-                Type = DataSourceType.Server,
-                ServerAggregates = true,
-                ServerFiltering = true,
-                ServerGrouping = true,
-                ServerPaging = true,
-                ServerSorting = true
-            };
+			//ToolBar = new GridToolBarSettings<T>(this);            
 
-            DataSource.ModelType(typeof(T));
-        }
+			DataSource = new DataSource(ModelMetadataProvider)
+			{
+				Type = DataSourceType.Server,
+				ServerAggregates = true,
+				ServerFiltering = true,
+				ServerGrouping = true,
+				ServerPaging = true,
+				ServerSorting = true
+			};
 
-        [Activate]
-        public IModelMetadataProvider ModelMetadataProvider
-        {
-            get;
-            set;
-        }
+			DataSource.ModelType(typeof(T));
+		}
 
-        [Activate]
-        public IUrlGenerator UrlGenerator
-        {
-            get;
-            set;
-        }
+		[Activate]
+		public IModelMetadataProvider ModelMetadataProvider
+		{
+			get;
+			set;
+		}
 
-        public DataSource DataSource
-        {
-            get;
-            private set;
-        }
+		[Activate]
+		public IScopedInstance<ActionBindingContext> ActionBindingContext
+		{
+			get;
+			set;
+		}
 
-        public int ColumnResizeHandleWidth
-        {
-            get;
-            set;
-        } = DEFAULT_COLUMN_RESIZE_HANDLE_WIDTH;
+		[Activate]
+		public IUrlGenerator UrlGenerator
+		{
+			get;
+			set;
+		}
+
+		public DataSource DataSource
+		{
+			get;
+			private set;
+		}
+
+		public int ColumnResizeHandleWidth
+		{
+			get;
+			set;
+		}
+		= DEFAULT_COLUMN_RESIZE_HANDLE_WIDTH;
 
 		public bool AutoGenerateColumns
-        {
-            get;
-            set;
-        } = true;
+		{
+			get;
+			set;
+		}
+		= true;
 
 		/// <summary>
 		/// Gets the selection configuration
@@ -88,25 +99,25 @@ namespace Kendo.Mvc.UI
 		/// </summary>
 		public GridColumnMenuSettings ColumnMenu { get; } = new GridColumnMenuSettings();
 
-        /// <summary>
-        /// Gets the filtering configuration.
-        /// </summary>
-        public GridFilterableSettings Filterable { get; } = new GridFilterableSettings();
+		/// <summary>
+		/// Gets the filtering configuration.
+		/// </summary>
+		public GridFilterableSettings Filterable { get; } = new GridFilterableSettings();
 
-        /// <summary>
-        /// Gets the keyboard navigation configuration.
-        /// </summary>
-        public GridSettings Navigatable { get; } = new GridSettings();
+		/// <summary>
+		/// Gets the keyboard navigation configuration.
+		/// </summary>
+		public GridSettings Navigatable { get; } = new GridSettings();
 
-        /// <summary>
-        /// Gets the scrolling configuration.
-        /// </summary>
-        public GridScrollableSettings Scrollable { get; } = new GridScrollableSettings();
+		/// <summary>
+		/// Gets the scrolling configuration.
+		/// </summary>
+		public GridScrollableSettings Scrollable { get; } = new GridScrollableSettings();
 
-        /// <summary>
-        /// Gets the paging configuration.
-        /// </summary>
-        public PageableSettings Pageable { get; } = new PageableSettings(); 
+		/// <summary>
+		/// Gets the paging configuration.
+		/// </summary>
+		public PageableSettings Pageable { get; } = new PageableSettings();
 
 		/// <summary>
 		/// Gets the sorting configuration.
@@ -114,17 +125,17 @@ namespace Kendo.Mvc.UI
 		/// <value>The sorting.</value>
 		public GridSortableSettings Sortable { get; } = new GridSortableSettings();
 
-        public GridGroupableSettings Grouping { get; } = new GridGroupableSettings();
+		public GridGroupableSettings Grouping { get; } = new GridGroupableSettings();
 
-        public GridSettings Resizable { get; } = new GridSettings();
+		public GridSettings Resizable { get; } = new GridSettings();
 
-        public GridSettings Reorderable { get; } = new GridSettings();
+		public GridSettings Reorderable { get; } = new GridSettings();
 
 		/// <summary>
 		/// Gets the columns of the grid.
 		/// </summary>
 		public IList<GridColumnBase<T>> Columns { get; } = new List<GridColumnBase<T>>();
-		
+
 		public IList<GridColumnBase<T>> VisibleColumns
 		{
 			get
@@ -132,25 +143,23 @@ namespace Kendo.Mvc.UI
 				return Columns.Where(c => c.Visible).ToList();
 			}
 		}
-		
-		/// <summary>
-		/// Gets or sets a value indicating whether to add the <see cref="WidgetBase.Name"/> property of the grid as a prefix in url parameters.
-		/// </summary>
-		/// <value><c>true</c> if prefixing is enabled; otherwise, <c>false</c>. The default value is <c>true</c></value>
-		public bool PrefixUrlParameters { get; set; } = true;
 
-        public IDictionary<string, object> TableHtmlAttributes { get; } = new RouteValueDictionary();
+		public IDictionary<string, object> TableHtmlAttributes { get; } = new RouteValueDictionary();
 
 		public bool? AutoBind { get; set; }
 
-        protected override Dictionary<string, object> SerializeSettings()
-        {
-            var settings = base.SerializeSettings();
+		/// <summary>
+		/// Gets or sets a value indicating whether custom binding is enabled.
+		/// </summary>
+		/// <value><c>true</c> if custom binding is enabled; otherwise, <c>false</c>. The default value is <c>false</c></value>
+		public bool EnableCustomBinding { get; set; }
+
+		protected override Dictionary<string, object> SerializeSettings()
+		{
+			var settings = base.SerializeSettings();
 
 			var autoBind = DataSource.Type != DataSourceType.Server && AutoBind.GetValueOrDefault(true);
-
-		
-
+						
 			var idPrefix = "#";
 			if (IsInClientTemplate)
 			{
@@ -190,7 +199,7 @@ namespace Kendo.Mvc.UI
 			{
 				var filtering = Filterable.ToJson();
 				settings["filterable"] = filtering.Any() ? (object)filtering : true;
-			}			
+			}
 
 			//var pdf = Pdf.ToJson();
 
@@ -232,7 +241,7 @@ namespace Kendo.Mvc.UI
 					settings["scrollable"] = scrolling;
 				}
 				settings["height"] = Scrollable.Height;
-            }
+			}
 
 			//if (Editable.Enabled)
 			//{
@@ -284,10 +293,29 @@ namespace Kendo.Mvc.UI
 			//}
 
 			return settings;
-        }
+		}
 
-        protected override void WriteHtml(TextWriter writer)
-        {
+		private void ProcessDataSource()
+		{
+			if (Pageable.Enabled && DataSource.PageSize == 0)
+			{
+				DataSource.PageSize = 10;
+			}
+
+			var binder = new DataSourceRequestModelBinder();
+
+			var bindingContext = new ModelBindingContext {
+				ValueProvider = ActionBindingContext.Value.ValueProvider,
+				ModelMetadata = ModelMetadataProvider.GetMetadataForType(null, typeof(T))
+			};
+
+			var result = binder.BindModelAsync(bindingContext).Result; // make it run synchronously
+
+			DataSource.Process((DataSourceRequest)bindingContext.Model, !EnableCustomBinding);					
+		}
+
+		protected override void WriteHtml(TextWriter writer)
+		{
 			if (!Columns.Any() && AutoGenerateColumns)
 			{
 				foreach (GridColumnBase<T> column in new GridColumnGenerator<T>(this).GetColumns())
@@ -296,11 +324,22 @@ namespace Kendo.Mvc.UI
 				}
 			}
 
-			var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);            
-			
-            writer.Write(tag.ToString());
+			if (!HtmlAttributes.ContainsKey("id"))
+			{
+				HtmlAttributes["id"] = Id;
 
-            base.WriteHtml(writer);
-        }
-    }
+			}
+
+			if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
+			{
+				ProcessDataSource();
+			}
+
+			var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
+
+			writer.Write(tag.ToString());
+
+			base.WriteHtml(writer);
+		}
+	}
 }
