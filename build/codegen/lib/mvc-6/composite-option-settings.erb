@@ -12,9 +12,9 @@ namespace Kendo.Mvc.UI
     public partial class <%= csharp_class %><%= csharp_generic_args %> <%= csharp_generic_constraints %>
     {
 <%= unique_options.map { |o| o.to_declaration }.join %>
-<% if toggleable %>
+% if toggleable
         public bool Enabled { get; set; }
-<% end %>
+% end
 
         protected Dictionary<string, object> SerializeSettings()
         {

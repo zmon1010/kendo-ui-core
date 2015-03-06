@@ -16,8 +16,8 @@ namespace Kendo.Mvc.UI
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
-<%= unique_options.map { |o| o.to_serialization}.join %>
 
+<%= unique_options.map { |o| o.to_serialization}.join %>
             return settings;
         }
     }

@@ -1,17 +1,25 @@
-        <%if csharp_type.eql?('string') || handler?%>
+%if csharp_type.eql?('string') || handler?
             if (<%=csharp_name%>.HasValue())
             {
                 settings["<%= name %>"] = <%=csharp_name%>;
-            } <%elsif csharp_array?%>
+            }
+
+%elsif csharp_array?
             if (<%=csharp_name%> != null && <%=csharp_name%>.Any())
             {
                 settings["<%= name %>"] = <%=csharp_name%>;
-            } <%elsif dictionary?%>
+            }
+
+%elsif dictionary?
             if (<%=csharp_name%>.Any())
             {
                 settings["<%= name %>"] = <%=csharp_name%>;
-            } <%else%>
+            }
+
+%else
             if (<%= csharp_name %>.HasValue)
             {
                 settings["<%= name %>"] = <%= csharp_name %>;
-            } <%end%>
+            }
+
+%end

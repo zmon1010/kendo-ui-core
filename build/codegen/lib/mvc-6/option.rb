@@ -7,7 +7,7 @@ module CodeGen::MVC6::Wrappers::Options
 
         DECLARATION = ERB.new(%{
         public <%= struct? ? csharp_type + '?' : csharp_type%> <%= csharp_name %> { get; set; }
-                              })
+})
 
         FLUENT = ERB.new(File.read("build/codegen/lib/mvc-6/option-fluent.erb"), 0, '%<>')
 

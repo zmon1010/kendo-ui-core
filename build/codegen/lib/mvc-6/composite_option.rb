@@ -10,7 +10,7 @@ module CodeGen::MVC6::Wrappers::Options
 
         DECLARATION = ERB.new(%{
         public <%= csharp_class_name %> <%= csharp_name %> { get; } = new <%= csharp_class_name %>();
-        })
+})
 
         FLUENT = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-fluent.erb"), 0, '%<>')
 
@@ -68,7 +68,7 @@ module CodeGen::MVC6::Wrappers::Options
             {
                 settings["<%= name %>"] = <%= name %>;
             }
-            }).result(binding)
+}).result(binding)
         end
     end
 
