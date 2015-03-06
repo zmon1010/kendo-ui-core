@@ -1,6 +1,6 @@
 #!/bin/sh
 
-HOST=nginx@bower.telerik.com
+HOST=nginx@ordkendobower01.telerik.local
 
 ssh $HOST <<'SH'
 cd /usr/share/nginx/html
