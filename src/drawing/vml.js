@@ -621,12 +621,13 @@
 
         addColors: function(attrs) {
             var options = this.srcElement.options;
+            var opacity = valueOrDefault(this.opacity, 1);
             var stopColors = [];
             var stops = options.fill.stops;
             var baseColor = options.baseColor;
             var colorsField = this.element.colors ? "colors.value" : "colors";
-            var color = stopColor(baseColor, stops[0]);
-            var color2 = stopColor(baseColor, stops[stops.length - 1]);
+            var color = stopColor(baseColor, stops[0], opacity);
+            var color2 = stopColor(baseColor, stops[stops.length - 1], opacity);
             var stop;
 
             for (var idx = 0; idx < stops.length; idx++) {
@@ -634,7 +635,7 @@
 
                 stopColors.push(
                     math.round(stop.offset() * 100) + "% " +
-                    stopColor(baseColor, stop)
+                    stopColor(baseColor, stop, opacity)
                 );
             }
 
@@ -1206,12 +1207,14 @@
         return field.indexOf("fill") === 0 || field.indexOf(GRADIENT) === 0;
     }
 
-    function stopColor(baseColor, stop) {
+    function stopColor(baseColor, stop, baseOpacity) {
+        var opacity = baseOpacity * valueOrDefault(stop.opacity(), 1);
         var color;
+
         if (baseColor) {
-            color = blendColors(baseColor, stop.color(), stop.opacity());
+            color = blendColors(baseColor, stop.color(), opacity);
         } else {
-            color = blendColors(stop.color(), "#fff", 1 - stop.opacity());
+            color = blendColors(stop.color(), "#fff", 1 - opacity);
         }
         return color;
     }

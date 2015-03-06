@@ -808,9 +808,9 @@
             RadialGradient = d.RadialGradient,
             path, fillNode;
 
-        function createNode(pathOptions) {
+        function createNode(pathOptions, opacity) {
             path = new Path(pathOptions);
-            fillNode = new FillNode(path);
+            fillNode = new FillNode(path, null, opacity);
         }
 
         function updateOption(field, value) {
@@ -884,6 +884,25 @@
             equal(element.type, "gradient");
         });
 
+        test("renders linear gradient with base opacity", function() {
+            var linearGradient = new LinearGradient({
+                stops: [[0.3, "blue", 0.5], [1, "blue", 1]],
+                start: [0.1, 0.2],
+                end: [0.5, 0.6]
+            });
+
+            createNode({fill: linearGradient}, 0.5);
+            var element = fillNode.element;
+            equal(element.angle, 225);
+            equal(element.color, "#bfbfff");
+            equal(element.color2, "#8080ff");
+            equal(element.colors, "30% #bfbfff,100% #8080ff");
+            equal(element.focus, 0);
+            equal(element.method, "none");
+            equal(element.on, "true");
+            equal(element.type, "gradient");
+        });
+
         test("renders linear gradient with base color", function() {
             var linearGradient = new LinearGradient({
                 stops: [[0.3, "#fff", 0.5], [1, "#fff", 1]]
@@ -898,6 +917,22 @@
             equal(element.color, "#ff8080");
             equal(element.color2, "#ffffff");
             equal(element.colors, "30% #ff8080,100% #ffffff");
+        });
+
+        test("renders linear gradient with base color and base opacity", function() {
+            var linearGradient = new LinearGradient({
+                stops: [[0.3, "#fff", 0.5], [1, "#fff", 1]]
+            });
+
+            createNode({
+                fill: linearGradient,
+                baseColor: "red"
+            }, 0.5);
+            var element = fillNode.element;
+
+            equal(element.color, "#ff4040");
+            equal(element.color2, "#ff8080");
+            equal(element.colors, "30% #ff4040,100% #ff8080");
         });
 
         test("renders on for RadialGradient", function() {
@@ -973,6 +1008,29 @@
             equal(element.on, "true");
             equal(element.type, "gradienttitle");
             equal(element.focusposition, "1 1.4");
+        });
+
+        test("renders RadialGradient with base opacity", function() {
+            var radialGradient = new RadialGradient({
+                stops: [{
+                    color: "red",
+                    offset: 0.3
+                }, {
+                    color: "green",
+                    offset: 0.7
+                }],
+                center: [100, 200]
+            });
+            radialGradient.supportVML = true;
+            path = new Path({
+                fill: radialGradient
+            });
+            path.segments.elements(Path.fromRect(new g.Rect([50, 60], [50, 100])).segments.elements());
+            fillNode = new FillNode(path, null, 0.5);
+            var element = fillNode.element;
+            equal(element.color, "#ff8080");
+            equal(element.color2, "#80c080");
+            equal(element.colors, "30% #ff8080,70% #80c080");
         });
 
         test("sets colors to colors.value if colors is already set", function() {
