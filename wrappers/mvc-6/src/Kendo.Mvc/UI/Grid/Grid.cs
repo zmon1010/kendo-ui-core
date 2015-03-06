@@ -142,7 +142,13 @@ namespace Kendo.Mvc.UI
 				return Columns.Where(c => c.Visible).ToList();
 			}
 		}
-		
+
+		public MobileMode Mobile
+		{
+			get;
+			set;
+		}
+
 		public bool? AutoBind { get; set; }
 
 		/// <summary>
@@ -270,17 +276,17 @@ namespace Kendo.Mvc.UI
 				settings["navigatable"] = true;
 			}
 
-			//if (Mobile != MobileMode.Disabled)
-			//{
-			//	if (Mobile == MobileMode.Auto)
-			//	{
-			//		options["mobile"] = true;
-			//	}
-			//	else
-			//	{
-			//		options["mobile"] = Mobile.ToString().ToLowerInvariant();
-			//	}
-			//}
+			if (Mobile != MobileMode.Disabled)
+			{
+				if (Mobile == MobileMode.Auto)
+				{
+					settings["mobile"] = true;
+				}
+				else
+				{
+					settings["mobile"] = Mobile.ToString().ToLowerInvariant();
+				}
+			}
 
 			return settings;
 		}
