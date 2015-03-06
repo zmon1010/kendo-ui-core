@@ -805,10 +805,13 @@ var __meta__ = {
         },
 
         toggleHighlight: function(show) {
-            var highlight = this._highlight;
+            var that = this;
+            var highlight = that._highlight;
+            var options = (that.options || {}).highlight;
+            var customVisual = (options || {}).visual;
 
             if (!highlight) {
-                highlight = this._highlight = this.createHighlight({
+                var highlightOptions = {
                     fill: {
                         color: WHITE,
                         opacity: 0.2
@@ -818,10 +821,29 @@ var __meta__ = {
                         width: 1,
                         opacity: 0.2
                     }
-                });
+                };
+                if (customVisual) {
+                    highlight = that._highlight = customVisual(deepExtend(that.highlightVisualArgs(), {
+                        createVisual: function() {
+                            return that.createHighlight(highlightOptions);
+                        },
+                        series: that.series,
+                        dataItem: that.dataItem,
+                        category: that.category,
+                        value: that.value,
+                        percentage: that.percentage,
+                        runningTotal: that.runningTotal,
+                        total: that.total
+                    }));
+                    if (!highlight) {
+                        return;
+                    }
+                } else {
+                    highlight = that._highlight = that.createHighlight(highlightOptions);
+                }
 
-                highlight.options.zIndex = this.options.zIndex;
-                this.appendVisual(highlight);
+                highlight.options.zIndex = that.options.zIndex;
+                that.appendVisual(highlight);
             }
 
             highlight.visible(show);
