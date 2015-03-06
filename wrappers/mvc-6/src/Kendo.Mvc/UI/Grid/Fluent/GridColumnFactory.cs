@@ -267,20 +267,20 @@ namespace Kendo.Mvc.UI.Fluent
 			return new GridTemplateColumnBuilder<TModel>(column);
 		}
 
-		///// <summary>
-		///// Defines a command column.
-		///// </summary>
-		///// <param name="commandAction"></param>
-		///// <returns></returns>
-		//public virtual GridActionColumnBuilder Command(Action<GridActionCommandFactory<TModel>> commandAction)
-		//{
-		//    GridActionColumn<TModel> column = new GridActionColumn<TModel>(Container);
+		/// <summary>
+		/// Defines a command column.
+		/// </summary>
+		/// <param name="commandAction"></param>
+		/// <returns></returns>
+		public virtual GridActionColumnBuilder Command(Action<GridActionCommandFactory<TModel>> commandAction)
+		{
+			GridActionColumn<TModel> column = new GridActionColumn<TModel>(Container);
 
-		//    commandAction(new GridActionCommandFactory<TModel>(column));
+			commandAction(new GridActionCommandFactory<TModel>(column));
 
-		//    ColumnsContainer.Columns.Add(column);
+			ColumnsContainer.Columns.Add(column);
 
-		//    return new GridActionColumnBuilder(column);
-		//}
+			return new GridActionColumnBuilder(column);
+		}
 	}
 }
