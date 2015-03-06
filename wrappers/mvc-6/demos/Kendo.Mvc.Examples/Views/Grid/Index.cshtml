@@ -1,26 +1,23 @@
 ﻿@using Kendo.Mvc.UI
-
-<link href="http://cdn.kendostatic.com/2015.1.225/styles/kendo.common-material.min.css" rel="stylesheet" />
-<link href="http://cdn.kendostatic.com/2015.1.225/styles/kendo.rtl.min.css" rel="stylesheet" />
-<link href="http://cdn.kendostatic.com/2015.1.225/styles/kendo.material.min.css" rel="stylesheet" />
+@model IEnumerable<Kendo.Mvc.Examples.Models.Product>
 
 
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="http://cdn.kendostatic.com/2015.1.225/js/jszip.min.js"></script>
-<script src="http://cdn.kendostatic.com/2015.1.225/js/kendo.all.min.js"></script>
-<script src="http://cdn.kendostatic.com/2015.1.225/js/kendo.aspnetmvc.min.js"></script>
-<script src="http://cdn.kendostatic.com/2015.1.225/js/kendo.timezones.min.js"></script>
 
-
-@(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.Product>()
-	.Name("grid")
-	.Columns(columns => {
-		columns.Template("#=UnitPrice#").HtmlAttributes(new { id="222" });
-	})
+@(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.Product>(Model)
+	.Name("grid")	
+	.Resizable(resizable => resizable.Columns(true))
+	.Reorderable(resizable => resizable.Columns(true))
+	.ColumnMenu()
 	.Pageable()
+	.Groupable()
+	.Filterable()
+	.Sortable()
+	.Scrollable()
+	.Selectable(selectable => selectable.Mode(GridSelectionMode.Multiple).Type(GridSelectionType.Row))
 	.DataSource(dataSource => dataSource
 		.Ajax()
-		.PageSize(10)
-		.Read("Products", "Grid")
+		.PageSize(10)	
+		.ServerOperation(false)			
+		//.Read("Products", "Grid")
 	)
 )
