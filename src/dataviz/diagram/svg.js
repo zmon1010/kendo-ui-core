@@ -730,6 +730,23 @@
             }
         },
 
+        _normalizeMarkerOptions: function(options) {
+            var startCap = options.startCap;
+            var endCap = options.endCap;
+
+            if (isString(startCap)) {
+                options.startCap = {
+                    type: startCap
+                };
+            }
+
+            if (isString(endCap)) {
+                options.endCap = {
+                    type: endCap
+                };
+            }
+        },
+
         _removeMarker: function(position) {
             var marker = this._markers[position];
             if (marker) {
@@ -740,14 +757,15 @@
 
         _createMarkers: function() {
             var options = this.options;
-            var startCap = options.startCap;
-            var endCap = options.endCap;
+            this._normalizeMarkerOptions(options);
+
             this._markers = {};
-            this._markers[START] = this._createMarker(startCap, START);
-            this._markers[END] = this._createMarker(endCap, END);
+            this._markers[START] = this._createMarker(options.startCap, START);
+            this._markers[END] = this._createMarker(options.endCap, END);
         },
 
-        _createMarker: function(type, position) {
+        _createMarker: function(options, position) {
+            var type = (options || {}).type;
             var path = this._getPath(position);
             var markerType, marker;
             if (!path) {
@@ -763,9 +781,9 @@
                 this._removeMarker(position);
             }
             if (markerType) {
-                marker = new markerType({
+                marker = new markerType(deepExtend({}, options, {
                     position: position
-                });
+                }));
                 marker.positionMarker(path);
                 this.drawingContainer().append(marker.drawingElement);
 
@@ -792,15 +810,22 @@
         },
 
         _redrawMarker: function(pathChange, position, options) {
+            this._normalizeMarkerOptions(options);
+
             var pathOptions = this.options;
             var cap = this._capMap[position];
+            var pathCapType = (pathOptions[cap] || {}).type;
             var optionsCap = options[cap];
             var created = false;
-            if (optionsCap && pathOptions[cap] != optionsCap) {
-                pathOptions[cap] = optionsCap;
-                this._removeMarker(position);
-                this._markers[position] = this._createMarker(optionsCap, position);
-                created  = true;
+            if (optionsCap) {
+                pathOptions[cap] = deepExtend({}, pathOptions[cap], optionsCap);
+                if (optionsCap.type && pathCapType != optionsCap.type) {
+                    this._removeMarker(position);
+                    this._markers[position] = this._createMarker(pathOptions[cap], position);
+                    created  = true;
+                } else if (this._markers[position]) {
+                   this._markers[position].redraw(optionsCap);
+                }
             } else if (pathChange && !this._markers[position] && pathOptions[cap]) {
                 this._markers[position] = this._createMarker(pathOptions[cap], position);
                 created = true;

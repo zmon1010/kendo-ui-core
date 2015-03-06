@@ -75,12 +75,7 @@
             type: "tree",
             subtype: "Down"
         },
-        pannable: {
-            key: "none"
-        },
-        selectable: {
-            key: "ctrl"
-        },
+
         shapeDefaults: {
             // type: "image",
             // source: "http://demos.telerik.com/kendo-ui/content/web/foods/1.jpg"
@@ -95,13 +90,20 @@
                 fill: "green"
             }
         },
-        connectionDefaults: {
-            stroke: {
-                color: "#979797",
-                width: 2
+        connectionDefaults: {            
+            startCap: {
+                type: "FilledCircle",
+                stroke: {
+                    color: "red",
+                    width: 2
+                }
             },
-            startCap: "FilledCircle",
-            endCap: "ArrowEnd"
+            endCap: {
+                type: "ArrowEnd",
+                fill: {                    
+                    color: "green"
+                }
+            }
         }
        //, zoom: 2
     });    

@@ -599,6 +599,7 @@
             return marker.drawingElement.transform() !== undefined;
         }
 
+        // ------------------------------------------------------------
         module(name + " / markers", {
             setup: function() {
                 setupMarkerPath({
@@ -628,6 +629,55 @@
             ok(positionedMarker(markers["end"]));
         });
 
+        // ------------------------------------------------------------
+        module(name + " / markers / options object", {
+            setup: function() {
+                setupMarkerPath({
+                    startCap: {
+                        type: Markers.filledCircle,
+                        fill: {
+                            color: "#ff0000"
+                        },
+                        stroke: {
+                            color: "#0037ff",
+                            width: 5
+                        }
+                    },
+                    endCap: {
+                        type:  Markers.arrowEnd
+                    }
+                });
+            }
+        });
+
+        test("creates markers", function() {
+            ok(markers["start"] instanceof CircleMarker);
+            ok(markers["end"] instanceof ArrowMarker);
+        });
+
+        test("sets marker fill and stroke options", function() {
+            var marker = markers["start"];
+            equal(marker.options.fill.color, "#ff0000");
+            equal(marker.options.stroke.color, "#0037ff");
+            equal(marker.options.stroke.width, 5);
+        });
+
+        test("appends markers to container", function() {
+            ok($.inArray(markers["start"].drawingElement, drawingContainer.children) >= 0);
+            ok($.inArray(markers["end"].drawingElement,drawingContainer.children) >= 0);
+        });
+
+        test("sets markers position", function() {
+            equal(markers["start"].options.position, "start");
+            equal(markers["end"].options.position, "end");
+        });
+
+        test("positions markers", function() {
+            ok(positionedMarker(markers["start"]));
+            ok(positionedMarker(markers["end"]));
+        });
+
+        // ------------------------------------------------------------
         module(name + " / markers / redraw / existing", {
             setup: function() {
                 setupMarkerPath({
@@ -675,6 +725,128 @@
             ok(positionedMarker(markers["end"]));
         });
 
+        // ------------------------------------------------------------
+        module(name + " / markers / options object / redraw / existing", {
+            setup: function() {
+                setupMarkerPath({
+                    startCap: {
+                        type: Markers.filledCircle,
+                        fill: {
+                            color: "#ff0000"
+                        },
+                        stroke: {
+                            color: "#0037ff",
+                            width: 5
+                        }
+                    },
+                    endCap: Markers.arrowEnd
+                });
+            }
+        });
+
+        test("removes markers if none is set as cap", function() {
+            element.redraw({
+                startCap: Markers.none,
+                endCap: {
+                    type: Markers.none
+                }
+            });
+            ok(!markers["start"]);
+            ok(!markers["end"]);
+            equal(drawingContainer.children.length, 1);
+        });
+
+        test("recreates markers if new cap type is set", function() {
+            element.redraw({
+                startCap: Markers.arrowStart,
+                endCap: {
+                    type: Markers.filledCircle
+                }
+            });
+
+            ok(markers["start"] instanceof ArrowMarker);
+            ok(markers["end"] instanceof CircleMarker);
+        });
+
+        test("recreates markers with new fill and stroke options", function() {
+            element.redraw({
+                startCap: {
+                    type: Markers.arrowStart,
+                    fill: {
+                        color: "#0037ff"
+                    },
+                    stroke: {
+                        color: "#ff0000",
+                        width: 2
+                    }
+                }
+            });
+
+            ok(markers.start instanceof ArrowMarker);
+            equal(markers.start.options.fill.color, "#0037ff");
+            equal(markers.start.options.stroke.color, "#ff0000");
+            equal(markers.start.options.stroke.width, 2);
+        });
+
+        test("redraws marker with new fill and stroke options", function() {
+            var start = element._markers.start;
+            var end = element._markers.end;
+
+            element.redraw({
+                startCap: {
+                    fill: {
+                        color: "#0037ff"
+                    },
+                    stroke: {
+                        color: "#ff0000",
+                        width: 2
+                    }
+                },
+                endCap: {
+                    fill: {
+                        color: "#ff0000"
+                    },
+                    stroke: {
+                        color: "#0037ff",
+                        width: 5
+                    }
+                }
+            });
+
+            ok(markers.start === start);
+            equal(markers.start.options.fill.color, "#0037ff");
+            equal(markers.start.options.stroke.color, "#ff0000");
+            equal(markers.start.options.stroke.width, 2);
+
+            ok(markers.end === end);
+            equal(markers.end.options.fill.color, "#ff0000");
+            equal(markers.end.options.stroke.color, "#0037ff");
+            equal(markers.end.options.stroke.width, 5);
+        });
+
+        test("removes old markers if markers are recreated", function() {
+            element.redraw({
+                startCap: Markers.arrowStart,
+                endCap: {
+                    type: Markers.filledCircle
+                }
+            });
+
+            equal(drawingContainer.children.length, 3);
+        });
+
+        test("positions markers", function() {
+            element.redraw({
+                startCap: Markers.arrowStart,
+                endCap: {
+                    type: Markers.filledCircle
+                }
+            });
+            ok(positionedMarker(markers["start"]));
+            ok(positionedMarker(markers["end"]));
+        });
+
+        // ------------------------------------------------------------
         module(name + " / markers / redraw / new", {
             setup: function() {
                 setupMarkerPath({});
@@ -726,6 +898,79 @@
 
             ok(positionedMarker(markers["start"]));
             ok(positionedMarker(markers["end"]));
+        });
+
+        // ------------------------------------------------------------
+        module(name + " / markers / options object / redraw / new", {
+            setup: function() {
+                setupMarkerPath({});
+            }
+        });
+
+        test("creates markers", function() {
+            element.redraw({
+                startCap: {
+                    type: Markers.filledCircle,
+                    fill: {
+                        color: "#ff0000"
+                    },
+                    stroke: {
+                        color: "#0037ff",
+                        width: 5
+                    }
+                },
+                endCap: {
+                    type: Markers.arrowEnd
+                }
+            });
+
+            ok(markers.start instanceof CircleMarker);
+            equal(markers.start.options.fill.color, "#ff0000");
+            equal(markers.start.options.stroke.color, "#0037ff");
+            equal(markers.start.options.stroke.width, 5);
+
+            ok(markers.end instanceof ArrowMarker);
+        });
+
+        test("does not create markers if type is set to none", function() {
+            element.redraw({
+                startCap: {
+                    type: Markers.none,
+                    fill: {
+                        color: "#ff0000"
+                    },
+                    stroke: {
+                        color: "#0037ff",
+                        width: 5
+                    }
+                },
+                endCap: Markers.none
+            });
+            ok(!markers["start"]);
+            ok(!markers["end"]);
+            equal(drawingContainer.children.length, 1);
+        });
+
+        test("appends markers to container", function() {
+            element.redraw({
+                startCap: {
+                    type: Markers.filledCircle
+                },
+                endCap: {
+                    type: Markers.arrowEnd
+                }
+            });
+            ok($.inArray(markers["start"].drawingElement, drawingContainer.children) >= 0);
+            ok($.inArray(markers["end"].drawingElement, drawingContainer.children) >= 0);
+        });
+
+        test("sets markers position", function() {
+            element.redraw({
+                startCap: Markers.filledCircle,
+                endCap: Markers.arrowEnd
+            });
+            equal(markers["start"].options.position, "start");
+            equal(markers["end"].options.position, "end");
         });
     }
 
