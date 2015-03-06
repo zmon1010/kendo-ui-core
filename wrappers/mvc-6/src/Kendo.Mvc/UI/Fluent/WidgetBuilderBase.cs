@@ -31,6 +31,18 @@ namespace Kendo.Mvc.UI.Fluent
             set;
         }
 
+        /// <summary>
+        /// Alias for the component as used from settings builder
+        /// </summary>
+        /// <value>The settings container.</value>
+        protected internal TViewComponent Container
+        {
+            get
+            {
+                return Component;
+            }
+        }
+
         private bool HasModelExpression { get; set; } = false;
 
         public static implicit operator TViewComponent(WidgetBuilderBase<TViewComponent, TBuilder> builder)

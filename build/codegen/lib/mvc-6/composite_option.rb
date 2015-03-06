@@ -5,6 +5,9 @@ module CodeGen::MVC6::Wrappers::Options
     class CompositeOption < CodeGen::CompositeOption
         include CodeGen::MVC6::Wrappers::Options
 
+        BUILDER = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-builder.erb"), 0, '%<>')
+        BUILDER_GENERATED = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-builder-generated.erb"), 0, '%<>')
+
         DECLARATION = ERB.new(%{
         public <%= csharp_class_name %> <%= csharp_name %> { get; } = new <%= csharp_class_name %>();
         })
@@ -40,6 +43,11 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         def to_builder
+            BUILDER.result(binding)
+        end
+
+        def to_builder_generated
+            BUILDER_GENERATED.result(binding)
         end
 
         def to_serialization

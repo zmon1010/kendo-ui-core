@@ -4,6 +4,6 @@
         /// <param name="configurator">The configurator for the <%= csharp_name.downcase %> setting.</param>
         public <%= csharp_owner_builder_name %> <%= csharp_name %>(Action<<%= csharp_builder_class_name %>> configurator)
         {
-            configurator(new <%= csharp_builder_class_name %>(Component.<%= csharp_name %>));
+            configurator(new <%= csharp_builder_class_name %>(Container.<%= csharp_name %>));
             return this;
         }

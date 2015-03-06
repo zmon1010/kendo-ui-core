@@ -56,9 +56,13 @@ module CodeGen::MVC6::Wrappers
             write_file(filename, component.to_composite_option_settings(option))
 
             # write *SettingsBuilder.cs file
-            #filename = "#{@path}/#{component.path}/Fluent/#{option.csharp_builder_class}.cs"
+            filename = "#{@path}/#{component.path}/Fluent/#{option.csharp_builder_class}.cs"
+            unless File.exists?(filename)
+                write_file(filename, option.to_builder)
+            end
 
-            #write_file(filename, component.to_fluent_setting(filename, option))
+            filename = "#{@path}/#{component.path}/Fluent/#{option.csharp_builder_class}.Generated.cs"
+            write_file(filename, option.to_builder_generated)
 
             option.composite_options.each do |o|
                 write_composite_option(component, o)

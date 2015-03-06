@@ -27,7 +27,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </example>
         public <%= csharp_builder_class %><%= csharp_generic_args %> Events(Action<<%= csharp_class %>EventBuilder> configurator)
         {
-            configurator(new <%= csharp_class %>EventBuilder(Component.Events));
+            configurator(new <%= csharp_class %>EventBuilder(Container.Events));
             return this;
         }
         <% end %>
