@@ -6,11 +6,7 @@ module CodeGen::MVC6::Wrappers::Options
         include CodeGen::MVC6::Wrappers::Options
 
         DECLARATION = ERB.new(%{
-        public <%= csharp_class %><%=csharp_generic_args%> <%= csharp_name %>
-        {
-            get;
-            set;
-        }
+        public <%= csharp_class %><%=csharp_generic_args%> <%= csharp_name %> { get; } = new <%= csharp_class %><%=csharp_generic_args%>();
         })
 
         def csharp_class
