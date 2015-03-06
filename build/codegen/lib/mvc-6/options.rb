@@ -16,12 +16,23 @@ module CodeGen::MVC6::Wrappers::Options
         'DateTime'
     ]
 
+    IGNORED = YAML.load(File.read("build/codegen/lib/mvc-6/ignored.yml"))
+
     def component_class
         Component
     end
 
     def composite_option_class
         CompositeOption
+    end
+
+    def delete_ignored
+        return if @options.nil?
+
+        @options.delete_if do |option|
+            option.delete_ignored
+            IGNORED.include?(option.full_name)
+        end
     end
 
     def option_class

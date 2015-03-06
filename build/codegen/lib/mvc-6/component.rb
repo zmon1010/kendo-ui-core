@@ -1,5 +1,6 @@
 require 'codegen/lib/mvc-6/options'
 require 'codegen/lib/mvc-6/option'
+require 'codegen/lib/mvc-6/array_option'
 require 'codegen/lib/mvc-6/composite_option'
 require 'codegen/lib/mvc-6/event'
 

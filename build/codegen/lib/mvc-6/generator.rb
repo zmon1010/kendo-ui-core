@@ -8,6 +8,8 @@ module CodeGen::MVC6::Wrappers
         end
 
         def component(component)
+            component.delete_ignored
+
             write_component(component)
             write_component_settings(component)
             write_composite_settings(component)
@@ -39,11 +41,10 @@ module CodeGen::MVC6::Wrappers
         end
 
         def write_composite_option(component, option)
-            #if option.instance_of?(component.array_option_class)
-            #    write_array(component, option)
-
-            #    return
-            #end
+            if option.instance_of?(component.array_option_class)
+                #write_array(component, option)
+                return
+            end
 
             # write *Settings.cs file
             filename = "#{@path}/#{component.path}/Settings/#{option.csharp_class}.cs"
