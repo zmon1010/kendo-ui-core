@@ -355,6 +355,105 @@
 
         // ------------------------------------------------------------
         (function() {
+            var visual;
+
+            function returnVisual() {
+                return visual;
+            }
+
+            module("ChartElement / toggleHighlight / custom visual", {
+                setup: function() {
+                    setup();
+                    chartElement.options.highlight = {};
+                    chartElement.highlightVisualArgs = function() { return {}; };
+                    chartElement.createVisual();
+                    visual = new kendo.drawing.Path();
+                }
+            });
+
+            test("uses visual returned from the visual function", function() {
+                chartElement.options.highlight.visual = returnVisual;
+                chartElement.toggleHighlight(true);
+                ok(chartElement._highlight === visual);
+            });
+
+            test("appends custom visual", function() {
+                chartElement.options.highlight.visual = returnVisual;
+                chartElement.appendVisual = function (childVisual) {
+                    ok(visual === childVisual);
+                };
+                chartElement.toggleHighlight(true);
+            });
+
+            test("does nothing if visual function returns no result", function() {
+                chartElement.options.highlight.visual = $.noop;
+                chartElement.toggleHighlight(true);
+                ok(chartElement._highlight === undefined);
+            });
+
+            test("toggles custom visual visiblity", function() {
+                chartElement.options.highlight.visual = returnVisual;
+                chartElement.toggleHighlight(true);
+                equal(visual.visible(), true);
+                chartElement.toggleHighlight(false);
+                equal(visual.visible(), false);
+            });
+
+            test("sets zIndex to custom visual", function() {
+                chartElement.options.zIndex = 100;
+                chartElement.options.highlight.visual = returnVisual;
+                chartElement.toggleHighlight();
+                equal(visual.options.zIndex, 100);
+            });
+
+            test("passes highlightVisualArgs to visual function", function() {
+                chartElement.highlightVisualArgs = function() {
+                    return {
+                        foo: "bar"
+                    };
+                };
+                chartElement.options.highlight.visual = function(e) {
+                    equal(e.foo, "bar");
+                };
+                chartElement.toggleHighlight();
+            });
+
+            test("passes a function that returns the default highlight visual", function() {
+                var defaultVisual = new kendo.drawing.Path();
+                chartElement.createHighlight = function() {
+                    return defaultVisual;
+                };
+                chartElement.options.highlight.visual = function(e) {
+                    ok(e.createVisual() ===  defaultVisual);
+                };
+                chartElement.toggleHighlight();
+            });
+
+            test("passes the element series, dataItem, category, value, percentage, runningTotal and total", function() {
+                var defaultVisual = new kendo.drawing.Path();
+                chartElement.series = "foo";
+                chartElement.dataItem = "bar";
+                chartElement.category = "baz";
+                chartElement.value = 1;
+                chartElement.percentage = 0.5;
+                chartElement.runningTotal = 2;
+                chartElement.total = 3;
+                chartElement.options.highlight.visual = function(e) {
+                    equal(e.series, "foo");
+                    equal(e.dataItem, "bar");
+                    equal(e.category, "baz");
+                    equal(e.value, 1);
+                    equal(e.percentage, 0.5);
+                    equal(e.runningTotal, 2);
+                    equal(e.total,3);
+                };
+                chartElement.toggleHighlight();
+            });
+
+        })();
+
+        // ------------------------------------------------------------
+        (function() {
             var gradient;
             var gradientOptions;
             var path;
@@ -3845,10 +3944,10 @@
             ok(visual === customVisual);
         });
 
-        test("passes rect as parameter", function() {
+        test("passes paddingBox rect as parameter", function() {
             createShape({
                 visual: function(e) {
-                   ok(e.rect.equals(shape.box.toRect()));
+                   ok(e.rect.equals(shape.paddingBox.toRect()));
                 }
             });
         });

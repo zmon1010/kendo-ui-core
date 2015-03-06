@@ -630,6 +630,14 @@
             ok(visual === point._mainVisual);
         });
 
+        test("highlightVisualArgs returns an object with the options, the candlestick rect and the _mainVisual", function() {
+            createPoint({});
+            var result = point.highlightVisualArgs();
+            deepEqual(result.options, point.options);
+            ok(point.box.toRect().equals(result.rect));
+            ok(point._mainVisual === result.visual);
+        });
+
     })();
 
     (function() {

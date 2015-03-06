@@ -2,6 +2,7 @@
 
     var dataviz = kendo.dataviz,
         draw = kendo.drawing,
+        geom = kendo.geometry,
         deepExtend = kendo.deepExtend,
         Box2D = dataviz.Box2D,
         categoriesCount = dataviz.categoriesCount,
@@ -526,6 +527,20 @@
 
             ok(visual instanceof draw.Group);
             ok(visual === segment.visual);
+        });
+
+        test("highlightVisualArgs returns an object with the options, the visual and the sector options", function() {
+            var result = segment.highlightVisualArgs();
+            var sector = segment.sector;
+            deepEqual(result.options, segment.options);
+            ok(segment.visual === result.visual);
+            equal(result.radius, sector.r);
+            equal(result.innerRadius, sector.ir);
+            ok(result.center instanceof geom.Point);
+            equal(result.center.x, sector.c.x);
+            equal(result.center.y, sector.c.y);
+            equal(result.startAngle, sector.startAngle);
+            equal(result.endAngle, sector.angle + sector.startAngle);
         });
 
     })();

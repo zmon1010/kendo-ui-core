@@ -334,8 +334,16 @@
         });
 
         test("highlightVisual returns bodyVisual", function() {
-            createBullet({});            
+            createBullet({});
             ok(bullet.highlightVisual() === bullet.bodyVisual);
+        });
+
+        test("highlightVisualArgs returns an object with the options, the bullet rect and the bodyVisual", function() {
+            createBullet({});
+            var result = bullet.highlightVisualArgs();
+            deepEqual(result.options, bullet.options);
+            ok(bullet.box.toRect().equals(result.rect));
+            ok(bullet.bodyVisual === result.visual);
         });
     })();
 
