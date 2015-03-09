@@ -747,7 +747,7 @@ var __meta__ = {
             var item = items[index++],
                 text = getter(item);
 
-            if(!seen.hasOwnProperty(text) && text !== undefined){
+            if(text !== undefined && text !== null && !seen.hasOwnProperty(text)){
                 result.push(item);
                 seen[text] = true;
             }
