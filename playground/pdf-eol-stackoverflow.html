@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+    <style>
+      body {
+        font-family: "DejaVu Sans", "Arial", sans-serif;
+        font-size: 14px;
+      }
+      .k-widget {
+        font-family: "DejaVu Sans", "Arial", sans-serif;
+        font-size: .9em;
+      }
+      .hide {
+        display: inline-block;
+        overflow: hidden;
+        width: 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="PDF()">PDF</button>
+    <div id="test">
+      <p>Foo <span class="hide">lorem ipsum</span> bar</p>
+    </div>
+    <script>
+      function PDF() {
+        kendo.drawing.drawDOM("#test", {
+          paperSize: "A4",
+          landscape: true,
+          margin: "1cm"
+        }).then(function(group){
+          return kendo.drawing.exportPDF(group);
+        }).then(function(data){
+          kendo.saveAs({ dataURI: data, fileName: "kendo.pdf" });
+        });
+      }
+
+
+
+
+      $("#grid").kendoGrid({
+        dataSource: {
+          type: "odata",
+          transport: {
+            read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+          },
+          group: { field: "ContactTitle" }
+        },
+        groupable: true,
+        sortable: true,
+        selectable: "multiple",
+        reorderable: true,
+        resizable: true,
+        filterable: true,
+        columns: [
+          {
+            field: "ContactName",
+            template: "<div class=\'customer-name\'>#: ContactName #</div>",
+            title: "Contact",
+            width: 200
+          },{
+            field: "ContactTitle",
+            title: "Contact Title",
+            width: 220
+          },{
+            field: "Phone",
+            title: "Phone",
+            width: 160
+          },{
+            field: "CompanyName",
+            title: "Company Name"
+          },{
+            field: "City",
+            title: "City",
+            width: 160
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>

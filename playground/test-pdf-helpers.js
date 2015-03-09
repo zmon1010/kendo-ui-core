@@ -53,3 +53,13 @@ window.h2c = function h2c(sel) {
         container().append(canvas);
     });
 }
+
+window.GUARDS = {};
+window.STOPIT = function(key, maxcalls) {
+    var x = GUARDS[key];
+    if (x == null) x = 0;
+    GUARDS[key] = ++x;
+    if (x >= maxcalls) {
+        throw new Error("Guard: " + key);
+    }
+};
