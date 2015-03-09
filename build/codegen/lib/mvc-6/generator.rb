@@ -73,9 +73,9 @@ module CodeGen::MVC6::Wrappers
         def write_array(component, option)
             #write *Factory.cs file
             filename = "#{@path}/#{component.path}/Fluent/#{option.csharp_builder_class}.cs"
-            unless File.exists?(filename)
+            #unless File.exists?(filename)
                 write_file(filename, option.to_factory)
-            end
+            #end
 
             #write *Factory.Generated.cs file
             filename = "#{@path}/#{component.path}/Fluent/#{option.csharp_builder_class}.Generated.cs"

@@ -33,6 +33,10 @@ module CodeGen::MVC6::Wrappers::Options
             "#{csharp_class}Builder#{csharp_generic_args}"
         end
 
+        def csharp_generic_args
+            owner.csharp_generic_args
+        end
+
         def to_declaration
             DECLARATION.result(binding)
         end

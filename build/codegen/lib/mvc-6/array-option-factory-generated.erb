@@ -14,7 +14,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         public virtual <%= csharp_item_builder_class_name %> Add()
         {
-            var item = new <%= csharp_item_class %>();
+            var item = new <%= csharp_item_class_name %>();
             container.Add(item);
 
             return new <%= csharp_item_builder_class_name %>(item);
@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         public virtual <%= csharp_item_builder_class_name %> Custom()
         {
-            var item = new <%= csharp_item_class %>();
+            var item = new <%= csharp_item_class_name %>();
             container.Add(item);
 
             return new <%= csharp_item_builder_class_name %>(item);
@@ -38,7 +38,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         public virtual <%= csharp_item_builder_class_name %> <%= name.to_csharp_name %>()
         {
-            var item = new <%= csharp_item_class %>() { Name = "<%= name %>" };
+            var item = new <%= csharp_item_class_name %>() { Name = "<%= name %>" };
             container.Add(item);
 
             return new <%= csharp_item_builder_class_name %>(item);
