@@ -1586,6 +1586,16 @@ var __meta__ = {
 
             kendo.destroy(that.wrapper);
 
+            that.rowTemplate =
+            that.altRowTemplate =
+            that.lockedRowTemplate =
+            that.lockedAltRowTemplate =
+            that.detailTemplate =
+            that.footerTemplate =
+            that.groupFooterTemplate =
+            that.lockedGroupFooterTemplate = null;
+
+
             that.scrollables =
             that.thead =
             that.tbody =
