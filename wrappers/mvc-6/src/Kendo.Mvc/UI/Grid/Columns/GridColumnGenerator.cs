@@ -82,32 +82,33 @@ namespace Kendo.Mvc.UI
         }
         
         public GridColumnBase<T> CreateColumn(GridColumnSettings settings)
-        {
-			//TODO: Load ColumnSettings for Action command
-			//var commandSettings = settings as GridCommandColumnSettings;
-			//if (commandSettings != null)
-			//{
-			//    var column = new GridActionColumn<T>(grid);
+        {			
+			var commandSettings = settings as GridCommandColumnSettings;
+			if (commandSettings != null)
+			{
+				var column = new GridActionColumn<T>(grid);
 
-			//    column.Settings = settings;
+				column.Settings = settings;
 
-			//    foreach (var command in commandSettings.Commands)
-			//    {
-			//        if (!(command is GridSelectActionCommand))
-			//        {
-			//            grid.Editable.Enabled = true;
-			//        }
-			//        column.Commands.Add(command);
-			//    }
+				foreach (var command in commandSettings.Commands)
+				{
+					if (!(command is GridSelectActionCommand))
+					{
+						//TODO: implement editing
+						//grid.Editable.Enabled = true;
+					}
+					column.Commands.Add(command);
+				}
 
-			//    if (settings.HeaderTemplate.HasValue())
-			//    {
-			//        column.HeaderTemplate.Html = settings.HeaderTemplate;
-			//    }
+				if (settings.HeaderTemplate.HasValue())
+				{
+					//TODO implement column header template
+					//column.HeaderTemplate.Html = settings.HeaderTemplate;
+				}
 
-			//    return column;
+				return column;
 
-			//}
+			}
 			return CreateBoundColumn(settings);
         }
         

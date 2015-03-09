@@ -1,11 +1,10 @@
 namespace Kendo.Mvc.UI
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;    
-    using Kendo.Mvc.Extensions;
+	using System.Collections.Generic;
+	using System.Linq;
+	using Kendo.Mvc.Extensions;
 
-    public class GridActionColumn<T> : GridColumnBase<T>, IGridActionColumn where T : class
+	public class GridActionColumn<T> : GridColumnBase<T>, IGridActionColumn where T : class
     {
         public GridActionColumn(Grid<T> grid)
             : base(grid)
