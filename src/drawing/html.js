@@ -2170,6 +2170,7 @@
         var range = element.ownerDocument.createRange();
         var align = getPropertyValue(style, "text-align");
         var isJustified = align == "justify";
+        var whiteSpace = getPropertyValue(style, "white-space");
 
         var fontSize = getPropertyValue(style, "font-size");
         var lineHeight = getPropertyValue(style, "line-height");
@@ -2301,7 +2302,9 @@
         }
 
         function drawText(str, box) {
-            str = str.replace(/[\r\n ]+/g, " ");
+            if (!/^(?:pre|pre-wrap)$/i.test(whiteSpace)) {
+                str = str.replace(/\s+/g, " ");
+            }
 
             // In IE the box height will be approximately lineHeight, while in
             // other browsers it'll (correctly) be the height of the bounding
