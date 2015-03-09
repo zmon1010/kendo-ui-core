@@ -1,0 +1,6 @@
+            var <%= name %> = <%= csharp_name %>.Select(i => i.Serialize());
+            if (<%= name %>.Any())
+            {
+                settings["<%= name %>"] = <%= name %>;
+            }
+

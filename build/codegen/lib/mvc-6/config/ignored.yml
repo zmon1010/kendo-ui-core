@@ -1,2 +1,5 @@
+- treelist.columns.command.click
+- treelist.columns.editor
+- treelist.columns.sortable.compare
 - treelist.datasource
 - treelist.editable.window
