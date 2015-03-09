@@ -1,3 +1,17 @@
+/* h2, h3 font */
+@font-face {
+  font-family: "FaktSlabPro-Medium";
+  src: url("../shared/styles/fonts/FaktSlabPro-Medium.eot");
+  src: url("../shared/styles/fonts/FaktSlabPro-Medium.eot?#iefix") format("embedded-opentype"), url("../shared/styles/fonts/FaktSlabPro-Medium.woff") format("woff"), url("../shared/styles/fonts/FaktSlabPro-Medium.ttf") format("truetype"), url("../shared/styles/fonts/FaktSlabPro-Medium.svg#FaktSlabPro-Medium") format("svg");
+}
+
+/* .responsive-section p */
+@font-face {
+  font-family: "MetricWeb-Semibold";
+  src: url("../shared/styles/fonts/MetricWeb-Semibold.eot");
+  src: url("../shared/styles/fonts/MetricWeb-Semibold.eot?#iefix") format("embedded-opentype"), url("../shared/styles/fonts/MetricWeb-Semibold.woff") format("woff"), url("../shared/styles/fonts/MetricWeb-Semibold.ttf") format("truetype"), url("../shared/styles/fonts/MetricWeb-Semibold.svg#MetricWeb-Semibold") format("svg");
+}
+
 body,h1,h2,h3,h4,p,ul,li,a,button
 {
     margin:0;
@@ -19,10 +33,6 @@ img {
     border:0;
 }
 
-a,
-li>a,
-h2>a,
-h3>a,
 a {
     text-decoration:none;
 }
@@ -30,22 +40,128 @@ a {
 /* Header */
 .responsive-header {
     margin: 0;
+    position: relative;
+    min-height: 80px;
     color: #fff;
-    background-color: #272727;
+    background-color: #0C2D4F;
+    /* IE10 Consumer Preview */ 
+    background-image: -ms-linear-gradient(right, #174770 0%, #092646 100%);
+    /* Mozilla Firefox */ 
+    background-image: -moz-linear-gradient(right, #174770 0%, #092646 100%);
+    /* Opera */ 
+    background-image: -o-linear-gradient(right, #174770 0%, #092646 100%);
+    /* Webkit (Safari/Chrome 10) */ 
+    background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #174770), color-stop(1, #092646));
+    /* Webkit (Chrome 11+) */ 
+    background-image: -webkit-linear-gradient(right, #174770 0%, #092646 100%);
+    /* W3C Markup, IE10 Release Preview */ 
+    background-image: linear-gradient(to left, #174770 0%, #092646 100%);
 }
 
 .responsive-header h1 {
+    float: left;
     font-size: 24px;
     font-weight: normal;
+    padding: 28px 32px;
+    line-height: 24px;   
 }
 
-.responsive-nav-buttons {
-    float: right;
+.responsive-nav {
     font-size: 18px;
+    line-height: 80px;
+    float: right;   
+}
+
+.responsive-nav > li {
+    float: left;    
+}
+
+.responsive-nav > li > a {
+    padding: 30px;
+    color: #fff;
+}
+
+.responsive-section {
+    position: relative;
+    text-align: center;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    border: 1px solid red;
+}
+
+.responsive-section h2 {
+    font: 100 24px "FaktSlabPro-Medium", Arial, Helvetica, sans-serif;  
+}
+
+.responsive-section > p {
+    font: 100 16px "MetricWeb-Semibold", Arial, Helvetica, sans-serif;
+}
+
+.responsive-section > h2,
+.responsive-section > p {
+    margin-bottom: 40px;
+}
+
+.responsive-section > p,
+#responsive-QR,
+.responsive-widgets-container {
+    max-width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#responsive-QR > div {
+    display: inline-block;
+}
+
+/* Index page */
+.responsive-btn {
+    color: #fff;    
+    padding: 17px 24px;
+    text-align: center;   
+    font-size: 22px;
+    line-height: 22px;   
+}
+
+.responsive-documentation {
+    background-color: #015991;    
+}
+
+.kendo-with-bootstrap {
+    background-color: #e84d3e;
+}
+
+.responsive-widgets-container {
+    background: yellow;
+}
+
+.responsive-widget {
+   float: left;
+   width: 33.33333333%;
+   position: relative;
+   min-height: 1px;
+
+   /*display: inline-block;*/
+}
+
+.responsive-ruler {
+    position: relative;
+    height: 10px;
+    margin: 20px 0;
+    background-image: url('responsive_ruler.png');
+    background-repeat: repeat-x;
+}
+
+/* Footer */
+#responsive-footer {
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 /* Clear floats */
-.responsive-header:after {
+.responsive-header:after,
+.responsive-nav:after,
+.responsive-widgets-container:after {
     content: "";
     display: block;
     clear: both;

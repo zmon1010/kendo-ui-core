@@ -1,1 +1,76 @@
-Some chart content
+@{
+    Layout = "ResponsiveLayout.cshtml";
+}
+
+<div class="responsive-ruler"></div>
+
+<div id="chart"></div>
+<script>
+$("#chart").kendoChart({
+    theme: "metro",
+    chartArea: {
+        background: "transparent",
+    },
+    title: {
+        text: "Stock prices",
+        visible: false
+    },
+    legend: {
+        visible: false,
+    },
+    seriesDefaults: {
+        type: "area", // try: "line" | "area" | "bar"
+        style: "smooth",
+        area: {
+            line: {
+                style: "smooth"
+            }
+        },
+        spacing: 0,
+        gap: .4,
+        spacing: .16,
+    },
+    series: [{
+        opacity: 1,
+        name: "Stock A",
+        color: "#d0e39b",
+        overlay: null,
+        //data: stocks[2]
+        data: [1, 2]
+    }, {
+        opacity: 1,
+        name: "Stock B",
+        color: "#90c57b",
+        //data: stocks[1]
+        data: [1, 2]
+    }, {
+        opacity: 1,
+        name: "Stock C",
+        color: "#67b49d",
+        //data: stocks[0],
+        data: [1, 2]
+    }],
+    valueAxis: {
+        labels: {
+            format: "${0}"
+        },
+        line: {
+            visible: false
+        },
+    },
+    categoryAxis: {
+        //categories: categoryList,
+        categories: ["1", "2"],
+        majorGridLines: {
+            visible: false
+        }
+    },
+    tooltip: {
+        visible: true,
+        format: "{0:N0}"
+    },
+    transitions: false
+});
+</script>
+
+<div class="responsive-ruler"></div>

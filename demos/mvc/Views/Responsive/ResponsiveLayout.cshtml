@@ -10,19 +10,37 @@
     <title>@ViewBag.Title</title>
     <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")"/>
     <link rel="stylesheet" href="@Url.Content("~/content/responsive/responsive.css")" />
+
+    <!-- Remote CDN-s -->    
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.default.min.css" />
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.dataviz.min.css" />
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.dataviz.default.min.css" />
+
+    <script src="http://cdn.kendostatic.com/2014.3.1411/js/jquery.min.js"></script>
+    <script src="http://cdn.kendostatic.com/2014.3.1411/js/kendo.all.min.js"></script>
+
 </head>
 <body>
     <header class="responsive-header">
         <h1>Responsive Kendo UI</h1>
-        <div class="responsive-nav-buttons">
-            <a id="responsive-about" href="#" class="btn">About</a>
-            <a id="responsive-grid" href="#" class="btn">Grid</a>
-            <a id="responsive-scheduler" href="#" class="btn">Scheduler</a>
-            <a id="responsive-chart" href="#" class="btn btn-primary">Charts</a>
-        </div>
+        <ul class="responsive-nav">
+            <li><a href="@Url.Action("Index", "Responsive")" id="responsive-about" class="btn">About</a></li>
+            <li><a href="@Url.Action("Grid", "Responsive")" id="responsive-grid" class="btn">Grid</a></li>
+            <li><a href="@Url.Action("Scheduler", "Responsive")" id="responsive-scheduler" class="btn">Scheduler</a></li>
+            <li><a href="@Url.Action("Chart", "Responsive")#" id="responsive-chart" class="btn btn-primary">Charts</a></li>
+        </ul>
     </header>
+
     <div>
         @RenderBody()
     </div>
+
+    <div id="responsive-footer" class="responsive-section">    
+         <div class="copyright">
+            <p>Copyrigh &copy; 2002-2015 Telerik Inc. All rights reserved</p>
+        </div>
+    </div>
+
 </body>
 </html>

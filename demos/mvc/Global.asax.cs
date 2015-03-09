@@ -46,8 +46,8 @@ namespace Kendo
 
             routes.MapRoute(
                 "Responsive",
-                "responsive/{widget}",
-                new { controller = "Responsive", action = "Index", widget = UrlParameter.Optional }
+                "responsive/{action}",
+                new { controller = "Responsive", action = "Index" }
             );
 
             routes.MapRoute(
