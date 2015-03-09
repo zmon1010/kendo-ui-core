@@ -7,7 +7,8 @@ module CodeGen::MVC6::Wrappers::Options
         'Number' => 'double',
         'String' => 'string',
         'Boolean' => 'bool',
-        'Date' => 'DateTime'
+        'Date' => 'DateTime',
+        'Function' => 'ClientHandlerDescriptor'
     }
 
     STRUCT_TYPES = [
