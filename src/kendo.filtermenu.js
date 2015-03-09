@@ -737,26 +737,31 @@ var __meta__ = {
         }
     }
 
+    function distinct(items, field) {
+        var getter = kendo.getter(field, true),
+            result = [],
+            index = 0,
+            seen = {};
+
+        while (index < items.length) {
+            var item = items[index++],
+                text = getter(item);
+
+            if(!seen.hasOwnProperty(text) && text !== undefined){
+                result.push(item);
+                seen[text] = true;
+            }
+        }
+
+        return result;
+    }
+
     function removeDuplicates (dataSelector, dataTextField) {
-        var getter = kendo.getter(dataTextField, true);
 
         return function(e) {
-            var items = dataSelector(e),
-                result = [],
-                index = 0,
-                seen = {};
+            var items = dataSelector(e);
 
-            while (index < items.length) {
-                var item = items[index++],
-                    text = getter(item);
-
-                if(!seen.hasOwnProperty(text) && text !== undefined){
-                    result.push(item);
-                    seen[text] = true;
-                }
-            }
-
-            return result;
+            return distinct(items, dataTextField);
         };
     }
 
@@ -772,6 +777,7 @@ var __meta__ = {
             if (options.forceUnique) {
                 checkSource = options.dataSource.options;
                 delete checkSource.pageSize;
+
                 this.checkSource = DataSource.create(checkSource);
                 this.checkSource.reader.data = removeDuplicates(this.checkSource.reader.data, this.field);
             } else {
@@ -804,11 +810,6 @@ var __meta__ = {
             this._refreshHandler = proxy(this.refresh, this);
             this.dataSource.bind(CHANGE, this._refreshHandler);
 
-            var that = this;
-            this.checkChangeHandler = function() {
-                that.createCheckBoxes();
-                that.checkValues(that.getFilterArray());
-            };
         },
         _createLink: function() {
             var element = this.element;
@@ -821,6 +822,9 @@ var __meta__ = {
             this._link = link.attr("tabindex", -1).on("click" + NS, proxy(this._click, this));
         },
         _init: function() {
+            var that = this;
+            var forceUnique = this.options.forceUnique;
+
             var options = this.options;
             this.pane = options.pane;
 
@@ -830,7 +834,24 @@ var __meta__ = {
 
             this._createForm();
 
-            this.refresh();
+            if (forceUnique && !this.checkSource.options.serverPaging && this.dataSource.data().length) {
+                this.checkSource.data(distinct(this.dataSource.data(),this.field));
+                this.refresh();
+            } else {
+                ui.progress(that.container, true);
+                this.checkSource.fetch(function() {
+                    ui.progress(that.container, false);
+                    that.refresh.call(that);
+                });
+            }
+
+            if (!this.options.forceUnique) {
+                this.checkChangeHandler = function() {
+                    that.container.empty();
+                    that.refresh();
+                };
+                this.checkSource.bind(CHANGE, this.checkChangeHandler);
+            }
 
             this.form.on("keydown" + multiCheckNS, proxy(this._keydown, this))
                         .on("submit" + multiCheckNS, proxy(this._filter, this))
@@ -890,32 +911,23 @@ var __meta__ = {
             }
         },
         refresh: function(e) {
-            if (e && this.options.forceUnique && e.sender === this.dataSource &&
-                 (e.action == "itemchange" || e.action == "add" || e.action == "remove") ) {
-                this.checkSource.data(this.dataSource.data());
-                this._isFetched = false;
-            }
+            var forceUnique = this.options.forceUnique;
+            var dataSource = this.dataSource;
             var filters = this.getFilterArray();
+
             if (this._link) {
                 this._link.toggleClass("k-state-active", filters.length !== 0);
             }
 
             if (this.form) {
-                if (!this._isFetched) {
-                    if (this.options.values) {
-                        this._isFetched = true;
-                        this.createCheckBoxes();
-                    } else {
-                        ui.progress(this.container, true);
-                        this.checkSource.fetch(proxy(function() {
-                            ui.progress(this.container, false);
-                            this._isFetched = true;
-                            this.createCheckBoxes();
-                            this.checkValues(this.getFilterArray());
-                            this.trigger(REFRESH);
-                            this.checkSource.bind(CHANGE, this.checkChangeHandler);
-                        }, this));
-                    }
+                if (e && forceUnique && e.sender === dataSource && !dataSource.options.serverPaging &&
+                     (e.action == "itemchange" || e.action == "add" || e.action == "remove")) {
+                    this.checkSource.data(distinct(this.dataSource.data(),this.field));
+                    this.container.empty();
+                }
+
+                if (this.container.is(":empty")) {
+                    this.createCheckBoxes();
                 }
                 this.checkValues(filters);
                 this.trigger(REFRESH);
@@ -928,7 +940,6 @@ var __meta__ = {
             return flatValues;
         },
         createCheckBoxes: function() {
-            this.container.empty();
             var options = this.options;
             var templateOptions = { field: this.field, format: options.format, mobile: this._isMobile };
             var template = kendo.template(options.itemTemplate(templateOptions));
