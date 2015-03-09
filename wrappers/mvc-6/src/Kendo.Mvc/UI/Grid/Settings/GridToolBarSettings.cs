@@ -43,7 +43,7 @@ namespace Kendo.Mvc.UI
 
 			if (commands.Any())
 			{
-				json["command"] = commands;
+				json["commands"] = commands;
 			}
 		}
     }

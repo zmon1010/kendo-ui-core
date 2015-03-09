@@ -245,7 +245,7 @@ namespace Kendo.Mvc.UI
 
 			if (ToolBar.Enabled)
 			{
-				settings["toolbar"] = ToolBar.ToJson();
+				settings["toolbar"] = ToolBar.ToJson().First().Value;
 			}
 
 			if (autoBind == false)

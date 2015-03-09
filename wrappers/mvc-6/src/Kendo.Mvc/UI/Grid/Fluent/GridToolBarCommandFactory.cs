@@ -72,13 +72,16 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         public GridToolBarSaveCommandBuilder Save()
         {
-            var command = new GridToolBarSaveCommand();
+            var save = new GridToolBarSaveCommand();
 
-            settings.Commands.Add(command);
+            settings.Commands.Add(save);
+
+			var cancel = new GridToolBarCancelCommand(save);
+			settings.Commands.Add(cancel);
 			//TODO: enable editing 
 			//settings.Grid.Editable.Enabled = true;
 
-            return new GridToolBarSaveCommandBuilder(command);
+			return new GridToolBarSaveCommandBuilder(save);
         }
 
         /// <summary>

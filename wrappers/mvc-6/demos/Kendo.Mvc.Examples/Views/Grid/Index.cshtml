@@ -4,10 +4,19 @@
 
 
 @(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.Product>(Model)
-	.Name("grid")	
+	.Name("grid")
 	.Resizable(resizable => resizable.Columns(true))
 	.Reorderable(resizable => resizable.Columns(true))
 	.ColumnMenu()
+	.Columns(columns => {		
+	})
+	.ToolBar(toolbar => {
+		 toolbar.Create();
+		 toolbar.Save().SaveText("save").CancelText("cancel").HtmlAttributes(new { style= "background:red" });
+		 toolbar.Pdf();
+		 toolbar.Excel();
+		 toolbar.Custom().Name("fooo");
+	 })
 	.Pageable()
 	.Groupable()
 	.Filterable()
@@ -16,8 +25,8 @@
 	.Selectable(selectable => selectable.Mode(GridSelectionMode.Multiple).Type(GridSelectionType.Row))
 	.DataSource(dataSource => dataSource
 		.Ajax()
-		.PageSize(10)	
-		.ServerOperation(false)			
-		//.Read("Products", "Grid")
+		.PageSize(10)
+		.ServerOperation(false)
+	//.Read("Products", "Grid")
 	)
 )
