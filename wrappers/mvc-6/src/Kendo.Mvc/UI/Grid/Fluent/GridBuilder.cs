@@ -603,5 +603,30 @@ namespace Kendo.Mvc.UI.Fluent
 
 			return this;
 		}
+
+		/// <summary>
+		/// Sets the toolbar configuration of the grid.
+		/// </summary>
+		/// <param name="configurator">The lambda which configures the toolbar</param>
+		/// <example>
+		/// <code lang="Razor">
+		///  @(Html.Kendo().Grid&lt;Product&gt;()
+		///     .Name("Grid")
+		///     .DataSource(dataSource =&gt;
+		///         // configure the data source
+		///         dataSource
+		///          .Ajax()
+		///          .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+		///     )
+		///    .ToolBar(commands => commands.Create())
+		/// )
+		/// </code>		
+		/// </example>
+		public GridBuilder<T> ToolBar(Action<GridToolBarCommandFactory<T>> configurator)
+		{
+			configurator(new GridToolBarCommandFactory<T>(Component.ToolBar));
+
+			return this;
+		}
 	}
 }

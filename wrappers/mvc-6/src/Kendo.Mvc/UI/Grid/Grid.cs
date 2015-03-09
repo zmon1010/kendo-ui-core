@@ -30,9 +30,7 @@ namespace Kendo.Mvc.UI
 			//        Modal = true,
 			//        Draggable = true
 			//    }
-			//};
-
-			//ToolBar = new GridToolBarSettings<T>(this);            
+			//};			
 
 			DataSource = new DataSource(ModelMetadataProvider)
 			{
@@ -85,8 +83,9 @@ namespace Kendo.Mvc.UI
 		{
 			get;
 			set;
-		}
-		= true;
+		} = true;
+
+		public GridToolBarSettings ToolBar { get; } = new GridToolBarSettings();
 
 		/// <summary>
 		/// Gets the selection configuration
@@ -244,10 +243,10 @@ namespace Kendo.Mvc.UI
 			//	options["editable"] = Editable.ToJson();
 			//}
 
-			//if (ToolBar.Enabled)
-			//{
-			//	options["toolbar"] = ToolBar.ToJson();
-			//}
+			if (ToolBar.Enabled)
+			{
+				settings["toolbar"] = ToolBar.ToJson();
+			}
 
 			if (autoBind == false)
 			{
