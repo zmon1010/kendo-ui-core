@@ -863,6 +863,16 @@
         }
     }
 
+    function emptyClipbox() {
+        var cb = nodeInfo._clipbox;
+        if (cb == null) {
+            return true;
+        }
+        if (cb) {
+            return cb.width() === 0 || cb.height() === 0;
+        }
+    }
+
     function createsStackingContext(style) {
         function prop(name) { return getPropertyValue(style, name); }
         if (prop("transform") != "none" ||
@@ -2112,6 +2122,9 @@
     }
 
     function renderText(element, node, group) {
+        if (emptyClipbox()) {
+            return;
+        }
         var style = getComputedStyle(element);
 
         if (parseFloat(getPropertyValue(style, "text-indent")) < -500) {
