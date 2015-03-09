@@ -7,9 +7,10 @@
             snippet = dojo.fixLineEndings(snippet);
             snippet = dojo.replaceCommon(snippet, window.kendoCommonFile);
             snippet = dojo.replaceTheme(snippet, window.kendoTheme);
+            snippet = window.btoa(encodeURIComponent(snippet));
 
             var form = $('<form method="post" action="' + dojo.configuration.url + '" target="_blank" />').hide().appendTo(document.body);
-            $("<input name='snippet'>").val(window.btoa(snippet)).appendTo(form);
+            $("<input name='snippet'>").val(snippet).appendTo(form);
 
             if ($("#mobile-application-container").length) {
                 $("<input name='mode'>").val("ios7").appendTo(form);
