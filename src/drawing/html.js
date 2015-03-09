@@ -109,11 +109,36 @@
                 });
                 handlePageBreaks(
                     function(x) {
-                        x.pages.forEach(function(page){
-                            group.append(doOne(page));
-                        });
-                        x.container.parentNode.removeChild(x.container);
-                        defer.resolve(group);
+                        if (options.progress) {
+                            var canceled = false, pageNum = 0;
+                            (function next(){
+                                if (pageNum < x.pages.length) {
+                                    group.append(doOne(x.pages[pageNum]));
+                                    options.progress({
+                                        pageNum: ++pageNum,
+                                        totalPages: x.pages.length,
+                                        cancel: function() {
+                                            canceled = true;
+                                        }
+                                    });
+                                    if (!canceled) {
+                                        setTimeout(next);
+                                    } else {
+                                        // XXX: should we also fail() the deferred object?
+                                        x.container.parentNode.removeChild(x.container);
+                                    }
+                                } else {
+                                    x.container.parentNode.removeChild(x.container);
+                                    defer.resolve(group);
+                                }
+                            })();
+                        } else {
+                            x.pages.forEach(function(page){
+                                group.append(doOne(page));
+                            });
+                            x.container.parentNode.removeChild(x.container);
+                            defer.resolve(group);
+                        }
                     },
                     element,
                     forceBreak,
@@ -182,9 +207,9 @@
             if (options.beforePageBreak) {
                 setTimeout(function(){
                     options.beforePageBreak(container, doPageBreak);
-                }, 10);
+                }, 15);
             } else {
-                setTimeout(doPageBreak, 10);
+                setTimeout(doPageBreak, 15);
             }
 
             function doPageBreak() {
