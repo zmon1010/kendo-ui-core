@@ -141,7 +141,9 @@ test("saveAsPDF uses 'auto' as default paperSize", 1, function() {
     var root = new kendo.drawing.Group();
     root.options.addObserver({
         optionsChange: function(e) {
-            equal(e.value.paperSize, "auto");
+            if (e.field == "pdf.paperSize") {
+                equal(e.value, "auto");
+            }
         }
     });
 
@@ -162,7 +164,9 @@ test("saveAsPDF passes the paperSize option", 1, function() {
     var root = new kendo.drawing.Group();
     root.options.addObserver({
         optionsChange: function(e) {
-            equal(e.value.paperSize, "A3");
+            if (e.field == "pdf.paperSize") {
+                equal(e.value, "A3");
+            }
         }
     });
 
