@@ -95,6 +95,14 @@
                             }
                         },
                         {
+                            field: "Salary",
+                            width: "200px",
+                            locked: true,
+                            filterable: {
+                                multi: true
+                            }
+                        },
+                        {
                             field: "Name",
                             locked: true,
                             width: 300,
@@ -186,6 +194,7 @@
                                             Position: 1 ,
                                             Grade: 1 ,
                                             Male: false,
+                                            Salary: 12.35,
                                             ContractDate : new Date('1996/12/12')
                                         },
                                         {
@@ -194,6 +203,7 @@
                                             Position: 2 ,
                                             Grade: 1 ,
                                             Male: true,
+                                            Salary: 12.88,
                                             ContractDate : new Date('2012/5/4')
                                         },
                                         {
@@ -202,6 +212,7 @@
                                             Position: 3 ,
                                             Grade: 2 ,
                                             Male: false,
+                                            Salary: 12.44,
                                             ContractDate : new Date()
                                         },
                                         {
@@ -239,6 +250,9 @@
                                         type : "number"
                                     },
                                     Position: {
+                                        type : "number"
+                                    },
+                                    Salary: {
                                         type : "number"
                                     },
                                     Grade: {

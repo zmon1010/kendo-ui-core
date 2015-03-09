@@ -941,7 +941,12 @@ var __meta__ = {
         },
         createCheckBoxes: function() {
             var options = this.options;
-            var templateOptions = { field: this.field, format: options.format, mobile: this._isMobile };
+            var templateOptions = {
+                field: this.field,
+                format: options.format,
+                mobile: this._isMobile,
+                type: this.type
+            };
             var template = kendo.template(options.itemTemplate(templateOptions));
             var data = this.checkSource.data();
             if (options.values) {
@@ -1054,13 +1059,18 @@ var __meta__ = {
                 var format = options.format;
                 var valueField = options.valueField;
                 var mobile = options.mobile;
+                var valueFormat = "";
 
                 if (valueField === undefined) {
                     valueField = field;
                 }
+                if (options.type == "date") {
+                    valueFormat = ":yyyy-MM-ddTHH:mm:sszzz";
+                }
+
                 return "<li class='k-item'>" +
                           "<label class='k-label'>" +
-                              "<input type='checkbox' class='" + (mobile? "k-check" : "") +"'  value='#:kendo.toString("+ valueField + ", 'yyyy-MM-ddTHH:mm:sszzz') #'/>" +
+                              "<input type='checkbox' class='" + (mobile? "k-check" : "") +"'  value='#:kendo.format('{0"+ valueFormat + "}'," + valueField + ")#'/>" +
                                  "#:kendo.format('" + ( format ?  format  : "{0}" ) + "', "  + field + ")#" +
                           "</label>" +
                         "</li>";
