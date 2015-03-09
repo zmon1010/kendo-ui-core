@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -15,6 +17,70 @@ namespace Kendo.Mvc.UI.Fluent
 		public GridBuilder(Grid<T> component)
 			: base(component)
 		{
+		}
+
+		/// <summary>
+		/// If set to <c>true</c> the grid will perform custom binding.
+		/// </summary>
+		/// <param name="value">If true enables custom binding.</param>
+		/// <example>
+		/// <code lang="Razor">
+		/// @(Html.Kendo().Grid&lt;Product&gt;()
+		///     .Name(&quot;grid&quot;)
+		///     .EnableCustomBinding(true)
+		///     .DataSource(dataSource =&gt;
+		///         // configure the data source
+		///         dataSource
+		///             .Ajax()
+		///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+		///     )
+		/// )
+		/// </code>		
+		/// </example>
+		public GridBuilder<T> EnableCustomBinding(bool value)
+		{
+			Component.EnableCustomBinding = value;
+
+			return this;
+		}
+
+		/// <summary>
+		/// Binds the grid to a list of objects
+		/// </summary>
+		/// <param name="dataSource">The data source.</param>
+		/// <example>	
+		/// <code lang="Razor">
+		/// @model IEnumerable&lt;Product&gt;
+		/// @(Html.Kendo().Grid&lt;Product&gt;()
+		///     .Name(&quot;grid&quot;)
+		///     .BindTo(Model)
+		/// )
+		/// </code>
+		/// </example>
+		public GridBuilder<T> BindTo(IEnumerable<T> dataSource)
+		{
+			Component.DataSource.Data = dataSource;
+
+			return this;
+		}
+
+		/// <summary>
+		/// Binds the grid to a list of objects
+		/// </summary>
+		/// <param name="dataSource">The data source.</param>
+		/// <example>
+		/// <code lang="Razor">
+		/// @model IEnumerable;
+		/// @(Html.Kendo().Grid&lt;Product&gt;()
+		///     .Name(&quot;grid&quot;)
+		///     .BindTo(Model)
+		/// )
+		/// </code>
+		/// </example>
+		public GridBuilder<T> BindTo(IEnumerable dataSource)
+		{
+			Component.DataSource.Data = new CustomGroupingWrapper<T>(dataSource);
+			return this;
 		}
 
 		/// <summary>

@@ -25,21 +25,13 @@ namespace Kendo.Mvc.UI.Fluent.Tests
             Assert.True(grid.Pageable.Enabled);
         }
       
-        [Fact (Skip = "Not implemented")]
+        [Fact]
         public void BindTo_sets_the_data_source()
         {
             IEnumerable<Customer> customers = new [] { new Customer()};
-        //    builder.BindTo(customers);
+			builder.BindTo(customers);
 
-            Assert.Same(customers, grid.DataSource.Data);
-        }
-
-		[Fact(Skip = "Not implemented")]
-		public void BindTo_sets_the_data_source_as_GridCustomGroupingWrapper_of_model_type_if_non_generic_enumerable_is_assigned()
-        {
-        //    builder.BindTo(new object[0]);
-
-        //    Assert.IsType<CustomGroupingWrapper<Customer>>(grid.DataSource.Data);
+			Assert.Same(customers, grid.DataSource.Data);
         }
 
         [Fact]
@@ -50,11 +42,10 @@ namespace Kendo.Mvc.UI.Fluent.Tests
             Assert.Equal(1, grid.Columns.Count);
         }
 
-		[Fact(Skip = "Not implemented")]
+		[Fact]
 		public void ProcessDataSource_sets_the_corresponding_property()
         {
-        //    builder.EnableCustomBinding(false);
-
+            builder.EnableCustomBinding(false);
             Assert.Equal(false, grid.EnableCustomBinding);
         }
        
