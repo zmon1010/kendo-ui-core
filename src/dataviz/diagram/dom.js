@@ -3907,23 +3907,11 @@
             },
 
             createTool: function(tool) {
-                var toolName;
-                if (isPlainObject(tool)) {
-                    if (tool.name) {
-                        toolName = tool.name + "Tool";
-                        if (this[toolName]) {
-                            this[toolName](tool);
-                        }
-                    } else if (tool.template) {
-                        this._toolBar.add({
-                            template: tool.template
-                        });
-                    }
+                var toolName = (isPlainObject(tool) ? tool.name : tool) + "Tool";
+                if (this[toolName]) {
+                    this[toolName](tool);
                 } else {
-                    toolName = tool + "Tool";
-                    if (this[toolName]) {
-                        this[toolName]({});
-                    }
+                    this._tools.push(tool);
                 }
             },
 

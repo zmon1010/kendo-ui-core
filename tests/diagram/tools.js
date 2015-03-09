@@ -54,4 +54,11 @@
         createToolBar({ tools: [{ name: "rotateClockwise", step: 45 }] });
         equal(toolbar.element.find("a").data("step"), 45);
     });
+
+    test("should create custom tool", function () {
+        createToolBar({ tools: [{ type: "button", text: "foo"}] });
+        debugger;
+        ok(toolbar.element.find(":contains(foo)").length !== 0);
+    });
+
 })();
