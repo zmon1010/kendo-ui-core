@@ -60,7 +60,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <returns></returns>
         public GridCustomActionCommandBuilder<T> Custom(string name)
         {
-            var command = new GridCustomActionCommand<T>();
+            var command = new GridCustomActionCommand();
             command.Name = name;
             command.Text = name;
 

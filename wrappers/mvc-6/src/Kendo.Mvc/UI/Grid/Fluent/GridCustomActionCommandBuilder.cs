@@ -3,12 +3,11 @@ namespace Kendo.Mvc.UI.Fluent
 	using System;
 	using Kendo.Mvc.UI;	
 
-	public class GridCustomActionCommandBuilder<T> : GridActionCommandBuilderBase<GridCustomActionCommand<T>, GridCustomActionCommandBuilder<T>>
+	public class GridCustomActionCommandBuilder<T> : GridActionCommandBuilderBase<GridCustomActionCommand, GridCustomActionCommandBuilder<T>>
         where T : class
     {
-        public GridCustomActionCommandBuilder(GridCustomActionCommand<T> command) : base(command)
+        public GridCustomActionCommandBuilder(GridCustomActionCommand command) : base(command)
         {
-
         }
 
         public GridCustomActionCommandBuilder<T> Click(Func<object, object> handler)

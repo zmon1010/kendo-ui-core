@@ -3,21 +3,11 @@ namespace Kendo.Mvc.UI
     using System.Collections.Generic;    
     using Kendo.Mvc.Extensions;    
 
-    public class GridCustomActionCommand<T> : GridCustomCommandBase
-        where T: class
-    {
-        public GridCustomActionCommand()
-        {   
-            Click = new ClientHandlerDescriptor();
-        }            
+    public class GridCustomActionCommand : GridCustomCommandBase
+	{        
+        public ClientHandlerDescriptor Click { get; } = new ClientHandlerDescriptor();
 
-        public ClientHandlerDescriptor Click
-        {
-            get;
-            set;
-        }
-
-        public override IDictionary<string, object> Serialize()
+		public override IDictionary<string, object> Serialize()
         {
             var state = base.Serialize();
 
