@@ -1,3 +1,9 @@
+module CodeGen::MVC6
+end
+
+module CodeGen::MVC6::Wrappers
+end
+
 require 'codegen/lib/mvc-6/options'
 require 'codegen/lib/mvc-6/option'
 require 'codegen/lib/mvc-6/array-option'
