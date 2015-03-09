@@ -1,0 +1,48 @@
+using System;
+
+namespace Kendo.Mvc.UI.Fluent
+{
+    /// <summary>
+    /// Defines the fluent API for adding items to Kendo UI <%= owner.csharp_name %>
+    /// </summary>
+    public partial class <%= csharp_builder_class_name %>
+        <%= csharp_generic_constraints %>
+    {
+% if builtin_names.empty?
+        /// <summary>
+        /// Adds an item to the collection
+        /// </summary>
+        public virtual <%= csharp_item_builder_class_name %> Add()
+        {
+            var item = new <%= csharp_item_class %>();
+            container.Add(item);
+
+            return new <%= csharp_item_builder_class_name %>(item);
+        }
+% else
+        /// <summary>
+        /// Adds an item for a custom action.
+        /// </summary>
+        public virtual <%= csharp_item_builder_class_name %> Custom()
+        {
+            var item = new <%= csharp_item_class %>();
+            container.Add(item);
+
+            return new <%= csharp_item_builder_class_name %>(item);
+        }
+% end
+% builtin_names.each { |name|
+
+        /// <summary>
+        /// Adds an item for the <%= name %> action.
+        /// </summary>
+        public virtual <%= csharp_item_builder_class_name %> <%= name.to_csharp_name %>()
+        {
+            var item = new <%= csharp_item_class %>() { Name = "<%= name %>" };
+            container.Add(item);
+
+            return new <%= csharp_item_builder_class_name %>(item);
+        }
+% }
+    }
+}

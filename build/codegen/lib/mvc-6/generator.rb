@@ -36,13 +36,13 @@ module CodeGen::MVC6::Wrappers
             options = component.composite_options
 
             options.each do |option|
-                write_composite_option(component, option)
+                write_composite(component, option)
             end
         end
 
-        def write_composite_option(component, option)
+        def write_composite(component, option)
             if option.instance_of?(component.array_option_class)
-                #write_array(component, option)
+                write_array(component, option)
                 return
             end
 
@@ -66,8 +66,32 @@ module CodeGen::MVC6::Wrappers
             write_file(filename, option.to_builder_generated)
 
             option.composite_options.each do |o|
-                write_composite_option(component, o)
+                write_composite(component, o)
             end
+        end
+
+        def write_array(component, option)
+            #write *Factory.cs file
+            filename = "#{@path}/#{component.path}/Fluent/#{option.csharp_builder_class}.cs"
+            unless File.exists?(filename)
+                write_file(filename, option.to_factory)
+            end
+
+            #write *Factory.Generated.cs file
+            filename = "#{@path}/#{component.path}/Fluent/#{option.csharp_builder_class}.Generated.cs"
+            write_file(filename, option.to_factory_generated)
+
+            #write *Item.cs file
+            #filename = "#{@path}/#{component.path}/#{option.csharp_item_class}.cs"
+            #write_file(filename, component.to_setting(filename, option))
+
+            #write *ItemBuilder.cs file
+            #filename = "#{@path}/#{component.path}/Fluent/#{option.csharp_item_class}Builder.cs"
+            #write_file(filename, component.to_fluent_setting(filename, option))
+
+            #option.item.composite_options.each do |o|
+                #write_composite(component, o)
+            #end
         end
 
         def write_events(component)
