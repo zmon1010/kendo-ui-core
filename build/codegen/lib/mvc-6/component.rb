@@ -15,11 +15,11 @@ module CodeGen::MVC6::Wrappers
     class Component < CodeGen::Component
         include Options
 
-        COMPONENT = ERB.new(File.read("build/codegen/lib/mvc-6/component.erb"), 0, '%<>')
-        COMPONENT_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/component-settings.erb"), 0, '%<>')
-        EVENT = ERB.new(File.read("build/codegen/lib/mvc-6/event-builder.erb"), 0, '%<>')
-        BUILDER = ERB.new(File.read("build/codegen/lib/mvc-6/component-builder.erb"), 0, '%<>')
-        BUILDER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/component-builder-settings.erb"), 0, '%<>')
+        COMPONENT = ERB.new(File.read("build/codegen/lib/mvc-6/templates/component.erb"), 0, '%<>')
+        COMPONENT_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/component-settings.erb"), 0, '%<>')
+        EVENT = ERB.new(File.read("build/codegen/lib/mvc-6/templates/event-builder.erb"), 0, '%<>')
+        BUILDER = ERB.new(File.read("build/codegen/lib/mvc-6/templates/component-builder.erb"), 0, '%<>')
+        BUILDER_SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/templates/component-builder-settings.erb"), 0, '%<>')
 
         def path
             name
