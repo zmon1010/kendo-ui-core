@@ -1,18 +1,19 @@
 using System;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
     /// Defines the fluent API for configuring TreeListColumnMenuSettings
     /// </summary>
-    public partial class TreeListColumnMenuSettingsBuilder
+    public partial class TreeListColumnMenuSettingsBuilder<T>
         
     {
         /// <summary>
         /// If set to true the column menu would allow the user to select (show and hide) treelist columns. By default the column menu allows column selection.
         /// </summary>
         /// <param name="value">The value for Columns</param>
-        public TreeListColumnMenuSettingsBuilder Columns(bool value)
+        public TreeListColumnMenuSettingsBuilder<T> Columns(bool value)
         {
             Container.Columns = value;
             return this;
@@ -22,7 +23,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the column menu would allow the user to filter the treelist. By default the column menu allows the user to filter if filtering is enabled via the filterable.
         /// </summary>
         /// <param name="value">The value for Filterable</param>
-        public TreeListColumnMenuSettingsBuilder Filterable(bool value)
+        public TreeListColumnMenuSettingsBuilder<T> Filterable(bool value)
         {
             Container.Filterable = value;
             return this;
@@ -32,7 +33,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the column menu would allow the user to sort the treelist by the column field. By default the column menu allows the user to sort if sorting is enabled via the sortable option.
         /// </summary>
         /// <param name="value">The value for Sortable</param>
-        public TreeListColumnMenuSettingsBuilder Sortable(bool value)
+        public TreeListColumnMenuSettingsBuilder<T> Sortable(bool value)
         {
             Container.Sortable = value;
             return this;
@@ -42,9 +43,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// The text messages displayed in the column menu. Use it to customize or localize the column menu messages.
         /// </summary>
         /// <param name="configurator">The configurator for the messages setting.</param>
-        public TreeListColumnMenuSettingsBuilder Messages(Action<TreeListColumnMenuMessagesSettingsBuilder> configurator)
+        public TreeListColumnMenuSettingsBuilder<T> Messages(Action<TreeListColumnMenuMessagesSettingsBuilder<T>> configurator)
         {
-            configurator(new TreeListColumnMenuMessagesSettingsBuilder(Container.Messages));
+            configurator(new TreeListColumnMenuMessagesSettingsBuilder<T>(Container.Messages));
             return this;
         }
 

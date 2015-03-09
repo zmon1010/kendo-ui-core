@@ -1,18 +1,19 @@
 using System;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
     /// Defines the fluent API for configuring TreeListExcelSettings
     /// </summary>
-    public partial class TreeListExcelSettingsBuilder
+    public partial class TreeListExcelSettingsBuilder<T>
         
     {
         /// <summary>
         /// Specifies the file name of the exported Excel file.
         /// </summary>
         /// <param name="value">The value for FileName</param>
-        public TreeListExcelSettingsBuilder FileName(string value)
+        public TreeListExcelSettingsBuilder<T> FileName(string value)
         {
             Container.FileName = value;
             return this;
@@ -22,7 +23,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Enables or disables column filtering in the Excel file. Not to be mistaken with the treelist filtering feature.
         /// </summary>
         /// <param name="value">The value for Filterable</param>
-        public TreeListExcelSettingsBuilder Filterable(bool value)
+        public TreeListExcelSettingsBuilder<T> Filterable(bool value)
         {
             Container.Filterable = value;
             return this;
@@ -32,7 +33,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.
         /// </summary>
         /// <param name="value">The value for ForceProxy</param>
-        public TreeListExcelSettingsBuilder ForceProxy(bool value)
+        public TreeListExcelSettingsBuilder<T> ForceProxy(bool value)
         {
             Container.ForceProxy = value;
             return this;
@@ -44,7 +45,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// attachment; filename="&lt;fileName.xslx&gt;".
         /// </summary>
         /// <param name="value">The value for ProxyURL</param>
-        public TreeListExcelSettingsBuilder ProxyURL(string value)
+        public TreeListExcelSettingsBuilder<T> ProxyURL(string value)
         {
             Container.ProxyURL = value;
             return this;

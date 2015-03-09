@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListExcelSettings class
     /// </summary>
-    public partial class TreeListExcelSettings 
+    public partial class TreeListExcelSettings<T> 
     {
         public string FileName { get; set; }
 

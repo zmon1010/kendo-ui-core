@@ -129,7 +129,8 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used. Note that value of the format option is always used.
+        /// Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used.
+		///  Note that value of the format option is always used. The timeFormat value also will be used if defined.
         /// </summary>
         /// <param name="value">The value for ParseFormats</param>
         public DateTimePickerBuilder ParseFormats(params string[] value)

@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListColumnMenuMessagesSettings class
     /// </summary>
-    public partial class TreeListColumnMenuMessagesSettings 
+    public partial class TreeListColumnMenuMessagesSettings<T> 
     {
         public Dictionary<string, object> Serialize()
         {

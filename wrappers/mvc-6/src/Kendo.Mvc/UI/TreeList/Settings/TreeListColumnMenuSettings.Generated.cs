@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListColumnMenuSettings class
     /// </summary>
-    public partial class TreeListColumnMenuSettings 
+    public partial class TreeListColumnMenuSettings<T> 
     {
         public bool? Columns { get; set; }
 
@@ -17,8 +17,8 @@ namespace Kendo.Mvc.UI
 
         public bool? Sortable { get; set; }
 
+        public TreeListColumnMenuMessagesSettings<T> Messages { get; } = new TreeListColumnMenuMessagesSettings<T>();
 
-        public TreeListColumnMenuMessagesSettings Messages { get; } = new TreeListColumnMenuMessagesSettings();
 
         public bool Enabled { get; set; }
 

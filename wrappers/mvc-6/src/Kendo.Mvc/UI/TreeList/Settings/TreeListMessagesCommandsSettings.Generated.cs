@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListMessagesCommandsSettings class
     /// </summary>
-    public partial class TreeListMessagesCommandsSettings 
+    public partial class TreeListMessagesCommandsSettings<T> 
     {
         public string Canceledit { get; set; }
 

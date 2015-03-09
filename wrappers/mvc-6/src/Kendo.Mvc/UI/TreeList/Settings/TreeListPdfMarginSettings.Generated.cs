@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListPdfMarginSettings class
     /// </summary>
-    public partial class TreeListPdfMarginSettings 
+    public partial class TreeListPdfMarginSettings<T> 
     {
         public double? Bottom { get; set; }
 

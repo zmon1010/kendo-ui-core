@@ -1,19 +1,20 @@
 using System;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
     /// Defines the fluent API for configuring TreeListExcelSettings
     /// </summary>
-    public partial class TreeListExcelSettingsBuilder
+    public partial class TreeListExcelSettingsBuilder<T>
         
     {
-        public TreeListExcelSettingsBuilder(TreeListExcelSettings container)
+        public TreeListExcelSettingsBuilder(TreeListExcelSettings<T> container)
         {
             Container = container;
         }
 
-        protected TreeListExcelSettings Container
+        protected TreeListExcelSettings<T> Container
         {
             get;
             private set;

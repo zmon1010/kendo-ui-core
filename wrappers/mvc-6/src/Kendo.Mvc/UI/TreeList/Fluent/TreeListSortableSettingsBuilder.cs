@@ -1,19 +1,20 @@
 using System;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
     /// Defines the fluent API for configuring TreeListSortableSettings
     /// </summary>
-    public partial class TreeListSortableSettingsBuilder
+    public partial class TreeListSortableSettingsBuilder<T>
         
     {
-        public TreeListSortableSettingsBuilder(TreeListSortableSettings container)
+        public TreeListSortableSettingsBuilder(TreeListSortableSettings<T> container)
         {
             Container = container;
         }
 
-        protected TreeListSortableSettings Container
+        protected TreeListSortableSettings<T> Container
         {
             get;
             private set;

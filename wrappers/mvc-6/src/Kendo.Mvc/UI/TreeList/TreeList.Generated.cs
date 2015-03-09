@@ -13,28 +13,34 @@ namespace Kendo.Mvc.UI
     {
         public bool? AutoBind { get; set; }
 
+        public List<TreeListColumn<T>> Columns { get; set; } = new List<TreeListColumn<T>>();
+
+        public bool? Resizable { get; set; }
+
         public bool? Reorderable { get; set; }
 
+        public TreeListColumnMenuSettings<T> ColumnMenu { get; } = new TreeListColumnMenuSettings<T>();
 
-        public TreeListColumnMenuSettings ColumnMenu { get; } = new TreeListColumnMenuSettings();
+        public TreeListEditableSettings<T> Editable { get; } = new TreeListEditableSettings<T>();
 
-        public TreeListEditableSettings Editable { get; } = new TreeListEditableSettings();
+        public TreeListExcelSettings<T> Excel { get; } = new TreeListExcelSettings<T>();
 
-        public TreeListExcelSettings Excel { get; } = new TreeListExcelSettings();
+        public TreeListFilterableSettings<T> Filterable { get; } = new TreeListFilterableSettings<T>();
 
-        public TreeListFilterableSettings Filterable { get; } = new TreeListFilterableSettings();
         public double? Height { get; set; }
 
+        public TreeListMessagesSettings<T> Messages { get; } = new TreeListMessagesSettings<T>();
 
-        public TreeListMessagesSettings Messages { get; } = new TreeListMessagesSettings();
+        public TreeListPdfSettings<T> Pdf { get; } = new TreeListPdfSettings<T>();
 
-        public TreeListPdfSettings Pdf { get; } = new TreeListPdfSettings();
         public bool? Scrollable { get; set; }
 
         public bool? Selectable { get; set; }
 
+        public TreeListSortableSettings<T> Sortable { get; } = new TreeListSortableSettings<T>();
 
-        public TreeListSortableSettings Sortable { get; } = new TreeListSortableSettings();
+        public List<TreeListToolbar<T>> Toolbar { get; set; } = new List<TreeListToolbar<T>>();
+
 
 
         protected override Dictionary<string, object> SerializeSettings()
@@ -44,6 +50,17 @@ namespace Kendo.Mvc.UI
             if (AutoBind.HasValue)
             {
                 settings["autoBind"] = AutoBind;
+            }
+
+            var columns = Columns.Select(i => i.Serialize());
+            if (columns.Any())
+            {
+                settings["columns"] = columns;
+            }
+
+            if (Resizable.HasValue)
+            {
+                settings["resizable"] = Resizable;
             }
 
             if (Reorderable.HasValue)
@@ -118,6 +135,12 @@ namespace Kendo.Mvc.UI
             }
             else if (Sortable.Enabled) {
                 settings["sortable"] = Sortable.Enabled;
+            }
+
+            var toolbar = Toolbar.Select(i => i.Serialize());
+            if (toolbar.Any())
+            {
+                settings["toolbar"] = toolbar;
             }
 
 

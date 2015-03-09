@@ -1,19 +1,20 @@
 using System;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
     /// Defines the fluent API for configuring TreeListColumnMenuSettings
     /// </summary>
-    public partial class TreeListColumnMenuSettingsBuilder
+    public partial class TreeListColumnMenuSettingsBuilder<T>
         
     {
-        public TreeListColumnMenuSettingsBuilder(TreeListColumnMenuSettings container)
+        public TreeListColumnMenuSettingsBuilder(TreeListColumnMenuSettings<T> container)
         {
             Container = container;
         }
 
-        protected TreeListColumnMenuSettings Container
+        protected TreeListColumnMenuSettings<T> Container
         {
             get;
             private set;

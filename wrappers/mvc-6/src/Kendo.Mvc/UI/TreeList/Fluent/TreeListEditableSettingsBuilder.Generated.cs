@@ -1,18 +1,19 @@
 using System;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
     /// Defines the fluent API for configuring TreeListEditableSettings
     /// </summary>
-    public partial class TreeListEditableSettingsBuilder
+    public partial class TreeListEditableSettingsBuilder<T>
         
     {
         /// <summary>
         /// The editing mode to use. The supported editing modes are "inline" and "popup".
         /// </summary>
         /// <param name="value">The value for Mode</param>
-        public TreeListEditableSettingsBuilder Mode(string value)
+        public TreeListEditableSettingsBuilder<T> Mode(string value)
         {
             Container.Mode = value;
             return this;
@@ -23,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.
         /// </summary>
         /// <param name="value">The value for Template</param>
-        public TreeListEditableSettingsBuilder Template(string value)
+        public TreeListEditableSettingsBuilder<T> Template(string value)
         {
             Container.Template = value;
             return this;
@@ -34,7 +35,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// which field to update. The other option is to use MVVM bindings in order to bind HTML elements to data item fields.
         /// </summary>
         /// <param name="value">The ID of the template element for Template</param>
-        public TreeListEditableSettingsBuilder TemplateId(string templateId)
+        public TreeListEditableSettingsBuilder<T> TemplateId(string templateId)
         {
             Container.TemplateId = templateId;
             return this;

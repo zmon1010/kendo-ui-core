@@ -1,19 +1,20 @@
 using System;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
     /// Defines the fluent API for configuring TreeListFilterableSettings
     /// </summary>
-    public partial class TreeListFilterableSettingsBuilder
+    public partial class TreeListFilterableSettingsBuilder<T>
         
     {
-        public TreeListFilterableSettingsBuilder(TreeListFilterableSettings container)
+        public TreeListFilterableSettingsBuilder(TreeListFilterableSettings<T> container)
         {
             Container = container;
         }
 
-        protected TreeListFilterableSettings Container
+        protected TreeListFilterableSettings<T> Container
         {
             get;
             private set;

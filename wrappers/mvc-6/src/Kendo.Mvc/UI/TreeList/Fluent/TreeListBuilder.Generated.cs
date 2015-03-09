@@ -20,6 +20,27 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The configuration of the treelist columns. An array of JavaScript objects or strings. JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+		/// field to which the column is bound. The treelist will create a column for every item of the array.
+        /// </summary>
+        /// <param name="configurator">The configurator for the columns setting.</param>
+        public TreeListBuilder<T> Columns(Action<TreeListColumnFactory<T>> configurator)
+        {
+            configurator(new TreeListColumnFactory<T>(Container.Columns));
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true allows users to resize columns by dragging their header borders. By default resizing is disabled.
+        /// </summary>
+        /// <param name="value">The value for Resizable</param>
+        public TreeListBuilder<T> Resizable(bool value)
+        {
+            Container.Resizable = value;
+            return this;
+        }
+
+        /// <summary>
         /// If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
         /// </summary>
         /// <param name="value">The value for Reorderable</param>
@@ -34,10 +55,10 @@ namespace Kendo.Mvc.UI.Fluent
 		/// By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the columnmenu setting.</param>
-        public TreeListBuilder<T> ColumnMenu(Action<TreeListColumnMenuSettingsBuilder> configurator)
+        public TreeListBuilder<T> ColumnMenu(Action<TreeListColumnMenuSettingsBuilder<T>> configurator)
         {
             Container.ColumnMenu.Enabled = true;
-            configurator(new TreeListColumnMenuSettingsBuilder(Container.ColumnMenu));
+            configurator(new TreeListColumnMenuSettingsBuilder<T>(Container.ColumnMenu));
             return this;
         }
 
@@ -66,10 +87,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the user would be able to edit the data to which the treelist is bound. By default editing is disabled.Can be set to a string ("inline" or "popup") to specify the editing mode. The default editing mode is "inline".Can be set to a JavaScript object which represents the editing configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the editable setting.</param>
-        public TreeListBuilder<T> Editable(Action<TreeListEditableSettingsBuilder> configurator)
+        public TreeListBuilder<T> Editable(Action<TreeListEditableSettingsBuilder<T>> configurator)
         {
             Container.Editable.Enabled = true;
-            configurator(new TreeListEditableSettingsBuilder(Container.Editable));
+            configurator(new TreeListEditableSettingsBuilder<T>(Container.Editable));
             return this;
         }
 
@@ -96,9 +117,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// Configures the Kendo UI TreeList Excel export settings.
         /// </summary>
         /// <param name="configurator">The configurator for the excel setting.</param>
-        public TreeListBuilder<T> Excel(Action<TreeListExcelSettingsBuilder> configurator)
+        public TreeListBuilder<T> Excel(Action<TreeListExcelSettingsBuilder<T>> configurator)
         {
-            configurator(new TreeListExcelSettingsBuilder(Container.Excel));
+            configurator(new TreeListExcelSettingsBuilder<T>(Container.Excel));
             return this;
         }
 
@@ -106,10 +127,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the user can filter the data source using the treelist filter menu. Filtering is disabled by default.Can be set to a JavaScript object which represents the filter menu configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the filterable setting.</param>
-        public TreeListBuilder<T> Filterable(Action<TreeListFilterableSettingsBuilder> configurator)
+        public TreeListBuilder<T> Filterable(Action<TreeListFilterableSettingsBuilder<T>> configurator)
         {
             Container.Filterable.Enabled = true;
-            configurator(new TreeListFilterableSettingsBuilder(Container.Filterable));
+            configurator(new TreeListFilterableSettingsBuilder<T>(Container.Filterable));
             return this;
         }
 
@@ -146,9 +167,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// Defines the text of the command buttons that are shown within the TreeList. Used primarily for localization.
         /// </summary>
         /// <param name="configurator">The configurator for the messages setting.</param>
-        public TreeListBuilder<T> Messages(Action<TreeListMessagesSettingsBuilder> configurator)
+        public TreeListBuilder<T> Messages(Action<TreeListMessagesSettingsBuilder<T>> configurator)
         {
-            configurator(new TreeListMessagesSettingsBuilder(Container.Messages));
+            configurator(new TreeListMessagesSettingsBuilder<T>(Container.Messages));
             return this;
         }
 
@@ -156,9 +177,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// Configures the Kendo UI TreeList PDF export settings.
         /// </summary>
         /// <param name="configurator">The configurator for the pdf setting.</param>
-        public TreeListBuilder<T> Pdf(Action<TreeListPdfSettingsBuilder> configurator)
+        public TreeListBuilder<T> Pdf(Action<TreeListPdfSettingsBuilder<T>> configurator)
         {
-            configurator(new TreeListPdfSettingsBuilder(Container.Pdf));
+            configurator(new TreeListPdfSettingsBuilder<T>(Container.Pdf));
             return this;
         }
 
@@ -186,10 +207,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true the user could sort the treelist by clicking the column header cells. By default sorting is disabled.Can be set to a JavaScript object which represents the sorting configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the sortable setting.</param>
-        public TreeListBuilder<T> Sortable(Action<TreeListSortableSettingsBuilder> configurator)
+        public TreeListBuilder<T> Sortable(Action<TreeListSortableSettingsBuilder<T>> configurator)
         {
             Container.Sortable.Enabled = true;
-            configurator(new TreeListSortableSettingsBuilder(Container.Sortable));
+            configurator(new TreeListSortableSettingsBuilder<T>(Container.Sortable));
             return this;
         }
 
@@ -209,6 +230,17 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeListBuilder<T> Sortable(bool enabled)
         {
             Container.Sortable.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
+        /// If a String value is assigned to the toolbar configuration option, it will be treated as a single string template for the whole treelist Toolbar,
+		/// and the string value will be passed as an argument to a kendo.template() function.If a Function value is assigned (it may be a kendo.template() function call or a generic function reference), then the return value of the function will be used to render the treelist Toolbar contents.If an Array value is assigned, it will be treated as the list of commands displayed in the treelist Toolbar. Commands can be custom or built-in ("create", "excel", "pdf").
+        /// </summary>
+        /// <param name="configurator">The configurator for the toolbar setting.</param>
+        public TreeListBuilder<T> Toolbar(Action<TreeListToolbarFactory<T>> configurator)
+        {
+            configurator(new TreeListToolbarFactory<T>(Container.Toolbar));
             return this;
         }
 

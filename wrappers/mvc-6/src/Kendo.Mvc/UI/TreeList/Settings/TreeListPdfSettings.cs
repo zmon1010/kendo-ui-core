@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListPdfSettings class
     /// </summary>
-    public partial class TreeListPdfSettings 
+    public partial class TreeListPdfSettings<T> 
     {
         public Dictionary<string, object> Serialize()
         {

@@ -1,18 +1,19 @@
 using System;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
     /// Defines the fluent API for configuring TreeListPdfSettings
     /// </summary>
-    public partial class TreeListPdfSettingsBuilder
+    public partial class TreeListPdfSettingsBuilder<T>
         
     {
         /// <summary>
         /// The author of the PDF document.
         /// </summary>
         /// <param name="value">The value for Author</param>
-        public TreeListPdfSettingsBuilder Author(string value)
+        public TreeListPdfSettingsBuilder<T> Author(string value)
         {
             Container.Author = value;
             return this;
@@ -22,7 +23,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The creator of the PDF document.
         /// </summary>
         /// <param name="value">The value for Creator</param>
-        public TreeListPdfSettingsBuilder Creator(string value)
+        public TreeListPdfSettingsBuilder<T> Creator(string value)
         {
             Container.Creator = value;
             return this;
@@ -32,7 +33,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The date when the PDF document is created. Defaults to new Date().
         /// </summary>
         /// <param name="value">The value for Date</param>
-        public TreeListPdfSettingsBuilder Date(DateTime value)
+        public TreeListPdfSettingsBuilder<T> Date(DateTime value)
         {
             Container.Date = value;
             return this;
@@ -42,7 +43,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the file name of the exported PDF file.
         /// </summary>
         /// <param name="value">The value for FileName</param>
-        public TreeListPdfSettingsBuilder FileName(string value)
+        public TreeListPdfSettingsBuilder<T> FileName(string value)
         {
             Container.FileName = value;
             return this;
@@ -52,7 +53,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.
         /// </summary>
         /// <param name="value">The value for ForceProxy</param>
-        public TreeListPdfSettingsBuilder ForceProxy(bool value)
+        public TreeListPdfSettingsBuilder<T> ForceProxy(bool value)
         {
             Container.ForceProxy = value;
             return this;
@@ -62,7 +63,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the keywords of the exported PDF file.
         /// </summary>
         /// <param name="value">The value for Keywords</param>
-        public TreeListPdfSettingsBuilder Keywords(string value)
+        public TreeListPdfSettingsBuilder<T> Keywords(string value)
         {
             Container.Keywords = value;
             return this;
@@ -72,7 +73,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Set to true to reverse the paper dimensions such that width is the larger edge.
         /// </summary>
         /// <param name="value">The value for Landscape</param>
-        public TreeListPdfSettingsBuilder Landscape(bool value)
+        public TreeListPdfSettingsBuilder<T> Landscape(bool value)
         {
             Container.Landscape = value;
             return this;
@@ -83,9 +84,9 @@ namespace Kendo.Mvc.UI.Fluent
 		/// units are "mm", "cm", "in" and "pt" (default).
         /// </summary>
         /// <param name="configurator">The configurator for the margin setting.</param>
-        public TreeListPdfSettingsBuilder Margin(Action<TreeListPdfMarginSettingsBuilder> configurator)
+        public TreeListPdfSettingsBuilder<T> Margin(Action<TreeListPdfMarginSettingsBuilder<T>> configurator)
         {
-            configurator(new TreeListPdfMarginSettingsBuilder(Container.Margin));
+            configurator(new TreeListPdfMarginSettingsBuilder<T>(Container.Margin));
             return this;
         }
 
@@ -94,7 +95,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// The default "auto" means the paper size is determined by the content.Supported values:
         /// </summary>
         /// <param name="value">The value for PaperSize</param>
-        public TreeListPdfSettingsBuilder PaperSize(string value)
+        public TreeListPdfSettingsBuilder<T> PaperSize(string value)
         {
             Container.PaperSize = value;
             return this;
@@ -106,9 +107,20 @@ namespace Kendo.Mvc.UI.Fluent
 		/// attachment; filename="&lt;fileName.pdf&gt;".
         /// </summary>
         /// <param name="value">The value for ProxyURL</param>
-        public TreeListPdfSettingsBuilder ProxyURL(string value)
+        public TreeListPdfSettingsBuilder<T> ProxyURL(string value)
         {
             Container.ProxyURL = value;
+            return this;
+        }
+
+        /// <summary>
+        /// A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+		/// the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".
+        /// </summary>
+        /// <param name="value">The value for ProxyTarget</param>
+        public TreeListPdfSettingsBuilder<T> ProxyTarget(string value)
+        {
+            Container.ProxyTarget = value;
             return this;
         }
 
@@ -116,7 +128,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the subject of the PDF file.
         /// </summary>
         /// <param name="value">The value for Subject</param>
-        public TreeListPdfSettingsBuilder Subject(string value)
+        public TreeListPdfSettingsBuilder<T> Subject(string value)
         {
             Container.Subject = value;
             return this;
@@ -126,7 +138,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the title of the PDF file.
         /// </summary>
         /// <param name="value">The value for Title</param>
-        public TreeListPdfSettingsBuilder Title(string value)
+        public TreeListPdfSettingsBuilder<T> Title(string value)
         {
             Container.Title = value;
             return this;

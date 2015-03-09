@@ -9,10 +9,10 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListMessagesSettings class
     /// </summary>
-    public partial class TreeListMessagesSettings 
+    public partial class TreeListMessagesSettings<T> 
     {
+        public TreeListMessagesCommandsSettings<T> Commands { get; } = new TreeListMessagesCommandsSettings<T>();
 
-        public TreeListMessagesCommandsSettings Commands { get; } = new TreeListMessagesCommandsSettings();
         public string Loading { get; set; }
 
         public string NoRows { get; set; }

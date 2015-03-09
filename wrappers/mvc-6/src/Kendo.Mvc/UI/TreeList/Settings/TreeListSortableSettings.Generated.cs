@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListSortableSettings class
     /// </summary>
-    public partial class TreeListSortableSettings 
+    public partial class TreeListSortableSettings<T> 
     {
         public bool? AllowUnsort { get; set; }
 

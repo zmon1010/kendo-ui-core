@@ -1,18 +1,19 @@
 using System;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
     /// Defines the fluent API for configuring TreeListPdfMarginSettings
     /// </summary>
-    public partial class TreeListPdfMarginSettingsBuilder
+    public partial class TreeListPdfMarginSettingsBuilder<T>
         
     {
         /// <summary>
         /// The bottom margin. Numbers are considered as "pt" units.
         /// </summary>
         /// <param name="value">The value for Bottom</param>
-        public TreeListPdfMarginSettingsBuilder Bottom(double value)
+        public TreeListPdfMarginSettingsBuilder<T> Bottom(double value)
         {
             Container.Bottom = value;
             return this;
@@ -22,7 +23,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The left margin. Numbers are considered as "pt" units.
         /// </summary>
         /// <param name="value">The value for Left</param>
-        public TreeListPdfMarginSettingsBuilder Left(double value)
+        public TreeListPdfMarginSettingsBuilder<T> Left(double value)
         {
             Container.Left = value;
             return this;
@@ -32,7 +33,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The right margin. Numbers are considered as "pt" units.
         /// </summary>
         /// <param name="value">The value for Right</param>
-        public TreeListPdfMarginSettingsBuilder Right(double value)
+        public TreeListPdfMarginSettingsBuilder<T> Right(double value)
         {
             Container.Right = value;
             return this;
@@ -42,7 +43,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The top margin. Numbers are considered as "pt" units.
         /// </summary>
         /// <param name="value">The value for Top</param>
-        public TreeListPdfMarginSettingsBuilder Top(double value)
+        public TreeListPdfMarginSettingsBuilder<T> Top(double value)
         {
             Container.Top = value;
             return this;

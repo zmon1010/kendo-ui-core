@@ -11,8 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class DateTimePicker 
     {
-
         public DateTimePickerAnimationSettings Animation { get; } = new DateTimePickerAnimationSettings();
+
         public string ARIATemplate { get; set; }
 
         public string ARIATemplateId { get; set; }
@@ -33,8 +33,8 @@ namespace Kendo.Mvc.UI
 
         public DateTime? Min { get; set; }
 
-
         public DateTimePickerMonthSettings Month { get; } = new DateTimePickerMonthSettings();
+
         public string[] ParseFormats { get; set; }
 
         public string Start { get; set; }
@@ -67,7 +67,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["ARIATemplate"] = ARIATemplate;
             }
- 
+
 
             if (Culture.HasValue())
             {

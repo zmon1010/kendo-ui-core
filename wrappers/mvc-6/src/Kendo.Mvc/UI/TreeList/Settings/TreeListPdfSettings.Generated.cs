@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListPdfSettings class
     /// </summary>
-    public partial class TreeListPdfSettings 
+    public partial class TreeListPdfSettings<T> 
     {
         public string Author { get; set; }
 
@@ -25,11 +25,13 @@ namespace Kendo.Mvc.UI
 
         public bool? Landscape { get; set; }
 
+        public TreeListPdfMarginSettings<T> Margin { get; } = new TreeListPdfMarginSettings<T>();
 
-        public TreeListPdfMarginSettings Margin { get; } = new TreeListPdfMarginSettings();
         public string PaperSize { get; set; }
 
         public string ProxyURL { get; set; }
+
+        public string ProxyTarget { get; set; }
 
         public string Subject { get; set; }
 
@@ -90,6 +92,11 @@ namespace Kendo.Mvc.UI
             if (ProxyURL.HasValue())
             {
                 settings["proxyURL"] = ProxyURL;
+            }
+
+            if (ProxyTarget.HasValue())
+            {
+                settings["proxyTarget"] = ProxyTarget;
             }
 
             if (Subject.HasValue())

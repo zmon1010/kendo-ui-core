@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListFilterableSettings class
     /// </summary>
-    public partial class TreeListFilterableSettings 
+    public partial class TreeListFilterableSettings<T> 
     {
         public bool? Extra { get; set; }
 
