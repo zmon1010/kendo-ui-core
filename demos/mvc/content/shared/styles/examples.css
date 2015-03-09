@@ -70,11 +70,11 @@
 /* Widgets icons font */
 @font-face {
   font-family: 'widgets';
-  src: url('fonts/widgets-v1.eot');
-  src: url('fonts/widgets-v1.eot') format('embedded-opentype'),
-       url('fonts/widgets-v1.woff') format('woff'),
-       url('fonts/widgets-v1.ttf') format('truetype'),
-       url('fonts/widgets-v1.svg') format('svg');
+  src: url('fonts/widgets-v2.eot');
+  src: url('fonts/widgets-v2.eot') format('embedded-opentype'),
+       url('fonts/widgets-v2.woff') format('woff'),
+       url('fonts/widgets-v2.ttf') format('truetype'),
+       url('fonts/widgets-v2.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -615,6 +615,8 @@ div.submenu-box ol {
 .chartRangeBarIcon:after { content: '\e846'; }
 .chartWaterfallIcon:after { content: '\e847'; }
 .comboBoxIcon:after { content: '\e848'; }
+.responsivePanelIcon:after { content: '\e849'; }
+.mobileCollapsibleIcon:after { content: '\e84A'; }
 
 .mobile + .widgetOverview #exampleTitle
 {
