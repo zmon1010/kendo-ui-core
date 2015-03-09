@@ -5,6 +5,9 @@ module CodeGen::MVC6::Wrappers::Options
     class ArrayOption < CodeGen::CompositeOption
         include CodeGen::MVC6::Wrappers::Options
 
+        DECLARATION = ERB.new(File.read("build/codegen/lib/mvc-6/array-option-declaration.erb"), 0, '%<>')
+        SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-serialization.erb"), 0, '%<>')
+
         def csharp_class
             "List<#{csharp_item_class}>"
         end
@@ -33,6 +36,7 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         def to_declaration
+            DECLARATION.result(binding)
         end
 
         def to_fluent
@@ -45,6 +49,7 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         def to_serialization
+            SERIALIZATION.result(binding)
         end
     end
 
