@@ -252,7 +252,7 @@
                             // elements ends up on next page, or possibly doesn't fit on a page at
                             // all.  break before it anyway if it's an <img> or <tr>, otherwise
                             // attempt to split.
-                            if (jqel.data("kendoChart") || /^(?:img|tr|iframe|svg|object|canvas|input|textarea|select|video)/i.test(el.tagName)) {
+                            if (jqel.data("kendoChart") || /^(?:img|tr|iframe|svg|object|canvas|input|textarea|select|video|h[1-6])/i.test(el.tagName)) {
                                 breakAtElement(el);
                             } else {
                                 splitElement(el);
