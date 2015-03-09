@@ -7,16 +7,10 @@ module CodeGen::MVC6::Wrappers::Options
 
         BUILDER = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-builder.erb"), 0, '%<>')
         BUILDER_GENERATED = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-builder-generated.erb"), 0, '%<>')
-
-        DECLARATION = ERB.new(%{
-        public <%= csharp_class_name %> <%= csharp_name %> { get; } = new <%= csharp_class_name %>();
-})
-
+        DECLARATION = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-declaration.erb"), 0, '%<>')
         FLUENT = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-fluent.erb"), 0, '%<>')
-
         SETTINGS = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option.erb"), 0, '%<>')
         SETTINGS_GENERATED = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-settings.erb"), 0, '%<>')
-
         SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/composite-option-serialization.erb"), 0, '%<>')
 
         def csharp_class
