@@ -17,13 +17,6 @@ namespace Kendo.Mvc.UI.Fluent
             this.settings = settings;
         }
 
-        //TODO: Implement Toolbar positioning
-        //public GridToolBarCommandFactory<T> Position(GridToolBarPosition value)
-        //{
-        //    settings.Position = value;
-
-        //    return this;
-        //}
 
         /// <summary>
         /// Defines a create command.
@@ -95,26 +88,14 @@ namespace Kendo.Mvc.UI.Fluent
 
             return new GridToolBarCustomCommandBuilder(command);
         }
-
-		//TODO: toolbar template
-		///// <summary>
-		///// Sets toolbar template.
-		///// </summary>
-		///// <param name="template">The action defining the template.</param>
-		//public void Template(Action template)
-		//{
-
-		//    settings.Template.Content = template;
-		//}
-
-		///// <summary>
-		///// Sets toolbar template.
-		///// </summary>
-		///// <param name="template">The template</param>
-		//public void Template(string template)
-		//{
-
-		//	settings.Template.Html = template;
-		//}       
-    }
+	
+		/// <summary>
+		/// Sets toolbar template.
+		/// </summary>
+		/// <param name="template">The action defining the template.</param>
+		public void ClientTemplate(string template)
+		{
+			settings.ClientTemplate = template;
+		}
+	}
 }

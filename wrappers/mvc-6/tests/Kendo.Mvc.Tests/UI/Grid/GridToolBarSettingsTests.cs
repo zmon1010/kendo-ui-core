@@ -1,10 +1,9 @@
 namespace Kendo.Mvc.UI.Tests
 {
+	using System.Collections.Generic;
+	using System.Linq;
 	using Moq;
-	using System;
-	using System.IO;
 	using Xunit;
-	using Kendo.Mvc.Tests;
 
 	public class GridToolBarSettingsTests
     {
@@ -22,11 +21,35 @@ namespace Kendo.Mvc.UI.Tests
             toolBarSettings.Enabled.ShouldBeTrue();
         }
 
-        [Fact(Skip = "Implement toolbar template")]
-        public void Enabled_should_return_true_if_template_is_not_empty()
+		[Fact]
+		public void Enabled_should_return_true_if_template_is_not_empty()
         {
-        //    toolBarSettings.Template.Content = () => { };
+			toolBarSettings.ClientTemplate = "foo";
             toolBarSettings.Enabled.ShouldBeTrue();
         }
-    }
+
+		[Fact]
+		public void Should_serialize_commands()
+		{
+			toolBarSettings.Commands.Add(new Mock<GridActionCommandBase>().Object);			
+			var json = toolBarSettings.ToJson();
+
+			json.Count.ShouldEqual(1);
+			json.ContainsKey("commands").ShouldBeTrue();
+			var commands = ((IEnumerable<IDictionary<string, object>>)json["commands"]);
+
+			commands.Count().ShouldEqual(1);
+		}
+
+		[Fact]
+		public void Template_should_have_presents_over_commands()
+		{
+			toolBarSettings.Commands.Add(new Mock<GridActionCommandBase>().Object);
+			toolBarSettings.ClientTemplate = "foo";
+			var json = toolBarSettings.ToJson();
+
+			json.Count.ShouldEqual(1);
+			json.ContainsKey("template").ShouldBeTrue();
+		}
+	}
 }

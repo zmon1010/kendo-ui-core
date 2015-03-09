@@ -23,21 +23,6 @@ namespace Kendo.Mvc.UI.Fluent
             Command = command;
         }
 
-        //TODO: Implement command button types
-        /*
-        /// <summary>
-        /// Sets the button type.
-        /// </summary>
-        /// <param name="type">The button type.</param>
-        /// <returns></returns>
-        public TBuilder ButtonType(GridButtonType type)
-        {
-
-            Command.ButtonType = type;
-
-            return this as TBuilder;
-        }
-        */
         /// <summary>
         /// Sets the text displayed by the command. If not set a default value is used.
         /// </summary>

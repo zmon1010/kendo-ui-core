@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI
         {
             get
             {
-				return Commands.Any();// || Template.HasValue();
+				return Commands.Any() || ClientTemplate.HasValue();
             }
         }
 
@@ -24,13 +24,12 @@ namespace Kendo.Mvc.UI
             get;
             private set;
         }
-
-		//TODO: toolbar template
-		//public HtmlTemplate Template
-		//{
-		//    get;
-		//    private set;
-		//}
+		
+		public string ClientTemplate
+		{
+			get;
+			set;
+		}
 
 		protected override void Serialize(IDictionary<string, object> json)
 		{
@@ -41,9 +40,14 @@ namespace Kendo.Mvc.UI
 				commands.Add(command.Serialize());
 			});
 
-			if (commands.Any())
+			if (commands.Any() && !ClientTemplate.HasValue())
 			{
 				json["commands"] = commands;
+			}
+
+			if (ClientTemplate.HasValue())
+			{
+				json["template"] = ClientTemplate;
 			}
 		}
     }
