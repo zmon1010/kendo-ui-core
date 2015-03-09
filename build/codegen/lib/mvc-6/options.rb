@@ -56,6 +56,10 @@ module CodeGen::MVC6::Wrappers::Options
         csharp_type.eql?('ClientHandlerDescriptor')
     end
 
+    def template?
+        name.match(/template$/i)
+    end
+
     def dictionary?
         csharp_type.match(/^IDictionary/)
     end
@@ -65,9 +69,7 @@ module CodeGen::MVC6::Wrappers::Options
     end
 
     def csharp_name
-        postfix = name[/template$/i].nil? ? "" : "Id"
-
-        name.to_csharp_name + postfix
+        name.to_csharp_name
     end
 
     def csharp_generic

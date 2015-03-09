@@ -5,12 +5,8 @@ module CodeGen::MVC6::Wrappers::Options
     class Option < CodeGen::Option
         include CodeGen::MVC6::Wrappers::Options
 
-        DECLARATION = ERB.new(%{
-        public <%= struct? ? csharp_type + '?' : csharp_type%> <%= csharp_name %> { get; set; }
-})
-
+        DECLARATION = ERB.new(File.read("build/codegen/lib/mvc-6/option-declaration.erb"), 0, '%<>')
         FLUENT = ERB.new(File.read("build/codegen/lib/mvc-6/option-fluent.erb"), 0, '%<>')
-
         SERIALIZATION = ERB.new(File.read("build/codegen/lib/mvc-6/option-serialization.erb"), 0, '%<>')
 
         def struct?
