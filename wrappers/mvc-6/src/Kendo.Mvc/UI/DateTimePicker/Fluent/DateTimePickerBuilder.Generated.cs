@@ -21,94 +21,103 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Specifies a template used to populate value of the aria-label attribute.
         /// </summary>
-        /// <param name="value">The value that configures the ariatemplateid.</param>
-        public DateTimePickerBuilder ARIATemplateId(string value)
+        /// <param name="value">The value for ARIATemplate</param>
+        public DateTimePickerBuilder ARIATemplate(string value)
         {
-            Container.ARIATemplateId = value;
+            Container.ARIATemplate = value;
+            return this;
+        }
 
+        /// <summary>
+        /// Specifies a template used to populate value of the aria-label attribute.
+        /// </summary>
+        /// <param name="value">The ID of the template element for ARIATemplate</param>
+        public DateTimePickerBuilder ARIATemplateId(string templateId)
+        {
+            Container.ARIATemplateId = templateId;
             return this;
         }
         /// <summary>
         /// Specifies the culture info used by the widget.
         /// </summary>
-        /// <param name="value">The value that configures the culture.</param>
+        /// <param name="value">The value for Culture</param>
         public DateTimePickerBuilder Culture(string value)
         {
             Container.Culture = value;
-
             return this;
         }
+
         /// <summary>
         /// Specifies a list of dates, which will be passed to the month template of the DateView. All dates, which match the date portion of the selected date will be used to re-bind the TimeView.
         /// </summary>
-        /// <param name="value">The value that configures the dates.</param>
+        /// <param name="value">The value for Dates</param>
         public DateTimePickerBuilder Dates(params DateTime[] value)
         {
             Container.Dates = value;
-
             return this;
         }
+
         /// <summary>
         /// Specifies the navigation depth of the calendar. The following
 		/// settings are available for the depth value:
         /// </summary>
-        /// <param name="value">The value that configures the depth.</param>
+        /// <param name="value">The value for Depth</param>
         public DateTimePickerBuilder Depth(string value)
         {
             Container.Depth = value;
-
             return this;
         }
+
         /// <summary>
         /// The template which renders the footer of the calendar. If false, the footer will not be rendered.
         /// </summary>
-        /// <param name="value">The value that configures the footer.</param>
+        /// <param name="value">The value for Footer</param>
         public DateTimePickerBuilder Footer(string value)
         {
             Container.Footer = value;
-
             return this;
         }
+
         /// <summary>
         /// Specifies the format, which is used to format the value of the DateTimePicker displayed in the input. The format also will be used to parse the input.
         /// </summary>
-        /// <param name="value">The value that configures the format.</param>
+        /// <param name="value">The value for Format</param>
         public DateTimePickerBuilder Format(string value)
         {
             Container.Format = value;
-
             return this;
         }
+
         /// <summary>
         /// Specifies the interval, between values in the popup list, in minutes.
         /// </summary>
-        /// <param name="value">The value that configures the interval.</param>
+        /// <param name="value">The value for Interval</param>
         public DateTimePickerBuilder Interval(double value)
         {
             Container.Interval = value;
-
             return this;
         }
+
         /// <summary>
         /// Specifies the maximum date, which the calendar can show.
         /// </summary>
-        /// <param name="value">The value that configures the max.</param>
+        /// <param name="value">The value for Max</param>
         public DateTimePickerBuilder Max(DateTime value)
         {
             Container.Max = value;
-
             return this;
         }
+
         /// <summary>
         /// Specifies the minimum date that the calendar can show.
         /// </summary>
-        /// <param name="value">The value that configures the min.</param>
+        /// <param name="value">The value for Min</param>
         public DateTimePickerBuilder Min(DateTime value)
         {
             Container.Min = value;
-
             return this;
         }
+
         /// <summary>
         /// Templates for the cells rendered in the calendar "month" view.
         /// </summary>
@@ -122,44 +131,44 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used. Note that value of the format option is always used.
         /// </summary>
-        /// <param name="value">The value that configures the parseformats.</param>
+        /// <param name="value">The value for ParseFormats</param>
         public DateTimePickerBuilder ParseFormats(params string[] value)
         {
             Container.ParseFormats = value;
-
             return this;
         }
+
         /// <summary>
         /// Specifies the start view of the calendar.
 		///  The following settings are available for the start value:
         /// </summary>
-        /// <param name="value">The value that configures the start.</param>
+        /// <param name="value">The value for Start</param>
         public DateTimePickerBuilder Start(string value)
         {
             Container.Start = value;
-
             return this;
         }
+
         /// <summary>
         /// Specifies the format, which is used to format the values in the time drop-down list.
         /// </summary>
-        /// <param name="value">The value that configures the timeformat.</param>
+        /// <param name="value">The value for TimeFormat</param>
         public DateTimePickerBuilder TimeFormat(string value)
         {
             Container.TimeFormat = value;
-
             return this;
         }
+
         /// <summary>
         /// Specifies the selected value.
         /// </summary>
-        /// <param name="value">The value that configures the value.</param>
+        /// <param name="value">The value for Value</param>
         public DateTimePickerBuilder Value(DateTime value)
         {
             Container.Value = value;
-
             return this;
         }
+
 
 
         

@@ -11,10 +11,10 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class DateTimePickerMonthSettings 
     {
-
         public string Content { get; set; }
 
         public string Empty { get; set; }
+
 
 
         protected Dictionary<string, object> SerializeSettings()

@@ -7,28 +7,22 @@ using System.Linq;
 namespace Kendo.Mvc.UI
 {
     /// <summary>
-    /// Kendo UI DateTimePickerAnimationCloseSettings class
+    /// Kendo UI TreeListFilterableSettings class
     /// </summary>
-    public partial class DateTimePickerAnimationCloseSettings 
+    public partial class TreeListFilterableSettings 
     {
-        public string Effects { get; set; }
-
-        public double? Duration { get; set; }
+        public bool? Extra { get; set; }
 
 
+        public bool Enabled { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
 
-            if (Effects.HasValue())
+            if (Extra.HasValue)
             {
-                settings["effects"] = Effects;
-            }
-
-            if (Duration.HasValue)
-            {
-                settings["duration"] = Duration;
+                settings["extra"] = Extra;
             }
 
 

@@ -11,10 +11,10 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class DateTimePickerAnimationOpenSettings 
     {
-
         public string Effects { get; set; }
 
         public double? Duration { get; set; }
+
 
 
         protected Dictionary<string, object> SerializeSettings()

@@ -1,0 +1,240 @@
+using System;
+
+namespace Kendo.Mvc.UI.Fluent
+{
+    /// <summary>
+    /// Defines the fluent API for configuring the Kendo UI TreeList
+    /// </summary>
+    public partial class TreeListBuilder<T>
+        where T : class 
+    {
+        /// <summary>
+        /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+		/// data source is fired. By default the widget will bind to the data source specified in the configuration.
+        /// </summary>
+        /// <param name="value">The value for AutoBind</param>
+        public TreeListBuilder<T> AutoBind(bool value)
+        {
+            Container.AutoBind = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
+        /// </summary>
+        /// <param name="value">The value for Reorderable</param>
+        public TreeListBuilder<T> Reorderable(bool value)
+        {
+            Container.Reorderable = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the treelist will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
+		/// By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
+        /// </summary>
+        /// <param name="configurator">The configurator for the columnmenu setting.</param>
+        public TreeListBuilder<T> ColumnMenu(Action<TreeListColumnMenuSettingsBuilder> configurator)
+        {
+            Container.ColumnMenu.Enabled = true;
+            configurator(new TreeListColumnMenuSettingsBuilder(Container.ColumnMenu));
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the treelist will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
+		/// By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
+        /// </summary>
+        public TreeListBuilder<T> ColumnMenu()
+        {
+            Container.ColumnMenu.Enabled = true;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the treelist will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
+		/// By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the columnmenu option.</param>
+        public TreeListBuilder<T> ColumnMenu(bool enabled)
+        {
+            Container.ColumnMenu.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user would be able to edit the data to which the treelist is bound. By default editing is disabled.Can be set to a string ("inline" or "popup") to specify the editing mode. The default editing mode is "inline".Can be set to a JavaScript object which represents the editing configuration.
+        /// </summary>
+        /// <param name="configurator">The configurator for the editable setting.</param>
+        public TreeListBuilder<T> Editable(Action<TreeListEditableSettingsBuilder> configurator)
+        {
+            Container.Editable.Enabled = true;
+            configurator(new TreeListEditableSettingsBuilder(Container.Editable));
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user would be able to edit the data to which the treelist is bound. By default editing is disabled.Can be set to a string ("inline" or "popup") to specify the editing mode. The default editing mode is "inline".Can be set to a JavaScript object which represents the editing configuration.
+        /// </summary>
+        public TreeListBuilder<T> Editable()
+        {
+            Container.Editable.Enabled = true;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user would be able to edit the data to which the treelist is bound. By default editing is disabled.Can be set to a string ("inline" or "popup") to specify the editing mode. The default editing mode is "inline".Can be set to a JavaScript object which represents the editing configuration.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the editable option.</param>
+        public TreeListBuilder<T> Editable(bool enabled)
+        {
+            Container.Editable.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the Kendo UI TreeList Excel export settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the excel setting.</param>
+        public TreeListBuilder<T> Excel(Action<TreeListExcelSettingsBuilder> configurator)
+        {
+            configurator(new TreeListExcelSettingsBuilder(Container.Excel));
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user can filter the data source using the treelist filter menu. Filtering is disabled by default.Can be set to a JavaScript object which represents the filter menu configuration.
+        /// </summary>
+        /// <param name="configurator">The configurator for the filterable setting.</param>
+        public TreeListBuilder<T> Filterable(Action<TreeListFilterableSettingsBuilder> configurator)
+        {
+            Container.Filterable.Enabled = true;
+            configurator(new TreeListFilterableSettingsBuilder(Container.Filterable));
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user can filter the data source using the treelist filter menu. Filtering is disabled by default.Can be set to a JavaScript object which represents the filter menu configuration.
+        /// </summary>
+        public TreeListBuilder<T> Filterable()
+        {
+            Container.Filterable.Enabled = true;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user can filter the data source using the treelist filter menu. Filtering is disabled by default.Can be set to a JavaScript object which represents the filter menu configuration.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the filterable option.</param>
+        public TreeListBuilder<T> Filterable(bool enabled)
+        {
+            Container.Filterable.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
+        /// The height of the treelist. Numeric values are treated as pixels.
+        /// </summary>
+        /// <param name="value">The value for Height</param>
+        public TreeListBuilder<T> Height(double value)
+        {
+            Container.Height = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Defines the text of the command buttons that are shown within the TreeList. Used primarily for localization.
+        /// </summary>
+        /// <param name="configurator">The configurator for the messages setting.</param>
+        public TreeListBuilder<T> Messages(Action<TreeListMessagesSettingsBuilder> configurator)
+        {
+            configurator(new TreeListMessagesSettingsBuilder(Container.Messages));
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the Kendo UI TreeList PDF export settings.
+        /// </summary>
+        /// <param name="configurator">The configurator for the pdf setting.</param>
+        public TreeListBuilder<T> Pdf(Action<TreeListPdfSettingsBuilder> configurator)
+        {
+            configurator(new TreeListPdfSettingsBuilder(Container.Pdf));
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the treelist will display a scrollbar when the total row height (or width) exceeds the treelist height (or width). By default scrolling is enabled.Can be set to a JavaScript object which represents the scrolling configuration.
+        /// </summary>
+        /// <param name="value">The value for Scrollable</param>
+        public TreeListBuilder<T> Scrollable(bool value)
+        {
+            Container.Scrollable = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user would be able to select treelist rows. By default selection is disabled.Can also be set to the following string values:
+        /// </summary>
+        /// <param name="value">The value for Selectable</param>
+        public TreeListBuilder<T> Selectable(bool value)
+        {
+            Container.Selectable = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user could sort the treelist by clicking the column header cells. By default sorting is disabled.Can be set to a JavaScript object which represents the sorting configuration.
+        /// </summary>
+        /// <param name="configurator">The configurator for the sortable setting.</param>
+        public TreeListBuilder<T> Sortable(Action<TreeListSortableSettingsBuilder> configurator)
+        {
+            Container.Sortable.Enabled = true;
+            configurator(new TreeListSortableSettingsBuilder(Container.Sortable));
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user could sort the treelist by clicking the column header cells. By default sorting is disabled.Can be set to a JavaScript object which represents the sorting configuration.
+        /// </summary>
+        public TreeListBuilder<T> Sortable()
+        {
+            Container.Sortable.Enabled = true;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user could sort the treelist by clicking the column header cells. By default sorting is disabled.Can be set to a JavaScript object which represents the sorting configuration.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the sortable option.</param>
+        public TreeListBuilder<T> Sortable(bool enabled)
+        {
+            Container.Sortable.Enabled = enabled;
+            return this;
+        }
+
+
+
+        
+        /// <summary>
+        /// Configures the client-side events.
+        /// </summary>
+        /// <param name="configurator">The client events action.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// @(Html.Kendo().TreeList()
+        ///       .Name("TreeList")
+        ///       .Events(events => events
+        ///           .Cancel("onCancel")
+        ///       )
+        /// )
+        /// </code>
+        /// </example>
+        public TreeListBuilder<T> Events(Action<TreeListEventBuilder> configurator)
+        {
+            configurator(new TreeListEventBuilder(Container.Events));
+            return this;
+        }
+        
+    }
+}
+

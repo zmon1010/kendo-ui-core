@@ -13,6 +13,7 @@ namespace Kendo.Mvc.UI
     {
 
         public DateTimePickerAnimationSettings Animation { get; } = new DateTimePickerAnimationSettings();
+        public string ARIATemplate { get; set; }
 
         public string ARIATemplateId { get; set; }
 
@@ -32,8 +33,8 @@ namespace Kendo.Mvc.UI
 
         public DateTime? Min { get; set; }
 
-        public DateTimePickerMonthSettings Month { get; } = new DateTimePickerMonthSettings();
 
+        public DateTimePickerMonthSettings Month { get; } = new DateTimePickerMonthSettings();
         public string[] ParseFormats { get; set; }
 
         public string Start { get; set; }
@@ -41,6 +42,7 @@ namespace Kendo.Mvc.UI
         public string TimeFormat { get; set; }
 
         public DateTime? Value { get; set; }
+
 
 
         protected override Dictionary<string, object> SerializeSettings()
@@ -55,8 +57,17 @@ namespace Kendo.Mvc.UI
 
             if (ARIATemplateId.HasValue())
             {
-                settings["ARIATemplate"] = ARIATemplateId;
+                settings["ARIATemplate"] = new ClientHandlerDescriptor {
+                    HandlerName = string.Format(
+                        "jQuery('#{0}').html()", ARIATemplateId
+                    )
+                };
             }
+            else if (ARIATemplate.HasValue())
+            {
+                settings["ARIATemplate"] = ARIATemplate;
+            }
+ 
 
             if (Culture.HasValue())
             {
