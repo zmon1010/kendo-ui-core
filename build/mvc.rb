@@ -1,4 +1,5 @@
 MVC_SRC_ROOT = 'wrappers/mvc/src/'
+MVC_BIN_ROOT = MVC_SRC_ROOT + 'Kendo.Mvc/bin/'
 MVC_DEMOS_ROOT = 'wrappers/mvc/demos/Kendo.Mvc.Examples/'
 DEMO_SHARED_ROOT = 'demos/mvc/content/'
 
@@ -16,22 +17,20 @@ def resources_for(configuration)
             .sub(/Messages\.(.+).resx/, '\1/Kendo.Mvc.resources.dll')
 end
 
+def dll_for(configuration)
+    FileList['Kendo.Mvc.dll']
+            .include('Kendo.Mvc.xml')
+            .pathmap(MVC_SRC_ROOT + "Kendo.Mvc/bin/#{configuration}/%f")
+            .include(resources_for(configuration))
+end
 
 # The list of assemblies produced when building the wrappers - Kendo.Mvc.dll and satellite assemblies
-MVC4_DLL = FileList['Kendo.Mvc.dll']
-            .include('Kendo.Mvc.xml')
-            .pathmap(MVC_SRC_ROOT + 'Kendo.Mvc/bin/Release/%f')
-            .include(resources_for("Release"))
-
-MVC3_DLL = FileList['Kendo.Mvc.dll']
-            .include('Kendo.Mvc.xml')
-            .pathmap(MVC_SRC_ROOT + 'Kendo.Mvc/bin/Release-MVC3/%f')
-            .include(resources_for("Release-MVC3"))
-
-MVC5_DLL = FileList['Kendo.Mvc.dll']
-            .include('Kendo.Mvc.xml')
-            .pathmap(MVC_SRC_ROOT + 'Kendo.Mvc/bin/Release-MVC5/%f')
-            .include(resources_for("Release-MVC5"))
+MVC3_DLL = dll_for("Release-MVC3")
+MVC3_TRIAL_DLL = dll_for("Release-MVC3-Trial")
+MVC4_DLL = dll_for("Release")
+MVC4_TRIAL_DLL = dll_for("Release-Trial")
+MVC5_DLL = dll_for("Release-MVC5")
+MVC5_TRIAL_DLL = dll_for("Release-MVC5-Trial")
 
 rule 'Kendo.Mvc.xml' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll'
 
@@ -204,24 +203,53 @@ namespace :mvc do
 
     desc('Build ASP.NET MVC binaries')
     task :binaries => [
-        'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll',
-        'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC3/Kendo.Mvc.dll',
-        'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC5/Kendo.Mvc.dll',
+        MVC_BIN_ROOT + 'Release/Kendo.Mvc.dll',
+        MVC_BIN_ROOT + 'Release-MVC3/Kendo.Mvc.dll',
+        MVC_BIN_ROOT + 'Release-MVC5/Kendo.Mvc.dll',
+        MVC_BIN_ROOT + 'Release-Trial/Kendo.Mvc.dll',
+        MVC_BIN_ROOT + 'Release-MVC3-Trial/Kendo.Mvc.dll',
+        MVC_BIN_ROOT + 'Release-MVC5-Trial/Kendo.Mvc.dll',
         MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll',
         'dist/binaries/'
     ]
+
+    desc('Replace commercial binaries with trials')
+    task :copy_trials => ['mvc:binaries'] do
+        # replaces commercial assemblies with trial ones in dist/
+        [ 'aspnetmvc.hotfix.trial', 'aspnetmvc.trial' ].each do |bundle|
+            {
+                'Release-Trial' => 'Mvc4',
+                'Release-MVC3-Trial' => 'Mvc3',
+                'Release-MVC5-Trial' => 'Mvc5'
+            }.each do |dir, version|
+                src = MVC_BIN_ROOT + dir + '/Kendo.*.dll'
+                dest = "dist/bundles/#{bundle}/wrappers/aspnetmvc/Binaries/#{version}/"
+                mkdir_p dest
+                Dir.glob(src).each do |f|
+                    cp f, dest
+                end
+            end
+        end
+    end
 end
 
 # the USE_MONO flag is useful when debugging builds on linux w/o having binaries
 if PLATFORM =~ /linux|darwin/ && !ENV['USE_MONO']
     # copy pre-built binaries
 
-    FileList[MVC3_DLL + MVC4_DLL + MVC5_DLL + FileList[MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll']].each do |file|
+    FileList[
+        MVC3_DLL + MVC4_DLL + MVC5_DLL +
+        MVC3_TRIAL_DLL + MVC4_TRIAL_DLL + MVC5_TRIAL_DLL +
+        FileList[MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll']
+    ].each do |file|
         file_copy :to => file, :from => file.sub('wrappers/mvc', "dist/binaries")
     end
 
 else
-    [ "Release", "Release-MVC3", "Release-MVC5" ].each do |configuration|
+    [
+        "Release", "Release-MVC3", "Release-MVC5",
+        "Release-Trial", "Release-MVC3-Trial", "Release-MVC5-Trial"
+    ].each do |configuration|
         options = '/p:Configuration="' + configuration + '"'
 
         output_dir = "wrappers/mvc/src/Kendo.Mvc/bin/#{configuration}"
@@ -259,7 +287,9 @@ else
 
     tree :to => 'dist/binaries/',
          :from => FileList[
-             MVC3_DLL + MVC4_DLL + MVC5_DLL + FileList['wrappers/mvc/**/*.dll']
+             MVC3_DLL + MVC4_DLL + MVC5_DLL +
+             MVC3_TRIAL_DLL + MVC4_TRIAL_DLL + MVC5_TRIAL_DLL +
+             FileList['wrappers/mvc/**/*.dll']
          ],
          :root => 'wrappers/mvc/'
 end

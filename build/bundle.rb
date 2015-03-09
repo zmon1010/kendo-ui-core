@@ -71,7 +71,7 @@ def bundle(options)
 
         tree :to => to,
              :from => contents,
-             :root => ROOT_MAP[target],
+             :root => root,
              :license => license
 
         prerequisites.push(to)
@@ -149,6 +149,8 @@ def bundle(options)
 
         prerequisites = prerequisites + demo_files.flatten
     end
+
+    prerequisites.push(options[:post_build]) if options[:post_build]
 
     zip "#{path}.zip" =>  prerequisites
 

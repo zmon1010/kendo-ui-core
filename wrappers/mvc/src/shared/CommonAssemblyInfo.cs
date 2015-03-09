@@ -10,6 +10,11 @@ using System.Security;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
+#if TRIAL
+[assembly: AssemblyTitle("Kendo.Mvc.Web Trial version")]
+#else
+[assembly: AssemblyTitle("Kendo.Mvc.Web")]
+#endif
 #if MVC3
 [assembly: AssemblyVersion("2014.1.617.340")]
 [assembly: AssemblyFileVersion("2014.1.617.340")]
