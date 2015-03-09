@@ -801,6 +801,12 @@ var __meta__ = {
 
             that.surface.clear();
             that.gaugeArea = that._createGaugeArea();
+
+            that.surface.element.css({
+                width: size.width,
+                height: size.height
+            });
+
             that._createModel();
 
             bbox = _unpad(wrapper.bbox(), that._gaugeAreaMargin);
