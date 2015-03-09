@@ -2215,11 +2215,11 @@
 
             if (!found) {
                 // This code does three things: (1) it selects one line of text in `range`, (2) it
-                // leaves the bounding rect of that line in `box` and (3) it updates `start` to
-                // point just after the line.  We know where the line starts (`start`) but we don't
-                // know where it ends.  To figure this out, we select a piece of text and look at
-                // the bottom of the bounding box.  If it changes, we have more than one line
-                // selected and should retry with a smaller selection.
+                // leaves the bounding rect of that line in `box` and (3) it returns the position
+                // just after the EOL.  We know where the line starts (`start`) but we don't know
+                // where it ends.  To figure this out, we select a piece of text and look at the
+                // bottom of the bounding box.  If it changes, we have more than one line selected
+                // and should retry with a smaller selection.
                 //
                 // To speed things up, we first try to select all text in the node (`start` ->
                 // `end`).  If there's more than one line there, then select only half of it.  And
@@ -2230,18 +2230,29 @@
                 // One more thing to note is that everything happens in a single Text DOM node.
                 // There's no other tags inside it, therefore the left/top coordinates of the
                 // bounding box will not change.
-                (function findEOL(min, eol, max){
+                pos = (function findEOL(min, eol, max){
                     range.setEnd(node, eol);
                     var r = range.getBoundingClientRect();
-                    if (r.bottom != box.bottom) {
-                        findEOL(min, (min + eol) >> 1, eol);
+                    if (r.bottom != box.bottom && min < eol) {
+                        return findEOL(min, (min + eol) >> 1, eol);
                     } else if (r.right != box.right) {
                         box = r;
-                        findEOL(eol, (eol + max) >> 1, max);
+                        if (eol < max) {
+                            return findEOL(eol, (eol + max) >> 1, max);
+                        } else {
+                            return eol;
+                        }
                     } else {
-                        start = eol;
+                        return eol;
                     }
                 })(start, Math.min(end, start + estimateLineLength), end);
+
+                if (pos == start) {
+                    // if EOL is at the start, then no more text fits on this line.  Skip the
+                    // remainder of this node entirely to avoid a stack overflow.
+                    return true;
+                }
+                start = pos;
 
                 pos = range.toString().search(/\s+$/);
                 if (pos === 0) {
