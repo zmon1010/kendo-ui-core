@@ -20,9 +20,7 @@ namespace Kendo.Mvc.UI
 		private readonly static int DEFAULT_COLUMN_RESIZE_HANDLE_WIDTH = 3;
 
 		public Grid(ViewContext viewContext) : base(viewContext)
-		{
-			//  RowTemplate = new HtmlTemplate<T>();
-			//DetailTemplate = new HtmlTemplate<T>();			
+		{					
 			//DataKeys = new List<IDataKey>();			
 
 			//Editable = new GridEditableSettings<T>(this)
@@ -100,6 +98,12 @@ namespace Kendo.Mvc.UI
 			{
 				clientAltRowTemplate = WebUtility.HtmlDecode(value);
 			}
+		}
+
+		public string ClientDetailTemplateId
+		{
+			get;
+			set;
 		}
 
 		public int ColumnResizeHandleWidth
@@ -285,10 +289,10 @@ namespace Kendo.Mvc.UI
 
 			settings["dataSource"] = DataSource.ToJson();
 
-			//if (!String.IsNullOrEmpty(ClientDetailTemplateId))
-			//{
-			//	options["detailTemplate"] = new ClientHandlerDescriptor { HandlerName = String.Format("kendo.template(jQuery('{0}{1}').html())", idPrefix, ClientDetailTemplateId) };
-			//}
+			if (!String.IsNullOrEmpty(ClientDetailTemplateId))
+			{
+				settings["detailTemplate"] = new ClientHandlerDescriptor { HandlerName = String.Format("kendo.template(jQuery('{0}{1}').html())", idPrefix, ClientDetailTemplateId) };
+			}
 
 			if (!String.IsNullOrEmpty(ClientRowTemplate))
 			{

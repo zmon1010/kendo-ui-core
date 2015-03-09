@@ -747,5 +747,36 @@ namespace Kendo.Mvc.UI.Fluent
 
 			return this;
 		}
+
+
+		/// <summary>
+		/// Sets the id of the script element which contains the client-side detail template of the grid.
+		/// </summary>
+		/// <param name="id">The id</param>
+		/// <example>
+		/// <code lang="Razor">
+		/// @(Html.Kendo().Grid&lt;Product&gt;()
+		///     .Name(&quot;grid&quot;)
+		///     .DataSource(dataSource =&gt;
+		///         // configure the data source
+		///         dataSource
+		///             .Ajax()
+		///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+		///     )
+		///     .ClientDetailTemplateId(&quot;detail-template&quot;)
+		/// )
+		/// &lt;script id=&quot;detail-template&quot; type=&quot;text/x-kendo-template&quot;&gt;
+		///     Product Details:
+		///     &lt;div&gt;Product Name: #: ProductName # &lt;/div&gt;
+		///     &lt;div&gt;Units In Stock: #: UnitsInStock #&lt;/div&gt;
+		/// &lt;/script&gt;
+		/// </code>		
+		/// </example>
+		public GridBuilder<T> ClientDetailTemplateId(string id)
+		{
+			Component.ClientDetailTemplateId = id;
+
+			return this;
+		}
 	}
 }
