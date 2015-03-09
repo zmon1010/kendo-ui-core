@@ -963,16 +963,16 @@ html .k-grid-edit-row .k-tooltip
 
 /* responsive styles  */
  
-@media (max-width: 1000px){
-    .k-pager-wrap>.k-link
-    {
+@media only screen and (max-width: 1024px) {
+    .k-pager-wrap .k-pager-nav,
+    .k-pager-input {
         float:none;
         display: inline-block;
+        vertical-align: top;
     }
     
     .k-pager-numbers,
-    .k-grid .k-pager-numbers
-    {
+    .k-grid .k-pager-numbers {
         position: absolute;                
         display: -moz-inline-flex;
         display: -webkit-inline-flex;
@@ -985,8 +985,7 @@ html .k-grid-edit-row .k-tooltip
     }
     
     .k-pager-numbers .k-current-page,
-    .k-grid .k-pager-numbers .k-current-page
-    {
+    .k-grid .k-pager-numbers .k-current-page {
         display: block;
         border-left: 0;
         -webkit-transform: translatey(100%);
@@ -994,13 +993,11 @@ html .k-grid-edit-row .k-tooltip
         transform: translatey(100%);
     }
     
-    .k-pager-numbers li:not(.k-current-page)
-    {
+    .k-pager-numbers li:not(.k-current-page) {
         display: none;
     }   
     
-    .k-pager-numbers .k-current-page .k-link
-    {
+    .k-pager-numbers .k-current-page .k-link {
         width: 3.2em;
         padding: 0 .429em 0 .714em;
         border-radius:  1.0833em;
@@ -1011,32 +1008,40 @@ html .k-grid-edit-row .k-tooltip
     }
     
     .k-pager-numbers .k-state-selected,
-    .k-pager-numbers .k-link
-    {
+    .k-pager-numbers .k-link {
         display: block;
         margin-right: 0;
         padding: 1px 5px 1px 5px;
         text-align: left;
     }
     
-    .k-pager-numbers.k-state-expanded
-    {
+    .k-pager-numbers.k-state-expanded {
         box-sizing: border-box;
         padding: 2px 2px 0;
     }
     
-    .k-pager-numbers.k-state-expanded .k-current-page
-    {
+    .k-pager-numbers.k-state-expanded .k-current-page {
         margin: -2em -3px 0;
         padding: 0;
     }
     
-    .k-pager-numbers.k-state-expanded .k-current-page .k-link
-    {
+    .k-pager-numbers.k-state-expanded .k-current-page .k-link {
         border-radius: 0 0 1.0833em 1.0833em;
     }
     
     .k-pager-numbers.k-state-expanded li {
         display: inline-block;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .k-pager-sizes {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .k-pager-info {
+        display: none;
     }
 }
