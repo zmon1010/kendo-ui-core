@@ -6,6 +6,8 @@ ssh $HOST <<'SH'
 cd /usr/share/nginx/html
     if [ ! -d bower-kendo-ui.git ]; then
         git clone --bare git@github.com:telerik/bower-kendo-ui.git;
+        cd bower-kendo-ui.git;
+        git config http.receivepack false;
     fi
 
     cd bower-kendo-ui.git;
