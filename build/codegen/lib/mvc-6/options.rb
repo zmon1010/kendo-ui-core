@@ -101,7 +101,7 @@ module CodeGen::MVC6::Wrappers::Options
 
     def builtin_names
         # check if child options contain 'name'
-        name_field = options.find{ |o| o.name.eql?('name') }
+        name_field = options.map{ |o| o.options }.flatten.find{ |o| o.name.eql?('name') }
 
         return [] if name_field.nil?
 
