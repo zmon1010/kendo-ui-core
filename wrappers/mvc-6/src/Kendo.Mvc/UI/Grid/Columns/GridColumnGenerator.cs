@@ -91,12 +91,9 @@ namespace Kendo.Mvc.UI
 				column.Settings = settings;
 
 				foreach (var command in commandSettings.Commands)
-				{
-					if (!(command is GridSelectActionCommand))
-					{
-						//TODO: implement editing
-						//grid.Editable.Enabled = true;
-					}
+				{					
+					//TODO: implement editing
+					//grid.Editable.Enabled = true;					
 					column.Commands.Add(command);
 				}
 
