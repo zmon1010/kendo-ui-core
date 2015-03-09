@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Routing;
@@ -70,6 +72,34 @@ namespace Kendo.Mvc.UI
 		{
 			get;
 			private set;
+		}
+
+		private string clientRowTemplate;
+
+        public string ClientRowTemplate
+		{
+			get
+			{
+				return clientRowTemplate;
+			}
+			set
+			{
+				clientRowTemplate = WebUtility.HtmlDecode(value);
+			}
+		}
+
+		private string clientAltRowTemplate;
+
+		public string ClientAltRowTemplate
+		{
+			get
+			{
+				return clientAltRowTemplate;
+			}
+			set
+			{
+				clientAltRowTemplate = WebUtility.HtmlDecode(value);
+			}
 		}
 
 		public int ColumnResizeHandleWidth
@@ -260,15 +290,15 @@ namespace Kendo.Mvc.UI
 			//	options["detailTemplate"] = new ClientHandlerDescriptor { HandlerName = String.Format("kendo.template(jQuery('{0}{1}').html())", idPrefix, ClientDetailTemplateId) };
 			//}
 
-			//if (!String.IsNullOrEmpty(ClientRowTemplate))
-			//{
-			//	options["rowTemplate"] = ClientRowTemplate;
-			//}
+			if (!String.IsNullOrEmpty(ClientRowTemplate))
+			{
+				settings["rowTemplate"] = ClientRowTemplate;
+			}
 
-			//if (!String.IsNullOrEmpty(ClientAltRowTemplate))
-			//{
-			//	options["altRowTemplate"] = ClientAltRowTemplate;
-			//}
+			if (!String.IsNullOrEmpty(ClientAltRowTemplate))
+			{
+				settings["altRowTemplate"] = ClientAltRowTemplate;
+			}
 
 			if (Navigatable.Enabled)
 			{

@@ -1,10 +1,11 @@
 namespace Kendo.Mvc.UI.Fluent.Tests
 {
-    using UI;
-    using Xunit;
-    using Kendo.Mvc.Tests;
+	using UI;
+	using Xunit;
+	using Kendo.Mvc.Tests;
+	using System.Collections.Generic;
 
-    public class GridBuilderTests
+	public class GridBuilderTests
     {
         private readonly Grid<Customer> grid;
         private readonly GridBuilder<Customer> builder;
@@ -23,22 +24,22 @@ namespace Kendo.Mvc.UI.Fluent.Tests
 
             Assert.True(grid.Pageable.Enabled);
         }
-      /*
-        [Fact]
+      
+        [Fact (Skip = "Not implemented")]
         public void BindTo_sets_the_data_source()
         {
             IEnumerable<Customer> customers = new [] { new Customer()};
-            builder.BindTo(customers);
+        //    builder.BindTo(customers);
 
             Assert.Same(customers, grid.DataSource.Data);
         }
 
-        [Fact]
-        public void BindTo_sets_the_data_source_as_GridCustomGroupingWrapper_of_model_type_if_non_generic_enumerable_is_assigned()
+		[Fact(Skip = "Not implemented")]
+		public void BindTo_sets_the_data_source_as_GridCustomGroupingWrapper_of_model_type_if_non_generic_enumerable_is_assigned()
         {
-            builder.BindTo(new object[0]);
+        //    builder.BindTo(new object[0]);
 
-            Assert.IsType<CustomGroupingWrapper<Customer>>(grid.DataSource.Data);
+        //    Assert.IsType<CustomGroupingWrapper<Customer>>(grid.DataSource.Data);
         }
 
         [Fact]
@@ -49,15 +50,14 @@ namespace Kendo.Mvc.UI.Fluent.Tests
             Assert.Equal(1, grid.Columns.Count);
         }
 
-        [Fact]
-        public void ProcessDataSource_sets_the_corresponding_property()
+		[Fact(Skip = "Not implemented")]
+		public void ProcessDataSource_sets_the_corresponding_property()
         {
-            builder.EnableCustomBinding(false);
+        //    builder.EnableCustomBinding(false);
 
             Assert.Equal(false, grid.EnableCustomBinding);
         }
-
-        */
+       
         [Fact]
         public void Sortable_sets_the_corresponding_property()
         {
@@ -87,13 +87,47 @@ namespace Kendo.Mvc.UI.Fluent.Tests
             builder.ColumnResizeHandleWidth(newWidth);
             Assert.Equal(newWidth, grid.ColumnResizeHandleWidth);
         }
-/*
-        [Fact]
-        public void PrefixUrlParameters_sets_the_corresponding_property()
-        {
-            builder.PrefixUrlParameters(false);
-            Assert.Equal(false, grid.PrefixUrlParameters);
-        }
-        */
-    }
+
+		[Fact]
+		public void ClientRowTemplate_set_the_clientRowTemplate_value()
+		{
+			var template = "foo";
+
+			builder.ClientRowTemplate(template);
+
+			grid.ClientRowTemplate.ShouldEqual(template);
+		}
+
+
+		[Fact]
+		public void ClientRowTemplates_are_set()
+		{
+			var template = "foo";
+			var altTemplate = "bar";
+
+			builder.ClientRowTemplate(template);
+			builder.ClientAltRowTemplate(altTemplate);
+
+			grid.ClientRowTemplate.ShouldEqual(template);
+			grid.ClientAltRowTemplate.ShouldEqual(altTemplate);
+		}
+
+		[Fact]
+		public void ClientAltRowTemplate_set_the_clientAltRowTemplate_value()
+		{
+			var template = "foo";
+
+			builder.ClientAltRowTemplate(template);
+
+			grid.ClientAltRowTemplate.ShouldEqual(template);
+		}
+		/*
+				[Fact]
+				public void PrefixUrlParameters_sets_the_corresponding_property()
+				{
+					builder.PrefixUrlParameters(false);
+					Assert.Equal(false, grid.PrefixUrlParameters);
+				}
+				*/
+	}
 }
