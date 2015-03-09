@@ -16,18 +16,21 @@ def push_appbuilder_bower(repository_url, work_dir, bundle_path, meta = nil)
     exec_bower_script "build/appbuilder-bower", repository_url, work_dir, bundle_path, meta
 end
 
+def push_bowers(meta = nil)
+    push_bower "git@github.com:telerik/bower-kendo-ui.git", "dist/bower-repo", "dist/bundles/professional.commercial", meta
+    push_bower "git@github.com:kendo-labs/bower-kendo-ui.git", "dist/bower-core-repo", "dist/bundles/core", meta
+    push_appbuilder_bower "git@github.com:kendo-labs/bower-kendo-ui-appbuilder.git", "dist/bower-core-appbuilder-repo", "dist/bundles/appbuilder.core", meta
+    sh "build/sync-bower"
+end
+
 namespace :bower do
-    task :push do
-       push_bower "git@github.com:telerik/bower-kendo-ui.git", "dist/bower-repo", "dist/bundles/professional.commercial"
-       sh "build/sync-bower"
+    task :internal_build do
+        push_bowers
     end
 
-    task :push_core do
-       push_bower "git@github.com:kendo-labs/bower-kendo-ui.git", "dist/bower-core-repo", "dist/bundles/core"
-    end
-
-    task :push_appbuilder_core do
-       push_appbuilder_bower "git@github.com:kendo-labs/bower-kendo-ui-appbuilder.git", "dist/bower-core-appbuilder-repo", "dist/bundles/appbuilder.core"
+    task :official do
+        push_bowers SERVICE_PACK_NUMBER ?  "SP#{SERVICE_PACK_NUMBER}" :  "Official"
     end
 end
 
+task "release_builds:bundles:all" => "bower:official"
