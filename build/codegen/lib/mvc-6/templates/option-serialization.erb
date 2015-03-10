@@ -27,6 +27,11 @@
             {
                 settings["<%= name %>"] = <%=csharp_name%>;
             }
+%elsif enum?
+            if (<%=csharp_name%>.HasValue)
+            {
+                settings["<%= name %>"] = <%=csharp_name%>.Serialize();
+            }
 %else
             if (<%= csharp_name %>.HasValue)
             {

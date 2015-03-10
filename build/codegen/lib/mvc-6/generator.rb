@@ -13,6 +13,7 @@ module CodeGen::MVC6::Wrappers
             write_component(component)
             write_component_settings(component)
             write_composite_settings(component)
+            write_enums(component)
             write_events(component)
             write_builder(component)
             write_builder_settings(component)
@@ -82,6 +83,15 @@ module CodeGen::MVC6::Wrappers
             write_file(filename, option.to_factory_generated)
 
             write_composite(component, option.item)
+        end
+
+        def write_enums(component)
+            options = component.enum_options
+
+            options.each do |option|
+                filename = "#{@path}/#{component.path}/#{option.csharp_type}.cs"
+                write_file(filename, option.to_enum)
+            end
         end
 
         def write_events(component)
