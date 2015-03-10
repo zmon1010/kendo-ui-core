@@ -66,17 +66,17 @@ a {
     line-height: 24px;   
 }
 
-.responsive-nav {
+#responsive-nav {
     font-size: 18px;
     line-height: 80px;
     float: right;   
 }
 
-.responsive-nav > li {
+#responsive-nav > li {
     float: left;    
 }
 
-.responsive-nav > li > a {
+#responsive-nav > li > a {
     padding: 30px;
     color: #fff;
 }
@@ -144,12 +144,54 @@ a {
    /*display: inline-block;*/
 }
 
-.responsive-ruler {
+.responsive-widget-wrapper {
     position: relative;
+    background: orange !important;
+    display:block;
+    /*min-height: 516px;*/
+    padding: 80px 40px;
+    overflow: hidden;
+}
+
+.responsive-horizontal-ruler {
+    position:absolute; 
+    left: 0;
+    width: 100%;   
     height: 10px;
-    margin: 20px 0;
     background-image: url('responsive_ruler.png');
     background-repeat: repeat-x;
+}
+
+.top-ruler {
+    top: 23px;
+}
+
+.bottom-ruler {
+    bottom: 0;
+}
+
+.responsive-vertical-ruler {
+    position: absolute;
+    top: 0;    
+    bottom: 0;
+    width: 22px;
+    /*height: 699px;*/    
+}
+
+.res-320 {
+    left: 302px;
+    background-image: url('vertical-ruler-320.png');
+}
+
+.res-768 {
+    left: 746px;
+    background-image: url('vertical-ruler-768.png');
+}
+
+.res-1024 {
+    width: 25px;
+    left: 999px;
+    background-image: url('vertical-ruler-1024.png');
 }
 
 /* Footer */
@@ -158,9 +200,51 @@ a {
     padding-bottom: 30px;
 }
 
+.k-rpanel-toggle {
+    
+}
+
+@media (max-width: 770px) {
+    #responsive-nav {
+        background: red;
+        /*position: absolute;*/
+        top: 48px;
+        float: none;
+        width: 100%;
+        height: auto;
+        line-height: 48px;
+        min-height: 193px;
+        z-index: 10;
+        box-shadow: 0 0 9px yellow; 
+    }
+
+    #responsive-nav li {
+        display: block;
+        float: none;
+        width: 100%;
+    }
+
+    #responsive-nav > li > a {
+        padding: 0 30px;
+    }
+
+    .responsive-header {
+        min-height: 48px;
+    }
+
+    .responsive-header h1 {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .k-rpanel-toggle {
+        position: relative;
+        float: right;
+    }
+}
 /* Clear floats */
 .responsive-header:after,
-.responsive-nav:after,
+#responsive-nav:after,
 .responsive-widgets-container:after {
     content: "";
     display: block;

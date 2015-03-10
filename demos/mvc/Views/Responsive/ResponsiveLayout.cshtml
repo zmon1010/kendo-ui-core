@@ -12,19 +12,16 @@
     <link rel="stylesheet" href="@Url.Content("~/content/responsive/responsive.css")" />
 
     <!-- Remote CDN-s -->    
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.common.min.css" />
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.default.min.css" />
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.dataviz.min.css" />
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.dataviz.default.min.css" />
-
-    <script src="http://cdn.kendostatic.com/2014.3.1411/js/jquery.min.js"></script>
-    <script src="http://cdn.kendostatic.com/2014.3.1411/js/kendo.all.min.js"></script>
+  <link href="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/styles/kendo.common-material.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/styles/kendo.rtl.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/styles/kendo.material.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/styles/kendo.material.mobile.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/styles/kendo.dataviz.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/styles/kendo.dataviz.material.min.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/js/kendo.all.min.js"></script>
 
 </head>
 <body>
     <header class="responsive-header">
         <h1>Responsive Kendo UI</h1>
-        <ul class="responsive-nav">
+        <button class="k-rpanel-toggle"><span class="k-icon k-i-hbars"></span></button>
+        <ul id="responsive-nav">
             <li><a href="@Url.Action("Index", "Responsive")" id="responsive-about" class="btn">About</a></li>
             <li><a href="@Url.Action("Grid", "Responsive")" id="responsive-grid" class="btn">Grid</a></li>
             <li><a href="@Url.Action("Scheduler", "Responsive")" id="responsive-scheduler" class="btn">Scheduler</a></li>
@@ -41,6 +38,14 @@
             <p>Copyrigh &copy; 2002-2015 Telerik Inc. All rights reserved</p>
         </div>
     </div>
+
+    <script>
+        $("#responsive-nav").kendoResponsivePanel({
+            breakpoint: 770,
+            width: 320,
+            orientation: "right"
+        });
+    </script>
 
 </body>
 </html>
