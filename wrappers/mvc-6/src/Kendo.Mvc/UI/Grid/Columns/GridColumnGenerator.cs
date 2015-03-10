@@ -91,16 +91,14 @@ namespace Kendo.Mvc.UI
 				column.Settings = settings;
 
 				foreach (var command in commandSettings.Commands)
-				{					
-					//TODO: implement editing
-					//grid.Editable.Enabled = true;					
+				{	
+					grid.Editable.Enabled = true;					
 					column.Commands.Add(command);
 				}
 
-				if (settings.HeaderTemplate.HasValue())
-				{
-					//TODO implement column header template
-					//column.HeaderTemplate.Html = settings.HeaderTemplate;
+				if (settings.ClientHeaderTemplate.HasValue())
+				{					
+					column.ClientHeaderTemplate = settings.ClientHeaderTemplate;
 				}
 
 				return column;

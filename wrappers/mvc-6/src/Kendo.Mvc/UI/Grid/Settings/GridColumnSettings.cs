@@ -35,7 +35,7 @@ namespace Kendo.Mvc.UI
             FooterHtmlAttributes = new RouteValueDictionary();
         }        
         
-        public string HeaderTemplate
+        public string ClientHeaderTemplate
         {
             get;
             set;

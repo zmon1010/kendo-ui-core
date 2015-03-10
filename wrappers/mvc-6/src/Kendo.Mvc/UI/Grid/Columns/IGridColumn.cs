@@ -32,8 +32,14 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
-      
-        IDictionary<string, object> HeaderHtmlAttributes 
+
+		string ClientHeaderTemplate
+		{
+			get;
+			set;
+		}
+
+		IDictionary<string, object> HeaderHtmlAttributes 
         { 
             get; 
         }

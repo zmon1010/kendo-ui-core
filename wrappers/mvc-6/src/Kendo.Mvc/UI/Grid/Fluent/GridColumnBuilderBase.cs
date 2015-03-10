@@ -330,39 +330,18 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this as TColumnBuilder;
         }
+		
+		/// <summary>
+		/// Sets the header template for the column. If sorting is enabled, the template content wrapper must have a k-link CSS class.
+		/// </summary>
+		/// <param name="template">The action defining the template.</param>
+		public TColumnBuilder ClientHeaderTemplate(string template)
+		{
+			Column.ClientHeaderTemplate = template;
+			return this as TColumnBuilder;
+		}		
 
-		//TODO: Add header template
-		///// <summary>
-		///// Sets the header template for the column. If sorting is enabled, the template content wrapper must have a k-link CSS class.
-		///// </summary>
-		///// <param name="template">The action defining the template.</param>
-		//public TColumnBuilder HeaderTemplate(Action template)
-		//{
-		//    Column.HeaderTemplate.Content = template;
-		//    return this as TColumnBuilder;
-		//}
-
-		///// <summary>
-		///// Sets the header template for the column.  If sorting is enabled, the template content wrapper must have a k-link CSS class.
-		///// </summary>
-		///// <param name="template">The string defining the template.</param>
-		//public TColumnBuilder HeaderTemplate(string template)
-		//{
-		//    Column.HeaderTemplate.Html = template;
-		//    return this as TColumnBuilder;
-		//}
-
-		///// <summary>
-		///// Sets the header template for the column.  If sorting is enabled, the template content wrapper must have a k-link CSS class.
-		///// </summary>
-		///// <param name="template">The action defining the template.</param>
-		//public TColumnBuilder HeaderTemplate(Func<object, object> template)
-		//{
-		//	Column.HeaderTemplate.InlineTemplate = template;
-		//	return this as TColumnBuilder;
-		//}
-       
-        public TColumnBuilder ClientFooterTemplate(string template)
+		public TColumnBuilder ClientFooterTemplate(string template)
         {
             Column.ClientFooterTemplate = template;
 

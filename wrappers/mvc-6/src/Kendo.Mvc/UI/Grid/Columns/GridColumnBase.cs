@@ -138,7 +138,12 @@ namespace Kendo.Mvc.UI
                 json["footerTemplate"] = WebUtility.UrlDecode(ClientFooterTemplate);
             }
 
-            if (ClientGroupFooterTemplate.HasValue())
+			if (ClientHeaderTemplate.HasValue())
+			{
+				json["headerTemplate"] = WebUtility.UrlDecode(ClientHeaderTemplate);
+			}
+
+			if (ClientGroupFooterTemplate.HasValue())
             {
                 json["groupFooterTemplate"] = ClientGroupFooterTemplate;
             }
@@ -191,7 +196,19 @@ namespace Kendo.Mvc.UI
             }
         }
 
-        public string ClientTemplate
+		public string ClientHeaderTemplate
+		{
+			get
+			{
+				return Settings.ClientHeaderTemplate;
+			}
+			set
+			{
+				Settings.ClientHeaderTemplate = value;
+			}
+		}
+
+		public string ClientTemplate
         {
             get
             {

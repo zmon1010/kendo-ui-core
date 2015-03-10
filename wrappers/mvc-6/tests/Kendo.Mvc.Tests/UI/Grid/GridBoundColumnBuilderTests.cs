@@ -98,45 +98,18 @@ namespace Kendo.Mvc.UI.Tests.Grid
         {
             builder.Title("");
             Assert.Equal("", builder.Column.Title);
-        }
+        }	
 
-		//TODO: Add column header template
-		//[Fact]
-		//public void Should_set_header_template()
-		//{
-		//    Action template = () => { };
+		[Fact]
+		public void Should_set_header_template()
+		{
+			var template = "my template";
+            builder.ClientHeaderTemplate(template);
 
-		//    builder.HeaderTemplate(template);
+			column.ClientHeaderTemplate.ShouldEqual(template);
+		}
 
-		//    column.HeaderTemplate.HasValue().ShouldBeTrue();
-		//}       
-
-		//[Fact]
-		//public void Header_template_should_return_not_null_column_builder()
-		//{
-		//    builder.HeaderTemplate(() => { }).ShouldNotBeNull();
-		//    builder.HeaderTemplate("my_template").ShouldNotBeNull();
-		//    builder.HeaderTemplate(t => t).ShouldNotBeNull();
-		//}
-
-		//[Fact]
-		//public void Should_set_header_template_from_string()
-		//{
-		//    const string expectedValue = "my_template";
-		//    builder.HeaderTemplate(expectedValue);
-		//    column.HeaderTemplate.HasValue().ShouldBeTrue();
-		//}
-
-		//[Fact]
-		//public void Should_set_header_template_for_razor()
-		//{
-		//    Func<object, object> template = t => t;
-		//    builder.HeaderTemplate(template);
-
-		//    column.HeaderTemplate.HasValue().ShouldBeTrue();
-		//}		
-
-        [Fact]
+		[Fact]
         public void Should_set_editor_template_name()
         {
             const string expectedValue = "SomeEditorName";
