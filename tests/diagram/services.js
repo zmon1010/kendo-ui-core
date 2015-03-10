@@ -634,6 +634,60 @@
             ok(!toolservice.hoveredItem);
         });
 
+        // ------------------------------------------------------------
+        (function() {
+            var shape;
+
+            function triggerDel(callback) {
+                shape = d.addShape({});
+                shape.select(true);
+                if (callback) {
+                    callback();
+                }
+                toolservice.keyDown(46);
+            }
+            module("ToolService /keydown / del", {
+                setup: function() {
+                    setupTool();
+                },
+                teardown: teardown
+            });
+
+            test("should trigger remove for selected items", function () {
+                triggerDel(function() {
+                    d.bind("remove", function(e) {
+                        ok(e.shape === shape);
+                    });
+                });
+            });
+
+            test("should remove the selected items", function () {
+                triggerDel(function() {
+                    d.remove = function(items) {
+                        ok(shape === items[0]);
+                    };
+                });
+            });
+
+            test("should not remove the selected items if the default action is prevented", 0, function () {
+                triggerDel(function() {
+                    d.bind("remove", function(e) {
+                        e.preventDefault();
+                    });
+                    d.remove = function(items) {
+                        ok(false);
+                    };
+                });
+            });
+
+            test("should sync the changes", function () {
+                d._syncChanges = function() {
+                    ok(true);
+                };
+                triggerDel();
+            });
+        })();
+
     })();
 
     (function() {

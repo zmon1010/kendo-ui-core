@@ -2366,25 +2366,21 @@
             },
 
             _triggerRemove: function(items){
-                if (this._isEditable) {
-                    var toRemove = [];
-                    var item, args;
+                var toRemove = [];
+                var item, args;
 
-                    for (var idx = 0; idx < items.length; idx++) {
-                        item = items[idx];
-                        if (item instanceof Shape) {
-                            args = { shape: item.dataItem };
-                        } else {
-                            args = { connection: item.dataItem };
-                        }
-                        if (!this.trigger("remove", args)) {
-                            toRemove.push(item);
-                        }
+                for (var idx = 0; idx < items.length; idx++) {
+                    item = items[idx];
+                    if (item instanceof Shape) {
+                        args = { shape: item };
+                    } else {
+                        args = { connection: item };
                     }
-                    return toRemove;
-                } else {
-                    return items;
+                    if (!this.trigger("remove", args)) {
+                        toRemove.push(item);
+                    }
                 }
+                return toRemove;
             },
 
             /**

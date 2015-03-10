@@ -141,6 +141,51 @@
         return root;
     };
 
+    function setupDiagramDataSource(options, data) {
+        var items = data || [{id: 1}];
+
+        dataSource = new kendo.data.DataSource($.extend({
+            transport: {
+                read: function(options) {
+                    options.success(items);
+                },
+                update: function(options) {
+                    options.success();
+                },
+                create: function(options) {
+                    var newItem = options.data;
+                    newItem.id = items.length + 1;
+                    items.push(newItem);
+                    options.success([newItem]);
+                },
+                destroy: function(options) {
+                    options.success();
+                }
+            },
+            schema: {
+                model: {
+                    id: "id",
+                    fields: {
+                        width: { type: "number" },
+                        height: { type: "number" },
+                        x: { type: "number" },
+                        y: { type: "number" },
+                        text: { type: "string" },
+                        type: { type: "string" },
+                        from: { type: "number" },
+                        to: { type: "number" },
+                        fromX: { type: "number" },
+                        fromY: { type: "number" },
+                        toX: { type: "number" },
+                        toY: { type: "number" }
+                    }
+                }
+            }
+        }, {
+        }, options));
+        return dataSource;
+    }
+
     function setupEditableDiagram() {
         QUnit.fixture.html('<div id="canvas" />');
 
@@ -170,6 +215,7 @@
     }
 
     deepExtend(window, {
+        setupDiagramDataSource: setupDiagramDataSource,
         setupEditableDiagram: setupEditableDiagram,
         Shapes: Shapes,
         roughlyEqual: roughlyEqual,
