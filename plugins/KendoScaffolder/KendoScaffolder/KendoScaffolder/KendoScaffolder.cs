@@ -31,9 +31,6 @@ namespace KendoScaffolder
             : base(context, information)
         {
             _viewModel = new GridConfigurationViewModel(Context);
-            //CommonParameters = new Dictionary<string, object>();
-            //ControllerParameters = new Dictionary<string, object>();
-            //ViewParameters = new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -45,9 +42,6 @@ namespace KendoScaffolder
         {
             GridConfigurationWindow window = new GridConfigurationWindow(_viewModel);
             bool? showDialog = window.ShowDialog();
-
-            //GridConfigurationViewModel a = (GridConfigurationViewModel)window.DataContext;
-            //_viewModel.SelectedGridEvents = 
 
             return showDialog ?? false;
         }

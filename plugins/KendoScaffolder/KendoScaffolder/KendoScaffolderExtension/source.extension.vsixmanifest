@@ -3,7 +3,7 @@
   <Metadata>
     <Identity Id="40e7bb7e-f72d-44cf-8439-2567be2590c6" Version="2015.1.220" Language="en-US" Publisher="Telerik" />
     <DisplayName>Kendo UI Scaffolder</DisplayName>
-    <Description xml:space="preserve">Generates UI for ASP.NET MVC server-side wrappers that allow using Kendo UI widgets from C# code.</Description>
+    <Description xml:space="preserve">Generates UI for ASP.NET MVC server-side wrapper widget declarations together with the related Controller action methods.</Description>
     <MoreInfo>http://docs.telerik.com/kendo-ui/aspnet-mvc/introduction</MoreInfo>
     <Icon>Images\ScaffolderIcon.ico</Icon>
     <PreviewImage>Images\ScaffolderPreviewImage.jpg</PreviewImage>
