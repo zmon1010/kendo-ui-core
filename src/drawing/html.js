@@ -2210,6 +2210,7 @@
         // current node.  After each chunk it updates `start` to just after the last rendered
         // character.
         function doChunk() {
+            var origStart = start;
             var box, pos = text.substr(start).search(/\S/);
             start += pos;
             if (pos < 0 || start >= end) {
@@ -2298,14 +2299,46 @@
                 box = range.getClientRects()[0];
             }
 
-            drawText(range.toString(), box);
+            var str = range.toString();
+            if (!/^(?:pre|pre-wrap)$/i.test(whiteSpace)) {
+                // node with non-significant space -- collapse whitespace.
+                str = str.replace(/\s+/g, " ");
+            }
+            else if (/\t/.test(str)) {
+                // with significant whitespace we need to do something about literal TAB characters.
+                // There's no TAB glyph in a font so they would be rendered in PDF as an empty box,
+                // and the whole text will stretch to fill the original width.  The core PDF lib
+                // does not have sufficient context to deal with it.
+
+                // calculate the starting column here, since we initially discarded any whitespace.
+                var cc = 0;
+                for (pos = origStart; pos < range.startOffset; ++pos) {
+                    var code = text.charCodeAt(pos);
+                    if (code == 9) {
+                        // when we meet a TAB we must round up to the next tab stop.
+                        // in all browsers TABs seem to be 8 characters.
+                        cc += 8 - cc % 8;
+                    } else if (code == 10 || code == 13) {
+                        // just in case we meet a newline we must restart.
+                        cc = 0;
+                    } else {
+                        // ordinary character --> advance one column
+                        cc++;
+                    }
+                }
+
+                // based on starting column, replace any TAB characters in the string we actually
+                // have to display with spaces so that they align to columns multiple of 8.
+                while ((pos = str.search("\t")) >= 0) {
+                    var indent = "        ".substr(0, 8 - (cc + pos) % 8);
+                    str = str.substr(0, pos) + indent + str.substr(pos + 1);
+                }
+            }
+
+            drawText(str, box);
         }
 
         function drawText(str, box) {
-            if (!/^(?:pre|pre-wrap)$/i.test(whiteSpace)) {
-                str = str.replace(/\s+/g, " ");
-            }
-
             // In IE the box height will be approximately lineHeight, while in
             // other browsers it'll (correctly) be the height of the bounding
             // box for the current text/font.  Which is to say, IE sucks again.
