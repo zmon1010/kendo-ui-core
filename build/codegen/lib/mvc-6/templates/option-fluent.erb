@@ -1,4 +1,4 @@
-%if handler?
+% if handler?
         /// <summary>
         /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
         /// </summary>
@@ -18,7 +18,7 @@
             Container.<%= csharp_name %> = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
-%else
+% else
         /// <summary>
         /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
         /// </summary>
@@ -28,9 +28,9 @@
             Container.<%= csharp_name %> = value;
             return this;
         }
-%end
 
-%if template?
+% end
+% if template?
         /// <summary>
         /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
         /// </summary>
@@ -40,4 +40,16 @@
             Container.<%= csharp_name %>Id = templateId;
             return this;
         }
-%end
+
+% end
+% if csharp_type.eql?('bool') && default.eql?('false')
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        public <%= csharp_owner_builder_name %> <%= csharp_name %>()
+        {
+            Container.<%= csharp_name %> = true;
+            return this;
+        }
+
+% end
