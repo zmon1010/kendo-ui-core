@@ -170,6 +170,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SampleEf.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmployeeCompleteModel.cs" />
     <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\EmployeeRepository.cs" />
     <Compile Include="Models\FileBrowser\ContentInitializer.cs" />

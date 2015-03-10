@@ -24,5 +24,23 @@ namespace KendoCRUDService.Models
 
             return result;
         }
+
+        public static IList<EmployeeCompleteModel> AllComplete()
+        {
+            IList<EmployeeCompleteModel> result = HttpContext.Current.Session["EmployeesComplete"] as IList<EmployeeCompleteModel>;
+
+            if (result == null)
+            {
+                HttpContext.Current.Session["EmployeesComplete"] = result = new SampleDataContext().Employees.Select(m => new EmployeeCompleteModel {
+                    FirstName = m.FirstName,
+                    LastName = m.LastName,
+                    Country = m.Country,
+                    City = m.City,
+                    Title = m.Title
+                }).ToList();
+            }
+
+            return result;
+        }
     }
 }

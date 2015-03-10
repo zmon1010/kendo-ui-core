@@ -6,11 +6,12 @@
             <div id="client"></div>
             <script>
                 $(document).ready(function() {
+                    var telerikWebServiceBase = "http://demos.telerik.com/kendo-ui/service/";
                     $("#server").kendoGrid({
                         dataSource: {
                             type: "odata",
                             transport: {
-                                read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Employees"
+                                read: telerikWebServiceBase + "Northwind.svc/Employees"
                             },
                             pageSize: 20,
                             serverPaging: true,
@@ -24,12 +25,39 @@
                             {
                                 field: "FirstName",
                                 title: "First Name",
-                                filterable: { multi: true },
+                                filterable: {
+                                    multi: true ,
+                                    //when serverPaging of the Grid is enabled, dataSource should be provided for all the Filterable Multi Check widgets
+                                    dataSource: {
+                                        transport: {
+                                            read: {
+                                                url: telerikWebServiceBase + "Employees/Unique",
+                                                dataType: "jsonp",
+                                                data: {
+                                                    field: "FirstName"
+                                                }
+                                            }
+                                       }
+                                    }
+                                },
                                 width: "220px"
                             },
                             {
                                 field: "LastName",
-                                filterable: { multi: true },
+                                filterable: { 
+                                    dataSource: {
+                                        transport: {
+                                            read: {
+                                                url: telerikWebServiceBase + "Employees/Unique",
+                                                dataType: "jsonp",
+                                                data: {
+                                                    field: "LastName"
+                                                }
+                                            }
+                                       }
+                                    },
+                                    multi: true 
+                                },
                                 title: "Last Name",
                                 width: "220px"
                             },
@@ -37,6 +65,17 @@
                                 field: "Country",
                                 filterable: {
                                     multi: true,
+                                    dataSource: {
+                                        transport: {
+                                            read: {
+                                                url: telerikWebServiceBase + "Employees/Unique",
+                                                dataType: "jsonp",
+                                                data: {
+                                                    field: "Country"
+                                                }
+                                            }
+                                       }
+                                    },
                                     checkAll: true,
                                     itemTemplate: function(e) {
                                         if (e.field == "all") {
@@ -52,8 +91,8 @@
                             },
                             {
                                 field: "City",
-                                filterable: { 
-                                  multi: true, 
+                                filterable: {
+                                  multi: true,
                                   dataSource: [{
                                     City: "Seattle",
                                   },{
@@ -65,13 +104,24 @@
                                   },{
                                     City: "London"
                                   }],
-                                  checkAll: false 
+                                  checkAll: false
                                 },
                                 width: "220px"
                             },
                             {
                                 filterable: {
-                                    multi: true
+                                    multi: true,
+                                    dataSource: {
+                                        transport: {
+                                            read: {
+                                                url: telerikWebServiceBase + "Employees/Unique",
+                                                dataType: "jsonp",
+                                                data: {
+                                                    field: "Title"
+                                                }
+                                            }
+                                       }
+                                    }
                                 },
                                 field: "Title"
                             }
@@ -79,23 +129,22 @@
                     });
 
 
-                    var crudServiceBaseUrl = "http://demos.telerik.com/kendo-ui/service",
-                        dataSource = new kendo.data.DataSource({
+                    var dataSource = new kendo.data.DataSource({
                             transport: {
                                 read:  {
-                                    url: crudServiceBaseUrl + "/Products",
+                                    url: telerikWebServiceBase + "/Products",
                                     dataType: "jsonp"
                                 },
                                 update: {
-                                    url: crudServiceBaseUrl + "/Products/Update",
+                                    url: telerikWebServiceBase + "/Products/Update",
                                     dataType: "jsonp"
                                 },
                                 destroy: {
-                                    url: crudServiceBaseUrl + "/Products/Destroy",
+                                    url: telerikWebServiceBase + "/Products/Destroy",
                                     dataType: "jsonp"
                                 },
                                 create: {
-                                    url: crudServiceBaseUrl + "/Products/Create",
+                                    url: telerikWebServiceBase + "/Products/Create",
                                     dataType: "jsonp"
                                 },
                                 parameterMap: function(options, operation) {
