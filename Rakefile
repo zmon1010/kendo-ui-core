@@ -95,6 +95,7 @@ def framework_api_doc
         .include(all_docs("data"))
         .include(all_docs("geometry"))
         .include(all_docs("drawing"))
+        .include(all_docs("ooxml"))
 end
 
 def md_api_suite(suite)

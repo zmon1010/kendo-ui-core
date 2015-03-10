@@ -527,6 +527,7 @@ declare module kendo.data {
         };
         constructor(data?: any);
         init(data?: any):void;
+        accept(data?: any): void;
         dirty: boolean;
         id: any;
         editable(field: string): boolean;
@@ -953,27 +954,29 @@ declare module kendo.data {
         constructor(array?: any[]);
         init(array?: any[]): void;
         [index: number]: any;
-        length: number;
+
+        empty(): void;
+        every(callback: (item: Object, index: number, source: ObservableArray) => boolean): boolean;
+        filter(callback: (item: Object, index: number, source: ObservableArray) => boolean): any[];
+        find(callback: (item: Object, index: number, source: ObservableArray) => boolean): any;
+        forEach(callback: (item: Object, index: number, source: ObservableArray) => void ): void;
+        indexOf(item: any): number;
         join(separator: string): string;
+        length: number;
+        map(callback: (item: Object, index: number, source: ObservableArray) => any): any[];
         parent(): ObservableObject;
         pop(): ObservableObject;
         push(...items: any[]): number;
+        remove(item: Object): void;
+        shift(): any;
         slice(begin: number, end?: number): any[];
+        some(callback: (item: Object, index: number, source: ObservableArray) => boolean): boolean;
         splice(start: number): any[];
         splice(start: number, deleteCount: number, ...items: any[]): any[];
-        shift(): any;
         toJSON(): any[];
         unshift(...items: any[]): number;
-        wrapAll(source: Object, target: Object): any;
         wrap(object: Object, parent: Object): any;
-        indexOf(item: any): number;
-        forEach(callback: (item: Object, index: number, source: ObservableArray) => void ): void;
-        map(callback: (item: Object, index: number, source: ObservableArray) => any): any[];
-        filter(callback: (item: Object, index: number, source: ObservableArray) => boolean): any[];
-        find(callback: (item: Object, index: number, source: ObservableArray) => boolean): any;
-        every(callback: (item: Object, index: number, source: ObservableArray) => boolean): boolean;
-        some(callback: (item: Object, index: number, source: ObservableArray) => boolean): boolean;
-        remove(item: Object): void;
+        wrapAll(source: Object, target: Object): any;
     }
 
     interface ObservableArrayEvent {
@@ -997,7 +1000,7 @@ declare module kendo.data {
         cancelChanges(model?: kendo.data.Model): void;
         data(): kendo.data.ObservableArray;
         data(value: any): void;
-        fetch(callback?: Function): void;
+        fetch(callback?: Function): JQueryPromise<any>;
         filter(filters: DataSourceFilterItem): void;
         filter(filters: DataSourceFilterItem[]): void;
         filter(filters: DataSourceFilters): void;
@@ -1018,13 +1021,13 @@ declare module kendo.data {
         page(page: number): void;
         pageSize(): number;
         pageSize(size: number): void;
-        query(options?: any): void;
-        read(data?: any): void;
-        remove(model: kendo.data.Model): void;
+        query(options?: any): JQueryPromise<any>;
+        read(data?: any): JQueryPromise<any>;
+        remove(model: kendo.data.ObservableObject): void;
         sort(sort: DataSourceSortItem): void;
         sort(sort: DataSourceSortItem[]): void;
         sort(): DataSourceSortItem[];
-        sync(): void;
+        sync(): JQueryPromise<any>;
         total(): number;
         totalPages(): number;
         view(): kendo.data.ObservableArray;

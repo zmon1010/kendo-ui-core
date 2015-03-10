@@ -40,6 +40,21 @@ module CodeGen::TypeScript
         'Point' => 'kendo.mobile.ui.Point'
     }
 
+    FIELD_OVERRIDES = {
+        'Grid' => {
+            'columns' => 'GridColumn[]'
+        },
+        'Workbook' => {
+            'sheets' => 'WorkbookSheet[]'
+        }
+    }
+
+    RESULT_OVERRIDES = {
+        'Grid' => {
+            'getOptions' => 'GridOptions'
+        }
+    }
+
     def self.type(type)
         return type if type.start_with?('kendo')
 
@@ -164,12 +179,6 @@ module CodeGen::TypeScript
             declaration
         end
     end
-
-    FIELD_OVERRIDES = {
-        'Grid' => {
-            'columns' => 'GridColumn[]'
-        }
-    }
 
     class Field < CodeGen::Field
         attr_accessor :jsdoc
@@ -310,6 +319,14 @@ module CodeGen::TypeScript
                 result_type = @result.type_script_type
             else
                 result_type = 'void'
+            end
+
+            if RESULT_OVERRIDES.has_key?(@owner.name)
+                overrides = RESULT_OVERRIDES[@owner.name]
+
+                if overrides.has_key?(@name)
+                    result_type = overrides[name]
+                end
             end
 
             combinations.map do |combination|
