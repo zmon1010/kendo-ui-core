@@ -188,15 +188,33 @@
             });
 
             if (pageWidth) {
-                // subtle: if we don't set the width *and* margins
-                // here, the layout in this container will be
-                // different from the one in our final page elements,
-                // and we'll split at the wrong places.
+                // subtle: if we don't set the width *and* margins here, the layout in this
+                // container will be different from the one in our final page elements, and we'll
+                // split at the wrong places.
                 $(container).css({
                     width        : pageWidth,
                     paddingLeft  : margin.left,
                     paddingRight : margin.right
                 });
+
+                // when the first element has a margin-top (i.e. a <h1>) the page will be
+                // inadvertently enlarged by that number (the browser will report the container's
+                // bounding box top to start at the element's top, rather than including its
+                // margin).  Adding overflow: hidden seems to fix it.
+                //
+                // to understand the difference, try the following snippets in your browser:
+                //
+                // 1. <div style="background: yellow">
+                //      <h1 style="margin: 3em">Foo</h1>
+                //    </div>
+                //
+                // 2. <div style="background: yellow; overflow: hidden">
+                //      <h1 style="margin: 3em">Foo</h1>
+                //    </div>
+                //
+                // this detail is not important when automatic page breaking is not requested, hence
+                // doing it only if pageWidth is defined.
+                $(copy).css({ overflow: "hidden" });
             }
 
             container.appendChild(copy);
@@ -295,7 +313,28 @@
                 adjust = saveAdjust;
             }
 
+            function firstInParent(el) {
+                var p = el.parentNode, first = p.firstChild;
+                if (el === first) {
+                    return true;
+                }
+                if (el === p.children[0]) {
+                    if (first.nodeType == 7 /* comment */ ||
+                        first.nodeType == 8 /* processing instruction */) {
+                        return true;
+                    }
+                    if (first.nodeType == 3 /* text */) {
+                        // if whitespace only we can probably consider it's first
+                        return !/\S/.test(first.data);
+                    }
+                }
+                return false;
+            }
+
             function breakAtElement(el) {
+                if (el.nodeType == 1 && el !== copy && firstInParent(el)) {
+                    return breakAtElement(el.parentNode);
+                }
                 var page = makePage();
                 var range = doc.createRange();
                 range.setStartBefore(copy);
@@ -322,6 +361,19 @@
                     overflow : pageHeight || pageWidth ? "hidden" : "visible",
                     clear    : "both"
                 });
+
+                // debug
+                // $("<div>").css({
+                //     position  : "absolute",
+                //     left      : margin.left,
+                //     top       : margin.top,
+                //     width     : pageWidth,
+                //     height    : pageHeight,
+                //     boxSizing : "border-box",
+                //     background: "rgba(255, 255, 0, 0.5)"
+                //     //border    : "1px solid red"
+                // }).appendTo(page);
+
                 if (options && options.pageClassName) {
                     page.className = options.pageClassName;
                 }
