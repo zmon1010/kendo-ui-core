@@ -3,6 +3,7 @@
 var FS = require("fs");
 var PATH = require("path");
 var SYS = require("util");
+var META = require("../kendo-meta.js");
 
 var U2 = require("uglify-js");
 var YAJET = require("./yajet.js").YAJET;
@@ -26,52 +27,10 @@ Array.prototype.find_if = function(test) {
     return false;
 };
 
-var BUNDLES = [
-    "kendo.editor.js",
-    "kendo.aspnetmvc.js",
-    "kendo.all.js",
-    "kendo.web.js",
-    "kendo.dataviz.js",
-    "kendo.mobile.js",
-    "kendo.winjs.js",
-];
-
 if (files.length == 0) {
-
-    files = FS.readdirSync(SRCDIR).filter(function(filename){
-        if (BUNDLES.indexOf(filename) >= 0) return false;
-        return /^kendo.*\.js$/i.test(filename) && !/\.min\.js$/i.test(filename);
-    }).map(ADD_PATH);
-
-    // add editor and aspnetmvc
-    files.push.apply(files, [
-        "editor/main.js",
-        "editor/dom.js",
-        "editor/serializer.js",
-        "editor/range.js",
-        "editor/system.js",
-        "editor/inlineformat.js",
-        "editor/formatblock.js",
-        "editor/linebreak.js",
-        "editor/lists.js",
-        "editor/link.js",
-        "editor/image.js",
-        "editor/components.js",
-        "editor/indent.js",
-        "editor/viewhtml.js",
-        "editor/formatting.js",
-        "editor/toolbar.js",
-        "editor/tables.js"
-    ].map(ADD_PATH));
-
-    files.push.apply(files, [
-        "aspnetmvc/kendo.data.aspnetmvc.js",
-        "aspnetmvc/kendo.combobox.aspnetmvc.js",
-        "aspnetmvc/kendo.multiselect.aspnetmvc.js",
-        "aspnetmvc/kendo.imagebrowser.aspnetmvc.js",
-        "aspnetmvc/kendo.validator.aspnetmvc.js"
-    ].map(ADD_PATH));
-
+    files = META.loadAll().map(function(filename){
+        return PATH.join(SRCDIR, filename);
+    });
 }
 
 var TOTAL_PARSED = 0;
