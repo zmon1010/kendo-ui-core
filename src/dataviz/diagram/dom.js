@@ -1729,25 +1729,53 @@
             },
 
             createShape: function() {
-                var that = this;
-                if (((this.editor && this.editor.end()) || !this.editor) &&
-                    !this.trigger("add", { shape: {} })) {
-                    var view = this.dataSource.view() || [];
+                if ((this.editor && this.editor.end()) || !this.editor) {
+                    var dataSource = this.dataSource;
+                    var view = dataSource.view() || [];
                     var index = view.length;
-                    var model = this.dataSource.insert(index, {});
-                    that.editModel(model, "shape");
+                    var model = createModel(dataSource, {});
+                    var shape = this._createShape(model, {});
+
+                    if (!this.trigger("add", { shape: shape })) {
+                        dataSource.insert(index, model);
+                        var inactiveItem = this._inactiveShapeItems.getByUid(model.uid);
+                        inactiveItem.element = shape;
+                        this.edit(shape);
+                    }
                 }
             },
 
+            _createShape: function(dataItem, options) {
+                options = deepExtend({}, this.options.shapeDefaults, options);
+                options.dataItem = dataItem;
+                var shape = new Shape(options, this);
+                return shape;
+            },
+
             createConnection: function() {
-                if (((this.editor && this.editor.end()) || !this.editor) &&
-                    !this.trigger("add", { connection: {} })) {
-                    var view = this.connectionsDataSource.view() || [];
+                if (((this.editor && this.editor.end()) || !this.editor)) {
+                    var connectionsDataSource = this.connectionsDataSource;
+                    var view = connectionsDataSource.view() || [];
                     var index = view.length;
-                    var model = this.connectionsDataSource.insert(index, {});
-                    var connection = this._connectionsDataMap[model.uid];
-                    this.edit(connection);
+                    var model = createModel(connectionsDataSource, {});
+                    var connection = this._createConnection(model);
+                    if (!this.trigger("add", { connection: connection })) {
+                        this._connectionsDataMap[model.uid] = connection;
+                        connectionsDataSource.insert(index, model);
+                        this.addConnection(connection, false);
+                        this.edit(connection);
+                    }
                 }
+            },
+
+            _createConnection: function(dataItem, source, target) {
+                var options = deepExtend({}, this.options.connectionDefaults);
+                options.dataItem = dataItem;
+
+                var connection = new Connection(source || new Point(), target || new Point(), options);
+                connection.diagram = this;
+                connection.type(options.type || CASCADING);
+                return connection;
             },
 
             editModel: function(dataItem, editorType) {
@@ -4442,6 +4470,14 @@
                 shapes: shapes,
                 connections: connections
             };
+        }
+
+        function createModel(dataSource, model) {
+            if (dataSource.reader.model) {
+                return new dataSource.reader.model(model);
+            }
+
+            return new kendo.data.ObservableObject(model);
         }
 
         dataviz.ui.plugin(Diagram);

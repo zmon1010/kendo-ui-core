@@ -190,25 +190,17 @@
         QUnit.fixture.html('<div id="canvas" />');
 
         $("#canvas").kendoDiagram({
-            dataSource: {
-                data: [{
-                    firstName: "firstName"
-                },{
-                    firstName: "firstName1"
-                }],
-                schema: {
-                    model: {
-                        id: "id",
-                        firstName: { type: "string" }
-                    }
-                }
-            },
-            connectionsDataSource: {
-                data: [{
-                    from: 1,
-                    to: 2
-                }]
-            }
+            dataSource: setupDiagramDataSource({}, [{
+                id: 1,
+                text: "firstName"
+            }, {
+                id: 2,
+                text: "firstName1"
+            }]),
+            connectionsDataSource: setupDiagramDataSource({}, [{
+                from: 1,
+                to: 2
+            }])
         });
 
         return $("#canvas").getKendoDiagram();
