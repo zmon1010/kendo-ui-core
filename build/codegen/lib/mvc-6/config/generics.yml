@@ -14,3 +14,6 @@
     - :name: T
       :constraint: class
 
+:grid:
+    - :name: T
+      :constraint: class
