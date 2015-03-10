@@ -101,11 +101,23 @@ namespace Kendo.Controllers
         }
 
         protected void SetTheme() {
-            var ThemeCookie = HttpContext.Request.Cookies["theme"];
+            var theme = "material";
+            var themeParam = HttpContext.Request.QueryString["theme"];
+            var themeCookie = HttpContext.Request.Cookies["theme"];
+
+            if (themeParam != null && Regex.IsMatch(themeParam, "[a-z0-9\\-]+", RegexOptions.IgnoreCase))
+            {
+                theme = themeParam;
+            }
+            else if (themeCookie != null)
+            {
+                theme = themeCookie.Value;
+            }
+
             var MobileThemeCookie = HttpContext.Request.Cookies["mobileTheme"];
             var CommonFileCookie = HttpContext.Request.Cookies["commonFile"];
 
-            ViewBag.Theme = ThemeCookie == null ? "material" : ThemeCookie.Value;
+            ViewBag.Theme = theme;
             ViewBag.MobileTheme = MobileThemeCookie == null ? "ios7" : MobileThemeCookie.Value;
             ViewBag.CommonFile = CommonFileCookie == null ? "common-material" : CommonFileCookie.Value;
         }
