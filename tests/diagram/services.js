@@ -570,6 +570,44 @@
             moveToShape(shape1.getConnector("auto"), shape2);
             ok(d.connections[0].target() === shape2.getConnector("left"));
         });
+
+         test("adds connection from the source connector to the current point", function() {
+            setupTool();
+            var shape = d.addShape({});
+            var sourceConnector = shape.getConnector("auto");
+            var point = new Point();
+            toolservice._hoveredConnector = new ConnectorVisual(sourceConnector);
+            connectionTool.start(new Point(), {});
+            var connection = shape.connections()[0];
+            ok(connection.source() === sourceConnector);
+            ok(connection.target().equals(point));
+        });
+
+        test("triggers add on start", 1, function() {
+            setupTool();
+            var shape = d.addShape({});
+            toolservice._hoveredConnector = new ConnectorVisual(shape.getConnector("auto"));
+            d.bind("add", function(e) {
+                ok(true);
+            });
+            connectionTool.start(new Point(), {});
+        });
+
+        test("does not add connection and ends service if the default action  is prevented", function() {
+            setupTool();
+            var shape = d.addShape({});
+            toolservice._hoveredConnector = new ConnectorVisual(shape.getConnector("auto"));
+            d.bind("add", function(e) {
+                e.preventDefault();
+            });
+            toolservice.end = function() {
+                ok(true);
+            };
+            connectionTool.start(new Point(), {});
+
+            equal(shape.connections().length, 0);
+        });
+
     })();
 
     (function() {

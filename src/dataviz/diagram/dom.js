@@ -1770,8 +1770,7 @@
                 options.dataItem = dataItem;
 
                 var connection = new Connection(source || new Point(), target || new Point(), options);
-                connection.diagram = this;
-                connection.type(options.type || CASCADING);
+
                 return connection;
             },
 
