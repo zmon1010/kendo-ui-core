@@ -545,10 +545,7 @@
                 var diagram = this.diagram;
                 if (diagram && diagram._isEditable) {
                     var bounds = this._bounds;
-                    var model;
-                    if (this.dataItem) {
-                        model = diagram.dataSource.getByUid(this.dataItem.uid);
-                    }
+                    var model = this.dataItem;
 
                     if (model) {
                         diagram._suspendModelRefresh();
@@ -1317,7 +1314,7 @@
                             diagram._deferredConnectionUpdates.push(inactiveItem.onActivate(setNewTarget));
                         }
                     }
-                } else if (instance !== that[name]()) {
+                } else {
                     that[name](instance, false);
                 }
             },
@@ -2253,21 +2250,27 @@
             },
 
             _addConnection: function (connection, undoable) {
-                var newConnection, newItem, dataItem;
-                if (this.connectionsDataSource && this._isEditable) {
-                    newItem = cloneDataItem(connection.dataItem);
-                    dataItem = this.connectionsDataSource.add(newItem);
-                    newConnection = this._connectionsDataMap[dataItem.uid];
-                    newConnection.redraw(connection.options);
-                    newConnection._updateConnector(connection.source(), "source");
-                    newConnection._updateConnector(connection.target(), "target");
-                } else {
-                    newConnection = this.addConnection(connection, undoable);
-                    newConnection.source(connection.source());
-                    newConnection.target(connection.target());
-                }
+                var connectionsDataSource = this.connectionsDataSource;
+                var dataItem;
+                if (connectionsDataSource && this._isEditable) {
+                    dataItem = createModel(connectionsDataSource, cloneDataItem(connection.dataItem));
+                    connection.dataItem = dataItem;
+                    connection.updateModel();
 
-                return newConnection;
+                    if (!this.trigger("add", { connection: connection })) {
+                        this._connectionsDataMap[dataItem.uid] = connection;
+
+                        connectionsDataSource.add(dataItem);
+                        this.addConnection(connection, undoable);
+                        connection._updateConnectors();
+
+                        return connection;
+                    }
+                } else if (!this.trigger("add", { connection: connection })) {
+                    this.addConnection(connection, undoable);
+                    connection._updateConnectors();
+                    return connection;
+                }
             },
 
             /**
@@ -2314,26 +2317,20 @@
 
             _addShape: function(shape, options) {
                 var that = this;
-                var newItem, dataItem;
-                if (this.dataSource && this._isEditable) {
-                    newItem = cloneDataItem(shape.dataItem);
-                    if (!this.trigger("add", { shape: newItem })) {
-                        dataItem = this.dataSource.add(newItem);
-                        var updateShape = function() {
-                            var element = that._dataMap[dataItem.id];
-                            element.redraw(shape.options);
-                        };
+                var dataSource = that.dataSource;
+                var dataItem;
+                if (dataSource && this._isEditable) {
+                    dataItem = createModel(dataSource, cloneDataItem(shape.dataItem));
+                    shape.dataItem = dataItem;
+                    shape.updateModel();
+
+                    if (!this.trigger("add", { shape: shape })) {
+                        this.dataSource.add(dataItem);
                         var inactiveItem = this._inactiveShapeItems.getByUid(dataItem.uid);
-                        shape.dataItem = dataItem;
-                        shape.updateModel();
-                        if (inactiveItem) {
-                            inactiveItem.onActivate(updateShape);
-                        } else {
-                            updateShape();
-                        }
-                        return that._dataMap[dataItem.id];
+                        inactiveItem.element = shape;
+                        return shape;
                     }
-                } else {
+                } else if (!this.trigger("add", { shape: shape })) {
                     return this.addShape(shape, options);
                 }
             },

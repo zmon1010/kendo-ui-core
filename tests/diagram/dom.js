@@ -1987,6 +1987,35 @@
             equal(bounds.height, 300);
         });
 
+        test("Paste should trigger add", function () {
+            diagram.bind("add", function() {
+                ok(true);
+            });
+            pasteShape();
+        });
+
+        test("Paste should not add item or shape if the default action is prevented", function () {
+            var shape;
+            diagram.bind("add", function(e) {
+                e.preventDefault();
+                shape = e.shape;
+            });
+            pasteShape();
+
+            ok(!diagram.getShapeById(shape.id));
+            equal(diagram.dataSource.data().length, 1);
+        });
+
+        test("Paste should add the shape passed to the add event after sync", function () {
+            var shape;
+            diagram.bind("add", function(e) {
+                shape = e.shape;
+            });
+            pasteShape();
+
+            ok(diagram.getShapeById(shape.id) === shape);
+        });
+
     })();
 
     (function() {
@@ -2063,6 +2092,43 @@
             equal(item.to, targetShape.dataItem.id);
             ok(source.shape === sourceShape);
             ok(target.shape === targetShape);
+        });
+
+        test("Paste should trigger add", function () {
+            diagram.bind("add", function() {
+                ok(true);
+            });
+            pasteConnection();
+        });
+
+        test("Paste should not add item or connection if the default action is prevented", function () {
+            var connection;
+            diagram.bind("add", function(e) {
+                e.preventDefault();
+                connection = e.connection;
+            });
+            pasteConnection();
+
+            for (var idx = 0; idx < diagram.connections.length; idx++) {
+                if (diagram.connections[idx] === connection) {
+                    ok(false);
+                }
+            }
+            equal(diagram.connectionsDataSource.data().length, 2);
+        });
+
+        test("Paste should add the connection passed to the add event after sync", 1, function () {
+            var connection;
+            diagram.bind("add", function(e) {
+                connection = e.connection;
+            });
+            pasteConnection();
+
+            for (var idx = 0; idx < diagram.connections.length; idx++) {
+                if (diagram.connections[idx] === connection) {
+                    ok(true);
+                }
+            }
         });
 
     })();
