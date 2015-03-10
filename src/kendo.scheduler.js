@@ -1745,6 +1745,8 @@ var __meta__ = {
             var view = that.view();
             var browser = kendo.support.browser;
             var selection = that._selection;
+            var groups = view.groups;
+            var selectedGroups;
 
             if (options === undefined) {
                 var selectedEvents;
@@ -1780,7 +1782,6 @@ var __meta__ = {
                 };
             }
 
-            var groups;
             if (options.resources) {
                 var fieldName;
                 var filters = [];
@@ -1794,82 +1795,107 @@ var __meta__ = {
                     filters.push({ field: fieldName, operator: "eq", value: options.resources[fieldName]});
                 }
 
-                groups = new kendo.data.Query(groupsByResource)
+                selectedGroups = new kendo.data.Query(groupsByResource)
                     .filter(filters)
                     .toArray();
             }
 
             if (options.events && options.events.length) {
-                var idx;
-                var eventsUids = options.events;
-
-                for (idx = 0; idx < eventsUids.length; idx++) {
-                    if (groups && groups.length) {
-                        var currentGroup = that.view().groups[groups[0].groupIndex];
-                        var events = [];
-                        var collectionCount = currentGroup.timeSlotCollectionCount();
-
-                        for (var collIdx = 0; collIdx < collectionCount; collIdx++) {
-                            events = events.concat(currentGroup.getTimeSlotCollection(collIdx).events());//timeslotCollections[collIdx].events());
-                        }
-
-                        events = new kendo.data.Query(events)
-                            .filter({field: "element[0].getAttribute('data-uid')", operator:"eq", value: eventsUids[idx]})
-                            .toArray();
-
-                        if (events[0]) {
-                            that._createSelection(events[0].element);
-                        }
-                    } else {
-                        var element = view.element.find(kendo.format(".k-event[data-uid={0}]", eventsUids[idx]));
-                        that._createSelection(element[0]);
-                    }
-                }
-
-                that.wrapper.focus();
-
-                if (browser.msie && browser.version < 9) {
-                    setTimeout(function() {
-                        that.wrapper.focus();
-                    });
-                }
+                that._selectEvents(options.events, selectedGroups);
             }
 
-            if (options.start && options.end) {
+            if (groups && (options.start && options.end)) {
+                var rangeStart = getDate(view._startDate);
+                var rangeEnd = kendo.date.addDays(getDate(view._endDate),1);
                 var group;
                 var ranges;
 
-                if (groups && groups.length) {
-                    group = that.view().groups[groups[0].groupIndex];
-                } else {
-                    group = that.view().groups[0];
-                }
-
-                ranges = group.ranges(options.start, options.end , options.isAllDay, false);
-
-                if (ranges.length) {
-                    if (!that._selection) {
-                        that._selection = {};
+                if (options.start < rangeEnd && rangeStart <= options.end) {
+                    if (selectedGroups && selectedGroups.length) {
+                        group = groups[selectedGroups[0].groupIndex];
+                    } else {
+                        group = groups[0];
                     }
 
-                    that._selection = {
-                        start: new Date(ranges[0].start.start),
-                        end: new Date(ranges[ranges.length-1].end.end),
-                        groupIndex: ranges[0].start.groupIndex,
-                        index: ranges[0].start.index,
-                        isAllDay: ranges[0].start.isDaySlot,
-                        events: []
-                    };
-                }
+                    ranges = group.ranges(options.start, options.end, options.isAllDay, false);
 
-                that._select();
-                that.wrapper.focus();
+                    if (ranges.length) {
+                        that._selection = {
+                            start: kendo.timezone.toLocalDate(ranges[0].start.start),
+                            end: kendo.timezone.toLocalDate(ranges[ranges.length-1].end.end),
+                            groupIndex: ranges[0].start.groupIndex,
+                            index: ranges[0].start.index,
+                            isAllDay: ranges[0].start.isDaySlot,
+                            events: []
+                        };
 
-                if (browser.msie && browser.version < 9) {
-                    setTimeout(function() {
+                        that._select();
+
+                        //extract focus to method?
                         that.wrapper.focus();
-                    });
+
+                        if (browser.msie && browser.version < 9) {
+                            setTimeout(function() {
+                                that.wrapper.focus();
+                            });
+                        }
+                    }
                 }
+
+            }
+        },
+
+        _selectEvents: function (eventsUids, selectedGroups) {
+            var that = this;
+            var idx;
+            var view = that.view();
+            var browser = kendo.support.browser;
+            var groups = view.groups;
+            var eventsLength = eventsUids.length;
+            var isGrouped = selectedGroups && selectedGroups.length;
+
+            for (idx = 0; idx < eventsLength; idx++) {
+                if (isGrouped) {
+                    var currentGroup = groups[selectedGroups[0].groupIndex];
+                    var events = [];
+
+                    //get all events only once?
+                    var timeSlotCollectionCount = currentGroup.timeSlotCollectionCount();
+                    var daySlotCollectionCount = currentGroup.daySlotCollectionCount();
+
+                    for (var collIdx = 0; collIdx < timeSlotCollectionCount; collIdx++) {
+                        events = events.concat(currentGroup.getTimeSlotCollection(collIdx).events());
+                    }
+
+                    for (var dayCollIdx = 0; dayCollIdx < daySlotCollectionCount; dayCollIdx++) {
+                        events = events.concat(currentGroup.getDaySlotCollection(dayCollIdx).events());
+                    }
+
+                    //filter the found events
+                    events = new kendo.data.Query(events)
+                        .filter({field: "element[0].getAttribute('data-uid')", operator: "eq", value: eventsUids[idx]})
+                        .toArray();
+
+                    //if event is found select it
+                    if (events[0]) {
+                        that._createSelection(events[0].element);
+                    }
+                } else {
+                    //find first element with given UID and select it if no grouping is set:
+                    var element = view.element.find(kendo.format(".k-event[data-uid={0}]", eventsUids[idx]));
+                    if (element.length) {
+                        that._createSelection(element[0]);
+
+                    }
+                }
+            }
+
+            that.wrapper.focus();
+
+            if (browser.msie && browser.version < 9) {
+                setTimeout(function () {
+                    that.wrapper.focus();
+                });
             }
         },
 
@@ -2137,7 +2163,6 @@ var __meta__ = {
 
         _updateSelection: function(dataItem, events) {
             var selection = this._selection;
-
 
             if (dataItem && selection) {
                 var view =  this.view();

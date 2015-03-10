@@ -76,40 +76,6 @@
         ok(td.hasClass("k-state-selected"));
     });
 
-    test("select method is returning current selection when no parameter is passed", function() {
-        var eventElement = container.find(".k-event");
-
-        eventElement.trigger({
-            type: "mousedown",
-            currentTarget: eventElement
-        });
-
-        ok(eventElement.hasClass("k-state-selected"));
-        equal(scheduler.select().events.length, 1);
-    });
-
-    test("select method is selecting events by id", function() {
-        var eventElement = container.find(".k-event");
-        var event = scheduler.dataSource.data()[0];
-
-        scheduler.select({
-            events: [event.uid]
-        });
-
-        ok(eventElement.hasClass("k-state-selected"));
-    });
-
-    test("select method is selecting slots", function() {
-        var eventElement = container.find(".k-event");
-        var event = scheduler.dataSource.data()[0];
-
-        scheduler.select({
-            events: [event.uid]
-        });
-
-        ok(eventElement.hasClass("k-state-selected"));
-    });
-
     test("scheduler does not move selection on right mouse click", function() {
         var td = container.find(".k-scheduler-content td:last");
 
@@ -727,55 +693,6 @@
         });
     });
 
-    test("select method is selecting events by id and resource", function() {
-        var today = kendo.date.today();
-        var end = new Date(today);
-        end.setHours(1);
-
-        setupWidget({
-            dataSource: [
-                { roomId2: [3,4], roomId: 2, start: today, end: end, title: "Test" }
-            ],
-            group: {
-                resources: ["Rooms", "Rooms2"]
-            },
-            resources: [
-                {
-                    field: "roomId",
-                    name: "Rooms",
-                    dataSource: [
-                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
-                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
-                    ],
-                    valuePrimitive: true,
-                    title: "Room"
-                }, {
-                    field: "roomId2",
-                    name: "Rooms2",
-                    multiple: true,
-                    dataSource: [
-                        { text: "101", value: 3, color: "#6eb3fa" },
-                        { text: "201", value: 4, color: "#f58a8a" }
-                    ],
-                    valuePrimitive: true,
-                    title: "Room2"
-                }
-            ]
-        });
-
-        var eventUid = scheduler.data()[0].uid;
-
-        scheduler.select({
-            events: [eventUid],
-            resources: {
-                roomId2: 4,
-                roomId: 2
-            }
-        });
-
-        ok(scheduler.wrapper.find("[data-uid=" + eventUid + "]").hasClass("k-state-selected"));
-    });
-
     test("Scheduler raises change event with resources", function() {
         var today = kendo.date.today();
         var end = new Date(today);
@@ -1048,5 +965,292 @@
         scheduler.view("day");
 
         equal(scheduler._selection.groupIndex, 0);
+    });
+
+    module("Selection API", {
+        setup: function() {
+            container = $("<div />");
+            QUnit.fixture.append(container);
+        },
+
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
+        }
+    });
+
+    test("select method is selecting events by id and resource", function() {
+        var today = kendo.date.today();
+        var end = new Date(today);
+        end.setHours(1);
+
+        setupWidget({
+            dataSource: [
+                { roomId2: [3,4], roomId: 2, start: today, end: end, title: "Test" }
+            ],
+            group: {
+                resources: ["Rooms", "Rooms2"]
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    valuePrimitive: true,
+                    title: "Room"
+                }, {
+                    field: "roomId2",
+                    name: "Rooms2",
+                    multiple: true,
+                    dataSource: [
+                        { text: "101", value: 3, color: "#6eb3fa" },
+                        { text: "201", value: 4, color: "#f58a8a" }
+                    ],
+                    valuePrimitive: true,
+                    title: "Room2"
+                }
+            ]
+        });
+
+        var eventUid = scheduler.data()[0].uid;
+
+        scheduler.select({
+            events: [eventUid],
+            resources: {
+                roomId2: 4,
+                roomId: 2
+            }
+        });
+
+        ok(scheduler.wrapper.find("[data-uid=" + eventUid + "]").hasClass("k-state-selected"));
+    });
+
+    test("select method is selecting allDay events by id and resource", function() {
+        var today = kendo.date.today();
+        var end = new Date(today);
+        end.setHours(1);
+
+        setupWidget({
+            dataSource: [
+                { roomId2: [3,4], roomId: 2, start: today, end: end, title: "Test", isAllDay: true }
+            ],
+            group: {
+                resources: ["Rooms", "Rooms2"]
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    valuePrimitive: true,
+                    title: "Room"
+                }, {
+                    field: "roomId2",
+                    name: "Rooms2",
+                    multiple: true,
+                    dataSource: [
+                        { text: "101", value: 3, color: "#6eb3fa" },
+                        { text: "201", value: 4, color: "#f58a8a" }
+                    ],
+                    valuePrimitive: true,
+                    title: "Room2"
+                }
+            ]
+        });
+
+        var eventUid = scheduler.data()[0].uid;
+
+        scheduler.select({
+            events: [eventUid],
+            resources: {
+                roomId2: 4,
+                roomId: 2
+            }
+        });
+
+        var eventElement = $(scheduler.wrapper.find("[data-uid=" + eventUid + "]")[1]);
+        ok(eventElement.hasClass("k-state-selected"));
+    });
+
+    test("select method is returning current selection when no parameter is passed", function() {
+        setupWidget({
+            selectable: true,
+            views: [
+                "day",
+                { type: "week", selected: true }
+            ]
+        });
+
+        var eventElement = container.find(".k-event");
+
+        eventElement.trigger({
+            type: "mousedown",
+            currentTarget: eventElement
+        });
+
+        ok(eventElement.hasClass("k-state-selected"));
+        equal(scheduler.select().events.length, 1);
+    });
+
+    test("select method is selecting events by id", function() {
+        setupWidget({
+            selectable: true,
+            views: [
+                "day",
+                { type: "week", selected: true }
+            ]
+        });
+
+        var eventElement = container.find(".k-event");
+        var event = scheduler.dataSource.data()[0];
+
+        scheduler.select({
+            events: [event.uid]
+        });
+
+        ok(eventElement.hasClass("k-state-selected"));
+    });
+
+    test("select method is selecting events by array of ids passed to the method", function() {
+        setupWidget({
+            selectable: true,
+            views: [
+                "day",
+                { type: "week", selected: true }
+            ]
+        });
+
+        var eventElement = container.find(".k-event");
+        var event = scheduler.dataSource.data()[0];
+
+        scheduler.select([event.uid]);
+
+        ok(eventElement.hasClass("k-state-selected"));
+    });
+
+    test("select method is clearing selection when null is passed as parameter", function() {
+        setupWidget({
+            selectable: true,
+            views: [
+                "day",
+                { type: "week", selected: true }
+            ]
+        });
+
+        var eventElement = container.find(".k-event");
+        var event = scheduler.dataSource.data()[0];
+
+        scheduler.select([event.uid]);
+        ok(eventElement.hasClass("k-state-selected"));
+        scheduler.select(null);
+        ok(!eventElement.hasClass("k-state-selected"));
+    });
+
+    test("select method is not selecting events when passed UIDs are not found", function() {
+        setupWidget({
+            selectable: true,
+            views: [
+                "day",
+                { type: "week", selected: true }
+            ],
+            date: new Date("2001-01-01T00:00:00.000Z")
+        });
+
+        scheduler.select({
+            events: ["invalidUID"]
+        });
+
+        equal(scheduler.view().content.find("td.k-state-selected").length, 1);
+        equal(scheduler.view().content.find("td.k-state-selected").index(), 0);
+    });
+
+    test("select method is not changing selection when dates are out of range", function() {
+        setupWidget({
+            selectable: true,
+            views: [
+                "day",
+                { type: "week", selected: true }
+            ],
+            date: new Date("2001-01-01T00:00:00.000Z")
+        });
+
+        scheduler.select({
+            start: new Date("2005-01-01T05:00:00.000Z"),
+            end: new Date("2005-01-01T08:00:00.000Z")
+        });
+
+        equal(scheduler.view().content.find(".k-state-selected").length, 1);
+        equal(scheduler.view().content.find(".k-state-selected").index(), 0);
+    });
+
+    test("select method is selecting allDay slots", function() {
+        setupWidget({
+            selectable: true,
+            views: [
+                "day",
+                { type: "week", selected: true }
+            ],
+            date: new Date("2001-01-01T00:00:00.000Z")
+        });
+
+        scheduler.select({
+            start: new Date("2001-01-01T05:00:00.000Z"),
+            end: new Date("2001-01-01T08:00:00.000Z"),
+            isAllDay: true
+        });
+
+        equal(scheduler.view().table.find(".k-state-selected").length, 1);
+        equal(scheduler.view().table.find(".k-state-selected").index(), 1);
+    });
+
+    test("select method is selecting regular slots", function() {
+        setupWidget({
+            selectable: true,
+            views: [
+                "day",
+                { type: "week", selected: true }
+            ],
+            date: new Date("2001-01-01T00:00:00.000Z")
+        });
+
+        var start = new Date("2001-01-01T05:00:00.000Z");
+        var end = new Date("2001-01-01T05:30:00.000Z");
+        var view = scheduler.view();
+
+        scheduler.select({
+            start: start,
+            end: end
+        });
+
+        equal(+scheduler.select().start, +start);
+        equal(+scheduler.select().end, +end);
+        equal(+scheduler.slotByElement($(view.table.find(".k-state-selected")[0])).startDate, +start);
+    });
+
+    test("select method is not selecting slots view does not have groups object", function() {
+        setupWidget({
+            selectable: true,
+            views: [
+                "agenda"
+            ],
+            dataSource: [{
+                start: new Date("2001-01-01T08:00:00.000Z"),
+                end: new Date("2001-01-01T10:00:00.000Z"),
+                title: "foo"
+            }],
+            date: new Date("2001-01-01T00:00:00.000Z")
+        });
+
+        scheduler.select({
+            start: new Date("2001-01-01T10:00:00.000Z"),
+            end: new Date("2001-01-01T11:00:00.000Z")
+        });
+
+        equal(scheduler.view().content.find(".k-state-selected").length, 0);
     });
 })();
