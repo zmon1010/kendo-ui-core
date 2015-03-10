@@ -1,0 +1,16 @@
+#!/bin/zsh
+
+loc() {
+    echo $1;
+    cat ${(P)${2}} | sed '/^\s*$/d' | wc -l
+}
+
+KENDO_SRC=(src/{kendo.*.js,{aspnetmvc,dataviz,drawing,editor,geometry,mixins,pdf,util}/**/*.js} styles/**/*.less)
+MVC_SRC=(wrappers/mvc/src/Kendo.Mvc/**/*.cs)
+JSP_SRC=(wrappers/java/kendo-taglib/**/*.java)
+PHP_SRC=(wrappers/php/lib/**/*.php)
+
+loc "Kendo UI:" 'KENDO_SRC'
+loc "UI for MVC:" 'MVC_SRC'
+loc "UI for JSP:" 'JSP_SRC'
+loc "UI for PHP:" 'PHP_SRC'
