@@ -195,9 +195,8 @@ namespace Kendo.Mvc.UI
         }
 
         private void Activate()
-        {
-            var serviceProvider = ViewContext.HttpContext.RequestServices;
-            var activator = (IViewComponentActivator)serviceProvider.GetService(typeof(IViewComponentActivator));
+        {            
+            var activator = ViewContext.GetService<IViewComponentActivator>();
 
             activator.Activate(this, ViewContext);
 

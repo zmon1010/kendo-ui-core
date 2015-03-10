@@ -11,12 +11,13 @@ namespace Kendo.Mvc.UI.Fluent
 		where T : class
     {
         private readonly GridToolBarSettings settings;
+		private readonly Grid<T> grid;
 
-        public GridToolBarCommandFactory(GridToolBarSettings settings)
+		public GridToolBarCommandFactory(GridToolBarSettings settings, Grid<T> grid)
         {
             this.settings = settings;
+			this.grid = grid;
         }
-
 
         /// <summary>
         /// Defines a create command.
@@ -28,8 +29,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             settings.Commands.Add(command);
 
-			//TODO: enable editing 
-			//settings.Grid.Editable.Enabled = true;
+			grid.Editable.Enabled = true;
 
 			return new GridToolBarCommandBuilder(command);
         }
@@ -70,9 +70,9 @@ namespace Kendo.Mvc.UI.Fluent
             settings.Commands.Add(save);
 
 			var cancel = new GridToolBarCancelCommand(save);
-			settings.Commands.Add(cancel);
-			//TODO: enable editing 
-			//settings.Grid.Editable.Enabled = true;
+			settings.Commands.Add(cancel);			
+
+			grid.Editable.Enabled = true;
 
 			return new GridToolBarSaveCommandBuilder(save);
         }

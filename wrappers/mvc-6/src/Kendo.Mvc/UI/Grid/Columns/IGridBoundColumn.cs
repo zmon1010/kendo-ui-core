@@ -1,10 +1,11 @@
 namespace Kendo.Mvc.UI
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using Microsoft.AspNet.Mvc.Rendering;
 
-    public interface IGridBoundColumn : IGridColumn
+	public interface IGridBoundColumn : IGridColumn
     {
         string Format 
         { 
@@ -57,6 +58,7 @@ namespace Kendo.Mvc.UI
         string EditorHtml
         {
             get;
+			set;
         }
 
         string EditorTemplateName
@@ -70,5 +72,7 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
+
+		string GetEditor(IHtmlHelper helper);		
     }
 }

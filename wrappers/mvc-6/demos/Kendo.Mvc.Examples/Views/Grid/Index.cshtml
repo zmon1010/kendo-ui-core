@@ -1,22 +1,23 @@
 ﻿@using Kendo.Mvc.UI
-@model IEnumerable<Kendo.Mvc.Examples.Models.Product>
 
-
-
-@(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.Product>(Model)
+@(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.Product>()
 	.Name("grid")
 	.Resizable(resizable => resizable.Columns(true))
 	.Reorderable(resizable => resizable.Columns(true))
 	.ColumnMenu()
-	.Columns(columns => {		
+	.Columns(columns => {
+		columns.Command(command => command.Edit());
+		columns.Bound(p => p.ProductName);
+		columns.Bound(p => p.UnitPrice);
 	})
 	.ToolBar(toolbar => {
-		 toolbar.Create();
-		 toolbar.Save().SaveText("save").CancelText("cancel").HtmlAttributes(new { style= "background:red" });
-		 toolbar.Pdf();
-		 toolbar.Excel();
-		 toolbar.Custom().Name("fooo");
-	 })
+		toolbar.Create();
+		toolbar.Save().SaveText("save").CancelText("cancel").HtmlAttributes(new { style= "background:red" });
+		toolbar.Pdf();
+		toolbar.Excel();
+		toolbar.Custom().Name("fooo");
+	})
+	.Editable(editable => editable.Mode(GridEditMode.PopUp))
 	.Pageable()
 	.Groupable()
 	.Filterable()
@@ -26,7 +27,10 @@
 	.DataSource(dataSource => dataSource
 		.Ajax()
 		.PageSize(10)
+		.Model(model => model.Id(p => p.ProductID))
 		.ServerOperation(false)
-	//.Read("Products", "Grid")
+		.Read("Products", "Grid")
 	)
 )
+
+

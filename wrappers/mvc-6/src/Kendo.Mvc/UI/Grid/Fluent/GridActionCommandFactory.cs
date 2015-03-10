@@ -32,9 +32,8 @@ namespace Kendo.Mvc.UI.Fluent
             GridEditActionCommand command = new GridEditActionCommand();
             
             Column.Commands.Add(command);
-
-			//TODO: set editable
-			//Column.Grid.Editable.Enabled = true;
+			
+			Column.Grid.Editable.Enabled = true;
 
             return new GridEditActionCommandBuilder(command);
         }
@@ -47,9 +46,8 @@ namespace Kendo.Mvc.UI.Fluent
         {
             GridDestroyActionCommand command = new GridDestroyActionCommand();
 
-            Column.Commands.Add(command);
-			//TODO: set editable
-			//Column.Grid.Editable.Enabled = true;
+            Column.Commands.Add(command);			
+			Column.Grid.Editable.Enabled = true;
 
             return new GridDestroyActionCommandBuilder(command);
         }        

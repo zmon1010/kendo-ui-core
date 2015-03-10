@@ -3,6 +3,7 @@ namespace Kendo.Mvc.UI
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
+	using System.IO;
 	using System.Linq;
 	using System.Linq.Expressions;
 	using System.Reflection;
@@ -12,7 +13,9 @@ namespace Kendo.Mvc.UI
 	using Kendo.Mvc.Resources;
 	using Microsoft.AspNet.Mvc;
 	using Microsoft.AspNet.Mvc.ModelBinding;
+	using Microsoft.AspNet.Mvc.Rendering;
 	using Microsoft.AspNet.Mvc.Rendering.Expressions;
+	using Microsoft.AspNet.Routing;
 
 	public class GridBoundColumn<TModel, TValue> : GridColumnBase<TModel>, IGridBoundColumn/*, IGridTemplateColumn<TModel>*/ where TModel : class
     {
@@ -235,12 +238,11 @@ namespace Kendo.Mvc.UI
                                 .Replace("</script>", "<\\/script>")                                
                                 .Replace("jQuery(\"#", "jQuery(\"\\#");
             }
-
-			//TODO: serialize column editor
-			//if (!Grid.DataSource.IsReadOnly(Member) && Grid.Editable.Enabled && Grid.IsClientBinding)
-			//{
-			//    json["editor"] = editorHtml;
-			//}
+			
+			if (!Grid.DataSource.IsReadOnly(Member) && Grid.Editable.Enabled)
+			{
+				json["editor"] = editorHtml;
+			}
 
 			if (ClientGroupHeaderTemplate.HasValue())
 			{
@@ -286,5 +288,14 @@ namespace Kendo.Mvc.UI
                 result["values"] = values;
             }
         }
-    }
+
+		public string GetEditor(IHtmlHelper helper)
+		{
+			((ICanHasViewContext)helper).Contextualize(Grid.ViewContext.ViewContextForType<TModel>(Grid.ModelMetadataProvider));
+
+			var validation = helper.ValidationMessage(Member);
+
+			return helper.Editor(Member, EditorTemplateName, AdditionalViewData).ToString() + validation ?? string.Empty;
+		}
+	}
 }

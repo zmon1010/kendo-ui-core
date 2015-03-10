@@ -29,14 +29,14 @@ namespace Kendo.Mvc.UI.Fluent.Tests
             Assert.NotNull(command as GridEditActionCommand);
         }
 
-        [Fact(Skip = "Editing is no implemented yet")]
+        [Fact]
         public void Edit_command_should_enable_editing()
         {
-           // column.Grid.Editable.Enabled = false;
+            column.Grid.Editable.Enabled = false;
 
             Factory().Edit();
 
-           // Assert.True(column.Grid.Editable.Enabled);
+            Assert.True(column.Grid.Editable.Enabled);
         }
 
         [Fact]
@@ -51,14 +51,14 @@ namespace Kendo.Mvc.UI.Fluent.Tests
             Assert.NotNull(command as GridDestroyActionCommand);
         }
 
-		[Fact(Skip = "Editing is no implemented yet")]
+		[Fact]
 		public void Delete_command_should_enable_editing()
         {
-          //  column.Grid.Editable.Enabled = false;
+            column.Grid.Editable.Enabled = false;
 
             Factory().Destroy();
 
-           // Assert.True(column.Grid.Editable.Enabled);
+            Assert.True(column.Grid.Editable.Enabled);
         }
     }
 }

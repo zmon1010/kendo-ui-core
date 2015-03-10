@@ -109,6 +109,55 @@ namespace Kendo.Mvc.UI.Fluent
 		}
 
 		/// <summary>
+		/// Sets the editing configuration of the grid.
+		/// </summary>
+		/// <param name="configurator">The lambda which configures the editing</param>
+		/// <example>
+		/// <code lang="Razor">
+		///  @(Html.Kendo().Grid&lt;Product&gt;()
+		///     .Name("Grid")
+		///     .DataSource(dataSource =&gt;
+		///         // configure the data source
+		///         dataSource
+		///          .Ajax()
+		///          .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+		///     )
+		///    .Editable(editing => editing.Mode(GridEditMode.PopUp))
+		/// )
+		/// </code>
+		/// </example>
+		public GridBuilder<T> Editable(Action<GridEditingSettingsBuilder<T>> configurator)
+		{
+			configurator(new GridEditingSettingsBuilder<T>(Component.Editable));
+
+			return this;
+		}
+
+
+		/// <summary>
+		/// Enables grid editing.
+		/// </summary>
+		/// <example>
+		/// <code lang="Razor">
+		///  @(Html.Kendo().Grid&lt;Product&gt;()
+		///     .Name("Grid")
+		///     .DataSource(dataSource =&gt;
+		///         // configure the data source
+		///         dataSource
+		///          .Ajax()
+		///          .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+		///     )
+		///    .Editable()
+		/// )
+		/// </code>	
+		/// </example>
+		public GridBuilder<T> Editable()
+		{
+			Component.Editable.Enabled = true;
+			return this;
+		}
+
+		/// <summary>
 		/// Sets the width of the column resize handle. Apply a larger value for easier grasping.
 		/// </summary>
 		/// <param name="width">width in pixels</param>
@@ -690,11 +739,10 @@ namespace Kendo.Mvc.UI.Fluent
 		/// </example>
 		public GridBuilder<T> ToolBar(Action<GridToolBarCommandFactory<T>> configurator)
 		{
-			configurator(new GridToolBarCommandFactory<T>(Component.ToolBar));
+			configurator(new GridToolBarCommandFactory<T>(Component.ToolBar, Component));
 
 			return this;
 		}
-
 
 		/// <summary>
 		/// Sets the client-side row template of the grid. The client-side row template must contain a table row element (tr).

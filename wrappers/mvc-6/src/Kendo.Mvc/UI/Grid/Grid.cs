@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
+using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.AspNet.Routing;
+using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Framework.DependencyInjection;
 
 namespace Kendo.Mvc.UI
@@ -20,17 +22,17 @@ namespace Kendo.Mvc.UI
 		private readonly static int DEFAULT_COLUMN_RESIZE_HANDLE_WIDTH = 3;
 
 		public Grid(ViewContext viewContext) : base(viewContext)
-		{					
+		{
 			//DataKeys = new List<IDataKey>();			
 
-			//Editable = new GridEditableSettings<T>(this)
-			//{
-			//    PopUp = new Window(viewContext, Initializer)
-			//    {
-			//        Modal = true,
-			//        Draggable = true
-			//    }
-			//};			
+			Editable = new GridEditableSettings<T>(this)
+			{
+				//PopUp = new Window(viewContext, Initializer)
+				//{
+				//	Modal = true,
+				//	Draggable = true
+				//}
+			};
 
 			DataSource = new DataSource(ModelMetadataProvider)
 			{
@@ -65,6 +67,7 @@ namespace Kendo.Mvc.UI
 			get;
 			set;
 		}
+		
 
 		public DataSource DataSource
 		{
@@ -118,6 +121,8 @@ namespace Kendo.Mvc.UI
 			get;
 			set;
 		} = true;
+
+		public GridEditableSettings<T> Editable { get; }
 
 		public GridToolBarSettings ToolBar { get; } = new GridToolBarSettings();
 
@@ -272,10 +277,10 @@ namespace Kendo.Mvc.UI
 				settings["height"] = Scrollable.Height;
 			}
 
-			//if (Editable.Enabled)
-			//{
-			//	options["editable"] = Editable.ToJson();
-			//}
+			if (Editable.Enabled)
+			{
+				settings["editable"] = Editable.ToJson();
+			}
 
 			if (ToolBar.Enabled)
 			{
@@ -324,6 +329,73 @@ namespace Kendo.Mvc.UI
 			return settings;
 		}
 
+		private string EditorForModel(IHtmlHelper htmlHelper, string templateName, IEnumerable<Action<IDictionary<string, object>, object>> foreignKeyData, object additionalViewData)
+		{
+			var viewContext = ViewContext.ViewContextForType<T>(ModelMetadataProvider);
+			((ICanHasViewContext)htmlHelper).Contextualize(viewContext);
+
+			if (foreignKeyData != null)
+			{
+				var dataItem = Editable.DefaultDataItem();
+				foreignKeyData.Each(action => action(viewContext.ViewData, dataItem));
+			}
+
+			if (templateName.HasValue())
+			{
+				return htmlHelper.EditorForModel(templateName, additionalViewData).ToString();
+			}
+
+			return htmlHelper.EditorForModel(additionalViewData).ToString();
+
+		}
+
+		private void InitializeEditors()
+		{			
+			var popupSlashes = new Regex("(?<=data-val-regex-pattern=\")([^\"]*)", RegexOptions.Multiline);
+
+			var dataItem = Editable.DefaultDataItem();
+
+			var htmlHelper = ViewContext.CreateHtmlHelper<T>();
+
+			if (Editable.Mode != GridEditMode.InLine && Editable.Mode != GridEditMode.InCell)
+			{
+				var html = EditorForModel(htmlHelper, Editable.TemplateName, Columns.OfType<IGridForeignKeyColumn>().Select(c => c.SerializeSelectList), Editable.AdditionalViewData);
+
+				EditorHtml = popupSlashes.Replace(html, match =>
+				{
+					return match.Groups[0].Value.Replace("\\", IsInClientTemplate ? "\\\\\\\\" : "\\\\");
+				});
+			}
+			else
+			{			
+				var fields = DataSource.Schema.Model.Fields;
+
+				var isDynamic = dataItem.GetType().IsDynamicObject();
+
+				VisibleColumns.LeafColumns().OfType<IGridBoundColumn>().Each(column =>
+				{
+					var field = fields.FirstOrDefault(f => f.Member == column.Member);
+					if (isDynamic && field != null && !field.IsEditable)
+					{
+						return;
+					}																	
+										
+					var editorHtml = column.GetEditor(htmlHelper);
+
+					if (IsInClientTemplate)
+					{
+						editorHtml = popupSlashes.Replace(editorHtml, match =>
+						{
+							return match.Groups[0].Value.Replace("\\", "\\\\");
+						});
+					}
+					column.EditorHtml = editorHtml;
+
+				});
+			}			
+		}
+		public string EditorHtml { get; set; }
+
 		private void ProcessDataSource()
 		{
 			if (Pageable.Enabled && DataSource.PageSize == 0)
@@ -362,6 +434,11 @@ namespace Kendo.Mvc.UI
 			if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
 			{
 				ProcessDataSource();
+			}
+
+			if (Editable.Enabled)
+			{
+				InitializeEditors();
 			}
 
 			var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
