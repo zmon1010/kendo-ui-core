@@ -3514,8 +3514,15 @@
                 var inactiveItems = diagram._inactiveShapeItems;
                 inactiveItems.forEach(function(inactiveItem) {
                     var dataItem = inactiveItem.dataItem;
+                    var shape = inactiveItem.element;
                     if (!dataItem.isNew()) {
-                        diagram._addDataItem(dataItem);
+                        if (shape) {
+                            shape._setOptionsFromModel();
+                            diagram.addShape(shape);
+                            diagram._dataMap[dataItem.id] = shape;
+                        } else {
+                            diagram._addDataItem(dataItem);
+                        }
                         inactiveItem.activate();
                         inactiveItems.remove(dataItem);
                     }
