@@ -1357,6 +1357,8 @@ var __meta__ = {
 
             that._attachCustomCommandsEvent();
 
+            that._minScreenSupport();
+
             if (that.options.autoBind) {
                 that.dataSource.fetch();
             } else {
@@ -1574,6 +1576,10 @@ var __meta__ = {
 
             if (that.pane) {
                 that.pane.destroy();
+            }
+
+            if (that.minScreenResizeHandler) {
+                $(window).off("resize", that.minScreenResizeHandler);
             }
 
             if (that._draggableInstance && that._draggableInstance.element) {
@@ -3655,6 +3661,35 @@ var __meta__ = {
                 this.areaClipBoard.remove();
                 this.areaClipBoard = null;
             }
+        },
+
+        _minScreenSupport: function() {
+            var any = this.hideMinScreenCols();
+
+            if (any) {
+                this.minScreenResizeHandler = proxy(this.hideMinScreenCols, this);
+                $(window).on("resize", this.minScreenResizeHandler);
+            }
+        },
+        hideMinScreenCols: function() {
+            var cols = this.columns,
+                any = false,
+                screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+            for (var i = 0; i < cols.length; i++) {
+                var col = cols[i];
+                //should provide px/em support
+                var minWidth = col.minScreenWidth;
+                if (minWidth !== undefined && minWidth !== null) {
+                    any = true;
+                    if (minWidth > screenWidth) {
+                        this.hideColumn(col);
+                    } else {
+                        this.showColumn(col);
+                    }
+                }
+            }
+            return any;
         },
 
         _relatedRow: function(row) {
