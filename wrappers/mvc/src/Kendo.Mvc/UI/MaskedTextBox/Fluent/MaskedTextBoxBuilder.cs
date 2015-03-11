@@ -22,6 +22,18 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Specifies whether the widget will unmask input value on form post
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public MaskedTextBoxBuilder UnmaskOnPost(bool value)
+        {
+            Component.UnmaskOnPost = value;
+
+            return this;
+        }
+
+        /// <summary>
         /// Specifies whether the widget will replace the prompt characters with spaces on blur
         /// </summary>
         /// <param name="value"></param>

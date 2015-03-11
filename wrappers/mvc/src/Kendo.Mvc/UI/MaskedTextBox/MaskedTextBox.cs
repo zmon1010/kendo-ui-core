@@ -54,6 +54,12 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public bool UnmaskOnPost
+        {
+            get;
+            set;
+        }
+
         public string Value
         {
             get;
@@ -85,6 +91,11 @@ namespace Kendo.Mvc.UI
             }
 
             options["rules"] = Rules;
+
+            if (UnmaskOnPost != false)
+            {
+                options["unmaskOnPost"] = UnmaskOnPost;
+            }
 
             writer.Write(Initializer.Initialize(Selector, "MaskedTextBox", options));
 
