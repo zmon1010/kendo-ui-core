@@ -442,6 +442,7 @@ var __meta__ = {
             name: "agenda",
             editable: true,
             selectedDateFormat: "{0:D}-{1:D}",
+            selectedShortDateFormat: "{0:d} - {1:d}",
             eventTemplate: "#:title#",
             eventTimeTemplate: "#if(data.isAllDay) {#" +
                             '#=this.options.messages.allDay#' +

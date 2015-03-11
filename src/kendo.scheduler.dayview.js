@@ -599,6 +599,7 @@ var __meta__ = {
         options: {
             name: "MultiDayView",
             selectedDateFormat: "{0:D}",
+            selectedShortDateFormat: "{0:d}",
             allDaySlot: true,
             showWorkHours: false,
             title: "",
@@ -1645,7 +1646,8 @@ var __meta__ = {
             options: {
                 name: "WeekView",
                 title: "Week",
-                selectedDateFormat: "{0:D} - {1:D}"
+                selectedDateFormat: "{0:D} - {1:D}",
+                selectedShortDateFormat: "{0:d} - {1:d}"
             },
             name: "week",
             calculateDateRange: function() {
@@ -1665,7 +1667,8 @@ var __meta__ = {
             options: {
                 name: "WorkWeekView",
                 title: "Work Week",
-                selectedDateFormat: "{0:D} - {1:D}"
+                selectedDateFormat: "{0:D} - {1:D}",
+                selectedShortDateFormat: "{0:d} - {1:d}"
             },
             name: "workWeek",
             nextDate: function() {

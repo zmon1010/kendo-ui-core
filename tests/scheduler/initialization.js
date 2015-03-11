@@ -113,7 +113,7 @@
             date: new Date("1/2/2013")
         });
 
-        equal(scheduler.wrapper.find("li.k-nav-current").text(), "Wednesday, January 02, 2013");
+        equal(scheduler.wrapper.find("li.k-nav-current .k-lg-date-format").text(), "Wednesday, January 02, 2013");
     });
 
     test("custom format is applied to the selected date", function() {
@@ -122,11 +122,13 @@
             views: [
             {
                 type: "day",
-                selectedDateFormat: "{0:d}"
+                selectedDateFormat: "{0:d}",
+                selectedShortDateFormat: "{0:D}"
             }]
         });
 
-        equal(scheduler.wrapper.find("li.k-nav-current").text(), "1/2/2013");
+        equal(scheduler.wrapper.find("li.k-nav-current .k-sm-date-format").text(), kendo.format("{0:D}", scheduler.view().startDate()));
+        equal(scheduler.wrapper.find("li.k-nav-current .k-lg-date-format").text(), "1/2/2013");
     });
 
     test("changing selected date updates the label", function() {
@@ -134,7 +136,8 @@
 
         scheduler.date(new Date("2/2/2013"));
 
-        equal(scheduler.wrapper.find("li.k-nav-current").text(), "Saturday, February 02, 2013");
+        equal(scheduler.wrapper.find("li.k-nav-current .k-sm-date-format").text(), kendo.format("{0:d}", scheduler.view().startDate()));
+        equal(scheduler.wrapper.find("li.k-nav-current .k-lg-date-format").text(), "Saturday, February 02, 2013");
     });
 
     test("clicking on the today selects today's date", function() {
@@ -302,6 +305,7 @@
         var MyCustomView = kendo.ui.SchedulerView.extend({
             renderLayout: $.noop,
             dateForTitle: $.noop,
+            shortDateForTitle: $.noop,
             render: $.noop,
             startDate: $.noop,
             endDate: $.noop
@@ -321,6 +325,7 @@
         var MyCustomView = kendo.ui.SchedulerView.extend({
             renderLayout: $.noop,
             dateForTitle: $.noop,
+            shortDateForTitle: $.noop,
             render: $.noop,
             startDate: $.noop,
             endDate: $.noop
@@ -340,6 +345,7 @@
         var MyCustomView = kendo.ui.SchedulerView.extend({
                 name: "foo",
                 dateForTitle: $.noop,
+                shortDateForTitle: $.noop,
                 render: $.noop,
                 startDate: $.noop,
                 endDate: $.noop
@@ -355,6 +361,7 @@
         var MyCustomView = kendo.ui.SchedulerView.extend({
                 name: "foo",
                 dateForTitle: $.noop,
+                shortDateForTitle: $.noop,
                 render: $.noop,
                 renderLayout: function(selectedDate) {
                 },
@@ -385,6 +392,7 @@
         var MyCustomView = kendo.ui.SchedulerView.extend({
                 title: "foo",
                 dateForTitle: $.noop,
+                shortDateForTitle: $.noop,
                 render: $.noop,
                 renderLayout: function(selectedDate) {
                     ok(true);
@@ -414,6 +422,7 @@
         var MyCustomView = kendo.ui.SchedulerView.extend({
                 title: "foo",
                 dateForTitle: $.noop,
+                shortDateForTitle: $.noop,
                 render: function(events) {
                     ok((events[0] instanceof kendo.data.SchedulerEvent));
                 },
@@ -434,6 +443,7 @@
         var MyCustomView = kendo.ui.SchedulerView.extend({
                 title: "view1",
                 dateForTitle: $.noop,
+                shortDateForTitle: $.noop,
                 render: $.noop,
                 renderLayout: $.noop,
                 startDate: $.noop,
@@ -442,6 +452,7 @@
             MyCustomView2 = kendo.ui.SchedulerView.extend({
                 title: "view2",
                 dateForTitle: $.noop,
+                shortDateForTitle: $.noop,
                 render: $.noop,
                 renderLayout: $.noop,
                 startDate: $.noop,
@@ -459,9 +470,10 @@
     });
 
     test("rebind is called once when navigating between views", function() {
-
+        debugger;
         var MyCustomView = kendo.ui.SchedulerView.extend({
                 dateForTitle: $.noop,
+                shortDateForTitle: $.noop,
                 render: $.noop,
                 renderLayout: $.noop,
                 startDate: $.noop,
@@ -469,19 +481,22 @@
             }),
             MyCustomView2 = kendo.ui.SchedulerView.extend({
                 dateForTitle: $.noop,
+                shortDateForTitle: $.noop,
                 render: $.noop,
                 renderLayout: $.noop,
                 startDate: $.noop,
                 endDate: $.noop
             }),
+
             scheduler = new Scheduler(container, {
                 views: [{ type: MyCustomView, title: "view1"}, {title: "view2", type: MyCustomView2}],
                 dataSource: { }
             }),
+
             rebindStub = stub(scheduler, "rebind");
-
+        debugger;
         scheduler.view().trigger("navigate", { view: "view2", date: new Date(2013, 1, 2) });
-
+        debugger;
         equal(rebindStub.calls("rebind"), 1);
     });
 
@@ -889,5 +904,16 @@
 
         ok(scheduler.toolbar.find(".k-current-view"));
         ok(scheduler.toolbar.find(".k-view-day"));
+    });
+
+    //check all views? for having the selectedDateFormat
+    test("responsive date format is correctly rendered", function() {
+
+        var scheduler = new Scheduler(container, {
+            views: ["day"]
+        });
+
+        equal(scheduler.toolbar.find(".k-sm-date-format").length, 1);
+        equal(scheduler.toolbar.find(".k-lg-date-format").length, 1);
     });
 })();

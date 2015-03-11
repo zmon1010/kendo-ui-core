@@ -1072,6 +1072,10 @@ var __meta__ = {
             return kendo.format(this.options.selectedDateFormat, this.startDate(), this.endDate());
         },
 
+        shortDateForTitle: function() {
+            return kendo.format(this.options.selectedShortDateFormat, this.startDate(), this.endDate());
+        },
+
         _changeGroup: function(selection, previous) {
             var method = previous ? "prevGroupSlot" : "nextGroupSlot";
             var slot = this[method](selection.start, selection.groupIndex, selection.isAllDay);

@@ -89,7 +89,13 @@ var __meta__ = {
                '<li class="k-state-default k-header k-nav-today"><a role="button" href="\\#" class="k-link">${messages.today}</a></li>' +
                '<li class="k-state-default k-header k-nav-prev"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-w"></span></a></li>' +
                '<li class="k-state-default k-header k-nav-next"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-e"></span></a></li>' +
-               '<li class="k-state-default k-nav-current"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-calendar"></span><span data-#=ns#bind="text: formattedDate"></span></a></li>' +
+               '<li class="k-state-default k-nav-current">' +
+                    '<a role="button" href="\\#" class="k-link">' +
+                        '<span class="k-icon k-i-calendar"></span>' +
+                        '<span class="k-sm-date-format" data-#=ns#bind="text: formattedShortDate"></span>' +
+                        '<span class="k-lg-date-format" data-#=ns#bind="text: formattedDate"></span>' +
+                    '</a>' +
+                '</li>' +
             '</ul>' +
             '<ul class="k-reset k-header k-scheduler-views">' +
                 '#for(var view in views){#' +
@@ -110,7 +116,10 @@ var __meta__ = {
             '<div class="k-floatwrap k-header k-scheduler-toolbar">' +
                 '<ul class="k-reset k-header k-scheduler-navigation">' +
                    '<li class="k-state-default k-nav-prev"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-w"></span></a></li>' +
-                   '<li class="k-state-default k-nav-current"><span data-#=ns#bind="text: formattedDate"></span></li>' +
+                   '<li class="k-state-default k-nav-current">' +
+                        '<span data-#=ns#bind="text: formattedShortDate"></span>' +
+                        '<span data-#=ns#bind="text: formattedDate"></span>' +
+                    '</li>' +
                    '<li class="k-state-default k-nav-next"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-e"></span></a></li>' +
                 '</ul>' +
             '</div>'),
@@ -3244,6 +3253,7 @@ var __meta__ = {
             this._bindView(view);
 
             this._model.set("formattedDate", view.dateForTitle());
+            this._model.set("formattedShortDate", view.shortDateForTitle());
 
             return view;
         },
@@ -3450,7 +3460,8 @@ var __meta__ = {
             var that = this;
             that._model = kendo.observable({
                selectedDate: new Date(this.options.date),
-               formattedDate: ""
+               formattedDate: "",
+               formattedShortDate: ""
            });
 
            that._model.bind("change", function(e) {

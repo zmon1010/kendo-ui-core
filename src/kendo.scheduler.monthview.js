@@ -195,6 +195,10 @@ var __meta__ = {
             return kendo.format(this.options.selectedDateFormat, this._firstDayOfMonth, this._lastDayOfMonth);
         },
 
+        shortDateForTitle: function() {
+            return kendo.format(this.options.selectedShortDateFormat, this._firstDayOfMonth, this._lastDayOfMonth);
+        },
+
         nextDate: function() {
             return kendo.date.nextDay(this._lastDayOfMonth);
         },
@@ -895,6 +899,7 @@ var __meta__ = {
             moreButtonHeight: 13,
             editable: true,
             selectedDateFormat: "{0:y}",
+            selectedShortDateFormat: "{0:y}",
             groupHeaderTemplate: "#=text#",
             dayTemplate: DAY_TEMPLATE,
             eventTemplate: EVENT_TEMPLATE

@@ -344,6 +344,7 @@ var __meta__ = {
             name: "TimelineView",
             title: "Timeline",
             selectedDateFormat: "{0:D}",
+            selectedShortDateFormat: "{0:d}",
             date: kendo.date.today(),
             startTime: kendo.date.today(),
             endTime: kendo.date.today(),
@@ -1584,6 +1585,7 @@ var __meta__ = {
                 name: "TimelineWeekView",
                 title: "Timeline Week",
                 selectedDateFormat: "{0:D} - {1:D}",
+                selectedShortDateFormat: "{0:d} - {1:d}",
                 majorTick: 120
             },
             name: "timelineWeek",
@@ -1605,6 +1607,7 @@ var __meta__ = {
                 name: "TimelineWorkWeekView",
                 title: "Timeline Work Week",
                 selectedDateFormat: "{0:D} - {1:D}",
+                selectedShortDateFormat: "{0:d} - {1:d}",
                 majorTick: 120
             },
             name: "timelineWorkWeek",
@@ -1632,6 +1635,7 @@ var __meta__ = {
                 name: "TimelineMonthView",
                 title: "Timeline Month",
                 selectedDateFormat: "{0:D} - {1:D}",
+                selectedShortDateFormat: "{0:d} - {1:d}",
                 workDayStart: new Date(1980, 1, 1, 0, 0, 0),
                 workDayEnd: new Date(1980, 1, 1, 0, 0, 0),
                 footer: false,
