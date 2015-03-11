@@ -4,20 +4,22 @@
 
 module.exports = function (grunt) {
 	grunt.loadNpmTasks("grunt-contrib-copy");
-    grunt.initConfig({
-    	bower: {			
-            install: {
-                options: {
-                    targetDir: "wwwroot/lib",
-                    layout: "byComponent",
-                    cleanTargetDir: false
-                }
-            }
-    	},
-    	copy: {
-    		main: {    			
-    			src: "Sample.mdf",
-    			dest: "wwwroot/App_Data/Sample.mdf"
+	grunt.initConfig({
+		bower: {			
+			install: {
+				options: {
+					targetDir: "wwwroot/lib",
+					layout: "byComponent",
+					cleanTargetDir: false
+				}
+			}
+		},
+		copy: {
+			main: {
+				files: [
+					{ src: ["Sample.mdf"], dest: "wwwroot/App_Data/" },
+					{ src: ["Sample_log.ldf"], dest: "wwwroot/App_Data/" }
+				]
     		}
     	}
     });    
