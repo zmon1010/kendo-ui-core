@@ -1,36 +1,26 @@
 ﻿@using Kendo.Mvc.UI
 
-@(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.Product>()
-	.Name("grid")
-	.Resizable(resizable => resizable.Columns(true))
-	.Reorderable(resizable => resizable.Columns(true))
-	.ColumnMenu()
-	.Columns(columns => {
-		columns.Command(command => command.Edit());
-		columns.Bound(p => p.ProductName);
-		columns.Bound(p => p.UnitPrice);
-	})
-	.ToolBar(toolbar => {
-		toolbar.Create();
-		toolbar.Save().SaveText("save").CancelText("cancel").HtmlAttributes(new { style= "background:red" });
-		toolbar.Pdf();
-		toolbar.Excel();
-		toolbar.Custom().Name("fooo");
-	})
-	.Editable(editable => editable.Mode(GridEditMode.PopUp))
-	.Pageable()
-	.Groupable()
-	.Filterable()
-	.Sortable()
-	.Scrollable()
-	.Selectable(selectable => selectable.Mode(GridSelectionMode.Multiple).Type(GridSelectionType.Row))
-	.DataSource(dataSource => dataSource
-		.Ajax()
-		.PageSize(10)
-		.Model(model => model.Id(p => p.ProductID))
-		.ServerOperation(false)
-		.Read("Products", "Grid")
-	)
+@(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.Customer>()
+		.Name("grid")
+		.Columns(columns =>
+		{
+			columns.Bound(c => c.ContactName).Width(140);
+			columns.Bound(c => c.ContactTitle).Width(190);
+			columns.Bound(c => c.CompanyName);
+			columns.Bound(c => c.Country).Width(110);
+		})
+		.HtmlAttributes(new { style = "height: 380px;" })
+		.Scrollable()
+		.Groupable()
+		.Sortable()
+		.Pageable(pageable => pageable
+			.Refresh(true)
+			.PageSizes(true)
+			.ButtonCount(5))
+		.DataSource(dataSource => dataSource
+			.Ajax()
+			.Read(read => read.Action("Customers_Read", "Grid"))
+		)
 )
 
 

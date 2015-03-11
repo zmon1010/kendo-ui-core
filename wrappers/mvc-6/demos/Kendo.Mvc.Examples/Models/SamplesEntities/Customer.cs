@@ -7,8 +7,7 @@ namespace Kendo.Mvc.Examples.Models
     {
         public Customer()
         {
-            Orders = new HashSet<Order>();
-            CustomerDemographics = new HashSet<CustomerDemographic>();
+            Orders = new HashSet<Order>();            
         }
 
         [StringLength(5)]
@@ -48,7 +47,5 @@ namespace Kendo.Mvc.Examples.Models
         public bool? Bool { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
-
-        public virtual ICollection<CustomerDemographic> CustomerDemographics { get; set; }
     }
 }

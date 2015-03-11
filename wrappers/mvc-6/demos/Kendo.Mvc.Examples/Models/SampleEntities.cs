@@ -40,10 +40,7 @@ namespace Kendo.Mvc.Examples.Models
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<CustomerDemographic>()				
-				.Key(e => e.CustomerTypeID);
-
-			modelBuilder.Entity<CustomerDemographic>()
-				.HasMany(e => e.Customers);
+				.Key(e => e.CustomerTypeID);			
 
 			modelBuilder.Entity<Customer>()
 				.Key(e => e.CustomerID);
