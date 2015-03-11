@@ -58,6 +58,15 @@ class MaskedTextBox extends \Kendo\UI\Widget {
     }
 
     /**
+    * Specifies whether the widget will unmask the input value on form post (available since Q1 2015).
+    * @param boolean $value
+    * @return \Kendo\UI\MaskedTextBox
+    */
+    public function unmaskOnPost($value) {
+        return $this->setProperty('unmaskOnPost', $value);
+    }
+
+    /**
     * Specifies the value of the MaskedTextBox widget.
     * @param string $value
     * @return \Kendo\UI\MaskedTextBox
