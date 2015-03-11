@@ -94,6 +94,14 @@ public class MaskedTextBoxTag extends WidgetTag /* interfaces *//* interfaces */
         setProperty("rules", value);
     }
 
+    public boolean getUnmaskOnPost() {
+        return (boolean)getProperty("unmaskOnPost");
+    }
+
+    public void setUnmaskOnPost(boolean value) {
+        setProperty("unmaskOnPost", value);
+    }
+
     public java.lang.String getValue() {
         return (java.lang.String)getProperty("value");
     }
