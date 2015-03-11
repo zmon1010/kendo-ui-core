@@ -1,0 +1,45 @@
+        <script src="../content/shared/js/orders.js"></script>
+
+        <div id="example">
+
+            <div class="demo-section k-header">
+                <h3>Select the cells you want to copy press Ctrl/Command + C to copy into the clipboard then go to Excel and paste</h3>
+                <br/>
+                <div id="cellSelection"></div>
+            </div>
+
+            <script>
+                $(document).ready(function () {
+
+                    $("#cellSelection").kendoGrid({
+                        dataSource: {
+                            data: orders,
+                            pageSize: 6
+                        },
+                        selectable: "multiple cell",
+                        allowCopy: true,
+                        pageable: {
+                            buttonCount: 5
+                        },
+                        scrollable: false,
+                        navigatable: true,
+                        columns: [
+                            {
+                                field: "ShipCountry",
+                                title: "Ship Country",
+                                width: 300
+                            },
+                            {
+                                field: "Freight",
+                                width: 300
+                            },
+                            {
+                                field: "OrderDate",
+                                title: "Order Date",
+                                format: "{0:dd/MM/yyyy}"
+                            }
+                        ]
+                    });
+                });
+            </script>
+        </div>
