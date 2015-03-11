@@ -10,6 +10,10 @@
     - :name: TDependenciesModel
       :constraint: class, IGanttDependency
 
+:numerictextbox:
+    - :name: T
+      :constraint: struct
+
 :treelist:
     - :name: T
       :constraint: class
