@@ -289,6 +289,9 @@
     <Content Include="content\mobile\shared\mymusic.jpg" />
     <Content Include="content\mobile\shared\player.jpg" />
     <Content Include="content\mobile\shared\sales.jpg" />
+    <Content Include="content\responsive\images\device-chart.png" />
+    <Content Include="content\responsive\images\device-grid.png" />
+    <Content Include="content\responsive\images\device-scheduler.png" />
     <Content Include="content\responsive\responsive.css" />
     <Content Include="content\shared\images\foods\1.jpg" />
     <Content Include="content\shared\images\foods\10.jpg" />
@@ -1181,6 +1184,7 @@
     <Content Include="Views\Responsive\Grid.cshtml" />
     <Content Include="Views\Responsive\Scheduler.cshtml" />
     <Content Include="Views\Responsive\ResponsiveLayout.cshtml" />
+    <Content Include="Views\Responsive\ResponsivePanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

@@ -40,7 +40,7 @@
                 pageSize: 15,
                 group: { field: "ContactTitle" }
             },
-            height: 500,
+            height: 400,
             groupable: true,
             sortable: true,
             selectable: "multiple",
@@ -57,22 +57,27 @@
                   field: "ContactName",
                   template: "<div class='customer-photo' style='background-image: url(http://demos.telerik.com/kendo-ui/content/web/Customers/${data.CustomerID}.jpg);'></div><div class='customer-name'>#: ContactName #</div>",
                   title: "Contact",
-                  width: 200
+              
               }, {
                   field: "ContactTitle",
                   title: "Contact Title",
-                  width: 220
+                  width: 220,
+                  minScreenWidth: 564
               }, {
                   field: "Phone",
                   title: "Phone",
-                  width: 140
+                  width: 140,
+                  minScreenWidth: 704
               }, {
                   field: "CompanyName",
-                  title: "Company Name"
+                  title: "Company Name",
+                  width: 140,
+                  minScreenWidth: 700
               }, {
                   field: "City",
                   title: "City",
-                  width: 120
+                  width: 120,
+                  minScreenWidth: 1000
               }
             ]
         });

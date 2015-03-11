@@ -12,9 +12,17 @@
     <link rel="stylesheet" href="@Url.Content("~/content/responsive/responsive.css")" />
 
     <!-- Remote CDN-s -->    
-  <link href="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/styles/kendo.common-material.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/styles/kendo.rtl.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/styles/kendo.material.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/styles/kendo.material.mobile.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/styles/kendo.dataviz.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/styles/kendo.dataviz.material.min.css" rel="stylesheet" />
+<link href="http://cdn.kendostatic.com/staging/6c143feedb21be02ffcf53c6f31c5d59c33cf5e3/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/staging/6c143feedb21be02ffcf53c6f31c5d59c33cf5e3/styles/kendo.rtl.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/staging/6c143feedb21be02ffcf53c6f31c5d59c33cf5e3/styles/kendo.default.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/staging/6c143feedb21be02ffcf53c6f31c5d59c33cf5e3/styles/kendo.material.mobile.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/staging/6c143feedb21be02ffcf53c6f31c5d59c33cf5e3/styles/kendo.dataviz.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/staging/6c143feedb21be02ffcf53c6f31c5d59c33cf5e3/styles/kendo.dataviz.material.min.css" rel="stylesheet" />
+  
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-        <script src="http://cdn.kendostatic.com/staging/730809a5f594dd1e237f0a50989722acca2617e3/js/kendo.all.min.js"></script>
+        <script src="http://cdn.kendostatic.com/staging/6c143feedb21be02ffcf53c6f31c5d59c33cf5e3/js/jszip.min.js"></script>
+        <script src="http://cdn.kendostatic.com/staging/6c143feedb21be02ffcf53c6f31c5d59c33cf5e3/js/kendo.all.min.js"></script>
+
 
 </head>
 <body>
@@ -26,6 +34,7 @@
             <li><a href="@Url.Action("Grid", "Responsive")" id="responsive-grid" class="btn">Grid</a></li>
             <li><a href="@Url.Action("Scheduler", "Responsive")" id="responsive-scheduler" class="btn">Scheduler</a></li>
             <li><a href="@Url.Action("Chart", "Responsive")#" id="responsive-chart" class="btn btn-primary">Charts</a></li>
+            <li><a href="@Url.Action("ResponsivePanel", "Responsive")#" id="responsive-panel" class="btn btn-primary">ResponsivePanel</a></li>
         </ul>
     </header>
 
@@ -41,9 +50,15 @@
 
     <script>
         $("#responsive-nav").kendoResponsivePanel({
-            breakpoint: 770,
+            breakpoint: 768,
             width: 320,
-            orientation: "right"
+            orientation: "top",
+            open: function () {
+                $(".k-rpanel-toggle").addClass("activeHamburger");
+            },
+            close: function () {
+                $(".activeHamburger").removeClass("activeHamburger");
+            }
         });
     </script>
 

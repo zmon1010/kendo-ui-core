@@ -27,5 +27,10 @@ namespace Kendo.Controllers
         {
             return View();
         }
+
+        public ActionResult ResponsivePanel()
+        {
+            return View();
+        }
     }
 }
