@@ -26,8 +26,43 @@ namespace Kendo.Mvc.Rendering
             _actionBindingContext = actionBindingContext.Value;
             _metadataProvider = metadataProvider;
         }
+		private TagBuilder GenerateInput(
+		   ViewContext viewContext,
+		   ModelMetadata metadata,
+		   string id,
+		   string name,
+		   object value,
+		   string format,
+		   string type,
+		   IDictionary<string, object> htmlAttributes)
+		{
+			var tagBuilder = GenerateTag("input", viewContext, id, name, htmlAttributes);
+			tagBuilder.MergeAttribute("type", type);
 
-        public virtual TagBuilder GenerateDateInput(
+			var fullName = tagBuilder.Attributes["name"];
+			var valueParameter = FormatValue(value, format);
+			var useViewData = metadata == null && value == null;
+			var attributeValue = (string)GetModelStateValue(viewContext, fullName, typeof(string));
+			if (attributeValue == null)
+			{
+				attributeValue = useViewData ? EvalString(viewContext, fullName, format) : valueParameter;
+			}
+
+			tagBuilder.MergeAttribute("value", attributeValue, true);
+
+			// If there are any errors for a named field, we add the CSS attribute.
+			ModelState modelState;
+			if (viewContext.ViewData.ModelState.TryGetValue(fullName, out modelState) && modelState.Errors.Count > 0)
+			{
+				tagBuilder.AddCssClass(HtmlHelper.ValidationInputCssClassName);
+			}
+
+			tagBuilder.MergeAttributes(GetValidationAttributes(viewContext, metadata, name));
+
+			return tagBuilder;
+		}
+
+		public virtual TagBuilder GenerateDateInput(
             ViewContext viewContext,
             ModelMetadata metadata,
             string id,
@@ -36,30 +71,7 @@ namespace Kendo.Mvc.Rendering
             string format,
             IDictionary<string, object> htmlAttributes)
         {
-            var tagBuilder = GenerateTag("input", viewContext, id, name, htmlAttributes);
-            tagBuilder.MergeAttribute("type", "date");
-
-            var fullName = tagBuilder.Attributes["name"];
-            var valueParameter = FormatValue(value, format);
-            var useViewData = metadata == null && value == null;
-            var attributeValue = (string) GetModelStateValue(viewContext, fullName, typeof(string));
-            if (attributeValue == null)
-            {
-                attributeValue = useViewData ? EvalString(viewContext, fullName, format) : valueParameter;
-            }
-
-            tagBuilder.MergeAttribute("value", attributeValue, true);
-
-            // If there are any errors for a named field, we add the CSS attribute.
-            ModelState modelState;
-            if (viewContext.ViewData.ModelState.TryGetValue(fullName, out modelState) && modelState.Errors.Count > 0)
-            {
-                tagBuilder.AddCssClass(HtmlHelper.ValidationInputCssClassName);
-            }
-
-            tagBuilder.MergeAttributes(GetValidationAttributes(viewContext, metadata, name));
-
-            return tagBuilder;
+			return GenerateInput(viewContext, metadata, id, name, value, format, "date", htmlAttributes);
         }
 
         public virtual TagBuilder GenerateDateTimeInput(
@@ -70,14 +82,23 @@ namespace Kendo.Mvc.Rendering
             object value,
             string format,
             IDictionary<string, object> htmlAttributes)
-        {
-            var tagBuilder = GenerateDateInput(viewContext, metadata, id, name, value, format, htmlAttributes);
-            tagBuilder.MergeAttribute("type", "datetime", replaceExisting: true);
+        {            
+            return GenerateInput(viewContext, metadata, id, name, value, format, "datetime", htmlAttributes);
+		}
 
-            return tagBuilder;
-        }
+		public virtual TagBuilder GenerateNumericInput(
+			ViewContext viewContext,
+			ModelMetadata metadata,
+			string id,
+			string name,
+			object value,
+			string format,
+			IDictionary<string, object> htmlAttributes)
+		{			
+			return GenerateInput(viewContext, metadata, id, name, value, format, "number", htmlAttributes);
+		}
 
-        public virtual TagBuilder GenerateTag(
+		public virtual TagBuilder GenerateTag(
             string tagName,
             ViewContext viewContext,
             string id,

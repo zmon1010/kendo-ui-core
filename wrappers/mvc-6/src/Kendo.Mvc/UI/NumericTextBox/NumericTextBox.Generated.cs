@@ -19,19 +19,21 @@ namespace Kendo.Mvc.UI
 
         public string Format { get; set; }
 
-        public double? Max { get; set; }
+        public T? Max { get; set; }
 
-        public double? Min { get; set; }
+        public T? Min { get; set; }
 
         public string Placeholder { get; set; }
 
         public bool? Spinners { get; set; }
 
-        public double? Step { get; set; }
+        public T? Step { get; set; }
 
         public string UpArrowText { get; set; }
 
-        public double? Value { get; set; }
+        public T? Value { get; set; }
+
+        public bool? Enable { get; set; }
 
 
         protected override Dictionary<string, object> SerializeSettings()
@@ -91,6 +93,11 @@ namespace Kendo.Mvc.UI
             if (Value.HasValue)
             {
                 settings["value"] = Value;
+            }
+
+            if (Enable.HasValue)
+            {
+                settings["enable"] = Enable;
             }
 
             return settings;

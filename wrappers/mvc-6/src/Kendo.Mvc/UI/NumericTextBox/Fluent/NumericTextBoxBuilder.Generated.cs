@@ -52,7 +52,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the largest value the user can enter.
         /// </summary>
         /// <param name="value">The value for Max</param>
-        public NumericTextBoxBuilder<T> Max(double value)
+        public NumericTextBoxBuilder<T> Max(T? value)
         {
             Container.Max = value;
             return this;
@@ -62,7 +62,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the smallest value the user can enter.
         /// </summary>
         /// <param name="value">The value for Min</param>
-        public NumericTextBoxBuilder<T> Min(double value)
+        public NumericTextBoxBuilder<T> Min(T? value)
         {
             Container.Min = value;
             return this;
@@ -92,7 +92,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the value used to increment or decrement widget value.
         /// </summary>
         /// <param name="value">The value for Step</param>
-        public NumericTextBoxBuilder<T> Step(double value)
+        public NumericTextBoxBuilder<T> Step(T? value)
         {
             Container.Step = value;
             return this;
@@ -112,9 +112,19 @@ namespace Kendo.Mvc.UI.Fluent
         /// Specifies the value of the NumericTextBox widget.
         /// </summary>
         /// <param name="value">The value for Value</param>
-        public NumericTextBoxBuilder<T> Value(double value)
+        public NumericTextBoxBuilder<T> Value(T? value)
         {
             Container.Value = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Enables or disables the textbox
+        /// </summary>
+        /// <param name="value">The value for Enable</param>
+        public NumericTextBoxBuilder<T> Enable(bool value)
+        {
+            Container.Enable = value;
             return this;
         }
 
