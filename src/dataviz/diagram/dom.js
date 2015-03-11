@@ -2314,7 +2314,7 @@
                 return shape;
             },
 
-            _addShape: function(shape, options) {
+            _addShape: function(shape, undoable) {
                 var that = this;
                 var dataSource = that.dataSource;
                 var dataItem;
@@ -2327,10 +2327,11 @@
                         this.dataSource.add(dataItem);
                         var inactiveItem = this._inactiveShapeItems.getByUid(dataItem.uid);
                         inactiveItem.element = shape;
+                        inactiveItem.undoable = undoable;
                         return shape;
                     }
                 } else if (!this.trigger("add", { shape: shape })) {
-                    return this.addShape(shape, options);
+                    return this.addShape(shape, { undoable: undoable });
                 }
             },
             /**
@@ -3542,7 +3543,7 @@
                     if (!dataItem.isNew()) {
                         if (shape) {
                             shape._setOptionsFromModel();
-                            diagram.addShape(shape);
+                            diagram.addShape(shape, { undoable: inactiveItem.undoable });
                             diagram._dataMap[dataItem.id] = shape;
                         } else {
                             diagram._addDataItem(dataItem);

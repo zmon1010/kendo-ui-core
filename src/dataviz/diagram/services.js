@@ -270,7 +270,7 @@
                 this.title = "Deletion";
             },
             undo: function () {
-                this.diagram._addShape(this.shape, { undoable: false });
+                this.diagram._addShape(this.shape, false);
                 this.shape.select(false);
             },
             redo: function () {

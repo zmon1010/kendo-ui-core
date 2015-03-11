@@ -104,7 +104,17 @@
                     color: "green"
                 }
             }
-        }
+        },
+            add: function(e) {
+       console.log("add", e);
+       if (e.connection) {
+        //e.connection.type("cascading");                    
+       }
+       // e.connection.type("polyline");                    
+    },
+    remove: function(e) {
+       console.log("remove", e);
+    }
        //, zoom: 2
     });    
     //diagram.bringIntoView([shape]);

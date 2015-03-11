@@ -183,9 +183,17 @@ function findIdx(data, id) {
                         template: "#:text#"
                     }
                 },
-                remove: function() {
-                    console.log("remove");
-                }
+    add: function(e) {
+       console.log("add", e);
+       if (e.shape) {
+        e.preventDefault();
+        //e.connection.type("cascading");                    
+       }
+       // e.connection.type("polyline");                    
+    },
+    remove: function(e) {
+       console.log("remove", e);
+    }
             }).data("kendoDiagram");
             
             function addConnection() {
