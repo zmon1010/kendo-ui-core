@@ -840,6 +840,11 @@
                         boundsChange = true;
                     }
 
+                    if (options.connectors) {
+                        shapeOptions.connectors = options.connectors;
+                        this._updateConnectors();
+                    }
+
                     shapeOptions = deepExtend(shapeOptions, options);
 
                     if  (options.rotation || boundsChange) {
@@ -849,6 +854,27 @@
                     if (shapeOptions.content) {
                         this.content(shapeOptions.content);
                     }
+                }
+            },
+
+            _updateConnectors: function() {
+                var connections = this.connections();
+                this.connectors = [];
+                this._createConnectors();
+                var connection;
+                var source;
+                var target;
+
+                for (var idx = 0; idx < connections.length; idx++) {
+                    connection = connections[idx];
+                    source = connection.source();
+                    target = connection.target();
+                    if (source.shape && source.shape === this) {
+                        connection.source(this.getConnector(source.options.name) || null);
+                    } else if (target.shape && target.shape === this) {
+                        connection.target(this.getConnector(target.options.name) || null);
+                    }
+                    connection.updateModel();
                 }
             },
 

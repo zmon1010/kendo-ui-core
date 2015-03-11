@@ -1136,6 +1136,7 @@
         })();
 
         (function() {
+            var Connection = dataviz.diagram.Connection;
 
             // ------------------------------------------------------------
             module("Shape / redraw", {
@@ -1224,6 +1225,57 @@
                 };
 
                 shape.redraw(visualOptions);
+            });
+
+            test("redraw updates connectors", function() {
+                shape.redraw({
+                    connectors: [{name: "top"}]
+                });
+                equal(shape.connectors.length, 1);
+                equal(shape.connectors[0].options.name, "top");
+            });
+
+            test("redraw updates connection source with the new instance", function() {
+                var connection = new Connection(shape.getConnector("top"), new Point());
+                shape.redraw({
+                    connectors: [{name: "top"}]
+                });
+                ok(connection.source() === shape.getConnector("top"));
+            });
+
+            test("redraw sets connection source to the source point if previous connector is not from the new connectors", function() {
+                var connection = new Connection(shape.getConnector("auto"), new Point());
+                shape.redraw({
+                    connectors: [{name: "top"}]
+                });
+                ok(connection.source().equals(connection.sourcePoint()));
+            });
+
+            test("redraw updates connection target with the new instance", function() {
+                var connection = new Connection(new Point(), shape.getConnector("top"));
+                shape.redraw({
+                    connectors: [{name: "top"}]
+                });
+                ok(connection.target() === shape.getConnector("top"));
+            });
+
+            test("redraw sets connection target to the target point if previous connector is not from the new connectors", function() {
+                var connection = new Connection(new Point(), shape.getConnector("auto"));
+                shape.redraw({
+                    connectors: [{name: "top"}]
+                });
+                ok(connection.target().equals(connection.targetPoint()));
+            });
+
+            test("redraw updates connection model", 2, function() {
+                var connectionSource = new Connection(shape.getConnector("auto"), new Point());
+                var connectionTarget = new Connection(new Point(), shape.getConnector("auto"));
+                connectionSource.updateModel = connectionTarget.updateModel = function() {
+                    ok(true);
+                };
+                shape.redraw({
+                    connectors: [{name: "top"}]
+                });
             });
         })();
 
