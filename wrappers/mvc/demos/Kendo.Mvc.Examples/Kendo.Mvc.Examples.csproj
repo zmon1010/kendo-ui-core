@@ -214,6 +214,7 @@
     <Compile Include="Controllers\Linear_Gauge\ExportController.cs" />
     <Compile Include="Controllers\Linear_Gauge\Multiple_PointersController.cs" />
     <Compile Include="Controllers\Line_Charts\VisualsController.cs" />
+    <Compile Include="Controllers\Map\ExportController.cs" />
     <Compile Include="Controllers\Menu\Context_MenuController.cs" />
     <Compile Include="Controllers\PivotGrid\Excel_ExportController.cs" />
     <Compile Include="Controllers\PivotGrid\KPIController.cs" />
@@ -2705,6 +2706,7 @@
     <Content Include="Areas\razor\Views\line_charts\visuals.cshtml" />
     <Content Include="Areas\razor\Views\editor\pdf_export.cshtml" />
     <Content Include="Areas\razor\Views\gantt\right_to_left_support.cshtml" />
+    <Content Include="Areas\razor\Views\map\export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
