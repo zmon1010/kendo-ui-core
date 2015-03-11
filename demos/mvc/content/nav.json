@@ -8234,6 +8234,17 @@
         "requiresServer": "true"
       },
       {
+        "text": "Export",
+        "new": true,
+        "url": "map/export",
+        "title": {
+            "kendo-ui": "Kendo UI Map Export API methods"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to export maps to PDF, PNG Images or SVG and save them directly in the browser."
+        }
+      },
+      {
         "text": "Events",
         "url": "map/events",
         "title": {
