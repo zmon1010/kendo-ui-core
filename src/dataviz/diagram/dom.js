@@ -1617,7 +1617,7 @@
                 that._initTheme();
                 that._initElements();
                 that._extendLayoutOptions(that.options);
-                that._initShapeDefaults(userOptions);
+                that._initDefaults(userOptions);
 
                 that._initCanvas();
 
@@ -1727,27 +1727,30 @@
             ],
 
             _createGlobalToolBar: function() {
-                var tools = this.options.editable.tools;
-                if (this._isEditable && tools.length === 0) {
-                    tools = ["createShape", "undo", "redo", "rotateClockwise", "rotateAnticlockwise"];
-                }
+                var editable = this.options.editable;
+                if (editable) {
+                    var tools = editable.tools;
+                    if (this._isEditable && tools.length === 0) {
+                        tools = ["createShape", "undo", "redo", "rotateClockwise", "rotateAnticlockwise"];
+                    }
 
-                if (tools && tools.length) {
-                    this.toolBar = new DiagramToolBar(this, {
-                        tools: tools || {},
-                        click: proxy(this._toolBarClick, this),
-                        modal: false
-                    });
+                    if (tools && tools.length) {
+                        this.toolBar = new DiagramToolBar(this, {
+                            tools: tools || {},
+                            click: proxy(this._toolBarClick, this),
+                            modal: false
+                        });
 
-                    this.toolBar.element.css({
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: this.element.width(),
-                        textAlign: "left"
-                    });
+                        this.toolBar.element.css({
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: this.element.width(),
+                            textAlign: "left"
+                        });
 
-                    this.element.append(this.toolBar.element);
+                        this.element.append(this.toolBar.element);
+                    }
                 }
             },
 
@@ -1898,15 +1901,12 @@
                 this.scrollable = $("<div />").appendTo(this.element);
             },
 
-            _initShapeDefaults: function(userOptions) {
+            _initDefaults: function(userOptions) {
                 var options = this.options;
                 var userShapeDefaults = (userOptions || {}).shapeDefaults;
                 if (options.editable === false) {
-                    deepExtend(options.shapeDefaults, {
-                        editable: {
-                            connect: false
-                        }
-                    });
+                    options.shapeDefaults.editable = false;
+                    options.connectionDefaults.editable = false;
                 }
 
                 if (userShapeDefaults && userShapeDefaults.connectors) {
@@ -3297,7 +3297,7 @@
 
                 if (!this.singleToolBar && diagram.select().length === 1) {
                     var element = diagram.select()[0];
-                    if (element) {
+                    if (element && element.options.editable !== false) {
                         var tools = element.options.editable.tools;
                         if (this._isEditable && tools.length === 0) {
                             if (element instanceof Shape) {

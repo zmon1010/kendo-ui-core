@@ -186,10 +186,10 @@
         return dataSource;
     }
 
-    function setupEditableDiagram() {
+    function setupEditableDiagram(options) {
         QUnit.fixture.html('<div id="canvas" />');
 
-        $("#canvas").kendoDiagram({
+        $("#canvas").kendoDiagram(deepExtend({
             dataSource: setupDiagramDataSource({}, [{
                 id: 1,
                 text: "firstName"
@@ -201,7 +201,7 @@
                 from: 1,
                 to: 2
             }])
-        });
+        }, options));
 
         return $("#canvas").getKendoDiagram();
     }

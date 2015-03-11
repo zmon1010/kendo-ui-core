@@ -507,13 +507,13 @@
             equal(shape.options.editable.connect, false);
         });
 
-        test("editable connect is set to false if diagram editable is false", function() {
+        test("editable is set to false if diagram editable is false", function() {
             createDiagram({
                 editable: false
             });
             shape = diagram.addShape({id: "shape1"});
 
-            equal(shape.options.editable.connect, false);
+            equal(shape.options.editable, false);
         });
 
         test("shapeDefaults connectors are overridden by the user options", function() {
@@ -524,6 +524,32 @@
 
             equal(shape.options.connectors.length, 1);
             equal(shape.options.connectors[0].name, "right");
+        });
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var diagram;
+        module("Diagram / Toolbar", {
+            teardown: function() {
+                diagram.destroy();
+            }
+        });
+
+        test("does not create global toolbar if editable is false", function() {
+            diagram = setupEditableDiagram({
+                editable: false
+            });
+            ok(!diagram.toolBar);
+        });
+
+        test("does not create element toolbar if element editable option is set to false", function() {
+            diagram = setupEditableDiagram({});
+            var shape = diagram.shapes[0];
+            shape.options.editable = false;
+            diagram.select(shape);
+            diagram._createToolBar();
+            ok(!diagram.singleToolBar);
         });
     })();
 
