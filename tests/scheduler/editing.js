@@ -746,14 +746,22 @@
         var scheduler = setup({
             views: ["week"],
             dataSource: {
-                data: [ { start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ]
+                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ],
+                schema: {
+                    model: {
+                        id: "id",
+                        fields: {
+                            id: {type: "number"}
+                        }
+                    }
+                }
             }
         });
 
         var eventUID = scheduler.element.find(".k-event:last").data("uid");
         scheduler.editEvent(eventUID);
 
-        ok($(".k-window-title").text(), "Edit Recurring Item");
+        equal($(".k-window-title").text(), "Edit Recurring Item");
     });
 
     test("close recurring dialog on button click", 1, function() {
