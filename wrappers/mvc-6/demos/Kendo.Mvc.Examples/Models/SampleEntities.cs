@@ -91,7 +91,70 @@ namespace Kendo.Mvc.Examples.Models
 				.HasMany(e => e.Orders);			
 
 			modelBuilder.Entity<Task>()
-				.HasMany(e => e.Tasks1);			
+				.HasMany(e => e.Tasks1);
+			
+			modelBuilder.Entity<Category>()
+				.ForSqlServer().Table("Categories");
+
+			modelBuilder.Entity<Customer>()
+				.ForSqlServer().Table("Customers");
+
+			modelBuilder.Entity<CustomerDemographic>()
+				.ForSqlServer().Table("CustomerDemographics");
+
+			modelBuilder.Entity<Employee>()
+				.ForSqlServer().Table("Employees");
+
+			modelBuilder.Entity<EmployeeDirectory>()
+				.ForSqlServer().Table("EmployeeDirectories");
+
+			modelBuilder.Entity<GanttDependency>()
+				.ForSqlServer().Table("GanttDependencies");
+
+			modelBuilder.Entity<GanttResource>()
+				.ForSqlServer().Table("GanttResources");
+
+			modelBuilder.Entity<GanttResourceAssignment>()
+				.ForSqlServer().Table("GanttResourceAssignment");
+
+			modelBuilder.Entity<GanttTask>()
+				.ForSqlServer().Table("GanttTasks");
+
+			modelBuilder.Entity<Meeting>()
+				.ForSqlServer().Table("Meetings");
+
+			modelBuilder.Entity<MeetingAttendee>()
+				.ForSqlServer().Table("MeetingAttendees");
+
+			modelBuilder.Entity<Order>()
+				.ForSqlServer().Table("Orders");
+
+			modelBuilder.Entity<Order_Detail>()
+				.ForSqlServer().Table("Order_Details");
+
+			modelBuilder.Entity<OrgChartConnection>()
+				.ForSqlServer().Table("OrgChartConnections");
+
+			modelBuilder.Entity<OrgChartShape>()
+				.ForSqlServer().Table("OrgChartShapes");
+
+			modelBuilder.Entity<Product>()
+				.ForSqlServer().Table("Products");
+
+			modelBuilder.Entity<Region>()
+				.ForSqlServer().Table("Regions");
+
+			modelBuilder.Entity<Shipper>()
+				.ForSqlServer().Table("Shippers");
+
+			modelBuilder.Entity<Task>()
+				.ForSqlServer().Table("Tasks");
+
+			modelBuilder.Entity<Territory>()
+				.ForSqlServer().Table("Territories");
+
+			modelBuilder.Entity<UrbanArea>()
+				.ForSqlServer().Table("UrbanAreas");
 		}
 	}
 }
