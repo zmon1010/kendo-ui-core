@@ -270,7 +270,7 @@
                 this.title = "Deletion";
             },
             undo: function () {
-                this.diagram._addShape(this.shape, { undoable: false });
+                this.diagram._addShape(this.shape, false);
                 this.shape.select(false);
             },
             redo: function () {
@@ -786,11 +786,16 @@
             start: function (p, meta) {
                 var diagram = this.toolService.diagram,
                     connector = this.toolService._hoveredConnector,
-                    connection = diagram.connect(connector._c, p);
+                    connection = diagram._createConnection({}, connector._c, p);
 
-                this.toolService._connectionManipulation(connection, connector._c.shape, true);
-                this.toolService._removeHover();
-                selectSingle(this.toolService.activeConnection, meta);
+                if (diagram._addConnection(connection)) {
+                    this.toolService._connectionManipulation(connection, connector._c.shape, true);
+                    this.toolService._removeHover();
+                    selectSingle(this.toolService.activeConnection, meta);
+                } else {
+                    connection.source(null);
+                    this.toolService.end();
+                }
             },
             move: function (p) {
                 this.toolService.activeConnection.target(p);
@@ -801,6 +806,10 @@
                     hoveredItem = this.toolService.hoveredItem,
                     connector = this.toolService._hoveredConnector,
                     target;
+
+                if (!connection) {
+                    return;
+                }
 
                 if (connector && connector._c != connection.sourceConnector) {
                     target = connector._c;

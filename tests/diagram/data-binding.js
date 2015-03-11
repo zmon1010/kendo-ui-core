@@ -428,6 +428,32 @@
             dataSource.sync();
         });
 
+        test("adds shape for the inactive dataItem after it has been synced", 1, function() {
+            item = dataSource.add({});
+            dataSource.sync();
+            ok(diagram._dataMap[item.id]);
+        });
+
+        test("adds existing shape for the inactive item if the element is set", 1, function() {
+            item = dataSource.add({});
+            var inactiveItem = diagram._inactiveShapeItems.getByUid(item.uid);
+            var shape = new kendo.dataviz.diagram.Shape();
+            inactiveItem.element = shape;
+            dataSource.sync();
+            ok(diagram._dataMap[item.id] === shape);
+        });
+
+        test("does not add shape to undo redo stack for existing shape if undoable is set to false", 1, function() {
+            item = dataSource.add({});
+            var inactiveItem = diagram._inactiveShapeItems.getByUid(item.uid);
+            var shape = new kendo.dataviz.diagram.Shape();
+            var count = diagram.undoRedoService.count();
+            inactiveItem.element = shape;
+            inactiveItem.undoable = false;
+            dataSource.sync();
+            equal(diagram.undoRedoService.count(), count);
+        });
+
     })();
 
     (function() {

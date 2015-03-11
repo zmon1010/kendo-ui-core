@@ -1987,6 +1987,35 @@
             equal(bounds.height, 300);
         });
 
+        test("Paste should trigger add", function () {
+            diagram.bind("add", function() {
+                ok(true);
+            });
+            pasteShape();
+        });
+
+        test("Paste should not add item or shape if the default action is prevented", function () {
+            var shape;
+            diagram.bind("add", function(e) {
+                e.preventDefault();
+                shape = e.shape;
+            });
+            pasteShape();
+
+            ok(!diagram.getShapeById(shape.id));
+            equal(diagram.dataSource.data().length, 1);
+        });
+
+        test("Paste should add the shape passed to the add event after sync", function () {
+            var shape;
+            diagram.bind("add", function(e) {
+                shape = e.shape;
+            });
+            pasteShape();
+
+            ok(diagram.getShapeById(shape.id) === shape);
+        });
+
     })();
 
     (function() {
@@ -2065,6 +2094,43 @@
             ok(target.shape === targetShape);
         });
 
+        test("Paste should trigger add", function () {
+            diagram.bind("add", function() {
+                ok(true);
+            });
+            pasteConnection();
+        });
+
+        test("Paste should not add item or connection if the default action is prevented", function () {
+            var connection;
+            diagram.bind("add", function(e) {
+                e.preventDefault();
+                connection = e.connection;
+            });
+            pasteConnection();
+
+            for (var idx = 0; idx < diagram.connections.length; idx++) {
+                if (diagram.connections[idx] === connection) {
+                    ok(false);
+                }
+            }
+            equal(diagram.connectionsDataSource.data().length, 2);
+        });
+
+        test("Paste should add the connection passed to the add event after sync", 1, function () {
+            var connection;
+            diagram.bind("add", function(e) {
+                connection = e.connection;
+            });
+            pasteConnection();
+
+            for (var idx = 0; idx < diagram.connections.length; idx++) {
+                if (diagram.connections[idx] === connection) {
+                    ok(true);
+                }
+            }
+        });
+
     })();
 
     // ------------------------------------------------------------
@@ -2134,6 +2200,37 @@
         equal(d.editor.options.type, "shape");
     });
 
+    test("should trigger add", function () {
+        d.bind("add", function(e) {
+            ok(true);
+        });
+        d.createShape();
+    });
+
+    test("should not add item or shape if the default action is prevented", function () {
+        var shape;
+        d.bind("add", function(e) {
+            e.preventDefault();
+            shape = e.shape;
+        });
+        d.createShape();
+
+        d.dataSource.sync();
+        ok(!d.getShapeById(shape.id));
+        equal(d.dataSource.data().length, 3);
+    });
+
+    test("should add the shape passed to the add event after sync", function () {
+        var shape;
+        d.bind("add", function(e) {
+            shape = e.shape;
+        });
+        d.createShape();
+
+        d.dataSource.sync();
+        ok(d.getShapeById(shape.id));
+    });
+
     // ------------------------------------------------------------
     module("Editing / Connections data source", {
         setup: function () {
@@ -2195,5 +2292,42 @@
 
     test("should create editor with type shape", function () {
         equal(d.editor.options.type, "connection");
+    });
+
+    test("should trigger add", function () {
+        d.bind("add", function(e) {
+            ok(true);
+        });
+        d.createConnection();
+    });
+
+    test("should not add item or connection if the default action is prevented", function () {
+        var connection;
+        d.bind("add", function(e) {
+            e.preventDefault();
+            connection = e.connection;
+        });
+        d.createConnection();
+
+        for (var idx = 0; idx < d.connections.length; idx++) {
+            if (d.connections[idx] === connection) {
+                ok(false);
+            }
+        }
+        equal(d.connectionsDataSource.data().length, 2);
+    });
+
+    test("should add the connection passed to the add event", function () {
+        var connection;
+        d.bind("add", function(e) {
+            connection = e.connection;
+        });
+        d.createConnection();
+
+        for (var idx = 0; idx < d.connections.length; idx++) {
+            if (d.connections[idx] === connection) {
+                ok(true);
+            }
+        }
     });
 })();
