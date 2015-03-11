@@ -1,9 +1,11 @@
-﻿// This file in the main entry point for defining grunt tasks and using grunt plugins.
+﻿/// <binding AfterBuild='copy' />
+// This file in the main entry point for defining grunt tasks and using grunt plugins.
 // Click here to learn more. http://go.microsoft.com/fwlink/?LinkID=513275&clcid=0x409
 
 module.exports = function (grunt) {
+	grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.initConfig({
-        bower: {
+    	bower: {			
             install: {
                 options: {
                     targetDir: "wwwroot/lib",
@@ -11,8 +13,14 @@ module.exports = function (grunt) {
                     cleanTargetDir: false
                 }
             }
-        }
-    });
+    	},
+    	copy: {
+    		main: {    			
+    			src: "Sample.mdf",
+    			dest: "wwwroot/App_Data/Sample.mdf"
+    		}
+    	}
+    });    
 
     // This command registers the default task which will install bower packages into wwwroot/lib
     grunt.registerTask("default", ["bower:install"]);
@@ -20,4 +28,5 @@ module.exports = function (grunt) {
     // The following line loads the grunt plugins.
     // This line needs to be at the end of this this file.
     grunt.loadNpmTasks("grunt-bower-task");
+    
 };

@@ -1,4 +1,5 @@
 ﻿using System;
+using Kendo.Mvc.Examples.Models;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Diagnostics.Entity;
@@ -21,7 +22,7 @@ namespace Kendo.Mvc.Examples
         {
             // Setup configuration sources.
             Configuration = new Configuration()
-                .AddJsonFile("config.json")
+                .AddJsonFile("config.json")				
                 .AddEnvironmentVariables();
         }
 
@@ -32,7 +33,8 @@ namespace Kendo.Mvc.Examples
         {
             // Add EF services to the services container.
             services.AddEntityFramework(Configuration)
-                .AddSqlServer();
+                .AddSqlServer()
+				.AddDbContext<SampleEntitiesDataContext>();
 
             // Add MVC services to the services container.
             services.AddMvc();
@@ -70,10 +72,10 @@ namespace Kendo.Mvc.Examples
             app.UseStaticFiles();
 
             // Add cookie-based authentication to the request pipeline.
-            app.UseIdentity();
+            app.UseIdentity();			
 
-            // Add MVC to the request pipeline.
-            app.UseMvc(routes =>
+			// Add MVC to the request pipeline.
+			app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",

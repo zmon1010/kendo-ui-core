@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using Kendo.Mvc.Examples.Models;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
@@ -7,7 +6,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public class GridController : Controller
+	public class GridController : Controller
     {
         public IActionResult Index()
         {
@@ -19,14 +18,9 @@ namespace Kendo.Mvc.Examples.Controllers
 			return Json(GetProducts().ToDataSourceResult(request));
 		}
 
-		private static IEnumerable<Product> GetProducts()
+		private static IEnumerable GetProducts()
 		{
-			return Enumerable.Range(1, 200).Select(i => new Product
-			{
-				ProductID = i,
-				ProductName = "Product" + i,
-				UnitPrice = i * 3.14m
-			});
+			return new SampleEntitiesDataContext().Products;			
 		}
 	}
 }
