@@ -12536,7 +12536,7 @@ settings are available for the depth value:</description>
         </attribute>
         <attribute>
             <description>Specifies a list of date formats used to parse the value set with value() method or by direct user input. If not set the value of the format will be used.
- Note that format option is always used parsing process.</description>
+ Note that the format option is always used during parsing.</description>
             <name>parseFormats</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -18493,6 +18493,12 @@ for all columns when filtering is enabled via the filterable option.Can be set t
             <name>itemTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Use this options to enable the MultiCheck filtering support for that column.</description>
+            <name>multi</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The role data attribute of the widget used in the filter menu or a JavaScript function which initializes that widget.</description>

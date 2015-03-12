@@ -87,6 +87,14 @@ public class ColumnFilterableTag extends  BaseTag  /* interfaces */ /* interface
         setProperty("itemTemplate", new Function(value));
     }
 
+    public java.lang.Object getMulti() {
+        return (java.lang.Object)getProperty("multi");
+    }
+
+    public void setMulti(java.lang.Object value) {
+        setProperty("multi", value);
+    }
+
     public java.lang.String getUi() {
         return (java.lang.String)getProperty("ui");
     }
