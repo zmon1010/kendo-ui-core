@@ -12,6 +12,8 @@
 - grid.messages
 - grid.mobile
 - grid.pageable
+- grid.pdf.papersize
+- grid.pdf.margin
 - grid.reorderable
 - grid.resizable
 - grid.rowtemplate
