@@ -1,0 +1,30 @@
+﻿@using Kendo.Mvc.Examples.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kendo UI Examples</title>
+    <link href="@Url.Content("~/wwwroot/css/site.css")" rel="stylesheet" />
+</head>
+<body>
+    <div id="page">
+        <a class="offline-button" href="@Url.Action("Index", "Home")">Back to all suites</a>
+
+        <ul>
+            @foreach (NavigationWidget widget in ViewBag.Navigation)
+            {
+                if (!widget.ShouldInclude || widget.Items.All(x=>!x.ShouldInclude)) { continue; }
+                <li>
+                    <h2>@widget.Text</h2>
+                    <ul>
+                        @foreach (NavigationExample example in widget.Items)
+                        {
+                            if (!example.ShouldInclude) { continue; }
+                            <li><a href='@(Url.Content("~/" + example.Url))'>@example.Text</a></li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+</body>
+</html>

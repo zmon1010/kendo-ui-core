@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNet.Mvc;
-using Kendo.Mvc.Examples.Models;
+﻿using Microsoft.AspNet.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
@@ -10,10 +6,7 @@ namespace Kendo.Mvc.Examples.Controllers
     {
         public IActionResult Index()
         {
-            return View(new HomeModel
-            {
-                Date = DateTime.Now
-            });
+            return View();
         }
 
         public IActionResult Error()
