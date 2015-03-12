@@ -577,15 +577,16 @@ form.k-filter-menu .k-textbox
     margin-right: 0;
 }
 
-.k-multicheck-wrap .k-item
-{
-    line-height: 26px;
-}
 .k-multicheck-wrap
 {
     overflow: auto;
-    max-height: 300px;
+    overflow-x: hidden;
     white-space: nowrap;
+    max-height: 300px;
+}
+
+.k-multicheck-wrap .k-item {
+    line-height: 2.2em;
 }
 
 /* Grid :: grouping */
