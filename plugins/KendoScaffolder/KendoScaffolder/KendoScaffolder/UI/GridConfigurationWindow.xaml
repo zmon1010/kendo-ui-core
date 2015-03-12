@@ -139,7 +139,7 @@
                         <Label Name="CrudOperationsLabel" Content="Operations:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <CheckBox Name="EditableCreate" Content="Create" Margin="15, 0, 0, 0" IsChecked="{Binding EditableCreate, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <CheckBox Name="EditableUpdate" Content="Update" Margin="15, 0, 0, 0" IsChecked="{Binding EditableUpdate, Mode=OneWayToSource}" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
-                        <CheckBox Name="EditableDestroy" Content="Delete" Margin="15, 0, 0, 0"  IsChecked="{Binding EditableDestroy, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <CheckBox Name="EditableDestroy" Content="Destroy" Margin="15, 0, 0, 0"  IsChecked="{Binding EditableDestroy, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </WrapPanel>
                     <CheckBox Grid.Row="4" Name="Filterable" Content="Filterable" Click="Filterable_Clicked" IsChecked="{Binding Filterable, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <WrapPanel Grid.Row="5" Grid.Column="1" Name="FilterableWrapPanel" Visibility="Collapsed">
