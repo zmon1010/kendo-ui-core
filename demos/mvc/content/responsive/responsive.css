@@ -173,7 +173,6 @@ a {
    position: relative;
    min-height: 1px;
    color: #37474f;
-   background: pink;
 }
 
 .responsive-widget-wrapper {
@@ -191,23 +190,24 @@ a {
     position:absolute; 
     left: 0;
     width: 100%;   
-    height: 10px;
-    background-image: url('images/responsive_ruler.png');
+    height: 10px;    
     background-repeat: repeat-x;
 }
 
 .top-ruler {
     top: 23px;
+    background-image: url('images/horizontal-ruler-top.png');
 }
 
 .bottom-ruler {
     bottom: 0;
+    background-image: url('images/horizontal-ruler-bottom.png');
 }
 
 .responsive-vertical-ruler {
     position: absolute;
     top: 0;    
-    bottom: 0;
+    bottom: 10px;
     width: 22px; 
 }
 
