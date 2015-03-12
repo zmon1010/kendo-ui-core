@@ -175,6 +175,10 @@ a {
     overflow: hidden;
 }
 
+.responsive-widget-wrapper #scheduler {
+   position: relative; 
+}
+
 .responsive-horizontal-ruler {
     position:absolute; 
     left: 0;
@@ -200,8 +204,13 @@ a {
 }
 
 .res-320 {
-    left: 302px;
+    left: 298px;
     background-image: url('images/vertical-ruler-320.png');
+}
+
+.res-480 {
+    left: 458px;
+    background-image: url('images/vertical-ruler-480.png');
 }
 
 .res-768 {
