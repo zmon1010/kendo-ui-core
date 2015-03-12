@@ -190,9 +190,10 @@ namespace :generate do
         desc 'Generate MVC v6 wrappers'
         task :wrappers do
             markdown = FileList[
-                'docs/api/javascript/ui/grid.md',
-                'docs/api/javascript/ui/datetimepicker.md',
-                'docs/api/javascript/ui/treelist.md'
+                #'docs/api/javascript/ui/grid.md',
+                'docs/api/javascript/ui/numerictextbox.md',
+                #'docs/api/javascript/ui/datetimepicker.md',
+                #'docs/api/javascript/ui/treelist.md'
             ]
 
             components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }
