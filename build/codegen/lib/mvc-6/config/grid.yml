@@ -1,5 +1,5 @@
 :options:
-    - :name: sortable.mode
+    - :name: sortable.sortMode
       :type: String
       :enum_type: GridSortMode
       :description: Defines the sort modes supported by Kendo UI Grid for ASP.NET MVC
@@ -11,4 +11,3 @@
           - :value: multiple
             :member: MultipleColumn
             :description: The user can sort by more than one column at the same time
-

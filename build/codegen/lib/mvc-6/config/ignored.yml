@@ -15,6 +15,7 @@
 - grid.resizable
 - grid.rowtemplate
 - grid.scrollable
+- grid.sortable.mode
 - grid.selectable
 - grid.toolbar
 - treelist.columns.editor

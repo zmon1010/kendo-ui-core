@@ -1,7 +1,8 @@
 module CodeGen::MVC6::Wrappers::Options
 
     GENERIC_ARGS = YAML.load(File.read("build/codegen/lib/mvc-6/config/generics.yml"))
-    IGNORED = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored.yml"))
+    IGNORED = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored.yml")).map(&:downcase)
+    IGNORED_SERIALIZATION = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored_serialization.yml")).map(&:downcase)
 
     CSHARP_TYPES = {
         'Number' => 'double',
@@ -51,6 +52,10 @@ module CodeGen::MVC6::Wrappers::Options
         composite = composite_options.map { |o| o.name }
 
         f = options.find_all { |o| o.composite? || !composite.include?(o.name) }
+    end
+
+    def serialize?
+        !IGNORED_SERIALIZATION.include?(full_name)
     end
 
     def handler?
