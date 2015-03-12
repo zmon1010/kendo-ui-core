@@ -15,6 +15,46 @@ class GridColumnFilterable extends \Kendo\SerializableObject {
     }
 
     /**
+    * Sets the data source of the GridColumnFilterable.
+    * @param array|\Kendo\Data\DataSource $value
+    * @return \Kendo\UI\GridColumnFilterable
+    */
+    public function dataSource($value) {
+        return $this->setProperty('dataSource', $value);
+    }
+
+    /**
+    * Controls whether to show or not the checkAll checkbox before the other checkboxes when using checkbox filtering.
+    * @param boolean $value
+    * @return \Kendo\UI\GridColumnFilterable
+    */
+    public function checkAll($value) {
+        return $this->setProperty('checkAll', $value);
+    }
+
+    /**
+    * Sets the itemTemplate option of the GridColumnFilterable.
+    * Allows customization on the logic that renderes the checkboxes when using checkbox filtering.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\GridColumnFilterable
+    */
+    public function itemTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('itemTemplate', $value);
+    }
+
+    /**
+    * Sets the itemTemplate option of the GridColumnFilterable.
+    * Allows customization on the logic that renderes the checkboxes when using checkbox filtering.
+    * @param string $value The template content.
+    * @return \Kendo\UI\GridColumnFilterable
+    */
+    public function itemTemplate($value) {
+        return $this->setProperty('itemTemplate', $value);
+    }
+
+    /**
     * The role data attribute of the widget used in the filter menu or a JavaScript function which initializes that widget.
     * @param string|\Kendo\JavaScriptFunction $value
     * @return \Kendo\UI\GridColumnFilterable
