@@ -941,22 +941,28 @@
     });
 
     if (kendo.PDFMixin) {
-       kendo.PDFMixin.extend(Editor.prototype);
-       Editor.prototype._drawPDF = function() {
-        return kendo.drawing.drawDOM(this.body);
-       };
-       Editor.prototype._drawPDFShadow = function() {
-            var wrapper = this.body;
-            var shadow = $("<div class='k-pdf-export-shadow'>").css("width", wrapper.width());
+        kendo.PDFMixin.extend(Editor.prototype);
+        Editor.prototype.saveAsPDF = function() {
+            var progress = new $.Deferred();
+            var promise = progress.promise();
+            var args = { promise: promise };
 
-            // Prepend the export container
-            wrapper.before(shadow);
-            shadow.append(wrapper.clone());
+            if (this.trigger("pdfExport", args)) {
+                return;
+            }
 
-            return kendo.drawing.drawDOM(shadow)
-            .done(function() {
-               shadow.remove();
+            var options = this.options.pdf;
+
+            kendo.drawing.drawDOM(this.body, options)
+            .done(function(dataURI) {
+                kendo.drawing.pdf.saveAs(dataURI, options.fileName, options.proxyURL);
+                progress.resolve();
+            })
+            .fail(function(err) {
+                progress.reject(err);
             });
+
+            return promise;
         };
     }
 
