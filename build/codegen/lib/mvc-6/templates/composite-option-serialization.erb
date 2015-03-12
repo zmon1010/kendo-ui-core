@@ -5,8 +5,9 @@
                 settings["<%= name %>"] = <%= name %>;
             }
 % if toggleable
-            else if (<%= csharp_name %>.Enabled) {
-                settings["<%= name %>"] = <%= csharp_name %>.Enabled;
+            else if (<%= csharp_name %>.Enabled == true)
+            {
+                settings["<%= name %>"] = true;
             }
 %end
 %end

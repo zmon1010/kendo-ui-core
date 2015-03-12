@@ -10,6 +10,7 @@
 - grid.groupable.messages
 - grid.height
 - grid.messages
+- grid.mobile
 - grid.pageable
 - grid.reorderable
 - grid.resizable

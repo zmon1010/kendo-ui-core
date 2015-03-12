@@ -12,7 +12,7 @@ namespace Kendo.Mvc.UI
     public partial class <%= csharp_class %><%= csharp_generic_args %> <%= csharp_generic_constraints %>
     {
 <%= unique_options.map { |o| o.to_declaration }.join %>
-% if toggleable
+% if toggleable && !unique_options.any?{ |o| o.csharp_name.downcase.eql?('enabled') }
         public bool Enabled { get; set; }
 % end
 
