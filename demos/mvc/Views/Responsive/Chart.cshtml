@@ -76,8 +76,18 @@ $(function () {
 });
 
 $(window).on("resize", function () {
-    var chart = $("#chart").data("kendoChart");
+    var windowWidth = $(window).width(),
+        chart = $("#chart").data("kendoChart");
+
     chart.resize();
+
+    if (windowWidth <= 480) {
+        chart.setOptions({ categoryAxis: { labels: { rotation: 310 } } });
+    }
+    else {
+        chart.setOptions({ categoryAxis: { labels: { rotation: 0 } } });
+    }
+
 });
 </script>
 
