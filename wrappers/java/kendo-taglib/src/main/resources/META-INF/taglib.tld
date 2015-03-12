@@ -17887,6 +17887,13 @@ By default the Kendo UI Gantt widget displays "day", "week", and "month" views.<
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV.
+Can be set to a JavaScript object which represents the allowCopy configuration.</description>
+            <name>allowCopy</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The id of the template used for rendering the alternate rows in the grid.</description>
             <name>altRowTemplate</name>
             <rtexprvalue>true</rtexprvalue>
@@ -18120,6 +18127,24 @@ and the string value will be passed as an argument to a kendo.template() functio
     </tag>
 
     <tag>
+        <description>If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV.
+Can be set to a JavaScript object which represents the allowCopy configuration.</description>
+        <name>grid-allowCopy</name>
+        <tag-class>com.kendoui.taglib.grid.AllowCopyTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Changes the delimeter between the items on the same row. Use this option if you want to change the default TSV format to CSV - set the delimeter to comma ','.</description>
+            <name>delimeter</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>If set to true the grid will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
 By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.</description>
         <name>grid-columnMenu</name>
@@ -18337,6 +18362,12 @@ is displayed in the column header cell.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>The width in pixels below which the column will become hidden.</description>
+            <name>minScreenWidth</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>If set to true the user can click the column header and sort the grid by the column field when sorting is enabled. If set to false sorting will
 be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.</description>
             <name>sortable</name>
@@ -18446,6 +18477,24 @@ for all columns when filtering is enabled via the filterable option.Can be set t
         <body-content>JSP</body-content>
 
         <attribute>
+            <description>Controls whether to show or not the checkAll checkbox before the other checkboxes when using checkbox filtering.</description>
+            <name>checkAll</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>The dataSource configuration for the items that will be used when columns.filterable.multi is enabled.</description>
+            <name>dataSource</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Allows customization on the logic that renderes the checkboxes when using checkbox filtering.</description>
+            <name>itemTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The role data attribute of the widget used in the filter menu or a JavaScript function which initializes that widget.</description>
             <name>ui</name>
             <rtexprvalue>true</rtexprvalue>
@@ -18535,6 +18584,12 @@ The function receives an object argument with two fields:</description>
         <body-content>JSP</body-content>
     </tag>
 
+    <tag>
+        <description>Allows customization on the logic that renderes the checkboxes when using checkbox filtering.</description>
+        <name>grid-column-filterable-itemTemplate</name>
+        <tag-class>com.kendoui.taglib.grid.ColumnFilterableItemTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>The role data attribute of the widget used in the filter menu or a JavaScript function which initializes that widget.</description>
         <name>grid-column-filterable-ui</name>
@@ -18765,6 +18820,12 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
         <attribute>
             <description>The text of the cancel button in the filter menu header (available in mobile mode only).</description>
             <name>cancel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The label used for the check-all checkbox.</description>
+            <name>checkAll</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -40160,7 +40221,8 @@ for more details.</description>
         </attribute>
         <attribute>
             <description>The selected files will be uploaded in separate requests, if this is supported by the browser.
-You can change this behavior by setting batch to true.</description>
+You can change this behavior by setting batch to true.The batch mode applies to multiple files, which are selected at the same time.
+Files selected one after the other will be uploaded in separate requests.</description>
             <name>batch</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -40572,16 +40634,16 @@ will disable all animations in the widget.</description>
         <body-content>empty</body-content>
 
         <attribute>
-            <description>Specifies the initial left position of the window.</description>
+            <description>Specifies the initial left position of the window. Numeric values are treated as pixels. String values can specify pixels or percentages, ems or other valid values.</description>
             <name>left</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>float</type>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>Specifies the initial top position of the window.</description>
+            <description>Specifies the initial top position of the window. Numeric values are treated as pixels. String values can specify pixels, percentages, ems or other valid values.</description>
             <name>top</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>float</type>
+            <type>java.lang.Object</type>
         </attribute>
 
     </tag>

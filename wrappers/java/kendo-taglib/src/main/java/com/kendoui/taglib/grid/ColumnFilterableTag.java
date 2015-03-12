@@ -55,8 +55,36 @@ public class ColumnFilterableTag extends  BaseTag  /* interfaces */ /* interface
         setProperty("cell", value);
     }
 
+    public void setItemTemplate(ColumnFilterableItemTemplateFunctionTag value) {
+        setEvent("itemTemplate", value.getBody());
+    }
+
     public void setUi(ColumnFilterableUiFunctionTag value) {
         setEvent("ui", value.getBody());
+    }
+
+    public boolean getCheckAll() {
+        return (boolean)getProperty("checkAll");
+    }
+
+    public void setCheckAll(boolean value) {
+        setProperty("checkAll", value);
+    }
+
+    public void setDataSource(DataSourceTag dataSource) {
+        setProperty("dataSource", dataSource);
+    }
+
+    public String getItemTemplate() {
+        Function property = ((Function)getProperty("itemTemplate"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setItemTemplate(String value) {
+        setProperty("itemTemplate", new Function(value));
     }
 
     public java.lang.String getUi() {

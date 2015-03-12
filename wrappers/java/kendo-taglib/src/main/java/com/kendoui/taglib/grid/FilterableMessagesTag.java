@@ -67,6 +67,14 @@ public class FilterableMessagesTag extends  BaseTag  /* interfaces *//* interfac
         setProperty("cancel", value);
     }
 
+    public java.lang.String getCheckAll() {
+        return (java.lang.String)getProperty("checkAll");
+    }
+
+    public void setCheckAll(java.lang.String value) {
+        setProperty("checkAll", value);
+    }
+
     public java.lang.String getClear() {
         return (java.lang.String)getProperty("clear");
     }

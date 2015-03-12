@@ -230,6 +230,14 @@ public class ColumnTag extends  BaseTag  /* interfaces *//* interfaces */ {
         setProperty("menu", value);
     }
 
+    public float getMinScreenWidth() {
+        return (float)getProperty("minScreenWidth");
+    }
+
+    public void setMinScreenWidth(float value) {
+        setProperty("minScreenWidth", value);
+    }
+
     public boolean getSortable() {
         return (boolean)getProperty("sortable");
     }

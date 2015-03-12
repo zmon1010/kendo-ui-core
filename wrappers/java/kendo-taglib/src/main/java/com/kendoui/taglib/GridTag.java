@@ -64,6 +64,10 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
         return "grid";
     }
 
+    public void setAllowCopy(com.kendoui.taglib.grid.AllowCopyTag value) {
+        setProperty("allowCopy", value);
+    }
+
     public void setColumnMenu(com.kendoui.taglib.grid.ColumnMenuTag value) {
         setProperty("columnMenu", value);
     }
@@ -198,6 +202,14 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setSaveChanges(SaveChangesFunctionTag value) {
         setEvent("saveChanges", value.getBody());
+    }
+
+    public boolean getAllowCopy() {
+        return (boolean)getProperty("allowCopy");
+    }
+
+    public void setAllowCopy(boolean value) {
+        setProperty("allowCopy", value);
     }
 
     public java.lang.String getAltRowTemplate() {
