@@ -57,7 +57,14 @@ namespace <#= Namespace #>
 <# } } #>
             });
 <# } else { #>
-            DataSourceResult result = <#= entitySetName.ToLower() #>.ToDataSourceResult(request);
+            DataSourceResult result = <#= entitySetName.ToLower() #>.ToDataSourceResult(request, <#= ModelVariable #> => new {
+                <#= PrimaryKeyName #> = <#= ModelVariable #>.<#= PrimaryKeyName #>,
+<#
+PushIndent(new string(' ', 16));
+ListModelEntityProperties();
+ClearIndent();
+#>
+            });
 <# } #>
 
             return Json(result);
@@ -182,7 +189,7 @@ ClearIndent();
         IEnumerable<PropertyMetadata> properties = ModelMetadata.Properties;
         var last = properties.Last();
         foreach (PropertyMetadata property in properties) {
-            if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+            if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey && !property.IsAssociation) {
                 if (property.Equals(last)) {
 #>
 <#= property.PropertyName #> = <#= ModelVariable #>.<#= property.PropertyName #>

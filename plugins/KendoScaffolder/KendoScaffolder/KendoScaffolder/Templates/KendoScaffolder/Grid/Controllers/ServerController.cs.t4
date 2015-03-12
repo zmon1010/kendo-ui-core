@@ -58,6 +58,7 @@ namespace <#= Namespace #>
             return db.<#= entitySetName #>;  
 <# } #>
         }
+<# if(EditableCreate && EditMode != batchEditMode) { #>
 
         public void Create(<#= modelTypeName #> <#= ModelVariable #>)
         {
@@ -79,6 +80,8 @@ ClearIndent();
 
             <#= ModelVariable #>.<#= PrimaryKeyName #> = entity.<#= PrimaryKeyName #>;
         }
+<# } #>
+<# if(EditableUpdate && EditMode != batchEditMode) { #>
 
         public void Update(<#= modelTypeName #> <#= ModelVariable #>)
         {
@@ -100,6 +103,8 @@ ClearIndent();
             db.Entry(entity).State = EntityState.Modified;
             db.SaveChanges(); 
         }
+<# } #>
+<# if(EditableDestroy && EditMode != batchEditMode) { #>
 
         public void Destroy(<#= modelTypeName #> <#= ModelVariable #>)
         {
@@ -121,6 +126,7 @@ ClearIndent();
             db.<#= entitySetName #>.Remove(entity);
             db.SaveChanges();
         }
+<# } #>
 
         public void Dispose()
         {
@@ -163,7 +169,7 @@ ClearIndent();
 
             return View("<#= ViewName #>", <#= ModelVariable #>Service.Read());
         }
-<# } #>      
+<# } #>
 <# if(EditableUpdate && EditMode != batchEditMode) { #>
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -179,7 +185,7 @@ ClearIndent();
 
             return View("<#= ViewName #>", <#= ModelVariable #>Service.Read());
         }
-<# } #>   
+<# } #>
 <# if(EditableDestroy && EditMode != batchEditMode) { #>
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -193,7 +199,7 @@ ClearIndent();
 
             return RedirectToAction("<#= ViewName #>", routeValues);
         }
-<# } #> 
+<# } #>
 <# if(PdfExport) { #>
 
         [HttpPost]
@@ -203,7 +209,7 @@ ClearIndent();
 
             return File(fileContents, contentType, fileName);
         }    
-<# } #> 
+<# } #>
     }
 }
 <#+

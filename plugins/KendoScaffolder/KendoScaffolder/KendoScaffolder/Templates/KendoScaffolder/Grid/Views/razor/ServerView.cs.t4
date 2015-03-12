@@ -75,13 +75,9 @@ if(EditableCreate || ExcelExport || PdfExport) {
       .ColumnMenu()
 <#
     }
-    if(Editable && EditMode != batchEditMode){
+    if(Editable) {
 #>
       .Editable(editable => editable.Mode(GridEditMode.<#= EditMode #>))
-<#
-    } else {
-#>
-      //InCell editing mode is not supported in server binding mode
 <#
     }
     if(Pageable){
@@ -176,8 +172,8 @@ if(Editable) {
 }
 #>
 )
-
 <# if(GridEvents.Count > 0){ #>
+
 <script>
 
 <#
