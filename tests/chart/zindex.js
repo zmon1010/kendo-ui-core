@@ -83,4 +83,26 @@
             equal(chart._segments[0].visual.options.zIndex, 100);
         });
     })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var pane;
+
+        module("Chart / Z-Index / Pane", {
+            setup: function() {
+                var widget = createChart({
+                    panes: [{
+                        background: "red"
+                    }]
+                });
+
+                pane = widget._plotArea.panes[0];
+            },
+            teardown: destroyChart
+        });
+
+        test("background is rendered below other elements", function() {
+            equal(pane.visual.children[0].options.fill.color, "red");
+        });
+    })();
 })();

@@ -8214,6 +8214,13 @@ var __meta__ = {
             }
         },
 
+        visualStyle: function() {
+            var style = BoxElement.fn.visualStyle.call(this);
+            style.zIndex = -10;
+
+            return style;
+        },
+
         renderComplete: function() {
             if (this.options.visible) {
                 this.createGridLines();
