@@ -1048,7 +1048,8 @@ var __meta__ = {
             var options = this.options;
             if (options.visible && this.hasBox()) {
                 this.visual.append(draw.Path.fromRect(
-                    this.paddingBox.toRect(), this.visualStyle()
+                    this.paddingBox.toRect(),
+                    this.visualStyle()
                 ));
             }
         },
