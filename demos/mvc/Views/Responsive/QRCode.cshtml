@@ -1,0 +1,14 @@
+﻿<p class="hide-small">See this page on a mobile device too:</p>
+
+<div id="responsive-QR" class="hide-small"></div>
+<script>
+    $("#responsive-QR").kendoQRCode({
+        value: window.location.href,
+        size: 110,
+        color: "#333333",
+        border: {
+            color: "#666666",
+            width: 1
+        }
+    });
+</script>
