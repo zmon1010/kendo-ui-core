@@ -1,9 +1,18 @@
 
        <div id="example">
-            <h3>Server Operations</h3>
-            <div id="server"></div>
-            <h3>Client Operations</h3>
-            <div id="client"></div>
+        <style>
+            .k-multicheck-wrap {
+                overflow-x: hidden;
+            }
+        </style>
+            <div class="demo-section k-header">
+                <h4>Client Operations</h4>
+                <div id="client"></div>
+            </div>
+            <div class="demo-section k-header">
+                <h4>Server Operations</h4>
+                <div id="server"></div>
+            </div>
             <script>
                 $(document).ready(function() {
                     var telerikWebServiceBase = "http://demos.telerik.com/kendo-ui/service/";
