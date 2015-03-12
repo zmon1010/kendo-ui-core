@@ -108,6 +108,11 @@ namespace Kendo.Controllers
             if (themeParam != null && Regex.IsMatch(themeParam, "[a-z0-9\\-]+", RegexOptions.IgnoreCase))
             {
                 theme = themeParam;
+
+                // update cookie
+                HttpCookie cookie = new HttpCookie("theme");
+                cookie.Value = theme;
+                this.ControllerContext.HttpContext.Response.Cookies.Add(cookie);
             }
             else if (themeCookie != null)
             {
