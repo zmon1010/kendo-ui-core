@@ -47,6 +47,9 @@
             margin: 5px 0 15px 0;
             text-align: center;
         }
+        .k-multicheck-wrap{
+        	overflow-x: hidden;
+        }
     </style>
     
 <demo:footer />

@@ -190,33 +190,41 @@ $dataSource->transport($transport)
 
 $server = new \Kendo\UI\Grid('server');
 
+$columnFilterable = new \Kendo\UI\GridColumnFilterable();
+$columnFilterable->multi(true);
+
 $firstName = new \Kendo\UI\GridColumn();
 $firstName->field('FirstName')
     ->width(110)
+    ->filterable($columnFilterable)
     ->title('First Name');
 
 
 $lastName = new \Kendo\UI\GridColumn();
 $lastName->field('LastName')
     ->width(110)
+    ->filterable($columnFilterable)
     ->title('Last Name');
 
 $country = new \Kendo\UI\GridColumn();
 $country->field('Country')
+    ->filterable($columnFilterable)
     ->width(110);
 
 $city = new \Kendo\UI\GridColumn();
 $city->field('City')
+    ->filterable($columnFilterable)
     ->width(110);
 
 $title = new \Kendo\UI\GridColumn();
-$title->field('Title');
+$title->field('Title')
+    ->filterable($columnFilterable);
 
 $server->addColumn($firstName, $lastName, $country, $city, $title)
      ->dataSource($dataSource)
      ->sortable(true)
+     ->filterable(true)
      ->pageable(true);
-
 ?>
 
 
@@ -226,6 +234,13 @@ $server->addColumn($firstName, $lastName, $country, $city, $title)
     <h4>Server Operations</h4>
     <?php echo $server->render(); ?>
 </div>
+
+<style>
+    .k-multicheck-wrap
+    {
+        overflow-x: hidden;
+    }
+</style>
 
 
 
