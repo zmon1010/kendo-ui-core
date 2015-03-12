@@ -42,7 +42,7 @@ class GridColumnFilterableCell extends \Kendo\SerializableObject {
     }
 
     /**
-    * Specifies the AutoComplete filter option. Possible values are same as the one for the AutoComplete filter option- "startswidht", "endswith", "contains". Notice this operator is completely separate from the operator used for filtering on this column.
+    * Specifies the AutoComplete filter option. Possible values are same as the one for the AutoComplete filter option- "startswidht", "endswith", "contains".
     * @param string $value
     * @return \Kendo\UI\GridColumnFilterableCell
     */
@@ -89,6 +89,7 @@ class GridColumnFilterableCell extends \Kendo\SerializableObject {
     /**
     * Sets the template option of the GridColumnFilterableCell.
     * JavaScript function which will customize how the input for the filter value is rendered.
+The function receives an object argument with two fields:
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\GridColumnFilterableCell
     */
@@ -101,6 +102,7 @@ class GridColumnFilterableCell extends \Kendo\SerializableObject {
     /**
     * Sets the template option of the GridColumnFilterableCell.
     * JavaScript function which will customize how the input for the filter value is rendered.
+The function receives an object argument with two fields:
     * @param string $value The template content.
     * @return \Kendo\UI\GridColumnFilterableCell
     */
