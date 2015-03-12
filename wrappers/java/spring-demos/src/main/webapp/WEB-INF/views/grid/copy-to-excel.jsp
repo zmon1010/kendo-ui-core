@@ -4,7 +4,7 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:url value="/grid/selection/read" var="transportReadUrl" />
+<c:url value="/grid/copy-to-excel/read" var="transportReadUrl" />
 
 <demo:header />
     <div class="demo-section">
@@ -12,7 +12,7 @@
 			<h4>Information</h4>
 			<p>Select the cells you want to copy press Ctrl/Command + C to copy into the clipboard then go to Excel and paste</p>
 		</div>
-         <kendo:grid name="cellSelection" selectable="multiple cell" allowCopy="true" ="false" navigatable="true">
+         <kendo:grid name="cellSelection" selectable="multiple cell" allowCopy="true" scrollable="false" navigatable="true">
 	    	<kendo:grid-pageable buttonCount="5" />	    		    		
 	        <kendo:grid-columns>
 	            <kendo:grid-column title="Order ID" field="orderId" width="200px"  />
