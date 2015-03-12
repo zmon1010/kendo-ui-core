@@ -10,22 +10,31 @@
     <p>This demo showcases the basic responsive features of Kendo UI widgets. <br />
 Select one of the widgets below to see how it handles different form factors.</p>
     <div class="responsive-widgets-container">
-           <div class="responsive-widget">
-               <a href="@Url.Action("Grid", "Responsive")"><img src="@Url.Content("~/content/responsive/images/device-grid.png")" class="responsive-img" alt="Responsive Grid widget" title="Responsive Grid widget"/></a>
+            <a href="@Url.Action("Grid", "Responsive")" class="responsive-widget">
+                @*<div class="responsive-widget">*@
+              <img src="@Url.Content("~/content/responsive/images/device-grid.png")" class="responsive-img" alt="Responsive Grid widget" title="Responsive Grid widget"/>
                <h3>Grid</h3>
-           </div> 
-           <div class="responsive-widget">
-                <a href="@Url.Action("Scheduler", "Responsive")"><img src="@Url.Content("~/content/responsive/images/device-scheduler.png")" class="responsive-img" alt="Responsive Scheduler widget" title="Responsive Scheduler widget" /></a>
+        @*   </div> *@
+                </a>
+           <a href="@Url.Action("Scheduler", "Responsive")" class="responsive-widget">
+              @* <div class="responsive-widget">*@
+                <img src="@Url.Content("~/content/responsive/images/device-scheduler.png")" class="responsive-img" alt="Responsive Scheduler widget" title="Responsive Scheduler widget" />
                <h3>Scheduler</h3> 
-               </div>
-           <div class="responsive-widget">
-                <a href="@Url.Action("Chart", "Responsive")"><img src="@Url.Content("~/content/responsive/images/device-chart.png")" class="responsive-img" alt="Responsive Chart widget" title="Responsive Chart widget"/></a>
+          @*     </div>*@
+        </a>
+           <a href="@Url.Action("Chart", "Responsive")" class="responsive-widget">
+             @*   <div class="responsive-widget">*@
+                <img src="@Url.Content("~/content/responsive/images/device-chart.png")" class="responsive-img" alt="Responsive Chart widget" title="Responsive Chart widget"/>
                 <h3>Chart</h3>
-           </div>
-         <div class="responsive-widget">
-                <a href="@Url.Action("ResponsivePanel", "Responsive")"><img src="@Url.Content("~/content/responsive/images/device-chart.png")" class="responsive-img" alt="ResponsivePanel widget" title="ResponsivePanel widget"/></a>
-                <h3>ResponsivePanel</h3>
-           </div> 
+             @*   </div>*@
+           </a>
+           
+         <a href="@Url.Action("ResponsivePanel", "Responsive")" class="responsive-widget">
+        @* <div class="responsive-widget">*@
+               <img src="@Url.Content("~/content/responsive/images/device-chart.png")" class="responsive-img" alt="ResponsivePanel widget" title="ResponsivePanel widget"/>
+               <h3>ResponsivePanel</h3>
+             </a>
+  @*         </div> *@
 
     </div>
 

@@ -167,10 +167,13 @@ a {
 }
 
 .responsive-widget {
+   display: block;
    float: left;
    width: 25%;
    position: relative;
    min-height: 1px;
+   color: #37474f;
+   background: pink;
 }
 
 .responsive-widget-wrapper {
