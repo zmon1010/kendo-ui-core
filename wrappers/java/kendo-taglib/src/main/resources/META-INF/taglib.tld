@@ -18498,7 +18498,7 @@ for all columns when filtering is enabled via the filterable option.Can be set t
             <description>Use this options to enable the MultiCheck filtering support for that column.</description>
             <name>multi</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>The role data attribute of the widget used in the filter menu or a JavaScript function which initializes that widget.</description>
