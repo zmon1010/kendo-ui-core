@@ -10,10 +10,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <example>
         /// <typeparam name="T">The type of the data item</typeparam>
         /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().Grid&lt;Order&gt;()
+        ///  @(Html.Kendo().Grid&lt;Order&gt;()
         ///             .Name("Grid")
         ///             .BindTo(Model)
-        /// %&gt;
+        /// )
         /// </code>
         /// </example>      
         public virtual GridBuilder<T> Grid<T>() where T : class
@@ -28,9 +28,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="dataSource">The data source.</param>
         /// <example>
         /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().Grid(Model)
+        ///  @(Html.Kendo().Grid(Model)
         ///             .Name("Grid")
-        /// %&gt;
+        /// )
         /// </code>
         /// </example>
         public virtual GridBuilder<T> Grid<T>(IEnumerable<T> dataSource) where T : class
@@ -49,9 +49,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="dataSourceViewDataKey">The data source view data key.</param>
         /// <example>
         /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().Grid&lt;Order&gt;("orders")
+        ///  @(Html.Kendo().Grid&lt;Order&gt;("orders")
         ///             .Name("Grid")
-        /// %&gt;
+        /// )
         /// </code>
         /// </example>
         public virtual GridBuilder<T> Grid<T>(string dataSourceViewDataKey) where T : class
