@@ -11,8 +11,7 @@
                         <button class="triggerItem k-button">Expand/Collapse</button>
                     </li>
                 </ul>
-            </div>
-            <div class="box-col">
+
                 <h4>Enable / Disable</h4>
                 <ul class="options">
                     <li>
@@ -29,6 +28,11 @@
                     <li>
                         <input type="text" value="Item" id="appendText" class="k-textbox"/> <button class="appendItem k-button">Append</button>
                     </li>
+                </ul>
+            </div>
+            <div class="box-col">
+                <h4>&nbsp;</h4>
+                <ul class="options">
                     <li>
                         <input type="text" value="Item" id="beforeText" class="k-textbox"/> <button class="beforeItem k-button">Insert Before</button>
                     </li>
@@ -158,7 +162,11 @@
             </script>
             <style>
                 .box-col {
-                    width: 200px;
+                    width: 250px;
+                    margin-bottom: -20px;
+                }
+                .box-col .options {
+                    margin-bottom: 20px;
                 }
                 .box .k-textbox {
                     width: 80px;
