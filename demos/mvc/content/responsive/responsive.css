@@ -98,8 +98,13 @@ a {
     padding-bottom: 80px;
 }
 
-.responsive-section:last-child {
+.responsive-index .responsive-documentation-section,
+.responsive-bootstrap-section {
     background: #f3f5f7;
+}
+
+.responsive-index .responsive-bootstrap-section {
+    background: #fff;
 }
 
 .responsive-section h2 {
