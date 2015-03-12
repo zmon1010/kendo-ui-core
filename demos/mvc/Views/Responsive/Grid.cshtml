@@ -1,0 +1,71 @@
+@{
+    Layout = "ResponsiveLayout.cshtml";
+}
+
+<div class="responsive-section">
+    <h2>Responsive Kendo UI Grid</h2>
+    <p>This demo shows the basic responsive features of Kendo UI Grid.<br />        Resize the browser window and see how the Grid responds to screen size changes.</p>
+
+    @Html.Partial("QRCode")
+</div>
+
+<div class="responsive-widget-wrapper ">
+
+@Html.Partial("Rulers")
+
+    <div id="grid"></div>
+    <script>
+        $("#grid").kendoGrid({
+            dataSource: {
+                type: "odata",
+                transport: {
+                    read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                },
+                pageSize: 15,
+                group: { field: "ContactTitle" }
+            },
+            height: 400,
+            groupable: true,
+            sortable: true,
+            selectable: "multiple",
+            reorderable: true,
+            resizable: true,
+            filterable: true,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            columns: [
+              {
+                  field: "ContactName",
+                  template: "<div class='customer-photo' style='background-image: url(http://demos.telerik.com/kendo-ui/content/web/Customers/${data.CustomerID}.jpg);'></div><div class='customer-name'>#: ContactName #</div>",
+                  title: "Contact",
+              
+              }, {
+                  field: "ContactTitle",
+                  title: "Contact Title",
+                  width: 220,
+                  minScreenWidth: 564
+              }, {
+                  field: "Phone",
+                  title: "Phone",
+                  width: 140,
+                  minScreenWidth: 704
+              }, {
+                  field: "CompanyName",
+                  title: "Company Name",
+                  width: 140,
+                  minScreenWidth: 700
+              }, {
+                  field: "City",
+                  title: "City",
+                  width: 120,
+                  minScreenWidth: 1000
+              }
+            ]
+        });
+    </script>
+
+    <div class="responsive-horizontal-ruler bottom-ruler"></div>
+</div>

@@ -121,5 +121,16 @@ namespace Kendo.Controllers
             ViewBag.MobileTheme = MobileThemeCookie == null ? "ios7" : MobileThemeCookie.Value;
             ViewBag.CommonFile = CommonFileCookie == null ? "common-material" : CommonFileCookie.Value;
         }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+
+#if DEBUG
+            ViewBag.Debug = true;
+#else
+            ViewBag.Debug = false;
+#endif
+        }
     }
 }

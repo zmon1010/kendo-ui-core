@@ -24,11 +24,7 @@ namespace Kendo.Controllers
 
             LoadNavigation();
             LoadCategories();
-#if DEBUG
-            ViewBag.Debug = true;
-#else
-            ViewBag.Debug = false;
-#endif
+
             return View();
         }
     }

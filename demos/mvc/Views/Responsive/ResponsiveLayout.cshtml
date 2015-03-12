@@ -1,0 +1,91 @@
+﻿@{
+    Layout = null;
+    var action = ((string)ViewContext.RouteData.Values["action"]).ToLower();
+    var pageClassName = "responsive-" + action;
+}
+<!DOCTYPE html>
+<html class="@pageClassName">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="@ViewBag.Meta">
+    <meta name="viewport" content="width=device-width">
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")"/>
+    <link rel="stylesheet" href="@Url.Content("~/content/responsive/responsive.css")" />
+    @foreach (string styleName in Kendo.Models.StyleGroups.All)
+    {
+    @Html.StyleLink(styleName, "silver", "common")
+    }
+
+    @if (ViewBag.Debug == true)
+    {
+    <script>
+        less = {
+            env: "development",
+            logLevel: 1
+        };
+    </script>
+    <script src="@Url.Content("~/content/shared/js/less.js")"></script>
+    <script>less.refresh();</script>
+    }
+
+    @foreach (string scriptName in Kendo.Models.ScriptGroups.All)
+    {
+        if (scriptName.Contains("angular") || scriptName.Contains("jszip")) {
+            continue;
+        }
+
+        <script src="@Url.Script(scriptName)"></script>
+    }
+</head>
+<body>
+    <header class="responsive-header">
+        <h1>@Html.ActionLink("Responsive Kendo UI", "Index")</h1>
+        <button class="k-rpanel-toggle"><span class="k-icon k-i-hbars"></span></button>
+        <ul id="responsive-nav">
+            <li@(action == "index" ? " class=selected" : "")>@Html.ActionLink("About", "index")</li>
+            <li@(action == "grid" ? " class=selected" : "")>@Html.ActionLink("Grid", "grid")</li>
+            <li@(action == "scheduler" ? " class=selected" : "")>@Html.ActionLink("Scheduler", "scheduler")</li>
+            <li@(action == "chart" ? " class=selected" : "")>@Html.ActionLink("Charts", "chart")</li>
+            <li@(action == "responsivepanel" ? " class=selected" : "")>@Html.ActionLink("ResponsivePanel", "responsivepanel")</li>
+        </ul>
+    </header>
+    <div>
+        @RenderBody()
+    </div>
+
+    <div class="responsive-section responsive-documentation-section">
+        <h2>How it works</h2>
+        <p>            The concept of responsive design suggests that the layout of the project needs to adapt to the media that renders it. Media queries are one of the cornerstones of Responsive Web Design. By adding some filter criteria around CSS definitions, we can control under which conditions rules are applied to Kendo UI widgets.
+        </p>
+        <a class="responsive-btn responsive-documentation-btn" href="http://docs.telerik.com/kendo-ui/using-kendo-in-responsive-web-pages#kendo-ui-and-media-queries">Read Documentation</a>
+    </div>
+
+    <div class="responsive-section responsive-bootstrap-section">
+        <h2>Using Twitter Bootstrap?</h2>
+        <a class="responsive-btn kendo-with-bootstrap-btn" href="http://demos.telerik.com/kendo-ui/bootstrap/">See Kendo UI ♥ Bootstrap Demo</a>
+    </div>
+
+    <div id="responsive-footer" class="responsive-section">    
+         <div class="copyright">
+            <p>Copyrigh &copy; 2002-2015 Telerik Inc. All rights reserved</p>
+        </div>
+    </div>
+
+    <script>
+        $("#responsive-nav").kendoResponsivePanel({
+            breakpoint: 769,
+            width: 320,
+            orientation: "top",
+            open: function () {
+                $(".k-rpanel-toggle").addClass("activeHamburger");
+            },
+            close: function () {
+                $(".activeHamburger").removeClass("activeHamburger");
+            }
+        });
+    </script>
+
+</body>
+</html>

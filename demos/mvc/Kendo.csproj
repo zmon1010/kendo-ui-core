@@ -89,6 +89,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MobileAppsController.cs" />
+    <Compile Include="Controllers\ResponsiveController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\MobileDeviceController.cs" />
     <Compile Include="Controllers\IntegrationController.cs" />
@@ -288,6 +289,10 @@
     <Content Include="content\mobile\shared\mymusic.jpg" />
     <Content Include="content\mobile\shared\player.jpg" />
     <Content Include="content\mobile\shared\sales.jpg" />
+    <Content Include="content\responsive\images\device-chart.png" />
+    <Content Include="content\responsive\images\device-grid.png" />
+    <Content Include="content\responsive\images\device-scheduler.png" />
+    <Content Include="content\responsive\responsive.css" />
     <Content Include="content\shared\images\foods\1.jpg" />
     <Content Include="content\shared\images\foods\10.jpg" />
     <Content Include="content\shared\images\foods\11.jpg" />
@@ -1174,6 +1179,14 @@
     <Content Include="Views\demos\bar-charts\visuals.cshtml" />
     <Content Include="Views\demos\editor\pdf-export.cshtml" />
     <Content Include="Views\demos\gantt\right-to-left-support.cshtml" />
+    <Content Include="Views\Responsive\Index.cshtml" />
+    <Content Include="Views\Responsive\Chart.cshtml" />
+    <Content Include="Views\Responsive\Grid.cshtml" />
+    <Content Include="Views\Responsive\Scheduler.cshtml" />
+    <Content Include="Views\Responsive\ResponsiveLayout.cshtml" />
+    <Content Include="Views\Responsive\ResponsivePanel.cshtml" />
+    <Content Include="Views\Responsive\Rulers.cshtml" />
+    <Content Include="Views\Responsive\QRCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

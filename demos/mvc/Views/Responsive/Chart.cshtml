@@ -1,0 +1,85 @@
+@{
+    Layout = "ResponsiveLayout.cshtml";
+}
+
+<div class="responsive-section">
+    <h2>Responsive Kendo UI Chart</h2>
+    <p>This demo shows the basic responsive features of Kendo UI Chart.<br />        Resize the browser window and see how the Chart responds to screen size changes.</p>
+
+    @Html.Partial("QRCode")
+</div>
+
+<div class="responsive-widget-wrapper">
+
+@Html.Partial("Rulers")
+
+<div id="chart"></div>
+<script>
+$(function () {
+    $("#chart").kendoChart({
+        theme: "metro",
+        title: {
+            text: "Gross domestic product growth \n /GDP annual %/"
+        },
+        legend: {
+            position: "bottom"
+        },
+        chartArea: {
+            background: "transparent"
+        },
+        plotArea: {
+            background: "#fff"
+        },
+        seriesDefaults: {
+            type: "area",
+            area: {
+                line: {
+                    style: "smooth"
+                }
+            },
+            opacity: 1
+        },
+        series: [{
+            name: "Haiti",
+            data: [-0.253, 0.362, -3.519, 1.799, 2.252, 3.343, 0.843, 2.877, -5.416, 5.590],
+            color: "#ffad5c"
+        }, {
+            name: "World",
+            data: [1.988, 2.733, 3.994, 3.464, 4.001, 3.939, 1.333, -2.245, 4.339, 2.727],
+            color: "#f96758"
+        }, {
+            name: "India",
+            data: [3.907, 7.943, 7.848, 9.284, 9.263, 9.801, 3.890, 8.238, 9.552, 6.855],
+            color: "#bb4193"
+        }],
+        valueAxis: {
+            labels: {
+                format: "{0}%"
+            },
+            line: {
+                visible: false
+            },
+            axisCrossingValue: -10
+        },
+        categoryAxis: {
+            categories: [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011],
+            majorGridLines: {
+                visible: false
+            }
+        },
+        tooltip: {
+            visible: true,
+            format: "{0}%",
+            template: "#= series.name #: #= value #"
+        }
+    });
+});
+
+$(window).on("resize", function () {
+    var chart = $("#chart").data("kendoChart");
+    chart.resize();
+});
+</script>
+
+    <div class="responsive-horizontal-ruler bottom-ruler"></div>
+</div>
