@@ -53,15 +53,8 @@ namespace Kendo.Mvc.UI.Fluent.Tests
         public void Sortable_sets_the_corresponding_property()
         {
             builder.Sortable();
-            Assert.Equal(GridSortMode.SingleColumn, grid.Sortable.SortMode);
-        }
-
-        [Fact]
-        public void Sortable_sets_the_allow_unsort()
-        {
-            builder.Sortable();
-            Assert.Equal(true, grid.Sortable.AllowUnsort);
-        }
+            grid.Sortable.Enabled.ShouldBeTrue();
+        }        
 
         [Fact]
         public void Sortable_sets_the_allow_unsort_to_false()

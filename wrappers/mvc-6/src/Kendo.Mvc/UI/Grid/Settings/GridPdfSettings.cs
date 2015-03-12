@@ -7,9 +7,9 @@ using System.Linq;
 namespace Kendo.Mvc.UI
 {
     /// <summary>
-    /// Kendo UI GridExcelSettings class
+    /// Kendo UI GridPdfSettings class
     /// </summary>
-    public partial class GridExcelSettings<T> 
+    public partial class GridPdfSettings<T> 
     {
         public Dictionary<string, object> Serialize()
         {

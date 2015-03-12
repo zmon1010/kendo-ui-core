@@ -3,7 +3,7 @@ using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI
 {
-    public class GridColumnMenuMessages : JsonObject
+    public class GridColumnMenuMessages
     {
         public GridColumnMenuMessages()
         {
@@ -35,8 +35,10 @@ namespace Kendo.Mvc.UI
         private const string DefaultLock = "Lock";
         private const string DefaultUnlock = "Unlock";
 
-        protected override void Serialize(IDictionary<string, object> json)
-        {            
+        public IDictionary<string, object> Serialize()
+        {
+			var json = new Dictionary<string, object>();
+
             if (Filter != DefaultFilter)
             {
                 json["filter"] = Filter;
@@ -75,7 +77,9 @@ namespace Kendo.Mvc.UI
             if (Unlock != DefaultUnlock)
             {
                 json["unlock"] = Unlock;
-            } 
+            }
+
+			return json;
         }
     }
 }

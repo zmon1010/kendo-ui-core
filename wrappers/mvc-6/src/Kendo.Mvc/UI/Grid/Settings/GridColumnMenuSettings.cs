@@ -1,51 +1,28 @@
+using Kendo.Mvc.Extensions;
+using Microsoft.AspNet.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
-    public class GridColumnMenuSettings : JsonObject
+    /// <summary>
+    /// Kendo UI GridColumnMenuSettings class
+    /// </summary>
+    public partial class GridColumnMenuSettings<T> 
     {
-        public GridColumnMenuSettings()
+		public GridColumnMenuMessages Messages { get; } = new GridColumnMenuMessages();
+        public Dictionary<string, object> Serialize()
         {
-            Sortable = true;
-            Filterable = true;
-            Columns = true;
-            Messages = new GridColumnMenuMessages();            
-        }
+            var settings = SerializeSettings();
 
-        public bool Enabled { get; set; }
+			var messages = Messages.Serialize();
+			if (messages.Any())
+			{
+				settings["messages"] = messages;
+			}
 
-        public bool Sortable { get; set; }
-
-        public bool Filterable { get; set; }
-
-        public bool Columns { get; set; }
-
-        public GridColumnMenuMessages Messages { get; private set; }
-        
-
-        protected override void Serialize(System.Collections.Generic.IDictionary<string, object> json)
-        {
-            var messages = Messages.ToJson();
-
-            if (messages.Any())
-            {
-                json["messages"] = messages;
-            }
-
-            if (!Sortable)
-            {
-                json["sortable"] = false;
-            }
-
-            if (!Filterable)
-            {
-                json["filterable"] = false;
-            }
-
-            if (!Columns)
-            {
-                json["columns"] = false;
-            }
+			return settings;
         }
     }
 }

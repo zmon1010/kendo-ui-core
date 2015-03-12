@@ -1,41 +1,26 @@
+using Kendo.Mvc.Extensions;
+using Microsoft.AspNet.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Kendo.Mvc.UI
-{    
-    public class GridSortableSettings : JsonObject
+{
+    /// <summary>
+    /// Kendo UI GridSortableSettings class
+    /// </summary>
+    public partial class GridSortableSettings<T> 
     {
-        public GridSortableSettings()
+        public Dictionary<string, object> Serialize()
         {
-            AllowUnsort = true;
-        }
+            var settings = SerializeSettings();
 
-        public bool Enabled
-        {
-            get;
-            set;
-        }
+			if (SortMode.HasValue)
+			{
+				settings["mode"] = SortMode?.Serialize();
+			}
 
-        public GridSortMode SortMode
-        {
-            get;
-            set;
-        }
-
-        public bool AllowUnsort
-        {
-            get;
-            set;
-        }
-
-        protected override void Serialize(System.Collections.Generic.IDictionary<string, object> json)
-        {
-            if (!AllowUnsort)
-            {
-                json["allowUnsort"] = AllowUnsort;                
-            }
-
-            if (SortMode != GridSortMode.SingleColumn)
-            {
-                json["mode"] = "multiple";
-            }
+            return settings;
         }
     }
 }
