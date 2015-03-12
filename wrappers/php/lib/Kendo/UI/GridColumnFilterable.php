@@ -15,6 +15,15 @@ class GridColumnFilterable extends \Kendo\SerializableObject {
     }
 
     /**
+    * Use this options to enable the MultiCheck filtering support for that column.
+    * @param  $value
+    * @return \Kendo\UI\GridColumnFilterable
+    */
+    public function multi($value) {
+        return $this->setProperty('multi', $value);
+    }
+
+    /**
     * Sets the data source of the GridColumnFilterable.
     * @param array|\Kendo\Data\DataSource $value
     * @return \Kendo\UI\GridColumnFilterable
