@@ -18,10 +18,18 @@
             <kendo:grid-toolbarItem name="cancel"/>
         </kendo:grid-toolbar>
         <kendo:grid-columns>
-            <kendo:grid-column title="Product Name" field="productName" multi="true" />
-            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" multi="true" />
-            <kendo:grid-column title="Units In Stock" field="unitsInStock" multi="true" />
-            <kendo:grid-column title="Discontinued" field="discontinued" multi="true" />
+            <kendo:grid-column title="Product Name" field="productName" >
+            	<kendo:grid-column-filterable multi="true"/>
+            </kendo:grid-column>
+            <kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" >
+            	<kendo:grid-column-filterable multi="true"/>
+            </kendo:grid-column>
+            <kendo:grid-column title="Units In Stock" field="unitsInStock" >
+            	<kendo:grid-column-filterable multi="true"/>
+            </kendo:grid-column>
+            <kendo:grid-column title="Discontinued" field="discontinued" >
+            	<kendo:grid-column-filterable multi="true"/>
+            </kendo:grid-column>
             <kendo:grid-column command="destroy" title="&nbsp;" />
         </kendo:grid-columns>
         <kendo:dataSource pageSize="10" batch="true">
