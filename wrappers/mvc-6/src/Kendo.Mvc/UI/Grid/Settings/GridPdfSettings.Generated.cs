@@ -25,10 +25,6 @@ namespace Kendo.Mvc.UI
 
         public bool? Landscape { get; set; }
 
-        public GridPdfMarginSettings<T> Margin { get; } = new GridPdfMarginSettings<T>();
-
-        public string PaperSize { get; set; }
-
         public string ProxyURL { get; set; }
 
         public string Subject { get; set; }
@@ -73,17 +69,6 @@ namespace Kendo.Mvc.UI
             if (Landscape.HasValue)
             {
                 settings["landscape"] = Landscape;
-            }
-
-            var margin = Margin.Serialize();
-            if (margin.Any())
-            {
-                settings["margin"] = margin;
-            }
-
-            if (PaperSize.HasValue())
-            {
-                settings["paperSize"] = PaperSize;
             }
 
             if (ProxyURL.HasValue())

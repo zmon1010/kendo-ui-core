@@ -2,39 +2,39 @@ namespace Kendo.Mvc.UI.Tests
 {
 	using Xunit;
 
-	public class PDFSettingsTests
+	public class GridPdfSettingsTests
     {
-        private readonly PDFSettings pdf;
+        private readonly GridPdfSettings<object> pdf;
 
-        public PDFSettingsTests()
+        public GridPdfSettingsTests()
         {
-            pdf = new PDFSettings();
+            pdf = new GridPdfSettings<object>();
         }
 
         [Fact]
         public void Serializes_forceProxy()
         {
             pdf.ForceProxy = true;
-            pdf.ToJson()["forceProxy"].ShouldEqual(true);
+            pdf.Serialize()["forceProxy"].ShouldEqual(true);
         }
 
         [Fact]
         public void Does_not_serialize_default_forceProxy()
         {
-            pdf.ToJson().ContainsKey("forceProxy").ShouldBeFalse();
+            pdf.Serialize().ContainsKey("forceProxy").ShouldBeFalse();
         }
 
         [Fact]
         public void Serializes_proxyURL()
         {
             pdf.ProxyURL = "foo";
-            pdf.ToJson()["proxyURL"].ShouldEqual("foo");
+            pdf.Serialize()["proxyURL"].ShouldEqual("foo");
         }
 
         [Fact]
         public void Does_not_serialize_default_proxyURL()
         {
-            pdf.ToJson().ContainsKey("proxyURL").ShouldBeFalse();
+            pdf.Serialize().ContainsKey("proxyURL").ShouldBeFalse();
         }
     }
 }

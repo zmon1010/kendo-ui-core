@@ -98,28 +98,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies the margins of the page (numbers or strings with units). Supported
-		/// units are "mm", "cm", "in" and "pt" (default).
-        /// </summary>
-        /// <param name="configurator">The configurator for the margin setting.</param>
-        public GridPdfSettingsBuilder<T> Margin(Action<GridPdfMarginSettingsBuilder<T>> configurator)
-        {
-            configurator(new GridPdfMarginSettingsBuilder<T>(Container.Margin));
-            return this;
-        }
-
-        /// <summary>
-        /// Specifies the paper size of the PDF document.
-		/// The default "auto" means paper size is determined by content.Supported values:
-        /// </summary>
-        /// <param name="value">The value for PaperSize</param>
-        public GridPdfSettingsBuilder<T> PaperSize(string value)
-        {
-            Container.PaperSize = value;
-            return this;
-        }
-
-        /// <summary>
         /// The URL of the server side proxy which will stream the file to the end user.A proxy will be used when the browser isn't capable of saving files locally e.g. Internet Explorer 9 and Safari. PDF export is not supported in Internet Explorer 8 and below.The developer is responsible for implementing the server-side proxy.The proxy will receive a POST request with the following parameters in the request body:The proxy should return the decoded file with the "Content-Disposition" header set to
 		/// attachment; filename="&lt;fileName.pdf&gt;".
         /// </summary>

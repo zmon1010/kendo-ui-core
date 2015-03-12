@@ -3,22 +3,22 @@ namespace Kendo.Mvc.UI.Html.Tests
 	using Kendo.Mvc.UI.Fluent;
 	using Xunit;
 
-	public class PDFSettingsBuilderTests
+	public class GridPdfSettingsBuilderTests
     {
-        private PDFSettingsBuilder builder;
-        private PDFSettings pdf;
+        private GridPdfSettingsBuilder<object> builder;
+        private GridPdfSettings<object> pdf;
 
-        public PDFSettingsBuilderTests()
+        public GridPdfSettingsBuilderTests()
         {
-            pdf = new PDFSettings();
-            builder = new PDFSettingsBuilder(pdf);
+            pdf = new GridPdfSettings<object>();
+            builder = new GridPdfSettingsBuilder<object>(pdf);
         }
 
         [Fact]
         public void ForceProxy_sets_forceProxy()
         {
             builder.ForceProxy(true);
-            pdf.ForceProxy.ShouldBeTrue();
+            pdf.ForceProxy?.ShouldBeTrue();
         }
 
         [Fact]

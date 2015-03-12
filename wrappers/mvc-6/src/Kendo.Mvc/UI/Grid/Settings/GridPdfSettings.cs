@@ -9,13 +9,13 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI GridPdfSettings class
     /// </summary>
-    public partial class GridPdfSettings<T> 
+    public partial class GridPdfSettings<T> : PdfSettings
     {
-        public Dictionary<string, object> Serialize()
+        public override Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
 
-            // Do manual serialization here
+			settings.Merge(base.Serialize());            
 
             return settings;
         }
