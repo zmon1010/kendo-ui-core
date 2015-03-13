@@ -18,7 +18,7 @@ namespace :nuget do
         nuspec = erb.pathmap('dist/bundles/%n')
         nuget = nuspec.ext('nupkg')
 
-        file nuspec do |f|
+        file nuspec => erb do |f|
             ensure_path f.name
             File.write(f.name, ERB.new(File.read(erb), 0, '%<>').result(binding))
         end
@@ -37,12 +37,13 @@ namespace :nuget do
     end
 
     def mvc_packages(options)
-        mvc_versions = [3,4,5]
-        mvc_versions.push(6) if not options[:trial]
+        mvc_versions = [3,4,5,6]
 
         suffix = ".Trial" if options[:trial]
 
-        mvc_versions.map { |mvc_version| "Telerik.UI.for.AspNet.Mvc#{mvc_version}#{suffix}.#{VERSION}.nupkg" }.join(" ")
+        mvc_versions.map { |mvc_version|
+            "Telerik.UI.for.AspNet.Mvc#{mvc_version}#{suffix}.#{VERSION}.nupkg"
+        }.join(" ")
     end
 
     file NUGET_ZIPS[0] do |t|
