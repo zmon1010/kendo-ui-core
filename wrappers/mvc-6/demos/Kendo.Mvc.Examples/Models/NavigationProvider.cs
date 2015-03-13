@@ -9,7 +9,7 @@ namespace Kendo.Mvc.Examples.Models
     {
         public static IEnumerable<NavigationWidget> SuiteWidgets(IFileProvider fileProvider)
         {
-            var file = fileProvider.GetFileInfo("/shared/nav.json");
+            var file = fileProvider.GetFileInfo("/shared/nav-beta.json");
             var navigationJson = IOFile.ReadAllText(file.PhysicalPath);
             return JsonConvert.DeserializeObject<IEnumerable<NavigationWidget>>(navigationJson);
         }

@@ -1,62 +1,33 @@
-﻿<!DOCTYPE html>
+﻿@using Kendo.Mvc.Examples.Models
+@using Task = System.Threading.Tasks.Task
+@{
+	Layout = null;
+}
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Telerik UI for ASP.NET MVC - Offline Examples</title>
 	<link rel="stylesheet" href="@Url.Content("~/css/site.css")" />
-	<style>
-		#page > h2 {
-			padding: 2em 0 0;
-		}
-
-		.box h2 a:hover {
-			text-decoration: none;
-		}
-
-		.box h2 span {
-			display: block;
-			font-size: .7em;
-		}
-
-		#page > ul > li.box {
-			clear: none;
-			display: inline-block;
-			float: none;
-			min-width: 290px;
-			max-width: 300px;
-		}
-
-		hr {
-			height: 1px;
-			line-height: 1px;
-			background: #DFDFDF;
-			border: 0;
-		}
-
-		#page .suite .imgPlate,
-		#page .suite .box {
-			border-width: 0;
-			box-shadow: none;
-		}
-
-		#page .suite {
-			text-align: center;
-		}
-
-		#page .suite .box h2 {
-				margin-top: 1em;
-		}
-	</style>
 </head>
 <body>
-	<h1 class="header">Telerik UI for ASP.NET MVC</h1>
+	<h1 class="header">Telerik UI for ASP.NET MVC 6 - Beta</h1>
 	<div id="page">
-		<div class="suites">
-			<div class="suite-column">
-				<h2>Telerik UI for ASP.NET MVC Demos</h2>
-				<img src="@Url.Content("~/shared/demos-mobile.png")" />
-				<a href="@Url.Action("Index", "Suite")">Launch ASP.NET MVC Demos</a>
-			</div>
-		</div>
+		<ul>
+			@foreach (NavigationWidget widget in ViewBag.Navigation)
+			{
+				if (!widget.ShouldInclude || widget.Items.All(x => !x.ShouldInclude)) { continue; }
+				<li>
+					<h2>@widget.Text</h2>
+					<ul>
+						@foreach (NavigationExample example in widget.Items)
+						{
+							if (!example.ShouldInclude) { continue; }
+							<li><a href='@(Url.Content("~/" + example.Url))'>@example.Text</a></li>
+						}
+					</ul>
+				</li>
+            }
+		</ul>
 	</div>
 </body>
 </html>

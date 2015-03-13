@@ -1,17 +1,23 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Kendo.Mvc.Examples.Models;
+using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Mvc;
+using System.Linq;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
     public class HomeController : Controller
     {
+        [Activate]
+        protected IHostingEnvironment HostingEnvironment { get; set; }
+
         public IActionResult Index()
         {
-            return View();
-        }
+            var widgets = NavigationProvider.SuiteWidgets(HostingEnvironment.WebRootFileProvider)
+                                            .Where(widget => widget.ShouldInclude);
 
-        public IActionResult Error()
-        {
-            return View("~/Views/Shared/Error.cshtml");
+            ViewBag.Navigation = widgets;
+
+            return View();
         }
     }
 }
