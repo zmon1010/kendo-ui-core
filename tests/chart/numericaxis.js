@@ -1095,6 +1095,12 @@
             arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 591], TOLERANCE);
         });
 
+        test("slot method returns slot as rect", function() {
+            var box = numericAxis.getSlot(0, 100);
+            var slot = numericAxis.slot(0, 100);
+            ok(slot.equals(box.toRect()));
+        });
+
         // ------------------------------------------------------------
         module("Slots / Vertical / Negative Values", {
             setup: function() {
@@ -1212,6 +1218,12 @@
         test("b value capped to maximum coordinate value", function() {
             var slot = numericAxis.getSlot(0, COORDINATE_LIMIT);
             arrayClose([slot.x1, slot.x2], [5, COORDINATE_LIMIT], TOLERANCE);
+        });
+
+        test("slot method returns slot as rect", function() {
+            var box = numericAxis.getSlot(0, 100);
+            var slot = numericAxis.slot(0, 100);
+            ok(slot.equals(box.toRect()));
         });
 
         // ------------------------------------------------------------

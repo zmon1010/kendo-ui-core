@@ -2198,6 +2198,13 @@ var __meta__ = {
             }
 
             return text;
+        },
+
+        slot: function(from , to) {
+            var slot = this.getSlot(from, to);
+            if (slot) {
+                return slot.toRect();
+            }
         }
     });
 

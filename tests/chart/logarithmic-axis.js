@@ -143,6 +143,11 @@
             close(slot.y2, value1Slot.y2, TOLERANCE);
         });
 
+        test("slot method returns slot as rect", function() {
+            var box = axis.getSlot(1);
+            var slot = axis.slot(1);
+            ok(slot.equals(box.toRect()));
+        });
 
         module("axis slot / vertical", {
             setup: function() {

@@ -237,6 +237,58 @@
     });
 
     // ------------------------------------------------------------
+    (function() {
+        var slot;
+        module("Polar Numeric Axis / slot", {
+            setup: function() {
+                createAxis();
+                slot = axis.slot(30, 90);
+            }
+        });
+
+        test("returns geometry Arc", function() {
+            ok(slot instanceof kendo.geometry.Arc);
+        });
+
+        test("arc has same center and radius based as slot center and radius", function() {
+            var ring = axis.getSlot(30, 90);
+
+            equal(slot.radiusX, ring.r);
+            equal(slot.radiusY, ring.r);
+            equal(slot.center.x, ring.c.x);
+            equal(slot.center.y, ring.c.y);
+        });
+
+        test("arc start and end angle are equal to the opposite angle of the max and min of the from and to values", function() {
+            equal(slot.startAngle, 270);
+            equal(slot.endAngle, 330);
+            slot = axis.slot(90, 30);
+            equal(slot.startAngle, 270);
+            equal(slot.endAngle, 330);
+        });
+
+        test("arc start and end angle are equal to the min and max of the from and to values for reverse axis", function() {
+            axis.options.reverse = true;
+
+            slot = axis.slot(30, 90);
+            equal(slot.startAngle, 30);
+            equal(slot.endAngle, 90);
+
+            slot = axis.slot(90, 30);
+            equal(slot.startAngle, 30);
+            equal(slot.endAngle, 90);
+        });
+
+        test("the opposite of the axis start angle is added to the arc start and end angles", function() {
+            axis.options.startAngle = 90;
+            slot = axis.slot(30, 90);
+            equal(slot.startAngle, 180);
+            equal(slot.endAngle, 240);
+        });
+
+    })();
+
+    // ------------------------------------------------------------
     module("Polar Numeric Axis / getValue", {
         setup: function() {
             createAxis();
