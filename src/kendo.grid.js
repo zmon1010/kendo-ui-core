@@ -3586,7 +3586,14 @@ var __meta__ = {
             if (!this.areaClipBoard) {
                 this.areaClipBoard =
                     $("<textarea />")
-                    .css({ position: "absolute", opacity: 0, width: 0, height: 0})
+                    .css({
+                        position: "fixed",
+                        top: "50%",
+                        left:"50%",
+                        opacity: 0,
+                        width: 0,
+                        height: 0
+                    })
                     .appendTo(this.wrapper);
             }
 

@@ -73,7 +73,7 @@
                     columns: [
                         {
                             field: "Male",
-                            locked: true,
+                            locked: false,
                             width: 300,
                             filterable: {
                                 multi: true
@@ -82,7 +82,7 @@
                         {
                             field: "ContractDate",
                             width: 400,
-                            locked: true,
+                            locked: false,
                             format: "{0:MM/dd/yyyy}",
                             filterable: {
                                 multi: true,
@@ -97,14 +97,14 @@
                         {
                             field: "Salary",
                             width: "200px",
-                            locked: true,
+                            locked: false,
                             filterable: {
                                 multi: true
                             }
                         },
                         {
                             field: "Name",
-                            locked: true,
+                            locked: false,
                             width: 300,
                             filterable: {
                                 multi: true
@@ -112,7 +112,7 @@
                         },
                         {
                             field: "Name",
-                            locked: true,
+                            locked: false,
                             width: 300,
                             filterable: {
                                 multi: true
@@ -120,7 +120,7 @@
                         },
                         {
                             field: "Grade",
-                            locked: true,
+                            locked: false,
                             filterable: {
                                 multi: true
                             },
@@ -154,7 +154,7 @@
                         },
                         {
                             field: "Name",
-                            locked: true,
+                            locked: false,
                             width: 300,
                             filterable: {
                                 multi: true
@@ -165,7 +165,7 @@
                             filterable: {
                                 multi: true
                             },
-                            locked: true,
+                            locked: false,
                             width: 300
                         },
                         { field: "ContractDate", width: 400, format: "{0:MM/dd/yyyy}" }
@@ -173,12 +173,15 @@
                     groupable:true,
                     resizable: true,
                     navigatable: true,
-                    selectable: "cell multiple",
+                    selectable: "cell ",
                     allowCopy: true,
                     reorderable: true,
                     columnMenu: false,
                     scrollable:true,
-                    //detailTemplate: "foo",
+                    detailTemplate: "<div class='grid'></div>",
+                    detailInit: function(e) {
+                        e.detailRow.find(".grid").kendoGrid($.extend({}, this.options));
+                    },
                     dataSource: {
                         requestStart: function() {
                             console.log("RS")
