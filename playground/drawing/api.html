@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<link href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.common.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.rtl.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.default.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.default.mobile.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.dataviz.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/2014.3.1411/styles/kendo.dataviz.default.min.css" rel="stylesheet" />
+
+    
+    <script src="../../src/jquery.js"></script>
+    <script src="../../src/kendo.core.js"></script>
+    <script src="../../src/kendo.color.js"></script>
+                
+    <script src="../../src/kendo.data.js"></script>
+    <script src="../../src/kendo.binder.js"></script>
+               
+    <script src="../../src/kendo.popup.js"></script>
+    <script src="../../src/kendo.userevents.js"></script>
+    <script src="../../src/kendo.draganddrop.js"></script>
+    <script src="../../src/kendo.slider.js"></script>
+    <script src="../../src/kendo.colorpicker.js"></script>
+    <script src="../../src/kendo.button.js"></script>
+    <script src="../../src/kendo.numerictextbox.js"></script>
+    <script src="../../src/kendo.list.js"></script>
+    <script src="../../src/kendo.dropdownlist.js"></script>
+    <script src="../../src/kendo.calendar.js"></script>
+    <script src="../../src/kendo.datepicker.js"></script>
+                
+    <script src="../../src/util/main.js"></script>
+    <script src="../../src/mixins/observers.js"></script>
+    <script src="../../src/geometry/main.js"></script>
+    <script src="../../src/drawing/core.js"></script>         
+    <script src="../../src/drawing/mixins.js"></script>
+    <script src="../../src/drawing/text-metrics.js"></script>
+    <script src="../../src/drawing/shapes.js"></script>
+    <script src="../../src/drawing/animation.js"></script>
+    <script src="../../src/drawing/parser.js"></script>
+    <script src="../../src/drawing/svg.js"></script>
+    <script src="../../src/drawing/canvas.js"></script>
+    <script src="../../src/drawing/vml.js"></script>
+                
+    <script src="../../src/kendo.dataviz.core.js"></script>
+    <script src="../../src/kendo.dataviz.chart.js"></script>
+    <script src="../../src/kendo.dataviz.chart.polar.js"></script>
+    <script src="../../src/kendo.dataviz.sparkline.js"></script>
+    <script src="../../src/kendo.dataviz.stock.js"></script>
+    <script src="../../src/kendo.dataviz.themes.js"></script>
+    <script>
+    var drawing = kendo.drawing;
+    var geometry = kendo.geometry;
+    $(function() {        
+        initChart();
+        initPieChart();
+        initDonutChart();
+        initLogarithmicChart();       
+        initDateChart();
+        initPolarChart();
+        initRadarChart();
+    });
+
+    function initChart() {
+        $("#chart").kendoChart({
+            title: {
+                text: "Site Visitors Stats \n /thousands/"
+            },
+            legend: {
+                visible: false
+            },
+            seriesDefaults: {
+                type: "bar"
+            },
+            series: [{
+                name: "Total Visits",
+                data: [56000, 63000, 74000, 91000, 117000, 138000]
+            }, {
+                name: "Unique visitors",
+                data: [52000, 34000, 23000, 48000, 67000, 83000]
+            }],
+            valueAxis: {
+                name: "value",
+                max: 140000,
+                line: {
+                    visible: false
+                },
+                minorGridLines: {
+                    visible: true
+                }
+            },
+            categoryAxis: {
+                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                majorGridLines: {
+                    visible: false
+                },
+                name: "category",
+            },
+            tooltip: {
+                visible: true,
+                template: "#= series.name #: #= value #"
+            },
+            render: function() {
+                var valueAxis = this.getAxis("value");
+                var categoryAxis = this.getAxis("category");
+                var valueSlot = valueAxis.slot(100000, 120000);
+                var valueCenter = valueSlot.center();
+                var categorySlot = categoryAxis.slot(0, 3);
+                var categoryCenter = categorySlot.center();
+                var circle  = new drawing.Circle(new geometry.Circle([valueCenter.x, categoryCenter.y], categorySlot.size.height / 2), {
+                    fill: {
+                        color: "yellow"
+                    }
+                });
+                this.surface.draw(circle);
+            }
+        });
+        $("#category").kendoDropDownList({
+            dataSource: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+        });
+        $("#drawLine").click(function() {
+            var chart = $("#chart").data("kendoChart");            
+            var valueAxis = chart.getAxis("value");
+            var categoryAxis = chart.getAxis("category");
+            var valueSlot = valueAxis.slot(parseFloat($("#value").val()));
+            var categoryRange = categoryAxis.range();
+            var categorySlot = categoryAxis.slot(categoryRange.min, categoryRange.max);
+
+            var path = new drawing.Path({
+                stroke: {
+                    color: "red",
+                    width: 3
+                }
+            }).moveTo(valueSlot.origin.x, categorySlot.origin.y)
+            .lineTo(valueSlot.origin.x, categorySlot.bottomLeft().y);
+            chart.surface.draw(path);
+        });             
+
+        $("#drawHorizontalLine").click(function() {
+            var chart = $("#chart").data("kendoChart");            
+            var valueAxis = chart.getAxis("value");
+            var categoryAxis = chart.getAxis("category");
+            var valueRange = valueAxis.range();
+            var valueSlot = valueAxis.slot(valueRange.min, valueRange.max);        
+          
+            var categorySlot = categoryAxis.slot($("#category").data("kendoDropDownList").select());
+            var center = categorySlot.center();
+
+            var path = new drawing.Path({
+                stroke: {
+                    color: "black",
+                    width: 3
+                }
+            }).moveTo(valueSlot.origin.x, center.y)
+            .lineTo(valueSlot.bottomRight().x, center.y);
+            chart.surface.draw(path);
+        }); 
+        $("#seriesNames").kendoDropDownList({
+            dataSource: [{
+                name: "Total Visits"                
+            }, {
+                name: "Unique visitors"
+            }],
+            dataTextField: "name",
+            dataValueField: "name"
+        });
+
+        $("#highlight").click(function() {
+             var chart = $("#chart").data("kendoChart");
+             var item = $("#seriesNames").data("kendoDropDownList").dataItem();
+             item.highlighted = !item.highlighted;
+             chart.toggleHighlight(item.highlighted, item.name);
+        });
+    }
+
+    function initPieChart() {
+      $("#pie").kendoChart({
+            title: {
+                position: "bottom",
+                text: "Share of Internet Population Growth, 2007 - 2012"
+            },
+            legend: {
+                visible: false
+            },
+            chartArea: {
+                background: ""
+            },
+            seriesDefaults: {
+                labels: {
+                    visible: true,
+                    background: "transparent",
+                    template: "#= category #: \n #= value#%"
+                }
+            },
+            series: [{
+                type: "pie",
+                startAngle: 150,
+                data: [{
+                    category: "Asia",
+                    value: 53.8,
+                    color: "#9de219"
+                },{
+                    category: "Europe",
+                    value: 16.1,
+                    color: "#90cc38"
+                },{
+                    category: "Latin America",
+                    value: 11.3,
+                    color: "#068c35"
+                },{
+                    category: "Africa",
+                    value: 9.6,
+                    color: "#006634"
+                },{
+                    category: "Middle East",
+                    value: 5.2,
+                    color: "#004d38"
+                },{
+                    category: "North America",
+                    value: 3.6,
+                    color: "#033939"
+                }]
+            }],
+            tooltip: {
+                visible: true,
+                format: "{0}%"
+            }
+        });
+
+        $("#pieSeriesNames").kendoDropDownList({
+            dataSource: [{
+                name: "Asia"                
+            }, {
+                name: "Europe"
+            }, {
+                name: "Latin America"
+            }, {
+                name: "Africa"
+            }, {
+                name: "Middle East"
+            }, {
+                name: "North America"
+            }],
+            dataTextField: "name",
+            dataValueField: "name"
+        });
+
+        $("#pieHighlight").click(function() {
+             var chart = $("#pie").data("kendoChart");
+             var item = $("#pieSeriesNames").data("kendoDropDownList").dataItem();
+             item.highlighted = !item.highlighted;
+             chart.toggleHighlight(item.highlighted, item.name);
+        });
+    }
+    
+    function initDonutChart() {
+        $("#donut").kendoChart({
+            title: {
+                position: "bottom",
+                text: "Share of Internet Population Growth"
+            },
+            legend: {
+                visible: false
+            },
+            chartArea: {
+                background: ""
+            },
+            seriesDefaults: {
+                type: "donut",
+                startAngle: 150
+            },
+            series: [{
+                name: "2011",
+                data: [{
+                    category: "Asia",
+                    value: 30.8,
+                    color: "#9de219"
+                },{
+                    category: "Europe",
+                    value: 21.1,
+                    color: "#90cc38"
+                },{
+                    category: "Latin America",
+                    value: 16.3,
+                    color: "#068c35"
+                },{
+                    category: "Africa",
+                    value: 17.6,
+                    color: "#006634"
+                },{
+                    category: "Middle East",
+                    value: 9.2,
+                    color: "#004d38"
+                },{
+                    category: "North America",
+                    value: 4.6,
+                    color: "#033939"
+                }]
+            }, {
+                name: "2012",
+                data: [{
+                    category: "Asia",
+                    value: 53.8,
+                    color: "#9de219"
+                },{
+                    category: "Europe",
+                    value: 16.1,
+                    color: "#90cc38"
+                },{
+                    category: "Latin America",
+                    value: 11.3,
+                    color: "#068c35"
+                },{
+                    category: "Africa",
+                    value: 9.6,
+                    color: "#006634"
+                },{
+                    category: "Middle East",
+                    value: 5.2,
+                    color: "#004d38"
+                },{
+                    category: "North America",
+                    value: 3.6,
+                    color: "#033939"
+                }],
+                labels: {
+                    visible: true,
+                    background: "transparent",
+                    position: "outsideEnd",
+                    template: "#= category #: \n #= value#%"
+                }
+            }],
+            tooltip: {
+                visible: true,
+                template: "#= category # (#= series.name #): #= value #%"
+            }
+        });
+
+        $("#donutSeriesNames").kendoDropDownList({
+            dataSource: [{
+                name: "2011"                
+            }, {
+                name: "2012"
+            }],
+            dataTextField: "name",
+            dataValueField: "name"
+        });
+        
+        $("#donutCategoryNames").kendoDropDownList({
+            dataSource: [{
+                name: "Asia"                
+            }, {
+                name: "Europe"
+            }, {
+                name: "Latin America"
+            }, {
+                name: "Africa"
+            }, {
+                name: "Middle East"
+            }, {
+                name: "North America"
+            }],
+            dataTextField: "name",
+            dataValueField: "name"
+        });        
+
+        $("#donutHighlight").click(function() {
+             var chart = $("#donut").data("kendoChart");
+             var seriesName = $("#donutSeriesNames").data("kendoDropDownList").value();
+             var categoryItem = $("#donutCategoryNames").data("kendoDropDownList").dataItem();debugger;
+             categoryItem.highlighted = !categoryItem.highlighted;
+             chart.toggleHighlight(categoryItem.highlighted, {
+                series: seriesName,
+                category: categoryItem.name
+             });
+        });
+    }
+    
+    function initLogarithmicChart() {
+        function fibonacciSequence(n) {
+            var data = [1, 1];
+            for (var i = 2; i < n; i++) {
+                data.push(data[i - 1] + data[i - 2]);
+            }
+            return data;
+        }
+        $("#log").kendoChart({
+            title: {
+                text: "Fibonacci sequence"
+            },
+            series: [{
+                data: fibonacciSequence(39)
+            }],
+            tooltip: {
+                visible: true
+            },
+            categoryAxis: {
+                name: "category"
+            },
+            valueAxis: {
+                name: "value",
+                type: "log",
+                minorGridLines: {
+                    visible: true
+                }
+            }
+        });
+        $("#drawLogLine").click(function() {
+            var chart = $("#log").data("kendoChart");  
+            var value = parseFloat($("#logValue").val());
+            var valueAxis = chart.getAxis("value");
+            var categoryAxis = chart.getAxis("category");
+            var valueSlot = valueAxis.slot(value);
+            var categoryRange = categoryAxis.range();
+            var categorySlot = categoryAxis.slot(categoryRange.min, categoryRange.max);
+        
+            var path = new drawing.Path({
+                stroke: {
+                    color: "red",
+                    width: 3
+                }
+            }).moveTo(categorySlot.origin.x, valueSlot.origin.y)
+            .lineTo(categorySlot.bottomRight().x, valueSlot.origin.y);
+            chart.surface.draw(path);        
+        }); 
+
+    }
+    
+    function initDateChart() {
+        var stocksDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "../stock-data-2011.json",
+                    dataType: "json"
+                }
+            },
+
+            group: {
+                field: "symbol"
+            },
+
+            sort: {
+                field: "date",
+                dir: "asc"
+            },
+
+            schema: {
+                model: {
+                    fields: {
+                        date: {
+                            type: "date"
+                        }
+                    }
+                }
+            }
+        });
+
+        $("#dateValue").kendoDatePicker({
+            value: new Date(2011, 6, 1)
+        });
+
+        $("#date").kendoChart({
+            title: {
+                text: "Closing stock prices"
+            },
+            dataSource: stocksDataSource,
+            seriesDefaults: {
+                type: "scatterLine",
+                markers: {
+                    size: 6
+                }
+            },
+            series: [{
+                xField: "date",
+                yField: "close"
+            }],
+            xAxis: {
+                name: "date"
+            },
+            yAxis: {
+                name: "y",
+                labels: {
+                    format: "${0}",
+                    skip: 1
+                }
+            },
+            tooltip: {
+                visible: true,
+                format: "{0:d}, ${1}"
+            }
+        });
+        
+        $("#drawDateLine").click(function() {
+            var chart = $("#date").data("kendoChart");            
+            var dateAxis = chart.getAxis("date");
+            var yAxis = chart.getAxis("y");
+            var date = $("#dateValue").data("kendoDatePicker").value();
+
+            var dateAxisSlot = dateAxis.slot(date);
+            var yRange = yAxis.range();
+            var ySlot = yAxis.slot(yRange.min, yRange.max);
+
+            var path = new drawing.Path({
+                stroke: {
+                    color: "red",
+                    width: 3
+                }
+            }).moveTo(dateAxisSlot.origin.x, ySlot.origin.y)
+            .lineTo(dateAxisSlot.origin.x, ySlot.bottomLeft().y);
+            chart.surface.draw(path);
+        });  
+    }
+    
+    function initPolarChart() {
+        $("#polar").kendoChart({
+                title: {
+                    text: "Polar plot"
+                },
+                seriesDefaults: {
+                    type: "polarLine",
+                    style: "smooth"
+                },
+                xAxis: {
+                    name: "x"
+                },
+                yAxis: {
+                    name: "y"
+                },
+                series: [{
+                    data: [
+                        [0, 0], [15, 2], [30, 4],
+                        [45, 6], [60, 8], [75, 10],
+                        [90, 12], [105, 14], [120, 16],
+                        [135, 18], [150, 20], [165, 22],
+                        [180, 24], [195, 26], [210, 28],
+                        [225, 30], [240, 32], [255, 34],
+                        [270, 36], [285, 38], [300, 40],
+                        [315, 42], [330, 44], [345, 46],
+                        [360, 48], [15, 50], [30, 52],
+                        [45, 54], [60, 56], [75, 58], [90, 60]
+                    ]
+                },{
+                    data: [
+                        [0, 0], [15, 1], [30, 2],
+                        [45, 3], [60, 4], [75, 5],
+                        [90, 6], [105, 7], [120, 8],
+                        [135, 9], [150, 10], [165, 11],
+                        [180, 12], [195, 13], [210, 14],
+                        [225, 15], [240, 16], [255, 17],
+                        [270, 18], [285, 19], [300, 20],
+                        [315, 21], [330, 22], [345, 23],
+                        [360, 24], [15, 25], [30, 26],
+                        [45, 27], [60, 28], [75, 29], [90, 30]
+                    ]
+                },{
+                    data: [
+                        [0, 0], [15, 3], [30, 6],
+                        [45, 9], [60, 12], [75, 15],
+                        [90, 18], [105, 21], [120, 24],
+                        [135, 27], [150, 30], [165, 33],
+                        [180, 36], [195, 39], [210, 42],
+                        [225, 45], [240, 48], [255, 51],
+                        [270, 54], [285, 57], [300, 60],
+                        [315, 63], [330, 66], [345, 69],
+                        [360, 72], [15, 75], [30, 78],
+                        [45, 81], [60, 84], [75, 87], [90, 90]
+                    ]
+                }]
+            });
+
+            $("#drawArc").click(function() {
+                var chart = $("#polar").data("kendoChart");
+                var yAxis = chart.getAxis("y");
+                var xAxis = chart.getAxis("x");
+                var from = parseFloat($("#from").val());
+                var to = parseFloat($("#to").val());
+                var value = parseFloat($("#polarValue").val());
+                var slot = xAxis.slot(from, to);
+                var valueRange = yAxis.range();
+                var valueSlot = yAxis.slot(valueRange.min, value);
+
+                slot.radiusX = slot.radiusY = valueSlot.size.height;
+                var arc = new drawing.Arc(slot, {
+                    stroke: {
+                        color: "red",
+                        width: 3
+                    }
+                });
+                chart.surface.draw(arc);
+            });
+    }
+
+    function initRadarChart() {
+        $("#radar").kendoChart({
+            title: {
+                text: "Market Value of Major Banks"
+            },
+            legend: {
+                position: "bottom"
+            },
+            seriesDefaults: {
+                type: "radarLine"
+            },
+            series: [{
+                name: "Market value as of 2007",
+                data: [116, 165, 215, 75, 100, 49, 80, 116, 108, 90, 67, 76, 91, 255, 120]
+            },{
+                name: "Market value as of 2009",
+                data: [64, 85, 97, 27, 16, 26, 35, 32, 26, 17, 10, 7, 19, 5]
+            }],
+            categoryAxis: {
+                name: "category",
+                categories: ["Santander", "JP Morgan", "HSBC", "Credit Suisse",
+                    "Goldman Sachs", "Morgan Stanley", "Societe Generale", "UBS",
+                    "BNP Paribas", "Unicredit", "Credit Agricole", "Deutsche Bank",
+                    "Barclays", "Citigroup", "RBS"]
+            },
+            valueAxis: {
+                name: "value",
+                labels: {
+                    format: "${0}"
+                }
+            },
+            tooltip: {
+                visible: true,
+                format: "${0} bln"
+            }
+        });
+        
+        $("#drawRadarArc").click(function() {
+            var chart = $("#radar").data("kendoChart");
+            var yAxis = chart.getAxis("value");
+            var xAxis = chart.getAxis("category");
+            var from = parseFloat($("#fromCategoryIdx").val());
+            var to = parseFloat($("#toCategoryIdx").val());
+            var value = parseFloat($("#radarValue").val());
+
+            var slot = xAxis.slot(from, to);
+            var valueRange = yAxis.range();
+            var valueSlot = yAxis.slot(valueRange.min, value);
+
+            slot.radiusX = slot.radiusY = valueSlot.size.height;
+            var arc = new drawing.Arc(slot, {
+                stroke: {
+                    color: "red",
+                    width: 3
+                }
+            });
+            chart.surface.draw(arc);
+        });
+    }
+
+    </script>
+  </head>
+  <body>
+    <input id="seriesNames"/>
+    <button type="button" id="highlight">toggle highlight</button>
+    <input id="value" type="text" value="60000"/>
+    <button type="button" id="drawLine">Draw Line</button>
+    <input id="category" />
+    <button type="button" id="drawHorizontalLine">Draw Horizontal Line</button>
+    <div id="chart"></div>
+    
+    <input id="pieSeriesNames"/>
+    <button type="button" id="pieHighlight">toggle highlight</button>
+    <div id="pie"></div>
+    
+    Series: <input id="donutSeriesNames"/> Categories: <input id="donutCategoryNames"/>
+    <button type="button" id="donutHighlight">toggle highlight</button>
+    <div id="donut"></div>
+
+    <input id="logValue" type="text" value="60000"/>
+    <button type="button" id="drawLogLine">Draw Line</button>
+    <div id="log"></div>
+    
+    <input id="dateValue" />
+    <button type="button" id="drawDateLine">Draw Line</button>
+    <div id="date"></div>
+
+    From: <input id="from" value="0"/> To: <input id="to" value="270"/> Value: <input id="polarValue" value="80"/>
+    <button type="button" id="drawArc">Draw Arc</button>
+    <div id="polar"></div>
+    
+    From: <input id="fromCategoryIdx" value="0"/> To: <input id="toCategoryIdx" value="2"/> Value: <input id="radarValue" value="80"/>
+    <button type="button" id="drawRadarArc">Draw Arc</button>
+    <div id="radar"></div>
+  </body>
+</html>

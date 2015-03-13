@@ -332,6 +332,20 @@ var __meta__ = {
             );
         },
 
+        slot: function(from, to) {
+            var options = this.options;
+            var slot = this.getSlot(from, to);
+            var startAngle = slot.startAngle + 180;
+            var endAngle = startAngle + slot.angle;
+
+            return new geom.Arc([slot.c.x, slot.c.y], {
+                startAngle: startAngle,
+                endAngle: endAngle,
+                radiusX: slot.r,
+                radiusY: slot.r
+            });
+        },
+
         pointCategoryIndex: function(point) {
             var axis = this,
                 index = null,
@@ -722,6 +736,39 @@ var __meta__ = {
             );
         },
 
+        slot: function(from, to) {
+            var options = this.options;
+            var start = 360 - options.startAngle;
+            var slot = this.getSlot(from, to);
+            var startAngle;
+            var endAngle;
+            var min;
+            var max;
+            if (!dataviz.util.defined(to)) {
+                to = from;
+            }
+
+            min = math.min(from, to);
+            max = math.max(from, to);
+            if (options.reverse) {
+                startAngle = min;
+                endAngle = max;
+            } else {
+                startAngle = 360 - max;
+                endAngle = 360 - min;
+            }
+
+            startAngle = (startAngle + start) % 360;
+            endAngle = (endAngle + start) % 360;
+
+            return new geom.Arc([slot.c.x, slot.c.y], {
+                startAngle: startAngle,
+                endAngle: endAngle,
+                radiusX: slot.r,
+                radiusY: slot.r
+            });
+        },
+
         getValue: function(point) {
             var axis = this,
                 options = axis.options,
@@ -739,6 +786,7 @@ var __meta__ = {
             return (theta + start + 360) % 360;
         },
 
+        range: NumericAxis.fn.range,
         labelsCount: NumericAxis.fn.labelsCount,
         createAxisLabel: NumericAxis.fn.createAxisLabel
     });

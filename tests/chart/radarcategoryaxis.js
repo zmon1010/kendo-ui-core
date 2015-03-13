@@ -341,6 +341,39 @@
     });
 
     // ------------------------------------------------------------
+    (function() {
+        var slot;
+        var ring;
+        module("Radar Category Axis / slot", {
+            setup: function() {
+                createAxis();
+                slot = axis.slot(1, 2);
+                ring = axis.getSlot(1, 2);
+            }
+        });
+
+        test("returns geometry Arc", function() {
+            ok(slot instanceof kendo.geometry.Arc);
+        });
+
+        test("arc has same center and radius as the slot center and radius", function() {
+            equal(slot.radiusX, ring.r);
+            equal(slot.radiusY, ring.r);
+            equal(slot.center.x, ring.c.x);
+            equal(slot.center.y, ring.c.y);
+        });
+
+        test("arc start angle is equal to the slot start angle plus 180", function() {
+            equal(slot.startAngle, ring.startAngle + 180);
+        });
+
+        test("arc end angle is equal to the slot start angle plus the slot angle plus 180", function() {
+            equal(slot.endAngle, ring.startAngle + ring.angle + 180);
+        });
+
+    })();
+
+    // ------------------------------------------------------------
     module("Radar CategoryAxis / getCategory ", {
         setup: function() {
             createAxis();

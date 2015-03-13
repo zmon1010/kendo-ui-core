@@ -754,6 +754,12 @@
             arrayClose([slot.x1, slot.x2], [lineBox.x2, lineBox.x2], TOLERANCE);
         });
 
+        test("slot method returns slot as rect", function() {
+            var box = categoryAxis.getSlot(0);
+            var slot = categoryAxis.slot(0);
+            ok(slot.equals(box.toRect()));
+        });
+
         // ------------------------------------------------------------
         module("Category Axis / Vertical / Slots", {
             setup: function() {
@@ -857,6 +863,12 @@
             createCategoryAxis({ vertical: true, categories: []});
             var slot = categoryAxis.getSlot(Number.MAX_VALUE);
             arrayClose([slot.y1, slot.y2], [lineBox.y2, lineBox.y2], TOLERANCE);
+        });
+
+        test("slot method returns slot as rect", function() {
+            var box = categoryAxis.getSlot(0);
+            var slot = categoryAxis.slot(0);
+            ok(slot.equals(box.toRect()));
         });
 
     })();

@@ -32,6 +32,7 @@ var __meta__ = {
     // Imports ================================================================
     var each = $.each,
         isArray = $.isArray,
+        isPlainObject = $.isPlainObject,
         map = $.map,
         math = Math,
         noop = $.noop,
@@ -472,6 +473,44 @@ var __meta__ = {
                 plotArea.redraw(pane);
             } else {
                 chart._redraw();
+            }
+        },
+
+        getAxis: function(name) {
+            var axes = this._plotArea.axes;
+
+            for (var idx = 0; idx < axes.length; idx++) {
+                if (axes[idx].options.name === name) {
+                    return new ChartAxis(axes[idx]);
+                }
+            }
+        },
+
+        toggleHighlight: function(show, options) {
+            var plotArea = this._plotArea;
+            var highlight = this._highlight;
+            var firstSeries = (plotArea.srcSeries || plotArea.series || [])[0];
+            var seriesName, categoryName, points;
+
+            if (isPlainObject(options)) {
+                seriesName = options.series;
+                categoryName = options.category;
+            }  else {
+                seriesName = categoryName = options;
+            }
+
+            if (firstSeries.type === DONUT) {
+                points = pointByCategoryName(plotArea.pointsBySeriesName(seriesName), categoryName);
+            } else if (firstSeries.type === PIE || firstSeries.type === FUNNEL) {
+                points = pointByCategoryName((plotArea.charts[0] || {}).points, categoryName);
+            } else {
+                points = plotArea.pointsBySeriesName(seriesName);
+            }
+
+            if (points) {
+               for (var idx = 0; idx < points.length; idx++) {
+                    highlight.togglePointHighlight(points[idx], show);
+               }
             }
         },
 
@@ -9122,6 +9161,25 @@ var __meta__ = {
             return result;
         },
 
+        pointsBySeriesName: function(name) {
+            var charts = this.charts,
+                result = [],
+                points, point, i, j, chart;
+
+            for (i = 0; i < charts.length; i++) {
+                chart = charts[i];
+                points = chart.points;
+                for (j = 0; j < points.length; j++) {
+                    point = points[j];
+                    if (point && point.series.name === name) {
+                        result.push(point);
+                    }
+                }
+            }
+
+            return result;
+        },
+
         paneByPoint: function(point) {
             var plotArea = this,
                 panes = plotArea.panes,
@@ -11541,6 +11599,20 @@ var __meta__ = {
         }
     };
 
+    var ChartAxis = Class.extend({
+        init: function(axis) {
+            this._axis = axis;
+        },
+
+        slot: function(from, to) {
+            return this._axis.slot(from, to);
+        },
+
+        range: function() {
+            return this._axis.range();
+        }
+    });
+
     function intersection(a1, a2, b1, b2) {
         var result,
             ua_t = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x),
@@ -12250,6 +12322,16 @@ var __meta__ = {
         this._defaultPrevented = true;
     }
 
+    function pointByCategoryName(points, name) {
+        if (points) {
+            for (var idx = 0; idx < points.length; idx++) {
+                if (points[idx].category === name) {
+                    return [points[idx]];
+                }
+            }
+        }
+    }
+
     // Exports ================================================================
     dataviz.ui.plugin(Chart);
 
@@ -12356,6 +12438,7 @@ var __meta__ = {
         CategoricalErrorBar: CategoricalErrorBar,
         CategoricalPlotArea: CategoricalPlotArea,
         CategoryAxis: CategoryAxis,
+        ChartAxis: ChartAxis,
         ChartContainer: ChartContainer,
         ClipAnimation: ClipAnimation,
         ClusterLayout: ClusterLayout,

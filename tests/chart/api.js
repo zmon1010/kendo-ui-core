@@ -726,4 +726,313 @@
         });
 
     })();
+
+
+    // ------------------------------------------------------------
+    (function() {
+        var axis = {
+            slot: function(from, to) {
+                return {
+                    from: from,
+                    to: to
+                };
+            },
+            range: function() {
+                return "foo";
+            }
+        },
+        chartAxis;
+
+        module("wrappers / ChartAxis", {
+            setup: function() {
+                chartAxis = new dataviz.ChartAxis(axis);
+            }
+        });
+
+        test("slot returns axis slot", function() {
+            var slot = chartAxis.slot(1, 2);
+            equal(slot.from, 1);
+            equal(slot.to, 2);
+        });
+
+        test("range returns axis range", function() {
+            var range = chartAxis.range();
+            equal(range, "foo");
+        });
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
+        module("getAxis", {
+            setup: function() {
+                chart = createChart({
+                    valueAxes: {
+                        name: "value"
+                    },
+                    categoryAxis: {
+                        name: "category"
+                    }
+                });
+            },
+            teardown: destroyChart
+        });
+
+        test("returns ChartAxis with the axis based on the name", function() {
+            var axes = chart._plotArea.axes;
+            var categoryAxis;
+            var valueAxis;
+            var axis = chart.getAxis("category");
+            if (axes[0].options.name == "category") {
+                categoryAxis = axes[0];
+                valueAxis = axes[1];
+            } else {
+                categoryAxis = axes[1];
+                valueAxis = axes[0];
+            }
+            ok(axis instanceof dataviz.ChartAxis);
+            ok(axis._axis === categoryAxis);
+
+            axis = chart.getAxis("value");
+            ok(axis._axis === valueAxis);
+        });
+
+        test("returns nothing if there isn't an axis with matching name", function() {
+            ok(chart.getAxis("foo") === undefined);
+        });
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var chart;
+        function setupChart(options) {
+            chart = createChart(options);
+        }
+
+        module("toggleHighlight", {
+            teardown: destroyChart
+        });
+
+        test("toggles donut chart point highlight by series and category", 6, function() {
+            setupChart({
+                series: [{
+                    type: "donut",
+                    name: "foo",
+                    data: [{
+                        value: 1,
+                        category: "bar"
+                    }]
+                }, {
+                    type: "donut",
+                    name: "baz",
+                    data: [{
+                        value: 1,
+                        category: "qux"
+                    }],
+                    value: 1
+                }]
+            });
+
+            var showHighlight = true;
+            chart._highlight.togglePointHighlight = function(point, show) {
+                equal(point.series.name, "baz");
+                equal(point.category, "qux");
+                equal(show, showHighlight);
+            };
+            chart.toggleHighlight(showHighlight, {
+                series: "baz",
+                category: "qux"
+            });
+            showHighlight = false;
+            chart.toggleHighlight(showHighlight, {
+                series: "baz",
+                category: "qux"
+            });
+        });
+
+        test("does not toggle donut chart point highlight if there isn't point with matching series and category", 0, function() {
+            setupChart({
+                series: [{
+                    type: "donut",
+                    name: "foo",
+                    data: [{
+                        value: 1,
+                        category: "bar"
+                    }]
+                }, {
+                    type: "donut",
+                    name: "baz",
+                    data: [{
+                        value: 1,
+                        category: "qux"
+                    }],
+                    value: 1
+                }]
+            });
+
+            var showHighlight = true;
+            chart._highlight.togglePointHighlight = function(point, show) {
+                ok(false);
+            };
+            chart.toggleHighlight(showHighlight, {
+                series: "foo",
+                category: "qux"
+            });
+            showHighlight = false;
+            chart.toggleHighlight(showHighlight, {
+                series: "baz",
+                category: "bar"
+            });
+        });
+
+        test("toggles pie chart point highlight by category", 4, function() {
+            setupChart({
+                series: [{
+                    type: "pie",
+                    data: [{
+                        value: 1,
+                        category: "foo"
+                    }, {
+                        value: 1,
+                        category: "bar"
+                    }]
+                }]
+            });
+
+            var showHighlight = true;
+            chart._highlight.togglePointHighlight = function(point, show) {
+                equal(point.category, "bar");
+                equal(show, showHighlight);
+            };
+            chart.toggleHighlight(showHighlight, {
+                category: "bar"
+            });
+            showHighlight = false;
+            chart.toggleHighlight(showHighlight, "bar");
+        });
+
+        test("does not toggle pie chart point highlight if there isn't category with matching name", 0, function() {
+            setupChart({
+                series: [{
+                    type: "pie",
+                    data: [{
+                        value: 1,
+                        category: "foo"
+                    }, {
+                        value: 1,
+                        category: "bar"
+                    }]
+                }]
+            });
+
+            var showHighlight = true;
+            chart._highlight.togglePointHighlight = function(point, show) {
+                ok(false);
+            };
+            chart.toggleHighlight(showHighlight, {
+                category: "baz"
+            });
+            showHighlight = false;
+            chart.toggleHighlight(showHighlight, "baz");
+        });
+
+        test("toggles categorical chart series points highlight by series name", 8, function() {
+            setupChart({
+                series: [{
+                    type: "column",
+                    name: "column",
+                    data: [1, 2]
+                }, {
+                    type: "line",
+                    name: "line",
+                    data: [3, 4]
+                }]
+            });
+
+            var showHighlight = true;
+            chart._highlight.togglePointHighlight = function(point, show) {
+                equal(point.series.name, "line");
+                equal(show, showHighlight);
+            };
+            chart.toggleHighlight(showHighlight, {
+                series: "line"
+            });
+            showHighlight = false;
+            chart.toggleHighlight(showHighlight, "line");
+        });
+
+        test("does not toggle categorical chart points highlight if there isn't series with matching name", 0, function() {
+            setupChart({
+                series: [{
+                    type: "column",
+                    name: "column",
+                    data: [1, 2]
+                }, {
+                    type: "line",
+                    name: "line",
+                    data: [3, 4]
+                }]
+            });
+
+            var showHighlight = true;
+            chart._highlight.togglePointHighlight = function(point, show) {
+                ok(false);
+            };
+            chart.toggleHighlight(showHighlight, {
+                series: "foo"
+            });
+            showHighlight = false;
+            chart.toggleHighlight(showHighlight, "foo");
+        });
+
+        test("toggles scatter chart series points highlight by series name", 8, function() {
+            setupChart({
+                series: [{
+                    type: "scatter",
+                    name: "A",
+                    data: [[1, 2], [3, 4]]
+                }, {
+                    type: "scatter",
+                    name: "B",
+                    data: [[5, 6], [7, 8]]
+                }]
+            });
+
+            var showHighlight = true;
+            chart._highlight.togglePointHighlight = function(point, show) {
+                equal(point.series.name, "A");
+                equal(show, showHighlight);
+            };
+            chart.toggleHighlight(showHighlight, {
+                series: "A"
+            });
+            showHighlight = false;
+            chart.toggleHighlight(showHighlight, "A");
+        });
+
+        test("does no toggle scatter chart points highlight if there isn't series with matching name", 0, function() {
+            setupChart({
+                series: [{
+                    type: "scatter",
+                    name: "A",
+                    data: [[1, 2], [3, 4]]
+                }, {
+                    type: "scatter",
+                    name: "B",
+                    data: [[5, 6], [7, 8]]
+                }]
+            });
+
+            var showHighlight = true;
+            chart._highlight.togglePointHighlight = function(point, show) {
+                ok(false);
+            };
+            chart.toggleHighlight(showHighlight, {
+                series: "foo"
+            });
+            showHighlight = false;
+            chart.toggleHighlight(showHighlight, "foo");
+        });
+
+    })();
+
 })();

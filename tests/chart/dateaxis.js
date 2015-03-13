@@ -1444,6 +1444,23 @@
         });
 
         // ------------------------------------------------------------
+        module("Date Category Axis / slot", {
+            setup: function() {
+                createDateCategoryAxis({
+                    categories: [
+                        new Date("2012/02/01 15:00:00"), new Date("2012/02/05 01:00:00")
+                    ]
+                });
+            }
+        });
+
+        test("slot method returns slot as rect", function() {
+            var box = dateAxis.getSlot(0);
+            var slot = dateAxis.slot(0);
+            ok(slot.equals(box.toRect()));
+        });
+
+        // ------------------------------------------------------------
         module("Date Category Axis / getCategory", {
             setup: function() {
                 createDateCategoryAxis({
@@ -1731,6 +1748,13 @@
                 unlimited = dateAxis.getSlot("2012/02/20", "2012/02/20", false);
             close(limited.x1, 784, 1, 1, "value is limited");
             close(unlimited.x1, 1222, 1, "value is not limited");
+        });
+
+        test("slot method returns slot as rect", function() {
+            createDateValueAxis(new Date("2012/02/01"), new Date("2012/02/10"));
+            var box = dateAxis.getSlot(new Date("2012/02/01"), new Date("2012/02/02"));
+            var slot = dateAxis.slot(new Date("2012/02/01"), new Date("2012/02/02"));
+            ok(slot.equals(box.toRect()));
         });
 
         // ------------------------------------------------------------
