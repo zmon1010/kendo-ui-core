@@ -786,6 +786,7 @@ var __meta__ = {
             return (theta + start + 360) % 360;
         },
 
+        range: NumericAxis.fn.range,
         labelsCount: NumericAxis.fn.labelsCount,
         createAxisLabel: NumericAxis.fn.createAxisLabel
     });
