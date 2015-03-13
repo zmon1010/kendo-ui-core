@@ -351,6 +351,8 @@ else
         sh "cd #{MVC6_SRC_ROOT} && kpm restore && kpm build --configuration Release"
     end
 
+	file MVC6_CORE_DLL => MVC6_DLL
+
     tree :to => 'dist/binaries/mvc-6/',
          :from => FileList[
              MVC6_REDIST, MVC6_CORE_REDIST
