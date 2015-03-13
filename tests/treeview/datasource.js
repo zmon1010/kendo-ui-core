@@ -840,4 +840,22 @@
         equal(treeview.find(".k-item").length, 2);
         equal(treeview.find(".k-item .k-item:last").text(), "baz");
     });
+
+    test("expand/collapse does not redraw node", function() {
+        var dom = $("<ul><li>foo<i class='bar' /><ul><li>baz</li></ul></li></ul>").appendTo(QUnit.fixture);
+        dom.kendoTreeView();
+
+        dom.find(".k-icon:First").click();
+
+        equal(dom.find("i.bar").length, 1);
+    });
+
+    test("checking does not redraw node", function() {
+        var dom = $("<ul><li><input type='checkbox' class='k-checkbox' />foo <i class='bar' /></li></ul>").appendTo(QUnit.fixture);
+        dom.kendoTreeView();
+
+        dom.find("[type=checkbox]").prop("checked", true).trigger("change");
+
+        equal(dom.find("i.bar").length, 1);
+    });
 })();

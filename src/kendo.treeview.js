@@ -1292,7 +1292,9 @@ var __meta__ = {
                     context.item = item = items[i];
                     node = elements[i].parent();
 
-                    node.find(">div>.k-in").html(that.templates.itemContent(context));
+                    if (field != "expanded" && field != "checked") {
+                        node.find(">div>.k-in").html(that.templates.itemContent(context));
+                    }
 
                     if (field == CHECKED) {
                         isChecked = item[field];
