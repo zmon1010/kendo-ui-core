@@ -1,10 +1,10 @@
 namespace Kendo.Mvc.UI
 {    
-    public class GridSortableSettings : JsonObject
+    public class AllowCopySettings : JsonObject
     {
-        public GridSortableSettings()
+        public AllowCopySettings()
         {
-            AllowUnsort = true;
+            Enabled = false;
         }
 
         public bool Enabled
@@ -13,13 +13,7 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-        public GridSortMode SortMode
-        {
-            get;
-            set;
-        }
-
-        public bool AllowUnsort
+        public string Delimeter
         {
             get;
             set;
@@ -27,14 +21,9 @@ namespace Kendo.Mvc.UI
 
         protected override void Serialize(System.Collections.Generic.IDictionary<string, object> json)
         {
-            if (!AllowUnsort)
+            if (Delimeter != "\t")
             {
-                json["allowUnsort"] = AllowUnsort;                
-            }
-
-            if (SortMode != GridSortMode.SingleColumn)
-            {
-                json["mode"] = "multiple";
+                json["delimeter"] = Delimeter;                
             }
         }
     }

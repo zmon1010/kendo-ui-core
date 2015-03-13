@@ -553,7 +553,14 @@ namespace Kendo.Mvc.UI.Fluent
         /// </example>
         public GridBuilder<T> AllowCopy(bool value)
         {
-            Component.AllowCopy = value;
+            Component.AllowCopy.Enabled = value;
+            return this;
+        }
+
+        public GridBuilder<T> AllowCopy(Action<GridAllowCopyBuilder> configurator)
+        {
+            configurator(new GridAllowCopyBuilder(Component.AllowCopy));
+
             return this;
         }
 

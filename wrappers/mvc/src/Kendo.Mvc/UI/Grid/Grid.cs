@@ -51,6 +51,7 @@ namespace Kendo.Mvc.UI
             DataKeys = new List<IDataKey>();
 
             Pageable = new PageableSettings();
+            AllowCopy = new AllowCopySettings();
             Sortable = new GridSortableSettings();
             Scrollable = new GridScrollableSettings();
             Navigatable = new GridNavigatableSettings(this);            
@@ -713,7 +714,7 @@ namespace Kendo.Mvc.UI
 
         public bool? AutoBind { get; set; }
 
-        public bool AllowCopy { get; set; }
+        public AllowCopySettings AllowCopy { get; set; }
 
         public override void WriteInitializationScript(TextWriter writer)
         {
@@ -826,9 +827,9 @@ namespace Kendo.Mvc.UI
                 options["autoBind"] = autoBind;
             }
 
-            if (AllowCopy == true)
+            if (AllowCopy.Enabled == true)
             {
-                options["allowCopy"] = AllowCopy;
+                options["allowCopy"] = AllowCopy.ToJson();
             }
 
             options["dataSource"] = DataSource.ToJson();
@@ -1303,7 +1304,7 @@ namespace Kendo.Mvc.UI
                 }
             }
 
-            if (AllowCopy && Selectable.Enabled == false)
+            if (AllowCopy.Enabled && Selectable.Enabled == false)
             {
                 throw new NotSupportedException(Exceptions.AllowCopyRequiresSelectable);
             }
