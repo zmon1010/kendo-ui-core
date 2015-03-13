@@ -245,7 +245,7 @@ namespace :mvc do
         MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll',
         MVC6_DLL,
         'dist/binaries/',
-        'dist/binaries/mvc-6'
+        'dist/binaries/mvc-6/'
     ]
 
     desc('Replace commercial binaries with trials')
