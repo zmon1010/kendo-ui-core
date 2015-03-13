@@ -135,6 +135,32 @@ end
 # Update CommonAssemblyInfo.cs whenever the VERSION constant changes
 assembly_info_file 'wrappers/mvc/src/shared/CommonAssemblyInfo.cs'
 
+# Updates project.json with the VERSION constant
+class ProjectFileTask < Rake::FileTask
+    def execute(args=nil)
+        content = File.read(name)
+
+        content.gsub!(/"version": ".*"/, '"version": "' + VERSION + '"')
+
+        puts "Updating project version to #{VERSION}"
+
+        File.open(name, 'w') do |file|
+            file.write content
+        end
+    end
+
+    def needed?
+        super || !File.read(name).include?(VERSION)
+    end
+end
+
+def project_file (*args, &block)
+    ProjectFileTask.define_task(*args, &block)
+end
+
+# Update CommonAssemblyInfo.cs whenever the VERSION constant changes
+project_file MVC6_SRC_ROOT + 'project.json'
+
 namespace :mvc do
     tree :to => MVC_DEMOS_ROOT + 'Content',
          :from => MIN_CSS_RESOURCES,
