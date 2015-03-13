@@ -1,0 +1,152 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'octokit'
+require 'json'
+require 'date'
+require 'time'
+require 'debugger'
+
+Octokit.auto_paginate = true
+
+a_month_ago = Time.now.utc.to_datetime << 1
+first_day = Date.new(a_month_ago.year, a_month_ago.month, 1).to_time.utc
+last_day = Date.new(Time.now.utc.year, Time.now.utc.month, 1).to_time.utc
+
+REPOS = [ 'telerik/kendo', 'telerik/kendo-ui-core']
+CLIENT = Octokit::Client.new(access_token: '88b65b5ddb933dcff847eb9b148449283b22e3f2')
+
+class Report
+    attr_accessor :kendo, :mvc, :php, :java
+
+    def initialize
+        @kendo = 0
+        @mvc = 0
+        @php = 0
+        @java = 0
+    end
+end
+
+def report(issues)
+    instance = Report.new
+
+    issues.each do |issue|
+        wrappers = false
+
+        for label in issue.labels do
+            name = label.name
+            if name == "S: Wrappers (ASP.NET MVC)"
+                instance.mvc += 1
+                wrappers = true
+                break
+            elsif name == "S: Wrappers (PHP)"
+                instance.php += 1
+                wrappers = true
+                break
+            elsif name == "S: Wrappers (Java)"
+                instance.java += 1
+                wrappers = true
+                break
+            end
+        end
+
+        instance.kendo +=1 unless wrappers
+    end
+
+    instance
+end
+
+def issues(options)
+    yield REPOS.map { |repo| CLIENT.list_issues(repo, options) }.flatten
+end
+
+OPEN_ISSUES_OPTIONS = {
+    per_page: 100,
+    labels: 'Bug',
+    state: 'all',
+    sort: 'created',
+    direction: 'desc',
+    since: first_day.iso8601
+}
+
+CLOSED_ISSUES_OPTIONS = {
+    per_page: 100,
+    labels: 'Bug',
+    state: 'closed',
+    sort: 'updated',
+    direction: 'desc',
+    since: first_day.iso8601
+}
+
+CURRENT_ISSUES_OPTIONS = {
+    per_page: 100,
+    labels: 'Bug',
+    state: 'open'
+}
+
+class ReportLine
+    attr_accessor :blocking, :critical, :high, :medium, :low, :open, :closed
+
+    def to_s
+        "Blocking: #{@blocking || 0} Critical: #{@critical} High: #{@high} Medium: #{@medium} Low: #{@low} Closed: #{@closed} Open: #{@open}"
+    end
+end
+
+class MasterReport
+    attr_accessor :kendo, :mvc, :java, :php
+
+    def initialize
+        @kendo = ReportLine.new
+        @mvc = ReportLine.new
+        @java = ReportLine.new
+        @php = ReportLine.new
+    end
+
+    def report_to_field(field, report)
+        for name in [:kendo, :mvc, :java, :php]
+            line = self.send(name)
+            line.send(field + '=', report.send(name))
+        end
+    end
+
+    def to_s
+        string = ""
+        for name in [:kendo, :mvc, :java, :php]
+            string << name.to_s + " " + self.send(name).to_s
+            string << "\n"
+        end
+        string
+    end
+end
+
+open_issues = issues(OPEN_ISSUES_OPTIONS) do |issues|
+    issues.select { |issue| issue.created_at > first_day && issue.created_at < last_day }
+end
+
+master = MasterReport.new
+
+master.report_to_field('open', report(open_issues))
+
+
+closed_issues = issues(CLOSED_ISSUES_OPTIONS) do |issues|
+    issues.select { |issue| issue.updated_at > first_day && issue.updated_at < last_day }
+end
+
+master.report_to_field('closed', report(closed_issues))
+
+current = issues(CURRENT_ISSUES_OPTIONS) do |issues|
+
+    issues.group_by do |issue|
+        label = issue.labels.find { |label| label.name =~ /S:(Low|Medium|High|Critical|Blocking)/ }
+        unless label
+            p "Invalid issue - #{issue.id}", issue
+        end
+        label ? label.name[/Low|Medium|High|Critical|Blocking/i].downcase : "default"
+    end
+end
+
+current.each do |k, vals|
+    master.report_to_field(k, report(vals))
+end
+
+p master
