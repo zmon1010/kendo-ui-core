@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class Grid<T> where T : class 
     {
+        public GridAllowCopySettings<T> AllowCopy { get; } = new GridAllowCopySettings<T>();
+
         public bool? AutoBind { get; set; }
 
         public double? ColumnResizeHandleWidth { get; set; }
@@ -31,6 +33,16 @@ namespace Kendo.Mvc.UI
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
+
+            var allowCopy = AllowCopy.Serialize();
+            if (allowCopy.Any())
+            {
+                settings["allowCopy"] = allowCopy;
+            }
+            else if (AllowCopy.Enabled == true)
+            {
+                settings["allowCopy"] = true;
+            }
 
             if (AutoBind.HasValue)
             {

@@ -10,6 +10,25 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
+        /// Exports all grid pages, starting from the first one.
+        /// </summary>
+        /// <param name="value">The value for AllPages</param>
+        public GridPdfSettingsBuilder<T> AllPages(bool value)
+        {
+            Container.AllPages = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Exports all grid pages, starting from the first one.
+        /// </summary>
+        public GridPdfSettingsBuilder<T> AllPages()
+        {
+            Container.AllPages = true;
+            return this;
+        }
+
+        /// <summary>
         /// The author of the PDF document.
         /// </summary>
         /// <param name="value">The value for Author</param>
@@ -105,6 +124,17 @@ namespace Kendo.Mvc.UI.Fluent
         public GridPdfSettingsBuilder<T> ProxyURL(string value)
         {
             Container.ProxyURL = value;
+            return this;
+        }
+
+        /// <summary>
+        /// A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+		/// the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".
+        /// </summary>
+        /// <param name="value">The value for ProxyTarget</param>
+        public GridPdfSettingsBuilder<T> ProxyTarget(string value)
+        {
+            Container.ProxyTarget = value;
             return this;
         }
 

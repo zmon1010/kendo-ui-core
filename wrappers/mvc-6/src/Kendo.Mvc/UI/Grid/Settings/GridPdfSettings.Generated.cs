@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class GridPdfSettings<T> 
     {
+        public bool? AllPages { get; set; }
+
         public string Author { get; set; }
 
         public string Creator { get; set; }
@@ -27,6 +29,8 @@ namespace Kendo.Mvc.UI
 
         public string ProxyURL { get; set; }
 
+        public string ProxyTarget { get; set; }
+
         public string Subject { get; set; }
 
         public string Title { get; set; }
@@ -35,6 +39,11 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            if (AllPages.HasValue)
+            {
+                settings["allPages"] = AllPages;
+            }
 
             if (Author.HasValue())
             {
@@ -74,6 +83,11 @@ namespace Kendo.Mvc.UI
             if (ProxyURL.HasValue())
             {
                 settings["proxyURL"] = ProxyURL;
+            }
+
+            if (ProxyTarget.HasValue())
+            {
+                settings["proxyTarget"] = ProxyTarget;
             }
 
             if (Subject.HasValue())

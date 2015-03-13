@@ -9,6 +9,39 @@ namespace Kendo.Mvc.UI.Fluent
         where T : class 
     {
         /// <summary>
+        /// If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV.
+		/// Can be set to a JavaScript object which represents the allowCopy configuration.
+        /// </summary>
+        /// <param name="configurator">The configurator for the allowcopy setting.</param>
+        public GridBuilder<T> AllowCopy(Action<GridAllowCopySettingsBuilder<T>> configurator)
+        {
+            Container.AllowCopy.Enabled = true;
+            configurator(new GridAllowCopySettingsBuilder<T>(Container.AllowCopy));
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV.
+		/// Can be set to a JavaScript object which represents the allowCopy configuration.
+        /// </summary>
+        public GridBuilder<T> AllowCopy()
+        {
+            Container.AllowCopy.Enabled = true;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV.
+		/// Can be set to a JavaScript object which represents the allowCopy configuration.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the allowcopy option.</param>
+        public GridBuilder<T> AllowCopy(bool enabled)
+        {
+            Container.AllowCopy.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
         /// If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
 		/// data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// </summary>
