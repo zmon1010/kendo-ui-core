@@ -91,11 +91,12 @@
 
         cacheImages(element, function(){
             var forceBreak = options && options.forcePageBreak;
-            var paperOptions = options && kendo.pdf.getPaperOptions(function(key, def){
+            var hasPaperSize = options && options.paperSize && options.paperSize != "auto";
+            var paperOptions = hasPaperSize && kendo.pdf.getPaperOptions(function(key, def){
                 return key in options ? options[key] : def;
             });
-            var pageWidth = options.paperSize && paperOptions.paperSize[0];
-            var pageHeight = options.paperSize && paperOptions.paperSize[1];
+            var pageWidth = hasPaperSize && paperOptions.paperSize[0];
+            var pageHeight = hasPaperSize && paperOptions.paperSize[1];
             var margin = options.margin && paperOptions.margin;
             if (forceBreak || pageHeight) {
                 if (!margin) {
@@ -104,7 +105,7 @@
                 var group = new drawing.Group({
                     pdf: {
                         multiPage : true,
-                        paperSize : options.paperSize ? paperOptions.paperSize : "auto"
+                        paperSize : hasPaperSize ? paperOptions.paperSize : "auto"
                     }
                 });
                 handlePageBreaks(
