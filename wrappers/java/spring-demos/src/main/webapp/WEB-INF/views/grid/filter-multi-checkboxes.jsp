@@ -9,8 +9,12 @@
 <c:url value="/grid/editing/update" var="updateUrl" />
 <c:url value="/grid/editing/destroy" var="destroyUrl" />
 
+<c:url value="/grid/detailtemplate/employees/" var="transportReadUrl" />
+<c:url value="/grid/detailtemplate/orders/" var="transportNestedReadUrl" />
+
 
 <demo:header />
+	<h4>Client Operations</h4>
     <kendo:grid name="client" pageable="true" sortable="true" scrollable="true" filterable="true" navigatable="true" editable="true">
         <kendo:grid-toolbar>
             <kendo:grid-toolbarItem name="create"/>
@@ -68,4 +72,43 @@
             </kendo:dataSource-schema>
         </kendo:dataSource>
     </kendo:grid>
+    
+	<h4>Server Operations</h4>
+	<kendo:grid name="server" pageable="true" sortable="true" filterable="true" >
+	    <kendo:grid-columns>
+	        <kendo:grid-column title="First Name" field="firstName" width="120px" >
+	        	<kendo:grid-column-filterable multi="true"/>
+	        </kendo:grid-column>
+	        <kendo:grid-column title="Last Name" field="lastName" width="120px" >
+	        	<kendo:grid-column-filterable multi="true"/>
+	        </kendo:grid-column>
+	        <kendo:grid-column title="Country" field="country" width="120px" >
+	        	<kendo:grid-column-filterable multi="true"/>
+	        </kendo:grid-column>
+	        <kendo:grid-column title="City" field="city" width="120px" >
+	        	<kendo:grid-column-filterable multi="true"/>
+	        </kendo:grid-column>
+	        <kendo:grid-column title="Title" field="title" >
+	        	<kendo:grid-column-filterable multi="true"/>
+	        </kendo:grid-column>
+	    </kendo:grid-columns>
+	    <kendo:dataSource pageSize="5" serverPaging="true" serverSorting="true">
+	        <kendo:dataSource-schema data="data" total="total"></kendo:dataSource-schema>
+	        <kendo:dataSource-transport>
+	            <kendo:dataSource-transport-read url="${transportReadUrl}" type="POST" contentType="application/json" />
+	            <kendo:dataSource-transport-parameterMap>
+	            	<script>
+	             		function parameterMap(options) { 
+	            			return JSON.stringify(options);
+	             		}
+	            	</script>
+	            </kendo:dataSource-transport-parameterMap>
+	        </kendo:dataSource-transport>
+	    </kendo:dataSource>
+	</kendo:grid>
+	<style>
+       	.k-multicheck-wrap{
+        	overflow-x: hidden;
+        }
+	</style>
 <demo:footer />
