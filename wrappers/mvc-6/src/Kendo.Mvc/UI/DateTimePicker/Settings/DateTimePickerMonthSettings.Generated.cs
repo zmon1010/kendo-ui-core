@@ -16,7 +16,6 @@ namespace Kendo.Mvc.UI
         public string Empty { get; set; }
 
 
-
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
@@ -30,7 +29,6 @@ namespace Kendo.Mvc.UI
             {
                 settings["empty"] = Empty;
             }
-
 
             return settings;
         }

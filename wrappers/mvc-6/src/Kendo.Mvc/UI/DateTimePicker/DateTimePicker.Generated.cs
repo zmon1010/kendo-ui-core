@@ -11,8 +11,6 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class DateTimePicker 
     {
-        public DateTimePickerAnimationSettings Animation { get; } = new DateTimePickerAnimationSettings();
-
         public string ARIATemplate { get; set; }
 
         public string ARIATemplateId { get; set; }
@@ -44,16 +42,9 @@ namespace Kendo.Mvc.UI
         public DateTime? Value { get; set; }
 
 
-
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
-
-            var animation = Animation.Serialize();
-            if (animation.Any())
-            {
-                settings["animation"] = animation;
-            }
 
             if (ARIATemplateId.HasValue())
             {
@@ -67,7 +58,6 @@ namespace Kendo.Mvc.UI
             {
                 settings["ARIATemplate"] = ARIATemplate;
             }
-
 
             if (Culture.HasValue())
             {
@@ -134,7 +124,6 @@ namespace Kendo.Mvc.UI
             {
                 settings["value"] = Value;
             }
-
 
             return settings;
         }

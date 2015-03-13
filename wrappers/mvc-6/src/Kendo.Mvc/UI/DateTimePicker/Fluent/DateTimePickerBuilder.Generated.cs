@@ -9,16 +9,6 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
-        /// Configures the opening and closing animations of the popups. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly.
-        /// </summary>
-        /// <param name="configurator">The configurator for the animation setting.</param>
-        public DateTimePickerBuilder Animation(Action<DateTimePickerAnimationSettingsBuilder> configurator)
-        {
-            configurator(new DateTimePickerAnimationSettingsBuilder(Container.Animation));
-            return this;
-        }
-
-        /// <summary>
         /// Specifies a template used to populate value of the aria-label attribute.
         /// </summary>
         /// <param name="value">The value for ARIATemplate</param>
@@ -37,6 +27,7 @@ namespace Kendo.Mvc.UI.Fluent
             Container.ARIATemplateId = templateId;
             return this;
         }
+
         /// <summary>
         /// Specifies the culture info used by the widget.
         /// </summary>
@@ -169,7 +160,6 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Value = value;
             return this;
         }
-
 
 
         

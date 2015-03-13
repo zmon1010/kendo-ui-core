@@ -192,7 +192,7 @@ namespace :generate do
             markdown = FileList[
                 'docs/api/javascript/ui/grid.md',
                 'docs/api/javascript/ui/numerictextbox.md',
-                #'docs/api/javascript/ui/datetimepicker.md',
+                'docs/api/javascript/ui/datetimepicker.md',
                 #'docs/api/javascript/ui/treelist.md'
             ]
 

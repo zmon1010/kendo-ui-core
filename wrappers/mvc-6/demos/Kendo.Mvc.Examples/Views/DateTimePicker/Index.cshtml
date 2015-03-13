@@ -3,8 +3,7 @@
 <div id='to-do'>
 	@(Html.Kendo().DateTimePicker()
 		.Name("datetimepicker")
-		.Value(DateTime.Now)
-		.Animation(a => a.Open(o => o.Duration(1000)))
+		.Value(DateTime.Now)		
 		.Events(e => e.Change("onChange"))
 	)
 </div>
