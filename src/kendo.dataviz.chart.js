@@ -494,7 +494,7 @@ var __meta__ = {
 
             if (isPlainObject(options)) {
                 seriesName = options.series;
-                categoryName = options.category
+                categoryName = options.category;
             }  else {
                 seriesName = categoryName = options;
             }
