@@ -475,6 +475,16 @@ var __meta__ = {
             }
         },
 
+        getAxis: function(name) {
+            var axes = this._plotArea.axes;
+
+            for (var idx = 0; idx < axes.length; idx++) {
+                if (axes[idx].options.name === name) {
+                    return new ChartAxis(axes[idx]);
+                }
+            }
+        },
+
         _initSurface: function() {
             var surface = this.surface;
             var wrap = this._surfaceWrap();

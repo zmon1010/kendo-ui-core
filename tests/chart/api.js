@@ -759,6 +759,46 @@
             var range = chartAxis.range();
             equal(range, "foo");
         });
-
     })();
+
+    // ------------------------------------------------------------
+    (function() {
+        module("getAxis", {
+            setup: function() {
+                chart = createChart({
+                    valueAxes: {
+                        name: "value"
+                    },
+                    categoryAxis: {
+                        name: "category"
+                    }
+                });
+            },
+            teardown: destroyChart
+        });
+
+        test("returns ChartAxis with the axis based on the name", function() {
+            var axes = chart._plotArea.axes;
+            var categoryAxis;
+            var valueAxis;
+            var axis = chart.getAxis("category");
+            if (axes[0].options.name == "category") {
+                categoryAxis = axes[0];
+                valueAxis = axes[1];
+            } else {
+                categoryAxis = axes[1];
+                valueAxis = axes[0];
+            }
+            ok(axis instanceof dataviz.ChartAxis);
+            ok(axis._axis === categoryAxis);
+
+            axis = chart.getAxis("value");
+            ok(axis._axis === valueAxis);
+        });
+
+        test("returns nothing if there isn't an axis with matching name", function() {
+            ok(chart.getAxis("foo") === undefined);
+        });
+    })();
+
 })();
