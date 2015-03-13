@@ -52,10 +52,10 @@
 
     <script>
         $("button").click(function() {
-            kendo.drawing.drawDOM($("#editor").getKendoEditor().body, { 
-                paperSize: "auto", 
-                margin: "2cm"
+            kendo.drawing.drawDOM($("#editor").getKendoEditor().body, {
             }).done(function(root){
+                root.options.set("pdf.paperSize", "auto"); // unnecessary, it's the default.
+                root.options.set("pdf.margin", "2cm");
                 kendo.drawing.pdf.saveAs(root, "kendo.pdf", "http://kendo.local:7569/", function(){
                 });
             });
@@ -70,7 +70,7 @@
             },
             stylesheets: [ "./pdf-editor-2.css", ],
             tools: ["pdf"],
-            pdf: { 
+            pdf: {
                     allPages: true,
                     multiPage: true,
                     fileName: "NewDocument.pdf",
