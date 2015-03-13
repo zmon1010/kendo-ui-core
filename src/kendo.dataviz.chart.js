@@ -32,6 +32,7 @@ var __meta__ = {
     // Imports ================================================================
     var each = $.each,
         isArray = $.isArray,
+        isPlainObject = $.isPlainObject,
         map = $.map,
         math = Math,
         noop = $.noop,
@@ -482,6 +483,34 @@ var __meta__ = {
                 if (axes[idx].options.name === name) {
                     return new ChartAxis(axes[idx]);
                 }
+            }
+        },
+
+        toggleHighlight: function(show, options) {
+            var plotArea = this._plotArea;
+            var highlight = this._highlight;
+            var firstSeries = (plotArea.srcSeries || plotArea.series || [])[0];
+            var seriesName, categoryName, points;
+
+            if (isPlainObject(options)) {
+                seriesName = options.series;
+                categoryName = options.category
+            }  else {
+                seriesName = categoryName = options;
+            }
+
+            if (firstSeries.type === DONUT) {
+                points = pointByCategoryName(plotArea.pointsBySeriesName(seriesName), categoryName);
+            } else if (firstSeries.type === PIE || firstSeries.type === FUNNEL) {
+                points = pointByCategoryName((plotArea.charts[0] || {}).points, categoryName);
+            } else {
+                points = plotArea.pointsBySeriesName(seriesName);
+            }
+
+            if (points) {
+               for (var idx = 0; idx < points.length; idx++) {
+                    highlight.togglePointHighlight(points[idx], show);
+               }
             }
         },
 
@@ -9133,14 +9162,22 @@ var __meta__ = {
         },
 
         pointsBySeriesName: function(name) {
-            var plotArea = this;
-            var series = plotArea.srcSeries || plotArea.series;
-            var result = [];
-            for (var idx = 0; idx < series.length; idx++) {
-                if (series[idx].name === name) {
-                    return plotArea.pointsBySeriesIndex(series[idx].index);
+            var charts = this.charts,
+                result = [],
+                points, point, i, j, chart;
+
+            for (i = 0; i < charts.length; i++) {
+                chart = charts[i];
+                points = chart.points;
+                for (j = 0; j < points.length; j++) {
+                    point = points[j];
+                    if (point && point.series.name === name) {
+                        result.push(point);
+                    }
                 }
             }
+
+            return result;
         },
 
         paneByPoint: function(point) {
@@ -12283,6 +12320,16 @@ var __meta__ = {
 
     function preventDefault() {
         this._defaultPrevented = true;
+    }
+
+    function pointByCategoryName(points, name) {
+        if (points) {
+            for (var idx = 0; idx < points.length; idx++) {
+                if (points[idx].category === name) {
+                    return [points[idx]];
+                }
+            }
+        }
     }
 
     // Exports ================================================================

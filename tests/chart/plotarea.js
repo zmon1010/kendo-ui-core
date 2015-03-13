@@ -3824,9 +3824,9 @@
            ok(points[0] instanceof dataviz.Bar);
         });
 
-        test("returns nothing if there isn't series with matching name", function() {
+        test("returns empty array if there isn't series with matching name", function() {
            var points = plotArea.pointsBySeriesName("foo");
-           equal(points, undefined);
+           equal(points.length, 0);
         });
 
     })();
@@ -5013,7 +5013,7 @@
 
         test("returns nothing if there isn't series with matching name", function() {
            var points = plotArea.pointsBySeriesName("foo");
-           equal(points, undefined);
+           equal(points.length, 0);
         });
 
     })();
