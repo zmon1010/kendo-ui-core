@@ -1752,7 +1752,6 @@ var __meta__ = {
         select: function (options) {
             var that = this;
             var view = that.view();
-            var browser = kendo.support.browser;
             var selection = that._selection;
             var groups = view.groups;
             var selectedGroups;
@@ -1839,15 +1838,6 @@ var __meta__ = {
                         };
 
                         that._select();
-
-                        //extract focus to method?
-                        that.wrapper.focus();
-
-                        if (browser.msie && browser.version < 9) {
-                            setTimeout(function() {
-                                that.wrapper.focus();
-                            });
-                        }
                     }
                 }
 
@@ -1858,7 +1848,6 @@ var __meta__ = {
             var that = this;
             var idx;
             var view = that.view();
-            var browser = kendo.support.browser;
             var groups = view.groups;
             var eventsLength = eventsUids.length;
             var isGrouped = selectedGroups && selectedGroups.length;
@@ -1867,8 +1856,6 @@ var __meta__ = {
                 if (isGrouped) {
                     var currentGroup = groups[selectedGroups[0].groupIndex];
                     var events = [];
-
-                    //get all events only once?
                     var timeSlotCollectionCount = currentGroup.timeSlotCollectionCount();
                     var daySlotCollectionCount = currentGroup.daySlotCollectionCount();
 
@@ -1880,31 +1867,19 @@ var __meta__ = {
                         events = events.concat(currentGroup.getDaySlotCollection(dayCollIdx).events());
                     }
 
-                    //filter the found events
                     events = new kendo.data.Query(events)
                         .filter({field: "element[0].getAttribute('data-uid')", operator: "eq", value: eventsUids[idx]})
                         .toArray();
 
-                    //if event is found select it
                     if (events[0]) {
                         that._createSelection(events[0].element);
                     }
                 } else {
-                    //find first element with given UID and select it if no grouping is set:
                     var element = view.element.find(kendo.format(".k-event[data-uid={0}]", eventsUids[idx]));
                     if (element.length) {
                         that._createSelection(element[0]);
-
                     }
                 }
-            }
-
-            that.wrapper.focus();
-
-            if (browser.msie && browser.version < 9) {
-                setTimeout(function () {
-                    that.wrapper.focus();
-                });
             }
         },
 

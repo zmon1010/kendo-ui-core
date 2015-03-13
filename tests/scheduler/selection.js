@@ -1024,6 +1024,8 @@
             }
         });
 
+        scheduler.wrapper.focus();
+
         ok(scheduler.wrapper.find("[data-uid=" + eventUid + "]").hasClass("k-state-selected"));
     });
 
@@ -1072,8 +1074,9 @@
                 roomId: 2
             }
         });
-
+        scheduler.wrapper.focus();
         var eventElement = $(scheduler.wrapper.find("[data-uid=" + eventUid + "]")[1]);
+
         ok(eventElement.hasClass("k-state-selected"));
     });
 
@@ -1112,6 +1115,7 @@
         scheduler.select({
             events: [event.uid]
         });
+        scheduler.wrapper.focus();
 
         ok(eventElement.hasClass("k-state-selected"));
     });
@@ -1129,6 +1133,7 @@
         var event = scheduler.dataSource.data()[0];
 
         scheduler.select([event.uid]);
+        scheduler.wrapper.focus();
 
         ok(eventElement.hasClass("k-state-selected"));
     });
@@ -1146,7 +1151,10 @@
         var event = scheduler.dataSource.data()[0];
 
         scheduler.select([event.uid]);
+        scheduler.wrapper.focus();
+
         ok(eventElement.hasClass("k-state-selected"));
+
         scheduler.select(null);
         ok(!eventElement.hasClass("k-state-selected"));
     });
@@ -1164,6 +1172,7 @@
         scheduler.select({
             events: ["invalidUID"]
         });
+        scheduler.wrapper.focus();
 
         equal(scheduler.view().content.find("td.k-state-selected").length, 1);
         equal(scheduler.view().content.find("td.k-state-selected").index(), 0);
@@ -1183,6 +1192,7 @@
             start: new Date("2005-01-01T05:00:00.000Z"),
             end: new Date("2005-01-01T08:00:00.000Z")
         });
+        scheduler.wrapper.focus();
 
         equal(scheduler.view().content.find(".k-state-selected").length, 1);
         equal(scheduler.view().content.find(".k-state-selected").index(), 0);
@@ -1203,6 +1213,7 @@
             end: new Date("2001-01-01T08:00:00.000Z"),
             isAllDay: true
         });
+        scheduler.wrapper.focus();
 
         equal(scheduler.view().table.find(".k-state-selected").length, 1);
         equal(scheduler.view().table.find(".k-state-selected").index(), 1);
@@ -1226,6 +1237,7 @@
             start: start,
             end: end
         });
+        scheduler.wrapper.focus();
 
         equal(+scheduler.select().start, +start);
         equal(+scheduler.select().end, +end);
@@ -1250,6 +1262,7 @@
             start: new Date("2001-01-01T10:00:00.000Z"),
             end: new Date("2001-01-01T11:00:00.000Z")
         });
+        scheduler.wrapper.focus();
 
         equal(scheduler.view().content.find(".k-state-selected").length, 0);
     });
