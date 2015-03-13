@@ -3556,6 +3556,11 @@ var __meta__ = {
             var selectable = options.selectable;
             if (selectable && options.allowCopy) {
                 var grid = this;
+                if (!options.navigatable) {
+                    grid.table.add(grid.lockedTable)
+                        .attr("tabindex", 0)
+                        .on("mousedown" + NS, NAVROW + ">" + NAVCELL, proxy(tableClick, grid));
+                }
                 grid.copyHandler = proxy(grid.copySelection, grid);
                 grid.updateClipBoardState = function () {
                     if (grid.areaClipBoard) {
@@ -3585,7 +3590,6 @@ var __meta__ = {
                     .appendTo(this.wrapper);
             }
 
-            this._currentState = this.current();
             this.areaClipBoard.val(this.getTSV()).focus().select();
 
         },
@@ -3654,9 +3658,14 @@ var __meta__ = {
         },
 
         clearArea: function(e) {
-            if (this.options.navigatable && this.areaClipBoard && e.target === this.areaClipBoard[0]) {
-                $(this.current()).closest("table").focus();
+            if (this.areaClipBoard && e && e.target === this.areaClipBoard[0]) {
+                if (this.options.navigatable) {
+                    $(this.current()).closest("table").focus();
+                } else {
+                    this.table.focus();
+                }
             }
+
             if (this.areaClipBoard) {
                 this.areaClipBoard.remove();
                 this.areaClipBoard = null;
@@ -6880,7 +6889,9 @@ var __meta__ = {
            return;
        }
 
-       this.current(currentTarget);
+       if (this.options.navigatable) {
+           this.current(currentTarget);
+       }
 
        if (isHeader || !isInput) {
            setTimeout(function() {
