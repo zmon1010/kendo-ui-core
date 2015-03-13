@@ -330,7 +330,7 @@ else
 
     # MVC6 package
     file MVC6_DLL => MVC6_SOURCES do
-        sh "cd #{MVC6_SRC_ROOT} && kpm build --configuration Release"
+        sh "cd #{MVC6_SRC_ROOT} && kpm restore && kpm build --configuration Release"
     end
 
     tree :to => 'dist/binaries/mvc-6/',
