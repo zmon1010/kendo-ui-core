@@ -18,6 +18,7 @@
             .Mode(GridSelectionMode.Multiple)
             .Type(GridSelectionType.Cell))
         .Navigatable()
+        .AllowCopy(true)
         .DataSource(dataSource => dataSource
             .Ajax()
             .PageSize(5)

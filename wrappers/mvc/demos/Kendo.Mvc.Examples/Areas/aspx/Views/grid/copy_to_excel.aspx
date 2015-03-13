@@ -21,6 +21,7 @@
         .Selectable(selectable => selectable
             .Mode(GridSelectionMode.Multiple)
             .Type(GridSelectionType.Cell))
+        .AllowCopy(true)
         .Navigatable()
         .DataSource(dataSource => dataSource
             .Ajax()

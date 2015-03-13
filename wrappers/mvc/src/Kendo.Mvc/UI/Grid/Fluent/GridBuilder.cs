@@ -524,7 +524,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// @(Html.Kendo().Grid&lt;Product&gt;()
         ///     .Name(&quot;grid&quot;)
         ///     .AllowCopy(false)
-        ///     .Selectable(GridSelectionMode.Multiple || GridSelectionMode.Cell)
+        ///     .Selectable(selectable => selectable
+        ///              .Mode(GridSelectionMode.Multiple)
+        ///              .Type(GridSelectionType.Cell))
         ///     .DataSource(dataSource =&gt;
         ///         // configure the data source
         ///         dataSource
@@ -537,7 +539,9 @@ namespace Kendo.Mvc.UI.Fluent
         /// &lt;%:Html.Kendo().Grid&lt;Product&gt;()
         ///     .Name(&quot;grid&quot;)
         ///     .AllowCopy(false)
-        ///     .Selectable(GridSelectionMode.Multiple || GridSelectionMode.Cell)
+        ///     .Selectable(selectable => selectable
+        ///              .Mode(GridSelectionMode.Multiple)
+        ///              .Type(GridSelectionType.Cell))
         ///     .DataSource(dataSource =&gt;
         ///         // configure the data source
         ///         dataSource
