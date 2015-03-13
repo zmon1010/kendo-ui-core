@@ -14,7 +14,7 @@ namespace Kendo.Mvc.UI
     {
         internal bool isPathHighlighted;
 
-        public TabStrip(ViewContext viewContext, IJavaScriptInitializer initializer, IUrlGenerator urlGenerator, INavigationItemAuthorization authorization) 
+        public TabStrip(ViewContext viewContext, IJavaScriptInitializer initializer, IUrlGenerator urlGenerator, INavigationItemAuthorization authorization)
             : base(viewContext, initializer)
         {
             UrlGenerator = urlGenerator;
@@ -26,6 +26,7 @@ namespace Kendo.Mvc.UI
             SelectedIndex = -1;
             Navigatable = true;
             HighlightPath = true;
+            Collapsible = false;
             SecurityTrimming = new SecurityTrimming();
         }
 
@@ -89,6 +90,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public bool Collapsible
+        {
+            get;
+            set;
+        }
+
         public override void WriteInitializationScript(TextWriter writer)
         {
             var options = new Dictionary<string, object>(Events);
@@ -103,6 +110,11 @@ namespace Kendo.Mvc.UI
             if (!Navigatable)
             {
                 options["navigatable"] = Navigatable;
+            }
+
+            if (Collapsible)
+            {
+                options["collapsible"] = Collapsible;
             }
 
             var urls = Items.Where(item => item.Visible && item.IsAccessible(this.Authorization, this.ViewContext)).Select(item =>
@@ -156,7 +168,7 @@ namespace Kendo.Mvc.UI
                         }
                         itemIndex++;
                     }
-                    
+
                     WriteItem(item, tabStripTag, builder);
                 });
 

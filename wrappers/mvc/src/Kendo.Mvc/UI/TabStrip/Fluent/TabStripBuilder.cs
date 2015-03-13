@@ -67,6 +67,24 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Configures the collapsible property of the tabstrip.
+        /// </summary>
+        /// <param name="enable">Whether the component animation is collapsible.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;%= Html.Kendo().TabStrip()
+        ///             .Name("PanelBar")
+        ///             .Collapsible(false)
+        /// </code>
+        /// </example>
+        public TabStripBuilder Collapsible(bool enable)
+        {
+            Component.Collapsible = enable;
+
+            return this;
+        }
+
+        /// <summary>
         /// Configures the animation effects of the tabstrip.
         /// </summary>
         /// <param name="enable">Whether the component animation is enabled.</param>
