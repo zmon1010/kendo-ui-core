@@ -1,0 +1,41 @@
+namespace Kendo.Mvc.UI
+{
+    /// <summary>
+    /// <%= description %>
+    /// </summary>
+    public enum <%= csharp_type %>
+    {
+% values.each_with_index do |item, index|
+% if item.is_a?(Hash)
+        /// <summary>
+        /// <%= item[:description] %>
+        /// </summary>
+        <%= item[:member] %><%= ',' if index < values.length - 1 %>
+%else
+        <%= item.pascalize %><%= ',' if index < values.length - 1 %>
+%end
+% end
+    }
+
+    internal static class <%= csharp_type %>Extensions
+    {
+        internal static string Serialize(this <%= csharp_type %> value)
+        {
+            switch (value)
+            {
+% values.each_with_index do |item, index|
+% if item.is_a?(Hash)
+                case <%= csharp_type %>.<%= item[:member] %>:
+                    return "<%= item[:value] %>";
+%else
+                case <%= csharp_type %>.<%= item.pascalize %>:
+                    return "<%= item %>";
+%end
+% end
+            }
+
+            return value.ToString();
+        }
+    }
+}
+

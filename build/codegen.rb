@@ -8,6 +8,7 @@ require 'codegen/lib/mvc/api'
 require 'codegen/lib/mvc/mvc'
 require 'codegen/lib/mvc/mobile'
 require 'codegen/lib/mvc/dataviz'
+require 'codegen/lib/mvc-6/main'
 require 'codegen/lib/java/module'
 require 'codegen/lib/java/composite_option'
 require 'codegen/lib/java/event'
@@ -183,6 +184,31 @@ namespace :generate do
             end
         end
 
+    end
+
+    namespace :mvc_6 do
+        desc 'Generate MVC v6 wrappers'
+        task :wrappers do
+            markdown = FileList[
+                'docs/api/javascript/ui/grid.md',
+                'docs/api/javascript/ui/numerictextbox.md',
+                'docs/api/javascript/ui/datetimepicker.md',
+                #'docs/api/javascript/ui/treelist.md'
+            ]
+
+            components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }
+                .sort { |a, b| a.name <=> b.name }
+
+            components.each do |component|
+                import_metadata(component)
+                import_metadata(component, "lib/mvc-6/config/")
+
+                generator = CodeGen::MVC6::Wrappers::Generator.new('wrappers/mvc-6/src/Kendo.Mvc/UI')
+                generator.component(component)
+            end
+
+            factory_file = 'wrappers/mvc-6/src/Kendo.Mvc/UI/WidgetFactory.cs'
+        end
     end
 
     desc 'Generate PHP wrappers'

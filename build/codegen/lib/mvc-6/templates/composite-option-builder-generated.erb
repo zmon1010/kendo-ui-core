@@ -1,0 +1,14 @@
+using System;
+using System.Collections.Generic;
+
+namespace Kendo.Mvc.UI.Fluent
+{
+    /// <summary>
+    /// Defines the fluent API for configuring <%= csharp_class %>
+    /// </summary>
+    public partial class <%= csharp_builder_class_name %>
+        <%= csharp_generic_constraints %>
+    {
+<%= unique_options.map { |o| o.to_fluent }.join %>
+    }
+}

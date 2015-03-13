@@ -1,6 +1,5 @@
 module CodeGen
     module Options
-
         def composite_options
             @options.find_all { |option| option.composite? }.sort {|a, b| a.name <=> b.name }
         end

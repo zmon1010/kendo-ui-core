@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+
+namespace Kendo.Mvc.UI.Fluent
+{
+    /// <summary>
+    /// Defines the fluent API for configuring <%= csharp_class %>
+    /// </summary>
+    public partial class <%= csharp_builder_class_name %>
+        <%= csharp_generic_constraints %>
+    {
+        public <%= csharp_builder_class %>(<%= csharp_class_name %> container)
+        {
+            Container = container;
+        }
+
+        protected <%= csharp_class_name %> Container
+        {
+            get;
+            private set;
+        }
+
+        // Place custom settings here
+    }
+}

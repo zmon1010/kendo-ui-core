@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Telerik.UI.for.AspNet.Mvc6</id>
+    <version><%= VERSION %>-beta1</version>
+    <title>Telerik UI for ASP.NET MVC 6 Beta</title>
+    <authors>Telerik</authors>
+    <owners>Telerik</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Beta version of the Telerik UI for ASP.NET MVC 6</description>
+    <summary>Telerik UI for ASP.NET MVC provides server-side helpers for Kendo UI's JavaScript framework. It enables developers comfortable with the ASP.NET MVC framework to easily configure and work with Kendo UI via familiar server-side programming instead of relying solely on hand-coding of HTML and JavaScript.</summary>
+    <dependencies>
+      <group targetFramework="Asp.Net5.0">
+        <dependency id="Microsoft.AspNet.Mvc" version="6.0.0-beta2" />
+        <dependency id="Microsoft.Framework.DependencyInjection" version="1.0.0-beta2" />
+      </group>
+      <group targetFramework="Asp.NetCore5.0">
+        <dependency id="Microsoft.AspNet.Mvc" version="6.0.0-beta2" />
+        <dependency id="Microsoft.Framework.DependencyInjection" version="1.0.0-beta2" />
+        <dependency id="System.Runtime" version="4.0.20-beta-22519" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="mscorlib" targetFramework="Asp.Net5.0" />
+      <frameworkAssembly assemblyName="System" targetFramework="Asp.Net5.0" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="Asp.Net5.0" />
+      <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework="Asp.Net5.0" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="..\binaries\mvc-6\**\*" target="lib" />
+  </files>
+</package>

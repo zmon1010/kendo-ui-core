@@ -1,0 +1,55 @@
+% if handler?
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
+        public <%= csharp_owner_builder_name %> <%= csharp_name %>(string handler)
+        {
+            Container.<%= csharp_name %> = new ClientHandlerDescriptor { HandlerName = handler };
+            return this;
+        }
+
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        /// <param name="handler">The handler code wrapped in a text tag.</param>
+        public <%= csharp_owner_builder_name %> <%= csharp_name %>(Func<object, object> handler)
+        {
+            Container.<%= csharp_name %> = new ClientHandlerDescriptor { TemplateDelegate = handler };
+            return this;
+        }
+% else
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        /// <param name="value">The value for <%= csharp_name %></param>
+        public <%= csharp_owner_builder_name %> <%= csharp_name %>(<%= csharp_array? ? 'params ' : '' %><%= csharp_type %> value)
+        {
+            Container.<%= csharp_name %> = value;
+            return this;
+        }
+
+% end
+% if template?
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        /// <param name="value">The ID of the template element for <%= csharp_name %></param>
+        public <%= csharp_owner_builder_name %> <%= csharp_name %>Id(string templateId)
+        {
+            Container.<%= csharp_name %>Id = templateId;
+            return this;
+        }
+
+% end
+% if csharp_type.eql?('bool') && default.eql?('false')
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        public <%= csharp_owner_builder_name %> <%= csharp_name %>()
+        {
+            Container.<%= csharp_name %> = true;
+            return this;
+        }
+
+% end

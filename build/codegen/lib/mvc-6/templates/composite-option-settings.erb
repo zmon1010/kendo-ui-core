@@ -1,0 +1,27 @@
+using Kendo.Mvc.Extensions;
+using Microsoft.AspNet.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Kendo.Mvc.UI
+{
+    /// <summary>
+    /// Kendo UI <%= csharp_class %> class
+    /// </summary>
+    public partial class <%= csharp_class %><%= csharp_generic_args %> <%= csharp_generic_constraints %>
+    {
+<%= unique_options.map { |o| o.to_declaration }.join %>
+% if toggleable && !unique_options.any?{ |o| o.csharp_name.downcase.eql?('enabled') }
+        public bool Enabled { get; set; }
+% end
+
+        protected Dictionary<string, object> SerializeSettings()
+        {
+            var settings = new Dictionary<string, object>();
+
+<%= unique_options.map { |o| o.to_serialization}.join %>
+            return settings;
+        }
+    }
+}

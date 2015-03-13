@@ -1,0 +1,19 @@
+using System;
+using System.Collections.Generic;
+
+namespace Kendo.Mvc.UI.Fluent
+{
+    /// <summary>
+    /// Defines the fluent API for configuring the Kendo UI <%= csharp_class %> for ASP.NET MVC events.
+    /// </summary>
+    public class <%= csharp_class %>EventBuilder: EventBuilder
+    {
+        public <%= csharp_class %>EventBuilder(IDictionary<string, object> events)
+            : base(events)
+        {
+        }
+
+<%= events.map { |event| event.to_fluent }.join %>
+    }
+}
+

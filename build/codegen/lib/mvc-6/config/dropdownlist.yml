@@ -1,0 +1,4 @@
+:options:
+    - :name: optionLabel
+      :merge: true
+      :type: object

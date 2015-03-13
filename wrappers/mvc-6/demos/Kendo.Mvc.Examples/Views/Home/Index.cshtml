@@ -1,0 +1,33 @@
+﻿@using Kendo.Mvc.Examples.Models
+@using Task = System.Threading.Tasks.Task
+@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Telerik UI for ASP.NET MVC - Offline Examples</title>
+	<link rel="stylesheet" href="@Url.Content("~/css/site.css")" />
+</head>
+<body>
+	<h1 class="header">Telerik UI for ASP.NET MVC 6 - Beta</h1>
+	<div id="page">
+		<ul>
+			@foreach (NavigationWidget widget in ViewBag.Navigation)
+			{
+				if (!widget.ShouldInclude || widget.Items.All(x => !x.ShouldInclude)) { continue; }
+				<li>
+					<h2>@widget.Text</h2>
+					<ul>
+						@foreach (NavigationExample example in widget.Items)
+						{
+							if (!example.ShouldInclude) { continue; }
+							<li><a href='@(Url.Content("~/" + example.Url))'>@example.Text</a></li>
+						}
+					</ul>
+				</li>
+            }
+		</ul>
+	</div>
+</body>
+</html>

@@ -1,7 +1,12 @@
 require 'erb'
 
 NUGETS = [];
-NUGET_ZIPS = FileList["dist/bundles/telerik.kendoui.professional.#{VERSION}.commercial.nupkg.zip", "dist/bundles/telerik.kendoui.professional.#{VERSION}.trial.nupkg.zip", "dist/bundles/telerik.ui.for.aspnetmvc.#{VERSION}.commercial.nupkg.zip", "dist/bundles/telerik.ui.for.aspnetmvc.#{VERSION}.trial.nupkg.zip"]
+NUGET_ZIPS = FileList[
+    "dist/bundles/telerik.kendoui.professional.#{VERSION}.commercial.nupkg.zip",
+    "dist/bundles/telerik.kendoui.professional.#{VERSION}.trial.nupkg.zip",
+    "dist/bundles/telerik.ui.for.aspnetmvc.#{VERSION}.commercial.nupkg.zip",
+    "dist/bundles/telerik.ui.for.aspnetmvc.#{VERSION}.trial.nupkg.zip"
+]
 namespace :nuget do
     tree :to => "dist/bundles/nuspec",
         :from => "build/nuspec/Mvc*/*.xdt",
@@ -13,7 +18,7 @@ namespace :nuget do
         nuspec = erb.pathmap('dist/bundles/%n')
         nuget = nuspec.ext('nupkg')
 
-        file nuspec do |f|
+        file nuspec => erb do |f|
             ensure_path f.name
             File.write(f.name, ERB.new(File.read(erb), 0, '%<>').result(binding))
         end
@@ -27,19 +32,33 @@ namespace :nuget do
         task :default => nuget
     end
 
+    def zip_bundle(name, package)
+        sh "cd dist/bundles && zip #{name.pathmap('%f')} #{package}"
+    end
+
+    def mvc_packages(options)
+        mvc_versions = [3,4,5,6]
+
+        suffix = ".Trial" if options[:trial]
+
+        mvc_versions.map { |mvc_version|
+            "Telerik.UI.for.AspNet.Mvc#{mvc_version}#{suffix}.#{VERSION}.nupkg"
+        }.join(" ")
+    end
+
     file NUGET_ZIPS[0] do |t|
-        sh "cd dist/bundles && zip #{t.name.pathmap('%f')} KendoUIProfessional.#{VERSION}.nupkg"
+        zip_bundle(t.name, "KendoUIProfessional.#{VERSION}.nupkg")
     end
 
     file NUGET_ZIPS[1] do |t|
-        sh "cd dist/bundles && zip #{t.name.pathmap('%f')} KendoUIProfessional.Trial.#{VERSION}.nupkg"
+        zip_bundle(t.name, "KendoUIProfessional.Trial.#{VERSION}.nupkg")
     end
 
     file NUGET_ZIPS[2] do |t|
-        sh "cd dist/bundles && zip #{t.name.pathmap('%f')} Telerik.UI.for.AspNet.Mvc3.#{VERSION}.nupkg Telerik.UI.for.AspNet.Mvc4.#{VERSION}.nupkg Telerik.UI.for.AspNet.Mvc5.#{VERSION}.nupkg"
+        zip_bundle(t.name, mvc_packages(:trial => false))
     end
 
     file NUGET_ZIPS[3] do |t|
-        sh "cd dist/bundles && zip #{t.name.pathmap('%f')} Telerik.UI.for.AspNet.Mvc3.Trial.#{VERSION}.nupkg Telerik.UI.for.AspNet.Mvc4.Trial.#{VERSION}.nupkg Telerik.UI.for.AspNet.Mvc5.Trial.#{VERSION}.nupkg"
+        zip_bundle(t.name, mvc_packages(:trial => true))
     end
 end

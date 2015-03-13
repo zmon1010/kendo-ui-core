@@ -1,0 +1,20 @@
+:options:
+    - :name: value
+      :merge: true
+      :type: T?
+
+    - :name: step
+      :merge: true
+      :type: T?
+
+    - :name: min
+      :merge: true
+      :type: T?
+
+    - :name: max
+      :merge: true
+      :type: T?
+
+    - :name: enable
+      :type: Boolean
+      :description: Enables or disables the textbox

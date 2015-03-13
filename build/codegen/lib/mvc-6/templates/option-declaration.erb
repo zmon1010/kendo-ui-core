@@ -1,0 +1,6 @@
+        public <%= struct? ? csharp_type + '?' : csharp_type%> <%= csharp_name %> { get; set; }
+%if template?
+
+        public string <%= csharp_name %>Id { get; set; }
+%end
+
