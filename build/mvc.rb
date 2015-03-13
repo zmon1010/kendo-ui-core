@@ -37,7 +37,18 @@ MVC6_SOURCES = FileList[MVC6_SRC_ROOT + '**/*.cs']
             .include(MVC6_SRC_ROOT + '**/*.resx')
             .include(MVC6_SRC_ROOT + '**/*.snk')
             .include(MVC6_SRC_ROOT + '**/*.json')
+
+def redist_for(runtime)
+    FileList['Kendo.Mvc.dll']
+            .include('Kendo.Mvc.xml')
+            .pathmap(MVC6_SRC_ROOT + "bin/Release/#{runtime}/%f")
+end
+
+MVC6_REDIST = redist_for("aspnet50")
+MVC6_CORE_REDIST = redist_for("aspnetcore50")
+
 MVC6_DLL = "#{MVC6_SRC_ROOT}bin/Release/aspnet50/Kendo.Mvc.dll"
+MVC6_CORE_DLL = "#{MVC6_SRC_ROOT}bin/Release/aspnetcore50/Kendo.Mvc.dll"
 
 rule 'Kendo.Mvc.xml' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll'
 
@@ -244,6 +255,7 @@ namespace :mvc do
         MVC_BIN_ROOT + 'Release-MVC5-Trial/Kendo.Mvc.dll',
         MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll',
         MVC6_DLL,
+		MVC6_CORE_DLL,
         'dist/binaries/',
         'dist/binaries/mvc-6/'
     ]
@@ -278,6 +290,12 @@ if PLATFORM =~ /linux|darwin/ && !ENV['USE_MONO']
         FileList[MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll']
     ].each do |file|
         file_copy :to => file, :from => file.sub('wrappers/mvc', "dist/binaries")
+    end
+
+    FileList[
+        MVC6_REDIST, MVC6_CORE_REDIST
+    ].each do |file|
+        file_copy :to => file, :from => file.sub(MVC6_SRC_ROOT + "bin/Release", "dist/binaries/mvc-6")
     end
 
 else
@@ -335,7 +353,7 @@ else
 
     tree :to => 'dist/binaries/mvc-6/',
          :from => FileList[
-             FileList[MVC6_SRC_ROOT + 'bin/Release/**/*'].include(MVC6_DLL)
+             MVC6_REDIST, MVC6_CORE_REDIST
          ],
          :root => MVC6_SRC_ROOT + 'bin/Release/'
 end
