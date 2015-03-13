@@ -3559,6 +3559,11 @@ var __meta__ = {
                 if (!options.navigatable) {
                     grid.table.add(grid.lockedTable)
                         .attr("tabindex", 0)
+                        .on("mousedown" + NS + " keydown" + NS, ".k-detail-cell", function(e) {
+                            if (e.target !== e.currentTarget) {
+                                e.stopImmediatePropagation();
+                            }
+                        })
                         .on("mousedown" + NS, NAVROW + ">" + NAVCELL, proxy(tableClick, grid));
                 }
                 grid.copyHandler = proxy(grid.copySelection, grid);
