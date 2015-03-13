@@ -726,4 +726,39 @@
         });
 
     })();
+
+
+    // ------------------------------------------------------------
+    (function() {
+        var axis = {
+            slot: function(from, to) {
+                return {
+                    from: from,
+                    to: to
+                };
+            },
+            range: function() {
+                return "foo";
+            }
+        },
+        chartAxis;
+
+        module("wrappers / ChartAxis", {
+            setup: function() {
+                chartAxis = new dataviz.ChartAxis(axis);
+            }
+        });
+
+        test("slot returns axis slot", function() {
+            var slot = chartAxis.slot(1, 2);
+            equal(slot.from, 1);
+            equal(slot.to, 2);
+        });
+
+        test("range returns axis range", function() {
+            var range = chartAxis.range();
+            equal(range, "foo");
+        });
+
+    })();
 })();
