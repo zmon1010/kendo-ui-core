@@ -32,7 +32,6 @@
                     Cras eu rhoncus lectus, ac auctor augue. Nulla eget dui ac metus pretium semper nec a odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed nisl nibh, imperdiet id leo et, faucibus laoreet dolor. Cras a dictum elit. Nunc eu ante vulputate, tempor ante quis, pretium elit. Morbi at ex id dolor tincidunt dignissim. Nunc vulputate eu ante eu hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
                 </textarea>
             <!-- Load Pako ZLIB library to enable PDF compression -->
-            <script src="@Url.Script("pako_deflate.min.js")"></script>
             <script>
                 $(document).ready(function() {
                     // create Editor from textarea HTML element with default set of tools
@@ -42,6 +41,7 @@
                         pdf: {
                             fileName: "NewDocument.pdf",
                             proxyURL: "http://demos.telerik.com/kendo-ui/service/export",
+                            paperSize: "auto",
                             margin: {
                                 bottom: 20,
                                 left: 20,

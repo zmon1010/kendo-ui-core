@@ -942,6 +942,16 @@
 
     if (kendo.PDFMixin) {
         kendo.PDFMixin.extend(Editor.prototype);
+        Editor.prototype._drawPDF = function() {
+            // var options = {
+                // margin: this.options.pdf.margin,
+                // paperSize: this.options.pdf.paperSize
+            // };
+            // if(options.paperSize.toLowerCase() === "auto"){ 
+                // options.paperSize = "";
+            // }
+            return kendo.drawing.drawDOM(this.body, this.options.pdf);
+        };
         Editor.prototype.saveAsPDF = function() {
             var progress = new $.Deferred();
             var promise = progress.promise();
@@ -953,9 +963,17 @@
 
             var options = this.options.pdf;
 
-            kendo.drawing.drawDOM(this.body, options)
+            this._drawPDF(progress)
+            .then(function(root) {
+                return kendo.drawing.exportPDF(root, options);
+            })
             .done(function(dataURI) {
-                kendo.drawing.pdf.saveAs(dataURI, options.fileName, options.proxyURL);
+                kendo.saveAs({
+                    dataURI: dataURI,
+                    fileName: options.fileName,
+                    proxyURL: options.proxyURL,
+                    forceProxy: options.forceProxy
+                });
                 progress.resolve();
             })
             .fail(function(err) {

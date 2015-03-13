@@ -12,74 +12,11 @@
     <script>
       requireSync([
         "../src/jquery.js",
-        "../src/kendo.all.js",
-        "./console.time.js",
-        "./test-pdf-helpers.js"
+        "../src/kendo.all.js"
       ]);
     </script>
   </head>
 <body>
-   <style>
-      body {
-        font-size: 12px;
-        font-family: "DejaVu Serif";
-      }
-      .page {
-        border: 1px solid red;
-        padding: 2em;
-        box-sizing: border-box;
-        background-color: #fea;
-      }
-      .page :first-child {
-        margin-top: 0;
-      }
-      .page :last-child {
-        margin-bottom: 0;
-      }
-      .page-break {
-        border-top: 1px dashed #999;
-      }
-      .k-pdf-export .page-break { border-top: none }
-
-      .page-template {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-      }
-      .page-template .header {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        right: 20px;
-        border-bottom: 1px solid #888;
-        font-size: 90%;
-        color: #888;
-      }
-      .page-template .footer {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        right: 20px;
-        border-top: 1px solid #888;
-        text-align: center;
-        font-size: 90%;
-        color: #888;
-      }
-    </style>
-    <script type="x/kendo-template" id="page-template">
-      <div class="page-template">
-        <div class="header">
-          <div style="float: right">Page #: pageNum # of #: totalPages #</div>
-          This is a header.
-        </div>
-        <div class="footer">
-          This is a footer.
-          Page #: pageNum # of #: totalPages #
-        </div>
-      </div>
-    </script>
     <button>To PDF</button>
     <textarea id="editor" rows="10" cols="30" style="height:440px">
         &lt;p&gt;&lt;img src=&quot;kendo-ui-web.png&quot; alt=&quot;Editor for ASP.NET MVC logo&quot; style=&quot;display:block;margin-left:auto;margin-right:auto;&quot; /&gt;&lt;/p&gt;
@@ -115,15 +52,11 @@
 
     <script>
         $("button").click(function() {
-            console.time("pdf");
-            console.time("drawing");
             kendo.drawing.drawDOM($("#editor").getKendoEditor().body, { 
-                    paperSize: "A4", 
-                    margin: "2cm"
-                } ).done(function(root){
-                console.timeEnd("drawing");
+                paperSize: "auto", 
+                margin: "2cm"
+            }).done(function(root){
                 kendo.drawing.pdf.saveAs(root, "kendo.pdf", "http://kendo.local:7569/", function(){
-                    console.timeEnd("pdf");
                 });
             });
         });
@@ -138,7 +71,10 @@
             stylesheets: [ "./pdf-editor-2.css", ],
             tools: ["pdf"],
             pdf: { 
-                    paperSize: "A4",
+                    allPages: true,
+                    multiPage: true,
+                    fileName: "NewDocument.pdf",
+                    paperSize: "a4",
                     margin: "2cm"
                 }
         });
