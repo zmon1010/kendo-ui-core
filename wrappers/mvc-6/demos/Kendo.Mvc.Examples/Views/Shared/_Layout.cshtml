@@ -3,19 +3,31 @@
 <head>
     <title>@ViewBag.Title</title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/kendo/css/web/kendo.common.min.css" />
     <link rel="stylesheet" href="~/lib/kendo/css/web/kendo.default.min.css" />
     <link rel="stylesheet" href="~/lib/kendo/css/dataviz/kendo.dataviz.min.css" />
     <link rel="stylesheet" href="~/lib/kendo/css/dataviz/kendo.dataviz.default.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+	<link rel="stylesheet" href="~/css/console.css" />
 
     <script src="~/lib/kendo/js/jquery.min.js"></script>
     <script src="~/lib/kendo/js/kendo.all.min.js"></script>
 	<script src="~/lib/kendo/js/kendo.aspnetmvc.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
 
+	@{
+		// Include the JavaScript for the current culture
+		var culture = System.Globalization.CultureInfo.CurrentCulture.ToString();
+	}
+	<script src="@("/lib/kendo/js/cultures/kendo.culture." + culture + ".min.js")"></script>
+
+	<script>
+		@* Set the current culture *@
+        kendo.culture("@culture");
+	</script>
+
     @RenderSection("scripts", required: false)
+	@RenderSection("HeadContent", required: false)
 </head>
 <body>
     <div class="container body-content">

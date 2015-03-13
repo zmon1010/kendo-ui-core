@@ -529,3 +529,4 @@
 /// <reference path="lib/kendo/css/mobile/apps/cuteness/cuteness.js" />
 /// <reference path="lib/kendo/css/dataviz/map/js/chroma.min.js" />
 /// <reference path="lib/kendo/css/mobile/apps/sushi/sushi.js" />
+/// <reference path="shared/console.js" />
