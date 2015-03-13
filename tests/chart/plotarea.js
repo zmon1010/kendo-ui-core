@@ -3793,6 +3793,44 @@
 
     })();
 
+    // ------------------------------------------------------------
+    (function() {
+        var plotArea;
+
+        module("CategoricalPlotArea / pointsBySeriesName", {
+            setup: function() {
+                plotArea = new dataviz.CategoricalPlotArea([{
+                    type: "line",
+                    data: [100],
+                    name: "lineSeries"
+                }, {
+                    type: "bar",
+                    data: [200],
+                    name: "barSeries"
+                }]);
+            },
+            teardown: moduleTeardown
+        });
+
+        test("finds points based on series name", function() {
+           var points = plotArea.pointsBySeriesName("lineSeries");
+           equal(points.length, 1);
+           equal(points[0].value, 100);
+           ok(points[0] instanceof dataviz.LinePoint);
+
+           points = plotArea.pointsBySeriesName("barSeries");
+           equal(points.length, 1);
+           equal(points[0].value, 200);
+           ok(points[0] instanceof dataviz.Bar);
+        });
+
+        test("returns nothing if there isn't series with matching name", function() {
+           var points = plotArea.pointsBySeriesName("foo");
+           equal(points, undefined);
+        });
+
+    })();
+
     (function() {
         var chart,
             bar,
@@ -4938,6 +4976,44 @@
             plotArea.redraw(plotArea.panes[0]);
 
             notEqual(plotArea.axes[0].box.x1, x);
+        });
+
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var plotArea;
+
+        module("XY Plot Area / pointsBySeriesName", {
+            setup: function() {
+                plotArea = new dataviz.XYPlotArea([{
+                    type: "scatter",
+                    name: "seriesA",
+                    data: [[10, 20]]
+                }, {
+                    type: "scatter",
+                    name: "seriesB",
+                    data: [[30, 40]]
+                }]);
+            },
+            teardown: moduleTeardown
+        });
+
+        test("finds points based on series name", function() {
+           var points = plotArea.pointsBySeriesName("seriesA");
+           equal(points.length, 1);
+           equal(points[0].value.x, 10);
+           equal(points[0].value.y, 20);
+
+           points = plotArea.pointsBySeriesName("seriesB");
+           equal(points.length, 1);
+           equal(points[0].value.x, 30);
+           equal(points[0].value.y, 40);
+        });
+
+        test("returns nothing if there isn't series with matching name", function() {
+           var points = plotArea.pointsBySeriesName("foo");
+           equal(points, undefined);
         });
 
     })();

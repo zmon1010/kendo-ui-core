@@ -9132,6 +9132,17 @@ var __meta__ = {
             return result;
         },
 
+        pointsBySeriesName: function(name) {
+            var plotArea = this;
+            var series = plotArea.srcSeries || plotArea.series;
+            var result = [];
+            for (var idx = 0; idx < series.length; idx++) {
+                if (series[idx].name === name) {
+                    return plotArea.pointsBySeriesIndex(series[idx].index);
+                }
+            }
+        },
+
         paneByPoint: function(point) {
             var plotArea = this,
                 panes = plotArea.panes,
