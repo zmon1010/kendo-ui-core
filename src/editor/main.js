@@ -943,13 +943,6 @@
     if (kendo.PDFMixin) {
         kendo.PDFMixin.extend(Editor.prototype);
         Editor.prototype._drawPDF = function() {
-            // var options = {
-                // margin: this.options.pdf.margin,
-                // paperSize: this.options.pdf.paperSize
-            // };
-            // if(options.paperSize.toLowerCase() === "auto"){ 
-                // options.paperSize = "";
-            // }
             return kendo.drawing.drawDOM(this.body, this.options.pdf);
         };
         Editor.prototype.saveAsPDF = function() {
@@ -962,9 +955,10 @@
             }
 
             var options = this.options.pdf;
-
+            
             this._drawPDF(progress)
             .then(function(root) {
+                options.paperSize = "auto";
                 return kendo.drawing.exportPDF(root, options);
             })
             .done(function(dataURI) {

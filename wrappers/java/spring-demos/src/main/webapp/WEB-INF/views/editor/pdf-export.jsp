@@ -10,7 +10,7 @@
     <kendo:editor-tools>
         <kendo:editor-tool name="pdf" /> 
     </kendo:editor-tools>
-    <kendo:editor-pdf>
+    <kendo:editor-pdf paperSize="a4">
     	<kendo:editor-pdf-margin bottom="20" left="20" right="20" top="20"/>
     </kendo:editor-pdf>
     <kendo:editor-value>

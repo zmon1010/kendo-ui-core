@@ -20,6 +20,7 @@ require_once '../lib/Kendo/Autoload.php';
         ->right(20)
         ->top(20);
     $pdf->margin($margin);
+    $pdf->paperSize("a4");
     $editor
         ->attr('style', 'width:740px;height:440px')
         ->stylesheets(array("../content/web/editor/pdf-export-styles.css"))
