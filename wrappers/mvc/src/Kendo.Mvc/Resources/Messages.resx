@@ -771,4 +771,7 @@
   <data name="Scheduler_DefaultRowText" xml:space="preserve">
     <value>All events</value>
   </data>
+  <data name="Grid_CheckAll" xml:space="preserve">
+    <value>Select All</value>
+  </data>
 </root>

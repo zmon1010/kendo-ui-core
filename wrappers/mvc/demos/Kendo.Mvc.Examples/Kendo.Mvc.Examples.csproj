@@ -206,6 +206,7 @@
     <Compile Include="Controllers\Gantt\ResourcesController.cs" />
     <Compile Include="Controllers\Gantt\Right_To_Left_SupportController.cs" />
     <Compile Include="Controllers\Gantt\ServerBindingController.cs" />
+    <Compile Include="Controllers\Grid\Filter_Multi_CheckboxesController.cs" />
     <Compile Include="Controllers\Grid\Persist_StateController.cs" />
     <Compile Include="Controllers\Grid\Multicolumnheaders.cs" />
     <Compile Include="Controllers\Grid\Pdf_ExportController.cs" />
@@ -905,6 +906,7 @@
     <Content Include="Areas\aspx\Views\gantt\index.aspx" />
     <Content Include="Areas\aspx\Views\gantt\keyboard_navigation.aspx" />
     <Content Include="Areas\aspx\Views\gantt\serverbinding.aspx" />
+    <Content Include="Areas\aspx\Views\grid\filter_multi_checkboxes.aspx" />
     <Content Include="Areas\aspx\Views\grid\persist_state.aspx" />
     <Content Include="Areas\aspx\Views\grid\multicolumnheaders.aspx" />
     <Content Include="Areas\aspx\Views\linear_gauge\export.aspx" />

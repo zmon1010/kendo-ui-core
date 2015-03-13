@@ -135,5 +135,16 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Sets the text for CheckAll message when Multi checkbox filtering is enabled.
+        /// </summary>
+        /// <param name="message">The message</param> 
+        public FilterableMessagesBuilder CheckAll(string message)
+        {
+            messages.CheckAll = message;
+
+            return this;
+        }
     }
 }

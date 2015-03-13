@@ -212,13 +212,14 @@ namespace Kendo.Mvc.UI
                 json["sortable"] = false;
             }
 
+            var filterableSettings = FilterableSettings.ToJson();
             if (!Filterable)
             {
                 json["filterable"] = false;
             }
-            else
+            else if (filterableSettings.Any())
             {
-                json["filterable"] = FilterableSettings.ToJson();
+                json["filterable"] = filterableSettings;
             }            
 
             if (Encoded)
