@@ -3599,7 +3599,7 @@ var __meta__ = {
                         width: 0,
                         height: 0
                     })
-                    .appendTo(this.wrapper);
+                    .appendTo(document.body);
             }
 
             this.areaClipBoard.val(this.getTSV()).focus().select();
