@@ -32,6 +32,13 @@ MVC4_TRIAL_DLL = dll_for("Release-Trial")
 MVC5_DLL = dll_for("Release-MVC5")
 MVC5_TRIAL_DLL = dll_for("Release-MVC5-Trial")
 
+MVC6_SRC_ROOT = "wrappers/mvc-6/src/Kendo.Mvc/"
+MVC6_SOURCES = FileList[MVC6_SRC_ROOT + '**/*.cs']
+            .include(MVC6_SRC_ROOT + '**/*.resx')
+            .include(MVC6_SRC_ROOT + '**/*.snk')
+            .include(MVC6_SRC_ROOT + '**/*.json')
+MVC6_DLL = "#{MVC6_SRC_ROOT}bin/Release/aspnet50/Kendo.Mvc.dll"
+
 rule 'Kendo.Mvc.xml' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll'
 
 # Delete all Kendo*.dll files when `rake clean`
@@ -210,7 +217,9 @@ namespace :mvc do
         MVC_BIN_ROOT + 'Release-MVC3-Trial/Kendo.Mvc.dll',
         MVC_BIN_ROOT + 'Release-MVC5-Trial/Kendo.Mvc.dll',
         MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll',
-        'dist/binaries/'
+        MVC6_DLL,
+        'dist/binaries/',
+        'dist/binaries/mvc-6'
     ]
 
     desc('Replace commercial binaries with trials')
@@ -292,6 +301,17 @@ else
              FileList['wrappers/mvc/**/*.dll']
          ],
          :root => 'wrappers/mvc/'
+
+    # MVC6 package
+    file MVC6_DLL => MVC6_SOURCES do
+        sh "cd #{MVC6_SRC_ROOT} && kpm build --configuration Release"
+    end
+
+    tree :to => 'dist/binaries/mvc-6/',
+         :from => FileList[
+             FileList[MVC6_SRC_ROOT + 'bin/Release/**/*'].include(MVC6_DLL)
+         ],
+         :root => MVC6_SRC_ROOT + 'bin/Release/'
 end
 
 ['commercial', 'internal.commercial'].each do |bundle|

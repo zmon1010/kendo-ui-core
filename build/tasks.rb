@@ -114,7 +114,7 @@ def file_copy(options)
     from = options[:from]
 
     if to === from
-        raise "malformed file copy for #{to}"
+        raise "refusing to copy #{from} onto itself"
     end
 
     if license && subject_to_license?(to)
