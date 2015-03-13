@@ -713,6 +713,8 @@ namespace Kendo.Mvc.UI
 
         public bool? AutoBind { get; set; }
 
+        public bool AllowCopy { get; set; }
+
         public override void WriteInitializationScript(TextWriter writer)
         {
             var options = new Dictionary<string, object>(Events);
@@ -822,6 +824,11 @@ namespace Kendo.Mvc.UI
             if (autoBind == false)
             {
                 options["autoBind"] = autoBind;
+            }
+
+            if (AllowCopy == true)
+            {
+                options["allowCopy"] = AllowCopy;
             }
 
             options["dataSource"] = DataSource.ToJson();
@@ -1294,6 +1301,11 @@ namespace Kendo.Mvc.UI
                 {
                     throw new NotSupportedException(Exceptions.CannotSetAutoBindIfBoundDuringInitialization);
                 }
+            }
+
+            if (AllowCopy && Selectable.Enabled == false)
+            {
+                throw new NotSupportedException(Exceptions.AllowCopyRequiresSelectable);
             }
 
             if (Columns.Any(c => c.Locked) && !IsClientBinding)

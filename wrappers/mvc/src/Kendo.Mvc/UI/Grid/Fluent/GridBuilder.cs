@@ -515,6 +515,45 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to <c>true</c> users can copy the selection to the clipboard and paste it to Excel or similar spreadsheet applications.
+        /// Setting AllowCopy to <c>true</c> requires Selectable to be enabled.
+        /// </summary>
+        /// <param name="value">If true the grid will be automatically data bound, otherwise false</param>
+        /// <example>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .AllowCopy(false)
+        ///     .Selectable(GridSelectionMode.Multiple || GridSelectionMode.Cell)
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// )
+        /// </code>
+        /// <code lang="ASPX">
+        /// &lt;%:Html.Kendo().Grid&lt;Product&gt;()
+        ///     .Name(&quot;grid&quot;)
+        ///     .AllowCopy(false)
+        ///     .Selectable(GridSelectionMode.Multiple || GridSelectionMode.Cell)
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(read =&gt; read.Action(&quot;Products_Read&quot;, &quot;Home&quot;))
+        ///     )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public GridBuilder<T> AllowCopy(bool value)
+        {
+            Component.AllowCopy = value;
+            return this;
+        }
+
+        /// <summary>
         /// Sets the resizing configuration of the grid.
         /// </summary>
         /// <param name="configurator">The lambda which configures the resizing</param>

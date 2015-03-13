@@ -340,4 +340,7 @@ The request for '{0}' has found the following matching controllers:{2}</value>
   <data name="ExcelExportNotSupportedInServerBinding" xml:space="preserve">
     <value>Excel export is not supported in server binding mode.</value>
   </data>
+  <data name="AllowCopyRequiresSelectable" xml:space="preserve">
+    <value>AllowCopy requires any Selectable mode to be enabled</value>
+  </data>
 </root>
