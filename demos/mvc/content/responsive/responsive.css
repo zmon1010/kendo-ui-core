@@ -70,7 +70,7 @@ a {
 .responsive-header h1 a {
     color: #fff;
     display: inline-block;
-    padding: 28px 32px;
+    padding: 28px 29px;
     line-height: 24px;   
 }
 
@@ -138,6 +138,7 @@ a {
 
 /* Index page */
 .responsive-btn {
+    display: inline-block;
     color: #fff;
     padding: .773em 1.091em;
     text-align: center;
@@ -279,8 +280,7 @@ a {
     }
 
     .responsive-header h1 a {
-        padding-top: 12px;
-        padding-bottom: 12px;
+        padding: 12px 17px;
     }
 
     #responsive-nav {
@@ -370,7 +370,7 @@ a {
     .responsive-section > p,
     #responsive-QR,
     .responsive-widgets-container {
-        max-width: 100%;
+        /*max-width: 100%;*/
     }
 
     /* Index page */
