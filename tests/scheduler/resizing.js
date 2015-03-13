@@ -1318,6 +1318,50 @@
         equal($(".k-window").length, 1);
     });
 
+    test("dragging the west handle of the occurrence head do not show recurrence dialog when editRecurringMode is set", function() {
+        var scheduler = new kendo.ui.Scheduler(div, {
+            date: new Date("2013/6/6"),
+            views: ["month"],
+            editable: {
+                editRecurringMode: "series"
+            },
+            dataSource: [
+                { id: 1, start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
+            ]
+        });
+
+        var handle = div.find(".k-resize-w:first");
+
+        var slots = div.find(".k-scheduler-content td.k-other-month");
+
+        dragdrop(scheduler, handle, slots.first());
+
+        ok(!scheduler.dataSource.at(1));
+        equal($(".k-window").length, 0);
+    });
+
+    test("dragging the west handle of the occurrence head do not show recurrence dialog when editRecurringMode is set and exception is created", function() {
+        var scheduler = new kendo.ui.Scheduler(div, {
+            date: new Date("2013/6/6"),
+            views: ["month"],
+            editable: {
+                editRecurringMode: "occurrence"
+            },
+            dataSource: [
+                { id: 1, start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
+            ]
+        });
+
+        var handle = div.find(".k-resize-w:first");
+
+        var slots = div.find(".k-scheduler-content td.k-other-month");
+
+        dragdrop(scheduler, handle, slots.first());
+
+        ok(scheduler.dataSource.at(1));
+        equal($(".k-window").length, 0);
+    });
+
     test("dragging the west handle of the occurrence head moves the start of the series if the edit series button is clicked", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),

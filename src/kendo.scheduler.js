@@ -2732,15 +2732,26 @@ var __meta__ = {
 
             var recurrenceMessages = that.options.messages.recurrenceMessages;
             if (event.recurrenceRule || event.isOccurrence()) {
-                that.showDialog({
-                    model: event,
-                    title: recurrenceMessages.editWindowTitle,
-                    text: recurrenceMessages.editRecurring ? recurrenceMessages.editRecurring : EDITRECURRING,
-                    buttons: [
-                        { text: recurrenceMessages.editWindowOccurrence, click: updateOccurrence },
-                        { text: recurrenceMessages.editWindowSeries, click: updateSeries }
-                    ]
-                });
+                var editable = that.options.editable;
+                var editRecurringMode = isPlainObject(editable) ? editable.editRecurringMode : "dialog";
+
+                if (editRecurringMode === "dialog") {
+                    that.showDialog({
+                        model: event,
+                        title: recurrenceMessages.editWindowTitle,
+                        text: recurrenceMessages.editRecurring ? recurrenceMessages.editRecurring : EDITRECURRING,
+                        buttons: [
+                            { text: recurrenceMessages.editWindowOccurrence, click: updateOccurrence },
+                            { text: recurrenceMessages.editWindowSeries, click: updateSeries }
+                        ]
+                    });
+                } else {
+                    if (editRecurringMode === "series") {
+                        updateSeries();
+                    } else if (editRecurringMode ===  "occurrence") {
+                        updateOccurrence();
+                    }
+                }
             } else {
                 updateEvent(that.dataSource.getByUid(event.uid));
             }
@@ -2899,15 +2910,26 @@ var __meta__ = {
             };
 
             var recurrenceMessages = that.options.messages.recurrenceMessages;
-            that.showDialog({
-                model: model,
-                title: recurrenceMessages.editWindowTitle,
-                text: recurrenceMessages.editRecurring ? recurrenceMessages.editRecurring : EDITRECURRING,
-                buttons: [
-                    { text: recurrenceMessages.editWindowOccurrence, click: editOccurrence },
-                    { text: recurrenceMessages.editWindowSeries, click: editSeries }
-                ]
-            });
+            var editable = that.options.editable;
+            var editRecurringMode = isPlainObject(editable) ? editable.editRecurringMode : "dialog";
+
+            if (editRecurringMode === "dialog") {
+                that.showDialog({
+                    model: model,
+                    title: recurrenceMessages.editWindowTitle,
+                    text: recurrenceMessages.editRecurring ? recurrenceMessages.editRecurring : EDITRECURRING,
+                    buttons: [
+                        { text: recurrenceMessages.editWindowOccurrence, click: editOccurrence },
+                        { text: recurrenceMessages.editWindowSeries, click: editSeries }
+                    ]
+                });
+            } else {
+                 if (editRecurringMode === "series") {
+                     editSeries();
+                 } else if (editRecurringMode ===  "occurrence") {
+                     editOccurrence();
+                 }
+             }
         },
 
         _createButton: function(command) {
@@ -3107,15 +3129,26 @@ var __meta__ = {
             };
 
             var recurrenceMessages = that.options.messages.recurrenceMessages;
-            that.showDialog({
-                model: model,
-                title: recurrenceMessages.deleteWindowTitle,
-                text: recurrenceMessages.deleteRecurring ? recurrenceMessages.deleteRecurring : DELETERECURRING,
-                buttons: [
-                   { text: recurrenceMessages.deleteWindowOccurrence, click: deleteOccurrence },
-                   { text: recurrenceMessages.deleteWindowSeries, click: deleteSeries }
-                ]
-            });
+            var editable = that.options.editable;
+            var editRecurringMode = isPlainObject(editable) ? editable.editRecurringMode : "dialog";
+
+            if (editRecurringMode === "dialog") {
+                that.showDialog({
+                    model: model,
+                    title: recurrenceMessages.deleteWindowTitle,
+                    text: recurrenceMessages.deleteRecurring ? recurrenceMessages.deleteRecurring : DELETERECURRING,
+                    buttons: [
+                       { text: recurrenceMessages.deleteWindowOccurrence, click: deleteOccurrence },
+                       { text: recurrenceMessages.deleteWindowSeries, click: deleteSeries }
+                    ]
+                });
+            }else {
+                if (editRecurringMode === "series") {
+                    deleteSeries();
+                } else if (editRecurringMode ===  "occurrence") {
+                    deleteOccurrence();
+                }
+            }
         },
 
         _unbindView: function(view) {

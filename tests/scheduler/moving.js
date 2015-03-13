@@ -221,6 +221,55 @@
         equalWithRound($(".k-event-drag-hint").outerWidth(), 2 * slots.first().outerWidth());
     });
 
+    test("moving the occurrence changes the start of the series when editRecurringMode is set to series", function() {
+        var scheduler = new kendo.ui.Scheduler(div, {
+            date: new Date("2013/6/6"),
+            views: ["month"],
+            editable: {
+                editRecurringMode: "series"
+            },
+            dataSource: [
+                { id: 1, start: new Date("2013/5/26 11:00"), end: new Date("2013/5/26 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
+            ]
+        });
+
+        var handle = div.find(".k-event:last");
+
+        var slots = div.find(".k-scheduler-content td");
+
+        dragdrop(scheduler, handle, slots.eq(2));
+
+        equal(scheduler.dataSource.at(0).start.getHours(), 11);
+        equal(scheduler.dataSource.at(0).start.getMinutes(), 0);
+        equal(scheduler.dataSource.at(0).start.getDate(), 28);
+        equal(scheduler.dataSource.at(0).start.getMonth(), 4);
+    });
+
+    test("moving the occurrence changes the start of the occurrence when editRecurringMode is set to occurrence", function() {
+        var scheduler = new kendo.ui.Scheduler(div, {
+            date: new Date("2013/6/6"),
+            startTime: new Date("2013/6/6 11:00"),
+            views: ["month"],
+            editable: {
+                editRecurringMode: "occurrence"
+            },
+            dataSource: [
+                { id: 1, start: new Date("2013/5/26 11:00"), end: new Date("2013/5/26 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
+            ]
+        });
+
+        var handle = div.find(".k-event:last");
+
+        var slots = div.find(".k-scheduler-content td");
+
+        dragdrop(scheduler, handle, slots.eq(2));
+
+        equal(scheduler.dataSource.at(1).start.getHours(), 11);
+        equal(scheduler.dataSource.at(1).start.getMinutes(), 0);
+        equal(scheduler.dataSource.at(1).start.getDate(), 28);
+        equal(scheduler.dataSource.at(1).start.getMonth(), 4);
+    });
+
     test("moving the occurrence changes the start of the series if the edit series button is clicked", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),

@@ -764,6 +764,105 @@
         equal($(".k-window-title").text(), "Edit Recurring Item");
     });
 
+    test("do not show recurring dialog when editRecurringMode option is set to series", function() {
+        var scheduler = setup({
+            views: ["week"],
+            editable: {
+                editRecurringMode: "series"
+            },
+            dataSource: {
+                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ],
+                schema: {
+                    model: {
+                        id: "id",
+                        fields: {
+                            id: {type: "number"}
+                        }
+                    }
+                }
+            }
+        });
+
+        var eventUID = scheduler.element.find(".k-event:last").data("uid");
+        scheduler.editEvent(eventUID);
+
+        equal($(".k-window-title").text(), "Event");
+    });
+
+    test("do not show recurring dialog when editRecurringMode option is set to occurrence", function() {
+        var scheduler = setup({
+            views: ["week"],
+            editable: {
+                editRecurringMode: "occurrence"
+            },
+            dataSource: {
+                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ],
+                schema: {
+                    model: {
+                        id: "id",
+                        fields: {
+                            id: {type: "number"}
+                        }
+                    }
+                }
+            }
+        });
+
+        var eventUID = scheduler.element.find(".k-event:last").data("uid");
+        scheduler.editEvent(eventUID);
+
+        equal($(".k-window-title").text(), "Event");
+    });
+
+    test("show recurring dialog when editRecurringMode option is set to dialog", function() {
+        var scheduler = setup({
+            views: ["week"],
+            editable: {
+                editRecurringMode: "dialog"
+            },
+            dataSource: {
+                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ],
+                schema: {
+                    model: {
+                        id: "id",
+                        fields: {
+                            id: {type: "number"}
+                        }
+                    }
+                }
+            }
+        });
+
+        var eventUID = scheduler.element.find(".k-event:last").data("uid");
+        scheduler.editEvent(eventUID);
+
+        equal($(".k-window-title").text(), "Edit Recurring Item");
+    });
+
+    test("show recurring dialog when editable option is set to false and editing event using editEvent", function() {
+        var scheduler = setup({
+            views: ["week"],
+            editable: false,
+            dataSource: {
+                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ],
+                schema: {
+                    model: {
+                        id: "id",
+                        fields: {
+                            id: {type: "number"}
+                        }
+                    }
+                }
+            }
+        });
+
+        var eventUID = scheduler.element.find(".k-event:last").data("uid");
+        scheduler.editEvent(eventUID);
+
+        equal($(".k-window-title").text(), "Edit Recurring Item");
+    });
+
+
     test("close recurring dialog on button click", 1, function() {
         var scheduler = setup({
             views: ["week"],
@@ -1075,6 +1174,52 @@
         var model = scheduler.dataSource.at(0);
 
         equal(model.recurrenceException, recurrenceException);
+    });
+
+    test("delete occurrence creates recurrenceException entry without showing the Edit recurrence window", function() {
+        var date = new Date(2013, 10, 10, 15, 0, 0),
+            exceptionDate = new Date(2013, 10, 12, 15, 0, 0),
+            exceptionDate = kendo.timezone.apply(exceptionDate, 0),
+            recurrenceException = kendo.toString(exceptionDate, "yyyyMMddTHHmmssZ") + ";";
+
+        var scheduler = setup({
+            views: ["week"],
+            date: date,
+            editable: {
+                editRecurringMode: "occurrence"
+            },
+            dataSource: {
+                data: [ new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" }) ]
+            }
+        });
+
+        scheduler.removeEvent(scheduler.element.find(".k-event").eq(2).data("uid"));
+
+        var model = scheduler.dataSource.at(0);
+
+        equal(model.recurrenceException, recurrenceException);
+    });
+
+    test("delete series is not showing the Edit recurrence window when editRecurringMode is set", function() {
+        var date = new Date(2013, 10, 10, 15, 0, 0),
+            exceptionDate = new Date(2013, 10, 12, 15, 0, 0),
+            exceptionDate = kendo.timezone.apply(exceptionDate, 0),
+            recurrenceException = kendo.toString(exceptionDate, "yyyyMMddTHHmmssZ") + ";";
+
+        var scheduler = setup({
+            views: ["week"],
+            date: date,
+            editable: {
+                editRecurringMode: "series"
+            },
+            dataSource: {
+                data: [ new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" }) ]
+            }
+        });
+
+        scheduler.removeEvent(scheduler.element.find(".k-event").eq(2).data("uid"));
+
+        equal(scheduler.dataSource.data().length, 0);
     });
 
     test("delete created exception", function() {
