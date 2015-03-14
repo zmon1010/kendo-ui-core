@@ -12,7 +12,11 @@ namespace :nuget do
         :from => "build/nuspec/Mvc*/*.xdt",
         :root => "build/nuspec"
 
-    task :default => "dist/bundles/nuspec"
+    tree :from => "dist/binaries/mvc-6/**/*",
+         :to => "dist/bundles/mvc-6",
+         :root => "dist/binaries/mvc-6/"
+
+    task :default => ["dist/bundles/nuspec", "dist/bundles/mvc-6"]
 
     FileList['build/nuspec/*.nuspec.erb'].each do |erb|
         nuspec = erb.pathmap('dist/bundles/%n')
