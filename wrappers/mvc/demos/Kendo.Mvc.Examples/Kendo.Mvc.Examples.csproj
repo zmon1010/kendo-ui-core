@@ -230,6 +230,7 @@
     <Compile Include="Controllers\Scheduler\TimelineController.cs" />
     <Compile Include="Controllers\Styling\CheckboxesController.cs" />
     <Compile Include="Controllers\Styling\RadioButtonsController.cs" />
+    <Compile Include="Controllers\TabStrip\Tab_PositionController.cs" />
     <Compile Include="Controllers\TreeList\ApiController.cs" />
     <Compile Include="Controllers\TreeList\AggregatesController.cs" />
     <Compile Include="Controllers\TreeList\Column_ReorderingController.cs" />
@@ -2711,6 +2712,7 @@
     <Content Include="Areas\razor\Views\gantt\right_to_left_support.cshtml" />
     <Content Include="Areas\razor\Views\map\export.cshtml" />
     <Content Include="Areas\razor\Views\grid\copy_to_excel.cshtml" />
+    <Content Include="Areas\razor\Views\tabstrip\tab_position.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />

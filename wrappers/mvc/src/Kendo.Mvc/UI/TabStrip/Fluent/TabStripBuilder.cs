@@ -291,5 +291,40 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Sets the tabs' position.
+        /// </summary>
+        /// <param name="value">The position.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().TabStrip()
+        ///             .Name("TabStrip")
+        ///             .Items(items =>
+        ///             {
+        ///                 items.Add().Text("First Item");
+        ///                 items.Add().Text("Second Item");
+        ///             })
+        ///             .TabPosition(TabPosition.Left)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public TabStripBuilder TabPosition(TabStripTabPosition position)
+        {
+            Component.TabPosition = position;
+
+            return this;
+        }
+    }
+}
+
+namespace Kendo.Mvc.UI
+{
+    public enum TabStripTabPosition
+    {
+        Top,
+        Left,
+        Right,
+        Bottom
     }
 }
