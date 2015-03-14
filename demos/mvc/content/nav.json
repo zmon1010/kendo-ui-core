@@ -4647,6 +4647,19 @@
         }
       },
       {
+        "text": "Tab position",
+        "url": "tabstrip/tab-position",
+		"new": true,
+        "title": {
+            "kendo-ui": "Kendo UI jQuery TabStrip tab position demo",
+            "aspnet-mvc": "ASP.NET MVC TabStrip tab position demo"
+        },
+        "meta": {
+            "kendo-ui": "This sample shows different tab position options for the Kendo UI TabStrip.",
+            "aspnet-mvc": "This sample shows different tab position options for the ASP.NET MVC TabStrip."
+        }
+      },
+      {
         "text": "Events",
         "url": "tabstrip/events",
         "title": {
