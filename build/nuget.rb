@@ -42,7 +42,7 @@ namespace :nuget do
         suffix = ".Trial" if options[:trial]
 
         mvc_versions.map { |mvc_version|
-            version_suffix = "-beta1" if mvc_version == 6
+            version_suffix = MVC_6_VERSION_SUFFIX if mvc_version == 6
             "Telerik.UI.for.AspNet.Mvc#{mvc_version}#{suffix}.#{VERSION}#{version_suffix}.nupkg"
         }.join(" ")
     end

@@ -1,3 +1,4 @@
+MVC_6_VERSION_SUFFIX = "-beta1"
 MVC_6_DEMOS_WWWROOT = 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/wwwroot/'
 MVC_6_DEMOS_LIBROOT = 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/wwwroot/lib/kendo/'
 

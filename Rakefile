@@ -1029,8 +1029,11 @@ namespace :build do
         nugets = []
 
         NUGETS.each do |nuget|
-            dest = File.join(ARCHIVE_ROOT, destination, nuget.pathmap("%n") + "." + VERSION + ".nupkg")
-            source = File.join("dist/bundles",  nuget.pathmap("%n") + "." + VERSION + ".nupkg")
+            version_suffix = MVC_6_VERSION_SUFFIX if nuget.match(/Mvc6/)
+            name = nuget.pathmap("%n") + ".#{VERSION}#{version_suffix}.nupkg";
+
+            dest = File.join(ARCHIVE_ROOT, destination, name)
+            source = File.join("dist/bundles",  name)
 
             file_copy :to => dest, :from => source
 
