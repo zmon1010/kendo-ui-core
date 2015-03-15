@@ -16,7 +16,7 @@ namespace :nuget do
          :to => "dist/bundles/mvc-6",
          :root => "dist/binaries/mvc-6/"
 
-    task :default => ["dist/bundles/nuspec", "dist/bundles/mvc-6"]
+    task :default => "dist/bundles/nuspec"
 
     FileList['build/nuspec/*.nuspec.erb'].each do |erb|
         nuspec = erb.pathmap('dist/bundles/%n')
@@ -27,7 +27,7 @@ namespace :nuget do
             File.write(f.name, ERB.new(File.read(erb), 0, '%<>').result(binding))
         end
 
-        file nuget => nuspec do |f|
+        file nuget => [nuspec, "dist/bundles/mvc-6"] do |f|
             sh "cd dist/bundles && nuget pack #{nuspec.pathmap("%f")}"
         end
 
