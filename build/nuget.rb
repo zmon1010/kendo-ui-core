@@ -12,9 +12,9 @@ namespace :nuget do
         :from => "build/nuspec/Mvc*/*.xdt",
         :root => "build/nuspec"
 
-    tree :from => "dist/binaries/mvc-6/**/*",
-         :to => "dist/bundles/mvc-6",
-         :root => "dist/binaries/mvc-6/"
+    file "dist/bundles/mvc-6" do
+        sh "ln -s ../binaries/mvc-6 dist/bundles/mvc-6"
+    end
 
     task :default => "dist/bundles/nuspec"
 
