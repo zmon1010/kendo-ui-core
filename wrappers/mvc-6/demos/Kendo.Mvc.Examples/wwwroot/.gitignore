@@ -1,2 +1,4 @@
 bin/**
 lib/**
+shared/**
+!shared/nav-beta.json

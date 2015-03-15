@@ -180,6 +180,16 @@ MVC_CONTENT = {
     } )
 end
 
+ROOT_MAP.merge!( {
+    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
+    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc-6/content/shared',
+} )
+
+MVC_CONTENT.merge!( {
+    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples" => MVC_6_DEMOS,
+    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*'],
+} )
+
 JSP_CONTENT = {
     'wrappers/jsp/kendo-taglib' => JSP_TAGLIB_JAR,
     'wrappers/jsp/spring-demos/src' => SPRING_DEMOS_SRC
