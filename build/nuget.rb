@@ -34,6 +34,10 @@ namespace :nuget do
         NUGETS << nuget
 
         task :default => nuget
+
+        if erb =~ /Mvc6/
+            task :mvc6 => nuget
+        end
     end
 
     def zip_bundle(name, package)

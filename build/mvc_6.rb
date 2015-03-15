@@ -122,4 +122,17 @@ namespace :mvc_6 do
 
     desc('Copy the minified CSS and JavaScript to wwwroot/lib/kendo folder')
     task :assets => ['mvc_6:assets_js', 'mvc_6:assets_css', 'mvc_6:assets_shared']
+
+    desc('Copy NuGet packages to offline demos')
+    task :copy_nuget => ['nuget:mvc6'] do
+        [ 'aspnetmvc.trial', 'aspnetmvc.commercial' ].each do |bundle|
+            nuget = "dist/bundles/Telerik.UI.for.AspNet.Mvc6.Trial.#{VERSION}#{MVC_6_VERSION_SUFFIX}.nupkg"
+            dest = "dist/bundles/#{bundle}/wrappers/aspnetmvc/Examples/VS2015/packages/"
+
+            p nuget
+
+            mkdir_p dest
+            cp nuget, dest
+        end
+    end
 end
