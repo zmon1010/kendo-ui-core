@@ -182,12 +182,13 @@ end
 
 ROOT_MAP.merge!( {
     "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
-    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc-6/content/shared',
+    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared',
+    "wrappers/aspnetmvc/Examples/VS2015/packages" => 'dist/bundles/'
 } )
 
 MVC_CONTENT.merge!( {
     "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples" => MVC_6_DEMOS,
-    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*'],
+    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
 } )
 
 JSP_CONTENT = {
@@ -546,7 +547,7 @@ bundle :name => 'aspnetmvc.trial',
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }
        .merge(MVC_CONTENT),
-       :post_build => 'mvc:copy_trials',
+       :post_build => ['mvc:copy_trials', 'mvc_6:copy_nuget'],
        :prerequisites => [
            'mvc:assets',
            'plugins/KendoScaffolder/KendoScaffolderExtension.vsix',
@@ -674,6 +675,7 @@ bundle :name => 'aspnetmvc.commercial',
                 .exclude('**/*.csproj'),
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }.merge(MVC_CONTENT),
+       :post_build => 'mvc_6:copy_nuget',
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test',
