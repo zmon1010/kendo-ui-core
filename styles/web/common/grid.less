@@ -1006,6 +1006,13 @@ html .k-grid-edit-row .k-tooltip
             transform: translatey(-100%);
         }
         
+        .k-rtl .k-pager-numbers,
+        .k-rtl .k-grid .k-pager-numbers
+        {
+            right: 4.8em;
+            width: 4.5em
+        }
+        
         .k-pager-numbers .k-current-page,
         .k-grid .k-pager-numbers .k-current-page {
             display: block;
@@ -1027,6 +1034,11 @@ html .k-grid-edit-row .k-tooltip
         
         .k-pager-numbers + .k-link {
             margin-left: 4.8em;
+        }
+        
+        .k-rtl .k-pager-numbers + .k-link {
+            margin-right: 5.1em;
+            margin-left: 0;
         }
         
         .k-pager-numbers .k-state-selected,

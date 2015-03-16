@@ -979,6 +979,11 @@ div[name="recurrenceRule"] > .k-dropdown
             top: 6px;
             z-index: 10003;
         }
+        
+        .k-rtl .k-scheduler-toolbar > ul.k-scheduler-views {
+            right: auto;
+            left: 6px;
+        }
 
         .k-scheduler-toolbar > ul.k-scheduler-views > li:not(.k-current-view)
         {
@@ -1000,6 +1005,11 @@ div[name="recurrenceRule"] > .k-dropdown
             display: block;
             border-width:1px;
         }
+        
+        .k-rtl .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view {
+            text-align: left;
+            padding-left: 1em;
+        }
 
         .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view > .k-link
         {
@@ -1007,6 +1017,11 @@ div[name="recurrenceRule"] > .k-dropdown
             position: relative;
             padding-right: 2.5em;
             padding-left: 1em;
+        }
+        
+        .k-rtl .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view > .k-link
+        {
+            padding-left: 0;
         }
 
         .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view > .k-link:after
@@ -1033,6 +1048,10 @@ div[name="recurrenceRule"] > .k-dropdown
             background-color: #fff;
             background-image: none;
             box-shadow: 0 2px 2px 0 rgba(0,0,0,0.3);
+        }
+        
+        .k-rtl .k-scheduler-toolbar > ul.k-scheduler-views.k-state-expanded {
+            text-align: left;
         }
     }    
 }
