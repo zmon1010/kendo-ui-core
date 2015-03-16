@@ -768,4 +768,7 @@
   <data name="Scheduler_DefaultRowText" xml:space="preserve">
     <value>Всички събития</value>
   </data>
+  <data name="Grid_Excel" xml:space="preserve">
+    <value>Експорт в Excel</value>
+  </data>
 </root>

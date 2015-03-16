@@ -765,4 +765,7 @@
   <data name="Scheduler_DefaultRowText" xml:space="preserve">
     <value>All events</value>
   </data>
+  <data name="Grid_Excel" xml:space="preserve">
+    <value>Excel'e aktar</value>
+  </data>
 </root>
