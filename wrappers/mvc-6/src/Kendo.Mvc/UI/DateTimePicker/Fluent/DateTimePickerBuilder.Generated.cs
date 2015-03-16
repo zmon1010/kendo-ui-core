@@ -149,6 +149,16 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="configurator">The configurator for the monthtemplate setting.</param>
+        public DateTimePickerBuilder MonthTemplate(Action<DateTimePickerMonthTemplateSettingsBuilder> configurator)
+        {
+            configurator(new DateTimePickerMonthTemplateSettingsBuilder(Container.MonthTemplate));
+            return this;
+        }
+
 
         
         /// <summary>

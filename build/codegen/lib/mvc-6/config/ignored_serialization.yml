@@ -1,2 +1,7 @@
 - grid.sortable.sortMode
 - datetimepicker.footer
+- datetimepicker.monthTemplate
+- datetimepicker.monthTemplate.empty
+- datetimepicker.monthTemplate.emptyId
+- datetimepicker.monthTemplate.content
+- datetimepicker.monthTemplate.contentId

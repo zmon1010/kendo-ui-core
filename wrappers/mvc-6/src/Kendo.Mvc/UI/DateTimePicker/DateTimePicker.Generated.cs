@@ -39,6 +39,8 @@ namespace Kendo.Mvc.UI
 
         public CalendarView? Depth { get; set; }
 
+        public DateTimePickerMonthTemplateSettings MonthTemplate { get; } = new DateTimePickerMonthTemplateSettings();
+
 
         protected override Dictionary<string, object> SerializeSettings()
         {
@@ -111,6 +113,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["depth"] = Depth?.Serialize();
             }
+
 
             return settings;
         }

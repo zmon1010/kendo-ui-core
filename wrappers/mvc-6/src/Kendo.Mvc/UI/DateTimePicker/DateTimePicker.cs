@@ -105,6 +105,13 @@ namespace Kendo.Mvc.UI
 				settings["footer"] = EnableFooter;
 			}
 
+			MonthTemplate.IdPrefix = idPrefix;
+			var month = MonthTemplate.Serialize();
+			if (month.Any())
+			{
+				settings["month"] = month;
+			}
+
 			writer.Write(Initializer.Initialize(Selector, "DateTimePicker", settings));
         }
     }
