@@ -1113,24 +1113,24 @@
       {
         "text": "Virtualization",
         "url": "dropdownlist/virtualization",
+        "new": true,
         "title": {
             "kendo-ui": "Example of virtualization in Kendo UI DropDownList widget"
         },
         "meta": {
             "kendo-ui": "See how the virtual dropdown list of Kendo UI DropDownList is filtered on the the server based on the input."
-        },
-        "new": true
+        }
       },
       {
         "text": "Grouping",
         "url": "dropdownlist/grouping",
+        "new": true,
         "title": {
             "kendo-ui": "Example of grouping in Kendo UI DropDownList widget"
         },
         "meta": {
             "kendo-ui": "See how the virtual dropdown list of Kendo UI DropDownList is grouped."
-        },
-        "new": true
+        }
       },
       {
         "packages": [

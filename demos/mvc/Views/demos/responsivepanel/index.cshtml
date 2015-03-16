@@ -2,12 +2,14 @@
         <p class="box">Resize the page to see how the responsive panel hides content.</p>
 
         <div class="dash-head">
+            <!-- toggle button for responsive panel, hidden on large screens -->
             <button class="k-rpanel-toggle"><span class="k-icon k-i-hbars"></span></button>
         </div>
         <div class="panel-wrap">
+            <!-- responsive panel, collapsed on small screens -->
             <div id="sidebar">
                 <div id="profile" class="widget">
-                    <h3>Profile <span class="collapse k-icon k-i-arrowhead-n"></span></h3>
+                    <h3>Profile</h3>
                     <div>
                         <div class="profile-photo"></div>
                         <h4>Lynda Schleifer</h4>
@@ -15,7 +17,7 @@
                     </div>
                 </div>
                 <div id="teammates" class="widget">
-                    <h3>Teammates <span class="collapse k-icon k-i-arrowhead-n"></span></h3>
+                    <h3>Teammates</h3>
                     <div>
                         <div class="team-mate">
                             <img src="../content/web/panelbar/andrew.jpg" alt="Andrew Fuller">
@@ -37,7 +39,7 @@
             </div>
             <div id="main-content">
                 <div id="news" class="widget">
-                    <h3>News <span class="collapse k-icon k-i-arrowhead-n"></span></h3>
+                    <h3>News</h3>
                     <div>
 
                         <h4><span>Jan 22, 2014</span> Stanford Speaker Series Looks at the Rising Tide of Eastern European High Tech Firms with Telerik CEO Vassil Terziev</h4>
@@ -50,7 +52,7 @@
                     </div>
                 </div>
                 <div id="blogs" class="widget">
-                    <h3>Blogs <span class="collapse k-icon k-i-arrowhead-n"></span></h3>
+                    <h3>Blogs</h3>
                     <div>
                         <h4>Upgrading OpenAccess ORM to Telerik Data Access</h4>
                         <p class="blog-info">Friday, February 14, 2014 by Data Access Team</p>
@@ -69,45 +71,11 @@
         </div>
 
         <script>
-            $(document).ready(function() {
-
-                // collapse sidebar
-                $("#sidebar").kendoResponsivePanel({
-                    breakpoint: 1000,
-                    width: 320,
-                    orientation: "left"
-                });
-
-                // expand
-                $(".panel-wrap").on("click", "span.k-i-arrowhead-s", function(e) {
-                    var contentElement = $(e.target).closest(".widget").find(">div");
-                    $(e.target)
-                        .removeClass("k-i-arrowhead-s")
-                        .addClass("k-i-arrowhead-n");
-
-                    kendo.fx(contentElement).expand("vertical").stop().play();
-                });
-
-                // collapse
-                $(".panel-wrap").on("click", "span.k-i-arrowhead-n", function(e) {
-                    var contentElement = $(e.target).closest(".widget").find(">div");
-                    $(e.target)
-                        .removeClass("k-i-arrowhead-n")
-                        .addClass("k-i-arrowhead-s");
-
-                    kendo.fx(contentElement).expand("vertical").stop().reverse();
-                });
+            $("#sidebar").kendoResponsivePanel({
+                breakpoint: 1000,
+                width: 320,
+                orientation: "left"
             });
-
-            function placeholder(element) {
-                return element.clone().addClass("placeholder");
-            }
-
-            function hint(element) {
-                return element.clone().addClass("hint")
-                            .height(element.height())
-                            .width(element.width());
-            }
         </script>
 
         <style>
@@ -168,11 +136,6 @@
                 padding: 20px;
                 min-height: 580px;
                 vertical-align: top;
-            }
-
-            .widget.placeholder {
-                opacity: 0.4;
-                border: 1px dashed #a6a6a6;
             }
 
             /* WIDGETS */
@@ -313,16 +276,6 @@
                 margin: 0 15px 0 0;
                 border: 1px solid #e7e7e7;
                 border-radius: 60px;
-            }
-
-            .hint {
-                width: 250px;
-                height: 100px;
-                overflow: hidden;
-            }
-
-            .hint > h3 {
-                padding-left: 20px;
             }
         </style>
     </div>
