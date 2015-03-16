@@ -59,7 +59,10 @@ class AutoComplete extends \Kendo\UI\Widget {
 
     /**
     * The filtering method used to determine the suggestions for the current value. The default filter is "startswith" -
-all data items which begin with the current widget value are displayed in the suggestion popup. The supported filter values are startswith, endswith and contains.  * @param string $value * @return \Kendo\UI\AutoComplete */
+all data items which begin with the current widget value are displayed in the suggestion popup. The supported filter values are startswith, endswith and contains.
+    * @param string $value
+    * @return \Kendo\UI\AutoComplete
+    */
     public function filter($value) {
         return $this->setProperty('filter', $value);
     }
@@ -178,6 +181,15 @@ all data items which begin with the current widget value are displayed in the su
     */
     public function valuePrimitive($value) {
         return $this->setProperty('valuePrimitive', $value);
+    }
+
+    /**
+    * Enables the virtualization feature of the widget.
+    * @param boolean|\Kendo\UI\AutoCompleteVirtual|array $value
+    * @return \Kendo\UI\AutoComplete
+    */
+    public function virtual($value) {
+        return $this->setProperty('virtual', $value);
     }
 
     /**

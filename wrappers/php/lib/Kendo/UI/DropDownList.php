@@ -106,6 +106,50 @@ The supported filter values are startswith, endswith and contains.
     }
 
     /**
+    * Sets the fixedGroupTemplate option of the DropDownList.
+    * The template used to render the fixed header group. By default the widget displays only the value of the group.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\DropDownList
+    */
+    public function fixedGroupTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('fixedGroupTemplate', $value);
+    }
+
+    /**
+    * Sets the fixedGroupTemplate option of the DropDownList.
+    * The template used to render the fixed header group. By default the widget displays only the value of the group.
+    * @param string $value The template content.
+    * @return \Kendo\UI\DropDownList
+    */
+    public function fixedGroupTemplate($value) {
+        return $this->setProperty('fixedGroupTemplate', $value);
+    }
+
+    /**
+    * Sets the groupTemplate option of the DropDownList.
+    * The template used to render the groups. By default the widget displays only the value of the group.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\DropDownList
+    */
+    public function groupTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('groupTemplate', $value);
+    }
+
+    /**
+    * Sets the groupTemplate option of the DropDownList.
+    * The template used to render the groups. By default the widget displays only the value of the group.
+    * @param string $value The template content.
+    * @return \Kendo\UI\DropDownList
+    */
+    public function groupTemplate($value) {
+        return $this->setProperty('groupTemplate', $value);
+    }
+
+    /**
     * The height of the suggestion popup in pixels. The default value is 200 pixels.
     * @param float $value
     * @return \Kendo\UI\DropDownList
@@ -149,6 +193,28 @@ The supported filter values are startswith, endswith and contains.
     */
     public function optionLabel($value) {
         return $this->setProperty('optionLabel', $value);
+    }
+
+    /**
+    * Sets the optionLabelTemplate option of the DropDownList.
+    * The template used to render the option label.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\DropDownList
+    */
+    public function optionLabelTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('optionLabelTemplate', $value);
+    }
+
+    /**
+    * Sets the optionLabelTemplate option of the DropDownList.
+    * The template used to render the option label.
+    * @param string $value The template content.
+    * @return \Kendo\UI\DropDownList
+    */
+    public function optionLabelTemplate($value) {
+        return $this->setProperty('optionLabelTemplate', $value);
     }
 
     /**
@@ -242,6 +308,15 @@ The supported filter values are startswith, endswith and contains.
     */
     public function valuePrimitive($value) {
         return $this->setProperty('valuePrimitive', $value);
+    }
+
+    /**
+    * Enables the virtualization feature of the widget.
+    * @param boolean|\Kendo\UI\DropDownListVirtual|array $value
+    * @return \Kendo\UI\DropDownList
+    */
+    public function virtual($value) {
+        return $this->setProperty('virtual', $value);
     }
 
     /**

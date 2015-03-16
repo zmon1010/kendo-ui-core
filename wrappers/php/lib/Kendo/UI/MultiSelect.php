@@ -95,6 +95,50 @@ The supported filter values are startswith, endswith and contains.
     }
 
     /**
+    * Sets the fixedGroupTemplate option of the MultiSelect.
+    * The template used to render the fixed header group. By default the widget displays only the value of the group.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function fixedGroupTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('fixedGroupTemplate', $value);
+    }
+
+    /**
+    * Sets the fixedGroupTemplate option of the MultiSelect.
+    * The template used to render the fixed header group. By default the widget displays only the value of the group.
+    * @param string $value The template content.
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function fixedGroupTemplate($value) {
+        return $this->setProperty('fixedGroupTemplate', $value);
+    }
+
+    /**
+    * Sets the groupTemplate option of the MultiSelect.
+    * The template used to render the groups. By default the widget displays only the value of the group.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function groupTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('groupTemplate', $value);
+    }
+
+    /**
+    * Sets the groupTemplate option of the MultiSelect.
+    * The template used to render the groups. By default the widget displays only the value of the group.
+    * @param string $value The template content.
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function groupTemplate($value) {
+        return $this->setProperty('groupTemplate', $value);
+    }
+
+    /**
     * The height of the suggestion popup in pixels. The default value is 200 pixels.
     * @param float $value
     * @return \Kendo\UI\MultiSelect
@@ -231,6 +275,15 @@ A zero value means that a request will be made as soon as the user focuses the w
     */
     public function valuePrimitive($value) {
         return $this->setProperty('valuePrimitive', $value);
+    }
+
+    /**
+    * Enables the virtualization feature of the widget.
+    * @param boolean|\Kendo\UI\MultiSelectVirtual|array $value
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function virtual($value) {
+        return $this->setProperty('virtual', $value);
     }
 
     /**
