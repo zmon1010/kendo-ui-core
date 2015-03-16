@@ -64,6 +64,10 @@ public class SeriesItemHighlightTag extends  BaseTag  /* interfaces *//* interfa
         setEvent("toggle", value.getBody());
     }
 
+    public void setVisual(SeriesItemHighlightVisualFunctionTag value) {
+        setEvent("visual", value.getBody());
+    }
+
     public java.lang.String getColor() {
         return (java.lang.String)getProperty("color");
     }
@@ -98,6 +102,18 @@ public class SeriesItemHighlightTag extends  BaseTag  /* interfaces *//* interfa
 
     public void setVisible(boolean value) {
         setProperty("visible", value);
+    }
+
+    public String getVisual() {
+        Function property = ((Function)getProperty("visual"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setVisual(String value) {
+        setProperty("visual", new Function(value));
     }
 
 //<< Attributes

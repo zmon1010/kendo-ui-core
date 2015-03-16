@@ -24,12 +24,21 @@ class DiagramConnectionDefaults extends \Kendo\SerializableObject {
     }
 
     /**
-    * The start cap (arrow, head or decoration) of the connection:Note that you can also use the "ArrowStart" for the endCap but its direction will be inversed.
-    * @param string $value
+    * The connection end cap fill options or color.
+    * @param string|\Kendo\Dataviz\UI\DiagramConnectionDefaultsEndCap.fill|array $value
     * @return \Kendo\Dataviz\UI\DiagramConnectionDefaults
     */
-    public function endCap($value) {
-        return $this->setProperty('endCap', $value);
+    public function endCap.fill($value) {
+        return $this->setProperty('endCap.fill', $value);
+    }
+
+    /**
+    * The connection end cap stroke options or color.
+    * @param string|\Kendo\Dataviz\UI\DiagramConnectionDefaultsEndCap.stroke|array $value
+    * @return \Kendo\Dataviz\UI\DiagramConnectionDefaults
+    */
+    public function endCap.stroke($value) {
+        return $this->setProperty('endCap.stroke', $value);
     }
 
     /**
@@ -51,8 +60,8 @@ class DiagramConnectionDefaults extends \Kendo\SerializableObject {
     }
 
     /**
-    * The start cap (arrow, head or decoration) of the connection:
-    * @param string $value
+    * The connection start cap configuration or type name.
+    * @param string|\Kendo\Dataviz\UI\DiagramConnectionDefaultsStartCap|array $value
     * @return \Kendo\Dataviz\UI\DiagramConnectionDefaults
     */
     public function startCap($value) {

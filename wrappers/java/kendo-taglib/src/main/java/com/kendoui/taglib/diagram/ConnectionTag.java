@@ -57,6 +57,10 @@ public class ConnectionTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("editable", value);
     }
 
+    public void setEndCap(com.kendoui.taglib.diagram.ConnectionEndCapTag value) {
+        setProperty("endCap", value);
+    }
+
     public void setFrom(com.kendoui.taglib.diagram.ConnectionFromTag value) {
         setProperty("from", value);
     }
@@ -73,6 +77,10 @@ public class ConnectionTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 
     public void setSelection(com.kendoui.taglib.diagram.ConnectionSelectionTag value) {
         setProperty("selection", value);
+    }
+
+    public void setStartCap(com.kendoui.taglib.diagram.ConnectionStartCapTag value) {
+        setProperty("startCap", value);
     }
 
     public void setStroke(com.kendoui.taglib.diagram.ConnectionStrokeTag value) {

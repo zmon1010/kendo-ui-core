@@ -24,8 +24,8 @@ class DiagramConnection extends \Kendo\SerializableObject {
     }
 
     /**
-    * The start cap (arrow, head or decoration) of the connection:Note that you can also use the "ArrowStart" for the endCap but its direction will be inversed.
-    * @param string $value
+    * The connection end cap configuration or type name.
+    * @param string|\Kendo\Dataviz\UI\DiagramConnectionEndCap|array $value
     * @return \Kendo\Dataviz\UI\DiagramConnection
     */
     public function endCap($value) {
@@ -69,8 +69,8 @@ class DiagramConnection extends \Kendo\SerializableObject {
     }
 
     /**
-    * The start cap (arrow, head or decoration) of the connection:
-    * @param string $value
+    * The connection start cap configuration or type name.
+    * @param string|\Kendo\Dataviz\UI\DiagramConnectionStartCap|array $value
     * @return \Kendo\Dataviz\UI\DiagramConnection
     */
     public function startCap($value) {

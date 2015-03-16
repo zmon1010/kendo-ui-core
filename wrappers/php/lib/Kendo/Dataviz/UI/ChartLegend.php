@@ -6,6 +6,15 @@ class ChartLegend extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
+    * The legend horizontal alignment when the legend.position is "top" or "bottom" and the vertical alignment when the legend.position is "left" or "right".The supported values are:
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\ChartLegend
+    */
+    public function align($value) {
+        return $this->setProperty('align', $value);
+    }
+
+    /**
     * The background color of the legend. Accepts a valid CSS color string, including hex and rgb.
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartLegend
@@ -24,7 +33,7 @@ class ChartLegend extends \Kendo\SerializableObject {
     }
 
     /**
-    * The legend height when the legend.position is set to "custom" and the legend.orientation is set to "vertical".
+    * The legend height when the legend.orientation is set to "vertical".
     * @param float $value
     * @return \Kendo\Dataviz\UI\ChartLegend
     */
@@ -91,7 +100,7 @@ A negative value will move the legend upwards from its current position.
     }
 
     /**
-    * The orientation of the legend items when the position legend.position is set to "custom".The supported values are:
+    * The orientation of the legend items.The supported values are:
     * @param string $value
     * @return \Kendo\Dataviz\UI\ChartLegend
     */
@@ -136,7 +145,7 @@ A negative value will move the legend upwards from its current position.
     }
 
     /**
-    * The legend width when the legend.position is set to "custom" and the legend.orientation is set to "horizontal".
+    * The legend width when the legend.orientation is set to "horizontal".
     * @param float $value
     * @return \Kendo\Dataviz\UI\ChartLegend
     */

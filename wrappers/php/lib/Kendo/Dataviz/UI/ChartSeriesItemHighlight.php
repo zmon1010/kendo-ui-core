@@ -65,6 +65,20 @@ By default chart series highlighting is enabled.
         return $this->setProperty('visible', $value);
     }
 
+    /**
+    * Sets the visual option of the ChartSeriesItemHighlight.
+    * A function that can be used to set custom visual for the point highlight.The available argument fields are:
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\ChartSeriesItemHighlight
+    */
+    public function visual($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('visual', $value);
+    }
+
 //<< Properties
 }
 

@@ -642,7 +642,7 @@ or series name (for other available series types) in the legend.
 
     /**
     * Sets the visual option of the ChartSeriesItem.
-    * A function that can be used to create a custom visual for the points. Applicable for bar and column series. The available argument fields are:
+    * A function that can be used to create a custom visual for the points. Applicable for bar, column, rangeBar, rangeColumn and waterfall series. The available argument fields are:
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\ChartSeriesItem
     */

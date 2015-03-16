@@ -53,14 +53,6 @@ public class ShapeDefaultsConnectorTag extends  BaseTag  /* interfaces */ /* int
         setEvent("position", value.getBody());
     }
 
-    public java.lang.String getDescription() {
-        return (java.lang.String)getProperty("description");
-    }
-
-    public void setDescription(java.lang.String value) {
-        setProperty("description", value);
-    }
-
     public java.lang.String getName() {
         return (java.lang.String)getProperty("name");
     }
