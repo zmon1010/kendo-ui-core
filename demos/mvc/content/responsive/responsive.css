@@ -53,12 +53,12 @@ a {
     position: relative;
     min-height: 80px;
     color: #fff;
-    background-color: #0C2D4F;
-    background-image: -webkit-linear-gradient(right, #174770 0%, #092646 100%);
+    background-color: #05172a;
+/*    background-image: -webkit-linear-gradient(right, #174770 0%, #092646 100%);
     background-image: -moz-linear-gradient(right, #174770 0%, #092646 100%);
     background-image: -ms-linear-gradient(right, #174770 0%, #092646 100%);
     background-image: -o-linear-gradient(right, #174770 0%, #092646 100%);
-    background-image: linear-gradient(to left, #174770 0%, #092646 100%);
+    background-image: linear-gradient(to left, #174770 0%, #092646 100%);*/
 }
 
 .responsive-header h1 {
@@ -136,6 +136,29 @@ a {
 }
 
 /* Index page */
+
+.responsive-hero {
+    background-color: #174770;
+    background-image: -webkit-linear-gradient(bottom, #014f80 0%, #092646 100%);
+    background-image: -moz-linear-gradient(bottom, #014f80 0%, #092646 100%);
+    background-image: -ms-linear-gradient(bottom, #014f80 0%, #092646 100%);
+    background-image: -o-linear-gradient(bottom, #014f80 0%, #092646 100%);
+    background-image: linear-gradient(to top, #014f80 0%, #092646 100%);
+    color: #fff;
+    padding-top: 140px;
+    padding-bottom: 140px;
+}
+
+.responsive-hero h2 {
+    font-size: 72px;
+    margin-bottom: 20px;
+}
+
+.responsive-hero p {
+    font-size: 22px;
+    margin-bottom: 120px;
+}
+
 .responsive-btn {
     display: inline-block;
     color: #fff;
@@ -170,7 +193,7 @@ a {
    width: 25%;
    position: relative;
    min-height: 1px;
-   color: #37474f;
+   color: #fff;
 }
 
 .responsive-img {
@@ -300,6 +323,21 @@ a {
     #responsive-nav > li > a {
         padding: 17px;
     }
+    
+    .responsive-hero {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    }
+    
+    .responsive-hero h2 {
+        font-size: 60px;
+        margin-bottom: 20px;
+    }
+    
+    .responsive-hero p {
+        font-size: 22px;
+        margin-bottom: 60px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -386,7 +424,7 @@ a {
         display: block;
         width: 100%;
         float: none;
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: 1px solid rgba(255,255,255,.05);
         padding-top: 30px;
         padding-bottom: 30px;
     }
@@ -398,6 +436,21 @@ a {
 
     .hide-small {
         display: none;
+    }
+    
+    .responsive-hero {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    }
+    
+    .responsive-hero h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+    
+    .responsive-hero p {
+        font-size: 18px;
+        margin-bottom: 0;
     }
 }
 
