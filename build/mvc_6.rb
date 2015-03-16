@@ -51,6 +51,19 @@ MVC_6_DEMOS = FileList[MVC_6_DEMOS_ROOT + '**/*']
                         .sub('demos/mvc/content', MVC_6_DEMOS_WWWROOT + 'shared')
                 )
 
+def update_nuget_reference name
+    return unless File.exists? name
+
+    content = File.read(name)
+    content.gsub!(/"Kendo.Mvc": ".*"/, '"Telerik.UI.for.AspNet.Mvc6.Trial": "' + VERSION + '-*"')
+
+    puts "Updating examples NuGet reference to #{VERSION}"
+
+    File.open(name, 'w') do |file|
+        file.write content
+    end
+end
+
 namespace :mvc_6 do
     tree :to => MVC_6_DEMOS_LIBROOT + 'css',
          :from => MIN_CSS_RESOURCES,
@@ -127,12 +140,20 @@ namespace :mvc_6 do
     task :copy_nuget => ['nuget:mvc6'] do
         [ 'aspnetmvc.trial', 'aspnetmvc.commercial' ].each do |bundle|
             nuget = "dist/bundles/Telerik.UI.for.AspNet.Mvc6.Trial.#{VERSION}#{MVC_6_VERSION_SUFFIX}.nupkg"
-            dest = "dist/bundles/#{bundle}/wrappers/aspnetmvc/Examples/VS2015/packages/"
-
-            p nuget
+            root = "dist/bundles/#{bundle}/wrappers/aspnetmvc/Examples/VS2015"
+            dest = "#{root}/packages/Telerik.UI.for.AspNet.Mvc6.Trial/#{VERSION}#{MVC_6_VERSION_SUFFIX}"
 
             mkdir_p dest
             cp nuget, dest
+
+            sh "cd #{dest} && unzip *.nupkg"
+            cp 'wrappers/mvc-6/NuGet.config', root
+
+            update_nuget_reference "#{root}/Kendo.Mvc.Examples/project.json"
+
+            File.open("#{root}/global.json", 'w') do |file|
+                file.write '{ "packages": "packages" }'
+            end
         end
     end
 end
