@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Northwind" Class="SampleDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Sample" Class="SampleDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\Sample.mdf;Integrated Security=True;User Instance=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SampleConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Products" Member="Products">
     <Type Name="Product">
@@ -45,6 +45,7 @@
       <Column Name="ReportsTo" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="PhotoPath" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Association Name="Employee_Employee" Member="Employees" ThisKey="EmployeeID" OtherKey="ReportsTo" Type="Employee" />
+      <Association Name="Employee_Order" Member="Orders" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="Order" />
       <Association Name="Employee_Employee" Member="Employee1" ThisKey="ReportsTo" OtherKey="EmployeeID" Type="Employee" IsForeignKey="true" />
     </Type>
   </Table>
@@ -62,6 +63,7 @@
       <Column Name="Phone" Type="System.String" DbType="NVarChar(24)" CanBeNull="true" />
       <Column Name="Fax" Type="System.String" DbType="NVarChar(24)" CanBeNull="true" />
       <Column Name="Bool" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Customer_Order" Member="Orders" ThisKey="CustomerID" OtherKey="CustomerID" Type="Order" />
     </Type>
   </Table>
   <Table Name="dbo.Intraday" Member="Intraday">
@@ -88,6 +90,26 @@
       <Column Name="Rain" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
       <Column Name="Snow" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
       <Column Name="Events" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Orders" Member="Orders">
+    <Type Name="Order">
+      <Column Name="OrderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerID" Type="System.String" DbType="NChar(5)" CanBeNull="true" />
+      <Column Name="EmployeeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OrderDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="RequiredDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ShippedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ShipVia" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Freight" Type="System.Decimal" DbType="Decimal(6,2)" CanBeNull="true" />
+      <Column Name="ShipName" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="ShipAddress" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="ShipCity" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="ShipRegion" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="ShipPostalCode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="ShipCountry" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Association Name="Customer_Order" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
+      <Association Name="Employee_Order" Member="Employee" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="Employee" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
