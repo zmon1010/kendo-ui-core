@@ -3,6 +3,7 @@ package com.kendoui.taglib.diagram;
 
 
 import com.kendoui.taglib.BaseTag;
+import com.kendoui.taglib.json.Function;
 
 
 
