@@ -2534,5 +2534,9 @@
     <Compile Include="UI\Diagram\Fluent\DiagramShapeEditableSettingsToolMenuButtonFactory.cs" />
     <Compile Include="UI\Diagram\DiagramShapeEditableSettingsToolMenuButton.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramShapeEditableSettingsToolMenuButtonBuilder.cs" />
+    <Compile Include="UI\ResponsivePanel\ResponsivePanel.cs" />
+    <Compile Include="UI\ResponsivePanel\Fluent\ResponsivePanelBuilder.cs" />
+    <Compile Include="UI\ResponsivePanel\Fluent\ResponsivePanelEventBuilder.cs" />
+    <Compile Include="UI\ResponsivePanel\Html\ResponsivePanelHtmlBuilder.cs" />
   </ItemGroup>
 </Project>

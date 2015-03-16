@@ -1396,6 +1396,21 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Creates a <see cref="ResponsivePanel"/>
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().ResponsivePanel()
+        ///             .Name("ResponsivePanel")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public virtual ResponsivePanelBuilder ResponsivePanel()
+        {
+            return new ResponsivePanelBuilder(new ResponsivePanel(ViewContext, Initializer, UrlGenerator));
+        }
+        
+        /// <summary>
         /// Creates a <see cref="ToolBar"/>
         /// </summary>
         /// <example>

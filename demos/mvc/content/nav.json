@@ -3924,10 +3924,7 @@
         "meta": {
             "kendo-ui": "This demo shows the basic functionality of Kendo UI ResponsivePanel widget, included in Kendo UI Web framework.",
             "aspnet-mvc": "This demo shows the basic functionality of the Telerik ASP.NET MVC ResponsivePanel control."
-        },
-        "packages": [
-          "!mvc"
-        ]
+        }
       }
     ],
     "category": "Layout"
