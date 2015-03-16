@@ -569,8 +569,8 @@
         var dropdownlist = scheduler._editor.container.find("select[data-role=dropdownlist]").data("kendoDropDownList");
 
         var marks = dropdownlist.list.find(".k-scheduler-mark");
-        equal(marks.eq(1)[0].style.backgroundColor, "red");
-        equal(marks.eq(2)[0].style.backgroundColor, "green");
+        equal(marks.eq(0)[0].style.backgroundColor, "red");
+        equal(marks.eq(1)[0].style.backgroundColor, "green");
     });
 
     test("the multiselect items have the color of the event", function() {

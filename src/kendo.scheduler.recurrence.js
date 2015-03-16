@@ -1938,8 +1938,9 @@ var __meta__ = {
         },
 
         value: function(value) {
-            var that = this,
-                timezone = that.options.timezone;
+            var that = this;
+            var timezone = that.options.timezone;
+            var freq;
 
             if (value === undefined) {
                 if (!that._value.freq) {
@@ -1951,7 +1952,14 @@ var __meta__ = {
 
             that._value = parseRule(value, timezone) || {};
 
-            that._frequency.value(that._value.freq || "");
+            freq = that._value.freq;
+
+            if (freq) {
+                that._frequency.value(freq);
+            } else {
+                that._frequency.select(0);
+            }
+
             that._initView(that._frequency.value());
         },
 

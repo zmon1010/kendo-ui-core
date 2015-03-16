@@ -3581,10 +3581,10 @@ var __meta__ = {
 
                 if (!that.trigger("navigate", { view: name, action: "changeView", date: that.date() })) {
                     that.view(name);
-                    that.element.find(".k-state-expanded").removeClass("k-state-expanded"); 
+                    that.element.find(".k-state-expanded").removeClass("k-state-expanded");
                 }
             });
-            
+
             toolbar.on(CLICK + NS, ".k-scheduler-views li.k-current-view", function(e) {
                 that.element.find(".k-scheduler-views").toggleClass("k-state-expanded");
             });
@@ -3774,6 +3774,17 @@ var __meta__ = {
             that._zoneTitlePicker();
             that._zonePicker();
 
+            that._zoneTitle.bind("cascade", function() {
+                if (!this.value()) {
+                    that._zone.wrapper.hide();
+                }
+            });
+
+            that._zone.bind("cascade", function() {
+                that._value = this.value();
+                that.trigger("change");
+            });
+
             that.value(that.options.value);
         },
         options: {
@@ -3791,12 +3802,7 @@ var __meta__ = {
                 dataSource: kendo.timezone.zones_titles,
                 dataValueField: "other_zone",
                 dataTextField: "name",
-                optionLabel: that.options.optionLabel,
-                cascade: function() {
-                    if (!this.value()) {
-                        that._zone.wrapper.hide();
-                    }
-                }
+                optionLabel: that.options.optionLabel
             });
         },
 
@@ -3809,10 +3815,6 @@ var __meta__ = {
                 dataTextField: "territory",
                 dataSource: that._zonesQuery.data,
                 cascadeFrom: that._zoneTitleId,
-                cascade: function() {
-                    that._value = this.value();
-                    that.trigger("change");
-                },
                 dataBound: function() {
                     that._value = this.value();
                     this.wrapper.toggle(this.dataSource.view().length > 1);
@@ -3842,7 +3844,7 @@ var __meta__ = {
                 that._zoneTitle.value(zone.other_zone);
                 that._zone.value(zone.zone);
             } else {
-                that._zoneTitle.value("");
+                that._zoneTitle.select(0);
             }
 
         }
