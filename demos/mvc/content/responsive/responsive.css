@@ -68,11 +68,21 @@ a {
 
 #responsive-nav > li {
     float: left;
+    border-bottom: 3px solid transparent;
+}
+
+#responsive-nav > li.selected {
+    float: left;
+    border-color: #00b5f1;
 }
 
 #responsive-nav > li > a {
     padding: 30px;
     color: #fff;
+}
+
+#responsive-nav > li > a:hover {
+    color: #00b5f1;
 }
 
 .responsive-section {
@@ -82,21 +92,19 @@ a {
     padding-bottom: 80px;
 }
 
-.responsive-index .responsive-documentation-section,
 .responsive-bootstrap-section {
     background: #f3f5f7;
 }
 
-.responsive-index .responsive-bootstrap-section {
-    background: #fff;
-}
-
 .responsive-section h2 {
-    font: 36px "FaktSlabPro-Medium", Arial, Helvetica, sans-serif;  
+    font: 36px "Roboto Slab", Arial, Helvetica, sans-serif;  
 }
 
 .responsive-section h3 {
-    font: 24px "FaktSlabPro-Medium", Arial, Helvetica, sans-serif;  
+    font: 24px "Roboto Slab", Arial, Helvetica, sans-serif;
+    display: inline-block;
+    border-bottom: 1px solid rgba(255,255,255,.6);
+    height: 28px;
 }
 
 
@@ -181,6 +189,14 @@ a {
    min-height: 1px;
    color: #fff;
 }
+
+.responsive-widget:hover {
+   color: #00b5f1;
+}
+.responsive-widget:hover h3 {
+   border-color: #00b5f1;
+}
+
 
 .responsive-img {
     margin-bottom: 30px;

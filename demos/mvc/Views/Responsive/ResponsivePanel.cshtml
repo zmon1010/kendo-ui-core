@@ -2,4 +2,17 @@
     Layout = "ResponsiveLayout.cshtml";
 }
 
-<h2>ResponsivePanel</h2>
+<div class="responsive-section">
+    <h2>Kendo UI ResponsivePanel</h2>
+    <p>The main menu above is wrapped in Kendo UI ResponsivePanel.
+        Resize the browser window under 768px breakpoint and see how a toggle icon (hamburger) appears and the menu transforms into dropdown.</p>
+
+    @Html.Partial("QRCode")
+</div>
+
+<div class="responsive-widget-wrapper ">
+
+    @Html.Partial("Rulers")
+
+    <div class="responsive-horizontal-ruler bottom-ruler"></div>
+</div>
