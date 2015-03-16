@@ -81,6 +81,14 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("destroy", value);
     }
 
+    public java.lang.String getEditRecurringMode() {
+        return (java.lang.String)getProperty("editRecurringMode");
+    }
+
+    public void setEditRecurringMode(java.lang.String value) {
+        setProperty("editRecurringMode", value);
+    }
+
     public boolean getMove() {
         return (boolean)getProperty("move");
     }

@@ -24812,6 +24812,12 @@ That way all users would see the same dates and times no matter their configured
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>Recurring events edit mode. The available modes are: "dialog" (default), "series" and "occurrence".</description>
+            <name>editRecurringMode</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>If set to true the scheduler allows event moving. Dragging the event changes the start and end time.</description>
             <name>move</name>
             <rtexprvalue>true</rtexprvalue>
