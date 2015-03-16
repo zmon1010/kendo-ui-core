@@ -1111,6 +1111,16 @@
         }
       },
       {
+        "text": "Virtualization",
+        "url": "dropdownlist/virtualization",
+        "title": {
+            "kendo-ui": "Example of virtualization in Kendo UI DropDownList widget"
+        },
+        "meta": {
+            "kendo-ui": "See how the virtual dropdown list of Kendo UI DropDownList is filtered on the the server based on the input."
+        }
+      },
+      {
         "packages": [
           "mvc-offline",
           "jsp"

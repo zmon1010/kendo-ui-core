@@ -1,0 +1,56 @@
+
+        <div id="example">
+
+            <div class="demo-section k-header">
+                <h4>Orders</h4>
+                <input id="orders" style="width: 400px" />
+            </div>
+
+            <script>
+                $(document).ready(function() {
+                    $("#orders").kendoDropDownList({
+                        template: "#= OrderID # | For: #= ShipName #, #= ShipCountry #",
+                        dataTextField: "ShipName",
+                        dataValueField: "OrderID",
+                        filter: "contains",
+                        virtual: {
+                            itemHeight: 26
+                        },
+                        height: 520,
+                        dataSource: {
+                            type: "odata",
+                            transport: {
+                                read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                            },
+                            schema: {
+                                model: {
+                                    fields: {
+                                        OrderID: { type: "number" },
+                                        Freight: { type: "number" },
+                                        ShipName: { type: "string" },
+                                        OrderDate: { type: "date" },
+                                        ShipCity: { type: "string" }
+                                    }
+                                }
+                            },
+                            pageSize: 80,
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true
+                        }
+                    });
+                });
+            </script>
+
+            <style>
+                .demo-section {
+                    width: 400px;
+                }
+                .demo-section h2 {
+                    text-transform: uppercase;
+                    font-size: 1.2em;
+                    margin-bottom: 10px;
+                }
+            </style>
+
+        </div>
