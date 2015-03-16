@@ -1,17 +1,3 @@
-/* h2, h3 font */
-@font-face {
-  font-family: "FaktSlabPro-Medium";
-  src: url("../shared/styles/fonts/FaktSlabPro-Medium.eot");
-  src: url("../shared/styles/fonts/FaktSlabPro-Medium.eot?#iefix") format("embedded-opentype"), url("../shared/styles/fonts/FaktSlabPro-Medium.woff") format("woff"), url("../shared/styles/fonts/FaktSlabPro-Medium.ttf") format("truetype"), url("../shared/styles/fonts/FaktSlabPro-Medium.svg#FaktSlabPro-Medium") format("svg");
-}
-
-/* .responsive-section p */
-/*@font-face {
-  font-family: "MetricWeb-Semibold";
-  src: url("../shared/styles/fonts/MetricWeb-Semibold.eot");
-  src: url("../shared/styles/fonts/MetricWeb-Semibold.eot?#iefix") format("embedded-opentype"), url("../shared/styles/fonts/MetricWeb-Semibold.woff") format("woff"), url("../shared/styles/fonts/MetricWeb-Semibold.ttf") format("truetype"), url("../shared/styles/fonts/MetricWeb-Semibold.svg#MetricWeb-Semibold") format("svg");
-}*/
-
 @font-face {
     font-family: "Kendo UI Examples";
     src: url("../shared/styles/kendoui.woff") format("woff"),

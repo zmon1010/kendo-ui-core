@@ -1,18 +1,4 @@
-/*reset*/
-/* h1 font */
-@font-face {
-  font-family: "MetricWeb-Semibold";
-  src: url("fonts/MetricWeb-Semibold.eot");
-  src: url("fonts/MetricWeb-Semibold.eot?#iefix") format("embedded-opentype"), url("fonts/MetricWeb-Semibold.woff") format("woff"), url("fonts/MetricWeb-Semibold.ttf") format("truetype"), url("fonts/MetricWeb-Semibold.svg#MetricWeb-Semibold") format("svg");
-}
-
-/* h2, h3 font */
-@font-face {
-  font-family: "FaktSlabPro-Medium";
-  src: url("fonts/FaktSlabPro-Medium.eot");
-  src: url("fonts/FaktSlabPro-Medium.eot?#iefix") format("embedded-opentype"), url("fonts/FaktSlabPro-Medium.woff") format("woff"), url("fonts/FaktSlabPro-Medium.ttf") format("truetype"), url("fonts/FaktSlabPro-Medium.svg#FaktSlabPro-Medium") format("svg");
-}
-
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab);
 
 /* New font */
 @font-face {
@@ -2716,7 +2702,7 @@ a.footer-links:hover,
 
 #overview h2 {
     color: #000;
-    font: 400 28px/1 "FaktSlabPro-Medium", Arial, Helvetica, sans-serif;
+    font: 400 28px/1 "Roboto Slab", Arial, Helvetica, sans-serif;
     text-align: left;
     padding: 2.5em 0 0.700em 0;
 }
