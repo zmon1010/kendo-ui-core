@@ -118,7 +118,7 @@ settings are available for the depth value:
 
     /**
     * Specifies a list of date formats used to parse the value set with value() method or by direct user input. If not set the value of the format will be used.
- Note that format option is always used parsing process.
+ Note that the format option is always used during parsing.
     * @param array $value
     * @return \Kendo\UI\DatePicker
     */
