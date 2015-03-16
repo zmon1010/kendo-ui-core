@@ -48,6 +48,32 @@
         }
       },
       {
+        "text": "Virtualization",
+        "url": "autocomplete/virtualization",
+        "title": {
+            "kendo-ui": "Virtualization in Kendo UI Autocomplete widget | Kendo UI Demo",
+            "aspnet-mvc": "Virtualization in ASP.NET MVC Autocomplete control"
+        },
+        "meta": {
+            "kendo-ui": "This demo of Kendo UI Autocomplete control shows how load large amount of data in the autocomplete widget",
+            "aspnet-mvc": "This demo of Kendo UI Autocomplete control shows how load large amount of data in the autocomplete widget"
+        },
+        "new": true
+      },
+      {
+        "text": "Grouping",
+        "url": "autocomplete/grouping",
+        "title": {
+            "kendo-ui": "Grouping in Kendo UI Autocomplete widget | Kendo UI Demo",
+            "aspnet-mvc": "Grouping in ASP.NET MVC Autocomplete control"
+        },
+        "meta": {
+            "kendo-ui": "This demo of Kendo UI Autocomplete control shows how load grouped data in the autocomplete widget",
+            "aspnet-mvc": "This demo of Kendo UI Autocomplete control shows how load grouped data in the autocomplete widget"
+        },
+        "new": true
+      },
+      {
         "packages": [
           "mvc-offline"
         ],
