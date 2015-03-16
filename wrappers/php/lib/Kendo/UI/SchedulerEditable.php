@@ -33,6 +33,15 @@ class SchedulerEditable extends \Kendo\SerializableObject {
     }
 
     /**
+    * Recurring events edit mode. The available modes are: "dialog" (default), "series" and "occurrence".
+    * @param string $value
+    * @return \Kendo\UI\SchedulerEditable
+    */
+    public function editRecurringMode($value) {
+        return $this->setProperty('editRecurringMode', $value);
+    }
+
+    /**
     * If set to true the scheduler allows event moving. Dragging the event changes the start and end time.
     * @param boolean $value
     * @return \Kendo\UI\SchedulerEditable
