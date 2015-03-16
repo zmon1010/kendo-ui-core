@@ -115,7 +115,6 @@ a {
 
 
 .responsive-section > p {
-    /*font: 100 16px "MetricWeb-Semibold", Arial, Helvetica, sans-serif;*/
     font: 400 16px/1.25 Arial,Helvetica,sans-serif;
 }
 
@@ -373,8 +372,9 @@ a {
     }
 
     .k-rpanel-toggle {
-        position: relative;
-        float: right;
+        position: absolute;
+        top: 0;
+        right: 0;
     }
 
     .responsive-widgets-container {
