@@ -822,6 +822,7 @@
     <Compile Include="UI\Scheduler\Fluent\SchedulerToolbarFactory.cs" />
     <Compile Include="UI\Scheduler\SchedulerToolbarCommand.cs" />
     <Compile Include="UI\Scheduler\SchedulerToolbarCommandType.cs" />
+    <Compile Include="UI\Scheduler\Settings\SchedulerEditRecurringMode.cs" />
     <Compile Include="UI\Scheduler\Views\SchedulerTimelineMonthView.cs" />
     <Compile Include="UI\Settings\PDFSettings.cs" />
     <Compile Include="UI\Grid\Settings\GridExcelSettings.cs" />

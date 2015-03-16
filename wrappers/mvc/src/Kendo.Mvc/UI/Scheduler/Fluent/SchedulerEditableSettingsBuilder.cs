@@ -115,6 +115,7 @@
 
             return this;
         }
+
         /// <summary>
         /// If set to true the scheduler will display a confirmation dialog when the user clicks the "destroy" button. Confirmation dialog is enabled by default.
         /// </summary>
@@ -126,5 +127,15 @@
             return this;
         }
 
+        /// <summary>
+        /// Recurring events edit mode.
+        /// </summary>
+        /// <param name="editRecurringMode">The edit recurrence mode.</param>
+        public SchedulerEditableSettingsBuilder<T> EditRecurringMode(SchedulerEditRecurringMode editRecurringMode)
+        {
+            container.EditRecurringMode = editRecurringMode;
+
+            return this;
+        }
     }
 }

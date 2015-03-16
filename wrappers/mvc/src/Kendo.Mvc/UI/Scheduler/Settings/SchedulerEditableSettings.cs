@@ -38,6 +38,8 @@
 
         public bool Move { get; set; }
 
+        public SchedulerEditRecurringMode EditRecurringMode { get; set; }
+
         public string TemplateName
         {
             get;
@@ -86,6 +88,9 @@
             {
                 json["move"] = false;
             }
+
+            string editRecurringMode = EditRecurringMode.ToString();
+            json["editRecurringMode"] = Char.ToLowerInvariant(editRecurringMode[0]) + editRecurringMode.Substring(1);
         }
 
         private void SerializeEditTemplate(IDictionary<string, object> options)
