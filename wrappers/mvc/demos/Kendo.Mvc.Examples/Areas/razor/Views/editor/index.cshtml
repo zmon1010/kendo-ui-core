@@ -1,6 +1,15 @@
 @(Html.Kendo().Editor()
       .Name("editor")
       .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .Resizable()
+      .ImageBrowser(imageBrowser => imageBrowser
+          .Image("~/Content/UserFiles/Images/{0}")
+          .Read("Read", "ImageBrowser")
+          .Create("Create", "ImageBrowser")
+          .Destroy("Destroy", "ImageBrowser")
+          .Upload("Upload", "ImageBrowser")
+          .Thumbnail("Thumbnail", "ImageBrowser")
+      )
       .Value(@<text>
             <p>
                <img src="@Url.Content("~/content/web/editor/kendo-ui-web.png")" alt="Editor for ASP.NET MVC logo" style="display:block;margin-left:auto;margin-right:auto;" />
@@ -25,11 +34,4 @@
                 <a href="http://www.telerik.com/forums">feedback</a>!
             </p>
       </text>)
-.ImageBrowser(imageBrowser => imageBrowser
-    .Image("~/Content/UserFiles/Images/{0}")    
-    .Read("Read", "ImageBrowser")
-    .Create("Create", "ImageBrowser")
-    .Destroy("Destroy", "ImageBrowser")
-    .Upload("Upload", "ImageBrowser")
-    .Thumbnail("Thumbnail", "ImageBrowser"))
 )

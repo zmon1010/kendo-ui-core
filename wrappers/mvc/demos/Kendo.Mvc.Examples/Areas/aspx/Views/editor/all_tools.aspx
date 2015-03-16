@@ -26,6 +26,7 @@
         .FontName()
         .FontSize()
         .FontColor().BackColor()
+        .Print()
       )
       .Value(() =>
            { %>

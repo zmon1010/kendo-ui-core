@@ -138,6 +138,11 @@ namespace Kendo.Mvc.UI.Fluent
             return Button("viewHtml");
         }
 
+        public EditorToolFactory Print()
+        {
+            return Button("print");
+        }
+
         public EditorToolFactory FontName()
         {
             return ComboBox("fontName", null);

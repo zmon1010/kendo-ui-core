@@ -8,6 +8,14 @@
 <% Html.Kendo().Editor()
       .Name("editor")
       .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .Resizable()
+      .ImageBrowser(imageBrowser => imageBrowser
+        .Image("~/Content/UserFiles/Images/{0}")
+        .Read("Read", "ImageBrowser")
+        .Create("Create", "ImageBrowser")
+        .Destroy("Destroy", "ImageBrowser")
+        .Upload("Upload", "ImageBrowser")
+        .Thumbnail("Thumbnail", "ImageBrowser"))
       .Value(() =>
            { %>
             &lt;p&gt;
@@ -33,13 +41,6 @@
                 &lt;a href="http://www.telerik.com/forums"&gt;feedback&lt;/a&gt;!
             &lt;/p&gt;
       <% })
-      .ImageBrowser(imageBrowser => imageBrowser
-        .Image("~/Content/UserFiles/Images/{0}")
-        .Read("Read", "ImageBrowser")
-        .Create("Create", "ImageBrowser")
-        .Destroy("Destroy", "ImageBrowser")
-        .Upload("Upload", "ImageBrowser")
-        .Thumbnail("Thumbnail", "ImageBrowser"))
       .Render();
 %>
 
