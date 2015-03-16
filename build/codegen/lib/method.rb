@@ -62,7 +62,7 @@ module CodeGen
             @description = settings[:description] || ''
             @owner = settings[:owner]
             @parameters = []
-            @result = result_class.new(settings[:result]) if settings[:result]
+            @result = result_class.new(settings[:result], self) if settings[:result]
         end
 
     end
@@ -70,8 +70,10 @@ module CodeGen
     class Result
         attr_reader :type, :description
 
-        def initialize(settings)
+        def initialize(settings, owner)
             @type = settings[:type]
+
+            throw "Missing return type for #{owner.name} (#{owner.description})" if @type.nil?
 
             @description = settings[:description]
         end
