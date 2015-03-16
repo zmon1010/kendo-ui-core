@@ -78,6 +78,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the highlight visual handler.
+        /// </summary>
+        /// <value>
+        /// The highlight visual handler.
+        /// </value>
+        public ClientHandlerDescriptor Visual
+        {
+            get;
+            set;
+        }
+
         public IChartSerializer CreateSerializer()
         {
             return new ChartSeriesHighlightSerializer(this);

@@ -61,5 +61,33 @@ namespace Kendo.Mvc.UI.Fluent
             };
             return this;
         }
+
+
+        /// <summary>
+        /// Sets the highlight visual handler
+        /// </summary>
+        /// <param name="handler">The visual handler name.</param>  
+        public ChartSeriesHighlightBuilder Visual(string handler)
+        {
+            Highlight.Visual = new ClientHandlerDescriptor
+            {
+                HandlerName = handler
+            };
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the highlight visual handler
+        /// </summary>
+        /// <param name="handler">The visual handler</param>  
+        public ChartSeriesHighlightBuilder Visual(Func<object, object> handler)
+        {
+            Highlight.Visual = new ClientHandlerDescriptor
+            {
+                TemplateDelegate = handler
+            };
+            return this;
+        }
+
     }
 }
