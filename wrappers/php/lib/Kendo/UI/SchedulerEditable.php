@@ -92,6 +92,15 @@ which field to update. The other option is to use MVVM bindings in order to bind
         return $this->setProperty('update', $value);
     }
 
+    /**
+    * Configures the Kendo UI Window instance, which is used when the Grid edit mode is "popup". The configuration is optional.For more information, please refer to the Window configuration API.
+    * @param  $value
+    * @return \Kendo\UI\SchedulerEditable
+    */
+    public function window($value) {
+        return $this->setProperty('window', $value);
+    }
+
 //<< Properties
 }
 

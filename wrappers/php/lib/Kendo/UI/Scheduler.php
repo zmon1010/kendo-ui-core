@@ -79,8 +79,8 @@ data source is fired. By default the widget will bind to the data source specifi
     /**
     * Sets the dateHeaderTemplate option of the Scheduler.
     * The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd".
-The "ddd" specifier, a.k.a abbreviated name of the week day, will be localized using the current Kendo UI culture.
-If the developer wants to control the day and month order then one needs to define a custom template.The fields which can be used in the template are:
+The "ddd" specifier represents the abbreviated name of the week day and will be localized using the current Kendo UI culture.
+If the developer wants to control the day and month order, then one needs to define a custom template.The fields which can be used in the template are:
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\Scheduler
     */
@@ -93,8 +93,8 @@ If the developer wants to control the day and month order then one needs to defi
     /**
     * Sets the dateHeaderTemplate option of the Scheduler.
     * The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd".
-The "ddd" specifier, a.k.a abbreviated name of the week day, will be localized using the current Kendo UI culture.
-If the developer wants to control the day and month order then one needs to define a custom template.The fields which can be used in the template are:
+The "ddd" specifier represents the abbreviated name of the week day and will be localized using the current Kendo UI culture.
+If the developer wants to control the day and month order, then one needs to define a custom template.The fields which can be used in the template are:
     * @param string $value The template content.
     * @return \Kendo\UI\Scheduler
     */

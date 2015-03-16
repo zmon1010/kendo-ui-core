@@ -78,21 +78,21 @@ class SchedulerMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * The text displayed by the PDF export button.
-    * @param string $value
-    * @return \Kendo\UI\SchedulerMessages
-    */
-    public function pdf($value) {
-        return $this->setProperty('pdf', $value);
-    }
-
-    /**
     * The text similar to "All events" displayed in timeline views when there is no vertical grouping.
     * @param string $value
     * @return \Kendo\UI\SchedulerMessages
     */
     public function defaultRowText($value) {
         return $this->setProperty('defaultRowText', $value);
+    }
+
+    /**
+    * The text displayed by the PDF export button.
+    * @param string $value
+    * @return \Kendo\UI\SchedulerMessages
+    */
+    public function pdf($value) {
+        return $this->setProperty('pdf', $value);
     }
 
     /**

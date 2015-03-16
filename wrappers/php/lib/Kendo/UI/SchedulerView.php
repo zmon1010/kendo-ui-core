@@ -69,7 +69,9 @@ class SchedulerView extends \Kendo\SerializableObject {
 
     /**
     * Sets the dateHeaderTemplate option of the SchedulerView.
-    * The template used to render the date header cells.By default the scheduler renders the date using the current culture date format.The fields which can be used in the template are:
+    * The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd".
+The "ddd" specifier, a.k.a abbreviated name of the week day, will be localized using the current Kendo UI culture.
+If the developer wants to control the day and month order then one needs to define a custom template.The fields which can be used in the template are:
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\SchedulerView
     */
@@ -81,7 +83,9 @@ class SchedulerView extends \Kendo\SerializableObject {
 
     /**
     * Sets the dateHeaderTemplate option of the SchedulerView.
-    * The template used to render the date header cells.By default the scheduler renders the date using the current culture date format.The fields which can be used in the template are:
+    * The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd".
+The "ddd" specifier, a.k.a abbreviated name of the week day, will be localized using the current Kendo UI culture.
+If the developer wants to control the day and month order then one needs to define a custom template.The fields which can be used in the template are:
     * @param string $value The template content.
     * @return \Kendo\UI\SchedulerView
     */
@@ -321,7 +325,7 @@ class SchedulerView extends \Kendo\SerializableObject {
     }
 
     /**
-    * The type of the view. The built-in views are: "day", "week", "workWeek", "month", "agenda", "timeline", "timelineWeek" and "timelineWorkWeek".
+    * The type of the view. The built-in views are: "day", "week", "workWeek", "month", "agenda", "timeline", "timelineWeek", "timelineWorkWeek" and "timelineMonth".
     * @param string $value
     * @return \Kendo\UI\SchedulerView
     */
