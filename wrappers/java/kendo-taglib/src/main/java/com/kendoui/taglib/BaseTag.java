@@ -113,7 +113,11 @@ public abstract class BaseTag extends BodyTagSupport implements Serializable {
     }
 
     public Object findParentWithClass(Class<?> clazz) throws JspException {
-        Object parent = findParent(clazz);
+        Object parent = this.getParent();
+
+        while (parent != null && !clazz.isAssignableFrom(parent.getClass())) {
+            parent = ((Tag) parent).getParent();
+        }
 
         if (parent == null || !clazz.isAssignableFrom(parent.getClass())) {
             StringBuilder exception = new StringBuilder();
@@ -139,8 +143,8 @@ public abstract class BaseTag extends BodyTagSupport implements Serializable {
     public Object findParent(Class<?> clazz) {
         Object parent = getParent();
 
-        while (parent != null && !clazz.isAssignableFrom(parent.getClass())) {
-            parent = ((Tag) parent).getParent();
+        if (parent == null || !clazz.isAssignableFrom(parent.getClass())) {
+            return null;
         }
 
         return parent;
