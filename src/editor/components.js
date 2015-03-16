@@ -20,7 +20,7 @@ var SelectBox = DropDownList.extend({
             this.bind("dataBound", $.proxy(this._initSelectOverlay, this));
         }
 
-        that.value(that.options.title);
+        that.text(that.options.title);
 
         that.bind("open", function() {
             if (that.options.autoSize) {
@@ -47,7 +47,8 @@ var SelectBox = DropDownList.extend({
         });
     },
     options: {
-        name: "SelectBox"
+        name: "SelectBox",
+        index: -1
     },
 
     _initSelectOverlay: function() {
@@ -91,15 +92,8 @@ var SelectBox = DropDownList.extend({
             return result;
         }
 
-        if (value !== DropDownList.fn.value.call(that)) {
+        if (!DropDownList.fn.value.call(that)) {
            that.text(that.options.title);
-
-           if (that._current) {
-               that._current.removeClass("k-state-selected");
-           }
-
-           that.current(null);
-           that._oldIndex = that.selectedIndex = -1;
         }
     },
 
