@@ -63,6 +63,15 @@ This property has been introduced in internal builds after 2014.1.319.
     }
 
     /**
+    * Configures the Kendo UI Editor PDF export settings.
+    * @param \Kendo\UI\EditorPdf|array $value
+    * @return \Kendo\UI\Editor
+    */
+    public function pdf($value) {
+        return $this->setProperty('pdf', $value);
+    }
+
+    /**
     * If enabled, the editor renders a resize handle to allow users to resize it.
     * @param boolean|\Kendo\UI\EditorResizable|array $value
     * @return \Kendo\UI\Editor
@@ -117,15 +126,6 @@ and a contenteditable iframe is generated.
         return $this->setProperty('fileBrowser', $value);
     }
 
-    /**
-    * Configuration for PDF export.
-    * @param \Kendo\UI\EditorPdf|array $value
-    * @return \Kendo\UI\Editor
-    */
-    public function pdf($value) {
-        return $this->setProperty('pdf', $value);
-    }
-    
     /**
     * The tag that will be rendered. Defaults to "textarea". Triggers the inline edit mode if different.
     * @param string $value
@@ -203,6 +203,20 @@ and a contenteditable iframe is generated.
         }
 
         return $this->setProperty('paste', $value);
+    }
+
+    /**
+    * Sets the pdfExport event of the Editor.
+    * Fired when the user clicks the "Export to PDF" toolbar button.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Editor
+    */
+    public function pdfExport($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('pdfExport', $value);
     }
 
     /**

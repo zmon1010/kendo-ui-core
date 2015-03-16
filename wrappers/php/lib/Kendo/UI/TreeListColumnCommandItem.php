@@ -6,24 +6,6 @@ class TreeListColumnCommandItem extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The name of the command. The built-in commands are "edit", "createChild" and "destroy". When set to a custom value, it is rendered as a data-command attribute.
-    * @param string $value
-    * @return \Kendo\UI\TreeListColumnCommandItem
-    */
-    public function name($value) {
-        return $this->setProperty('name', $value);
-    }
-
-    /**
-    * The text displayed by the command button. If not set the name option is used as the button text.
-    * @param string $value
-    * @return \Kendo\UI\TreeListColumnCommandItem
-    */
-    public function text($value) {
-        return $this->setProperty('text', $value);
-    }
-
-    /**
     * The CSS class applied to the command button.
     * @param string $value
     * @return \Kendo\UI\TreeListColumnCommandItem
@@ -44,6 +26,24 @@ class TreeListColumnCommandItem extends \Kendo\SerializableObject {
         }
 
         return $this->setProperty('click', $value);
+    }
+
+    /**
+    * The name of the command. The built-in commands are "edit", "createChild" and "destroy". When set to a custom value, it is rendered as a data-command attribute.
+    * @param string $value
+    * @return \Kendo\UI\TreeListColumnCommandItem
+    */
+    public function name($value) {
+        return $this->setProperty('name', $value);
+    }
+
+    /**
+    * The text displayed by the command button. If not set the name option is used as the button text.
+    * @param string $value
+    * @return \Kendo\UI\TreeListColumnCommandItem
+    */
+    public function text($value) {
+        return $this->setProperty('text', $value);
     }
 
 //<< Properties

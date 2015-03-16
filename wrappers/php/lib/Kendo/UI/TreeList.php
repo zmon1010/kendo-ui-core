@@ -28,6 +28,15 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
+    * If set to true allows users to resize columns by dragging their header borders. By default resizing is disabled.
+    * @param boolean $value
+    * @return \Kendo\UI\TreeList
+    */
+    public function resizable($value) {
+        return $this->setProperty('resizable', $value);
+    }
+
+    /**
     * If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
     * @param boolean $value
     * @return \Kendo\UI\TreeList

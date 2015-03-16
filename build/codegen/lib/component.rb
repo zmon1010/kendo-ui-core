@@ -61,6 +61,8 @@ module CodeGen
         def import(metadata)
             @content = metadata[:content]
 
+            return unless metadata[:options]
+
             metadata[:options].each do |option|
 
                 if option[:merge]

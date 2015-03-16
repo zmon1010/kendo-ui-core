@@ -3927,8 +3927,7 @@
         },
         "packages": [
           "!mvc",
-          "!jsp",
-          "!php"
+          "!jsp"
         ]
       }
     ],

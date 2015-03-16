@@ -6,7 +6,7 @@ class TreeListSortable extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * If set to true the user can get the treelist in unsorted state by clicking the sorted column header.
+    * If set to true the user can get the treelist in its unsorted state by clicking the sorted column header.
     * @param boolean $value
     * @return \Kendo\UI\TreeListSortable
     */
@@ -15,7 +15,7 @@ class TreeListSortable extends \Kendo\SerializableObject {
     }
 
     /**
-    * The sorting mode. If set to "single" the user can sort by one column. If set to "multiple" the user can sort by one column.
+    * The sorting mode. If set to "single" the user can sort by one column. If set to "multiple" the user can sort by multiple columns.
     * @param string $value
     * @return \Kendo\UI\TreeListSortable
     */

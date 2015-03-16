@@ -285,6 +285,15 @@ class EditorMessages extends \Kendo\SerializableObject {
     }
 
     /**
+    * The title of the iframe editing area when a sandboxed editor is used. Used as a hint for screen readers.
+    * @param string $value
+    * @return \Kendo\UI\EditorMessages
+    */
+    public function editAreaTitle($value) {
+        return $this->setProperty('editAreaTitle', $value);
+    }
+
+    /**
     * The caption of the sorting order in the file- or imageBrowser.
     * @param string $value
     * @return \Kendo\UI\EditorMessages
