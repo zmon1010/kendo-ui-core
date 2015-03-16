@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
@@ -20,7 +21,9 @@ namespace Kendo.Mvc.UI
             Value = null;
         }
 
-        public CultureInfo CultureInfo
+		public PopupAnimation Animation { get; } = new PopupAnimation();
+
+		public CultureInfo CultureInfo
         {
             get
             {
@@ -63,9 +66,13 @@ namespace Kendo.Mvc.UI
         {
             var settings = SerializeSettings();
 
-            // TODO: Manually serialized settings go here
+			var animation = Animation.ToJson();
+			if (animation.Any())
+			{
+				settings["animation"] = animation["animation"];
+			}
 
-            writer.Write(Initializer.Initialize(Selector, "DateTimePicker", settings));
+			writer.Write(Initializer.Initialize(Selector, "DateTimePicker", settings));
         }
     }
 }
