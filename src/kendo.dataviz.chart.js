@@ -6533,6 +6533,10 @@ var __meta__ = {
         },
 
         drawLines: function(container, options, lines, lineOptions) {
+            if (!lines) {
+                return;
+            }
+
             var lineStyle = {
                 stroke: {
                     color: lineOptions.color || this.color,
