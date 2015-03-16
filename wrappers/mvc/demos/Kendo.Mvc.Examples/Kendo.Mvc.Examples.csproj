@@ -1320,6 +1320,7 @@
     <Content Include="Areas\aspx\Views\collapsible\index.aspx" />
     <Content Include="Areas\aspx\Views\collapsible\nested.aspx" />
     <None Include="Areas\razor\Views\diagram\editing.cshtml" />
+    <None Include="Areas\razor\Views\grid\filter_multi_checkboxes.cshtml" />
     <Content Include="Areas\razor\Views\range_bar_charts\index.cshtml" />
     <Content Include="Areas\razor\Views\diagram\index.cshtml" />
     <Content Include="Areas\razor\Views\diagram\layout.cshtml" />
