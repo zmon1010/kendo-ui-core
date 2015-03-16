@@ -5,17 +5,14 @@ package com.kendoui.taglib.combobox;
 import com.kendoui.taglib.BaseTag;
 
 
-
 import com.kendoui.taglib.ComboBoxTag;
-
-
-
-
+import com.kendoui.taglib.json.Function;
 import javax.servlet.jsp.JspException;
+
 
 @SuppressWarnings("serial")
 public class VirtualTag extends  BaseTag  /* interfaces */ /* interfaces */ {
-    
+
     @Override
     public int doEndTag() throws JspException {
 //>> doEndTag

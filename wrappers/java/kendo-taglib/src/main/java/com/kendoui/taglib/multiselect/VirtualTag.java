@@ -5,17 +5,14 @@ package com.kendoui.taglib.multiselect;
 import com.kendoui.taglib.BaseTag;
 
 
-
 import com.kendoui.taglib.MultiSelectTag;
-
-
-
-
+import com.kendoui.taglib.json.Function;
 import javax.servlet.jsp.JspException;
+
 
 @SuppressWarnings("serial")
 public class VirtualTag extends  BaseTag  /* interfaces */ /* interfaces */ {
-    
+
     @Override
     public int doEndTag() throws JspException {
 //>> doEndTag
