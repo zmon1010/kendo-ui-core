@@ -60,6 +60,7 @@
         "./kendo.splitter",
         "./kendo.upload",
         "./kendo.window",
+        "./kendo.virtuallist",
         "./kendo.scheduler.view",
         "./kendo.scheduler.dayview",
         "./kendo.scheduler.agendaview",
