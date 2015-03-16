@@ -54,15 +54,24 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new DiagramConnectionDefaultsEditableSettingsBuilder<TShapeModel,TConnectionModel>(container.Editable));
             return this;
         }
-        
-        /// <summary>
-        /// The start cap (arrow, head or decoration) of the connection:Note that you can also use the "ArrowStart" for the endCap but its direction will be inversed.
-        /// </summary>
-        /// <param name="value">The value that configures the endcap.</param>
-        public DiagramConnectionDefaultsSettingsBuilder<TShapeModel,TConnectionModel> EndCap(string value)
-        {
-            container.EndCap = value;
 
+        /// <summary>
+        /// The connection end cap type.
+        /// </summary>
+        /// <param name="type">The end cap type.</param>
+        public DiagramConnectionDefaultsSettingsBuilder<TShapeModel, TConnectionModel> EndCap(string type)
+        {
+            container.EndCap.Type = type;
+            return this;
+        }
+
+        /// <summary>
+        /// The connection end cap configuration or type name.
+        /// </summary>
+        /// <param name="configurator">The action that configures the endcap.</param>
+        public DiagramConnectionDefaultsSettingsBuilder<TShapeModel,TConnectionModel> EndCap(Action<DiagramConnectionDefaultsEndCapSettingsBuilder<TShapeModel,TConnectionModel>> configurator)
+        {
+            configurator(new DiagramConnectionDefaultsEndCapSettingsBuilder<TShapeModel,TConnectionModel>(container.EndCap));
             return this;
         }
         
@@ -85,15 +94,24 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new DiagramConnectionDefaultsSelectionSettingsBuilder<TShapeModel,TConnectionModel>(container.Selection));
             return this;
         }
+
+        /// <summary>
+        /// The connection start cap type.
+        /// </summary>
+        /// <param name="type">The start cap type.</param>
+        public DiagramConnectionDefaultsSettingsBuilder<TShapeModel, TConnectionModel> StartCap(string type)
+        {
+            container.StartCap.Type = type;
+            return this;
+        }
         
         /// <summary>
-        /// The start cap (arrow, head or decoration) of the connection:
+        /// The connection start cap configuration or type name.
         /// </summary>
-        /// <param name="value">The value that configures the startcap.</param>
-        public DiagramConnectionDefaultsSettingsBuilder<TShapeModel,TConnectionModel> StartCap(string value)
+        /// <param name="configurator">The action that configures the startcap.</param>
+        public DiagramConnectionDefaultsSettingsBuilder<TShapeModel,TConnectionModel> StartCap(Action<DiagramConnectionDefaultsStartCapSettingsBuilder<TShapeModel,TConnectionModel>> configurator)
         {
-            container.StartCap = value;
-
+            configurator(new DiagramConnectionDefaultsStartCapSettingsBuilder<TShapeModel,TConnectionModel>(container.StartCap));
             return this;
         }
         

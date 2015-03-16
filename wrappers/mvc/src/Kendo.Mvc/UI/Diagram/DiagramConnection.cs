@@ -16,6 +16,8 @@ namespace Kendo.Mvc.UI
                 
             Editable = new DiagramConnectionEditableSettings();
                 
+            EndCap = new DiagramConnectionEndCapSettings();
+                
             From = new DiagramConnectionFromSettings();
                 
             Hover = new DiagramConnectionHoverSettings();
@@ -23,6 +25,8 @@ namespace Kendo.Mvc.UI
             Points = new List<DiagramConnectionPoint>();
                 
             Selection = new DiagramConnectionSelectionSettings();
+                
+            StartCap = new DiagramConnectionStartCapSettings();
                 
             Stroke = new DiagramConnectionStrokeSettings();
                 
@@ -45,7 +49,11 @@ namespace Kendo.Mvc.UI
             set;
         }
         
-        public string EndCap { get; set; }
+        public DiagramConnectionEndCapSettings EndCap
+        {
+            get;
+            set;
+        }
         
         public DiagramConnectionFromSettings From
         {
@@ -71,7 +79,11 @@ namespace Kendo.Mvc.UI
             set;
         }
         
-        public string StartCap { get; set; }
+        public DiagramConnectionStartCapSettings StartCap
+        {
+            get;
+            set;
+        }
         
         public DiagramConnectionStrokeSettings Stroke
         {
@@ -104,11 +116,11 @@ namespace Kendo.Mvc.UI
                 json["editable"] = Editable.Enabled;
             }
 
-            if (EndCap.HasValue())
+            var endCap = EndCap.ToJson();
+            if (endCap.Any())
             {
-                json["endCap"] = EndCap;
+                json["endCap"] = endCap;
             }
-            
             var from = From.ToJson();
             if (from.Any())
             {
@@ -129,11 +141,11 @@ namespace Kendo.Mvc.UI
             {
                 json["selection"] = selection;
             }
-            if (StartCap.HasValue())
+            var startCap = StartCap.ToJson();
+            if (startCap.Any())
             {
-                json["startCap"] = StartCap;
+                json["startCap"] = startCap;
             }
-            
             var stroke = Stroke.ToJson();
             if (stroke.Any())
             {
