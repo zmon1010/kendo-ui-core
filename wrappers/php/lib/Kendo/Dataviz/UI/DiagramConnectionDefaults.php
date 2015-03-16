@@ -24,21 +24,12 @@ class DiagramConnectionDefaults extends \Kendo\SerializableObject {
     }
 
     /**
-    * The connection end cap fill options or color.
-    * @param string|\Kendo\Dataviz\UI\DiagramConnectionDefaultsEndCap.fill|array $value
+    * The connection end cap configuration or type name.
+    * @param string|\Kendo\Dataviz\UI\DiagramConnectionDefaultsEndCap|array $value
     * @return \Kendo\Dataviz\UI\DiagramConnectionDefaults
     */
-    public function endCap.fill($value) {
-        return $this->setProperty('endCap.fill', $value);
-    }
-
-    /**
-    * The connection end cap stroke options or color.
-    * @param string|\Kendo\Dataviz\UI\DiagramConnectionDefaultsEndCap.stroke|array $value
-    * @return \Kendo\Dataviz\UI\DiagramConnectionDefaults
-    */
-    public function endCap.stroke($value) {
-        return $this->setProperty('endCap.stroke', $value);
+    public function endCap($value) {
+        return $this->setProperty('endCap', $value);
     }
 
     /**

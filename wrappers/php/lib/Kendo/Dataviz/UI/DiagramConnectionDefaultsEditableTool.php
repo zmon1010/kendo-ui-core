@@ -7,7 +7,6 @@ class DiagramConnectionDefaultsEditableTool extends \Kendo\SerializableObject {
 
     /**
     * The name of the tool. The built-in tools are "edit" and "delete".
-### connectionDefaults.endCap String|ObjectThe connection end cap configuration or type name.
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramConnectionDefaultsEditableTool
     */

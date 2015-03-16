@@ -2,13 +2,13 @@
 
 namespace Kendo\Dataviz\UI;
 
-class DiagramConnectionDefaultsEndCap.fill extends \Kendo\SerializableObject {
+class DiagramConnectionDefaultsEndCapFill extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
     * The connection end cap fill color.
     * @param string $value
-    * @return \Kendo\Dataviz\UI\DiagramConnectionDefaultsEndCap.fill
+    * @return \Kendo\Dataviz\UI\DiagramConnectionDefaultsEndCapFill
     */
     public function color($value) {
         return $this->setProperty('color', $value);

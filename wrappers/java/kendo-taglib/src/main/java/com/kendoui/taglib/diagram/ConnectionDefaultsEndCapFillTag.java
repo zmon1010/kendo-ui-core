@@ -12,17 +12,17 @@ import com.kendoui.taglib.BaseTag;
 import javax.servlet.jsp.JspException;
 
 @SuppressWarnings("serial")
-public class ConnectionDefaultsEndCap.strokeTag extends  BaseTag  /* interfaces */ /* interfaces */ {
+public class ConnectionDefaultsEndCapFillTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     
     @Override
     public int doEndTag() throws JspException {
 //>> doEndTag
 
 
-        ConnectionDefaultsTag parent = (ConnectionDefaultsTag)findParentWithClass(ConnectionDefaultsTag.class);
+        ConnectionDefaultsEndCapTag parent = (ConnectionDefaultsEndCapTag)findParentWithClass(ConnectionDefaultsEndCapTag.class);
 
 
-        parent.setEndCap.stroke(this);
+        parent.setFill(this);
 
 //<< doEndTag
 
@@ -48,7 +48,7 @@ public class ConnectionDefaultsEndCap.strokeTag extends  BaseTag  /* interfaces 
 //>> Attributes
 
     public static String tagName() {
-        return "diagram-connectionDefaults-endCap.stroke";
+        return "diagram-connectionDefaults-endCap-fill";
     }
 
     public java.lang.String getColor() {
@@ -57,22 +57,6 @@ public class ConnectionDefaultsEndCap.strokeTag extends  BaseTag  /* interfaces 
 
     public void setColor(java.lang.String value) {
         setProperty("color", value);
-    }
-
-    public java.lang.String getDashType() {
-        return (java.lang.String)getProperty("dashType");
-    }
-
-    public void setDashType(java.lang.String value) {
-        setProperty("dashType", value);
-    }
-
-    public float getWidth() {
-        return (float)getProperty("width");
-    }
-
-    public void setWidth(float value) {
-        setProperty("width", value);
     }
 
 //<< Attributes

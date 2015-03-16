@@ -61,12 +61,8 @@ public class ConnectionDefaultsTag extends  BaseTag  /* interfaces */ /* interfa
         setProperty("editable", value);
     }
 
-    public void setEndCap.fill(com.kendoui.taglib.diagram.ConnectionDefaultsEndCap.fillTag value) {
-        setProperty("endCap.fill", value);
-    }
-
-    public void setEndCap.stroke(com.kendoui.taglib.diagram.ConnectionDefaultsEndCap.strokeTag value) {
-        setProperty("endCap.stroke", value);
+    public void setEndCap(com.kendoui.taglib.diagram.ConnectionDefaultsEndCapTag value) {
+        setProperty("endCap", value);
     }
 
     public void setHover(com.kendoui.taglib.diagram.ConnectionDefaultsHoverTag value) {
@@ -93,20 +89,12 @@ public class ConnectionDefaultsTag extends  BaseTag  /* interfaces */ /* interfa
         setProperty("editable", value);
     }
 
-    public java.lang.String getEndCap.fill() {
-        return (java.lang.String)getProperty("endCap.fill");
+    public java.lang.String getEndCap() {
+        return (java.lang.String)getProperty("endCap");
     }
 
-    public void setEndCap.fill(java.lang.String value) {
-        setProperty("endCap.fill", value);
-    }
-
-    public java.lang.String getEndCap.stroke() {
-        return (java.lang.String)getProperty("endCap.stroke");
-    }
-
-    public void setEndCap.stroke(java.lang.String value) {
-        setProperty("endCap.stroke", value);
+    public void setEndCap(java.lang.String value) {
+        setProperty("endCap", value);
     }
 
     public java.lang.String getStartCap() {

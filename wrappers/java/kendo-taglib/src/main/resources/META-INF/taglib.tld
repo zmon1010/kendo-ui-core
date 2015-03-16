@@ -2385,13 +2385,19 @@ That is, the last category in the range will not be included in the selection.If
         <body-content>JSP</body-content>
 
         <attribute>
+            <description>The legend horizontal alignment when the legend.position is "top" or "bottom" and the vertical alignment when the legend.position is "left" or "right".The supported values are:</description>
+            <name>align</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The background color of the legend. Accepts a valid CSS color string, including hex and rgb.</description>
             <name>background</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The legend height when the legend.position is set to "custom" and the legend.orientation is set to "vertical".</description>
+            <description>The legend height when the legend.orientation is set to "vertical".</description>
             <name>height</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -2419,7 +2425,7 @@ A negative value will move the legend upwards from its current position.</descri
             <type>float</type>
         </attribute>
         <attribute>
-            <description>The orientation of the legend items when the position legend.position is set to "custom".The supported values are:</description>
+            <description>The orientation of the legend items.The supported values are:</description>
             <name>orientation</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -2449,7 +2455,7 @@ A negative value will move the legend upwards from its current position.</descri
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The legend width when the legend.position is set to "custom" and the legend.orientation is set to "horizontal".</description>
+            <description>The legend width when the legend.orientation is set to "horizontal".</description>
             <name>width</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -3615,7 +3621,7 @@ or series name (for other available series types) in the legend.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>A function that can be used to create a custom visual for the points. Applicable for bar and column series. The available argument fields are:</description>
+            <description>A function that can be used to create a custom visual for the points. Applicable for bar, column, rangeBar, rangeColumn and waterfall series. The available argument fields are:</description>
             <name>visual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -3998,6 +4004,12 @@ By default chart series highlighting is enabled.</description>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
+        <attribute>
+            <description>A function that can be used to set custom visual for the point highlight.The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -4062,6 +4074,12 @@ By default chart series highlighting is enabled.</description>
         <description>A function that can be used to handle toggling the points highlight. The available argument fields are:</description>
         <name>chart-seriesItem-highlight-toggle</name>
         <tag-class>com.kendoui.taglib.chart.SeriesItemHighlightToggleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>A function that can be used to set custom visual for the point highlight.The available argument fields are:</description>
+        <name>chart-seriesItem-highlight-visual</name>
+        <tag-class>com.kendoui.taglib.chart.SeriesItemHighlightVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
@@ -5552,7 +5570,7 @@ The function return value is displayed instead of the individual points.The supp
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>A function that can be used to create a custom visual for the points. Applicable for bar and column series. The available argument fields are:</description>
+        <description>A function that can be used to create a custom visual for the points. Applicable for bar, column, rangeBar, rangeColumn and waterfall series. The available argument fields are:</description>
         <name>chart-seriesItem-visual</name>
         <tag-class>com.kendoui.taglib.chart.SeriesItemVisualFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -13050,13 +13068,13 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The start cap (arrow, head or decoration) of the connection:Note that you can also use the "ArrowStart" for the endCap but its direction will be inversed.</description>
+            <description>The connection end cap configuration or type name.</description>
             <name>endCap</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The start cap (arrow, head or decoration) of the connection:</description>
+            <description>The connection start cap configuration or type name.</description>
             <name>startCap</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -13113,13 +13131,405 @@ data source is fired. By default the widget will bind to the data source specifi
         <name>diagram-connectionDefaults-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolTag</tag-class>
 
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.</description>
+            <name>click</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the control is initially enabled or disabled. Default value is "true".</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Assigns the button to a group. Applicable only for buttons with togglable set to true.</description>
+            <name>group</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the button.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
         <attribute>
             <description>The name of the tool. The built-in tools are "edit" and "delete".</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>Specifies how the button behaves when the ToolBar is resized. Possible values are "always", "never" or "auto" (default).</description>
+            <name>overflow</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.</description>
+            <name>overflowTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the button is primary. Primary buttons receive different styling.</description>
+            <name>primary</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the toggle button is initially selected. Applicable only for buttons with togglable set to true.</description>
+            <name>selected</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the button icon will be displayed. Possible values are "toolbar", "overflow" or "both" (default).</description>
+            <name>showIcon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the text will be displayed. Possible values are "toolbar", "overflow" or "both" (default).</description>
+            <name>showText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.</description>
+            <name>spriteCssClass</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.</description>
+            <name>template</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the text of the button.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the button is togglable, e.g. has a selected and unselected state.</description>
+            <name>togglable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.</description>
+            <name>toggle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the command type. Supported types are "button", "splitButton", "buttonGroup", "separator".</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <description>Specifies the buttons of ButtonGroup.</description>
+        <name>diagram-connectionDefaults-editable-tool-buttons</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolButtonsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Specifies the buttons of ButtonGroup.</description>
+        <name>diagram-connectionDefaults-editable-tool-button</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolButtonTag</tag-class>
+
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a ButtonGroup's button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+            <name>click</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the button is initially enabled or disabled.</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Assigns the button to a group. Applicable only for the children of a ButtonGroup that has togglable true.</description>
+            <name>group</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the menu button. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the button.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the toggle button is initially selected. Applicable only for the children of a ButtonGroup that has togglable true.</description>
+            <name>selected</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the icon of the button will be displayed. Applicable only for the children of a ButtonGroup.</description>
+            <name>showIcon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the text of the menu button will be displayed. Applicable only for the buttons of a ButtonGroup.</description>
+            <name>showText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.</description>
+            <name>spriteCssClass</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the text of the menu button.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the button is togglable, e.g. has a selected and unselected state. Applicable only for the children of a ButtonGroup.</description>
+            <name>togglable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+            <name>toggle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url of the button to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+
+    <tag>
+        <description>Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+        <name>diagram-connectionDefaults-editable-tool-button-click</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolButtonClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+        <name>diagram-connectionDefaults-editable-tool-button-toggle</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolButtonToggleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the menu buttons of a SplitButton.</description>
+        <name>diagram-connectionDefaults-editable-tool-menuButtons</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolMenuButtonsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Specifies the menu buttons of a SplitButton.</description>
+        <name>diagram-connectionDefaults-editable-tool-menuButton</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolMenuButtonTag</tag-class>
+
+        <body-content>empty</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a menu button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the menu button is initially enabled or disabled.</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the menu buttons. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the menu buttons.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the menu button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for menu button icon.</description>
+            <name>spriteCssClass</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the text of the menu buttons.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url of the menu button to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+
+
+    <tag>
+        <description>Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.</description>
+        <name>diagram-connectionDefaults-editable-tool-click</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.</description>
+        <name>diagram-connectionDefaults-editable-tool-overflowTemplate</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolOverflowTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.</description>
+        <name>diagram-connectionDefaults-editable-tool-template</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.</description>
+        <name>diagram-connectionDefaults-editable-tool-toggle</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableToolToggleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>The connection end cap configuration or type name.</description>
+        <name>diagram-connectionDefaults-endCap</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEndCapTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The connection end cap fill options or color.</description>
+            <name>fill</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection end cap stroke options or color.</description>
+            <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>The connection end cap fill options or color.</description>
+        <name>diagram-connectionDefaults-endCap-fill</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEndCapFillTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The connection end cap fill color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The connection end cap stroke options or color.</description>
+        <name>diagram-connectionDefaults-endCap-stroke</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEndCapStrokeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The connection end cap stroke color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection end cap stroke dash type.</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection end cap stroke width.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
     </tag>
 
 
@@ -13209,6 +13619,72 @@ data source is fired. By default the widget will bind to the data source specifi
 
 
     <tag>
+        <description>The connection start cap configuration or type name.</description>
+        <name>diagram-connectionDefaults-startCap</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsStartCapTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The connection start cap fill options or color.</description>
+            <name>fill</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection start cap stroke options or color.</description>
+            <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>The connection start cap fill options or color.</description>
+        <name>diagram-connectionDefaults-startCap-fill</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsStartCapFillTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The connection start cap fill color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The connection start cap stroke options or color.</description>
+        <name>diagram-connectionDefaults-startCap-stroke</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsStartCapStrokeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The connection start cap stroke color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection start cap stroke dash type.</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection start cap stroke width.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+
+    <tag>
         <description>Defines the stroke configuration.</description>
         <name>diagram-connectionDefaults-stroke</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsStrokeTag</tag-class>
@@ -13252,7 +13728,7 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The start cap (arrow, head or decoration) of the connection:Note that you can also use the "ArrowStart" for the endCap but its direction will be inversed.</description>
+            <description>The connection end cap configuration or type name.</description>
             <name>endCap</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -13264,7 +13740,7 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>The start cap (arrow, head or decoration) of the connection:</description>
+            <description>The connection start cap configuration or type name.</description>
             <name>startCap</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -13326,13 +13802,405 @@ data source is fired. By default the widget will bind to the data source specifi
         <name>diagram-connection-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolTag</tag-class>
 
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.</description>
+            <name>click</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the control is initially enabled or disabled. Default value is "true".</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Assigns the button to a group. Applicable only for buttons with togglable set to true.</description>
+            <name>group</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the button.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
         <attribute>
             <description>The name of the tool. The built-in tools are "edit" and "delete".</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>Specifies how the button behaves when the ToolBar is resized. Possible values are "always", "never" or "auto" (default).</description>
+            <name>overflow</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.</description>
+            <name>overflowTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the button is primary. Primary buttons receive different styling.</description>
+            <name>primary</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the toggle button is initially selected. Applicable only for buttons with togglable set to true.</description>
+            <name>selected</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the button icon will be displayed. Possible values are "toolbar", "overflow" or "both" (default).</description>
+            <name>showIcon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the text will be displayed. Possible values are "toolbar", "overflow" or "both" (default).</description>
+            <name>showText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.</description>
+            <name>spriteCssClass</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.</description>
+            <name>template</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the text of the button.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the button is togglable, e.g. has a selected and unselected state.</description>
+            <name>togglable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.</description>
+            <name>toggle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the command type. Supported types are "button", "splitButton", "buttonGroup", "separator".</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <description>Specifies the buttons of ButtonGroup.</description>
+        <name>diagram-connection-editable-tool-buttons</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolButtonsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Specifies the buttons of ButtonGroup.</description>
+        <name>diagram-connection-editable-tool-button</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolButtonTag</tag-class>
+
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a ButtonGroup's button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+            <name>click</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the button is initially enabled or disabled.</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Assigns the button to a group. Applicable only for the children of a ButtonGroup that has togglable true.</description>
+            <name>group</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the menu button. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the button.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the toggle button is initially selected. Applicable only for the children of a ButtonGroup that has togglable true.</description>
+            <name>selected</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the icon of the button will be displayed. Applicable only for the children of a ButtonGroup.</description>
+            <name>showIcon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the text of the menu button will be displayed. Applicable only for the buttons of a ButtonGroup.</description>
+            <name>showText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.</description>
+            <name>spriteCssClass</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the text of the menu button.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the button is togglable, e.g. has a selected and unselected state. Applicable only for the children of a ButtonGroup.</description>
+            <name>togglable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+            <name>toggle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url of the button to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+
+    <tag>
+        <description>Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+        <name>diagram-connection-editable-tool-button-click</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolButtonClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+        <name>diagram-connection-editable-tool-button-toggle</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolButtonToggleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the menu buttons of a SplitButton.</description>
+        <name>diagram-connection-editable-tool-menuButtons</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolMenuButtonsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Specifies the menu buttons of a SplitButton.</description>
+        <name>diagram-connection-editable-tool-menuButton</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolMenuButtonTag</tag-class>
+
+        <body-content>empty</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a menu button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the menu button is initially enabled or disabled.</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the menu buttons. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the menu buttons.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the menu button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for menu button icon.</description>
+            <name>spriteCssClass</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the text of the menu buttons.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url of the menu button to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+
+
+    <tag>
+        <description>Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.</description>
+        <name>diagram-connection-editable-tool-click</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.</description>
+        <name>diagram-connection-editable-tool-overflowTemplate</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolOverflowTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.</description>
+        <name>diagram-connection-editable-tool-template</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.</description>
+        <name>diagram-connection-editable-tool-toggle</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEditableToolToggleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>The connection end cap configuration or type name.</description>
+        <name>diagram-connection-endCap</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEndCapTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The connection end cap fill options or color.</description>
+            <name>fill</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection end cap stroke options or color.</description>
+            <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>The connection end cap fill options or color.</description>
+        <name>diagram-connection-endCap-fill</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEndCapFillTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The connection end cap fill color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The connection end cap stroke options or color.</description>
+        <name>diagram-connection-endCap-stroke</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionEndCapStrokeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The connection end cap stroke color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection end cap stroke dash type.</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection end cap stroke width.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
     </tag>
 
 
@@ -13468,6 +14336,72 @@ data source is fired. By default the widget will bind to the data source specifi
 
     </tag>
 
+
+
+
+    <tag>
+        <description>The connection start cap configuration or type name.</description>
+        <name>diagram-connection-startCap</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionStartCapTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The connection start cap fill options or color.</description>
+            <name>fill</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection start cap stroke options or color.</description>
+            <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>The connection start cap fill options or color.</description>
+        <name>diagram-connection-startCap-fill</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionStartCapFillTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The connection start cap fill color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The connection start cap stroke options or color.</description>
+        <name>diagram-connection-startCap-stroke</name>
+        <tag-class>com.kendoui.taglib.diagram.ConnectionStartCapStrokeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The connection start cap stroke color.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection start cap stroke dash type.</description>
+            <name>dashType</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection start cap stroke width.</description>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
 
 
 
@@ -13770,10 +14704,94 @@ data source is fired. By default the widget will bind to the data source specifi
         <name>diagram-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.EditableToolTag</tag-class>
 
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.</description>
+            <name>click</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the control is initially enabled or disabled. Default value is "true".</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Assigns the button to a group. Applicable only for buttons with togglable set to true.</description>
+            <name>group</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the button.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
         <attribute>
             <description>The name of the tool. The built-in tools are "edit", "createShape", "createConnection", "undo", "redo", "rotateClockwise" and "rotateAnticlockwise".</description>
             <name>name</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies how the button behaves when the ToolBar is resized. Possible values are "always", "never" or "auto" (default).</description>
+            <name>overflow</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.</description>
+            <name>overflowTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the button is primary. Primary buttons receive different styling.</description>
+            <name>primary</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the toggle button is initially selected. Applicable only for buttons with togglable set to true.</description>
+            <name>selected</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the button icon will be displayed. Possible values are "toolbar", "overflow" or "both" (default).</description>
+            <name>showIcon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the text will be displayed. Possible values are "toolbar", "overflow" or "both" (default).</description>
+            <name>showText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.</description>
+            <name>spriteCssClass</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -13783,9 +14801,251 @@ data source is fired. By default the widget will bind to the data source specifi
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
+        <attribute>
+            <description>Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.</description>
+            <name>template</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the text of the button.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the button is togglable, e.g. has a selected and unselected state.</description>
+            <name>togglable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.</description>
+            <name>toggle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the command type. Supported types are "button", "splitButton", "buttonGroup", "separator".</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <description>Specifies the buttons of ButtonGroup.</description>
+        <name>diagram-editable-tool-buttons</name>
+        <tag-class>com.kendoui.taglib.diagram.EditableToolButtonsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Specifies the buttons of ButtonGroup.</description>
+        <name>diagram-editable-tool-button</name>
+        <tag-class>com.kendoui.taglib.diagram.EditableToolButtonTag</tag-class>
+
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a ButtonGroup's button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+            <name>click</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the button is initially enabled or disabled.</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Assigns the button to a group. Applicable only for the children of a ButtonGroup that has togglable true.</description>
+            <name>group</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the menu button. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the button.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the toggle button is initially selected. Applicable only for the children of a ButtonGroup that has togglable true.</description>
+            <name>selected</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the icon of the button will be displayed. Applicable only for the children of a ButtonGroup.</description>
+            <name>showIcon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the text of the menu button will be displayed. Applicable only for the buttons of a ButtonGroup.</description>
+            <name>showText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.</description>
+            <name>spriteCssClass</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the text of the menu button.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the button is togglable, e.g. has a selected and unselected state. Applicable only for the children of a ButtonGroup.</description>
+            <name>togglable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+            <name>toggle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url of the button to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
 
 
+    <tag>
+        <description>Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+        <name>diagram-editable-tool-button-click</name>
+        <tag-class>com.kendoui.taglib.diagram.EditableToolButtonClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+        <name>diagram-editable-tool-button-toggle</name>
+        <tag-class>com.kendoui.taglib.diagram.EditableToolButtonToggleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the menu buttons of a SplitButton.</description>
+        <name>diagram-editable-tool-menuButtons</name>
+        <tag-class>com.kendoui.taglib.diagram.EditableToolMenuButtonsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Specifies the menu buttons of a SplitButton.</description>
+        <name>diagram-editable-tool-menuButton</name>
+        <tag-class>com.kendoui.taglib.diagram.EditableToolMenuButtonTag</tag-class>
+
+        <body-content>empty</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a menu button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the menu button is initially enabled or disabled.</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the menu buttons. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the menu buttons.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the menu button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for menu button icon.</description>
+            <name>spriteCssClass</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the text of the menu buttons.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url of the menu button to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+
+
+    <tag>
+        <description>Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.</description>
+        <name>diagram-editable-tool-click</name>
+        <tag-class>com.kendoui.taglib.diagram.EditableToolClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.</description>
+        <name>diagram-editable-tool-overflowTemplate</name>
+        <tag-class>com.kendoui.taglib.diagram.EditableToolOverflowTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.</description>
+        <name>diagram-editable-tool-template</name>
+        <tag-class>com.kendoui.taglib.diagram.EditableToolTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.</description>
+        <name>diagram-editable-tool-toggle</name>
+        <tag-class>com.kendoui.taglib.diagram.EditableToolToggleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>Specifies the connection editor template which shows up when editing the connection via a pop-up editor much like 'editable.template' configuration of the Kendo UI Grid widget.</description>
@@ -14215,12 +15475,6 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <body-content>JSP</body-content>
         <attribute>
             <description></description>
-            <name>description</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description></description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -14319,10 +15573,94 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <name>diagram-shapeDefaults-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolTag</tag-class>
 
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.</description>
+            <name>click</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the control is initially enabled or disabled. Default value is "true".</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Assigns the button to a group. Applicable only for buttons with togglable set to true.</description>
+            <name>group</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the button.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
         <attribute>
             <description>The name of the tool. The built-in tools are "edit", "delete", "rotateClockwise" and "rotateAnticlockwise".</description>
             <name>name</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies how the button behaves when the ToolBar is resized. Possible values are "always", "never" or "auto" (default).</description>
+            <name>overflow</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.</description>
+            <name>overflowTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the button is primary. Primary buttons receive different styling.</description>
+            <name>primary</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the toggle button is initially selected. Applicable only for buttons with togglable set to true.</description>
+            <name>selected</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the button icon will be displayed. Possible values are "toolbar", "overflow" or "both" (default).</description>
+            <name>showIcon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the text will be displayed. Possible values are "toolbar", "overflow" or "both" (default).</description>
+            <name>showText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.</description>
+            <name>spriteCssClass</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -14332,9 +15670,251 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
+        <attribute>
+            <description>Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.</description>
+            <name>template</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the text of the button.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the button is togglable, e.g. has a selected and unselected state.</description>
+            <name>togglable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.</description>
+            <name>toggle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the command type. Supported types are "button", "splitButton", "buttonGroup", "separator".</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <description>Specifies the buttons of ButtonGroup.</description>
+        <name>diagram-shapeDefaults-editable-tool-buttons</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolButtonsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Specifies the buttons of ButtonGroup.</description>
+        <name>diagram-shapeDefaults-editable-tool-button</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolButtonTag</tag-class>
+
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a ButtonGroup's button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+            <name>click</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the button is initially enabled or disabled.</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Assigns the button to a group. Applicable only for the children of a ButtonGroup that has togglable true.</description>
+            <name>group</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the menu button. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the button.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the toggle button is initially selected. Applicable only for the children of a ButtonGroup that has togglable true.</description>
+            <name>selected</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the icon of the button will be displayed. Applicable only for the children of a ButtonGroup.</description>
+            <name>showIcon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the text of the menu button will be displayed. Applicable only for the buttons of a ButtonGroup.</description>
+            <name>showText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.</description>
+            <name>spriteCssClass</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the text of the menu button.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the button is togglable, e.g. has a selected and unselected state. Applicable only for the children of a ButtonGroup.</description>
+            <name>togglable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+            <name>toggle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url of the button to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
 
 
+    <tag>
+        <description>Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+        <name>diagram-shapeDefaults-editable-tool-button-click</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolButtonClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+        <name>diagram-shapeDefaults-editable-tool-button-toggle</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolButtonToggleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the menu buttons of a SplitButton.</description>
+        <name>diagram-shapeDefaults-editable-tool-menuButtons</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolMenuButtonsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Specifies the menu buttons of a SplitButton.</description>
+        <name>diagram-shapeDefaults-editable-tool-menuButton</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolMenuButtonTag</tag-class>
+
+        <body-content>empty</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a menu button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the menu button is initially enabled or disabled.</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the menu buttons. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the menu buttons.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the menu button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for menu button icon.</description>
+            <name>spriteCssClass</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the text of the menu buttons.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url of the menu button to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+
+
+    <tag>
+        <description>Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.</description>
+        <name>diagram-shapeDefaults-editable-tool-click</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.</description>
+        <name>diagram-shapeDefaults-editable-tool-overflowTemplate</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolOverflowTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.</description>
+        <name>diagram-shapeDefaults-editable-tool-template</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.</description>
+        <name>diagram-shapeDefaults-editable-tool-toggle</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsEditableToolToggleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>Defines the fill options of the shape.</description>
@@ -14661,10 +16241,94 @@ See visual.</description>
         <name>diagram-shape-editable-tool</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolTag</tag-class>
 
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.</description>
+            <name>click</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the control is initially enabled or disabled. Default value is "true".</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Assigns the button to a group. Applicable only for buttons with togglable set to true.</description>
+            <name>group</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the button.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
         <attribute>
             <description>The name of the tool. The built-in tools are "edit", "delete", "rotateClockwise" and "rotateAnticlockwise".</description>
             <name>name</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies how the button behaves when the ToolBar is resized. Possible values are "always", "never" or "auto" (default).</description>
+            <name>overflow</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.</description>
+            <name>overflowTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the button is primary. Primary buttons receive different styling.</description>
+            <name>primary</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the toggle button is initially selected. Applicable only for buttons with togglable set to true.</description>
+            <name>selected</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the button icon will be displayed. Possible values are "toolbar", "overflow" or "both" (default).</description>
+            <name>showIcon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the text will be displayed. Possible values are "toolbar", "overflow" or "both" (default).</description>
+            <name>showText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.</description>
+            <name>spriteCssClass</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -14674,9 +16338,251 @@ See visual.</description>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
+        <attribute>
+            <description>Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.</description>
+            <name>template</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the text of the button.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the button is togglable, e.g. has a selected and unselected state.</description>
+            <name>togglable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.</description>
+            <name>toggle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the command type. Supported types are "button", "splitButton", "buttonGroup", "separator".</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <description>Specifies the buttons of ButtonGroup.</description>
+        <name>diagram-shape-editable-tool-buttons</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolButtonsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Specifies the buttons of ButtonGroup.</description>
+        <name>diagram-shape-editable-tool-button</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolButtonTag</tag-class>
+
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a ButtonGroup's button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+            <name>click</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the button is initially enabled or disabled.</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Assigns the button to a group. Applicable only for the children of a ButtonGroup that has togglable true.</description>
+            <name>group</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the menu button. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the button.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the toggle button is initially selected. Applicable only for the children of a ButtonGroup that has togglable true.</description>
+            <name>selected</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the icon of the button will be displayed. Applicable only for the children of a ButtonGroup.</description>
+            <name>showIcon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies where the text of the menu button will be displayed. Applicable only for the buttons of a ButtonGroup.</description>
+            <name>showText</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.</description>
+            <name>spriteCssClass</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the text of the menu button.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the button is togglable, e.g. has a selected and unselected state. Applicable only for the children of a ButtonGroup.</description>
+            <name>togglable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+            <name>toggle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url of the button to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
 
 
+    <tag>
+        <description>Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+        <name>diagram-shape-editable-tool-button-click</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolButtonClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.</description>
+        <name>diagram-shape-editable-tool-button-toggle</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolButtonToggleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the menu buttons of a SplitButton.</description>
+        <name>diagram-shape-editable-tool-menuButtons</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolMenuButtonsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>Specifies the menu buttons of a SplitButton.</description>
+        <name>diagram-shape-editable-tool-menuButton</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolMenuButtonTag</tag-class>
+
+        <body-content>empty</body-content>
+        <attribute>
+            <description>Specifies the HTML attributes of a menu button.</description>
+            <name>attributes</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies whether the menu button is initially enabled or disabled.</description>
+            <name>enable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Sets icon for the menu buttons. The icon should be one of the existing in the Kendo UI theme sprite.</description>
+            <name>icon</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the ID of the menu buttons.</description>
+            <name>id</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set, the ToolBar will render an image with the specified URL in the menu button.</description>
+            <name>imageUrl</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Defines a CSS class (or multiple classes separated by spaces) which will be used for menu button icon.</description>
+            <name>spriteCssClass</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the text of the menu buttons.</description>
+            <name>text</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the url of the menu button to navigate to.</description>
+            <name>url</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+
+
+    <tag>
+        <description>Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.</description>
+        <name>diagram-shape-editable-tool-click</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolClickFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.</description>
+        <name>diagram-shape-editable-tool-overflowTemplate</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolOverflowTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.</description>
+        <name>diagram-shape-editable-tool-template</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.</description>
+        <name>diagram-shape-editable-tool-toggle</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeEditableToolToggleFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>Defines the fill options of the shape.</description>
