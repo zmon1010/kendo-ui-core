@@ -58,6 +58,10 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("animation", value);
     }
 
+    public void setVirtual(com.kendoui.taglib.autocomplete.VirtualTag value) {
+        setProperty("virtual", value);
+    }
+
     public void setChange(ChangeFunctionTag value) {
         setEvent("change", value.getBody());
     }
@@ -196,6 +200,14 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
 
     public void setValuePrimitive(boolean value) {
         setProperty("valuePrimitive", value);
+    }
+
+    public boolean getVirtual() {
+        return (boolean)getProperty("virtual");
+    }
+
+    public void setVirtual(boolean value) {
+        setProperty("virtual", value);
     }
 
     public String getChange() {

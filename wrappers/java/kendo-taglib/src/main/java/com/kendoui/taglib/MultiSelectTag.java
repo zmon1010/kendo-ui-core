@@ -57,6 +57,10 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
         setProperty("animation", value);
     }
 
+    public void setVirtual(com.kendoui.taglib.multiselect.VirtualTag value) {
+        setProperty("virtual", value);
+    }
+
     public void setChange(ChangeFunctionTag value) {
         setEvent("change", value.getBody());
     }
@@ -139,6 +143,22 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
 
     public void setFilter(java.lang.String value) {
         setProperty("filter", value);
+    }
+
+    public java.lang.String getFixedGroupTemplate() {
+        return (java.lang.String)getProperty("fixedGroupTemplate");
+    }
+
+    public void setFixedGroupTemplate(java.lang.String value) {
+        setProperty("fixedGroupTemplate", value);
+    }
+
+    public java.lang.String getGroupTemplate() {
+        return (java.lang.String)getProperty("groupTemplate");
+    }
+
+    public void setGroupTemplate(java.lang.String value) {
+        setProperty("groupTemplate", value);
     }
 
     public java.lang.String getHeaderTemplate() {
@@ -227,6 +247,14 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
 
     public void setValuePrimitive(boolean value) {
         setProperty("valuePrimitive", value);
+    }
+
+    public boolean getVirtual() {
+        return (boolean)getProperty("virtual");
+    }
+
+    public void setVirtual(boolean value) {
+        setProperty("virtual", value);
     }
 
     public String getChange() {

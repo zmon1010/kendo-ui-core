@@ -58,6 +58,10 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("animation", value);
     }
 
+    public void setVirtual(com.kendoui.taglib.dropdownlist.VirtualTag value) {
+        setProperty("virtual", value);
+    }
+
     public void setCascade(CascadeFunctionTag value) {
         setEvent("cascade", value.getBody());
     }
@@ -154,6 +158,22 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("filter", value);
     }
 
+    public java.lang.String getFixedGroupTemplate() {
+        return (java.lang.String)getProperty("fixedGroupTemplate");
+    }
+
+    public void setFixedGroupTemplate(java.lang.String value) {
+        setProperty("fixedGroupTemplate", value);
+    }
+
+    public java.lang.String getGroupTemplate() {
+        return (java.lang.String)getProperty("groupTemplate");
+    }
+
+    public void setGroupTemplate(java.lang.String value) {
+        setProperty("groupTemplate", value);
+    }
+
     public java.lang.String getHeaderTemplate() {
         return (java.lang.String)getProperty("headerTemplate");
     }
@@ -202,6 +222,14 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("optionLabel", value);
     }
 
+    public java.lang.String getOptionLabelTemplate() {
+        return (java.lang.String)getProperty("optionLabelTemplate");
+    }
+
+    public void setOptionLabelTemplate(java.lang.String value) {
+        setProperty("optionLabelTemplate", value);
+    }
+
     public java.lang.String getTemplate() {
         return (java.lang.String)getProperty("template");
     }
@@ -240,6 +268,14 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
 
     public void setValueTemplate(java.lang.String value) {
         setProperty("valueTemplate", value);
+    }
+
+    public boolean getVirtual() {
+        return (boolean)getProperty("virtual");
+    }
+
+    public void setVirtual(boolean value) {
+        setProperty("virtual", value);
     }
 
     public String getCascade() {

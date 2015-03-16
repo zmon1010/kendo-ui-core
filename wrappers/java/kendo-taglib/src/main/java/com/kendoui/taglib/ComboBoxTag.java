@@ -58,6 +58,10 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
         setProperty("animation", value);
     }
 
+    public void setVirtual(com.kendoui.taglib.combobox.VirtualTag value) {
+        setProperty("virtual", value);
+    }
+
     public void setCascade(CascadeFunctionTag value) {
         setEvent("cascade", value.getBody());
     }
@@ -154,6 +158,22 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
         setProperty("filter", value);
     }
 
+    public java.lang.String getFixedGroupTemplate() {
+        return (java.lang.String)getProperty("fixedGroupTemplate");
+    }
+
+    public void setFixedGroupTemplate(java.lang.String value) {
+        setProperty("fixedGroupTemplate", value);
+    }
+
+    public java.lang.String getGroupTemplate() {
+        return (java.lang.String)getProperty("groupTemplate");
+    }
+
+    public void setGroupTemplate(java.lang.String value) {
+        setProperty("groupTemplate", value);
+    }
+
     public java.lang.String getHeaderTemplate() {
         return (java.lang.String)getProperty("headerTemplate");
     }
@@ -248,6 +268,14 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
 
     public void setValuePrimitive(boolean value) {
         setProperty("valuePrimitive", value);
+    }
+
+    public boolean getVirtual() {
+        return (boolean)getProperty("virtual");
+    }
+
+    public void setVirtual(boolean value) {
+        setProperty("virtual", value);
     }
 
     public String getCascade() {

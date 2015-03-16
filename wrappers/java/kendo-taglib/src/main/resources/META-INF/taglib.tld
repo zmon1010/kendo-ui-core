@@ -117,6 +117,12 @@ all data items which begin with the current widget value are displayed in the su
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>Enables the virtualization feature of the widget.</description>
+            <name>virtual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>change</name>
             <rtexprvalue>true</rtexprvalue>
@@ -203,6 +209,35 @@ all data items which begin with the current widget value are displayed in the su
 
 
 
+
+    <tag>
+        <description>Enables the virtualization feature of the widget.</description>
+        <name>autoComplete-virtual</name>
+        <tag-class>com.kendoui.taglib.autocomplete.VirtualTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Specifies the height of the virtual item. If not specified the framework will automatically calculate the itemHeight based on the theme used.</description>
+            <name>itemHeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description></description>
+            <name>valueMapper</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description></description>
+        <name>autoComplete-virtual-valueMapper</name>
+        <tag-class>com.kendoui.taglib.autocomplete.VirtualValueMapperFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
@@ -11327,6 +11362,18 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The template used to render the fixed header group. By default the widget displays only the value of the group.</description>
+            <name>fixedGroupTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The template used to render the groups. By default the widget displays only the value of the group.</description>
+            <name>groupTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Specifies a static HTML content, which will be rendered as a header of the popup element.</description>
             <name>headerTemplate</name>
             <rtexprvalue>true</rtexprvalue>
@@ -11395,6 +11442,12 @@ The supported filter values are startswith, endswith and contains.</description>
         <attribute>
             <description>Specifies the value binding behavior for the widget when the initial model value is null. If set to true, the View-Model field will be updated with the selected item value field. If set to false, the View-Model field will be updated with the selected item.</description>
             <name>valuePrimitive</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Enables the virtualization feature of the widget.</description>
+            <name>virtual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
@@ -11490,6 +11543,35 @@ The supported filter values are startswith, endswith and contains.</description>
 
 
 
+
+    <tag>
+        <description>Enables the virtualization feature of the widget.</description>
+        <name>comboBox-virtual</name>
+        <tag-class>com.kendoui.taglib.combobox.VirtualTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Specifies the height of the virtual item. If not specified the framework will automatically calculate the itemHeight based on the theme used.</description>
+            <name>itemHeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Required!</description>
+            <name>valueMapper</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Required!</description>
+        <name>comboBox-virtual-valueMapper</name>
+        <tag-class>com.kendoui.taglib.combobox.VirtualValueMapperFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
@@ -16888,6 +16970,18 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The template used to render the fixed header group. By default the widget displays only the value of the group.</description>
+            <name>fixedGroupTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The template used to render the groups. By default the widget displays only the value of the group.</description>
+            <name>groupTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Specifies a static HTML content, which will be rendered as a header of the popup element.</description>
             <name>headerTemplate</name>
             <rtexprvalue>true</rtexprvalue>
@@ -16925,6 +17019,12 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>The template used to render the option label.</description>
+            <name>optionLabelTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The template used to render the items. By default the widget displays only the text of the data item (configured via dataTextField).</description>
             <name>template</name>
             <rtexprvalue>true</rtexprvalue>
@@ -16953,6 +17053,12 @@ The supported filter values are startswith, endswith and contains.</description>
             <name>valueTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Enables the virtualization feature of the widget.</description>
+            <name>virtual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
@@ -17046,6 +17152,35 @@ The supported filter values are startswith, endswith and contains.</description>
 
 
 
+
+    <tag>
+        <description>Enables the virtualization feature of the widget.</description>
+        <name>dropDownList-virtual</name>
+        <tag-class>com.kendoui.taglib.dropdownlist.VirtualTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Specifies the height of the virtual item. If not specified the framework will automatically calculate the itemHeight based on the theme used.</description>
+            <name>itemHeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Required!</description>
+            <name>valueMapper</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Required!</description>
+        <name>dropDownList-virtual-valueMapper</name>
+        <tag-class>com.kendoui.taglib.dropdownlist.VirtualValueMapperFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
@@ -23798,6 +23933,12 @@ Cancelling the event will prevent the user action.</description>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description>Specifies whether the widget will unmask the input value on form post (available since Q1 2015).</description>
+            <name>unmaskOnPost</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Specifies the value of the MaskedTextBox widget.</description>
             <name>value</name>
             <rtexprvalue>true</rtexprvalue>
@@ -24107,6 +24248,18 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The template used to render the fixed header group. By default the widget displays only the value of the group.</description>
+            <name>fixedGroupTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The template used to render the groups. By default the widget displays only the value of the group.</description>
+            <name>groupTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Specifies a static HTML content, which will be rendered as a header of the popup element.</description>
             <name>headerTemplate</name>
             <rtexprvalue>true</rtexprvalue>
@@ -24170,6 +24323,12 @@ A zero value means that a request will be made as soon as the user focuses the w
         <attribute>
             <description>Specifies the value binding behavior for the widget. If set to true, the View-Model field will be updated with the selected item value field. If set to false, the View-Model field will be updated with the selected item.</description>
             <name>valuePrimitive</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Enables the virtualization feature of the widget.</description>
+            <name>virtual</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
@@ -24260,6 +24419,35 @@ A zero value means that a request will be made as soon as the user focuses the w
 
 
 
+
+    <tag>
+        <description>Enables the virtualization feature of the widget.</description>
+        <name>multiSelect-virtual</name>
+        <tag-class>com.kendoui.taglib.multiselect.VirtualTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Specifies the height of the virtual item. If not specified the framework will automatically calculate the itemHeight based on the theme used.</description>
+            <name>itemHeight</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Required!</description>
+            <name>valueMapper</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>Required!</description>
+        <name>multiSelect-virtual-valueMapper</name>
+        <tag-class>com.kendoui.taglib.multiselect.VirtualValueMapperFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
 
     <tag>
         <description>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
