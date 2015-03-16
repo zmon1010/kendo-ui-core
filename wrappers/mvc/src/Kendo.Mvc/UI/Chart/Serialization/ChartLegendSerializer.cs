@@ -38,7 +38,8 @@ namespace Kendo.Mvc.UI
                 .Add("width", legend.Width, () => legend.Width.HasValue)
                 .Add("height", legend.Height, () => legend.Height.HasValue)
                 .Add("reverse", legend.Reverse, () => legend.Reverse.HasValue)
-                .Add("item", legendItemOptions, () => legendItemOptions.Any());
+                .Add("item", legendItemOptions, () => legendItemOptions.Any())
+                .Add("align", legend.Align.ToString().ToLowerInvariant(), () => legend.Align.HasValue);
 
             return result;
         }

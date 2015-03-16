@@ -167,6 +167,15 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the legend align option
+        /// </summary>
+        public ChartLegendAlign? Align
+        {
+            get;
+            set;
+        }
+
         public IChartSerializer CreateSerializer()
         {
             return new ChartLegendSerializer(this);

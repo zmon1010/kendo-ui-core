@@ -322,5 +322,24 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Sets the legend align option
+        /// </summary>
+        /// <param name="align">The legend align option.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().Chart()
+        ///           .Name("Chart")
+        ///           .Legend(legend => legend.Align(ChartLegendAlign.Start))
+        ///           .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>        
+        public ChartLegendBuilder Align(ChartLegendAlign align)
+        {
+            legend.Align = align;
+            return this;
+        }
+
     }
 }
