@@ -75,6 +75,14 @@ public class ConnectionStartCapTag extends  BaseTag  /* interfaces */ /* interfa
         setProperty("stroke", value);
     }
 
+    public java.lang.String getType() {
+        return (java.lang.String)getProperty("type");
+    }
+
+    public void setType(java.lang.String value) {
+        setProperty("type", value);
+    }
+
 //<< Attributes
 
 }

@@ -23,6 +23,15 @@ class DiagramConnectionDefaultsEndCap extends \Kendo\SerializableObject {
         return $this->setProperty('stroke', $value);
     }
 
+    /**
+    * The connection end cap type.The supported values are:
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\DiagramConnectionDefaultsEndCap
+    */
+    public function type($value) {
+        return $this->setProperty('type', $value);
+    }
+
 //<< Properties
 }
 

@@ -13486,6 +13486,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>The connection end cap type.The supported values are:</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -13633,6 +13639,12 @@ data source is fired. By default the widget will bind to the data source specifi
         <attribute>
             <description>The connection start cap stroke options or color.</description>
             <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection start cap type.The supported values are:</description>
+            <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -14157,6 +14169,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>The connection end cap type.The supported values are:Note that you can also use the "ArrowStart" for the endCap but its direction will be inversed.</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -14354,6 +14372,12 @@ data source is fired. By default the widget will bind to the data source specifi
         <attribute>
             <description>The connection start cap stroke options or color.</description>
             <name>stroke</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The connection start cap type.The supported values are:</description>
+            <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
