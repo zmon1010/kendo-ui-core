@@ -185,6 +185,14 @@ public class TabStripTag extends WidgetWithItemsTag /* interfaces */implements I
         setProperty("navigatable", value);
     }
 
+    public java.lang.String getTabPosition() {
+        return (java.lang.String)getProperty("tabPosition");
+    }
+
+    public void setTabPosition(java.lang.String value) {
+        setProperty("tabPosition", value);
+    }
+
     public String getActivate() {
         Function property = ((Function)getProperty("activate"));
         if (property != null) {
