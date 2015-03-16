@@ -181,6 +181,14 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("directoryNotFound", value);
     }
 
+    public java.lang.String getEditAreaTitle() {
+        return (java.lang.String)getProperty("editAreaTitle");
+    }
+
+    public void setEditAreaTitle(java.lang.String value) {
+        setProperty("editAreaTitle", value);
+    }
+
     public java.lang.String getEmptyFolder() {
         return (java.lang.String)getProperty("emptyFolder");
     }

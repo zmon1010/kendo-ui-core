@@ -18192,6 +18192,12 @@ If function is assigned, the current path and image name will be provided.</desc
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The title of the iframe editing area when a sandboxed editor is used. Used as a hint for screen readers.</description>
+            <name>editAreaTitle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>The message shown in the file- or imageBrowser when a folder is empty.</description>
             <name>emptyFolder</name>
             <rtexprvalue>true</rtexprvalue>
@@ -19912,7 +19918,8 @@ The grid uses same layout for both phone and tablet.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>If set to true the user could resize the columns by dragging the edges of their header cells. By default resizing is disabled.</description>
+            <description>If set to true, users can resize columns by dragging the edges (resize handles) of their header cells. As of Kendo UI Q1 2015, users can also auto-fit a column by double-clicking
+its resize handle. In this case the column will assume the smallest possible width, which allows the column content to fit without wrapping.By default, column resizing is disabled.</description>
             <name>resizable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -26412,7 +26419,68 @@ the RangeSlider tick labels.</description>
         <tag-class>com.kendoui.taglib.rangeslider.SlideFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
+    <tag>
+        <description>ResponsivePanel</description>
+        <name>responsivePanel</name>
+        <tag-class>com.kendoui.taglib.ResponsivePanelTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to false the widget will not close when the page content is touched, after it was opened on a mobile device. You will need to call the close method when the panel needs to close.</description>
+            <name>autoClose</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the page width at which the widget will be hidden and its toggle button will become visible.</description>
+            <name>breakpoint</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the direction from which the hidden element will open up, once the toggle button has been activated. Valid values are "left", "right", and "top".</description>
+            <name>orientation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the selector for the toggle button that will show and hide the responsive panel.</description>
+            <name>toggleButton</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Triggered before the responsive panel is closed. Cancellable.</description>
+            <name>close</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Triggered before the responsive panel is opened. Cancellable.</description>
+            <name>open</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
 
+
+    <tag>
+        <description>Triggered before the responsive panel is closed. Cancellable.</description>
+        <name>responsivePanel-close</name>
+        <tag-class>com.kendoui.taglib.responsivepanel.CloseFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Triggered before the responsive panel is opened. Cancellable.</description>
+        <name>responsivePanel-open</name>
+        <tag-class>com.kendoui.taglib.responsivepanel.OpenFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>Scheduler</description>
         <name>scheduler</name>

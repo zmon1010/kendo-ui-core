@@ -3926,8 +3926,7 @@
             "aspnet-mvc": "This demo shows the basic functionality of the Telerik ASP.NET MVC ResponsivePanel control."
         },
         "packages": [
-          "!mvc",
-          "!jsp"
+          "!mvc"
         ]
       }
     ],
