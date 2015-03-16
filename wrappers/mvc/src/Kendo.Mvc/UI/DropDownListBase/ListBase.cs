@@ -14,6 +14,8 @@
 
             DataSource = new DataSource();
 
+            VirtualSettings = new UI.VirtualSettings();
+
             UrlGenerator = urlGenerator;
         }
 
@@ -53,6 +55,30 @@
             set;
         }
 
+        public string FixedGroupTemplate
+        {
+            get;
+            set;
+        }
+
+        public string FixedGroupTemplateId
+        {
+            get;
+            set;
+        }
+
+        public string GroupTemplate
+        {
+            get;
+            set;
+        }
+
+        public string GroupTemplateId
+        {
+            get;
+            set;
+        }
+
         public bool? IgnoreCase
         {
             get;
@@ -87,6 +113,12 @@
         {
             get;
             set;
+        }
+
+        public VirtualSettings VirtualSettings
+        { 
+            get; 
+            set; 
         }
        
         public IUrlGenerator UrlGenerator
@@ -146,6 +178,24 @@
                 idPrefix = "\\" + idPrefix;
             }
 
+            if (!string.IsNullOrEmpty(FixedGroupTemplateId))
+            {
+                options["fixedGroupTemplateId"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", idPrefix, FixedGroupTemplateId) };
+            }
+            else if (!string.IsNullOrEmpty(FixedGroupTemplate))
+            {
+                options["fixedGroupTemplate"] = FixedGroupTemplate;
+            }
+
+            if (!string.IsNullOrEmpty(GroupTemplateId))
+            {
+                options["groupTemplateId"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", idPrefix, GroupTemplateId) };
+            }
+            else if (!string.IsNullOrEmpty(GroupTemplate))
+            {
+                options["groupTemplate"] = GroupTemplate;
+            }
+
             if (!string.IsNullOrEmpty(HeaderTemplateId))
             {
                 options["headerTemplate"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", idPrefix, HeaderTemplateId) };
@@ -163,6 +213,18 @@
             if (ValuePrimitive != null)
             {
                 options["valuePrimitive"] = ValuePrimitive;
+            }
+
+            if (VirtualSettings.Enable)
+            {
+                if (VirtualSettings.ValueMapper != null)
+                {
+                    options["virtual"] = VirtualSettings.SeriailzeOptions();
+                }
+                else
+                {
+                    options["virtual"] = VirtualSettings.Enable;
+                }
             }
 
             return options;

@@ -46,6 +46,18 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public string OptionLabelTemplate
+        {
+            get;
+            set;
+        }
+
+        public string OptionLabelTemplateId
+        {
+            get;
+            set;
+        }
+
         public int? SelectedIndex
         {
             get;
@@ -86,6 +98,15 @@ namespace Kendo.Mvc.UI
             if (IsInClientTemplate)
             {
                 idPrefix = "\\" + idPrefix;
+            }
+
+            if (!string.IsNullOrEmpty(OptionLabelTemplateId))
+            {
+                options["optionLabelTemplate"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery(\"{0}{1}\").html()", idPrefix, OptionLabelTemplateId) };
+            }
+            else if (!string.IsNullOrEmpty(OptionLabelTemplate))
+            {
+                options["optionLabelTemplate"] = OptionLabelTemplate;
             }
 
             if (!string.IsNullOrEmpty(ValueTemplateId))

@@ -161,6 +161,46 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Fixed group template which will be rendered as a static group header of the popup element.
+        /// </summary>
+        public TDropDownBuilder FixedGroupTemplate(string fixedGroupTemplate)
+        {
+            Component.FixedGroupTemplate = fixedGroupTemplate;
+
+            return this as TDropDownBuilder;
+        }
+
+        /// <summary>
+        /// FixedGroupTemplateId to be used for rendering the static header of the popup element.
+        /// </summary>
+        public TDropDownBuilder FixedGroupTemplateId(string fixedGroupTemplateId)
+        {
+            Component.FixedGroupTemplateId = fixedGroupTemplateId;
+
+            return this as TDropDownBuilder;
+        }
+
+        /// <summary>
+        /// Group template which will be rendered as a group header of each new group in the popup.
+        /// </summary>
+        public TDropDownBuilder GroupTemplate(string groupTemplate)
+        {
+            Component.GroupTemplate = groupTemplate;
+
+            return this as TDropDownBuilder;
+        }
+
+        /// <summary>
+        /// GroupTemplateId to be used for rendering the static header of the popup element.
+        /// </summary>
+        public TDropDownBuilder GroupTemplateId(string groupTemplateId)
+        {
+            Component.GroupTemplateId = groupTemplateId;
+
+            return this as TDropDownBuilder;
+        }
+
+        /// <summary>
         /// Use it to enable case insensitive bahavior of the combobox. If true the combobox will select the first matching item ignoring its casing.
         /// </summary>
         /// <example>
@@ -236,6 +276,26 @@ namespace Kendo.Mvc.UI.Fluent
         public TDropDownBuilder ValuePrimitive(bool valuePrimitive)
         {
             Component.ValuePrimitive = valuePrimitive;
+
+            return this as TDropDownBuilder;
+        }
+
+        /// <summary>
+        /// Configures the virtualization settings of the widget.
+        /// </summary>
+        public TDropDownBuilder Virtual(bool enable)
+        {
+            Component.VirtualSettings.Enable = enable;
+
+            return this as TDropDownBuilder;
+        }
+
+        /// <summary>
+        /// Configures the virtualization settings of the widget.
+        /// </summary>
+        public TDropDownBuilder Virtual(Action<VirtualSettingsBuilder> virtualizationAction)
+        {
+            virtualizationAction(new VirtualSettingsBuilder(Component.VirtualSettings));
 
             return this as TDropDownBuilder;
         }

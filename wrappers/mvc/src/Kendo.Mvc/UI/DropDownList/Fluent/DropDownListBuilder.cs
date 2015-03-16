@@ -328,6 +328,42 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// OptionLabelTemplate to be used to render the option label content.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DropDownList()
+        ///             .Name("DropDownList")
+        ///             .OptionLabelTemplate("#= data #")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public DropDownListBuilder OptionLabelTemplate(string optionLabelTemplate)
+        {
+            Component.OptionLabelTemplate = optionLabelTemplate;
+
+            return this;
+        }
+
+        /// <summary>
+        /// OptionLabelTemplateId to be used to render the option label content.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().DropDownList()
+        ///             .Name("DropDownList")
+        ///             .OptionLabelTemplateId("widgetOptionLabelTemplateId")
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public DropDownListBuilder OptionLabelTemplateId(string optionLabelTemplateId)
+        {
+            Component.OptionLabelTemplateId = optionLabelTemplateId;
+
+            return this;
+        }
+
+        /// <summary>
         /// ValueTemplate to be used to render the selected value.
         /// </summary>
         /// <example>
