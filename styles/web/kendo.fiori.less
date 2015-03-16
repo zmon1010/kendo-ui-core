@@ -646,6 +646,11 @@ div.k-window.k-state-focused
             top: 0;
         }
         
+        .k-rtl .k-scheduler-toolbar > ul.k-scheduler-views {
+            right: auto;
+            left: 0;
+        }
+        
         .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view,
         .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view:hover {
             .composite-background(@widget-gradient);
@@ -654,6 +659,11 @@ div.k-window.k-state-focused
             border-color: transparent;
             border-radius: @main-border-radius;
             text-align: right;
+        }
+        
+        .k-rtl .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view {
+            text-align: left;
+            padding-left: 0;
         }
         
         .k-scheduler-toolbar > ul.k-scheduler-views.k-state-expanded > li {
@@ -704,14 +714,14 @@ div.k-window.k-state-focused
             border-style: solid;
             border-color: transparent; /*@secondary-border-color*/
             background-color: @header-background-color;
-            border-radius: @main-border-radius @main-border-radius 0 0;
+            border-radius: 0;
+            border-width: 1px;
+            background-image: none;
             .box-shadow(0 2px 2px 0 @shadow-color);
         }
         
-        .k-scheduler-toolbar > ul.k-scheduler-views.k-state-expanded {
-            border-width: 1px;
-            background-image: none;
-            border-radius: @main-border-radius;
+        .k-rtl .k-scheduler-toolbar > ul.k-scheduler-views.k-state-expanded {
+            text-align: left;
         }
         
         /* Responsive Pager */
@@ -725,7 +735,8 @@ div.k-window.k-state-focused
         
         .k-pager-numbers,
         .k-grid .k-pager-numbers {
-            position: absolute;                
+            position: absolute;
+            left: 5em;
             display: -moz-inline-flex;
             display: -webkit-inline-flex;
             display: inline-flex;
@@ -735,6 +746,13 @@ div.k-window.k-state-focused
             -moz-transform: translatey(-100%);
             transform: translatey(-100%);
             margin-top: 6px;
+        }
+        
+        .k-rtl .k-pager-numbers,
+        .k-rtl .k-grid .k-pager-numbers
+        {
+            right: 5em;
+            width: 5.15em;
         }
         
         .k-pager-numbers .k-current-page,
@@ -780,6 +798,11 @@ div.k-window.k-state-focused
         
         .k-pager-numbers + .k-link {
             margin-left: 5.4em;
+        }
+        
+        .k-rtl .k-pager-numbers + .k-link {
+            margin-right: 5.2em;
+            margin-left: 0;
         }
         
         .k-pager-wrap .k-pager-numbers .k-state-selected,
