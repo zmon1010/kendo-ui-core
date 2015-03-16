@@ -4021,6 +4021,22 @@
         ]
       },
       {
+        "text": "Binding to SignalR",
+        "url": "scheduler/signalr",
+        "title": {
+            "kendo-ui": "Real-time Binding to SignalR Hub",
+            "aspnet-mvc": "Real-time Binding to SignalR Hub | UI for ASP.NET MVC demos"
+        },
+        "meta": {
+            "kendo-ui": "This example shows how the Kendo UI Scheduler can be bound to SignalR Hub for real-time push notifications",
+            "aspnet-mvc": "This example shows how the Telerik ASP.NET MVC Scheduler can be bound to SignalR Hub for real-time push notifications."
+        },
+        "packages": [
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
         "text": "Resources",
         "url": "scheduler/resources",
         "disableInMobile": true,

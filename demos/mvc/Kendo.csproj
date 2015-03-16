@@ -1187,6 +1187,7 @@
     <Content Include="Views\Responsive\ResponsivePanel.cshtml" />
     <Content Include="Views\Responsive\Rulers.cshtml" />
     <Content Include="Views\Responsive\QRCode.cshtml" />
+    <Content Include="Views\demos\scheduler\signalr.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />
