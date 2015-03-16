@@ -1,20 +1,13 @@
-﻿@using Kendo.Mvc.UI;
+﻿@using Kendo.Mvc.UI
 
 <div id='to-do'>
 	@(Html.Kendo().DateTimePicker()
 		.Name("datetimepicker")
-		.Value(DateTime.Now)		
-		.Events(e => e.Change("onChange"))
+		.Value(DateTime.Now)
 	)
 </div>
 
-<script>
-	function onChange(e) {
-		console.log(e);
-	}
-</script>
-
-<style scoped>
+<style>
     .k-datetimepicker
     {
         width: 200px;
