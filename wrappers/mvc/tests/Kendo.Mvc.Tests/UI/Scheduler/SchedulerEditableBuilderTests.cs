@@ -85,6 +85,15 @@
         }
 
         [Fact]
+        public void EditRecurringMode_sets_the_corresponding_property()
+        {
+            var editRecurringMode = SchedulerEditRecurringMode.Occurrence;
+            builder.EditRecurringMode(editRecurringMode);
+
+            Assert.Equal(editRecurringMode, editable.EditRecurringMode);
+        }
+
+        [Fact]
         public void DisplayDeleteConfirmation_sets_the_corresponding_property()
         {
             var displaydeleteconfirmation = false;
