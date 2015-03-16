@@ -39,7 +39,7 @@
             links: ["insertImage", "insertFile", "createLink", "unlink"],
             lists: ["insertUnorderedList", "insertOrderedList", "indent", "outdent"],
             tables: [ "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn" ],
-            advanced: [ "viewHtml", "cleanFormatting" ]
+            advanced: [ "viewHtml", "cleanFormatting", "print", "pdf" ]
         },
 
         _initPopup: function() {
