@@ -44,22 +44,13 @@ class GridColumnFilterable extends \Kendo\SerializableObject {
     /**
     * Sets the itemTemplate option of the GridColumnFilterable.
     * Allows customization on the logic that renderes the checkboxes when using checkbox filtering.
-    * @param string $value The id of the element which represents the kendo template.
-    * @return \Kendo\UI\GridColumnFilterable
-    */
-    public function itemTemplateId($value) {
-        $value = new \Kendo\Template($value);
-
-        return $this->setProperty('itemTemplate', $value);
-    }
-
-    /**
-    * Sets the itemTemplate option of the GridColumnFilterable.
-    * Allows customization on the logic that renderes the checkboxes when using checkbox filtering.
     * @param string $value The template content.
     * @return \Kendo\UI\GridColumnFilterable
     */
     public function itemTemplate($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
         return $this->setProperty('itemTemplate', $value);
     }
 

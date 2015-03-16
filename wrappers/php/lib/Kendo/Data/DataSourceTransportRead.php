@@ -31,6 +31,9 @@ Refer to the jQuery.ajax documentation for further info.
     * @return \Kendo\Data\DataSourceTransportRead
     */
     public function data($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
         return $this->setProperty('data', $value);
     }
 
