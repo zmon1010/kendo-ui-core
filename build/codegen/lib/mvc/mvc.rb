@@ -119,6 +119,7 @@ module CodeGen::MVC::Wrappers
         'editor.encoded',
         'editor.stylesheets',
         'editor.content',
+        'editor.pdf',
         'colorpicker.palette',
         'colorpicker.tilesize',
 		'diagram.shapedefaults.visual',

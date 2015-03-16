@@ -171,19 +171,19 @@ namespace Kendo.Mvc.UI
                 json["resizable"] = Resizable.Enabled;
             }
 
-            var pdf = Pdf.ToJson();
-
-            if (pdf.Any())
-            {
-                json["pdf"] = pdf;
-            }
-
             var serialization = Serialization.ToJson();
             if (serialization.Any())
             {
                 json["serialization"] = serialization;
             }
         //<< Serialization
+
+            var pdf = Pdf.ToJson();
+
+            if (pdf.Any())
+            {
+                json["pdf"] = pdf;
+            }
 
             json["tools"] = DefaultToolGroup.Tools.Select(tool =>
             {
