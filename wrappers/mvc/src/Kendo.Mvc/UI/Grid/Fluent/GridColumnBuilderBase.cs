@@ -168,10 +168,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <example>
         /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().Grid(Model)
-        ///             .Name("Grid")
-        ///             .Columns(columns => columns.Bound(o => o.OrderID).MinScreenWidth(450)
-        /// %&gt;
+        /// @(Html.Kendo().Grid(Model)
+        ///     .Name("Grid")
+        ///     .Columns(columns => columns.Bound(o => o.OrderID).MinScreenWidth(450))
+        /// )
         /// </code>
         /// </example>
         public TColumnBuilder MinScreenWidth(int value)
