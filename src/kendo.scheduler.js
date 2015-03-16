@@ -1853,7 +1853,7 @@ var __meta__ = {
             var isGrouped = selectedGroups && selectedGroups.length;
 
             for (idx = 0; idx < eventsLength; idx++) {
-                if (isGrouped) {
+                if (groups && isGrouped) {
                     var currentGroup = groups[selectedGroups[0].groupIndex];
                     var events = [];
                     var timeSlotCollectionCount = currentGroup.timeSlotCollectionCount();
@@ -1875,7 +1875,8 @@ var __meta__ = {
                         that._createSelection(events[0].element);
                     }
                 } else {
-                    var element = view.element.find(kendo.format(".k-event[data-uid={0}]", eventsUids[idx]));
+                    var element = view.element.find(kendo.format(".k-event[data-uid={0}], .k-task[data-uid={0}]", eventsUids[idx]));
+
                     if (element.length) {
                         that._createSelection(element[0]);
                     }
@@ -2125,7 +2126,10 @@ var __meta__ = {
 
             item = $(item);
             selection = this._selection;
-            uid = item.attr(kendo.attr("uid"));
+
+            if (item.is(".k-event")) {
+                uid = item.attr(kendo.attr("uid"));
+            }
 
             slot = this.view().selectionByElement(item);
 

@@ -349,6 +349,10 @@ var __meta__ = {
                 return;
             }
 
+            if (cell.is(".k-task")) {
+                cell = cell.closest("td");
+            }
+
             if (this._isMobile()) {
                 var parent = cell.parent();
                 index = parent.parent().children()

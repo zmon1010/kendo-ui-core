@@ -1029,6 +1029,59 @@
         ok(scheduler.wrapper.find("[data-uid=" + eventUid + "]").hasClass("k-state-selected"));
     });
 
+    test("select method is selecting events by id and resource in views without groups object", function() {
+        var today = kendo.date.today();
+        var end = new Date(today);
+        end.setHours(1);
+
+        setupWidget({
+            views: ["agenda"],
+            dataSource: [
+                { roomId2: [3,4], roomId: 2, start: today, end: end, title: "Test" },
+                { roomId2: [3,4], roomId: 1, start: today, end: end, title: "Test" }
+            ],
+            group: {
+                resources: ["Rooms", "Rooms2"]
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    valuePrimitive: true,
+                    title: "Room"
+                }, {
+                    field: "roomId2",
+                    name: "Rooms2",
+                    multiple: true,
+                    dataSource: [
+                        { text: "101", value: 3, color: "#6eb3fa" },
+                        { text: "201", value: 4, color: "#f58a8a" }
+                    ],
+                    valuePrimitive: true,
+                    title: "Room2"
+                }
+            ]
+        });
+
+        var eventUid = scheduler.data()[0].uid;
+
+        scheduler.select({
+            events: [eventUid],
+            resources: {
+                roomId2: 4,
+                roomId: 2
+            }
+        });
+
+        scheduler.wrapper.focus();
+
+        ok(scheduler.wrapper.find("[data-uid=" + eventUid + "]").closest("tr").hasClass("k-state-selected"));
+    });
+
     test("select method is selecting allDay events by id and resource", function() {
         var today = kendo.date.today();
         var end = new Date(today);
