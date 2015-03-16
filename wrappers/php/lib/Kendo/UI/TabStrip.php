@@ -97,8 +97,7 @@ user interactions. Setting this option to false will disable all animations.
     }
 
     /**
-    * Sets the field of the data item that provides the text content of
-the tab content element.
+    * Sets the field of the data item that provides the text content of the tab content element.
     * @param string $value
     * @return \Kendo\UI\TabStrip
     */
@@ -107,8 +106,7 @@ the tab content element.
     }
 
     /**
-    * Sets the field of the data item that provides the URL for
-the ajax loaded tab content.
+    * Sets the field of the data item that provides the URL for the Ajax loaded tab content.
     * @param string $value
     * @return \Kendo\UI\TabStrip
     */
@@ -117,8 +115,7 @@ the ajax loaded tab content.
     }
 
     /**
-    * Sets the field of the data item that provides the image URL of
-the tab.
+    * Sets the field of the data item that provides the image URL of the tab.
     * @param string $value
     * @return \Kendo\UI\TabStrip
     */
@@ -127,8 +124,7 @@ the tab.
     }
 
     /**
-    * Sets the field of the data item that provides the CSS class of
-the tab.
+    * Sets the field of the data item that provides the CSS class of the tab.
     * @param string $value
     * @return \Kendo\UI\TabStrip
     */
@@ -146,8 +142,7 @@ the tab.
     }
 
     /**
-    * Sets the field of the data item that provides the link URL for the
-tab.
+    * Sets the field of the data item that provides the link URL for the tab.
     * @param string $value
     * @return \Kendo\UI\TabStrip
     */
@@ -162,6 +157,16 @@ tab.
     */
     public function navigatable($value) {
         return $this->setProperty('navigatable', $value);
+    }
+
+    /**
+    * Specifies the position of the widget tabs. Valid values are "top" (default), "left", "right" and "bottom".
+A fade animation is highly recommended with any of the non-default tab position settings.
+    * @param string $value
+    * @return \Kendo\UI\TabStrip
+    */
+    public function tabPosition($value) {
+        return $this->setProperty('tabPosition', $value);
     }
 
     /**
