@@ -227,6 +227,7 @@
     <Compile Include="Controllers\Radial_Gauge\ExportController.cs" />
     <Compile Include="Controllers\Radial_Gauge\Multiple_PointersController.cs" />
     <Compile Include="Controllers\Scheduler\Pdf_ExportController.cs" />
+    <Compile Include="Controllers\Scheduler\SignalRController.cs" />
     <Compile Include="Controllers\Scheduler\TimelineController.cs" />
     <Compile Include="Controllers\Styling\CheckboxesController.cs" />
     <Compile Include="Controllers\Styling\RadioButtonsController.cs" />
@@ -690,6 +691,7 @@
     <Compile Include="Models\OrgChartShape.cs">
       <DependentUpon>Sample.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Scheduler\MeetingSignalRViewModel.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryModel.cs" />
     <Compile Include="Models\TreeList\EmployeeDirectoryService.cs" />
     <Compile Include="Models\WebMail.cs" />
@@ -922,6 +924,7 @@
     <Content Include="Areas\aspx\Views\radial_gauge\export.aspx" />
     <Content Include="Areas\aspx\Views\radial_gauge\multiple_pointers.aspx" />
     <Content Include="Areas\aspx\Views\scheduler\pdf_export.aspx" />
+    <Content Include="Areas\aspx\Views\scheduler\signalr.aspx" />
     <Content Include="Areas\aspx\Views\scheduler\timeline.aspx" />
     <Content Include="Areas\aspx\Views\styling\checkboxes.aspx" />
     <Content Include="Areas\aspx\Views\styling\radios.aspx" />
@@ -2714,6 +2717,7 @@
     <Content Include="Areas\razor\Views\map\export.cshtml" />
     <Content Include="Areas\razor\Views\grid\copy_to_excel.cshtml" />
     <Content Include="Areas\razor\Views\tabstrip\tab_position.cshtml" />
+    <Content Include="Areas\razor\Views\scheduler\signalr.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
