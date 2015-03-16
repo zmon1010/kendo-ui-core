@@ -150,7 +150,13 @@ def bundle(options)
         prerequisites = prerequisites + demo_files.flatten
     end
 
-    prerequisites.push(options[:post_build]) if options[:post_build]
+    if options[:post_build]
+        if options[:post_build].kind_of?(Array)
+            prerequisites.push(*options[:post_build])
+        else
+            prerequisites.push(options[:post_build])
+        end
+    end
 
     zip "#{path}.zip" =>  prerequisites
 
