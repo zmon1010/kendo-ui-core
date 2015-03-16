@@ -1118,7 +1118,19 @@
         },
         "meta": {
             "kendo-ui": "See how the virtual dropdown list of Kendo UI DropDownList is filtered on the the server based on the input."
-        }
+        },
+        "new": true
+      },
+      {
+        "text": "Grouping",
+        "url": "dropdownlist/grouping",
+        "title": {
+            "kendo-ui": "Example of grouping in Kendo UI DropDownList widget"
+        },
+        "meta": {
+            "kendo-ui": "See how the virtual dropdown list of Kendo UI DropDownList is grouped."
+        },
+        "new": true
       },
       {
         "packages": [
