@@ -103,6 +103,7 @@ var __meta__ = {
         },
 
         _setFilterForm: function(expression) {
+            var filterOperator = this._filterOperator;
             var operator = "";
             var value = "";
 
@@ -111,7 +112,11 @@ var __meta__ = {
                 value = expression.value;
             }
 
-            this._filterOperator.value(operator);
+            filterOperator.value(operator);
+            if (!filterOperator.value()) {
+                filterOperator.select(0);
+            }
+
             this._filterValue.val(value);
         },
 
