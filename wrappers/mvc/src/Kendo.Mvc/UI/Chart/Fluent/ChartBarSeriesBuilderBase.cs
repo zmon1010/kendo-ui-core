@@ -344,5 +344,31 @@ namespace Kendo.Mvc.UI.Fluent
 
             return (TSeriesBuilder)this;
         }
+
+        /// <summary>
+        /// Sets the series visual handler
+        /// </summary>
+        /// <param name="handler">The handler name.</param>
+        public TSeriesBuilder Visual(string handler)
+        {
+            Series.Visual = new ClientHandlerDescriptor
+            {
+                HandlerName = handler
+            };
+            return (TSeriesBuilder)this;
+        }
+
+        /// <summary>
+        /// Sets the series visual handler
+        /// </summary>
+        /// <param name="handler">The handler</param>
+        public TSeriesBuilder Visual(Func<object, object> handler)
+        {
+            Series.Visual = new ClientHandlerDescriptor
+            {
+                TemplateDelegate = handler
+            };
+            return (TSeriesBuilder)this;
+        }
     }
 }

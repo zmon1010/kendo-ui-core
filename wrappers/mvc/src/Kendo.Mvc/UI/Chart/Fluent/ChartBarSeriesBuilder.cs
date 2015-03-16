@@ -39,31 +39,5 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new CategoricalErrorBarsBuilder(Series.ErrorBars));
             return this;
         }
-
-        /// <summary>
-        /// Sets the series visual handler
-        /// </summary>
-        /// <param name="handler">The handler name.</param>  
-        public ChartBarSeriesBuilder<T> Visual(string handler)
-        {
-            Series.Visual = new ClientHandlerDescriptor
-            {
-                HandlerName = handler
-            };
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the series visual handler
-        /// </summary>
-        /// <param name="handler">The handler</param>  
-        public ChartBarSeriesBuilder<T> Visual(Func<object, object> handler)
-        {
-            Series.Visual = new ClientHandlerDescriptor
-            {
-                TemplateDelegate = handler
-            };
-            return this;
-        }
     }
 }
