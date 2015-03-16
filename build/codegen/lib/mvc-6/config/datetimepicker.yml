@@ -6,3 +6,29 @@
     - :name: parseFormats
       :merge: true
       :type: string[]
+
+    - :name: start
+      :type: String
+      :enum_type: CalendarView
+      :description: Represents available types of calendar views.
+      :values:
+          - :value: month
+            :member: Month
+            :description: Shows the days of the current month
+
+          - :value: year
+            :member: Year
+            :description: Shows the months of the current year
+
+          - :value: decade
+            :member: Decade
+            :description: Shows the years of the current decade
+
+          - :value: century
+            :member: Century
+            :description: Shows the decades of the current century
+
+    - :name: depth
+      :type: String
+      :enum_type: CalendarView
+      :description: Specifies the navigation depth.

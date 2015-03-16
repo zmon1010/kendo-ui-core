@@ -46,8 +46,19 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
+		public bool EnableFooter
+		{
+			get;
+			set;
+		} = true;
 
-        protected override void WriteHtml(TextWriter writer)
+		public string FooterId
+		{
+			get;
+			set;
+		}
+
+		protected override void WriteHtml(TextWriter writer)
         {
             var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
             var tag = Generator.GenerateDateTimeInput(ViewContext, metadata, Id, Name, Value, Format, HtmlAttributes);
@@ -66,10 +77,32 @@ namespace Kendo.Mvc.UI
         {
             var settings = SerializeSettings();
 
+			var idPrefix = "#";
+			if (IsInClientTemplate)
+			{
+				idPrefix = "\\" + idPrefix;
+			}
+
 			var animation = Animation.ToJson();
 			if (animation.Any())
 			{
 				settings["animation"] = animation["animation"];
+			}
+
+			if (EnableFooter)
+			{
+				if (FooterId.HasValue())
+				{
+					settings["footer"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", idPrefix, FooterId) };
+				}
+				else if (Footer.HasValue())
+				{
+					settings["footer"] = Footer;
+				}
+			}
+			else
+			{
+				settings["footer"] = EnableFooter;
 			}
 
 			writer.Write(Initializer.Initialize(Selector, "DateTimePicker", settings));
