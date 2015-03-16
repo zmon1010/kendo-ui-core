@@ -243,7 +243,7 @@ namespace :mvc do
     task :assembly_version => 'wrappers/mvc/src/shared/CommonAssemblyInfo.cs'
 
     desc('Copy the minified CSS and JavaScript to Content and Scripts folder')
-    task :assets => ['mvc:assets_js', 'mvc:assets_css']
+    task :assets => ['mvc:assets_js', 'mvc:assets_css', 'mvc_6:assets']
 
     desc('Build ASP.NET MVC binaries')
     task :binaries => [
