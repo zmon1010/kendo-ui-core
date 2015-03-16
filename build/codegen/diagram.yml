@@ -36,4 +36,678 @@
           - ctrl
           - shift
           - alt
-
+    - :name: connectionDefaults.editable.tools.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a button.
+    - :name: connectionDefaults.editable.tools.buttons
+      :type: Array
+      :description: Specifies the buttons of ButtonGroup.
+    - :name: connectionDefaults.editable.tools.buttons.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a ButtonGroup's button.
+    - :name: connectionDefaults.editable.tools.buttons.click
+      :type: Function
+      :description: Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.
+    - :name: connectionDefaults.editable.tools.buttons.enable
+      :type: Boolean
+      :description: Specifies whether the button is initially enabled or disabled.
+    - :name: connectionDefaults.editable.tools.buttons.group
+      :type: String
+      :description: Assigns the button to a group. Applicable only for the children of a ButtonGroup that has togglable true.
+    - :name: connectionDefaults.editable.tools.buttons.icon
+      :type: String
+      :description: Sets icon for the menu button. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: connectionDefaults.editable.tools.buttons.id
+      :type: String
+      :description: Specifies the ID of the button.
+    - :name: connectionDefaults.editable.tools.buttons.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the button.
+    - :name: connectionDefaults.editable.tools.buttons.selected
+      :type: Boolean
+      :description: Specifies if the toggle button is initially selected. Applicable only for the children of a ButtonGroup that has togglable true.
+    - :name: connectionDefaults.editable.tools.buttons.showIcon
+      :type: String
+      :description: Specifies where the icon of the button will be displayed. Applicable only for the children of a ButtonGroup.
+    - :name: connectionDefaults.editable.tools.buttons.showText
+      :type: String
+      :description: Specifies where the text of the menu button will be displayed. Applicable only for the buttons of a ButtonGroup.
+    - :name: connectionDefaults.editable.tools.buttons.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.
+    - :name: connectionDefaults.editable.tools.buttons.toggle
+      :type: Function
+      :description: Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.
+    - :name: connectionDefaults.editable.tools.buttons.togglable
+      :type: Boolean
+      :description: Specifies if the button is togglable, e.g. has a selected and unselected state. Applicable only for the children of a ButtonGroup.
+    - :name: connectionDefaults.editable.tools.buttons.text
+      :type: String
+      :description: Specifies the text of the menu button.
+    - :name: connectionDefaults.editable.tools.buttons.url
+      :type: String
+      :description: Specifies the url of the button to navigate to.
+    - :name: connectionDefaults.editable.tools.click
+      :type: Function
+      :description: Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.
+    - :name: connectionDefaults.editable.tools.enable
+      :type: Boolean
+      :description: Specifies whether the control is initially enabled or disabled. Default value is "true".
+    - :name: connectionDefaults.editable.tools.group
+      :type: String
+      :description: Assigns the button to a group. Applicable only for buttons with togglable set to true.
+    - :name: connectionDefaults.editable.tools.icon
+      :type: String
+      :description: Sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: connectionDefaults.editable.tools.id
+      :type: String
+      :description: Specifies the ID of the button.
+    - :name: connectionDefaults.editable.tools.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the button.
+    - :name: connectionDefaults.editable.tools.menuButtons
+      :type: Array
+      :description: Specifies the menu buttons of a SplitButton.
+    - :name: connectionDefaults.editable.tools.menuButtons.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a menu button.
+    - :name: connectionDefaults.editable.tools.menuButtons.enable
+      :type: Boolean
+      :description: Specifies whether the menu button is initially enabled or disabled.
+    - :name: connectionDefaults.editable.tools.menuButtons.icon
+      :type: String
+      :description: Sets icon for the menu buttons. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: connectionDefaults.editable.tools.menuButtons.id
+      :type: String
+      :description: Specifies the ID of the menu buttons.
+    - :name: connectionDefaults.editable.tools.menuButtons.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the menu button.
+    - :name: connectionDefaults.editable.tools.menuButtons.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for menu button icon.
+    - :name: connectionDefaults.editable.tools.menuButtons.text
+      :type: String
+      :description: Specifies the text of the menu buttons.
+    - :name: connectionDefaults.editable.tools.menuButtons.url
+      :type: String
+      :description: Specifies the url of the menu button to navigate to.
+    - :name: connectionDefaults.editable.tools.overflow
+      :type: String
+      :description: Specifies how the button behaves when the ToolBar is resized. Possible values are "always", "never" or "auto" (default).
+    - :name: connectionDefaults.editable.tools.overflowTemplate
+      :type: String|Function
+      :description: Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.
+    - :name: connectionDefaults.editable.tools.primary
+      :type: Boolean
+      :description: Specifies whether the button is primary. Primary buttons receive different styling.
+    - :name: connectionDefaults.editable.tools.selected
+      :type: Boolean
+      :description: Specifies if the toggle button is initially selected. Applicable only for buttons with togglable set to true.
+    - :name: connectionDefaults.editable.tools.showIcon
+      :type: String
+      :description: Specifies where the button icon will be displayed. Possible values are "toolbar", "overflow" or "both" (default).
+    - :name: connectionDefaults.editable.tools.showText
+      :type: String
+      :description: Specifies where the text will be displayed. Possible values are "toolbar", "overflow" or "both" (default).
+    - :name: connectionDefaults.editable.tools.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.
+    - :name: connectionDefaults.editable.tools.template
+      :type: String|Function
+      :description: Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.
+    - :name: connectionDefaults.editable.tools.text
+      :type: String
+      :description: Sets the text of the button.
+    - :name: connectionDefaults.editable.tools.togglable
+      :type: Boolean
+      :description: Specifies if the button is togglable, e.g. has a selected and unselected state.
+    - :name: connectionDefaults.editable.tools.toggle
+      :type: Function
+      :description: Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.
+    - :name: connectionDefaults.editable.tools.type
+      :type: String
+      :description: Specifies the command type. Supported types are "button", "splitButton", "buttonGroup", "separator".
+    - :name: connectionDefaults.editable.tools.url
+      :type: String
+      :description: Specifies the url to navigate to.
+    - :name: connections.editable.tools.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a button.
+    - :name: connections.editable.tools.buttons
+      :type: Array
+      :description: Specifies the buttons of ButtonGroup.
+    - :name: connections.editable.tools.buttons.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a ButtonGroup's button.
+    - :name: connections.editable.tools.buttons.click
+      :type: Function
+      :description: Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.
+    - :name: connections.editable.tools.buttons.enable
+      :type: Boolean
+      :description: Specifies whether the button is initially enabled or disabled.
+    - :name: connections.editable.tools.buttons.group
+      :type: String
+      :description: Assigns the button to a group. Applicable only for the children of a ButtonGroup that has togglable true.
+    - :name: connections.editable.tools.buttons.icon
+      :type: String
+      :description: Sets icon for the menu button. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: connections.editable.tools.buttons.id
+      :type: String
+      :description: Specifies the ID of the button.
+    - :name: connections.editable.tools.buttons.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the button.
+    - :name: connections.editable.tools.buttons.selected
+      :type: Boolean
+      :description: Specifies if the toggle button is initially selected. Applicable only for the children of a ButtonGroup that has togglable true.
+    - :name: connections.editable.tools.buttons.showIcon
+      :type: String
+      :description: Specifies where the icon of the button will be displayed. Applicable only for the children of a ButtonGroup.
+    - :name: connections.editable.tools.buttons.showText
+      :type: String
+      :description: Specifies where the text of the menu button will be displayed. Applicable only for the buttons of a ButtonGroup.
+    - :name: connections.editable.tools.buttons.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.
+    - :name: connections.editable.tools.buttons.toggle
+      :type: Function
+      :description: Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.
+    - :name: connections.editable.tools.buttons.togglable
+      :type: Boolean
+      :description: Specifies if the button is togglable, e.g. has a selected and unselected state. Applicable only for the children of a ButtonGroup.
+    - :name: connections.editable.tools.buttons.text
+      :type: String
+      :description: Specifies the text of the menu button.
+    - :name: connections.editable.tools.buttons.url
+      :type: String
+      :description: Specifies the url of the button to navigate to.
+    - :name: connections.editable.tools.click
+      :type: Function
+      :description: Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.
+    - :name: connections.editable.tools.enable
+      :type: Boolean
+      :description: Specifies whether the control is initially enabled or disabled. Default value is "true".
+    - :name: connections.editable.tools.group
+      :type: String
+      :description: Assigns the button to a group. Applicable only for buttons with togglable set to true.
+    - :name: connections.editable.tools.icon
+      :type: String
+      :description: Sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: connections.editable.tools.id
+      :type: String
+      :description: Specifies the ID of the button.
+    - :name: connections.editable.tools.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the button.
+    - :name: connections.editable.tools.menuButtons
+      :type: Array
+      :description: Specifies the menu buttons of a SplitButton.
+    - :name: connections.editable.tools.menuButtons.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a menu button.
+    - :name: connections.editable.tools.menuButtons.enable
+      :type: Boolean
+      :description: Specifies whether the menu button is initially enabled or disabled.
+    - :name: connections.editable.tools.menuButtons.icon
+      :type: String
+      :description: Sets icon for the menu buttons. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: connections.editable.tools.menuButtons.id
+      :type: String
+      :description: Specifies the ID of the menu buttons.
+    - :name: connections.editable.tools.menuButtons.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the menu button.
+    - :name: connections.editable.tools.menuButtons.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for menu button icon.
+    - :name: connections.editable.tools.menuButtons.text
+      :type: String
+      :description: Specifies the text of the menu buttons.
+    - :name: connections.editable.tools.menuButtons.url
+      :type: String
+      :description: Specifies the url of the menu button to navigate to.
+    - :name: connections.editable.tools.overflow
+      :type: String
+      :description: Specifies how the button behaves when the ToolBar is resized. Possible values are "always", "never" or "auto" (default).
+    - :name: connections.editable.tools.overflowTemplate
+      :type: String|Function
+      :description: Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.
+    - :name: connections.editable.tools.primary
+      :type: Boolean
+      :description: Specifies whether the button is primary. Primary buttons receive different styling.
+    - :name: connections.editable.tools.selected
+      :type: Boolean
+      :description: Specifies if the toggle button is initially selected. Applicable only for buttons with togglable set to true.
+    - :name: connections.editable.tools.showIcon
+      :type: String
+      :description: Specifies where the button icon will be displayed. Possible values are "toolbar", "overflow" or "both" (default).
+    - :name: connections.editable.tools.showText
+      :type: String
+      :description: Specifies where the text will be displayed. Possible values are "toolbar", "overflow" or "both" (default).
+    - :name: connections.editable.tools.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.
+    - :name: connections.editable.tools.template
+      :type: String|Function
+      :description: Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.
+    - :name: connections.editable.tools.text
+      :type: String
+      :description: Sets the text of the button.
+    - :name: connections.editable.tools.togglable
+      :type: Boolean
+      :description: Specifies if the button is togglable, e.g. has a selected and unselected state.
+    - :name: connections.editable.tools.toggle
+      :type: Function
+      :description: Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.
+    - :name: connections.editable.tools.type
+      :type: String
+      :description: Specifies the command type. Supported types are "button", "splitButton", "buttonGroup", "separator".
+    - :name: connections.editable.tools.url
+      :type: String
+      :description: Specifies the url to navigate to.
+    - :name: editable.tools.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a button.
+    - :name: editable.tools.buttons
+      :type: Array
+      :description: Specifies the buttons of ButtonGroup.
+    - :name: editable.tools.buttons.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a ButtonGroup's button.
+    - :name: editable.tools.buttons.click
+      :type: Function
+      :description: Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.
+    - :name: editable.tools.buttons.enable
+      :type: Boolean
+      :description: Specifies whether the button is initially enabled or disabled.
+    - :name: editable.tools.buttons.group
+      :type: String
+      :description: Assigns the button to a group. Applicable only for the children of a ButtonGroup that has togglable true.
+    - :name: editable.tools.buttons.icon
+      :type: String
+      :description: Sets icon for the menu button. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: editable.tools.buttons.id
+      :type: String
+      :description: Specifies the ID of the button.
+    - :name: editable.tools.buttons.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the button.
+    - :name: editable.tools.buttons.selected
+      :type: Boolean
+      :description: Specifies if the toggle button is initially selected. Applicable only for the children of a ButtonGroup that has togglable true.
+    - :name: editable.tools.buttons.showIcon
+      :type: String
+      :description: Specifies where the icon of the button will be displayed. Applicable only for the children of a ButtonGroup.
+    - :name: editable.tools.buttons.showText
+      :type: String
+      :description: Specifies where the text of the menu button will be displayed. Applicable only for the buttons of a ButtonGroup.
+    - :name: editable.tools.buttons.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.
+    - :name: editable.tools.buttons.toggle
+      :type: Function
+      :description: Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.
+    - :name: editable.tools.buttons.togglable
+      :type: Boolean
+      :description: Specifies if the button is togglable, e.g. has a selected and unselected state. Applicable only for the children of a ButtonGroup.
+    - :name: editable.tools.buttons.text
+      :type: String
+      :description: Specifies the text of the menu button.
+    - :name: editable.tools.buttons.url
+      :type: String
+      :description: Specifies the url of the button to navigate to.
+    - :name: editable.tools.click
+      :type: Function
+      :description: Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.
+    - :name: editable.tools.enable
+      :type: Boolean
+      :description: Specifies whether the control is initially enabled or disabled. Default value is "true".
+    - :name: editable.tools.group
+      :type: String
+      :description: Assigns the button to a group. Applicable only for buttons with togglable set to true.
+    - :name: editable.tools.icon
+      :type: String
+      :description: Sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: editable.tools.id
+      :type: String
+      :description: Specifies the ID of the button.
+    - :name: editable.tools.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the button.
+    - :name: editable.tools.menuButtons
+      :type: Array
+      :description: Specifies the menu buttons of a SplitButton.
+    - :name: editable.tools.menuButtons.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a menu button.
+    - :name: editable.tools.menuButtons.enable
+      :type: Boolean
+      :description: Specifies whether the menu button is initially enabled or disabled.
+    - :name: editable.tools.menuButtons.icon
+      :type: String
+      :description: Sets icon for the menu buttons. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: editable.tools.menuButtons.id
+      :type: String
+      :description: Specifies the ID of the menu buttons.
+    - :name: editable.tools.menuButtons.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the menu button.
+    - :name: editable.tools.menuButtons.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for menu button icon.
+    - :name: editable.tools.menuButtons.text
+      :type: String
+      :description: Specifies the text of the menu buttons.
+    - :name: editable.tools.menuButtons.url
+      :type: String
+      :description: Specifies the url of the menu button to navigate to.
+    - :name: editable.tools.overflow
+      :type: String
+      :description: Specifies how the button behaves when the ToolBar is resized. Possible values are "always", "never" or "auto" (default).
+    - :name: editable.tools.overflowTemplate
+      :type: String|Function
+      :description: Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.
+    - :name: editable.tools.primary
+      :type: Boolean
+      :description: Specifies whether the button is primary. Primary buttons receive different styling.
+    - :name: editable.tools.selected
+      :type: Boolean
+      :description: Specifies if the toggle button is initially selected. Applicable only for buttons with togglable set to true.
+    - :name: editable.tools.showIcon
+      :type: String
+      :description: Specifies where the button icon will be displayed. Possible values are "toolbar", "overflow" or "both" (default).
+    - :name: editable.tools.showText
+      :type: String
+      :description: Specifies where the text will be displayed. Possible values are "toolbar", "overflow" or "both" (default).
+    - :name: editable.tools.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.
+    - :name: editable.tools.template
+      :type: String|Function
+      :description: Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.
+    - :name: editable.tools.text
+      :type: String
+      :description: Sets the text of the button.
+    - :name: editable.tools.togglable
+      :type: Boolean
+      :description: Specifies if the button is togglable, e.g. has a selected and unselected state.
+    - :name: editable.tools.toggle
+      :type: Function
+      :description: Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.
+    - :name: editable.tools.type
+      :type: String
+      :description: Specifies the command type. Supported types are "button", "splitButton", "buttonGroup", "separator".
+    - :name: editable.tools.url
+      :type: String
+      :description: Specifies the url to navigate to.
+    - :name: shapeDefaults.editable.tools.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a button.
+    - :name: shapeDefaults.editable.tools.buttons
+      :type: Array
+      :description: Specifies the buttons of ButtonGroup.
+    - :name: shapeDefaults.editable.tools.buttons.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a ButtonGroup's button.
+    - :name: shapeDefaults.editable.tools.buttons.click
+      :type: Function
+      :description: Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.
+    - :name: shapeDefaults.editable.tools.buttons.enable
+      :type: Boolean
+      :description: Specifies whether the button is initially enabled or disabled.
+    - :name: shapeDefaults.editable.tools.buttons.group
+      :type: String
+      :description: Assigns the button to a group. Applicable only for the children of a ButtonGroup that has togglable true.
+    - :name: shapeDefaults.editable.tools.buttons.icon
+      :type: String
+      :description: Sets icon for the menu button. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: shapeDefaults.editable.tools.buttons.id
+      :type: String
+      :description: Specifies the ID of the button.
+    - :name: shapeDefaults.editable.tools.buttons.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the button.
+    - :name: shapeDefaults.editable.tools.buttons.selected
+      :type: Boolean
+      :description: Specifies if the toggle button is initially selected. Applicable only for the children of a ButtonGroup that has togglable true.
+    - :name: shapeDefaults.editable.tools.buttons.showIcon
+      :type: String
+      :description: Specifies where the icon of the button will be displayed. Applicable only for the children of a ButtonGroup.
+    - :name: shapeDefaults.editable.tools.buttons.showText
+      :type: String
+      :description: Specifies where the text of the menu button will be displayed. Applicable only for the buttons of a ButtonGroup.
+    - :name: shapeDefaults.editable.tools.buttons.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.
+    - :name: shapeDefaults.editable.tools.buttons.toggle
+      :type: Function
+      :description: Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.
+    - :name: shapeDefaults.editable.tools.buttons.togglable
+      :type: Boolean
+      :description: Specifies if the button is togglable, e.g. has a selected and unselected state. Applicable only for the children of a ButtonGroup.
+    - :name: shapeDefaults.editable.tools.buttons.text
+      :type: String
+      :description: Specifies the text of the menu button.
+    - :name: shapeDefaults.editable.tools.buttons.url
+      :type: String
+      :description: Specifies the url of the button to navigate to.
+    - :name: shapeDefaults.editable.tools.click
+      :type: Function
+      :description: Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.
+    - :name: shapeDefaults.editable.tools.enable
+      :type: Boolean
+      :description: Specifies whether the control is initially enabled or disabled. Default value is "true".
+    - :name: shapeDefaults.editable.tools.group
+      :type: String
+      :description: Assigns the button to a group. Applicable only for buttons with togglable set to true.
+    - :name: shapeDefaults.editable.tools.icon
+      :type: String
+      :description: Sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: shapeDefaults.editable.tools.id
+      :type: String
+      :description: Specifies the ID of the button.
+    - :name: shapeDefaults.editable.tools.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the button.
+    - :name: shapeDefaults.editable.tools.menuButtons
+      :type: Array
+      :description: Specifies the menu buttons of a SplitButton.
+    - :name: shapeDefaults.editable.tools.menuButtons.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a menu button.
+    - :name: shapeDefaults.editable.tools.menuButtons.enable
+      :type: Boolean
+      :description: Specifies whether the menu button is initially enabled or disabled.
+    - :name: shapeDefaults.editable.tools.menuButtons.icon
+      :type: String
+      :description: Sets icon for the menu buttons. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: shapeDefaults.editable.tools.menuButtons.id
+      :type: String
+      :description: Specifies the ID of the menu buttons.
+    - :name: shapeDefaults.editable.tools.menuButtons.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the menu button.
+    - :name: shapeDefaults.editable.tools.menuButtons.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for menu button icon.
+    - :name: shapeDefaults.editable.tools.menuButtons.text
+      :type: String
+      :description: Specifies the text of the menu buttons.
+    - :name: shapeDefaults.editable.tools.menuButtons.url
+      :type: String
+      :description: Specifies the url of the menu button to navigate to.
+    - :name: shapeDefaults.editable.tools.overflow
+      :type: String
+      :description: Specifies how the button behaves when the ToolBar is resized. Possible values are "always", "never" or "auto" (default).
+    - :name: shapeDefaults.editable.tools.overflowTemplate
+      :type: String|Function
+      :description: Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.
+    - :name: shapeDefaults.editable.tools.primary
+      :type: Boolean
+      :description: Specifies whether the button is primary. Primary buttons receive different styling.
+    - :name: shapeDefaults.editable.tools.selected
+      :type: Boolean
+      :description: Specifies if the toggle button is initially selected. Applicable only for buttons with togglable set to true.
+    - :name: shapeDefaults.editable.tools.showIcon
+      :type: String
+      :description: Specifies where the button icon will be displayed. Possible values are "toolbar", "overflow" or "both" (default).
+    - :name: shapeDefaults.editable.tools.showText
+      :type: String
+      :description: Specifies where the text will be displayed. Possible values are "toolbar", "overflow" or "both" (default).
+    - :name: shapeDefaults.editable.tools.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.
+    - :name: shapeDefaults.editable.tools.template
+      :type: String|Function
+      :description: Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.
+    - :name: shapeDefaults.editable.tools.text
+      :type: String
+      :description: Sets the text of the button.
+    - :name: shapeDefaults.editable.tools.togglable
+      :type: Boolean
+      :description: Specifies if the button is togglable, e.g. has a selected and unselected state.
+    - :name: shapeDefaults.editable.tools.toggle
+      :type: Function
+      :description: Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.
+    - :name: shapeDefaults.editable.tools.type
+      :type: String
+      :description: Specifies the command type. Supported types are "button", "splitButton", "buttonGroup", "separator".
+    - :name: shapeDefaults.editable.tools.url
+      :type: String
+      :description: Specifies the url to navigate to.
+    - :name: shapes.editable.tools.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a button.
+    - :name: shapes.editable.tools.buttons
+      :type: Array
+      :description: Specifies the buttons of ButtonGroup.
+    - :name: shapes.editable.tools.buttons.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a ButtonGroup's button.
+    - :name: shapes.editable.tools.buttons.click
+      :type: Function
+      :description: Specifies the click event handler of the button. Applicable only for the children of a ButtonGroup.
+    - :name: shapes.editable.tools.buttons.enable
+      :type: Boolean
+      :description: Specifies whether the button is initially enabled or disabled.
+    - :name: shapes.editable.tools.buttons.group
+      :type: String
+      :description: Assigns the button to a group. Applicable only for the children of a ButtonGroup that has togglable true.
+    - :name: shapes.editable.tools.buttons.icon
+      :type: String
+      :description: Sets icon for the menu button. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: shapes.editable.tools.buttons.id
+      :type: String
+      :description: Specifies the ID of the button.
+    - :name: shapes.editable.tools.buttons.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the button.
+    - :name: shapes.editable.tools.buttons.selected
+      :type: Boolean
+      :description: Specifies if the toggle button is initially selected. Applicable only for the children of a ButtonGroup that has togglable true.
+    - :name: shapes.editable.tools.buttons.showIcon
+      :type: String
+      :description: Specifies where the icon of the button will be displayed. Applicable only for the children of a ButtonGroup.
+    - :name: shapes.editable.tools.buttons.showText
+      :type: String
+      :description: Specifies where the text of the menu button will be displayed. Applicable only for the buttons of a ButtonGroup.
+    - :name: shapes.editable.tools.buttons.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.
+    - :name: shapes.editable.tools.buttons.toggle
+      :type: Function
+      :description: Specifies the toggle event handler of the button. Applicable only for the children of a ButtonGroup.
+    - :name: shapes.editable.tools.buttons.togglable
+      :type: Boolean
+      :description: Specifies if the button is togglable, e.g. has a selected and unselected state. Applicable only for the children of a ButtonGroup.
+    - :name: shapes.editable.tools.buttons.text
+      :type: String
+      :description: Specifies the text of the menu button.
+    - :name: shapes.editable.tools.buttons.url
+      :type: String
+      :description: Specifies the url of the button to navigate to.
+    - :name: shapes.editable.tools.click
+      :type: Function
+      :description: Specifies the click event handler of the button. Applicable only for commands of type `button` and `splitButton`.
+    - :name: shapes.editable.tools.enable
+      :type: Boolean
+      :description: Specifies whether the control is initially enabled or disabled. Default value is "true".
+    - :name: shapes.editable.tools.group
+      :type: String
+      :description: Assigns the button to a group. Applicable only for buttons with togglable set to true.
+    - :name: shapes.editable.tools.icon
+      :type: String
+      :description: Sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: shapes.editable.tools.id
+      :type: String
+      :description: Specifies the ID of the button.
+    - :name: shapes.editable.tools.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the button.
+    - :name: shapes.editable.tools.menuButtons
+      :type: Array
+      :description: Specifies the menu buttons of a SplitButton.
+    - :name: shapes.editable.tools.menuButtons.attributes
+      :type: Object
+      :description: Specifies the HTML attributes of a menu button.
+    - :name: shapes.editable.tools.menuButtons.enable
+      :type: Boolean
+      :description: Specifies whether the menu button is initially enabled or disabled.
+    - :name: shapes.editable.tools.menuButtons.icon
+      :type: String
+      :description: Sets icon for the menu buttons. The icon should be one of the existing in the Kendo UI theme sprite.
+    - :name: shapes.editable.tools.menuButtons.id
+      :type: String
+      :description: Specifies the ID of the menu buttons.
+    - :name: shapes.editable.tools.menuButtons.imageUrl
+      :type: String
+      :description: If set, the ToolBar will render an image with the specified URL in the menu button.
+    - :name: shapes.editable.tools.menuButtons.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for menu button icon.
+    - :name: shapes.editable.tools.menuButtons.text
+      :type: String
+      :description: Specifies the text of the menu buttons.
+    - :name: shapes.editable.tools.menuButtons.url
+      :type: String
+      :description: Specifies the url of the menu button to navigate to.
+    - :name: shapes.editable.tools.overflow
+      :type: String
+      :description: Specifies how the button behaves when the ToolBar is resized. Possible values are "always", "never" or "auto" (default).
+    - :name: shapes.editable.tools.overflowTemplate
+      :type: String|Function
+      :description: Specifies what element will be added in the command overflow popup. Applicable only for items that have a template.
+    - :name: shapes.editable.tools.primary
+      :type: Boolean
+      :description: Specifies whether the button is primary. Primary buttons receive different styling.
+    - :name: shapes.editable.tools.selected
+      :type: Boolean
+      :description: Specifies if the toggle button is initially selected. Applicable only for buttons with togglable set to true.
+    - :name: shapes.editable.tools.showIcon
+      :type: String
+      :description: Specifies where the button icon will be displayed. Possible values are "toolbar", "overflow" or "both" (default).
+    - :name: shapes.editable.tools.showText
+      :type: String
+      :description: Specifies where the text will be displayed. Possible values are "toolbar", "overflow" or "both" (default).
+    - :name: shapes.editable.tools.spriteCssClass
+      :type: String
+      :description: Defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.
+    - :name: shapes.editable.tools.template
+      :type: String|Function
+      :description: Specifies what element will be added in the ToolBar wrapper. Items with template does not have a type.
+    - :name: shapes.editable.tools.text
+      :type: String
+      :description: Sets the text of the button.
+    - :name: shapes.editable.tools.togglable
+      :type: Boolean
+      :description: Specifies if the button is togglable, e.g. has a selected and unselected state.
+    - :name: shapes.editable.tools.toggle
+      :type: Function
+      :description: Specifies the toggle event handler of the button. Applicable only for commands of type `button` and togglable set to true.
+    - :name: shapes.editable.tools.type
+      :type: String
+      :description: Specifies the command type. Supported types are "button", "splitButton", "buttonGroup", "separator".
+    - :name: shapes.editable.tools.url
+      :type: String
+      :description: Specifies the url to navigate to.
