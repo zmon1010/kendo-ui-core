@@ -21,7 +21,8 @@ require_once '../lib/Kendo/Autoload.php';
         "fontName",
         "fontSize",
         "foreColor",
-        "backColor"
+        "backColor",
+        "print"
     );
 
     $editor
