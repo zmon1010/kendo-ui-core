@@ -3138,7 +3138,7 @@ var __meta__ = {
                 dataItem: this.dataItem,
                 runningTotal: this.runningTotal,
                 total: this.total,
-                element: $(e.target),
+                element: $((e || {}).target),
                 originalEvent: e,
                 point: this
             };
