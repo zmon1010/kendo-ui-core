@@ -1791,6 +1791,22 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { background: #eee; }
     display: none;
 }
 
+.mobileExample .km-pane-wrapper .k-pager-numbers .k-current-page,
+.mobileExample .km-pane-wrapper .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view {
+    display: none;
+}
+
+.mobileExample .km-pane-wrapper .k-pager-numbers {
+    position: static;
+    -webkit-transform: translatey(0);
+    -moz-transform: translatey(0);
+    transform: translatey(0);
+}
+
+.mobileExample .km-pane-wrapper .k-scheduler-toolbar > ul.k-scheduler-views > li {
+    display: table-cell;
+}
+
 #example .km-wp .km-tabstrip .km-button,
 #example .km-wp .km-tabstrip .km-button.km-state-active
 {
