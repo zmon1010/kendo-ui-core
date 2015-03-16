@@ -160,6 +160,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Common\JsonpResult.cs" />
+    <Compile Include="Hubs\MeetingHub.cs" />
     <Compile Include="Hubs\ProductHub.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\CustomerRepository.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Models\Gantt\GanttDependencyRepository.cs" />
     <Compile Include="Models\Gantt\GanttTaskModel.cs" />
     <Compile Include="Models\Gantt\GanttTaskRepository.cs" />
+    <Compile Include="Models\Scheduler\MeetingSignalR.cs" />
     <Compile Include="Models\ProductSignalR.cs" />
     <Compile Include="Models\Sample.designer.cs">
       <AutoGen>True</AutoGen>
@@ -243,7 +245,9 @@
       <LastGenOutput>Sample.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
