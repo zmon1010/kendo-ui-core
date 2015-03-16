@@ -29,8 +29,6 @@ namespace Kendo.Mvc.UI
 
         public DateTime? Min { get; set; }
 
-        public DateTimePickerMonthSettings Month { get; } = new DateTimePickerMonthSettings();
-
         public string[] ParseFormats { get; set; }
 
         public string TimeFormat { get; set; }
@@ -87,12 +85,6 @@ namespace Kendo.Mvc.UI
             if (Min.HasValue)
             {
                 settings["min"] = Min;
-            }
-
-            var month = Month.Serialize();
-            if (month.Any())
-            {
-                settings["month"] = month;
             }
 
             if (ParseFormats != null && ParseFormats.Any())

@@ -1,6 +1,7 @@
 - dropdownlist.datasource
 - dropdownlist.animation
 - datetimepicker.animation
+- datetimepicker.month
 - grid.altrowtemplate
 - grid.columnmenu.messages
 - grid.columns

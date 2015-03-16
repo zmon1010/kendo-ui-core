@@ -99,16 +99,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Templates for the cells rendered in the calendar "month" view.
-        /// </summary>
-        /// <param name="configurator">The configurator for the month setting.</param>
-        public DateTimePickerBuilder Month(Action<DateTimePickerMonthSettingsBuilder> configurator)
-        {
-            configurator(new DateTimePickerMonthSettingsBuilder(Container.Month));
-            return this;
-        }
-
-        /// <summary>
         /// Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used.
 		///  Note that value of the format option is always used. The timeFormat value also will be used if defined.
         /// </summary>
