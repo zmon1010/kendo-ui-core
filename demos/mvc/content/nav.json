@@ -631,6 +631,32 @@
         }
       },
       {
+        "text": "Virtualization",
+        "url": "combobox/virtualization",
+        "title": {
+            "kendo-ui": "Virtualization in Kendo UI ComboBox",
+            "aspnet-mvc": "Virtualization in ASP.NET MVC ComboBox"
+        },
+        "meta": {
+            "kendo-ui": "Check out this demo to see how the virtualization functionality works in Kendo UI ComboBox.",
+            "aspnet-mvc": "Check out this demo to see how the virtualization functionality works in ASP.NET MVC ComboBox."
+        },
+        "new": true
+      },
+      {
+        "text": "Grouping",
+        "url": "combobox/grouping",
+        "title": {
+            "kendo-ui": "Grouping in Kendo UI ComboBox",
+            "aspnet-mvc": "Grouping in ASP.NET MVC ComboBox"
+        },
+        "meta": {
+            "kendo-ui": "Check out this demo to see how the grouping functionality works in Kendo UI ComboBox.",
+            "aspnet-mvc": "Check out this demo to see how the grouping functionality works in ASP.NET MVC ComboBox."
+        },
+        "new": true
+      },
+      {
         "packages": [
           "mvc-offline",
           "jsp"
