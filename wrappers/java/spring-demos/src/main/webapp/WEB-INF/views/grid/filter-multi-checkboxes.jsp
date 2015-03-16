@@ -9,6 +9,8 @@
 <c:url value="/grid/editing/update" var="updateUrl" />
 <c:url value="/grid/editing/destroy" var="destroyUrl" />
 
+<c:url value="/grid/filter-multi-checkboxes/unique" var="filterableUnique" />
+
 <c:url value="/grid/detailtemplate/employees/" var="transportReadUrl" />
 <c:url value="/grid/detailtemplate/orders/" var="transportNestedReadUrl" />
 
@@ -74,25 +76,136 @@
     </kendo:grid>
     
 	<h4>Server Operations</h4>
-	<kendo:grid name="server" pageable="true" sortable="true" filterable="true" >
+	<kendo:grid name="server" pageable="true" sortable="true" filterable="true">
 	    <kendo:grid-columns>
 	        <kendo:grid-column title="First Name" field="firstName" width="120px" >
-	        	<kendo:grid-column-filterable multi="true"/>
+	        	<kendo:grid-column-filterable multi="true">
+	        		
+	        		<kendo:dataSource>
+	        		 <kendo:dataSource-transport>
+		        		 <kendo:dataSource-transport-parameterMap>
+			            	<script>
+			             		function parameterMap(options) { 
+			            			return JSON.stringify(options);
+			             		}
+			            	</script>
+			            </kendo:dataSource-transport-parameterMap>
+	        		 	<kendo:dataSource-transport-read url="${filterableUnique}" type="POST" dataType="json" contentType="application/json">	        		 	
+	        		 		<kendo:dataSource-transport-read-data>
+	        		 			<script>
+	        		 				{ field: "firstName" }
+	        		 			</script>
+	        		 		</kendo:dataSource-transport-read-data>
+	        		 	</kendo:dataSource-transport-read>
+	        		 </kendo:dataSource-transport>
+	        		 </kendo:dataSource>
+	        		
+	        	</kendo:grid-column-filterable>
 	        </kendo:grid-column>
 	        <kendo:grid-column title="Last Name" field="lastName" width="120px" >
-	        	<kendo:grid-column-filterable multi="true"/>
+	        	<kendo:grid-column-filterable multi="true">
+	        		<kendo:dataSource>
+	        		 <kendo:dataSource-transport>
+		        		 <kendo:dataSource-transport-parameterMap>
+			            	<script>
+			             		function parameterMap(options) { 
+			            			return JSON.stringify(options);
+			             		}
+			            	</script>
+			            </kendo:dataSource-transport-parameterMap>
+	        		 	<kendo:dataSource-transport-read url="${filterableUnique}" type="POST" dataType="json" contentType="application/json">	        		 	
+	        		 		<kendo:dataSource-transport-read-data>
+	        		 			<script>
+	        		 				{ field: "lastName" }
+	        		 			</script>
+	        		 		</kendo:dataSource-transport-read-data>
+	        		 	</kendo:dataSource-transport-read>
+	        		 </kendo:dataSource-transport>
+	        		</kendo:dataSource>
+	        	</kendo:grid-column-filterable>
 	        </kendo:grid-column>
 	        <kendo:grid-column title="Country" field="country" width="120px" >
-	        	<kendo:grid-column-filterable multi="true"/>
+	        	<kendo:grid-column-filterable multi="true">
+	        		<kendo:grid-column-filterable-itemTemplate>
+	        		<script>
+		        		function (e) {
+				            if (e.field == "all") {
+				                //handle the check-all checkbox template
+				                return "<div><label><strong><input type='checkbox' />#= all#</strong></label></div>";
+				            } else {
+				                //handle the other checkboxes
+				                return "<span><label><input type='checkbox' name='" + e.field + "' value='#=country#'/><span>#= country #</span></label></span>"
+				            }
+				        }
+	        		</script>
+	        			
+	        		</kendo:grid-column-filterable-itemTemplate>
+	        		        		<kendo:dataSource>
+	        		 <kendo:dataSource-transport>
+		        		 <kendo:dataSource-transport-parameterMap>
+			            	<script>
+			             		function parameterMap(options) { 
+			            			return JSON.stringify(options);
+			             		}
+			            	</script>
+			            </kendo:dataSource-transport-parameterMap>
+	        		 	<kendo:dataSource-transport-read url="${filterableUnique}" type="POST" dataType="json" contentType="application/json">	        		 	
+	        		 		<kendo:dataSource-transport-read-data>
+	        		 			<script>
+	        		 				{ field: "country" }
+	        		 			</script>
+	        		 		</kendo:dataSource-transport-read-data>
+	        		 	</kendo:dataSource-transport-read>
+	        		 </kendo:dataSource-transport>
+	        		 </kendo:dataSource>
+	        		 </kendo:grid-column-filterable>
 	        </kendo:grid-column>
 	        <kendo:grid-column title="City" field="city" width="120px" >
-	        	<kendo:grid-column-filterable multi="true"/>
+	        	<kendo:grid-column-filterable multi="true">
+	        		        		<kendo:dataSource>
+	        		 <kendo:dataSource-transport>
+		        		 <kendo:dataSource-transport-parameterMap>
+			            	<script>
+			             		function parameterMap(options) { 
+			            			return JSON.stringify(options);
+			             		}
+			            	</script>
+			            </kendo:dataSource-transport-parameterMap>
+	        		 	<kendo:dataSource-transport-read url="${filterableUnique}" type="POST" dataType="json" contentType="application/json">	        		 	
+	        		 		<kendo:dataSource-transport-read-data>
+	        		 			<script>
+	        		 				{ field: "city" }
+	        		 			</script>
+	        		 		</kendo:dataSource-transport-read-data>
+	        		 	</kendo:dataSource-transport-read>
+	        		 </kendo:dataSource-transport>
+	        		 </kendo:dataSource>
+	        		 </kendo:grid-column-filterable>
 	        </kendo:grid-column>
 	        <kendo:grid-column title="Title" field="title" >
-	        	<kendo:grid-column-filterable multi="true"/>
+	        	<kendo:grid-column-filterable multi="true">
+     		        <kendo:dataSource>
+	        		 <kendo:dataSource-transport>
+		        		 <kendo:dataSource-transport-parameterMap>
+			            	<script>
+			             		function parameterMap(options) { 
+			            			return JSON.stringify(options);
+			             		}
+			            	</script>
+			            </kendo:dataSource-transport-parameterMap>
+	        		 	<kendo:dataSource-transport-read url="${filterableUnique}" type="POST" contentType="application/json">	        		 	
+	        		 		<kendo:dataSource-transport-read-data>
+	        		 			<script>
+	        		 				{ field: 'title' }
+	        		 			</script>
+	        		 		</kendo:dataSource-transport-read-data>
+	        		 	</kendo:dataSource-transport-read>
+	        		 </kendo:dataSource-transport>
+	        		</kendo:dataSource>
+	        	</kendo:grid-column-filterable>
 	        </kendo:grid-column>
 	    </kendo:grid-columns>
-	    <kendo:dataSource pageSize="5" serverPaging="true" serverSorting="true">
+	    <kendo:dataSource serverPaging="true" serverSorting="true">
 	        <kendo:dataSource-schema data="data" total="total"></kendo:dataSource-schema>
 	        <kendo:dataSource-transport>
 	            <kendo:dataSource-transport-read url="${transportReadUrl}" type="POST" contentType="application/json" />

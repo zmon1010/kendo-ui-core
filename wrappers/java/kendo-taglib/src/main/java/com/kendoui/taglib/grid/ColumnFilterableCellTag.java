@@ -3,6 +3,7 @@ package com.kendoui.taglib.grid;
 
 
 import com.kendoui.taglib.BaseTag;
+import com.kendoui.taglib.DataBoundWidget;
 import com.kendoui.taglib.DataSourceTag;
 import com.kendoui.taglib.json.Function;
 
@@ -14,7 +15,7 @@ import com.kendoui.taglib.json.Function;
 import javax.servlet.jsp.JspException;
 
 @SuppressWarnings("serial")
-public class ColumnFilterableCellTag extends  BaseTag  /* interfaces */ /* interfaces */ {
+public class ColumnFilterableCellTag extends  BaseTag implements DataBoundWidget /* interfaces */ /* interfaces */ {
     
     @Override
     public int doEndTag() throws JspException {
