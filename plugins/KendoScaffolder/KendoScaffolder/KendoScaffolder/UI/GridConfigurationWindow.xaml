@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <DockPanel Height="62" Background="#fff">
             <Image Source="/KendoScaffolder;component/Resources/Images/grid-icon.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20, 0, 10, 0" />
-            <TextBlock Text="Kendo UI Grid" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" />
+            <TextBlock Text="Telerik ASP.NET MVC Grid" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" />
             <Image Source="/KendoScaffolder;component/Resources/Images/telerik-logo.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20, 0" />
         </DockPanel>
         <TabControl Grid.Row="1" Background="#F0F0F0" BorderBrush="#E0E0E0" SelectedIndex="0" TabStripPlacement="Left" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Padding="4">
