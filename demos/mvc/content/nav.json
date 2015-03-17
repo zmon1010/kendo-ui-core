@@ -2886,6 +2886,32 @@
         }
       },
       {
+        "text": "Virtualization",
+        "url": "multiselect/virtualization",
+        "title": {
+            "kendo-ui": "Example of virtualization in Kendo UI MultiSelect widget",
+            "aspnet-mvc": "Example of virtualization in ASP.NET MVC MultiSelect control"
+        },
+        "meta": {
+            "kendo-ui": "See how the auto-searchable dropdown list of Kendo UI MultiSelect is virtualized.",
+            "aspnet-mvc": "See how the auto-searchable dropdown list of ASP.NET MVC MultiSelect is virtualized."
+        },
+        "new": true
+      },
+      {
+        "text": "Grouping",
+        "url": "multiselect/grouping",
+        "title": {
+            "kendo-ui": "Example of grouping in Kendo UI MultiSelect widget",
+            "aspnet-mvc": "Example of grouping in ASP.NET MVC MultiSelect control"
+        },
+        "meta": {
+            "kendo-ui": "See how the auto-searchable dropdown list of Kendo UI MultiSelect displays grouped data.",
+            "aspnet-mvc": "See how the auto-searchable dropdown list of ASP.NET MVC MultiSelect displays grouped data."
+        },
+        "new": true
+      },
+      {
         "packages": [
           "mvc-offline",
           "jsp"

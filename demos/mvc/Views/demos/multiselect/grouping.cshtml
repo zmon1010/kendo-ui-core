@@ -1,0 +1,33 @@
+
+<div id="example" >
+    <div class="demo-section k-header">
+        <h4>Search for shipping names</h4>
+        <select id="orders" style="width: 400px;"></select>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#orders").kendoMultiSelect({
+                placeholder: "Select customers...",
+                dataTextField: "ContactName",
+                dataValueField: "CustomerID",
+                height: 400,
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                    },
+                    group: { field: "Country" }
+                }
+            });
+        });
+    </script>
+    <style>
+        .demo-section {
+            width: 400px;
+        }
+        .order-id {
+            display: inline-block;
+            min-width: 60px;
+        }
+    </style>
+</div>
