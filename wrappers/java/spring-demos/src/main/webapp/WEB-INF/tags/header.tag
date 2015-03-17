@@ -14,6 +14,7 @@
 		
 		<script src="<c:url value='/resources/js/jquery.min.js' />"></script>
 		<script src="<c:url value='/resources/js/kendo.all.min.js' />"></script>
+		<script src="<c:url value='/resources/js/kendo.timezones.min.js' />"></script>
 		<script src="<c:url value='/resources/shared/js/console.js'/>"></script>
 		<script src="<c:url value='/resources/shared/js/prettify.js'/>"></script>
     </head>
