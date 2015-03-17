@@ -36,6 +36,10 @@
                 timezone: "Etc/UTC",
                 dataSource: {
                     type: "signalr",
+                    push: function (e) {
+                        var notification = $("#notification").data("kendoNotification");
+                        notification.success(e.type);
+                    },
                     transport: {
                         signalr: {
                             hub: hub,
@@ -143,10 +147,10 @@
         <p>This example demonstrates real-time push-notifications from <a href="http://signalr.net/">SignalR</a>. To see the real-time updates:</p>
         <ol>
             <li>Open this page in another browser window by clicking <a href="./signalr" target="_new">here</a></li>
-            <li>Create, update or destroy grid items.</li>
+            <li>Create, update or destroy scheduler items.</li>
         </ol>
         <p>
-            <strong>Note:</strong> To further enhance real-time experience, the Grid will also display changes from other users,
+            <strong>Note:</strong> To further enhance real-time experience, the Scheduler will also display changes from other users,
             which currently happen to perform CRUD operations on the same demo.
             If you refresh the page, all changes will be lost, because the remote service only broadcasts changes, it does not actually save them.
         </p>
