@@ -12,7 +12,7 @@
           .DataTextField("ShipName")
           .DataValueField("OrderID")
           .MinLength(3)
-          .HtmlAttributes(new { style = "width:250px" })
+          .HtmlAttributes(new { style = "width:450px" })
           .Template("#= OrderID # | For: #= ShipName #, #= ShipCountry #")
           .DataSource(source => {
               source.Custom()
@@ -57,7 +57,7 @@
 </script>
 <style>
     .demo-section {
-        width: 250px;
+        width: 450px;
         margin: 35px auto 50px;
         padding: 30px;
     }
