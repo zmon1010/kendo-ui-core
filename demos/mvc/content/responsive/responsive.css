@@ -199,7 +199,8 @@ a {
 
 
 .responsive-img {
-    margin-bottom: 30px;
+    display: block;
+    margin: 0 auto 30px;
 }
 
 .responsive-widget-wrapper {
