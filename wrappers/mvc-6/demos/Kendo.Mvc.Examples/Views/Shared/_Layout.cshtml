@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Mvc.Razor;
+<!DOCTYPE html>
 <html>
 <head>
     <title>@ViewBag.Title</title>
@@ -14,11 +15,13 @@
     <script src="~/lib/kendo/js/kendo.all.min.js"></script>
 	<script src="~/lib/kendo/js/kendo.aspnetmvc.min.js"></script>
     <script src="~/shared/console.js"></script>
+	<script src="~/shared/prettify.js"></script>
 
 	@{
 		// Include the JavaScript for the current culture
 		var culture = System.Globalization.CultureInfo.CurrentCulture.ToString();
-	}
+	}	
+
 	<script src="@("/lib/kendo/js/cultures/kendo.culture." + culture + ".min.js")"></script>
 
 	<script>
@@ -36,6 +39,12 @@
 		<div id="example" class="k-content">
 			@RenderBody()
 		</div>
+				
+		@{
+			ViewData["ViewPath"] = ((RazorPage)((RazorView)ViewContext.View).RazorPage).Path;
+		}
+		@Html.Partial("~/Views/Shared/_Source.cshtml", ViewData)
+
 	</div>
 </body>
 </html>
