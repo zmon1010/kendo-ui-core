@@ -3,10 +3,15 @@
 <asp:Content ID="Content1"  ContentPlaceHolderID="MainContent" runat="server">
 <script src=" <%= Url.Content("~/Content/web/integration/jquery.signalr-1.1.3.min.js")%>"></script>
 <script>
-    var hubUrl = "http://demos.telerik.com/kendo-ui/service/signalr/hubs";
-    var connection = $.hubConnection(hubUrl, { useDefaultPath: false });
-    var meetingHub = connection.createHubProxy("meetingHub");
-    var hubStart = connection.start({ jsonp: true });
+    var hub,
+    hubStart;
+
+    $(function () {
+        var hubUrl = "http://demos.telerik.com/kendo-ui/service/signalr/hubs";
+        var connection = $.hubConnection(hubUrl, { useDefaultPath: false });
+        meetingHub = connection.createHubProxy("meetingHub");
+        hubStart = connection.start({ jsonp: true });
+    });
 
     function onPush(e) {
         var notification = $("#notification").data("kendoNotification");
