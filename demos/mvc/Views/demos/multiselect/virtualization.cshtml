@@ -16,7 +16,7 @@
                     itemHeight: 26,
                     valueMapper: function(options) {
                         $.ajax({
-                            url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders/ValueMapper",
+                            url: "http://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
                             type: "GET",
                             data: convertValues(options.value),
                             success: function (data) {
