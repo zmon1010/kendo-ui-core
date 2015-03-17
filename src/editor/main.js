@@ -955,7 +955,8 @@
             }
 
             var options = this.options.pdf;
-            
+            var paperSize = options.paperSize;
+
             this._drawPDF(progress)
             .then(function(root) {
                 options.paperSize = "auto";
@@ -968,6 +969,7 @@
                     proxyURL: options.proxyURL,
                     forceProxy: options.forceProxy
                 });
+                options.paperSize = paperSize;
                 progress.resolve();
             })
             .fail(function(err) {

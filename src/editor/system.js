@@ -1069,13 +1069,16 @@ var PrintCommand = Command.extend({
 
 var ExportPdfCommand = Command.extend({
     init: function(options) {
+        this.async = true;
         Command.fn.init.call(this, options);
-
-        this.managesUndoRedo = true;
     },
 
     exec: function() {
-        this.editor.saveAsPDF();
+        var that = this;
+        var range = this.lockRange(true);
+        this.editor.saveAsPDF().then(function() {
+            that.releaseRange(range);
+        });
     }
 });
 extend(editorNS, {
