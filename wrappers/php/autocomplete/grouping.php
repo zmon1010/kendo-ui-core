@@ -38,7 +38,6 @@ $autoComplete = new \Kendo\UI\AutoComplete('orders');
 
 $autoComplete->dataSource($dataSource)
          ->dataTextField('ContactName')
-         ->dataValueField('CustomerID')
          ->height(400)
          ->attr('style', 'width: 400px');
 

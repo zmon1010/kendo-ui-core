@@ -87,15 +87,27 @@ echo $autoComplete->render();
 ?>
 </div>
 <script>
-    function valueMapper(data) {
+    function valueMapper(options) {
         $.ajax({
-            url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders/ValueMapper",
+            url: "http://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
             type: "GET",
-            data: [data.value],
-            success: function(response) {
-                data.success(response);
+            data: convertValues(options.value),
+            success: function (data) {
+                options.success(data);
             }
-        })
+        });
+    }
+
+    function convertValues(value) {
+        var data = {};
+
+        value = $.isArray(value) ? value : [value];
+
+        for (var idx = 0; idx < value.length; idx++) {
+            data["values[" + idx + "]"] = value[idx];
+        }
+
+        return data;
     }
 </script>
 <style>

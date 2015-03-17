@@ -61,32 +61,44 @@ $dataSource->type('odata')
            ->serverFiltering(true)
            ->serverPaging(true);
 
-$virtual = new \Kendo\UI\ComboBoxVirtual();
+$virtual = new \Kendo\UI\MultiSelectVirtual();
 
 $virtual->itemHeight(26)
         ->valueMapper('valueMapper');
 
-$comboBox = new \Kendo\UI\ComboBox('orders');
+$multiselect = new \Kendo\UI\MultiSelect('orders');
 
-$comboBox->dataSource($dataSource)
-         ->dataTextField('ShipName')
-         ->dataValueField('OrderID')
-         ->filter('contains')
-         ->virtual($virtual)
-         ->height(520)
-         ->template(<<<TEMPLATE
+$multiselect->dataSource($dataSource)
+            ->dataTextField('ShipName')
+            ->dataValueField('OrderID')
+            ->itemTemplate(<<<TEMPLATE
 <span class="order-id">#= OrderID #</span> #= ShipName #, #= ShipCountry #
 TEMPLATE
-         )
-         ->attr('style', 'width: 400px');
+            )
+            ->placeholder('Select addresses...')
+            ->height(520)
+            ->virtual($virtual)
+            ->value(array(10265, 10289));
 
 ?>
 <div class="demo-section">
-    <h2>Search for shipping name</h2>
+    <h2>Select addresses</h2>
 <?php
-echo $comboBox->render();
+echo $multiselect->render();
 ?>
 </div>
+<style>
+    .demo-section {
+        width: 300px;
+        margin: 35px auto 50px;
+        padding: 30px;
+    }
+    .demo-section h2 {
+        text-transform: uppercase;
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+</style>
 <script>
     function valueMapper(options) {
         $.ajax({
@@ -111,20 +123,4 @@ echo $comboBox->render();
         return data;
     }
 </script>
-<style>
-    .demo-section {
-        width: 400px;
-        margin: 35px auto 50px;
-        padding: 30px;
-    }
-    .demo-section h2 {
-        text-transform: uppercase;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-    .order-id {
-        display: inline-block;
-        min-width: 60px;
-    }
-</style>
 <?php require_once '../include/footer.php'; ?>
