@@ -41,7 +41,7 @@
 		</div>
 				
 		@{
-			ViewData["ViewPath"] = ((RazorPage)((RazorView)ViewContext.View).RazorPage).Path;
+			ViewData["ViewPath"] = ((RazorView)ViewContext.View).RazorPage.Path;
 		}
 		@Html.Partial("~/Views/Shared/_Source.cshtml", ViewData)
 
