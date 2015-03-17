@@ -8,14 +8,19 @@
     var meetingHub = connection.createHubProxy("meetingHub");
     var hubStart = connection.start({ jsonp: true });
 
-    $("#notification").kendoNotification({
-        width: "100%",
-        position: {
-            top: 0,
-            left: 0
-        }
-    });
+    function onPush(e) {
+        var notification = $("#notification").data("kendoNotification");
+        notification.success(e.type);
+    }
 </script>
+
+<%= Html.Kendo().Notification()
+    .Name("notification")
+    .Width("100%")
+    .Position(position => position
+        .Top(0)
+        .Left(0))
+%>
 
 <%=Html.Kendo().Scheduler<Kendo.Mvc.Examples.Models.Scheduler.MeetingSignalRViewModel>()
     .Name("scheduler")
@@ -56,6 +61,7 @@
          })
     .DataSource(dataSource => dataSource
         .SignalR()
+        .Events(events => events.Push("onPush"))
         .Transport(tr => tr
             .Promise("hubStart")
             .Hub("meetingHub")
@@ -88,4 +94,18 @@
         )
     )
 %>
+<br />
+<div class="configuration-horizontal">
+    <span class="configHead">Information</span>
+    <p>
+    This demo demonstrates real-time push-notifications from <a href="http://signalr.net/">SignalR</a>.
+    </p>
+    <p>
+        To see the real-time updates:
+    </p>
+    <ol>
+        <li>Open this page in another browser window by clicking <a href="./signalr" target="_new">here</a></li>
+        <li>Create, update or destroy Scheduler items.</li>
+    </ol>
+</div>
 </asp:Content>

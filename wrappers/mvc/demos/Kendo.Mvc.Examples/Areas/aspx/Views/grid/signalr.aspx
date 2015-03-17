@@ -8,14 +8,19 @@
     var hub = connection.createHubProxy("productHub");
     var hubStart = connection.start({ jsonp: true });
 
-    $("#notification").kendoNotification({
-        width: "100%",
-        position: {
-            top: 0,
-            left: 0
-        }
-    });
+    function onPush(e) {
+        var notification = $("#notification").data("kendoNotification");
+        notification.success(e.type);
+    }
 </script>
+
+<%= Html.Kendo().Notification()
+    .Name("notification")
+    .Width("100%")
+    .Position(position => position
+        .Top(0)
+        .Left(0))
+%>
 
 <%= Html.Kendo().Grid<Kendo.Mvc.Examples.Models.ProductViewModel>()
     .Name("Grid")
@@ -43,6 +48,7 @@
     .DataSource(dataSource => dataSource
         .SignalR()
         .AutoSync(true)
+        .Events(events => events.Push("onPush"))
         .Sort(s => s.Add("CreatedAt").Descending())
         .Transport(tr => tr
             .Promise("hubStart")
@@ -79,8 +85,8 @@
         To see the real-time updates:
     </p>
     <ol>
-        <li>Open this page in another browser window by clicking <a href="./signalr.html" target="_new">here</a></li>
-        <li>Create, update or destroy grid items.</li>
+        <li>Open this page in another browser window by clicking <a href="./signalr" target="_new">here</a></li>
+        <li>Create, update or destroy Grid items.</li>
     </ol>
 </div>
 </asp:Content>
