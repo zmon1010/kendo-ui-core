@@ -90,23 +90,13 @@ class GridColumnFilterableCell extends \Kendo\SerializableObject {
     * Sets the template option of the GridColumnFilterableCell.
     * JavaScript function which will customize how the input for the filter value is rendered.
 The function receives an object argument with two fields:
-    * @param string $value The id of the element which represents the kendo template.
-    * @return \Kendo\UI\GridColumnFilterableCell
-    */
-    public function templateId($value) {
-        $value = new \Kendo\Template($value);
-
-        return $this->setProperty('template', $value);
-    }
-
-    /**
-    * Sets the template option of the GridColumnFilterableCell.
-    * JavaScript function which will customize how the input for the filter value is rendered.
-The function receives an object argument with two fields:
     * @param string $value The template content.
     * @return \Kendo\UI\GridColumnFilterableCell
     */
     public function template($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
         return $this->setProperty('template', $value);
     }
 
