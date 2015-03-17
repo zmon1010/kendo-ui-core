@@ -2959,6 +2959,15 @@ html.k-material .demo-section.k-content {
      font-weight: normal;
 }
 
+html.k-materialblack .demo-section.k-header,
+html.k-materialblack .demo-section.k-content {
+     background-color: #1c1c1c;
+     border-color: #1c1c1c;
+     box-shadow: 0 1px 2px 1px rgba(0,0,0,.10), 0 2px 5px rgba(0,0,0,.10);
+     color: #fff;
+     font-weight: normal;
+}
+
 .box h4,
 .demo-section h4 {
     margin-bottom: 1em;
