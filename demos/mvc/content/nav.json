@@ -2896,7 +2896,7 @@
             "kendo-ui": "See how the auto-searchable dropdown list of Kendo UI MultiSelect is virtualized.",
             "aspnet-mvc": "See how the auto-searchable dropdown list of ASP.NET MVC MultiSelect is virtualized."
         },
-        "new": true
+        "new": "true"
       },
       {
         "text": "Grouping",
@@ -2909,7 +2909,7 @@
             "kendo-ui": "See how the auto-searchable dropdown list of Kendo UI MultiSelect displays grouped data.",
             "aspnet-mvc": "See how the auto-searchable dropdown list of ASP.NET MVC MultiSelect displays grouped data."
         },
-        "new": true
+        "new": "true"
       },
       {
         "packages": [
