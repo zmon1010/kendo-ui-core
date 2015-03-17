@@ -272,10 +272,18 @@ namespace :mvc do
                 src = MVC_BIN_ROOT + dir + '/Kendo.*.dll'
                 dest = "dist/bundles/#{bundle}/wrappers/aspnetmvc/Binaries/#{version}/"
                 mkdir_p dest
-                Dir.glob(src).each do |f|
-                    cp f, dest
-                end
+                Dir.glob(src).each { |f| cp f, dest }
             end
+        end
+
+        {
+            'Release-Trial' => 'VS2012',
+            'Release-MVC5-Trial' => 'VS2013'
+        }.each do |dir, vs|
+            src = MVC_BIN_ROOT + dir + '/Kendo.*.dll'
+            dest = "dist/bundles/aspnetmvc.trial/wrappers/aspnetmvc/Examples/#{vs}/Kendo.Mvc.Examples/bin/"
+            mkdir_p dest
+            Dir.glob(src).each { |f| cp f, dest }
         end
     end
 end
