@@ -1357,6 +1357,8 @@ var __meta__ = {
 
             that._attachCustomCommandsEvent();
 
+            that._minScreenSupport();
+
             if (that.options.autoBind) {
                 that.dataSource.fetch();
             } else {
@@ -1576,6 +1578,10 @@ var __meta__ = {
                 that.pane.destroy();
             }
 
+            if (that.minScreenResizeHandler) {
+                $(window).off("resize", that.minScreenResizeHandler);
+            }
+
             if (that._draggableInstance && that._draggableInstance.element) {
                 that._draggableInstance.destroy();
             }
@@ -1782,8 +1788,7 @@ var __meta__ = {
             var left;
 
             if (resizeHandle && that.lockedContent && resizeHandle.data("th")[0] !== th[0]) {
-                resizeHandle.off(NS);
-                resizeHandle.remove();
+                resizeHandle.off(NS).remove();
                 resizeHandle = null;
             }
 
@@ -1811,7 +1816,7 @@ var __meta__ = {
                     left += container.find(".k-hierarchy-cell:first").outerWidth();
                 }
 
-            } else {
+           } else {
                 left = th.position().left;
                 if (scrollable) {
                     var headerWrap = th.closest(".k-grid-header-wrap, .k-grid-header-locked"),
@@ -1831,7 +1836,7 @@ var __meta__ = {
             })
             .data("th", th)
             .show();
-            
+
             resizeHandle.off("dblclick" + NS).on("dblclick" + NS, function () {
                 that._autoFitLeafColumn(th.data("index"));
             });
@@ -2258,7 +2263,7 @@ var __meta__ = {
             this.autoFitColumn(leafColumns(this.columns)[leafIndex]);
         },
 
-        autoFitColumn: function(column) {
+        autoFitColumn: function (column) {
             var that = this,
                 options = that.options,
                 columns = that.columns,
@@ -2269,7 +2274,7 @@ var __meta__ = {
                 isLocked,
                 visibleLocked = that.lockedHeader ? leafDataCells(that.lockedHeader.find(">table>thead")).filter(isCellVisible).length : 0,
                 col;
-            
+
             //  retrieve the column object, depending on the method argument
             if (typeof column == "number") {
                 column = columns[column];
@@ -2295,9 +2300,9 @@ var __meta__ = {
             } else {
                 headerTable = that.thead.parent();
             }
-            
+
             th = headerTable.find("[data-index='" + index + "']");
-            
+
             var contentTable = isLocked ? that.lockedTable : that.table,
                 footer = that.footer || $();
 
@@ -2330,7 +2335,7 @@ var __meta__ = {
             } else {
                 col = contentTable.children("colgroup").find("col:not(.k-group-col):not(.k-hierarchy-col):eq(" + index + ")");
             }
-            
+
             var tables = headerTable.add(contentTable).add(footerTable);
 
             var oldColumnWidth = th.outerWidth();
@@ -3692,6 +3697,16 @@ var __meta__ = {
             var selectable = options.selectable;
             if (selectable && options.allowCopy) {
                 var grid = this;
+                if (!options.navigatable) {
+                    grid.table.add(grid.lockedTable)
+                        .attr("tabindex", 0)
+                        .on("mousedown" + NS + " keydown" + NS, ".k-detail-cell", function(e) {
+                            if (e.target !== e.currentTarget) {
+                                e.stopImmediatePropagation();
+                            }
+                        })
+                        .on("mousedown" + NS, NAVROW + ">" + NAVCELL, proxy(tableClick, grid));
+                }
                 grid.copyHandler = proxy(grid.copySelection, grid);
                 grid.updateClipBoardState = function () {
                     if (grid.areaClipBoard) {
@@ -3717,11 +3732,17 @@ var __meta__ = {
             if (!this.areaClipBoard) {
                 this.areaClipBoard =
                     $("<textarea />")
-                    .css({ position: "absolute", opacity: 0, width: 0, height: 0})
+                    .css({
+                        position: "fixed",
+                        top: "50%",
+                        left:"50%",
+                        opacity: 0,
+                        width: 0,
+                        height: 0
+                    })
                     .appendTo(this.wrapper);
             }
 
-            this._currentState = this.current();
             this.areaClipBoard.val(this.getTSV()).focus().select();
 
         },
@@ -3790,13 +3811,47 @@ var __meta__ = {
         },
 
         clearArea: function(e) {
-            if (this.options.navigatable && this.areaClipBoard && e.target === this.areaClipBoard[0]) {
-                $(this.current()).closest("table").focus();
+            if (this.areaClipBoard && e && e.target === this.areaClipBoard[0]) {
+                if (this.options.navigatable) {
+                    $(this.current()).closest("table").focus();
+                } else {
+                    this.table.focus();
+                }
             }
+
             if (this.areaClipBoard) {
                 this.areaClipBoard.remove();
                 this.areaClipBoard = null;
             }
+        },
+
+        _minScreenSupport: function() {
+            var any = this.hideMinScreenCols();
+
+            if (any) {
+                this.minScreenResizeHandler = proxy(this.hideMinScreenCols, this);
+                $(window).on("resize", this.minScreenResizeHandler);
+            }
+        },
+        hideMinScreenCols: function() {
+            var cols = this.columns,
+                any = false,
+                screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+            for (var i = 0; i < cols.length; i++) {
+                var col = cols[i];
+                //should provide px/em support
+                var minWidth = col.minScreenWidth;
+                if (minWidth !== undefined && minWidth !== null) {
+                    any = true;
+                    if (minWidth > screenWidth) {
+                        this.hideColumn(col);
+                    } else {
+                        this.showColumn(col);
+                    }
+                }
+            }
+            return any;
         },
 
         _relatedRow: function(row) {
@@ -6987,7 +7042,9 @@ var __meta__ = {
            return;
        }
 
-       this.current(currentTarget);
+       if (this.options.navigatable) {
+           this.current(currentTarget);
+       }
 
        if (isHeader || !isInput) {
            setTimeout(function() {
