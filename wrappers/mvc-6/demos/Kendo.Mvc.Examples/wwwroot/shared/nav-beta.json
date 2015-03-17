@@ -189,130 +189,245 @@
 		],
 		"category": "Data Management"
 	  },
-	  {
+	{
 		"text": "NumericTextBox",
 		"name": "numerictextbox",
 		"api": "web/numerictextbox",
 		"documentation": {
-		   "kendo-ui": "getting-started/web/numerictextbox/overview",
-		   "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/numerictextbox/overview",
-		   "jsp-ui": "getting-started/using-kendo-with/jsp/tags/numerictextbox/overview",
-		   "php-ui": "getting-started/using-kendo-with/php/widgets/numerictextbox/overview"
+			"kendo-ui": "getting-started/web/numerictextbox/overview",
+			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/numerictextbox/overview",
+			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/numerictextbox/overview",
+			"php-ui": "getting-started/using-kendo-with/php/widgets/numerictextbox/overview"
 		},
 		"forum": {
-		   "kendo-ui": "kendo-ui/numeric-textbox",
-		   "aspnet-mvc": "aspnet-mvc/numeric-textbox",
-		   "jsp-ui": "jsp/numeric-textbox",
-		   "php-ui": "php/numeric-textbox"
+			"kendo-ui": "kendo-ui/numeric-textbox",
+			"aspnet-mvc": "aspnet-mvc/numeric-textbox",
+			"jsp-ui": "jsp/numeric-textbox",
+			"php-ui": "php/numeric-textbox"
 		},
 		"codelibrary": {
-		   "kendo-ui": "kendo-ui/numerictextbox",
-		   "aspnet-mvc": "aspnet-mvc/numerictextbox",
-		   "jsp-ui": "jsp/numerictextbox",
-		   "php-ui": "php/numerictextbox"
+			"kendo-ui": "kendo-ui/numerictextbox",
+			"aspnet-mvc": "aspnet-mvc/numerictextbox",
+			"jsp-ui": "jsp/numerictextbox",
+			"php-ui": "php/numerictextbox"
 		},
 		"spriteCssClass": "numericTextBoxIcon",
 		"items": [
-		  {
-			"text": "Basic usage",
-			"url": "numerictextbox/index",
-			"title": {
-				"kendo-ui": "Primary features of Kendo UI Numeric TextBox | Kendo UI Web demo",
-				"aspnet-mvc": "ASP.NET MVC NumericTextBox control demo"
+			{
+				"text": "Basic usage",
+				"url": "numerictextbox/index",
+				"title": {
+					"kendo-ui": "Primary features of Kendo UI Numeric TextBox | Kendo UI Web demo",
+					"aspnet-mvc": "ASP.NET MVC NumericTextBox control demo"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows the core functionality of KendoNumericTextBox component.",
+					"aspnet-mvc": "This example illustrates how to use all core features of Telerik NumericTextBox for ASP.NET MVC."
+				}
 			},
-			"meta": {
-				"kendo-ui": "This demo shows the core functionality of KendoNumericTextBox component.",
-				"aspnet-mvc": "This example illustrates how to use all core features of Telerik NumericTextBox for ASP.NET MVC."
+			{
+				"text": "Events",
+				"url": "numerictextbox/events",
+				"title": {
+					"kendo-ui": "Events in Kendo UI NumericTextBox widget",
+					"aspnet-mvc": "Events in ASP.NET MVC NumericTextBox control"
+				},
+				"meta": {
+					"kendo-ui": "This example shows events which are triggered in Kendo UI NumericTextBox widget.",
+					"aspnet-mvc": "This example shows events which are triggered in ASP.NET MVC NumericTextBox control."
+				}
+			},
+			{
+				"text": "API",
+				"url": "numerictextbox/api",
+				"title": {
+					"kendo-ui": "API Functions Demo for KendoNumericTextBox",
+					"aspnet-mvc": "API Functions Demo for ASP.NET MVC NumericTextBox"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows specific API functions for KendoNumericTextBox component.",
+					"aspnet-mvc": "This demo shows specific API functions for ASP.NET MVC NumericTextBox component."
+				}
+			},
+			{
+				"packages": [
+					"mvc-offline"
+				],
+				"text": "Globalization",
+				"url": "numerictextbox/globalization"
+			},
+			{
+				"text": "RTL support",
+				"disableInMobile": true,
+				"url": "numerictextbox/right-to-left-support",
+				"title": {
+					"kendo-ui": "RTL support in Kendo UI NumericTextBox widget",
+					"aspnet-mvc": "RTL support in ASP.NET MVC NumericTextBox control"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows how right-to-left input is implemented in Kendo UI Numeric TextBox component to ensure the satisfaction of RTL language users.",
+					"aspnet-mvc": "This demo shows how right-to-left input is implemented in ASP.NET MVC Numeric TextBox component to ensure the satisfaction of RTL language users."
+				}
+			},
+			{
+				"text": "Keyboard navigation",
+				"disableInMobile": true,
+				"url": "numerictextbox/keyboard-navigation",
+				"title": {
+					"kendo-ui": "Keyboard navigation in Kendo UI NumericTextBox",
+					"aspnet-mvc": "Keyboard navigation in ASP.NET MVC NumericTextBox"
+				},
+				"meta": {
+					"kendo-ui": "The value in Kendo UI NumericTextBox can be increased or decreased by using keyboard navigation combinations. Take a look at the demo to learn how.",
+					"aspnet-mvc": "The value in ASP.NET MVC NumericTextBox can be increased or decreased by using keyboard navigation combinations. Take a look at the demo to learn how."
+				}
+			},
+			{
+				"text": "MVVM",
+				"url": "numerictextbox/mvvm",
+				"title": {
+					"kendo-ui": "MVVM support in Kendo UI NumericTextBox"
+				},
+				"meta": {
+					"kendo-ui": "Enabled, events, value and visible MVVM binding support in Kendo UI NumericTextBox"
+				},
+				"packages": [
+					"!mvc",
+					"!jsp",
+					"!php"
+				]
+			},
+			{
+				"text": "AngularJS",
+				"url": "numerictextbox/angular",
+				"title": {
+					"kendo-ui": "AngularJS support in Kendo UI NumericTextBox"
+				},
+				"meta": {
+					"kendo-ui": "AngularJS directive support for Kendo UI NumericTextBox"
+				},
+				"packages": [
+					"!mvc",
+					"!jsp",
+					"!php"
+				]
 			}
-		  },
-		  {
-			"text": "Events",
-			"url": "numerictextbox/events",
-			"title": {
-				"kendo-ui": "Events in Kendo UI NumericTextBox widget",
-				"aspnet-mvc": "Events in ASP.NET MVC NumericTextBox control"
-			},
-			"meta": {
-				"kendo-ui": "This example shows events which are triggered in Kendo UI NumericTextBox widget.",
-				"aspnet-mvc": "This example shows events which are triggered in ASP.NET MVC NumericTextBox control."
-			}
-		  },
-		  {
-			"text": "API",
-			"url": "numerictextbox/api",
-			"title": {
-				"kendo-ui": "API Functions Demo for KendoNumericTextBox",
-				"aspnet-mvc": "API Functions Demo for ASP.NET MVC NumericTextBox"
-			},
-			"meta": {
-				"kendo-ui": "This demo shows specific API functions for KendoNumericTextBox component.",
-				"aspnet-mvc": "This demo shows specific API functions for ASP.NET MVC NumericTextBox component."
-			}
-		  },
-		  {
-			"packages": [
-			  "mvc-offline"
-			],
-			"text": "Globalization",
-			"url": "numerictextbox/globalization"
-		  },
-		  {
-			"text": "RTL support",
-			"disableInMobile": true,
-			"url": "numerictextbox/right-to-left-support",
-			"title": {
-				"kendo-ui": "RTL support in Kendo UI NumericTextBox widget",
-				"aspnet-mvc": "RTL support in ASP.NET MVC NumericTextBox control"
-			},
-			"meta": {
-				"kendo-ui": "This demo shows how right-to-left input is implemented in Kendo UI Numeric TextBox component to ensure the satisfaction of RTL language users.",
-				"aspnet-mvc": "This demo shows how right-to-left input is implemented in ASP.NET MVC Numeric TextBox component to ensure the satisfaction of RTL language users."
-			}
-		  },
-		  {
-			"text": "Keyboard navigation",
-			"disableInMobile": true,
-			"url": "numerictextbox/keyboard-navigation",
-			"title": {
-				"kendo-ui": "Keyboard navigation in Kendo UI NumericTextBox",
-				"aspnet-mvc": "Keyboard navigation in ASP.NET MVC NumericTextBox"
-			},
-			"meta": {
-				"kendo-ui": "The value in Kendo UI NumericTextBox can be increased or decreased by using keyboard navigation combinations. Take a look at the demo to learn how.",
-				"aspnet-mvc": "The value in ASP.NET MVC NumericTextBox can be increased or decreased by using keyboard navigation combinations. Take a look at the demo to learn how."
-			}
-		  },
-		  {
-			"text": "MVVM",
-			"url": "numerictextbox/mvvm",
-			"title": {
-				"kendo-ui": "MVVM support in Kendo UI NumericTextBox"
-			},
-			"meta": {
-				"kendo-ui": "Enabled, events, value and visible MVVM binding support in Kendo UI NumericTextBox"
-			},
-			"packages": [
-			  "!mvc",
-			  "!jsp",
-			  "!php"
-			]
-		  },
-		  {
-			"text": "AngularJS",
-			"url": "numerictextbox/angular",
-			"title": {
-				"kendo-ui": "AngularJS support in Kendo UI NumericTextBox"
-			},
-			"meta": {
-				"kendo-ui": "AngularJS directive support for Kendo UI NumericTextBox"
-			},
-			"packages": [
-			  "!mvc",
-			  "!jsp",
-			  "!php"
-			]
-		  }
 		],
 		"category": "Editors"
-	  }
+	},
+	{
+    "text": "MaskedTextBox",
+    "name": "maskedtextbox",
+    "api": "web/maskedtextbox",
+    "documentation": {
+       "kendo-ui": "getting-started/web/maskedtextbox/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/maskedtextbox/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/maskedtextbox/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/maskedtextbox/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/maskedtextbox",
+       "aspnet-mvc": "aspnet-mvc/maskedtextbox",
+       "jsp-ui": "jsp/maskedtextbox",
+       "php-ui": "php/maskedtextbox"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/maskedtextbox",
+       "aspnet-mvc": "aspnet-mvc/maskedtextbox",
+       "jsp-ui": "jsp/maskedtextbox",
+       "php-ui": "php/maskedtextbox"
+    },
+    "spriteCssClass": "maskedtextboxIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "maskedtextbox/index",
+        "title": {
+            "kendo-ui": "Primary features of Kendo UI Mask Input | Kendo UI Web demo",
+            "aspnet-mvc": "Primary features of ASP.NET MVC Mask Input | ASP.NET MVC demo"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the core functionality of KendoMaskedTextBox component.",
+            "aspnet-mvc": "This demo shows the core functionality of ASP.NET MVC MaskedTextBox component."
+        }
+      },
+      {
+        "text": "Events",
+        "url": "maskedtextbox/events",
+        "title": {
+            "kendo-ui": "Events in Kendo UI MaskedTextBox widget",
+            "aspnet-mvc": "Events in ASP.NET MVC MaskedTextBox control"
+        },
+        "meta": {
+            "kendo-ui": "This example shows events which are triggered in Kendo UI MaskedTextBox widget.",
+            "aspnet-mvc": "This example shows events which are triggered in ASP.NET MVC MaskedTextBox component."
+        }
+      },
+      {
+        "text": "API",
+        "url": "maskedtextbox/api",
+        "title": {
+            "kendo-ui": "API Functions Demo for KendoMaskedTextBox",
+            "aspnet-mvc": "API Functions Demo for ASP.NET MVC MaskedTextBox"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows specific API functions for KendoMaskedTextBox component.",
+            "aspnet-mvc": "This demo shows specific API functions for ASP.NET MVC MaskedTextBox component."
+        }
+      },
+      {
+        "text": "Globalization",
+        "url": "maskedtextbox/globalization",
+        "title": {
+            "kendo-ui": "Globalization Demo for KendoMaskedTextBox",
+            "aspnet-mvc": "Globalization Demo for ASP.NET MVC MaskedTextBox"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows KendoMaskedTextBox globalization support for decimal point, thousand separator and currency symbol.",
+            "aspnet-mvc": "This demo shows ASP.NET MVC MaskedTextBox globalization support for decimal point, thousand separator and currency symbol."
+        }
+      },
+      {
+        "text": "RTL support",
+        "disableInMobile": true,
+        "url": "maskedtextbox/right-to-left-support",
+        "title": {
+            "kendo-ui": "RTL support in Kendo UI MaskedTextBox widget",
+            "aspnet-mvc": "RTL support in ASP.NET MVC MaskedTextBox control"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how right-to-left input is implemented in Kendo UI MaskedTextBox component to ensure the satisfaction of RTL language users.",
+            "aspnet-mvc": "This demo shows how right-to-left input is implemented in ASP.NET MVC MaskedTextBox component to ensure the satisfaction of RTL language users."
+        }
+      },
+      {
+        "text": "Validation",
+        "url": "maskedtextbox/validation",
+        "title": {
+            "kendo-ui": "Validation Demo for Kendo UI MaskedTextBox",
+            "aspnet-mvc": "Validation Demo for ASP.NET MVC MaskedTextBox"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to validate an incomplete widget value",
+            "aspnet-mvc": "This demo shows how to validate an incomplete control value in ASP.NET MVC MaskedTextBox"
+        }
+      },
+      {
+        "text": "AngularJS",
+        "url": "maskedtextbox/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI MaskedTextBox"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directive support for Kendo UI MaskedTextBox"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Editors"
+  }
 ]
