@@ -49,5 +49,15 @@
 
             return this;
         }
+
+        /// <summary>
+        /// Configures the initial group.
+        /// </summary>
+        public virtual ReadOnlyCustomDataSourceBuilder Group(Action<ReadOnlyCustomDataSourceGroupDescriptorFactory> configurator)
+        {
+            configurator(new ReadOnlyCustomDataSourceGroupDescriptorFactory(dataSource.Groups));
+
+            return this;
+        }
     }
 }

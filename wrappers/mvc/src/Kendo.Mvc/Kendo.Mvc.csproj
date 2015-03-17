@@ -760,6 +760,8 @@
     <Compile Include="UI\ComboBox\Fluent\ComboBoxEventBuilder.cs" />
     <Compile Include="UI\ContextMenu\ContextMenuDirection.cs" />
     <Compile Include="UI\ContextMenu\ContextMenuOrientation.cs" />
+    <Compile Include="UI\DataSource\Fluent\DataSourceGroupDescriptorFactoryBase.cs" />
+    <Compile Include="UI\DataSource\Fluent\ReadOnlyCustomDataSourceGroupDescriptorFactory.cs" />
     <Compile Include="UI\DataSource\TreeDataSourceResult.cs" />
     <Compile Include="UI\DataSource\Fluent\DataSourceTreeListModelDescriptorFactory.cs" />
     <Compile Include="UI\CheckBox\Fluent\CheckBoxBuilder.cs" />

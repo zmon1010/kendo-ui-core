@@ -146,6 +146,8 @@
     <Compile Include="UI\Chart\Serialization\ChartWaterfallSeriesSerializerTests.cs" />
     <Compile Include="UI\Chart\Serialization\ScatterErrorBarsSerializerTests.cs" />
     <Compile Include="UI\ComboBox\ComboBoxSerializationTests.cs" />
+    <Compile Include="UI\DataSource\ReadOnlyCustomDataSourceBuilderTests.cs" />
+    <Compile Include="UI\DataSource\ReadOnlyDataSourceBuilderTests.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramShapeBuilderTests.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramShapeDefaultsSettingsTests.cs" />
     <Compile Include="UI\Diagram\DiagramTestHelper.cs" />

@@ -2,8 +2,7 @@ namespace Kendo.Mvc.UI.Fluent
 {
     using System;
 
-    public class DataSourceGroupDescriptorBuilder<T>
-        where T : class
+    public class DataSourceGroupDescriptorBuilder
     {
         private readonly GroupDescriptor descriptor;
         
