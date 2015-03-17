@@ -1,12 +1,12 @@
 using System;
-using System.Collections.Generic;
+using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI.Fluent
 {
-    /// <summary>
-    /// Defines the fluent API for configuring the Kendo UI DateTimePicker
-    /// </summary>
-    public partial class DateTimePickerBuilder : WidgetBuilderBase<DateTimePicker, DateTimePickerBuilder>
+	/// <summary>
+	/// Defines the fluent API for configuring the Kendo UI DateTimePicker
+	/// </summary>
+	public partial class DateTimePickerBuilder : WidgetBuilderBase<DateTimePicker, DateTimePickerBuilder>
     {
         public DateTimePickerBuilder(DateTimePicker component) : base(component)
         {
@@ -144,6 +144,44 @@ namespace Kendo.Mvc.UI.Fluent
 		{
 			Component.FooterId = id;
 
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the minimal date, which can be selected in DatePicker.
+		/// </summary>
+		public DateTimePickerBuilder Min(string date)
+		{
+
+			DateTime parsedDate;
+
+			if (DateTime.TryParse(date, out parsedDate))
+			{
+				Component.Min = parsedDate;
+			}
+			else
+			{
+				throw new ArgumentException(Exceptions.StringNotCorrectDate);
+			}
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the maximal date, which can be selected in DatePicker.
+		/// </summary>
+		public DateTimePickerBuilder Max(string date)
+		{
+
+			DateTime parsedDate;
+
+			if (DateTime.TryParse(date, out parsedDate))
+			{
+				Component.Max = parsedDate;
+			}
+			else
+			{
+				throw new ArgumentException(Exceptions.StringNotCorrectDate);
+			}
 			return this;
 		}
 	}
