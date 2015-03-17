@@ -4,8 +4,8 @@
 
 <div class="responsive-section">
     <h2>Kendo UI ResponsivePanel</h2>
-    <p>The main menu above is wrapped in Kendo UI ResponsivePanel.
-        Resize the browser window under 768px breakpoint and see how a toggle icon (hamburger) appears and the menu transforms into dropdown.</p>
+    <p>The menus above and below are wrapped in two instances of a Kendo UI ResponsivePanel.
+        Resize the browser window under the 768px breakpoint and see how a toggle icon (hamburger) appears and the menus transform into dropdowns.</p>
 
     @Html.Partial("QRCode")
 </div>
@@ -13,6 +13,45 @@
 <div class="responsive-widget-wrapper ">
 
     @Html.Partial("Rulers")
+
+    <button class="k-button k-button-icon menu-toggle"><span class="k-icon k-i-hbars"></span></button>
+
+    <div id ="responsive-menu-panel">
+        <ul id="menu">
+            <li>Root Item 1</li>
+            <li>Root Item 2</li>
+            <li>Root Item 3</li>
+            <li>Root Item 4</li>
+            <li>Root Item 5</li>
+            <li>Root Item 6</li>
+            <li>Root Item 7</li>
+            <li>Root Item 8</li>
+        </ul>
+    </div>
+
+    <script>
+
+        $(function () {
+            $("#menu").kendoMenu({
+                select: function (e) {
+                    $(e.item).closest(".k-rpanel").data("kendoResponsivePanel").close();
+                }
+            });
+
+            $("#responsive-menu-panel").kendoResponsivePanel({
+                breakpoint: 769,
+                toggleButton: ".menu-toggle",
+                orientation: "top",
+                open: function () {
+                    $(".menu-toggle").addClass("k-state-focused");
+                },
+                close: function () {
+                    $(".menu-toggle").removeClass("k-state-focused");
+                }
+            });
+        });
+
+    </script>
 
     <div class="responsive-horizontal-ruler bottom-ruler"></div>
 </div>

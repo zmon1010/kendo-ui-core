@@ -455,6 +455,15 @@ a {
         font-size: 18px;
         margin-bottom: 0;
     }
+
+    /* Menu */
+    #menu .k-item {
+        display: block;
+        clear: both;
+        float: none;
+        width: auto;
+    }
+
 }
 
 @media (max-width: 387px) {
