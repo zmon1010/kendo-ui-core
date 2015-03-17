@@ -481,6 +481,7 @@
             this._spellCorrect(editor);
 
             $(editor.body)
+                .on("dragstart" + NS, false)
                 .on("keydown" + NS, function (e) {
                     var range;
 
