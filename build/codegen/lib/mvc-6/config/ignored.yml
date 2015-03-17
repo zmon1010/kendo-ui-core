@@ -27,3 +27,5 @@
 - treelist.datasource
 - treelist.editable.window
 - maskedtextbox.rules
+- upload.enabled
+- upload.localization
