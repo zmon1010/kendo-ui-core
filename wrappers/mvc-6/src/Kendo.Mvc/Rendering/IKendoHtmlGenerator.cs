@@ -34,6 +34,15 @@ namespace Kendo.Mvc.Rendering
 			string format,
 			IDictionary<string, object> htmlAttributes);
 
+		TagBuilder GenerateTextInput(
+			ViewContext viewContext,
+			ModelMetadata metadata,
+			string id,
+			string name,
+			object value,
+			string format,
+			IDictionary<string, object> htmlAttributes);
+
 		TagBuilder GenerateTag(
             string tagName,
             ViewContext viewContext,

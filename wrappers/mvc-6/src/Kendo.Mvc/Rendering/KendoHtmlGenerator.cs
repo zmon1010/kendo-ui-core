@@ -191,5 +191,17 @@ namespace Kendo.Mvc.Rendering
         {
             return ViewDataDictionary.FormatValue(value, format);
         }
-    }
+
+		public TagBuilder GenerateTextInput(
+			ViewContext viewContext,
+			ModelMetadata metadata, 
+			string id, 
+			string name, 
+			object value, 
+			string format, 
+			IDictionary<string, object> htmlAttributes)
+		{
+			return GenerateInput(viewContext, metadata, id, name, value, format, "text", htmlAttributes);
+		}
+	}
 }
