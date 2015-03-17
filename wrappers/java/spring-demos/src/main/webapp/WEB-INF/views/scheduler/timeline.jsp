@@ -46,7 +46,7 @@
 	room1.put("color", "#6eb3fa");
 	rooms.add(room1);
 	HashMap<String, Object> room2 = new HashMap<String, Object>();
-	room2.put("text", "Meeting Room 102");
+	room2.put("text", "Meeting Room 201");
 	room2.put("value", 2);
 	room2.put("color", "#f58a8a");
 	rooms.add(room2);
