@@ -363,7 +363,7 @@
                 return;
             }
 
-            $.when.apply($, prefetch).then(function() {
+            $.when.apply($, $.map(prefetch, ThemeChooser.preloadStylesheet)).then(function() {
                 var example = $("#example");
 
                 example.kendoStop().kendoAnimate(extend({}, animation.hide, {
