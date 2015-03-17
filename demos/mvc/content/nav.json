@@ -58,7 +58,7 @@
             "kendo-ui": "This demo of Kendo UI Autocomplete control shows how load large amount of data in the autocomplete widget",
             "aspnet-mvc": "This demo of Kendo UI Autocomplete control shows how load large amount of data in the autocomplete widget"
         },
-        "new": true
+        "new": "true"
       },
       {
         "text": "Grouping",
@@ -71,7 +71,7 @@
             "kendo-ui": "This demo of Kendo UI Autocomplete control shows how load grouped data in the autocomplete widget",
             "aspnet-mvc": "This demo of Kendo UI Autocomplete control shows how load grouped data in the autocomplete widget"
         },
-        "new": true
+        "new": "true"
       },
       {
         "packages": [
@@ -667,7 +667,7 @@
             "kendo-ui": "Check out this demo to see how the virtualization functionality works in Kendo UI ComboBox.",
             "aspnet-mvc": "Check out this demo to see how the virtualization functionality works in ASP.NET MVC ComboBox."
         },
-        "new": true
+        "new": "true"
       },
       {
         "text": "Grouping",
@@ -680,7 +680,7 @@
             "kendo-ui": "Check out this demo to see how the grouping functionality works in Kendo UI ComboBox.",
             "aspnet-mvc": "Check out this demo to see how the grouping functionality works in ASP.NET MVC ComboBox."
         },
-        "new": true
+        "new": "true"
       },
       {
         "packages": [
@@ -1165,7 +1165,7 @@
       {
         "text": "Virtualization",
         "url": "dropdownlist/virtualization",
-        "new": true,
+        "new": "true",
         "title": {
             "kendo-ui": "Example of virtualization in Kendo UI DropDownList widget"
         },
@@ -1176,7 +1176,7 @@
       {
         "text": "Grouping",
         "url": "dropdownlist/grouping",
-        "new": true,
+        "new": "true",
         "title": {
             "kendo-ui": "Example of grouping in Kendo UI DropDownList widget"
         },
@@ -1189,7 +1189,7 @@
           "mvc-offline",
           "jsp"
         ],
-        "new": true,
+        "new": "true",
         "text": "Client filtering",
         "url": "dropdownlist/clientfiltering"
       },
@@ -1494,7 +1494,7 @@
       {
         "text": "PDF Export",
         "disableInMobile": true,
-        "new": true,
+        "new": "true",
         "url": "editor/pdf-export",
         "title": {
             "kendo-ui": "PDF export support in Kendo UI Editor",
@@ -1964,7 +1964,7 @@
         }
       },
       {
-        "new": true,
+        "new": "true",
         "text": "Filter Multi Checkboxes",
         "url": "grid/filter-multi-checkboxes",
         "title": {
@@ -1975,7 +1975,7 @@
         }
       },
       {
-        "new": true,
+        "new": "true",
         "text": "Copy to Excel",
         "url": "grid/copy-to-excel",
         "title": {
@@ -2458,7 +2458,7 @@
       {
           "text": "Export to Excel",
           "url": "pivotgrid/excel-export",
-          "new": true,
+          "new": "true",
           "title": {
               "kendo-ui": "Exporting to MS Excel"
           },
@@ -2472,7 +2472,7 @@
       {
           "text": "Export to PDF",
           "url": "pivotgrid/pdf-export",
-          "new": true,
+          "new": "true",
           "title": {
               "kendo-ui": "Exporting to PDF"
           },
@@ -3785,7 +3785,7 @@
       {
           "text": "Export to PDF",
           "url": "gantt/pdf-export",
-          "new": true,
+          "new": "true",
           "title": {
               "kendo-ui": "Exporting to PDF"
           },
@@ -3799,7 +3799,7 @@
       {
         "text": "Resources",
         "url": "gantt/resources",
-        "new": true,
+        "new": "true",
         "title": {
             "kendo-ui": "Resources in Kendo UI Gantt"
         },
@@ -3977,7 +3977,7 @@
       },
       {
         "text": "Timeline view",
-        "new": true,
+        "new": "true",
         "url": "scheduler/timeline",
         "disableInMobile": true,
         "title": {
@@ -3990,7 +3990,7 @@
       {
           "text": "Export to PDF",
           "url": "scheduler/pdf-export",
-          "new": true,
+          "new": "true",
           "title": {
               "kendo-ui": "Exporting to PDF"
           },
@@ -4734,7 +4734,7 @@
       {
         "text": "Tab position",
         "url": "tabstrip/tab-position",
-		"new": true,
+		"new": "true",
         "title": {
             "kendo-ui": "Kendo UI jQuery TabStrip tab position demo",
             "aspnet-mvc": "ASP.NET MVC TabStrip tab position demo"
@@ -5258,7 +5258,7 @@
       {
         "text": "Column resizing",
         "url": "treelist/column-resizing",
-        "new": true,
+        "new": "true",
         "title": {
             "kendo-ui": "Columns resizing in Kendo UI TreeList control | Kendo UI Web demo",
             "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC TreeList"
@@ -5271,7 +5271,7 @@
       {
         "text": "Column reordering",
         "url": "treelist/column-reordering",
-        "new": true,
+        "new": "true",
         "title": {
             "kendo-ui": "Columns reordering in Kendo UI TreeList control | Kendo UI Web demo",
             "aspnet-mvc": "Column Reordering in Telerik ASP.NET MVC TreeList"
@@ -5285,7 +5285,7 @@
         "text": "Column menu",
         "url": "treelist/column-menu",
         "disableInMobile": true,
-        "new": true,
+        "new": "true",
         "title": {
             "kendo-ui": "Column menu in Kendo UI TreeList",
             "aspnet-mvc": "Column menu functionality of Telerik ASP.NET MVC TreeList"
@@ -5298,7 +5298,7 @@
       {
         "text": "Frozen columns",
         "url": "treelist/frozen-columns",
-        "new": true,
+        "new": "true",
         "title": {
             "kendo-ui": "Static columns of Kendo UI TreeList control | Kendo UI Web demo",
             "aspnet-mvc": "Frozen columns demo in Telerik ASP.NET MVC Grid "
@@ -6046,7 +6046,7 @@
       {
         "text": "Document Export",
         "url": "pdf-export/index",
-        "new": true,
+        "new": "true",
         "disableInMobile": true,
         "packages": [
           "!mvc"
@@ -6060,7 +6060,7 @@
       }, {
         "text": "Page Layout",
         "url": "pdf-export/page-layout",
-        "new": true,
+        "new": "true",
         "disableInMobile": true,
         "packages": [
           "!mvc"
@@ -6222,7 +6222,7 @@
       {
         "text": "Strongly typed binding",
         "url": "mvvm/types",
-        "new": true,
+        "new": "true",
         "title": {
             "kendo-ui": "Strongly typed binding demo | Kendo UI MVVM"
         },
@@ -6434,7 +6434,7 @@
       },
       {
         "text": "Checkboxes",
-        "new": true,
+        "new": "true",
         "url": "styling/checkboxes",
         "title": {
             "kendo-ui": "jQuery icons styling example | Kendo UI Web demos"
@@ -6445,7 +6445,7 @@
       },
       {
         "text": "Radio buttons",
-        "new": true,
+        "new": "true",
         "url": "styling/radios",
         "title": {
             "kendo-ui": "jQuery icons styling example | Kendo UI Web demos"
@@ -6837,7 +6837,7 @@
       {
         "text": "Custom Visuals",
         "url": "bar-charts/visuals",
-		"new": true,
+		"new": "true",
         "title": {
             "kendo-ui": "Example of using custom visuals for the Kendo UI Bar Chart",
             "aspnet-mvc": "Example of using custom visuals for ASP.NET MVC Bar Chart"
@@ -7380,7 +7380,7 @@
       },
       {
         "text": "PDF Export",
-        "new": true,
+        "new": "true",
         "url": "chart-api/pdf-export",
         "title": {
             "kendo-ui": "Kendo UI Chart saveAsPDF API method"
@@ -7391,7 +7391,7 @@
       },
       {
         "text": "Advanced Export",
-        "new": true,
+        "new": "true",
         "url": "chart-api/export",
         "title": {
             "kendo-ui": "Kendo UI Charts Export API methods"
@@ -7700,7 +7700,7 @@
       {
         "text": "Multiple pointers",
         "url": "linear-gauge/multiple-pointers",
-        "new": true,
+        "new": "true",
         "title": {
             "kendo-ui": "Kendo UI Linear Gauge multiple pointers demo",
             "aspnet-mvc": "ASP.NET MVC Linear Gauge multiple pointers demo"
@@ -7713,7 +7713,7 @@
       {
         "text": "Export to PDF, Image, SVG",
         "url": "linear-gauge/export",
-        "new": true,
+        "new": "true",
         "title": {
             "kendo-ui": "Kendo UI Linear Gauge export demo",
             "aspnet-mvc": "ASP.NET MVC Linear Gauge export demo"
@@ -7808,7 +7808,7 @@
       {
         "text": "Multiple pointers",
         "url": "radial-gauge/multiple-pointers",
-        "new": true,
+        "new": "true",
         "title": {
             "kendo-ui": "Kendo UI Radial Gauge multiple pointers demo",
             "aspnet-mvc": "ASP.NET MVC Radial Gauge multiple pointers demo"
@@ -7821,7 +7821,7 @@
       {
         "text": "Export to PDF, Image, SVG",
         "url": "radial-gauge/export",
-        "new": true,
+        "new": "true",
         "title": {
             "kendo-ui": "Kendo UI Radial Gauge export demo",
             "aspnet-mvc": "ASP.NET MVC Radial Gauge export demo"
@@ -8028,7 +8028,7 @@
       {
         "text": "Custom Visuals",
         "url": "line-charts/visuals",
-		"new": true,
+		"new": "true",
         "title": {
             "kendo-ui": "Example of using custom visuals for the Kendo UI Line Chart",
             "aspnet-mvc": "Example of using custom visuals for ASP.NET MVC Line Chart"
@@ -8163,7 +8163,7 @@
       },
       {
         "text": "Editing",
-        "new": true,
+        "new": "true",
         "url": "diagram/editing",
         "title": {
             "kendo-ui": "Kendo UI Diagram Editing",
@@ -8176,7 +8176,7 @@
       },
       {
         "text": "PDF Export",
-        "new": true,
+        "new": "true",
         "url": "diagram/pdf-export",
         "title": {
             "kendo-ui": "Kendo UI Diagram saveAsPDF API method"
@@ -8187,7 +8187,7 @@
       },
       {
         "text": "Advanced Export",
-        "new": true,
+        "new": "true",
         "url": "diagram/export",
         "title": {
             "kendo-ui": "Kendo UI Diagram Export API methods"
@@ -8343,7 +8343,7 @@
       },
       {
         "text": "Export",
-        "new": true,
+        "new": "true",
         "url": "map/export",
         "title": {
             "kendo-ui": "Kendo UI Map Export API methods"
@@ -9251,7 +9251,7 @@
       },
       {
         "text": "PDF Export",
-        "new": true,
+        "new": "true",
         "url": "financial/pdf-export",
         "title": {
             "kendo-ui": "Kendo UI StockChart saveAsPDF API method"
@@ -9549,7 +9549,7 @@
       {
         "text": "AngularJS",
         "mobile": true,
-        "new": true,
+        "new": "true",
         "disableInMobile": true,
         "url": "application/angular",
         "title": {
@@ -10063,7 +10063,7 @@
       {
         "text": "AngularJS",
         "mobile": true,
-        "new": true,
+        "new": "true",
         "disableInMobile": true,
         "url": "mobile-layout/angular",
         "title": {
@@ -10274,7 +10274,7 @@
       },
       {
         "text": "Responsive images",
-        "new": true,
+        "new": "true",
         "url": "mobile-listview/responsive-images",
         "title": {
             "kendo-ui": "Mobile ListView widget demo | Kendo UI Demos"
@@ -10772,7 +10772,7 @@
       },
       {
         "text": "AngularJS",
-        "new": true,
+        "new": "true",
         "mobile": true,
         "disableInMobile": true,
         "url": "splitview/angular",
@@ -11002,7 +11002,7 @@
       {
         "text": "AngularJS",
         "mobile": true,
-        "new": true,
+        "new": "true",
         "disableInMobile": true,
         "url": "touchevents/angular",
         "title": {
@@ -11076,7 +11076,7 @@
       {
         "text": "AngularJS",
         "mobile": true,
-        "new": true,
+        "new": "true",
         "disableInMobile": true,
         "url": "mobile-view/angular",
         "title": {
