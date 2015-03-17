@@ -10,7 +10,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <example>
         /// <code lang="CS">
-        /// &lt;%= Html.Kendo().DateTimePickerFor(m => m.Property) %&gt;
+        /// @(Html.Kendo().DateTimePickerFor(m => m.Property))
         /// </code>
         /// </example>
         public virtual DateTimePickerBuilder DateTimePickerFor(Expression<Func<TModel, DateTime>> expression)
@@ -23,7 +23,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// </summary>
         /// <example>
         /// <code lang="CS">
-        /// &lt;%= Html.Kendo().DateTimePickerFor(m => m.Property) %&gt;
+        /// @(Html.Kendo().DateTimePickerFor(m => m.Property))
         /// </code>
         /// </example>
         public virtual DateTimePickerBuilder DateTimePickerFor(Expression<Func<TModel, Nullable<DateTime>>> expression)
