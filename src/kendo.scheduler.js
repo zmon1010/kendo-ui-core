@@ -741,7 +741,9 @@ var __meta__ = {
     }
 
     SchedulerDataSource.create = function(options) {
-        options = options && options.push ? { data: options } : options;
+        if (isArray(options) || options instanceof kendo.data.ObservableArray) {
+            options = { data: options };
+        }
 
         var dataSource = options || {},
             data = dataSource.data;
