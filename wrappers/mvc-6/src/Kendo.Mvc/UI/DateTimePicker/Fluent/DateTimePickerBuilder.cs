@@ -1,5 +1,7 @@
 using System;
 using Kendo.Mvc.Resources;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -72,10 +74,9 @@ namespace Kendo.Mvc.UI.Fluent
 		/// )
 		/// </code>
 		/// </example>
-		public DateTimePickerBuilder BindTo(params DateTime[] dates)
+		public DateTimePickerBuilder BindTo(IEnumerable<DateTime> dates)
 		{
-
-			Component.Dates = dates;
+			Component.Dates = dates.ToArray();
 
 			return this;
 		}
@@ -182,6 +183,42 @@ namespace Kendo.Mvc.UI.Fluent
 			{
 				throw new ArgumentException(Exceptions.StringNotCorrectDate);
 			}
+			return this;
+		}
+
+		/// <summary>
+		/// MonthTemplateId to be used for rendering the cells of the Calendar.
+		/// </summary>
+		/// <example>
+		/// <code lang="CS">
+		///  @(Html.Kendo().DateTimePicker()
+		///             .Name("DateTimePicker")
+		///             .MonthTemplateId("widgetMonthTemplateId")
+		/// )
+		/// </code>
+		/// </example>
+		public DateTimePickerBuilder MonthTemplateId(string id)
+		{
+			Component.MonthTemplate.ContentId = id;
+
+			return this;
+		}
+
+		/// <summary>
+		/// Templates for the cells rendered in the "month" view.
+		/// </summary>
+		/// <example>
+		/// <code lang="CS">
+		/// @(Html.Kendo().DateTimePicker()
+		///             .Name("DateTimePicker")
+		///             .MonthTemplate("#= data.value #")
+		/// )
+		/// </code>
+		/// </example>
+		public DateTimePickerBuilder MonthTemplate(string content)
+		{
+			Component.MonthTemplate.Content = content;
+
 			return this;
 		}
 	}
