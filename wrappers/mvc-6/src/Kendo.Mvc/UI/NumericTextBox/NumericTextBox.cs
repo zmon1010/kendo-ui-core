@@ -57,13 +57,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = SerializeSettings();
 
-			// TODO: Manually serialized settings go here
-
-			settings.Remove("enable");
-			settings.Remove("min");
-			settings.Remove("max");
-			settings.Remove("value");
-			settings.Remove("step");
+			// TODO: Manually serialized settings go here			
 
 			writer.Write(Initializer.Initialize(Selector, "NumericTextBox", settings));
         }

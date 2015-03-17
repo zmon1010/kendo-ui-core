@@ -1,7 +1,12 @@
-- grid.sortable.sortMode
 - datetimepicker.footer
 - datetimepicker.monthTemplate
-- datetimepicker.monthTemplate.empty
-- datetimepicker.monthTemplate.emptyId
 - datetimepicker.monthTemplate.content
 - datetimepicker.monthTemplate.contentId
+- datetimepicker.monthTemplate.empty
+- datetimepicker.monthTemplate.emptyId
+- grid.sortable.sortMode
+- numerictextbox.enable
+- numerictextbox.max
+- numerictextbox.min
+- numerictextbox.step
+- numerictextbox.value
