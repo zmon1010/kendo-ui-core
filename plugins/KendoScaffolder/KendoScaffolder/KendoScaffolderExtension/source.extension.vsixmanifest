@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="40e7bb7e-f72d-44cf-8439-2567be2590c6" Version="2015.1.312" Language="en-US" Publisher="Telerik" />
+    <Identity Id="40e7bb7e-f72d-44cf-8439-2567be2590c6" Version="2015.1.318" Language="en-US" Publisher="Telerik" />
     <DisplayName>Kendo UI Scaffolder</DisplayName>
     <Description xml:space="preserve">Generates UI for ASP.NET MVC server-side wrapper widget declarations together with the related Controller action methods.</Description>
     <MoreInfo>http://docs.telerik.com/kendo-ui/aspnet-mvc/scaffolding</MoreInfo>
