@@ -519,18 +519,6 @@
         }
       },
       {
-        "text": "Initial Files",
-        "url": "upload/initialfiles",
-        "title": {
-            "kendo-ui": "Example of initial files for Kendo UI Upload",
-            "aspnet-mvc": "Example of initial files for ASP.NET MVC Upload"
-        },
-        "meta": {
-            "kendo-ui": "This demo illustrates how to render initial files with the Kendo UI Upload widget.",
-            "aspnet-mvc": "This demo illustrates how to render initial files with the ASP.NET MVC Upload."
-        }
-      },
-      {
         "text": "RTL support",
         "disableInMobile": true,
         "url": "upload/right-to-left-support",
