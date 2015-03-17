@@ -150,6 +150,7 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ImageBrowserController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\RedditImagesController.cs" />
     <Compile Include="Controllers\StockDataController.cs" />
@@ -189,6 +190,8 @@
     <Compile Include="Models\Gantt\GanttDependencyRepository.cs" />
     <Compile Include="Models\Gantt\GanttTaskModel.cs" />
     <Compile Include="Models\Gantt\GanttTaskRepository.cs" />
+    <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Models\OrderRepository.cs" />
     <Compile Include="Models\Scheduler\MeetingSignalR.cs" />
     <Compile Include="Models\ProductSignalR.cs" />
     <Compile Include="Models\Sample.designer.cs">
