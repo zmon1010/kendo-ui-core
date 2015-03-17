@@ -49,17 +49,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies the navigation depth of the calendar. The following
-		/// settings are available for the depth value:
-        /// </summary>
-        /// <param name="value">The value for Depth</param>
-        public DateTimePickerBuilder Depth(string value)
-        {
-            Container.Depth = value;
-            return this;
-        }
-
-        /// <summary>
         /// The template which renders the footer of the calendar. If false, the footer will not be rendered.
         /// </summary>
         /// <param name="value">The value for Footer</param>
@@ -110,16 +99,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Templates for the cells rendered in the calendar "month" view.
-        /// </summary>
-        /// <param name="configurator">The configurator for the month setting.</param>
-        public DateTimePickerBuilder Month(Action<DateTimePickerMonthSettingsBuilder> configurator)
-        {
-            configurator(new DateTimePickerMonthSettingsBuilder(Container.Month));
-            return this;
-        }
-
-        /// <summary>
         /// Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used.
 		///  Note that value of the format option is always used. The timeFormat value also will be used if defined.
         /// </summary>
@@ -127,17 +106,6 @@ namespace Kendo.Mvc.UI.Fluent
         public DateTimePickerBuilder ParseFormats(params string[] value)
         {
             Container.ParseFormats = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Specifies the start view of the calendar.
-		///  The following settings are available for the start value:
-        /// </summary>
-        /// <param name="value">The value for Start</param>
-        public DateTimePickerBuilder Start(string value)
-        {
-            Container.Start = value;
             return this;
         }
 
@@ -158,6 +126,36 @@ namespace Kendo.Mvc.UI.Fluent
         public DateTimePickerBuilder Value(DateTime value)
         {
             Container.Value = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Represents available types of calendar views.
+        /// </summary>
+        /// <param name="value">The value for Start</param>
+        public DateTimePickerBuilder Start(CalendarView value)
+        {
+            Container.Start = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the navigation depth.
+        /// </summary>
+        /// <param name="value">The value for Depth</param>
+        public DateTimePickerBuilder Depth(CalendarView value)
+        {
+            Container.Depth = value;
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="configurator">The configurator for the monthtemplate setting.</param>
+        public DateTimePickerBuilder MonthTemplate(Action<DateTimePickerMonthTemplateSettingsBuilder> configurator)
+        {
+            configurator(new DateTimePickerMonthTemplateSettingsBuilder(Container.MonthTemplate));
             return this;
         }
 

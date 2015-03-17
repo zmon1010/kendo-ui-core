@@ -19,8 +19,6 @@ namespace Kendo.Mvc.UI
 
         public DateTime[] Dates { get; set; }
 
-        public string Depth { get; set; }
-
         public string Footer { get; set; }
 
         public string Format { get; set; }
@@ -31,15 +29,17 @@ namespace Kendo.Mvc.UI
 
         public DateTime? Min { get; set; }
 
-        public DateTimePickerMonthSettings Month { get; } = new DateTimePickerMonthSettings();
-
         public string[] ParseFormats { get; set; }
-
-        public string Start { get; set; }
 
         public string TimeFormat { get; set; }
 
         public DateTime? Value { get; set; }
+
+        public CalendarView? Start { get; set; }
+
+        public CalendarView? Depth { get; set; }
+
+        public DateTimePickerMonthTemplateSettings MonthTemplate { get; } = new DateTimePickerMonthTemplateSettings();
 
 
         protected override Dictionary<string, object> SerializeSettings()
@@ -69,16 +69,6 @@ namespace Kendo.Mvc.UI
                 settings["dates"] = Dates;
             }
 
-            if (Depth.HasValue())
-            {
-                settings["depth"] = Depth;
-            }
-
-            if (Footer.HasValue())
-            {
-                settings["footer"] = Footer;
-            }
-
             if (Format.HasValue())
             {
                 settings["format"] = Format;
@@ -99,20 +89,9 @@ namespace Kendo.Mvc.UI
                 settings["min"] = Min;
             }
 
-            var month = Month.Serialize();
-            if (month.Any())
-            {
-                settings["month"] = month;
-            }
-
             if (ParseFormats != null && ParseFormats.Any())
             {
                 settings["parseFormats"] = ParseFormats;
-            }
-
-            if (Start.HasValue())
-            {
-                settings["start"] = Start;
             }
 
             if (TimeFormat.HasValue())
@@ -124,6 +103,17 @@ namespace Kendo.Mvc.UI
             {
                 settings["value"] = Value;
             }
+
+            if (Start.HasValue)
+            {
+                settings["start"] = Start?.Serialize();
+            }
+
+            if (Depth.HasValue)
+            {
+                settings["depth"] = Depth?.Serialize();
+            }
+
 
             return settings;
         }

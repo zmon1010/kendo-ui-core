@@ -1,6 +1,7 @@
 - dropdownlist.datasource
 - dropdownlist.animation
 - datetimepicker.animation
+- datetimepicker.month
 - grid.altrowtemplate
 - grid.columnmenu.messages
 - grid.columns
@@ -25,3 +26,6 @@
 - treelist.columns.editor
 - treelist.datasource
 - treelist.editable.window
+- maskedtextbox.rules
+- upload.enabled
+- upload.localization

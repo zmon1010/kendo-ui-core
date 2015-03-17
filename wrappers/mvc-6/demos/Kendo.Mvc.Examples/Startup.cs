@@ -77,14 +77,16 @@ namespace Kendo.Mvc.Examples
 			// Add MVC to the request pipeline.
 			app.UseMvc(routes =>
             {
-                routes.MapRoute(
+				routes.AddHyphenatedRoute();
+				
+				routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action}/{id?}",
-                    defaults: new { controller = "Home", action = "Index" });
+                    defaults: new { controller = "Home", action = "Index" });				
 
-                // Uncomment the following line to add a route for porting Web API 2 controllers.
-                // routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
-            });
+				// Uncomment the following line to add a route for porting Web API 2 controllers.
+				// routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
+			});
         }
     }
 }

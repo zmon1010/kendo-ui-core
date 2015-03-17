@@ -2,7 +2,7 @@
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public class DateTimePickerController : Controller
+    public partial class DateTimePickerController : Controller
     {
         public IActionResult Index()
         {

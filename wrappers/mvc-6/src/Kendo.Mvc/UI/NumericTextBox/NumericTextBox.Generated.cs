@@ -60,16 +60,6 @@ namespace Kendo.Mvc.UI
                 settings["format"] = Format;
             }
 
-            if (Max.HasValue)
-            {
-                settings["max"] = Max;
-            }
-
-            if (Min.HasValue)
-            {
-                settings["min"] = Min;
-            }
-
             if (Placeholder.HasValue())
             {
                 settings["placeholder"] = Placeholder;
@@ -80,24 +70,9 @@ namespace Kendo.Mvc.UI
                 settings["spinners"] = Spinners;
             }
 
-            if (Step.HasValue)
-            {
-                settings["step"] = Step;
-            }
-
             if (UpArrowText.HasValue())
             {
                 settings["upArrowText"] = UpArrowText;
-            }
-
-            if (Value.HasValue)
-            {
-                settings["value"] = Value;
-            }
-
-            if (Enable.HasValue)
-            {
-                settings["enable"] = Enable;
             }
 
             return settings;

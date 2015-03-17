@@ -1,19 +1,20 @@
 using System;
+using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
-    /// Defines the fluent API for configuring DateTimePickerMonthSettings
+    /// Defines the fluent API for configuring UploadFile
     /// </summary>
-    public partial class DateTimePickerMonthSettingsBuilder
+    public partial class UploadFileBuilder
         
     {
-        public DateTimePickerMonthSettingsBuilder(DateTimePickerMonthSettings container)
+        public UploadFileBuilder(UploadFile container)
         {
             Container = container;
         }
 
-        protected DateTimePickerMonthSettings Container
+        protected UploadFile Container
         {
             get;
             private set;

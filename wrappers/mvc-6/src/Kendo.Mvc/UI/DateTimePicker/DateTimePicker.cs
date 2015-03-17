@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
@@ -20,7 +21,9 @@ namespace Kendo.Mvc.UI
             Value = null;
         }
 
-        public CultureInfo CultureInfo
+		public PopupAnimation Animation { get; } = new PopupAnimation();
+
+		public CultureInfo CultureInfo
         {
             get
             {
@@ -43,8 +46,19 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
+		public bool EnableFooter
+		{
+			get;
+			set;
+		} = true;
 
-        protected override void WriteHtml(TextWriter writer)
+		public string FooterId
+		{
+			get;
+			set;
+		}
+
+		protected override void WriteHtml(TextWriter writer)
         {
             var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
             var tag = Generator.GenerateDateTimeInput(ViewContext, metadata, Id, Name, Value, Format, HtmlAttributes);
@@ -63,9 +77,42 @@ namespace Kendo.Mvc.UI
         {
             var settings = SerializeSettings();
 
-            // TODO: Manually serialized settings go here
+			var idPrefix = "#";
+			if (IsInClientTemplate)
+			{
+				idPrefix = "\\" + idPrefix;
+			}
 
-            writer.Write(Initializer.Initialize(Selector, "DateTimePicker", settings));
+			var animation = Animation.ToJson();
+			if (animation.Any())
+			{
+				settings["animation"] = animation["animation"];
+			}
+
+			if (EnableFooter)
+			{
+				if (FooterId.HasValue())
+				{
+					settings["footer"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", idPrefix, FooterId) };
+				}
+				else if (Footer.HasValue())
+				{
+					settings["footer"] = Footer;
+				}
+			}
+			else
+			{
+				settings["footer"] = EnableFooter;
+			}
+
+			MonthTemplate.IdPrefix = idPrefix;
+			var month = MonthTemplate.Serialize();
+			if (month.Any())
+			{
+				settings["month"] = month;
+			}
+
+			writer.Write(Initializer.Initialize(Selector, "DateTimePicker", settings));
         }
     }
 }

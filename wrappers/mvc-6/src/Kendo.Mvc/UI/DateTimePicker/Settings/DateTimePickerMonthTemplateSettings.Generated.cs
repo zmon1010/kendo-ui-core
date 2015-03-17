@@ -7,28 +7,22 @@ using System.Linq;
 namespace Kendo.Mvc.UI
 {
     /// <summary>
-    /// Kendo UI DateTimePickerMonthSettings class
+    /// Kendo UI DateTimePickerMonthTemplateSettings class
     /// </summary>
-    public partial class DateTimePickerMonthSettings 
+    public partial class DateTimePickerMonthTemplateSettings 
     {
+        public string Empty { get; set; }
+
+        public string EmptyId { get; set; }
+
         public string Content { get; set; }
 
-        public string Empty { get; set; }
+        public string ContentId { get; set; }
 
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
-            if (Content.HasValue())
-            {
-                settings["content"] = Content;
-            }
-
-            if (Empty.HasValue())
-            {
-                settings["empty"] = Empty;
-            }
 
             return settings;
         }

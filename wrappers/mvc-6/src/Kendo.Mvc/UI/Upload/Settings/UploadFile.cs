@@ -7,9 +7,9 @@ using System.Linq;
 namespace Kendo.Mvc.UI
 {
     /// <summary>
-    /// Kendo UI DateTimePickerMonthSettings class
+    /// Kendo UI UploadFile class
     /// </summary>
-    public partial class DateTimePickerMonthSettings 
+    public partial class UploadFile 
     {
         public Dictionary<string, object> Serialize()
         {
