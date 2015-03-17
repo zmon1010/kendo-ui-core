@@ -316,110 +316,256 @@
 		"category": "Editors"
 	},
 	{
-    "text": "MaskedTextBox",
-    "name": "maskedtextbox",
-    "api": "web/maskedtextbox",
+		"text": "MaskedTextBox",
+		"name": "maskedtextbox",
+		"api": "web/maskedtextbox",
+		"documentation": {
+			"kendo-ui": "getting-started/web/maskedtextbox/overview",
+			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/maskedtextbox/overview",
+			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/maskedtextbox/overview",
+			"php-ui": "getting-started/using-kendo-with/php/widgets/maskedtextbox/overview"
+		},
+		"forum": {
+			"kendo-ui": "kendo-ui/maskedtextbox",
+			"aspnet-mvc": "aspnet-mvc/maskedtextbox",
+			"jsp-ui": "jsp/maskedtextbox",
+			"php-ui": "php/maskedtextbox"
+		},
+		"codelibrary": {
+			"kendo-ui": "kendo-ui/maskedtextbox",
+			"aspnet-mvc": "aspnet-mvc/maskedtextbox",
+			"jsp-ui": "jsp/maskedtextbox",
+			"php-ui": "php/maskedtextbox"
+		},
+		"spriteCssClass": "maskedtextboxIcon",
+		"items": [
+			{
+				"text": "Basic usage",
+				"url": "maskedtextbox/index",
+				"title": {
+					"kendo-ui": "Primary features of Kendo UI Mask Input | Kendo UI Web demo",
+					"aspnet-mvc": "Primary features of ASP.NET MVC Mask Input | ASP.NET MVC demo"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows the core functionality of KendoMaskedTextBox component.",
+					"aspnet-mvc": "This demo shows the core functionality of ASP.NET MVC MaskedTextBox component."
+				}
+			},
+			{
+				"text": "Events",
+				"url": "maskedtextbox/events",
+				"title": {
+					"kendo-ui": "Events in Kendo UI MaskedTextBox widget",
+					"aspnet-mvc": "Events in ASP.NET MVC MaskedTextBox control"
+				},
+				"meta": {
+					"kendo-ui": "This example shows events which are triggered in Kendo UI MaskedTextBox widget.",
+					"aspnet-mvc": "This example shows events which are triggered in ASP.NET MVC MaskedTextBox component."
+				}
+			},
+			{
+				"text": "API",
+				"url": "maskedtextbox/api",
+				"title": {
+					"kendo-ui": "API Functions Demo for KendoMaskedTextBox",
+					"aspnet-mvc": "API Functions Demo for ASP.NET MVC MaskedTextBox"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows specific API functions for KendoMaskedTextBox component.",
+					"aspnet-mvc": "This demo shows specific API functions for ASP.NET MVC MaskedTextBox component."
+				}
+			},
+			{
+				"text": "Globalization",
+				"url": "maskedtextbox/globalization",
+				"title": {
+					"kendo-ui": "Globalization Demo for KendoMaskedTextBox",
+					"aspnet-mvc": "Globalization Demo for ASP.NET MVC MaskedTextBox"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows KendoMaskedTextBox globalization support for decimal point, thousand separator and currency symbol.",
+					"aspnet-mvc": "This demo shows ASP.NET MVC MaskedTextBox globalization support for decimal point, thousand separator and currency symbol."
+				}
+			},
+			{
+				"text": "RTL support",
+				"disableInMobile": true,
+				"url": "maskedtextbox/right-to-left-support",
+				"title": {
+					"kendo-ui": "RTL support in Kendo UI MaskedTextBox widget",
+					"aspnet-mvc": "RTL support in ASP.NET MVC MaskedTextBox control"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows how right-to-left input is implemented in Kendo UI MaskedTextBox component to ensure the satisfaction of RTL language users.",
+					"aspnet-mvc": "This demo shows how right-to-left input is implemented in ASP.NET MVC MaskedTextBox component to ensure the satisfaction of RTL language users."
+				}
+			},
+			{
+				"text": "Validation",
+				"url": "maskedtextbox/validation",
+				"title": {
+					"kendo-ui": "Validation Demo for Kendo UI MaskedTextBox",
+					"aspnet-mvc": "Validation Demo for ASP.NET MVC MaskedTextBox"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows how to validate an incomplete widget value",
+					"aspnet-mvc": "This demo shows how to validate an incomplete control value in ASP.NET MVC MaskedTextBox"
+				}
+			},
+			{
+				"text": "AngularJS",
+				"url": "maskedtextbox/angular",
+				"title": {
+					"kendo-ui": "AngularJS support in Kendo UI MaskedTextBox"
+				},
+				"meta": {
+					"kendo-ui": "AngularJS directive support for Kendo UI MaskedTextBox"
+				},
+				"packages": [
+					"!mvc",
+					"!jsp",
+					"!php"
+				]
+			}
+		],
+		"category": "Editors"
+	},
+	{
+    "text": "Upload",
+    "name": "upload",
+    "pro": "true",
+    "api": "web/upload",
     "documentation": {
-       "kendo-ui": "getting-started/web/maskedtextbox/overview",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/maskedtextbox/overview",
-       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/maskedtextbox/overview",
-       "php-ui": "getting-started/using-kendo-with/php/widgets/maskedtextbox/overview"
+       "kendo-ui": "getting-started/web/upload/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/upload/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/upload/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/upload/overview"
     },
     "forum": {
-       "kendo-ui": "kendo-ui/maskedtextbox",
-       "aspnet-mvc": "aspnet-mvc/maskedtextbox",
-       "jsp-ui": "jsp/maskedtextbox",
-       "php-ui": "php/maskedtextbox"
+       "kendo-ui": "kendo-ui/upload",
+       "aspnet-mvc": "aspnet-mvc/upload",
+       "jsp-ui": "jsp/upload",
+       "php-ui": "php/upload"
     },
     "codelibrary": {
-       "kendo-ui": "kendo-ui/maskedtextbox",
-       "aspnet-mvc": "aspnet-mvc/maskedtextbox",
-       "jsp-ui": "jsp/maskedtextbox",
-       "php-ui": "php/maskedtextbox"
+       "kendo-ui": "kendo-ui/upload",
+       "aspnet-mvc": "aspnet-mvc/upload",
+       "jsp-ui": "jsp/upload",
+       "php-ui": "php/upload"
     },
-    "spriteCssClass": "maskedtextboxIcon",
+    "spriteCssClass": "uploadIcon",
+    "packages": [
+      "!offline"
+    ],
     "items": [
       {
         "text": "Basic usage",
-        "url": "maskedtextbox/index",
+        "url": "upload/index",
         "title": {
-            "kendo-ui": "Primary features of Kendo UI Mask Input | Kendo UI Web demo",
-            "aspnet-mvc": "Primary features of ASP.NET MVC Mask Input | ASP.NET MVC demo"
+            "kendo-ui": "Kendo UI Upload widget - example of core features",
+            "aspnet-mvc": "ASP.NET MVC Upload extension demo"
         },
         "meta": {
-            "kendo-ui": "This demo shows the core functionality of KendoMaskedTextBox component.",
-            "aspnet-mvc": "This demo shows the core functionality of ASP.NET MVC MaskedTextBox component."
+            "kendo-ui": "This example shows the basic functionality and core features of Kendo UI jQuery file upload control.",
+            "aspnet-mvc": "This ASP.NET MVC Upload extension demo illustrates the multi-file selection capability of the control."
+        }
+      },
+      {
+        "text": "Asynchronous Upload",
+        "url": "upload/async",
+        "title": {
+            "kendo-ui": "jQuery Asynchronous File Upload Example | Kendo UI Upload Demo",
+            "aspnet-mvc": "ASP.NET MVC Asynchronous File Upload Example"
+        },
+        "meta": {
+            "kendo-ui": "This example shows the async upload functionality of Kendo UI Upload control.",
+            "aspnet-mvc": "This example shows the async upload functionality of ASP.NET MVC Upload control."
         }
       },
       {
         "text": "Events",
-        "url": "maskedtextbox/events",
+        "url": "upload/events",
         "title": {
-            "kendo-ui": "Events in Kendo UI MaskedTextBox widget",
-            "aspnet-mvc": "Events in ASP.NET MVC MaskedTextBox control"
+            "kendo-ui": "Example of handling events in Kendo UI Upload",
+            "aspnet-mvc": "Handling events in ASP.NET MVC Upload | UI for ASP.NET MVC Demos"
         },
         "meta": {
-            "kendo-ui": "This example shows events which are triggered in Kendo UI MaskedTextBox widget.",
-            "aspnet-mvc": "This example shows events which are triggered in ASP.NET MVC MaskedTextBox component."
+            "kendo-ui": "Learn with this example how to handle events, triggered by Kendo UI Upload widget.",
+            "aspnet-mvc": "In this sample you will see how to handle events, triggered by Kendo UI jQuery-based Upload widget, used in ASP.NET MVC."
         }
       },
       {
         "text": "API",
-        "url": "maskedtextbox/api",
+        "url": "upload/api",
         "title": {
-            "kendo-ui": "API Functions Demo for KendoMaskedTextBox",
-            "aspnet-mvc": "API Functions Demo for ASP.NET MVC MaskedTextBox"
+            "kendo-ui": "API example for Kendo UI File Upload Control",
+            "aspnet-mvc": "API example for ASP.NET MVC File Upload Control"
         },
         "meta": {
-            "kendo-ui": "This demo shows specific API functions for KendoMaskedTextBox component.",
-            "aspnet-mvc": "This demo shows specific API functions for ASP.NET MVC MaskedTextBox component."
+            "kendo-ui": "This demo shows API Functions of Kendo UI Upload component. Try the sample to see how to enable, disable the upload option and toggle the enabled state.",
+            "aspnet-mvc": "This demo shows API Functions of ASP.NET MVC Upload component. Try the sample to see how to enable, disable the upload option and toggle the enabled state."
         }
       },
       {
-        "text": "Globalization",
-        "url": "maskedtextbox/globalization",
+        "text": "Templates",
+        "url": "upload/templates",
         "title": {
-            "kendo-ui": "Globalization Demo for KendoMaskedTextBox",
-            "aspnet-mvc": "Globalization Demo for ASP.NET MVC MaskedTextBox"
+            "kendo-ui": "Example of templates for Kendo UI Upload",
+            "aspnet-mvc": "Templates for Telerik ASP.NET MVC Upload"
         },
         "meta": {
-            "kendo-ui": "This demo shows KendoMaskedTextBox globalization support for decimal point, thousand separator and currency symbol.",
-            "aspnet-mvc": "This demo shows ASP.NET MVC MaskedTextBox globalization support for decimal point, thousand separator and currency symbol."
+            "kendo-ui": "This demo illustrates how to use templates with the Kendo UI Upload widget.",
+            "aspnet-mvc": "In this example you will see templates options for Telerik ASP.NET MVC Upload extension."
+        }
+      },
+      {
+        "text": "Initial Files",
+        "url": "upload/initialfiles",
+        "title": {
+            "kendo-ui": "Example of initial files for Kendo UI Upload",
+            "aspnet-mvc": "Example of initial files for ASP.NET MVC Upload"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates how to render initial files with the Kendo UI Upload widget.",
+            "aspnet-mvc": "This demo illustrates how to render initial files with the ASP.NET MVC Upload."
         }
       },
       {
         "text": "RTL support",
         "disableInMobile": true,
-        "url": "maskedtextbox/right-to-left-support",
+        "url": "upload/right-to-left-support",
         "title": {
-            "kendo-ui": "RTL support in Kendo UI MaskedTextBox widget",
-            "aspnet-mvc": "RTL support in ASP.NET MVC MaskedTextBox control"
+            "kendo-ui": "RTL support in Kendo UI Upload",
+            "aspnet-mvc": "Right to left support in Telerik ASP.NET MVC Upload extension"
         },
         "meta": {
-            "kendo-ui": "This demo shows how right-to-left input is implemented in Kendo UI MaskedTextBox component to ensure the satisfaction of RTL language users.",
-            "aspnet-mvc": "This demo shows how right-to-left input is implemented in ASP.NET MVC MaskedTextBox component to ensure the satisfaction of RTL language users."
+            "kendo-ui": "This Kendo UI demo illustrates how you can facilitate your RTL app users by using the RTL feature of Kendo UI Upload widget.",
+            "aspnet-mvc": "This demo illustrates the right to left support in Telerik ASP.NET MVC Upload HtmlHelper extension."
         }
       },
       {
-        "text": "Validation",
-        "url": "maskedtextbox/validation",
+        "text": "MVVM",
+        "url": "upload/mvvm",
         "title": {
-            "kendo-ui": "Validation Demo for Kendo UI MaskedTextBox",
-            "aspnet-mvc": "Validation Demo for ASP.NET MVC MaskedTextBox"
+            "kendo-ui": "MVVM support in Kendo UI Upload"
         },
         "meta": {
-            "kendo-ui": "This demo shows how to validate an incomplete widget value",
-            "aspnet-mvc": "This demo shows how to validate an incomplete control value in ASP.NET MVC MaskedTextBox"
-        }
+            "kendo-ui": "Enabled, events and visible MVVM binding support in Kendo UI Upload"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "AngularJS",
-        "url": "maskedtextbox/angular",
+        "url": "upload/angular",
         "title": {
-            "kendo-ui": "AngularJS support in Kendo UI MaskedTextBox"
+            "kendo-ui": "AngularJS support in Kendo UI Upload"
         },
         "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI MaskedTextBox"
+            "kendo-ui": "AngularJS support directives in Kendo UI Upload"
         },
         "packages": [
           "!mvc",
