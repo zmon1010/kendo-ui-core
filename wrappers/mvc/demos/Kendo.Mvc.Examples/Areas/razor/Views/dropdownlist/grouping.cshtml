@@ -8,13 +8,14 @@
           .MinLength(3)
           .HtmlAttributes(new { style = "width:250px" })
           .OptionLabel("Select a contact name")
-          .DataSource(source => {
-              source.Read(read =>
-              {
-                  read.Action("Customers_Read", "DropDownList");
-              })
-              .Group(g => g.Add("Country", typeof(string)));
-          })
+          .DataSource(source =>  source
+              .Custom()
+              .Group(g => g.Add("Country", typeof(string)))
+              .Transport(transport => transport
+                .Read(read =>
+                {
+                    read.Action("Customers_Read", "DropDownList");
+                })))
      )
 </div>
 <style>

@@ -13,15 +13,16 @@
           .MinLength(3)
           .HtmlAttributes(new { style = "width:250px" })
           .Placeholder("Type a customer name")
-          .DataSource(source => {
-              source.Read(read =>
-              {
-                  read.Action("Customers_Read", "AutoComplete")
-                      .Data("onAdditionalData");
-              })
+          .DataSource(source =>  source
+              .Custom()
               .Group(g => g.Add("Country", typeof(string)))
-              .ServerFiltering(true);
-          })
+              .Transport(transport => transport
+                .Read(read =>
+                {
+                    read.Action("Customers_Read", "AutoComplete")
+                        .Data("onAdditionalData");
+                }))
+              .ServerFiltering(true))
      %>
 </div>
 <script>
