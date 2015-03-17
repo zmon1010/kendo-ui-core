@@ -142,6 +142,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\aspx\ASPXAreaRegistration.cs" />
     <Compile Include="Areas\razor\RazorAreaRegistration.cs" />
+    <Compile Include="Controllers\AutoComplete\VirtualizationController.cs" />
+    <Compile Include="Controllers\AutoComplete\GroupingController.cs" />
     <Compile Include="Controllers\Bar_Charts\VisualsController.cs" />
     <Compile Include="Controllers\Chart_Api\ExportController.cs" />
     <Compile Include="Controllers\Chart_Api\Pdf_ExportController.cs" />
@@ -190,13 +192,17 @@
     <Compile Include="Controllers\Collapsible\EventsController.cs" />
     <Compile Include="Controllers\Collapsible\IndexController.cs" />
     <Compile Include="Controllers\Collapsible\NestedController.cs" />
+    <Compile Include="Controllers\ComboBox\GroupingController.cs" />
+    <Compile Include="Controllers\ComboBox\VirtualizationController.cs" />
     <Compile Include="Controllers\Diagram\ApiController.cs" />
     <Compile Include="Controllers\Diagram\ExportController.cs" />
     <Compile Include="Controllers\Diagram\EditingController.cs" />
     <Compile Include="Controllers\Diagram\Events.cs" />
     <Compile Include="Controllers\Diagram\Pdf_ExportController.cs" />
     <Compile Include="Controllers\DropDownList\ClientFilteringController.cs" />
+    <Compile Include="Controllers\DropDownList\GroupingController.cs" />
     <Compile Include="Controllers\DropDownList\ServerFilteringController.cs" />
+    <Compile Include="Controllers\DropDownList\VirtualizationController.cs" />
     <Compile Include="Controllers\Editor\Pdf_ExportController.cs" />
     <Compile Include="Controllers\Financial\Pdf_ExportController.cs" />
     <Compile Include="Controllers\Gantt\ApiController.cs" />
@@ -218,6 +224,8 @@
     <Compile Include="Controllers\Line_Charts\VisualsController.cs" />
     <Compile Include="Controllers\Map\ExportController.cs" />
     <Compile Include="Controllers\Menu\Context_MenuController.cs" />
+    <Compile Include="Controllers\MultiSelect\GroupingController.cs" />
+    <Compile Include="Controllers\MultiSelect\VirtualizationController.cs" />
     <Compile Include="Controllers\PivotGrid\Excel_ExportController.cs" />
     <Compile Include="Controllers\PivotGrid\KPIController.cs" />
     <Compile Include="Controllers\PivotGrid\Pdf_ExportController.cs" />
@@ -894,13 +902,17 @@
     <Content Include="Areas\aspx\Views\bullet_charts\index.aspx" />
     <Content Include="Areas\aspx\Views\bullet_charts\local_data_binding.aspx" />
     <Content Include="Areas\aspx\Views\bullet_charts\remote_data_binding.aspx" />
+    <Content Include="Areas\aspx\Views\combobox\grouping.aspx" />
+    <Content Include="Areas\aspx\Views\combobox\virtualization.aspx" />
     <Content Include="Areas\aspx\Views\diagram\api.aspx" />
     <Content Include="Areas\aspx\Views\diagram\export.aspx" />
     <Content Include="Areas\aspx\Views\diagram\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\diagram\editing.aspx" />
     <Content Include="Areas\aspx\Views\diagram\events.aspx" />
     <Content Include="Areas\aspx\Views\dropdownlist\clientfiltering.aspx" />
+    <Content Include="Areas\aspx\Views\dropdownlist\grouping.aspx" />
     <Content Include="Areas\aspx\Views\dropdownlist\serverfiltering.aspx" />
+    <Content Include="Areas\aspx\Views\dropdownlist\virtualization.aspx" />
     <Content Include="Areas\aspx\Views\financial\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\gantt\api.aspx" />
     <Content Include="Areas\aspx\Views\gantt\right_to_left_support.aspx" />
@@ -1313,6 +1325,10 @@
     <Content Include="Areas\aspx\Views\window\keyboard_navigation.aspx" />
     <Content Include="Areas\aspx\Views\window\right_to_left_support.aspx" />
     <Content Include="Areas\aspx\Views\diagram\layout.aspx" />
+    <Content Include="Areas\aspx\Views\multiselect\grouping.aspx" />
+    <Content Include="Areas\aspx\Views\multiselect\virtualization.aspx" />
+    <None Include="Areas\razor\Views\combobox\grouping.cshtml" />
+    <None Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\diagram\pdf_export.cshtml" />
     <Content Include="Areas\razor\Views\diagram\export.cshtml" />
     <Content Include="Areas\razor\Views\chart_api\pdf_export.cshtml" />
@@ -1327,6 +1343,13 @@
     <Content Include="Areas\aspx\Views\editor\pdf_export.aspx" />
     <None Include="Areas\razor\Views\diagram\editing.cshtml" />
     <None Include="Areas\razor\Views\grid\filter_multi_checkboxes.cshtml" />
+    <Content Include="Areas\razor\Views\autocomplete\grouping.cshtml" />
+    <Content Include="Areas\aspx\Views\autocomplete\grouping.aspx" />
+    <Content Include="Areas\razor\Views\autocomplete\virtualization.cshtml" />
+    <Content Include="Areas\aspx\Views\autocomplete\virtualization.aspx" />
+    <None Include="Areas\razor\Views\diagram\editing.cshtml" />
+    <None Include="Areas\razor\Views\dropdownlist\grouping.cshtml" />
+    <None Include="Areas\razor\Views\dropdownlist\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\range_bar_charts\index.cshtml" />
     <Content Include="Areas\razor\Views\diagram\index.cshtml" />
     <Content Include="Areas\razor\Views\diagram\layout.cshtml" />
@@ -2722,6 +2745,8 @@
     <Content Include="Areas\razor\Views\tabstrip\tab_position.cshtml" />
     <Content Include="Areas\razor\Views\scheduler\signalr.cshtml" />
     <Content Include="Areas\razor\Views\responsivepanel\index.cshtml" />
+    <Content Include="Areas\razor\Views\multiselect\grouping.cshtml" />
+    <Content Include="Areas\razor\Views\multiselect\virtualization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
