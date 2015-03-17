@@ -9,11 +9,21 @@
             <script>
                 $(document).ready(function() {
                     $("#orders").kendoComboBox({
-                        template: "#= OrderID # | For: #= ShipName #, #= ShipCountry #",
+                        template: '<span class="order-id">#= OrderID #</span> #= ShipName #, #= ShipCountry #',
                         dataTextField: "ShipName",
                         dataValueField: "OrderID",
                         virtual: {
-                            itemHeight: 26
+                            itemHeight: 26,
+                            valueMapper: function(options) {
+                                $.ajax({
+                                    url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders/ValueMapper",
+                                    type: "GET",
+                                    data: convertValues(options.value),
+                                    success: function (data) {
+                                        options.success(data);
+                                    }
+                                })
+                            }
                         },
                         height: 520,
                         dataSource: {
@@ -34,11 +44,22 @@
                             },
                             pageSize: 80,
                             serverPaging: true,
-                            serverFiltering: true,
-                            serverSorting: true
+                            serverFiltering: true
                         }
                     });
                 });
+
+                function convertValues(value) {
+                    var data = {};
+
+                    value = $.isArray(value) ? value : [value];
+
+                    for (var idx = 0; idx < value.length; idx++) {
+                        data["values[" + idx + "]"] = value[idx];
+                    }
+
+                    return data;
+                }
             </script>
 
             <style>
