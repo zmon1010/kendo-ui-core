@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.Rendering.Expressions;
 
 namespace Kendo.Mvc.UI
@@ -20,12 +21,14 @@ namespace Kendo.Mvc.UI
 		protected override void WriteHtml(TextWriter writer)
         {
 			var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
-			var tag = Generator.GenerateNumericInput(ViewContext, metadata, Id, Name, Value, string.Empty, HtmlAttributes);
+			var tag = Generator.GenerateTextInput(ViewContext, metadata, Id, Name, Value, string.Empty, HtmlAttributes);
 
 			if (!Enable.GetValueOrDefault(true))
 			{
 				tag.MergeAttribute("disabled", "disabled");
-			}			
+			}
+
+			writer.Write(tag.ToString(TagRenderMode.SelfClosing));
 
 			base.WriteHtml(writer);
         }
