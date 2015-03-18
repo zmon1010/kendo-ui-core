@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class ResponsivePanelController : Controller
+    public partial class Responsive_PanelController : Controller
     {
         public ActionResult Index()
         {
