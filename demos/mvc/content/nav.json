@@ -3915,8 +3915,8 @@
     "category": "Scheduling"
   },
   {
-    "text": "ResponsivePanel",
-    "name": "responsivepanel",
+    "text": "Responsive Panel",
+    "name": "responsive-panel",
     "new": "true",
     "api": "web/responsivepanel",
     "documentation": {
