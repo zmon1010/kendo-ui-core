@@ -24,7 +24,16 @@ class GanttMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * The text similar to "Delete dependency" displayed in Gantt dependency delete dialog.
+    * The text similar to "Are you sure you want to delete this dependency?" displayed in Gantt dependency delete dialog.
+    * @param string $value
+    * @return \Kendo\UI\GanttMessages
+    */
+    public function deleteDependencyConfirmation($value) {
+        return $this->setProperty('deleteDependencyConfirmation', $value);
+    }
+
+    /**
+    * The text similar to "Delete dependency" displayed in Gantt dependency delete dialog title.
     * @param string $value
     * @return \Kendo\UI\GanttMessages
     */
@@ -33,7 +42,16 @@ class GanttMessages extends \Kendo\SerializableObject {
     }
 
     /**
-    * The text similar to "Delete task" displayed in Gantt task delete dialog.
+    * The text similar to "Are you sure you want to delete this task?" displayed in Gantt task delete dialog.
+    * @param string $value
+    * @return \Kendo\UI\GanttMessages
+    */
+    public function deleteTaskConfirmation($value) {
+        return $this->setProperty('deleteTaskConfirmation', $value);
+    }
+
+    /**
+    * The text similar to "Delete task" displayed in Gantt task delete dialog title.
     * @param string $value
     * @return \Kendo\UI\GanttMessages
     */
