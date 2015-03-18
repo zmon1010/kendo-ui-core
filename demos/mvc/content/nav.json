@@ -3941,7 +3941,7 @@
     "items": [
       {
         "text": "Basic usage",
-        "url": "responsivepanel/index",
+        "url": "responsive-panel/index",
         "disableInMobile": true,
         "title": {
             "kendo-ui": "Kendo jQuery ResponsivePanel Control Demo",
