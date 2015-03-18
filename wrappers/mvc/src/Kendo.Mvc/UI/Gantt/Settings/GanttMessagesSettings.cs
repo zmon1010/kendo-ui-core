@@ -31,7 +31,11 @@ namespace Kendo.Mvc.UI
         
         public string Cancel { get; set; }
         
+        public string DeleteDependencyConfirmation { get; set; }
+        
         public string DeleteDependencyWindowTitle { get; set; }
+        
+        public string DeleteTaskConfirmation { get; set; }
         
         public string DeleteTaskWindowTitle { get; set; }
         
@@ -67,9 +71,19 @@ namespace Kendo.Mvc.UI
                 json["cancel"] = Cancel;
             }
             
+            if (DeleteDependencyConfirmation.HasValue())
+            {
+                json["deleteDependencyConfirmation"] = DeleteDependencyConfirmation;
+            }
+            
             if (DeleteDependencyWindowTitle.HasValue())
             {
                 json["deleteDependencyWindowTitle"] = DeleteDependencyWindowTitle;
+            }
+            
+            if (DeleteTaskConfirmation.HasValue())
+            {
+                json["deleteTaskConfirmation"] = DeleteTaskConfirmation;
             }
             
             if (DeleteTaskWindowTitle.HasValue())

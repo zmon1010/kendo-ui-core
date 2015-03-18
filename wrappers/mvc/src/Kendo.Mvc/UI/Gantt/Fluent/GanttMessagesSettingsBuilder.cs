@@ -41,7 +41,18 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The text similar to "Delete dependency" displayed in Gantt dependency delete dialog.
+        /// The text similar to "Are you sure you want to delete this dependency?" displayed in Gantt dependency delete dialog.
+        /// </summary>
+        /// <param name="value">The value that configures the deletedependencyconfirmation.</param>
+        public GanttMessagesSettingsBuilder DeleteDependencyConfirmation(string value)
+        {
+            container.DeleteDependencyConfirmation = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The text similar to "Delete dependency" displayed in Gantt dependency delete dialog title.
         /// </summary>
         /// <param name="value">The value that configures the deletedependencywindowtitle.</param>
         public GanttMessagesSettingsBuilder DeleteDependencyWindowTitle(string value)
@@ -52,7 +63,18 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// The text similar to "Delete task" displayed in Gantt task delete dialog.
+        /// The text similar to "Are you sure you want to delete this task?" displayed in Gantt task delete dialog.
+        /// </summary>
+        /// <param name="value">The value that configures the deletetaskconfirmation.</param>
+        public GanttMessagesSettingsBuilder DeleteTaskConfirmation(string value)
+        {
+            container.DeleteTaskConfirmation = value;
+
+            return this;
+        }
+        
+        /// <summary>
+        /// The text similar to "Delete task" displayed in Gantt task delete dialog title.
         /// </summary>
         /// <param name="value">The value that configures the deletetaskwindowtitle.</param>
         public GanttMessagesSettingsBuilder DeleteTaskWindowTitle(string value)

@@ -133,6 +133,18 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// A name or keyword indicating where to display the document returned from the proxy.If you want to display the document in a new window or iframe,
+		/// the proxy should set the "Content-Disposition" header to inline; filename="&lt;fileName.pdf&gt;".
+        /// </summary>
+        /// <param name="value">The value that configures the proxytarget.</param>
+        public GanttPdfSettingsBuilder ProxyTarget(string value)
+        {
+            container.ProxyTarget = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// Sets the subject of the PDF file.
         /// </summary>
         /// <param name="value">The value that configures the subject.</param>
