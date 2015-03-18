@@ -374,6 +374,18 @@
         equal(expander.length, 0);
     });
 
+    test("column title is retrieved from the th element when initialized from table", function() {
+        table = $('<table><thead><th data-kendo-field="foo" data-kendo-title="the foo"></th><th data-kendo-field="bar"></th><th data-kendo-field="baz"></th></thead></table>');
+
+        var grid = new Grid(table, {
+                dataSource: [],
+                scrollable: false
+            });
+
+        equal(grid.columns[0].title, "the foo");
+        ok(grid.columns[1].title === undefined, "title for other columns missing attribute for title remain undefined")
+    });
+
     test("grid height is applied to the wrapper element", function() {
         var grid = new Grid(table, { height: 100, dataSource: [{foo:"bar"}] });
 

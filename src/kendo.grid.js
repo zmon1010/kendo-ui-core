@@ -5099,6 +5099,7 @@ var __meta__ = {
                     type = th.attr(kendo.attr("type")),
                     groupable = th.attr(kendo.attr("groupable")),
                     field = th.attr(kendo.attr("field")),
+                    title = th.attr(kendo.attr("title")),
                     menu = th.attr(kendo.attr("menu"));
 
                 if (!field) {
@@ -5108,6 +5109,7 @@ var __meta__ = {
                 return {
                     field: field,
                     type: type,
+                    title: title,
                     sortable: sortable !== "false",
                     filterable: filterable !== "false",
                     groupable: groupable !== "false",
