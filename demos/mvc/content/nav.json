@@ -4003,7 +4003,6 @@
       },
       {
         "text": "Timeline view",
-        "new": "true",
         "url": "scheduler/timeline",
         "disableInMobile": true,
         "title": {
@@ -4016,7 +4015,6 @@
       {
           "text": "Export to PDF",
           "url": "scheduler/pdf-export",
-          "new": "true",
           "title": {
               "kendo-ui": "Exporting to PDF"
           },
