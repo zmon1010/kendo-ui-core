@@ -25,6 +25,8 @@ namespace Kendo.Controllers
             LoadNavigation();
             LoadCategories();
 
+            SetTheme();
+
             return View();
         }
     }
