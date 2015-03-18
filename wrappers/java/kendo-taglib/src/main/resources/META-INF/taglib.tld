@@ -19324,13 +19324,25 @@ which field to update. The other option is to use MVVM bindings in order to bind
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The text similar to "Delete dependency" displayed in Gantt dependency delete dialog.</description>
+            <description>The text similar to "Are you sure you want to delete this dependency?" displayed in Gantt dependency delete dialog.</description>
+            <name>deleteDependencyConfirmation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text similar to "Delete dependency" displayed in Gantt dependency delete dialog title.</description>
             <name>deleteDependencyWindowTitle</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The text similar to "Delete task" displayed in Gantt task delete dialog.</description>
+            <description>The text similar to "Are you sure you want to delete this task?" displayed in Gantt task delete dialog.</description>
+            <name>deleteTaskConfirmation</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text similar to "Delete task" displayed in Gantt task delete dialog title.</description>
             <name>deleteTaskWindowTitle</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>

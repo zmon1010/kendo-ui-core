@@ -73,12 +73,28 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         setProperty("cancel", value);
     }
 
+    public java.lang.String getDeleteDependencyConfirmation() {
+        return (java.lang.String)getProperty("deleteDependencyConfirmation");
+    }
+
+    public void setDeleteDependencyConfirmation(java.lang.String value) {
+        setProperty("deleteDependencyConfirmation", value);
+    }
+
     public java.lang.String getDeleteDependencyWindowTitle() {
         return (java.lang.String)getProperty("deleteDependencyWindowTitle");
     }
 
     public void setDeleteDependencyWindowTitle(java.lang.String value) {
         setProperty("deleteDependencyWindowTitle", value);
+    }
+
+    public java.lang.String getDeleteTaskConfirmation() {
+        return (java.lang.String)getProperty("deleteTaskConfirmation");
+    }
+
+    public void setDeleteTaskConfirmation(java.lang.String value) {
+        setProperty("deleteTaskConfirmation", value);
     }
 
     public java.lang.String getDeleteTaskWindowTitle() {
