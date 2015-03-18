@@ -39,7 +39,12 @@
             name: "Resize handle",
             description: "Support for resizing the content area via a resize handle",
             depends: [ "resizable" ]
-        } ]
+        }, {
+            id: "editor-pdf-export",
+            name: "PDF export",
+            description: "Export Editor content as PDF",
+            depends: [ "pdf", "drawing" ]
+        }]
     };
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
