@@ -1,5 +1,7 @@
 ﻿namespace Kendo.Mvc.UI.Fluent
 {
+    using System;
+
     /// <summary>
     /// Defines the fluent interface for configuring the <see cref="SchedulerEditableSettings{T}"/>.
     /// </summary>
@@ -134,6 +136,16 @@
         public SchedulerEditableSettingsBuilder<T> EditRecurringMode(SchedulerEditRecurringMode editRecurringMode)
         {
             container.EditRecurringMode = editRecurringMode;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the Scheduler Window instance, which is used for editing of events. The configuration is optional.
+        /// </summary>
+        public SchedulerEditableSettingsBuilder<T> Window(Action<WindowBuilder> configurator)
+        {
+            configurator(new WindowBuilder(container.PopUp));
 
             return this;
         }

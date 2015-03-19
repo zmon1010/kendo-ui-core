@@ -44,7 +44,17 @@
 
             Messages = new SchedulerMessages();
             Group = new SchedulerGroupSettings();
-            Editable = new SchedulerEditableSettings<TModel>();
+
+            Editable = new SchedulerEditableSettings<TModel>()
+            {
+                PopUp = new Window(viewContext, Initializer)
+                {
+                    Modal = true,
+                    Draggable = true,
+                    Title = Kendo.Mvc.Resources.Messages.Scheduler_Editor_EditorTitle
+                }
+            };
+
             CurrentTimeMarker = new SchedulerCurrentTimeMarkerSettings();
         }
 

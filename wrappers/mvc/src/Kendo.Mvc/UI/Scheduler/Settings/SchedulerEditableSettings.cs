@@ -1,6 +1,7 @@
 ﻿namespace Kendo.Mvc.UI
 {
     using Kendo.Mvc.Extensions;
+    using Kendo.Mvc.Infrastructure;
     using Kendo.Mvc.Resources;
     using System;
     using System.Collections.Generic;
@@ -52,6 +53,68 @@
             set;
         }
 
+        public Window PopUp
+        {
+            get;
+            set;
+        }
+
+        private IDictionary<string, object> SerializePopUp()
+        {
+            var result = new Dictionary<string, object>();
+
+            var title = PopUp.Title ?? Messages.Scheduler_Editor_EditorTitle;
+
+            if ((string)PopUp.Title !=  Messages.Scheduler_Editor_EditorTitle)
+            {
+                result["title"] = PopUp.Title;
+            }
+
+            if (!PopUp.Modal)
+            {
+                 result["modal"] = PopUp.Modal;
+            }
+
+            if (!PopUp.Draggable)
+            {
+                 result["draggable"] = PopUp.Draggable;
+            }
+
+            if (PopUp.ResizingSettings.Enabled)
+            {
+                result["resizable"] = PopUp.ResizingSettings.Enabled;
+            }
+
+            if (PopUp.Width > 0)
+            {
+                result["width"] = PopUp.Width;
+            }
+
+            if (PopUp.Height > 0)
+            {
+                result["height"] = PopUp.Height;
+            }
+
+            if (PopUp.PositionSettings.Left != int.MinValue || PopUp.PositionSettings.Top != int.MinValue)
+            {
+                var topLeft = new Dictionary<string, int>();
+
+                if (PopUp.PositionSettings.Top != int.MinValue)
+                {
+                    topLeft.Add("top", PopUp.PositionSettings.Top);
+                }
+
+                if (PopUp.PositionSettings.Left != int.MinValue)
+                {
+                    topLeft.Add("left", PopUp.PositionSettings.Left);
+                }
+
+                result.Add("position", topLeft);
+            }
+
+            return result;
+        }
+
         protected override void Serialize(IDictionary<string, object> json)
         {
             base.Serialize(json);
@@ -87,6 +150,12 @@
             if (!Move)
             {
                 json["move"] = false;
+            }
+
+            var popup = SerializePopUp();
+            if (popup.Count > 0)
+            {
+                json["window"] = popup;
             }
 
             string editRecurringMode = EditRecurringMode.ToString();
