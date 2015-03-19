@@ -92,7 +92,7 @@ var __meta__ = {
             '<div data-#=ns#role="view" data-#=ns#init-widgets="false" class="k-grid-filter-menu">'+
                 '<div data-#=ns#role="header" class="k-header">'+
                     '<button class="k-button k-cancel">#=messages.cancel#</button>'+
-                    '#=field#'+
+                    '#=title#'+
                     '<button type="submit" class="k-button k-submit">#=messages.filter#</button>'+
                 '</div>'+
                 '<form class="k-filter-menu k-mobile-list">'+
@@ -158,7 +158,7 @@ var __meta__ = {
             '<div data-#=ns#role="view" data-#=ns#init-widgets="false" class="k-grid-filter-menu">'+
                 '<div data-#=ns#role="header" class="k-header">'+
                     '<button class="k-button k-cancel">#=messages.cancel#</button>'+
-                    '#=field#'+
+                    '#=title#'+
                     '<button type="submit" class="k-button k-submit">#=messages.filter#</button>'+
                 '</div>'+
                 '<form class="k-filter-menu k-mobile-list">'+
@@ -406,6 +406,7 @@ var __meta__ = {
             that.form = $("<div />")
                 .html(kendo.template(type === "boolean" ? booleanMobileTemplate : defaultMobileTemplate)({
                     field: that.field,
+                    title: options.title || that.field,
                     format: options.format,
                     ns: kendo.ns,
                     messages: options.messages,

@@ -538,7 +538,8 @@ var __meta__ = {
                         appendToElement: true,
                         dataSource: options.dataSource,
                         values: options.values,
-                        field: that.field
+                        field: that.field,
+                        title: that.title
                     },
                     options.filterable)
                     ).data(widget);
