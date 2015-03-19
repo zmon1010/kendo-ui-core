@@ -251,8 +251,7 @@ span.k-tooltip {
 	height: 14px;
 }*/
 
-//From here
-/*.k-gantt {
+.k-gantt {
     .k-task {
         border-width: 0;
     }
@@ -262,7 +261,7 @@ span.k-tooltip {
     }
 
     .k-task-single {
-        margin-top: -.429em;
+        //margin-top: -.429em;
     }
 
     .k-task-template {
@@ -275,17 +274,16 @@ span.k-tooltip {
     }
 
     .k-task-draghandle {
-        margin-left: 24px;
-        border-width: 8px;
-        border-radius: 0 50% 50% 50%;
+        border-width: 6px;
+        border-radius: 0;
         border-style: solid;        
-        bottom: -11px;
+        bottom: -1px;
     }
 
     .k-gantt-timeline th {
         text-align: left;
     }
-}*/
+}
 
 .k-tabstrip.k-header {
     border: 0;
@@ -731,38 +729,47 @@ div.k-window-content {
     }
 }
 
-.k-grid {
-    .k-update,
-    .k-button:not(.k-state-disabled):hover .k-update {
-        background-position: -48px -32px;
+.k-update,
+.k-button:not(.k-state-disabled):hover .k-update {
+    background-position: -48px -32px;
+}
+
+.k-button:active,
+.k-button:active:hover {
+    .k-add {
+        background-position: -48px -64px;  
     }
 
-    .k-button:active {
-        .k-add {
-            background-position: -48px -64px;  
-        }
+    .k-edit {
+        background-position: -48px 0px;
+    }
 
-        .k-edit {
-            background-position: -48px 0px;
-        }
+    .k-cancel {
+        background-position: -48px -48px;
+    }
 
-        .k-cancel {
-            background-position: -48px -48px;
-        }
+    .k-delete {
+        background-position: -48px -16px;
+    }
 
-        .k-delete {
-            background-position: -48px -16px;
-        }
+    .k-i-excel {
+        background-position: -80px -96px;
+    }
 
-        .k-i-excel {
-            background-position: -80px -96px;
-        }
+    .k-i-pdf {
+        background-position: -80px -80px;
+    }
+} 
 
-        .k-i-pdf {
-            background-position: -80px -80px;
-        }
-    }   
-}    
+.k-button:active:not(.k-state-disabled):hover {
+    .k-i-plus {
+        background-position: -48px -64px;  
+    }
+
+    .k-i-pdf {
+        background-position: -80px -80px;
+    }
+}     
 
 .k-grouping-header {
     .k-si-arrow-n,
@@ -808,6 +815,10 @@ div.k-window-content {
     .k-i-expand {
         background-position: 0 0;
     }
+
+    .k-si-close {
+        //background-position: -176px -80px;
+    }
 }
 
 .k-scheduler {
@@ -850,4 +861,19 @@ div.k-window-content {
     .k-i-expand {
         background-position: 0px 0px;
     }
+}
+
+.k-checkbox-label {
+    line-height: normal;
+    padding-left: 2em;
+    // line-height: 1.5em;
+    // vertical-align: middle;
+}
+
+.k-checkbox-label:before,
+.k-checkbox-label:after,
+.k-checkbox:checked + .k-checkbox-label:after {
+    width: 1.357em;
+    height: 1.357em;
+
 }
