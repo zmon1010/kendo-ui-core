@@ -6354,7 +6354,7 @@
     "packages": [ "!mvc", "!jsp", "!php" ],
     "text": "Validator",
     "name": "validator",
-    "api": "framework/validator",
+    "api": "ui/validator",
     "documentation": {
        "kendo-ui": "getting-started/framework/validator/overview"
     },
