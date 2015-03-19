@@ -151,6 +151,17 @@
         ok(td.hasClass("k-state-selected"));
     });
 
+    test("scheduler agenda view support focusing when there are no events rendered", function() {
+        scheduler.views.agenda = {title: "Agenda", type: "kendo.ui.AgendaView"};
+        scheduler.dataSource.transport.data = [];
+        scheduler.dataSource.data([]);
+        delete scheduler._selection;
+        scheduler.view("agenda");
+        scheduler.wrapper.focus();
+
+        equal(container.find(".k-state-selected").length, 0);
+    });
+
     test("scheduler restores previous selected state on focus", function() {
         var td = container.find(".k-scheduler-content td").eq(1);
 

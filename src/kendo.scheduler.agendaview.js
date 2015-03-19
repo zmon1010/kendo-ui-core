@@ -345,7 +345,7 @@ var __meta__ = {
         selectionByElement: function(cell) {
             var index, event;
             cell = $(cell);
-            if (cell.hasClass("k-scheduler-datecolumn")) {
+            if (cell.hasClass("k-scheduler-datecolumn") || !this._eventsList.length) {
                 return;
             }
 
