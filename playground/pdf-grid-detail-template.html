@@ -54,6 +54,7 @@
         $(document).ready(function() {
             var element = $("#grid").kendoGrid({
                 toolbar: [ "pdf" ],
+                pdf: { allPages: true },
                 dataSource: {
                     type: "odata",
                     transport: {
