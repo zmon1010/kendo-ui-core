@@ -3742,7 +3742,7 @@ var __meta__ = {
                     if (point) {
                         if (point.series.stack === stackName || point.series.axis === axisName) {
                             var to = this.plotRange(point, 0)[1];
-                            if (defined(to)) {
+                            if (defined(to) && isFinite(to)) {
                                 max = math.max(max, to);
                                 min = math.min(min, to);
                             }

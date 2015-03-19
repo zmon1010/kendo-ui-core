@@ -578,6 +578,15 @@
             equal(series.valueAxisRanges[undefined].max, -1);
         });
 
+        test("ignores missing values", function() {
+            setupBarChart(plotArea, {
+                series: [{data: [-1]}, {data: []}],
+                isStacked: true
+            });
+            equal(series.valueAxisRanges[undefined].max, -1);
+            equal(series.valueAxisRanges[undefined].min, -1)
+        });
+
         test("bars in first category are stacked", function() {
             equal(series.points[1].box.y1, series.points[0].box.y2);
         });
