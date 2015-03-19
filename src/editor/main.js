@@ -410,6 +410,35 @@
             }
         },
 
+        _spellCorrect: function(editor) {
+            var beforeCorrection;
+            var falseTrigger = false;
+
+            $(editor.body)
+                .on("contextmenu" + NS, function(e) {
+                    editor.one("select", function() {
+                        beforeCorrection = null;
+                    });
+
+                    editor._spellCorrectTimeout = setTimeout(function() {
+                        beforeCorrection = new kendo.ui.editor.RestorePoint(editor.getRange());
+                        falseTrigger = false;
+                    }, 10);
+                })
+                .on("input" + NS, function(e) {
+                    if (!beforeCorrection) {
+                        return;
+                    }
+
+                    if (kendo.support.browser.mozilla && !falseTrigger) {
+                        falseTrigger = true;
+                        return;
+                    }
+
+                    kendo.ui.editor._finishUpdate(editor, beforeCorrection);
+                });
+        },
+
         _initializeContentElement: function() {
             var editor = this;
             var doc;
@@ -448,6 +477,8 @@
                           }
                       });
             }
+
+            this._spellCorrect(editor);
 
             $(editor.body)
                 .on("keydown" + NS, function (e) {
@@ -653,6 +684,8 @@
 
             $(document).off("mousedown", proxy(that._endTyping, that))
                        .off("mouseup", proxy(that._mouseup, that));
+
+            clearTimeout(this._spellCorrectTimeout);
 
             that._focusOutside();
 

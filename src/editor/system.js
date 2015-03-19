@@ -1082,6 +1082,7 @@ var ExportPdfCommand = Command.extend({
     }
 });
 extend(editorNS, {
+    _finishUpdate: finishUpdate,
     Command: Command,
     GenericCommand: GenericCommand,
     InsertHtmlCommand: InsertHtmlCommand,
