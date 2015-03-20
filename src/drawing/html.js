@@ -1386,7 +1386,9 @@
                 group = tmp;
                 updateClipbox(clipPath);
             }
-            if (/^(hidden|auto|scroll)/.test(getPropertyValue(style, "overflow"))) {
+            if (isFormField(element)) {
+                clipit();
+            } else if (/^(hidden|auto|scroll)/.test(getPropertyValue(style, "overflow"))) {
                 clipit();
             } else if (/^(hidden|auto|scroll)/.test(getPropertyValue(style, "overflow-x"))) {
                 clipit();
@@ -2143,6 +2145,29 @@
         return parseFloat(za) - parseFloat(zb);
     }
 
+    function isFormField(element) {
+        return /^(?:textarea|select|input)$/i.test(element.tagName);
+    }
+
+    function renderFormField(element, group) {
+        var tag = element.tagName.toLowerCase();
+        var p = element.parentNode;
+        var el = element.ownerDocument.createElement(KENDO_PSEUDO_ELEMENT);
+        el.style.cssText = getCssText(getComputedStyle(element));
+        el.style.display = "inline-block";
+        if (tag == "input") {
+            el.style.whiteSpace = "pre";
+        }
+        if (tag == "select" && element.selectedOptions.length > 0) {
+            el.textContent = element.selectedOptions[0].textContent;
+        } else {
+            el.textContent = element.value;
+        }
+        p.insertBefore(el, element);
+        renderContents(el, group);
+        p.removeChild(el);
+    }
+
     function renderContents(element, group) {
         switch (element.tagName.toLowerCase()) {
           case "img":
@@ -2159,10 +2184,12 @@
 
           case "textarea":
           case "input":
+            renderFormField(element, group);
             break;
 
           case "select":
             if (!element.multiple) {
+                renderFormField(element, group);
                 break;
             }
             /* falls through */
