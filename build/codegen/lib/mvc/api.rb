@@ -95,7 +95,7 @@ For additional information check the [<%= js_name %>](/api/<%= suite %>/<%= owne
         end
 
         def suite
-            return 'dataviz' if owner.name =~ /Chart|Gauge|Sparkline/i
+            return 'dataviz' if owner.name =~ /Chart|Gauge|Sparkline|StockChart|Map|Barcode|Diagram|LinearGauge|QRCode|RadialGauge|TreeMap/i
             return 'framework' if owner.name.include?('DataSource')
             'web'
         end
