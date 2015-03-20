@@ -4481,11 +4481,17 @@ var __meta__ = {
                 invertAxes: options.invertAxes
             }, series);
 
+            var color = data.fields.color || series.color;
             bulletOptions = chart.evalPointOptions(
                 bulletOptions, value, category, categoryIx, series, seriesIx
             );
 
+            if (kendo.isFunction(series.color)) {
+                color = bulletOptions.color;
+            }
+
             bullet = new Bullet(value, bulletOptions);
+            bullet.color = color;
 
             cluster = children[categoryIx];
             if (!cluster) {
@@ -4554,12 +4560,12 @@ var __meta__ = {
 
             ChartElement.fn.init.call(bullet, options);
 
-            bullet.value = value;
             bullet.aboveAxis = bullet.options.aboveAxis;
+            bullet.color = options.color || WHITE;
+            bullet.value = value;
         },
 
         options: {
-            color: WHITE,
             border: {
                 width: 1
             },
@@ -4590,7 +4596,7 @@ var __meta__ = {
                 if (defined(bullet.value.target)) {
                     bullet.target = new Target({
                         type: options.target.shape,
-                        background: options.target.color || options.color,
+                        background: options.target.color || bullet.color,
                         opacity: options.opacity,
                         zIndex: options.zIndex,
                         border: options.target.border,
@@ -4643,7 +4649,7 @@ var __meta__ = {
             var options = this.options;
             var body = draw.Path.fromRect(this.box.toRect(), {
                 fill: {
-                    color: options.color,
+                    color: this.color,
                     opacity: options.opacity
                 },
                 stroke: null
@@ -4651,7 +4657,7 @@ var __meta__ = {
 
             if (options.border.width > 0) {
                 body.options.set("stroke", {
-                    color: options.border.color || options.color,
+                    color: options.border.color || this.color,
                     width: options.border.width,
                     dashType: options.border.dashType,
                     opacity: valueOrDefault(options.border.opacity, options.opacity)

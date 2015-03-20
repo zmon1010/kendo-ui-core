@@ -70,7 +70,7 @@
         });
 
         test("applies series fill color to bars", function() {
-            equal(bulletChart.points[0].options.color, "#f00");
+            equal(bulletChart.points[0].color, "#f00");
         });
 
         test("applies series opacity color to bullets", function() {
@@ -90,7 +90,7 @@
                 }]
             });
 
-            equal(bulletChart.points[0].options.color, "#f00");
+            equal(bulletChart.points[0].color, "#f00");
         });
 
         test("applies color function for each point", 2, function() {
@@ -125,6 +125,18 @@
                     color: function(bubble) { equal(bubble.series.name, "series 1"); }
                 }]
             });
+        });
+
+        test("applies color binding", function() {
+            bulletChart = new dataviz.BulletChart(plotArea, {
+                series: [{
+                    type: "bullet",
+                    data: [{ value: [0, 0], color: "red" }],
+                    colorField: "color"
+                }]
+            });
+
+            equal(bulletChart.points[0].color, "red");
         });
 
         test("sets bar size to current value", function() {
