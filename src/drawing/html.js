@@ -2225,11 +2225,6 @@
             return; // whitespace-only node
         }
 
-        var range = element.ownerDocument.createRange();
-        var align = getPropertyValue(style, "text-align");
-        var isJustified = align == "justify";
-        var whiteSpace = getPropertyValue(style, "white-space");
-
         var fontSize = getPropertyValue(style, "font-size");
         var lineHeight = getPropertyValue(style, "line-height");
 
@@ -2250,6 +2245,16 @@
         }
 
         var color = getPropertyValue(style, "color");
+
+        if (/^option$/i.test(element.tagName)) {
+            drawText(text, element.getBoundingClientRect());
+            return;
+        }
+
+        var range = element.ownerDocument.createRange();
+        var align = getPropertyValue(style, "text-align");
+        var isJustified = align == "justify";
+        var whiteSpace = getPropertyValue(style, "white-space");
 
         // A line of 500px, with a font of 12px, contains an average of 80 characters, but since we
         // err, we'd like to guess a bigger number rather than a smaller one.  Multiplying by 5
