@@ -2163,6 +2163,11 @@
         } else {
             el.textContent = element.value;
         }
+        if (tag == "textarea") {
+            el.style.position = "relative";
+            el.style.left = -element.scrollLeft + "px";
+            el.style.top = -element.scrollTop + "px";
+        }
         p.insertBefore(el, element);
         renderContents(el, group);
         p.removeChild(el);
