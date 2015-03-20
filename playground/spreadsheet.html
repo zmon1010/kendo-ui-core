@@ -2,6 +2,7 @@
 <html>
     <head>
         <script src="loader.js"></script>
+        <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
         <script>
           requireSync([
             "../src/jquery.js",
@@ -16,8 +17,19 @@
                 overflow: scroll;
             }
 
+            @media only screen and (max-device-width: 667px) {
+                #wrapper {
+                    width: 100%;
+                    -webkit-overflow-scrolling: touch;
+                }
+
+                form {
+                    display: none;
+                }
+            }
+
             #area {
-                height: 1000000px;
+                height: 10000000px;
                 width: 1000000px;
             }
 
@@ -38,12 +50,19 @@
                 height: 100%;
             }
 
+            #area canvas {
+                position:absolute;
+            }
+
+            #container canvas {
+                width: 100%;
+                height: 100%;
+            }
+
             #area table td {
                 border: 1px solid gray;
-                /*
-                overflow: hidden;
                 box-sizing: border-box;
-                */
+                overflow: hidden;
                 font-size: 11px;
                 height: 20px;
             }
@@ -64,7 +83,13 @@
     <body>
         <form>
             <p>
-                <label>FPS:<span id="fps"></span></label>
+            <label>FPS:<span id="fps"></span></label>
+            </p>
+            <p>
+            <label>Canvas:<span id="canvas"></span></label>
+            </p>
+            <p>
+            <label>Scroll:<span id="scroll"></span></label>
             </p>
             <p>
             <label>Virtual DOM:<span id="virtual"></span></label>
@@ -85,6 +110,7 @@
             <label>requestAnimationFrame:<span id="raf"></span></label>
             </p>
         </form>
+        <button>add cell</button>
         <div id="wrapper">
             <div id="area">
                 <div id="container"></div>
@@ -103,35 +129,117 @@
 
 
             var viewportWidth = wrapper.clientWidth;
-            container.style.width = viewportWidth + "px";
             var viewportHeight = wrapper.clientHeight;
+            container.style.width = viewportWidth + "px";
             container.style.height = viewportHeight + "px";
-            var maxWidth = wrapper.scrollWidth - (wrapper.offsetWidth - viewportWidth);
-            var maxHeight = wrapper.scrollHeight - (wrapper.offsetHeight - viewportHeight);
+
             var widths = { 1: 120, 50: 200 };
-            var heights = { 1: 120, 50: 200 };
+            var heights = { 1: 40, 50: 200 };//, 50: 200 };
 
-            //kendo.support.kineticScrollNeeded = true;
+            var cells= {
+                0: {
+                    2: {
+                        value: "foo",
+                        bold: true,
+                        italic: true,
+                        color: "#a0b0c0"
+                    }
+                }
+            };
 
-            if (kendo.support.kineticScrollNeeded) {
-                area.removeChild(container);
-                area.style.position = "relative";
-                container = area;
+            var widthSegments = [ {
+                size: COLUMN_WIDTH,
+                from: 0,
+                fromIndex: 0,
+                to: COLUMNS * COLUMN_WIDTH,
+                toIndex: COLUMNS - 1
+            }];
+
+            var heightSegments = [{
+                size: ROW_HEIGHT,
+                from:0,
+                fromIndex: 0,
+                to: ROWS * ROW_HEIGHT,
+                toIndex: ROWS - 1
+            }];
+
+            function partition(segments, sizes, defaultSize) {
+                var diff = 0;
+                for (var sizeIndex in sizes) {
+                    var lastSegment = segments.pop();
+
+                    var size = sizes[sizeIndex];
+
+                    var previousSegment = {
+                        size: lastSegment.size,
+                        from: lastSegment.from,
+                        to: sizeIndex * lastSegment.size + diff - 1,
+                        fromIndex: lastSegment.fromIndex,
+                        toIndex: sizeIndex - 1
+                    };
+
+                    var currentSegment = {
+                        size: size,
+                        from: previousSegment.to + 1,
+                        to: previousSegment.to + size,
+                        fromIndex: previousSegment.toIndex + 1,
+                        toIndex: previousSegment.toIndex + 1
+                    };
+
+                    lastSegment.from = currentSegment.to + 1;
+                    lastSegment.fromIndex = currentSegment.toIndex + 1;
+                    lastSegment.to += size - lastSegment.size;
+
+                    segments.push(previousSegment, currentSegment, lastSegment);
+
+                    diff += size - defaultSize;
+                }
             }
 
+            partition(widthSegments, widths, COLUMN_WIDTH);
+
+            partition(heightSegments, heights, ROW_HEIGHT);
+
+            //area.style.width = widthSegments[widthSegments.length-1].to + "px";
+            //area.style.height = heightSegments[heightSegments.length-1].to + "px";
+
+            var maxWidth = wrapper.scrollWidth - (wrapper.offsetWidth - viewportWidth);
+            var maxHeight = wrapper.scrollHeight - (wrapper.offsetHeight - viewportHeight);
+
+            kendo.support.kineticScrollNeeded = false;
+
+            var canvas = false;
             var virtual = true;
             var table = true;
             var innerHTML = !virtual;
             var raf = false;
             var translate = false;
-            var translate3d = false;
+            var translate3d = true;
 
+            if (kendo.support.kineticScrollNeeded) {
+                area.removeChild(container);
+                area.style.position = "relative";
+                container = area;
+                //area.style.width = widthSegments[widthSegments.length-1].to + "px";
+                //area.style.height = heightSegments[heightSegments.length-1].to + "px";
+            }
+
+            document.getElementById("canvas").innerHTML = canvas;
             document.getElementById("virtual").innerHTML = virtual;
             document.getElementById("table").innerHTML = table;
             document.getElementById("innerHTML").innerHTML = innerHTML;
             document.getElementById("translate").innerHTML = translate;
             document.getElementById("translate3d").innerHTML = translate3d;
             document.getElementById("raf").innerHTML = raf;
+            document.getElementById("scroll").innerHTML = kendo.support.kineticScrollNeeded;
+
+            if (canvas) {
+                canvas = document.createElement("canvas");
+                canvas.width = viewportWidth;
+                canvas.height = viewportHeight;
+                container.appendChild(canvas);
+                var ctx = canvas.getContext("2d");
+            }
 
             function heightForRowAtIndex(index) {
                 return heights[index] || ROW_HEIGHT;
@@ -143,39 +251,49 @@
 
             var tree = new kendo.dom.Tree(container);
 
-            function visibleRange(measure, start, end, max) {
-                var value = 0;
-                var index = 0;
-                var indexes = [];
-                var offset = 0;
-                var size = 0;
+            function visibleRange(segments, start, end, max) {
+                var startSegment = null;
+                var endSegment = null;
+                var lastPage = false
 
-                while (start > value) {
-                    size = measure(index);
 
-                    if (value + size > start) {
-                        offset = start - value;
-                    } else {
-                        index ++;
+                if (end >= max) {
+                    lastPage = true;
+                }
+
+                for (var si = 0; si < segments.length; si++) {
+                    var segment = segments[si];
+
+                    if (segment.from <= start && start <= segment.to) {
+                        startSegment = segment;
                     }
-                    value += size;
+
+                    if (segment.from <= end && end <= segment.to) {
+                        endSegment = segment;
+                        break;
+                    }
                 }
 
-                if (end < max) {
-                    end += size;
-                } else {
-                    end += offset;
+                var startOffset = start - startSegment.from;
+                var startIndex = ((startOffset / startSegment.size) >> 0) + startSegment.fromIndex;
+
+                var offset = startOffset - (startIndex-startSegment.fromIndex) * startSegment.size;
+
+                var endOffset = end - endSegment.from;
+                var endIndex = ((endOffset / endSegment.size) >> 0) + endSegment.fromIndex;
+
+                if (endIndex > endSegment.toIndex) {
+                    endIndex = endSegment.toIndex;
                 }
 
-                while (value <= end) {
-                    value += measure(index);
-                    indexes.push(index);
-                    index ++;
+                if (lastPage) {
+                    offset += endSegment.size - (endOffset - (endIndex-endSegment.fromIndex) * endSegment.size);
                 }
 
                 return {
                     offset: offset,
-                    indexes: indexes
+                    startIndex: startIndex,
+                    endIndex: endIndex
                 };
             }
 
@@ -183,19 +301,59 @@
 
             var start = new Date();
 
-            function drawTable(left, right, top, bottom) {
-                var rowRange = visibleRange(heightForRowAtIndex, top, bottom, maxHeight);
-                var rows = rowRange.indexes;
+            function drawCanvas(left, right, top, bottom) {
+                var rows = visibleRange(heightSegments, top, bottom, maxHeight);
 
-                var columnRange = visibleRange(widthForColumnAtIndex, left, right, maxWidth);
-                var columns = columnRange.indexes;
+                var columns = visibleRange(widthSegments, left, right, maxWidth);
 
-                var x = -columnRange.offset - 1;
-                var y = -rowRange.offset - 1;
+                var y = -rows.offset;
 
                 if (kendo.support.kineticScrollNeeded) {
-                    x += left;
-                    y += top;
+                    canvas.style.left = left / ((totalWidth - wrapper.clientWidth) / (wrapper.scrollWidth - wrapper.clientWidth)) + "px";
+                    canvas.style.top = top / ((totalHeight - wrapper.clientHeight) / (wrapper.scrollHeight - wrapper.clientHeight)) + "px";
+                }
+
+                ctx.strokeStyle = "black";
+                ctx.clearRect(0, 0, viewportWidth, viewportHeight);
+
+                for (var ri = rows.startIndex; ri <= rows.endIndex; ri++) {
+                    var x = -columns.offset;
+
+                    var height = heightForRowAtIndex(ri);
+
+                    for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
+                        var width = widthForColumnAtIndex(ci);
+
+                        ctx.strokeRect(x, y, width, height);
+                        ctx.fillText(ri + ":" + ci, x+1, y+11)
+
+                        x += width;
+                    }
+                    y += height;
+                }
+
+                var end = new Date();
+
+                var fps = Math.round(1000/(end-start));
+                document.getElementById("fps").innerHTML = fps;
+
+                start = new Date();
+            }
+
+            var totalHeight = heightSegments[heightSegments.length-1].to;
+            var totalWidth = widthSegments[widthSegments.length-1].to;
+
+            function drawTable(left, right, top, bottom) {
+                var rows = visibleRange(heightSegments, top, bottom, maxHeight);
+
+                var columns = visibleRange(widthSegments, left, right, maxWidth);
+
+                var x = - columns.offset - 1;
+                var y = - rows.offset - 1;
+
+                if (kendo.support.kineticScrollNeeded) {
+                    x += left / ((totalWidth - wrapper.clientWidth) / (wrapper.scrollWidth - wrapper.clientWidth));
+                    y += top / ((totalHeight - wrapper.clientHeight) / (wrapper.scrollHeight - wrapper.clientHeight));
                 }
 
                 if (innerHTML) {
@@ -207,23 +365,23 @@
 
                     html += "<colgroup>"
 
-                    for (var ci = 0; ci < columns.length; ci++) {
+                    for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
                         html += '<col style="width:';
-                        html += widthForColumnAtIndex(columns[ci]);
+                        html += widthForColumnAtIndex(ci);
                         html += 'px">'
                     }
 
                     html += "</colgroup>"
                     html += "<tbody>"
-                    for (var ri = 0; ri < rows.length; ri++) {
+                    for (var ri = rows.startIndex; ri <= rows.endIndex; ri++) {
                         html += '<tr style="height:';
-                        html += heightForRowAtIndex(rows[ri]);
+                        html += heightForRowAtIndex(ri);
                         html += 'px">'
-                        for (var ci = 0; ci < columns.length; ci++) {
+                        for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
                             html += "<td>";
-                            html += rows[ri];
+                            html += ri;
                             html += ":";
-                            html += columns[ci];
+                            html += ci;
                             html += "</td>"
                         }
                         html += "</tr>";
@@ -235,18 +393,40 @@
                 } else if (virtual) {
                     var cols = [];
 
-                    for (var ci = 0; ci < columns.length; ci++) {
-                        cols.push(tree.element("col", { style: { width: widthForColumnAtIndex(columns[ci]) + "px" } }));
+                    for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
+                        cols.push(tree.element("col", { style: { width: widthForColumnAtIndex(ci) + "px" } }));
                     }
 
                     var tr = [];
 
-                    for (var ri = 0; ri < rows.length; ri++) {
-                        var height = heightForRowAtIndex(rows[ri]);
-                        var cells = [];
+                    for (var ri = rows.startIndex; ri <= rows.endIndex; ri++) {
+                        var height = heightForRowAtIndex(ri);
+                        var tds = [];
 
-                        for (var ci = 0; ci < columns.length; ci++) {
-                            cells.push(tree.element("td", null, [ tree.text(rows[ri] + ":" + columns[ci]) ] ));
+                        for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
+                            var cell = (cells[ci] || {})[ri];
+
+                            var text = "";//ri + ":" + ci;
+                            var attr = {
+                                style: {}
+                            };
+
+                            if (cell) {
+                                text = cell.value;
+                                if (cell.bold) {
+                                    attr.style.fontWeight = "bold";
+                                }
+
+                                if (cell.color) {
+                                    attr.style.color = cell.color;
+                                }
+
+                                if (cell.italic) {
+                                    attr.style.fontStyle = "italic";
+                                }
+                            }
+
+                            tds.push(tree.element("td", attr, [ tree.text(text) ] ));
                         }
 
                         var attr = null;
@@ -255,11 +435,30 @@
                             attr = { style: { height: height + "px" } };
                         }
 
-                        tr.push(tree.element("tr", attr, cells));
+                        tr.push(tree.element("tr", attr, tds));
+                    }
+
+                    var tableAttr = {
+                        style: {}
+                    };
+
+                    if (translate) {
+                        if (kendo.support.touch) {
+                            if (translate3d) {
+                                tableAttr.style.webkitTransform = "translate3d(" + x + "px," + y + "px,0)";
+                            } else {
+                                tableAttr.style.webkitTransform = "translate(" + x + "px," + y + "px)";
+                            }
+                        } else {
+                            tableAttr.style.transform = "translate(" + x + "px," + y + "px)";
+                        }
+                    } else {
+                        tableAttr.style.left = x + "px";
+                        tableAttr.style.top = y + "px";
                     }
 
                     tree.render([
-                        tree.element("table", { style: { left: x + "px", top: y + "px" } },
+                        tree.element("table", tableAttr,
                         [
                             tree.element("colgroup", null, cols),
                             tree.element("tbody", null, tr)
@@ -276,34 +475,32 @@
             }
 
             function draw(left, right, top, bottom) {
-                var rowRange = visibleRange(heightForRowAtIndex, top, bottom, maxHeight);
-                var rows = rowRange.indexes;
+                var rows = visibleRange(heightSegments, top, bottom, maxHeight);
 
-                var columnRange = visibleRange(widthForColumnAtIndex, left, right, maxWidth);
-                var columns = columnRange.indexes;
+                var columns = visibleRange(widthSegments, left, right, maxWidth);
 
                 //var y = top - rowRange.offset;
-                var y = -rowRange.offset;
+                var y = -rows.offset;
 
                 if (kendo.support.kineticScrollNeeded) {
                     y += top;
                 }
-                var cells = [];
+                var tds = [];
                 var html = "";
 
                 var childIndex = 0;
 
-                for (var ri = 0; ri < rows.length; ri++) {
-                    var height = heightForRowAtIndex(rows[ri]);
+                for (var ri = rows.startIndex; ri <= rows.endIndex; ri++) {
+                    var height = heightForRowAtIndex(ri);
 
                     //var x = left - columnRange.offset;
-                    var x = -columnRange.offset;
+                    var x = -columns.offset;
 
                 if (kendo.support.kineticScrollNeeded) {
                     x += left;
                 }
-                    for (var ci = 0; ci < columns.length; ci++) {
-                        var width = widthForColumnAtIndex(columns[ci]);
+                    for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
+                        var width = widthForColumnAtIndex(ci);
 
                         if (virtual) {
                             var style = {
@@ -324,9 +521,9 @@
                             var cell = tree.element("div", {
                                 class: "cell",
                                 style: style,
-                            }, [ tree.text(rows[ri] + ":" + columns[ci]) ]);
+                            }, [ tree.text(ri + ":" + ci) ]);
 
-                            cells.push(cell);
+                            tds.push(cell);
                         } else if(innerHTML) {
                             html += '<div class="cell" style="width:';
                             html += width;
@@ -356,9 +553,9 @@
                                 html += "px";
                             }
                             html += '">';
-                            html += rows[ri];
+                            html += ri;
                             html += ":";
-                            html += columns[ci];
+                            html += ci;
                             html += "</div>";
                         } else {
                             var cell = container.childNodes[childIndex++];
@@ -389,7 +586,7 @@
                             }
                             //cell.style.transform = "translate(" + x + "px, " + y + "px)";
                             //cell.style.webkitTransform = "translate(" + x + "px, " + y + "px)";
-                            cell.innerHTML = rows[ri] + ":" + columns[ci];
+                            cell.innerHTML = ri + ":" + ci;
                             cell.style.cssText = cssText;
                             if (!existing) {
                                 container.appendChild(cell);
@@ -403,7 +600,7 @@
                 }
 
                 if (virtual) {
-                    tree.render(cells);
+                    tree.render(tds);
                 } else if (innerHTML) {
                     container.innerHTML = html;
                 }
@@ -416,26 +613,65 @@
                 start = new Date();
             }
 
-            if (table) {
+            if (canvas) {
+                drawCanvas(0, viewportWidth, 0, viewportHeight);
+            } else if (table) {
                 drawTable(0, viewportWidth, 0, viewportHeight);
             } else {
                 draw(0, viewportWidth, 0, viewportHeight);
             }
 
+            var count = 1;
+
+            $("button").click(function() {
+                var row = {};
+                cells[10] = row;
+
+                for (var i = 0; i < 100; i++) {
+                    row[i] = {
+                        value: i + "",
+                        bold: Math.floor(Math.random() * 1000) % 2 == 0,
+                        italic: Math.floor(Math.random() * 1000) % 2 == 0,
+                        color: "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," +Math.floor(Math.random() * 255) + ")"
+                    };
+                }
+                scroll();
+            });
+
             function scroll() {
+                var top = Math.floor(wrapper.scrollTop * ((totalHeight - wrapper.clientHeight) / (wrapper.scrollHeight - wrapper.clientHeight)));
+                var bottom = top + viewportHeight;
+
+                if (top < 0) {
+                    bottom -= top;
+                    top = 0;
+                }
+
+                var left = Math.floor(wrapper.scrollLeft * ((totalWidth - wrapper.clientWidth) / (wrapper.scrollWidth - wrapper.clientWidth)));
+                var right = left + viewportWidth;
+
+                if (left < 0) {
+                    right -= left;
+                    left = 0;
+                }
+
                 if (raf) {
                     requestAnimationFrame(function() {
-                        if (table) {
-                            drawTable(wrapper.scrollLeft, wrapper.scrollLeft + viewportWidth, wrapper.scrollTop, wrapper.scrollTop + viewportHeight);
+                        if (canvas) {
+                            drawCanvas(left, right, top, bottom);
+                        } else if (table) {
+                            drawTable(left, right, top, bottom);
                         } else {
-                            draw(wrapper.scrollLeft, wrapper.scrollLeft + viewportWidth, wrapper.scrollTop, wrapper.scrollTop + viewportHeight);
+                            draw(left, right, top, bottom);
                         }
                     });
                 } else {
-                    if (table) {
-                        drawTable(wrapper.scrollLeft, wrapper.scrollLeft + viewportWidth, wrapper.scrollTop, wrapper.scrollTop + viewportHeight);
+                    if (canvas) {
+                        drawCanvas(left, right, top, bottom);
+                    } else if (table) {
+                        drawTable(left, right, top, bottom);
                     } else {
-                        draw(wrapper.scrollLeft, wrapper.scrollLeft + viewportWidth, wrapper.scrollTop, wrapper.scrollTop + viewportHeight);
+                        draw(left, right, top, bottom);
                     }
                 }
             }
