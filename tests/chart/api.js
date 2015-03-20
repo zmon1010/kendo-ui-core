@@ -240,6 +240,15 @@
             chart.redraw();
         });
 
+        test("redraw resizes surface", function() {
+            setupChart();
+
+            chart.surface.resize = function() {
+                ok(true);
+            };
+            chart.redraw();
+        });
+
         // ------------------------------------------------------------
         (function() {
             module("chartArea size", {
@@ -272,6 +281,19 @@
                     chartArea: { height: "500px" }
                 });
                 equal(chart.element.height(), 500);
+            });
+
+            test("applies size to surface", function() {
+                setupChart({
+                    chartArea: {
+                        height: 300,
+                        width: 300
+                    }
+                });
+
+                var size = chart.surface._size;
+                equal(size.width, 300);
+                equal(size.height, 300);
             });
         })();
 
