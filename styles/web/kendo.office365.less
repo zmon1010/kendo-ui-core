@@ -304,7 +304,7 @@
 @radio-checked-active-box-shadow: none;
 
 @radio-disabled-background-color-after: @widget-background-color;
-@radio-disabled-color: @widget-background-color;
+@radio-disabled-color: @disabled-text-color;
 @radio-disabled-box-shadow: none;
 @radio-disabled-background-color-before: @widget-background-color;
 
@@ -368,6 +368,10 @@ div.k-splitbar.k-state-focused .k-icon,
 .k-button:focus:hover,
 .k-button.k-state-focused:hover {
     border-color: @button-focused-border-color;
+}
+
+.k-primary.k-grid-update {
+    color: @inverse-text-color;
 }
 
 .k-primary:active,
