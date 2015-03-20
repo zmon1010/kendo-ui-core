@@ -2161,6 +2161,11 @@
           case "input":
             break;
 
+          case "select":
+            if (!element.multiple) {
+                break;
+            }
+            /* falls through */
           default:
             var blocks = [], floats = [], inline = [], positioned = [];
             for (var i = element.firstChild; i; i = i.nextSibling) {
