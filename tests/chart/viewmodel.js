@@ -3766,6 +3766,15 @@
             equal(stroke.dashType, "dashType");
         });
 
+        test("is clipRoot", function() {
+            pane.parent = {
+                clipRoot: function() {
+                    return "foo";
+                }
+            };
+            ok(pane.clipRoot() === pane);
+        });
+
         // ------------------------------------------------------------
 
         function createPaneWithTitle(options) {

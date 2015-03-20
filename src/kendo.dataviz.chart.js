@@ -8280,6 +8280,8 @@ var __meta__ = {
 
         stackRoot: returnSelf,
 
+        clipRoot: returnSelf,
+
         createGridLines: function() {
             var pane = this,
                 axes = pane.axes,
