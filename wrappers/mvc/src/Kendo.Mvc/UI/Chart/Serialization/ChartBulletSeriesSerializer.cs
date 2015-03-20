@@ -27,7 +27,6 @@ namespace Kendo.Mvc.UI
                 .Add("currentField", series.CurrentMember, () => series.CurrentMember != null)
                 .Add("data", series.Data, () => { return series.Data != null; })
                 .Add("border", series.Border.CreateSerializer().Serialize(), ShouldSerializeBorder)
-                .Add("color", series.Color, () => series.Color.HasValue())
                 .Add("name", series.Name, string.Empty)
                 .Add("opacity", series.Opacity, () => series.Opacity.HasValue)
                 .Add("axis", series.Axis, string.Empty)
@@ -50,6 +49,15 @@ namespace Kendo.Mvc.UI
             if (targetData.Count > 0)
             {
                 result.Add("target", targetData);
+            }
+
+            if (series.ColorHandler != null)
+            {
+                result.Add("color", series.ColorHandler);
+            }
+            else if (series.Color.HasValue())
+            {
+                result.Add("color", series.Color);
             }
 
             return result;

@@ -309,6 +309,64 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Sets the function used to retrieve point color.
+        /// </summary>
+        /// <param name="colorFunction">
+        ///     The JavaScript function that will be executed
+        ///     to retrieve the color of each point.
+        /// </param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().Chart()
+        ///            .Name("Chart")
+        ///            .Series(series => series
+        ///                .Bullet(s => s.Current, s => s.Target)
+        ///                .ColorHandler(
+        ///                    @&lt;text&gt;
+        ///                    function(point) {
+        ///                        return point.value > 5 ? "red" : "green";
+        ///                    }
+        ///                    &lt;/text&gt;
+        ///                )
+        ///             )
+        ///            .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ChartBulletSeriesBuilder<T> ColorHandler(Func<object, object> colorFunction)
+        {
+            Series.ColorHandler = new ClientHandlerDescriptor { TemplateDelegate = colorFunction };
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the function used to retrieve point color.
+        /// </summary>
+        /// <param name="colorFunction">
+        ///     The JavaScript function that will be executed
+        ///     to retrieve the color of each point.
+        /// </param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().Chart()
+        ///            .Name("Chart")
+        ///                .Bullet(s => s.Current, s => s.Target)
+        ///                .Bar(s => s.Sales)
+        ///                .ColorHandler("pointColor")
+        ///             )
+        ///            .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public ChartBulletSeriesBuilder<T> ColorHandler(string colorFunction)
+        {
+            Series.ColorHandler = new ClientHandlerDescriptor { HandlerName = colorFunction };
+
+            return this;
+        }
+
+        /// <summary>
         /// Sets the color field for the series
         /// </summary>
         /// <param name="colorField">The color field for the series</param>

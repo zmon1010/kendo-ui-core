@@ -2,17 +2,20 @@ namespace Kendo.Mvc.UI.Tests.Chart
 {
     using Kendo.Mvc.UI;
     using Kendo.Mvc.UI.Fluent;
+    using System;
     using Xunit;
 
     public class ChartBulletSeriesBuilderTests
     {
         protected IChartBulletSeries series;
         protected ChartBulletSeriesBuilder<SalesData> builder;
+        private readonly Func<object, object> nullFunc;
 
         public ChartBulletSeriesBuilderTests()
         {
             series = new ChartBulletSeries<SalesData, decimal, string>(s => s.RepSales, s => s.TotalSales, null, null, null);
             builder = new ChartBulletSeriesBuilder<SalesData>(series);
+            nullFunc = (o) => null;
         }
 
         [Fact]
@@ -160,6 +163,25 @@ namespace Kendo.Mvc.UI.Tests.Chart
         public void ColorField_should_return_builder()
         {
             builder.ColorField("Color").ShouldBeSameAs(builder);
+        }
+
+        [Fact]
+        public void Color_handler_returns_builder()
+        {
+            builder.ColorHandler("Foo").ShouldEqual(builder);
+        }
+
+        [Fact]
+        public void Color_handler_sets_background_delegate()
+        {
+            builder.ColorHandler(nullFunc);
+            series.ColorHandler.TemplateDelegate.ShouldEqual(nullFunc);
+        }
+
+        [Fact]
+        public void Color_handler_delegate_returns_builder()
+        {
+            builder.ColorHandler(nullFunc).ShouldEqual(builder);
         }
 
         [Fact]
