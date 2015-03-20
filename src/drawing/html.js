@@ -2149,6 +2149,13 @@
         return /^(?:textarea|select|input)$/i.test(element.tagName);
     }
 
+    function getSelectedOption(element) {
+        if (element.selectedOptions && element.selectedOptions.length > 0) {
+            return element.selectedOptions[0];
+        }
+        return element.options[element.selectedIndex];
+    }
+
     function renderFormField(element, group) {
         var tag = element.tagName.toLowerCase();
         var p = element.parentNode;
@@ -2158,8 +2165,11 @@
         if (tag == "input") {
             el.style.whiteSpace = "pre";
         }
-        if (tag == "select" && element.selectedOptions.length > 0) {
-            el.textContent = element.selectedOptions[0].textContent;
+        if (tag == "select") {
+            var option = getSelectedOption(element);
+            if (option) {
+                el.textContent = option.textContent;
+            }
         } else {
             el.textContent = element.value;
         }
