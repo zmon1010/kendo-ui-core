@@ -1,0 +1,113 @@
+@import "../common/switch.less";
+@import "base.less";
+
+/* Switch */
+
+.km-office365 .km-switch
+{
+    width: 5rem;
+    height: 2.4rem;
+    line-height: 2.2rem;
+}
+
+.km-office365 .km-switch-wrapper
+{
+    overflow: hidden;
+}
+
+.km-office365 .km-switch-background,
+.km-office365 .k-slider-selection
+{
+    background-position: 4.25em 0;
+    background-repeat: no-repeat;
+    background-color: currentcolor;
+}
+
+.km-office365 .k-slider-selection
+{
+    margin-left: -3.4rem;
+}
+
+.km-office365 .km-switch-container
+{
+    //padding: 1px 0 1px 1px;
+    border-width: 0;
+}
+
+.km-office365 .km-switch-handle
+{
+    width: 1.25em;
+    margin: 0 4px 0 0;
+    border-width: 3px;
+}
+
+.km-office365 .km-switch-on .km-switch-handle
+{
+    margin: 0 0 0 4px;
+}
+
+.km-office365 .km-switch-label-off
+{
+    left: 1.5em;
+}
+
+.km-office365 .km-switch-label-on
+{
+    left: -2.8em;
+}
+
+.km-office365 .km-switch-label-on,
+.km-office365 .km-switch-label-off
+{
+    display: none;
+    /*text-shadow: none;
+    width: 185%;
+    font-size: 1em;
+    line-height: 2em;
+    vertical-align: middle;*/
+}
+
+.km-office365 .km-switch-wrapper,
+.km-office365 .km-switch-container,
+.km-office365 .km-switch-background,
+.km-office365 .km-switch-handle
+{
+    border-radius: 0;
+}
+
+.km-office365 .km-switch-container,
+.km-office365 .km-switch-wrapper
+{
+    .box-sizing(border-box);
+    border-style: solid;
+    background-clip: content-box;
+}
+
+.km-office365 .km-switch-wrapper {
+    border-width: 3px;
+}
+
+.km-office365 .km-switch-background {
+    width: 100%;
+    margin-left: -4em;
+}
+
+.km-office365 .km-switch-off .km-switch-handle:after,
+.km-office365 .km-switch-on .km-switch-handle:after {
+    content: "";
+    width: 3px;
+    height: 100%;
+    display: inline-block;
+    margin-top: -3px;
+    padding: 3px 0;
+}
+
+.km-office365 .km-switch-off .km-switch-handle:after {
+    float: right;   
+}
+
+.km-office365 .km-switch-container:after {
+    content: "";
+    display: block;
+    clear: both;
+}
