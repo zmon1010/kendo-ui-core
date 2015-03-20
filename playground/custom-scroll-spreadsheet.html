@@ -1,0 +1,730 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="loader.js"></script>
+        <script>
+          requireSync([
+            "../src/jquery.js",
+            "../src/kendo.draganddrop.js",
+            "../src/kendo.dom.js"
+          ]);
+        </script>
+        <style>
+            #wrapper {
+                border: 1px solid black;
+                width: 800px;
+                height: 600px;
+                position: relative;
+            }
+
+            #container {
+                position: absolute;
+                overflow: hidden;
+            }
+
+            #container table {
+                table-layout: fixed;
+                position: absolute;
+                border-collapse: collapse;
+                box-sizing: border-box;
+            }
+
+            #container table {
+                width: 100%;
+                height: 100%;
+            }
+
+            #container canvas {
+                position:absolute;
+            }
+
+            #container canvas {
+                width: 100%;
+                height: 100%;
+            }
+
+            #container table td {
+                border: 1px solid gray;
+                box-sizing: border-box;
+                overflow: hidden;
+                font-size: 11px;
+            }
+
+            .cell {
+                box-sizing: border-box;
+                border: 1px solid gray;
+                overflow: hidden;
+                font-size: 11px;
+                position: absolute;
+            }
+
+            .k-scrollbar-vertical {
+                width: 17px;
+                right: 0;
+                top:0;
+                bottom: 17px;
+            }
+
+            .k-scrollbar-horizontal {
+                height: 17px;
+                right: 17px;
+                left: 0;
+                bottom: 0;
+            }
+
+            .k-scrollbar {
+                position: absolute;
+                background: blue;
+            }
+
+            .k-scrollbar-vertical .k-scrollbar-thumb {
+                position: absolute;
+                width: 17px;
+                height: 17px;
+                background: green;
+            }
+
+            .k-scrollbar-vertical .k-scrollbar-plus {
+                position: absolute;
+                background: green;
+                width: 17px;
+                height: 17px;
+                bottom: 0;
+                text-align: center;
+            }
+
+            .k-scrollbar-vertical .k-scrollbar-plus:after{
+                content: "\25BE";
+                vertical-align: bottom;
+            }
+
+            .k-scrollbar-vertical .k-scrollbar-minus {
+                position: absolute;
+                background: green;
+                width: 17px;
+                height: 17px;
+                top: 0;
+                text-align: center;
+            }
+
+            .k-scrollbar-vertical .k-scrollbar-minus:after{
+                content: "\25B4";
+                vertical-align: bottom;
+            }
+
+            .k-scrollbar-horizontal .k-scrollbar-thumb {
+                position: absolute;
+                width: 17px;
+                height: 17px;
+                background: green;
+            }
+
+            .k-scrollbar-horizontal .k-scrollbar-plus {
+                position: absolute;
+                background: green;
+                width: 17px;
+                height: 17px;
+                right: 0;
+                text-align: center;
+            }
+
+            .k-scrollbar-horizontal .k-scrollbar-plus:after{
+                content: "\25B8";
+                vertical-align: bottom;
+            }
+
+            .k-scrollbar-horizontal .k-scrollbar-minus {
+                position: absolute;
+                background: green;
+                width: 17px;
+                height: 17px;
+                left: 0;
+                text-align: center;
+            }
+
+            .k-scrollbar-horizontal .k-scrollbar-minus:after{
+                content: "\25C2";
+                vertical-align: bottom;
+            }
+
+            .k-scrollbar-thumb,
+            .k-scrollbar-minus,
+            .k-scrollbar-plus {
+                box-sizing: border-box;
+                border: 1px solid black;
+            }
+
+            form {
+                float: right;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <p>
+                <label>FPS:<span id="fps"></span></label>
+            </p>
+            <p>
+            <label>Canvas:<span id="canvas"></span></label>
+            </p>
+            <p>
+            <label>Virtual DOM:<span id="virtual"></span></label>
+            </p>
+            <p>
+            <label>Table:<span id="table"></span></label>
+            </p>
+            <p>
+            <label>innerHTML:<span id="innerHTML"></span></label>
+            </p>
+            <p>
+            <label>translate:<span id="translate"></span></label>
+            </p>
+            <p>
+            <label>translate3d:<span id="translate3d"></span></label>
+            </p>
+            <p>
+            <label>requestAnimationFrame:<span id="raf"></span></label>
+            </p>
+        </form>
+        <div id="wrapper">
+            <div id="container"></div>
+            <div id="vertical-scrollbar"></div>
+            <div id="horizontal-scrollbar"></div>
+        </div>
+
+        <script>
+            var COLUMNS = 16384;
+            var ROWS = 1048576;
+            var COLUMN_WIDTH = 64;
+            var ROW_HEIGHT = 20;
+
+            var wrapper = document.getElementById("wrapper");
+            var container = document.getElementById("container");
+
+            var NS = ".kendoScrollbar";
+
+            var Scrollbar = kendo.ui.Widget.extend({
+                init: function(element, options) {
+                    kendo.ui.Widget.fn.init.call(this, element, options);
+
+                    this.element.addClass("k-scrollbar").addClass("k-scrollbar-" + this.options.orientation);
+                    this.minus = $("<div>").addClass("k-scrollbar-minus").appendTo(this.element);
+                    this.thumb = $("<div>").addClass("k-scrollbar-thumb").appendTo(this.element).css(this._axis(), this.minus.outerHeight());
+                    this.plus = $("<div>").addClass("k-scrollbar-plus").appendTo(this.element);
+                    this.element.on(kendo.support.mousedown + NS, ".k-scrollbar-plus", $.proxy(this._plus, this));
+                    this.element.on(kendo.support.mousedown + NS, ".k-scrollbar-minus", $.proxy(this._minus, this));
+                    this.element.on(kendo.support.mouseup + NS, ".k-scrollbar-plus,.k-scrollbar-minus", $.proxy(this._stop, this));
+                    this.thumb.kendoDraggable({
+                        distance: 0,
+                        drag: $.proxy(this._drag, this)
+                    });
+                    this._value = 0;
+                    this._pixelMin = this.minus.outerHeight();
+                    this._pixelMax = this.element[0][this._size()] - this.plus[0][this._size()] - this.thumb[0][this._size()];
+                    this._offset = this.element.offset()[this._axis()];
+                },
+                destroy: function() {
+                    kendo.ui.Widget.fn.destroy.call(this);
+
+                    this.element.off(NS);
+                    this._stop();
+
+                    kendo.destroy(this.thumb);
+                },
+                _axis: function() {
+                    return this.options.orientation == "vertical"? "top" : "left";
+                },
+                _size: function() {
+                    return this.options.orientation == "vertical"? "offsetHeight" : "offsetWidth";
+                },
+                value: function() {
+                    return this._value;
+                },
+                _stop: function() {
+                    clearInterval(this._interval);
+                },
+                _plus: function(e) {
+                    e.preventDefault();
+                    this._stop();
+                    this._interval = setInterval($.proxy(function() {
+                        this.scrollTo(this._value + this.options.step);
+                    }, this), 50);
+                },
+                _minus: function(e) {
+                    e.preventDefault();
+                    this._stop();
+                    this._interval = setInterval($.proxy(function() {
+                        this.scrollTo(this._value - this.options.step);
+                    }, this), 50);
+                },
+                _valueRange: function() {
+                    return this.options.max - this.options.min;
+                },
+                _pixelRange: function() {
+                    return this._pixelMax - this._pixelMin;
+                },
+                _drag: function(e) {
+                    var axis = this.options.orientation == "vertical" ? e.y : e.x;
+                    var pixelValue = axis.client - this._pixelMin - this._offset;
+
+                    pixelValue = Math.min(pixelValue, this._pixelMax);
+                    pixelValue = Math.max(pixelValue, this._pixelMin);
+
+                    var value = (pixelValue - this._pixelMin) * (this._valueRange() / this._pixelRange());
+
+                    this.scrollTo(Math.floor(value));
+                },
+                scrollTo: function(value) {
+                    if (this._value != value) {
+                        value = Math.min(this.options.max, value);
+                        value = Math.max(this.options.min, value);
+
+                        var pixelValue = (value * this._pixelRange()) / this._valueRange() + this._pixelMin;
+
+                        this.thumb.css(this._axis(), Math.floor(pixelValue));
+
+                        this._value = value;
+
+                        this.trigger("change");
+                    }
+                },
+                options: {
+                    step: 40,
+                    orientation: "vertical",
+                    name: "Scrollbar"
+                },
+                events: ["change"]
+            });
+
+            kendo.ui.plugin(Scrollbar);
+
+
+            var viewportWidth = wrapper.clientWidth - 17;
+            var viewportHeight = wrapper.clientHeight - 17;
+            container.style.width = viewportWidth + "px";
+            container.style.height = viewportHeight + "px";
+
+            var widths = { 1: 120, 50: 200 };
+            var heights = { 1: 40, 50: 200 };//, 50: 200 };
+
+            var widthSegments = [ {
+                size: COLUMN_WIDTH,
+                from: 0,
+                fromIndex: 0,
+                to: COLUMNS * COLUMN_WIDTH,
+                toIndex: COLUMNS - 1
+            }];
+
+            var heightSegments = [{
+                size: ROW_HEIGHT,
+                from:0,
+                fromIndex: 0,
+                to: ROWS * ROW_HEIGHT,
+                toIndex: ROWS - 1
+            }];
+
+            function partition(segments, sizes, defaultSize) {
+                var diff = 0;
+                for (var sizeIndex in sizes) {
+                    var lastSegment = segments.pop();
+
+                    var size = sizes[sizeIndex];
+
+                    var previousSegment = {
+                        size: lastSegment.size,
+                        from: lastSegment.from,
+                        to: sizeIndex * lastSegment.size + diff - 1,
+                        fromIndex: lastSegment.fromIndex,
+                        toIndex: sizeIndex - 1
+                    };
+
+                    var currentSegment = {
+                        size: size,
+                        from: previousSegment.to + 1,
+                        to: previousSegment.to + size,
+                        fromIndex: previousSegment.toIndex + 1,
+                        toIndex: previousSegment.toIndex + 1
+                    };
+
+                    lastSegment.from = currentSegment.to + 1;
+                    lastSegment.fromIndex = currentSegment.toIndex + 1;
+                    lastSegment.to += size - lastSegment.size;
+
+                    segments.push(previousSegment, currentSegment, lastSegment);
+
+                    diff += size - defaultSize;
+                }
+            }
+
+            partition(widthSegments, widths, COLUMN_WIDTH);
+
+            partition(heightSegments, heights, ROW_HEIGHT);
+
+            var maxHeight = heightSegments[heightSegments.length-1].to;
+            var maxWidth = widthSegments[widthSegments.length-1].to;
+
+            var canvas = false;
+            var virtual = true;
+            var table = true;
+            var innerHTML = !virtual;
+            var raf = false;
+            var translate = false;
+            var translate3d = false;
+
+
+            document.getElementById("canvas").innerHTML = canvas;
+            document.getElementById("virtual").innerHTML = virtual;
+            document.getElementById("table").innerHTML = table;
+            document.getElementById("innerHTML").innerHTML = innerHTML;
+            document.getElementById("translate").innerHTML = translate;
+            document.getElementById("translate3d").innerHTML = translate3d;
+            document.getElementById("raf").innerHTML = raf;
+
+            if (canvas) {
+                canvas = document.createElement("canvas");
+                canvas.width = viewportWidth;
+                canvas.height = viewportHeight;
+                container.appendChild(canvas);
+                var ctx = canvas.getContext("2d");
+            }
+
+            function heightForRowAtIndex(index) {
+                return heights[index] || ROW_HEIGHT;
+            }
+
+            function widthForColumnAtIndex(index) {
+                return widths[index] || COLUMN_WIDTH;
+            }
+
+            var tree = new kendo.dom.Tree(container);
+
+            function visibleRange(segments, start, end, max) {
+                var startSegment = null;
+                var endSegment = null;
+                var lastPage = false
+
+                if (end >= max) {
+                    lastPage = true;
+                }
+
+                for (var si = 0; si < segments.length; si++) {
+                    var segment = segments[si];
+
+                    if (segment.from <= start && start <= segment.to) {
+                        startSegment = segment;
+                    }
+
+                    if (segment.from <= end && end <= segment.to) {
+                        endSegment = segment;
+                        break;
+                    }
+                }
+
+                var startOffset = start - startSegment.from;
+                var startIndex = ((startOffset / startSegment.size) >> 0) + startSegment.fromIndex;
+
+                var offset = startOffset - (startIndex-startSegment.fromIndex) * startSegment.size;
+
+                var endOffset = end - endSegment.from;
+                var endIndex = ((endOffset / endSegment.size) >> 0) + endSegment.fromIndex;
+
+                if (endIndex > endSegment.toIndex) {
+                    endIndex = endSegment.toIndex;
+                }
+
+                if (lastPage) {
+                    offset += endSegment.size - (endOffset - (endIndex-endSegment.fromIndex) * endSegment.size);
+                }
+
+                return {
+                    offset: offset,
+                    startIndex: startIndex,
+                    endIndex: endIndex
+                };
+            }
+
+            wrapper.onscroll = scroll;
+
+            var start = new Date();
+
+            function drawCanvas(left, right, top, bottom) {
+                var rows = visibleRange(heightSegments, top, bottom, maxHeight);
+
+                var columns = visibleRange(widthSegments, left, right, maxWidth);
+
+                var y = -rows.offset;
+
+                ctx.strokeStyle = "black";
+                ctx.clearRect(0, 0, viewportWidth, viewportHeight);
+
+                for (var ri = rows.startIndex; ri <= rows.endIndex; ri++) {
+                    var x = -columns.offset;
+
+                    var height = heightForRowAtIndex(ri);
+
+                    for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
+                        var width = widthForColumnAtIndex(ci);
+
+                        ctx.strokeRect(x, y, width, height);
+                        ctx.fillText(ri + ":" + ci, x+1, y+11)
+
+                        x += width;
+                    }
+                    y += height;
+                }
+
+                var end = new Date();
+
+                var fps = Math.round(1000/(end-start));
+                document.getElementById("fps").innerHTML = fps;
+
+                start = new Date();
+            }
+
+            function drawTable(left, right, top, bottom) {
+                var rows = visibleRange(heightSegments, top, bottom, maxHeight);
+
+                var columns = visibleRange(widthSegments, left, right, maxWidth);
+
+                var x = - columns.offset - 1;
+                var y = - rows.offset - 1;
+
+                if (innerHTML) {
+                    var html = '<table style="left:';
+                    html += x;
+                    html += "px;top:";
+                    html += y;
+                    html += 'px">'
+
+                    html += "<colgroup>"
+
+                    for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
+                        html += '<col style="width:';
+                        html += widthForColumnAtIndex(ci);
+                        html += 'px">'
+                    }
+
+                    html += "</colgroup>"
+                    html += "<tbody>"
+                    for (var ri = rows.startIndex; ri <= rows.endIndex; ri++) {
+                        html += '<tr style="height:';
+                        html += heightForRowAtIndex(ri);
+                        html += 'px">'
+                        for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
+                            html += "<td>";
+                            html += ri;
+                            html += ":";
+                            html += ci;
+                            html += "</td>"
+                        }
+                        html += "</tr>";
+                    }
+                    html += "</tbody>"
+
+                    html += "</table>";
+                    container.innerHTML = html;
+                } else if (virtual) {
+                    var cols = [];
+
+                    for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
+                        cols.push(tree.element("col", { style: { width: widthForColumnAtIndex(ci) + "px" } }));
+                    }
+
+                    var tr = [];
+
+                    for (var ri = rows.startIndex; ri <= rows.endIndex; ri++) {
+                        var height = heightForRowAtIndex(ri);
+                        var cells = [];
+
+                        for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
+                            cells.push(tree.element("td", null, [ tree.text(ri + ":" + ci) ] ));
+                        }
+
+                        tr.push(tree.element("tr", { style: { height: height + "px" } }, cells));
+                    }
+
+                    tree.render([
+                        tree.element("table", { style: { left: x + "px", top: y + "px" } },
+                        [
+                            tree.element("colgroup", null, cols),
+                            tree.element("tbody", null, tr)
+                        ])
+                    ]);
+                }
+
+                var end = new Date();
+
+                var fps = Math.round(1000/(end-start));
+                document.getElementById("fps").innerHTML = fps;
+
+                start = new Date();
+            }
+
+            function drawDiv(left, right, top, bottom) {
+                var rows = visibleRange(heightSegments, top, bottom, maxHeight);
+
+                var columns = visibleRange(widthSegments, left, right, maxWidth);
+
+                //var y = top - rowRange.offset;
+                var y = -rows.offset;
+
+                var cells = [];
+                var html = "";
+
+                var childIndex = 0;
+
+                for (var ri = rows.startIndex; ri <= rows.endIndex; ri++) {
+                    var height = heightForRowAtIndex(ri);
+
+                    //var x = left - columnRange.offset;
+                    var x = -columns.offset;
+
+                    for (var ci = columns.startIndex; ci <= columns.endIndex; ci++) {
+                        var width = widthForColumnAtIndex(ci);
+
+                        if (virtual) {
+                            var style = {
+                                width: width + "px",
+                                height: height + "px",
+                            };
+
+                            if (translate) {
+                                if (translate3d) {
+                                    style.transform = "translate3d(" + x + "px," + y + "px,0)";
+                                } else {
+                                    style["-webkit-transform"] = "translate(" + x + "px," + y + "px)";
+                                }
+                            } else {
+                                style.top = y + "px";
+                                style.left =  x + "px";
+                            }
+                            var cell = tree.element("div", {
+                                class: "cell",
+                                style: style,
+                            }, [ tree.text(ri + ":" + ci) ]);
+
+                            cells.push(cell);
+                        } else if(innerHTML) {
+                            html += '<div class="cell" style="width:';
+                            html += width;
+                            html += "px;height:";
+                            html += height;
+                            html += "px;"
+                            if (translate) {
+                                html += "-webkit-transform:"
+                                if (translate3d) {
+                                    html += "translate3d(";
+                                    html += x;
+                                    html += "px,";
+                                    html += y;
+                                    html += "px,0)"
+                                } else {
+                                    html += "translate(";
+                                    html += x;
+                                    html += "px,";
+                                    html += y;
+                                    html += "px)"
+                                }
+                            } else {
+                                html += "left:";
+                                html += x;
+                                html += "px;top:";
+                                html += y;
+                                html += "px";
+                            }
+                            html += '">';
+                            html += ri;
+                            html += ":";
+                            html += ci;
+                            html += "</div>";
+                        } else {
+                            var cell = container.childNodes[childIndex++];
+                            var existing = !!cell;
+
+                            if (!existing) {
+                                cell = document.createElement("div");
+                                cell.className = "cell";
+                            }
+                            var cssText = "width:";
+                            cssText += width;
+                            cssText += "px;height:";
+                            cssText += height;
+                            cssText += "px;";
+                            if (translate) {
+                                cssText += "-webkit-transform:"
+                                if (translate3d) {
+                                    cssText += "translate3d(" + x + "px, " + y + "px,0)";
+                                } else {
+                                    cssText += "translate(" + x + "px, " + y + "px)";
+                                }
+                            } else {
+                                cssText += "top:";
+                                cssText += y;
+                                cssText += "px;left:";
+                                cssText += x;
+                                cssText += "px";
+                            }
+                            //cell.style.transform = "translate(" + x + "px, " + y + "px)";
+                            //cell.style.webkitTransform = "translate(" + x + "px, " + y + "px)";
+                            cell.innerHTML = ri + ":" + ci;
+                            cell.style.cssText = cssText;
+                            if (!existing) {
+                                container.appendChild(cell);
+                            }
+                        }
+
+                        x += width;
+                    }
+
+                    y += height;
+                }
+
+                if (virtual) {
+                    tree.render(cells);
+                } else if (innerHTML) {
+                    container.innerHTML = html;
+                }
+
+                var end = new Date();
+
+                var fps = Math.round(1000/(end-start));
+                document.getElementById("fps").innerHTML = fps;
+
+                start = new Date();
+            }
+
+
+            function draw(left, top) {
+                var bottom = top + viewportHeight;
+                var right = left + viewportWidth;
+
+                if (canvas) {
+                    drawCanvas(left, right, top, bottom);
+                } else if (table) {
+                    drawTable(left, right, top, bottom);
+                } else {
+                    drawDiv(left, right, top, bottom);
+                }
+            }
+
+            var vertical = $("#vertical-scrollbar").kendoScrollbar({
+                min: 0,
+                max: maxHeight - viewportHeight,
+                change: function(e) {
+                    draw(horizontal.value(), this.value());
+                }
+            }).getKendoScrollbar();
+
+            var horizontal = $("#horizontal-scrollbar").kendoScrollbar({
+                min: 0,
+                orientation: "horizontal",
+                max: maxWidth - viewportWidth,
+                change: function(e) {
+                    draw(this.value(), vertical.value());
+                }
+            }).getKendoScrollbar();
+
+            draw(0,0);
+        </script>
+    </body>
+</html>
