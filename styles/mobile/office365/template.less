@@ -28,6 +28,8 @@
 
 @office365-shadow: 0 0 10px 10px rgba(0,0,0,.2);
 
+@office365-selected-color: #004578;
+
 /*listview*/
 @office365-list-background: #fff;
 @office365-list-hover-background: #fff; /*also modalview title*/
@@ -129,12 +131,21 @@
     color: @switch-color;
 }
 
-.km-office365 .km-buttongroup .km-button {
-    border-color: @office365-border-color;
+.km-office365 .km-tabstrip .km-state-active .km-icon {
+    color: @office365-selected-color;
+}
+
+.km-office365 .km-buttongroup .km-button.km-state-active {
+    box-shadow: 0 0 0 1px @office365-button-selected-border;
+    z-index: 1;
 }
 
 .km-office365 .km-widget.km-navbar .km-buttongroup .km-button {  
     border-color: @office365-background;
+}
+
+.km-office365 .km-buttongroup .km-button:last-child {
+    border-left-color: @office365-button-border;
 }
 
 .km-office365 .km-widget.km-navbar .km-buttongroup .km-state-active {

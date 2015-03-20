@@ -9,16 +9,6 @@
     border-radius: 0;
 }
 
-.km-office365 .km-buttongroup > *:first-child
-{
-    border-radius: @office365-border-radius 0 0 @office365-border-radius;
-}
-
-.km-office365 .km-buttongroup > *:last-child
-{
-    border-radius: 0 @office365-border-radius @office365-border-radius 0;
-}
-
 .km-office365 .km-buttongroup > *.km-state-active
 {
     border-right-width: 1px;
@@ -42,4 +32,13 @@
     margin: 0;    
     top: 0;
     height: auto;    
+}
+
+.km-office365 .km-buttongroup {
+    border-width: 1px;
+    border-style: solid;
+}
+
+.km-office365 .km-buttongroup .km-button {
+    border: 0;
 }
