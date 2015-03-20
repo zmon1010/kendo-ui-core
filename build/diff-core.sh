@@ -13,7 +13,7 @@ fi
 
 DIFF_FILE=diff.diff
 
-find src styles tests -type f | grep -v 'tests/kendo-test-helpers.js' | xargs -I{} git diff --color origin/$BRANCH -- {}>$DIFF_FILE;
+find src styles tests docs -type f | grep -v 'tests/kendo-test-helpers.js' | xargs -I{} git diff --color origin/$BRANCH -- {}>$DIFF_FILE;
 
 cat diff.diff
 
