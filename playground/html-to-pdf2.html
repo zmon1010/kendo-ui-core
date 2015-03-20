@@ -32,8 +32,13 @@
         background: #ffc;
         font-family: Verdana;
       }
-      .k-widget, button {
+      .k-widget, button, input, textarea, select {
         font-family: Verdana !important;
+      }
+      textarea {
+        padding: 10px;
+        border: 5px solid red;
+        border-radius: 10px;
       }
     </style>
   </head>
@@ -58,7 +63,7 @@
       </td><td style="padding-left: 2em">
         <input type="text" value="Foo bar baz" /><br /><br />
         <input type="text" value="Foo bar baz very long something here asd qwe" /><br /><br />
-        <textarea>This is a textarea This is a textarea This is a textarea</textarea>
+        <textarea>This is a textarea Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis ornare ex. Sed laoreet lacinia sollicitudin. Curabitur aliquet ipsum vel risus consequat semper. Fusce iaculis rutrum cursus. Nam velit est, tempor in efficitur ac, auctor vel est. Etiam volutpat metus sed nisi efficitur.</textarea>
       </td></tr></table>
 
       <table cellspacing="0" cellpadding="0"><tr><td>
