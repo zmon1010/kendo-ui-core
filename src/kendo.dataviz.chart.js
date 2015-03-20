@@ -9103,10 +9103,17 @@ var __meta__ = {
             var options = this.options.plotArea;
             var border = options.border || {};
 
+            var background = options.background;
+            var opacity = options.opacity;
+            if (util.isTransparent(background)) {
+                background = WHITE;
+                opacity = 0;
+            }
+
             var bg = this._bgVisual = draw.Path.fromRect(bgBox.toRect(), {
                 fill: {
-                    color: options.background,
-                    opacity: options.opacity
+                    color: background,
+                    opacity: opacity
                 },
                 stroke: {
                     color: border.width ? border.color : "",

@@ -2870,6 +2870,19 @@
             equal(rect.options.fill.opacity, 0.5);
         });
 
+        test("should render transparent plot area background by default", function() {
+            var categoryAxis = {
+                    categories: ["A"]
+                },
+                valueAxis = { };
+
+            renderPlotArea(categoryAxis, valueAxis);
+
+            var rect = plotArea._bgVisual;
+            equal(rect.options.fill.color, "#fff");
+            equal(rect.options.fill.opacity, 0);
+        });
+
     })();
 
     (function() {
