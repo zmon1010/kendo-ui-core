@@ -375,9 +375,9 @@
             ok(dom.find(":checkbox:first").prop("indeterminate"));
         });
 
-        test("templates are bound to correct item", function() {
+        test("child templates are bound to child item", function() {
             $('<div id="tmpl"><i class="text" data-bind="text: name"></i></div>').appendTo(QUnit.fixture);
-            var dom = $('<div data-role="treeview" data-template="tmpl" data-load-on-demand="false" data-bind="source: items" />').appendTo(QUnit.fixture);
+            var dom = $('<div data-role="treeview" data-template="tmpl" data-bind="source: items" />').appendTo(QUnit.fixture);
 
             var viewModel = kendo.observable({
                 items: kendo.observableHierarchy([
@@ -397,7 +397,48 @@
 
             viewModel.items[0].set("expanded", false);
 
-            equal(dom.find(".text:first").text(), "foo");
+            items = dom.find(".text");
+            equal(items.eq(0).text(), "foo");
+            equal(items.eq(1).text(), "bar");
+            equal(items.eq(2).text(), "baz");
+        });
+
+        test("root item after children is bound correctly", function() {
+            $('<div id="tmpl"><i data-bind="text: name"></i></div>').appendTo(QUnit.fixture);
+            var dom = $('<div data-role="treeview" data-template="tmpl" data-bind="source: items" />').appendTo(QUnit.fixture);
+
+            var viewModel = kendo.observable({
+                items: kendo.observableHierarchy([
+                    { name: "foo", expanded: true, items: [
+                      { name: "bar" },
+                      { name: "baz" }
+                    ] },
+                    { name: "qux" }
+                ])
+            });
+
+            kendo.bind(dom, viewModel);
+
+            var items = dom.find("i");
+            equal(items.last().text(), "qux");
+            equal(items.eq(1).text(), "bar");
+        });
+
+        test("changing item text rebinds MVVM bindings", function() {
+            $('<div id="tmpl"><i data-bind="text: name"></i></div>').appendTo(QUnit.fixture);
+            var dom = $('<div data-role="treeview" data-template="tmpl" data-bind="source: items" />').appendTo(QUnit.fixture);
+
+            var viewModel = kendo.observable({
+                items: kendo.observableHierarchy([
+                    { name: "foo" }
+                ])
+            });
+
+            kendo.bind(dom, viewModel);
+
+            viewModel.items[0].set("name", "bar");
+
+            equal(dom.find("i").text(), "bar");
         });
 
     })();

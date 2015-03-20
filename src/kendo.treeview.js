@@ -1258,7 +1258,7 @@ var __meta__ = {
 
         _updateNodes: function(items, field) {
             var that = this;
-            var i, node, item, isChecked, isCollapsed;
+            var i, node, nodeWrapper, item, isChecked, isCollapsed;
             var context = { treeview: that.options, item: item };
 
             function setCheckedState(root, state) {
@@ -1290,16 +1290,17 @@ var __meta__ = {
 
                 for (i = 0; i < items.length; i++) {
                     context.item = item = items[i];
-                    node = elements[i].parent();
+                    nodeWrapper = elements[i];
+                    node = nodeWrapper.parent();
 
                     if (field != "expanded" && field != "checked") {
-                        node.find(">div>.k-in").html(that.templates.itemContent(context));
+                        nodeWrapper.children(".k-in").html(that.templates.itemContent(context));
                     }
 
                     if (field == CHECKED) {
                         isChecked = item[field];
 
-                        setCheckedState(node.children("div"), isChecked);
+                        setCheckedState(nodeWrapper, isChecked);
 
                         if (that.options.checkboxes.checkChildren) {
                             setCheckedState(node.children(".k-group"), isChecked);
@@ -1334,7 +1335,7 @@ var __meta__ = {
                         that._updateNodeClasses(node, {}, { enabled: item[field], expanded: !isCollapsed });
                     }
 
-                    this.trigger("itemChange", { item: node, data: item, ns: ui });
+                    this.trigger("itemChange", { item: nodeWrapper, data: item, ns: ui });
                 }
 
                 that.angular("compile", function(){
@@ -1372,15 +1373,80 @@ var __meta__ = {
             }
         },
 
+        _refreshChildren: function(parentNode, items, index) {
+            var i, children, child;
+            var options = this.options;
+            var loadOnDemand = options.loadOnDemand;
+            var checkChildren = options.checkboxes && options.checkboxes.checkChildren;
+
+            subGroup(parentNode).empty();
+
+            if (!items.length) {
+                updateNodeHtml(parentNode);
+            } else {
+                this._appendItems(index, items, parentNode);
+
+                children = subGroup(parentNode).children();
+
+                if (loadOnDemand && checkChildren) {
+                    this._bubbleIndeterminate(children.last());
+                }
+
+                for (i = 0; i < children.length; i++) {
+                    child = children.eq(i);
+                    this.trigger("itemChange", {
+                        item: child.children("div"),
+                        data: this.dataItem(child),
+                        ns: ui
+                    });
+                }
+            }
+        },
+
+        _refreshRoot: function(items) {
+            var groupHtml = this._renderGroup({
+                    items: items,
+                    group: {
+                        firstLevel: true,
+                        expanded: true
+                    }
+                });
+
+            if (this.root.length) {
+                this._angularItems("cleanup");
+
+                var group = $(groupHtml);
+
+                this.root
+                    .attr("class", group.attr("class"))
+                    .html(group.html());
+            } else {
+                this.root = this.wrapper.html(groupHtml).children("ul");
+            }
+
+            this.root.attr("role", "tree");
+
+            for (var i = 0; i < items.length; i++) {
+                var elements = this.root.children(".k-item");
+                this.trigger("itemChange", {
+                    item: elements.eq(i),
+                    data: items[i],
+                    ns: ui
+                });
+            }
+
+            this._angularItems("compile");
+        },
+
         refresh: function(e) {
-            var parentNode = this.wrapper,
-                node = e.node,
-                action = e.action,
-                items = e.items,
-                options = this.options,
-                loadOnDemand = options.loadOnDemand,
-                checkChildren = options.checkboxes && options.checkboxes.checkChildren,
-                i;
+            var node = e.node;
+            var action = e.action;
+            var items = e.items;
+            var parentNode = this.wrapper;
+            var options = this.options;
+            var loadOnDemand = options.loadOnDemand;
+            var checkChildren = options.checkboxes && options.checkboxes.checkChildren;
+            var i;
 
             if (e.field) {
                 if (!items[0] || !items[0].level) {
@@ -1418,55 +1484,10 @@ var __meta__ = {
                 this._remove(this.findByUid(items[0].uid), false);
             } else if (action == "itemchange") {
                 this._updateNodes(items);
+            } else if (action == "itemloaded") {
+                this._refreshChildren(parentNode, items, e.index);
             } else {
-                if (node) {
-                    subGroup(parentNode).empty();
-
-                    if (!items.length) {
-                        updateNodeHtml(parentNode);
-
-                        this.trigger("itemChange", { item: parentNode, data: node, ns: ui });
-                    } else {
-                        this._appendItems(e.index, items, parentNode);
-
-                        var children = subGroup(parentNode).children();
-
-                        if (loadOnDemand && checkChildren) {
-                            this._bubbleIndeterminate(children.last());
-                        }
-
-                        for (i = 0; i < children.length; i++) {
-                            var child = children.eq(i);
-                            this.trigger("itemChange", { item: child, data: this.dataItem(child), ns: ui });
-                        }
-                    }
-                } else {
-
-                    var groupHtml = this._renderGroup({
-                            items: items,
-                            group: {
-                                firstLevel: true,
-                                expanded: true
-                            }
-                        });
-
-                    if (this.root.length) {
-
-                        this._angularItems("cleanup");
-
-                        var group = $(groupHtml);
-
-                        this.root
-                            .attr("class", group.attr("class"))
-                            .html(group.html());
-                    } else {
-                        this.root = this.wrapper.html(groupHtml).children("ul");
-                    }
-
-                    this.root.attr("role", "tree");
-
-                    this._angularItems("compile");
-                }
+                this._refreshRoot(items);
             }
 
             if (action != "remove") {
@@ -1477,9 +1498,7 @@ var __meta__ = {
                 }
             }
 
-            this.trigger(DATABOUND, {
-                node: node ? parentNode : undefined
-            });
+            this.trigger(DATABOUND, { node: node ? parentNode : undefined });
         },
 
         _error: function(e) {
