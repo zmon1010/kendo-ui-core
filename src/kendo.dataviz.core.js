@@ -2025,35 +2025,30 @@ var __meta__ = {
                 vertical = options.vertical,
                 labels = axis.labels,
                 count = labels.length,
-                space = axis.getActualTickSize() + options.margin,
-                maxLabelHeight = 0,
-                maxLabelWidth = 0,
                 title = axis.title,
-                label, i;
+                sizeFn = vertical ? WIDTH : HEIGHT,
+                titleSize = title ? title.box[sizeFn]() : 0,
+                space = axis.getActualTickSize() + options.margin + titleSize,
+                maxLabelSize = 0,
+                boxSize = box[sizeFn](),
+                labelSize, i;
 
             for (i = 0; i < count; i++) {
-                label = labels[i];
-                maxLabelHeight = math.max(maxLabelHeight, label.box.height());
-                maxLabelWidth = math.max(maxLabelWidth, label.box.width());
-            }
-
-            if (title) {
-                if (vertical) {
-                    maxLabelWidth += title.box.width();
-                } else {
-                    maxLabelHeight += title.box.height();
+                labelSize = labels[i].box[sizeFn]();
+                if (labelSize + space <= boxSize) {
+                    maxLabelSize = math.max(maxLabelSize, labelSize);
                 }
             }
 
             if (vertical) {
                 axis.box = Box2D(
                     box.x1, box.y1,
-                    box.x1 + maxLabelWidth + space, box.y2
+                    box.x1 + maxLabelSize + space, box.y2
                 );
             } else {
                 axis.box = Box2D(
                     box.x1, box.y1,
-                    box.x2, box.y1 + maxLabelHeight + space
+                    box.x2, box.y1 + maxLabelSize + space
                 );
             }
 

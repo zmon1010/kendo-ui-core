@@ -1926,4 +1926,92 @@
             equal(Math.round(r.max), 2);
         });
     })();
+
+    (function() {
+        var ACTUAL_TICK_SIZE = 5;
+        var MARGIN = 5;
+        var axisBox;
+        var axis;
+
+        function LabelMock(box) {
+            this.box = box;
+            this.options = {};
+            this.reflow = function(box) {
+                this.box = box;
+            };
+        }
+
+        // ------------------------------------------------------------
+        module("Numeric Axis / Horizontal / reflow", {
+            setup: function() {
+                axis = new NumericAxis(0, 1, { vertical: false, margin: MARGIN });
+                axis.labels = [new LabelMock(Box2D(0, 0, 20, 20)), new LabelMock(Box2D(0, 0, 20, 30))];
+                axisBox = new Box2D(0, 0, 100, 100);
+                axis.getActualTickSize = function() {
+                    return ACTUAL_TICK_SIZE;
+                };
+            }
+        });
+
+        test("box height is equal to the maximum label height plus the tick size plus the margin ", function() {
+            axis.reflow(axisBox);
+            equal(axis.box.height(), 30 + ACTUAL_TICK_SIZE + MARGIN);
+        });
+
+        test("box height includes title height if title is set", function() {
+            axis.title = new LabelMock(Box2D(0, 0, 20, 40));
+            axis.reflow(axisBox);
+            equal(axis.box.height(), 70 + ACTUAL_TICK_SIZE + MARGIN);
+        });
+
+        test("only labels with height that can be fitted in the container box are taken into account", function() {
+            axis.labels.push(new LabelMock(Box2D(0, 0, 20, 101 - ACTUAL_TICK_SIZE - MARGIN)));
+            axis.reflow(axisBox);
+            equal(axis.box.height(), 30 + ACTUAL_TICK_SIZE + MARGIN);
+        });
+
+        test("only labels with height that can be fitted in the container box including the title are taken into account", function() {
+            axis.title = new LabelMock(Box2D(0, 0, 20, 40));
+            axis.labels.push(new LabelMock(Box2D(0, 0, 20, 61 - ACTUAL_TICK_SIZE - MARGIN)));
+            axis.reflow(axisBox);
+            equal(axis.box.height(), 70 + ACTUAL_TICK_SIZE + MARGIN);
+        });
+
+        // ------------------------------------------------------------
+        module("Numeric Axis / Vertical / reflow", {
+            setup: function() {
+                axis = new NumericAxis(0, 1, { vertical: true, margin: MARGIN });
+                axis.labels = [new LabelMock(Box2D(0, 0, 20, 20)), new LabelMock(Box2D(0, 0, 30, 20))];
+                axisBox = new Box2D(0, 0, 100, 100);
+                axis.getActualTickSize = function() {
+                    return ACTUAL_TICK_SIZE;
+                };
+            }
+        });
+
+        test("box width is equal to the maximum label width plus the tick size plus the margin", function() {
+            axis.reflow(axisBox);
+            equal(axis.box.width(), 30 + ACTUAL_TICK_SIZE + MARGIN);
+        });
+
+        test("box width includes title width if title is set", function() {
+            axis.title = new LabelMock(Box2D(0, 0, 40, 20));
+            axis.reflow(axisBox);
+            equal(axis.box.width(), 70 + ACTUAL_TICK_SIZE + MARGIN);
+        });
+
+        test("only labels with width that can be fitted in the container box are taken into account", function() {
+            axis.labels.push(new LabelMock(Box2D(0, 0, 101 - ACTUAL_TICK_SIZE - MARGIN, 20)));
+            axis.reflow(axisBox);
+            equal(axis.box.width(), 30 + ACTUAL_TICK_SIZE + MARGIN);
+        });
+
+        test("only labels with width that can be fitted in the container box including the title are taken into account", function() {
+            axis.title = new LabelMock(Box2D(0, 0, 40, 20));
+            axis.labels.push(new LabelMock(Box2D(0, 0, 61 - ACTUAL_TICK_SIZE - MARGIN, 20)));
+            axis.reflow(axisBox);
+            equal(axis.box.width(), 70 + ACTUAL_TICK_SIZE + MARGIN);
+        });
+    })();
+
 })();
