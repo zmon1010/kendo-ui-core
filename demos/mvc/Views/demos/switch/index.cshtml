@@ -1,58 +1,62 @@
-<div data-role="view" id="switch-home" data-init="mobileSwitchInit" data-title="User Settings">
-    <ul data-role="listview" data-style="inset" data-type="group">
-        <li>Profile
-            <ul>
-                <li><h2>Eduardo <span>Saavedra</span></h2><img src="../content/mobile/overview/eduardo.jpg" /></li>
-                <li>Brand Manager at Marketing Team</li>
-            </ul>
-        </li>
+<div id="example">
+    <div class="demo-section k-content">
+        <div class="settings-head"></div>
+        <dl>
+            <dt>Notifications</dt><dd><input type="checkbox" id="notifications-switch" checked="checked" /></dd>
+            <dt>Send notifications via mail</dt><dd><input id="mail-switch" /></dd>
+            <dt>Always visible to everyone</dt><dd><input id="visible-switch" /></dd>
+            <dt>Display real name</dt><dd><input id="name-switch" /></dd>
+        </dl>
+    </div>
 
-        <li>Password
-            <ul>
-                <li>User cannot change pasword <input data-role="switch" id="email-switch" checked="checked" /></li>
-                <li>Password never expires <input id="wink-switch" /></li>
-            </ul>
-        </li>
-
-        <li>Newsletter Subscription
-            <ul>
-                <li>Subscribed <input id="subscription-switch" /></li>
-            </ul>
-        </li>
-    </ul>
+    <style>
+        .demo-section dl {
+            margin: 0;
+            padding: 0;
+        }
+        .demo-section dl dt,
+        .demo-section dl dd {
+            display: inline-block;
+            margin: 0;
+            padding: 0 0 0 20px;
+            height: 40px;
+            line-height: 40px;
+            vertical-align: middle;
+            border-top: 1px solid rgba(128,128,128,.5);
+        }
+        .demo-section dl dt {
+            width: 185px;
+            clear: left;
+            text-align: left;
+        }
+        .demo-section dl dd {
+            width: 80px;
+            text-align: right;
+            padding-right: 10px;
+        }
+        .demo-section {
+            width: 315px;
+            margin-top: 50px;
+            padding: 0;
+            text-align: center;
+        }
+        .settings-head {
+            height: 66px;
+            background: url('../content/web/switch/settings-title.png') no-repeat 20px 50% #2db245;
+        }
+    </style>
 </div>
 
 <script>
-    function mobileSwitchInit() {
-        $("#wink-switch").kendoMobileSwitch();
-
-        $("#subscription-switch").kendoMobileSwitch({
-            checked: true,
+    $(function() {
+        $("#notifications-switch").kendoMobileSwitch();
+        $("#mail-switch").kendoMobileSwitch({
             onLabel: "YES",
             offLabel: "NO"
         });
-    }
+        $("#visible-switch").kendoMobileSwitch({
+            checked: true
+        });
+        $("#name-switch").kendoMobileSwitch();
+    });
 </script>
-
-<style>
-#switch-home h2 {
-    display: inline-block;
-    font-size: 1.1em;
-    margin: 1.5em 0 0 .7em;
-}
-#switch-home h2 span {
-    display: block;
-    clear: both;
-    font-size: 1.8em;
-    margin: .1em 0 0 0;
-}
-#switch-home img {
-    width: 5em;
-    height: 5em;
-    float: left;
-    margin: 1em;
-    border: 1px solid rgba(0,0,0,.2);
-    -webkit-border-radius: 4em;
-    border-radius: 4em;
-}
-</style>

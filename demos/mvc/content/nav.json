@@ -330,6 +330,7 @@
     "text": "ButtonGroup",
     "name": "buttongroup",
     "api": "mobile/buttongroup",
+    "category": "Navigation",
     "documentation": {
        "kendo-ui": "getting-started/mobile/buttongroup",
        "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilebuttongroup/overview"
@@ -360,8 +361,7 @@
           "!php"
         ]
       }
-    ],
-    "category": "Mobile"
+    ]
   },
   {
     "text": "Calendar",
@@ -10702,74 +10702,17 @@
        "aspnet-mvc": "aspnet-mvc/switch"
     },
     "spriteCssClass": "mobileSwitchIcon",
-    "mobile": true,
+    "category": "Editors",
     "packages": [ "!jsp", "!php" ],
     "items": [
       {
-        "text": "Basic usage",
+        "text": "Basic Usage",
         "url": "switch/index",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile Flip Switch Demo",
-            "aspnet-mvc": "Mobile Switch control demo | UI for ASP.NET MVC Demos"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how Kendo UI Switch widget is used on apps for binary on/off or true/false (yes/no) data input.",
-            "aspnet-mvc": "This demo shows how ASP.NET MVC Switch control is used on apps for binary on/off or true/false (yes/no) data input."
-        }
-      },
-      {
-        "text": "Events",
-        "url": "switch/events",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile Switch widget events examples",
-            "aspnet-mvc": "ASP.NET MVC Mobile Switch control events examples"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows all events, enabled for Kendo UI Mobile Switch component. The events correlate to the value of the switch widget.",
-            "aspnet-mvc": "This demo shows all events, enabled for ASP.NET MVC Mobile Switch component. The events correlate to the value of the switch control."
-        }
-      },
-      {
-        "text": "MVVM",
-        "url": "switch/mvvm",
-        "title": {
-            "kendo-ui": "MVVM support in Kendo UI Mobile Switch"
-        },
-        "meta": {
-            "kendo-ui": "Checked, enabled, events and visible MVVM binding support in Kendo UI Mobile Switch"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "switch/adaptive",
         "title": {
             "kendo-ui": "Mobile Switch widget demo | Kendo UI Demos"
         },
         "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile Switch may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "switch/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile Switch"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile Switch"
+            "kendo-ui": "This example demonstrates the Switch widget"
         },
         "packages": [
           "!mvc",
@@ -10777,8 +10720,7 @@
           "!php"
         ]
       }
-    ],
-    "category": "Mobile"
+    ]
   },
   {
     "text": "TabStrip",
@@ -10876,28 +10818,25 @@
     "text": "Touch Events",
     "name": "touchevents",
     "api": "mobile/touch",
+    "category": "Framework",
     "documentation": {
        "kendo-ui": "getting-started/mobile/touch"
     },
     "spriteCssClass": "mobileAppIcon",
-    "mobile": true,
     "packages": [ "!mvc", "!jsp", "!php" ],
     "items": [
       {
         "text": "Touch Events",
         "url": "touchevents/index",
         "title": {
-            "kendo-ui": "Touch Events Demo in Kendo UI jQuery-powered mobile framework"
+            "kendo-ui": "Kendo UI Touch Events Demo"
         },
         "meta": {
-            "kendo-ui": "Play with this Kendo UI Mobile demo to explore the touch events in Kendo UI Mobile advanced mobile app framework."
+            "kendo-ui": ""
         }
       },
       {
         "text": "AngularJS",
-        "mobile": true,
-        "new": "true",
-        "disableInMobile": true,
         "url": "touchevents/angular",
         "title": {
             "kendo-ui": "AngularJS support in Kendo UI Touch Events"
@@ -10911,9 +10850,7 @@
           "!php"
         ]
       }
-
-    ],
-    "category": "Mobile"
+    ]
   },
   {
     "text": "View",
