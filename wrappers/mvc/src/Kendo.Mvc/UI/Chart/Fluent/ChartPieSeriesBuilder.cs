@@ -367,5 +367,30 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Configure the series tooltip.
+        /// </summary>
+        /// <param name="configurator">Use the configurator to set the tooltip options.</param>
+        public ChartPieSeriesBuilder<T> Tooltip(Action<ChartTooltipBuilder> configurator)
+        {
+
+            configurator(new ChartTooltipBuilder(Series.Tooltip));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the tooltip visibility.
+        /// </summary>
+        /// <param name="visible">
+        /// A value indicating if the tooltip should be displayed.
+        /// </param>
+        public ChartPieSeriesBuilder<T> Tooltip(bool visible)
+        {
+            Series.Tooltip.Visible = visible;
+
+            return this;
+        }
     }
 }
