@@ -50,9 +50,7 @@ var ImageCommand = Command.extend({
 
             if (!img) {
                 img = dom.create(doc, "img", attributes);
-                img.onload = img.onerror = function () {
-                    removeIEAttributes();
-                };
+                img.onload = img.onerror = removeIEAttributes;
 
                 range.deleteContents();
                 range.insertNode(img);
@@ -68,6 +66,7 @@ var ImageCommand = Command.extend({
                 RangeUtils.selectRange(range);
                 return true;
             } else {
+                img.onload = img.onerror = removeIEAttributes;
                 dom.attr(img, attributes);
                 removeIEAttributes();
             }
