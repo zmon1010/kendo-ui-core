@@ -327,6 +327,43 @@
     "category": "Navigation"
   },
   {
+    "text": "ButtonGroup",
+    "name": "buttongroup",
+    "api": "mobile/buttongroup",
+    "documentation": {
+       "kendo-ui": "getting-started/mobile/buttongroup",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilebuttongroup/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/button-group",
+       "aspnet-mvc": "aspnet-mvc/buttongroup"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/buttongroup",
+       "aspnet-mvc": "aspnet-mvc/buttongroup"
+    },
+    "spriteCssClass": "mobileButtonGroupIcon",
+    "packages": [ "!jsp", "!php" ],
+    "items": [
+      {
+        "text": "Basic Usage",
+        "url": "buttongroup/index",
+        "title": {
+            "kendo-ui": "Mobile ButtonGroup widget demo | Kendo UI Demos"
+        },
+        "meta": {
+            "kendo-ui": "This example demonstrates the Mobile ButtonGroup"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Mobile"
+  },
+  {
     "text": "Calendar",
     "name": "calendar",
     "api": "web/calendar",
@@ -9768,137 +9805,6 @@
     ],
     "category": "Mobile"
 
-  },
-  {
-    "text": "ButtonGroup",
-    "name": "buttongroup",
-    "api": "mobile/buttongroup",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/buttongroup",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilebuttongroup/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/button-group",
-       "aspnet-mvc": "aspnet-mvc/buttongroup"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/buttongroup",
-       "aspnet-mvc": "aspnet-mvc/buttongroup"
-    },
-    "spriteCssClass": "mobileButtonGroupIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "buttongroup/index",
-        "title": {
-            "kendo-ui": "Example of Kendo UI Mobile Button Group",
-            "aspnet-mvc": "ASP.NET MVC Button Group sample "
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the core functionality of Kendo UI Mobile Button Group. When the horizontal group button is active, its corresponding items are visualized on the screen.",
-            "aspnet-mvc": "In this example you will see in action the basic functionality of Telerik Button Group helper for ASP.NET MVC."
-        }
-      },
-      {
-        "text": "NavBar usage",
-        "url": "buttongroup/navbar",
-        "title": {
-            "kendo-ui": "Example of Kendo UI Mobile Button Group in a NavBar",
-            "aspnet-mvc": "Example of ASP.NET MVC Mobile Button Group in a NavBar"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the core functionality of Kendo UI Mobile Button Group when placed in a NavBar.",
-            "aspnet-mvc": "This demo shows the core functionality of ASP.NET MVC Mobile Button Group when placed in a NavBar."
-        }
-      },
-      {
-        "text": "Badges",
-        "url": "buttongroup/badges",
-        "title": {
-            "kendo-ui": "Example of Kendo UI Mobile Button Group used with badges",
-            "aspnet-mvc": "Adding badges to Telerik ASP.NET MVC ButtonGroup"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the core functionality of Kendo UI Mobile Button Group when used with badges.",
-            "aspnet-mvc": "In this demo you will see how to add and use badges for Telerik ButtonGroup in ASP.NET MVC."
-        }
-      },
-      {
-        "text": "Events",
-        "url": "buttongroup/events",
-        "title": {
-            "kendo-ui": "Events in Kendo UI Mobile Button Group | Kendo ButtonGroup Demo",
-            "aspnet-mvc": "Events in ASP.NET MVC Mobile Button Group"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the events which can be bound to Kendo UI ButtonGroup widget.",
-            "aspnet-mvc": "This demo shows the events which can be bound to the ASP.NET MVC ButtonGroup component."
-        }
-      },
-      {
-        "text": "Customizing appearance",
-        "url": "buttongroup/appearance",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile Button Group Theming",
-            "aspnet-mvc": "ASP.NET MVC Mobile Button Group Theming"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how you can customize the appearance of Kendo UI ButtonGroup mobile widget. You have full control over the style of the buttons group.",
-            "aspnet-mvc": "This demo shows how you can customize the appearance of ASP.NET MVC Mobile ButtonGroup. You have full control over the style of the buttons group."
-        }
-      },
-      {
-        "text": "MVVM",
-        "url": "buttongroup/mvvm",
-        "title": {
-            "kendo-ui": "MVVM support in Kendo UI Mobile ButtonGroup"
-        },
-        "meta": {
-            "kendo-ui": "Events and visible MVVM binding support in Kendo UI Mobile ButtonGroup"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "buttongroup/adaptive",
-        "title": {
-            "kendo-ui": "Mobile ButtonGroup widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile ButtonGroup may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "disableInMobile": true,
-        "mobile": true,
-        "url": "buttongroup/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile ButtonGroup"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile ButtonGroup"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
   },
   {
     "text": "Collapsible",
