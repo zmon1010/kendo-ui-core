@@ -5440,6 +5440,39 @@
     "category": "Data Management"
   },
   {
+    "text": "ScrollView",
+    "name": "scrollview",
+    "api": "mobile/scrollview",
+    "category": "Data Management",
+    "spriteCssClass": "mobileScrollViewIcon",
+    "packages": [ "!jsp", "!php" ],
+    "documentation": {
+       "kendo-ui": "getting-started/mobile/scrollview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilescrollview/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/scrollview",
+       "aspnet-mvc": "aspnet-mvc/scrollview"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/scrollview",
+       "aspnet-mvc": "aspnet-mvc/scrollview"
+    },
+    "items": [
+      {
+        "text": "Basic Usage",
+        "url": "scrollview/index",
+        "title": {
+            "kendo-ui": "Mobile ScrollView widget demo | Kendo UI Demos"
+        },
+        "meta": {
+            "kendo-ui": "This example demonstrates the ScrollView widget basic usage"
+        },
+        "packages": [ "!mvc", "!jsp", "!php" ]
+      }
+    ]
+  },
+  {
     "text": "TreeView",
     "name": "treeview",
     "pro": "true",
@@ -10670,100 +10703,6 @@
         },
         "meta": {
             "kendo-ui": "AngularJS directive support for Kendo UI Mobile Scroller"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "ScrollView",
-    "name": "scrollview",
-    "api": "mobile/scrollview",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/scrollview",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilescrollview/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/scrollview",
-       "aspnet-mvc": "aspnet-mvc/scrollview"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/scrollview",
-       "aspnet-mvc": "aspnet-mvc/scrollview"
-    },
-    "spriteCssClass": "mobileScrollViewIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "scrollview/index",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile ScrollView Example",
-            "aspnet-mvc": "ASP.NET MVC Mobile ScrollView Example"
-        },
-        "meta": {
-            "kendo-ui": "This demo illustrates the intuitive scrolling on a touch device by using Kendo UI ScrollView widget in your HTML5 app.",
-            "aspnet-mvc": "This demo illustrates the intuitive scrolling on a touch device by using ASP.NET MVC ScrollView control in your ASP.NET MVC app."
-        }
-      },
-      {
-        "text": "Data binding",
-        "url": "scrollview/databinding",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile ScrollView DataBinding Example"
-        },
-        "packages": [
-          "!mvc"
-        ],
-        "meta": {
-            "kendo-ui": "This demo illustrates the data virtualization on a touch device by using Kendo UI ScrollView widget in your HTML5 app."
-        }
-      },
-      {
-        "text": "Custom template",
-        "url": "scrollview/custom-template",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile ScrollView Template Customization Example"
-        },
-        "packages": [
-          "!mvc"
-        ],
-        "meta": {
-            "kendo-ui": "This demo illustrates the data virtualization on a touch device by using Kendo UI ScrollView widget in your HTML5 app."
-        }
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "scrollview/adaptive",
-        "title": {
-            "kendo-ui": "Mobile ScrollView widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile ScrollView may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "scrollview/angular",
-        "title": {
-            "kendo-ui": "AngularJS support for Kendo UI Mobile ScrollView"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile ScrollView"
         },
         "packages": [
           "!mvc",
