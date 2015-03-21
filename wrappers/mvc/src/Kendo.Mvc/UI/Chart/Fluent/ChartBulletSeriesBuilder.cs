@@ -29,7 +29,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Set distance between category clusters. 
+        /// Set distance between category clusters.
         /// <param name="gap">
         /// A value of 1 means that there is a total of 1 bullet width / vertical bullet height between categories.
         /// The distance is distributed evenly on each side.
@@ -87,7 +87,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///           .Render();
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartBulletSeriesBuilder<T> Border(int width, string color, ChartDashType dashType)
         {
             Series.Border = new ChartElementBorder(width, color, dashType);
@@ -107,7 +107,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///           .Render();
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartBulletSeriesBuilder<T> Overlay(ChartBarSeriesOverlay overlay)
         {
             Series.Overlay = overlay;
@@ -133,7 +133,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
-        
+
         /// <summary>
         /// Sets the series opacity.
         /// </summary>
@@ -168,7 +168,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///           .Render();
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartBulletSeriesBuilder<T> Color(string color)
         {
             Series.Color = color;
@@ -280,7 +280,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///            .Render();
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartBulletSeriesBuilder<T> CurrentField(string currentField)
         {
             Series.CurrentMember = currentField;
@@ -300,7 +300,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///            .Render();
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartBulletSeriesBuilder<T> TargetField(string targetField)
         {
             Series.TargetMember = targetField;
@@ -351,8 +351,8 @@ namespace Kendo.Mvc.UI.Fluent
         /// <code lang="CS">
         /// &lt;% Html.Kendo().Chart()
         ///            .Name("Chart")
+        ///            .Series(series => series
         ///                .Bullet(s => s.Current, s => s.Target)
-        ///                .Bar(s => s.Sales)
         ///                .ColorHandler("pointColor")
         ///             )
         ///            .Render();
@@ -378,7 +378,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///            .Render();
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartBulletSeriesBuilder<T> ColorField(string colorField)
         {
             Series.ColorMember = colorField;
@@ -398,7 +398,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///            .Render();
         /// %&gt;
         /// </code>
-        /// </example>        
+        /// </example>
         public ChartBulletSeriesBuilder<T> NoteTextField(string noteTextField)
         {
             Series.NoteTextMember = noteTextField;
