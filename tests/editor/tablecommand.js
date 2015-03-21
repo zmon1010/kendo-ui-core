@@ -77,6 +77,9 @@ test("first cell is focused after insertion", function() {
     execTableCommand({ range:range });
 
     range = editor.getRange();
+
+    ok(range.collapsed);
+
     range.insertNode(editor.document.createElement("a"));
 
     equal(editor.value(), "foo<table><tbody><tr><td><a></a></td></tr></tbody></table>");

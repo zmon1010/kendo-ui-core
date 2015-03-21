@@ -38,7 +38,8 @@ var TableCommand = InsertHtmlCommand.extend({
     postProcess: function(editor, range) {
         var insertedTable = $("table[data-last]", editor.document).removeAttr("data-last");
 
-        range.selectNodeContents(insertedTable.find("td")[0]);
+        range.setStart(insertedTable.find("td")[0], 0);
+        range.collapse(true);
 
         editor.selectRange(range);
     },
