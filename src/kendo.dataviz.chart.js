@@ -3682,7 +3682,7 @@ var __meta__ = {
             if (this.options.isStacked) {
                 startValue = startValue || 0;
                 var plotValue = this.plotValue(point);
-                var positive = plotValue > 0;
+                var positive = plotValue >= 0;
                 var prevValue = startValue;
                 var isStackedBar = false;
 
@@ -3706,7 +3706,7 @@ var __meta__ = {
                     }
 
                     var otherValue = this.plotValue(other);
-                    if ((otherValue > 0 && positive) ||
+                    if ((otherValue >= 0 && positive) ||
                         (otherValue < 0 && !positive)) {
                         prevValue += otherValue;
                         plotValue += otherValue;

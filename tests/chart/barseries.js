@@ -2898,7 +2898,7 @@
         // ------------------------------------------------------------
         module("Bar Chart  / Plot range / Stack / Positive values", {
             setup: function() {
-                createChart([{ data: [1] }, { data: [2] }],
+                createChart([{ data: [1] }, { data: [2] }, { data: [0] }],
                              { isStacked: true });
             }
         });
@@ -2911,10 +2911,14 @@
             deepEqual(chart.plotRange(chart.points[1]), [1, 3]);
         });
 
+        test("zero value is included in positive stack", function() {
+            deepEqual(chart.plotRange(chart.points[2]), [3, 3]);
+        });
+
         // ------------------------------------------------------------
         module("Bar Chart  / Plot range / Stack / Negative values", {
             setup: function() {
-                createChart([{ data: [-1] }, { data: [-2] }],
+                createChart([{ data: [-1] }, { data: [-2] }, { data: [0] }],
                              { isStacked: true });
             }
         });
@@ -2927,10 +2931,14 @@
             deepEqual(chart.plotRange(chart.points[1]), [-1, -3]);
         });
 
+        test("zero value is not included in negative stack", function() {
+            deepEqual(chart.plotRange(chart.points[2]), [0, 0]);
+        });
+
         // ------------------------------------------------------------
         module("Bar Chart  / Plot range / Stack / Mixed values", {
             setup: function() {
-                createChart([{ data: [1] }, { data: [-1] }],
+                createChart([{ data: [1] }, { data: [-1] }, { data: [0] }],
                              { isStacked: true });
             }
         });
@@ -2941,6 +2949,10 @@
 
         test("from axis to negative value", function() {
             deepEqual(chart.plotRange(chart.points[1]), [0, -1]);
+        });
+
+        test("zero value is included in positive stack", function() {
+            deepEqual(chart.plotRange(chart.points[2]), [1, 1]);
         });
 
         // ------------------------------------------------------------
@@ -2960,12 +2972,17 @@
             test("second stack, from prev point to value", function() {
                 deepEqual(chart.plotRange(chart.points[3]), [3, 7]);
             });
+
+            test("zero value is included in the corresponding positive stack", function() {
+                deepEqual(chart.plotRange(chart.points[4]), [7, 7]);
+            });
         }
 
         module("Bar Chart  / Plot range / Multiple Stacks / Positive values", {
             setup: function() {
                 createChart([{ data: [1], stack: "a" }, { data: [2], stack: "a" },
-                             { data: [3], stack: "b" }, { data: [4], stack: "b" }],
+                             { data: [3], stack: "b" }, { data: [4], stack: "b" },
+                             { data: [0], stack: "b" }],
                              { isStacked: true });
             }
         });
@@ -2976,7 +2993,8 @@
                 createChart([{ data: [1], stack: { group: "a" } },
                              { data: [2], stack: { group: "a" } },
                              { data: [3], stack: { group: "b" } },
-                             { data: [4], stack: { group: "b" } }],
+                             { data: [4], stack: { group: "b" } },
+                             { data: [0], stack: { group: "b" } }],
                              { isStacked: true });
             }
         });
@@ -2999,12 +3017,17 @@
             test("second stack, from prev point to value", function() {
                 deepEqual(chart.plotRange(chart.points[3]), [-3, -7]);
             });
+
+            test("zero value is not included in corresponding negative stack", function() {
+                deepEqual(chart.plotRange(chart.points[4]), [0, 0]);
+            });
         }
 
         module("Bar Chart  / Plot range / Multiple Stacks / Negative values", {
             setup: function() {
                 createChart([{ data: [-1], stack: "a" }, { data: [-2], stack: "a" },
-                             { data: [-3], stack: "b" }, { data: [-4], stack: "b" }],
+                             { data: [-3], stack: "b" }, { data: [-4], stack: "b" },
+                             { data: [0], stack: "b" }],
                              { isStacked: true });
             }
         });
@@ -3015,7 +3038,8 @@
                 createChart([{ data: [-1], stack: { group: "a" } },
                              { data: [-2], stack: { group: "a" } },
                              { data: [-3], stack: { group: "b" } },
-                             { data: [-4], stack: { group: "b" } }],
+                             { data: [-4], stack: { group: "b" } },
+                             { data: [0], stack: { group: "b" } }],
                              { isStacked: true });
             }
         });
