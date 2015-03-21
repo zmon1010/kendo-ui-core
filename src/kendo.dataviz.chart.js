@@ -5320,11 +5320,12 @@ var __meta__ = {
                     this._addSegment(lastSegment);
                 }
             }
+
+            this.children.unshift.apply(this.children, this._segments);
         },
 
         _addSegment: function(segment) {
             this._segments.push(segment);
-            this.children.unshift(segment);
             segment.parent = this;
         },
 

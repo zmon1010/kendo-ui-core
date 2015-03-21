@@ -160,6 +160,24 @@ function baseLineChartTests(seriesName, TChart) {
             }
         });
 
+        test("renders segments in the order specified with the series configuration", function() {
+            createChart({
+                series: [{
+                    name: "foo",
+                    data: [0, 1]
+                }, {
+                    name: "bar",
+                    data: [1, 2]
+                }]
+            });
+
+            var segments = $.grep(chart.children, function(item) {
+                return item instanceof dataviz.LineSegment;
+            });
+            equal(segments[0].series.name, "foo");
+            equal(segments[1].series.name, "bar");
+        });
+
     })();
 
     (function() {
