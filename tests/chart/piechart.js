@@ -135,8 +135,19 @@
             equal(typeof firstSegment.dataItem, "object");
         });
 
-        test("sets segment dataItem", function() {
+        test("sets segment percentage", function() {
             close(firstSegment.percentage, 0.333, TOLERANCE);
+        });
+
+        test("sets segment percentage to zero if total is zero", function() {
+            plotArea = new PlotAreaStub();
+            setupPieChart(plotArea, { series: [{
+                type: "pie",
+                data: [{
+                   value: 0
+                }]
+            }] });
+            equal(firstSegment.percentage, 0);
         });
 
         test("sets segment explode", function() {

@@ -7504,7 +7504,7 @@ var __meta__ = {
                         series: currentSeries,
                         seriesIx: seriesIx,
                         dataItem: data[i],
-                        percentage: plotValue / total,
+                        percentage: total !== 0 ? plotValue / total : 0,
                         explode: explode,
                         visibleInLegend: fields.visibleInLegend,
                         visible: fields.visible,
