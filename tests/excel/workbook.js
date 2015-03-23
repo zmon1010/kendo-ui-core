@@ -95,6 +95,25 @@ test("toDataUrl creates definedName for every sheet with autoFilter", function()
     equal(dom.find("definedNames > definedName").eq(1).text(), "Foo!$B$1:$C$1");
 });
 
+test("toDataUrl creates definedName for columns with two letters", function() {
+    var workbook = new kendo.ooxml.Workbook({
+        sheets: [
+            {
+                columns: [ {}, {} , {}],
+                filter: { from: 0, to: 26 }
+            }
+        ]
+    });
+
+    workbook.toDataURL();
+
+    var dom = $(JSZip.prototype.files["workbook.xml"]);
+    equal(dom.find("definedNames > definedName").length, 1);
+    equal(dom.find("definedNames > definedName").attr("name"), "_xlnm._FilterDatabase");
+    equal(dom.find("definedNames > definedName").eq(0).attr("localSheetId"), "0");
+    equal(dom.find("definedNames > definedName").eq(0).text(), "Sheet1!$A$1:$AA$1");
+});
+
 test("toDataUrl sets the name of the sheet element to the title option", function() {
     var workbook = new kendo.ooxml.Workbook({
         sheets: [ { title: "foo"} ]

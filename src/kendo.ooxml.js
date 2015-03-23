@@ -101,7 +101,7 @@ var WORKBOOK = kendo.template(
   '<definedNames>' +
   ' # for (var di = 0; di < definedNames.length; di++) { #' +
   '<definedName name="_xlnm._FilterDatabase" hidden="1" localSheetId="${definedNames[di].localSheetId}">' +
-  '${definedNames[di].name}!$${definedNames[di].from.split("").join("$")}:$${definedNames[di].to.split("").join("$")}' +
+  '${definedNames[di].name}!$${definedNames[di].from}:$${definedNames[di].to}' +
   '</definedName>' +
   ' # } #' +
   '</definedNames>' +
@@ -307,6 +307,10 @@ function numChar(colIndex) {
 
 function ref(rowIndex, colIndex) {
     return numChar(colIndex) + (rowIndex + 1);
+}
+
+function $ref(rowIndex, colIndex) {
+    return numChar(colIndex) + "$" + (rowIndex + 1);
 }
 
 function filterRowIndex(options) {
@@ -623,8 +627,8 @@ var Workbook = kendo.Class.extend({
                     return {
                         localSheetId: index,
                         name: (options.title || "Sheet" + (index + 1)),
-                        from: ref(filterRowIndex(options), filter.from),
-                        to: ref(filterRowIndex(options), filter.to)
+                        from: $ref(filterRowIndex(options), filter.from),
+                        to: $ref(filterRowIndex(options), filter.to)
                     };
                 }
             })
