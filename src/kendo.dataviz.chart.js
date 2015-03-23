@@ -4045,8 +4045,7 @@ var __meta__ = {
             var chart = this,
                 options = chart.options,
                 series = options.series,
-                categories,
-                categoryAxis,
+                categories = chart.categoryAxis.options.categories || [],
                 count = categoriesCount(series),
                 categoryIx,
                 seriesIx,
@@ -4058,8 +4057,6 @@ var __meta__ = {
             for (categoryIx = 0; categoryIx < count; categoryIx++) {
                 for (seriesIx = 0; seriesIx < seriesCount; seriesIx++) {
                     currentSeries = series[seriesIx];
-                    categoryAxis = chart.plotArea.seriesCategoryAxis(currentSeries);
-                    categories = categoryAxis.options.categories || [];
                     currentCategory = categories[categoryIx];
                     pointData = this._bindPoint(currentSeries, seriesIx, categoryIx);
 
@@ -8020,8 +8017,7 @@ var __meta__ = {
 
         traverseDataPoints: function(callback) {
             var series = this.options.series;
-            var categoryAxis;
-            var categories;
+            var categories = this.categoryAxis.options.categories || [];
             var totalCategories = categoriesCount(series);
             var isVertical = !this.options.invertAxes;
 
@@ -8029,8 +8025,6 @@ var __meta__ = {
                 var currentSeries = series[seriesIx];
                 var total = 0;
                 var runningTotal = 0;
-                categoryAxis = this.plotArea.seriesCategoryAxis(currentSeries);
-                categories = categoryAxis.options.categories || [];
 
                 for (var categoryIx = 0; categoryIx < totalCategories; categoryIx++) {
                     var data = SeriesBinder.current.bindPoint(currentSeries, categoryIx);
@@ -9483,9 +9477,14 @@ var __meta__ = {
         },
 
         groupByCategoryAxis: function(series, callback) {
-            var categoryAxes = $.unique($.map(series, function(s) {
-                return s.categoryAxis || "$$default$$";
-            }));
+            var unique = {};
+            var categoryAxes = $.map(series, function(s) {
+                var name = s.categoryAxis || "$$default$$";
+                if (!unique.hasOwnProperty(name)) {
+                    unique[name] = true;
+                    return name;
+                }
+            });
 
             $.each(categoryAxes, function(axisIx, axis) {
                 var axisSeries = $.grep(series, function(s) {
@@ -9548,11 +9547,11 @@ var __meta__ = {
 
         createLineChart: function(series, pane) {
             var plotArea = this;
-            plotArea.groupByCategoryAxis(series, function(axisSeries) {
-                var firstSeries = axisSeries[0],
+            plotArea.groupByCategoryAxis(series, function(series) {
+                var firstSeries = series[0],
                     lineChart = new LineChart(plotArea, extend({
                         invertAxes: plotArea.invertAxes,
-                        series: axisSeries
+                        series: series
                     }, plotArea.stackableChartOptions(firstSeries, pane)));
 
                 plotArea.appendChart(lineChart, pane);

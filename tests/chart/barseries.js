@@ -211,34 +211,29 @@
         });
 
         test("sets correct category if multiple categoryAxis are used", function() {
-            var plotArea = stubPlotArea(getCategorySlot, getValueSlot, {
-                categoryAxis: {}
-            });
-            plotArea.namedCategoryAxes = {
-                A: {
-                    options: {
-                        categories: [1, 2]
-                    },
-                    getSlot: getCategorySlot
-                },
-                B: {
-                    options: {
-                        categories: [3, 4]
-                    },
-                    getSlot: getCategorySlot
-                }
-            };
-
-            setupBarChart(plotArea, { series: [{
+            var plotArea = new dataviz.CategoricalPlotArea([{
+                type: "bar",
                 categoryAxis: "A",
                 data: [1, 2]
             }, {
+                type: "bar",
                 categoryAxis: "B",
                 data: [3, 4]
-            }] });
+            }], {
+                categoryAxis: [{
+                    name: "A",
+                    categories: [1, 2]
+                }, {
+                    name: "B",
+                    categories: [3, 4]
+                }]
+            });
 
-            for (var idx = 0; idx < series.points.length; idx++) {
-                equal(series.points[idx].category, series.points[idx].value);
+            for (var chartIdx = 0; chartIdx < plotArea.charts.length; chartIdx++) {
+                var chart = plotArea.charts[chartIdx];
+                for (var idx = 0; idx < chart.points.length; idx++) {
+                    equal(chart.points[idx].category, chart.points[idx].value);
+                }
             }
         });
 

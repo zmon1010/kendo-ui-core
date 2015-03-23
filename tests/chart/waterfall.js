@@ -42,7 +42,15 @@
         });
 
         test("sets correct category if multiple categoryAxis are used", function() {
-            plotArea = new dataviz.CategoricalPlotArea([], {
+            plotArea = new dataviz.CategoricalPlotArea([{
+                    type: "waterfall",
+                    categoryAxis: "A",
+                    data: [1, 2]
+                }, {
+                    type: "waterfall",
+                    categoryAxis: "B",
+                    data: [3, 4]
+                }], {
                 categoryAxis: [{
                     name: "A",
                     categories: [1, 2]
@@ -52,16 +60,12 @@
                 }]
             });
 
-            chart = new dataviz.WaterfallChart(plotArea, { series: [{
-                categoryAxis: "A",
-                data: [1, 2]
-            }, {
-                categoryAxis: "B",
-                data: [3, 4]
-            }] });
+            for (var chartIdx = 0; chartIdx < plotArea.charts.length; chartIdx++) {
+                chart = plotArea.charts[chartIdx];
 
-            for (var idx = 0; idx < chart.points.length; idx++) {
-                equal(chart.points[idx].category, chart.points[idx].value);
+                for (var idx = 0; idx < chart.points.length; idx++) {
+                    equal(chart.points[idx].category, chart.points[idx].value);
+                }
             }
         });
     })();
