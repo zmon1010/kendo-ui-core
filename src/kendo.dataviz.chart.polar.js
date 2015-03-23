@@ -136,12 +136,14 @@ var __meta__ = {
 
         gridLineAngles: function(altAxis, step, skipStep) {
             var axis = this,
-                divs = axis.intervals(step, skipStep);
+                divs = axis.intervals(step, skipStep),
+                options = altAxis.options,
+                altAxisVisible = options.visible && (options.line || {}).visible !== false;
 
             return $.map(divs, function(d) {
                 var alpha = axis.intervalAngle(d);
 
-                if (!altAxis.options.visible || alpha !== 90) {
+                if (!altAxisVisible || alpha !== 90) {
                     return alpha;
                 }
             });

@@ -445,6 +445,22 @@
         equal(anchor.y, 100);
     });
 
+    test("renders 90 degree grid line when value axis line is not visible", function() {
+        setupGridLines({
+            options: {
+            visible: true,
+                line: {
+                    visible: false
+                }
+            },
+            lineBox: altAxis.lineBox
+        }, { majorUnit: 90 });
+
+        var anchor = gridLines[1].segments[1].anchor();
+        equal(anchor.x, 300);
+        equal(anchor.y, 100);
+    });
+
     test("applies major grid line color", function() {
         setupGridLines(altAxis, { majorGridLines: { color: "red" } });
 
