@@ -9482,157 +9482,157 @@ var __meta__ = {
             };
         },
 
+        groupByCategoryAxis: function(series, callback) {
+            var categoryAxes = $.unique($.map(series, function(s) {
+                return s.categoryAxis || "$$default$$";
+            }));
+
+            $.each(categoryAxes, function(axisIx, axis) {
+                var axisSeries = $.grep(series, function(s) {
+                    return (axisIx === 0 && !s.categoryAxis) || (s.categoryAxis == axis);
+                });
+
+                if (axisSeries.length === 0) {
+                    return;
+                }
+
+                callback(axisSeries);
+            });
+        },
+
         createBarChart: function(series, pane) {
-            if (series.length === 0) {
-                return;
-            }
+            var plotArea = this;
+            plotArea.groupByCategoryAxis(series, function(series) {
+                var firstSeries = series[0],
+                    barChart = new BarChart(plotArea, extend({
+                        series: series,
+                        invertAxes: plotArea.invertAxes,
+                        gap: firstSeries.gap,
+                        spacing: firstSeries.spacing
+                    }, plotArea.stackableChartOptions(firstSeries, pane)));
 
-            var plotArea = this,
-                firstSeries = series[0],
-                barChart = new BarChart(plotArea, extend({
-                    series: series,
-                    invertAxes: plotArea.invertAxes,
-                    gap: firstSeries.gap,
-                    spacing: firstSeries.spacing
-                }, plotArea.stackableChartOptions(firstSeries, pane)));
-
-            plotArea.appendChart(barChart, pane);
+                plotArea.appendChart(barChart, pane);
+            });
         },
 
         createRangeBarChart: function(series, pane) {
-            if (series.length === 0) {
-                return;
-            }
+            var plotArea = this;
+            plotArea.groupByCategoryAxis(series, function(series) {
+                var firstSeries = series[0],
+                    rangeColumnChart = new RangeBarChart(plotArea, {
+                        series: series,
+                        invertAxes: plotArea.invertAxes,
+                        gap: firstSeries.gap,
+                        spacing: firstSeries.spacing
+                    });
 
-            var plotArea = this,
-                firstSeries = series[0],
-                rangeColumnChart = new RangeBarChart(plotArea, {
-                    series: series,
-                    invertAxes: plotArea.invertAxes,
-                    gap: firstSeries.gap,
-                    spacing: firstSeries.spacing
-                });
-
-            plotArea.appendChart(rangeColumnChart, pane);
+                plotArea.appendChart(rangeColumnChart, pane);
+            });
         },
 
         createBulletChart: function(series, pane) {
-            if (series.length === 0) {
-                return;
-            }
+            var plotArea = this;
+            plotArea.groupByCategoryAxis(series, function(series) {
+                var firstSeries = series[0],
+                    bulletChart = new BulletChart(plotArea, {
+                        series: series,
+                        invertAxes: plotArea.invertAxes,
+                        gap: firstSeries.gap,
+                        spacing: firstSeries.spacing,
+                        clip: pane.options.clip
+                    });
 
-            var plotArea = this,
-                firstSeries = series[0],
-                bulletChart = new BulletChart(plotArea, {
-                    series: series,
-                    invertAxes: plotArea.invertAxes,
-                    gap: firstSeries.gap,
-                    spacing: firstSeries.spacing,
-                    clip: pane.options.clip
-                });
-
-            plotArea.appendChart(bulletChart, pane);
+                plotArea.appendChart(bulletChart, pane);
+            });
         },
 
         createLineChart: function(series, pane) {
-            if (series.length === 0) {
-                return;
-            }
+            var plotArea = this;
+            plotArea.groupByCategoryAxis(series, function(axisSeries) {
+                var firstSeries = axisSeries[0],
+                    lineChart = new LineChart(plotArea, extend({
+                        invertAxes: plotArea.invertAxes,
+                        series: axisSeries
+                    }, plotArea.stackableChartOptions(firstSeries, pane)));
 
-            var plotArea = this,
-                firstSeries = series[0],
-                lineChart = new LineChart(plotArea, extend({
-                    invertAxes: plotArea.invertAxes,
-                    series: series
-                }, plotArea.stackableChartOptions(firstSeries, pane)));
-
-            plotArea.appendChart(lineChart, pane);
+                plotArea.appendChart(lineChart, pane);
+            });
         },
 
         createAreaChart: function(series, pane) {
-            if (series.length === 0) {
-                return;
-            }
+            var plotArea = this;
+            plotArea.groupByCategoryAxis(series, function(series) {
+                var firstSeries = series[0],
+                    areaChart = new AreaChart(plotArea, extend({
+                        invertAxes: plotArea.invertAxes,
+                        series: series
+                    }, plotArea.stackableChartOptions(firstSeries, pane)));
 
-            var plotArea = this,
-                firstSeries = series[0],
-                areaChart = new AreaChart(plotArea, extend({
-                    invertAxes: plotArea.invertAxes,
-                    series: series
-                }, plotArea.stackableChartOptions(firstSeries, pane)));
-
-            plotArea.appendChart(areaChart, pane);
+                plotArea.appendChart(areaChart, pane);
+            });
         },
 
         createOHLCChart: function(series, pane) {
-            if (series.length === 0) {
-                return;
-            }
+            var plotArea = this;
+            plotArea.groupByCategoryAxis(series, function(series) {
+                var firstSeries = series[0],
+                    chart = new OHLCChart(plotArea, {
+                        invertAxes: plotArea.invertAxes,
+                        gap: firstSeries.gap,
+                        series: series,
+                        spacing: firstSeries.spacing,
+                        clip: pane.options.clip
+                    });
 
-            var plotArea = this,
-                firstSeries = series[0],
-                chart = new OHLCChart(plotArea, {
-                    invertAxes: plotArea.invertAxes,
-                    gap: firstSeries.gap,
-                    series: series,
-                    spacing: firstSeries.spacing,
-                    clip: pane.options.clip
-                });
-
-            plotArea.appendChart(chart, pane);
+                plotArea.appendChart(chart, pane);
+            });
         },
 
         createCandlestickChart: function(series, pane) {
-            if (series.length === 0) {
-                return;
-            }
+            var plotArea = this;
+            plotArea.groupByCategoryAxis(series, function(series) {
+                var firstSeries = series[0],
+                    chart = new CandlestickChart(plotArea, {
+                        invertAxes: plotArea.invertAxes,
+                        gap: firstSeries.gap,
+                        series: series,
+                        spacing: firstSeries.spacing,
+                        clip: pane.options.clip
+                    });
 
-            var plotArea = this,
-                firstSeries = series[0],
-                chart = new CandlestickChart(plotArea, {
-                    invertAxes: plotArea.invertAxes,
-                    gap: firstSeries.gap,
-                    series: series,
-                    spacing: firstSeries.spacing,
-                    clip: pane.options.clip
-                });
-
-            plotArea.appendChart(chart, pane);
+                plotArea.appendChart(chart, pane);
+            });
         },
 
         createBoxPlotChart: function(series, pane) {
-            if (series.length === 0) {
-                return;
-            }
+            var plotArea = this;
+            plotArea.groupByCategoryAxis(series, function(series) {
+                var firstSeries = series[0],
+                    chart = new BoxPlotChart(plotArea, {
+                        invertAxes: plotArea.invertAxes,
+                        gap: firstSeries.gap,
+                        series: series,
+                        spacing: firstSeries.spacing,
+                        clip: pane.options.clip
+                    });
 
-            var plotArea = this,
-                firstSeries = series[0],
-                chart = new BoxPlotChart(plotArea, {
-                    invertAxes: plotArea.invertAxes,
-                    gap: firstSeries.gap,
-                    series: series,
-                    spacing: firstSeries.spacing,
-                    clip: pane.options.clip
-                });
-
-            plotArea.appendChart(chart, pane);
+                plotArea.appendChart(chart, pane);
+            });
         },
 
         createWaterfallChart: function(series, pane) {
-            if (series.length === 0) {
-                return;
-            }
+            var plotArea = this;
+            plotArea.groupByCategoryAxis(series, function(series) {
+                var firstSeries = series[0],
+                    waterfallChart = new WaterfallChart(plotArea, {
+                        series: series,
+                        invertAxes: plotArea.invertAxes,
+                        gap: firstSeries.gap,
+                        spacing: firstSeries.spacing
+                    });
 
-            var plotArea = this,
-                firstSeries = series[0],
-                waterfallChart = new WaterfallChart(plotArea, {
-                    series: series,
-                    invertAxes: plotArea.invertAxes,
-                    gap: firstSeries.gap,
-                    spacing: firstSeries.spacing
-                });
-
-            plotArea.appendChart(waterfallChart, pane);
+                plotArea.appendChart(waterfallChart, pane);
+            });
         },
 
         axisRequiresRounding: function(categoryAxisName, categoryAxisIndex) {
