@@ -2159,26 +2159,38 @@
     function renderFormField(element, group) {
         var tag = element.tagName.toLowerCase();
         var p = element.parentNode;
-        var el = element.ownerDocument.createElement(KENDO_PSEUDO_ELEMENT);
+        var doc = element.ownerDocument;
+        var el = doc.createElement(KENDO_PSEUDO_ELEMENT);
+        var option;
         el.style.cssText = getCssText(getComputedStyle(element));
         el.style.display = "inline-block";
         if (tag == "input") {
             el.style.whiteSpace = "pre";
         }
+        if (tag == "select" || tag == "textarea") {
+            el.style.overflow = "auto";
+        }
         if (tag == "select") {
-            var option = getSelectedOption(element);
-            if (option) {
-                el.textContent = option.textContent;
+            if (element.multiple) {
+                for (var i = 0; i < element.options.length; ++i) {
+                    option = doc.createElement(KENDO_PSEUDO_ELEMENT);
+                    option.style.cssText = getCssText(getComputedStyle(element.options[i]));
+                    option.style.display = "block"; // IE9 messes up without this
+                    option.textContent = element.options[i].textContent;
+                    el.appendChild(option);
+                }
+            } else {
+                option = getSelectedOption(element);
+                if (option) {
+                    el.textContent = option.textContent;
+                }
             }
         } else {
             el.textContent = element.value;
         }
-        if (tag == "textarea") {
-            el.style.position = "relative";
-            el.style.left = -element.scrollLeft + "px";
-            el.style.top = -element.scrollTop + "px";
-        }
         p.insertBefore(el, element);
+        el.scrollLeft = element.scrollLeft;
+        el.scrollTop = element.scrollTop;
         renderContents(el, group);
         p.removeChild(el);
     }
@@ -2199,15 +2211,10 @@
 
           case "textarea":
           case "input":
+          case "select":
             renderFormField(element, group);
             break;
 
-          case "select":
-            if (!element.multiple) {
-                renderFormField(element, group);
-                break;
-            }
-            /* falls through */
           default:
             var blocks = [], floats = [], inline = [], positioned = [];
             for (var i = element.firstChild; i; i = i.nextSibling) {
@@ -2287,12 +2294,6 @@
         }
 
         var color = getPropertyValue(style, "color");
-
-        if (/^option$/i.test(element.tagName)) {
-            drawText(text, element.getBoundingClientRect());
-            return;
-        }
-
         var range = element.ownerDocument.createRange();
         var align = getPropertyValue(style, "text-align");
         var isJustified = align == "justify";
