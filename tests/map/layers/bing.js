@@ -117,6 +117,20 @@
         test("sets current imagerySet from imagerySet() without parameters", function() {
             deepEqual(layer.imagerySet(), "road");
         });
+
+
+        test("remains hidden if reset before receiving metadata", function() {
+            layer.hide();
+            layer._onMetadata({
+                resourceSets: [{
+                    resources: [{
+                        imageUrl: ""
+                    }]
+                }]
+            });
+
+            equal(layer.element.css("display"), "none");
+        });
     })();
 
     baseLayerTests("Bing Layer", BingLayerDouble);

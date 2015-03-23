@@ -83,7 +83,10 @@
                 }
 
                 this._addAttribution();
-                this.reset();
+
+                if (this.element.css("display") !== "none") {
+                    this.reset();
+                }
             }
         },
 
