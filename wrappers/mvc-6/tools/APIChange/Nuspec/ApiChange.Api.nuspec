@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- http://docs.nuget.org/docs/reference/nuspec-reference -->
+<package >
+	<metadata>
+		<id>ApiChange.Api</id>
+		<version>$version$</version>
+		<authors>Alois, GrahamTheCoder</authors>
+		<owners>GrahamTheCoder</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>A library to help diff assembly public APIs and apply a semantic version based on that API (as on semver.org)</description>
+		<dependencies> 
+			<dependency id="Mono.Cecil" version="[0.9.5.4]"/>
+		</dependencies>
+		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+		<projectUrl>https://apichange.codeplex.com/SourceControl/network/forks/GrahamHelliwell/DiffOnly</projectUrl>
+	</metadata>
+	<files>
+		<file src="bin\Release\ApiChange.Api.dll" target="lib" />
+		<file src="bin\Release\ApiChange.Api.pdb" target="lib" />
+		<file src="Examples\*.ps1" target="tools" />
+	</files>
+</package>
