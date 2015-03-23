@@ -213,6 +213,11 @@
 {
     background: @office365-list-background;
     border-color: @office365-button-border;
+
+    border-top-color: @ios7-second-border-color;
+    border-image: -webkit-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
+    border-image: -moz-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
+    border-image: -ms-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
 }
 
 .km-office365 .km-list > li:hover
@@ -230,6 +235,11 @@
 .km-office365 .km-listgroupinset .km-list > li:last-child
 {
     border-color: @office365-button-border;
+}
+
+.km-office365 .km-list > li:last-child
+{
+    .box-shadow(inset 0 -1px 0 green);
 }
 
 .km-office365 .km-listview-link:after

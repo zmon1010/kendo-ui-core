@@ -4,156 +4,107 @@
 
 /* ListView */
 
+.km-office365 .km-listinset,
+.km-office365 .km-listgroupinset
+{
+    margin: 0;
+}
+
 .km-office365 .km-list > li
 {
     font-size: 1.125em;
+    padding-left: 1em;
+    background: transparent;
+    border-radius: 0;
+    border-width: 1px 0 0;
     border-style: solid;
-    border-width: 0 0 @office365-border-width 0;
-    line-height: 2em;
 }
 
-.km-office365 .km-listinset > li:first-child,
-.km-office365 .km-listgroupinset .km-list > li:first-child
-{
-    border-style: solid;
-    border-width: @office365-border-width;
-    border-radius: @office365-border-radius @office365-border-radius 0 0;
-}
-
-.km-office365 .km-listinset > li,
-.km-office365 .km-listgroupinset .km-list > li
-{
-    border-width: 0 @office365-border-width @office365-border-width @office365-border-width;
-}
-
-.km-office365 .km-listinset > li:last-child,
-.km-office365 .km-listgroupinset .km-list > li:last-child
-{
-    border-style: solid;
-    border-width: 0 @office365-border-width @office365-border-width @office365-border-width;
-    border-radius: 0 0 @office365-border-radius @office365-border-radius;
-}
-
-.km-office365 .km-listinset > li:first-child:last-child,
-.km-office365 .km-listgroupinset .km-list > li:first-child:last-child
-{
-    border-width: @office365-border-width;
-    border-radius: @office365-border-radius;
+.km-office365 .km-list > .km-load-more+li {
+    border-top: 0;
 }
 
 .km-office365 .km-listview-link:after
 {
-    border-width: .2rem .2rem 0 0;
-}
-
-.km-office365:not(.km-on-android) .km-listview-link:after
-{
     width: .66rem;
     height: .64rem;
     border-width: 0;
-    box-shadow: inset -.2rem .2rem 0;
+    box-shadow: inset -.2rem .2rem 0 currentcolor;
 }
 
-.km-office365 .km-listinset li:first-child > .km-listview-link,
-.km-office365 .km-listgroupinset li:first-child > .km-listview-link,
-.km-office365 .km-listinset li:first-child > .km-listview-label,
-.km-office365 .km-listgroupinset li:first-child > .km-listview-label
+.km-office365 .km-list li > .km-listview-link,
+.km-office365 .km-list li > .km-listview-label
 {
-    border-radius: @office365-inline-border-radius @office365-inline-border-radius 0 0;
-}
-
-.km-office365 .km-listinset li:last-child > .km-listview-link,
-.km-office365 .km-listgroupinset li:last-child > .km-listview-link,
-.km-office365 .km-listinset li:last-child > .km-listview-label,
-.km-office365 .km-listgroupinset li:last-child > .km-listview-label
-{
-    border-radius: 0 0 @office365-inline-border-radius @office365-inline-border-radius;
-}
-
-.km-office365 .km-listinset li:first-child:last-child > .km-listview-link,
-.km-office365 .km-listgroupinset li:first-child:last-child > .km-listview-link,
-.km-office365 .km-listinset li:first-child:last-child > .km-listview-label,
-.km-office365 .km-listgroupinset li:first-child:last-child > .km-listview-label
-{
-    border-radius: @office365-inline-border-radius;
+    margin-left: -1em;
+    padding-left: 1em;
+    border-radius: 0;
 }
 
 .km-office365 .km-group-title
 {
     font-size: .875em;
+    position: -webkit-sticky;
+    text-indent: 1em;
+    margin-top: 0;
     font-weight: normal;
     text-transform: uppercase;
-    border-style: solid;
-    border-width: @office365-border-width 0;
-    line-height: 1.6;
-    padding: 1.286em 0 .429em 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
 }
 
-.km-office365 .km-scroll-header .km-group-title
-{
-    border-width: 0 0 @office365-border-width;
-}
-
+.km-office365 .km-listgroup .km-group-title,
 .km-office365 .km-listgroupinset .km-group-title
 {
-    //border: 0;
-    //background: none;
-    margin-top: 0;
-}
-
-.km-office365 .km-listinset, 
-.km-office365 .km-listgroupinset {
-    margin: .64em 0;   
+    line-height: 2em;
+    border-top-width: 1px;
+    border-top-style: solid;
 }
 
 .km-office365 .km-listview .km-switch
 {
-    margin-top: -1.2rem;
+    margin-top: -1.1rem;
 }
 
 /* Filter box */
 
-.km-office365 .km-listview-wrapper form .km-filter-wrap > input
+.km-office365 .km-filter-wrap
 {
-    font-size: 1.2em;
-    padding: .3em 1.8em;
-}
-
-.km-office365 .km-filter-wrap:before
-{
-    margin: .05em -1.3em 0 .3em;
-}
-
-.km-office365 .km-filter-reset
-{
-    margin: .05em 0 0 -2em;
-}
-
-.km-office365 .km-filter-reset .km-clear:after
-{
-    content: "\e038";
+    color: inherit;
+    border-radius: @ios7-secondary-border-radius;
+    background: currentcolor;
 }
 
 .km-office365 .km-filter-wrap > input
 {
-    border-radius: @office365-border-radius;
-    border-width: @office365-border-width;
-    border-style: solid;
+    padding: 0 1.8em;
+    color: transparent;
+    background: transparent;
 }
 
-.km-office365 .km-filter-wrap > input:focus
+.km-office365 .km-filter-wrap > input::-webkit-input-placeholder { text-align: center; }
+.km-office365 .km-filter-wrap > input::-moz-placeholder { text-align: center; }
+.km-office365 .km-filter-wrap > input::-ms-input-placeholder { text-align: center; }
+
+.km-office365 .km-filter-wrap > input:focus::-webkit-input-placeholder { text-align: left; }
+.km-office365 .km-filter-wrap > input:focus::-moz-placeholder { text-align: left; }
+.km-office365 .km-filter-wrap > input:focus::-ms-input-placeholder { text-align: left; }
+
+.km-office365 .km-filter-wrap:before,
+.km-office365 .km-filter-reset .km-clear
 {
-    border-width: @office365-border-width;
-    border-style: solid;
+    position: absolute;
+    top: 50%;
+    margin-top: -.55em;
 }
 
-.km-office365 .km-list > li,
-.km-office365 .km-widget .km-listview-link,
-.km-office365 .km-widget .km-listview-label {
-    padding: .278em .7em;
+.km-office365 .km-filter-wrap:before
+{
+    font-size: 1em;
+    content: "\e21e";
 }
 
-.km-office365 .km-widget .km-listview-link,
-.km-office365 .km-widget .km-listview-label {
-    margin: -0.278em -0.7em;
+.km-office365 .km-filter-wrap .km-clear:after
+{
+    content: "\e031";
 }
+
