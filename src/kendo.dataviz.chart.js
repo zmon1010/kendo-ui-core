@@ -4045,7 +4045,8 @@ var __meta__ = {
             var chart = this,
                 options = chart.options,
                 series = options.series,
-                categories = chart.categoryAxis.options.categories || [],
+                categories,
+                categoryAxis,
                 count = categoriesCount(series),
                 categoryIx,
                 seriesIx,
@@ -4057,6 +4058,8 @@ var __meta__ = {
             for (categoryIx = 0; categoryIx < count; categoryIx++) {
                 for (seriesIx = 0; seriesIx < seriesCount; seriesIx++) {
                     currentSeries = series[seriesIx];
+                    categoryAxis = chart.plotArea.seriesCategoryAxis(currentSeries);
+                    categories = categoryAxis.options.categories || [];
                     currentCategory = categories[categoryIx];
                     pointData = this._bindPoint(currentSeries, seriesIx, categoryIx);
 
@@ -8017,7 +8020,8 @@ var __meta__ = {
 
         traverseDataPoints: function(callback) {
             var series = this.options.series;
-            var categories = this.categoryAxis.options.categories || [];
+            var categoryAxis;
+            var categories;
             var totalCategories = categoriesCount(series);
             var isVertical = !this.options.invertAxes;
 
@@ -8025,6 +8029,8 @@ var __meta__ = {
                 var currentSeries = series[seriesIx];
                 var total = 0;
                 var runningTotal = 0;
+                categoryAxis = this.plotArea.seriesCategoryAxis(currentSeries);
+                categories = categoryAxis.options.categories || [];
 
                 for (var categoryIx = 0; categoryIx < totalCategories; categoryIx++) {
                     var data = SeriesBinder.current.bindPoint(currentSeries, categoryIx);

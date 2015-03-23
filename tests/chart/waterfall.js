@@ -40,6 +40,30 @@
         test("runningTotal field is set on all points", function() {
             assertFields("runningTotal", [1, 3, 6, 10]);
         });
+
+        test("sets correct category if multiple categoryAxis are used", function() {
+            plotArea = new dataviz.CategoricalPlotArea([], {
+                categoryAxis: [{
+                    name: "A",
+                    categories: [1, 2]
+                }, {
+                    name: "B",
+                    categories: [3, 4]
+                }]
+            });
+
+            chart = new dataviz.WaterfallChart(plotArea, { series: [{
+                categoryAxis: "A",
+                data: [1, 2]
+            }, {
+                categoryAxis: "B",
+                data: [3, 4]
+            }] });
+
+            for (var idx = 0; idx < chart.points.length; idx++) {
+                equal(chart.points[idx].category, chart.points[idx].value);
+            }
+        });
     })();
 
     // ------------------------------------------------------------

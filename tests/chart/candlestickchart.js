@@ -76,19 +76,20 @@
             VALUE_AXIS_MAX = 4,
             CATEGORY_AXIS_Y = 2;
 
-        var plotArea = stubPlotArea(
-            function(categoryIndex) {
-                return new Box2D(categoryIndex, CATEGORY_AXIS_Y,
-                                 categoryIndex + 1, CATEGORY_AXIS_Y);
-            },
-            function(value) {
-                var value = typeof value === "undefined" ? 0 : value,
-                    valueY = VALUE_AXIS_MAX - value,
-                    slotTop = Math.min(CATEGORY_AXIS_Y, valueY),
-                    slotBottom = Math.max(CATEGORY_AXIS_Y, valueY);
+        var getCategorySlot = function(categoryIndex) {
+            return new Box2D(categoryIndex, CATEGORY_AXIS_Y,
+                             categoryIndex + 1, CATEGORY_AXIS_Y);
+        };
+        var getValueSlot = function(value) {
+            var value = typeof value === "undefined" ? 0 : value,
+                valueY = VALUE_AXIS_MAX - value,
+                slotTop = Math.min(CATEGORY_AXIS_Y, valueY),
+                slotBottom = Math.max(CATEGORY_AXIS_Y, valueY);
 
-                return new Box2D(0, slotTop, 0, slotBottom);
-            }, {
+            return new Box2D(0, slotTop, 0, slotBottom);
+        };
+
+        var plotArea = stubPlotArea(getCategorySlot, getValueSlot, {
                 categoryAxis: {
                     categories: ["A", "B"]
                 }
@@ -180,6 +181,39 @@
 
         test("sets point category", function() {
             equal(candlestickChart.points[0].category, "A");
+        });
+
+        test("sets correct category if multiple categoryAxis are used", function() {
+            var plotArea = stubPlotArea(getCategorySlot, getValueSlot, {
+                categoryAxis: {}
+            });
+            plotArea.namedCategoryAxes = {
+                A: {
+                    options: {
+                        categories: [1]
+                    },
+                    getSlot: getCategorySlot
+                },
+                B: {
+                    options: {
+                        categories: [2]
+                    },
+                    getSlot: getCategorySlot
+                }
+            };
+            candlestickChart = new dataviz.CandlestickChart(plotArea, { series: [{
+                categoryAxis: "A",
+                type: "candlestick",
+                data: [[2,4,1,3]]
+            }, {
+                type: "candlestick",
+                categoryAxis: "B",
+                data: [[1,2,3,4]]
+            }] });
+
+            for (var idx = 0; idx < candlestickChart.points.length; idx++) {
+                equal(candlestickChart.points[idx].category, idx + 1);
+            }
         });
 
         test("sets point dataItem", function() {

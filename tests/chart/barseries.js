@@ -78,27 +78,27 @@
             VALUE_AXIS_MAX = 2,
             CATEGORY_AXIS_Y = 2,
             TOLERANCE = 0.1;
+        var getCategorySlot = function(categoryIndex) {
+            return new Box2D(categoryIndex, CATEGORY_AXIS_Y,
+            categoryIndex + 1, CATEGORY_AXIS_Y);
+        };
 
-        var plotArea = stubPlotArea(
-                function(categoryIndex) {
-                    return new Box2D(categoryIndex, CATEGORY_AXIS_Y,
-                    categoryIndex + 1, CATEGORY_AXIS_Y);
-                },
-                function(from, to) {
-                    var reverse = this.options.reverse,
-                        fromY = CATEGORY_AXIS_Y + (reverse ? from : -from),
-                        toY = CATEGORY_AXIS_Y + (reverse ? to : -to),
-                        slotTop = Math.min(fromY, toY),
-                        slotBottom = Math.max(fromY, toY);
+        var getValueSlot = function(from, to) {
+            var reverse = this.options.reverse,
+                fromY = CATEGORY_AXIS_Y + (reverse ? from : -from),
+                toY = CATEGORY_AXIS_Y + (reverse ? to : -to),
+                slotTop = Math.min(fromY, toY),
+                slotBottom = Math.max(fromY, toY);
 
-                    return new Box2D(0, slotTop, 0, slotBottom);
-                },
-                {
-                    categoryAxis: {
-                        categories: ["A", "B"]
-                    }
+            return new Box2D(0, slotTop, 0, slotBottom);
+        };
+
+        var plotArea = stubPlotArea(getCategorySlot, getValueSlot, {
+                categoryAxis: {
+                    categories: ["A", "B"]
                 }
-            );
+            }
+        );
 
         // ------------------------------------------------------------
         module("Bar Chart", {
@@ -208,6 +208,38 @@
 
         test("sets bar category", function() {
             equal(series.points[0].category, "A");
+        });
+
+        test("sets correct category if multiple categoryAxis are used", function() {
+            var plotArea = stubPlotArea(getCategorySlot, getValueSlot, {
+                categoryAxis: {}
+            });
+            plotArea.namedCategoryAxes = {
+                A: {
+                    options: {
+                        categories: [1, 2]
+                    },
+                    getSlot: getCategorySlot
+                },
+                B: {
+                    options: {
+                        categories: [3, 4]
+                    },
+                    getSlot: getCategorySlot
+                }
+            };
+
+            setupBarChart(plotArea, { series: [{
+                categoryAxis: "A",
+                data: [1, 2]
+            }, {
+                categoryAxis: "B",
+                data: [3, 4]
+            }] });
+
+            for (var idx = 0; idx < series.points.length; idx++) {
+                equal(series.points[idx].category, series.points[idx].value);
+            }
         });
 
         test("sets bar dataItem", function() {

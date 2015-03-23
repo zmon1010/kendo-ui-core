@@ -187,20 +187,21 @@ function baseLineChartTests(seriesName, TChart) {
             VALUE_AXIS_MAX = 2,
             CATEGORY_AXIS_Y = 2;
 
-        var plotArea = stubPlotArea(
-            function(categoryIndex) {
-                return new Box2D(categoryIndex, CATEGORY_AXIS_Y,
-                                 categoryIndex + 1, CATEGORY_AXIS_Y);
-            },
-            function(value, b) {
-                var value = typeof value === "undefined" ? 0 : value,
-                    valueY = VALUE_AXIS_MAX - value,
-                    slotTop = Math.min(CATEGORY_AXIS_Y, valueY),
-                    slotBottom = Math.max(CATEGORY_AXIS_Y, valueY);
+        var getCategorySlot = function(categoryIndex) {
+            return new Box2D(categoryIndex, CATEGORY_AXIS_Y,
+                             categoryIndex + 1, CATEGORY_AXIS_Y);
+        };
 
-                return new Box2D(0, slotTop, 0, slotBottom);
-            }
-        );
+        var getValueSlot = function(value, b) {
+            var value = typeof value === "undefined" ? 0 : value,
+                valueY = VALUE_AXIS_MAX - value,
+                slotTop = Math.min(CATEGORY_AXIS_Y, valueY),
+                slotBottom = Math.max(CATEGORY_AXIS_Y, valueY);
+
+            return new Box2D(0, slotTop, 0, slotBottom);
+        };
+
+        var plotArea = stubPlotArea(getCategorySlot, getValueSlot);
 
         // ------------------------------------------------------------
         module(chartName + " / Positive Values", {
@@ -277,6 +278,41 @@ function baseLineChartTests(seriesName, TChart) {
 
         test("sets point category", function() {
             equal(chart.points[0].category, "A");
+        });
+
+        test("sets correct category if multiple categoryAxis are used", function() {
+            var lineBox = function() {
+                return new Box2D(0,2,2,2);
+            };
+            var plotArea = stubPlotArea(getCategorySlot, getValueSlot);
+            plotArea.namedCategoryAxes = {
+                A: {
+                    options: {
+                        categories: [1, 2]
+                    },
+                    lineBox: lineBox,
+                    getSlot: getCategorySlot
+                },
+                B: {
+                    options: {
+                        categories: [3, 4]
+                    },
+                    lineBox: lineBox,
+                    getSlot: getCategorySlot
+                }
+            };
+
+            setupChart(plotArea, { series: [{
+                categoryAxis: "A",
+                data: [1, 2]
+            }, {
+                categoryAxis: "B",
+                data: [3, 4]
+            }] });
+
+            for (var idx = 0; idx < chart.points.length; idx++) {
+                equal(chart.points[idx].category, chart.points[idx].value);
+            }
         });
 
         test("sets point dataItem", function() {
