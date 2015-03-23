@@ -632,6 +632,9 @@ var __meta__ = {
 
         reflowLabels: function() {
             var axis = this,
+                labelOptions = axis.options.labels,
+                skip = labelOptions.skip || 0,
+                step = labelOptions.step || 1,
                 measureBox = new Box2D(),
                 divs = axis.majorIntervals(),
                 labels = axis.labels,
@@ -642,7 +645,7 @@ var __meta__ = {
                 labels[i].reflow(measureBox);
                 labelBox = labels[i].box;
 
-                labels[i].reflow(axis.getSlot(divs[i]).adjacentBox(
+                labels[i].reflow(axis.getSlot(divs[skip + i * step]).adjacentBox(
                     0, labelBox.width(), labelBox.height()
                 ));
             }

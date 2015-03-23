@@ -59,6 +59,16 @@
         equalTexts(getAxisTexts(), ["0", "60", "120", "180", "240", "300"]);
     });
 
+    test("applies skip and step when creating labels", function() {
+        createAxis({
+            labels: {
+                skip: 1,
+                step: 2
+            }
+        });
+        equalTexts(getAxisTexts(), ["60", "180", "300"]);
+    });
+
     test("creates labels with full format", 1, function() {
         createAxis({ categories: [1, 2], labels: { format: "{0:N2}"} });
 
@@ -122,6 +132,16 @@
     test("labels are distributed on major divisions", function() {
         closeTextPosition("", getAxisTexts(), [[510, 293], [410, 102], [169, 102],
              [69, 293], [169, 483], [410, 483]], TOLERANCE);
+    });
+
+    test("applies skip and step when distributing labels", function() {
+        createAxis({
+            labels: {
+                skip: 1,
+                step: 2
+            }
+        });
+        closeTextPosition("", getAxisTexts(), [[410, 102], [66, 292], [410, 483]], TOLERANCE);
     });
 
     test("labels margin is applied", function() {
