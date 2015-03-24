@@ -444,69 +444,91 @@
             if (!(/^data:/i.test(url))) {
                 img.crossOrigin = "Anonymous";
             }
-            img.src = url;
-
-            var onload = function() {
-                var canvas = document.createElement("canvas");
-                canvas.width = img.width;
-                canvas.height = img.height;
-                var ctx = canvas.getContext("2d");
-
-                ctx.drawImage(img, 0, 0);
-
-                var imgdata;
-                try {
-                    imgdata = ctx.getImageData(0, 0, img.width, img.height);
-                } catch(ex) {
-                    // it tainted the canvas -- can't draw it.
-                    return cont(IMAGE_CACHE[url] = "TAINTED");
-                }
-
-                // in case it contains transparency, we must separate rgb data from the alpha
-                // channel and create a PDFRawImage image with opacity.  otherwise we can use a
-                // PDFJpegImage.
-                //
-                // to do this in one step, we create the rgb and alpha streams anyway, even if
-                // we might end up not using them if hasAlpha remains false.
-
-                var hasAlpha = false, rgb = BinaryStream(), alpha = BinaryStream();
-                var rawbytes = imgdata.data;
-                var i = 0;
-                while (i < rawbytes.length) {
-                    rgb.writeByte(rawbytes[i++]);
-                    rgb.writeByte(rawbytes[i++]);
-                    rgb.writeByte(rawbytes[i++]);
-                    var a = rawbytes[i++];
-                    if (a < 255) {
-                        hasAlpha = true;
-                    }
-                    alpha.writeByte(a);
-                }
-
-                if (hasAlpha) {
-                    img = new PDFRawImage(img.width, img.height, rgb, alpha);
-                } else {
-                    // no transparency, encode as JPEG.
-                    var data = canvas.toDataURL("image/jpeg");
-                    data = data.substr(data.indexOf(";base64,") + 8);
-
-                    var stream = BinaryStream();
-                    stream.writeBase64(data);
-                    stream.offset(0);
-                    img = new PDFJpegImage(img.width, img.height, stream);
-                }
-
-                cont(IMAGE_CACHE[url] = img);
-            };
-
-            if (img.complete) {
-                onload();
-            } else {
-                img.onload = onload;
-                img.onerror = function(ev) {
-                    cont(IMAGE_CACHE[url] = "TAINTED");
+            if (kendo.support.browser.msie && kendo.support.browser.version == 10) {
+                // IE10 fails to load images from another domain even
+                // when the server sends the proper CORS headers.
+                // a XHR, however, will be able to load the data.
+                // http://stackoverflow.com/a/19734516/154985
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function() {
+                    var url = URL.createObjectURL(xhr.response);
+                    _load(url);
+                    URL.revokeObjectURL(url);
                 };
+                xhr.onerror = _onerror;
+                xhr.open("GET", url, true);
+                xhr.responseType = "blob";
+                xhr.send();
+            } else {
+                _load(url);
             }
+        }
+
+        function _load(url) {
+            img.src = url;
+            if (img.complete) {
+                _onload();
+            } else {
+                img.onload = _onload;
+                img.onerror = _onerror;
+            }
+        }
+
+        function _onerror() {
+            cont(IMAGE_CACHE[url] = "TAINTED");
+        }
+
+        function _onload() {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+
+            ctx.drawImage(img, 0, 0);
+
+            var imgdata;
+            try {
+                imgdata = ctx.getImageData(0, 0, img.width, img.height);
+            } catch(ex) {
+                // it tainted the canvas -- can't draw it.
+                return _onerror();
+            }
+
+            // in case it contains transparency, we must separate rgb data from the alpha
+            // channel and create a PDFRawImage image with opacity.  otherwise we can use a
+            // PDFJpegImage.
+            //
+            // to do this in one step, we create the rgb and alpha streams anyway, even if
+            // we might end up not using them if hasAlpha remains false.
+
+            var hasAlpha = false, rgb = BinaryStream(), alpha = BinaryStream();
+            var rawbytes = imgdata.data;
+            var i = 0;
+            while (i < rawbytes.length) {
+                rgb.writeByte(rawbytes[i++]);
+                rgb.writeByte(rawbytes[i++]);
+                rgb.writeByte(rawbytes[i++]);
+                var a = rawbytes[i++];
+                if (a < 255) {
+                    hasAlpha = true;
+                }
+                alpha.writeByte(a);
+            }
+
+            if (hasAlpha) {
+                img = new PDFRawImage(img.width, img.height, rgb, alpha);
+            } else {
+                // no transparency, encode as JPEG.
+                var data = canvas.toDataURL("image/jpeg");
+                data = data.substr(data.indexOf(";base64,") + 8);
+
+                var stream = BinaryStream();
+                stream.writeBase64(data);
+                stream.offset(0);
+                img = new PDFJpegImage(img.width, img.height, stream);
+            }
+
+            cont(IMAGE_CACHE[url] = img);
         }
     }
 
