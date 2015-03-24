@@ -1,0 +1,29 @@
+@color: #999;
+@step: 1%;
+
+.show(@amount, @color, @original, @function) { }
+
+.show(@amount, @color, @original, @function) when not (@color = #fff) and not (@color = #000) {
+    process: ~"@{color} = @{function}(@{original}, @{amount})";
+}
+
+.lighten(@color, @amount) when (@amount = 100) { }
+
+.lighten(@color, @amount) when not (@amount = 100) {
+    .show(@amount, lighten(@color, @amount), @color, 'lighten');
+
+    .lighten(@color, @amount + @step);
+}
+
+.darken(@color, @amount) when (@amount = 100) { }
+
+.darken(@color, @amount) when not (@amount = 100) {
+    .show(@amount, darken(@color, @amount), @color, 'darken');
+
+    .darken(@color, @amount + @step);
+}
+
+.result {
+    .lighten(@color, 0%);
+    .darken(@color, 0%);
+}
