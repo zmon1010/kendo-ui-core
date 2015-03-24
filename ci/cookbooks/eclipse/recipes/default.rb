@@ -6,8 +6,8 @@ extract_root = "/usr/lib"
 extract_path = "#{extract_root}/eclipse"
 
 remote_file src_filepath do
-  source "http://mirrors.linux-bg.org/eclipse/technology/epp/downloads/release/luna/SR1/eclipse-jee-luna-SR1-linux-gtk-x86_64.tar.gz"
-  checksum "8257d8af6c6c01fcb0c542e80b3771348bc0c127"
+  source "http://mirrors.linux-bg.org/eclipse/technology/epp/downloads/release/luna/SR2/eclipse-jee-luna-SR2-linux-gtk-x86_64.tar.gz"
+  checksum "df680622332c69303d23b14afe33281aca774f8e"
 end
 
 bash 'extract_eclipse' do
