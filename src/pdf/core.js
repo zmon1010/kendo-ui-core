@@ -2,7 +2,7 @@
     define([ "../kendo.core" ], f);
 })(function(){
 
-(function(global, parseFloat, undefined){
+(function(window, parseFloat, undefined){
 
     "use strict";
 
@@ -14,10 +14,10 @@
     /* jshint newcap:false */
     /* global VBArray */
 
-    var kendo = global.kendo;
+    var kendo = window.kendo;
 
     // XXX: remove this junk (assume `true`) when we no longer have to support IE < 10
-    var HAS_TYPED_ARRAYS = !!global.Uint8Array;
+    var HAS_TYPED_ARRAYS = !!window.Uint8Array;
 
     var NL = "\n";
 
@@ -387,11 +387,11 @@
 
     function loadBinary(url, cont) {
         function error() {
-            if (global.console) {
-                if (global.console.error) {
-                    global.console.error("Cannot load URL: %s", url);
+            if (window.console) {
+                if (window.console.error) {
+                    window.console.error("Cannot load URL: %s", url);
                 } else {
-                    global.console.log("Cannot load URL: %s", url);
+                    window.console.log("Cannot load URL: %s", url);
                 }
             }
             cont(null);
@@ -858,14 +858,14 @@
     }, {
         render: function(out) {
             var data = this.data.get(), props = this.props;
-            if (this.compress && global.pako && typeof global.pako.deflate == "function") {
+            if (this.compress && window.pako && typeof window.pako.deflate == "function") {
                 if (!props.Filter) {
                     props.Filter = [];
                 } else if (!(props.Filter instanceof Array)) {
                     props.Filter = [ props.Filter ];
                 }
                 props.Filter.unshift(_("FlateDecode"));
-                data = global.pako.deflate(data);
+                data = window.pako.deflate(data);
             }
             props.Length = data.length;
             out(new PDFDictionary(props), " stream", NL);
@@ -2025,6 +2025,6 @@
         return m[0] === 1 && m[1] === 0 && m[2] === 0 && m[3] === 1 && m[4] === 0 && m[5] === 0;
     }
 
-})(this, parseFloat);
+})(window, parseFloat);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

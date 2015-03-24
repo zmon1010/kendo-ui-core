@@ -2,7 +2,7 @@
     define([ "./core" ], f);
 })(function(){
 
-(function(global){
+(function(window){
 
 /*****************************************************************************\
  *
@@ -30,7 +30,7 @@ function sortedKeys(obj) {
     return Object.keys(obj).sort(function(a, b){ return a - b; }).map(parseFloat);
 }
 
-var PDF = global.kendo.pdf;
+var PDF = window.kendo.pdf;
 var BinaryStream = PDF.BinaryStream;
 
 ///
@@ -1092,6 +1092,6 @@ TTFFont.prototype = {
 
 PDF.TTFFont = TTFFont;
 
-})(this);
+})(window);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
