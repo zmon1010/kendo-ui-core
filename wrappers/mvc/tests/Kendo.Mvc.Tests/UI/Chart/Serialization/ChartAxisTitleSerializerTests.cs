@@ -132,6 +132,19 @@ namespace Kendo.Mvc.UI.Tests
             GetJson().ContainsKey("border").ShouldBeFalse();
         }
 
+        [Fact]
+        public void Does_not_serialize_default_visibility()
+        {
+            GetJson().ContainsKey("visible").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Serializes_visibility()
+        {
+            title.Visible = true;
+            GetJson()["visible"].ShouldEqual(true);
+        }
+
         private IDictionary<string, object> GetJson()
         {
             return title.CreateSerializer().Serialize();

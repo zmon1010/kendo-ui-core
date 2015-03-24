@@ -114,6 +114,15 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the axis title visibility.
+        /// </summary>
+        public bool? Visible
+        {
+            get;
+            set;
+        }
+
         public IChartSerializer CreateSerializer()
         {
             return new ChartAxisTitleSerializer(this);

@@ -298,5 +298,15 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Sets the axis title visibility
+        /// </summary>
+        /// <param name="visible">The axis title visibility.</param>
+        public ChartAxisTitleBuilder Visible(bool visible)
+        {
+            title.Visible = visible;
+            return this;
+        }
     }
 }
