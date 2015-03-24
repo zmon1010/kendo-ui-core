@@ -1525,4 +1525,29 @@
         equal(grid.lockedTable.find(".k-grouping-row:eq(1) > td:eq(1)").attr("colspan"), 3); // single groupcell + locked column
     });
 
+    test("setDataSource re-creates the locked header with multicolumn headers", function() {
+        var grid = setup({
+            columns:  [
+                { title: "foo", locked: true },
+                { title: "bar" },
+                { title: "baz master", columns: [{ title: "baz child" }] }
+            ]
+        });
+
+        grid.setDataSource(new kendo.data.DataSource({ }));
+
+        equal(grid.lockedHeader.find("col").length, 1);
+        equal(grid.lockedHeader.find("th").text(), "foo");
+        equal(grid.lockedHeader.find("th").length, 1);
+        equal(grid.lockedHeader.find("tr").length, 1);
+
+        equal(grid.thead.closest("table").find("col").length, 2);
+        equal(grid.thead.find("th").length, 3);
+        equal(grid.thead.find("tr").length, 2);
+
+        equal(grid.thead.find("tr:first th:first").text(), "bar");
+        equal(grid.thead.find("tr:first th:last").text(), "baz master");
+        equal(grid.thead.find("tr:last th:first").text(), "baz child");
+    });
+
 })();

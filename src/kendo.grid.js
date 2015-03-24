@@ -5788,6 +5788,8 @@ var __meta__ = {
 
             if (that.lockedHeader && that.thead) {
                 tr = that.thead.find("tr:has(th):not(.k-filter-row)").html("");
+                tr.remove();
+                tr = $();
 
                 that._removeLockedContainers();
             } else if (hasTHead) {
