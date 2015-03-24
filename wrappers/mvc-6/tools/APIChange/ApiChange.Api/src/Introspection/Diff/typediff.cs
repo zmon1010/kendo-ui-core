@@ -143,6 +143,11 @@ namespace ApiChange.Api.Introspection
                 }
                 if (!bFound)
                 {
+                    if (baseV1.FullName.Contains("IHideObjectMembers"))
+                    {
+                        continue;
+                    }
+
                     Interfaces.Add(new DiffResult<TypeReference>(baseV1, new DiffOperation(false)));
                 }
             }

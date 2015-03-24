@@ -8,6 +8,7 @@ using Mono.Cecil;
 using System.Diagnostics;
 using System.IO;
 using Mono.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace ApiChange.Api.Introspection
 {
@@ -467,14 +468,14 @@ namespace ApiChange.Api.Introspection
             // check if function name, modifiers and paramters are still equal
             if (  m1 != null &&
                   m1.Name == m2.Name &&
-                  m1.ReturnType.FullName == m2.ReturnType.FullName &&
+                  ResolveTypeAliases(m1.ReturnType.FullName) == ResolveTypeAliases(m2.ReturnType.FullName) &&
                   m1.Parameters.Count == m2.Parameters.Count &&
                   m1.IsPrivate == m2.IsPrivate &&
                   m1.IsPublic == m2.IsPublic &&
                   m1.IsFamily == m2.IsFamily &&
                   m1.IsAssembly == m2.IsAssembly &&
                   m1.IsFamilyOrAssembly == m2.IsFamilyOrAssembly &&
-                  m1.IsVirtual == m2.IsVirtual &&
+                  //m1.IsVirtual == m2.IsVirtual &&
                   m1.IsStatic == m2.IsStatic &&
                   m1.GenericParameters.Count == m2.GenericParameters.Count
              )
@@ -487,7 +488,10 @@ namespace ApiChange.Api.Introspection
                     ParameterDefinition pa = m1.Parameters[i];
                     ParameterDefinition pb = m2.Parameters[i];
 
-                    if (pa.ParameterType.FullName != pb.ParameterType.FullName)
+                    var paType = ResolveTypeAliases(pa.ParameterType.FullName);
+                    var pbType = ResolveTypeAliases(pb.ParameterType.FullName);
+
+                    if (paType != pbType)
                     {
                         bParameterEqual = false;
                     }
@@ -497,6 +501,16 @@ namespace ApiChange.Api.Introspection
             }
 
             return lret;
+        }
+
+        private static string ResolveTypeAliases(string p)
+        {
+            p = p.Replace("System.Web", "Microsoft.AspNet");
+            p = p.Replace("<T>", "");
+            p = p.Replace("`1", "");
+            p = Regex.Replace(p, "Action<.+>", "Action");
+
+            return p;
         }
 
         public static bool IsEqual(this EventDefinition e1, EventDefinition e2)
