@@ -7,7 +7,7 @@ then
     apt-get update -y
 
     apt-get install -y ruby1.9.3 build-essential
-    gem install chef --no-ri --no-rdoc
+    gem install chef --version '~> 11' --no-ri --no-rdoc
 elif grep -q 'Red Hat' /proc/version
 then
     yum update -y
