@@ -11,7 +11,7 @@ var __meta__ = {
     hidden: true
 };
 
-(function () {
+(function ($) {
 
     // Imports ================================================================
     var kendo = window.kendo,
@@ -3596,7 +3596,7 @@ var __meta__ = {
             }
         });
     })();
-    
+
     function fuse(arr1, arr2) {
         return $.map(arr1, function(item, index) {
             return [
