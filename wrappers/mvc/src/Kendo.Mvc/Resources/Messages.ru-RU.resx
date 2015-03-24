@@ -148,7 +148,7 @@
     <value>фильтровать</value>
   </data>
   <data name="Filter_And" xml:space="preserve">
-    <value>И</value>
+    <value>и</value>
   </data>
   <data name="Filter_Clear" xml:space="preserve">
     <value>очистить фильтр</value>
