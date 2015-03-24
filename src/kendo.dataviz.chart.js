@@ -12168,6 +12168,12 @@ var __meta__ = {
             dataLength = data.length,
             seriesClone;
 
+        if (dataLength === 0) {
+            seriesClone = deepExtend({}, series);
+            seriesClone.visibleInLegend = false;
+            return [seriesClone];
+        }
+
         if (defined(legacyTemplate)) {
             kendo.logToConsole(
                 "'groupNameTemplate' is obsolete and will be removed in future versions. " +

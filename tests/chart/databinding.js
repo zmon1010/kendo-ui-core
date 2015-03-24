@@ -660,10 +660,10 @@
         });
 
         // ------------------------------------------------------------
-        function createGroupedChart(dataBound, series) {
+        function createGroupedChart(dataBound, series, data) {
             chart = createChart({
                 dataSource: {
-                    data: [{
+                    data: data || [{
                         period: "Jan",
                         product: "Foo",
                         sales: 100
@@ -705,6 +705,14 @@
                 equal(this.options.series.length, 2);
                 start();
             });
+        });
+
+        asyncTest("creates series with visibleInLegend set to false if there is no data", 2, function() {
+            createGroupedChart(function() {
+                equal(this.options.series.length, 1);
+                equal(this.options.series[0].visibleInLegend, false);
+                start();
+            }, null, []);
         });
 
         asyncTest("does not duplicate series on rebind", 1, function() {
