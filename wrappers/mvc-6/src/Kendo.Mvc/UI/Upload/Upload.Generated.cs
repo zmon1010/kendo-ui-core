@@ -23,6 +23,7 @@ namespace Kendo.Mvc.UI
 
         public string TemplateId { get; set; }
 
+
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
