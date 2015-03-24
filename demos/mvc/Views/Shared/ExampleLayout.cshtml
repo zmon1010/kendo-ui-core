@@ -7,7 +7,6 @@
 }
 <script>
     window.kendoTheme = "@ViewBag.Theme";
-    window.kendoMobileTheme = "@ViewBag.MobileTheme";
     window.kendoCommonFile = "@ViewBag.CommonFile";
 </script>
 
@@ -388,39 +387,4 @@
     });
 
     setTimeout(function(){ prettyPrint(); }, 100);
-
-    @if (ViewBag.Mobile)
-    {
-        <text>
-            kendo.history.stop();
-
-            $(function() {
-                var mobileTheme = window.kendoMobileTheme;
-
-                window.ThemeChooserViewModel.setMobileTheme(mobileTheme);
-
-                var options = {
-                    layout: "examples",
-                    updateDocumentTitle: false,
-                    hideAddressBar: false
-                };
-
-                if (mobileTheme === "flat") {
-                    options.skin = "flat";
-                } else {
-                    options.platform = mobileTheme;
-                }
-
-                window.mobileAppOptions;
-
-@if (!ViewBag.MobileAngular) {
-    <text>
-                if (!(kendo.support.browser.msie && kendo.support.browser.version < 10) && !kendo.support.browser.opera) {
-                    window.app = new kendo.mobile.Application($("#mobile-application-container"), options);
-                }
-    </text>
-}
-            });
-        </text>
-    }
 </script>

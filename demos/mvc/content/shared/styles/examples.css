@@ -67,13 +67,13 @@
 
 [class$="Icon"]:after {
   font-family: "widgets";
-  speak: none; 
+  speak: none;
   display: inline-block;
   width: 1em;
   margin-right: .2em;
   font-variant: normal;
-  text-transform: none;     
-  line-height: 1em; 
+  text-transform: none;
+  line-height: 1em;
   margin-left: .2em;
   color: #00B312;
 }
@@ -292,8 +292,8 @@ header
 /* View Beta demos */
 .try-beta-demos {
      text-align: center;
-     color: #0487c4; 
-     background-color: #e5f5fa;  
+     color: #0487c4;
+     background-color: #e5f5fa;
      font-size: 14px;
      padding: 24px 0;
 }
@@ -528,8 +528,6 @@ div.submenu-box ol {
 }
 
 .overviewIcon{display:none;}
-.mobileActionSheetIcon:after { content: '\e800'; }
-.mobileAppIcon:after { content: '\e801'; }
 .chartAreaIcon:after { content: '\e802'; }
 .autoCompleteIcon:after { content: '\e803'; }
 .chartBarIcon:after, .chartIcon:after { content: '\e804'; }
@@ -546,7 +544,6 @@ div.submenu-box ol {
 .diagramIcon:after { content: '\e80f'; }
 .chartDonutIcon:after, .integrationIcon:after { content: '\e810'; }
 .dragDropIcon:after { content: '\e811'; }
-.mobileDrawerIcon:after { content: '\e812'; }
 .dropDownListIcon:after { content: '\e813'; }
 .editorIcon:after { content: '\e814'; }
 .effectsIcon:after { content: '\e815'; }
@@ -560,34 +557,27 @@ div.submenu-box ol {
 .listViewIcon:after { content: '\e81c'; }
 .mapIcon:after { content: '\e81d'; }
 .maskedtextboxIcon:after { content: '\e81e'; }
-.mobileListViewIcon:after, .menuIcon:after { content: '\e81f'; }
-.mobileModalViewIcon:after { content: '\e820'; }
 .multiselectIcon:after { content: '\e821'; }
-.mobileNavBarIcon:after, .toolbarIcon:after { content: '\e823'; }
 .notificationIcon:after { content: '\e824'; }
 .numericTextBoxIcon:after { content: '\e825'; }
 .panelBarIcon:after { content: '\e826'; }
 .chartPieIcon:after { content: '\e827'; }
 .chartPolarIcon:after { content: '\e828'; }
-.mobilePopOverIcon:after { content: '\e829'; }
 .progressBarIcon:after { content: '\e82a'; }
 .qrcodeIcon:after { content: '\e82b'; }
 .chartRadarIcon:after { content: '\e82c'; }
 .gaugeRadialIcon:after { content: '\e82d'; }
 .chartScatterIcon:after { content: '\e82e'; }
 .schedulerIcon:after { content: '\e82f'; }
-.mobileScrollerIcon:after { content: '\e830'; }
 .mobileScrollViewIcon:after { content: '\e831'; }
 .spaIcon:after { content: '\e832'; }
 .sliderIcon:after { content: '\e833'; }
-.sortableIcon:after { content: '\e834'; } 
+.sortableIcon:after { content: '\e834'; }
 .sparklineIcon:after, .drawingIcon:after { content: '\e835'; }
 .splitterIcon:after { content: '\e836'; }
-.mobileSplitViewIcon:after { content: '\e837'; }
 .chartStockIcon:after { content: '\e838'; }
 .mobileSwitchIcon:after { content: '\e839'; }
 .tabStripIcon:after { content: '\e83a'; }
-.mobileTabStripIcon:after { content: '\e83b'; }
 .templatesIcon:after { content: '\e83c'; }
 .timePickerIcon:after { content: '\e83d'; }
 .tooltipIcon:after { content: '\e83e'; }
@@ -602,23 +592,6 @@ div.submenu-box ol {
 .chartWaterfallIcon:after { content: '\e847'; }
 .comboBoxIcon:after { content: '\e848'; }
 .responsivePanelIcon:after { content: '\e849'; }
-.mobileCollapsibleIcon:after { content: '\e84A'; }
-
-.mobile + .widgetOverview #exampleTitle
-{
-    position: absolute;
-    top: 23px;
-}
-
-.mobile + .widgetOverview #exampleWrap
-{
-    margin-top: 45px;
-}
-
-.mobile + .widgetOverview #themeWrap
-{
-    margin-right: 7px;
-}
 
 .themechooser
 {
@@ -845,8 +818,7 @@ div.submenu-box ol {
     height: 100px;
 }
 
-.wideCol.dashboards ul,
-#deviceList
+.wideCol.dashboards ul
 {
     width:auto;
     margin-top:30px;
@@ -916,8 +888,7 @@ pre.prettyprint
     width: 500px;
 }
 
-.console .count,
-.km-root .km-android .console .count
+.console .count
 {
     background-color: #91AFEF;
     -moz-border-radius: 15px;
@@ -939,32 +910,6 @@ pre.prettyprint
 .console .error
 {
     background-position: 6px -135px;
-}
-
-/* Console Mobile */
-.km-root .console
-{
-    margin: 2em;
-    min-height: 10em;
-    height: auto;
-    overflow-y: auto;
-}
-
-.km-root .console div
-{
-    padding: 0;
-    min-height: 2.5em;
-    color: #333;
-    font: normal .8em/2.5em monospace;
-    vertical-align: middle;
-    text-indent: .6em;
-}
-
-.km-root .console .count,
-.km-root .km-android .console .count
-{
-    background-clip: border-box;
-    background-color: #f00;
 }
 
 /*configurator*/
@@ -1181,7 +1126,7 @@ pre.prettyprint
 	color: #036c9c;
     cursor: pointer;
 }
- 
+
 #inspector-header {
     border-bottom: 1px solid #ebecee;
     background: #fdfdfd;
@@ -1236,12 +1181,12 @@ pre.prettyprint
 
 #wrappers-source-code ul li {
     padding: 0 .6em;
-    border-right: 1px solid #ebecee; 
+    border-right: 1px solid #ebecee;
 }
 
 #wrappers-source-code ul li:last-child {
     padding-right: 0;
-    border-right: 0; 
+    border-right: 0;
 }
 
 
@@ -1580,49 +1525,6 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { background: #eee; }
     height: 240px;
 }
 
-#device-wrapper {
-    background-image: url("iphone.png");
-    background-size: cover;
-    padding: 119px 47px 112px 50px;
-    margin: auto;
-}
-
-#device-wrapper.android-dark,
-#device-wrapper.android-light,
-#device-wrapper.material-dark,
-#device-wrapper.material-light{
-    background-image: url("nexus.png");
-}
-
-#device-wrapper.blackberry {
-    background-image: url("blackberrySkin.png");
-}
-
-#device-wrapper.wp-dark,
-#device-wrapper.wp-light {
-    background-image: url("wpSkin.png");
-}
-
-#device-wrapper.flat,
-#device-wrapper.material {
-    background-image: url("flat.png");
-}
-
-.tablet #device-wrapper,
-.tablet #mobile-application-container
-{
-    height: 453px;
-    width: 605px;
-}
-
-.tablet #device-wrapper
-{
-    background-size: 100% auto;
-    height: 453px;
-    padding: 57px 66px 57px 66px;
-    background-image: url("ipad.png");
-}
-
 #example.tablet
 {
     padding-left: 22px;
@@ -1633,213 +1535,6 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { background: #eee; }
 .tablet .wp #mobile-application-container
 {
     height: 358px;
-}
-
-.tablet #device-wrapper.android {
-    height: 362px;
-    padding: 45px 73px 45px 73px;
-    background-image: url("a100.png");
-}
-
-.tablet #device-wrapper.blackberry {
-    height: 362px;
-    padding: 73px 77px 73px 77px;
-    background-image: url("playbook.png");
-}
-
-.tablet #device-wrapper.wp {
-    height: 358px;
-    padding: 60px 60px 54px 59px;
-    background-image: url("w8.png");
-}
-
-#device-wrapper,
-#mobile-application-container {
-    height: 460px;
-    overflow: hidden;
-    position: relative;
-    width: 282px;
-}
-
-#device-wrapper [href='#/'], #back-button, .back-button
-{
-    visibility: hidden;
-}
-
-#example .km-android [href*=index]
-{
-    display: none;
-}
-
-#example .km-wp
-{
-    font-size: 1.2rem;
-}
-
-.mobileExample .km-wp-light .km-content,
-.mobileExample .km-wp-light .km-button,
-.mobileExample .km-wp-light .km-navbar,
-.mobileExample .km-wp-light .k-toolbar,
-.mobileExample .km-wp-light .km-detail,
-.mobileExample .km-wp-light *:not(.k-label) > input:not(.k-input),
-.mobileExample .km-wp-light .k-dropdown,
-.mobileExample .km-wp-light *:not(.k-label) > textarea,
-.mobileExample .km-wp-light *:not(.k-label) > select
-{
-    background: #fff;
-}
-
-.mobileExample .km-wp-dark .km-content,
-.mobileExample .km-wp-dark .km-button,
-.mobileExample .km-wp-dark .km-navbar,
-.mobileExample .km-wp-dark .k-toolbar,
-.mobileExample .km-wp-dark .km-detail,
-.mobileExample .km-wp-dark *:not(.k-label) > input:not(.k-input),
-.mobileExample .km-wp-dark .k-dropdown,
-.mobileExample .km-wp-dark *:not(.k-label) > textarea,
-.mobileExample .km-wp-dark *:not(.k-label) > select
-{
-    background: #000;
-}
-
-.mobileExample .km-pane-wrapper *:not(.k-state-default) > input:not([type="checkbox"]):not([type="radio"]),
-.mobileExample .km-pane-wrapper .k-mobile-list select:not([multiple]),
-.mobileExample .km-pane-wrapper .k-mobile-list textarea,
-.mobileExample .km-pane-wrapper .k-mobile-list .k-widget,
-.mobileExample .km-pane-wrapper .k-edit-field > *:not([type="checkbox"]):not([type="radio"]):not(.k-button)
-{
-    width: 50%;
-}
-
-.mobileExample .km-pane-wrapper .k-mobile-list .k-recur-view > .k-edit-field .k-check,
-.mobileExample .km-pane-wrapper .k-mobile-list .k-edit-field > * > select:not([multiple]),
-.mobileExample .km-pane-wrapper .k-mobile-list .k-scheduler-timezones .k-edit-field label.k-check
-{
-    width: 100%;
-}
-
-.mobileExample .km-pane-wrapper .k-scheduler-views
-{
-    width: 200px;
-}
-
-.mobileExample .km-pane-wrapper .k-mobile-list .k-edit-field > .k-button
-{
-    margin-left: 50%;
-}
-
-.mobileExample .km-pane-wrapper .k-mobile-list .k-edit-field > .k-timezone-button
-{
-    margin-left: 1em;
-}
-
-.mobileExample .km-pane-wrapper .k-nav-today a
-{
-    padding-left: .6em;
-    padding-right: .6em;
-}
-
-.mobileExample .km-pane-wrapper li.k-nav-current
-{
-    margin-left: 0;
-    margin-right: 0;
-}
-
-.mobileExample .km-pane-wrapper .k-pager-wrap
-{
-    position: relative;
-}
-
-.mobileExample .km-pane-wrapper .k-pager-numbers
-{
-    width: auto;
-    display: block;
-    overflow: hidden;
-    margin-right: 5.5em;
-    float: none;
-    text-overflow: ellipsis;
-    height: 2.4em;
-    text-align: center;
-}
-
-.mobileExample .km-pane-wrapper .k-pager-numbers li
-{
-    float: none;
-    display: inline-block;
-}
-
-.mobileExample .km-pane-wrapper .k-pager-nav
-{
-    float: left;
-}
-
-.mobileExample .km-pane-wrapper .k-pager-nav + .k-pager-nav ~ .k-pager-nav
-{
-    position: absolute;
-    right: .3em;
-    top: .3em;
-}
-
-.mobileExample .km-pane-wrapper .k-pager-wrap .k-pager-numbers + .k-pager-nav,
-.mobileExample .km-pane-wrapper .k-pager-nav:first-child + .k-pager-nav + .k-pager-nav
-{
-    right: 3em;
-}
-
-.mobileExample .km-pane-wrapper .k-pager-info
-{
-    display: none;
-}
-
-.mobileExample .km-pane-wrapper .k-pager-numbers .k-current-page,
-.mobileExample .km-pane-wrapper .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view {
-    display: none;
-}
-
-.mobileExample .km-pane-wrapper .k-pager-numbers {
-    position: static;
-    -webkit-transform: translatey(0);
-    -moz-transform: translatey(0);
-    transform: translatey(0);
-}
-
-.mobileExample .km-pane-wrapper .k-scheduler-toolbar > ul.k-scheduler-views > li {
-    display: table-cell;
-}
-
-#example .km-wp .km-tabstrip .km-button,
-#example .km-wp .km-tabstrip .km-button.km-state-active
-{
-    background: transparent;
-}
-
-#example .km-wp .km-detail:active,
-#example .km-wp .km-button:active,
-#example .km-wp .km-detail.km-state-active,
-#example .km-wp .km-button.km-state-active,
-#example .km-wp .km-actionsheet > li > a:active,
-#example .km-wp .km-badge,
-#example .km-wp .km-group-title,
-#example .km-wp .km-pages .km-current-page,
-#example .km-wp .km-switch-background
-{
-    color: white;
-    background-color: #01ABAA;
-}
-
-#example .km-wp .km-tabstrip .km-state-active .km-icon {
-    background-color: #01ABAA;
-}
-
-#example .km-wp input:not(.k-input):focus,
-#example .km-wp textarea:focus
-{
-    border-color: #01ABAA;
-}
-
-#example #device-wrapper .km-wp8 img
-{
-    border-radius: 0;
 }
 
 #icon-list
@@ -2061,21 +1756,6 @@ ul.keyboard-legend li a {
     font-family: "Kendo UI Examples";
     src: url("kendoui.woff") format("woff"),
          url("kendoui.ttf") format("truetype");
-}
-
-#device-wrapper .km-icon:after,
-#device-wrapper .km-icon:before,
-#device-wrapper .km-contactadd:after,
-#device-wrapper .km-contactadd:before,
-#device-wrapper .km-rowdelete:after,
-#device-wrapper .km-rowdelete:before,
-#device-wrapper .km-rowinsert:after,
-#device-wrapper .km-rowinsert:before,
-#device-wrapper .km-detaildisclose:after,
-#device-wrapper .km-detaildisclose:before,
-#device-wrapper .km-loading:after
-{
-    font-family: "Kendo UI Examples";
 }
 
 /* Retina Support */
@@ -2659,7 +2339,7 @@ a.footer-links:hover,
 #example-search-list li.k-state-focused {
   -webkit-box-shadow: inset 0 0 0 1px #cad0d6;
     box-shadow: inset 0 0 0 1px #cad0d6;
-  
+
 }
 
 #example-search-list li.k-state-hover {
@@ -2671,7 +2351,7 @@ a.footer-links:hover,
       text-decoration: none;
 }
 
-#example-search-list a{   
+#example-search-list a{
     font-size: 13px;
     line-height: 13px;
     color: #2d3e50;
@@ -3069,18 +2749,18 @@ html.k-materialblack .demo-section.k-content {
       width: 180px;
   }
 }
-  
+
 @media only screen and (max-width : 1352px) {
   #overview,
   #applications-and-tools {
       width: 1100px;
       text-align: left;
   }
-  
+
   #overview-widgets h2, #most-popular h3, #most-popular .overview-col {
       padding-left: 0;
   }
-  
+
   .application {
       width: 240px;
   }
@@ -3092,7 +2772,7 @@ html.k-materialblack .demo-section.k-content {
       width: 940px;
       text-align: left;
   }
-  
+
   .application {
       width: 200px;
   }

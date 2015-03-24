@@ -125,7 +125,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "autocomplete/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left support in Kendo UI AutoComplete widget",
@@ -138,7 +137,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "autocomplete/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI AutoComplete widget",
@@ -269,7 +267,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "button/right-to-left-support",
         "title": {
             "kendo-ui": "Kendo UI Button RTL Support",
@@ -282,7 +279,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "button/keyboard-navigation",
         "title": {
             "kendo-ui": "Kendo UI Button Keyboard Navigation",
@@ -444,7 +440,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "calendar/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left functionality, enabled in Kendo UI Calendar widget",
@@ -457,7 +452,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "calendar/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation demo for Kendo UI Calendar widget",
@@ -576,7 +570,6 @@
       },
       {
         "text": "Keyboard support",
-        "disableInMobile": true,
         "url": "colorpicker/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard support enabled in Kendo UI ColorPicker widget",
@@ -590,7 +583,6 @@
       {
         "text": "Events",
         "url": "colorpicker/events",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Events in Kendo UI ColorPicker widget",
             "aspnet-mvc": "Events in ASP.NET MVC ColorPicker control"
@@ -784,7 +776,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "combobox/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left support in Kendo UI ComboBox widget",
@@ -797,7 +788,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "combobox/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard nagivation in Kendo UI ComboBox | Kendo UI Web demos",
@@ -934,7 +924,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "datepicker/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI DatePicker widget | Kendo UI Demo",
@@ -947,7 +936,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "datepicker/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI DatePicker",
@@ -1084,7 +1072,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "datetimepicker/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left support in Kendo UI DateTimePicker control | Kendo UI Demo",
@@ -1097,7 +1084,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "datetimepicker/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI DateTimePicker widget",
@@ -1287,7 +1273,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "dropdownlist/right-to-left-support",
         "title": {
             "kendo-ui": "RTL feature in Kendo UI DropDownList",
@@ -1300,7 +1285,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "dropdownlist/keyboard-navigation",
         "title": {
             "kendo-ui": "Kendo UI DropdownList | Keyboard navigation demo",
@@ -1348,7 +1332,6 @@
     "text": "Editor",
     "name": "editor",
     "pro": "true",
-    "disableInMobile": true,
     "api": "web/editor",
     "documentation": {
        "kendo-ui": "getting-started/web/editor/overview",
@@ -1373,7 +1356,6 @@
       {
         "text": "Basic usage",
         "url": "editor/index",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Demo for jQuery WYSIWYG editor in Kendo UI Web framework",
             "aspnet-mvc": "Basic usage demo for ASP.NET MVC Editor"
@@ -1399,7 +1381,6 @@
       {
         "text": "Custom tools",
         "url": "editor/custom-tools",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Custom tools for Kendo UI WYSIWYG jQuery Editor",
             "aspnet-mvc": "Custom tools for ASP.NET MVC WYSIWYG Editor"
@@ -1412,7 +1393,6 @@
       {
         "text": "File and image browser",
         "url": "editor/imagebrowser",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "File and image browser in Kendo UI Editor | Kendo UI demo",
             "aspnet-mvc": "Image browser in ASP.NET MVC Editor | ASP.NET MVC demo"
@@ -1431,7 +1411,6 @@
       {
         "text": "All tools",
         "url": "editor/all-tools",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "All tools demo in Kendo UI HTML5-based Editor widget",
             "aspnet-mvc": "All tools demo in ASP.NET MVC Editor control"
@@ -1444,7 +1423,6 @@
       {
         "text": "Snippets",
         "url": "editor/snippets",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Demo for snippets feature of Kendo UI Editor widget",
             "aspnet-mvc": "Demo for snippets feature of ASP.NET MVC Editor control"
@@ -1457,7 +1435,6 @@
       {
         "text": "Styles",
         "url": "editor/styles",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Style tool demo for Kendo UI HTML5-based web editor | Kendo UI Demos",
             "aspnet-mvc": "Style tool demo for ASP.NET MVC web editor | ASP.NET MVC Demos"
@@ -1489,7 +1466,6 @@
       {
         "text": "API",
         "url": "editor/api",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "API demo for Kendo UI Web Editor component",
             "aspnet-mvc": "API demo for ASP.NET MVC Editor component"
@@ -1501,7 +1477,6 @@
       },
       {
         "text": "Localization",
-        "disableInMobile": true,
         "url": "editor/localization",
         "title": {
             "kendo-ui": "Localization support in Kendo UI Editor"
@@ -1517,7 +1492,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "editor/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI Editor",
@@ -1530,7 +1504,6 @@
       },
       {
         "text": "PDF Export",
-        "disableInMobile": true,
         "new": "true",
         "url": "editor/pdf-export",
         "title": {
@@ -1544,7 +1517,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "editor/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI Editor",
@@ -1558,7 +1530,6 @@
       {
         "text": "MVVM",
         "url": "editor/mvvm",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "MVVM support in Kendo UI Editor"
         },
@@ -1574,7 +1545,6 @@
 {
         "text": "AngularJS",
         "url": "editor/angular",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "AngularJS support in Kendo UI Editor"
         },
@@ -1873,7 +1843,6 @@
       },
       {
         "text": "Virtualization of local data",
-        "disableInMobile": true,
         "url": "grid/virtualization-local-data",
         "title": {
             "kendo-ui": "Example of local data virtualization in Kendo UI Grid control"
@@ -2089,7 +2058,6 @@
       {
         "text": "Column resizing",
         "url": "grid/column-resizing",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Column resizing feature of Kendo UI grid control | Kendo UI Grid demo",
             "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC Grid"
@@ -2102,7 +2070,6 @@
       {
         "text": "Column menu",
         "url": "grid/column-menu",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Column menu in Kendo UI Grid",
             "aspnet-mvc": "Column menu functionality of Telerik ASP.NET MVC Grid"
@@ -2208,7 +2175,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "grid/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI Grid component",
@@ -2221,7 +2187,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "grid/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI Grid",
@@ -2253,7 +2218,6 @@
         "title": {
             "kendo-ui": "Adaptive Rendering of Kendo UI Grid"
         },
-        "mobile": "true",
         "packages": [
           "!mvc",
           "!jsp",
@@ -2360,7 +2324,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "listview/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI ListView",
@@ -2373,7 +2336,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "listview/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI ListView widget",
@@ -2612,7 +2574,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "maskedtextbox/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI MaskedTextBox widget",
@@ -2802,7 +2763,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "menu/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left support in Kendo UI Menu control | Kendo UI Web Demo",
@@ -2815,7 +2775,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "menu/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI Menu",
@@ -2994,7 +2953,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "multiselect/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI MultiSelect widget | Kendo UI Web demo",
@@ -3007,7 +2965,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "multiselect/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI MultiSelect component | Kendo UI Web demo",
@@ -3137,7 +3094,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "notification/right-to-left-support",
         "title": {
             "kendo-ui": "RTL Support of Kendo UI Notification | Kendo UI Web demo",
@@ -3250,7 +3206,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "numerictextbox/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI NumericTextBox widget",
@@ -3263,7 +3218,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "numerictextbox/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI NumericTextBox",
@@ -3407,7 +3361,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "panelbar/right-to-left-support",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI PanelBar widget | Kendo UI Web demo",
@@ -3420,7 +3373,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "panelbar/keyboard-navigation",
         "title": {
             "kendo-ui": "Demo for keyboard navigation feature in Kendo UI Collapsible Panel",
@@ -3765,7 +3717,6 @@
       },
       {
         "text": "RTL Support",
-        "disableInMobile": true,
         "url": "progressbar/right-to-left-support",
         "title": {
             "kendo-ui": "Kendo UI ProgressBar RTL Support",
@@ -3814,7 +3765,6 @@
     "name": "gantt",
     "api": "web/gantt",
     "pro": "true",
-    "disableInMobile" : true,
     "documentation": {
        "kendo-ui": "getting-started/web/gantt/overview",
        "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/gantt/overview",
@@ -3902,7 +3852,6 @@
       },
       {
         "text": "RTL Support",
-        "disableInMobile": true,
         "url": "gantt/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left (RTL) support of Kendo UI Gantt"
@@ -3979,7 +3928,6 @@
       {
         "text": "Basic usage",
         "url": "responsive-panel/index",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Kendo jQuery ResponsivePanel Control Demo",
             "aspnet-mvc": "ASP.NET MVC ResponsivePanel Control Demo"
@@ -4020,7 +3968,6 @@
       {
         "text": "Basic usage",
         "url": "scheduler/index",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Kendo jQuery Scheduler Control Demo",
             "aspnet-mvc": "ASP.NET MVC Scheduler Control Demo"
@@ -4033,7 +3980,6 @@
       {
         "text": "Custom data source",
         "url": "scheduler/custom-datasource",
-        "disableInMobile": true,
         "packages": [
           "mvc-offline"
         ]
@@ -4041,7 +3987,6 @@
       {
         "text": "Timeline view",
         "url": "scheduler/timeline",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Timeline view in Kendo UI Scheduler"
         },
@@ -4065,7 +4010,6 @@
       {
         "text": "Binding to Telerik Backend Services",
         "url": "scheduler/backend-services",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Binding to Telerik Backend Services | Kendo UI Scheduler demo"
         },
@@ -4097,7 +4041,6 @@
       {
         "text": "Resources",
         "url": "scheduler/resources",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Resources in Kendo UI Scheduler",
             "aspnet-mvc": "Resources in ASP.NET MVC Scheduler"
@@ -4110,7 +4053,6 @@
       {
         "text": "Horizontal Grouping",
         "url": "scheduler/resources-grouping-horizontal",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Horizontal resources grouping in Kendo UI Scheduler",
             "aspnet-mvc": "Horizontal resources grouping in ASP.NET MVC Scheduler control"
@@ -4123,7 +4065,6 @@
       {
         "text": "Vertical Grouping",
         "url": "scheduler/resources-grouping-vertical",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Vertical resources grouping in Kendo UI Scheduler",
             "aspnet-mvc": "Vertical resources grouping in ASP.NET MVC Scheduler control"
@@ -4143,7 +4084,6 @@
       {
         "text": "Templates",
         "url": "scheduler/templates",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Templates in Kendo UI Scheduler",
             "aspnet-mvc": "Templates in ASP.NET MVC Scheduler"
@@ -4156,7 +4096,6 @@
       {
         "text": "Events",
         "url": "scheduler/events",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Events in Kendo UI Scheduler",
             "aspnet-mvc": "Events in ASP.NET MVC Scheduler"
@@ -4169,7 +4108,6 @@
       {
         "text": "API",
         "url": "scheduler/api",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "API in Kendo UI Scheduler",
             "aspnet-mvc": "API in Telerik ASP.NET MVC Scheduler component"
@@ -4182,7 +4120,6 @@
       {
         "text": "Globalization",
         "url": "scheduler/globalization",
-        "disableInMobile": true,
         "packages": [
           "mvc-offline"
         ]
@@ -4190,7 +4127,6 @@
       {
         "text": "Restrictions",
         "url": "scheduler/restriction",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Restricting events resizing and moving",
             "aspnet-mvc": "Restrictions in ASP.NET MVC Scheduler | UI for ASP.NET MVC Demos"
@@ -4203,7 +4139,6 @@
       {
         "text": "Event move & resize",
         "url": "scheduler/move-resize",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Moving and resizing events",
             "aspnet-mvc": "Moving and resizing events in ASP.NET MVC Scheduler"
@@ -4216,7 +4151,6 @@
       {
         "text": "Selection",
         "url": "scheduler/selection",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Selection and Keyboard navigation in Kendo UI Scheduler",
             "aspnet-mvc": "Selection and Keyboard navigation in ASP.NET MVC Scheduler"
@@ -4229,7 +4163,6 @@
       {
         "text": "Localization",
         "url": "scheduler/localization",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Kendo UI Scheduler localization demo"
         },
@@ -4244,7 +4177,6 @@
       },
       {
         "text": "RTL Support",
-        "disableInMobile": true,
         "url": "scheduler/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left (RTL) support of Kendo UI Scheduler",
@@ -4258,7 +4190,6 @@
       {
         "text": "MVVM",
         "url": "scheduler/mvvm",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "MVVM support in Kendo UI Scheduler"
         },
@@ -4277,7 +4208,6 @@
         "title": {
             "kendo-ui": "Adaptive Rendering of Kendo UI Scheduler"
         },
-        "mobile": "true",
         "packages": [
           "!mvc",
           "!jsp",
@@ -4287,7 +4217,6 @@
       {
         "text": "AngularJS",
         "url": "scheduler/angular",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "AngularJS support in Kendo UI Scheduler"
         },
@@ -4306,7 +4235,6 @@
   {
     "text": "Slider",
     "name": "slider",
-    "disableInMobile": true,
     "api": "web/slider",
     "documentation": {
        "kendo-ui": "getting-started/web/slider/overview",
@@ -4366,7 +4294,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "slider/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left support in Kendo UI Slider | Kendo UI Web Demos",
@@ -4379,7 +4306,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "slider/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI Slider | Kendo UI Web Demos",
@@ -4662,7 +4588,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "splitter/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left support in Kendo UI Splitter control | Kendo UI Web demo",
@@ -4675,7 +4600,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "splitter/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation support in Kendo UI Slider",
@@ -4832,7 +4756,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "tabstrip/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI TabStrip widget | Kendo UI Web Demos",
@@ -4845,7 +4768,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "tabstrip/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI TabStrip",
@@ -4970,7 +4892,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "timepicker/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left time input in Kendo UI TimePicker",
@@ -4983,7 +4904,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "timepicker/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI TimePicker",
@@ -5030,7 +4950,6 @@
   {
     "text": "ToolBar",
     "name": "toolbar",
-    "disableInMobile": true,
     "api": "web/toolbar",
     "documentation": {
        "kendo-ui": "getting-started/web/toolbar/overview",
@@ -5357,7 +5276,6 @@
       {
         "text": "Column menu",
         "url": "treelist/column-menu",
-        "disableInMobile": true,
         "new": "true",
         "title": {
             "kendo-ui": "Column menu in Kendo UI TreeList",
@@ -5669,7 +5587,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "treeview/right-to-left-support",
         "title": {
             "kendo-ui": "RTL Support in Kendo UI TreeView component",
@@ -5682,7 +5599,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "treeview/keyboard-navigation",
         "title": {
             "kendo-ui": "Kendo UI TreeView control | Keyboard support demo",
@@ -5828,7 +5744,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "upload/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI Upload",
@@ -5876,7 +5791,6 @@
     "text": "Window",
     "name": "window",
     "api": "web/window",
-    "disableInMobile": true,
     "documentation": {
        "kendo-ui": "getting-started/web/window/overview",
        "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/window/overview",
@@ -5974,7 +5888,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "window/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-Left window position of Kendo UI Window control",
@@ -5987,7 +5900,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "window/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation support | Kendo UI Window Demo",
@@ -6151,7 +6063,6 @@
         "text": "Document Export",
         "url": "pdf-export/index",
         "new": "true",
-        "disableInMobile": true,
         "packages": [
           "!jsp",
           "!php"
@@ -6166,7 +6077,6 @@
         "text": "Page Layout",
         "url": "pdf-export/page-layout",
         "new": "true",
-        "disableInMobile": true,
         "packages": [
           "!mvc",
           "!jsp",
@@ -6298,7 +6208,6 @@
       {
         "text": "Style binding",
         "url": "mvvm/style",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Example of using the style binding in Kendo UI MVVM"
         },
@@ -6350,7 +6259,6 @@
       {
         "text": "Custom binding",
         "url": "mvvm/custom",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Example of creating custom bindings in Kendo UI MVVM"
         },
@@ -6376,7 +6284,6 @@
        "kendo-ui": "kendo-ui/spa"
     },
     "spriteCssClass": "spaIcon",
-    "disableInMobile": true,
     "items": [
       {
         "text": "Launch",
@@ -6397,7 +6304,6 @@
     "packages": [ "!mvc", "!jsp", "!php" ],
     "text": "Templates",
     "name": "templates",
-    "disableInMobile": true,
     "api": "framework/kendo",
     "documentation": {
        "kendo-ui": "getting-started/framework/templates/overview"
@@ -6476,7 +6382,6 @@
       },
       {
         "text": "AngularJS",
-        "disableInMobile": true,
         "url": "validator/angular",
         "title": {
             "kendo-ui": "AngularJS support in Kendo UI Validator"
@@ -6969,7 +6874,6 @@
       {
         "text": "Pan and zoom",
         "url": "bar-charts/pan-and-zoom",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Pan and zoom in Bar charts | Kendo UI Bar Chart demo"
         },
@@ -8356,7 +8260,6 @@
       },
       {
         "text": "AngularJS",
-        "disableInMobile": true,
         "url": "diagram/angular",
         "title": {
             "kendo-ui": "AngularJS support in Kendo UI Diagram"
@@ -9163,7 +9066,6 @@
       {
         "text": "Pan and zoom",
         "url": "scatter-charts/pan-and-zoom",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Pan and zoom in Kendo UI Scatter Charts"
         },
@@ -9620,7 +9522,6 @@
       "text": "Single Page Applications",
       "name": "spa",
       "packages": [ "offline" ],
-      "disableInMobile": true,
       "items": [
           {
             "text": "Aeroviewr",
@@ -9647,8 +9548,6 @@
   {
       "text": "Sample Mobile Applications",
       "name": "mobile-apps",
-      "mobile": "true",
-      "disableInMobile": true,
       "packages": [ "offline" ],
       "items": [
           {

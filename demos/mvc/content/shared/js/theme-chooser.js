@@ -126,18 +126,6 @@
             { value: "fiori", name: "Fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] },
             { value: "office365", name: "Office 365", colors: ["#0072c6", "#cde6f7", "#fff"] }
         ],
-        mobileThemes: [
-            { name: "iOS7", value:"ios7", colors: [ "#007aff", "#f5f5f5", "#ffffff" ]  },
-            { name: "iOS6", value: "ios", colors: [ "#4a86ec", "#6982a3", "#c3ccd5" ]  },
-            { name: "Android Light", value: "android-light", colors: [ "#33b5e5", "#cacaca", "#fcfcfc" ]  },
-            { name: "Android Dark", value: "android-dark", colors: [ "#33b5e5", "#000000", "#4c4c4c" ]  },
-            { name: "BlackBerry", value: "blackberry", colors: [ "#357fad", "#d9d9d9", "#ffffff" ]  },
-            { name: "WP8 Light", value: "wp-light", colors: [ "#01abaa", "#000000", "#ffffff" ]  },
-            { name: "WP8 Dark", value: "wp-dark", colors: [ "#01abaa", "#ffffff", "#000000" ]  },
-            { name: "Flat Skin", value: "flat", colors: [ "#10c4b2", "#dcdcdc", "#f4f4f4" ]  },
-            { name: "Material Light", value: "material-light", colors: [ "#3f51b5", "#283593", "#fff" ]  },
-            { name: "Material Dark", value: "material-dark", colors: [ "#3f51b5", "#1c1c1c", "#4d4d4d" ]  }
-        ],
         sizes: [
             { name: "Standard", value: "common" },
             { name: "Bootstrap", value: "common-bootstrap", relativity: "larger" },
@@ -147,14 +135,7 @@
         ],
 
         selectedTheme: window.kendoTheme,
-        selectedMobileTheme: window.kendoMobileTheme,
         selectedSize: window.kendoCommonFile,
-
-        updateMobileTheme: function(e) {
-            var that = this;
-
-            setTimeout(function () { that.setMobileTheme(e.item.value); }, 0);
-        },
 
         updateTheme: function(e) {
             var themeName = e.item.value;
@@ -173,16 +154,6 @@
             }
 
             ThemeChooser.changeThemePair(themeName, commonFile, true);
-        },
-
-        setMobileTheme: function(themeName) {
-            var mobileContainer = $("#mobile-application-container");
-            var toClass = function(x) { return "km-" + x + (" km-" + x.replace(/-.*/, "")); };
-            var themeIds = $.map(this.mobileThemes, function(x) { return x.value; });
-            mobileContainer.removeClass($.map(themeIds, toClass).join(" ")).addClass(toClass(themeName));
-            $("#device-wrapper").removeClass(themeIds.join(" ")).addClass(themeName);
-            cookie("mobileTheme", themeName, Infinity, "/");
-            kendo.resize(mobileContainer);
         }
     });
 
@@ -217,12 +188,6 @@
         getCurrentThemeLink: function () {
             return $("head link").filter(function () {
                 return (/kendo\./gi).test(this.href) && !(/common|rtl|dataviz|mobile/gi).test(this.href);
-            });
-        },
-
-        getCurrentMobileThemeLink: function () {
-            return $("head link").filter(function () {
-                return (/kendo\.[^\.\/]+?\.mobile/gi).test(this.href) && !(/common|rtl|dataviz/gi).test(this.href);
             });
         },
 
@@ -268,13 +233,6 @@
             $(doc.documentElement).removeClass("k-" + oldThemeName).addClass("k-" + themeName);
         },
 
-        replaceWebMobileTheme: function (themeName) {
-            var newThemeUrl = ThemeChooser.getThemeUrl(themeName + ".mobile"),
-                themeLink = ThemeChooser.getCurrentMobileThemeLink();
-
-            ThemeChooser.updateLink(themeLink, newThemeUrl);
-        },
-
         replaceDVTheme: function (themeName) {
             var newThemeUrl = ThemeChooser.getDVThemeUrl(themeName),
                 themeLink = ThemeChooser.getCurrentDVThemeLink();
@@ -316,7 +274,6 @@
 
         replaceTheme: function(themeName) {
             ThemeChooser.replaceWebTheme(themeName);
-            ThemeChooser.replaceWebMobileTheme(themeName);
             ThemeChooser.replaceDVTheme(themeName);
             ThemeChooser.publishTheme(themeName);
             cookie("theme", themeName, Infinity, "/");
