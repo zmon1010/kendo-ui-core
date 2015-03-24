@@ -239,10 +239,11 @@
 
 .km-office365 .km-list > li:last-child
 {
-    .box-shadow(inset 0 -1px 0 green);
+    .box-shadow(inset 0 -1px 0 @office365-border-color);
 }
 
-.km-office365 .km-listview-link:after
+.km-office365 .km-listview-link:after,
+.km-office365 .km-state-active .km-listview-link:after
 {
     color: lighten(@office365-text, 30);
     border-color: currentcolor;
@@ -250,12 +251,11 @@
 
 .km-office365 .km-group-title
 {
-    background: #f7f7f7;
-    //border-color: @office365-list-border transparent #a4bdd4;
+    background: @office365-list-group-background;
+    border-color: @office365-list-group-background @office365-border-color @office365-border-color;
     color: @office365-list-group-text;
 }
 
-.km-office365 .km-group-title,
 .km-office365 .km-buttongroup {
     border-color: @office365-border-color;
 }
@@ -419,8 +419,7 @@
 .km-office365 .km-popup .k-state-focused,
 .km-office365 .km-popup .k-state-selected,
 .km-office365 li.km-state-active .km-listview-link,
-.km-office365 li.km-state-active .km-listview-label,
-.km-office365 .km-state-active .km-listview-link:after
+.km-office365 li.km-state-active .km-listview-label
 {
     color: @office365-secondary-text;
 }
