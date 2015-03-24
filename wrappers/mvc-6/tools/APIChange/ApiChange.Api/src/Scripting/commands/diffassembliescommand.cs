@@ -85,7 +85,7 @@ namespace ApiChange.Api.Scripting
                     if (assemblyV1 != null && assemblyV2 != null)
                     {
                         AssemblyDiffer differ = new AssemblyDiffer(assemblyV1, assemblyV2);
-                        AssemblyDiffCollection diff = differ.GenerateTypeDiff(QueryAggregator.PublicApiQueries);
+                        AssemblyDiffCollection diff = differ.GenerateTypeDiff(QueryAggregator.FluentApis);
                         removedTypes += diff.AddedRemovedTypes.RemovedCount;
                         changedTypes += diff.ChangedTypes.Count;
 

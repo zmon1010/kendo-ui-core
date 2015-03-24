@@ -125,6 +125,20 @@ namespace ApiChange.Api.Introspection
 
         }
 
+        public static QueryAggregator FluentApis
+        {
+            get
+            {
+                QueryAggregator agg = new QueryAggregator();
+                agg.TypeQueries.Add(new TypeQuery("Kendo.Mvc.UI.Fluent"));
+                agg.MethodQueries.Add(MethodQuery.PublicMethods);
+                agg.FieldQueries.Add(FieldQuery.PublicFields);
+
+                return agg;
+            }
+
+        }
+
         public QueryAggregator()
         {
         }
