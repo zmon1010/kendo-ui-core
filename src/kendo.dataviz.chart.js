@@ -4045,8 +4045,7 @@ var __meta__ = {
             var chart = this,
                 options = chart.options,
                 series = options.series,
-                categories,
-                categoryAxis,
+                categories = chart.categoryAxis.options.categories || [],
                 count = categoriesCount(series),
                 categoryIx,
                 seriesIx,
@@ -4058,8 +4057,6 @@ var __meta__ = {
             for (categoryIx = 0; categoryIx < count; categoryIx++) {
                 for (seriesIx = 0; seriesIx < seriesCount; seriesIx++) {
                     currentSeries = series[seriesIx];
-                    categoryAxis = chart.plotArea.seriesCategoryAxis(currentSeries);
-                    categories = categoryAxis.options.categories || [];
                     currentCategory = categories[categoryIx];
                     pointData = this._bindPoint(currentSeries, seriesIx, categoryIx);
 
@@ -8020,8 +8017,7 @@ var __meta__ = {
 
         traverseDataPoints: function(callback) {
             var series = this.options.series;
-            var categoryAxis;
-            var categories;
+            var categories = this.categoryAxis.options.categories || [];
             var totalCategories = categoriesCount(series);
             var isVertical = !this.options.invertAxes;
 
@@ -8029,8 +8025,6 @@ var __meta__ = {
                 var currentSeries = series[seriesIx];
                 var total = 0;
                 var runningTotal = 0;
-                categoryAxis = this.plotArea.seriesCategoryAxis(currentSeries);
-                categories = categoryAxis.options.categories || [];
 
                 for (var categoryIx = 0; categoryIx < totalCategories; categoryIx++) {
                     var data = SeriesBinder.current.bindPoint(currentSeries, categoryIx);
@@ -9289,64 +9283,61 @@ var __meta__ = {
 
         createCharts: function(panes) {
             var plotArea = this,
-                seriesByPane = plotArea.groupSeriesByPane(),
-                i, pane, paneSeries, filteredSeries;
+                seriesByPane = this.groupSeriesByPane();
 
-            for (i = 0; i < panes.length; i++) {
-                pane = panes[i];
-                paneSeries = seriesByPane[pane.options.name || "default"] || [];
-                plotArea.addToLegend(paneSeries);
-                filteredSeries = plotArea.filterVisibleSeries(paneSeries);
+            for (var i = 0; i < panes.length; i++) {
+                var pane = panes[i];
+                var paneSeries = seriesByPane[pane.options.name || "default"] || [];
+                this.addToLegend(paneSeries);
 
-                if (!filteredSeries) {
+                var visibleSeries = this.filterVisibleSeries(paneSeries);
+                if (!visibleSeries) {
                     continue;
                 }
 
-                plotArea.createAreaChart(
-                    filterSeriesByType(filteredSeries, [AREA, VERTICAL_AREA]),
-                    pane
-                );
-
-                plotArea.createBarChart(
-                    filterSeriesByType(filteredSeries, [COLUMN, BAR]),
-                    pane
-                );
-
-                plotArea.createRangeBarChart(
-                    filterSeriesByType(filteredSeries, [RANGE_COLUMN, RANGE_BAR]),
-                    pane
-                );
-
-                plotArea.createBulletChart(
-                    filterSeriesByType(filteredSeries, [BULLET, VERTICAL_BULLET]),
-                    pane
-                );
-
-                plotArea.createCandlestickChart(
-                    filterSeriesByType(filteredSeries, CANDLESTICK),
-                    pane
-                );
-
-                plotArea.createBoxPlotChart(
-                    filterSeriesByType(filteredSeries, BOX_PLOT),
-                    pane
-                );
-
-                plotArea.createOHLCChart(
-                    filterSeriesByType(filteredSeries, OHLC),
-                    pane
-                );
-
-                plotArea.createWaterfallChart(
-                    filterSeriesByType(filteredSeries, [WATERFALL, HORIZONTAL_WATERFALL]),
-                    pane
-                );
-
-                plotArea.createLineChart(
-                    filterSeriesByType(filteredSeries, [LINE, VERTICAL_LINE]),
-                    pane
-                );
+                var groups = this.groupSeriesByCategoryAxis(visibleSeries);
+                for (var groupIx = 0; groupIx < groups.length; groupIx++) {
+                    this.createChartGroup(groups[groupIx], pane);
+                }
             }
+        },
+
+        createChartGroup: function(series, pane) {
+            this.createAreaChart(
+                filterSeriesByType(series, [AREA, VERTICAL_AREA]), pane
+            );
+
+            this.createBarChart(
+                filterSeriesByType(series, [COLUMN, BAR]), pane
+            );
+
+            this.createRangeBarChart(
+                filterSeriesByType(series, [RANGE_COLUMN, RANGE_BAR]), pane
+            );
+
+            this.createBulletChart(
+                filterSeriesByType(series, [BULLET, VERTICAL_BULLET]), pane
+            );
+
+            this.createCandlestickChart(
+                filterSeriesByType(series, CANDLESTICK), pane
+            );
+
+            this.createBoxPlotChart(
+                filterSeriesByType(series, BOX_PLOT), pane
+            );
+
+            this.createOHLCChart(
+                filterSeriesByType(series, OHLC), pane
+            );
+
+            this.createWaterfallChart(
+                filterSeriesByType(series, [WATERFALL, HORIZONTAL_WATERFALL]), pane
+            );
+
+            this.createLineChart(
+                filterSeriesByType(series, [LINE, VERTICAL_LINE]), pane
+            );
         },
 
         aggregateCategories: function(panes) {
@@ -9480,6 +9471,36 @@ var __meta__ = {
                 isStacked100: isStacked100,
                 clip: clip
             };
+        },
+
+        groupSeriesByCategoryAxis: function(series, callback) {
+            var unique = {};
+            var categoryAxes = $.map(series, function(s) {
+                var name = s.categoryAxis || "$$default$$";
+                if (!unique.hasOwnProperty(name)) {
+                    unique[name] = true;
+                    return name;
+                }
+            });
+
+            function groupSeries(axis, axisIx) {
+                return $.grep(series, function(s) {
+                    return (axisIx === 0 && !s.categoryAxis) || (s.categoryAxis == axis);
+                });
+            }
+
+            var groups = [];
+            for (var axisIx = 0; axisIx < categoryAxes.length; axisIx++) {
+                var axis = categoryAxes[axisIx];
+                var axisSeries = groupSeries(axis, axisIx);
+                if (axisSeries.length === 0) {
+                    continue;
+                }
+
+                groups.push(axisSeries);
+            }
+
+            return groups;
         },
 
         createBarChart: function(series, pane) {

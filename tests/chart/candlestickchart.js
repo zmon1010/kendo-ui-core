@@ -184,24 +184,7 @@
         });
 
         test("sets correct category if multiple categoryAxis are used", function() {
-            var plotArea = stubPlotArea(getCategorySlot, getValueSlot, {
-                categoryAxis: {}
-            });
-            plotArea.namedCategoryAxes = {
-                A: {
-                    options: {
-                        categories: [1]
-                    },
-                    getSlot: getCategorySlot
-                },
-                B: {
-                    options: {
-                        categories: [2]
-                    },
-                    getSlot: getCategorySlot
-                }
-            };
-            candlestickChart = new dataviz.CandlestickChart(plotArea, { series: [{
+            var plotArea = new dataviz.CategoricalPlotArea([{
                 categoryAxis: "A",
                 type: "candlestick",
                 data: [[2,4,1,3]]
@@ -209,11 +192,19 @@
                 type: "candlestick",
                 categoryAxis: "B",
                 data: [[1,2,3,4]]
-            }] });
+            }], {
+                categoryAxis: [{
+                    name: "A",
+                    categories: [1]
+                }, {
+                    name: "B",
+                    categories: [2]
+                }]
+            });
 
-            for (var idx = 0; idx < candlestickChart.points.length; idx++) {
-                equal(candlestickChart.points[idx].category, idx + 1);
-            }
+            equal(plotArea.charts.length, 2);
+            equal(plotArea.charts[0].points[0].category, 1);
+            equal(plotArea.charts[1].points[0].category, 2);
         });
 
         test("sets point dataItem", function() {

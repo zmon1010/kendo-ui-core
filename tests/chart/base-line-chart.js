@@ -281,37 +281,29 @@ function baseLineChartTests(seriesName, TChart) {
         });
 
         test("sets correct category if multiple categoryAxis are used", function() {
-            var lineBox = function() {
-                return new Box2D(0,2,2,2);
-            };
-            var plotArea = stubPlotArea(getCategorySlot, getValueSlot);
-            plotArea.namedCategoryAxes = {
-                A: {
-                    options: {
-                        categories: [1, 2]
-                    },
-                    lineBox: lineBox,
-                    getSlot: getCategorySlot
-                },
-                B: {
-                    options: {
-                        categories: [3, 4]
-                    },
-                    lineBox: lineBox,
-                    getSlot: getCategorySlot
-                }
-            };
-
-            setupChart(plotArea, { series: [{
+            var plotArea = new dataviz.CategoricalPlotArea([{
+                type: seriesName,
                 categoryAxis: "A",
                 data: [1, 2]
             }, {
+                type: seriesName,
                 categoryAxis: "B",
                 data: [3, 4]
-            }] });
+            }], {
+                categoryAxis: [{
+                    name: "A",
+                    categories: [1, 2]
+                }, {
+                    name: "B",
+                    categories: [3, 4]
+                }]
+            });
 
-            for (var idx = 0; idx < chart.points.length; idx++) {
-                equal(chart.points[idx].category, chart.points[idx].value);
+            for (var chartIdx = 0; chartIdx < plotArea.charts.length; chartIdx++) {
+                var chart = plotArea.charts[chartIdx];
+                for (var idx = 0; idx < chart.points.length; idx++) {
+                    equal(chart.points[idx].category, chart.points[idx].value);
+                }
             }
         });
 
