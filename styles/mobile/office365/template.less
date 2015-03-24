@@ -26,7 +26,7 @@
 @switch-color: #666666;
 @switch-border: #c8c8c8;
 
-@office365-shadow: 0 0 10px 10px rgba(0,0,0,.2);
+@office365-shadow: 0 0 10px 5px rgba(0,0,0,.18);
 
 @office365-selected-color: #004578;
 
@@ -80,6 +80,12 @@
     background-color: @office365-button-background;
  }
 
+.km-office365 .km-modalview .km-footer .km-rightitem .km-button:first-child
+{
+    color: @office365-secondary-text;
+    background-color: @office365-button-primary-background;    
+}
+
  .km-office365 .km-modalview .km-footer .km-button.km-state-active
  {
     background-color: @office365-button-selected-background;
@@ -97,6 +103,16 @@
 {
     background: @office365-background;
     color: @office365-text;
+
+    border-top-color: @ios7-second-border-color;
+    border-image: -webkit-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
+    border-image: -moz-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
+    border-image: -ms-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
+}
+
+.km-office365 .km-actionsheet > li:nth-last-child(2) > a
+{
+    border-image: none;   
 }
 
 .km-office365 .km-footer .km-tabstrip .km-button:hover,
