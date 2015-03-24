@@ -40,6 +40,22 @@ test("toXML sets the r attribute to the alphanumeric and cell number (index plus
     equal(dom.find("c").attr("r"), "A1");
 });
 
+test("toXML sets the tabSelected attribute to 1 if the sheet is first", function() {
+    var worksheet = Worksheet();
+
+    var dom = $(worksheet.toXML(0));
+
+    equal(dom.find("sheetView").attr("tabSelected"), "1");
+});
+
+test("toXML does not set the tabSelected attribute if the sheet is not first", function() {
+    var worksheet = Worksheet();
+
+    var dom = $(worksheet.toXML(1));
+
+    equal(dom.find("sheetView").attr("tabSelected"), null);
+});
+
 test("toXML sets the 'r' attribute to the alphanumeric when index is greater than 26", function() {
     var cells = new Array(27);
 

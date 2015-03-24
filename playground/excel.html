@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="loader.js"></script>
+        <script src="../src/jszip.js"></script>
+        <script>
+            requireSync([
+            "../src/jquery.js",
+            "../src/kendo.ooxml.js"
+            ]);
+        </script>
+    </head>
+    <body>
+        <script>
+            var workbook = new kendo.ooxml.Workbook({
+                sheets: [ { }, { } ]
+            });
+            kendo.saveAs({
+                dataURI: workbook.toDataURL(),
+                fileName: "Test.xlsx"
+            });
+        </script>
+    </body>
+</html>
