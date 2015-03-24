@@ -436,7 +436,7 @@
     var IMAGE_CACHE = {};
 
     function loadImage(url, cont) {
-        var img = IMAGE_CACHE[url];
+        var img = IMAGE_CACHE[url], bloburl, blob;
         if (img) {
             cont(img);
         } else {
@@ -444,16 +444,20 @@
             if (!(/^data:/i.test(url))) {
                 img.crossOrigin = "Anonymous";
             }
-            if (kendo.support.browser.msie && kendo.support.browser.version == 10) {
-                // IE10 fails to load images from another domain even
-                // when the server sends the proper CORS headers.
-                // a XHR, however, will be able to load the data.
+            if (HAS_TYPED_ARRAYS) {
+                // IE10 fails to load images from another domain even when the server sends the
+                // proper CORS headers.  a XHR, however, will be able to load the data.
                 // http://stackoverflow.com/a/19734516/154985
+                //
+                // On the other hand, it's worth doing it this way for all browsers which support
+                // responseType = "blob" (HAS_TYPED_ARRAYS will be true), because we can inspect the
+                // mime type and if it's a JPEG (very common case) we can save a lot of time in
+                // _load below.
                 var xhr = new XMLHttpRequest();
                 xhr.onload = function() {
-                    var url = URL.createObjectURL(xhr.response);
-                    _load(url);
-                    URL.revokeObjectURL(url);
+                    blob = xhr.response;
+                    bloburl = URL.createObjectURL(blob);
+                    _load(bloburl);
                 };
                 xhr.onerror = _onerror;
                 xhr.open("GET", url, true);
@@ -479,6 +483,25 @@
         }
 
         function _onload() {
+            if (blob && /^image\/jpe?g$/i.test(blob.type)) {
+                // If we know we got a JPEG, we can skip the process of rendering it to a
+                // canvas, getting the pixel data, searching for transparency we know we won't
+                // find, getting back a data URI and then decoding the BASE64 to finally get the
+                // binary we already have.  Also, we avoid downgrading the image quality, with
+                // the possible drawback of making a bigger PDF; still, seems legit.
+                //
+                // Besides saving a lot of work, this also reuses the buffer memory
+                // (BinaryStream does not create a copy), potentially saving some GC cycles.
+                var reader = new FileReader();
+                reader.onload = function() {
+                    img = new PDFJpegImage(img.width, img.height, BinaryStream(new Uint8Array(this.result)));
+                    URL.revokeObjectURL(bloburl);
+                    cont(IMAGE_CACHE[url] = img);
+                };
+                reader.readAsArrayBuffer(blob);
+                return;
+            }
+
             var canvas = document.createElement("canvas");
             canvas.width = img.width;
             canvas.height = img.height;
@@ -492,6 +515,10 @@
             } catch(ex) {
                 // it tainted the canvas -- can't draw it.
                 return _onerror();
+            } finally {
+                if (bloburl) {
+                    URL.revokeObjectURL(bloburl);
+                }
             }
 
             // in case it contains transparency, we must separate rgb data from the alpha
