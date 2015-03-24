@@ -3,6 +3,7 @@
     <head>
         <script src="loader.js"></script>
         <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <script src="formula.js"></script>
         <script>
             requireSync([
             "../src/jquery.js",
@@ -17,6 +18,13 @@
         <script>
 
             function parseFormula() {
+
+                var formulaControl = document.getElementById("formula");
+                var formula = formulaControl.value;
+
+                console.log(parser.parse(formula), parser);
+
+                return;
 
                 var indentCount = 0;
 
