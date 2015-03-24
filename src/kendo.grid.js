@@ -3840,7 +3840,6 @@ var __meta__ = {
 
             for (var i = 0; i < cols.length; i++) {
                 var col = cols[i];
-                //should provide px/em support
                 var minWidth = col.minScreenWidth;
                 if (minWidth !== undefined && minWidth !== null) {
                     any = true;

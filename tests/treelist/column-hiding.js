@@ -381,6 +381,29 @@
         ok(!wasCalled, "event was triggered on already hidden column");
     });
 
+    test("hideMinScreenCols hides the column initially when there is not enough width", function() {
+        createTreeList({
+            columns: [ { field: "id", minScreenWidth: 50000 }, "parentId", { field: "text", hidden: true }],
+        });
+
+        equal(instance.columns[0].hidden, true);
+    });
+
+    test("hideMinScreenCols shows the column when there is enough width", function() {
+        createTreeList({
+            columns: [ { field: "id", minScreenWidth: 50000 }, "parentId", { field: "text", hidden: true }],
+        });
+
+        var firstCol = instance.columns[0];
+
+        equal(firstCol.hidden, true);
+
+        firstCol.minScreenWidth = 0;
+        $(window).trigger('resize');
+
+        equal(firstCol.hidden, false);
+    });
+
     test("showColumn doesn't trigger event if the column is already visible", function() {
         var wasCalled = false;
         createTreeList({

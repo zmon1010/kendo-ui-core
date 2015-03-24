@@ -756,6 +756,7 @@ var __meta__ = {
             this._scrollable();
             this._reorderable();
             this._columnMenu();
+            this._minScreenSupport();
 
             if (this.options.autoBind) {
                 this.dataSource.fetch();
@@ -980,6 +981,34 @@ var __meta__ = {
             this._adjustHeight();
         },
 
+        _minScreenSupport: function() {
+            var any = this.hideMinScreenCols();
+
+            if (any) {
+                this.minScreenResizeHandler = proxy(this.hideMinScreenCols, this);
+                $(window).on("resize", this.minScreenResizeHandler);
+            }
+        },
+        hideMinScreenCols: function() {
+            var cols = this.columns,
+                any = false,
+                screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+            for (var i = 0; i < cols.length; i++) {
+                var col = cols[i];
+                var minWidth = col.minScreenWidth;
+                if (minWidth !== undefined && minWidth !== null) {
+                    any = true;
+                    if (minWidth > screenWidth) {
+                        this.hideColumn(col);
+                    } else {
+                        this.showColumn(col);
+                    }
+                }
+            }
+            return any;
+        },
+
         destroy: function() {
             DataBoundWidget.fn.destroy.call(this);
 
@@ -1006,6 +1035,10 @@ var __meta__ = {
             if (this._draggableInstance && this._draggableInstance.element) {
                 this._draggableInstance.destroy();
                 this._draggableInstance = null;
+            }
+
+            if (this.minScreenResizeHandler) {
+                $(window).off("resize", this.minScreenResizeHandler);
             }
 
             this._destroyEditor();

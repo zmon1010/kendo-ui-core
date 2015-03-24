@@ -117,7 +117,7 @@
                 columns: [
                     { field: "FirstName", locked: true, title: "First Name", width: 200 },
                     { field: "LastName", title: "Last Name", sortable: true, width: 200 },
-                    { command: ["edit", "destroy", { name: "addChild", text: "Add Child", click: cmd }], width: 1500 }
+                    { minScreenWidth: 600, command: ["edit", "destroy", { name: "addChild", text: "Add Child", click: cmd }], width: 1500 }
                 ]
             });
 
