@@ -13,6 +13,7 @@ apt_repository "mono-tiffcompat" do
     components ["main"]
     keyserver "hkp://keyserver.ubuntu.com:80/"
     key "3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF"
+    only_if { node['lsb']['codename'] == 'precise' }
 end
 
 package "mono-complete"
