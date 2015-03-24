@@ -1644,7 +1644,9 @@ var __meta__ = {
 
             that._resources();
 
-            that._resizeHandler = proxy(that.resize, that);
+            that._resizeHandler = function() {
+                that.resize();
+            };
 
             that.wrapper.on("mousedown" + NS + " selectstart" + NS, function(e) {
                 if (!$(e.target).is(":kendoFocusable")) {
@@ -1658,7 +1660,7 @@ var __meta__ = {
 
             that._movable();
 
-            $(window).on("resize" + NS, that._resizeHandler);
+            that._bindResize();
 
             if(that.options.messages && that.options.messages.recurrence) {
                 recurrence.options = that.options.messages.recurrence;
@@ -1669,6 +1671,14 @@ var __meta__ = {
             that._ariaId = kendo.guid();
 
             that._createEditor();
+        },
+
+        _bindResize: function() {
+            $(window).on("resize" + NS, this._resizeHandler);
+        },
+
+        _unbindResize: function() {
+            $(window).off("resize" + NS, this._resizeHandler);
         },
 
         dataItems: function() {
@@ -2717,6 +2727,8 @@ var __meta__ = {
                 var editRecurringMode = isPlainObject(editable) ? editable.editRecurringMode : "dialog";
 
                 if (editRecurringMode === "dialog") {
+                    this._unbindResize();
+
                     that.showDialog({
                         model: event,
                         title: recurrenceMessages.editWindowTitle,
@@ -2726,6 +2738,8 @@ var __meta__ = {
                             { text: recurrenceMessages.editWindowSeries, click: updateSeries }
                         ]
                     });
+
+                    this._bindResize();
                 } else {
                     if (editRecurringMode === "series") {
                         updateSeries();
@@ -2767,12 +2781,16 @@ var __meta__ = {
                     buttons.push({ name: "canceledit", text: messages.cancel, click: function() { callback(true); } });
                 }
 
+                this._unbindResize();
+
                 this.showDialog({
                     model: model,
                     text: text,
                     title: messages.deleteWindowTitle,
                     buttons: buttons
                 });
+
+                this._bindResize();
             } else {
                 callback();
             }
@@ -2868,7 +2886,11 @@ var __meta__ = {
         },
 
         _editEvent: function(model) {
+            this._unbindResize();
+
             this._createPopupEditor(model);
+
+            this._bindResize();
         },
 
         _editRecurringDialog: function(model) {
@@ -2895,6 +2917,8 @@ var __meta__ = {
             var editRecurringMode = isPlainObject(editable) ? editable.editRecurringMode : "dialog";
 
             if (editRecurringMode === "dialog") {
+                this._unbindResize();
+
                 that.showDialog({
                     model: model,
                     title: recurrenceMessages.editWindowTitle,
@@ -2904,6 +2928,8 @@ var __meta__ = {
                         { text: recurrenceMessages.editWindowSeries, click: editSeries }
                     ]
                 });
+
+                this._bindResize();
             } else {
                  if (editRecurringMode === "series") {
                      editSeries();
@@ -3114,6 +3140,8 @@ var __meta__ = {
             var editRecurringMode = isPlainObject(editable) ? editable.editRecurringMode : "dialog";
 
             if (editRecurringMode === "dialog") {
+                this._unbindResize();
+
                 that.showDialog({
                     model: model,
                     title: recurrenceMessages.deleteWindowTitle,
@@ -3123,6 +3151,8 @@ var __meta__ = {
                        { text: recurrenceMessages.deleteWindowSeries, click: deleteSeries }
                     ]
                 });
+
+                this._bindResize();
             }else {
                 if (editRecurringMode === "series") {
                     deleteSeries();

@@ -418,6 +418,21 @@
         equal(view.calls("render"), 1);
     });
 
+    test("scheduler is not redrawn if the element is not resized", function() {
+        var scheduler = new Scheduler(container, {
+            width: 500,
+            height: 500
+        });
+
+        $(window).trigger("resize");
+
+        var view = stub(scheduler.view(), "render");
+
+        $(window).trigger("resize");
+
+        equal(view.calls("render"), 0);
+    });
+
     test("renderEvent is called with events as SchedulerEvent", 1, function() {
         var MyCustomView = kendo.ui.SchedulerView.extend({
                 title: "foo",
@@ -470,7 +485,6 @@
     });
 
     test("rebind is called once when navigating between views", function() {
-        debugger;
         var MyCustomView = kendo.ui.SchedulerView.extend({
                 dateForTitle: $.noop,
                 shortDateForTitle: $.noop,
@@ -492,11 +506,10 @@
                 views: [{ type: MyCustomView, title: "view1"}, {title: "view2", type: MyCustomView2}],
                 dataSource: { }
             }),
-
             rebindStub = stub(scheduler, "rebind");
-        debugger;
+
         scheduler.view().trigger("navigate", { view: "view2", date: new Date(2013, 1, 2) });
-        debugger;
+
         equal(rebindStub.calls("rebind"), 1);
     });
 
