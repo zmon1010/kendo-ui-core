@@ -1512,11 +1512,16 @@
                  [291, 576], TOLERANCE);
         });
 
-        test("remove plotBands if they are not in range", function() {
+        test("do not render plotBands if the have zero size", function() {
             var axis = new NumericAxis(3, 10, {
                 plotBands: [{
                     from: 1,
                     to: 2,
+                    color: "red",
+                    opacity: 0.5
+                }, {
+                    from: 3,
+                    to: 3,
                     color: "red",
                     opacity: 0.5
                 }],
@@ -1532,7 +1537,6 @@
             axis.plotArea = plotArea;
             axis.pane = { axes: [] };
             axis.renderVisual();
-
 
             equal(axis._plotbandGroup.children.length, 0);
         });

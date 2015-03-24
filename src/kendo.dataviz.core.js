@@ -1948,15 +1948,15 @@ var __meta__ = {
                 to = valueOrDefault(item.to, MAX_VALUE);
                 var element = [];
 
-                if (isInRange(from, range) || isInRange(to, range)) {
-                    if (vertical) {
-                        slotX = (altAxis || plotArea.axisX).lineBox();
-                        slotY = axis.getSlot(item.from, item.to, true);
-                    } else {
-                        slotX = axis.getSlot(item.from, item.to, true);
-                        slotY = (altAxis || plotArea.axisY).lineBox();
-                    }
+                if (vertical) {
+                    slotX = (altAxis || plotArea.axisX).lineBox();
+                    slotY = axis.getSlot(item.from, item.to, true);
+                } else {
+                    slotX = axis.getSlot(item.from, item.to, true);
+                    slotY = (altAxis || plotArea.axisY).lineBox();
+                }
 
+                if (slotX.width() !== 0 && slotY.height() !== 0) {
                     var bandRect = new geom.Rect(
                         [slotX.x1, slotY.y1],
                         [slotX.width(), slotY.height()]
@@ -3916,10 +3916,6 @@ var __meta__ = {
             element.innerHTML = text;
             return element.textContent || element.innerText;
         }
-    }
-
-    function isInRange(value, range) {
-        return value >= range.min && value <= range.max;
     }
 
     function alignPathToPixel(path) {
