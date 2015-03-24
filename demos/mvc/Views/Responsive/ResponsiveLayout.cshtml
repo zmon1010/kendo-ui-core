@@ -44,19 +44,20 @@
     
     <header class="responsive-header">
         <h1>@Html.ActionLink("Responsive Kendo UI", "Index")</h1>
-        <div class="nav-buttons">
-            <a id="pricing" href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
-            <a id="get-kendoui" href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
-        </div>
-        
         <button class="k-rpanel-toggle"><span class="k-icon k-i-hbars"></span></button>
-        <ul id="responsive-nav">
+        <div id="responsive-nav">
+        <ul>
             <li@(action == "index" ? " class=selected" : "")>@Html.ActionLink("About", "index")</li>
             <li@(action == "grid" ? " class=selected" : "")>@Html.ActionLink("Grid", "grid")</li>
             <li@(action == "scheduler" ? " class=selected" : "")>@Html.ActionLink("Scheduler", "scheduler")</li>
             <li@(action == "chart" ? " class=selected" : "")>@Html.ActionLink("Charts", "chart")</li>
             <li@(action == "responsivepanel" ? " class=selected" : "")>@Html.ActionLink("ResponsivePanel", "responsivepanel")</li>
         </ul>
+        <div class="nav-buttons">
+            <a id="pricing" href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+            <a id="get-kendoui" href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+        </div>
+        </div>
     </header>
     <div>
         @RenderBody()

@@ -61,27 +61,31 @@ a {
 }
 
 #responsive-nav {
-    font-size: 18px;
-    line-height: 80px;
     float: right;
 }
 
-#responsive-nav > li {
+#responsive-nav ul {
+    font-size: 18px;
+    line-height: 80px;
+    float: left;
+}
+
+#responsive-nav ul > li {
     float: left;
     border-bottom: 3px solid transparent;
 }
 
-#responsive-nav > li.selected {
+#responsive-nav ul > li.selected {
     float: left;
     border-color: #00b5f1;
 }
 
-#responsive-nav > li > a {
+#responsive-nav ul > li > a {
     padding: 30px;
     color: #fff;
 }
 
-#responsive-nav > li > a:hover {
+#responsive-nav ul > li > a:hover {
     color: #00b5f1;
 }
 
@@ -345,7 +349,7 @@ a {
      color: #10375c;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1280px) {
     .responsive-section > p,
     #responsive-QR,
     .responsive-widgets-container {
@@ -360,12 +364,12 @@ a {
         padding: 12px 17px;
     }
 
-    #responsive-nav {
+    #responsive-nav ul {
         font-size: 14px;
         line-height: 48px;
     }
 
-    #responsive-nav > li > a {
+    #responsive-nav ul > li > a {
         padding: 17px;
     }
     
@@ -383,15 +387,70 @@ a {
         font-size: 22px;
         margin-bottom: 60px;
     }
+    
+    .nav-buttons {
+        float: right;
+        padding: 0 17px;
+    }
+    
+    .btn {
+        font-size: 13px;
+        padding: 0.5em 2em 0.667em 2em;
+        margin-top: 10px;
+    }
+    .btn-primary {
+        margin-left: 6px;
+    }
+}
+
+@media (max-width: 980px) {
+    #responsive-nav ul > li > a {
+        padding: 10px;
+    }
+    
+    .btn {
+        font-size: 13px;
+        padding: 0.5em 1em 0.667em 1em;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 860px) {
+    .nav-buttons {
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {
+    .nav-buttons {
+        display: block;
+    }
+    
     #responsive-nav {
         width: 100%;
         line-height: 46px;
         z-index: 10;
         box-shadow: 0 0 9px #000000; 
         text-align: left;
+        background-color: #fff;
+    }
+    
+    #responsive-nav ul {
+        width: 100%;
+        float: none;
+    }
+    
+    .nav-buttons {
+        float: none;
+        margin: 0;
+        padding: 10px 20px;
+        border-top: 1px solid #eee;
+    }
+    .btn {
+        display: block;
+        margin: 10px 0;
+        padding: 1em;
+        font-size: 15px;
     }
 
     .responsive-header {
@@ -403,55 +462,45 @@ a {
         float: none;
     }
 
-    #responsive-nav li {
+    #responsive-nav ul li {
         display: block;
         float: none;
         width: 100%;
         background: #fff;
     }
 
-    #responsive-nav li:hover,
-    #responsive-nav li:active {
-        background: #f0f0f0;
-        border-top-color: #f0f0f0;
-        border-bottom-color: #f6f6f6;
+    #responsive-nav ul li:hover,
+    #responsive-nav ul li:active {
+        border-left-color: #00b5f1;
     }
 
-    #responsive-nav > li {
-        border-top: 1px solid #fff;
-        border-bottom: 1px solid #fff;
+    #responsive-nav ul > li {
+        border-top: 0;
+        border-bottom: 0;
+        border-left: 3px solid #fff;
     }
 
-     #responsive-nav > li:first-child {
-        border-top: 10px solid #fff;
-        
+     #responsive-nav ul > li:first-child {
+        margin-top: 10px;
+        border-top: 0;
     }
 
-    #responsive-nav > li:last-child {
-        border-bottom: 10px solid #fff;
+    #responsive-nav ul > li:last-child {
+        margin-bottom: 10px;
     }
 
-    #responsive-nav > li > a {
+    #responsive-nav ul > li > a {
         display: block;
-        padding: 0 30px;
+        padding: 0 20px;
         color: #272727;
     }
 
-     #responsive-nav .selected {        
-        background-color: #0C2D4F;
-        background-image: -webkit-linear-gradient(right, #092646 0%, #174770 100%);
-        background-image: -moz-linear-gradient(right, #092646 0%, #174770 100%);
-        background-image: -ms-linear-gradient(right, #092646 0%, #174770 100%);
-        background-image: -o-linear-gradient(right, #092646 0%, #174770 100%);
-        background-image: linear-gradient(to left, #092646 0%, #174770 100%);
+    #responsive-nav ul > li.selected {
+        float: none;
     }
 
-    #responsive-nav .selected a {
-        color: #fff;
-    }
-
-     #responsive-nav .selected:hover a {
-        color: #272727;
+    #responsive-nav ul .selected a {
+        color: #00b5f1;
     }
 
     .k-rpanel-toggle {
@@ -534,7 +583,7 @@ a {
 
 /* Clear floats */
 .responsive-header:after,
-#responsive-nav:after,
+#responsive-nav ul:after,
 .responsive-widgets-container:after {
     content: "";
     display: block;
