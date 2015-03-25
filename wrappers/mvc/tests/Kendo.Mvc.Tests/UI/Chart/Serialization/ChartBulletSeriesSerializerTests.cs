@@ -250,11 +250,16 @@ namespace Kendo.Mvc.UI.Tests
             series.Target.Border.Color = "red";
             series.Target.Border.Width = 1;
             series.Target.Border.DashType = ChartDashType.Dot;
-            ((Dictionary<string, object>)GetJson(series)["target"])["width"].ShouldEqual(1);
-            ((Dictionary<string, object>)GetJson(series)["target"])["color"].ShouldEqual("red");
-            ((Dictionary<string, object>)((Dictionary<string, object>)GetJson(series)["target"])["border"])["width"].ShouldEqual(1);
-            ((Dictionary<string, object>)((Dictionary<string, object>)GetJson(series)["target"])["border"])["color"].ShouldEqual("red");
-            ((Dictionary<string, object>)((Dictionary<string, object>)GetJson(series)["target"])["border"])["dashType"].ShouldEqual("dot");
+
+            var target = GetJson(series)["target"] as Dictionary<string, object>;
+            var line = target["line"] as Dictionary<string, object>;
+            var border = target["border"] as Dictionary<string, object>;
+
+            target["color"].ShouldEqual("red");
+            line["width"].ShouldEqual(1);
+            border["width"].ShouldEqual(1);
+            border["color"].ShouldEqual("red");
+            border["dashType"].ShouldEqual("dot");
         }
     }
 }

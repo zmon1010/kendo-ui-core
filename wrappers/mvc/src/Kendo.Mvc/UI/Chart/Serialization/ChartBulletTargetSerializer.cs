@@ -19,8 +19,14 @@ namespace Kendo.Mvc.UI
             
             FluentDictionary.For(result)
                 .Add("border", target.Border.CreateSerializer().Serialize(), ShouldSerializeBorder)
-                .Add("color", target.Color, () => target.Color.HasValue())
-                .Add("width", target.Width, () => target.Width.HasValue);
+                .Add("color", target.Color, () => target.Color.HasValue());
+
+            if (target.Width.HasValue)
+            {
+                var targetLine = new Dictionary<string, object>();
+                targetLine["width"] = target.Width;
+                result["line"] = targetLine;
+            }
 
             return result;
         }
