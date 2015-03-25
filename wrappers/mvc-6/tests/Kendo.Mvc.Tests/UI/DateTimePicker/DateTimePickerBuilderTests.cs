@@ -1,21 +1,22 @@
 namespace Kendo.Mvc.UI.Tests
 {
 
-    using System;
-    using Xunit;
-    using Fluent;
+	using System;
+	using Xunit;
+	using Fluent;
 	using System.Linq;
-    using System.Collections.Generic;
+	using System.Collections.Generic;
+	using Kendo.Mvc.Tests;
 
-    public class DateTimePickerBuilderTests
+	public class DateTimePickerBuilderTests
     {
         private readonly DateTimePicker dateTimePicker;
         private readonly DateTimePickerBuilder builder;
 
         public DateTimePickerBuilderTests()
         {
-            dateTimePicker = DateTimePickerTestHelper.CreateDateTimePicker(null);
-            builder = new DateTimePickerBuilder(dateTimePicker);
+            dateTimePicker = new DateTimePicker(TestHelper.CreateViewContext());
+			builder = new DateTimePickerBuilder(dateTimePicker);
         }
 
         [Fact]
