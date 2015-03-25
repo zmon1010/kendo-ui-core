@@ -85,7 +85,8 @@
     background-color: @office365-button-background;
  }
 
-.km-office365 .km-modalview .km-footer .km-rightitem .km-button:first-child
+.km-office365 .km-modalview .km-footer .km-rightitem .km-button:first-child,
+ .km-office365 .km-modalview .km-footer .km-button.km-state-active
 {
     color: @office365-secondary-text;
     background-color: @office365-button-primary-background;    
@@ -93,7 +94,7 @@
 
  .km-office365 .km-modalview .km-footer .km-button.km-state-active
  {
-    color: @office365-text;
+    //color: @office365-text;
     //background-color: @office365-button-selected-background;
  }
 
@@ -101,6 +102,19 @@
 {
     //color: @office365-secondary-text;
     //border-color: @office365-inverse-background;
+}
+
+.km-office365 .km-navbar .km-leftitem .km-button {
+    border-color: @office365-background;
+}
+
+.km-office365 .km-navbar .km-leftitem .km-button.km-state-active {
+    border-color: @office365-selected-color;
+}
+
+.km-office365 .km-navbar .km-state-active.km-back:before,
+.km-office365 .k-toolbar .km-state-active.km-back:before {
+    color: @office365-selected-color;
 }
 
 /* ActionSheet, Footer */
@@ -215,7 +229,9 @@
 }
 
 .km-office365 .km-switch-off .km-switch-handle:after,
-.km-office365 .km-switch-on .km-switch-handle:after 
+.km-office365 .km-switch-on .km-switch-handle:after,
+.km-office365 .km-switch-off .km-switch-handle:before,
+.km-office365 .km-switch-on .km-switch-handle:before 
 {
     background-color: @office365-background;
 }
@@ -495,7 +511,11 @@
     border-color: @office365-button-selected-background;
 }
 
-.km-office365 li.km-state-active .km-listview-link,
+.km-office365 .km-detail.km-state-active,
+.km-office365 .km-state-active .km-detail,
+.km-office365 a.km-listview-link:active,
+.km-office365 .km-state-active a.km-listview-link,
+.km-office365 .km-list > li:active,
 .km-office365 .km-tabstrip .km-state-active {
     background: @office365-list-selected-background;
 }

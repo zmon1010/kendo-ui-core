@@ -6,7 +6,7 @@
 .km-office365 .km-switch
 {
     width: 5rem;
-    height: 2.4rem;
+    height: 2.5rem;
     line-height: 2.2rem;
 }
 
@@ -36,7 +36,7 @@
 
 .km-office365 .km-switch-handle
 {
-    width: 1.25em;
+    width: 1.5em;
     margin: 0 4px 0 0;
     border-width: 3px;
 }
@@ -93,13 +93,23 @@
 }
 
 .km-office365 .km-switch-off .km-switch-handle:after,
-.km-office365 .km-switch-on .km-switch-handle:after {
+.km-office365 .km-switch-on .km-switch-handle:after,
+.km-office365 .km-switch-off .km-switch-handle:before,
+.km-office365 .km-switch-on .km-switch-handle:before {
     content: "";
     width: 3px;
     height: 100%;
     display: inline-block;
     margin-top: -3px;
     padding: 3px 0;
+}
+
+.km-office365 .km-switch-on .km-switch-handle:after {
+    float: right;
+}
+
+.km-office365 .km-switch-on .km-switch-handle:before {
+    float: left;
 }
 
 .km-office365 .km-switch-off .km-switch-handle:after {

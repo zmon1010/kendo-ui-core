@@ -64,3 +64,40 @@
 .km-office365 .km-buttongroup .km-button {
     padding: .625em 1.875em; 
 }
+
+.km-office365 .km-navbar .km-button .km-icon,
+.km-office365 .k-toolbar .km-button .km-icon
+{
+    font-size: 1.2em;
+}
+
+.km-office365 .km-navbar .km-back:before,
+.km-office365 .k-toolbar .km-back:before
+{ 
+    content: "\a0";
+    display: inline-block;
+    color: currentcolor;
+    width: .8em;
+    height: .8em;
+    border-width: 0;
+    box-shadow: inset .25rem -.25rem 0 currentcolor;
+    .transform(rotate(45deg));
+
+    margin-top: 1px;
+    margin-left: 1px;
+}
+
+.km-office365 .km-navbar .km-back .km-text,
+.km-office365 .k-toolbar .km-back .km-text
+{
+    display: none;    
+}
+
+.km-office365 .km-navbar .km-leftitem .km-button
+{
+    width: 2em;
+    height: 2em;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50%;
+}
