@@ -17,8 +17,15 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
-<%= unique_options.map { |o| o.to_serialization}.join %>
+            InitializePrefix();
+
+<%= unique_options.map { |o| o.to_serialization }.join %>
             return settings;
+        }
+
+        protected void InitializePrefix()
+        {
+            <%= composite_options.map { |o| o.to_prefix }.join %>
         }
     }
 }

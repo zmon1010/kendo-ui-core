@@ -100,15 +100,23 @@ namespace Kendo.Mvc.UI
         {
             get
             {
-                return (IsInClientTemplate ? "\\#" : "#") + Id;
+                return IdPrefix + Id;
             }
         }
 
-        /// <summary>
-        /// Gets or sets the view context to rendering a view.
-        /// </summary>
-        /// <value>The view context.</value>
-        public ViewContext ViewContext
+		public string IdPrefix
+		{
+			get
+			{
+				return IsInClientTemplate ? "\\#" : "#";
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the view context to rendering a view.
+		/// </summary>
+		/// <value>The view context.</value>
+		public ViewContext ViewContext
         {
             get;
             private set;

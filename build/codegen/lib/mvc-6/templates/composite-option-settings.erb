@@ -15,13 +15,21 @@ namespace Kendo.Mvc.UI
 % if toggleable && !unique_options.any?{ |o| o.csharp_name.downcase.eql?('enabled') }
         public bool Enabled { get; set; }
 % end
+        public string IdPrefix { get; set; } = "#";
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
 
-<%= unique_options.map { |o| o.to_serialization}.join %>
+            InitializePrefix();
+
+<%= unique_options.map { |o| o.to_serialization }.join %>
             return settings;
+        }
+
+        protected void InitializePrefix()
+        {
+            <%= composite_options.map { |o| o.to_prefix }.join %>
         }
     }
 }

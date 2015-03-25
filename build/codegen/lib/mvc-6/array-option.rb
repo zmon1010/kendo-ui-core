@@ -85,6 +85,12 @@ module CodeGen::MVC6::Wrappers::Options
         def to_serialization
             SERIALIZATION.result(binding)
         end
+
+        def to_prefix()
+            ERB.new(%{
+            <%=csharp_name%>.Each(i => i.IdPrefix = IdPrefix);
+            }).result(binding)
+        end
     end
 
 end
