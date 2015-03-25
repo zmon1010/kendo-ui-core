@@ -14,10 +14,12 @@ namespace Kendo.Mvc.UI
         public string Delimeter { get; set; }
 
         public bool Enabled { get; set; }
+        public string IdPrefix { get; set; } = "#";
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
 
             if (Delimeter.HasValue())
             {
@@ -26,5 +28,6 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
+
     }
 }

@@ -16,10 +16,12 @@ namespace Kendo.Mvc.UI
         public GridSortMode? SortMode { get; set; }
 
         public bool Enabled { get; set; }
+        public string IdPrefix { get; set; } = "#";
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
 
             if (AllowUnsort.HasValue)
             {
@@ -28,5 +30,6 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
+
     }
 }

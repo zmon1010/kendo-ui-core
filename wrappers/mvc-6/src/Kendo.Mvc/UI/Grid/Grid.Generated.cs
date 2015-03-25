@@ -34,6 +34,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
+
             var allowCopy = AllowCopy.Serialize();
             if (allowCopy.Any())
             {
@@ -103,5 +104,6 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
+
     }
 }

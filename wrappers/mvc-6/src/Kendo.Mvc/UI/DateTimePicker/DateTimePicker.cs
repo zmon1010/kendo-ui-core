@@ -104,8 +104,7 @@ namespace Kendo.Mvc.UI
 			{
 				settings["footer"] = EnableFooter;
 			}
-
-			MonthTemplate.IdPrefix = idPrefix;
+			
 			var month = MonthTemplate.Serialize();
 			if (month.Any())
 			{

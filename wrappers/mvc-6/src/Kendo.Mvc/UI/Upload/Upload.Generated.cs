@@ -28,6 +28,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
+
             var async = Async.Serialize();
             if (async.Any())
             {
@@ -54,7 +55,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["template"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('#{0}').html()", TemplateId
+                        "jQuery('{0}{1}').html()", IdPrefix, TemplateId
                     )
                 };
             }
@@ -65,5 +66,6 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
+
     }
 }

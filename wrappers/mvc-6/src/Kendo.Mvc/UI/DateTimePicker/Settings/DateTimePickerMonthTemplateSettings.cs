@@ -11,8 +11,6 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class DateTimePickerMonthTemplateSettings 
     {
-		public string IdPrefix { get; set; }
-
 		public Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();

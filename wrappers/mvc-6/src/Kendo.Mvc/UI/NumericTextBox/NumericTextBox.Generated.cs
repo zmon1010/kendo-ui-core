@@ -40,6 +40,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
+
             if (Culture.HasValue())
             {
                 settings["culture"] = Culture;
@@ -77,5 +78,6 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
+
     }
 }
