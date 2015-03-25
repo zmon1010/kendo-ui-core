@@ -2217,7 +2217,6 @@ a.footer-links:hover,
     position: relative;
     text-align: center;
     background-color: #f5f7f8;
-    width:100%;
 }
 
 #example-search-wrapper {
@@ -2227,7 +2226,7 @@ a.footer-links:hover,
 }
 
 #layout-search-wrapper {
-    padding: 2.833em 0;
+    padding: 2.833em 1.467em;
     border-bottom: 1px solid #ebecee;
 }
 
@@ -2269,7 +2268,7 @@ a.footer-links:hover,
 
 #layout-search-wrapper .search {
     margin: 0 auto;
-    width: 44%;
+    max-width: 700px;
 }
 
 #example-search-wrapper .search > span,
@@ -2790,6 +2789,10 @@ html.k-materialblack .demo-section.k-content {
   .btn {
     padding-left: 10px;
     padding-right: 10px;
+  }
+  
+  #layout-search-wrapper {
+    padding: 1.467em;
   }
 }
 
