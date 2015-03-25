@@ -174,18 +174,30 @@
 		},
 		"spriteCssClass": "gridIcon",
 		"items": [
-		  {
-			"text": "Basic usage",
-			"url": "grid/index",
-			"title": {
-				"kendo-ui": "jQuery Grid control example | Kendo UI Grid Demos",
-				"aspnet-mvc": " ASP.NET MVC Grid control example"
+			{
+				"text": "Basic usage",
+				"url": "grid/index",
+				"title": {
+					"kendo-ui": "jQuery Grid control example | Kendo UI Grid Demos",
+					"aspnet-mvc": " ASP.NET MVC Grid control example"
+				},
+				"meta": {
+					"kendo-ui": "This demo for Kendo UI jQuery-based Grid component shows how you can make your static HTML tables and raw data much more interactive to match your modern web app.",
+					"aspnet-mvc": "In this demo for Kendo UI jQuery-powered Grid in ASP.NET MVC you will see all basic functionalities of the extension."
+				}
 			},
-			"meta": {
-				"kendo-ui": "This demo for Kendo UI jQuery-based Grid component shows how you can make your static HTML tables and raw data much more interactive to match your modern web app.",
-				"aspnet-mvc": "In this demo for Kendo UI jQuery-powered Grid in ASP.NET MVC you will see all basic functionalities of the extension."
-			}
-		  }
+			{
+				"text": "Binding to local data",
+				"url": "grid/local-data-binding",
+				"title": {
+					"kendo-ui": "Binding to local data in Kendo UI Grid | Kendo UI Web",
+					"aspnet-mvc": "Binding to local data in Telerik ASP.NET MVC Grid"
+				},
+				"meta": {
+					"kendo-ui": "This sample demonstrates how we can bind Kendo UI Grid widget to local JSON Data by using Kendo UI DataSource component.",
+					"aspnet-mvc": "This sample demonstrates how we can bind the Telerik ASP.NET MVC Grid control to local JSON Data by using Kendo UI DataSource component."
+				}
+			  }
 		],
 		"category": "Data Management"
 	  },
