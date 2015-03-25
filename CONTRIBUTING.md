@@ -102,7 +102,6 @@ All code contributed to this project should adhere to a consistent style, so ple
 - Semicolons are nice. Use them.
 - Double quotes
 - No trailing whitespace
-- Declare variables at the top of a scope
 - Return early
 - Be JSHint Valid
 
