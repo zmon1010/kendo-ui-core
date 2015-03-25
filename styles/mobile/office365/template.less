@@ -66,12 +66,17 @@
 }
 
 .km-office365 .km-popup .km-navbar,
-.km-office365 .km-popup .km-navbar .km-view-title,
-.km-office365 .km-modalview .km-header .km-navbar,
-.km-office365 .km-modalview .km-header .km-navbar .km-view-title 
+.km-office365 .km-popup .km-navbar .km-view-title
 {
     color: @office365-text;
     background-color: @office365-background;   
+}
+
+.km-office365 .km-modalview .km-header .km-navbar,
+.km-office365 .km-modalview .km-header .km-navbar .km-view-title 
+{
+    color: @switch-color;
+    background-color: @office365-background;  
 }
 
 .km-office365 .km-modalview .km-footer .km-rightitem  
@@ -88,7 +93,8 @@
 
  .km-office365 .km-modalview .km-footer .km-button.km-state-active
  {
-    background-color: @office365-button-selected-background;
+    color: @office365-text;
+    //background-color: @office365-button-selected-background;
  }
 
 .km-office365 .km-navbar
