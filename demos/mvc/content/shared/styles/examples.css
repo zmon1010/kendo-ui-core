@@ -89,7 +89,6 @@ body {
     background-color: #fff;
     color: #555;
     font: 400 12px Arial, Helvetica, sans-serif;
-    min-width: 1230px;
     position: relative;
 }
 
@@ -2775,5 +2774,41 @@ html.k-materialblack .demo-section.k-content {
 
   .application {
       width: 200px;
+  }
+}
+
+
+@media only screen and (max-width : 1200px) {
+
+/* Homepage */
+
+}
+
+@media only screen and (max-width : 720px) {
+
+/* Homepage */
+  .btn {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media only screen and (max-width : 520px) {
+
+/* Homepage */
+  .nav-buttons {
+    display: none;
+  }
+  
+  #logo-bar {
+    float: none;
+    margin: 0;
+  }
+  
+  #logo-bar a {
+    display: block;
+    text-align: center;
+    padding-top: 1.2em;
+    padding-bottom: 1.3em;
   }
 }
