@@ -1,4 +1,278 @@
 @import "common/mixins.less";
+
+@texture: none;
+@tooltip-texture: url('textures/highlight.png');
+@fallback-texture: url('textures/highlight.png');
+
+/* Widget Base Styles */
+@widget-text-color: @normal-text-color;
+
+
+@inverse-text-color: contrast(@normal-text-color);
+@widget-gradient: @normal-gradient;
+@widget-background-color: @normal-background;
+@widget-border-color: contrast(@normal-background, darken(@normal-background, 10%), lighten(@normal-background, 10%));
+@widget-shadow: none;
+
+/* Selects, Dropdowns */
+@select-background-color: @base;
+@select-border-color: contrast(@base, darken(@base, 10%), lighten(@base, 10%));
+@select-hover-background-color: @hover-background;
+@select-group-background-color: @base;
+
+/* Inputs */
+@input-background-color: #fff;
+@input-text-color: #000;
+
+/* Links */
+@link-text-color: @accent;
+
+/* Headers */
+@header-text-color: @normal-text-color;
+@header-background-color: @base;
+
+/* Buttons */
+@button-text-color: @normal-text-color;
+@button-background-color: @base;
+
+/* Group Base Styles */
+@group-background-color: @base;
+@group-border-color: contrast(@base, darken(@base, 10%), lighten(@base, 10%));
+
+/* Content */
+@content-background-color: @normal-background;
+
+
+/* Widget States */
+
+/* Hover State */
+@hover-background-color: @hover-background;
+@hover-border-color: contrast(@hover-background, darken(@hover-background, 10%), lighten(@hover-background, 10%));
+@hover-shadow: none;
+
+/* Selected State */
+@selected-background-color: @selected-background;
+@selected-border-color: contrast(@hover-background, darken(@hover-background, 10%), lighten(@hover-background, 10%));
+@selected-shadow: none;
+
+/*Focused State*/
+@focused-border-color: @hover-border-color;
+@focused-shadow: 0 0 3px 0 @shadow-color;
+@focused-item-shadow: inset 0 0 5px 1px @focused-border-color;
+@focused-active-item-shadow: inset 0 0 3px 4px darken(@selected-border-color, 4%);
+
+/* Active State */
+@active-text-color: @accent;
+@active-gradient:  none;
+@active-background-color: @normal-background;
+@active-border-color: @accent;
+@active-shadow: none;
+
+/* Error State */
+@error-text-color: #fff;
+@error-background-color: @error;
+@error-border-color: @error;
+
+/* Disabled State */
+@disabled-text-color: desaturate(@normal-text-color, 50%);
+
+/* Notification */
+@notification-info-background-color: @info;
+@notification-info-text-color: contrast(@info, darken(@info, 10%), lighten(@info, 10%));
+@notification-info-border-color: @notification-info-text-color;
+@notification-success-background-color: @success;
+@notification-success-text-color: contrast(@success, darken(@success, 10%), lighten(@success, 10%));
+@notification-success-border-color: @notification-success-text-color;
+@notification-warning-background-color: @warning;
+@notification-warning-text-color: contrast(@warning, darken(@warning, 10%), lighten(@warning, 10%));
+@notification-warning-border-color: @notification-warning-text-color;
+@notification-error-background-color: lighten(@error, 10%);
+@notification-error-text-color: @notification-error-border-color;
+@notification-error-border-color: @error;
+
+/* ToolTip */
+@tooltip-text-color: contrast(@accent);
+@tooltip-background-color: @accent;
+@tooltip-border-color: @accent;
+
+/* Validation Message */
+@validation-text-color: @notification-warning-text-color;
+@validation-background-color: @notification-warning-background-color;
+@validation-border-color: @notification-warning-border-color;
+
+/* Splitter */
+@splitbar-background-color: @base;
+
+/* Slider */
+@draghandle-border-radius: 7px;
+@draghandle-border-color: @widget-border-color;
+@draghandle-background-color: @widget-background-color;
+@draghandle-shadow: none;
+@draghandle-hover-border-color: @hover-border-color;
+@draghandle-hover-background-color: @hover-background-color;
+@draghandle-hover-shadow: none;
+
+/* Grid */
+@alt-background-color: contrast(@background, lighten(@background, 1%), darken(@background, 1%));
+@nested-alt-background-color: darken(@alt-background-color, 8%);
+@cell-border-color: @widget-border-color;
+@column-highlight-background-color: contrast(@alt-background-color, lighten(@alt-background-color, 1%), darken(@alt-background-color, 1%));
+@active-filter-background-color: @active-background-color;
+
+/* Scheduler */
+@scheduler-background-color: @widget-background-color;
+@current-time-color: @error-border-color;
+@event-background-color: @accent;
+@event-text-color: @widget-text-color;
+@event-inverse-text-color: @scheduler-background-color;
+@scheduler-nonwork-background-color: @column-highlight-background-color;
+@resize-background-color: @selected-background-color;
+
+/* Upload */
+@upload-progress-background-color: @normal-background;
+@upload-progress-text-color: @normal-text-color;
+@upload-success-background-color: @success;
+@upload-success-text-color: @notification-success-text-color;
+@upload-error-background-color: @notification-error-background-color;
+@upload-error-text-color: @notification-error-text-color;
+
+/* Gantt*/
+
+@task-summary-color: lighten(@widget-text-color, 25%);
+@task-summary-selected-color: lighten(@selected-background-color, 25%);
+
+/* Loading Indicators */
+@loading-panel-color: @background;
+
+/* Shadows */
+@shadow-color: fadeout(@focused-border-color, 70%);
+
+/* Border Radii */
+@main-border-radius: @border-radius;
+@list-border-radius: @main-border-radius - 1;
+@inner-border-radius: @main-border-radius - 1;
+@slider-border-radius: 50%;
+
+/* Icons */
+@default-icon-opacity: 0.8;
+
+@calendar-border-radius: @border-radius;
+@calendar-content-text-color: @widget-text-color;
+@calendar-footer-background: @widget-background-color;
+@calendar-footer-text-decoration: none;
+@calendar-footer-hover-text-decoration: underline;
+@calendar-footer-hover-background: @widget-background-color;
+@calendar-header-hover-text-decoration: none;
+@calendar-header-hover-background: @hover-background-color;
+@calendar-footer-active-background: @widget-background-color;
+@calendar-group-background-color: @group-background-color;
+@button-border-color: @widget-border-color;
+@menu-border-color: @widget-border-color;
+@tabstrip-items-border: @widget-border-color;
+@tabstrip-active-background: @widget-background-color;
+@tabstrip-tabs-color: @widget-text-color;
+@form-widget-color: @normal-text-color;
+@drop-down-border-color: @widget-border-color;
+@drop-down-hover-border-color: @hover-border-color;
+@drop-down-focused-border-color: @focused-border-color;
+@drop-down-background: @base;
+@drop-down-text-color: @widget-text-color;
+@secondary-border-color: @widget-border-color;
+@secondary-text-color: @widget-text-color;
+@numeric-selected-background: @selected-background-color;
+@panelbar-items-border: @widget-border-color;
+@panelbar-content-background: @content-background-color;
+@panelbar-content-color: @widget-text-color;
+@window-shadow-style: 1px 1px 7px 1px;
+@filter-menu-content-background: @content-background-color;
+@icon-background-color: transparent;
+@disabled-background-color: @button-background-color;
+@disabled-border-color: @widget-border-color;
+@disabled-gradient: @widget-gradient;
+
+@primary-button-text-color: contrast(@accent, #fff, #000);
+@primary-button-background-color: @accent;
+@primary-button-border-color: @primary-button-text-color;
+@primary-gradient: @selected-gradient;
+@primary-shadow: none;
+
+@primary-hover-text-color: @primary-button-text-color;
+@primary-hover-background-color: softlight(@accent, #fff);
+@primary-hover-border-color: @primary-button-border-color;
+@primary-hover-gradient: @hover-gradient;
+@primary-hover-shadow:none;
+
+@primary-focused-color: @primary-button-text-color;
+@primary-focused-border-color: @primary-hover-border-color;
+@primary-focused-gradient: @primary-hover-gradient;
+@primary-focused-active-item-shadow: 0 0 3px 1px #e10000;
+
+@primary-active-text-color: @primary-button-text-color;
+@primary-active-background-color: darken(@accent, 5%);
+@primary-active-gradient: @primary-gradient;
+@primary-active-border-color: darken(@primary-active-background-color, 5%);
+@primary-active-shadow: none;
+
+@primary-disabled-text-color: desaturate(@primary-button-text-color, 50%);
+@primary-disabled-background-color: @primary-button-background-color;
+@primary-disabled-border-color: @primary-button-border-color;
+@primary-disabled-gradient: @primary-gradient;
+
+@button-hover-text-color: @hover-text-color;
+@button-hover-background-color: @hover-background-color;
+@button-hover-border-color: @hover-border-color;
+
+@button-active-background: @selected-background-color;
+@button-active-border-color: @selected-border-color;
+@button-focused-border-color: @button-border-color;
+@button-focused-shadow: @focused-item-shadow;
+@button-focused-active-shadow: @focused-active-item-shadow;
+
+@checkbox-border-color-before: transparent;
+@checkbox-border-radius-before: (@border-radius - 1);
+@checkbox-background-color: @widget-background-color;
+
+@checkbox-hover-border-color: contrast(@hover-background, lighten(@hover-background, 1%), darken(@hover-background, 1%));
+@checkbox-hover-box-shadow: none;
+
+@checkbox-checked-border-color-after: contrast(@hover-background, lighten(@hover-background, 1%), darken(@hover-background, 1%));
+@checkbox-checked-border-radius-after: (@border-radius - 1);
+@checkbox-checked-background-color-after: #fff;
+@checkbox-checked-color-after: @accent;
+
+@checkbox-active-border-color-after: #fff;
+@checkbox-active-border-color-before: transparent;
+@checkbox-active-border-radius: (@border-radius - 1);
+@checkbox-active-border-radius-after: (@border-radius - 1);
+@checkbox-active-box-shadow: 0 0 (@border-radius - 1) 0 @base;
+
+@checkbox-checked-active-border-radius-before: (@border-radius - 1);
+@checkbox-checked-active-box-shadow: @checkbox-active-box-shadow;
+
+@checkbox-checked-disabled-color-after: @base;
+@checkbox-disabled-background-color-after: #ededed;
+@checkbox-disabled-color: @disabled-text-color;
+@checkbox-disabled-box-shadow: none;
+@checkbox-disabled-border-color-before: @disabled-border-color;
+
+@radio-border-color-before: @checkbox-border-color-before;
+@radio-background-color: @widget-background-color;
+
+@radio-hover-border-color: @checkbox-hover-border-color;
+@radio-hover-box-shadow:none;
+
+@radio-checked-background-color-after: @checkbox-checked-background-color-after;
+
+@radio-active-border-color-before: @checkbox-hover-border-color;
+@radio-active-box-shadow: 0 0 (@border-radius - 1) 0 @checkbox-hover-border-color;
+
+@radio-checked-active-box-shadow: @radio-active-box-shadow;
+
+@radio-disabled-background-color-after: @checkbox-disabled-background-color-after;
+@radio-disabled-color: @checkbox-disabled-color;
+@radio-disabled-box-shadow: none;
+@radio-disabled-background-color-before: @disabled-background-color;
+
 @inner-radius: @main-border-radius - 1;
 @sprite-image: url('@{image-folder}/sprite.png');
 
@@ -1969,7 +2243,6 @@ html .km-pane-wrapper .km-widget,
 }
 
 .k-checkbox-label:after{
-  border-color: @checkbox-border-color-after;
   background: @checkbox-background-color;
   border-radius: @checkbox-border-radius-before;
 }
@@ -2045,10 +2318,6 @@ html .km-pane-wrapper .km-widget,
    box-shadow: @radio-hover-box-shadow;
 }
 
-.k-radio:checked + .k-radio-label:before {
-   border-color: @radio-checked-border-color-before;
-}
-
 .k-radio:checked + .k-radio-label:after {
   background-color: @radio-checked-background-color-after;
   border-radius: 50%;
@@ -2063,7 +2332,6 @@ html .km-pane-wrapper .km-widget,
 .k-radio:checked + .k-radio-label:active:before {
   box-shadow: @radio-checked-active-box-shadow;
   border-radius: 50%;
-  border-color: @radio-checked-active-border-color-before;
 }
 
 .k-radio:disabled + .k-radio-label {
@@ -2143,7 +2411,6 @@ html .km-pane-wrapper .km-widget,
 
 //ThemeBuilder Checkboxes / Radio buttons rules
 .ktb-checkbox-label-after {
-    border-color: @checkbox-border-color-after;
     background: @checkbox-background-color;
 }
 
@@ -2184,10 +2451,6 @@ html .km-pane-wrapper .km-widget,
 
 .ktb-radio-checked + .ktb-radio-label-after {
     background-color: @radio-checked-background-color-after;
-}
-
-.ktb-radio-checked + .ktb-radio-label-before {
-    border-color: @radio-checked-border-color-before;
 }
 
 .ktb-radio-label-hover-before,
