@@ -163,6 +163,14 @@ test("paste of nested table adds k-table class", function() {
     ok($("table", editor.body).hasClass("k-table"));
 });
 
+test("paste places selection after table", function() {
+    pasteIn(editor, '||', '<table><tr><td>foo</td></tr> </table>');
+
+    editor.getRange().insertNode(editor.document.createElement('a'));
+
+    equal(editor.value(), '<table><tbody><tr><td>foo</td></tr></tbody></table><a></a>');
+});
+
 if ('FileReader' in window) {
 
     function imageEvent() {

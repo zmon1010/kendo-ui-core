@@ -711,6 +711,13 @@ var Clipboard = Class.extend({
         dom.restoreScrollTop(editor.document);
         dom.scrollTo(caret);
         marker.removeCaret(range);
+
+        var rangeEnd = range.commonAncestorContainer.parentNode;
+        if (range.collapsed && dom.name(rangeEnd) == "tbody") {
+            range.setStartAfter($(rangeEnd).closest("table")[0]);
+            range.collapse(true);
+        }
+
         editor.selectRange(range);
     }
 });
