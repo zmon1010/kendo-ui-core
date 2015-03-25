@@ -2794,6 +2794,18 @@ html.k-materialblack .demo-section.k-content {
   #layout-search-wrapper {
     padding: 1.467em;
   }
+  
+  .footer-links {
+    display: block;
+    float: left;
+    clear: left;
+    padding: .5em 0;
+    border-left: 0;
+  }
+  .copyright {
+    clear: both;
+    padding-top: 20px;
+  }
 }
 
 @media only screen and (max-width : 520px) {
@@ -2815,3 +2827,10 @@ html.k-materialblack .demo-section.k-content {
     padding-bottom: 1.3em;
   }
 }
+
+@media only screen and (max-width : 320px) {
+
+
+}
+
+
