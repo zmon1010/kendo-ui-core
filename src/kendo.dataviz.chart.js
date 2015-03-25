@@ -6006,22 +6006,34 @@ var __meta__ = {
                 x = value.x,
                 y = value.y,
                 seriesIx = fields.seriesIx,
-                seriesPoints = chart.seriesPoints[seriesIx];
+                series = this.options.series[seriesIx],
+                missingValues = this.seriesMissingValues(series),
+                seriesPoints = chart.seriesPoints[seriesIx],
+                missingValue;
 
-            chart.updateRange(value, fields.series);
+            if (!(hasValue(x) && hasValue(y))) {
+                value = this.createMissingValue(value, missingValues);
+            }
 
-            if (defined(x) && x !== null && defined(y) && y !== null) {
+            if (value) {
                 point = chart.createPoint(value, fields);
                 if (point) {
                     extend(point, fields);
                     chart.addErrorBar(point, X, fields);
                     chart.addErrorBar(point, Y, fields);
                 }
+                chart.updateRange(value, fields.series);
             }
 
             chart.points.push(point);
             seriesPoints.push(point);
         },
+
+        seriesMissingValues: function(series) {
+            return series.missingValues;
+        },
+
+        createMissingValue: noop,
 
         updateRange: function(value, series) {
             var chart = this,
@@ -6032,7 +6044,7 @@ var __meta__ = {
                 xAxisRange = chart.xAxisRanges[xAxisName],
                 yAxisRange = chart.yAxisRanges[yAxisName];
 
-            if (defined(x) && x !== null) {
+            if (hasValue(x)) {
                 xAxisRange = chart.xAxisRanges[xAxisName] =
                     xAxisRange || { min: MAX_VALUE, max: MIN_VALUE };
 
@@ -6044,7 +6056,7 @@ var __meta__ = {
                 xAxisRange.max = math.max(xAxisRange.max, x);
             }
 
-            if (defined(y) && y !== null) {
+            if (hasValue(y)) {
                 yAxisRange = chart.yAxisRanges[yAxisName] =
                     yAxisRange || { min: MAX_VALUE, max: MIN_VALUE };
 
@@ -6268,6 +6280,22 @@ var __meta__ = {
         animationPoints: function() {
             var points = ScatterChart.fn.animationPoints.call(this);
             return points.concat(this._segments);
+        },
+
+        createMissingValue: function(value, missingValues) {
+            if (missingValues === ZERO) {
+                var missingValue = {
+                    x: value.x,
+                    y: value.y
+                };
+                if (!hasValue(missingValue.x)) {
+                    missingValue.x = 0;
+                }
+                if (!hasValue(missingValue.y)) {
+                    missingValue.y = 0;
+                }
+                return missingValue;
+            }
         }
     });
     deepExtend(ScatterLineChart.fn, LineChartMixin);
@@ -12387,6 +12415,10 @@ var __meta__ = {
         }
     }
 
+    function hasValue(value) {
+        return defined(value) && value !== null;
+    }
+
     // Exports ================================================================
     dataviz.ui.plugin(Chart);
 
@@ -12555,6 +12587,7 @@ var __meta__ = {
         isNumber: isNumber,
         floorDate: floorDate,
         filterSeriesByType: filterSeriesByType,
+        hasValue: hasValue,
         lteDateIndex: lteDateIndex,
         evalOptions: evalOptions,
         seriesTotal: seriesTotal,

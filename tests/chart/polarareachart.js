@@ -66,6 +66,91 @@
     });
 
     // ------------------------------------------------------------
+    (function() {
+        module("Polar Area Chart / Missing values");
+
+        test("omits points if missingValues is set to interpolate", function() {
+            createChart([{
+                type: "polarArea",
+                data: [[45, 2], null, [60, 4], [null, 1], [80, 3], [100, null]],
+                missingValues: "interpolate"
+            }]);
+            equal(chart.points[1], undefined);
+            equal(chart.points[3], undefined);
+            equal(chart.points[5], undefined);
+        });
+
+        test("does not omit point if missingValues is set to zero and point have x value", function() {
+            createChart([{
+                type: "polarArea",
+                data: [[45, 2], [100, null]],
+                missingValues: "zero"
+            }]);
+
+            equal(chart.points[1].value.x, 100);
+            equal(chart.points[1].value.y, 0);
+        });
+
+        test("omits point if missingValues is set to zero and point does not have x value", function() {
+            createChart([{
+                type: "polarArea",
+                data: [[45, 2], null, [60, 4], [null, 1], [80, 3], [100, null]],
+                missingValues: "zero"
+            }]);
+            equal(chart.points[1], undefined);
+            equal(chart.points[3], undefined);
+        });
+
+        test("does not omit point if missingValues is set to gap and point have x value", function() {
+            createChart([{
+                type: "polarArea",
+                data: [[45, 2], [100, 3], [120, null]],
+                missingValues: "gap"
+            }]);
+
+            equal(chart.points[2].value.x, 120);
+            equal(chart.points[2].value.y, null);
+        });
+
+        test("omits point if missingValues is set to gap and point does not have x value", function() {
+            createChart([{
+                type: "polarArea",
+                data: [[45, 2], null, [60, 4], [null, 1], [80, 3], [100, null]],
+                missingValues: "gap"
+            }]);
+            equal(chart.points[1], undefined);
+            equal(chart.points[3], undefined);
+        });
+
+        test("splits into segments with sorted by x points if missingValues is set to gap and there are missing values", function() {
+            createChart([{
+                type: "polarArea",
+                data: [[45, 2], [130, 3], null, [60, 4], [120, 5], [100, null], [null, 1]],
+                missingValues: "gap"
+            }]);
+
+            equal(chart._segments.length, 2);
+            deepEqual(chart._segments[0].linePoints[0].value, {
+                x: 45,
+                y: 2
+            });
+            deepEqual(chart._segments[0].linePoints[1].value, {
+                x: 60,
+                y: 4
+            });
+            deepEqual(chart._segments[1].linePoints[0].value, {
+                x: 120,
+                y: 5
+            });
+            deepEqual(chart._segments[1].linePoints[1].value, {
+                x: 130,
+                y: 3
+            });
+        });
+
+    })();
+
+    // ------------------------------------------------------------
 
     (function() {
         module("PolarArea Chart / Values exceeding axis min or max options ", {});

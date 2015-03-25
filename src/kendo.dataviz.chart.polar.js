@@ -59,6 +59,8 @@ var __meta__ = {
         COORD_PRECISION = dataviz.COORD_PRECISION,
         DEFAULT_PADDING = 0.15,
         DEG_TO_RAD = math.PI / 180,
+        GAP = "gap",
+        INTERPOLATE = "interpolate",
         LOGARITHMIC = "log",
         PLOT_AREA_CLICK = "plotAreaClick",
         POLAR_AREA = "polarArea",
@@ -1067,12 +1069,54 @@ var __meta__ = {
             return segment;
         },
 
+        createMissingValue: function(value, missingValues) {
+            var missingValue;
+
+            if (dataviz.hasValue(value.x) && missingValues != INTERPOLATE) {
+                missingValue = {
+                    x: value.x,
+                    y: value.y
+                };
+                if (missingValues == ZERO) {
+                    missingValue.y = 0;
+                }
+            }
+
+            return missingValue;
+        },
+
         seriesMissingValues: function(series) {
             return series.missingValues || ZERO;
         },
 
+        _hasMissingValuesGap: function() {
+            var series = this.options.series;
+
+            for (var idx = 0; idx < series.length; idx++) {
+                if (this.seriesMissingValues(series[idx]) === GAP) {
+                   return true;
+                }
+            }
+        },
+
         sortPoints: function(points) {
-            return points.sort(xComparer);
+            var missingValues, value, point;
+            points.sort(xComparer);
+
+            if (this._hasMissingValuesGap()) {
+                for (var idx = 0; idx < points.length; idx++)  {
+                    point = points[idx];
+                    if (point) {
+                        value = point.value;
+                        if (!dataviz.hasValue(value.y) &&
+                            this.seriesMissingValues(point.series) === GAP) {
+                            delete points[idx];
+                        }
+                    }
+                }
+            }
+
+            return points;
         }
     });
 

@@ -261,6 +261,37 @@
         });
 
         // ------------------------------------------------------------
+        module("Scatter Line Chart / Missing values/ ZERO", {
+            setup: function() {
+                plotArea = new PlotAreaStub();
+                setupScatterLineChart(plotArea, {
+                    series: [ $.extend({ missingValues: "zero" }, sparseSeries) ]
+                });
+            }
+        });
+
+        test("Reports minimum series value for primary X axis", function() {
+            deepEqual(scatterLineChart.xAxisRanges[undefined].min, 0);
+        });
+
+        test("Reports minimum series value for primary Y axis", function() {
+            deepEqual(scatterLineChart.yAxisRanges[undefined].min, 0);
+        });
+
+        test("point with missing X value is not omitted and the value is set to zero", function() {
+            equal(scatterLineChart.points[4].value.x, 0);
+        });
+
+        test("point with missing Y value is not omitted and the value is set to zero", function() {
+            equal(scatterLineChart.points[5].value.y, 0);
+        });
+
+        test("does not omit null points and sets the values to zero", function() {
+            equal(scatterLineChart.points[2].value.x, 0);
+            equal(scatterLineChart.points[2].value.y, 0);
+        });
+
+        // ------------------------------------------------------------
         module("Scatter Line Chart / Rendering", {
             setup: function() {
                 plotArea = new PlotAreaStub();
