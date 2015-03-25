@@ -2250,6 +2250,21 @@
         equal(endDate, 2);
     });
 
+    test("day is correctly set when last pixel of given slot is used", function() {
+
+        var view = new MyWorkWeekView(container,  {
+            date: new Date(),
+            workWeekEnd: 3
+        });
+
+        var row = view.content.find("tr:first");
+        var endOffset = row.find("td:nth-child(3)").offset();
+        var endSlot = view._slotByPosition(endOffset.left-1, endOffset.top);
+        var endDate = endSlot.startDate().getDay();
+
+        equal(endDate, 2);
+    });
+
     test("previous button is working correctly in workWeek view", function() {
         var scheduler = container.kendoScheduler({
             views: ["workWeek"],
