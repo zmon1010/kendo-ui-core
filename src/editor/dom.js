@@ -291,13 +291,15 @@ var Dom = {
 
     significantNodes: function(nodes) {
         return $.grep(nodes, function(child) {
-            if (Dom.is(child, 'br')) {
+            var name = Dom.name(child);
+
+            if (name == 'br') {
                 return false;
             } else if (Dom.insignificant(child)) {
                 return false;
             } else if (child.nodeType == 3 && whitespaceOrBom.test(child.nodeValue)) {
                 return false;
-            } else if (Dom.is(child, 'p') && Dom.emptyNode(child)) {
+            } else if (child.nodeType == 1 && !empty[name] && Dom.emptyNode(child)) {
                 return false;
             }
 

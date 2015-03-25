@@ -84,6 +84,16 @@ test('exec when inside empty li', function() {
     equal(editor.body.firstChild.nodeName.toLowerCase(), 'p');
 });
 
+test("exec when inside empty li with formatting", function() {
+    editor.value('<ul><li><em></em></li></ul>');
+    var range = editor.createRange();
+    range.selectNodeContents(editor.body.firstChild.firstChild.firstChild);
+    var command = createParagraphCommand(range);
+    command.exec();
+    equal(editor.value(), '');
+    equal(editor.body.firstChild.nodeName.toLowerCase(), 'p');
+});
+
 test('exec when inside empty li and p', function() {
     editor.value('<ul><li><p></p></li></ul>');
     var range = editor.createRange();
