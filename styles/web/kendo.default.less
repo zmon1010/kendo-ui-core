@@ -1,43 +1,18 @@
-// chrome
-@accent: #f35800;  // accent color for chrome elements
-@base: #e9e9e9;    // base color for chrome elements
-@background: #fff; // background color of canvas
-@border-radius: 4px;
-
-// state
-@normal-background: fuchsia;
-@normal-text-color: #2e2e2e;
-@normal-gradient: "rgba(255,255,255,.6) 0%, rgba(255,255,255,.0) 100%";
-@hover-background: #bcb4b0;
-@hover-text-color: fuchsia;
-@hover-gradient: "rgba(255,255,255,.4) 0%, rgba(255,255,255,.0) 100%";
-@selected-background: #f35800;
-@selected-text-color: #fff;
-@selected-gradient: "rgba(255,255,255,.2) 0%, rgba(255,255,255,.0) 100%";
-
-@error: #ffe0d9; // color of errors
-@warning: #fff4d9;
-@success: #eaf7ec;
-@info: #e5f5fa;
-
-// graphics
 @image-folder: "Default";
 @texture: none;
+@tooltip-texture: url('textures/highlight.png');
 @fallback-texture: url('textures/highlight.png');
 
-// following variables must be rewritten with above ones
-
-@tooltip-texture: @fallback-texture;
-
-@widget-text-color: @normal-text-color;
+/* Widget Base Styles */
+@widget-text-color: #2e2e2e;
 @inverse-text-color: #fff;
-@widget-gradient: @normal-gradient;
-@widget-background-color: @background;
-@widget-border-color: darken(@base, 14%);
+@widget-gradient: "rgba(255,255,255,.6) 0%, rgba(255,255,255,.0) 100%";
+@widget-background-color: #fff;
+@widget-border-color: #c5c5c5;
 @widget-shadow: none;
 
 /* Selects, Dropdowns */
-@select-background-color: @base;
+@select-background-color: #e9e9e9;
 @select-border-color: @hover-border-color;
 @select-hover-background-color: @hover-background-color;
 @select-group-background-color: @select-background-color;
@@ -51,14 +26,14 @@
 
 /* Headers */
 @header-text-color: @widget-text-color;
-@header-background-color: darken(@base, 2%); // #e3e3e3
+@header-background-color: #e3e3e3;
 
 /* Buttons */
 @button-text-color: @widget-text-color;
 @button-background-color: @header-background-color;
 
 /* Group Base Styles */
-@group-background-color: lighten(@base, 1%); // #ebebeb
+@group-background-color: #ebebeb;
 @group-border-color: @widget-border-color;
 
 /* Content */
@@ -69,12 +44,15 @@
 
 /* Hover State */
 @hover-text-color: @widget-text-color;
-@hover-background-color: @hover-background;
+@hover-gradient: "rgba(255,255,255,.4) 0%, rgba(255,255,255,.0) 100%";
+@hover-background-color: #bcb4b0;
 @hover-border-color: @hover-background-color;
 @hover-shadow: none;
 
 /* Selected State */
-@selected-background-color: @selected-background;
+@selected-text-color: #fff;
+@selected-gradient: "rgba(255,255,255,.2) 0%, rgba(255,255,255,.0) 100%";
+@selected-background-color: #f35800;
 @selected-border-color: @selected-background-color;
 @selected-shadow: none;
 
@@ -92,26 +70,26 @@
 @active-shadow: none;
 
 /* Error State */
-@error-text-color: @inverse-text-color;
-@error-background-color: @error;
-@error-border-color: darken(@base, 22%);
+@error-text-color: #fff;
+@error-background-color: #ff5252;
+@error-border-color: #e20000;
 
 /* Disabled State */
-@disabled-text-color: darken(@base, 29%);
+@disabled-text-color: #9f9e9e;
 
 /* Notification */
-@notification-info-background-color: @info;
+@notification-info-background-color: #e5f5fa;
 @notification-info-text-color: #0487c4;
-@notification-info-border-color: darken(@base, 11%);
-@notification-success-background-color: @success;
+@notification-info-border-color: #b7e1f0;
+@notification-success-background-color: #eaf7ec;
 @notification-success-text-color: #349946;
-@notification-success-border-color: darken(@base, 11%);
-@notification-warning-background-color: @warning;
+@notification-success-border-color: #c3e8ca;
+@notification-warning-background-color: #fff4d9;
 @notification-warning-text-color: #0487c4;
-@notification-warning-border-color: darken(@base, 3%);
-@notification-error-background-color: @error;
+@notification-warning-border-color: #fff0c8;
+@notification-error-background-color: #ffe0d9;
 @notification-error-text-color: #ef470a;
-@notification-error-border-color: darken(@base, 10%);
+@notification-error-border-color: #ffb7a8;
 
 /* ToolTip */
 @tooltip-text-color: #282828;

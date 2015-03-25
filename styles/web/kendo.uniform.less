@@ -1,5 +1,6 @@
 @image-folder: "Uniform";
 @texture: none;
+@tooltip-texture: url('textures/highlight.png');
 @fallback-texture: url('textures/highlight.png');
 
 /* Widget Base Styles */
@@ -66,6 +67,7 @@
 @active-gradient:  none;
 @active-background-color: #ffffff;
 @active-border-color: #999;
+@active-shadow: none;
 
 /* Error State */
 @error-text-color: #fff;
@@ -107,17 +109,21 @@
 @draghandle-border-radius: 7px;
 @draghandle-border-color: @widget-border-color;
 @draghandle-background-color: @widget-background-color;
+@draghandle-shadow: none;
 @draghandle-hover-border-color: @hover-border-color;
 @draghandle-hover-background-color: @hover-background-color;
+@draghandle-hover-shadow: none;
 
 /* Grid */
 @alt-background-color: #f5f5f5;
 @nested-alt-background-color: darken(@alt-background-color, 8%);
 @cell-border-color: @widget-border-color;
 @column-highlight-background-color: #f7f7f7;
+@active-filter-background-color: @active-background-color;
 
 /* Scheduler */
 @scheduler-background-color: @widget-background-color;
+@current-time-color: @error-border-color;
 @event-background-color: #cee5fd;
 @event-text-color: @widget-text-color;
 @event-inverse-text-color: @scheduler-background-color;
@@ -146,23 +152,46 @@
 
 /* Border Radii */
 @main-border-radius: 6px;
+@list-border-radius: @main-border-radius - 1;
+@inner-border-radius: @main-border-radius - 1;
+@slider-border-radius: 13px;
 
 /* Icons */
 @default-icon-opacity: 1;
 
 @calendar-border-radius: 4px;
 @calendar-content-text-color: @link-text-color;
+@calendar-footer-background: @widget-background-color;
+@calendar-footer-text-decoration: none;
+@calendar-footer-hover-text-decoration: underline;
+@calendar-footer-hover-background: @widget-background-color;
+@calendar-header-hover-text-decoration: none;
+@calendar-header-hover-background: @hover-background-color;
 @calendar-footer-active-background: @widget-background-color; 
 @calendar-group-background-color: @group-background-color; 
+@button-border-color: @widget-border-color;
 @menu-border-color: @widget-border-color;
+@tabstrip-items-border: @widget-border-color;
 @tabstrip-active-background: @widget-background-color;
+@tabstrip-tabs-color: @widget-text-color;
 @form-widget-color: #3e6b99;
+@drop-down-border-color: @widget-border-color;
 @drop-down-hover-border-color: @widget-border-color;
 @drop-down-focused-border-color: @widget-border-color;
 @drop-down-background: #e9e9e9;
+@drop-down-text-color: @widget-text-color;
+@secondary-border-color: @widget-border-color;
 @secondary-text-color: @widget-text-color;
 @numeric-selected-background: @selected-background-color; 
+@panelbar-items-border: @widget-border-color;
+@panelbar-content-background: @content-background-color;
+@panelbar-content-color: @widget-text-color;
 @window-shadow-style: 1px 1px 7px 1px;
+@filter-menu-content-background: @content-background-color;
+@icon-background-color: transparent;
+@disabled-background-color: @button-background-color;
+@disabled-border-color: @widget-border-color;
+@disabled-gradient: @widget-gradient;
 
 @primary-button-text-color: #686868;
 @primary-button-background-color: #fff;
@@ -170,6 +199,7 @@
 @primary-gradient: "#ebebeb 0%, #dfdfdf 100%";
 @primary-shadow: inset 0 0 4px 0 #e5e5e5;
 
+@primary-hover-text-color: @primary-button-text-color;
 @primary-hover-background-color: #fff;
 @primary-hover-border-color: @primary-button-border-color;
 @primary-hover-gradient: "#efefef 0%, #e5e5e5 100%";
@@ -191,9 +221,18 @@
 @primary-disabled-border-color: #d4d4d4;
 @primary-disabled-gradient: "#ebebeb 0%, #dfdfdf 100%";
 
+@button-hover-text-color: @hover-text-color;
+@button-hover-background-color: @hover-background-color;
+@button-hover-border-color: @hover-border-color;
 
+@button-active-background: @selected-background-color;
+@button-active-border-color: @selected-border-color;
+@button-focused-border-color: @button-border-color;
+@button-focused-shadow: @focused-item-shadow;
+@button-focused-active-shadow: @focused-active-item-shadow;
 
 //Checkboxes
+@checkbox-border-color-before: transparent;
 @checkbox-border-color-after: #cccccc;
 @checkbox-border-radius-before: 0;
 @checkbox-background-color: @widget-background-color;
@@ -213,15 +252,18 @@
 @checkbox-active-box-shadow: 0 0 2px 0 #c5c5c5;
 
 @checkbox-checked-active-border-radius-before: 0;
+@checkbox-checked-active-box-shadow: @checkbox-active-box-shadow;
 
 @checkbox-checked-disabled-color-after: #d4d4d4;
 @checkbox-disabled-background-color-after: #fff;
 @checkbox-disabled-color: #b6b6b6;
+@checkbox-disabled-box-shadow: none;
 @checkbox-disabled-border-color-before: #d4d4d4;
 
 //Radio buttons
 @radio-border-color-before: #cccccc;
 @radio-background-color: @widget-background-color;
+@radio-border-width-before: 1px;
 
 @radio-hover-border-color: #cccccc;
 @radio-hover-box-shadow: 0 0 2px 0 #cccccc;
@@ -237,6 +279,7 @@
 
 @radio-disabled-background-color-after: #fff;
 @radio-disabled-color: #b6b6b6;
+@radio-disabled-box-shadow: none;
 @radio-disabled-background-color-before: #fff;
 
-@import "type-default.less";
+@import "theme-template.less";
