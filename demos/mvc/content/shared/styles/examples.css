@@ -2749,9 +2749,13 @@ html.k-materialblack .demo-section.k-content {
 }
 
 @media only screen and (max-width : 1352px) {
+  #overview {
+      padding-left: 20px;
+      padding-right: 20px;
+  }
   #overview,
   #applications-and-tools {
-      width: 1100px;
+      max-width: 1100px;
       text-align: left;
   }
 
@@ -2760,19 +2764,19 @@ html.k-materialblack .demo-section.k-content {
   }
 
   .application {
-      width: 240px;
+      max-width: 240px;
   }
 }
 
 @media only screen and (max-width : 1252px) {
   #overview,
   #applications-and-tools {
-      width: 940px;
+      max-width: 940px;
       text-align: left;
   }
 
   .application {
-      width: 200px;
+      max-width: 200px;
   }
 }
 
@@ -2786,6 +2790,9 @@ html.k-materialblack .demo-section.k-content {
 @media only screen and (max-width : 720px) {
 
 /* Homepage */
+  #overview {
+    padding-bottom: 220px;
+  }
   .btn {
     padding-left: 10px;
     padding-right: 10px;
