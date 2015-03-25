@@ -9,13 +9,17 @@ namespace Kendo.Mvc.UI.Tests.UITests
     public class NavigationHtmlBuilderBaseTests
     {
         private TComponentTestDouble component;
+        private Mock<IUrlGenerator> generator;
+
         NavigationHtmlBuilderBaseTestDouble builder;
 
         public NavigationHtmlBuilderBaseTests()
-        {
+        {            
             var viewContext = TestHelper.CreateViewContext();
             component = new TComponentTestDouble(viewContext);
             builder = new NavigationHtmlBuilderBaseTestDouble(component);
+
+            generator = new Mock<IUrlGenerator>();
         }
 
         [Fact]
@@ -45,6 +49,75 @@ namespace Kendo.Mvc.UI.Tests.UITests
             IHtmlNode imageTag = builder.ImageTag(item);
 
             Assert.Equal(value, imageTag.Attribute("alt"));
+        }
+
+        [Fact]
+        public void LinkTag_should_render_an_anchor_if_needed()
+        {
+            const string url = "foo";
+
+            NavigationItemTestDouble item = new NavigationItemTestDouble();
+
+            item.Url(url);
+
+            generator.Setup(g => g.Generate(component.ViewContext.RequestContext, item)).Returns(url);
+            component.UrlGenerator = generator.Object;
+
+            IHtmlNode linkTag = builder.LinkTag(item, (p) => { });
+
+            Assert.Equal("a", linkTag.TagName);
+        }
+
+        [Fact]
+        public void LinkTag_should_not_render_an_anchor_if_url_is_empty()
+        {
+            const string url = "";
+
+            NavigationItemTestDouble item = new NavigationItemTestDouble();
+
+            item.Url(url);
+
+            generator.Setup(g => g.Generate(component.ViewContext.RequestContext, item)).Returns(url);
+            component.UrlGenerator = generator.Object;
+
+            IHtmlNode linkTag = builder.LinkTag(item, (p) => { });
+
+            Assert.Equal("span", linkTag.TagName);
+        }
+
+        [Fact]
+        public void LinkTag_should_not_render_an_anchor_if_url_is_null()
+        {
+            const string url = null;
+
+            NavigationItemTestDouble item = new NavigationItemTestDouble();
+
+            item.Url(url);
+
+
+            generator.Setup(g => g.Generate(component.ViewContext.RequestContext, item)).Returns(url);
+            component.UrlGenerator = generator.Object;
+
+            IHtmlNode linkTag = builder.LinkTag(item, (p) => { });
+
+            Assert.Equal("span", linkTag.TagName);
+        }
+
+        [Fact]
+        public void LinkTag_should_not_render_an_anchor_if_not_needed()
+        {
+            const string url = "#";
+
+            NavigationItemTestDouble item = new NavigationItemTestDouble();
+
+            item.Url(url);
+
+            generator.Setup(g => g.Generate(component.ViewContext.RequestContext, item)).Returns(url);
+            component.UrlGenerator = generator.Object;
+
+            IHtmlNode linkTag = builder.LinkTag(item, (p) => { });
+
+            Assert.Equal("span", linkTag.TagName);
         }
     }
 

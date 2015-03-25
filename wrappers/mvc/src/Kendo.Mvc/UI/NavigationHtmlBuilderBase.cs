@@ -91,7 +91,7 @@ namespace Kendo.Mvc.UI
 
             IHtmlNode a;
 
-            if (url != "#")
+            if (url != "#" && url != "" && url != null)
             {
                 a = new HtmlElement("a");
 
