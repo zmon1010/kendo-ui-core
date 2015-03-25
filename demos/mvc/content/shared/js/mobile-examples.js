@@ -36,6 +36,23 @@ navDataSource = new kendo.data.DataSource({
             dataType: "json"
         }
     },
+    change: function(e) {
+        $.each(this.view(), function(index, group) {
+            group.items.sort(function(a, b) {
+                if (a.text === "Basic usage") {
+                    return false;
+                }
+
+                if (b.text === "Basic usage") {
+                    return true;
+                }
+
+                // console.log(a, b);
+                return a.text > b.text;
+            });
+        });
+    },
+
     schema: {
         model: {
             id: "name"

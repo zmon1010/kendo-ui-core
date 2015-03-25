@@ -616,7 +616,7 @@
         }
       },
       {
-        "text": "Overview",
+        "text": "Basic Usage",
         "url": "splitview/index",
         "title": {
             "kendo-ui": "Kendo UI Mobile SplitView component demo",
