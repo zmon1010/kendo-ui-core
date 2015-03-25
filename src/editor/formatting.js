@@ -194,8 +194,9 @@ var FormattingTool = DelayedExecutionTool.extend({
 
 var CleanFormatCommand = Command.extend({
     exec: function() {
+        var listFormatter = new Editor.ListFormatter('ul');
         var range = this.lockRange(true);
-        var remove = this.options.remove || "strong,em,span".split(",");
+        var remove = this.options.remove || "strong,em,span,sup,sub,del".split(",");
 
         RangeUtils.wrapSelectedElements(range);
 
@@ -206,7 +207,21 @@ var CleanFormatCommand = Command.extend({
                 return;
             }
 
-            if (node.nodeType == 1 && !dom.insignificant(node)) {
+            var name = dom.name(node);
+
+            if (name == "ul" || name == "ol") {
+                var prev = node.previousSibling;
+                var next = node.nextSibling;
+
+                listFormatter.unwrap(node);
+
+                // clean contents
+                for (; prev && prev != next; prev = prev.nextSibling) {
+                    clean(prev);
+                }
+            } else if (name == "blockquote") {
+                dom.changeTag(node, "p");
+            } else if (node.nodeType == 1 && !dom.insignificant(node)) {
                 for (var i = node.childNodes.length-1; i >= 0; i--) {
                     clean(node.childNodes[i]);
                 }
@@ -215,7 +230,7 @@ var CleanFormatCommand = Command.extend({
                 node.removeAttribute("class");
             }
 
-            if ($.inArray(dom.name(node), remove) > -1) {
+            if ($.inArray(name, remove) > -1) {
                 dom.unwrap(node);
             }
         });

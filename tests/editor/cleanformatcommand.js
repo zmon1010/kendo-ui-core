@@ -12,10 +12,7 @@ editor_module("editor clean format command", {
 });
 
 function cleanCommand(range) {
-    var command = new CleanFormatCommand({
-        range: range,
-        remove: "strong,em,span".split(",")
-    });
+    var command = new CleanFormatCommand({ range: range });
     command.editor = editor;
     return command;
 }
@@ -86,6 +83,31 @@ test("removes style attributes of fully selected nodes", function() {
 
 test("removes class attribute", function() {
     equal(cleanedContent('<p class="red">foo</p>'), '<p>foo</p>');
+});
+
+test("removes superscript", function() {
+    equal(cleanedContent('<p><sup>foo</sup></p>'), '<p>foo</p>');
+});
+
+test("removes subscript", function() {
+    equal(cleanedContent('<p><sub>foo</sub></p>'), '<p>foo</p>');
+});
+
+test("removes strikethrough", function() {
+    equal(cleanedContent('<p><del>foo</del></p>'), '<p>foo</p>');
+});
+
+test("unwraps lists", function() {
+    equal(cleanedContent('<ul><li>foo</li></ul>'), '<p>foo</p>');
+    equal(cleanedContent('<ul><li>foo</li><li>bar</li></ul>'), '<p>foo</p><p>bar</p>');
+    equal(cleanedContent('<ul><li>foo<ul><li>bar</li></ul></li></ul>'), '<p>foo</p><p>bar</p>');
+
+    equal(cleanedContent('<ol><li>foo</li></ol>'), '<p>foo</p>');
+    equal(cleanedContent('<ol><li>foo</li><li>bar</li></ol>'), '<p>foo</p><p>bar</p>');
+});
+
+test("unwraps blockquotes", function() {
+    equal(cleanedContent('<blockquote>foo</blockquote>'), '<p>foo</p>');
 });
 
 }());
