@@ -191,6 +191,7 @@ namespace :generate do
         desc 'Generate MVC v6 wrappers'
         task :wrappers do
             markdown = FileList[
+                'docs/api/javascript/ui/colorpicker.md',
                 'docs/api/javascript/ui/datetimepicker.md',
                 'docs/api/javascript/ui/grid.md',
                 'docs/api/javascript/ui/numerictextbox.md',

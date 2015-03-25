@@ -1,0 +1,17 @@
+:options:
+    - :name: palette
+      :type: String
+      :enum_type: ColorPickerPalette
+      :description: Defines the palettes that can be used in the color picker.
+      :values:
+          - :value: none
+            :member: None
+            :description: Do not use a palette (allow selection of arbitrary colors)
+
+          - :value: basic
+            :member: Basic
+            :description: Use a palette of basic colors
+
+          - :value: webSafe
+            :member: WebSafe
+            :description: Use a palette of web-safe colors

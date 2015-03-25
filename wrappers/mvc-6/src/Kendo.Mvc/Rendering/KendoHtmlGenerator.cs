@@ -62,6 +62,17 @@ namespace Kendo.Mvc.Rendering
 			return tagBuilder;
 		}
 
+		public virtual TagBuilder GenerateColorInput(
+			ViewContext viewContext,
+			ModelMetadata metadata,
+			string id,
+			string name,
+			object value,
+			IDictionary<string, object> htmlAttributes)
+		{
+			return GenerateInput(viewContext, metadata, id, name, value, null, "color", htmlAttributes);
+		}
+
 		public virtual TagBuilder GenerateDateInput(
             ViewContext viewContext,
             ModelMetadata metadata,
