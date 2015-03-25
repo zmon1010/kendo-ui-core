@@ -532,6 +532,10 @@ var __meta__ = {
 
                 if (options.filterable.multi) {
                     widget = "kendoFilterMultiCheck";
+                    if (options.filterable.dataSource) {
+                        options.filterable.checkSource = options.filterable.dataSource;
+                        delete options.filterable.dataSource;
+                    }
                 }
                 that.filterMenu = that.wrapper.find(".k-filterable")[widget](
                     extend(true, {}, {

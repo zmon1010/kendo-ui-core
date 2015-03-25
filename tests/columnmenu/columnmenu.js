@@ -125,6 +125,28 @@
         equal(menu.wrapper.find(".k-filterable").length, 1);
     });
 
+    test("filterable dataSource sets the options of the checkSource", function() {
+        var checkSource = DataSource.create({
+            transport: {
+                read: "foo"
+            },
+            serverPaging: true
+        });
+
+        var menu = setup({
+            filterable: {
+                multi: true,
+                forceUnique: false,
+                dataSource: checkSource
+            }
+        });
+
+        var multiCheck = menu.wrapper.find("[data-kendo-role=filtermulticheck]");
+        equal(multiCheck.length, 1);
+        multiCheck = multiCheck.data("kendoFilterMultiCheck");
+        ok(multiCheck.checkSource === checkSource);
+    });
+
     test("changing default filter option", function() {
         var menu = setup({ filter: "foo" });
 
