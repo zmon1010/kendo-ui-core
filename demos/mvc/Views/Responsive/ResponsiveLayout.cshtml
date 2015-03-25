@@ -47,13 +47,13 @@
         <button class="k-rpanel-toggle"><span class="k-icon k-i-hbars"></span></button>
         <div id="responsive-nav">
         <ul>
-            <li@(action == "index" ? " class=selected" : "")>@Html.ActionLink("About", "index")</li>
             <li@(action == "grid" ? " class=selected" : "")>@Html.ActionLink("Grid", "grid")</li>
             <li@(action == "scheduler" ? " class=selected" : "")>@Html.ActionLink("Scheduler", "scheduler")</li>
             <li@(action == "chart" ? " class=selected" : "")>@Html.ActionLink("Charts", "chart")</li>
             <li@(action == "responsivepanel" ? " class=selected" : "")>@Html.ActionLink("ResponsivePanel", "responsivepanel")</li>
         </ul>
         <div class="nav-buttons">
+            <a id="about" href="http://www.telerik.com/kendo-ui" class="btn">About</a>
             <a id="pricing" href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
             <a id="get-kendoui" href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
         </div>

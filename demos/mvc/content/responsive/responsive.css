@@ -111,7 +111,7 @@ a {
     font-size: 15px;
     font-weight: bold;
     text-align: center;
-    margin: 23px 0 0;
+    margin: 23px 0 0 10px;
 }
 
 .btn:hover {
@@ -121,7 +121,6 @@ a {
 .btn-primary {
     background-color: #ee5315;
     border-color: #ee5315;
-    margin-left: 10px;
 }
 
 .btn-primary:hover
@@ -397,13 +396,11 @@ a {
         font-size: 13px;
         padding: 0.5em 2em 0.667em 2em;
         margin-top: 10px;
-    }
-    .btn-primary {
         margin-left: 6px;
     }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1000px) {
     #responsive-nav ul > li > a {
         padding: 10px;
     }
@@ -415,7 +412,7 @@ a {
     }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 870px) {
     .nav-buttons {
         display: none;
     }
