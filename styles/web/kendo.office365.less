@@ -777,10 +777,21 @@ input.k-textbox:focus {
 
 
 .k-scheduler {
-    .k-event-template {
+    .k-event-template,
+    .k-event-inverse {
         color: @inverse-text-color;
     }
 }    
+
+.k-scheduler-times tr,
+.k-scheduler-times th,
+.k-scheduler-table td,
+.k-scheduler-header th,
+.k-scheduler-header-wrap,
+.k-scheduler-times {
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
 
 .k-gantt .k-grid-content td {
 	//border-color: @widget-border-color;
