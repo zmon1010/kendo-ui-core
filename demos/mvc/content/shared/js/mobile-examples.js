@@ -4,6 +4,54 @@ var isAndroid = kendo.support.mobileOS.android;
 var currentExample,
     currentSection;
 
+
+var TITLES = {
+    "actionsheet": "ActionSheet",
+    "application": "Application",
+    "buttongroup": "ButtonGroup",
+    "collapsible": "Collapsilble",
+    "drawer": "Drawer",
+    "mobile-button": "Button",
+    "mobile-forms": "Forms",
+    "mobile-layout": "Layout",
+    "mobile-listview": "ListView",
+    "mobile-tabstrip": "TabStrip",
+    "mobile-view": "View",
+    "modalview": "ModalView",
+    "navbar": "NavBar",
+    "popover": "PopOver",
+    "scroller": "Scroller",
+    "scrollview": "ScrollView",
+    "splitview": "SplitView",
+    "switch": "Switch",
+    "touchevents": "Touch Events"
+};
+
+// override datasources
+
+navDataSource = new kendo.data.DataSource({
+    transport: {
+        read: {
+            url: NAV_JSON_URL,
+            dataType: "json"
+        }
+    },
+    schema: {
+        model: {
+            id: "name"
+        },
+        parse: function(response) {
+            for (var i = 0; i < response.length; i++) {
+                response[i].section = TITLES[response[i].url.split("/")[0]];
+            }
+            return response;
+        }
+    },
+    group: { field: "section" }
+})
+
+searchDataSource = navDataSource;
+
 function nullCurrentExample(e) {
     currentExample = null;
 }
@@ -14,36 +62,29 @@ function removeView(e) {
     }
 }
 
-function loadSection(e) {
-    currentExample = null;
-    navDataSource.fetch(function() {
-        var item = navDataSource.get(e.view.params["name"]);
-        detailNavDataSource.data(mobileExamples(item));
-        e.view.scroller.reset();
+function initSearch(e) {
+    var searchBox = e.view.element.find("#demos-search");
 
-        var navBar = e.view.element.find("[data-role=navbar]").data("kendoMobileNavBar");
-        if (navBar) {
-            navBar.title(item.text);
+    searchBox.on("input", function() {
+        searchExamplesFor(searchBox.val(), product);
+    });
+
+    searchBox.on("blur", function() {
+        if (searchBox.val() == "") {
+            hideSearch();
         }
     });
 }
 
-function focusSearch(e) {
-    var search = e.view.element.find("#demos-search");
-    search.focus();
+function showSearch() {
+    $("#normal").addClass("navbar-hidden");
+    $("#search").removeClass("navbar-hidden");
+    $("#demos-search").focus();
 }
 
-function blurSearch(e) {
-    e.view.element.find("#demos-search").blur();
-}
-
-function initSearch(e) {
-    populateSearchDataSource(mobileExamples);
-
-    var searchBox = e.view.element.find("#demos-search");
-    searchBox.on("input", function() {
-        searchExamplesFor(searchBox.val(), product);
-    });
+function hideSearch() {
+    $("#normal").removeClass("navbar-hidden");
+    $("#search").addClass("navbar-hidden");
 }
 
 function checkSearch(e) {
@@ -53,19 +94,6 @@ function checkSearch(e) {
         $("#search-tooltip").show();
     } else {
         $("#search-tooltip").hide();
-    }
-}
-
-function pickInitialTheme(e) {
-    var view = e.sender.dataSource.view();
-    for (var i = 0; i < view.length; i++) {
-        if (view[i].value === window.kendoTheme) {
-            e.sender.items()
-                .filter("[data-uid='" + view[i].uid + "']")
-                .addClass("current");
-
-            break;
-        }
     }
 }
 
@@ -88,28 +116,7 @@ function showDemoLayout(e) {
                 navBar.title(currentExample.text);
             }
 
-            e.view.header.find("#themechooser-button").toggle(!currentSection.mobile);
-
             element.find("[data-role=backbutton]").attr("href", "#section?name=" + currentSection.name);
         }
     });
-}
-
-function checkThemeChooser(e) {
-    if (!currentExample || (currentSection && currentSection.mobile)) {
-        e.preventDefault();
-    }
-}
-
-function selectTheme(e) {
-    e.preventDefault();
-    if (!e.item.hasClass("current")) {
-        e.sender.element.find("li").removeClass("current");
-        e.item.addClass("current");
-        kendo.mobile.application.showLoading();
-        window.kendoThemeChooser.changeTheme(e.dataItem.value, true, function() {
-            kendo.mobile.application.hideLoading();
-            $("#themechooser").data("kendoMobileDrawer").hide();
-        });
-    }
 }

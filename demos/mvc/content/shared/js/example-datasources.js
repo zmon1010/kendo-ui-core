@@ -86,12 +86,11 @@ function onlineExamples(section, product, reject) {
 
         return result;
     });
-
 }
 
 function mobileExamples(section) {
     return onlineExamples(section, navProduct, function(item) {
-        return item.disableInMobile || item.url.indexOf("angular") > -1;
+        return false;
     });
 }
 
