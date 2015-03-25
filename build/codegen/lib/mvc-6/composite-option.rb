@@ -70,6 +70,14 @@ module CodeGen::MVC6::Wrappers::Options
             <%=csharp_name%>.IdPrefix = IdPrefix;
             }).result(binding)
         end
+
+        def prefix?()
+            return true if simple_options.any? { |o| o.serialize? && o.template? }
+
+            return true if composite_options.any? { |o| o.serialize? && o.prefix? }
+
+            false
+        end
     end
 
 end

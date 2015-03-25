@@ -69,6 +69,12 @@ module CodeGen::MVC6::Wrappers
 
             enums
         end
+
+        def prefix?()
+            return true if composite_options.any? { |o| o.serialize? && o.prefix? }
+
+            false
+        end
     end
 
 end
