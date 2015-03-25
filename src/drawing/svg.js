@@ -92,6 +92,24 @@
             return "<?xml version='1.0' ?>" + this._template(this);
         },
 
+        exportVisual: function() {
+            var visual = this._visual;
+
+            var offset = this._offset;
+            if (offset) {
+                var wrap = new d.Group();
+                wrap.children.push(visual);
+
+                wrap.transform(
+                    g.transform().translate(-offset.x, -offset.y)
+                );
+
+                visual = wrap;
+            }
+
+            return visual;
+        },
+
         _resize: function() {
             if (this._offset) {
                 this.translate(this._offset);
