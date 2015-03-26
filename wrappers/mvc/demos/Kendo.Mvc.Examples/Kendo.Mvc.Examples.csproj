@@ -224,6 +224,7 @@
     <Compile Include="Controllers\Line_Charts\VisualsController.cs" />
     <Compile Include="Controllers\Map\ExportController.cs" />
     <Compile Include="Controllers\Menu\Context_MenuController.cs" />
+    <Compile Include="Controllers\Mobile_ListView\Local_VirtualizationController.cs" />
     <Compile Include="Controllers\MultiSelect\GroupingController.cs" />
     <Compile Include="Controllers\MultiSelect\VirtualizationController.cs" />
     <Compile Include="Controllers\PivotGrid\Excel_ExportController.cs" />
@@ -929,6 +930,7 @@
     <Content Include="Areas\aspx\Views\linear_gauge\multiple_pointers.aspx" />
     <Content Include="Areas\aspx\Views\line_charts\visuals.aspx" />
     <Content Include="Areas\aspx\Views\menu\context_menu.aspx" />
+    <Content Include="Areas\aspx\Views\mobile_listview\local_virtualization.aspx" />
     <Content Include="Areas\aspx\Views\pivotgrid\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\pivotgrid\excel_export.aspx" />
     <Content Include="Areas\aspx\Views\pivotgrid\kpi.aspx" />
@@ -2747,6 +2749,7 @@
     <Content Include="Areas\razor\Views\responsive_panel\index.cshtml" />
     <Content Include="Areas\razor\Views\multiselect\grouping.cshtml" />
     <Content Include="Areas\razor\Views\multiselect\virtualization.cshtml" />
+    <Content Include="Areas\razor\Views\mobile_listview\local_virtualization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
