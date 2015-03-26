@@ -26,6 +26,8 @@ namespace Kendo.Mvc.UI
 
             WebAppCapable = true;
 
+            Icon = new Dictionary<string, string>();
+
         //>> Initialization
         
         //<< Initialization
@@ -68,6 +70,8 @@ namespace Kendo.Mvc.UI
         public bool PushState { get; set; }
         
         //<< Fields
+
+        public IDictionary<string, string> Icon { get; set; }
 
         public override void WriteInitializationScript(TextWriter writer)
         {
@@ -126,6 +130,11 @@ namespace Kendo.Mvc.UI
                 }
 
                 options.Add("root",  root);                        
+            }
+
+            if (Icon.Any())
+            {
+                options.Add("icon", Icon);
             }
 
             writer.Write(String.Format("jQuery(function(){{ new kendo.mobile.Application(jQuery({0}), {1}); }});", container, Initializer.Serialize(options)));

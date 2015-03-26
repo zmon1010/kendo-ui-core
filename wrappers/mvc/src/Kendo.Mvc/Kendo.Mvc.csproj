@@ -787,6 +787,7 @@
     <Compile Include="UI\Diagram\Settings\DiagramEditableResizeSettings.cs" />
     <Compile Include="UI\Grid\Fluent\GridAllowCopyBuilder.cs" />
     <Compile Include="UI\Grid\Settings\AllowCopySettings.cs" />
+    <Compile Include="UI\MobileApplication\Fluent\MobileApplicationIconBuilder.cs" />
     <Compile Include="UI\MobileCollapsible\Fluent\MobileCollapsibleBuilder.cs" />
     <Compile Include="UI\MobileCollapsible\Fluent\MobileCollapsibleEventBuilder.cs" />
     <Compile Include="UI\MobileCollapsible\Html\MobileCollapsibleHtmlBuilder.cs" />

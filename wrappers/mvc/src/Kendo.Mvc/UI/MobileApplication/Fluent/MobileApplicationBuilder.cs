@@ -215,6 +215,28 @@ namespace Kendo.Mvc.UI.Fluent
         //<< Fields
 
         /// <summary>
+        /// Specify default icon url
+        /// </summary>
+        /// <param name="url">The icon url</param>        
+        public MobileApplicationBuilder Icon(string url)
+        {
+            Component.Icon.Add("", url);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specify icon url per dimension
+        /// </summary>
+        /// <param name="configurator">Configurator for icon url per dimension</param>        
+        public MobileApplicationBuilder Icon(Action<MobileApplicationIconBuilder> configurator)
+        {
+            configurator(new MobileApplicationIconBuilder(Component.Icon));
+
+            return this;
+        }
+
+        /// <summary>
         /// Configures the client-side events.
         /// </summary>
         /// <param name="configurator">The client events action.</param>
