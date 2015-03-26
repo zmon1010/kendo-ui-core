@@ -1948,7 +1948,7 @@ var __meta__ = {
 
             wrapper.on("focus" + NS, function() {
                 if (!that._selection) {
-                    that._createSelection($(".k-scheduler-content").find("td:first"));
+                     that._createSelection(that.wrapper.find(".k-scheduler-content").find("td:first"));
                 }
 
                 that._select();

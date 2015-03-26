@@ -151,6 +151,27 @@
         ok(td.hasClass("k-state-selected"));
     });
 
+    test("scheduler selects first cell on focus when there are more than one scheduler on the page", function() {
+
+        var fixture = scheduler.wrapper.parent();
+        var secondContainer = $("<div id='secondWidget' />");
+
+        fixture.append(secondContainer);
+
+        var secondScheduler = new Scheduler(secondContainer, {
+            selectable: true,
+            views: [
+                "day",
+                { type: "week", selected: true }
+            ]
+        });
+
+        secondScheduler.wrapper.focus();
+        var td = secondContainer.find(".k-scheduler-content td:first");
+        ok(td.hasClass("k-state-selected"));
+    });
+
+
     test("scheduler agenda view support focusing when there are no events rendered", function() {
         scheduler.views.agenda = {title: "Agenda", type: "kendo.ui.AgendaView"};
         scheduler.dataSource.transport.data = [];
