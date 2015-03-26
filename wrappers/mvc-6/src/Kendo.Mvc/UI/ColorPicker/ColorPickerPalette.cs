@@ -30,7 +30,7 @@ namespace Kendo.Mvc.UI
                 case ColorPickerPalette.Basic:
                     return "basic";
                 case ColorPickerPalette.WebSafe:
-                    return "webSafe";
+                    return "websafe";
             }
 
             return value.ToString();

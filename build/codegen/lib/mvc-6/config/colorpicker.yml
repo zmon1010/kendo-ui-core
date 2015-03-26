@@ -12,6 +12,6 @@
             :member: Basic
             :description: Use a palette of basic colors
 
-          - :value: webSafe
+          - :value: websafe
             :member: WebSafe
             :description: Use a palette of web-safe colors
