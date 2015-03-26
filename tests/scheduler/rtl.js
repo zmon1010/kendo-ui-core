@@ -34,6 +34,22 @@
         equalWithRound(event.outerWidth() + event.offset().left, slots.eq(0).outerWidth() + slots.offset().left);
     });
 
+    test("current time marker is correctly positioned in timeline view", function() {
+        var date = new Date();
+        var scheduler = new Scheduler(div, {
+            date: date,
+            views: ["timeline"],
+            dataSource: []
+        });
+
+        var timeElementsCount = scheduler.view().element.find(".k-current-time").length;
+        var top = scheduler.view().content[0].offsetTop;
+        var slot = scheduler.slotByPosition($(".k-current-time").offset().left, top);
+
+        ok(slot.startDate <= date);
+        equal(timeElementsCount,1);
+    });
+
     test("two events are positioned according to top right edge of the slot in day view", function() {
         var scheduler = new Scheduler(div, {
             date: new Date("2013/6/6"),
