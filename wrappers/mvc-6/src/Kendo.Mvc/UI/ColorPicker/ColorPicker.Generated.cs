@@ -34,6 +34,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
+
             if (Buttons.HasValue)
             {
                 settings["buttons"] = Buttons;
@@ -83,5 +84,6 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
+
     }
 }
