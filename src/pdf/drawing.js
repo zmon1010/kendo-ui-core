@@ -502,6 +502,10 @@
 
     function drawImage(element, page, pdf) {
         var url = element.src();
+        if (!url) {
+            return;
+        }
+
         var rect = element.rect();
         var tl = rect.getOrigin();
         var sz = rect.getSize();
