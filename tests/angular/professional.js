@@ -172,6 +172,52 @@
     }
     );
 
+    ngTest("Grid cell templates with groups", 8, function(){
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: {
+                    group: { field: "Foo" },
+                    data: [
+                        { text: "Foo", id: 1 },
+                        { text: "Bar", id: 2 }
+                    ]
+                },
+                columns: [
+                    { field: "text",
+                      template: "|{{dataItem.text}}|",
+                      headerTemplate: "{{3+3}}",
+                      footerTemplate: "{{column.field}}",
+                    },
+                    { field: "id",
+                      template: "|{{dataItem.id}}|"
+                    }
+                ]
+            };
+        });
+
+        $("<div ng-controller=mine><div kendo-grid='grid' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function() {
+        var grid = QUnit.fixture.find('[data-role=grid]').getKendoGrid();
+
+        var rows = $("tr:not(.k-grouping-row)", grid.tbody);
+
+        var footer = grid.element.find(".k-footer-template");
+        equal($(grid.thead[0].rows[0].cells[1]).text(), "6");
+
+        console.log(footer[0].cells[0]);
+        equal($(footer[0].cells[0]).html(), "&nbsp;");
+        equal($(footer[0].cells[1]).text(), "text");
+        equal($(footer[0].cells[2]).html(), "&nbsp;");
+
+        equal($(rows[0].cells[1]).text(), "|Foo|");
+        equal($(rows[0].cells[2]).text(), "|1|");
+        equal($(rows[1].cells[1]).text(), "|Bar|");
+        equal($(rows[1].cells[2]).text(), "|2|");
+    }
+    );
+
     ngTest("Grid getOptions does not contain circular references", 1, function(){
         angular.module("kendo.tests").controller("mine", function($scope) {
             $scope.options = {

@@ -4762,7 +4762,7 @@ var __meta__ = {
 
                 that.angular("compile", function(){
                     return {
-                        elements: footer.find("td").get(),
+                        elements: footer.find("td:not(.k-group-cell, .k-hierarchy-cell)").get(),
                         data: map(that.columns, function(col, i){
                             return {
                                 column: col,
