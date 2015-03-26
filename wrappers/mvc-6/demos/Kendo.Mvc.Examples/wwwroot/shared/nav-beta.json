@@ -222,9 +222,36 @@
 					"aspnet-mvc": "In this sample you will see in action how Telerik ASP.NET MVC Grid is bound to Telerik cloud-based services."
 				},
 				"packages": [
-				  "!jsp",
-				  "!php"
+					"!jsp",
+					"!php"
 				]
+			},
+			{
+				"text": "Export to Excel",
+				"url": "grid/excel-export",
+				"title": {
+					"kendo-ui": "Exporting to MS Excel"
+				},
+				"meta": {
+					"kendo-ui": "Export Kendo UI grid as Microsoft Excel file"
+				},
+				"packages": [
+					"!offline"
+				]
+			},
+			{
+				"text": "Export to PDF",
+				"url": "grid/pdf-export",
+				"title": {
+					"kendo-ui": "Exporting to PDF"
+				},
+				"meta": {
+					"kendo-ui": "Export Kendo UI grid as PDF file"
+				},
+				"packages": [
+					"!offline"
+				],
+				"new": "true"
 			}
 		],
 		"category": "Data Management"

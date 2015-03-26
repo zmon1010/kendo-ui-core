@@ -16,7 +16,7 @@ namespace Kendo.Mvc.Examples.Models
 
         public IEnumerable<ProductViewModel> Read()
         {
-            return entities.Products.Select(product => new ProductViewModel
+            return entities.Products.ToList().Select(product => new ProductViewModel
             {
                  ProductID = product.ProductID,
                  ProductName = product.ProductName,
