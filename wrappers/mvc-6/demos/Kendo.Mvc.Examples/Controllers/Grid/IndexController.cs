@@ -52,5 +52,32 @@ namespace Kendo.Mvc.Examples.Controllers
 				Bool = customer.Bool
 			});
 		}
+
+		public ActionResult Orders_Read([DataSourceRequest]DataSourceRequest request)
+		{
+			return Json(GetOrders().ToDataSourceResult(request));
+		}
+
+		private static IEnumerable<OrderViewModel> GetOrders()
+		{
+			var northwind = new SampleEntitiesDataContext();
+
+			var customers = northwind.Customers.ToList();
+
+            return northwind.Orders.Select(order => new OrderViewModel
+			{
+				ContactName = customers.First(c => c.CustomerID == order.CustomerID).ContactName,
+				Freight = order.Freight,
+				OrderDate = order.OrderDate,
+				ShippedDate = order.ShippedDate,
+				OrderID = order.OrderID,
+				ShipAddress = order.ShipAddress,
+				ShipCountry = order.ShipCountry,
+				ShipName = order.ShipName,
+				ShipCity = order.ShipCity,
+				EmployeeID = order.EmployeeID,
+				CustomerID = order.CustomerID
+			});
+		}
 	}
 }

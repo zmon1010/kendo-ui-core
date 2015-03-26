@@ -197,7 +197,19 @@
 					"kendo-ui": "This sample demonstrates how we can bind Kendo UI Grid widget to local JSON Data by using Kendo UI DataSource component.",
 					"aspnet-mvc": "This sample demonstrates how we can bind the Telerik ASP.NET MVC Grid control to local JSON Data by using Kendo UI DataSource component."
 				}
-			  }
+			},
+		    {
+				"text": "Binding to remote data",
+				"url": "grid/remote-data-binding",
+				"title": {
+					"kendo-ui": "Remote data binding example in KendoGrid",
+					"aspnet-mvc": "Remote data binding example in Telerik ASP.NET MVC Grid"
+				},
+				"meta": {
+					"kendo-ui": "This example and demo source code illustrate how KendoGrid component can be bound to remote data by using the DataSource component.",
+					"aspnet-mvc": "This example and demo source code illustrate how the Telerik ASP.NET MVC Grid component can be bound to remote data using the DataSource component."
+				}
+			}
 		],
 		"category": "Data Management"
 	  },
