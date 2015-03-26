@@ -147,16 +147,16 @@ a:hover
     font-weight: normal;
 }
 
-.overview #header,
+/*.overview #header,
 .overview .suite-demos-nav,
 .overview .demos-nav,
 .overview #footer
 {
-    /*iPad fix*/
+    iPad fix
     min-width:990px;
 }
 
-header
+header*/
 #header h1
 {
     width:134px;
@@ -183,10 +183,10 @@ header
     margin:25px -8px 0 0;
 }
 
-*+html .kendo-nav
+/**+html .kendo-nav
 {
     min-width:648px;
-}
+}*/
 
 .main-nav>li,
 .kendo-nav>li
@@ -2295,7 +2295,7 @@ a.footer-links:hover,
 #layout-search-wrapper input {
     padding: 0.750em 0;
     font-size: 16px;
-    line-height: 16px;
+    line-height: 19px;
     height: 1.188em;
     text-indent: 0.75em;
 }
@@ -2392,6 +2392,8 @@ a.footer-links:hover,
     margin:auto;
     text-align: center;
     padding-bottom: 180px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 #overview h2 {
@@ -2405,14 +2407,14 @@ a.footer-links:hover,
     color: #036c9c;
 }
 
-#overview-widgets,
+/*#overview-widgets,
 #applications-and-tools,
 #overview-applications,
 #overview-tools {
     display: inline-block;
     *display: inline;
     zoom:1;
-}
+}*/
 
 #applications-and-tools {
     vertical-align: top;
