@@ -74,7 +74,7 @@
 
             var root = new draw.Group({
                 transform: geom.transform()
-                               .translate(-scroller.scrollLeft, -scroller.scrollRight)
+                               .translate(-scroller.scrollLeft, -scroller.scrollTop)
             });
 
             clipRoot.append(root);

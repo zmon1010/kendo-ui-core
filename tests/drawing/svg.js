@@ -65,12 +65,9 @@
             equal(surface._rootElement.getAttribute("viewBox"), "10 10 100 100");
         });
 
-        test("exportVisual reverses translate", function() {
-            surface.translate({ x: 10, y: 10 });
-            surface.draw(new Path().moveTo(0, 0).lineTo(5, 5));
+        test("exportVisual returns root visual", function() {
             var element = surface.exportVisual();
-
-            deepEqual(element.bbox().origin.toArray(), [-10, -10]);
+            equal(element, surface._visual);
         });
     })();
 
