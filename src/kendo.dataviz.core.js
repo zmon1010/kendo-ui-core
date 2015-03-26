@@ -1693,7 +1693,7 @@ var __meta__ = {
                     align: align,
                     zIndex: options.zIndex
                 }),
-                step = labelOptions.step;
+                step = math.max(1, labelOptions.step);
 
             axis.labels = [];
 

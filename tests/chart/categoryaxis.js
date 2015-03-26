@@ -323,6 +323,15 @@
                  [121.5, 652], TOLERANCE);
         });
 
+        test("zero step doesn't hang", function() {
+            createCategoryAxis({
+                categories: ["Foo", "Bar", "Baz"],
+                labels: { step: 0 }
+            });
+
+            ok(true);
+        });
+
         // ------------------------------------------------------------
         module("Category Axis / Horizontal / Label Step and skip / Rendering", {
             setup: function() {
