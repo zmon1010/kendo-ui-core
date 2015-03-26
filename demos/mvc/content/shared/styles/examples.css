@@ -2536,6 +2536,10 @@ h5 {
     margin-bottom: 34px;
 }
 
+.popular-widgets {
+    margin-bottom: 1em;
+}
+
 #most-popular p {
     font-size: 13px;
     line-height: 1.4;
@@ -2860,6 +2864,7 @@ html.k-materialblack .demo-section.k-content {
   .popular-widgets {
     float: left;
     width: 79%;
+    margin-bottom: 0em;
   }
   
   .qr-code {
