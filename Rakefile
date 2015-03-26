@@ -230,7 +230,6 @@ bundle :name => 'professional.commercial',
        :type_script => %w(all web mobile dataviz),
        :changelog => %w(components),
        :demos => {
-           :suites => %w(web dataviz mobile),
            :dir => 'examples'
        },
        :product => 'Kendo UI Professional',
@@ -299,7 +298,6 @@ bundle :name => 'professional.trial',
        :type_script => %w(all web mobile dataviz),
        :changelog => %w(components),
        :demos => {
-           :suites => %w(web dataviz mobile),
            :dir => 'examples'
        },
        :contents => {
@@ -369,83 +367,6 @@ bundle :name => 'professional.trial',
           :changelog => true,
        }
 
-# Kendo UI Web (obsolete)
-bundle :name => 'web.commercial',
-       :license => 'src-license-web',
-       :eula => 'web',
-       :vsdoc => %w(web),
-       :intellisense => %w(web),
-       :type_script => %w(web),
-       :changelog => %w(web framework),
-       :demos => {
-           :suites => %w(web),
-           :dir => 'examples'
-       },
-       :product => 'Kendo UI Web',
-       :contents => {
-            'js' => WEB_MIN_JS + WEB_MIN_JS_MAP + JQUERY_MAP,
-            'styles' => WEB_MIN_CSS,
-            'src/js' => WEB_SRC_JS,
-            'src/styles' => WEB_SRC_CSS
-       }
-#Kendo UI Web GPL (obsolete)
-bundle :name => 'web.open-source',
-       :license => 'src-license-web',
-       :vsdoc => %w(web),
-       :intellisense => %w(web),
-       :type_script => %w(web),
-       :changelog => %w(web framework),
-       :demos => {
-           :suites => %w(web),
-           :dir => 'examples'
-       },
-       :contents => {
-            'js' => WEB_MIN_JS + WEB_MIN_JS_MAP + JQUERY_MAP,
-            'styles' => WEB_MIN_CSS,
-            'src/js' => WEB_SRC_JS,
-            'src/styles' => WEB_SRC_CSS
-       }
-
-# Kendo UI Mobile (obsolete)
-bundle :name => 'mobile.commercial',
-       :license => 'src-license-mobile',
-       :vsdoc => %w(mobile),
-       :intellisense => %w(mobile),
-       :type_script => %w(mobile),
-       :changelog => %w(mobile framework),
-       :demos => {
-           :suites => %w(mobile),
-           :dir => 'examples'
-       },
-       :product => 'Kendo UI Mobile',
-       :eula => 'mobile',
-       :contents => {
-            'js' => MOBILE_MIN_JS + MOBILE_MIN_JS_MAP + JQUERY_MAP,
-            'styles' => MOBILE_MIN_CSS,
-            'src/js' => MOBILE_SRC_JS,
-            'src/styles' => MOBILE_SRC_CSS
-       }
-
-# Kendo UI DataViz (obsolete)
-bundle :name => 'dataviz.commercial',
-       :license => 'src-license-dataviz',
-       :vsdoc => %w(dataviz),
-       :intellisense => %w(dataviz),
-       :type_script => %w(dataviz),
-       :changelog => %w(dataviz framework),
-       :eula => 'dataviz',
-       :demos => {
-           :suites => %w(dataviz),
-           :dir => 'examples'
-       },
-       :product => 'Kendo UI DataViz',
-       :contents => {
-            'js' => DATAVIZ_MIN_JS + DATAVIZ_MIN_JS_MAP + JQUERY_MAP,
-            'styles' => DATAVIZ_MIN_CSS + WEB_MIN_CSS,
-            'src/js' => DATAVIZ_SRC_JS,
-            'src/styles' => DATAVIZ_SRC_CSS
-       }
-
 # UI for ASP.NET MVC
 bundle :name => 'aspnetmvc.trial',
        :skip_grunt_build => true,
@@ -458,7 +379,6 @@ bundle :name => 'aspnetmvc.trial',
        :changelog => %w(components aspnetmvc),
        :upload_as_release_build => true,
        :demos => {
-           :suites => %w(web dataviz mobile),
            :dir => [
                'wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/html',
                'wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/html'
@@ -607,7 +527,6 @@ bundle :name => 'aspnetmvc.commercial',
        :type_script => %w(all web mobile dataviz),
        :changelog => %w(components aspnetmvc),
        :demos => {
-           :suites => %w(web dataviz mobile),
            :dir => [
                'wrappers/aspnetmvc/Examples/VS2012/Kendo.Mvc.Examples/html',
                'wrappers/aspnetmvc/Examples/VS2013/Kendo.Mvc.Examples/html'

@@ -6,8 +6,6 @@ DEMOS_CS = FileList['demos/mvc/**/*.cs']
 
 DEMOS_BULDFILES = FileList['build/demos.rb'].include('build/templates/**/*.erb')
 
-BUNDLE_INDEX_TEMPLATE = ERB.new(File.read('build/templates/bundle-index.html.erb'))
-
 OFFLINE_DEMO_TEMPLATE_OPTIONS = {
     "/spa/Sushi.html" => {
         skip_back_button: true,
@@ -104,20 +102,16 @@ def find_navigation_item(categories, filename)
     return nil, nil
 end
 
-def offline_navigation(path)
-
+def offline_navigation
     categories = YAML.load(File.read("demos/mvc/content/nav.json"))
 
     offline = []
 
     categories.each do |category|
 
-        next if path.include?('mobile.commercial') && category['name'] == 'adaptive'
-        next if path.include?('web') && category['name'] == 'mobile'
-
         if include_item?(category)
             category['items'] = category['items'].find_all do |item|
-                include_item?(item) && !(item['external'] && path.include?('web.commercial'))
+                include_item?(item)
             end
 
             offline.push(category)
@@ -156,28 +150,16 @@ def demos(options)
          :from => FileList['demos/mvc/content/**/*'].exclude('**/docs/*'),
          :root => 'demos/mvc/content/'
 
-    # Build the index.html page of the demos
-    file "#{path}/index.html" => [path, 'build/templates/bundle-index.html.erb'] do |t|
+    categories = offline_navigation
 
-        File.open(t.name, 'w') do |file|
-            file.write BUNDLE_INDEX_TEMPLATE.result(binding) # 'binding' is the current scope
-        end
-
-    end
-
-    suite_path  = "#{path}"
-
-    categories = offline_navigation(path)
-
-    files = files + offline_demos(categories, suite_path).include("#{suite_path}/index.html");
+    files = files + offline_demos(categories, path).include("#{path}/index.html");
 
     # Build the index.html page of the suite
-    file "#{suite_path}/index.html" => DEMOS_BULDFILES.include("build/templates/suite-index.html.erb") do |t|
+    file "#{path}/index.html" => DEMOS_BULDFILES.include("build/templates/suite-index.html.erb") do |t|
 
         template = ERB.new(File.read("build/templates/suite-index.html.erb"))
 
         File.write(t.name, template.result(binding))
-
     end
 
     template = ERB.new(File.read("build/templates/#{template_dir}/example.html.erb"), 0, '%<>')
