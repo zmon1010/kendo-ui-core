@@ -112,6 +112,17 @@
                         opacity: 0.7
                     }
                 }
+            }, {
+                type: "tile",
+                _urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                subdomains: ["a", "b", "c"]
+            }],
+            markers: [{
+                location: [30.268107, -97.744821],
+                shape: "pinTarget",
+                tooltip: {
+                    content: "Austin, TX"
+                }
             }],
             shapeCreated: onShapeCreated,
             shapeMouseEnter: onShapeMouseEnter,
