@@ -93,21 +93,7 @@
         },
 
         exportVisual: function() {
-            var visual = this._visual;
-
-            var offset = this._offset;
-            if (offset) {
-                var wrap = new d.Group();
-                wrap.children.push(visual);
-
-                wrap.transform(
-                    g.transform().translate(-offset.x, -offset.y)
-                );
-
-                visual = wrap;
-            }
-
-            return visual;
+            return this._visual;
         },
 
         _resize: function() {

@@ -270,6 +270,23 @@
             };
         },
 
+        exportVisual: function() {
+            var group = new kendo.drawing.Group();
+
+            var layers = this.layers.concat(this.markers);
+
+            layers.sort(function(a, b) {
+                return b.options.zIndex - a.options.zIndex;
+            });
+
+            for (var i = 0; i < layers.length; i++) {
+                var visual = layers[i].exportVisual();
+                group.append(visual);
+            }
+
+            return group;
+        },
+
         _setOrigin: function(origin, zoom) {
             var size = this.viewSize(),
                 topLeft;
