@@ -17,7 +17,7 @@ class TelerikReleaseNotesBot
         #click_and_wait("Log in with Telerik", "Legacy Dashboard")
         driver.find_element(:xpath, "//input[contains(@id,'username')]").send_keys SITE_LOGIN
         driver.find_element(:xpath, "//input[contains(@id,'password')]").send_keys SITE_DOWNLOAD_BUILDER_UPLOAD_PASS
-        click_element(find("[id='LoginButton']"))
+        click_element(driver.find_element(:xpath, "//button[contains(@id,'LoginButton')]"))
         
         @products = ["Kendo UI", "UI for ASP.NET MVC", "UI for JSP", "UI for PHP"]
 
