@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     {
         public bool? AllowUnsort { get; set; }
 
-        public string Mode { get; set; }
+        public TreeListSortMode? Mode { get; set; }
 
         public bool Enabled { get; set; }
         public string IdPrefix { get; set; } = "#";
@@ -28,9 +28,9 @@ namespace Kendo.Mvc.UI
                 settings["allowUnsort"] = AllowUnsort;
             }
 
-            if (Mode.HasValue())
+            if (Mode.HasValue)
             {
-                settings["mode"] = Mode;
+                settings["mode"] = Mode?.Serialize();
             }
 
             return settings;

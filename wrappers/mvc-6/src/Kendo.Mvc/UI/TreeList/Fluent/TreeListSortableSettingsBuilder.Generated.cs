@@ -20,10 +20,10 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The sorting mode. If set to "single" the user can sort by one column. If set to "multiple" the user can sort by multiple columns.
+        /// Defines the sort modes supported by Kendo UI TreeList for ASP.NET MVC
         /// </summary>
         /// <param name="value">The value for Mode</param>
-        public TreeListSortableSettingsBuilder<T> Mode(string value)
+        public TreeListSortableSettingsBuilder<T> Mode(TreeListSortMode value)
         {
             Container.Mode = value;
             return this;
