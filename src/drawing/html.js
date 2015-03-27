@@ -12,6 +12,7 @@
 
     /* jshint eqnull:true */
     /* jshint -W069 */
+    /* global console */
 
     /* -----[ local vars ]----- */
 
@@ -2504,7 +2505,7 @@
         }
     }
 
-    function groupInStackingContext(group, zIndex) {
+    function groupInStackingContext(element, group, zIndex) {
         var main = nodeInfo._stackingContext.group;
         var a = main.children;
         for (var i = 0; i < a.length; ++i) {
@@ -2521,7 +2522,12 @@
         //     tmp.transform(nodeInfo._matrix);
         // }
         if (nodeInfo._clipbox) {
-            tmp.clip(drawing.Path.fromRect(nodeInfo._clipbox));
+            var m = nodeInfo._matrix.invert();
+            var r = nodeInfo._clipbox.transformCopy(m);
+            setClipping(tmp, drawing.Path.fromRect(r));
+            // console.log(r);
+            // tmp.append(drawing.Path.fromRect(r));
+            // tmp.append(new drawing.Text(element.className || element.id, r.topLeft()));
         }
 
         return tmp;
@@ -2564,14 +2570,20 @@
             zIndex = 0;
         }
         if (zIndex != "auto") {
-            group = groupInStackingContext(container, zIndex);
+            group = groupInStackingContext(element, container, parseFloat(zIndex));
         } else {
             group = new drawing.Group();
             container.append(group);
         }
 
         // XXX: remove at some point
-        group.DEBUG = $(element).data("debug");
+        // group.options._pdfDebug = "";
+        // if (element.id) {
+        //     group.options._pdfDebug = "#" + element.id;
+        // }
+        // if (element.className) {
+        //     group.options._pdfDebug += "." + element.className.split(" ").join(".");
+        // }
 
         if (opacity < 1) {
             group.opacity(opacity * group.opacity());

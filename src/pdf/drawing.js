@@ -96,7 +96,8 @@
                 var tmp = optimize(group);
                 var bbox = tmp.bbox;
                 group = tmp.root;
-
+                // var tmp, bbox;
+                
                 var paperSize = getOption("paperSize", getOption("paperSize", "auto"), options), addMargin = false;
                 if (paperSize == "auto") {
                     if (bbox) {
@@ -179,8 +180,8 @@
     }
 
     function drawElement(element, page, pdf) {
-        if (element.DEBUG) {
-            page.comment(element.DEBUG);
+        if (element.options._pdfDebug) {
+            page.comment("BEGIN: " + element.options._pdfDebug);
         }
 
         var transform = element.transform();
@@ -212,6 +213,10 @@
         }, element, page, pdf);
 
         page.restore();
+
+        if (element.options._pdfDebug) {
+            page.comment("END: " + element.options._pdfDebug);
+        }
     }
 
     function setStrokeOptions(element, page, pdf) {

@@ -306,6 +306,13 @@
             var bl = this.bottomLeft().transformCopy(matrix);
 
             return Rect.fromPoints(tl, tr, br, bl);
+        },
+
+        transformCopy: function(m) {
+            return Rect.fromPoints(
+                this.topLeft().transform(m),
+                this.bottomRight().transform(m)
+            );
         }
     });
 
@@ -597,6 +604,42 @@
                 this.a * m.e + this.c * m.f + this.e,
                 this.b * m.e + this.d * m.f + this.f
             );
+        },
+
+        // Invert function for general 3x3 matrixes, based on
+        // http://en.wikipedia.org/wiki/Invertible_matrix#Inversion_of_3.C3.973_matrices
+        // (simplified below for transformation matrixes, where the
+        // last col is constant, but let's keep this commented here)
+        //
+        // invert: function() {
+        //     var a = this.a, b = this.b, c = 0;
+        //     var d = this.c, e = this.d, f = 0;
+        //     var g = this.e, h = this.f, i = 1;
+        //
+        //     var A =  (e*i - f*h), D = -(b*i - c*h), G =  (b*f - c*e);
+        //     var B = -(d*i - f*g), E =  (a*i - c*g), H = -(a*f - c*d);
+        //     var C =  (d*h - e*g), F = -(a*h - b*g), I =  (a*e - b*d);
+        //
+        //     var det = a*A + b*B + c*C;
+        //     if (det === 0) {
+        //         return null;
+        //     }
+        //
+        //     return new Matrix(A/det, D/det, B/det, E/det, C/det, F/det);
+        // },
+
+        invert: function() {
+            var a = this.a, b = this.b;
+            var d = this.c, e = this.d;
+            var g = this.e, h = this.f;
+
+            var det = a*e - b*d;
+            if (det === 0) {
+                return null;
+            }
+
+            return new Matrix(e/det, -b/det, -d/det, a/det,
+                              (d*h - e*g)/det, (b*g - a*h)/det);
         },
 
         clone: function() {
