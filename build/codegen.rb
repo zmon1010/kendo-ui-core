@@ -198,7 +198,8 @@ namespace :generate do
                 'docs/api/javascript/ui/numerictextbox.md',
                 'docs/api/javascript/ui/maskedtextbox.md',
                 'docs/api/javascript/ui/upload.md',
-                'docs/api/javascript/ui/treelist.md'
+                'docs/api/javascript/ui/treelist.md',
+                'docs/api/javascript/ui/notification.md'
             ]
 
             components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }

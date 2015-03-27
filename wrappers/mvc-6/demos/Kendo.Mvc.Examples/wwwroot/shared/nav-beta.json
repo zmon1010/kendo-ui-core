@@ -155,22 +155,22 @@
 		"pro": "true",
 		"api": "web/grid",
 		"documentation": {
-		   "kendo-ui": "getting-started/web/grid/overview",
-		   "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/grid/overview",
-		   "jsp-ui": "getting-started/using-kendo-with/jsp/tags/grid/overview",
-		   "php-ui": "getting-started/using-kendo-with/php/widgets/grid/overview"
+			"kendo-ui": "getting-started/web/grid/overview",
+			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/grid/overview",
+			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/grid/overview",
+			"php-ui": "getting-started/using-kendo-with/php/widgets/grid/overview"
 		},
 		"forum": {
-		   "kendo-ui": "kendo-ui/grid",
-		   "aspnet-mvc": "aspnet-mvc/grid",
-		   "jsp-ui": "jsp/grid",
-		   "php-ui": "php/grid"
+			"kendo-ui": "kendo-ui/grid",
+			"aspnet-mvc": "aspnet-mvc/grid",
+			"jsp-ui": "jsp/grid",
+			"php-ui": "php/grid"
 		},
 		"codelibrary": {
-		   "kendo-ui": "kendo-ui/grid",
-		   "aspnet-mvc": "aspnet-mvc/grid",
-		   "jsp-ui": "jsp/grid",
-		   "php-ui": "php/grid"
+			"kendo-ui": "kendo-ui/grid",
+			"aspnet-mvc": "aspnet-mvc/grid",
+			"jsp-ui": "jsp/grid",
+			"php-ui": "php/grid"
 		},
 		"spriteCssClass": "gridIcon",
 		"items": [
@@ -271,7 +271,137 @@
 			}
 		],
 		"category": "Data Management"
-	  },
+	},
+	{
+		"text": "Notification",
+		"name": "notification",
+		"api": "web/notification",
+		"documentation": {
+			"kendo-ui": "getting-started/web/notification/overview",
+			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/notification/overview",
+			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/notification/overview",
+			"php-ui": "getting-started/using-kendo-with/php/widgets/notification/overview"
+		},
+		"forum": {
+			"kendo-ui": "kendo-ui/notification",
+			"aspnet-mvc": "aspnet-mvc/notification",
+			"jsp-ui": "jsp/notification",
+			"php-ui": "php/notification"
+		},
+		"codelibrary": {
+			"kendo-ui": "kendo-ui/notification",
+			"aspnet-mvc": "aspnet-mvc/notification",
+			"jsp-ui": "jsp/notification",
+			"php-ui": "php/notification"
+		},
+		"spriteCssClass": "notificationIcon",
+		"items": [
+			{
+				"text": "Basic usage",
+				"url": "notification/index",
+				"title": {
+					"kendo-ui": "Overview of Kendo UI Notification | Kendo UI Web demo",
+					"aspnet-mvc": "ASP.NET MVC Notification Extension demo"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows the core functionality of Kendo UI Notification component.",
+					"aspnet-mvc": "In this example you will see all options to show and hide a notification in ASP.NET MVC."
+				}
+			},
+			{
+				"text": "Position and stacking",
+				"url": "notification/position-stacking",
+				"title": {
+					"kendo-ui": "Position and stacking of Kendo UI Notification | Kendo UI Web demo",
+					"aspnet-mvc": "Position and stacking of ASP.NET MVC Notification | ASP.NET MVC"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows the position and stacking behavior of the Kendo UI Notification component.",
+					"aspnet-mvc": "This demo shows the position and stacking behavior of the ASP.NET MVC Notification component."
+				}
+			},
+			{
+				"text": "Templates",
+				"url": "notification/templates",
+				"title": {
+					"kendo-ui": "Templates of Kendo UI Notification | Kendo UI Web demo",
+					"aspnet-mvc": " Layout notification templates for ASP.NET MVC"
+				},
+				"meta": {
+					"kendo-ui": "Demo about using templates with the Kendo UI Notification component.",
+					"aspnet-mvc": "In this example you will see how Telerik notification templates could be modified in ASP.NET MVC."
+				}
+			},
+			{
+				"text": "Events",
+				"url": "notification/events",
+				"title": {
+					"kendo-ui": "Events of Kendo UI Notification | Kendo UI Web demo",
+					"aspnet-mvc": "Events of ASP.NET MVC Notification | ASP.NET MVC demo"
+				},
+				"meta": {
+					"kendo-ui": "Demo about using events and handlers with the Kendo UI Notification component.",
+					"aspnet-mvc": "Demo about using events and handlers with the ASP.NET MVC Notification component."
+				}
+			},
+			{
+				"text": "API",
+				"url": "notification/api",
+				"title": {
+					"kendo-ui": "API of Kendo UI Notification | Kendo UI Web demo",
+					"aspnet-mvc": "API of ASP.NET MVC Notification | UI for ASP.NET MVC demo"
+				},
+				"meta": {
+					"kendo-ui": "Demo about using the API of the Kendo UI Notification component.",
+					"aspnet-mvc": "Demo about using the API of the ASP.NET MVC Notification component."
+				}
+			},
+			{
+				"text": "RTL support",
+				"disableInMobile": true,
+				"url": "notification/right-to-left-support",
+				"title": {
+					"kendo-ui": "RTL Support of Kendo UI Notification | Kendo UI Web demo",
+					"aspnet-mvc": "RTL Support for ASP.NET MVC Notification | ASP.NET MVC demo"
+				},
+				"meta": {
+					"kendo-ui": "Demo about the RTL support of the Kendo UI Notification component.",
+					"aspnet-mvc": "Demo about the RTL support of the ASP.NET MVC Notification component."
+				}
+			},
+			{
+				"text": "MVVM",
+				"url": "notification/mvvm",
+				"title": {
+					"kendo-ui": "MVVM support in Kendo UI Notification"
+				},
+				"meta": {
+					"kendo-ui": "MVVM support for Kendo UI Notification"
+				},
+				"packages": [
+					"!mvc",
+					"!jsp",
+					"!php"
+				]
+			},
+			{
+				"text": "AngularJS",
+				"url": "notification/angular",
+				"title": {
+					"kendo-ui": "AngularJS support in Kendo UI Notification"
+				},
+				"meta": {
+					"kendo-ui": "AngularJS directive support for Kendo UI Notification"
+				},
+				"packages": [
+					"!mvc",
+					"!jsp",
+					"!php"
+				]
+			}
+		],
+		"category": "Layout"
+	},
 	{
 		"text": "NumericTextBox",
 		"name": "numerictextbox",

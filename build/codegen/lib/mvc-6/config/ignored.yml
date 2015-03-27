@@ -31,3 +31,5 @@
 - maskedtextbox.rules
 - upload.enabled
 - upload.localization
+- notification.animation
+- notification.templates
