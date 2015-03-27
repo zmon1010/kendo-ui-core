@@ -1442,6 +1442,7 @@ var __meta__ = {
             if (chart._hasDataSource) {
                 chart.refresh();
             }  else {
+                chart._bindCategories();
                 chart.redraw();
             }
 

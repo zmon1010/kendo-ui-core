@@ -658,6 +658,20 @@
             chart.element.trigger("mousemove");
         });
 
+        test("binds categories from series data", function() {
+            setupChart({});
+            chart.setOptions({
+                series: [{
+                    data: [{
+                        value: 1,
+                        foo: "A"
+                    }],
+                    categoryField: "foo"
+                }]
+            });
+            equal(chart._plotArea.categoryAxis.options.categories[0], "A");
+        });
+
     })();
 
     // ------------------------------------------------------------
