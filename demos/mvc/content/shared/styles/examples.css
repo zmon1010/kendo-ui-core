@@ -1843,6 +1843,10 @@ ul.keyboard-legend li a {
     margin-left: 1.833em;
 }
 
+.logo {
+  width: 198px;
+}
+
 .nav-buttons {
     float: right;
 }
