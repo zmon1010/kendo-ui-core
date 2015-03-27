@@ -437,6 +437,7 @@ var __meta__ = {
         },
 
         destroy: function() {
+            clearTimeout(this._focusTimeout);
             this.popup.destroy();
             this.element.off(NS);
             this.list.off(NS);
@@ -2840,7 +2841,7 @@ var __meta__ = {
                     }
 
                     if ((navigatable || editable) && !isInput) {
-                        setTimeout(function() {
+                        that._focusTimeout = setTimeout(function() {
                             focusTable(that.list.content.find("table"), true);
                         }, 2);
                     }

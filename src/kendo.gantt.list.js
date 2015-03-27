@@ -131,6 +131,10 @@ var __meta__ = {
                 this.touch.destroy();
             }
 
+            if (this.timer) {
+                clearTimeout(this.timer);
+            }
+
             this.content.off(NS);
             this.header = null;
             this.content = null;
