@@ -5,6 +5,7 @@
 
 namespace CultureGenerator
 {
+    using System.Linq;
     using System.Globalization;
     using System.Collections.Generic;
     using System.Web.Script.Serialization;
@@ -54,10 +55,10 @@ namespace CultureGenerator
             //standard calendar info
             globalization["DayNames"] = dateTimeFormats.DayNames;
             globalization["AbbreviatedDayNames"] = dateTimeFormats.AbbreviatedDayNames;
-            globalization["ShortestDayNames"] = dateTimeFormats.ShortestDayNames;
+            globalization["ShortestDayNames"] = dateTimeFormats.ShortestDayNames;         
 
-            globalization["MonthNames"] = dateTimeFormats.MonthNames;
-            globalization["AbbreviatedMonthNames"] = dateTimeFormats.AbbreviatedMonthNames;
+            globalization["MonthNames"] = dateTimeFormats.MonthNames.Take(12).ToArray();
+            globalization["AbbreviatedMonthNames"] = dateTimeFormats.AbbreviatedMonthNames.Take(12).ToArray();
 
             globalization["d"] = dateTimeFormats.ShortDatePattern;
             globalization["D"] = dateTimeFormats.LongDatePattern;
