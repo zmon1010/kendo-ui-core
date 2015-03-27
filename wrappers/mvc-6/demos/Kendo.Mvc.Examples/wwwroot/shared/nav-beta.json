@@ -252,6 +252,22 @@
 					"!offline"
 				],
 				"new": "true"
+			},
+			{
+				"text": "Binding to SignalR",
+				"url": "grid/signalr",
+				"title": {
+					"kendo-ui": "Real-time Binding to SignalR Hub",
+					"aspnet-mvc": "Real-time Binding to SignalR Hub | UI for ASP.NET MVC demos"
+				},
+				"meta": {
+					"kendo-ui": "This example shows how the Kendo UI Grid can be bound to SignalR Hub for real-time push notifications",
+					"aspnet-mvc": "This example shows how the Telerik ASP.NET MVC Grid can be bound to SignalR Hub for real-time push notifications."
+				},
+				"packages": [
+					"!jsp",
+					"!php"
+				]
 			}
 		],
 		"category": "Data Management"
