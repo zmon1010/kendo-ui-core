@@ -1439,14 +1439,14 @@ var __meta__ = {
                 chart.setDataSource(dataSource);
             }
 
-            if (chart._shouldAttachMouseMove()) {
-                chart.element.on(MOUSEMOVE_NS, chart._mousemove);
-            }
-
             if (chart._hasDataSource) {
                 chart.refresh();
             }  else {
                 chart.redraw();
+            }
+
+            if (chart._shouldAttachMouseMove()) {
+                chart.element.on(MOUSEMOVE_NS, chart._mousemove);
             }
         },
 

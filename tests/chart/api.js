@@ -640,6 +640,24 @@
             });
         });
 
+        asyncTest("binds mousemove handler if crosshairs are enabled with the new options", function() {
+            setupChart();
+            chart._mousemove = function() {
+                ok(true);
+                start();
+            };
+
+            chart.setOptions({
+                categoryAxis: {
+                    crosshair:{
+                        visible: true
+                    }
+                }
+            });
+
+            chart.element.trigger("mousemove");
+        });
+
     })();
 
     // ------------------------------------------------------------
