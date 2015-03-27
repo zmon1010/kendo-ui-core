@@ -1,12 +1,15 @@
 #!/usr/bin/ruby
 
 require 'erb'
-
-dir = File.dirname(__FILE__)
-template = ERB.new(File.read(File.join(dir, 'variable-origins-default.erb')), 0, '%<>')
+require 'less'
+require 'color'
 
 def read(filename)
     File.readlines(filename).map { |line| line.gsub(/\r?\n/, '') }
+end
+
+def lines(content)
+    content.split(/\r?\n/)
 end
 
 def parse(lines)
@@ -44,27 +47,99 @@ def function_map(color)
     COLOR_MAPS[color]
 end
 
-def approximate(vars, value)
+def name_from(lower)
+    lower.capitalize.sub(/opal|contrast|black/) { |str| str.capitalize }
 end
 
-THEME_VALUES = {}
+def same_values?(array)
+    array.uniq.length == 1
+end
+
+type = "default"
+dir = File.dirname(__FILE__)
+template_content = File.read(File.join(dir, "variable-origins-#{type}.erb"))
+template = ERB.new(template_content, 0, '%<>')
 
 files = ARGV.each { |f| Dir.glob(f) }.flatten.sort
 
+####
 # extract values from skins
+
+OLD_VARS = {}
+BASE_VARS = {}
 
 files.each do |current|
     current_lines = read(current)
 
     basename = current.sub(/\.less/,'')
 
-    values = THEME_VALUES[current] = parse(current_lines)
+    values = OLD_VARS[current] = parse(current_lines)
 
-    themeName = /kendo\.(.*).less/.match(current)[1]
+    themeName = name_from(/kendo\.(.*).less/.match(current)[1])
+
+    new_base_content = template.result(binding)
 
     File.open("#{basename}.new.less", "w") do |f|
-      f.write template.result(binding)
+      f.write new_base_content
+    end
+
+    BASE_VARS[current] = parse(lines(new_base_content))
+end
+
+####
+# define new colors based on extracted ones
+
+BASE_VAR_NAMES = BASE_VARS.values.first.keys
+
+OLD_VAR_NAMES = OLD_VARS.values.first.keys
+
+themes = BASE_VARS.keys
+theme_dir = File.dirname(files.first)
+theme_template = File.read(File.join(theme_dir, "theme-template.less"))
+
+rewritten = OLD_VAR_NAMES.select { |x| !(BASE_VAR_NAMES.include? x) }
+
+BASE_ARRAYS = {}
+
+themes.each do |theme|
+    BASE_VARS[theme].each do |variable, value|
+        BASE_ARRAYS[variable] = [] unless BASE_ARRAYS[variable]
+
+        BASE_ARRAYS[variable].push(value)
     end
 end
 
-# define new colors based on extracted ones
+actions = {}
+
+def match_var old_values
+    BASE_ARRAYS.find old_values
+end
+
+rewritten.each do |variable|
+    old_values = []
+
+    themes.each do |theme|
+        old_values.push OLD_VARS[theme][variable]
+    end
+
+    # try to match functions for each variable
+
+    # determine action for variables
+    if same_values? old_values
+        actions[variable] = :inline
+    elsif match_var old_values
+        actions[variable] = match_var old_values
+    end
+
+    # rewrite variable with some function
+    # constraint: for each theme, the (f, var) pair is fixed and  f(base_vars[theme][var]) = old_vars[theme][variable]
+end
+
+####
+# write new type
+
+type_content = rewritten.join("\n") + "\n" + theme_template
+
+File.open(File.join(theme_dir, "type-#{type}.less"), "w") do |f|
+  f.write type_content.gsub(/\r?\n/, "\n")
+end
