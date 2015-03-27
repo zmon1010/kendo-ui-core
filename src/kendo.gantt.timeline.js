@@ -474,11 +474,14 @@ var __meta__ = {
             var size;
             var className = GanttView.styles.task + " " + GanttView.styles.taskMilestone;
             var milestone = $("<div class='" + className + "' style='visibility: hidden; position: absolute'>");
+            var boundingClientRect;
 
             this.content.append(milestone);
 
+            boundingClientRect = milestone[0].getBoundingClientRect();
+
             size = {
-                "width": milestone[0].getBoundingClientRect().width,
+                "width": boundingClientRect.right - boundingClientRect.left,
                 "clientWidth": milestone[0].clientWidth
             };
 
