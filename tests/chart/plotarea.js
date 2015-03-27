@@ -1940,6 +1940,19 @@
             deepEqual(plotArea.series[0].data, [{ v: 2, n: "foo" }]);
         });
 
+        test("Category axis data items are aggregated", function() {
+            createPlotArea([{
+                type: "bar",
+                data: [100, 200, 300]
+            }], {
+                categoryAxis: kendo.deepExtend({
+                    baseUnit: "months"
+                }, dateCategoryAxis)
+            });
+
+            equal(plotArea.axes[0].options.dataItems[0].value, 300);
+        });
+
         // ------------------------------------------------------------
         module("Categorical PlotArea / Date series / Aggregates / max", {
             setup: moduleSetup,

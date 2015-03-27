@@ -9283,6 +9283,7 @@ var __meta__ = {
 
             plotArea.createCategoryAxes(panes);
             plotArea.aggregateCategories(panes);
+            plotArea.createCategoryAxesLabels(panes);
             plotArea.createCharts(panes);
             plotArea.createValueAxes(panes);
         },
@@ -9386,7 +9387,6 @@ var __meta__ = {
                 }
 
                 processedSeries.push(currentSeries);
-
             }
 
             plotArea.srcSeries = series;
@@ -9437,6 +9437,8 @@ var __meta__ = {
                     srcPoints[i], categories[i]
                 );
             }
+
+            categoryAxis.options.dataItems = data;
 
             return result;
         },
@@ -9698,6 +9700,15 @@ var __meta__ = {
             }
         },
 
+        createCategoryAxesLabels: function() {
+            var axes = this.axes;
+            for (var i = 0; i < axes.length; i++) {
+                if (axes[i] instanceof CategoryAxis) {
+                    axes[i].createLabels();
+                }
+            }
+        },
+
         createCategoryAxes: function(panes) {
             var plotArea = this,
                 invertAxes = plotArea.invertAxes,
@@ -9717,7 +9728,8 @@ var __meta__ = {
                     type  = axisOptions.type || "";
                     axisOptions = deepExtend({
                         vertical: invertAxes,
-                        axisCrossingValue: invertAxes ? MAX_VALUE : 0
+                        axisCrossingValue: invertAxes ? MAX_VALUE : 0,
+                        _deferLabels: true
                     }, axisOptions);
 
                     if (!defined(axisOptions.justified)) {

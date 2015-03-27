@@ -1620,7 +1620,10 @@ var __meta__ = {
                 align: axis.options.majorTickType
             });
 
-            axis.createLabels();
+            if (!this.options._deferLables) {
+                axis.createLabels();
+            }
+
             axis.createTitle();
             axis.createNotes();
         },
@@ -1679,7 +1682,8 @@ var __meta__ = {
                 }
             },
 
-            _alignLines: true
+            _alignLines: true,
+            _deferLabels: false
         },
 
         // abstract labelsCount(): Number
@@ -1694,6 +1698,10 @@ var __meta__ = {
                     zIndex: options.zIndex
                 }),
                 step = math.max(1, labelOptions.step);
+
+            axis.children = $.grep(axis.children, function (child) {
+                return !(child instanceof AxisLabel);
+            });
 
             axis.labels = [];
 
