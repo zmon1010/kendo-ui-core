@@ -17,7 +17,7 @@ class TelerikCodeLibraryBot
         
         driver.find_element(:xpath, "//input[contains(@id,'username')]").send_keys SITE_LOGIN
         driver.find_element(:xpath, "//input[contains(@id,'password')]").send_keys SITE_DOWNLOAD_BUILDER_UPLOAD_PASS
-        click_element(find("[id='LoginButton']"))
+        click_element(driver.find_element(:xpath, "//button[contains(@id,'LoginButton')]"))
     end
 
     def find(selector)
