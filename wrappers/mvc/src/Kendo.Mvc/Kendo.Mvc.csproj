@@ -270,6 +270,7 @@
     <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Extensions\HtmlTextWriterExtensions.cs" />
     <Compile Include="Extensions\DataTableWrapperExtensions.cs" />
+    <Compile Include="Infrastructure\CultureGenerator.cs" />
     <Compile Include="Infrastructure\IControllerDescriptorCache.cs" />
     <Compile Include="Infrastructure\IControllerContextCache.cs" />
     <Compile Include="Infrastructure\IAuthorizationContextCache.cs" />

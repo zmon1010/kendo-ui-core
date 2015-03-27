@@ -106,6 +106,7 @@
   <ItemGroup>
     <Compile Include="Data\DynamicPropertyAccessExpressionBuilderTests.cs" />
     <Compile Include="Extensions\IHtmlNodeExtensions.cs" />
+    <Compile Include="Infrastructure\CultureGeneratorTests.cs" />
     <Compile Include="Infrastructure\Implementation\CacheTests.cs" />
     <Compile Include="Infrastructure\Implementation\ControllerContextCacheTests.cs" />
     <Compile Include="Infrastructure\Implementation\ControllerDescriptorCacheTests.cs" />

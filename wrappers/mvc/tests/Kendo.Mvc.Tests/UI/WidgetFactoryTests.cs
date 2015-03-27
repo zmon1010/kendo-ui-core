@@ -1,5 +1,6 @@
 namespace Kendo.Mvc.UI.Tests
 {
+    using System.Globalization;
     using System.Web.Mvc;
     using Kendo.Mvc.UI.Fluent;
     using Xunit;
@@ -146,6 +147,43 @@ namespace Kendo.Mvc.UI.Tests
             var output = _factory.DeferredScriptsFor("foo", false).ToHtmlString();
 
             output.ShouldNotContain("<script>");
+        }
+
+        [Fact]
+        public void Culture_returns_current_culture_script()
+        {
+            var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+            var cultureScript = _factory.Culture().ToHtmlString();
+            cultureScript.ShouldContain(Infrastructure.CultureGenerator.Generate(culture.Name));
+            cultureScript.IndexOf("<script>").ShouldEqual(0);           
+        }
+
+        [Fact]
+        public void Culture_returns_current_culture_script_without_script_tag()
+        {
+            var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+            var cultureScript = _factory.Culture(false).ToHtmlString();
+            cultureScript.ShouldNotContain("script");
+        }
+
+        [Fact]
+        public void Culture_returns_specified_culture_script()
+        {
+            var name = "bg-BG";
+            var culture = new CultureInfo(name);
+            var cultureScript = _factory.Culture(name).ToHtmlString();
+            cultureScript.ShouldContain(Infrastructure.CultureGenerator.Generate(name));
+            cultureScript.IndexOf("<script>").ShouldEqual(0);            
+        }
+
+        [Fact]
+        public void Culture_returns_specified_culture_script_without_script_tag()
+        {
+            var name = "bg-BG";
+            var culture = new CultureInfo(name);
+            var cultureScript = _factory.Culture(name, false).ToHtmlString();
+            cultureScript.ShouldContain(string.Format("kendo.cultures[\"{0}\"]=", name));
+            cultureScript.ShouldNotContain("script");
         }
     }
 }

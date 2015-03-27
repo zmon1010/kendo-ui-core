@@ -80,5 +80,18 @@ namespace Xunit
         {
             Assert.DoesNotContain(expected, collection, comparer);
         }
+
+        /// <summary>
+        /// Verifies that lists should have same items.
+        /// </summary>        
+        public static void ShouldHaveSameItems(this IList list,
+                                               IList expected)
+        {
+            Assert.Equal(expected.Count, list.Count);
+            for (int i = 0; i < list.Count; i++)
+            {
+                Assert.Equal(expected[i], list[i]);
+            }
+        }
     }
 }

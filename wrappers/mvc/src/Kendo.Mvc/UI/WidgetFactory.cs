@@ -1239,6 +1239,40 @@ namespace Kendo.Mvc.UI.Fluent
             return new QRCodeBuilder(new QRCode(ViewContext, Initializer));
         }
 
+
+        /// <summary>
+        /// Returns the kendo culture script for the current .NET culture.
+        /// </summary>
+        /// <param name="renderScriptTags">Determines if the script should be rendered within a script tag</param>
+        public virtual MvcHtmlString Culture(bool renderScriptTags = true)
+        {
+            return Culture(null, renderScriptTags);
+        }
+
+        /// <summary>
+        /// Returns the kendo culture scripts for the specified .NET culture.
+        /// </summary>
+        /// <param name="name">The name of the culture.</param>
+        /// <param name="renderScriptTags">Determines if the script should be rendered within a script tag</param>        
+        public virtual MvcHtmlString Culture(string name, bool renderScriptTags = true)
+        {
+            var result = new StringBuilder();
+
+            if (renderScriptTags)
+            {
+                result.Append("<script>");
+            }
+
+            result.Append(CultureGenerator.Generate(name));
+
+            if (renderScriptTags)
+            {
+                result.Append("</script>");
+            }
+
+            return new MvcHtmlString(result.ToString());
+        }
+
         /// <summary>
         /// Returns the initialization scripts for widgets set as deferred
         /// </summary>
