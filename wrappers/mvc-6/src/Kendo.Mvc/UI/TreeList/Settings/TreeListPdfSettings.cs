@@ -9,15 +9,15 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListPdfSettings class
     /// </summary>
-    public partial class TreeListPdfSettings<T> 
+    public partial class TreeListPdfSettings<T> : PdfSettings
     {
-        public Dictionary<string, object> Serialize()
-        {
-            var settings = SerializeSettings();
+		public override Dictionary<string, object> Serialize()
+		{
+			var settings = SerializeSettings();
 
-            // Do manual serialization here
+			settings.Merge(base.Serialize());
 
-            return settings;
-        }
-    }
+			return settings;
+		}
+	}
 }

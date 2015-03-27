@@ -6,10 +6,10 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring TreeListPdfSettings
     /// </summary>
-    public partial class TreeListPdfSettingsBuilder<T>
-        
-    {
-        public TreeListPdfSettingsBuilder(TreeListPdfSettings<T> container)
+    public partial class TreeListPdfSettingsBuilder<T> : PdfSettingsBuilder<TreeListPdfSettingsBuilder<T>>
+
+	{
+        public TreeListPdfSettingsBuilder(TreeListPdfSettings<T> container) : base (container)
         {
             Container = container;
         }

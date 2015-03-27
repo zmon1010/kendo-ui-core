@@ -26,6 +26,8 @@
 - treelist.columns.editor
 - treelist.datasource
 - treelist.editable.window
+- treelist.pdf.papersize
+- treelist.pdf.margin
 - maskedtextbox.rules
 - upload.enabled
 - upload.localization
