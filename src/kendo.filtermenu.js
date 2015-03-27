@@ -942,20 +942,25 @@ var __meta__ = {
         },
         createCheckBoxes: function() {
             var options = this.options;
+            var data;
             var templateOptions = {
                 field: this.field,
                 format: options.format,
                 mobile: this._isMobile,
                 type: this.type
             };
-            var template = kendo.template(options.itemTemplate(templateOptions));
-            var data = this.checkSource.data();
-            if (options.values) {
+
+            if (!this.options.forceUnique) {
+                data = this.checkSource.view();
+            } else if (options.values) {
                 data = options.values;
                 templateOptions.valueField = "value";
                 templateOptions.field = "text";
-                template = kendo.template(options.itemTemplate(templateOptions));
+            } else {
+                data = this.checkSource.data();
             }
+
+            var template = kendo.template(options.itemTemplate(templateOptions));
             var itemsHtml = kendo.render(template, data);
             if (options.checkAll) {
                 this.createCheckAllItem();

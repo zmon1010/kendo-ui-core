@@ -295,4 +295,33 @@
         equal(chkbxs.eq(0).val(), "new string");
         equal(chkbxs.eq(0).closest("label").text(), "new string");
     });
+
+    test("checkboxes shown are the one from the view() when using custom dataSource", function() {
+        var customDS = new kendo.data.DataSource({
+            data: [{
+                foo: "first string"
+            }, {
+                foo: "second string"
+            }]
+        });
+
+        widget = setup({
+            forceUnique: false,
+            dataSource: new kendo.data.DataSource({
+                serverPaging: false,
+                data: [{
+                    foo: "some string"
+                }]
+            }),
+            checkSource: customDS,
+            field: "foo"
+        });
+
+        customDS.filter({ field: "foo", operator: "contains", value: "second"});
+
+        var chkbxs = widget.container.find(":checkbox:not(.k-check-all)");
+        equal(chkbxs.length, 1);
+        equal(chkbxs.eq(0).val(), "second string");
+        equal(chkbxs.eq(0).closest("label").text(), "second string");
+    });
 })();
