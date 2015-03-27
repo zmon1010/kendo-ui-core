@@ -2214,6 +2214,19 @@
             sameLinePath(rect, dataviz.alignPathToPixel(draw.Path.fromRect(box.toRect())));
         });
 
+        test("sets stroke line join to round if the path is aligned and the width / height is less than one", function() {
+            bar.box = new Box2D(0, 0, 100, 0.9);
+            bar.renderVisual();
+
+            equal(bar.rectVisual.options.stroke.lineJoin, "round");
+
+            bar.options.vertical = false;
+            bar.box = new Box2D(0, 0, 0.9, 100);
+            bar.renderVisual();
+
+            equal(bar.rectVisual.options.stroke.lineJoin, "round");
+        });
+
         test("does not render rectangle when box height is zero", function() {
             bar.reflow(new Box2D(0, 0, 100, 0));
 
