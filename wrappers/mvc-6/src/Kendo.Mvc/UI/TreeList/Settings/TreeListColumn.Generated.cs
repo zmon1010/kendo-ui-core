@@ -59,7 +59,6 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            InitializePrefix();
 
             if (Attributes.Any())
             {
@@ -189,15 +188,5 @@ namespace Kendo.Mvc.UI
             return settings;
         }
 
-        protected void InitializePrefix()
-        {
-            
-            Command.Each(i => i.IdPrefix = IdPrefix);
-            
-            Filterable.IdPrefix = IdPrefix;
-            
-            Sortable.IdPrefix = IdPrefix;
-            
-        }
     }
 }

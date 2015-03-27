@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-% if prefix?
+% if composite_prefix?
             InitializePrefix();
 % end
 
@@ -29,10 +29,10 @@ namespace Kendo.Mvc.UI
             return settings;
         }
 
-% if prefix?
+% if composite_prefix?
         protected void InitializePrefix()
         {
-            <%= composite_options.map { |o| o.to_prefix }.join %>
+            <%= composite_options.map { |o| o.to_prefix if o.prefix? }.join %>
         }
 % end
     }

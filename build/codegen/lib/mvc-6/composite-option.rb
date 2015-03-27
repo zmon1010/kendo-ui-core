@@ -71,12 +71,16 @@ module CodeGen::MVC6::Wrappers::Options
             }).result(binding)
         end
 
-        def prefix?()
-            return true if simple_options.any? { |o| o.serialize? && o.template? }
-
+        def composite_prefix?()
             return true if composite_options.any? { |o| o.serialize? && o.prefix? }
 
             false
+        end
+
+        def prefix?()
+            return true if simple_options.any? { |o| o.serialize? && o.template? }
+
+            composite_prefix?
         end
     end
 

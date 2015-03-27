@@ -28,7 +28,7 @@ namespace Kendo.Mvc.UI
 % if prefix?
         protected void InitializePrefix()
         {
-            <%= composite_options.map { |o| o.to_prefix }.join %>
+            <%= composite_options.map { |o| o.to_prefix if o.prefix? }.join %>
         }
 % end
     }

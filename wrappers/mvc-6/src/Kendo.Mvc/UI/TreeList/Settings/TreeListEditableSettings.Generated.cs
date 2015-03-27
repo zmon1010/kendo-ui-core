@@ -24,7 +24,6 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            InitializePrefix();
 
             if (Mode.HasValue())
             {
@@ -47,9 +46,5 @@ namespace Kendo.Mvc.UI
             return settings;
         }
 
-        protected void InitializePrefix()
-        {
-            
-        }
     }
 }

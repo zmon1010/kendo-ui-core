@@ -150,25 +150,9 @@ namespace Kendo.Mvc.UI
         protected void InitializePrefix()
         {
             
-            ColumnMenu.IdPrefix = IdPrefix;
-            
             Columns.Each(i => i.IdPrefix = IdPrefix);
             
             Editable.IdPrefix = IdPrefix;
-            
-            Excel.IdPrefix = IdPrefix;
-            
-            Filterable.IdPrefix = IdPrefix;
-            
-            Messages.IdPrefix = IdPrefix;
-            
-            Pdf.IdPrefix = IdPrefix;
-            
-            Selectable.IdPrefix = IdPrefix;
-            
-            Sortable.IdPrefix = IdPrefix;
-            
-            Toolbar.Each(i => i.IdPrefix = IdPrefix);
             
         }
     }
