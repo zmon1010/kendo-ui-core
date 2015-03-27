@@ -1942,7 +1942,7 @@ var __meta__ = {
                 }
 
                 that.resizable = new ui.Resizable(container.add(that.lockedHeader), {
-                    handle: ".k-resize-handle",
+                    handle: (!!options.scrollable ? "" : ">") + ".k-resize-handle",
                     hint: function(handle) {
                         return $('<div class="k-grid-resize-indicator" />').css({
                             height: handle.data("th").outerHeight() + that.tbody.attr("clientHeight")
