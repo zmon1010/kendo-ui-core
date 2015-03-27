@@ -4,7 +4,7 @@
     <div id="background">
         <div class="column">
             <h3 class="title">Select Wall Paint</h3>
-            @*@(Html.Kendo().ColorPalette()
+            @(Html.Kendo().ColorPalette()
                 .Name("palette")
                 .Columns(4)
                 .TileSize(s => s.Width(34).Height(19))
@@ -16,7 +16,7 @@
                     "#c6d9f0", "#8db3e2", "#548dd4", "#17365d"
                 })
                 .Events(events => events.Change("preview"))
-            )*@
+            )
         </div>
 
         <div class="column">

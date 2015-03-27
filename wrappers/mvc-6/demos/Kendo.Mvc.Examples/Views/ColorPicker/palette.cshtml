@@ -5,13 +5,13 @@
 		<img class="product-image" src="@Url.Content("/shared/web/colorpicker/sofa-ffcc33.jpg")" alt="" width="285" height="149">
 
 		<div id="color-chooser"></div>
-		@*@(Html.Kendo().ColorPalette()
+		@(Html.Kendo().ColorPalette()
 			  .Name("color-chooser")
 			  .Palette(new string[] { "#ddd1c3", "#d2d2d2", "#746153", "#3a4c8b", "#ffcc33", "#fb455f", "#ac120f" })
 			  .Value("#ffcc33")
 			  .TileSize(30)
 			  .Events(events => events.Change("change"))
-		)*@
+		)
 	</div>
 
 	<div class="product-info">

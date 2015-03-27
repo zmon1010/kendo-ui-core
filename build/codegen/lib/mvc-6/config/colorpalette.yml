@@ -1,0 +1,4 @@
+:options:
+    - :name: columns
+      :merge: true
+      :type: int
