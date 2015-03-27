@@ -1843,8 +1843,30 @@ ul.keyboard-legend li a {
     margin-left: 1.833em;
 }
 
-.logo {
+.kendo-ui.logo {
   width: 198px;
+}
+
+.aspnet-mvc.logo {
+  width: 397px;
+}
+
+.php-ui.logo {
+  width: 298px;
+}
+
+.jsp-ui.logo {
+  width: 290px;
+}
+
+#logo-bar span {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  margin-left: 28px;
 }
 
 .nav-buttons {
@@ -3030,8 +3052,12 @@ html.k-materialblack .demo-section.k-content {
   #logo-bar a {
     display: block;
     text-align: center;
-    padding-top: 1.2em;
-    padding-bottom: 1.3em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  
+  #logo-bar span {
+    display: none;
   }
   
   .popular-widgets {

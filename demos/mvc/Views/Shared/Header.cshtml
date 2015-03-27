@@ -12,7 +12,8 @@
 <div id="header">
     <div id="logo-bar">
         <a href="@Url.Content("~")">
-            <img alt="@(ProductNames[ViewBag.Product]) logo" class="logo" src="@Url.Content("~/content/shared/images/logos/" + ViewBag.Product + ".png")"/>
+            <img alt="@(ProductNames[ViewBag.Product]) logo" class="@Url.Content(ViewBag.Product) logo" src="@Url.Content("~/content/shared/images/logos/" + ViewBag.Product + ".png")"/>
+            <span>Demos and Sample Applications</span>
         </a>
     </div>
     <div class="nav-buttons">
