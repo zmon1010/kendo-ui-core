@@ -9,7 +9,11 @@ class TelerikReleaseBot
 
     def initialize
 
-        @driver = Selenium::WebDriver.for(:firefox)
+        profile = Selenium::WebDriver::Firefox::Profile.new
+        profile.assume_untrusted_certificate_issuer = true
+        profile['security.ssl.enable_ocsp_stapling'] = false
+        
+        @driver = Selenium::WebDriver.for :firefox, :profile => profile
         @driver.navigate.to ADMIN_URL
 
         driver.find_element(:name, "UserName").send_keys ADMIN_RELEASE_UPLOAD_LOGIN
