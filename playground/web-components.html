@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="loader.js"></script>
+        <link rel="stylesheet" href="../dist/styles/web/kendo.common.min.css">
+        <link rel="stylesheet" href="../dist/styles/web/kendo.default.min.css">
+        <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <script src="../src/jquery.min.js"></script>
+        <script src="../dist/js/kendo.web.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.6.0/webcomponents.min.js"></script>
+        <script src="web-components.js"></script>
+    </head>
+    <body>
+        <kendo-datepicker value="03/27/2015" onchange="console.log(event.type)"></kendo-datepicker>
+        <kendo-numerictextbox value="42"></kendo-numerictextbox>
+        <kendo-dropdownlist value="1" dataTextField="text" dataValueField="value" dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-dropdownlist>
+        <kendo-grid dataSource="[{text:'One', value: 0},{text: 'Two', value: 1}]"></kendo-grid>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var datepicker = document.querySelector("kendo-datepicker");
+                datepicker.addEventListener("open", function(e) {
+                    console.log(e.type, e.detail);
+                });
+
+                var numeric = document.querySelector("kendo-numerictextbox");
+                numeric.value = 3.14;
+
+                var dropdownlist = document.querySelector("kendo-dropdownlist");
+                dropdownlist.addEventListener("change", function(e) {
+                    console.log(e.type, e.detail);
+                });
+            });
+        </script>
+    </body>
+</html>
