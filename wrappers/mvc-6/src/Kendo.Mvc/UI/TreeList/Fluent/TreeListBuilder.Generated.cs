@@ -41,12 +41,30 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true allows users to resize columns by dragging their header borders. By default resizing is disabled.
+        /// </summary>
+        public TreeListBuilder<T> Resizable()
+        {
+            Container.Resizable = true;
+            return this;
+        }
+
+        /// <summary>
         /// If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
         /// </summary>
         /// <param name="value">The value for Reorderable</param>
         public TreeListBuilder<T> Reorderable(bool value)
         {
             Container.Reorderable = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
+        /// </summary>
+        public TreeListBuilder<T> Reorderable()
+        {
+            Container.Reorderable = true;
             return this;
         }
 
@@ -204,6 +222,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true the user would be able to select treelist rows. By default selection is disabled.Can also be set to the following string values:
+        /// </summary>
+        public TreeListBuilder<T> Selectable()
+        {
+            Container.Selectable = true;
+            return this;
+        }
+
+        /// <summary>
         /// If set to true the user could sort the treelist by clicking the column header cells. By default sorting is disabled.Can be set to a JavaScript object which represents the sorting configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the sortable setting.</param>
@@ -243,7 +270,6 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new TreeListToolbarFactory<T>(Container.Toolbar));
             return this;
         }
-
 
 
         

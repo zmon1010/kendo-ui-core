@@ -17,12 +17,14 @@ namespace Kendo.Mvc.UI
 
         public string TemplateId { get; set; }
 
-
         public bool Enabled { get; set; }
+        public string IdPrefix { get; set; } = "#";
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            InitializePrefix();
 
             if (Mode.HasValue())
             {
@@ -33,7 +35,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["template"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('#{0}').html()", TemplateId
+                        "jQuery('{0}{1}').html()", IdPrefix, TemplateId
                     )
                 };
             }
@@ -42,9 +44,12 @@ namespace Kendo.Mvc.UI
                 settings["template"] = Template;
             }
 
-
-
             return settings;
+        }
+
+        protected void InitializePrefix()
+        {
+            
         }
     }
 }

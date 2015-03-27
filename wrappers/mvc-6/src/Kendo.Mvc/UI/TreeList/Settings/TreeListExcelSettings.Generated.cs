@@ -19,11 +19,12 @@ namespace Kendo.Mvc.UI
 
         public string ProxyURL { get; set; }
 
-
+        public string IdPrefix { get; set; } = "#";
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
 
             if (FileName.HasValue())
             {
@@ -45,8 +46,8 @@ namespace Kendo.Mvc.UI
                 settings["proxyURL"] = ProxyURL;
             }
 
-
             return settings;
         }
+
     }
 }

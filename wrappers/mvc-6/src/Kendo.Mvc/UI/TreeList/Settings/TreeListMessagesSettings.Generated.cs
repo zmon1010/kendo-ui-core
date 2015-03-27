@@ -21,11 +21,12 @@ namespace Kendo.Mvc.UI
 
         public string Retry { get; set; }
 
-
+        public string IdPrefix { get; set; } = "#";
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
 
             var commands = Commands.Serialize();
             if (commands.Any())
@@ -53,8 +54,8 @@ namespace Kendo.Mvc.UI
                 settings["retry"] = Retry;
             }
 
-
             return settings;
         }
+
     }
 }

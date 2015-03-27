@@ -19,6 +19,15 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// The text messages displayed in the filter menu. Use it to customize or localize the filter menu messages.
+        /// </summary>
+        /// <param name="configurator">The configurator for the messages setting.</param>
+        public TreeListFilterableSettingsBuilder<T> Messages(Action<TreeListFilterableMessagesSettingsBuilder<T>> configurator)
+        {
+            configurator(new TreeListFilterableMessagesSettingsBuilder<T>(Container.Messages));
+            return this;
+        }
 
     }
 }

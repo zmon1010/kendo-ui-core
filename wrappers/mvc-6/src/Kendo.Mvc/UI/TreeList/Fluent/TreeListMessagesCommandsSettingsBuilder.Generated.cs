@@ -89,6 +89,5 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-
     }
 }

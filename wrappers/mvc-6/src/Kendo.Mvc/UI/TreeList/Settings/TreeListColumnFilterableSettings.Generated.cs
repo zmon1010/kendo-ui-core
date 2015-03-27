@@ -13,20 +13,21 @@ namespace Kendo.Mvc.UI
     {
         public string Ui { get; set; }
 
-
         public bool Enabled { get; set; }
+        public string IdPrefix { get; set; } = "#";
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
 
             if (Ui.HasValue())
             {
                 settings["ui"] = Ui;
             }
 
-
             return settings;
         }
+
     }
 }

@@ -28,7 +28,5 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Compare = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
-
-
     }
 }

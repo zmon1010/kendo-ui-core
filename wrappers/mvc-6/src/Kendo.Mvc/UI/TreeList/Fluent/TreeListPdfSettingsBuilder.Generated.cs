@@ -60,6 +60,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.
+        /// </summary>
+        public TreeListPdfSettingsBuilder<T> ForceProxy()
+        {
+            Container.ForceProxy = true;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies the keywords of the exported PDF file.
         /// </summary>
         /// <param name="value">The value for Keywords</param>
@@ -76,6 +85,15 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeListPdfSettingsBuilder<T> Landscape(bool value)
         {
             Container.Landscape = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Set to true to reverse the paper dimensions such that width is the larger edge.
+        /// </summary>
+        public TreeListPdfSettingsBuilder<T> Landscape()
+        {
+            Container.Landscape = true;
             return this;
         }
 
@@ -143,7 +161,6 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Title = value;
             return this;
         }
-
 
     }
 }

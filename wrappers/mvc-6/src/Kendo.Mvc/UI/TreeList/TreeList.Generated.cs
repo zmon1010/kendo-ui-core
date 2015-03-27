@@ -42,10 +42,11 @@ namespace Kendo.Mvc.UI
         public List<TreeListToolbar<T>> Toolbar { get; set; } = new List<TreeListToolbar<T>>();
 
 
-
         protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
+
+            InitializePrefix();
 
             if (AutoBind.HasValue)
             {
@@ -73,8 +74,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["columnMenu"] = columnMenu;
             }
-            else if (ColumnMenu.Enabled) {
-                settings["columnMenu"] = ColumnMenu.Enabled;
+            else if (ColumnMenu.Enabled == true)
+            {
+                settings["columnMenu"] = true;
             }
 
             var editable = Editable.Serialize();
@@ -82,8 +84,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["editable"] = editable;
             }
-            else if (Editable.Enabled) {
-                settings["editable"] = Editable.Enabled;
+            else if (Editable.Enabled == true)
+            {
+                settings["editable"] = true;
             }
 
             var excel = Excel.Serialize();
@@ -97,8 +100,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["filterable"] = filterable;
             }
-            else if (Filterable.Enabled) {
-                settings["filterable"] = Filterable.Enabled;
+            else if (Filterable.Enabled == true)
+            {
+                settings["filterable"] = true;
             }
 
             if (Height.HasValue)
@@ -133,8 +137,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["sortable"] = sortable;
             }
-            else if (Sortable.Enabled) {
-                settings["sortable"] = Sortable.Enabled;
+            else if (Sortable.Enabled == true)
+            {
+                settings["sortable"] = true;
             }
 
             var toolbar = Toolbar.Select(i => i.Serialize());
@@ -143,8 +148,30 @@ namespace Kendo.Mvc.UI
                 settings["toolbar"] = toolbar;
             }
 
-
             return settings;
+        }
+
+        protected void InitializePrefix()
+        {
+            
+            ColumnMenu.IdPrefix = IdPrefix;
+            
+            Columns.Each(i => i.IdPrefix = IdPrefix);
+            
+            Editable.IdPrefix = IdPrefix;
+            
+            Excel.IdPrefix = IdPrefix;
+            
+            Filterable.IdPrefix = IdPrefix;
+            
+            Messages.IdPrefix = IdPrefix;
+            
+            Pdf.IdPrefix = IdPrefix;
+            
+            Sortable.IdPrefix = IdPrefix;
+            
+            Toolbar.Each(i => i.IdPrefix = IdPrefix);
+            
         }
     }
 }

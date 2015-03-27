@@ -27,11 +27,12 @@ namespace Kendo.Mvc.UI
 
         public string Update { get; set; }
 
-
+        public string IdPrefix { get; set; } = "#";
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
 
             if (Canceledit.HasValue())
             {
@@ -73,8 +74,8 @@ namespace Kendo.Mvc.UI
                 settings["update"] = Update;
             }
 
-
             return settings;
         }
+
     }
 }

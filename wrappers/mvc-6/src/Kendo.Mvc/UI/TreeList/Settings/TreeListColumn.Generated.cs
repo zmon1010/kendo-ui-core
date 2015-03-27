@@ -53,11 +53,13 @@ namespace Kendo.Mvc.UI
 
         public bool? Lockable { get; set; }
 
-
+        public string IdPrefix { get; set; } = "#";
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            InitializePrefix();
 
             if (Attributes.Any())
             {
@@ -90,15 +92,16 @@ namespace Kendo.Mvc.UI
             {
                 settings["filterable"] = filterable;
             }
-            else if (Filterable.Enabled) {
-                settings["filterable"] = Filterable.Enabled;
+            else if (Filterable.Enabled == true)
+            {
+                settings["filterable"] = true;
             }
 
             if (FooterTemplateId.HasValue())
             {
                 settings["footerTemplate"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('#{0}').html()", FooterTemplateId
+                        "jQuery('{0}{1}').html()", IdPrefix, FooterTemplateId
                     )
                 };
             }
@@ -106,7 +109,6 @@ namespace Kendo.Mvc.UI
             {
                 settings["footerTemplate"] = FooterTemplate;
             }
-
 
             if (Format.HasValue())
             {
@@ -122,7 +124,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["headerTemplate"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('#{0}').html()", HeaderTemplateId
+                        "jQuery('{0}{1}').html()", IdPrefix, HeaderTemplateId
                     )
                 };
             }
@@ -131,21 +133,21 @@ namespace Kendo.Mvc.UI
                 settings["headerTemplate"] = HeaderTemplate;
             }
 
-
             var sortable = Sortable.Serialize();
             if (sortable.Any())
             {
                 settings["sortable"] = sortable;
             }
-            else if (Sortable.Enabled) {
-                settings["sortable"] = Sortable.Enabled;
+            else if (Sortable.Enabled == true)
+            {
+                settings["sortable"] = true;
             }
 
             if (TemplateId.HasValue())
             {
                 settings["template"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('#{0}').html()", TemplateId
+                        "jQuery('{0}{1}').html()", IdPrefix, TemplateId
                     )
                 };
             }
@@ -153,7 +155,6 @@ namespace Kendo.Mvc.UI
             {
                 settings["template"] = Template;
             }
-
 
             if (Title.HasValue())
             {
@@ -185,8 +186,18 @@ namespace Kendo.Mvc.UI
                 settings["lockable"] = Lockable;
             }
 
-
             return settings;
+        }
+
+        protected void InitializePrefix()
+        {
+            
+            Command.Each(i => i.IdPrefix = IdPrefix);
+            
+            Filterable.IdPrefix = IdPrefix;
+            
+            Sortable.IdPrefix = IdPrefix;
+            
         }
     }
 }

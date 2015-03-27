@@ -38,7 +38,6 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Click = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
-
         /// <summary>
         /// The name of the command. The built-in commands are "edit", "createChild" and "destroy". When set to a custom value, it is rendered as a data-command attribute.
         /// </summary>
@@ -58,7 +57,6 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Text = value;
             return this;
         }
-
 
     }
 }

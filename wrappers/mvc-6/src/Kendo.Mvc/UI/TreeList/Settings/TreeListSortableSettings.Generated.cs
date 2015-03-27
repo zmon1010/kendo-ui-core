@@ -15,12 +15,13 @@ namespace Kendo.Mvc.UI
 
         public string Mode { get; set; }
 
-
         public bool Enabled { get; set; }
+        public string IdPrefix { get; set; } = "#";
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
 
             if (AllowUnsort.HasValue)
             {
@@ -32,8 +33,8 @@ namespace Kendo.Mvc.UI
                 settings["mode"] = Mode;
             }
 
-
             return settings;
         }
+
     }
 }

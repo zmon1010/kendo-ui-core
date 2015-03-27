@@ -13,20 +13,21 @@ namespace Kendo.Mvc.UI
     {
         public ClientHandlerDescriptor Compare { get; set; }
 
-
         public bool Enabled { get; set; }
+        public string IdPrefix { get; set; } = "#";
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
 
             if (Compare.HasValue())
             {
                 settings["compare"] = Compare;
             }
 
-
             return settings;
         }
+
     }
 }

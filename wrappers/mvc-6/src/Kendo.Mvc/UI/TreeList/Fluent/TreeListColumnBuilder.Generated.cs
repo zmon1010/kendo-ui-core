@@ -50,6 +50,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true the column will show the icons that are used for expanding and collapsing child rows. By default, the first column of the TreeList is expandable.
+        /// </summary>
+        public TreeListColumnBuilder<T> Expandable()
+        {
+            Container.Expandable = true;
+            return this;
+        }
+
+        /// <summary>
         /// The field to which the column is bound. The value of this field is displayed by the column during data binding.
 		/// The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.
         /// </summary>
@@ -102,6 +111,7 @@ namespace Kendo.Mvc.UI.Fluent
             Container.FooterTemplateId = templateId;
             return this;
         }
+
         /// <summary>
         /// The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format,
 		/// custom number format, standard date format or a custom date format.
@@ -144,6 +154,7 @@ namespace Kendo.Mvc.UI.Fluent
             Container.HeaderTemplateId = templateId;
             return this;
         }
+
         /// <summary>
         /// If set to true the user can click the column header and sort the treelist by the column field when sorting is enabled. If set to false sorting will
 		/// be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.
@@ -188,6 +199,7 @@ namespace Kendo.Mvc.UI.Fluent
             Container.TemplateId = templateId;
             return this;
         }
+
         /// <summary>
         /// The text that is displayed in the column header cell. If not set the field is used.
         /// </summary>
@@ -219,6 +231,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true the column will not be displayed in the treelist. By default all columns are displayed.
+        /// </summary>
+        public TreeListColumnBuilder<T> Hidden()
+        {
+            Container.Hidden = true;
+            return this;
+        }
+
+        /// <summary>
         /// If set to true the column will be visible in the grid column menu. By default the column menu includes all data-bound columns (ones that have their field set).
         /// </summary>
         /// <param name="value">The value for Menu</param>
@@ -239,6 +260,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true the column will be displayed as locked in the treelist. Also see Frozen Columns.
+        /// </summary>
+        public TreeListColumnBuilder<T> Locked()
+        {
+            Container.Locked = true;
+            return this;
+        }
+
+        /// <summary>
         /// If set to false the column will remain in the side of the treelist into which its own locked configuration placed it.
         /// </summary>
         /// <param name="value">The value for Lockable</param>
@@ -247,7 +277,6 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Lockable = value;
             return this;
         }
-
 
     }
 }
