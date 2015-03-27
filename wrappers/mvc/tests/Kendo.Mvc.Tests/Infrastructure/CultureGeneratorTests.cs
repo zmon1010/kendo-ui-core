@@ -7,6 +7,7 @@
     using Xunit;
     using System.Text.RegularExpressions;
     using System.Collections;
+    using System.Linq;
 
     public class CultureGeneratorTests
     {
@@ -35,25 +36,40 @@
             VerifyCulture(script, new CultureInfo("bg-BG"));
         }
 
-        private void VerifyCulture(string script, CultureInfo cultureInfo)
-        {                       
-            var serializer = new JavaScriptSerializer();
+        [Fact]
+        public void Generate_generates_twelve_month_names_for_cultures_that_incorrectly_return_thirteen()
+        {
+            var script = CultureGenerator.Generate("en-GB");
+            var cultureDictionary = ParseCultureScript(script.Substring(script.IndexOf("=") + 1));
+            var dateFormat = (cultureDictionary["calendars"] as Dictionary<string, object>)["standard"] as Dictionary<string, object>;
+            var months = dateFormat["months"] as Dictionary<string, object>;
 
+            (months["names"] as IList).Count.ShouldEqual(12);
+            (months["namesAbbr"] as IList).Count.ShouldEqual(12);
+        }
+
+        private void VerifyCulture(string script, CultureInfo cultureInfo)
+        {
             var assignment = script.Substring(0, script.IndexOf("="));
             var cultureScript = script.Substring(script.IndexOf("=") + 1);
-            cultureScript = new Regex(TO_JSON_REGEX).Replace(cultureScript.Substring(0, cultureScript.Length - 1), REPLACEMENT_STRING);
-
-            var resultDictionary = serializer.Deserialize<Dictionary<string, object>>(cultureScript);
+            var cultureDictionary = ParseCultureScript(cultureScript);
 
             assignment.ShouldEqual(string.Format("kendo.cultures[\"{0}\"]", cultureInfo.Name));
-            resultDictionary["name"].ShouldEqual(cultureInfo.Name);
+            cultureDictionary["name"].ShouldEqual(cultureInfo.Name);
 
-            var numberFormat = resultDictionary["numberFormat"] as Dictionary<string, object>;
+            var numberFormat = cultureDictionary["numberFormat"] as Dictionary<string, object>;
             VerifyNumberFormats(numberFormat, cultureInfo);
 
-            var dateFormat = (resultDictionary["calendars"] as Dictionary<string, object>)["standard"] as Dictionary<string, object>;
+            var dateFormat = (cultureDictionary["calendars"] as Dictionary<string, object>)["standard"] as Dictionary<string, object>;
             VerifyDateTimeFormats(dateFormat, cultureInfo);
+        }
 
+        private Dictionary<string, object> ParseCultureScript(string cultureScript)
+        {
+            var serializer = new JavaScriptSerializer();
+            var jsonString = new Regex(TO_JSON_REGEX).Replace(cultureScript.Substring(0, cultureScript.Length - 1), REPLACEMENT_STRING);
+            var cultureDictionary = serializer.Deserialize<Dictionary<string, object>>(jsonString);
+            return cultureDictionary;
         }
 
         private void VerifyNumberFormats(Dictionary<string, object> numberFormat, CultureInfo cultureInfo)
@@ -68,7 +84,7 @@
 
             var currencyFormat = numberFormat["currency"] as Dictionary<string, object>;
 
-            (currencyFormat["pattern"] as IList).ShouldHaveSameItems(new string[] { currencyNegativePatterns[numberFormats.CurrencyNegativePattern], 
+            (currencyFormat["pattern"] as IList).ShouldHaveSameItems(new string[] { currencyNegativePatterns[numberFormats.CurrencyNegativePattern],
                 currencyPositivePatterns[numberFormats.CurrencyPositivePattern] });
 
             currencyFormat["decimals"].ShouldEqual(numberFormats.CurrencyDecimalDigits);
@@ -79,7 +95,7 @@
 
             var percentFormat = numberFormat["percent"] as Dictionary<string, object>;
 
-            (percentFormat["pattern"] as IList).ShouldHaveSameItems(new string[] { percentNegativePatterns[numberFormats.PercentNegativePattern], 
+            (percentFormat["pattern"] as IList).ShouldHaveSameItems(new string[] { percentNegativePatterns[numberFormats.PercentNegativePattern],
                 percentPositivePatterns[numberFormats.PercentPositivePattern] });
 
             percentFormat["decimals"].ShouldEqual(numberFormats.PercentDecimalDigits);
@@ -101,8 +117,8 @@
 
             var months = dateFormat["months"] as Dictionary<string, object>;
 
-            (months["names"] as IList).ShouldHaveSameItems(dateTimeFormats.MonthNames);
-            (months["namesAbbr"] as IList).ShouldHaveSameItems(dateTimeFormats.AbbreviatedMonthNames);
+            (months["names"] as IList).ShouldHaveSameItems(dateTimeFormats.MonthNames.Take(12).ToArray());
+            (months["namesAbbr"] as IList).ShouldHaveSameItems(dateTimeFormats.AbbreviatedMonthNames.Take(12).ToArray());
 
             var am = dateTimeFormats.AMDesignator;
             var pm = dateTimeFormats.PMDesignator;

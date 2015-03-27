@@ -99,8 +99,8 @@ namespace Kendo.Mvc.Infrastructure
             globalization["AbbreviatedDayNames"] = dateTimeFormats.AbbreviatedDayNames;
             globalization["ShortestDayNames"] = dateTimeFormats.ShortestDayNames;
 
-            globalization["MonthNames"] = dateTimeFormats.MonthNames;
-            globalization["AbbreviatedMonthNames"] = dateTimeFormats.AbbreviatedMonthNames;
+            globalization["MonthNames"] = dateTimeFormats.MonthNames.Take(12).ToArray();
+            globalization["AbbreviatedMonthNames"] = dateTimeFormats.AbbreviatedMonthNames.Take(12).ToArray();
 
             globalization["d"] = dateTimeFormats.ShortDatePattern;
             globalization["D"] = dateTimeFormats.LongDatePattern;
