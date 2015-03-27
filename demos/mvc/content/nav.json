@@ -5079,6 +5079,18 @@
           "!jsp",
           "!php"
         ]
+      },{
+        "text": "RTL Support",
+		"disableInMobile": true,
+        "url": "toolbar/right-to-left-support",
+        "title": {
+            "kendo-ui": "Right-to-left support for Kendo UI Toolbar",
+            "aspnet-mvc": "Right to left support in ASP.NET MVC Toolbar"
+        },
+        "meta": {
+            "kendo-ui": "Enhance the experience with RTL support in Kendo UI Toolbar.",
+            "aspnet-mvc": "The sample illustrates the right to left functionality which Telerik ASP.NET MVC Toolbar supports."
+        }
       }
     ],
     "category": "Navigation"

@@ -242,6 +242,7 @@
     <Compile Include="Controllers\Styling\CheckboxesController.cs" />
     <Compile Include="Controllers\Styling\RadioButtonsController.cs" />
     <Compile Include="Controllers\TabStrip\Tab_PositionController.cs" />
+    <Compile Include="Controllers\ToolBar\Right_To_Left_SupportController.cs" />
     <Compile Include="Controllers\TreeList\ApiController.cs" />
     <Compile Include="Controllers\TreeList\AggregatesController.cs" />
     <Compile Include="Controllers\TreeList\Column_ReorderingController.cs" />
@@ -944,6 +945,7 @@
     <Content Include="Areas\aspx\Views\scheduler\timeline.aspx" />
     <Content Include="Areas\aspx\Views\styling\checkboxes.aspx" />
     <Content Include="Areas\aspx\Views\styling\radios.aspx" />
+    <Content Include="Areas\aspx\Views\toolbar\right_to_left_support.aspx" />
     <Content Include="Areas\aspx\Views\treelist\api.aspx" />
     <Content Include="Areas\aspx\Views\treelist\aggregates.aspx" />
     <Content Include="Areas\aspx\Views\treelist\column_reordering.aspx" />
@@ -2750,6 +2752,7 @@
     <Content Include="Areas\razor\Views\multiselect\grouping.cshtml" />
     <Content Include="Areas\razor\Views\multiselect\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\mobile_listview\local_virtualization.cshtml" />
+    <Content Include="Areas\razor\Views\toolbar\right_to_left_support.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
