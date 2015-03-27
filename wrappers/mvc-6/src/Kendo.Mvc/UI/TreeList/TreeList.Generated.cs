@@ -35,11 +35,11 @@ namespace Kendo.Mvc.UI
 
         public bool? Scrollable { get; set; }
 
-        public bool? Selectable { get; set; }
-
         public TreeListSortableSettings<T> Sortable { get; } = new TreeListSortableSettings<T>();
 
         public List<TreeListToolbar<T>> Toolbar { get; set; } = new List<TreeListToolbar<T>>();
+
+        public TreeListSelectableSettings<T> Selectable { get; } = new TreeListSelectableSettings<T>();
 
 
         protected override Dictionary<string, object> SerializeSettings()
@@ -127,11 +127,6 @@ namespace Kendo.Mvc.UI
                 settings["scrollable"] = Scrollable;
             }
 
-            if (Selectable.HasValue)
-            {
-                settings["selectable"] = Selectable;
-            }
-
             var sortable = Sortable.Serialize();
             if (sortable.Any())
             {
@@ -147,6 +142,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["toolbar"] = toolbar;
             }
+
 
             return settings;
         }
@@ -167,6 +163,8 @@ namespace Kendo.Mvc.UI
             Messages.IdPrefix = IdPrefix;
             
             Pdf.IdPrefix = IdPrefix;
+            
+            Selectable.IdPrefix = IdPrefix;
             
             Sortable.IdPrefix = IdPrefix;
             

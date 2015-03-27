@@ -11,3 +11,6 @@
 - numerictextbox.step
 - numerictextbox.value
 - maskedtextbox.enabled
+- treelist.selectable
+- treelist.selectable.mode
+- treelist.selectable.type
