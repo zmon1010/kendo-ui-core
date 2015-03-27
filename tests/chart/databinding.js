@@ -365,6 +365,30 @@
             });
         });
 
+        asyncTest("date categories are populated from series even if first is undefined", function() {
+            chart = createChart({
+                dataSource: {
+                    data: [{
+                        value: 1
+                    }, {
+                        cat: new Date("2014/01/01 10:00"),
+                        value: 2
+                    }]
+                },
+                series: [{
+                    field: "value",
+                    categoryField: "cat"
+                }],
+                categoryAxis: {
+                    type: "date"
+                },
+                dataBound: function(e) {
+                    equal(e.sender.options.categoryAxis.categories.length, 2);
+                    start();
+                }
+            });
+        });
+
         asyncTest("date categories populated from series are sorted", function() {
             chart = createChart({
                 series: [{

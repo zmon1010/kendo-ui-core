@@ -3605,7 +3605,7 @@ var __meta__ = {
              return a.getTime() - b.getTime();
          }
 
-         return 0;
+         return -1;
     }
 
     var CurveProcessor = function(closed){
