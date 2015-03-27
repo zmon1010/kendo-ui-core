@@ -3325,9 +3325,17 @@ var __meta__ = {
                 }
             });
 
-            var size = options.vertical ? this.box.width() : this.box.height();
+            var width = this.box.width();
+            var height = this.box.height();
+
+            var size = options.vertical ? width : height;
+
             if (size > BAR_ALIGN_MIN_WIDTH) {
                 alignPathToPixel(rect);
+                //fixes lineJoin issue in firefox when the joined lines are parallel
+                if (width < 1 || height < 1) {
+                    rect.options.stroke.lineJoin = "round";
+                }
             }
 
             visual.append(rect);
