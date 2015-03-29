@@ -136,3 +136,590 @@
 .km-office365 .km-detaildisclose:before {
     margin-top: 0;
 }
+
+
+
+
+@import "../common/base.less";
+
+@office365-border-width: 1px;
+@office365-border-radius: 2px;
+@office365-inline-border-radius: @office365-border-radius - 1px;
+
+.km-office365
+{
+    font: normal 1em "HelveticaNeue Light", "Roboto Light", "Slate Light", "Segoe WP", NokiaPureTextLight, sans-serif;
+    font: normal 16px "HelveticaNeue Light", "Roboto Light", "Slate Light", "Segoe WP", NokiaPureTextLight, sans-serif; /* Delete */
+}
+
+/* override transform options for performance */
+.km-root .km-office365.km-pane,
+.km-root .km-office365 .km-view,
+.km-root .km-office365 .km-slider,
+.km-root .km-office365 .km-switch,
+.km-root .km-office365 .km-group-title,
+.km-root .km-office365 .km-filter-reset,
+.km-root .km-office365 .km-shim .k-animation-container
+{
+    -webkit-transform: none;
+}
+
+.km-office365,
+.km-office365 *
+{
+    .box-sizing(border-box);
+    .background-clip(border-box);
+}
+
+/* Revert box/clip for Web widgets */
+.km-office365 [class^=k-]
+{
+    .box-sizing(content-box);
+}
+
+
+.km-office365 .km-tabstrip .km-button
+{
+    background: none;
+}
+
+/* PopUp */
+
+.km-office365 .km-popup .k-popup
+{
+    font-size: 1em !important;
+}
+
+.km-office365 .km-popup .k-item,
+.km-office365 .km-actionsheet > li > a
+{
+    text-decoration: none;
+    padding: .688em 1em;
+    border-radius: 0;
+    border-width: 0 0 @office365-border-width;
+    border-style: solid;
+    .box-sizing(border-box);
+}
+
+.km-office365 .km-popup
+{
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    .box-sizing(border-box);
+}
+
+.km-office365 .km-popup .k-list-container
+{
+    width: 100% !important;
+    height: auto !important;
+    padding: 0;
+}
+
+.km-office365 .km-actionsheet,
+.km-office365 .km-popup .k-list-container
+{
+    max-height: 80%;
+}
+
+.km-office365 .km-actionsheet-wrapper,
+.km-office365 .km-popup .k-list-container
+{
+    bottom: 0;
+    border-width: @office365-border-width 0 0;
+    border-style: solid;
+    border-radius: 0;
+    .box-sizing(border-box);
+}
+
+.km-office365 .km-shim .k-animation-container
+{
+    left: 0;
+    top: auto;
+    bottom: 0;
+}
+
+.km-office365 .km-popup-wrapper
+{
+    padding: 15px;
+}
+
+.km-office365 .km-popup.km-pane,
+.km-office365 .km-actionsheet-wrapper.km-popup
+{
+    //border-radius: @office365-border-radius;
+}
+
+.km-office365 .km-view-title,
+.km-office365 .km-dialog-title {
+    font-size: 1.125em;
+    line-height: 2.78em;
+}
+
+/* Color Template */
+@import "template.less";
+
+
+
+/* Tablet Styles */
+
+.km-tablet .km-office365.km-horizontal .km-navbar .km-button,
+.km-tablet .km-office365.km-horizontal .km-toolbar .km-button
+{
+    margin-top: .2rem;
+    margin-bottom: .2rem;
+}
+
+.km-office365 .km-icon:before,
+.km-office365 .km-contactadd:before,
+.km-office365 .km-rowdelete:before,
+.km-office365 .km-rowinsert:before,
+.km-office365 .km-detaildisclose:before {
+    margin-top: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Loader & Pull-to-refresh */
+.km-office365 .km-loader:before {background-color: red; }
+.km-office365 .km-loader > *:not(h1) {background-color: transparent;}
+//.km-office365 .km-loader .km-loading-left {background-color: #fff;}
+.km-office365 .km-loader .km-loading-right {background-color: transparent;}
+.km-office365 .km-loader .km-loading-right:before {background-color: red;}
+.km-office365 .km-loader .km-loading-right:after {background-color: green;}
+
+.km-office365 .km-loader .km-loading-left:before {background-color: pink;}
+.km-office365 .km-loader .km-loading-left:after {background-color: purple;}
+
+
+.km-office365 .km-load-more
+{
+    height: 3.4em;
+}
+
+.km-office365 .km-load-more .km-button
+{
+    margin: 0 .8em;
+    display: block;
+}
+
+.km-office365 .km-scroller-refresh.km-load-more,
+.km-office365 .km-scroller-pull
+{
+    border-radius: 50%;
+    overflow: visible;
+}
+
+.km-office365 .km-loader
+{
+    left: 0;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+}
+
+.km-office365 .km-loading,
+.km-office365 .km-scroller-refresh .km-icon
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -13px;
+    margin-left: -13px;
+    width: 26px;
+    height: 26px;
+    border: 5px solid transparent;
+    border-radius: 50%;
+    .animation(none);
+}
+
+.km-office365 .km-loading:before,
+.km-office365 .km-scroller-refresh .km-icon:before
+{
+    content: "\a0";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50%;
+}
+
+.km-root .km-office365 .km-scroller-pull .km-icon
+{
+    -webkit-background-clip: inherit;
+    background-size: inherit;
+    border-radius: 50%;
+}
+
+.km-office365 .km-loading:after
+{
+    display: none;
+}
+
+.km-office365 .km-loading-left,
+.km-office365 .km-loading-right
+{
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    //overflow: hidden;
+    margin-top: -13px;
+    margin-left: -13px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 3px dotted purple;
+}
+
+//.km-office365 .km-loader .km-loading-left,
+//.km-office365 .km-loader .km-loading-right,
+.km-office365 .km-scroller-refresh .km-loading-left,
+.km-office365 .km-scroller-refresh .km-loading-right
+{
+    .animation(materialdrive 6s infinite linear);
+}
+
+.km-office365 .km-scroller-refresh.km-load-more
+{
+    padding: 0;
+    position: relative;
+    margin: auto;
+}
+
+.km-office365 .km-scroller-refresh.km-load-more,
+.km-office365 .km-scroller-pull
+{
+    font-size: 1em;
+    width: 2.5em;
+    height: 2.5em;
+    top: .25em;
+    white-space: nowrap;
+}
+
+.km-office365 .km-scroller-pull
+{
+    left: 50%;
+    margin: 0 0 0 -90px;
+}
+
+.km-office365 .km-loader h1
+{
+    display: none;
+    font-size: 1em;
+    position: absolute;
+    left: -50%;
+    width: 200%;
+    top: 55%;
+}
+
+.km-office365 .km-scroller-pull .km-template
+{
+    position: absolute;
+    line-height: 2em;
+    font-size: 1.2em;
+    min-width: 0;
+    top: 0;
+    left: 3em;
+}
+
+.km-office365 .km-loader .km-loading-left:before,
+.km-office365 .km-loader .km-loading-left:after {
+    z-index: 10;
+}
+
+.km-office365 .km-loader .km-loading-left:before,
+.km-office365 .km-loader .km-loading-left:after,
+.km-office365 .km-loader .km-loading-right:before,
+.km-office365 .km-loader .km-loading-right:after,
+.km-office365 .km-scroller-refresh .km-loading-left:before,
+.km-office365 .km-scroller-refresh .km-loading-left:after,
+.km-office365 .km-scroller-refresh .km-loading-right:before,
+.km-office365 .km-scroller-refresh .km-loading-right:after
+{
+    content: "\a0";
+    display: block;
+    position: absolute;
+    top: -13px;
+    left: -13px;
+    width: 26px;
+    height: 26px;
+    .transform-origin(24px 24px);
+    .animation(materialrotate1 5s infinite ease-out);
+
+    transform:rotate(90deg);
+}
+
+/*.km-office365 .km-loader .km-loading-left:before,
+.km-office365 .km-loader .km-loading-left:after,
+.km-office365 .km-scroller-refresh .km-loading-left:after
+{
+   // .animation-name(materialrotate2);
+}
+
+.km-office365 .km-loader .km-loading-left:before {
+    .animation-name(materialrotate5);
+}*/
+
+.km-office365 .km-loader .km-loading-left:before {
+    .animation-name(a1);
+}
+
+.km-office365 .km-loader .km-loading-left:after {
+    .animation-name(a2);
+}
+
+.km-office365 .km-loader .km-loading-right:before {
+    .animation-name(a3);
+}
+
+.km-office365 .km-loader .km-loading-right:after {
+    .animation-name(a4);
+}
+
+
+.km-office365 .km-loader .km-loading-right:before,
+.km-office365 .km-scroller-refresh .km-loading-right:before
+{
+   // .animation-name(materialrotate3);
+}
+
+.km-office365 .km-loader .km-loading-right:after,
+.km-office365 .km-scroller-refresh .km-loading-right:after
+{
+    //.animation-name(materialrotate4);
+}
+
+.km-office365 .km-scroller-pull .km-icon
+{
+    margin-right: 0;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -1rem;
+    margin-top: -1rem;
+}
+
+.km-office365 .km-scroller-pull .km-icon:after
+{
+    content: "\e012";
+    margin-left: -3px;
+}
+
+.km-office365 .km-scroller-refresh .km-icon:after
+{
+    display: none;
+}
+
+.km-office365 .km-load-more .km-icon,
+.km-office365 .km-scroller-pull .km-icon
+{
+    .transform(rotate(0deg));
+    .pTransition(none);
+}
+
+.km-office365 .km-load-more .km-icon:after,
+.km-office365 .km-scroller-pull .km-icon:after
+{
+    .transform(rotate(0deg));
+    .transform-origin(62% 50%);
+    .pTransition(~"transform 300ms linear");
+}
+
+.km-office365 .km-scroller-release .km-icon:after
+{
+    .transform(rotate(180deg));
+}
+
+.km-office365 .km-scroller-refresh .km-icon:after
+{
+    .transition(none);
+}
+
+@-webkit-keyframes materialrotate1 {
+    0% { -webkit-transform: rotate(0deg); }
+    25% { -webkit-transform: rotate(0deg); }
+    50% { -webkit-transform: rotate(0deg); }
+    75% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(0deg); }
+}
+
+@-webkit-keyframes materialrotate2 {
+    0% { -webkit-transform: rotate(deg); }
+    25% { -webkit-transform: rotate(90deg); }
+    50% { -webkit-transform: rotate(90deg); }
+    75% { -webkit-transform: rotate(90deg); }
+    100% { -webkit-transform: rotate(90deg); }
+}
+
+@-webkit-keyframes materialrotate3 {
+    0% { -webkit-transform: rotate(0deg); }
+    25% { -webkit-transform: rotate(90deg); }
+    50% { -webkit-transform: rotate(150deg); }
+    75% { -webkit-transform: rotate(180deg); }
+    100% { -webkit-transform: rotate(270deg); }
+}
+
+@-webkit-keyframes materialrotate4 {
+    0% { -webkit-transform: rotate(0deg); }
+    25% { -webkit-transform: rotate(90deg); }
+    50% { -webkit-transform: rotate(180deg); }
+    90% { -webkit-transform: rotate(270deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+
+@-webkit-keyframes materialrotate5{
+    0% { -webkit-transform: rotate(360deg); }
+    25% { -webkit-transform: rotate(360deg); }
+    50% { -webkit-transform: rotate(360deg); }
+    90% { -webkit-transform: rotate(360deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+
+
+
+
+
+
+@-webkit-keyframes a1 {
+    0% { -webkit-transform: rotate(0deg); }
+    //25% { -webkit-transform: rotate(25deg); }
+    50% { -webkit-transform: rotate(90deg); }
+    //75% { -webkit-transform: rotate(75deg); }
+    100% { -webkit-transform: rotate(90deg); }
+}
+
+@-webkit-keyframes a2 {
+    0% { -webkit-transform: rotate(0deg); }
+   // 25% { -webkit-transform: rotate(60deg); }
+    50% { -webkit-transform: rotate(90deg); }
+    //75% { -webkit-transform: rotate(120deg); }
+    100% { -webkit-transform: rotate(180deg); }
+}
+
+@-webkit-keyframes a3 {
+    0% { -webkit-transform: rotate(0deg); }
+    25% { -webkit-transform: rotate(90deg); }
+    50% { -webkit-transform: rotate(180deg); }
+    //75% { -webkit-transform: rotate(90deg); }
+    100% { -webkit-transform: rotate(270deg); }
+}
+
+@-webkit-keyframes a4 {
+    0% { -webkit-transform: rotate(0deg); }
+    25% { -webkit-transform: rotate(90deg); }
+    50% { -webkit-transform: rotate(180deg); }
+    90% { -webkit-transform: rotate(270deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+
+@-webkit-keyframes a5{
+    0% { -webkit-transform: rotate(360deg); }
+    25% { -webkit-transform: rotate(360deg); }
+    50% { -webkit-transform: rotate(360deg); }
+    90% { -webkit-transform: rotate(360deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+
+
+
+
+
+
+@-ms-keyframes materialrotate1 {
+    0% { -ms-transform: rotate(0deg); }
+    10% { -ms-transform: rotate(0deg); }
+    50% { -ms-transform: rotate(270deg); }
+    90% { -ms-transform: rotate(360deg); }
+    100% { -ms-transform: rotate(360deg); }
+}
+
+@-ms-keyframes materialrotate2 {
+    0% { -ms-transform: rotate(0deg); }
+    10% { -ms-transform: rotate(0deg); }
+    50% { -ms-transform: rotate(20deg); }
+    90% { -ms-transform: rotate(360deg); }
+    100% { -ms-transform: rotate(360deg); }
+}
+
+@-ms-keyframes materialrotate3 {
+    0% { -ms-transform: rotate(0deg); }
+    10% { -ms-transform: rotate(0deg); }
+    50% { -ms-transform: rotate(90deg); }
+    90% { -ms-transform: rotate(360deg); }
+    100% { -ms-transform: rotate(360deg); }
+}
+
+@-ms-keyframes materialrotate4 {
+    0% { -ms-transform: rotate(0deg); }
+    10% { -ms-transform: rotate(0deg); }
+    50% { -ms-transform: rotate(180deg); }
+    90% { -ms-transform: rotate(360deg); }
+    100% { -ms-transform: rotate(360deg); }
+}
+
+@keyframes materialrotate1 {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(0deg); }
+    50% { transform: rotate(270deg); }
+    90% { transform: rotate(360deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes materialrotate2 {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(0deg); }
+    50% { transform: rotate(20deg); }
+    90% { transform: rotate(360deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes materialrotate3 {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(0deg); }
+    50% { transform: rotate(90deg); }
+    90% { transform: rotate(360deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes materialrotate4 {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+    90% { transform: rotate(360deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@-webkit-keyframes materialdrive {
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@-ms-keyframes materialdrive {
+    100% { -ms-transform: rotate(360deg); }
+}
+
+@keyframes materialdrive {
+    100% { transform: rotate(360deg); }
+}
