@@ -296,6 +296,42 @@
 				"packages": [
 					"mvc-offline"
 				]
+			},
+			{
+				"text": "Batch editing",
+				"url": "grid/editing",
+				"title": {
+					"kendo-ui": "Batch editing example for Kendo UI jQuery Grid control",
+					"aspnet-mvc": "Batch editing functionality in Telerik ASP.NET MVC Grid"
+				},
+				"meta": {
+					"kendo-ui": "This demo illustrates the batch editing feature of Kendo UI jQuery Grid. Find the source code which shows how to send changes to the server as a batch.",
+					"aspnet-mvc": "In this sample you will play with the batch editing functionality of Telerik ASP.NET MVC Grid."
+				}
+			},
+			{
+				"text": "Inline editing",
+				"url": "grid/editing-inline",
+				"title": {
+					"kendo-ui": "Applying inline editing in Kendo UI Grid",
+					"aspnet-mvc": "Applying inline editing in Telerik ASP.NET MVC Grid"
+				},
+				"meta": {
+					"kendo-ui": "This sample demonstrates how the values in the cells of KendoGrid can be easily changed. Try the demo source code to find how inline data grid can be deleted and modified.",
+					"aspnet-mvc": "See how the values in the cells of Telerik ASP.NET MVC Grid can be easily changed. Try the demo source code to find how inline data grid can be deleted and modified."
+				}
+			},
+			{
+				"text": "Popup editing",
+				"url": "grid/editing-popup",
+				"title": {
+					"kendo-ui": "Popup data editing example for Kendo UI Grid widget",
+					"aspnet-mvc": "Batch editing functionality in Telerik ASP.NET MVC Grid"
+				},
+				"meta": {
+					"kendo-ui": "This demo illustrates how the records in KendoGrid can be easily modified in a pop-up dialog.",
+					"aspnet-mvc": "In this sample you can see the batch editing functionality of Telerik ASP.NET MVC Grid in action."
+				}
 			}
 		],
 		"category": "Data Management"
