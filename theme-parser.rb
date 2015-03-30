@@ -124,10 +124,11 @@ rewritten.each do |variable|
 
     # determine action for variables
     if same_values? old_values
-        actions[variable] = :inline
+        actions[variable] = old_values[0]
     elsif match_var old_values
         actions[variable] = "@#{match_var old_values}"
     else
+        functions = old_values.map function_map
         # rewrite variable with some function
         # constraint: for each theme, the (f, var) pair is fixed and  f(base_vars[theme][var]) = old_vars[theme][variable]
         # find transformation based on BASE_ARRAYS
@@ -137,8 +138,6 @@ end
 def apply_actions variables, actions
     variables.map do |variable|
         value = actions[variable]
-        puts "inline #{variable}" if value == :inline
-        value = OLD_VARS.values.first[variable] if value == :inline
 
         "@#{variable}: #{value};"
     end
