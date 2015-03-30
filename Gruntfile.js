@@ -95,8 +95,9 @@ module.exports = function(grunt) {
 
                     files: [].concat(
                         TESTS.beforeTestFiles,
-                        TESTS.ciFiles, //commented for test purposes
-                        // allKendoFiles,
+                        // TESTS.ciFiles,
+                        // Temporary override to track offset() error
+                        allKendoFiles,
                         TESTS.afterTestFiles,
                         tests
                     )
