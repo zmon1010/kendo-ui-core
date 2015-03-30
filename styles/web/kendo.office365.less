@@ -424,6 +424,14 @@ div.k-splitbar.k-state-focused .k-icon,
     border-color: @primary-disabled-border-color;
 }
 
+.k-autocomplete.k-state-border-down {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-bottom: 0;
+}
+
+
+
 input.k-textbox:focus {
 	border-color: @drop-down-focused-border-color;
 }
@@ -462,6 +470,11 @@ input.k-textbox:focus {
 	border-color: @select-border-color;
 }
 
+.k-picker-wrap.k-state-default.k-state-active .k-select,
+.k-dropdown-wrap.k-state-default.k-state-active .k-select {
+    border-color: @select-border-color;
+}
+
 .k-dropdown .k-state-default.k-state-active .k-input,
 .k-state-selected .k-progress-status {
 	color: @inverse-text-color;	
@@ -477,7 +490,7 @@ input.k-textbox:focus {
 }
 
 .k-popup {
-	.box-shadow(0 2px 5px 0 @shadow-color);
+	.box-shadow(0 0 5px 2px @shadow-color);
 }
 
 .k-calendar {
@@ -565,6 +578,10 @@ input.k-textbox:focus {
 .k-header.k-grid-toolbar,
 .k-grid-header-wrap {
 	border-color: transparent;
+}
+
+.k-pivot .k-grid-header th.k-header {
+    border-color: @widget-border-color;
 }
 
 .k-group-footer td {
@@ -725,6 +742,25 @@ input.k-textbox:focus {
 	border-color: @primary-hover-border-color;
 }
 
+.k-flatcolorpicker .k-selected-color input.k-color-value,
+.k-flatcolorpicker .k-hsv-rectangle {
+    border-color: @widget-border-color;
+}
+
+.k-flatcolorpicker .k-hue-slider .k-draghandle,
+.k-flatcolorpicker .k-transparency-slider .k-draghandle,
+.k-flatcolorpicker .k-hue-slider .k-draghandle:hover,
+.k-flatcolorpicker .k-transparency-slider .k-draghandle:hover,
+.k-flatcolorpicker .k-hue-slider .k-draghandle:focus,
+.k-flatcolorpicker .k-transparency-slider .k-draghandle:focus {
+    background-color: @checkbox-border-color-after;
+    border-color: @checkbox-border-color-after;
+}
+
+.k-flatcolorpicker .k-slider-horizontal .k-slider-track {
+    .box-shadow(none);
+}
+
 .k-treeview {
 	.k-state-selected {
 		color: @select-background-color;
@@ -783,6 +819,14 @@ input.k-textbox:focus {
         color: @inverse-text-color;
     }
 }    
+
+.k-scheduler .k-nonwork-hour {
+    background-color: lighten(@selected-background-color, 5%);
+}
+
+.k-scheduler-content .k-event {
+    box-shadow: inset 4px 0 0 0 rgba(255, 255, 255, .5);
+}
 
 .k-scheduler-times tr,
 .k-scheduler-times th,
