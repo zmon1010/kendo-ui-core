@@ -11,11 +11,13 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class TreeListEditableSettings<T> 
     {
-        public string Mode { get; set; }
-
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
+
+        public string TemplateName { get; set; }
+
+        public TreeListEditMode? Mode { get; set; }
 
         public bool Enabled { get; set; }
         public string IdPrefix { get; set; } = "#";
@@ -24,11 +26,6 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-
-            if (Mode.HasValue())
-            {
-                settings["mode"] = Mode;
-            }
 
             if (TemplateId.HasValue())
             {
@@ -41,6 +38,11 @@ namespace Kendo.Mvc.UI
             else if (Template.HasValue())
             {
                 settings["template"] = Template;
+            }
+
+            if (Mode.HasValue)
+            {
+                settings["mode"] = Mode?.Serialize();
             }
 
             return settings;

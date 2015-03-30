@@ -44,3 +44,20 @@
           - :value: cell
             :member: Cell
             :description: The user can select widget cells
+
+    - :name: editable.templateName
+      :description: The EditorTemplate which to be rendered as editor.
+      :type: String
+
+    - :name: editable.mode
+      :type: String
+      :enum_type: TreeListEditMode
+      :description: Represents the editing modes supported by Kendo UI TreeList for ASP.NET MVC
+      :values:
+          - :value: inline
+            :member: InLine
+            :description: Specifies in-line edit mode
+
+          - :value: popup
+            :member: PopUp
+            :description: Specifies popup edit mode

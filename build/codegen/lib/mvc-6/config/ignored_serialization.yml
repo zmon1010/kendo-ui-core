@@ -14,3 +14,4 @@
 - treelist.selectable
 - treelist.selectable.mode
 - treelist.selectable.type
+- treelist.editable.templateName

@@ -20,6 +20,14 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
-    }
+		/// <summary>
+		/// The editing mode to use. The supported editing modes are "inline" and "popup".
+		/// </summary>
+		/// <param name="value">The value for Mode</param>
+		public TreeListEditableSettingsBuilder<T> Mode(string value)
+		{
+			Container.Mode = value.ToLowerInvariant() == "inline" ? TreeListEditMode.InLine : TreeListEditMode.PopUp;
+			return this;
+		}
+	}
 }
