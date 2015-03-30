@@ -112,7 +112,7 @@ end
 actions = {}
 
 def match_var old_values
-    BASE_ARRAYS.find old_values
+    BASE_ARRAYS.key old_values
 end
 
 rewritten.each do |variable|
@@ -122,23 +122,33 @@ rewritten.each do |variable|
         old_values.push OLD_VARS[theme][variable]
     end
 
-    # try to match functions for each variable
-
     # determine action for variables
     if same_values? old_values
         actions[variable] = :inline
     elsif match_var old_values
-        actions[variable] = match_var old_values
+        actions[variable] = "@#{match_var old_values}"
+    else
+        # rewrite variable with some function
+        # constraint: for each theme, the (f, var) pair is fixed and  f(base_vars[theme][var]) = old_vars[theme][variable]
+        # find transformation based on BASE_ARRAYS
     end
+end
 
-    # rewrite variable with some function
-    # constraint: for each theme, the (f, var) pair is fixed and  f(base_vars[theme][var]) = old_vars[theme][variable]
+def apply_actions variables, actions
+    variables.map do |variable|
+        value = actions[variable]
+        puts "inline #{variable}" if value == :inline
+        value = OLD_VARS.values.first[variable] if value == :inline
+
+        "@#{variable}: #{value};"
+    end
+    .join("\n")
 end
 
 ####
 # write new type
 
-type_content = rewritten.join("\n") + "\n" + theme_template
+type_content = apply_actions(rewritten, actions) + "\n" + theme_template
 
 File.open(File.join(theme_dir, "type-#{type}.less"), "w") do |f|
   f.write type_content.gsub(/\r?\n/, "\n")
