@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// %&gt;
 		/// </code>
 		/// </example>
-		public ColorPaletteBuilder TileSize(int tileSize)
+		public ColorPaletteBuilder TileSize(double tileSize)
 		{
 			Component.TileSize.Width = tileSize;
 			Component.TileSize.Height = tileSize;
