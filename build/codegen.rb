@@ -198,6 +198,7 @@ namespace :generate do
                 'docs/api/javascript/ui/grid.md',
                 'docs/api/javascript/ui/numerictextbox.md',
                 'docs/api/javascript/ui/maskedtextbox.md',
+                'docs/api/javascript/ui/progressbar.md',
                 'docs/api/javascript/ui/upload.md',
                 'docs/api/javascript/ui/treelist.md',
                 'docs/api/javascript/ui/notification.md'
