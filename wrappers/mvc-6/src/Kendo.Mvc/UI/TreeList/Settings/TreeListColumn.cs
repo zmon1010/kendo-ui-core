@@ -11,15 +11,15 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class TreeListColumn<T> 
     {
-		public string EditorHtml {	get; set; }
+		public string Editor {	get; set; }
 
 		public Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
 
-			if (EditorHtml.HasValue())
+			if (Editor.HasValue())
 			{
-				settings.Add("editor", EditorHtml);
+				settings.Add("editor", Editor);
 			}
 
             return settings;

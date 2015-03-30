@@ -174,7 +174,7 @@ namespace Kendo.Mvc.UI
 							return match.Groups[0].Value.Replace("\\", "\\\\");
 						});
 					}
-					column.EditorHtml = editorHtml;
+					column.Editor = editorHtml;
 
 				});
 			}
