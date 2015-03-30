@@ -97,7 +97,7 @@ kendo.PDFMixin = {
         shadow.append(content || wrapper.clone(true, true));
 
         var promise = kendo.drawing.drawDOM(shadow);
-        promise.done(function() {
+        promise.always(function() {
             shadow.remove();
         });
 
