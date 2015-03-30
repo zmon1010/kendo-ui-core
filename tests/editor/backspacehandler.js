@@ -85,4 +85,14 @@
         equal(editor.value(), "<p><em><a></a>foo</em></p>");
     });
 
+    test("does not change selection unnecessarily", function() {
+        editor.selectRange(createRangeFromText(editor, 'foo||bar'));
+
+        handleBackspace();
+
+        editor.getRange().insertNode(editor.document.createElement("a"));
+
+        equal(editor.value(), "foo<a></a>bar");
+    });
+
 }());

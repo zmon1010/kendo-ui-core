@@ -237,12 +237,12 @@ var BackspaceHandler = Class.extend({
     },
     _handleCaret: function(range) {
         var node = range.startContainer;
-        var i = range.startOffset - 1;
+        var i = range.startOffset;
         var li = dom.closestEditableOfType(node, ['li']);
 
         if (dom.isDataNode(node)) {
-            while (i >= 0 && node.nodeValue[i] == "\ufeff") {
-                node.deleteData(i, 1);
+            while (i >= 0 && node.nodeValue[i-1] == "\ufeff") {
+                node.deleteData(i-1, 1);
                 i--;
             }
 
