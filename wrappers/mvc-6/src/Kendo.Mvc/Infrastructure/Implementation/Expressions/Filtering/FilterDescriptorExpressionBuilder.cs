@@ -128,8 +128,12 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
                     else if (nonNullableTargetType == typeof(Guid))
                     {
                         value = new Guid(value.ToString());
-                    }
-                }
+					}
+					else if (value is IConvertible)
+					{
+						value = Convert.ChangeType(value, nonNullableTargetType, culture);
+					}
+				}
             }
 
             return CreateConstantExpression(value);
