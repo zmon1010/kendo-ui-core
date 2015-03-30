@@ -64,13 +64,14 @@
 
 </head>
 <body>
-    <textarea id="editor"></textarea>
+    <textarea id="editor">
+        &lt;em&gt;foo&lt;/em&gt;
+    </textarea>
 
     <button>Alert HTML</button>
 
     <script>
         $("#editor").kendoEditor({
-            encoded: false,
             tools: kendo.ui.Editor.fn.options.tools.concat(["cleanFormatting"]),
             resizable: {
                 min: 100,

@@ -235,37 +235,68 @@ var BackspaceHandler = Class.extend({
     init: function(editor) {
         this.editor = editor;
     },
+    _handleCaret: function(range) {
+        var node = range.startContainer;
+        var i = range.startOffset - 1;
+        var li = dom.closestEditableOfType(node, ['li']);
+
+        if (dom.isDataNode(node)) {
+            while (i >= 0 && node.nodeValue[i] == "\ufeff") {
+                node.deleteData(i, 1);
+                i--;
+            }
+
+            range.setStart(node, Math.max(0, i));
+            range.collapse(true);
+            this.editor.selectRange(range);
+        }
+
+        // unwrap li element
+        if (li && editorNS.RangeUtils.isStartOf(range, li)) {
+            var formatter = new editorNS.GreedyBlockFormatter([ { tags: ["p"] } ]);
+            var child = li.firstChild;
+            formatter.editor = this.editor;
+            formatter.apply(li.childNodes);
+            range.setStart(child, 0);
+            this.editor.selectRange(range);
+
+            return true;
+        }
+
+        return false;
+    },
+    _handleSelection: function(range) {
+        var ancestor = range.commonAncestorContainer;
+        var emptyParagraphContent = editorNS.emptyElementContent;
+
+        if (/t(able|body|r)/i.test(dom.name(ancestor))) {
+            range.selectNode(dom.closest(ancestor, "table"));
+        }
+
+        range.deleteContents();
+
+        ancestor = range.commonAncestorContainer;
+
+        if (dom.name(ancestor) === "p" && ancestor.innerHTML === "") {
+            ancestor.innerHTML = emptyParagraphContent;
+            range.setStart(ancestor, 0);
+            range.collapse(true);
+            this.editor.selectRange(range);
+        }
+
+        return true;
+    },
     keydown: function(e) {
         if (e.keyCode === kendo.keys.BACKSPACE) {
-            var editor = this.editor;
-            var range = editor.getRange();
-            var emptyParagraphContent = kendo.support.browser.msie ? '' : '<br _moz_dirty="" />';
-
-            if (range.collapsed) {
-                return;
-            }
-
-            e.preventDefault();
-
+            var range = this.editor.getRange();
+            var method = range.collapsed ? "_handleCaret" : "_handleSelection";
             var startRestorePoint = new RestorePoint(range);
-            var ancestor = range.commonAncestorContainer;
 
-            if (/t(able|body|r)/i.test(dom.name(ancestor))) {
-                range.selectNode(dom.closest(ancestor, "table"));
+            if (this[method](range)) {
+                e.preventDefault();
+
+                finishUpdate(this.editor, startRestorePoint);
             }
-
-            range.deleteContents();
-
-            ancestor = range.commonAncestorContainer;
-
-            if (dom.name(ancestor) === "p" && ancestor.innerHTML === "") {
-                ancestor.innerHTML = emptyParagraphContent;
-                range.setStart(ancestor, 0);
-                range.collapse(true);
-                editor.selectRange(range);
-            }
-
-            finishUpdate(editor, startRestorePoint);
         }
     },
     keyup: function() {}

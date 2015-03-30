@@ -222,8 +222,8 @@
             that._initializeContentElement(that);
 
             that.keyboard = new editorNS.Keyboard([
-                new editorNS.TypingHandler(that),
                 new editorNS.BackspaceHandler(that),
+                new editorNS.TypingHandler(that),
                 new editorNS.SystemHandler(that)
             ]);
 

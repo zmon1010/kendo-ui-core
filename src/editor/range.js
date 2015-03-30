@@ -1088,6 +1088,23 @@ var RangeUtils = {
         }
     },
 
+    isStartOf: function(range, node) {
+        range = range.cloneRange();
+
+        while (range.startOffset === 0 && range.startContainer != node) {
+            var index = dom.findNodeIndex(range.startContainer);
+            var parent = range.startContainer.parentNode;
+
+            while (index > 0 && dom.insignificant(parent[index-1])) {
+                index--;
+            }
+
+            range.setStart(parent, index);
+        }
+
+        return range.startOffset === 0 && range.startContainer == node;
+    },
+
     wrapSelectedElements: function(range) {
         var startEditable = dom.editableParent(range.startContainer);
         var endEditable = dom.editableParent(range.endContainer);
