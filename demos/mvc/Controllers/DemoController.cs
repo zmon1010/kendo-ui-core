@@ -35,6 +35,7 @@ namespace Kendo.Controllers
             }
 
             ViewBag.ShowCodeStrip = true;
+            ViewBag.ShowDescription = product == "kendo-ui";
             ViewBag.Product = product;
             ViewBag.NavProduct = CurrentNavProduct();
             ViewBag.Section = section;
