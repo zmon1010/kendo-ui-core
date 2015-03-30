@@ -275,6 +275,13 @@
 				"packages": [
 					"mvc-offline"
 				]
+			},
+			{
+				"text": "Custom data source",
+				"url": "grid/custom-datasource",
+				"packages": [
+					"mvc-offline"
+				]
 			}
 		],
 		"category": "Data Management"
