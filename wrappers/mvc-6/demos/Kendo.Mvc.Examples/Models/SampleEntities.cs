@@ -76,10 +76,14 @@ namespace Kendo.Mvc.Examples.Models
 				.HasMany(e => e.Meetings1);
 
 			modelBuilder.Entity<Order>()
-				.HasMany(e => e.Order_Details);			
+				.HasMany(e => e.Order_Details);
 
-			modelBuilder.Entity<Product>()
-				.HasMany(e => e.Order_Details);			
+			modelBuilder.Entity<Product>(builder =>
+			{
+				builder.HasMany(e => e.Order_Details)
+					.WithOne(o => o.Product)
+					.ForeignKey(o => o.ProductID);					
+			});			
 
 			modelBuilder.Entity<Region>()
 				.HasMany(e => e.Territories);
