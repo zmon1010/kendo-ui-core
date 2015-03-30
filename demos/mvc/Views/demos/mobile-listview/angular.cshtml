@@ -1,21 +1,21 @@
 <div kendo-mobile-application ng-app="kendoDemo">
-<kendo-mobile-view k-title="'My Menu'" ng-controller="Mine">
-    <kendo-mobile-header>
-        <kendo-mobile-nav-bar>
-            <kendo-view-title></kendo-view-title>
-        </kendo-mobile-nav-bar>
-    </kendo-mobile-header>
-
-    <kendo-mobile-list-view k-load-more="true" k-data-source="source">
-        <div class="product" k-template>
-            <img src="../content/web/foods/{{dataItem.ProductID}}.jpg" alt="{{dataItem.ProductName}} image" class="pullImage"/>
-            <h3>{{dataItem.ProductName}}</h3>
-            <p>{{kendo.toString(dataItem.UnitPrice, "c")}}</p>
-        </div>
-    </kendo-mobile-list-view>
-
-</kendo-mobile-view>
-
+    <kendo-mobile-view k-title="'My Menu'" ng-controller="Mine">
+        <kendo-mobile-header>
+            <kendo-mobile-nav-bar>
+                <kendo-view-title></kendo-view-title>
+            </kendo-mobile-nav-bar>
+        </kendo-mobile-header>
+    
+        <kendo-mobile-list-view k-load-more="true" k-data-source="source">
+            <div class="product" k-template>
+                <img src="../content/web/foods/{{dataItem.ProductID}}.jpg" alt="{{dataItem.ProductName}} image" class="pullImage"/>
+                <h3>{{dataItem.ProductName}}</h3>
+                <p>{{kendo.toString(dataItem.UnitPrice, "c")}}</p>
+            </div>
+        </kendo-mobile-list-view>
+    
+    </kendo-mobile-view>
+</div>
 
 <script>
     angular.module("kendoDemo", [ 'kendo.directives' ])
