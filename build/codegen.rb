@@ -196,12 +196,12 @@ namespace :generate do
                 'docs/api/javascript/ui/datetimepicker.md',
                 'docs/api/javascript/ui/flatcolorpicker.md',
                 'docs/api/javascript/ui/grid.md',
-                'docs/api/javascript/ui/numerictextbox.md',
                 'docs/api/javascript/ui/maskedtextbox.md',
+                'docs/api/javascript/ui/notification.md',
+                'docs/api/javascript/ui/numerictextbox.md',
                 'docs/api/javascript/ui/progressbar.md',
-                'docs/api/javascript/ui/upload.md',
                 'docs/api/javascript/ui/treelist.md',
-                'docs/api/javascript/ui/notification.md'
+                'docs/api/javascript/ui/upload.md'
             ]
 
             components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }
