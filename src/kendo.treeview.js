@@ -1628,10 +1628,6 @@ var __meta__ = {
                 } else {
                     this._updateNodeClasses(node, {}, { expanded: expand });
 
-                    if (contents.css("display") == (expand ? "block" : "none")) {
-                        return;
-                    }
-
                     if (!expand) {
                         contents.css("height", contents.height()).css("height");
                     }

@@ -928,230 +928,26 @@
         equal(treeview.text(), "baz");
     });
 
-    test("collapse() of non-visible items hides their subgroup", function() {
+    test("collapse() of  does not keep group height", function() {
         createTreeView({
             animation: false,
             dataSource: [
-                { text: "foo", expanded: true, items: [
-                    { text: "bar", expanded: true, items: [
-                        { text: "baz" }
-                    ] }
-                ] }
-            ]
-        });
-
-        treeviewObject.collapse(".k-item");
-
-        equal(treeview.find(".k-group:last").css("display"), "none");
-    });
-
-    test("appending of items with children set", function() {
-        createTreeView({
-            dataSource: {
-                data: [{
-                    HasChildren: false,
-                    Children: [],
-                    text: "foo"
-                }],
-                schema: {
-                    model: {
-                        hasChildren: "HasChildren",
-                        children: "Children"
-                    }
-                }
-            }
-        });
-
-        treeviewObject.append({
-            HasChildren: false,
-            Children: [],
-            text: "bar"
-        });
-
-        treeviewObject.append(treeviewObject.findByText("foo"), treeviewObject.findByText("bar"));
-
-        equal(treeview.find(".k-item .k-item").length, 1);
-    });
-
-    test("appending array of items adds them to the datasource in one pass", function() {
-        var calls = 0;
-
-        createTreeView({
-            dataSource: {
-                data: [],
-                change: function() {
-                    calls++;
-                }
-            }
-        });
-
-        equal(calls, 1);
-
-        treeviewObject.append([
-            { text: "foo" },
-            { text: "bar" }
-        ]);
-
-        equal(calls, 2);
-    });
-
-    test("collapse() on collapsed item does not trigger a datasource fetch", function() {
-        var calls = 0;
-
-        createTreeView({
-            dataSource: {
-                transport: {
-                    read: function(options) {
-                        options.success([ { text: "foo", hasChildren: true } ]);
-                        calls++;
-                    }
-                }
-            }
-        });
-
-        treeviewObject.collapse(".k-item");
-
-        equal(calls, 1);
-    });
-
-    test("updateIndeterminate updates indeterminate state", function() {
-        createTreeView({
-            dataSource: [
-                { text: "foo", expanded: true, items: [
-                    { text: "bar" },
-                    { text: "baz" }
+                { text: "foo", items: [
+                    { text: "bar" }
                 ] }
             ],
-            checkboxes: {
-                checkChildren: true
+            expand: function(e) {
+                this.append({ text: "baz" }, $(e.node));
             }
         });
 
-        treeview.find(":checkbox:last").prop("checked", true);
+        treeviewObject.expand(".k-item");
+        treeviewObject.collapse(".k-item");
+        treeviewObject.expand(".k-item");
 
-        treeviewObject.updateIndeterminate();
+        var group = treeview.find(".k-group:last");
 
-        ok(treeview.find(":checkbox:first").prop("indeterminate"));
-    });
-
-    test("destroy removes datasource handlers", function() {
-        var dataSource = new kendo.data.HierarchicalDataSource();
-
-        createTreeView({ dataSource: dataSource });
-
-        treeviewObject.destroy();
-
-        var changeEvents = dataSource._events.change;
-
-        ok(!changeEvents || !changeEvents.length);
-    });
-
-    test("expandPath expands root node", function() {
-        createTreeView([
-            { id: 1, text: "foo", items: [
-                { id: 2, text: "bar" }
-            ] }
-        ]);
-
-        treeviewObject.expandPath([ 1 ]);
-
-        ok(get(1).expanded);
-    });
-
-    test("expandPath expands multiple levels", 2, function() {
-        createTreeView([
-            { id: 1, text: "foo", items: [
-                { id: 2, text: "bar", items: [
-                    { id: 3, text: "baz" }
-                ] }
-            ] }
-        ]);
-
-        treeviewObject.expandPath([ 1, 2 ], function() {
-            ok(get(1).expanded);
-            ok(get(2).expanded);
-        });
-    });
-
-    test("expandPath works with expanded nodes", function() {
-        createTreeView([
-            { id: 1, text: "foo", expanded: true, items: [
-                { id: 2, text: "bar", items: [
-                    { id: 3, text: "baz" }
-                ] }
-            ] }
-        ]);
-
-        treeviewObject.expandPath([ 1, 2 ], function() {
-            ok(get(1).expanded);
-            ok(get(2).expanded);
-        });
-    });
-
-    test("expandPath does not modify array parameter", function() {
-        createTreeView([
-            { id: 1, text: "foo", items: [
-                { id: 2, text: "bar" }
-            ] }
-        ]);
-
-        var path = [ 1 ];
-
-        treeviewObject.expandPath(path);
-
-        equal(path.length, 1);
-    });
-
-    test("expandPath callback uses treeview as context", function() {
-        createTreeView([
-            { id: 1, text: "foo", items: [
-                { id: 2, text: "bar" }
-            ] }
-        ]);
-
-        treeviewObject.expandPath([ 1 ], function() {
-            equal(this, treeviewObject);
-        });
-    });
-
-    test("expandPath does not fail if node does not exist", function() {
-        createTreeView([
-            { id: 1, text: "foo" }
-        ]);
-
-        treeviewObject.expandPath([ 100 ], function() {
-            equal(this, treeviewObject);
-        });
-    });
-
-    test("expandTo expands up to model", function() {
-        createTreeView([
-            { text: "foo", items: [
-                { text: "bar", items: [
-                    { text: "baz" }
-                ] }
-            ] }
-        ]);
-
-        treeviewObject.expandTo(getByText("baz"));
-
-        ok(getByText("foo").expanded);
-        ok(getByText("bar").expanded);
-    });
-
-    test("expandTo expands up to ID", function() {
-        createTreeView([
-            { id: 1, text: "foo", items: [
-                { id: 2, text: "bar", items: [
-                    { id: 3, text: "baz" }
-                ] }
-            ] }
-        ]);
-
-        treeviewObject.expandTo(3);
-
-        ok(get(1).expanded);
-        ok(get(2).expanded);
+        equal(group.css("height"), group[0].scrollHeight + "px");
     });
 
     module("expandPath async", {
