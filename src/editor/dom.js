@@ -768,13 +768,11 @@ var Dom = {
     },
 
     ensureTrailingBreak: function(node) {
+        $(node).find(".k-br").remove();
+
         var lastChild = node.lastChild;
         var name = lastChild && Dom.name(lastChild);
         var br;
-
-        if ($(node).find(".k-br").length) {
-            return;
-        }
 
         if (!name ||
             (name != "br" && name != "img") ||

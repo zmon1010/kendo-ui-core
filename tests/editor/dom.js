@@ -272,6 +272,15 @@ test("adds breaks to all table cells", function() {
     equal(dom.find("br").length, 2);
 });
 
+test("removes line breaks inside content", function() {
+    var dom = $("<p>foo<br class='k-br'>bar</p>");
+
+    Dom.ensureTrailingBreaks(dom[0]);
+
+    equal(dom.find(".k-br").length, 1);
+    equal(dom[0].lastChild.nodeName.toLowerCase(), "br");
+});
+
 test("encode HTML characters", function() {
     equal(Dom.encode("foo < bar"), "foo &lt; bar");
     equal(Dom.encode("foo > bar"), "foo &gt; bar");
