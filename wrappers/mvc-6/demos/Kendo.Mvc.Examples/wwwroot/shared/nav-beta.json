@@ -334,6 +334,18 @@
 				}
 			},
 			{
+				"text": "Editing custom editor",
+				"url": "grid/editing-custom",
+				"title": {
+					"kendo-ui": "jQuery Grid Custom Editing example | Kendo UI Grid Demo",
+					"aspnet-mvc": "ASP.NET MVC Grid Custom Editing | UI for ASP.NET MVC Demo"
+				},
+				"meta": {
+					"kendo-ui": " This example illustrates how editing in KendoGrid can be further customized with the custom editor and using DataSource component.",
+					"aspnet-mvc": "This example illustrates how editing in Telerik ASP.NET MVC Grid can be further customized with the custom editor and using DataSource component."
+				}
+			},
+			{
 				"text": "Custom validator editing",
 				"url": "grid/editing-custom-validation",
 				"title": {
@@ -374,6 +386,42 @@
 				"meta": {
 					"kendo-ui": "This demo illustrates the hierarchical data grid feature of Kendo UI Grid widget. Try the demo source code to play with the grid in your web app.",
 					"aspnet-mvc": "This demo illustrates the hierarchical data grid feature of the Telerik ASP.NET MVC Grid component. Try the demo source code to play with the grid in your web app."
+				}
+			},
+			{
+				"text": "Detail template",
+				"url": "grid/detailtemplate",
+				"title": {
+					"kendo-ui": "Detail template demo in Kendo UI Grid control",
+					"aspnet-mvc": "Detail Template for Telerik ASP.NET MVC Grid"
+				},
+				"meta": {
+					"kendo-ui": "This example shows how records in the data grid widget can be presented with a detailed template.",
+					"aspnet-mvc": "This example shows how records in the Telerik ASP.NET MVC Grid component can be presented with a detailed template."
+				}
+			},
+			{
+				"text": "Toolbar template",
+				"url": "grid/toolbar-template",
+				"title": {
+					"kendo-ui": "Toolbar template demo for Kendo UI HTML5 Grid control",
+					"aspnet-mvc": "Toolbar templates for Telerik ASP.NET MVC Grid"
+				},
+				"meta": {
+					"kendo-ui": "This Kendo UI Grid example shows how you can add custom toolbars to the grid and create toolbar templates.",
+					"aspnet-mvc": "This Telerik ASP.NET MVC Grid example shows how you can add custom toolbars to the grid and create toolbar templates."
+				}
+			},
+			{
+				"text": "Custom command",
+				"url": "grid/custom-command",
+				"title": {
+					"kendo-ui": "Custom commands demo for Kendo UI Grid widget",
+					"aspnet-mvc": "Custom command demo in Telerik ASP.NET MVC Grid"
+				},
+				"meta": {
+					"kendo-ui": "This demo demonstrates the functionality to apply custom commands to KendoGrid. Look at the source code to find how to set the text attribute and command name for the grid component.",
+					"aspnet-mvc": "This example illustrates the custom command of Telerik ASP.NET MVC Grid extension."
 				}
 			}		
 		],
