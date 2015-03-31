@@ -351,7 +351,7 @@
 				"packages": [
 					"mvc-offline"
 				]
-			},			
+			},
 			{
 				"text": "Virtualization of remote data",
 				"url": "grid/virtualization-remote-data",
@@ -362,6 +362,18 @@
 				"meta": {
 					"kendo-ui": "This sample shows how KendoGrid UI virtualization is enabled to remote data.",
 					"aspnet-mvc": "This demo illustrates the virtualization of remote data in ASP.NET MVC Grid."
+				}
+			},
+			{
+				"text": "Hierarchy",
+				"url": "grid/hierarchy",
+				"title": {
+					"kendo-ui": "Hierarchical Kendo UI Grid | Kendo UI Web",
+					"aspnet-mvc": "Hierarchical ASP.NET MVC Grid | UI for ASP.NET MVC Demo"
+				},
+				"meta": {
+					"kendo-ui": "This demo illustrates the hierarchical data grid feature of Kendo UI Grid widget. Try the demo source code to play with the grid in your web app.",
+					"aspnet-mvc": "This demo illustrates the hierarchical data grid feature of the Telerik ASP.NET MVC Grid component. Try the demo source code to play with the grid in your web app."
 				}
 			}		
 		],
