@@ -1,29 +1,42 @@
-@color: #999;
+@color1: #aaa;
+@color2: #bbb;
+@color3: #ccc;
+@color4: #ddd;
+@color5: #eee;
+@color6: #fff;
 @step: 1%;
 
-.show(@amount, @color, @original, @function) { }
+.lighten(@amount) when (@amount = 100) { }
 
-.show(@amount, @color, @original, @function) when not (@color = #fff) and not (@color = #000) {
-    process: ~"@{color} = @{function}(@{original}, @{amount})";
+.lighten(@amount) when not (@amount = 100) {
+    @mod1: lighten(@color1, @amount);
+    @mod2: lighten(@color2, @amount);
+    @mod3: lighten(@color3, @amount);
+    @mod4: lighten(@color4, @amount);
+    @mod5: lighten(@color5, @amount);
+    @mod6: lighten(@color6, @amount);
+
+    process: ~"lighten(@VARIABLE, @{amount})=[ @{mod1} @{mod2} @{mod3} @{mod4} @{mod5} @{mod6} ]";
+
+    .lighten(@amount + @step);
 }
 
-.lighten(@color, @amount) when (@amount = 100) { }
+.darken(@amount) when (@amount = 100) { }
 
-.lighten(@color, @amount) when not (@amount = 100) {
-    .show(@amount, lighten(@color, @amount), @color, 'lighten');
+.darken(@amount) when not (@amount = 100) {
+    @mod1: darken(@color1, @amount);
+    @mod2: darken(@color2, @amount);
+    @mod3: darken(@color3, @amount);
+    @mod4: darken(@color4, @amount);
+    @mod5: darken(@color5, @amount);
+    @mod6: darken(@color6, @amount);
 
-    .lighten(@color, @amount + @step);
-}
+    process: ~"darken(@VARIABLE, @{amount})=[ @{mod1} @{mod2} @{mod3} @{mod4} @{mod5} @{mod6} ]";
 
-.darken(@color, @amount) when (@amount = 100) { }
-
-.darken(@color, @amount) when not (@amount = 100) {
-    .show(@amount, darken(@color, @amount), @color, 'darken');
-
-    .darken(@color, @amount + @step);
+    .darken(@amount + @step);
 }
 
 .result {
-    .lighten(@color, 0%);
-    .darken(@color, 0%);
+    .lighten(0%);
+    .darken(0%);
 }

@@ -37,14 +37,22 @@ end
 
 COLOR_MAPS = {}
 
-def function_map(color)
-    COLOR_MAPS[color] = `
-        lessc --modify-var='color=#{color}' generate-functions.less |
-        grep 'process' |
-        sed 's/process: //' |
-        sort` unless COLOR_MAPS[color]
+def function_map(colors)
+    args = colors.each_with_index.map { |c,i| "--modify-var='color#{i+1}=#{c}'" }
+    key = colors.hash
 
-    COLOR_MAPS[color]
+    unless COLOR_MAPS[key] then
+        functions = `/usr/bin/lessc #{args.join(' ')} generate-functions.less | grep 'process'`
+
+        vals = {}
+        functions.scan(/process:\s+([^=]+)\s*=\s*\[\s*([^\]]+)\s*\]/) {
+            |func, colors| vals[func] = colors.split(' ')
+        }
+
+        COLOR_MAPS[key] = vals
+    end
+
+    COLOR_MAPS[key]
 end
 
 def name_from(lower)
@@ -115,6 +123,38 @@ def match_var old_values
     BASE_ARRAYS.key old_values
 end
 
+
+def similar a, b
+    a == b
+end
+
+def transform_color color
+    color.gsub!(/([a-fA-F]|[0-9])/, '\1\1') if color.length == 4
+
+    color
+end
+
+def transform old_values
+    color = /^#([a-fA-F]|[0-9])+$/
+
+    return if old_values.index { |v| not (v =~ color) }
+
+    old_values = old_values.map { |v| transform_color v }
+
+    # find function that transforms a variable from BASE_ARRAYS to old_values
+    BASE_ARRAYS.each do |variable, values|
+        next unless values.join(' ') =~ /^(#([a-fA-F]|[0-9])+\s*)+$/
+
+        functions = function_map values
+
+        matches = functions.find { |f, c| similar(c, old_values) }
+
+        return matches[0].gsub(/VARIABLE/, variable) if matches
+    end
+
+    "lighten(@accent, 20%)"
+end
+
 rewritten.each do |variable|
     old_values = []
 
@@ -128,10 +168,7 @@ rewritten.each do |variable|
     elsif match_var old_values
         actions[variable] = "@#{match_var old_values}"
     else
-        functions = old_values.map function_map
-        # rewrite variable with some function
-        # constraint: for each theme, the (f, var) pair is fixed and  f(base_vars[theme][var]) = old_vars[theme][variable]
-        # find transformation based on BASE_ARRAYS
+        actions[variable] = transform old_values
     end
 end
 
