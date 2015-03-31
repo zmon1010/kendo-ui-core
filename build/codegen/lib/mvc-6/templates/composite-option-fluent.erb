@@ -7,7 +7,17 @@
 % if toggleable
             Container.<%= csharp_name %>.Enabled = true;
 % end
+
+% if self.instance_of?(array_option_class)
+            configurator(new <%= csharp_builder_class_name %>(Container.<%= csharp_name %>)
+            {
+                <%= component_name %> = <%= component_setter %>
+            });
+% else
+            Container.<%= csharp_name %>.<%= component_name %> = <%= component_setter %>;
             configurator(new <%= csharp_builder_class_name %>(Container.<%= csharp_name %>));
+% end
+
             return this;
         }
 

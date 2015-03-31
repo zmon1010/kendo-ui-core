@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 % end
         public string IdPrefix { get; set; } = "#";
 
+        public <%= component_name %><%= csharp_generic_args %> <%= component_name %> { get; set; }
+
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();

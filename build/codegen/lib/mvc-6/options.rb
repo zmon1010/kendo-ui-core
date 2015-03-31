@@ -79,7 +79,7 @@ module CodeGen::MVC6::Wrappers::Options
     end
 
     def csharp_generic
-        GENERIC_ARGS[full_name.downcase.to_sym]
+        GENERIC_ARGS[full_name.split('.')[0].downcase.to_sym]
     end
 
     def csharp_owner_builder_name
@@ -96,12 +96,6 @@ module CodeGen::MVC6::Wrappers::Options
         generics = csharp_generic
         return '' if generics.nil?
         generics.map { |item| "where #{item[:name]} : #{item[:constraint]} "}.join(' ')
-    end
-
-    def uses_generic_args?
-        GENERIC_BUILDER_SKIP_LIST.inject(true) do |uses_generics, field|
-            uses_generics && !full_name.start_with?(field)
-        end
     end
 
     def builtin_names
@@ -125,6 +119,22 @@ module CodeGen::MVC6::Wrappers::Options
 
     def values
         @values if self.respond_to?(:values)
+    end
+
+    def component_name
+        return @owner.component_name if !@owner.nil?
+
+        csharp_name
+    end
+
+    def component_setter
+        setter = "Container"
+
+        if !@owner.csharp_name.eql?(component_name)
+            setter += ".#{component_name}"
+        end
+
+        setter
     end
 
     def csharp_type
