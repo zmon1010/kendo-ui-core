@@ -1,9 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master"
-Inherits="System.Web.Mvc.ViewPage<IEnumerable<Kendo.Mvc.Examples.Models.StockDataPoint>>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Areas/aspx/Views/Shared/Web.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 <div class="chart-wrapper">
-    <%= Html.Kendo().Chart(Model)
+    <%= Html.Kendo().Chart<Kendo.Mvc.Examples.Models.StockDataPoint>()
         .Name("chart")
         .Title("Stock Prices")
         .DataSource(dataSource => dataSource
