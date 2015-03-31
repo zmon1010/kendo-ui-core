@@ -22,7 +22,6 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
-
             if (Columns.HasValue)
             {
                 settings["columns"] = Columns;
@@ -41,6 +40,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

@@ -31,14 +31,12 @@ namespace Kendo.Mvc.UI
 
         public string Operator { get; set; }
 
-        public string IdPrefix { get; set; } = "#";
 
         public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
 
             if (And.HasValue())
             {
@@ -92,6 +90,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

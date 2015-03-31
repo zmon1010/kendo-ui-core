@@ -13,14 +13,12 @@ namespace Kendo.Mvc.UI
     {
         public double? Duration { get; set; }
 
-        public string IdPrefix { get; set; } = "#";
 
         public ProgressBar ProgressBar { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
 
             if (Duration.HasValue)
             {
@@ -29,6 +27,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

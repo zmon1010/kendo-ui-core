@@ -28,7 +28,6 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
-
             if (Opacity.HasValue)
             {
                 settings["opacity"] = Opacity;
@@ -62,6 +61,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

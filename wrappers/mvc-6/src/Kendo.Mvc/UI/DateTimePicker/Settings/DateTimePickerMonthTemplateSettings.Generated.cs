@@ -19,7 +19,6 @@ namespace Kendo.Mvc.UI
 
         public string ContentId { get; set; }
 
-        public string IdPrefix { get; set; } = "#";
 
         public DateTimePicker DateTimePicker { get; set; }
 
@@ -27,9 +26,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-
             return settings;
         }
-
     }
 }

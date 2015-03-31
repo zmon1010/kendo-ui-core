@@ -20,14 +20,12 @@ namespace Kendo.Mvc.UI
         public TreeListColumnMenuMessagesSettings<T> Messages { get; } = new TreeListColumnMenuMessagesSettings<T>();
 
         public bool Enabled { get; set; }
-        public string IdPrefix { get; set; } = "#";
 
         public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
 
             if (Columns.HasValue)
             {
@@ -52,6 +50,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

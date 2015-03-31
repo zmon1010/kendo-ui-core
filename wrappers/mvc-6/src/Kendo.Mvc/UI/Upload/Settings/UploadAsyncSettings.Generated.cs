@@ -27,14 +27,12 @@ namespace Kendo.Mvc.UI
 
         public bool? WithCredentials { get; set; }
 
-        public string IdPrefix { get; set; } = "#";
 
         public Upload Upload { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
 
             if (AutoUpload.HasValue)
             {
@@ -78,6 +76,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

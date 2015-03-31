@@ -20,7 +20,6 @@ namespace Kendo.Mvc.UI
         public TreeListEditMode? Mode { get; set; }
 
         public bool Enabled { get; set; }
-        public string IdPrefix { get; set; } = "#";
 
         public TreeList<T> TreeList { get; set; }
 
@@ -28,12 +27,11 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-
             if (TemplateId.HasValue())
             {
                 settings["template"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('{0}{1}').html()", IdPrefix, TemplateId
+                        "jQuery('{0}{1}').html()", TreeList.IdPrefix, TemplateId
                     )
                 };
             }
@@ -49,6 +47,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

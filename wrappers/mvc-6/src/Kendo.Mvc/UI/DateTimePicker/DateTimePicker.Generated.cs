@@ -46,7 +46,6 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
-
             if (ARIATemplateId.HasValue())
             {
                 settings["ARIATemplate"] = new ClientHandlerDescriptor {
@@ -118,6 +117,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

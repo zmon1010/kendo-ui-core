@@ -16,7 +16,6 @@ namespace Kendo.Mvc.UI
         public TreeListSelectionType? Type { get; set; }
 
         public bool Enabled { get; set; }
-        public string IdPrefix { get; set; } = "#";
 
         public TreeList<T> TreeList { get; set; }
 
@@ -24,9 +23,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-
             return settings;
         }
-
     }
 }

@@ -28,7 +28,6 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
-
             var async = Async.Serialize();
             if (async.Any())
             {
@@ -66,6 +65,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

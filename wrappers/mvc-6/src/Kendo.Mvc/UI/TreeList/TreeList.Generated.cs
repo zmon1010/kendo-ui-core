@@ -46,8 +46,6 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
-            InitializePrefix();
-
             if (AutoBind.HasValue)
             {
                 settings["autoBind"] = AutoBind;
@@ -145,15 +143,6 @@ namespace Kendo.Mvc.UI
 
 
             return settings;
-        }
-
-        protected void InitializePrefix()
-        {
-            
-            Columns.Each(i => i.IdPrefix = IdPrefix);
-            
-            Editable.IdPrefix = IdPrefix;
-            
         }
     }
 }

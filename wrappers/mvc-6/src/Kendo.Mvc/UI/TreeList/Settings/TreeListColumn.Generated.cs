@@ -53,14 +53,12 @@ namespace Kendo.Mvc.UI
 
         public bool? Lockable { get; set; }
 
-        public string IdPrefix { get; set; } = "#";
 
         public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
 
             if (Attributes.Any())
             {
@@ -102,7 +100,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["footerTemplate"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('{0}{1}').html()", IdPrefix, FooterTemplateId
+                        "jQuery('{0}{1}').html()", TreeList.IdPrefix, FooterTemplateId
                     )
                 };
             }
@@ -125,7 +123,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["headerTemplate"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('{0}{1}').html()", IdPrefix, HeaderTemplateId
+                        "jQuery('{0}{1}').html()", TreeList.IdPrefix, HeaderTemplateId
                     )
                 };
             }
@@ -148,7 +146,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["template"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('{0}{1}').html()", IdPrefix, TemplateId
+                        "jQuery('{0}{1}').html()", TreeList.IdPrefix, TemplateId
                     )
                 };
             }
@@ -189,6 +187,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

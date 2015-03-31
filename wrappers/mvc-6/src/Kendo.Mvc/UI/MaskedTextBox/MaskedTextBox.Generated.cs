@@ -30,7 +30,6 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
-
             if (ClearPromptChar.HasValue)
             {
                 settings["clearPromptChar"] = ClearPromptChar;
@@ -68,6 +67,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

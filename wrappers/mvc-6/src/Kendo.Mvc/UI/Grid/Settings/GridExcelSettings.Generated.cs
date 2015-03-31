@@ -21,14 +21,12 @@ namespace Kendo.Mvc.UI
 
         public string ProxyURL { get; set; }
 
-        public string IdPrefix { get; set; } = "#";
 
         public Grid<T> Grid { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
 
             if (AllPages.HasValue)
             {
@@ -57,6 +55,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

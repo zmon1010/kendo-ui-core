@@ -15,14 +15,12 @@ namespace Kendo.Mvc.UI
 
         public double? Height { get; set; }
 
-        public string IdPrefix { get; set; } = "#";
 
         public ColorPicker ColorPicker { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
 
             if (Width.HasValue)
             {
@@ -36,6 +34,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

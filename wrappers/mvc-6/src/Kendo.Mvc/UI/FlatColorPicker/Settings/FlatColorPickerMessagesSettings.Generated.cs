@@ -15,14 +15,12 @@ namespace Kendo.Mvc.UI
 
         public string Cancel { get; set; }
 
-        public string IdPrefix { get; set; } = "#";
 
         public FlatColorPicker FlatColorPicker { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
 
             if (Apply.HasValue())
             {
@@ -36,6 +34,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

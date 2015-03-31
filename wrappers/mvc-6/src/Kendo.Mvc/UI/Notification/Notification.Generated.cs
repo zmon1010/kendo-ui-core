@@ -34,7 +34,6 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
-
             if (AllowHideAfter.HasValue)
             {
                 settings["allowHideAfter"] = AllowHideAfter;
@@ -83,6 +82,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }
