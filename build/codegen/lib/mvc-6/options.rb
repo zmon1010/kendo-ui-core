@@ -137,6 +137,16 @@ module CodeGen::MVC6::Wrappers::Options
         setter
     end
 
+    def id_prefix
+        prefix = "IdPrefix"
+
+        if !@owner.csharp_name.eql?(component_name)
+            prefix = "#{component_name}.#{prefix}"
+        end
+
+        prefix
+    end
+
     def csharp_type
         return_type = ''
 

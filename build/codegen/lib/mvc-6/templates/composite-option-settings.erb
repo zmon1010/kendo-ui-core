@@ -15,7 +15,6 @@ namespace Kendo.Mvc.UI
 % if toggleable && !unique_options.any?{ |o| o.csharp_name.downcase.eql?('enabled') }
         public bool Enabled { get; set; }
 % end
-        public string IdPrefix { get; set; } = "#";
 
         public <%= component_name %><%= csharp_generic_args %> <%= component_name %> { get; set; }
 
@@ -23,19 +22,8 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-% if composite_prefix?
-            InitializePrefix();
-% end
-
 <%= unique_options.map { |o| o.to_serialization }.join %>
             return settings;
         }
-
-% if composite_prefix?
-        protected void InitializePrefix()
-        {
-            <%= composite_options.map { |o| o.to_prefix if o.prefix? }.join %>
-        }
-% end
     }
 }

@@ -4,7 +4,7 @@
             {
                 settings["<%= name %>"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('{0}{1}').html()", IdPrefix, <%=csharp_name%>Id
+                        "jQuery('{0}{1}').html()", <%=id_prefix%>, <%=csharp_name%>Id
                     )
                 };
             }
