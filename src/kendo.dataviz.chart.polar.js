@@ -95,7 +95,7 @@ var __meta__ = {
                 majorAngles = axis.majorGridLineAngles(altAxis);
                 skipMajor = true;
 
-                gridLines = axis.renderGridLines(
+                gridLines = axis.renderMajorGridLines(
                     majorAngles, radius, options.majorGridLines
                 );
             }
@@ -103,15 +103,24 @@ var __meta__ = {
             if (options.minorGridLines.visible) {
                 minorAngles = axis.minorGridLineAngles(altAxis, skipMajor);
 
-                append(gridLines, axis.renderGridLines(
-                    minorAngles, radius, options.minorGridLines
+                append(gridLines, axis.renderMinorGridLines(
+                    minorAngles, radius, options.minorGridLines, altAxis, skipMajor
                 ));
             }
 
             return gridLines;
         },
 
-        renderGridLines: function(angles, radius, options) {
+        renderMajorGridLines: function(angles, radius, options) {
+            return this.renderGridLines(angles, radius, options);
+        },
+
+        renderMinorGridLines: function(angles, radius, options, altAxis, skipMajor) {
+            var radiusCallback = this.radiusCallback && this.radiusCallback(radius, altAxis, skipMajor);
+            return this.renderGridLines(angles, radius, options, radiusCallback);
+        },
+
+        renderGridLines: function(angles, radius, options, radiusCallback) {
             var style = {
                 stroke: {
                     width: options.width,
@@ -126,6 +135,9 @@ var __meta__ = {
 
             for (var i = 0; i < angles.length; i++) {
                 var line = new draw.Path(style);
+                if (radiusCallback) {
+                    circle.radius = radiusCallback(angles[i]);
+                }
 
                 line.moveTo(circle.center)
                     .lineTo(circle.pointAt(angles[i]));
@@ -136,9 +148,9 @@ var __meta__ = {
             return container.children;
         },
 
-        gridLineAngles: function(altAxis, step, skipStep) {
+        gridLineAngles: function(altAxis, size, skip, step, skipAngles) {
             var axis = this,
-                divs = axis.intervals(step, skipStep),
+                divs = axis.intervals(size, skip, step, skipAngles),
                 options = altAxis.options,
                 altAxisVisible = options.visible && (options.line || {}).visible !== false;
 
@@ -179,6 +191,9 @@ var __meta__ = {
 
         reflowLabels: function() {
             var axis = this,
+                labelOptions = axis.options.labels,
+                skip = labelOptions.skip || 0,
+                step = labelOptions.step || 1,
                 measureBox = new Box2D(),
                 labels = axis.labels,
                 labelBox,
@@ -188,38 +203,37 @@ var __meta__ = {
                 labels[i].reflow(measureBox);
                 labelBox = labels[i].box;
 
-                labels[i].reflow(axis.getSlot(i).adjacentBox(
+                labels[i].reflow(axis.getSlot(skip + i * step).adjacentBox(
                     0, labelBox.width(), labelBox.height()
                 ));
             }
         },
 
-        intervals: function(step, skipStep) {
+        intervals: function(size, skip, step, skipAngles) {
             var axis = this,
                 options = axis.options,
                 categories = options.categories.length,
                 angle = 0,
                 skipAngle = 0,
-                divCount = categories / step || 1,
+                divCount = categories / size || 1,
                 divAngle = 360 / divCount,
                 divs = [],
                 i;
 
-            if (skipStep) {
-                skipAngle = 360 / (categories / skipStep);
-            }
+            skip = skip || 0;
+            step = step || 1;
 
-            for (i = 0; i < divCount; i++) {
-                angle = round(angle, COORD_PRECISION);
-
-                if (angle % skipAngle !== 0) {
-                    divs.push(angle % 360);
+            for (i = skip; i < divCount; i+= step) {
+                if (options.reverse) {
+                    angle = 360 - i * divAngle;
+                } else {
+                    angle = i * divAngle;
                 }
 
-                if (options.reverse) {
-                    angle = 360 + angle - divAngle;
-                } else {
-                    angle += divAngle;
+                angle = round(angle, COORD_PRECISION) % 360;
+
+                if (!(skipAngles && dataviz.inArray(angle, skipAngles))) {
+                    divs.push(angle);
                 }
             }
 
@@ -247,11 +261,34 @@ var __meta__ = {
         },
 
         majorGridLineAngles: function(altAxis) {
-            return this.gridLineAngles(altAxis, 1);
+            var majorGridLines = this.options.majorGridLines;
+            return this.gridLineAngles(altAxis, 1, majorGridLines.skip, majorGridLines.step);
         },
 
         minorGridLineAngles: function(altAxis, skipMajor) {
-            return this.gridLineAngles(altAxis, 0.5, skipMajor ? 1 : 0);
+            var options = this.options;
+            var minorGridLines = options.minorGridLines;
+            var majorGridLines = options.majorGridLines;
+            var majorGridLineAngles = skipMajor ? this.intervals(1, majorGridLines.skip, majorGridLines.step) : null;
+
+            return this.gridLineAngles(altAxis, 0.5, minorGridLines.skip, minorGridLines.step, majorGridLineAngles);
+        },
+
+        radiusCallback: function(radius, altAxis, skipMajor) {
+            if (altAxis.options.type !== ARC) {
+                var minorAngle = 360 / (this.options.categories.length * 2);
+                var minorRadius = math.cos(minorAngle * DEG_TO_RAD) * radius;
+                var majorAngles = this.majorAngles();
+
+                var radiusCallback = function(angle) {
+                    if (!skipMajor && dataviz.inArray(angle, majorAngles)) {
+                        return radius;
+                    } else {
+                        return minorRadius;
+                    }
+                };
+                return radiusCallback;
+            }
         },
 
         createPlotBands: function() {
@@ -634,11 +671,12 @@ var __meta__ = {
 
         reflowLabels: function() {
             var axis = this,
-                labelOptions = axis.options.labels,
+                options = axis.options,
+                labelOptions = options.labels,
                 skip = labelOptions.skip || 0,
                 step = labelOptions.step || 1,
                 measureBox = new Box2D(),
-                divs = axis.majorIntervals(),
+                divs = axis.intervals(options.majorUnit, skip, step),
                 labels = axis.labels,
                 labelBox,
                 i;
@@ -647,7 +685,7 @@ var __meta__ = {
                 labels[i].reflow(measureBox);
                 labelBox = labels[i].box;
 
-                labels[i].reflow(axis.getSlot(divs[skip + i * step]).adjacentBox(
+                labels[i].reflow(axis.getSlot(divs[i]).adjacentBox(
                     0, labelBox.width(), labelBox.height()
                 ));
             }
@@ -657,24 +695,23 @@ var __meta__ = {
             return this.box;
         },
 
-        intervals: function(step, skipStep) {
+        intervals: function(size, skip, step, skipAngles) {
             var axis = this,
                 options = axis.options,
-                divisions = axis.getDivisions(step),
-                angle = options.min,
+                divisions = axis.getDivisions(size),
+                min = options.min,
+                current,
                 divs = [],
                 i;
 
-            if (skipStep) {
-                skipStep = skipStep / step;
-            }
+            skip = skip || 0;
+            step = step || 1;
 
-            for (i = 0; i < divisions; i++) {
-                if (i % skipStep !== 0) {
-                    divs.push((360 + angle) % 360);
+            for (i = skip; i < divisions; i+= step) {
+                current = (360 + min + i * size) % 360;
+                if (!(skipAngles && dataviz.inArray(current, skipAngles))) {
+                    divs.push(current);
                 }
-
-                angle += step;
             }
 
             return divs;
@@ -689,7 +726,7 @@ var __meta__ = {
         },
 
         intervalAngle: function(i) {
-            return (360 + i - this.options.startAngle) % 360;
+            return (540 - i - this.options.startAngle) % 360;
         },
 
         majorAngles: RadarCategoryAxis.fn.majorAngles,
@@ -699,12 +736,17 @@ var __meta__ = {
         },
 
         majorGridLineAngles: function(altAxis) {
-            return this.gridLineAngles(altAxis, this.options.majorUnit);
+            var majorGridLines = this.options.majorGridLines;
+            return this.gridLineAngles(altAxis, this.options.majorUnit, majorGridLines.skip, majorGridLines.step);
         },
 
         minorGridLineAngles: function(altAxis, skipMajor) {
-            return this.gridLineAngles(altAxis, this.options.minorUnit,
-                      skipMajor ? this.options.majorUnit : 0);
+            var options = this.options;
+            var minorGridLines = options.minorGridLines;
+            var majorGridLines = options.majorGridLines;
+            var majorGridLineAngles = skipMajor ? this.intervals(options.majorUnit, majorGridLines.skip, majorGridLines.step) : null;
+
+            return this.gridLineAngles(altAxis, this.options.minorUnit, minorGridLines.skip, minorGridLines.step, majorGridLineAngles);
         },
 
         createPlotBands: RadarCategoryAxis.fn.createPlotBands,

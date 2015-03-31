@@ -127,6 +127,24 @@
         closeTextPosition("", getAxisTexts(), [[483, 175], [290.5, 510], [92.795, 175]], TOLERANCE);
     });
 
+    test("applies skip when distributing labels", function() {
+        createAxis({
+            labels: {
+                skip: 1
+            }
+        });
+        closeTextPosition("", getAxisTexts(),  [[482.535, 410], [92.795, 410]], TOLERANCE);
+    });
+
+    test("applies step when distributing labels", function() {
+        createAxis({
+            labels: {
+                step: 2
+            }
+        });
+        closeTextPosition("", getAxisTexts(), [[289.5, 75], [92.795, 410]], TOLERANCE);
+    });
+
     test("labels margin is applied", function() {
         createAxis({ labels: { margin: 5 } });
 
@@ -467,6 +485,20 @@
         equal(gridLines[0].options.stroke.width, 2);
     });
 
+    test("applies major grid line skip and step", function() {
+        setupGridLines(altAxis, {
+            categories: ["A", "B", "C", "D", "E"],
+            majorGridLines: {
+                skip: 2,
+                step: 2
+            }
+        });
+
+        equal(gridLines.length, 2);
+        sameLinePath(gridLines[0], kendo.drawing.Path.fromPoints([[300, 300], [418,  462]]), TOLERANCE);
+        sameLinePath(gridLines[1], kendo.drawing.Path.fromPoints([[300, 300], [110,  238]]), TOLERANCE);
+    });
+
     test("renders minor grid lines", function() {
         setupGridLines(altAxis, {
             majorGridLines: {
@@ -478,6 +510,34 @@
         });
 
         equal(gridLines.length, 5);
+    });
+
+    test("renders minor grid lines to the alt axis if the alt axis type is line", function() {
+        setupGridLines(deepExtend({
+            options: {
+                type: "line"
+            }
+        }, altAxis), {
+            majorGridLines: {
+                visible: false
+            },
+            minorGridLines: {
+                visible: true
+            }
+        });
+        var radius = 200;
+        var minorAngle = 360 / (3 * 2);
+        var minorRadius = Math.cos(kendo.util.rad(minorAngle)) * radius;
+
+        for (var idx = 0; idx < 5; idx++) {
+            var gridLine = gridLines[idx];
+            var distance = gridLine.segments[0].anchor().distanceTo(gridLine.segments[1].anchor());
+            if (idx % 2 !== 0) {
+                close(distance, radius, 0.1);
+            } else {
+                close(distance, minorRadius, 0.1);
+            }
+        }
     });
 
     test("applies minor grid line color", function() {
@@ -506,6 +566,24 @@
         });
 
         equal(gridLines[0].options.stroke.width, 4);
+    });
+
+    test("applies minor grid lines skip and step", function() {
+        setupGridLines(altAxis, {
+            majorGridLines: {
+                visible: false
+            },
+            minorGridLines: {
+                visible: true,
+                skip: 1,
+                step: 2
+            }
+        });
+
+        equal(gridLines.length, 3);
+        sameLinePath(gridLines[0], kendo.drawing.Path.fromPoints([[300, 300], [387,  250]]), TOLERANCE);
+        sameLinePath(gridLines[1], kendo.drawing.Path.fromPoints([[300, 300], [300,  400]]), TOLERANCE);
+        sameLinePath(gridLines[2], kendo.drawing.Path.fromPoints([[300, 300], [213,  250]]), TOLERANCE);
     });
 
     // ------------------------------------------------------------

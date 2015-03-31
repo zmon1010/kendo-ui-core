@@ -141,6 +141,7 @@
                 step: 2
             }
         });
+
         closeTextPosition("", getAxisTexts(), [[410, 102], [66, 292], [410, 483]], TOLERANCE);
     });
 
@@ -429,6 +430,12 @@
         gridLines = axis.createGridLines(altAxis);
     }
 
+    function closeGridLines(actual, expected, tolerance) {
+        for (var idx = 0; idx < actual.length; idx++) {
+            sameLinePath(actual[idx], kendo.drawing.Path.fromPoints(expected[idx]), tolerance);
+        }
+    }
+
     module("Polar Numeric Axis / Grid lines", {
         setup: function() {
             setupGridLines(altAxis);
@@ -451,7 +458,7 @@
 
     test("major grid lines extend to value axis end", function() {
         var anchor = gridLines[0].segments[1].anchor();
-        close(anchor.x, 100, TOLERANCE);
+        close(anchor.x, 500, TOLERANCE);
         equal(anchor.y, 300);
     });
 
@@ -490,6 +497,12 @@
     test("applies major grid line width", function() {
         setupGridLines(altAxis, { majorGridLines: { width: 2 } });
         equal(gridLines[0].options.stroke.width, 2);
+    });
+
+    test("applies major grid lines skip and step", function() {
+        setupGridLines(altAxis, { majorGridLines: { skip: 1, step: 2 } });
+        equal(gridLines.length, 3);
+        closeGridLines(gridLines, [[[300, 300], [400, 127]], [[300, 300], [100, 300]], [[300, 300], [400, 473]]], TOLERANCE);
     });
 
     test("renders minor grid lines", function() {
@@ -532,6 +545,21 @@
         equal(gridLines[0].options.stroke.width, 4);
     });
 
+    test("applies minor grid lines skip and step", function() {
+        setupGridLines(altAxis, {
+            majorGridLines: {
+                visible: false
+            },
+            minorGridLines: {
+                visible: true,
+                skip: 2,
+                step: 4
+            }
+        });
+        equal(gridLines.length, 3);
+        closeGridLines(gridLines, [[[300, 300], [400, 127]], [[300, 300], [100, 300]], [[300, 300], [400, 473]]], TOLERANCE);
+    });
+
     // ------------------------------------------------------------
     module("Polar Numeric Axis / Grid lines / startAngle", {
         setup: function() {
@@ -540,7 +568,7 @@
     });
 
     test("major grid lines are offset with start angle", function() {
-        var ref = Point2D.onCircle(center, 350, 200),
+        var ref = Point2D.onCircle(center, 170, 200),
             end = gridLines[0].segments[1].anchor();
 
         ok(ref.equals(end));
