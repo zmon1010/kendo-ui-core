@@ -6840,7 +6840,7 @@ var __meta__ = {
            var startingPage = dataSource.page();
 
            function resolve() {
-               if (allPages) {
+               if (allPages && startingPage !== undefined) {
                    dataSource.unbind("change", exportPage);
                    dataSource.one("change", function() {
                        result.resolve(doc);

@@ -285,4 +285,32 @@
         });
     });
 
+    test("promise is resolved", function() {
+        stubMethod(draw, "exportPDF", function(group) {
+            return exportNoop();
+        }, function() {
+            grid.saveAsPDF().done(function(e) {
+                ok(true);
+            });
+        });
+    });
+
+    test("promise is resolved for non-pageable grid", function() {
+        createGrid({
+            dataSource: [],
+            pageable: false,
+            pdf: {
+                allPages: true
+            }
+        });
+
+        stubMethod(draw, "exportPDF", function(group) {
+            return exportNoop();
+        }, function() {
+            grid.saveAsPDF().done(function(e) {
+                ok(true);
+            });
+        });
+    });
+
 })();
