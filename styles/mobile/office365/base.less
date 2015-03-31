@@ -280,28 +280,7 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 /* Loader & Pull-to-refresh */
-.km-office365 .km-loader:before {background-color: red; }
-.km-office365 .km-loader > *:not(h1) {background-color: transparent;}
-//.km-office365 .km-loader .km-loading-left {background-color: #fff;}
-.km-office365 .km-loader .km-loading-right {background-color: transparent;}
-.km-office365 .km-loader .km-loading-right:before {background-color: red;}
-.km-office365 .km-loader .km-loading-right:after {background-color: green;}
-
-.km-office365 .km-loader .km-loading-left:before {background-color: pink;}
-.km-office365 .km-loader .km-loading-left:after {background-color: purple;}
-
 
 .km-office365 .km-load-more
 {
@@ -380,21 +359,20 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    //overflow: hidden;
+    overflow: hidden;
     margin-top: -13px;
     margin-left: -13px;
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    border: 3px dotted purple;
 }
 
-//.km-office365 .km-loader .km-loading-left,
-//.km-office365 .km-loader .km-loading-right,
+.km-office365 .km-loader .km-loading-left,
+.km-office365 .km-loader .km-loading-right,
 .km-office365 .km-scroller-refresh .km-loading-left,
 .km-office365 .km-scroller-refresh .km-loading-right
 {
-    .animation(materialdrive 6s infinite linear);
+   // .animation(materialdrive 4s infinite linear);
 }
 
 .km-office365 .km-scroller-refresh.km-load-more
@@ -441,11 +419,6 @@
 }
 
 .km-office365 .km-loader .km-loading-left:before,
-.km-office365 .km-loader .km-loading-left:after {
-    z-index: 10;
-}
-
-.km-office365 .km-loader .km-loading-left:before,
 .km-office365 .km-loader .km-loading-left:after,
 .km-office365 .km-loader .km-loading-right:before,
 .km-office365 .km-loader .km-loading-right:after,
@@ -461,44 +434,20 @@
     left: -13px;
     width: 26px;
     height: 26px;
-    .transform-origin(24px 24px);
-    .animation(materialrotate1 5s infinite ease-out);
-
-    transform:rotate(90deg);
+    //.transform-origin(24px 24px);
+    //.animation(materialrotate1 1.5s infinite ease-out);
 }
 
-/*.km-office365 .km-loader .km-loading-left:before,
 .km-office365 .km-loader .km-loading-left:after,
 .km-office365 .km-scroller-refresh .km-loading-left:after
 {
-   // .animation-name(materialrotate2);
+    //.animation-name(materialrotate2);
 }
-
-.km-office365 .km-loader .km-loading-left:before {
-    .animation-name(materialrotate5);
-}*/
-
-.km-office365 .km-loader .km-loading-left:before {
-    .animation-name(a1);
-}
-
-.km-office365 .km-loader .km-loading-left:after {
-    .animation-name(a2);
-}
-
-.km-office365 .km-loader .km-loading-right:before {
-    .animation-name(a3);
-}
-
-.km-office365 .km-loader .km-loading-right:after {
-    .animation-name(a4);
-}
-
 
 .km-office365 .km-loader .km-loading-right:before,
 .km-office365 .km-scroller-refresh .km-loading-right:before
 {
-   // .animation-name(materialrotate3);
+    //.animation-name(materialrotate3);
 }
 
 .km-office365 .km-loader .km-loading-right:after,
@@ -554,99 +503,146 @@
     .transition(none);
 }
 
+
+     .km-loading-left:before {
+        content: " " !important;
+        position: absolute !important;
+        top: 6px !important;
+        left: 6px !important;
+        width: 80px !important;
+        height: 80px !important;
+        border-radius: 50% !important;
+        display: block !important;
+        border: 4px dotted black !important;
+      }
+      
+      .km-loading-left,
+      .km-loading-left:after {
+        left: 0 !important;
+        top: 0 !important;
+        display: block !important;
+        position: absolute !important;
+        width: 100px !important;
+        height: 100px !important;
+        border-radius: 50% !important;
+         clip: rect(0px, 50px, 100px, 0px);
+      }
+
+      .km-loading-left:after {
+        content: " " !important;
+        background-color: red !important;
+        //-webkit-animation: rotate_left_sector 4s linear 0 infinite;
+        //.animation-name(rotate_left_sector 4s linear 0 infinite);
+ 
+      -webkit-animation: rotate_left_sector 4s linear 0s infinite alternate;
+          -moz-animation: rotate_left_sector 4s linear 0s infinite alternate;
+           -o-animation: rotate_left_sector 4s linear 0s infinite alternate;
+              animation: rotate_left_sector 4s linear 0s infinite alternate;
+
+      }
+      
+      .km-loading-right { 
+            transform: rotate(180deg) !important;
+        }
+      
+      .km-loading-right:after {
+       content: " " !important;
+        background-color: orange !important;
+        //-webkit-animation: rotate_right_sector 4s linear 0 infinite;
+        //.animation-name(rotate_right_sector 4s linear 0 infinite);
+
+        -webkit-animation: rotate_right_sector 4s linear 0s infinite alternate;
+      -moz-animation: rotate_right_sector 4s linear 0s infinite alternate;
+       -o-animation: rotate_right_sector 4s linear 0s infinite alternate;
+          animation: rotate_right_sector 4s linear 0s infinite alternate;
+      }
+
+
+
+
+
+
+@-webkit-keyframes rotate_left_sector {
+    0% { -webkit-transform: rotate(0deg);  }
+    25% { -webkit-transform: rotate(0deg); }
+    50% { -webkit-transform: rotate(180deg); }
+    75% { -webkit-transform: rotate(180deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@-webkit-keyframes rotate_right_sector {
+    0% { -webkit-transform: rotate(0deg);  }
+    25% { -webkit-transform: rotate(180deg); }
+    50% { -webkit-transform: rotate(180deg); }
+    75% { -webkit-transform: rotate(360deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@-ms-keyframes rotate_left_sector {
+    0% { -ms-transform: rotate(0deg);  }
+    25% { -ms-transform: rotate(0deg); }
+    50% { -ms-transform: rotate(180deg); }
+    75% { -ms-transform: rotate(180deg); }
+    100% { -ms-transform: rotate(360deg); }
+}
+
+@-ms-keyframes rotate_right_sector {
+    0% { -ms-transform: rotate(0deg);  }
+    25% { -ms-transform: rotate(180deg); }
+    50% { -ms-transform: rotate(180deg); }
+    75% { -ms-transform: rotate(360deg); }
+    100% { -ms-transform: rotate(360deg); }
+}
+
+@keyframes rotate_left_sector {
+    0% { -webkit-transform: rotate(0deg);  }
+    25% { -webkit-transform: rotate(0deg); }
+    50% { -webkit-transform: rotate(180deg); }
+    75% { -webkit-transform: rotate(180deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes rotate_right_sector {
+    0% { transform: rotate(0deg);  }
+    25% { transform: rotate(180deg); }
+    50% { transform: rotate(180deg); }
+    75% { transform: rotate(360deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/*
 @-webkit-keyframes materialrotate1 {
     0% { -webkit-transform: rotate(0deg); }
-    25% { -webkit-transform: rotate(0deg); }
-    50% { -webkit-transform: rotate(0deg); }
-    75% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(0deg); }
+    10% { -webkit-transform: rotate(0deg); }
+    50% { -webkit-transform: rotate(270deg); }
+    90% { -webkit-transform: rotate(360deg); }
+    100% { -webkit-transform: rotate(360deg); }
 }
 
 @-webkit-keyframes materialrotate2 {
-    0% { -webkit-transform: rotate(deg); }
-    25% { -webkit-transform: rotate(90deg); }
-    50% { -webkit-transform: rotate(90deg); }
-    75% { -webkit-transform: rotate(90deg); }
-    100% { -webkit-transform: rotate(90deg); }
+    0% { -webkit-transform: rotate(0deg); }
+    10% { -webkit-transform: rotate(0deg); }
+    50% { -webkit-transform: rotate(20deg); }
+    90% { -webkit-transform: rotate(360deg); }
+    100% { -webkit-transform: rotate(360deg); }
 }
 
 @-webkit-keyframes materialrotate3 {
     0% { -webkit-transform: rotate(0deg); }
-    25% { -webkit-transform: rotate(90deg); }
-    50% { -webkit-transform: rotate(150deg); }
-    75% { -webkit-transform: rotate(180deg); }
-    100% { -webkit-transform: rotate(270deg); }
+    10% { -webkit-transform: rotate(0deg); }
+    50% { -webkit-transform: rotate(90deg); }
+    90% { -webkit-transform: rotate(360deg); }
+    100% { -webkit-transform: rotate(360deg); }
 }
 
 @-webkit-keyframes materialrotate4 {
     0% { -webkit-transform: rotate(0deg); }
-    25% { -webkit-transform: rotate(90deg); }
+    10% { -webkit-transform: rotate(0deg); }
     50% { -webkit-transform: rotate(180deg); }
-    90% { -webkit-transform: rotate(270deg); }
-    100% { -webkit-transform: rotate(360deg); }
-}
-
-
-@-webkit-keyframes materialrotate5{
-    0% { -webkit-transform: rotate(360deg); }
-    25% { -webkit-transform: rotate(360deg); }
-    50% { -webkit-transform: rotate(360deg); }
     90% { -webkit-transform: rotate(360deg); }
     100% { -webkit-transform: rotate(360deg); }
 }
-
-
-
-
-
-
-
-@-webkit-keyframes a1 {
-    0% { -webkit-transform: rotate(0deg); }
-    //25% { -webkit-transform: rotate(25deg); }
-    50% { -webkit-transform: rotate(90deg); }
-    //75% { -webkit-transform: rotate(75deg); }
-    100% { -webkit-transform: rotate(90deg); }
-}
-
-@-webkit-keyframes a2 {
-    0% { -webkit-transform: rotate(0deg); }
-   // 25% { -webkit-transform: rotate(60deg); }
-    50% { -webkit-transform: rotate(90deg); }
-    //75% { -webkit-transform: rotate(120deg); }
-    100% { -webkit-transform: rotate(180deg); }
-}
-
-@-webkit-keyframes a3 {
-    0% { -webkit-transform: rotate(0deg); }
-    25% { -webkit-transform: rotate(90deg); }
-    50% { -webkit-transform: rotate(180deg); }
-    //75% { -webkit-transform: rotate(90deg); }
-    100% { -webkit-transform: rotate(270deg); }
-}
-
-@-webkit-keyframes a4 {
-    0% { -webkit-transform: rotate(0deg); }
-    25% { -webkit-transform: rotate(90deg); }
-    50% { -webkit-transform: rotate(180deg); }
-    90% { -webkit-transform: rotate(270deg); }
-    100% { -webkit-transform: rotate(360deg); }
-}
-
-
-@-webkit-keyframes a5{
-    0% { -webkit-transform: rotate(360deg); }
-    25% { -webkit-transform: rotate(360deg); }
-    50% { -webkit-transform: rotate(360deg); }
-    90% { -webkit-transform: rotate(360deg); }
-    100% { -webkit-transform: rotate(360deg); }
-}
-
-
-
-
-
-
 
 @-ms-keyframes materialrotate1 {
     0% { -ms-transform: rotate(0deg); }
@@ -722,4 +718,4 @@
 
 @keyframes materialdrive {
     100% { transform: rotate(360deg); }
-}
+}*/
