@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListColumnMenuSettings class
     /// </summary>
-    public partial class TreeListColumnMenuSettings<T> 
+    public partial class TreeListColumnMenuSettings<T> where T : class 
     {
         public bool? Columns { get; set; }
 
@@ -21,6 +21,8 @@ namespace Kendo.Mvc.UI
 
         public bool Enabled { get; set; }
         public string IdPrefix { get; set; } = "#";
+
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

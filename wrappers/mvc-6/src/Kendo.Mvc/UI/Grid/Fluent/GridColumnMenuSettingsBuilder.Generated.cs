@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring GridColumnMenuSettings
     /// </summary>
     public partial class GridColumnMenuSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// If set to true the column menu would allow the user to select (show and hide) grid columns. By default the column menu allows column selection.

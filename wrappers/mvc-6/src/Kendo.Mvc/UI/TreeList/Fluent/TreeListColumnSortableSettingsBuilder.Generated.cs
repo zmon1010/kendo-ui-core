@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListColumnSortableSettings
     /// </summary>
     public partial class TreeListColumnSortableSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// A JavaScript function which is used to compare the values - should return -1 if first argument is less than second one, 0 if both are the same or +1 if the first one is greater than second one.

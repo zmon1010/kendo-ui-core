@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListSortableSettings
     /// </summary>
     public partial class TreeListSortableSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// If set to true the user can get the treelist in its unsorted state by clicking the sorted column header.

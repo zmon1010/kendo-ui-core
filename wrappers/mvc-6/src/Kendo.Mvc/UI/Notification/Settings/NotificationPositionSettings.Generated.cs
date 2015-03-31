@@ -23,6 +23,8 @@ namespace Kendo.Mvc.UI
 
         public string IdPrefix { get; set; } = "#";
 
+        public Notification Notification { get; set; }
+
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();

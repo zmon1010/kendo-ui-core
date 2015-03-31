@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListMessagesCommandsSettings class
     /// </summary>
-    public partial class TreeListMessagesCommandsSettings<T> 
+    public partial class TreeListMessagesCommandsSettings<T> where T : class 
     {
         public string Canceledit { get; set; }
 
@@ -28,6 +28,8 @@ namespace Kendo.Mvc.UI
         public string Update { get; set; }
 
         public string IdPrefix { get; set; } = "#";
+
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

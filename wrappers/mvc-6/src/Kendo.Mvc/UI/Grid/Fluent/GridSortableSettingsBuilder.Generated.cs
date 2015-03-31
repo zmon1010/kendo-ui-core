@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring GridSortableSettings
     /// </summary>
     public partial class GridSortableSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// If set to true the user can get the grid in unsorted state by clicking the sorted column header.

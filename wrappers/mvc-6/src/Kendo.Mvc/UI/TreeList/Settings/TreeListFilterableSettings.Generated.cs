@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListFilterableSettings class
     /// </summary>
-    public partial class TreeListFilterableSettings<T> 
+    public partial class TreeListFilterableSettings<T> where T : class 
     {
         public bool? Extra { get; set; }
 
@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 
         public bool Enabled { get; set; }
         public string IdPrefix { get; set; } = "#";
+
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListColumn
     /// </summary>
     public partial class TreeListColumnBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// HTML attributes of the table cell (&lt;td&gt;) rendered for the column.
@@ -25,7 +25,12 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the command setting.</param>
         public TreeListColumnBuilder<T> Command(Action<TreeListColumnCommandFactory<T>> configurator)
         {
-            configurator(new TreeListColumnCommandFactory<T>(Container.Command));
+
+            configurator(new TreeListColumnCommandFactory<T>(Container.Command)
+            {
+                TreeList = Container.TreeList
+            });
+
             return this;
         }
 
@@ -77,7 +82,10 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeListColumnBuilder<T> Filterable(Action<TreeListColumnFilterableSettingsBuilder<T>> configurator)
         {
             Container.Filterable.Enabled = true;
+
+            Container.Filterable.TreeList = Container.TreeList;
             configurator(new TreeListColumnFilterableSettingsBuilder<T>(Container.Filterable));
+
             return this;
         }
 
@@ -163,7 +171,10 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeListColumnBuilder<T> Sortable(Action<TreeListColumnSortableSettingsBuilder<T>> configurator)
         {
             Container.Sortable.Enabled = true;
+
+            Container.Sortable.TreeList = Container.TreeList;
             configurator(new TreeListColumnSortableSettingsBuilder<T>(Container.Sortable));
+
             return this;
         }
 

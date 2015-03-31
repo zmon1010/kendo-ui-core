@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListFilterableMessagesSettings
     /// </summary>
     public partial class TreeListFilterableMessagesSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// The text of the option which represents the "and" logical operation.

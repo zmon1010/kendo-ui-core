@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListColumnMenuMessagesSettings
     /// </summary>
     public partial class TreeListColumnMenuMessagesSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// The text message displayed for the column selection menu item.

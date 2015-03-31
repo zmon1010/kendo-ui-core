@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListPdfSettings
     /// </summary>
     public partial class TreeListPdfSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// The author of the PDF document.

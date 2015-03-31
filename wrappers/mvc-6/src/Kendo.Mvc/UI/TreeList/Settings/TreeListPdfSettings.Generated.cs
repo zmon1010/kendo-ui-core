@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListPdfSettings class
     /// </summary>
-    public partial class TreeListPdfSettings<T> 
+    public partial class TreeListPdfSettings<T> where T : class 
     {
         public string Author { get; set; }
 
@@ -34,6 +34,8 @@ namespace Kendo.Mvc.UI
         public string Title { get; set; }
 
         public string IdPrefix { get; set; } = "#";
+
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

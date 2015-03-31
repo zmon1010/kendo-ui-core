@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListColumnMenuMessagesSettings class
     /// </summary>
-    public partial class TreeListColumnMenuMessagesSettings<T> 
+    public partial class TreeListColumnMenuMessagesSettings<T> where T : class 
     {
         public string Columns { get; set; }
 
@@ -20,6 +20,8 @@ namespace Kendo.Mvc.UI
         public string SortDescending { get; set; }
 
         public string IdPrefix { get; set; } = "#";
+
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

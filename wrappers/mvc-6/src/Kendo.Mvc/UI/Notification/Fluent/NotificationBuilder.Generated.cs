@@ -85,7 +85,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the position setting.</param>
         public NotificationBuilder Position(Action<NotificationPositionSettingsBuilder> configurator)
         {
+
+            Container.Position.Notification = Container;
             configurator(new NotificationPositionSettingsBuilder(Container.Position));
+
             return this;
         }
 

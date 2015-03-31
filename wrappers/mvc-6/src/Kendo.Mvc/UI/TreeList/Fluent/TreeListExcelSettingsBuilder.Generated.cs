@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListExcelSettings
     /// </summary>
     public partial class TreeListExcelSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// Specifies the file name of the exported Excel file.

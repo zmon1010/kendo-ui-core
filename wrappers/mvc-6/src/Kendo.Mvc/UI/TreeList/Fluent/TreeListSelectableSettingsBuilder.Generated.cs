@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListSelectableSettings
     /// </summary>
     public partial class TreeListSelectableSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// Specifies whether multiple or single selection is allowed.

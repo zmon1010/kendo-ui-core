@@ -21,6 +21,8 @@ namespace Kendo.Mvc.UI
 
         public string IdPrefix { get; set; } = "#";
 
+        public DateTimePicker DateTimePicker { get; set; }
+
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();

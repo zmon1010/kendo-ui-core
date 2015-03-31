@@ -9,12 +9,14 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListColumnFilterableSettings class
     /// </summary>
-    public partial class TreeListColumnFilterableSettings<T> 
+    public partial class TreeListColumnFilterableSettings<T> where T : class 
     {
         public string Ui { get; set; }
 
         public bool Enabled { get; set; }
         public string IdPrefix { get; set; } = "#";
+
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

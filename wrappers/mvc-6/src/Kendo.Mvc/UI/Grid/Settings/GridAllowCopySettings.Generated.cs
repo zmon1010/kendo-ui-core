@@ -9,12 +9,14 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI GridAllowCopySettings class
     /// </summary>
-    public partial class GridAllowCopySettings<T> 
+    public partial class GridAllowCopySettings<T> where T : class 
     {
         public string Delimeter { get; set; }
 
         public bool Enabled { get; set; }
         public string IdPrefix { get; set; } = "#";
+
+        public Grid<T> Grid { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

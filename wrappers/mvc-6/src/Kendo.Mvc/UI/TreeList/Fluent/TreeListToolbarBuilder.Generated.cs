@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListToolbar
     /// </summary>
     public partial class TreeListToolbarBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// The name of the toolbar command. Either a built-in ("create", "excel", "pdf") or custom. The name is reflected in one of the CSS classes, which is applied to the button - k-grid-name.

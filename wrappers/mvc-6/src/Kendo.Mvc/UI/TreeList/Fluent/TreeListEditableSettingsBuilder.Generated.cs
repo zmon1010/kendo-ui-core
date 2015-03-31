@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListEditableSettings
     /// </summary>
     public partial class TreeListEditableSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// The template which renders the popup editor.The template should contain elements whose name HTML attributes are set as the editable fields. This is how the treelist will know

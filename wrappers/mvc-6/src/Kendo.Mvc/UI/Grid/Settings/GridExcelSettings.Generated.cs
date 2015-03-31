@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI GridExcelSettings class
     /// </summary>
-    public partial class GridExcelSettings<T> 
+    public partial class GridExcelSettings<T> where T : class 
     {
         public bool? AllPages { get; set; }
 
@@ -22,6 +22,8 @@ namespace Kendo.Mvc.UI
         public string ProxyURL { get; set; }
 
         public string IdPrefix { get; set; } = "#";
+
+        public Grid<T> Grid { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

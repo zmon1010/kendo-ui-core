@@ -24,7 +24,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the tilesize setting.</param>
         public ColorPaletteBuilder TileSize(Action<ColorPaletteTileSizeSettingsBuilder> configurator)
         {
+
+            Container.TileSize.ColorPalette = Container;
             configurator(new ColorPaletteTileSizeSettingsBuilder(Container.TileSize));
+
             return this;
         }
 

@@ -9,13 +9,15 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListToolbar class
     /// </summary>
-    public partial class TreeListToolbar<T> 
+    public partial class TreeListToolbar<T> where T : class 
     {
         public string Name { get; set; }
 
         public string Text { get; set; }
 
         public string IdPrefix { get; set; } = "#";
+
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

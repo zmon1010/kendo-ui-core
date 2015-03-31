@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListColumnCommand
     /// </summary>
     public partial class TreeListColumnCommandBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// The CSS class applied to the command button.

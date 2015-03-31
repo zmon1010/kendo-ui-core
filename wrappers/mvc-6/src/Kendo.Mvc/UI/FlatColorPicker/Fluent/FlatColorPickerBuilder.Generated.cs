@@ -87,7 +87,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the messages setting.</param>
         public FlatColorPickerBuilder Messages(Action<FlatColorPickerMessagesSettingsBuilder> configurator)
         {
+
+            Container.Messages.FlatColorPicker = Container;
             configurator(new FlatColorPickerMessagesSettingsBuilder(Container.Messages));
+
             return this;
         }
 

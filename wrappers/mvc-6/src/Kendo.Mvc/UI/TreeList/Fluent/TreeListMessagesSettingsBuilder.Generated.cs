@@ -7,7 +7,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListMessagesSettings
     /// </summary>
     public partial class TreeListMessagesSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// Defines the text for the command buttons used across the widget.
@@ -15,7 +15,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the commands setting.</param>
         public TreeListMessagesSettingsBuilder<T> Commands(Action<TreeListMessagesCommandsSettingsBuilder<T>> configurator)
         {
+
+            Container.Commands.TreeList = Container.TreeList;
             configurator(new TreeListMessagesCommandsSettingsBuilder<T>(Container.Commands));
+
             return this;
         }
 

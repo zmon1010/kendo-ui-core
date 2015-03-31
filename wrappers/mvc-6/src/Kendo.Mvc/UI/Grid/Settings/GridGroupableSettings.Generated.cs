@@ -9,13 +9,15 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI GridGroupableSettings class
     /// </summary>
-    public partial class GridGroupableSettings<T> 
+    public partial class GridGroupableSettings<T> where T : class 
     {
         public bool? Enabled { get; set; }
 
         public bool? ShowFooter { get; set; }
 
         public string IdPrefix { get; set; } = "#";
+
+        public Grid<T> Grid { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

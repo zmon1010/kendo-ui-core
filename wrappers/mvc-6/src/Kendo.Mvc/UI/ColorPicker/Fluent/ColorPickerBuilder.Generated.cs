@@ -36,7 +36,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the tilesize setting.</param>
         public ColorPickerBuilder TileSize(Action<ColorPickerTileSizeSettingsBuilder> configurator)
         {
+
+            Container.TileSize.ColorPicker = Container;
             configurator(new ColorPickerTileSizeSettingsBuilder(Container.TileSize));
+
             return this;
         }
 
@@ -46,7 +49,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the messages setting.</param>
         public ColorPickerBuilder Messages(Action<ColorPickerMessagesSettingsBuilder> configurator)
         {
+
+            Container.Messages.ColorPicker = Container;
             configurator(new ColorPickerMessagesSettingsBuilder(Container.Messages));
+
             return this;
         }
 

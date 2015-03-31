@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI GridPdfSettings class
     /// </summary>
-    public partial class GridPdfSettings<T> 
+    public partial class GridPdfSettings<T> where T : class 
     {
         public bool? AllPages { get; set; }
 
@@ -36,6 +36,8 @@ namespace Kendo.Mvc.UI
         public string Title { get; set; }
 
         public string IdPrefix { get; set; } = "#";
+
+        public Grid<T> Grid { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

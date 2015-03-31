@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListColumn class
     /// </summary>
-    public partial class TreeListColumn<T> 
+    public partial class TreeListColumn<T> where T : class 
     {
         public IDictionary<string,object> Attributes { get; set; }
 
@@ -54,6 +54,8 @@ namespace Kendo.Mvc.UI
         public bool? Lockable { get; set; }
 
         public string IdPrefix { get; set; } = "#";
+
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

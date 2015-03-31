@@ -14,7 +14,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the animation setting.</param>
         public ProgressBarBuilder Animation(Action<ProgressBarAnimationSettingsBuilder> configurator)
         {
+
+            Container.Animation.ProgressBar = Container;
             configurator(new ProgressBarAnimationSettingsBuilder(Container.Animation));
+
             return this;
         }
 

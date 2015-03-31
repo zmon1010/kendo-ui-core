@@ -9,12 +9,14 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListColumnSortableSettings class
     /// </summary>
-    public partial class TreeListColumnSortableSettings<T> 
+    public partial class TreeListColumnSortableSettings<T> where T : class 
     {
         public ClientHandlerDescriptor Compare { get; set; }
 
         public bool Enabled { get; set; }
         public string IdPrefix { get; set; } = "#";
+
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {

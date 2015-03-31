@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI GridSortableSettings class
     /// </summary>
-    public partial class GridSortableSettings<T> 
+    public partial class GridSortableSettings<T> where T : class 
     {
         public bool? AllowUnsort { get; set; }
 
@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 
         public bool Enabled { get; set; }
         public string IdPrefix { get; set; } = "#";
+
+        public Grid<T> Grid { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
