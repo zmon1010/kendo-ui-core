@@ -344,6 +344,13 @@
 					"kendo-ui": " This example demonstrates how to implement custom validation rule in a Kendo UI Grid.",
 					"aspnet-mvc": "This example demonstrates how to implement custom validation rule in a Telerik ASP.NET MVC Grid."
 				}
+			},
+			{
+				"text": "Paging",
+				"url": "grid/paging",
+				"packages": [
+					"mvc-offline"
+				]
 			}		
 		],
 		"category": "Data Management"
