@@ -172,8 +172,4 @@ module CodeGen::MVC6::Wrappers::Options
 
         return_type
     end
-
-    def get_binding
-        binding
-    end
 end

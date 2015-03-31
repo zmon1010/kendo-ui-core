@@ -64,24 +64,6 @@ module CodeGen::MVC6::Wrappers::Options
         def to_serialization
             SERIALIZATION.result(binding)
         end
-
-        def to_prefix()
-            ERB.new(%{
-            <%=csharp_name%>.IdPrefix = IdPrefix;
-            }).result(binding)
-        end
-
-        def composite_prefix?()
-            return true if composite_options.any? { |o| o.serialize? && o.prefix? }
-
-            false
-        end
-
-        def prefix?()
-            return true if simple_options.any? { |o| o.serialize? && o.template? }
-
-            composite_prefix?
-        end
     end
 
 end
