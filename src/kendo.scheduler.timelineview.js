@@ -1264,10 +1264,12 @@ var __meta__ = {
             return adjustedEvent.occurrence;
         },
 
-        _updateEventForMove: function(event) {
+        _eventOptionsForMove: function(event) {
            if (event.isAllDay) {
-               event.set("isAllDay", false);
+               return { isAllDay: false };
            }
+
+            return {};
         },
 
         _updateEventForResize: function(event) {

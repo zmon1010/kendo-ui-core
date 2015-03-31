@@ -2359,6 +2359,7 @@ var __meta__ = {
             var event;
             var clonedEvent;
             var that = this;
+            var originSlot;
 
             var isMobile = that._isMobile();
             var movable = that.options.editable && that.options.editable.move !== false;
@@ -2393,7 +2394,7 @@ var __meta__ = {
 
                         clonedEvent = event.clone();
 
-                        view._updateEventForMove(clonedEvent);
+                        clonedEvent.update(view._eventOptionsForMove(clonedEvent));
 
                         startSlot = view._slotByPosition(e.x.startLocation, e.y.startLocation);
 
@@ -2401,14 +2402,17 @@ var __meta__ = {
 
                         endSlot = startSlot;
 
+                        originSlot = startSlot;
+
                         if (!startSlot || that.trigger("moveStart", { event: event })) {
                             e.preventDefault();
                         }
                     })
                     .bind("drag", function(e) {
                         var view = that.view();
-
                         var slot = view._slotByPosition(e.x.location, e.y.location);
+                        var distance;
+                        var range;
 
                         if (!slot) {
                             return;
@@ -2416,15 +2420,30 @@ var __meta__ = {
 
                         endTime = slot.startOffset(e.x.location, e.y.location, that.options.snap);
 
-                        var distance = endTime - startTime;
+                        if (slot.isDaySlot !== startSlot.isDaySlot) {
+                            startSlot = view._slotByPosition(e.x.location, e.y.location);
+                            startTime = startSlot.startOffset(e.x.location, e.y.location, that.options.snap);
 
-                        view._updateMoveHint(clonedEvent, slot.groupIndex, distance);
+                            distance = endTime - startTime;
 
-                        var range = moveEventRange(clonedEvent, distance);
+                            clonedEvent.isAllDay = slot.isDaySlot;
+                            clonedEvent.start = kendo.timezone.toLocalDate(startTime);
+                            clonedEvent.end = kendo.timezone.toLocalDate(endTime);
+
+                            view._updateMoveHint(clonedEvent, slot.groupIndex, distance);
+
+                            range = { start: clonedEvent.start, end: clonedEvent.end };
+                        } else {
+                            distance = endTime - startTime;
+
+                            view._updateMoveHint(clonedEvent, slot.groupIndex, distance);
+
+                            range = moveEventRange(clonedEvent, distance);
+                        }
 
                         if (!that.trigger("move", {
                             event: event,
-                            slot: { element: slot.element, start: slot.startDate(), end: slot.endDate() },
+                            slot: { element: slot.element, start: slot.startDate(), end: slot.endDate(), isDaySlot: slot.isDaySlot },
                             resources: view._resourceBySlot(slot),
                             start: range.start,
                             end: range.end
@@ -2438,10 +2457,8 @@ var __meta__ = {
                     })
                     .bind("dragend", function(e) {
                         that.view()._removeMoveHint();
-
                         var distance = endTime - startTime;
                         var range = moveEventRange(clonedEvent, distance);
-
                         var start = range.start;
                         var end = range.end;
 
@@ -2456,10 +2473,24 @@ var __meta__ = {
                             resources: endResources
                         });
 
-                        if (!prevented && (clonedEvent.start.getTime() != start.getTime() ||
-                        clonedEvent.end.getTime() != end.getTime() || kendo.stringify(endResources) != kendo.stringify(startResources)))  {
-                            that.view()._updateEventForMove(event);
-                            that._updateEvent(null, event, $.extend({ start: start, end: end}, endResources));
+                        if (!prevented && (event.start.getTime() !== start.getTime() ||
+                        event.end.getTime() !== end.getTime() ||
+                        originSlot.isDaySlot !== endSlot.isDaySlot ||
+                        kendo.stringify(endResources) !== kendo.stringify(startResources))) {
+                            var updatedEventOptions = that.view()._eventOptionsForMove(event);
+                            var eventOptions;
+
+                            if (originSlot.isDaySlot !== endSlot.isDaySlot) {
+                                if (endSlot.isDaySlot) {
+                                    eventOptions = $.extend({ start: endSlot.startDate(), end: endSlot.startDate(), isAllDay: endSlot.isDaySlot }, updatedEventOptions, endResources);
+                                } else {
+                                    eventOptions = $.extend({ isAllDay: endSlot.isDaySlot, start: start, end: end }, updatedEventOptions, endResources);
+                                }
+                            } else {
+                                eventOptions = $.extend({ isAllDay: event.isAllDay, start: start, end: end }, updatedEventOptions, endResources);
+                            }
+
+                            that._updateEvent(null, event, eventOptions);
                         }
 
                         e.currentTarget.removeClass("k-event-active");
