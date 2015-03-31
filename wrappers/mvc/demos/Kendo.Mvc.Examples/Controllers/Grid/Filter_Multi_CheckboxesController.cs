@@ -37,12 +37,23 @@ namespace Kendo.Mvc.Examples.Controllers
 
         public bool Equals(EmployeeViewModel x, EmployeeViewModel y)
         {
-            return prop.GetValue(x, null).Equals(prop.GetValue(y, null));
+            var valueX = prop.GetValue(x, null);
+            var valueY = prop.GetValue(y, null);
+            if (valueX == null)
+            {
+                return valueY == null;
+            }
+            return valueX.Equals(valueY);
         }
 
         public int GetHashCode(EmployeeViewModel obj)
         {
-            return prop.GetValue(obj, null).GetHashCode();
+            var value = prop.GetValue(obj, null);
+            if (value == null)
+            {
+                return 0;
+            }
+            return value.GetHashCode();
         }
     }
 }
