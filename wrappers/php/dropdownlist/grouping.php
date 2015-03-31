@@ -34,7 +34,7 @@ $dataSource->type('odata')
            ->transport($transport)
            ->addGroupItem($group);
 
-$dropDownList = new \Kendo\UI\DropDownList('orders');
+$dropDownList = new \Kendo\UI\DropDownList('customers');
 
 $dropDownList->dataSource($dataSource)
          ->dataTextField('ContactName')

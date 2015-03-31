@@ -34,7 +34,7 @@ $dataSource->type('odata')
            ->transport($transport)
            ->addGroupItem($group);
 
-$multiselect = new \Kendo\UI\MultiSelect('orders');
+$multiselect = new \Kendo\UI\MultiSelect('customers');
 
 $multiselect->dataSource($dataSource)
          ->placeholder('Select customers...')

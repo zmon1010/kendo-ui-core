@@ -34,7 +34,7 @@ $dataSource->type('odata')
            ->transport($transport)
            ->addGroupItem($group);
 
-$comboBox = new \Kendo\UI\ComboBox('orders');
+$comboBox = new \Kendo\UI\ComboBox('customers');
 
 $comboBox->dataSource($dataSource)
          ->dataTextField('ContactName')

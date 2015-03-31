@@ -34,7 +34,7 @@ $dataSource->type('odata')
            ->transport($transport)
            ->addGroupItem($group);
 
-$autoComplete = new \Kendo\UI\AutoComplete('orders');
+$autoComplete = new \Kendo\UI\AutoComplete('customers');
 
 $autoComplete->dataSource($dataSource)
          ->dataTextField('ContactName')
