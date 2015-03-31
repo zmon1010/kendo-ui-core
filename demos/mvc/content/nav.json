@@ -9546,10 +9546,20 @@
       ]
   },
   {
-      "text": "Sample Mobile Applications",
-      "name": "mobile-apps",
+      "text": "Kendo UI Mobile",
+      "name": "mobile",
       "packages": [ "offline" ],
       "items": [
+          {
+            "text": "Hybrid Framework Demos",
+            "url": "mobile",
+            "title": {
+                "kendo-ui": "Hybrid Framework Demos"
+            },
+            "meta": {
+                "kendo-ui": "Hybrid Framework Demos"
+            }
+          },
           {
             "text": "Cuteness.io",
             "url": "mobile-apps/cuteness",

@@ -6,11 +6,6 @@
     <link href="../content/shared/styles/examples-offline.css" rel="stylesheet">
     <link href="../../content/web/kendo.common.min.css" rel="stylesheet">
     <link href="../../content/web/kendo.rtl.min.css" rel="stylesheet">
-    <link href="../../content/web/kendo.default.min.css" rel="stylesheet">
-
-<% if mobile %>
-    <link href="../../content/mobile/kendo.mobile.all.min.css" rel="stylesheet" />
-<% end %>
     <script src="../../scripts/jquery.min.js"></script>
     <script src="../../scripts/angular.min.js"></script>
     <script src="../../scripts/kendo.all.min.js"></script>
@@ -27,10 +22,6 @@
     <% end %>
     <%= body %>
 
-    <% if mobile %>
-    <script>
-        window.kendoMobileApplication = new kendo.mobile.Application(document.body);
-    </script>
     <% end %>
 </body>
 </html>

@@ -84,7 +84,7 @@ def include_item?(item)
     (!invert && match) || (invert && !match)
 end
 
-def find_demo_src (filename, path)
+def find_demo_src(filename, path)
     filename = filename.sub(path, 'demos/mvc/Views/demos').pathmap('%X.cshtml')
 
     DEMOS_CSHTML.find { |file| file == filename }
@@ -103,9 +103,8 @@ def find_navigation_item(categories, filename)
 end
 
 def offline_navigation
-    categories = YAML.load(File.read("demos/mvc/content/nav.json"))
-
     offline = []
+    categories = YAML.load(File.read("demos/mvc/content/nav.json"))
 
     categories.each do |category|
 
@@ -126,11 +125,13 @@ def offline_demos(categories, path)
     demos = []
 
     categories.each do |category|
-
         category['items'].each do |item|
             demos.push("#{path}/#{item['url']}.html") unless item['external']
         end
+    end
 
+    YAML.load(File.read("demos/mvc/content/mobile-nav.json")).each do |item|
+        demos.push("#{path}/#{item['url']}.html")
     end
 
     FileList[demos]
@@ -154,7 +155,10 @@ def demos(options)
 
     files = files + offline_demos(categories, path).include("#{path}/index.html");
 
-    # Build the index.html page of the suite
+    file "#{path}/mobile.html" => DEMOS_BULDFILES.include("build/templates/suite-index.html.erb") do |t|
+        cp "build/templates/mobile.html", t.name
+    end
+
     file "#{path}/index.html" => DEMOS_BULDFILES.include("build/templates/suite-index.html.erb") do |t|
 
         template = ERB.new(File.read("build/templates/suite-index.html.erb"))
@@ -186,13 +190,15 @@ def demos(options)
 
         category, item = find_navigation_item(categories, t.name)
 
-        requiresServer = item['requiresServer'].nil? ? false : item['requiresServer']
+        if item
+            requiresServer = item['requiresServer'].nil? ? false : item['requiresServer']
+            title = item['text'] # used by the template and passed via 'binding'
+            File.write(t.name, template.result(binding));
+        else
+            body.gsub!("../content", "content")
+            File.write(t.name, body);
+        end
 
-        mobile = (category['mobile'] && !item['disableInMobile']) || item['mobile']
-
-        title = item['text'] # used by the template and passed via 'binding'
-
-        File.write(t.name, template.result(binding));
     end
 
     files
