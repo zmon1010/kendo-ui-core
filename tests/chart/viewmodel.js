@@ -576,6 +576,28 @@
             rootElement.reflow();
         });
 
+        test("reflow passes empty box if there is no box left with non zero size left", function() {
+            var childStub = {
+                reflow: function(box) {
+                    this.box = dataviz.Box2D(box.x1, box.y2 - 10, box.x2, box.y2);
+                }
+            };
+
+            var child1Stub = {
+                reflow: function(box) {
+                    ok(box);
+                    equal(box.hasSize(), false);
+                },
+                box: dataviz.Box2D()
+            };
+
+            rootElement.children.push(childStub, child1Stub);
+            rootElement.options.width = 10;
+            rootElement.options.height = 10;
+
+            rootElement.reflow();
+        });
+
         test("sets border to rootElement", function() {
             createRoot({
                 border: {

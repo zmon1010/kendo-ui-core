@@ -900,7 +900,7 @@ var __meta__ = {
 
             for (var i = 0; i < children.length; i++) {
                 children[i].reflow(currentBox);
-                currentBox = boxDiff(currentBox, children[i].box);
+                currentBox = boxDiff(currentBox, children[i].box) || Box2D();
             }
         },
 
