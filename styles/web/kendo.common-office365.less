@@ -30,6 +30,18 @@
     text-align: left;
 }
 
+.k-event-actions .k-icon:first-child {
+    margin-left: 4px;
+}
+
+.k-scheduler .k-scheduler-toolbar .k-nav-current {
+    vertical-align: middle;
+}
+
+.k-scheduler .k-scheduler-toolbar .k-nav-current .k-icon {
+    vertical-align: baseline;
+}
+
 .k-scheduler-toolbar .k-scheduler-views,
 .k-scheduler-toolbar .k-nav-today,
 .k-gantt-toolbar .k-gantt-views {
@@ -293,7 +305,7 @@ span.k-tooltip {
 
 .k-fieldselector .k-list li.k-item {
     line-height: 1.231em;
-    padding: .192em 3.3em .192em .308em;
+    padding: .192em 3.9em .192em 0;
 }
 
 .k-pivot-toolbar .k-button {
@@ -821,11 +833,17 @@ div.k-window-content {
     background-position: -16px -192px; 
 }
 
-
-
 .k-pivot-toolbar {
     .k-button:active {
         .k-setting-sort {
+            //background-position: -128px -256px;
+        }
+
+        .k-i-sort-asc {
+            background-position: -128px -240px;
+        }
+
+        .k-i-sort-desc {
             background-position: -128px -256px;
         }
 
@@ -836,8 +854,11 @@ div.k-window-content {
         .k-setting-delete {
             background-position: -176px -80px;
         }
-    }
 
+        .k-setting-sort {
+            //background-position: -128px -240px;
+        }        
+    }
 }
 
 .k-treeview {
