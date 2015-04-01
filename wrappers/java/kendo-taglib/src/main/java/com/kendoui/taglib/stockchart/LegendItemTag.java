@@ -1,9 +1,9 @@
 
-package com.kendoui.taglib.chart;
+package com.kendoui.taglib.stockchart;
 
 
 import com.kendoui.taglib.BaseTag;
-import com.kendoui.taglib.json.Function;
+
 
 
 
@@ -48,7 +48,7 @@ public class LegendItemTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 //>> Attributes
 
     public static String tagName() {
-        return "chart-legend-item";
+        return "stockChart-legend-item";
     }
 
     public void setVisual(LegendItemVisualFunctionTag value) {

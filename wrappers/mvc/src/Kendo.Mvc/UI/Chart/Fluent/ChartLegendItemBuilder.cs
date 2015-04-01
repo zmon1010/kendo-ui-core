@@ -15,6 +15,17 @@
         }
 
         /// <summary>
+        /// Sets the legend item cursor style
+        /// </summary>
+        /// <param name="cursor">The cursor style.</param>  
+        public ChartLegendItemBuilder Cursor(string cursor)
+        {
+            legendItem.Cursor = cursor;
+
+            return this;
+        }
+
+        /// <summary>
         /// Sets the legend item visual handler
         /// </summary>
         /// <param name="handler">The handler name.</param>  

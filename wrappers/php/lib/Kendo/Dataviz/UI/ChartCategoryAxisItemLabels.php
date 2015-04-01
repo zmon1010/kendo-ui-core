@@ -42,7 +42,9 @@ class ChartCategoryAxisItemLabels extends \Kendo\SerializableObject {
     }
 
     /**
-    * The format used to display the labels when the categories are dates. Uses kendo.format. Contains one placeholder ("{0}") which represents the category value.
+    * The format used to display labels for date category axis.
+The {0} placeholder represents the category value.The chart will choose the appropriate format for the current categoryAxis.baseUnit.
+Setting the categoryAxis.labels.format option will override the date formats.See also: kendo.format.
     * @param \Kendo\Dataviz\UI\ChartCategoryAxisItemLabelsDateFormats|array $value
     * @return \Kendo\Dataviz\UI\ChartCategoryAxisItemLabels
     */

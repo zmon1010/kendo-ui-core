@@ -14,6 +14,15 @@
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the item cursor style.
+        /// </summary>
+        public string Cursor
+        {
+            get;
+            set;
+        }
+
         public IChartSerializer CreateSerializer()
         {
             return new ChartLegendItemSerializer(this);
