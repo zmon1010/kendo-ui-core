@@ -57,8 +57,8 @@ namespace Kendo.Mvc.Examples.Models
 			modelBuilder.Entity<Order_Detail>()
 				.Key(e => e.ProductID);
 
-			modelBuilder.Entity<EmployeeDirectory>()
-				.HasMany(e => e.EmployeeDirectory1);
+			//modelBuilder.Entity<EmployeeDirectory>()
+			//	.HasMany(e => e.EmployeeDirectory1);
 
 			modelBuilder.Entity<Employee>()
 				.HasMany(e => e.Employees1);
@@ -107,7 +107,7 @@ namespace Kendo.Mvc.Examples.Models
 				.ForSqlServer().Table("Employees");
 
 			modelBuilder.Entity<EmployeeDirectory>()
-				.ForSqlServer().Table("EmployeeDirectories");
+				.ForSqlServer().Table("EmployeeDirectory");
 
 			modelBuilder.Entity<GanttDependency>()
 				.ForSqlServer().Table("GanttDependencies");
