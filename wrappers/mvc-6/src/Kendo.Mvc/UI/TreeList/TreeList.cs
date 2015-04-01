@@ -22,15 +22,14 @@ namespace Kendo.Mvc.UI
         {
 			DataSource = new DataSource(ModelMetadataProvider)
 			{
-				Type = DataSourceType.Server,
+				Type = DataSourceType.Ajax,
 				ServerAggregates = true,
 				ServerFiltering = true,
-				ServerGrouping = true,
 				ServerPaging = true,
 				ServerSorting = true
 			};
 
-			DataSource.ModelType(typeof(T));
+			DataSource.Schema.Model = new TreeListModelDescriptor(typeof(T), ModelMetadataProvider);
 		}
 
 		[Activate]
@@ -72,9 +71,11 @@ namespace Kendo.Mvc.UI
 				InitializeEditors();
 			}
 
-			var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);            
+			var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
 
-            base.WriteHtml(writer);
+			writer.Write(tag);
+
+			base.WriteHtml(writer);
         }
 
         public override void WriteInitializationScript(TextWriter writer)
