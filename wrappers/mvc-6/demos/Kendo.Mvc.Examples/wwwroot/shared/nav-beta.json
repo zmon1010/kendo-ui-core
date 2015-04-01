@@ -458,7 +458,29 @@
 				"meta": {
 					"kendo-ui": "In this example we will learn how to enable the filter row of Kendo UI Grid component."
 				}
-			}		
+			},
+			{
+				"new": "true",
+				"text": "Filter Multi Checkboxes",
+				"url": "grid/filter-multi-checkboxes",
+				"title": {
+					"kendo-ui": "Filter multi-check in Kendo UI Grid | Kendo UI Web Demo"
+				},
+				"meta": {
+					"kendo-ui": "In this example we will learn how to enable the filter multi-check of Kendo UI Grid component."
+				}
+			},
+			{
+				"new": "true",
+				"text": "Copy to Excel",
+				"url": "grid/copy-to-excel",
+				"title": {
+					"kendo-ui": "Copy to Excel in Kendo UI Grid | Kendo UI Web Demo"
+				},
+				"meta": {
+					"kendo-ui": "In this example we will learn how to enable the allowCopy option of Kendo UI Grid component to allow copying data to Excel."
+				}
+			}
 		],
 		"category": "Data Management"
 	},
