@@ -423,7 +423,7 @@
 					"kendo-ui": "This demo demonstrates the functionality to apply custom commands to KendoGrid. Look at the source code to find how to set the text attribute and command name for the grid component.",
 					"aspnet-mvc": "This example illustrates the custom command of Telerik ASP.NET MVC Grid extension."
 				}
-			}		
+			}
 		],
 		"category": "Data Management"
 	},
@@ -931,6 +931,264 @@
 			}
 		],
 		"category": "Editors"
+	},
+	{
+		"text": "TreeList",
+		"name": "treelist",
+		"pro": "true",
+		"api": "web/treelist",
+		"documentation": {
+			"kendo-ui": "getting-started/web/treelist/overview",
+			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/treelist/overview",
+			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/treelist/overview",
+			"php-ui": "getting-started/using-kendo-with/php/widgets/treelist/overview"
+		},
+		"forum": {
+			"kendo-ui": "kendo-ui/treelist",
+			"aspnet-mvc": "aspnet-mvc/treelist",
+			"jsp-ui": "jsp/treelist",
+			"php-ui": "php/treelist"
+		},
+		"codelibrary": {
+			"kendo-ui": "kendo-ui/treelist",
+			"aspnet-mvc": "aspnet-mvc/treelist",
+			"jsp-ui": "jsp/treelist",
+			"php-ui": "php/treelist"
+		},
+		"spriteCssClass": "treeListIcon",
+		"items": [
+			{
+				"text": "Basic usage",
+				"url": "treelist/index",
+				"title": {
+					"kendo-ui": "Kendo UI TreeList widget | Kendo UI Web demo"
+				},
+				"meta": {
+					"kendo-ui": "This demo illustrates the basic usage and functionality of Kendo UI jQuery TreeList widget which represents items in a hierarchical tree structure."
+				}
+			},
+			{
+				"text": "Binding to local data",
+				"url": "treelist/local-data-binding",
+				"title": {
+					"kendo-ui": "Binding Kendo UI TreeList component to local data"
+				},
+				"meta": {
+					"kendo-ui": "This example illustrates how the treelist can be bound to local data, so that all information is available."
+				},
+				"packages": [
+					"!mvc"
+				]
+			},
+			{
+				"text": "Binding to remote data",
+				"url": "treelist/remote-data-binding",
+				"title": {
+					"kendo-ui": "Binding Kendo UI TreeList component to remote data"
+				},
+				"meta": {
+					"kendo-ui": "This example illustrates how the treelist can be bound to remote data and each level is requested asynchronously."
+				},
+				"packages": [
+					"!mvc"
+				]
+			},
+			{
+				"text": "Editing",
+				"url": "treelist/editing",
+				"title": {
+					"kendo-ui": "Kendo UI TreeList widget | Kendo UI Web demo"
+				},
+				"meta": {
+					"kendo-ui": "This demo illustrates how editing works within the Kendo UI jQuery TreeList widget which represents items in a hierarchical tree structure."
+				},
+				"packages": [
+					"!mvc"
+				]
+			},
+			{
+				"text": "Popup editing",
+				"url": "treelist/editing-popup",
+				"title": {
+					"kendo-ui": "Popup data editing example for Kendo UI TreeList widget"
+				},
+				"meta": {
+					"kendo-ui": "This demo illustrates how the records in KendoTreeList can be easily modified in a pop-up dialog."
+				},
+				"packages": [
+					"!mvc"
+				]
+			},
+			{
+				"text": "Column resizing",
+				"url": "treelist/column-resizing",
+				"new": true,
+				"title": {
+					"kendo-ui": "Columns resizing in Kendo UI TreeList control | Kendo UI Web demo",
+					"aspnet-mvc": "Column resizing in Telerik ASP.NET MVC TreeList"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows the column resizing feature of the KendoTreeList control.",
+					"aspnet-mvc": "In this demo you can see how simple it is to resize columns in the Telerik ASP.NET MVC TreeList."
+				},
+				"packages": [
+					"!mvc"
+				]
+			},
+			{
+				"text": "Column reordering",
+				"url": "treelist/column-reordering",
+				"new": true,
+				"title": {
+					"kendo-ui": "Columns reordering in Kendo UI TreeList control | Kendo UI Web demo",
+					"aspnet-mvc": "Column Reordering in Telerik ASP.NET MVC TreeList"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows column moving and reordering feature of KendoTreeList control.",
+					"aspnet-mvc": "In this demo you can see how simple it is to reorder columns in Telerik ASP.NET MVC TreeList."
+				},
+				"packages": [
+					"!mvc"
+				]
+			},
+			{
+				"text": "Column menu",
+				"url": "treelist/column-menu",
+				"disableInMobile": true,
+				"new": true,
+				"title": {
+					"kendo-ui": "Column menu in Kendo UI TreeList",
+					"aspnet-mvc": "Column menu functionality of Telerik ASP.NET MVC TreeList"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows column menu functionality of KendoTreeList widget.",
+					"aspnet-mvc": "This Telerik example shows column menu functionality in the TreeList extension for ASP.NET MVC."
+				},
+				"packages": [
+					"!mvc"
+				]
+			},
+			{
+				"text": "Frozen columns",
+				"url": "treelist/frozen-columns",
+				"new": true,
+				"title": {
+					"kendo-ui": "Static columns of Kendo UI TreeList control | Kendo UI Web demo",
+					"aspnet-mvc": "Frozen columns demo in Telerik ASP.NET MVC Grid "
+				},
+				"meta": {
+					"kendo-ui": "This demo shows locked columns feature of KendoTreeList control.",
+					"aspnet-mvc": "Play with the demo for frozen columns functionality of Telerik ASP.NET MVC TreeList."
+				},
+				"packages": [
+					"!mvc"
+				]
+			},
+			{
+				"text": "Aggregates",
+				"url": "treelist/aggregates",
+				"title": {
+					"kendo-ui": "Aggregating option demo for KendoTreeList jQuery control"
+				},
+				"meta": {
+					"kendo-ui": "This example demonstrates the aggregate option for KendoTreeList. Use demo source code to enable the TreeList to calculate aggregated values."
+				},
+				"packages": [
+					"!mvc"
+				]
+			},
+			{
+				"text": "Export to Excel",
+				"url": "treelist/excel-export",
+				"title": {
+					"kendo-ui": "Exporting to MS Excel"
+				},
+				"meta": {
+					"kendo-ui": "Export Kendo UI TreeList as Microsoft Excel file"
+				},
+				"packages": [
+					"!offline",
+					"!mvc",
+					"!jsp",
+					"!php",
+					"!offline"
+				]
+			},
+			{
+				"text": "Export to PDF",
+				"url": "treelist/pdf-export",
+				"title": {
+					"kendo-ui": "Exporting to PDF"
+				},
+				"meta": {
+					"kendo-ui": "Export Kendo UI TreeList as PDF file"
+				},
+				"packages": [
+					"!offline",
+					"!mvc",
+					"!jsp",
+					"!php",
+					"!offline"
+				]
+			},
+			{
+				"text": "Events",
+				"url": "treelist/events",
+				"title": {
+					"kendo-ui": "Example of using events in Kendo UI TreeList control"
+				},
+				"meta": {
+					"kendo-ui": "This example demonstrates different events which are available in KendoTreeList widget and the code explains how you can use them for  your project."
+				},
+				"packages": [
+					"!mvc"
+				]
+			},
+			{
+				"text": "API",
+				"url": "treelist/api",
+				"title": {
+					"kendo-ui": "KendoTreeList API Demo"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows how API Functions can manipulate the contents and behavior of Kendo UI TreeList widget."
+				},
+				"packages": [
+					"!mvc"
+				]
+			},
+			{
+				"text": "MVVM",
+				"url": "treelist/mvvm",
+				"title": {
+					"kendo-ui": "MVVM support in Kendo UI TreeList"
+				},
+				"meta": {
+					"kendo-ui": "MVVM support for Kendo UI TreeList"
+				},
+				"packages": [
+					"!mvc",
+					"!jsp",
+					"!php"
+				]
+			},
+			{
+				"text": "AngularJS",
+				"url": "treelist/angular",
+				"title": {
+					"kendo-ui": "AngularJS support in Kendo UI TreeList"
+				},
+				"meta": {
+					"kendo-ui": "AngularJS directive support for Kendo UI TreeList"
+				},
+				"packages": [
+					"!mvc",
+					"!jsp",
+					"!php"
+				]
+			}
+		],
+		"category": "Data Management"
 	},
 	{
 		"text": "Window",
