@@ -2197,6 +2197,11 @@
     }
 
     function renderContents(element, group) {
+        if (nodeInfo._stackingContext.element === element) {
+            // the group that was set in pushNodeInfo might have
+            // changed due to clipping/transforms, update it here.
+            nodeInfo._stackingContext.group = group;
+        }
         switch (element.tagName.toLowerCase()) {
           case "img":
             renderImage(element, element.src, group);
