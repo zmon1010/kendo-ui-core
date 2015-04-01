@@ -423,7 +423,32 @@
 					"kendo-ui": "This demo demonstrates the functionality to apply custom commands to KendoGrid. Look at the source code to find how to set the text attribute and command name for the grid component.",
 					"aspnet-mvc": "This example illustrates the custom command of Telerik ASP.NET MVC Grid extension."
 				}
-			}
+			
+			},
+			{
+				"text": "Aggregates",
+				"url": "grid/aggregates",
+				"title": {
+					"kendo-ui": "Aggregating option demo for KendoGrid jQuery control",
+					"aspnet-mvc": "Aggregating option demo for Telerik ASP.NET MVC Grid"
+				},
+				"meta": {
+					"kendo-ui": "This example demonstrates the aggregate option for KendoGrid. Use demo source code to enable the grid to calculate aggregated values.",
+					"aspnet-mvc": "This example demonstrates the aggregate option for Telerik ASP.NET MVC Grid. Use demo source code to enable the grid to calculate aggregated values."
+				}
+			},
+			{
+				"text": "Filter menu customization",
+				"url": "grid/filter-menu-customization",
+				"title": {
+					"kendo-ui": "Filter menu customization in Kendo UI Grid | Kendo UI Web Demo",
+					"aspnet-mvc": "Filter menu customization in MVC Grid | UI for ASP.NET MVC Demo"
+				},
+				"meta": {
+					"kendo-ui": "In this example we will learn how to customize the filter menu of Kendo UI Grid component.",
+					"aspnet-mvc": "In this example you will learn how to customize the filter menu of Telerik ASP.NET MVC Grid component."
+				}
+			}		
 		],
 		"category": "Data Management"
 	},
