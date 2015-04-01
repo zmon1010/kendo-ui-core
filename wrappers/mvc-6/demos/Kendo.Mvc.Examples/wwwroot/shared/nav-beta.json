@@ -1,1409 +1,1408 @@
 [
-	{
-		"text": "DateTimePicker",
-		"name": "datetimepicker",
-		"api": "web/datetimepicker",
-		"documentation": {
-			"kendo-ui": "getting-started/web/datetimepicker/overview",
-			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/datetimepicker/overview",
-			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/datetimepicker/overview",
-			"php-ui": "getting-started/using-kendo-with/php/widgets/datetimepicker/overview"
-		},
-		"forum": {
-			"kendo-ui": "kendo-ui/date-time-pickers",
-			"aspnet-mvc": "aspnet-mvc/date-time-pickers",
-			"jsp-ui": "jsp/date-picker-pickers",
-			"php-ui": "php/date-time-pickers"
-		},
-		"codelibrary": {
-			"kendo-ui": "kendo-ui/datepicker",
-			"aspnet-mvc": "aspnet-mvc/datetime",
-			"jsp-ui": "jsp/date-time-pickers",
-			"php-ui": "php/date-time-pickers"
-		},
-		"spriteCssClass": "dateTimePickerIcon",
-		"items": [
-			{
-				"text": "Basic usage",
-				"url": "datetimepicker/index",
-				"title": {
-					"kendo-ui": "Kendo UI Date and Time picker example",
-					"aspnet-mvc": "ASP.NET MVC Date and Time picker example"
-				},
-				"meta": {
-					"kendo-ui": "Kendo UI DateTimePicker control handles both dates and times. Learn more about the time/date selection functionality by playing with this demo.",
-					"aspnet-mvc": "ASP.NET MVC DateTimePicker control handles both dates and times. Learn more about the time/date selection functionality by playing with this demo."
-				}
-			},
-			{
-				"text": "Range selection",
-				"url": "datetimepicker/rangeselection",
-				"title": {
-					"kendo-ui": "Date range selection functionality in Kendo UI DateTimePicker",
-					"aspnet-mvc": "Date range selection functionality in ASP.NET MVC DateTimePicker"
-				},
-				"meta": {
-					"kendo-ui": "In Kendo UI DateTimePicker control, dates and times are handled in two different input boxes so that the user can easily select different date ranges.",
-					"aspnet-mvc": "In ASP.NET MVC DateTimePicker control, dates and times are handled in two different input boxes so that the user can easily select different date ranges."
-				}
-			},
-			{
-				"text": "Customizing templates",
-				"url": "datetimepicker/template",
-				"title": {
-					"kendo-ui": "Templates customization example | Kendo UI DateTimePicker widget",
-					"aspnet-mvc": "Templates customization example | ASP.NET MVC DateTimePicker demo"
-				},
-				"meta": {
-					"kendo-ui": "This example shows how templates of Kendo HTML5-based DateTimePicker widget can be customized to fit your application.",
-					"aspnet-mvc": "This example shows how templates of ASP.NET MVC DateTimePicker control can be customized to fit your application."
-				}
-			},
-			{
-				"text": "Events",
-				"url": "datetimepicker/events",
-				"title": {
-					"kendo-ui": "Events in Kendo UI Date and Timepicker component",
-					"aspnet-mvc": "Events in ASP.NET MVC Date and Timepicker component"
-				},
-				"meta": {
-					"kendo-ui": "This example shows which events are triggered when you change the date and time in Kendo UI DateTimePicker component.",
-					"aspnet-mvc": "This example shows which events are triggered when you change the date and time in ASP.NET MVC DateTimePicker component."
-				}
-			},
-			{
-				"text": "API",
-				"url": "datetimepicker/api",
-				"title": {
-					"kendo-ui": "Kendo UI DateTimePicker API Demo",
-					"aspnet-mvc": "ASP.NET MVC DateTimePicker API Demo"
-				},
-				"meta": {
-					"kendo-ui": "Play with the demo to explore Kendo UI DateTimePicker API and all API functions.",
-					"aspnet-mvc": "Play with the demo to explore ASP.NET MVC DateTimePicker API and all API functions."
-				}
-			},
-			{
-				"packages": [
-					"mvc-offline"
-				],
-				"text": "Globalization",
-				"url": "datetimepicker/globalization"
-			},
-			{
-				"text": "RTL support",
-				"disableInMobile": true,
-				"url": "datetimepicker/right-to-left-support",
-				"title": {
-					"kendo-ui": "Right-to-left support in Kendo UI DateTimePicker control | Kendo UI Demo",
-					"aspnet-mvc": "Right-to-left support in ASP.NET MVC DateTimePicker control"
-				},
-				"meta": {
-					"kendo-ui": "Choose a date and see how the date and the time are displayed from right to left in Kendo UI DateTimePicker component.",
-					"aspnet-mvc": "Choose a date and see how the date and the time are displayed from right to left in ASP.NET MVC DateTimePicker component."
-				}
-			},
-			{
-				"text": "Keyboard navigation",
-				"disableInMobile": true,
-				"url": "datetimepicker/keyboard-navigation",
-				"title": {
-					"kendo-ui": "Keyboard navigation in Kendo UI DateTimePicker widget",
-					"aspnet-mvc": "Keyboard navigation in ASP.NET MVC DateTimePicker component"
-				},
-				"meta": {
-					"kendo-ui": "By using the keyboard, you can easily select date and time in Kendo UI DateTimePicker, trigger an event or highlight a specific day.",
-					"aspnet-mvc": "By using the keyboard, you can easily select date and time in ASP.NET MVC DateTimePicker, trigger an event or highlight a specific day."
-				}
-			},
-			{
-				"text": "MVVM",
-				"url": "datetimepicker/mvvm",
-				"title": {
-					"kendo-ui": "MVVM support in Kendo UI DateTimePicker"
-				},
-				"meta": {
-					"kendo-ui": "Enabled, events, value and visible MVVM binding support in Kendo UI DateTimePicker"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			},
-			{
-				"text": "AngularJS",
-				"url": "datetimepicker/angular",
-				"title": {
-					"kendo-ui": "AngularJS support in Kendo UI DateTimePicker"
-				},
-				"meta": {
-					"kendo-ui": "AngularJS directive support for Kendo UI DateTimePicker"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			}
-		],
-		"category": "Editors"
-	},
-	{
-		"text": "Grid",
-		"name": "grid",
-		"pro": "true",
-		"api": "web/grid",
-		"documentation": {
-			"kendo-ui": "getting-started/web/grid/overview",
-			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/grid/overview",
-			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/grid/overview",
-			"php-ui": "getting-started/using-kendo-with/php/widgets/grid/overview"
-		},
-		"forum": {
-			"kendo-ui": "kendo-ui/grid",
-			"aspnet-mvc": "aspnet-mvc/grid",
-			"jsp-ui": "jsp/grid",
-			"php-ui": "php/grid"
-		},
-		"codelibrary": {
-			"kendo-ui": "kendo-ui/grid",
-			"aspnet-mvc": "aspnet-mvc/grid",
-			"jsp-ui": "jsp/grid",
-			"php-ui": "php/grid"
-		},
-		"spriteCssClass": "gridIcon",
-		"items": [
-			{
-				"text": "Basic usage",
-				"url": "grid/index",
-				"title": {
-					"kendo-ui": "jQuery Grid control example | Kendo UI Grid Demos",
-					"aspnet-mvc": " ASP.NET MVC Grid control example"
-				},
-				"meta": {
-					"kendo-ui": "This demo for Kendo UI jQuery-based Grid component shows how you can make your static HTML tables and raw data much more interactive to match your modern web app.",
-					"aspnet-mvc": "In this demo for Kendo UI jQuery-powered Grid in ASP.NET MVC you will see all basic functionalities of the extension."
-				}
-			},
-			{
-				"text": "Binding to local data",
-				"url": "grid/local-data-binding",
-				"title": {
-					"kendo-ui": "Binding to local data in Kendo UI Grid | Kendo UI Web",
-					"aspnet-mvc": "Binding to local data in Telerik ASP.NET MVC Grid"
-				},
-				"meta": {
-					"kendo-ui": "This sample demonstrates how we can bind Kendo UI Grid widget to local JSON Data by using Kendo UI DataSource component.",
-					"aspnet-mvc": "This sample demonstrates how we can bind the Telerik ASP.NET MVC Grid control to local JSON Data by using Kendo UI DataSource component."
-				}
-			},
-			{
-				"text": "Binding to remote data",
-				"url": "grid/remote-data-binding",
-				"title": {
-					"kendo-ui": "Remote data binding example in KendoGrid",
-					"aspnet-mvc": "Remote data binding example in Telerik ASP.NET MVC Grid"
-				},
-				"meta": {
-					"kendo-ui": "This example and demo source code illustrate how KendoGrid component can be bound to remote data by using the DataSource component.",
-					"aspnet-mvc": "This example and demo source code illustrate how the Telerik ASP.NET MVC Grid component can be bound to remote data using the DataSource component."
-				}
-			},
-			{
-				"text": "Binding to Telerik Backend Services",
-				"url": "grid/everlive",
-				"title": {
-					"kendo-ui": "Binding to Telerik Backend Services | Kendo UI Grid demo",
-					"aspnet-mvc": "Binding ASP.NET MVC Grid to Telerik Backend Services"
-				},
-				"meta": {
-					"kendo-ui": "This example shows how the Kendo UI Grid can be bound to Telerik Backend Services which will provide the backend functionality",
-					"aspnet-mvc": "In this sample you will see in action how Telerik ASP.NET MVC Grid is bound to Telerik cloud-based services."
-				},
-				"packages": [
-					"!jsp",
-					"!php"
-				]
-			},
-			{
-				"text": "Export to Excel",
-				"url": "grid/excel-export",
-				"title": {
-					"kendo-ui": "Exporting to MS Excel"
-				},
-				"meta": {
-					"kendo-ui": "Export Kendo UI grid as Microsoft Excel file"
-				},
-				"packages": [
-					"!offline"
-				]
-			},
-			{
-				"text": "Export to PDF",
-				"url": "grid/pdf-export",
-				"title": {
-					"kendo-ui": "Exporting to PDF"
-				},
-				"meta": {
-					"kendo-ui": "Export Kendo UI grid as PDF file"
-				},
-				"packages": [
-					"!offline"
-				],
-				"new": "true"
-			},
-			{
-				"text": "Binding to SignalR",
-				"url": "grid/signalr",
-				"title": {
-					"kendo-ui": "Real-time Binding to SignalR Hub",
-					"aspnet-mvc": "Real-time Binding to SignalR Hub | UI for ASP.NET MVC demos"
-				},
-				"meta": {
-					"kendo-ui": "This example shows how the Kendo UI Grid can be bound to SignalR Hub for real-time push notifications",
-					"aspnet-mvc": "This example shows how the Telerik ASP.NET MVC Grid can be bound to SignalR Hub for real-time push notifications."
-				},
-				"packages": [
-					"!jsp",
-					"!php"
-				]
-			},
-			{
-				"text": "Custom ajax binding",
-				"url": "grid/customajaxbinding",
-				"packages": [
-					"mvc-offline"
-				]
-			},
-			{
-				"text": "Custom data source",
-				"url": "grid/custom-datasource",
-				"packages": [
-					"mvc-offline"
-				]
-			},
-			{
-				"text": "OData binding",
-				"url": "grid/odata",
-				"packages": [
-					"mvc-offline"
-				]
-			},
-			{
-				"text": "Web API binding",
-				"url": "grid/webapi",
-				"packages": [
-					"mvc-offline"
-				]
-			},
-			{
-				"text": "Batch editing",
-				"url": "grid/editing",
-				"title": {
-					"kendo-ui": "Batch editing example for Kendo UI jQuery Grid control",
-					"aspnet-mvc": "Batch editing functionality in Telerik ASP.NET MVC Grid"
-				},
-				"meta": {
-					"kendo-ui": "This demo illustrates the batch editing feature of Kendo UI jQuery Grid. Find the source code which shows how to send changes to the server as a batch.",
-					"aspnet-mvc": "In this sample you will play with the batch editing functionality of Telerik ASP.NET MVC Grid."
-				}
-			},
-			{
-				"text": "Inline editing",
-				"url": "grid/editing-inline",
-				"title": {
-					"kendo-ui": "Applying inline editing in Kendo UI Grid",
-					"aspnet-mvc": "Applying inline editing in Telerik ASP.NET MVC Grid"
-				},
-				"meta": {
-					"kendo-ui": "This sample demonstrates how the values in the cells of KendoGrid can be easily changed. Try the demo source code to find how inline data grid can be deleted and modified.",
-					"aspnet-mvc": "See how the values in the cells of Telerik ASP.NET MVC Grid can be easily changed. Try the demo source code to find how inline data grid can be deleted and modified."
-				}
-			},
-			{
-				"text": "Popup editing",
-				"url": "grid/editing-popup",
-				"title": {
-					"kendo-ui": "Popup data editing example for Kendo UI Grid widget",
-					"aspnet-mvc": "Batch editing functionality in Telerik ASP.NET MVC Grid"
-				},
-				"meta": {
-					"kendo-ui": "This demo illustrates how the records in KendoGrid can be easily modified in a pop-up dialog.",
-					"aspnet-mvc": "In this sample you can see the batch editing functionality of Telerik ASP.NET MVC Grid in action."
-				}
-			},
-			{
-				"text": "Editing custom editor",
-				"url": "grid/editing-custom",
-				"title": {
-					"kendo-ui": "jQuery Grid Custom Editing example | Kendo UI Grid Demo",
-					"aspnet-mvc": "ASP.NET MVC Grid Custom Editing | UI for ASP.NET MVC Demo"
-				},
-				"meta": {
-					"kendo-ui": " This example illustrates how editing in KendoGrid can be further customized with the custom editor and using DataSource component.",
-					"aspnet-mvc": "This example illustrates how editing in Telerik ASP.NET MVC Grid can be further customized with the custom editor and using DataSource component."
-				}
-			},
-			{
-				"text": "Custom validator editing",
-				"url": "grid/editing-custom-validation",
-				"title": {
-					"kendo-ui": "Custom Validation example for Kendo UI Grid widget",
-					"aspnet-mvc": "Custom Validation example for Telerik ASP.NET MVC Grid"
-				},
-				"meta": {
-					"kendo-ui": " This example demonstrates how to implement custom validation rule in a Kendo UI Grid.",
-					"aspnet-mvc": "This example demonstrates how to implement custom validation rule in a Telerik ASP.NET MVC Grid."
-				}
-			},
-			{
-				"text": "Paging",
-				"url": "grid/paging",
-				"packages": [
-					"mvc-offline"
-				]
-			},
-			{
-				"text": "Virtualization of remote data",
-				"url": "grid/virtualization-remote-data",
-				"title": {
-					"kendo-ui": "Demo for Kendo UI Grid virtualization to remote data",
-					"aspnet-mvc": "Virtualization of remote data in ASP.NET MVC Grid"
-				},
-				"meta": {
-					"kendo-ui": "This sample shows how KendoGrid UI virtualization is enabled to remote data.",
-					"aspnet-mvc": "This demo illustrates the virtualization of remote data in ASP.NET MVC Grid."
-				}
-			},
-			{
-				"text": "Hierarchy",
-				"url": "grid/hierarchy",
-				"title": {
-					"kendo-ui": "Hierarchical Kendo UI Grid | Kendo UI Web",
-					"aspnet-mvc": "Hierarchical ASP.NET MVC Grid | UI for ASP.NET MVC Demo"
-				},
-				"meta": {
-					"kendo-ui": "This demo illustrates the hierarchical data grid feature of Kendo UI Grid widget. Try the demo source code to play with the grid in your web app.",
-					"aspnet-mvc": "This demo illustrates the hierarchical data grid feature of the Telerik ASP.NET MVC Grid component. Try the demo source code to play with the grid in your web app."
-				}
-			},
-			{
-				"text": "Detail template",
-				"url": "grid/detailtemplate",
-				"title": {
-					"kendo-ui": "Detail template demo in Kendo UI Grid control",
-					"aspnet-mvc": "Detail Template for Telerik ASP.NET MVC Grid"
-				},
-				"meta": {
-					"kendo-ui": "This example shows how records in the data grid widget can be presented with a detailed template.",
-					"aspnet-mvc": "This example shows how records in the Telerik ASP.NET MVC Grid component can be presented with a detailed template."
-				}
-			},
-			{
-				"text": "Toolbar template",
-				"url": "grid/toolbar-template",
-				"title": {
-					"kendo-ui": "Toolbar template demo for Kendo UI HTML5 Grid control",
-					"aspnet-mvc": "Toolbar templates for Telerik ASP.NET MVC Grid"
-				},
-				"meta": {
-					"kendo-ui": "This Kendo UI Grid example shows how you can add custom toolbars to the grid and create toolbar templates.",
-					"aspnet-mvc": "This Telerik ASP.NET MVC Grid example shows how you can add custom toolbars to the grid and create toolbar templates."
-				}
-			},
-			{
-				"text": "Custom command",
-				"url": "grid/custom-command",
-				"title": {
-					"kendo-ui": "Custom commands demo for Kendo UI Grid widget",
-					"aspnet-mvc": "Custom command demo in Telerik ASP.NET MVC Grid"
-				},
-				"meta": {
-					"kendo-ui": "This demo demonstrates the functionality to apply custom commands to KendoGrid. Look at the source code to find how to set the text attribute and command name for the grid component.",
-					"aspnet-mvc": "This example illustrates the custom command of Telerik ASP.NET MVC Grid extension."
-				}
-			
-			},
-			{
-				"text": "Aggregates",
-				"url": "grid/aggregates",
-				"title": {
-					"kendo-ui": "Aggregating option demo for KendoGrid jQuery control",
-					"aspnet-mvc": "Aggregating option demo for Telerik ASP.NET MVC Grid"
-				},
-				"meta": {
-					"kendo-ui": "This example demonstrates the aggregate option for KendoGrid. Use demo source code to enable the grid to calculate aggregated values.",
-					"aspnet-mvc": "This example demonstrates the aggregate option for Telerik ASP.NET MVC Grid. Use demo source code to enable the grid to calculate aggregated values."
-				}
-			},
-			{
-				"text": "Filter menu customization",
-				"url": "grid/filter-menu-customization",
-				"title": {
-					"kendo-ui": "Filter menu customization in Kendo UI Grid | Kendo UI Web Demo",
-					"aspnet-mvc": "Filter menu customization in MVC Grid | UI for ASP.NET MVC Demo"
-				},
-				"meta": {
-					"kendo-ui": "In this example we will learn how to customize the filter menu of Kendo UI Grid component.",
-					"aspnet-mvc": "In this example you will learn how to customize the filter menu of Telerik ASP.NET MVC Grid component."
-				}
-			},
-			{
-				"text": "Filter row",
-				"url": "grid/filter-row",
-				"title": {
-					"kendo-ui": "Filter row in Kendo UI Grid | Kendo UI Web Demo"
-				},
-				"meta": {
-					"kendo-ui": "In this example we will learn how to enable the filter row of Kendo UI Grid component."
-				}
-			},
-			{
-				"new": "true",
-				"text": "Filter Multi Checkboxes",
-				"url": "grid/filter-multi-checkboxes",
-				"title": {
-					"kendo-ui": "Filter multi-check in Kendo UI Grid | Kendo UI Web Demo"
-				},
-				"meta": {
-					"kendo-ui": "In this example we will learn how to enable the filter multi-check of Kendo UI Grid component."
-				}
-			},
-			{
-				"new": "true",
-				"text": "Copy to Excel",
-				"url": "grid/copy-to-excel",
-				"title": {
-					"kendo-ui": "Copy to Excel in Kendo UI Grid | Kendo UI Web Demo"
-				},
-				"meta": {
-					"kendo-ui": "In this example we will learn how to enable the allowCopy option of Kendo UI Grid component to allow copying data to Excel."
-				}
-			}
-		],
-		"category": "Data Management"
-	},
-	{
-		"text": "Notification",
-		"name": "notification",
-		"api": "web/notification",
-		"documentation": {
-			"kendo-ui": "getting-started/web/notification/overview",
-			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/notification/overview",
-			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/notification/overview",
-			"php-ui": "getting-started/using-kendo-with/php/widgets/notification/overview"
-		},
-		"forum": {
-			"kendo-ui": "kendo-ui/notification",
-			"aspnet-mvc": "aspnet-mvc/notification",
-			"jsp-ui": "jsp/notification",
-			"php-ui": "php/notification"
-		},
-		"codelibrary": {
-			"kendo-ui": "kendo-ui/notification",
-			"aspnet-mvc": "aspnet-mvc/notification",
-			"jsp-ui": "jsp/notification",
-			"php-ui": "php/notification"
-		},
-		"spriteCssClass": "notificationIcon",
-		"items": [
-			{
-				"text": "Basic usage",
-				"url": "notification/index",
-				"title": {
-					"kendo-ui": "Overview of Kendo UI Notification | Kendo UI Web demo",
-					"aspnet-mvc": "ASP.NET MVC Notification Extension demo"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows the core functionality of Kendo UI Notification component.",
-					"aspnet-mvc": "In this example you will see all options to show and hide a notification in ASP.NET MVC."
-				}
-			},
-			{
-				"text": "Position and stacking",
-				"url": "notification/position-stacking",
-				"title": {
-					"kendo-ui": "Position and stacking of Kendo UI Notification | Kendo UI Web demo",
-					"aspnet-mvc": "Position and stacking of ASP.NET MVC Notification | ASP.NET MVC"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows the position and stacking behavior of the Kendo UI Notification component.",
-					"aspnet-mvc": "This demo shows the position and stacking behavior of the ASP.NET MVC Notification component."
-				}
-			},
-			{
-				"text": "Templates",
-				"url": "notification/templates",
-				"title": {
-					"kendo-ui": "Templates of Kendo UI Notification | Kendo UI Web demo",
-					"aspnet-mvc": " Layout notification templates for ASP.NET MVC"
-				},
-				"meta": {
-					"kendo-ui": "Demo about using templates with the Kendo UI Notification component.",
-					"aspnet-mvc": "In this example you will see how Telerik notification templates could be modified in ASP.NET MVC."
-				}
-			},
-			{
-				"text": "Events",
-				"url": "notification/events",
-				"title": {
-					"kendo-ui": "Events of Kendo UI Notification | Kendo UI Web demo",
-					"aspnet-mvc": "Events of ASP.NET MVC Notification | ASP.NET MVC demo"
-				},
-				"meta": {
-					"kendo-ui": "Demo about using events and handlers with the Kendo UI Notification component.",
-					"aspnet-mvc": "Demo about using events and handlers with the ASP.NET MVC Notification component."
-				}
-			},
-			{
-				"text": "API",
-				"url": "notification/api",
-				"title": {
-					"kendo-ui": "API of Kendo UI Notification | Kendo UI Web demo",
-					"aspnet-mvc": "API of ASP.NET MVC Notification | UI for ASP.NET MVC demo"
-				},
-				"meta": {
-					"kendo-ui": "Demo about using the API of the Kendo UI Notification component.",
-					"aspnet-mvc": "Demo about using the API of the ASP.NET MVC Notification component."
-				}
-			},
-			{
-				"text": "RTL support",
-				"disableInMobile": true,
-				"url": "notification/right-to-left-support",
-				"title": {
-					"kendo-ui": "RTL Support of Kendo UI Notification | Kendo UI Web demo",
-					"aspnet-mvc": "RTL Support for ASP.NET MVC Notification | ASP.NET MVC demo"
-				},
-				"meta": {
-					"kendo-ui": "Demo about the RTL support of the Kendo UI Notification component.",
-					"aspnet-mvc": "Demo about the RTL support of the ASP.NET MVC Notification component."
-				}
-			},
-			{
-				"text": "MVVM",
-				"url": "notification/mvvm",
-				"title": {
-					"kendo-ui": "MVVM support in Kendo UI Notification"
-				},
-				"meta": {
-					"kendo-ui": "MVVM support for Kendo UI Notification"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			},
-			{
-				"text": "AngularJS",
-				"url": "notification/angular",
-				"title": {
-					"kendo-ui": "AngularJS support in Kendo UI Notification"
-				},
-				"meta": {
-					"kendo-ui": "AngularJS directive support for Kendo UI Notification"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			}
-		],
-		"category": "Layout"
-	},
-	{
-		"text": "NumericTextBox",
-		"name": "numerictextbox",
-		"api": "web/numerictextbox",
-		"documentation": {
-			"kendo-ui": "getting-started/web/numerictextbox/overview",
-			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/numerictextbox/overview",
-			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/numerictextbox/overview",
-			"php-ui": "getting-started/using-kendo-with/php/widgets/numerictextbox/overview"
-		},
-		"forum": {
-			"kendo-ui": "kendo-ui/numeric-textbox",
-			"aspnet-mvc": "aspnet-mvc/numeric-textbox",
-			"jsp-ui": "jsp/numeric-textbox",
-			"php-ui": "php/numeric-textbox"
-		},
-		"codelibrary": {
-			"kendo-ui": "kendo-ui/numerictextbox",
-			"aspnet-mvc": "aspnet-mvc/numerictextbox",
-			"jsp-ui": "jsp/numerictextbox",
-			"php-ui": "php/numerictextbox"
-		},
-		"spriteCssClass": "numericTextBoxIcon",
-		"items": [
-			{
-				"text": "Basic usage",
-				"url": "numerictextbox/index",
-				"title": {
-					"kendo-ui": "Primary features of Kendo UI Numeric TextBox | Kendo UI Web demo",
-					"aspnet-mvc": "ASP.NET MVC NumericTextBox control demo"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows the core functionality of KendoNumericTextBox component.",
-					"aspnet-mvc": "This example illustrates how to use all core features of Telerik NumericTextBox for ASP.NET MVC."
-				}
-			},
-			{
-				"text": "Events",
-				"url": "numerictextbox/events",
-				"title": {
-					"kendo-ui": "Events in Kendo UI NumericTextBox widget",
-					"aspnet-mvc": "Events in ASP.NET MVC NumericTextBox control"
-				},
-				"meta": {
-					"kendo-ui": "This example shows events which are triggered in Kendo UI NumericTextBox widget.",
-					"aspnet-mvc": "This example shows events which are triggered in ASP.NET MVC NumericTextBox control."
-				}
-			},
-			{
-				"text": "API",
-				"url": "numerictextbox/api",
-				"title": {
-					"kendo-ui": "API Functions Demo for KendoNumericTextBox",
-					"aspnet-mvc": "API Functions Demo for ASP.NET MVC NumericTextBox"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows specific API functions for KendoNumericTextBox component.",
-					"aspnet-mvc": "This demo shows specific API functions for ASP.NET MVC NumericTextBox component."
-				}
-			},
-			{
-				"packages": [
-					"mvc-offline"
-				],
-				"text": "Globalization",
-				"url": "numerictextbox/globalization"
-			},
-			{
-				"text": "RTL support",
-				"disableInMobile": true,
-				"url": "numerictextbox/right-to-left-support",
-				"title": {
-					"kendo-ui": "RTL support in Kendo UI NumericTextBox widget",
-					"aspnet-mvc": "RTL support in ASP.NET MVC NumericTextBox control"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows how right-to-left input is implemented in Kendo UI Numeric TextBox component to ensure the satisfaction of RTL language users.",
-					"aspnet-mvc": "This demo shows how right-to-left input is implemented in ASP.NET MVC Numeric TextBox component to ensure the satisfaction of RTL language users."
-				}
-			},
-			{
-				"text": "Keyboard navigation",
-				"disableInMobile": true,
-				"url": "numerictextbox/keyboard-navigation",
-				"title": {
-					"kendo-ui": "Keyboard navigation in Kendo UI NumericTextBox",
-					"aspnet-mvc": "Keyboard navigation in ASP.NET MVC NumericTextBox"
-				},
-				"meta": {
-					"kendo-ui": "The value in Kendo UI NumericTextBox can be increased or decreased by using keyboard navigation combinations. Take a look at the demo to learn how.",
-					"aspnet-mvc": "The value in ASP.NET MVC NumericTextBox can be increased or decreased by using keyboard navigation combinations. Take a look at the demo to learn how."
-				}
-			},
-			{
-				"text": "MVVM",
-				"url": "numerictextbox/mvvm",
-				"title": {
-					"kendo-ui": "MVVM support in Kendo UI NumericTextBox"
-				},
-				"meta": {
-					"kendo-ui": "Enabled, events, value and visible MVVM binding support in Kendo UI NumericTextBox"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			},
-			{
-				"text": "AngularJS",
-				"url": "numerictextbox/angular",
-				"title": {
-					"kendo-ui": "AngularJS support in Kendo UI NumericTextBox"
-				},
-				"meta": {
-					"kendo-ui": "AngularJS directive support for Kendo UI NumericTextBox"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			}
-		],
-		"category": "Editors"
-	},
-	{
-		"text": "MaskedTextBox",
-		"name": "maskedtextbox",
-		"api": "web/maskedtextbox",
-		"documentation": {
-			"kendo-ui": "getting-started/web/maskedtextbox/overview",
-			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/maskedtextbox/overview",
-			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/maskedtextbox/overview",
-			"php-ui": "getting-started/using-kendo-with/php/widgets/maskedtextbox/overview"
-		},
-		"forum": {
-			"kendo-ui": "kendo-ui/maskedtextbox",
-			"aspnet-mvc": "aspnet-mvc/maskedtextbox",
-			"jsp-ui": "jsp/maskedtextbox",
-			"php-ui": "php/maskedtextbox"
-		},
-		"codelibrary": {
-			"kendo-ui": "kendo-ui/maskedtextbox",
-			"aspnet-mvc": "aspnet-mvc/maskedtextbox",
-			"jsp-ui": "jsp/maskedtextbox",
-			"php-ui": "php/maskedtextbox"
-		},
-		"spriteCssClass": "maskedtextboxIcon",
-		"items": [
-			{
-				"text": "Basic usage",
-				"url": "maskedtextbox/index",
-				"title": {
-					"kendo-ui": "Primary features of Kendo UI Mask Input | Kendo UI Web demo",
-					"aspnet-mvc": "Primary features of ASP.NET MVC Mask Input | ASP.NET MVC demo"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows the core functionality of KendoMaskedTextBox component.",
-					"aspnet-mvc": "This demo shows the core functionality of ASP.NET MVC MaskedTextBox component."
-				}
-			},
-			{
-				"text": "Events",
-				"url": "maskedtextbox/events",
-				"title": {
-					"kendo-ui": "Events in Kendo UI MaskedTextBox widget",
-					"aspnet-mvc": "Events in ASP.NET MVC MaskedTextBox control"
-				},
-				"meta": {
-					"kendo-ui": "This example shows events which are triggered in Kendo UI MaskedTextBox widget.",
-					"aspnet-mvc": "This example shows events which are triggered in ASP.NET MVC MaskedTextBox component."
-				}
-			},
-			{
-				"text": "API",
-				"url": "maskedtextbox/api",
-				"title": {
-					"kendo-ui": "API Functions Demo for KendoMaskedTextBox",
-					"aspnet-mvc": "API Functions Demo for ASP.NET MVC MaskedTextBox"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows specific API functions for KendoMaskedTextBox component.",
-					"aspnet-mvc": "This demo shows specific API functions for ASP.NET MVC MaskedTextBox component."
-				}
-			},
-			{
-				"text": "Globalization",
-				"url": "maskedtextbox/globalization",
-				"title": {
-					"kendo-ui": "Globalization Demo for KendoMaskedTextBox",
-					"aspnet-mvc": "Globalization Demo for ASP.NET MVC MaskedTextBox"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows KendoMaskedTextBox globalization support for decimal point, thousand separator and currency symbol.",
-					"aspnet-mvc": "This demo shows ASP.NET MVC MaskedTextBox globalization support for decimal point, thousand separator and currency symbol."
-				}
-			},
-			{
-				"text": "RTL support",
-				"disableInMobile": true,
-				"url": "maskedtextbox/right-to-left-support",
-				"title": {
-					"kendo-ui": "RTL support in Kendo UI MaskedTextBox widget",
-					"aspnet-mvc": "RTL support in ASP.NET MVC MaskedTextBox control"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows how right-to-left input is implemented in Kendo UI MaskedTextBox component to ensure the satisfaction of RTL language users.",
-					"aspnet-mvc": "This demo shows how right-to-left input is implemented in ASP.NET MVC MaskedTextBox component to ensure the satisfaction of RTL language users."
-				}
-			},
-			{
-				"text": "Validation",
-				"url": "maskedtextbox/validation",
-				"title": {
-					"kendo-ui": "Validation Demo for Kendo UI MaskedTextBox",
-					"aspnet-mvc": "Validation Demo for ASP.NET MVC MaskedTextBox"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows how to validate an incomplete widget value",
-					"aspnet-mvc": "This demo shows how to validate an incomplete control value in ASP.NET MVC MaskedTextBox"
-				}
-			},
-			{
-				"text": "AngularJS",
-				"url": "maskedtextbox/angular",
-				"title": {
-					"kendo-ui": "AngularJS support in Kendo UI MaskedTextBox"
-				},
-				"meta": {
-					"kendo-ui": "AngularJS directive support for Kendo UI MaskedTextBox"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			}
-		],
-		"category": "Editors"
-	},
-	{
-		"text": "Upload",
-		"name": "upload",
-		"pro": "true",
-		"api": "web/upload",
-		"documentation": {
-			"kendo-ui": "getting-started/web/upload/overview",
-			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/upload/overview",
-			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/upload/overview",
-			"php-ui": "getting-started/using-kendo-with/php/widgets/upload/overview"
-		},
-		"forum": {
-			"kendo-ui": "kendo-ui/upload",
-			"aspnet-mvc": "aspnet-mvc/upload",
-			"jsp-ui": "jsp/upload",
-			"php-ui": "php/upload"
-		},
-		"codelibrary": {
-			"kendo-ui": "kendo-ui/upload",
-			"aspnet-mvc": "aspnet-mvc/upload",
-			"jsp-ui": "jsp/upload",
-			"php-ui": "php/upload"
-		},
-		"spriteCssClass": "uploadIcon",
-		"packages": [
-			"!offline"
-		],
-		"items": [
-			{
-				"text": "Basic usage",
-				"url": "upload/index",
-				"title": {
-					"kendo-ui": "Kendo UI Upload widget - example of core features",
-					"aspnet-mvc": "ASP.NET MVC Upload extension demo"
-				},
-				"meta": {
-					"kendo-ui": "This example shows the basic functionality and core features of Kendo UI jQuery file upload control.",
-					"aspnet-mvc": "This ASP.NET MVC Upload extension demo illustrates the multi-file selection capability of the control."
-				}
-			},
-			{
-				"text": "Asynchronous Upload",
-				"url": "upload/async",
-				"title": {
-					"kendo-ui": "jQuery Asynchronous File Upload Example | Kendo UI Upload Demo",
-					"aspnet-mvc": "ASP.NET MVC Asynchronous File Upload Example"
-				},
-				"meta": {
-					"kendo-ui": "This example shows the async upload functionality of Kendo UI Upload control.",
-					"aspnet-mvc": "This example shows the async upload functionality of ASP.NET MVC Upload control."
-				}
-			},
-			{
-				"text": "Events",
-				"url": "upload/events",
-				"title": {
-					"kendo-ui": "Example of handling events in Kendo UI Upload",
-					"aspnet-mvc": "Handling events in ASP.NET MVC Upload | UI for ASP.NET MVC Demos"
-				},
-				"meta": {
-					"kendo-ui": "Learn with this example how to handle events, triggered by Kendo UI Upload widget.",
-					"aspnet-mvc": "In this sample you will see how to handle events, triggered by Kendo UI jQuery-based Upload widget, used in ASP.NET MVC."
-				}
-			},
-			{
-				"text": "API",
-				"url": "upload/api",
-				"title": {
-					"kendo-ui": "API example for Kendo UI File Upload Control",
-					"aspnet-mvc": "API example for ASP.NET MVC File Upload Control"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows API Functions of Kendo UI Upload component. Try the sample to see how to enable, disable the upload option and toggle the enabled state.",
-					"aspnet-mvc": "This demo shows API Functions of ASP.NET MVC Upload component. Try the sample to see how to enable, disable the upload option and toggle the enabled state."
-				}
-			},
-			{
-				"text": "Templates",
-				"url": "upload/templates",
-				"title": {
-					"kendo-ui": "Example of templates for Kendo UI Upload",
-					"aspnet-mvc": "Templates for Telerik ASP.NET MVC Upload"
-				},
-				"meta": {
-					"kendo-ui": "This demo illustrates how to use templates with the Kendo UI Upload widget.",
-					"aspnet-mvc": "In this example you will see templates options for Telerik ASP.NET MVC Upload extension."
-				}
-			},
-			{
-				"text": "RTL support",
-				"disableInMobile": true,
-				"url": "upload/right-to-left-support",
-				"title": {
-					"kendo-ui": "RTL support in Kendo UI Upload",
-					"aspnet-mvc": "Right to left support in Telerik ASP.NET MVC Upload extension"
-				},
-				"meta": {
-					"kendo-ui": "This Kendo UI demo illustrates how you can facilitate your RTL app users by using the RTL feature of Kendo UI Upload widget.",
-					"aspnet-mvc": "This demo illustrates the right to left support in Telerik ASP.NET MVC Upload HtmlHelper extension."
-				}
-			},
-			{
-				"text": "MVVM",
-				"url": "upload/mvvm",
-				"title": {
-					"kendo-ui": "MVVM support in Kendo UI Upload"
-				},
-				"meta": {
-					"kendo-ui": "Enabled, events and visible MVVM binding support in Kendo UI Upload"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			},
-			{
-				"text": "AngularJS",
-				"url": "upload/angular",
-				"title": {
-					"kendo-ui": "AngularJS support in Kendo UI Upload"
-				},
-				"meta": {
-					"kendo-ui": "AngularJS support directives in Kendo UI Upload"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			}
-		],
-		"category": "Editors"
-	},
-	{
-		"text": "TreeList",
-		"name": "treelist",
-		"pro": "true",
-		"api": "web/treelist",
-		"documentation": {
-			"kendo-ui": "getting-started/web/treelist/overview",
-			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/treelist/overview",
-			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/treelist/overview",
-			"php-ui": "getting-started/using-kendo-with/php/widgets/treelist/overview"
-		},
-		"forum": {
-			"kendo-ui": "kendo-ui/treelist",
-			"aspnet-mvc": "aspnet-mvc/treelist",
-			"jsp-ui": "jsp/treelist",
-			"php-ui": "php/treelist"
-		},
-		"codelibrary": {
-			"kendo-ui": "kendo-ui/treelist",
-			"aspnet-mvc": "aspnet-mvc/treelist",
-			"jsp-ui": "jsp/treelist",
-			"php-ui": "php/treelist"
-		},
-		"spriteCssClass": "treeListIcon",
-		"items": [
-			{
-				"text": "Basic usage",
-				"url": "treelist/index",
-				"title": {
-					"kendo-ui": "Kendo UI TreeList widget | Kendo UI Web demo"
-				},
-				"meta": {
-					"kendo-ui": "This demo illustrates the basic usage and functionality of Kendo UI jQuery TreeList widget which represents items in a hierarchical tree structure."
-				}
-			},
-			{
-				"text": "Binding to local data",
-				"url": "treelist/local-data-binding",
-				"title": {
-					"kendo-ui": "Binding Kendo UI TreeList component to local data"
-				},
-				"meta": {
-					"kendo-ui": "This example illustrates how the treelist can be bound to local data, so that all information is available."
-				},
-				"packages": [
-					"!mvc"
-				]
-			},
-			{
-				"text": "Binding to remote data",
-				"url": "treelist/remote-data-binding",
-				"title": {
-					"kendo-ui": "Binding Kendo UI TreeList component to remote data"
-				},
-				"meta": {
-					"kendo-ui": "This example illustrates how the treelist can be bound to remote data and each level is requested asynchronously."
-				},
-				"packages": [
-					"!mvc"
-				]
-			},
-			{
-				"text": "Editing",
-				"url": "treelist/editing",
-				"title": {
-					"kendo-ui": "Kendo UI TreeList widget | Kendo UI Web demo"
-				},
-				"meta": {
-					"kendo-ui": "This demo illustrates how editing works within the Kendo UI jQuery TreeList widget which represents items in a hierarchical tree structure."
-				},
-				"packages": [
-					"!mvc"
-				]
-			},
-			{
-				"text": "Popup editing",
-				"url": "treelist/editing-popup",
-				"title": {
-					"kendo-ui": "Popup data editing example for Kendo UI TreeList widget"
-				},
-				"meta": {
-					"kendo-ui": "This demo illustrates how the records in KendoTreeList can be easily modified in a pop-up dialog."
-				},
-				"packages": [
-					"!mvc"
-				]
-			},
-			{
-				"text": "Column resizing",
-				"url": "treelist/column-resizing",
-				"new": true,
-				"title": {
-					"kendo-ui": "Columns resizing in Kendo UI TreeList control | Kendo UI Web demo",
-					"aspnet-mvc": "Column resizing in Telerik ASP.NET MVC TreeList"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows the column resizing feature of the KendoTreeList control.",
-					"aspnet-mvc": "In this demo you can see how simple it is to resize columns in the Telerik ASP.NET MVC TreeList."
-				},
-				"packages": [
-					"!mvc"
-				]
-			},
-			{
-				"text": "Column reordering",
-				"url": "treelist/column-reordering",
-				"new": true,
-				"title": {
-					"kendo-ui": "Columns reordering in Kendo UI TreeList control | Kendo UI Web demo",
-					"aspnet-mvc": "Column Reordering in Telerik ASP.NET MVC TreeList"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows column moving and reordering feature of KendoTreeList control.",
-					"aspnet-mvc": "In this demo you can see how simple it is to reorder columns in Telerik ASP.NET MVC TreeList."
-				},
-				"packages": [
-					"!mvc"
-				]
-			},
-			{
-				"text": "Column menu",
-				"url": "treelist/column-menu",
-				"disableInMobile": true,
-				"new": true,
-				"title": {
-					"kendo-ui": "Column menu in Kendo UI TreeList",
-					"aspnet-mvc": "Column menu functionality of Telerik ASP.NET MVC TreeList"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows column menu functionality of KendoTreeList widget.",
-					"aspnet-mvc": "This Telerik example shows column menu functionality in the TreeList extension for ASP.NET MVC."
-				},
-				"packages": [
-					"!mvc"
-				]
-			},
-			{
-				"text": "Frozen columns",
-				"url": "treelist/frozen-columns",
-				"new": true,
-				"title": {
-					"kendo-ui": "Static columns of Kendo UI TreeList control | Kendo UI Web demo",
-					"aspnet-mvc": "Frozen columns demo in Telerik ASP.NET MVC Grid "
-				},
-				"meta": {
-					"kendo-ui": "This demo shows locked columns feature of KendoTreeList control.",
-					"aspnet-mvc": "Play with the demo for frozen columns functionality of Telerik ASP.NET MVC TreeList."
-				},
-				"packages": [
-					"!mvc"
-				]
-			},
-			{
-				"text": "Aggregates",
-				"url": "treelist/aggregates",
-				"title": {
-					"kendo-ui": "Aggregating option demo for KendoTreeList jQuery control"
-				},
-				"meta": {
-					"kendo-ui": "This example demonstrates the aggregate option for KendoTreeList. Use demo source code to enable the TreeList to calculate aggregated values."
-				},
-				"packages": [
-					"!mvc"
-				]
-			},
-			{
-				"text": "Export to Excel",
-				"url": "treelist/excel-export",
-				"title": {
-					"kendo-ui": "Exporting to MS Excel"
-				},
-				"meta": {
-					"kendo-ui": "Export Kendo UI TreeList as Microsoft Excel file"
-				},
-				"packages": [
-					"!offline",
-					"!mvc",
-					"!jsp",
-					"!php",
-					"!offline"
-				]
-			},
-			{
-				"text": "Export to PDF",
-				"url": "treelist/pdf-export",
-				"title": {
-					"kendo-ui": "Exporting to PDF"
-				},
-				"meta": {
-					"kendo-ui": "Export Kendo UI TreeList as PDF file"
-				},
-				"packages": [
-					"!offline",
-					"!mvc",
-					"!jsp",
-					"!php",
-					"!offline"
-				]
-			},
-			{
-				"text": "Events",
-				"url": "treelist/events",
-				"title": {
-					"kendo-ui": "Example of using events in Kendo UI TreeList control"
-				},
-				"meta": {
-					"kendo-ui": "This example demonstrates different events which are available in KendoTreeList widget and the code explains how you can use them for  your project."
-				},
-				"packages": [
-					"!mvc"
-				]
-			},
-			{
-				"text": "API",
-				"url": "treelist/api",
-				"title": {
-					"kendo-ui": "KendoTreeList API Demo"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows how API Functions can manipulate the contents and behavior of Kendo UI TreeList widget."
-				},
-				"packages": [
-					"!mvc"
-				]
-			},
-			{
-				"text": "MVVM",
-				"url": "treelist/mvvm",
-				"title": {
-					"kendo-ui": "MVVM support in Kendo UI TreeList"
-				},
-				"meta": {
-					"kendo-ui": "MVVM support for Kendo UI TreeList"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			},
-			{
-				"text": "AngularJS",
-				"url": "treelist/angular",
-				"title": {
-					"kendo-ui": "AngularJS support in Kendo UI TreeList"
-				},
-				"meta": {
-					"kendo-ui": "AngularJS directive support for Kendo UI TreeList"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			}
-		],
-		"category": "Data Management"
-	},
-	{
-		"text": "Window",
-		"name": "window",
-		"api": "web/window",
-		"disableInMobile": true,
-		"documentation": {
-			"kendo-ui": "getting-started/web/window/overview",
-			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/window/overview",
-			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/window/overview",
-			"php-ui": "getting-started/using-kendo-with/php/widgets/window/overview"
-		},
-		"forum": {
-			"kendo-ui": "kendo-ui/window",
-			"aspnet-mvc": "aspnet-mvc/window",
-			"jsp-ui": "jsp/window",
-			"php-ui": "php/window"
-		},
-		"codelibrary": {
-			"kendo-ui": "kendo-ui/window",
-			"aspnet-mvc": "aspnet-mvc/window",
-			"jsp-ui": "jsp/window",
-			"php-ui": "php/window"
-		},
-		"spriteCssClass": "windowIcon",
-		"items": [
-			{
-				"text": "Basic usage",
-				"url": "window/index",
-				"title": {
-					"kendo-ui": "Kendo UI Window Example | Kendo UI Web Demos",
-					"aspnet-mvc": "ASP.NET MVC Window Example | UI for ASP.NET MVC Demos"
-				},
-				"meta": {
-					"kendo-ui": "This example demonstrates the basic usage of KendoWindow widget, one of the components which you can use to enhance the interaction in your web app.",
-					"aspnet-mvc": "This example demonstrates the basic usage of ASP.NET MVC Window contorl one of the components which you can use to enhance the interaction in your web app."
-				}
-			},
-			{
-				"text": "Customizing actions",
-				"url": "window/actions",
-				"title": {
-					"kendo-ui": "Example of customizing actions in Kendo UI Window control",
-					"aspnet-mvc": "Example of customizing actions in ASP.NET MVC Window control"
-				},
-				"meta": {
-					"kendo-ui": "This Kendo UI Window sample illustrates how client-side actions can be further customized in order to bring interactivity in your web app to a higher level.",
-					"aspnet-mvc": "This ASP.NET MVC Window sample illustrates how client-side actions can be further customized in order to bring interactivity in your web app to a higher level."
-				}
-			},
-			{
-				"text": "Loading content with AJAX",
-				"url": "window/ajax",
-				"title": {
-					"kendo-ui": "AJAX loaded content with Kendo UI Window widget",
-					"aspnet-mvc": "AJAX loaded content with ASP.NET MVC Window"
-				},
-				"meta": {
-					"kendo-ui": "This example illustrates how content in Kendo UI window widget can be loaded, using AJAX.",
-					"aspnet-mvc": "This example illustrates how content in ASP.NET MVC window control can be loaded, using AJAX."
-				},
-				"requiresServer": "true"
-			},
-			{
-				"text": "Animation effects",
-				"url": "window/animation",
-				"title": {
-					"kendo-ui": "Animation effects demo for Kendo UI window widget",
-					"aspnet-mvc": "Animation effects demo for ASP.NET MVC window control"
-				},
-				"meta": {
-					"kendo-ui": "This sample illustrates the animation effects in Kendo UI window control. Just play with animation settings to change the interactivity of the control.",
-					"aspnet-mvc": "This sample illustrates the animation effects in ASP.NET MVC window control. Just play with animation settings to change the interactivity of the control."
-				}
-			},
-			{
-				"text": "Events",
-				"url": "window/events",
-				"title": {
-					"kendo-ui": "Events in Kendo UI Window demo",
-					"aspnet-mvc": "Events in ASP.NET MVC Window demo"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows how to fire events in  Kendo UI jQuery window control. Refresh, activate, open, dragend, dragstart are some of the events which you can trigger.",
-					"aspnet-mvc": "This demo shows how to fire events in ASP.NET MVC window control. Refresh, activate, open, dragend, dragstart are some of the events which you can trigger."
-				},
-				"requiresServer": "true"
-			},
-			{
-				"text": "API",
-				"url": "window/api",
-				"title": {
-					"kendo-ui": "Example of Kendo UI Window API",
-					"aspnet-mvc": "Example of ASP.NET MVC Window API"
-				},
-				"meta": {
-					"kendo-ui": "This sample shows how you can use the API of kendoWindow widget to refresh the content of the window, open and close it.",
-					"aspnet-mvc": "This sample shows how you can use the API of ASP.NET MVC Window control to refresh the content of the window, open and close it."
-				},
-				"requiresServer": "true"
-			},
-			{
-				"text": "RTL support",
-				"disableInMobile": true,
-				"url": "window/right-to-left-support",
-				"title": {
-					"kendo-ui": "Right-to-Left window position of Kendo UI Window control",
-					"aspnet-mvc": "Right-to-Left window position of ASP.NET MVC Window control"
-				},
-				"meta": {
-					"kendo-ui": "This demo shows how Kendo UI Window widget supports right-to-left direction of the window to provide best end-user experience.",
-					"aspnet-mvc": "This demo shows how ASP.NET MVC Window control supports right-to-left direction of the window to provide best end-user experience."
-				}
-			},
-			{
-				"text": "Keyboard navigation",
-				"disableInMobile": true,
-				"url": "window/keyboard-navigation",
-				"title": {
-					"kendo-ui": "Keyboard navigation support | Kendo UI Window Demo",
-					"aspnet-mvc": "Keyboard navigation support | ASP.NET MVC Window Demo"
-				},
-				"meta": {
-					"kendo-ui": "The sample demonstrates how the keyboard navigation feature is integrated in the powerful Kendo UI Window.",
-					"aspnet-mvc": "The sample demonstrates how the keyboard navigation feature is integrated in the powerful ASP.NET MVC Window control."
-				}
-			},
-			{
-				"text": "MVVM",
-				"url": "window/mvvm",
-				"title": {
-					"kendo-ui": "MVVM support in Kendo UI Window"
-				},
-				"meta": {
-					"kendo-ui": "Events and visible MVVM binding support in Kendo UI Window"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			},
-			{
-				"text": "AngularJS",
-				"url": "window/angular",
-				"title": {
-					"kendo-ui": "AngularJS support in Kendo UI Window"
-				},
-				"meta": {
-					"kendo-ui": "AngularJS directive support for Kendo UI Window"
-				},
-				"packages": [
-					"!mvc",
-					"!jsp",
-					"!php"
-				]
-			}
-		],
-		"category": "Layout"
-	}
+    {
+        "text": "DateTimePicker",
+        "name": "datetimepicker",
+        "api": "web/datetimepicker",
+        "documentation": {
+            "kendo-ui": "getting-started/web/datetimepicker/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/datetimepicker/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/datetimepicker/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/datetimepicker/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/date-time-pickers",
+            "aspnet-mvc": "aspnet-mvc/date-time-pickers",
+            "jsp-ui": "jsp/date-picker-pickers",
+            "php-ui": "php/date-time-pickers"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/datepicker",
+            "aspnet-mvc": "aspnet-mvc/datetime",
+            "jsp-ui": "jsp/date-time-pickers",
+            "php-ui": "php/date-time-pickers"
+        },
+        "spriteCssClass": "dateTimePickerIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "datetimepicker/index",
+                "title": {
+                    "kendo-ui": "Kendo UI Date and Time picker example",
+                    "aspnet-mvc": "ASP.NET MVC Date and Time picker example"
+                },
+                "meta": {
+                    "kendo-ui": "Kendo UI DateTimePicker control handles both dates and times. Learn more about the time/date selection functionality by playing with this demo.",
+                    "aspnet-mvc": "ASP.NET MVC DateTimePicker control handles both dates and times. Learn more about the time/date selection functionality by playing with this demo."
+                }
+            },
+            {
+                "text": "Range selection",
+                "url": "datetimepicker/rangeselection",
+                "title": {
+                    "kendo-ui": "Date range selection functionality in Kendo UI DateTimePicker",
+                    "aspnet-mvc": "Date range selection functionality in ASP.NET MVC DateTimePicker"
+                },
+                "meta": {
+                    "kendo-ui": "In Kendo UI DateTimePicker control, dates and times are handled in two different input boxes so that the user can easily select different date ranges.",
+                    "aspnet-mvc": "In ASP.NET MVC DateTimePicker control, dates and times are handled in two different input boxes so that the user can easily select different date ranges."
+                }
+            },
+            {
+                "text": "Customizing templates",
+                "url": "datetimepicker/template",
+                "title": {
+                    "kendo-ui": "Templates customization example | Kendo UI DateTimePicker widget",
+                    "aspnet-mvc": "Templates customization example | ASP.NET MVC DateTimePicker demo"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows how templates of Kendo HTML5-based DateTimePicker widget can be customized to fit your application.",
+                    "aspnet-mvc": "This example shows how templates of ASP.NET MVC DateTimePicker control can be customized to fit your application."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "datetimepicker/events",
+                "title": {
+                    "kendo-ui": "Events in Kendo UI Date and Timepicker component",
+                    "aspnet-mvc": "Events in ASP.NET MVC Date and Timepicker component"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows which events are triggered when you change the date and time in Kendo UI DateTimePicker component.",
+                    "aspnet-mvc": "This example shows which events are triggered when you change the date and time in ASP.NET MVC DateTimePicker component."
+                }
+            },
+            {
+                "text": "API",
+                "url": "datetimepicker/api",
+                "title": {
+                    "kendo-ui": "Kendo UI DateTimePicker API Demo",
+                    "aspnet-mvc": "ASP.NET MVC DateTimePicker API Demo"
+                },
+                "meta": {
+                    "kendo-ui": "Play with the demo to explore Kendo UI DateTimePicker API and all API functions.",
+                    "aspnet-mvc": "Play with the demo to explore ASP.NET MVC DateTimePicker API and all API functions."
+                }
+            },
+            {
+                "packages": [
+                    "mvc-offline"
+                ],
+                "text": "Globalization",
+                "url": "datetimepicker/globalization"
+            },
+            {
+                "text": "RTL support",
+                "disableInMobile": true,
+                "url": "datetimepicker/right-to-left-support",
+                "title": {
+                    "kendo-ui": "Right-to-left support in Kendo UI DateTimePicker control | Kendo UI Demo",
+                    "aspnet-mvc": "Right-to-left support in ASP.NET MVC DateTimePicker control"
+                },
+                "meta": {
+                    "kendo-ui": "Choose a date and see how the date and the time are displayed from right to left in Kendo UI DateTimePicker component.",
+                    "aspnet-mvc": "Choose a date and see how the date and the time are displayed from right to left in ASP.NET MVC DateTimePicker component."
+                }
+            },
+            {
+                "text": "Keyboard navigation",
+                "disableInMobile": true,
+                "url": "datetimepicker/keyboard-navigation",
+                "title": {
+                    "kendo-ui": "Keyboard navigation in Kendo UI DateTimePicker widget",
+                    "aspnet-mvc": "Keyboard navigation in ASP.NET MVC DateTimePicker component"
+                },
+                "meta": {
+                    "kendo-ui": "By using the keyboard, you can easily select date and time in Kendo UI DateTimePicker, trigger an event or highlight a specific day.",
+                    "aspnet-mvc": "By using the keyboard, you can easily select date and time in ASP.NET MVC DateTimePicker, trigger an event or highlight a specific day."
+                }
+            },
+            {
+                "text": "MVVM",
+                "url": "datetimepicker/mvvm",
+                "title": {
+                    "kendo-ui": "MVVM support in Kendo UI DateTimePicker"
+                },
+                "meta": {
+                    "kendo-ui": "Enabled, events, value and visible MVVM binding support in Kendo UI DateTimePicker"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            },
+            {
+                "text": "AngularJS",
+                "url": "datetimepicker/angular",
+                "title": {
+                    "kendo-ui": "AngularJS support in Kendo UI DateTimePicker"
+                },
+                "meta": {
+                    "kendo-ui": "AngularJS directive support for Kendo UI DateTimePicker"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            }
+        ],
+        "category": "Editors"
+    },
+    {
+        "text": "Grid",
+        "name": "grid",
+        "pro": "true",
+        "api": "web/grid",
+        "documentation": {
+            "kendo-ui": "getting-started/web/grid/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/grid/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/grid/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/grid/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/grid",
+            "aspnet-mvc": "aspnet-mvc/grid",
+            "jsp-ui": "jsp/grid",
+            "php-ui": "php/grid"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/grid",
+            "aspnet-mvc": "aspnet-mvc/grid",
+            "jsp-ui": "jsp/grid",
+            "php-ui": "php/grid"
+        },
+        "spriteCssClass": "gridIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "grid/index",
+                "title": {
+                    "kendo-ui": "jQuery Grid control example | Kendo UI Grid Demos",
+                    "aspnet-mvc": " ASP.NET MVC Grid control example"
+                },
+                "meta": {
+                    "kendo-ui": "This demo for Kendo UI jQuery-based Grid component shows how you can make your static HTML tables and raw data much more interactive to match your modern web app.",
+                    "aspnet-mvc": "In this demo for Kendo UI jQuery-powered Grid in ASP.NET MVC you will see all basic functionalities of the extension."
+                }
+            },
+            {
+                "text": "Binding to local data",
+                "url": "grid/local-data-binding",
+                "title": {
+                    "kendo-ui": "Binding to local data in Kendo UI Grid | Kendo UI Web",
+                    "aspnet-mvc": "Binding to local data in Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This sample demonstrates how we can bind Kendo UI Grid widget to local JSON Data by using Kendo UI DataSource component.",
+                    "aspnet-mvc": "This sample demonstrates how we can bind the Telerik ASP.NET MVC Grid control to local JSON Data by using Kendo UI DataSource component."
+                }
+            },
+            {
+                "text": "Binding to remote data",
+                "url": "grid/remote-data-binding",
+                "title": {
+                    "kendo-ui": "Remote data binding example in KendoGrid",
+                    "aspnet-mvc": "Remote data binding example in Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This example and demo source code illustrate how KendoGrid component can be bound to remote data by using the DataSource component.",
+                    "aspnet-mvc": "This example and demo source code illustrate how the Telerik ASP.NET MVC Grid component can be bound to remote data using the DataSource component."
+                }
+            },
+            {
+                "text": "Binding to Telerik Backend Services",
+                "url": "grid/everlive",
+                "title": {
+                    "kendo-ui": "Binding to Telerik Backend Services | Kendo UI Grid demo",
+                    "aspnet-mvc": "Binding ASP.NET MVC Grid to Telerik Backend Services"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows how the Kendo UI Grid can be bound to Telerik Backend Services which will provide the backend functionality",
+                    "aspnet-mvc": "In this sample you will see in action how Telerik ASP.NET MVC Grid is bound to Telerik cloud-based services."
+                },
+                "packages": [
+                    "!jsp",
+                    "!php"
+                ]
+            },
+            {
+                "text": "Export to Excel",
+                "url": "grid/excel-export",
+                "title": {
+                    "kendo-ui": "Exporting to MS Excel"
+                },
+                "meta": {
+                    "kendo-ui": "Export Kendo UI grid as Microsoft Excel file"
+                },
+                "packages": [
+                    "!offline"
+                ]
+            },
+            {
+                "text": "Export to PDF",
+                "url": "grid/pdf-export",
+                "title": {
+                    "kendo-ui": "Exporting to PDF"
+                },
+                "meta": {
+                    "kendo-ui": "Export Kendo UI grid as PDF file"
+                },
+                "packages": [
+                    "!offline"
+                ],
+                "new": "true"
+            },
+            {
+                "text": "Binding to SignalR",
+                "url": "grid/signalr",
+                "title": {
+                    "kendo-ui": "Real-time Binding to SignalR Hub",
+                    "aspnet-mvc": "Real-time Binding to SignalR Hub | UI for ASP.NET MVC demos"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows how the Kendo UI Grid can be bound to SignalR Hub for real-time push notifications",
+                    "aspnet-mvc": "This example shows how the Telerik ASP.NET MVC Grid can be bound to SignalR Hub for real-time push notifications."
+                },
+                "packages": [
+                    "!jsp",
+                    "!php"
+                ]
+            },
+            {
+                "text": "Custom ajax binding",
+                "url": "grid/customajaxbinding",
+                "packages": [
+                    "mvc-offline"
+                ]
+            },
+            {
+                "text": "Custom data source",
+                "url": "grid/custom-datasource",
+                "packages": [
+                    "mvc-offline"
+                ]
+            },
+            {
+                "text": "OData binding",
+                "url": "grid/odata",
+                "packages": [
+                    "mvc-offline"
+                ]
+            },
+            {
+                "text": "Web API binding",
+                "url": "grid/webapi",
+                "packages": [
+                    "mvc-offline"
+                ]
+            },
+            {
+                "text": "Batch editing",
+                "url": "grid/editing",
+                "title": {
+                    "kendo-ui": "Batch editing example for Kendo UI jQuery Grid control",
+                    "aspnet-mvc": "Batch editing functionality in Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This demo illustrates the batch editing feature of Kendo UI jQuery Grid. Find the source code which shows how to send changes to the server as a batch.",
+                    "aspnet-mvc": "In this sample you will play with the batch editing functionality of Telerik ASP.NET MVC Grid."
+                }
+            },
+            {
+                "text": "Inline editing",
+                "url": "grid/editing-inline",
+                "title": {
+                    "kendo-ui": "Applying inline editing in Kendo UI Grid",
+                    "aspnet-mvc": "Applying inline editing in Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This sample demonstrates how the values in the cells of KendoGrid can be easily changed. Try the demo source code to find how inline data grid can be deleted and modified.",
+                    "aspnet-mvc": "See how the values in the cells of Telerik ASP.NET MVC Grid can be easily changed. Try the demo source code to find how inline data grid can be deleted and modified."
+                }
+            },
+            {
+                "text": "Popup editing",
+                "url": "grid/editing-popup",
+                "title": {
+                    "kendo-ui": "Popup data editing example for Kendo UI Grid widget",
+                    "aspnet-mvc": "Batch editing functionality in Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This demo illustrates how the records in KendoGrid can be easily modified in a pop-up dialog.",
+                    "aspnet-mvc": "In this sample you can see the batch editing functionality of Telerik ASP.NET MVC Grid in action."
+                }
+            },
+            {
+                "text": "Editing custom editor",
+                "url": "grid/editing-custom",
+                "title": {
+                    "kendo-ui": "jQuery Grid Custom Editing example | Kendo UI Grid Demo",
+                    "aspnet-mvc": "ASP.NET MVC Grid Custom Editing | UI for ASP.NET MVC Demo"
+                },
+                "meta": {
+                    "kendo-ui": " This example illustrates how editing in KendoGrid can be further customized with the custom editor and using DataSource component.",
+                    "aspnet-mvc": "This example illustrates how editing in Telerik ASP.NET MVC Grid can be further customized with the custom editor and using DataSource component."
+                }
+            },
+            {
+                "text": "Custom validator editing",
+                "url": "grid/editing-custom-validation",
+                "title": {
+                    "kendo-ui": "Custom Validation example for Kendo UI Grid widget",
+                    "aspnet-mvc": "Custom Validation example for Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": " This example demonstrates how to implement custom validation rule in a Kendo UI Grid.",
+                    "aspnet-mvc": "This example demonstrates how to implement custom validation rule in a Telerik ASP.NET MVC Grid."
+                }
+            },
+            {
+                "text": "Paging",
+                "url": "grid/paging",
+                "packages": [
+                    "mvc-offline"
+                ]
+            },
+            {
+                "text": "Virtualization of remote data",
+                "url": "grid/virtualization-remote-data",
+                "title": {
+                    "kendo-ui": "Demo for Kendo UI Grid virtualization to remote data",
+                    "aspnet-mvc": "Virtualization of remote data in ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This sample shows how KendoGrid UI virtualization is enabled to remote data.",
+                    "aspnet-mvc": "This demo illustrates the virtualization of remote data in ASP.NET MVC Grid."
+                }
+            },
+            {
+                "text": "Hierarchy",
+                "url": "grid/hierarchy",
+                "title": {
+                    "kendo-ui": "Hierarchical Kendo UI Grid | Kendo UI Web",
+                    "aspnet-mvc": "Hierarchical ASP.NET MVC Grid | UI for ASP.NET MVC Demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo illustrates the hierarchical data grid feature of Kendo UI Grid widget. Try the demo source code to play with the grid in your web app.",
+                    "aspnet-mvc": "This demo illustrates the hierarchical data grid feature of the Telerik ASP.NET MVC Grid component. Try the demo source code to play with the grid in your web app."
+                }
+            },
+            {
+                "text": "Detail template",
+                "url": "grid/detailtemplate",
+                "title": {
+                    "kendo-ui": "Detail template demo in Kendo UI Grid control",
+                    "aspnet-mvc": "Detail Template for Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows how records in the data grid widget can be presented with a detailed template.",
+                    "aspnet-mvc": "This example shows how records in the Telerik ASP.NET MVC Grid component can be presented with a detailed template."
+                }
+            },
+            {
+                "text": "Toolbar template",
+                "url": "grid/toolbar-template",
+                "title": {
+                    "kendo-ui": "Toolbar template demo for Kendo UI HTML5 Grid control",
+                    "aspnet-mvc": "Toolbar templates for Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This Kendo UI Grid example shows how you can add custom toolbars to the grid and create toolbar templates.",
+                    "aspnet-mvc": "This Telerik ASP.NET MVC Grid example shows how you can add custom toolbars to the grid and create toolbar templates."
+                }
+            },
+            {
+                "text": "Custom command",
+                "url": "grid/custom-command",
+                "title": {
+                    "kendo-ui": "Custom commands demo for Kendo UI Grid widget",
+                    "aspnet-mvc": "Custom command demo in Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This demo demonstrates the functionality to apply custom commands to KendoGrid. Look at the source code to find how to set the text attribute and command name for the grid component.",
+                    "aspnet-mvc": "This example illustrates the custom command of Telerik ASP.NET MVC Grid extension."
+                }
+            },
+            {
+                "text": "Aggregates",
+                "url": "grid/aggregates",
+                "title": {
+                    "kendo-ui": "Aggregating option demo for KendoGrid jQuery control",
+                    "aspnet-mvc": "Aggregating option demo for Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This example demonstrates the aggregate option for KendoGrid. Use demo source code to enable the grid to calculate aggregated values.",
+                    "aspnet-mvc": "This example demonstrates the aggregate option for Telerik ASP.NET MVC Grid. Use demo source code to enable the grid to calculate aggregated values."
+                }
+            },
+            {
+                "text": "Filter menu customization",
+                "url": "grid/filter-menu-customization",
+                "title": {
+                    "kendo-ui": "Filter menu customization in Kendo UI Grid | Kendo UI Web Demo",
+                    "aspnet-mvc": "Filter menu customization in MVC Grid | UI for ASP.NET MVC Demo"
+                },
+                "meta": {
+                    "kendo-ui": "In this example we will learn how to customize the filter menu of Kendo UI Grid component.",
+                    "aspnet-mvc": "In this example you will learn how to customize the filter menu of Telerik ASP.NET MVC Grid component."
+                }
+            },
+            {
+                "text": "Filter row",
+                "url": "grid/filter-row",
+                "title": {
+                    "kendo-ui": "Filter row in Kendo UI Grid | Kendo UI Web Demo"
+                },
+                "meta": {
+                    "kendo-ui": "In this example we will learn how to enable the filter row of Kendo UI Grid component."
+                }
+            },
+            {
+                "new": "true",
+                "text": "Filter Multi Checkboxes",
+                "url": "grid/filter-multi-checkboxes",
+                "title": {
+                    "kendo-ui": "Filter multi-check in Kendo UI Grid | Kendo UI Web Demo"
+                },
+                "meta": {
+                    "kendo-ui": "In this example we will learn how to enable the filter multi-check of Kendo UI Grid component."
+                }
+            },
+            {
+                "new": "true",
+                "text": "Copy to Excel",
+                "url": "grid/copy-to-excel",
+                "title": {
+                    "kendo-ui": "Copy to Excel in Kendo UI Grid | Kendo UI Web Demo"
+                },
+                "meta": {
+                    "kendo-ui": "In this example we will learn how to enable the allowCopy option of Kendo UI Grid component to allow copying data to Excel."
+                }
+            }
+        ],
+        "category": "Data Management"
+    },
+    {
+        "text": "Notification",
+        "name": "notification",
+        "api": "web/notification",
+        "documentation": {
+            "kendo-ui": "getting-started/web/notification/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/notification/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/notification/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/notification/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/notification",
+            "aspnet-mvc": "aspnet-mvc/notification",
+            "jsp-ui": "jsp/notification",
+            "php-ui": "php/notification"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/notification",
+            "aspnet-mvc": "aspnet-mvc/notification",
+            "jsp-ui": "jsp/notification",
+            "php-ui": "php/notification"
+        },
+        "spriteCssClass": "notificationIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "notification/index",
+                "title": {
+                    "kendo-ui": "Overview of Kendo UI Notification | Kendo UI Web demo",
+                    "aspnet-mvc": "ASP.NET MVC Notification Extension demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows the core functionality of Kendo UI Notification component.",
+                    "aspnet-mvc": "In this example you will see all options to show and hide a notification in ASP.NET MVC."
+                }
+            },
+            {
+                "text": "Position and stacking",
+                "url": "notification/position-stacking",
+                "title": {
+                    "kendo-ui": "Position and stacking of Kendo UI Notification | Kendo UI Web demo",
+                    "aspnet-mvc": "Position and stacking of ASP.NET MVC Notification | ASP.NET MVC"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows the position and stacking behavior of the Kendo UI Notification component.",
+                    "aspnet-mvc": "This demo shows the position and stacking behavior of the ASP.NET MVC Notification component."
+                }
+            },
+            {
+                "text": "Templates",
+                "url": "notification/templates",
+                "title": {
+                    "kendo-ui": "Templates of Kendo UI Notification | Kendo UI Web demo",
+                    "aspnet-mvc": " Layout notification templates for ASP.NET MVC"
+                },
+                "meta": {
+                    "kendo-ui": "Demo about using templates with the Kendo UI Notification component.",
+                    "aspnet-mvc": "In this example you will see how Telerik notification templates could be modified in ASP.NET MVC."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "notification/events",
+                "title": {
+                    "kendo-ui": "Events of Kendo UI Notification | Kendo UI Web demo",
+                    "aspnet-mvc": "Events of ASP.NET MVC Notification | ASP.NET MVC demo"
+                },
+                "meta": {
+                    "kendo-ui": "Demo about using events and handlers with the Kendo UI Notification component.",
+                    "aspnet-mvc": "Demo about using events and handlers with the ASP.NET MVC Notification component."
+                }
+            },
+            {
+                "text": "API",
+                "url": "notification/api",
+                "title": {
+                    "kendo-ui": "API of Kendo UI Notification | Kendo UI Web demo",
+                    "aspnet-mvc": "API of ASP.NET MVC Notification | UI for ASP.NET MVC demo"
+                },
+                "meta": {
+                    "kendo-ui": "Demo about using the API of the Kendo UI Notification component.",
+                    "aspnet-mvc": "Demo about using the API of the ASP.NET MVC Notification component."
+                }
+            },
+            {
+                "text": "RTL support",
+                "disableInMobile": true,
+                "url": "notification/right-to-left-support",
+                "title": {
+                    "kendo-ui": "RTL Support of Kendo UI Notification | Kendo UI Web demo",
+                    "aspnet-mvc": "RTL Support for ASP.NET MVC Notification | ASP.NET MVC demo"
+                },
+                "meta": {
+                    "kendo-ui": "Demo about the RTL support of the Kendo UI Notification component.",
+                    "aspnet-mvc": "Demo about the RTL support of the ASP.NET MVC Notification component."
+                }
+            },
+            {
+                "text": "MVVM",
+                "url": "notification/mvvm",
+                "title": {
+                    "kendo-ui": "MVVM support in Kendo UI Notification"
+                },
+                "meta": {
+                    "kendo-ui": "MVVM support for Kendo UI Notification"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            },
+            {
+                "text": "AngularJS",
+                "url": "notification/angular",
+                "title": {
+                    "kendo-ui": "AngularJS support in Kendo UI Notification"
+                },
+                "meta": {
+                    "kendo-ui": "AngularJS directive support for Kendo UI Notification"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            }
+        ],
+        "category": "Layout"
+    },
+    {
+        "text": "NumericTextBox",
+        "name": "numerictextbox",
+        "api": "web/numerictextbox",
+        "documentation": {
+            "kendo-ui": "getting-started/web/numerictextbox/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/numerictextbox/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/numerictextbox/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/numerictextbox/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/numeric-textbox",
+            "aspnet-mvc": "aspnet-mvc/numeric-textbox",
+            "jsp-ui": "jsp/numeric-textbox",
+            "php-ui": "php/numeric-textbox"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/numerictextbox",
+            "aspnet-mvc": "aspnet-mvc/numerictextbox",
+            "jsp-ui": "jsp/numerictextbox",
+            "php-ui": "php/numerictextbox"
+        },
+        "spriteCssClass": "numericTextBoxIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "numerictextbox/index",
+                "title": {
+                    "kendo-ui": "Primary features of Kendo UI Numeric TextBox | Kendo UI Web demo",
+                    "aspnet-mvc": "ASP.NET MVC NumericTextBox control demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows the core functionality of KendoNumericTextBox component.",
+                    "aspnet-mvc": "This example illustrates how to use all core features of Telerik NumericTextBox for ASP.NET MVC."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "numerictextbox/events",
+                "title": {
+                    "kendo-ui": "Events in Kendo UI NumericTextBox widget",
+                    "aspnet-mvc": "Events in ASP.NET MVC NumericTextBox control"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows events which are triggered in Kendo UI NumericTextBox widget.",
+                    "aspnet-mvc": "This example shows events which are triggered in ASP.NET MVC NumericTextBox control."
+                }
+            },
+            {
+                "text": "API",
+                "url": "numerictextbox/api",
+                "title": {
+                    "kendo-ui": "API Functions Demo for KendoNumericTextBox",
+                    "aspnet-mvc": "API Functions Demo for ASP.NET MVC NumericTextBox"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows specific API functions for KendoNumericTextBox component.",
+                    "aspnet-mvc": "This demo shows specific API functions for ASP.NET MVC NumericTextBox component."
+                }
+            },
+            {
+                "packages": [
+                    "mvc-offline"
+                ],
+                "text": "Globalization",
+                "url": "numerictextbox/globalization"
+            },
+            {
+                "text": "RTL support",
+                "disableInMobile": true,
+                "url": "numerictextbox/right-to-left-support",
+                "title": {
+                    "kendo-ui": "RTL support in Kendo UI NumericTextBox widget",
+                    "aspnet-mvc": "RTL support in ASP.NET MVC NumericTextBox control"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how right-to-left input is implemented in Kendo UI Numeric TextBox component to ensure the satisfaction of RTL language users.",
+                    "aspnet-mvc": "This demo shows how right-to-left input is implemented in ASP.NET MVC Numeric TextBox component to ensure the satisfaction of RTL language users."
+                }
+            },
+            {
+                "text": "Keyboard navigation",
+                "disableInMobile": true,
+                "url": "numerictextbox/keyboard-navigation",
+                "title": {
+                    "kendo-ui": "Keyboard navigation in Kendo UI NumericTextBox",
+                    "aspnet-mvc": "Keyboard navigation in ASP.NET MVC NumericTextBox"
+                },
+                "meta": {
+                    "kendo-ui": "The value in Kendo UI NumericTextBox can be increased or decreased by using keyboard navigation combinations. Take a look at the demo to learn how.",
+                    "aspnet-mvc": "The value in ASP.NET MVC NumericTextBox can be increased or decreased by using keyboard navigation combinations. Take a look at the demo to learn how."
+                }
+            },
+            {
+                "text": "MVVM",
+                "url": "numerictextbox/mvvm",
+                "title": {
+                    "kendo-ui": "MVVM support in Kendo UI NumericTextBox"
+                },
+                "meta": {
+                    "kendo-ui": "Enabled, events, value and visible MVVM binding support in Kendo UI NumericTextBox"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            },
+            {
+                "text": "AngularJS",
+                "url": "numerictextbox/angular",
+                "title": {
+                    "kendo-ui": "AngularJS support in Kendo UI NumericTextBox"
+                },
+                "meta": {
+                    "kendo-ui": "AngularJS directive support for Kendo UI NumericTextBox"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            }
+        ],
+        "category": "Editors"
+    },
+    {
+        "text": "MaskedTextBox",
+        "name": "maskedtextbox",
+        "api": "web/maskedtextbox",
+        "documentation": {
+            "kendo-ui": "getting-started/web/maskedtextbox/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/maskedtextbox/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/maskedtextbox/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/maskedtextbox/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/maskedtextbox",
+            "aspnet-mvc": "aspnet-mvc/maskedtextbox",
+            "jsp-ui": "jsp/maskedtextbox",
+            "php-ui": "php/maskedtextbox"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/maskedtextbox",
+            "aspnet-mvc": "aspnet-mvc/maskedtextbox",
+            "jsp-ui": "jsp/maskedtextbox",
+            "php-ui": "php/maskedtextbox"
+        },
+        "spriteCssClass": "maskedtextboxIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "maskedtextbox/index",
+                "title": {
+                    "kendo-ui": "Primary features of Kendo UI Mask Input | Kendo UI Web demo",
+                    "aspnet-mvc": "Primary features of ASP.NET MVC Mask Input | ASP.NET MVC demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows the core functionality of KendoMaskedTextBox component.",
+                    "aspnet-mvc": "This demo shows the core functionality of ASP.NET MVC MaskedTextBox component."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "maskedtextbox/events",
+                "title": {
+                    "kendo-ui": "Events in Kendo UI MaskedTextBox widget",
+                    "aspnet-mvc": "Events in ASP.NET MVC MaskedTextBox control"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows events which are triggered in Kendo UI MaskedTextBox widget.",
+                    "aspnet-mvc": "This example shows events which are triggered in ASP.NET MVC MaskedTextBox component."
+                }
+            },
+            {
+                "text": "API",
+                "url": "maskedtextbox/api",
+                "title": {
+                    "kendo-ui": "API Functions Demo for KendoMaskedTextBox",
+                    "aspnet-mvc": "API Functions Demo for ASP.NET MVC MaskedTextBox"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows specific API functions for KendoMaskedTextBox component.",
+                    "aspnet-mvc": "This demo shows specific API functions for ASP.NET MVC MaskedTextBox component."
+                }
+            },
+            {
+                "text": "Globalization",
+                "url": "maskedtextbox/globalization",
+                "title": {
+                    "kendo-ui": "Globalization Demo for KendoMaskedTextBox",
+                    "aspnet-mvc": "Globalization Demo for ASP.NET MVC MaskedTextBox"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows KendoMaskedTextBox globalization support for decimal point, thousand separator and currency symbol.",
+                    "aspnet-mvc": "This demo shows ASP.NET MVC MaskedTextBox globalization support for decimal point, thousand separator and currency symbol."
+                }
+            },
+            {
+                "text": "RTL support",
+                "disableInMobile": true,
+                "url": "maskedtextbox/right-to-left-support",
+                "title": {
+                    "kendo-ui": "RTL support in Kendo UI MaskedTextBox widget",
+                    "aspnet-mvc": "RTL support in ASP.NET MVC MaskedTextBox control"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how right-to-left input is implemented in Kendo UI MaskedTextBox component to ensure the satisfaction of RTL language users.",
+                    "aspnet-mvc": "This demo shows how right-to-left input is implemented in ASP.NET MVC MaskedTextBox component to ensure the satisfaction of RTL language users."
+                }
+            },
+            {
+                "text": "Validation",
+                "url": "maskedtextbox/validation",
+                "title": {
+                    "kendo-ui": "Validation Demo for Kendo UI MaskedTextBox",
+                    "aspnet-mvc": "Validation Demo for ASP.NET MVC MaskedTextBox"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how to validate an incomplete widget value",
+                    "aspnet-mvc": "This demo shows how to validate an incomplete control value in ASP.NET MVC MaskedTextBox"
+                }
+            },
+            {
+                "text": "AngularJS",
+                "url": "maskedtextbox/angular",
+                "title": {
+                    "kendo-ui": "AngularJS support in Kendo UI MaskedTextBox"
+                },
+                "meta": {
+                    "kendo-ui": "AngularJS directive support for Kendo UI MaskedTextBox"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            }
+        ],
+        "category": "Editors"
+    },
+    {
+        "text": "Upload",
+        "name": "upload",
+        "pro": "true",
+        "api": "web/upload",
+        "documentation": {
+            "kendo-ui": "getting-started/web/upload/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/upload/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/upload/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/upload/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/upload",
+            "aspnet-mvc": "aspnet-mvc/upload",
+            "jsp-ui": "jsp/upload",
+            "php-ui": "php/upload"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/upload",
+            "aspnet-mvc": "aspnet-mvc/upload",
+            "jsp-ui": "jsp/upload",
+            "php-ui": "php/upload"
+        },
+        "spriteCssClass": "uploadIcon",
+        "packages": [
+            "!offline"
+        ],
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "upload/index",
+                "title": {
+                    "kendo-ui": "Kendo UI Upload widget - example of core features",
+                    "aspnet-mvc": "ASP.NET MVC Upload extension demo"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows the basic functionality and core features of Kendo UI jQuery file upload control.",
+                    "aspnet-mvc": "This ASP.NET MVC Upload extension demo illustrates the multi-file selection capability of the control."
+                }
+            },
+            {
+                "text": "Asynchronous Upload",
+                "url": "upload/async",
+                "title": {
+                    "kendo-ui": "jQuery Asynchronous File Upload Example | Kendo UI Upload Demo",
+                    "aspnet-mvc": "ASP.NET MVC Asynchronous File Upload Example"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows the async upload functionality of Kendo UI Upload control.",
+                    "aspnet-mvc": "This example shows the async upload functionality of ASP.NET MVC Upload control."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "upload/events",
+                "title": {
+                    "kendo-ui": "Example of handling events in Kendo UI Upload",
+                    "aspnet-mvc": "Handling events in ASP.NET MVC Upload | UI for ASP.NET MVC Demos"
+                },
+                "meta": {
+                    "kendo-ui": "Learn with this example how to handle events, triggered by Kendo UI Upload widget.",
+                    "aspnet-mvc": "In this sample you will see how to handle events, triggered by Kendo UI jQuery-based Upload widget, used in ASP.NET MVC."
+                }
+            },
+            {
+                "text": "API",
+                "url": "upload/api",
+                "title": {
+                    "kendo-ui": "API example for Kendo UI File Upload Control",
+                    "aspnet-mvc": "API example for ASP.NET MVC File Upload Control"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows API Functions of Kendo UI Upload component. Try the sample to see how to enable, disable the upload option and toggle the enabled state.",
+                    "aspnet-mvc": "This demo shows API Functions of ASP.NET MVC Upload component. Try the sample to see how to enable, disable the upload option and toggle the enabled state."
+                }
+            },
+            {
+                "text": "Templates",
+                "url": "upload/templates",
+                "title": {
+                    "kendo-ui": "Example of templates for Kendo UI Upload",
+                    "aspnet-mvc": "Templates for Telerik ASP.NET MVC Upload"
+                },
+                "meta": {
+                    "kendo-ui": "This demo illustrates how to use templates with the Kendo UI Upload widget.",
+                    "aspnet-mvc": "In this example you will see templates options for Telerik ASP.NET MVC Upload extension."
+                }
+            },
+            {
+                "text": "RTL support",
+                "disableInMobile": true,
+                "url": "upload/right-to-left-support",
+                "title": {
+                    "kendo-ui": "RTL support in Kendo UI Upload",
+                    "aspnet-mvc": "Right to left support in Telerik ASP.NET MVC Upload extension"
+                },
+                "meta": {
+                    "kendo-ui": "This Kendo UI demo illustrates how you can facilitate your RTL app users by using the RTL feature of Kendo UI Upload widget.",
+                    "aspnet-mvc": "This demo illustrates the right to left support in Telerik ASP.NET MVC Upload HtmlHelper extension."
+                }
+            },
+            {
+                "text": "MVVM",
+                "url": "upload/mvvm",
+                "title": {
+                    "kendo-ui": "MVVM support in Kendo UI Upload"
+                },
+                "meta": {
+                    "kendo-ui": "Enabled, events and visible MVVM binding support in Kendo UI Upload"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            },
+            {
+                "text": "AngularJS",
+                "url": "upload/angular",
+                "title": {
+                    "kendo-ui": "AngularJS support in Kendo UI Upload"
+                },
+                "meta": {
+                    "kendo-ui": "AngularJS support directives in Kendo UI Upload"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            }
+        ],
+        "category": "Editors"
+    },
+    {
+        "text": "TreeList",
+        "name": "treelist",
+        "pro": "true",
+        "api": "web/treelist",
+        "documentation": {
+            "kendo-ui": "getting-started/web/treelist/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/treelist/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/treelist/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/treelist/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/treelist",
+            "aspnet-mvc": "aspnet-mvc/treelist",
+            "jsp-ui": "jsp/treelist",
+            "php-ui": "php/treelist"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/treelist",
+            "aspnet-mvc": "aspnet-mvc/treelist",
+            "jsp-ui": "jsp/treelist",
+            "php-ui": "php/treelist"
+        },
+        "spriteCssClass": "treeListIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "treelist/index",
+                "title": {
+                    "kendo-ui": "Kendo UI TreeList widget | Kendo UI Web demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo illustrates the basic usage and functionality of Kendo UI jQuery TreeList widget which represents items in a hierarchical tree structure."
+                }
+            },
+            {
+                "text": "Binding to local data",
+                "url": "treelist/local-data-binding",
+                "title": {
+                    "kendo-ui": "Binding Kendo UI TreeList component to local data"
+                },
+                "meta": {
+                    "kendo-ui": "This example illustrates how the treelist can be bound to local data, so that all information is available."
+                },
+                "packages": [
+                    "!mvc"
+                ]
+            },
+            {
+                "text": "Binding to remote data",
+                "url": "treelist/remote-data-binding",
+                "title": {
+                    "kendo-ui": "Binding Kendo UI TreeList component to remote data"
+                },
+                "meta": {
+                    "kendo-ui": "This example illustrates how the treelist can be bound to remote data and each level is requested asynchronously."
+                },
+                "packages": [
+                    "!mvc"
+                ]
+            },
+            {
+                "text": "Editing",
+                "url": "treelist/editing",
+                "title": {
+                    "kendo-ui": "Kendo UI TreeList widget | Kendo UI Web demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo illustrates how editing works within the Kendo UI jQuery TreeList widget which represents items in a hierarchical tree structure."
+                },
+                "packages": [
+                    "!mvc"
+                ]
+            },
+            {
+                "text": "Popup editing",
+                "url": "treelist/editing-popup",
+                "title": {
+                    "kendo-ui": "Popup data editing example for Kendo UI TreeList widget"
+                },
+                "meta": {
+                    "kendo-ui": "This demo illustrates how the records in KendoTreeList can be easily modified in a pop-up dialog."
+                },
+                "packages": [
+                    "!mvc"
+                ]
+            },
+            {
+                "text": "Column resizing",
+                "url": "treelist/column-resizing",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Columns resizing in Kendo UI TreeList control | Kendo UI Web demo",
+                    "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC TreeList"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows the column resizing feature of the KendoTreeList control.",
+                    "aspnet-mvc": "In this demo you can see how simple it is to resize columns in the Telerik ASP.NET MVC TreeList."
+                },
+                "packages": [
+                    "!mvc"
+                ]
+            },
+            {
+                "text": "Column reordering",
+                "url": "treelist/column-reordering",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Columns reordering in Kendo UI TreeList control | Kendo UI Web demo",
+                    "aspnet-mvc": "Column Reordering in Telerik ASP.NET MVC TreeList"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows column moving and reordering feature of KendoTreeList control.",
+                    "aspnet-mvc": "In this demo you can see how simple it is to reorder columns in Telerik ASP.NET MVC TreeList."
+                },
+                "packages": [
+                    "!mvc"
+                ]
+            },
+            {
+                "text": "Column menu",
+                "url": "treelist/column-menu",
+                "disableInMobile": true,
+                "new": true,
+                "title": {
+                    "kendo-ui": "Column menu in Kendo UI TreeList",
+                    "aspnet-mvc": "Column menu functionality of Telerik ASP.NET MVC TreeList"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows column menu functionality of KendoTreeList widget.",
+                    "aspnet-mvc": "This Telerik example shows column menu functionality in the TreeList extension for ASP.NET MVC."
+                },
+                "packages": [
+                    "!mvc"
+                ]
+            },
+            {
+                "text": "Frozen columns",
+                "url": "treelist/frozen-columns",
+                "new": true,
+                "title": {
+                    "kendo-ui": "Static columns of Kendo UI TreeList control | Kendo UI Web demo",
+                    "aspnet-mvc": "Frozen columns demo in Telerik ASP.NET MVC Grid "
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows locked columns feature of KendoTreeList control.",
+                    "aspnet-mvc": "Play with the demo for frozen columns functionality of Telerik ASP.NET MVC TreeList."
+                },
+                "packages": [
+                    "!mvc"
+                ]
+            },
+            {
+                "text": "Aggregates",
+                "url": "treelist/aggregates",
+                "title": {
+                    "kendo-ui": "Aggregating option demo for KendoTreeList jQuery control"
+                },
+                "meta": {
+                    "kendo-ui": "This example demonstrates the aggregate option for KendoTreeList. Use demo source code to enable the TreeList to calculate aggregated values."
+                },
+                "packages": [
+                    "!mvc"
+                ]
+            },
+            {
+                "text": "Export to Excel",
+                "url": "treelist/excel-export",
+                "title": {
+                    "kendo-ui": "Exporting to MS Excel"
+                },
+                "meta": {
+                    "kendo-ui": "Export Kendo UI TreeList as Microsoft Excel file"
+                },
+                "packages": [
+                    "!offline",
+                    "!mvc",
+                    "!jsp",
+                    "!php",
+                    "!offline"
+                ]
+            },
+            {
+                "text": "Export to PDF",
+                "url": "treelist/pdf-export",
+                "title": {
+                    "kendo-ui": "Exporting to PDF"
+                },
+                "meta": {
+                    "kendo-ui": "Export Kendo UI TreeList as PDF file"
+                },
+                "packages": [
+                    "!offline",
+                    "!mvc",
+                    "!jsp",
+                    "!php",
+                    "!offline"
+                ]
+            },
+            {
+                "text": "Events",
+                "url": "treelist/events",
+                "title": {
+                    "kendo-ui": "Example of using events in Kendo UI TreeList control"
+                },
+                "meta": {
+                    "kendo-ui": "This example demonstrates different events which are available in KendoTreeList widget and the code explains how you can use them for  your project."
+                },
+                "packages": [
+                    "!mvc"
+                ]
+            },
+            {
+                "text": "API",
+                "url": "treelist/api",
+                "title": {
+                    "kendo-ui": "KendoTreeList API Demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how API Functions can manipulate the contents and behavior of Kendo UI TreeList widget."
+                },
+                "packages": [
+                    "!mvc"
+                ]
+            },
+            {
+                "text": "MVVM",
+                "url": "treelist/mvvm",
+                "title": {
+                    "kendo-ui": "MVVM support in Kendo UI TreeList"
+                },
+                "meta": {
+                    "kendo-ui": "MVVM support for Kendo UI TreeList"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            },
+            {
+                "text": "AngularJS",
+                "url": "treelist/angular",
+                "title": {
+                    "kendo-ui": "AngularJS support in Kendo UI TreeList"
+                },
+                "meta": {
+                    "kendo-ui": "AngularJS directive support for Kendo UI TreeList"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            }
+        ],
+        "category": "Data Management"
+    },
+    {
+        "text": "Window",
+        "name": "window",
+        "api": "web/window",
+        "disableInMobile": true,
+        "documentation": {
+            "kendo-ui": "getting-started/web/window/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/window/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/window/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/window/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/window",
+            "aspnet-mvc": "aspnet-mvc/window",
+            "jsp-ui": "jsp/window",
+            "php-ui": "php/window"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/window",
+            "aspnet-mvc": "aspnet-mvc/window",
+            "jsp-ui": "jsp/window",
+            "php-ui": "php/window"
+        },
+        "spriteCssClass": "windowIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "window/index",
+                "title": {
+                    "kendo-ui": "Kendo UI Window Example | Kendo UI Web Demos",
+                    "aspnet-mvc": "ASP.NET MVC Window Example | UI for ASP.NET MVC Demos"
+                },
+                "meta": {
+                    "kendo-ui": "This example demonstrates the basic usage of KendoWindow widget, one of the components which you can use to enhance the interaction in your web app.",
+                    "aspnet-mvc": "This example demonstrates the basic usage of ASP.NET MVC Window contorl one of the components which you can use to enhance the interaction in your web app."
+                }
+            },
+            {
+                "text": "Customizing actions",
+                "url": "window/actions",
+                "title": {
+                    "kendo-ui": "Example of customizing actions in Kendo UI Window control",
+                    "aspnet-mvc": "Example of customizing actions in ASP.NET MVC Window control"
+                },
+                "meta": {
+                    "kendo-ui": "This Kendo UI Window sample illustrates how client-side actions can be further customized in order to bring interactivity in your web app to a higher level.",
+                    "aspnet-mvc": "This ASP.NET MVC Window sample illustrates how client-side actions can be further customized in order to bring interactivity in your web app to a higher level."
+                }
+            },
+            {
+                "text": "Loading content with AJAX",
+                "url": "window/ajax",
+                "title": {
+                    "kendo-ui": "AJAX loaded content with Kendo UI Window widget",
+                    "aspnet-mvc": "AJAX loaded content with ASP.NET MVC Window"
+                },
+                "meta": {
+                    "kendo-ui": "This example illustrates how content in Kendo UI window widget can be loaded, using AJAX.",
+                    "aspnet-mvc": "This example illustrates how content in ASP.NET MVC window control can be loaded, using AJAX."
+                },
+                "requiresServer": "true"
+            },
+            {
+                "text": "Animation effects",
+                "url": "window/animation",
+                "title": {
+                    "kendo-ui": "Animation effects demo for Kendo UI window widget",
+                    "aspnet-mvc": "Animation effects demo for ASP.NET MVC window control"
+                },
+                "meta": {
+                    "kendo-ui": "This sample illustrates the animation effects in Kendo UI window control. Just play with animation settings to change the interactivity of the control.",
+                    "aspnet-mvc": "This sample illustrates the animation effects in ASP.NET MVC window control. Just play with animation settings to change the interactivity of the control."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "window/events",
+                "title": {
+                    "kendo-ui": "Events in Kendo UI Window demo",
+                    "aspnet-mvc": "Events in ASP.NET MVC Window demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how to fire events in  Kendo UI jQuery window control. Refresh, activate, open, dragend, dragstart are some of the events which you can trigger.",
+                    "aspnet-mvc": "This demo shows how to fire events in ASP.NET MVC window control. Refresh, activate, open, dragend, dragstart are some of the events which you can trigger."
+                },
+                "requiresServer": "true"
+            },
+            {
+                "text": "API",
+                "url": "window/api",
+                "title": {
+                    "kendo-ui": "Example of Kendo UI Window API",
+                    "aspnet-mvc": "Example of ASP.NET MVC Window API"
+                },
+                "meta": {
+                    "kendo-ui": "This sample shows how you can use the API of kendoWindow widget to refresh the content of the window, open and close it.",
+                    "aspnet-mvc": "This sample shows how you can use the API of ASP.NET MVC Window control to refresh the content of the window, open and close it."
+                },
+                "requiresServer": "true"
+            },
+            {
+                "text": "RTL support",
+                "disableInMobile": true,
+                "url": "window/right-to-left-support",
+                "title": {
+                    "kendo-ui": "Right-to-Left window position of Kendo UI Window control",
+                    "aspnet-mvc": "Right-to-Left window position of ASP.NET MVC Window control"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how Kendo UI Window widget supports right-to-left direction of the window to provide best end-user experience.",
+                    "aspnet-mvc": "This demo shows how ASP.NET MVC Window control supports right-to-left direction of the window to provide best end-user experience."
+                }
+            },
+            {
+                "text": "Keyboard navigation",
+                "disableInMobile": true,
+                "url": "window/keyboard-navigation",
+                "title": {
+                    "kendo-ui": "Keyboard navigation support | Kendo UI Window Demo",
+                    "aspnet-mvc": "Keyboard navigation support | ASP.NET MVC Window Demo"
+                },
+                "meta": {
+                    "kendo-ui": "The sample demonstrates how the keyboard navigation feature is integrated in the powerful Kendo UI Window.",
+                    "aspnet-mvc": "The sample demonstrates how the keyboard navigation feature is integrated in the powerful ASP.NET MVC Window control."
+                }
+            },
+            {
+                "text": "MVVM",
+                "url": "window/mvvm",
+                "title": {
+                    "kendo-ui": "MVVM support in Kendo UI Window"
+                },
+                "meta": {
+                    "kendo-ui": "Events and visible MVVM binding support in Kendo UI Window"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            },
+            {
+                "text": "AngularJS",
+                "url": "window/angular",
+                "title": {
+                    "kendo-ui": "AngularJS support in Kendo UI Window"
+                },
+                "meta": {
+                    "kendo-ui": "AngularJS directive support for Kendo UI Window"
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            }
+        ],
+        "category": "Layout"
+    }
 ]
