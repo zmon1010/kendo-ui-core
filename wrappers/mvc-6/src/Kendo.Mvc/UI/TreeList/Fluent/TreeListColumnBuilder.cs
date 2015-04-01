@@ -71,5 +71,16 @@ namespace Kendo.Mvc.UI.Fluent
 
 			return this;
 		}
+
+		/// <summary>
+		/// The width of the column. Numeric values are treated as pixels. For more important information, please refer to Column Widths.
+		/// </summary>
+		/// <param name="value">The value that configures the width.</param>
+		public TreeListColumnBuilder<T> Width(int value)
+		{
+			Container.Width = value + "px";
+
+			return this;
+		}
 	}
 }
