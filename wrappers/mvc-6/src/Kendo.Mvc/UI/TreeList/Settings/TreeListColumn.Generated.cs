@@ -11,7 +11,7 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class TreeListColumn<T> where T : class 
     {
-        public IDictionary<string,object> Attributes { get; set; }
+        public IDictionary<string,object> HtmlAttributes { get; set; }
 
         public List<TreeListColumnCommand<T>> Command { get; set; } = new List<TreeListColumnCommand<T>>();
 
@@ -60,9 +60,9 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Attributes?.Any() == true)
+            if (HtmlAttributes?.Any() == true)
             {
-                settings["attributes"] = Attributes;
+                settings["attributes"] = HtmlAttributes;
             }
 
             var command = Command.Select(i => i.Serialize());

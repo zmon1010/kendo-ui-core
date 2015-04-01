@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -12,10 +13,20 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// HTML attributes of the table cell (&lt;td&gt;) rendered for the column.
         /// </summary>
-        /// <param name="value">The value for Attributes</param>
-        public TreeListColumnBuilder<T> Attributes(IDictionary<string,object> value)
+        /// <param name="value">The value for HtmlAttributes</param>
+        public TreeListColumnBuilder<T> HtmlAttributes(IDictionary<string,object> value)
         {
-            Container.Attributes = value;
+            Container.HtmlAttributes = value;
+            return this;
+        }
+
+        /// <summary>
+        /// HTML attributes of the table cell (&lt;td&gt;) rendered for the column.
+        /// </summary>
+        /// <param name="value">The value for HtmlAttributes</param>
+        public TreeListColumnBuilder<T> HtmlAttributes(object value)
+        {
+            Container.HtmlAttributes = value.ToDictionary();
             return this;
         }
 
@@ -138,6 +149,16 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeListColumnBuilder<T> HeaderAttributes(IDictionary<string,object> value)
         {
             Container.HeaderAttributes = value;
+            return this;
+        }
+
+        /// <summary>
+        /// HTML attributes of the table header cell (&lt;th&gt;) rendered for the column.
+        /// </summary>
+        /// <param name="value">The value for HeaderAttributes</param>
+        public TreeListColumnBuilder<T> HeaderAttributes(object value)
+        {
+            Container.HeaderAttributes = value.ToDictionary();
             return this;
         }
 
