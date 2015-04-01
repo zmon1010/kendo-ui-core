@@ -14,10 +14,12 @@
           .HtmlAttributes(new { style = "width:450px" })
           .Placeholder("Type a ship name")
           .Template("#= OrderID # | For: #= ShipName #, #= ShipCountry #")
+          .Height(520)
           .DataSource(source => {
               source.Custom()
                   .ServerFiltering(true)
                   .ServerPaging(true)
+                  .PageSize(80)
                   .Type("aspnetmvc-ajax") //Set this type if you want to use DataSourceRequest and ToDataSourceResult instances
                   .Transport(transport =>
                   {
@@ -29,7 +31,7 @@
                             .Total("Total"); //define the [total](http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-schema.total) option
                   });
           })
-          .Virtual(v => v.ValueMapper("valueMapper"))
+          .Virtual(v => v.ItemHeight(26).ValueMapper("valueMapper"))
     %>
 </div>
 <script>
