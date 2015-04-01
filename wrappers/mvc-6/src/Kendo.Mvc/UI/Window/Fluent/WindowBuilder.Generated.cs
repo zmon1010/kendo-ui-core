@@ -122,7 +122,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the position setting.</param>
         public WindowBuilder Position(Action<WindowPositionSettingsBuilder> configurator)
         {
+
+            Container.Position.Window = Container;
             configurator(new WindowPositionSettingsBuilder(Container.Position));
+
             return this;
         }
 

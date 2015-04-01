@@ -37,12 +37,12 @@ namespace Kendo.Mvc.UI
 
         public double? Width { get; set; }
 
-        public double? Height { get; set; }		
+        public double? Height { get; set; }
 
-		protected override Dictionary<string, object> SerializeSettings()
+
+        protected override Dictionary<string, object> SerializeSettings()
         {
             var settings = base.SerializeSettings();
-
 
             if (AutoFocus.HasValue)
             {
@@ -117,6 +117,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }

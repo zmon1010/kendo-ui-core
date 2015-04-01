@@ -15,12 +15,12 @@ namespace Kendo.Mvc.UI
 
         public double? Left { get; set; }
 
-        public string IdPrefix { get; set; } = "#";
+
+        public Window Window { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
-
 
             if (Top.HasValue)
             {
@@ -34,6 +34,5 @@ namespace Kendo.Mvc.UI
 
             return settings;
         }
-
     }
 }
