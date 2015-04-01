@@ -129,8 +129,8 @@ namespace Kendo.Mvc.Infrastructure.Implementation.Expressions
                     {
                         value = new Guid(value.ToString());
 					}
-					else if (value is IConvertible)
-					{
+					else if (value.GetType().IsNumericType())
+                    {
 						value = Convert.ChangeType(value, nonNullableTargetType, culture);
 					}
 				}
