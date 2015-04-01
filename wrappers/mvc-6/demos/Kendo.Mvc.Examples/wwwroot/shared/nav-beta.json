@@ -989,6 +989,47 @@
         "category": "Editors"
     },
     {
+        "text": "Scheduler",
+        "name": "scheduler",
+        "pro": "true",
+        "api": "web/scheduler",
+        "documentation": {
+            "kendo-ui": "getting-started/web/scheduler/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/scheduler/mvc-scheduler-overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/scheduler/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/scheduler/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/scheduler",
+            "aspnet-mvc": "aspnet-mvc/scheduler",
+            "jsp-ui": "jsp/scheduler",
+            "php-ui": "php/scheduler"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/scheduler",
+            "aspnet-mvc": "aspnet-mvc/mvc-scheduler",
+            "jsp-ui": "jsp/scheduler",
+            "php-ui": "php/scheduler"
+        },
+        "spriteCssClass": "schedulerIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "scheduler/index",
+                "disableInMobile": true,
+                "title": {
+                    "kendo-ui": "Kendo jQuery Scheduler Control Demo",
+                    "aspnet-mvc": "ASP.NET MVC Scheduler Control Demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows the basic functionality of Kendo UI Scheduler widget, included in Kendo UI Web framework.",
+                    "aspnet-mvc": "This demo shows the basic functionality and UI of the Telerik ASP.NET MVC Scheduler control."
+                }
+            }
+        ],
+        "category": "Scheduling"
+    },
+    {
         "text": "TreeList",
         "name": "treelist",
         "pro": "true",
