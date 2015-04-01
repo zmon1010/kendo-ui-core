@@ -476,26 +476,6 @@ var __meta__ = {
             .css('cursor', value);
     }
 
-    function buildEmptyAggregatesObject(aggregates) {
-            var idx,
-                length,
-                aggregate = {},
-                fieldsMap = {};
-
-            if (!isEmptyObject(aggregates)) {
-                if (!isArray(aggregates)){
-                    aggregates = [aggregates];
-                }
-
-                for (idx = 0, length = aggregates.length; idx < length; idx++) {
-                    aggregate[aggregates[idx].aggregate] = 0;
-                    fieldsMap[aggregates[idx].field] = aggregate;
-                }
-            }
-
-            return fieldsMap;
-    }
-
     function reorder(selector, source, dest, before, count) {
         var sourceIndex = source;
         source = $();
@@ -4739,8 +4719,6 @@ var __meta__ = {
                 footer = that.footer || that.wrapper.find(".k-grid-footer");
 
             if (footerTemplate) {
-                aggregates = !isEmptyObject(aggregates) ? aggregates : buildEmptyAggregatesObject(that.dataSource.aggregate());
-
                 html = $(that._wrapFooter(footerTemplate(aggregates)));
 
                 if (footer.length) {
@@ -5343,7 +5321,7 @@ var __meta__ = {
                 count = 0,
                 scope = {},
                 groups = that._groups(),
-                fieldsMap = buildEmptyAggregatesObject(aggregates),
+                fieldsMap = that.dataSource._emptyAggregates(aggregates),
                 column;
 
             html += '<tr class="' + rowClass + '">';
@@ -6730,7 +6708,7 @@ var __meta__ = {
                 }
 
                 if (that.groupFooterTemplate) {
-                    that._groupAggregatesDefaultObject = buildEmptyAggregatesObject(that.dataSource.aggregate());
+                    that._groupAggregatesDefaultObject = that.dataSource.aggregates();
                 }
 
                 for (idx = 0, length = data.length; idx < length; idx++) {
