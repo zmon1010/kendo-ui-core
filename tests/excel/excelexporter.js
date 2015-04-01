@@ -467,6 +467,19 @@ test("passes all aggregates to footerTemplate", function() {
     });
 });
 
+test("passes all aggregates as zero to footerTemplate when there is no data", function() {
+    dataSource = new DataSource({
+       data: [
+       ],
+       aggregate: [
+           { field: "foo", aggregate: "count" }
+       ]
+    });
+
+    testWorkbook({ columns: [ { field: "foo", footerTemplate: "Foo: #= data.foo.count #" }, { field: "bar" } ], dataSource: dataSource }, function(book) {
+        equal(book.sheets[0].rows[1].cells[0].value, "Foo: 0");
+    });
+});
 test("sets row type to 'footer' when footerTemplate is set", function() {
     dataSource = new DataSource({
        data: [
