@@ -799,137 +799,296 @@
 		"category": "Editors"
 	},
 	{
-    "text": "Upload",
-    "name": "upload",
-    "pro": "true",
-    "api": "web/upload",
-    "documentation": {
-       "kendo-ui": "getting-started/web/upload/overview",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/upload/overview",
-       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/upload/overview",
-       "php-ui": "getting-started/using-kendo-with/php/widgets/upload/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/upload",
-       "aspnet-mvc": "aspnet-mvc/upload",
-       "jsp-ui": "jsp/upload",
-       "php-ui": "php/upload"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/upload",
-       "aspnet-mvc": "aspnet-mvc/upload",
-       "jsp-ui": "jsp/upload",
-       "php-ui": "php/upload"
-    },
-    "spriteCssClass": "uploadIcon",
-    "packages": [
-      "!offline"
-    ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "upload/index",
-        "title": {
-            "kendo-ui": "Kendo UI Upload widget - example of core features",
-            "aspnet-mvc": "ASP.NET MVC Upload extension demo"
-        },
-        "meta": {
-            "kendo-ui": "This example shows the basic functionality and core features of Kendo UI jQuery file upload control.",
-            "aspnet-mvc": "This ASP.NET MVC Upload extension demo illustrates the multi-file selection capability of the control."
-        }
-      },
-      {
-        "text": "Asynchronous Upload",
-        "url": "upload/async",
-        "title": {
-            "kendo-ui": "jQuery Asynchronous File Upload Example | Kendo UI Upload Demo",
-            "aspnet-mvc": "ASP.NET MVC Asynchronous File Upload Example"
-        },
-        "meta": {
-            "kendo-ui": "This example shows the async upload functionality of Kendo UI Upload control.",
-            "aspnet-mvc": "This example shows the async upload functionality of ASP.NET MVC Upload control."
-        }
-      },
-      {
-        "text": "Events",
-        "url": "upload/events",
-        "title": {
-            "kendo-ui": "Example of handling events in Kendo UI Upload",
-            "aspnet-mvc": "Handling events in ASP.NET MVC Upload | UI for ASP.NET MVC Demos"
-        },
-        "meta": {
-            "kendo-ui": "Learn with this example how to handle events, triggered by Kendo UI Upload widget.",
-            "aspnet-mvc": "In this sample you will see how to handle events, triggered by Kendo UI jQuery-based Upload widget, used in ASP.NET MVC."
-        }
-      },
-      {
-        "text": "API",
-        "url": "upload/api",
-        "title": {
-            "kendo-ui": "API example for Kendo UI File Upload Control",
-            "aspnet-mvc": "API example for ASP.NET MVC File Upload Control"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows API Functions of Kendo UI Upload component. Try the sample to see how to enable, disable the upload option and toggle the enabled state.",
-            "aspnet-mvc": "This demo shows API Functions of ASP.NET MVC Upload component. Try the sample to see how to enable, disable the upload option and toggle the enabled state."
-        }
-      },
-      {
-        "text": "Templates",
-        "url": "upload/templates",
-        "title": {
-            "kendo-ui": "Example of templates for Kendo UI Upload",
-            "aspnet-mvc": "Templates for Telerik ASP.NET MVC Upload"
-        },
-        "meta": {
-            "kendo-ui": "This demo illustrates how to use templates with the Kendo UI Upload widget.",
-            "aspnet-mvc": "In this example you will see templates options for Telerik ASP.NET MVC Upload extension."
-        }
-      },
-      {
-        "text": "RTL support",
-        "disableInMobile": true,
-        "url": "upload/right-to-left-support",
-        "title": {
-            "kendo-ui": "RTL support in Kendo UI Upload",
-            "aspnet-mvc": "Right to left support in Telerik ASP.NET MVC Upload extension"
-        },
-        "meta": {
-            "kendo-ui": "This Kendo UI demo illustrates how you can facilitate your RTL app users by using the RTL feature of Kendo UI Upload widget.",
-            "aspnet-mvc": "This demo illustrates the right to left support in Telerik ASP.NET MVC Upload HtmlHelper extension."
-        }
-      },
-      {
-        "text": "MVVM",
-        "url": "upload/mvvm",
-        "title": {
-            "kendo-ui": "MVVM support in Kendo UI Upload"
-        },
-        "meta": {
-            "kendo-ui": "Enabled, events and visible MVVM binding support in Kendo UI Upload"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "url": "upload/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Upload"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS support directives in Kendo UI Upload"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Editors"
-  }
+		"text": "Upload",
+		"name": "upload",
+		"pro": "true",
+		"api": "web/upload",
+		"documentation": {
+			"kendo-ui": "getting-started/web/upload/overview",
+			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/upload/overview",
+			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/upload/overview",
+			"php-ui": "getting-started/using-kendo-with/php/widgets/upload/overview"
+		},
+		"forum": {
+			"kendo-ui": "kendo-ui/upload",
+			"aspnet-mvc": "aspnet-mvc/upload",
+			"jsp-ui": "jsp/upload",
+			"php-ui": "php/upload"
+		},
+		"codelibrary": {
+			"kendo-ui": "kendo-ui/upload",
+			"aspnet-mvc": "aspnet-mvc/upload",
+			"jsp-ui": "jsp/upload",
+			"php-ui": "php/upload"
+		},
+		"spriteCssClass": "uploadIcon",
+		"packages": [
+			"!offline"
+		],
+		"items": [
+			{
+				"text": "Basic usage",
+				"url": "upload/index",
+				"title": {
+					"kendo-ui": "Kendo UI Upload widget - example of core features",
+					"aspnet-mvc": "ASP.NET MVC Upload extension demo"
+				},
+				"meta": {
+					"kendo-ui": "This example shows the basic functionality and core features of Kendo UI jQuery file upload control.",
+					"aspnet-mvc": "This ASP.NET MVC Upload extension demo illustrates the multi-file selection capability of the control."
+				}
+			},
+			{
+				"text": "Asynchronous Upload",
+				"url": "upload/async",
+				"title": {
+					"kendo-ui": "jQuery Asynchronous File Upload Example | Kendo UI Upload Demo",
+					"aspnet-mvc": "ASP.NET MVC Asynchronous File Upload Example"
+				},
+				"meta": {
+					"kendo-ui": "This example shows the async upload functionality of Kendo UI Upload control.",
+					"aspnet-mvc": "This example shows the async upload functionality of ASP.NET MVC Upload control."
+				}
+			},
+			{
+				"text": "Events",
+				"url": "upload/events",
+				"title": {
+					"kendo-ui": "Example of handling events in Kendo UI Upload",
+					"aspnet-mvc": "Handling events in ASP.NET MVC Upload | UI for ASP.NET MVC Demos"
+				},
+				"meta": {
+					"kendo-ui": "Learn with this example how to handle events, triggered by Kendo UI Upload widget.",
+					"aspnet-mvc": "In this sample you will see how to handle events, triggered by Kendo UI jQuery-based Upload widget, used in ASP.NET MVC."
+				}
+			},
+			{
+				"text": "API",
+				"url": "upload/api",
+				"title": {
+					"kendo-ui": "API example for Kendo UI File Upload Control",
+					"aspnet-mvc": "API example for ASP.NET MVC File Upload Control"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows API Functions of Kendo UI Upload component. Try the sample to see how to enable, disable the upload option and toggle the enabled state.",
+					"aspnet-mvc": "This demo shows API Functions of ASP.NET MVC Upload component. Try the sample to see how to enable, disable the upload option and toggle the enabled state."
+				}
+			},
+			{
+				"text": "Templates",
+				"url": "upload/templates",
+				"title": {
+					"kendo-ui": "Example of templates for Kendo UI Upload",
+					"aspnet-mvc": "Templates for Telerik ASP.NET MVC Upload"
+				},
+				"meta": {
+					"kendo-ui": "This demo illustrates how to use templates with the Kendo UI Upload widget.",
+					"aspnet-mvc": "In this example you will see templates options for Telerik ASP.NET MVC Upload extension."
+				}
+			},
+			{
+				"text": "RTL support",
+				"disableInMobile": true,
+				"url": "upload/right-to-left-support",
+				"title": {
+					"kendo-ui": "RTL support in Kendo UI Upload",
+					"aspnet-mvc": "Right to left support in Telerik ASP.NET MVC Upload extension"
+				},
+				"meta": {
+					"kendo-ui": "This Kendo UI demo illustrates how you can facilitate your RTL app users by using the RTL feature of Kendo UI Upload widget.",
+					"aspnet-mvc": "This demo illustrates the right to left support in Telerik ASP.NET MVC Upload HtmlHelper extension."
+				}
+			},
+			{
+				"text": "MVVM",
+				"url": "upload/mvvm",
+				"title": {
+					"kendo-ui": "MVVM support in Kendo UI Upload"
+				},
+				"meta": {
+					"kendo-ui": "Enabled, events and visible MVVM binding support in Kendo UI Upload"
+				},
+				"packages": [
+					"!mvc",
+					"!jsp",
+					"!php"
+				]
+			},
+			{
+				"text": "AngularJS",
+				"url": "upload/angular",
+				"title": {
+					"kendo-ui": "AngularJS support in Kendo UI Upload"
+				},
+				"meta": {
+					"kendo-ui": "AngularJS support directives in Kendo UI Upload"
+				},
+				"packages": [
+					"!mvc",
+					"!jsp",
+					"!php"
+				]
+			}
+		],
+		"category": "Editors"
+	},
+	{
+		"text": "Window",
+		"name": "window",
+		"api": "web/window",
+		"disableInMobile": true,
+		"documentation": {
+			"kendo-ui": "getting-started/web/window/overview",
+			"aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/window/overview",
+			"jsp-ui": "getting-started/using-kendo-with/jsp/tags/window/overview",
+			"php-ui": "getting-started/using-kendo-with/php/widgets/window/overview"
+		},
+		"forum": {
+			"kendo-ui": "kendo-ui/window",
+			"aspnet-mvc": "aspnet-mvc/window",
+			"jsp-ui": "jsp/window",
+			"php-ui": "php/window"
+		},
+		"codelibrary": {
+			"kendo-ui": "kendo-ui/window",
+			"aspnet-mvc": "aspnet-mvc/window",
+			"jsp-ui": "jsp/window",
+			"php-ui": "php/window"
+		},
+		"spriteCssClass": "windowIcon",
+		"items": [
+			{
+				"text": "Basic usage",
+				"url": "window/index",
+				"title": {
+					"kendo-ui": "Kendo UI Window Example | Kendo UI Web Demos",
+					"aspnet-mvc": "ASP.NET MVC Window Example | UI for ASP.NET MVC Demos"
+				},
+				"meta": {
+					"kendo-ui": "This example demonstrates the basic usage of KendoWindow widget, one of the components which you can use to enhance the interaction in your web app.",
+					"aspnet-mvc": "This example demonstrates the basic usage of ASP.NET MVC Window contorl one of the components which you can use to enhance the interaction in your web app."
+				}
+			},
+			{
+				"text": "Customizing actions",
+				"url": "window/actions",
+				"title": {
+					"kendo-ui": "Example of customizing actions in Kendo UI Window control",
+					"aspnet-mvc": "Example of customizing actions in ASP.NET MVC Window control"
+				},
+				"meta": {
+					"kendo-ui": "This Kendo UI Window sample illustrates how client-side actions can be further customized in order to bring interactivity in your web app to a higher level.",
+					"aspnet-mvc": "This ASP.NET MVC Window sample illustrates how client-side actions can be further customized in order to bring interactivity in your web app to a higher level."
+				}
+			},
+			{
+				"text": "Loading content with AJAX",
+				"url": "window/ajax",
+				"title": {
+					"kendo-ui": "AJAX loaded content with Kendo UI Window widget",
+					"aspnet-mvc": "AJAX loaded content with ASP.NET MVC Window"
+				},
+				"meta": {
+					"kendo-ui": "This example illustrates how content in Kendo UI window widget can be loaded, using AJAX.",
+					"aspnet-mvc": "This example illustrates how content in ASP.NET MVC window control can be loaded, using AJAX."
+				},
+				"requiresServer": "true"
+			},
+			{
+				"text": "Animation effects",
+				"url": "window/animation",
+				"title": {
+					"kendo-ui": "Animation effects demo for Kendo UI window widget",
+					"aspnet-mvc": "Animation effects demo for ASP.NET MVC window control"
+				},
+				"meta": {
+					"kendo-ui": "This sample illustrates the animation effects in Kendo UI window control. Just play with animation settings to change the interactivity of the control.",
+					"aspnet-mvc": "This sample illustrates the animation effects in ASP.NET MVC window control. Just play with animation settings to change the interactivity of the control."
+				}
+			},
+			{
+				"text": "Events",
+				"url": "window/events",
+				"title": {
+					"kendo-ui": "Events in Kendo UI Window demo",
+					"aspnet-mvc": "Events in ASP.NET MVC Window demo"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows how to fire events in  Kendo UI jQuery window control. Refresh, activate, open, dragend, dragstart are some of the events which you can trigger.",
+					"aspnet-mvc": "This demo shows how to fire events in ASP.NET MVC window control. Refresh, activate, open, dragend, dragstart are some of the events which you can trigger."
+				},
+				"requiresServer": "true"
+			},
+			{
+				"text": "API",
+				"url": "window/api",
+				"title": {
+					"kendo-ui": "Example of Kendo UI Window API",
+					"aspnet-mvc": "Example of ASP.NET MVC Window API"
+				},
+				"meta": {
+					"kendo-ui": "This sample shows how you can use the API of kendoWindow widget to refresh the content of the window, open and close it.",
+					"aspnet-mvc": "This sample shows how you can use the API of ASP.NET MVC Window control to refresh the content of the window, open and close it."
+				},
+				"requiresServer": "true"
+			},
+			{
+				"text": "RTL support",
+				"disableInMobile": true,
+				"url": "window/right-to-left-support",
+				"title": {
+					"kendo-ui": "Right-to-Left window position of Kendo UI Window control",
+					"aspnet-mvc": "Right-to-Left window position of ASP.NET MVC Window control"
+				},
+				"meta": {
+					"kendo-ui": "This demo shows how Kendo UI Window widget supports right-to-left direction of the window to provide best end-user experience.",
+					"aspnet-mvc": "This demo shows how ASP.NET MVC Window control supports right-to-left direction of the window to provide best end-user experience."
+				}
+			},
+			{
+				"text": "Keyboard navigation",
+				"disableInMobile": true,
+				"url": "window/keyboard-navigation",
+				"title": {
+					"kendo-ui": "Keyboard navigation support | Kendo UI Window Demo",
+					"aspnet-mvc": "Keyboard navigation support | ASP.NET MVC Window Demo"
+				},
+				"meta": {
+					"kendo-ui": "The sample demonstrates how the keyboard navigation feature is integrated in the powerful Kendo UI Window.",
+					"aspnet-mvc": "The sample demonstrates how the keyboard navigation feature is integrated in the powerful ASP.NET MVC Window control."
+				}
+			},
+			{
+				"text": "MVVM",
+				"url": "window/mvvm",
+				"title": {
+					"kendo-ui": "MVVM support in Kendo UI Window"
+				},
+				"meta": {
+					"kendo-ui": "Events and visible MVVM binding support in Kendo UI Window"
+				},
+				"packages": [
+					"!mvc",
+					"!jsp",
+					"!php"
+				]
+			},
+			{
+				"text": "AngularJS",
+				"url": "window/angular",
+				"title": {
+					"kendo-ui": "AngularJS support in Kendo UI Window"
+				},
+				"meta": {
+					"kendo-ui": "AngularJS directive support for Kendo UI Window"
+				},
+				"packages": [
+					"!mvc",
+					"!jsp",
+					"!php"
+				]
+			}
+		],
+		"category": "Layout"
+	}
 ]

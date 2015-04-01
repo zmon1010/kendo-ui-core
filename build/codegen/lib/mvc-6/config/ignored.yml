@@ -35,3 +35,8 @@
 - notification.animation
 - notification.templates
 - progressbar.value
+- window.actions
+- window.appendto
+- window.content
+- window.animation
+- window.resizable
