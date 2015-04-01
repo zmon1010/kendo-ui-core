@@ -33,13 +33,12 @@ namespace Kendo.Mvc.UI
             CancelDelete = Messages.Grid_CancelDelete;
             CreateAt = GridInsertRowPosition.Top;
         }
-
-		//TODO: popup editing
-		//public Window PopUp
-		//{
-		//    get;
-		//    set;
-		//}
+		
+        public Window PopUp
+		{
+			get;
+			set;
+		}
 
 		public string Confirmation
 		{
@@ -129,41 +128,42 @@ namespace Kendo.Mvc.UI
             return instance;
         }
 
-		//TODO: implement popup editing
-		//private IDictionary<string, object> SerializePopUp()
-		//{
-		//	var result = new Dictionary<string, object>();
-		//	//var title = PopUp.Title ?? Messages.Grid_Edit;
 
-		//	FluentDictionary.For(result)
-		//		.Add("title", title)
-		//		.Add("modal", PopUp.Modal)
-		//		.Add("draggable", PopUp.Draggable)
-		//		.Add("resizable", PopUp.ResizingSettings.Enabled)
-		//		.Add("width", PopUp.Width, 0)
-		//		.Add("height", PopUp.Height, 0);
+		private IDictionary<string, object> SerializePopUp()
+		{
+			var title = PopUp.Title ?? Messages.Grid_Edit;
+			var result = new Dictionary<string, object> {
+				["title"] = title,
+				["modal"] = PopUp.Modal,
+				["draggable"] = PopUp.Draggable,
+				["resizable"] = PopUp.ResizingSettings.Enabled,
+				["width"] = PopUp.Width ?? 0,
+				["height"] = PopUp.Height ?? 0
+			};
 
-		//	if (PopUp.PositionSettings.Left != int.MinValue || PopUp.PositionSettings.Top != int.MinValue)
-		//	{
-		//		var topLeft = new Dictionary<string, int>();
+			var popupPosition = PopUp.Position;
 
-		//		if (PopUp.PositionSettings.Top != int.MinValue)
-		//		{
-		//			topLeft.Add("top", PopUp.PositionSettings.Top);
-		//		}
+			if (popupPosition.Left.HasValue || popupPosition.Top.HasValue)
+			{
+				var topLeft = new Dictionary<string, double>();
 
-		//		if (PopUp.PositionSettings.Left != int.MinValue)
-		//		{
-		//			topLeft.Add("left", PopUp.PositionSettings.Left);
-		//		}
+				if (popupPosition.Top.HasValue)
+				{
+					topLeft.Add("top", popupPosition.Top.Value);
+				}
 
-		//		result.Add("position", topLeft);
-		//	}
+				if (popupPosition.Left.HasValue)
+				{
+					topLeft.Add("left", popupPosition.Left.Value);
+				}
 
-		//	return result;
-		//}
+				result.Add("position", topLeft);
+			}
 
-        protected override void Serialize(IDictionary<string, object> json)
+			return result;
+		}
+
+		protected override void Serialize(IDictionary<string, object> json)
         {
             var editorHtml = grid.EditorHtml;
 
@@ -203,10 +203,8 @@ namespace Kendo.Mvc.UI
 			});
 
 			json.Add("template", editorHtml, () => Mode != GridEditMode.InLine)
-				.Add("createAt", CreateAt.ToString().ToLower(), () => CreateAt != GridInsertRowPosition.Top);
-
-			//TODO: implement popup editing
-			//.Add("window", SerializePopUp(), () => Mode == GridEditMode.PopUp && IsClientBinding);			
+				.Add("createAt", CreateAt.ToString().ToLower(), () => CreateAt != GridInsertRowPosition.Top)		
+				.Add("window", SerializePopUp(), () => Mode == GridEditMode.PopUp && IsClientBinding);			
 		}
 
 		private bool IsClientBinding

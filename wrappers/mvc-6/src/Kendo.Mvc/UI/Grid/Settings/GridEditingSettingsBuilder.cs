@@ -48,14 +48,13 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-		//TODO: implement popup editing
-		//public GridEditingSettingsBuilder<T> Window(Action<WindowBuilder> configurator)
-		//{
+		public GridEditingSettingsBuilder<T> Window(Action<WindowBuilder> configurator)
+		{
 
-		//    configurator(new WindowBuilder(settings.PopUp));
+			configurator(new WindowBuilder(settings.PopUp));
 
-		//    return this;
-		//}        
+			return this;
+		}
 
 		/// <summary>
 		/// Specify an editor template to be used in PopUp edit mode

@@ -22,11 +22,11 @@ namespace Kendo.Mvc.UI
         {
 			Editable = new GridEditableSettings<T>(this)
 			{
-				//PopUp = new Window(viewContext, Initializer)
-				//{
-				//	Modal = true,
-				//	Draggable = true
-				//}
+				PopUp = new Window(viewContext)
+				{
+					Modal = true,
+					Draggable = true
+				}
 			};
 
 			DataSource = new DataSource(ModelMetadataProvider)
