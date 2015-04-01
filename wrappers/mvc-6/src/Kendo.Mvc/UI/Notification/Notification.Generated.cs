@@ -39,7 +39,7 @@ namespace Kendo.Mvc.UI
                 settings["allowHideAfter"] = AllowHideAfter;
             }
 
-            if (AppendTo.HasValue())
+            if (AppendTo?.HasValue() == true)
             {
                 settings["appendTo"] = AppendTo;
             }
@@ -54,7 +54,7 @@ namespace Kendo.Mvc.UI
                 settings["button"] = Button;
             }
 
-            if (Height.HasValue())
+            if (Height?.HasValue() == true)
             {
                 settings["height"] = Height;
             }
@@ -70,7 +70,7 @@ namespace Kendo.Mvc.UI
                 settings["position"] = position;
             }
 
-            if (Width.HasValue())
+            if (Width?.HasValue() == true)
             {
                 settings["width"] = Width;
             }

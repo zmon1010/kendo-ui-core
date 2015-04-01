@@ -47,12 +47,12 @@ namespace Kendo.Mvc.UI
                 settings["allPages"] = AllPages;
             }
 
-            if (Author.HasValue())
+            if (Author?.HasValue() == true)
             {
                 settings["author"] = Author;
             }
 
-            if (Creator.HasValue())
+            if (Creator?.HasValue() == true)
             {
                 settings["creator"] = Creator;
             }
@@ -62,7 +62,7 @@ namespace Kendo.Mvc.UI
                 settings["date"] = Date;
             }
 
-            if (FileName.HasValue())
+            if (FileName?.HasValue() == true)
             {
                 settings["fileName"] = FileName;
             }
@@ -72,7 +72,7 @@ namespace Kendo.Mvc.UI
                 settings["forceProxy"] = ForceProxy;
             }
 
-            if (Keywords.HasValue())
+            if (Keywords?.HasValue() == true)
             {
                 settings["keywords"] = Keywords;
             }
@@ -82,22 +82,22 @@ namespace Kendo.Mvc.UI
                 settings["landscape"] = Landscape;
             }
 
-            if (ProxyURL.HasValue())
+            if (ProxyURL?.HasValue() == true)
             {
                 settings["proxyURL"] = ProxyURL;
             }
 
-            if (ProxyTarget.HasValue())
+            if (ProxyTarget?.HasValue() == true)
             {
                 settings["proxyTarget"] = ProxyTarget;
             }
 
-            if (Subject.HasValue())
+            if (Subject?.HasValue() == true)
             {
                 settings["subject"] = Subject;
             }
 
-            if (Title.HasValue())
+            if (Title?.HasValue() == true)
             {
                 settings["title"] = Title;
             }

@@ -24,12 +24,12 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Extension.HasValue())
+            if (Extension?.HasValue() == true)
             {
                 settings["extension"] = Extension;
             }
 
-            if (Name.HasValue())
+            if (Name?.HasValue() == true)
             {
                 settings["name"] = Name;
             }

@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Delimeter.HasValue())
+            if (Delimeter?.HasValue() == true)
             {
                 settings["delimeter"] = Delimeter;
             }

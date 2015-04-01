@@ -33,7 +33,7 @@ namespace Kendo.Mvc.UI
                 settings["tileSize"] = tileSize;
             }
 
-            if (Value.HasValue())
+            if (Value?.HasValue() == true)
             {
                 settings["value"] = Value;
             }

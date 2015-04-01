@@ -38,52 +38,52 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (And.HasValue())
+            if (And?.HasValue() == true)
             {
                 settings["and"] = And;
             }
 
-            if (Clear.HasValue())
+            if (Clear?.HasValue() == true)
             {
                 settings["clear"] = Clear;
             }
 
-            if (Filter.HasValue())
+            if (Filter?.HasValue() == true)
             {
                 settings["filter"] = Filter;
             }
 
-            if (Info.HasValue())
+            if (Info?.HasValue() == true)
             {
                 settings["info"] = Info;
             }
 
-            if (IsFalse.HasValue())
+            if (IsFalse?.HasValue() == true)
             {
                 settings["isFalse"] = IsFalse;
             }
 
-            if (IsTrue.HasValue())
+            if (IsTrue?.HasValue() == true)
             {
                 settings["isTrue"] = IsTrue;
             }
 
-            if (Or.HasValue())
+            if (Or?.HasValue() == true)
             {
                 settings["or"] = Or;
             }
 
-            if (SelectValue.HasValue())
+            if (SelectValue?.HasValue() == true)
             {
                 settings["selectValue"] = SelectValue;
             }
 
-            if (Cancel.HasValue())
+            if (Cancel?.HasValue() == true)
             {
                 settings["cancel"] = Cancel;
             }
 
-            if (Operator.HasValue())
+            if (Operator?.HasValue() == true)
             {
                 settings["operator"] = Operator;
             }

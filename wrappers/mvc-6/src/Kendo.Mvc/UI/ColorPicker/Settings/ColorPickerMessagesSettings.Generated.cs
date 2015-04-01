@@ -22,12 +22,12 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Apply.HasValue())
+            if (Apply?.HasValue() == true)
             {
                 settings["apply"] = Apply;
             }
 
-            if (Cancel.HasValue())
+            if (Cancel?.HasValue() == true)
             {
                 settings["cancel"] = Cancel;
             }

@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Ui.HasValue())
+            if (Ui?.HasValue() == true)
             {
                 settings["ui"] = Ui;
             }

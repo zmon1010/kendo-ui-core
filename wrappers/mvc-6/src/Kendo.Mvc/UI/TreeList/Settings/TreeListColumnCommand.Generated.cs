@@ -26,22 +26,22 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (ClassName.HasValue())
+            if (ClassName?.HasValue() == true)
             {
                 settings["className"] = ClassName;
             }
 
-            if (Click.HasValue())
+            if (Click?.HasValue() == true)
             {
                 settings["click"] = Click;
             }
 
-            if (Name.HasValue())
+            if (Name?.HasValue() == true)
             {
                 settings["name"] = Name;
             }
 
-            if (Text.HasValue())
+            if (Text?.HasValue() == true)
             {
                 settings["text"] = Text;
             }

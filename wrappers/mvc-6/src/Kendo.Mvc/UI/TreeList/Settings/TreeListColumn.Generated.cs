@@ -60,7 +60,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Attributes.Any())
+            if (Attributes?.Any() == true)
             {
                 settings["attributes"] = Attributes;
             }
@@ -81,7 +81,7 @@ namespace Kendo.Mvc.UI
                 settings["expandable"] = Expandable;
             }
 
-            if (Field.HasValue())
+            if (Field?.HasValue() == true)
             {
                 settings["field"] = Field;
             }
@@ -109,12 +109,12 @@ namespace Kendo.Mvc.UI
                 settings["footerTemplate"] = FooterTemplate;
             }
 
-            if (Format.HasValue())
+            if (Format?.HasValue() == true)
             {
                 settings["format"] = Format;
             }
 
-            if (HeaderAttributes.Any())
+            if (HeaderAttributes?.Any() == true)
             {
                 settings["headerAttributes"] = HeaderAttributes;
             }
@@ -155,12 +155,12 @@ namespace Kendo.Mvc.UI
                 settings["template"] = Template;
             }
 
-            if (Title.HasValue())
+            if (Title?.HasValue() == true)
             {
                 settings["title"] = Title;
             }
 
-            if (Width.HasValue())
+            if (Width?.HasValue() == true)
             {
                 settings["width"] = Width;
             }

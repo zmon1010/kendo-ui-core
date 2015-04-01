@@ -38,7 +38,7 @@ namespace Kendo.Mvc.UI
                 settings["buttons"] = Buttons;
             }
 
-            if (Value.HasValue())
+            if (Value?.HasValue() == true)
             {
                 settings["value"] = Value;
             }

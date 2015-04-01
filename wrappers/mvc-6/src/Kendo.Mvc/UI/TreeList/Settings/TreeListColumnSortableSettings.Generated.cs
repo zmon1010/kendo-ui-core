@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Compare.HasValue())
+            if (Compare?.HasValue() == true)
             {
                 settings["compare"] = Compare;
             }

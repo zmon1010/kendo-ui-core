@@ -95,7 +95,7 @@ namespace Kendo.Mvc.UI
                 settings["position"] = position;
             }
 
-            if (Title.HasValue())
+            if (Title?.HasValue() == true)
             {
                 settings["title"] = Title;
             }

@@ -34,22 +34,22 @@ namespace Kendo.Mvc.UI
                 settings["commands"] = commands;
             }
 
-            if (Loading.HasValue())
+            if (Loading?.HasValue() == true)
             {
                 settings["loading"] = Loading;
             }
 
-            if (NoRows.HasValue())
+            if (NoRows?.HasValue() == true)
             {
                 settings["noRows"] = NoRows;
             }
 
-            if (RequestFailed.HasValue())
+            if (RequestFailed?.HasValue() == true)
             {
                 settings["requestFailed"] = RequestFailed;
             }
 
-            if (Retry.HasValue())
+            if (Retry?.HasValue() == true)
             {
                 settings["retry"] = Retry;
             }

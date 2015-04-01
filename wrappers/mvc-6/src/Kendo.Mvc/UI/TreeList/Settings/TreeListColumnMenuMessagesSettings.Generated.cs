@@ -26,22 +26,22 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Columns.HasValue())
+            if (Columns?.HasValue() == true)
             {
                 settings["columns"] = Columns;
             }
 
-            if (Filter.HasValue())
+            if (Filter?.HasValue() == true)
             {
                 settings["filter"] = Filter;
             }
 
-            if (SortAscending.HasValue())
+            if (SortAscending?.HasValue() == true)
             {
                 settings["sortAscending"] = SortAscending;
             }
 
-            if (SortDescending.HasValue())
+            if (SortDescending?.HasValue() == true)
             {
                 settings["sortDescending"] = SortDescending;
             }

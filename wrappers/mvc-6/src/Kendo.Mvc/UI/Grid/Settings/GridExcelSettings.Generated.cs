@@ -33,7 +33,7 @@ namespace Kendo.Mvc.UI
                 settings["allPages"] = AllPages;
             }
 
-            if (FileName.HasValue())
+            if (FileName?.HasValue() == true)
             {
                 settings["fileName"] = FileName;
             }
@@ -48,7 +48,7 @@ namespace Kendo.Mvc.UI
                 settings["forceProxy"] = ForceProxy;
             }
 
-            if (ProxyURL.HasValue())
+            if (ProxyURL?.HasValue() == true)
             {
                 settings["proxyURL"] = ProxyURL;
             }

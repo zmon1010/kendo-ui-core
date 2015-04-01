@@ -34,42 +34,42 @@ namespace Kendo.Mvc.UI
         {
             var settings = new Dictionary<string, object>();
 
-            if (Canceledit.HasValue())
+            if (Canceledit?.HasValue() == true)
             {
                 settings["canceledit"] = Canceledit;
             }
 
-            if (Create.HasValue())
+            if (Create?.HasValue() == true)
             {
                 settings["create"] = Create;
             }
 
-            if (Createchild.HasValue())
+            if (Createchild?.HasValue() == true)
             {
                 settings["createchild"] = Createchild;
             }
 
-            if (Destroy.HasValue())
+            if (Destroy?.HasValue() == true)
             {
                 settings["destroy"] = Destroy;
             }
 
-            if (Edit.HasValue())
+            if (Edit?.HasValue() == true)
             {
                 settings["edit"] = Edit;
             }
 
-            if (Excel.HasValue())
+            if (Excel?.HasValue() == true)
             {
                 settings["excel"] = Excel;
             }
 
-            if (Pdf.HasValue())
+            if (Pdf?.HasValue() == true)
             {
                 settings["pdf"] = Pdf;
             }
 
-            if (Update.HasValue())
+            if (Update?.HasValue() == true)
             {
                 settings["update"] = Update;
             }

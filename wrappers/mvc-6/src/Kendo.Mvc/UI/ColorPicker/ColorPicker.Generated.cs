@@ -66,12 +66,12 @@ namespace Kendo.Mvc.UI
                 settings["preview"] = Preview;
             }
 
-            if (ToolIcon.HasValue())
+            if (ToolIcon?.HasValue() == true)
             {
                 settings["toolIcon"] = ToolIcon;
             }
 
-            if (Value.HasValue())
+            if (Value?.HasValue() == true)
             {
                 settings["value"] = Value;
             }
