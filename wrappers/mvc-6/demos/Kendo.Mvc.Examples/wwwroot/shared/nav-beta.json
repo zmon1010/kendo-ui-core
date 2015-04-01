@@ -448,6 +448,16 @@
 					"kendo-ui": "In this example we will learn how to customize the filter menu of Kendo UI Grid component.",
 					"aspnet-mvc": "In this example you will learn how to customize the filter menu of Telerik ASP.NET MVC Grid component."
 				}
+			},
+			{
+				"text": "Filter row",
+				"url": "grid/filter-row",
+				"title": {
+					"kendo-ui": "Filter row in Kendo UI Grid | Kendo UI Web Demo"
+				},
+				"meta": {
+					"kendo-ui": "In this example we will learn how to enable the filter row of Kendo UI Grid component."
+				}
 			}		
 		],
 		"category": "Data Management"
