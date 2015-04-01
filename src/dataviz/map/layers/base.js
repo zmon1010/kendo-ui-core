@@ -63,28 +63,6 @@
             this._reset();
         },
 
-        exportVisual: function() {
-            var scroller = this.map.scroller;
-            var size = [scroller.element.width(), scroller.element.height()];
-
-            var clipRect = new geom.Rect([0, 0], size);
-            var clipRoot = new draw.Group({
-                clip: draw.Path.fromRect(clipRect)
-            });
-
-            var root = new draw.Group({
-                transform: geom.transform()
-                               .translate(-scroller.scrollLeft, -scroller.scrollTop)
-            });
-
-            clipRoot.append(root);
-            draw.drawDOM(this.element).done(function(dom) {
-                root.append(dom);
-            });
-
-            return clipRoot;
-        },
-
         _reset: function() {
             this._applyExtent();
         },

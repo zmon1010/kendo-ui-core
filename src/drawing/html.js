@@ -2097,6 +2097,10 @@
                     visual = widget.exportVisual();
                 }
 
+                if (!visual) {
+                    return false;
+                }
+
                 var wrap = new drawing.Group();
                 wrap.children.push(visual);
 
