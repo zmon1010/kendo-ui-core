@@ -3325,7 +3325,7 @@
                 legendItem.renderVisual();
             }
 
-            module("LegendItem / custom visual", {
+            module("LegendItem / Visual", {
                 setup: function() {
                     customVisual = new draw.Path();
                 }
@@ -3400,6 +3400,26 @@
                        ok(defaultVisual.children[2] instanceof draw.Path);
                     }
                 });
+            });
+
+            test("sets item cursor from object", function() {
+                renderLegendItem({
+                    text: "item1",
+                    cursor: {
+                        style: "foo"
+                    }
+                });
+
+                equal(legendItem._itemOverlay.options.cursor, "foo");
+            });
+
+            test("sets item cursor from string", function() {
+                renderLegendItem({
+                    text: "item1",
+                    cursor: "foo"
+                });
+
+                equal(legendItem._itemOverlay.options.cursor, "foo");
             });
         })();
 

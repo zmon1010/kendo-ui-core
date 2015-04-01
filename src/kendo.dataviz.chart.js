@@ -1866,7 +1866,7 @@ var __meta__ = {
                     opacity: 0
                 },
                 stroke: null,
-                cursor: cursor.style
+                cursor: cursor.style || cursor
             });
 
             this.appendVisual(eventSink);
@@ -2006,9 +2006,7 @@ var __meta__ = {
                 width: 0
             },
             item: {
-                cursor: {
-                    style: POINTER
-                }
+                cursor: POINTER
             },
             spacing: 6,
             background: "",
