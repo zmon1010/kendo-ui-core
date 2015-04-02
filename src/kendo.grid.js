@@ -3732,6 +3732,8 @@ var __meta__ = {
             var selected = grid.select();
             var delimeter = "\t";
             var allowCopy = grid.options.allowCopy;
+            var onlyVisible = true;
+
             if ($.isPlainObject(allowCopy) && allowCopy.delimeter) {
                 delimeter = allowCopy.delimeter;
             }
@@ -3739,6 +3741,9 @@ var __meta__ = {
             if (selected.length) {
                 if (selected.eq(0).is("tr")) {
                     selected = selected.find("td:not(.k-group-cell)");
+                }
+                if (onlyVisible) {
+                    selected.filter(":visible");
                 }
 
                 var result = [];
@@ -3751,6 +3756,9 @@ var __meta__ = {
                     var tr = cell.closest("tr");
                     var rowIndex = tr.index();
                     var cellIndex = cell.index();
+                    if (onlyVisible) {
+                        cellIndex -= cell.prevAll(":hidden").length;
+                    }
                     if (lockedCols && inLockedArea) {
                         inLockedArea = $.contains(grid.lockedTable[0], cell[0]);
                     }

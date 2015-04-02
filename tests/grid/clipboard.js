@@ -87,7 +87,7 @@
                     { foo: "7", bar: "8", baz: "9" }
                 ],
            }
-            });
+        });
         grid.select(grid.tbody.find(":contains(5),:contains(9)"));
 
         var ev = jQuery.Event("keydown");
@@ -106,7 +106,7 @@
                     { foo: "7", bar: "8", baz: "9" }
                 ],
            }
-            });
+        });
         grid.select(grid.tbody.find(":contains(6),:contains(8)"));
 
         var ev = jQuery.Event("keydown");
@@ -128,7 +128,7 @@
                     { foo: "7", bar: "8", baz: "9" }
                 ],
            }
-            });
+        });
         grid.select(grid.tbody.find(":contains(1),:contains(3),:contains(5),:contains(7),:contains(9)"));
 
         var ev = jQuery.Event("keydown");
@@ -158,5 +158,27 @@
         equal(typeof(grid.copyHandler), "function");
     });
 
+    test("does not include hidden columns by default", function() {
+        var grid = setup({
+            columns: [
+                { field: "foo", width: 10 },
+                { field: "bar", width: 20, hidden: true },
+                { field: "baz", width: 30 }
+            ],
+            dataSource: {
+                data : [
+                    { foo: "1", bar: "2", baz: "3" },
+                    { foo: "4", bar: "5", baz: "6" },
+                    { foo: "7", bar: "8", baz: "9" }
+                ],
+           }
+        });
+        grid.select(grid.tbody.find(":contains(4),:contains(5),:contains(6)"));
 
+        var ev = jQuery.Event("keydown");
+        ev.ctrlKey = true;
+
+        grid.copySelection(ev);
+        equal(grid.getTSV().trim(),"4\t6");
+    });
 })();

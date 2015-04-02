@@ -81,6 +81,7 @@
                         },
                         {
                             field: "ContractDate",
+                            hidden: true,
                             width: 400,
                             locked: false,
                             format: "{0:MM/dd/yyyy}",
@@ -168,7 +169,7 @@
                             locked: false,
                             width: 300
                         },
-                        { field: "ContractDate", width: 400, format: "{0:MM/dd/yyyy}" }
+                        //{ field: "ContractDate", width: 400, format: "{0:MM/dd/yyyy}" }
                     ],
                     groupable:true,
                     resizable: true,
@@ -176,7 +177,7 @@
                     selectable: "cell multiple",
                     allowCopy: true,
                     reorderable: true,
-                    columnMenu: false,
+                    columnMenu: true,
                     scrollable:true,
                     detailTemplate: "<div class='grid'></div>",
                     detailInit: function(e) {
