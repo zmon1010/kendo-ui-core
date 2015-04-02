@@ -137,9 +137,9 @@ master.report_to_field('closed', report(closed_issues))
 current = issues(CURRENT_ISSUES_OPTIONS) do |issues|
 
     issues.group_by do |issue|
-        label = issue.labels.find { |label| label.name =~ /S:(Low|Medium|High|Critical|Blocking)/ }
+        label = issue.labels.find { |label| label.name =~ /Sev: (Low|Medium|High|Critical|Blocking)/i }
         unless label
-            p "Invalid issue - #{issue.id}", issue
+            p "Invalid issue - #{issue.url}"
         end
         label ? label.name[/Low|Medium|High|Critical|Blocking/i].downcase : "default"
     end
