@@ -50,7 +50,6 @@
         _reset: function() {
             Layer.fn._reset.call(this);
             this._updateView();
-            this._view.clear();
             this._view.reset();
         },
 
@@ -143,10 +142,6 @@
             );
         },
 
-        clear: function() {
-            this.pool.empty();
-        },
-
         tileCount: function() {
             var size = this.size(),
                 firstTileIndex = this.pointToTileIndex(this._extent.nw),
@@ -191,6 +186,7 @@
         },
 
         reset: function() {
+            this.pool.reset();
             this.subdomainIndex = 0;
             this.basePoint = this._extent.nw;
             this.render();
@@ -264,7 +260,7 @@
         init: function(options) {
             this._initOptions(options);
             this.createElement();
-            this.load();
+            this.show();
             // initially the image should be
             this.options.visible = false;
         },
@@ -286,7 +282,7 @@
                             }, this));
         },
 
-        load: function(options) {
+        show: function(options) {
             this.options = deepExtend({}, this.options, options);
 
             var htmlElement = this.element[0];
@@ -299,6 +295,10 @@
 
             this.options.id = tileId(this.options.currentIndex, this.options.zoom);
             this.options.visible = true;
+        },
+
+        hide: function() {
+            this.element[0].style.visibility = "hidden";
         },
 
         url: function() {
@@ -372,6 +372,15 @@
             this._items = [];
         },
 
+        reset: function() {
+            var items = this._items,
+                i;
+
+            for (i = 0; i < items.length; i++) {
+                items[i].hide();
+            }
+        },
+
         _create: function(options) {
             var pool = this,
                 items = pool._items,
@@ -387,7 +396,7 @@
             }
 
             if (oldTile) {
-                oldTile.load(options);
+                oldTile.show(options);
             } else {
                 tile = new ImageTile(options);
                 this._items.push(tile);
@@ -417,7 +426,7 @@
                 }
             }
 
-            items[index].load(options);
+            items[index].show(options);
 
             return items[index];
         }
