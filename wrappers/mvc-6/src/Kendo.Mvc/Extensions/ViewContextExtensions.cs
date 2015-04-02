@@ -33,6 +33,10 @@ namespace Kendo.Mvc.Extensions
 			var modelMetadataProvider = viewContext.GetService<IModelMetadataProvider>();
 
 			return new HtmlHelper<T>(generator, viewEngine, modelMetadataProvider);
-		}		
-	}
+		}
+        public static string GetFullHtmlFieldName(this ViewContext viewContext, string name)
+        {
+            return viewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
+        }
+    }
 }

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.Rendering
 {
@@ -116,7 +117,8 @@ namespace Kendo.Mvc.Rendering
             string name,
             IDictionary<string, object> htmlAttributes)
         {
-            var fullName = GetFullHtmlFieldName(viewContext, name);
+            var fullName = viewContext.GetFullHtmlFieldName(name);
+
             if (string.IsNullOrEmpty(fullName))
             {
                 throw new InvalidOperationException(Resources.Exceptions.NameCannotBeBlank);
@@ -143,7 +145,7 @@ namespace Kendo.Mvc.Rendering
                 return null;
             }
 
-            var fullName = GetFullHtmlFieldName(viewContext, name);
+            var fullName = viewContext.GetFullHtmlFieldName(name);
             if (formContext.RenderedField(fullName))
             {
                 return null;
@@ -169,12 +171,6 @@ namespace Kendo.Mvc.Rendering
                 .OfType<IClientModelValidator>()
                 .SelectMany(v => v.GetClientValidationRules(
                     new ClientModelValidationContext(metadata, _metadataProvider)));
-        }
-
-        private static string GetFullHtmlFieldName(ViewContext viewContext, string name)
-        {
-            var fullName = viewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
-            return fullName;
         }
 
         private static object GetModelStateValue(ViewContext viewContext, string key, Type destinationType)

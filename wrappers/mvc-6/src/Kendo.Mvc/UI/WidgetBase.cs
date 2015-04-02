@@ -37,7 +37,7 @@ namespace Kendo.Mvc.UI
             get;
             private set;
         }
-
+        
         /// <summary>
         /// Gets the unique ID of the widget
         /// </summary>
@@ -46,7 +46,7 @@ namespace Kendo.Mvc.UI
         {
             get
             {
-                return SanitizeId(HtmlAttributes.ContainsKey("id") ? (string) HtmlAttributes["id"] : Name);
+                return SanitizeId(HtmlAttributes.ContainsKey("id") ? (string) HtmlAttributes["id"] : ViewContext.GetFullHtmlFieldName(Name));
             }
         }
 
