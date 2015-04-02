@@ -317,7 +317,7 @@ var InsertColumnCommand = Command.extend({
             newCell,
             position = this.options.position;
 
-        columnIndex = dom.findNodeIndex(td);
+        columnIndex = dom.findNodeIndex(td, true);
 
         for (i = 0; i < rows.length; i++) {
             cell = rows[i].cells[columnIndex];

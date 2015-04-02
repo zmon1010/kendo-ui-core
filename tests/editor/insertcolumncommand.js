@@ -75,4 +75,14 @@ test("inserted row do not copy text content", function() {
     equal(dom.find("td").text(), "foo");
 });
 
+test("insert row after non-table element and cell", function() {
+    range = createRangeFromText(editor, "<table><tr> <td>f||oo</td></tr></table>");
+
+    execInsertColumnCommand({ range:range });
+
+    var dom = $(editor.value());
+
+    equal(dom.find("td").text(), "foo");
+});
+
 }());
