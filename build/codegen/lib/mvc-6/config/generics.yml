@@ -21,3 +21,7 @@
 :grid:
     - :name: T
       :constraint: class
+
+:scheduler:
+    - :name: T
+      :constraint: class, ISchedulerEvent

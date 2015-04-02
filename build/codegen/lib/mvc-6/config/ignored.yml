@@ -25,6 +25,10 @@
 - grid.sortable.mode
 - grid.selectable
 - grid.toolbar
+- scheduler.datasource
+- scheduler.editable
+- scheduler.group
+- scheduler.resources
 - treelist.columns.editor
 - treelist.datasource
 - treelist.editable.window

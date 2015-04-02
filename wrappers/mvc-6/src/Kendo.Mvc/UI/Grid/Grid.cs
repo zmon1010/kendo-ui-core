@@ -176,7 +176,6 @@ namespace Kendo.Mvc.UI
 			if (!HtmlAttributes.ContainsKey("id"))
 			{
 				HtmlAttributes["id"] = Id;
-
 			}
 
 			if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
