@@ -504,6 +504,18 @@
                     "kendo-ui": "This example demonstrates different selection modes, supported by KendoGrid. Review the available selection options and apply the functionality to KendoGrid in your app.",
                     "aspnet-mvc": "This demo illustrates how you can use Telerik ASP.NET MVC grid with multiple row or cell selection enabled."
                 }
+            },
+            {
+                "text": "ForeignKey column",
+                "url": "grid/foreignkeycolumn",
+                "title": {
+                    "kendo-ui": "Foreign Key Column demo in KendoGrid jQuery control",
+                    "aspnet-mvc": "Foreign Key Column demo in Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows the foreign key column functionality to cross-reference tables in KendoGrid component.",
+                    "aspnet-mvc": "This example shows the foreign key column functionality to cross-reference tables in the Telerik ASP.NET MVC Grid component."
+                }
             }
         ],
         "category": "Data Management"
