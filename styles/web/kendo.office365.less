@@ -399,6 +399,18 @@ div.k-splitbar.k-state-focused .k-icon,
     .composite-background(@disabled-gradient);
 }
 
+.k-primary.k-state-disabled,
+.k-state-disabled .k-primary,
+.k-primary.k-state-disabled:hover,
+.k-state-disabled .k-primary:hover,
+.k-primary.k-state-disabled:hover,
+.k-state-disabled .k-primary:active,
+.k-primary.k-state-disabled:active
+{
+    color: @primary-disabled-text-color;
+    background-color: @primary-disabled-background-color;
+}
+
 .k-numerictextbox .k-select,
 .k-combobox .k-select,
 .k-picker-wrap .k-select {
@@ -842,6 +854,10 @@ input.k-textbox:focus {
 
 .k-gantt .k-grid-content td {
 	//border-color: @widget-border-color;
+}
+
+.k-gantt .k-gantt-timeline tr:first-child th {
+    border-color: @widget-border-color;
 }
 
 .k-gantt .k-treelist .k-alt {
