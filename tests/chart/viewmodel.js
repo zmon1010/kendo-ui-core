@@ -1759,10 +1759,16 @@
             sameBox(textBox.normalBox, Box2D(5,5, 25, 35));
         });
 
-        test("rotates box without margin and applies margin to the rotated box", function() {
+        test("rotates box without margin and translates the rotated box with the margin", function() {
             textBox.options.margin = 5;
             textBox.reflow(targetBox);
-            sameBox(textBox.box, Box2D(0,0, 40, 30));
+            sameBox(textBox.rotatedBox, Box2D(0,0, 30, 20));
+        });
+
+        test("box is equal to the rotated box with margin applied", function() {
+            textBox.options.margin = 5;
+            textBox.reflow(targetBox);
+            sameBox(textBox.box, Box2D(-5, -5, 35, 25));
         });
 
         // ------------------------------------------------------------

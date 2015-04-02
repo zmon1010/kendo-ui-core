@@ -1366,13 +1366,15 @@ var __meta__ = {
                 BoxElement.fn.reflow.call(textbox, targetBox);
 
                 if (rotation) {
-                    var margin = options.margin;
+                    var margin = getSpacing(options.margin);
                     var box = textbox.box.unpad(margin);
                     textbox.normalBox = box.clone();
                     box.rotate(rotation);
-                    box.pad(margin);
                     textbox.align(targetBox, X, align);
                     textbox.align(targetBox, Y, options.vAlign);
+                    box.translate(margin.left - margin.right, margin.top - margin.bottom);
+                    textbox.rotatedBox = box.clone();
+                    box.pad(margin);
                 }
             }
         },
@@ -1434,27 +1436,11 @@ var __meta__ = {
             var center = this.normalBox.center();
             var cx = center.x;
             var cy = center.y;
-            var boxCenter = this.box.center();
+            var boxCenter = this.rotatedBox.center();
 
             return geom.transform()
                        .translate(boxCenter.x - cx, boxCenter.y - cy)
                        .rotate(rotation, [cx, cy]);
-        },
-
-        rotationMatrix: function() {
-            var textbox = this;
-            var options = textbox.options;
-            var normalBox = textbox.normalBox;
-            var center = normalBox.center();
-            var cx = center.x;
-            var cy = center.y;
-            var boxCenter = textbox.box.center();
-            var offsetX = boxCenter.x - cx;
-            var offsetY = boxCenter.y - cy;
-            var matrix = Matrix.translate(offsetX, offsetY)
-                    .times(Matrix.rotate(options.rotation, cx, cy));
-
-            return matrix;
         }
     });
 
