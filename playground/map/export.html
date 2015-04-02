@@ -108,7 +108,7 @@
             zoom: 3,
             layers: [{
                 type: "shape",
-                dataSource: {
+                _dataSource: {
                     type: "geojson",
                     transport: {
                         read: "countries.geo.json"
@@ -121,7 +121,7 @@
                 }
             }, {
                 type: "tile",
-                _urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
                 subdomains: ["a", "b", "c"]
             }],
             markers: [{
