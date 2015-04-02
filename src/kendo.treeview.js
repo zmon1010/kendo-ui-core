@@ -1957,7 +1957,7 @@ var __meta__ = {
         _parents: function(node) {
             var parent = node && node.parentNode();
             var parents = [];
-            while (parent) {
+            while (parent && parent.parentNode) {
                 parents.push(parent);
                 parent = parent.parentNode();
             }

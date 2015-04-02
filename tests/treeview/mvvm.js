@@ -441,5 +441,23 @@
             equal(dom.find("i").text(), "bar");
         });
 
+        test("expandTo does not break out of source binding", function() {
+            var dom = $('<div data-role="treeview" data-bind="source: items" />').appendTo(QUnit.fixture);
+
+            var viewModel = kendo.observable({
+                items: kendo.observableHierarchy([
+                    { id: 1, name: "foo", items: [
+                        { id: 2, name: "bar" }
+                    ] }
+                ])
+            });
+
+            kendo.bind(dom, viewModel);
+
+            dom.data("kendoTreeView").expandTo(2);
+
+            ok(true);
+        });
+
     })();
 })();
