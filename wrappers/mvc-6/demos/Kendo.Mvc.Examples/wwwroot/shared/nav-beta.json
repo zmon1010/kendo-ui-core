@@ -492,6 +492,18 @@
                     "kendo-ui": "This example demonstrates how to sort the data in KendoGrid. Use the demo source code to look into the logic of the grid sorting and implement it easily in your app.",
                     "aspnet-mvc": "This demo shows how to sort data in Telerik ASP.NET MVC Grid. Use the demo source code to look into the logic of grid sorting and easily implement it in your app."
                 }
+            },
+            {
+                "text": "Selection",
+                "url": "grid/selection",
+                "title": {
+                    "kendo-ui": "Example of selection modes for KendoGrid component",
+                    "aspnet-mvc": "Multiple row and cell selection in Telerik Grid for ASP.NET MVC"
+                },
+                "meta": {
+                    "kendo-ui": "This example demonstrates different selection modes, supported by KendoGrid. Review the available selection options and apply the functionality to KendoGrid in your app.",
+                    "aspnet-mvc": "This demo illustrates how you can use Telerik ASP.NET MVC grid with multiple row or cell selection enabled."
+                }
             }
         ],
         "category": "Data Management"
