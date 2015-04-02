@@ -1784,6 +1784,8 @@ var __meta__ = {
         destroy: function() {
             Widget.fn.destroy.call(this);
 
+            clearTimeout(this._tooltipTimeout);
+
             if (this._currentTimeUpdateTimer) {
                 clearInterval(this._currentTimeUpdateTimer);
             }
