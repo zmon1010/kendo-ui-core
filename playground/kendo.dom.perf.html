@@ -4,24 +4,25 @@
         <script src="../src/jquery.js"></script>
         <script src="../src/kendo.core.js"></script>
         <script src="../src/kendo.dom.js"></script>
+        <script src="https://rawgit.com/Matt-Esch/virtual-dom/master/dist/virtual-dom.js"></script>
         <script src="dom.data.js"></script>
         <link rel="stylesheet" href="../dist/styles/web/kendo.common.min.css">
         <link rel="stylesheet" href="../dist/styles/web/kendo.default.min.css">
         <style>
             div {
-                width: 500px;
+                width: 300px;
                 height: 500px;
                 overflow: auto;
             }
             section {
-                width: 700px;
+                width: 300px;
                 float: left;
             }
         </style>
     </head>
     <body>
         <section>
-            <h3>DOM</h3>
+            <h3>kendo.dom.js</h3>
             <button id="toggle-dom">toggle</button>
             <div id="root-dom"></div>
         </section>
@@ -30,10 +31,16 @@
             <button id="toggle-html">toggle</button>
             <div id="root-html"></div>
         </section>
+        <section>
+            <h3>Virtual DOM</h3>
+            <button id="toggle-virtual">toggle</button>
+            <div id="root-virtual"></div>
+        </section>
         <script>
             var rootDom = document.getElementById("root-dom");
             var tree = new kendo.dom.Tree(rootDom);
             var rootHtml = document.getElementById("root-html");
+            var rootVirtual = document.getElementById("root-virtual");
             var largeDom = true;
             var largeHtml = true;
 
@@ -42,20 +49,24 @@
             }
 
             document.getElementById("toggle-dom").onclick = function () {
-                largeDom = !largeDom;
-
                 var start = now();
-                renderDom(largeDom);
+                renderDom();
                 console.log(now() - start);
 
                 return false;
             }
 
             document.getElementById("toggle-html").onclick = function () {
-                largeHtml = !largeHtml;
-
                 var start = now();
-                renderHtml(largeHtml);
+                renderHtml();
+                console.log(now() - start);
+
+                return false;
+            }
+
+            document.getElementById("toggle-virtual").onclick = function () {
+                var start = now();
+                renderVirtualDom();
                 console.log(now() - start);
 
                 return false;
@@ -87,8 +98,30 @@
                 rootHtml.innerHTML = "<div style='position:relative'>" + rows.join("") + "</div>";
             }
 
-            renderDom(largeDom);
-            renderHtml(largeHtml);
+            var VirtualNode = virtualDom.h().constructor;
+
+            function virtualDomTree() {
+                var rows = [];
+                for (var i = 0; i < 7600; i++) {
+                    rows.push(new VirtualNode("div", { style: { position:"absolute", background: "black", top: i + "px", height: "2px", width: "100px" } }));
+                }
+
+                return new VirtualNode("div", { style: { position: "relative" } }, rows);
+            }
+
+            var vdomTree = virtualDomTree();
+            var rootNode = virtualDom.create(vdomTree);
+            rootVirtual.appendChild(rootNode);
+
+            function renderVirtualDom() {
+                var newTree = virtualDomTree();
+                var patches = virtualDom.diff(vdomTree, newTree);
+                virtualDom.patch(rootNode, patches);
+            }
+
+            renderDom();
+            renderHtml();
+            renderVirtualDom();
         </script>
     </body>
 </html>
