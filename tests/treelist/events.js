@@ -51,6 +51,14 @@
         return read;
     }
 
+    function dragEvent(x, y, handle) {
+        return {
+            x: { location: x, startLocation: x },
+            y: { location: y, startLocation: y },
+            currentTarget: handle
+        };
+    }
+
     test("dataBound is fired upon refresh", function() {
         createTreeList({
             dataBound: handler
@@ -191,5 +199,32 @@
         instance.content.find(".k-i-collapse").mousedown();
 
         equal(instance.content.find("tr:visible").length, 2);
+    });
+
+    test("columnResize event is fired upon resizing", function() {
+        var handler = spy();
+
+        createTreeList({
+            resizable: true,
+            dataSource: [
+                { id: 1, parentId: null },
+                { id: 2, parentId: 1 }
+            ],
+            columnResize: handler
+        });
+
+        var th = instance.wrapper.find("th:first")[0];
+        instance._positionResizeHandle({
+            currentTarget: th,
+            clientX: th.offsetWidth-2
+        });
+
+        var handle = instance.wrapper.find(".k-resize-handle");
+        var resizable = instance.resizable;
+        resizable.press(handle)
+        resizable.move(10);
+        resizable.end();
+
+        equal(handler.calls, 1);
     });
 })();

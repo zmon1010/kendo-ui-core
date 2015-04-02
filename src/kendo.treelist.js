@@ -86,6 +86,7 @@ var __meta__ = {
     var COLUMNSHOW = "columnShow";
     var HEADERCELLS = "th.k-header";
     var COLUMNREORDER = "columnReorder";
+    var COLUMNRESIZE = "columnResize";
     var COLUMNMENUINIT = "columnMenuInit";
     var COLUMNLOCK = "columnLock";
     var COLUMNUNLOCK = "columnUnlock";
@@ -1117,6 +1118,7 @@ var __meta__ = {
             COLUMNHIDE,
             COLUMNSHOW,
             COLUMNREORDER,
+            COLUMNRESIZE,
             COLUMNMENUINIT,
             COLUMNLOCK,
             COLUMNUNLOCK
@@ -2023,10 +2025,17 @@ var __meta__ = {
                     var column = grep(treelist.columns, function(c) {
                         return c.field == field;
                     });
+                    var newWidth = Math.floor(this.th.outerWidth());
 
-                    column[0].width = Math.floor(this.th.outerWidth());
+                    column[0].width = newWidth;
                     treelist._resize();
                     treelist._adjustRowsHeight();
+
+                    treelist.trigger(COLUMNRESIZE, {
+                        column: column,
+                        oldWidth: this.columnWidth,
+                        newWidth: newWidth
+                    });
 
                     this.table = this.col = this.th = null;
                 }
