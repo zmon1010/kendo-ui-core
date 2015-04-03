@@ -1,6 +1,8 @@
-﻿namespace Kendo.Mvc.UI
+﻿using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
+
+namespace Kendo.Mvc.UI
 {
-    using System.Collections.Generic;
     public class ChartLegendItemSerializer : IChartSerializer
     {
         private readonly ChartLegendItem legendItem;
@@ -13,10 +15,16 @@
         public System.Collections.Generic.IDictionary<string, object> Serialize()
         {
             var result = new Dictionary<string, object>();
-            if (this.legendItem.Visual != null)
+            if (legendItem.Visual != null)
             {
-                result["visual"] = this.legendItem.Visual;
+                result["visual"] = legendItem.Visual;
             }
+
+            if (legendItem.Cursor.HasValue())
+            {
+                result["cursor"] = legendItem.Cursor;
+            }
+
             return result;
         }
     }

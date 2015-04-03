@@ -2577,6 +2577,12 @@ A negative value will move the legend upwards from its current position.</descri
         <body-content>JSP</body-content>
 
         <attribute>
+            <description>The cursor style of the legend item.</description>
+            <name>cursor</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>A function that can be used to create a custom visual for the legend items. The available argument fields are:</description>
             <name>visual</name>
             <rtexprvalue>true</rtexprvalue>
@@ -3641,6 +3647,12 @@ Summary columns are optional and can be one of two types:</description>
             <name>upperField</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Sets the visible property of a chart series</description>
+            <name>visible</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>A value indicating whether to show the point category name (for bubble, donut and pie series)

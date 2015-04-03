@@ -61,6 +61,10 @@ public class LegendTag extends  BaseTag  /* interfaces *//* interfaces */ {
         setProperty("inactiveItems", value);
     }
 
+    public void setItem(com.kendoui.taglib.stockchart.LegendItemTag value) {
+        setProperty("item", value);
+    }
+
     public void setLabels(com.kendoui.taglib.stockchart.LegendLabelsTag value) {
         setProperty("labels", value);
     }

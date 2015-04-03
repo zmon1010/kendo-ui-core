@@ -622,6 +622,15 @@ A string value is interpreted as series.stack.group.
     }
 
     /**
+    * Sets the visible property of a chart series
+    * @param boolean $value
+    * @return \Kendo\Dataviz\UI\ChartSeriesItem
+    */
+    public function visible($value) {
+        return $this->setProperty('visible', $value);
+    }
+
+    /**
     * A value indicating whether to show the point category name (for bubble, donut and pie series)
 or series name (for other available series types) in the legend.
     * @param boolean $value
