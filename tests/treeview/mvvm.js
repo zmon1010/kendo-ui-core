@@ -447,14 +447,16 @@
             var viewModel = kendo.observable({
                 items: kendo.observableHierarchy([
                     { id: 1, name: "foo", items: [
-                        { id: 2, name: "bar" }
+                        { id: 2, name: "bar", items: [
+                            { id: 3, name: "baz" }
+                        ] }
                     ] }
                 ])
             });
 
             kendo.bind(dom, viewModel);
 
-            dom.data("kendoTreeView").expandTo(2);
+            dom.data("kendoTreeView").expandTo(3);
 
             ok(true);
         });
