@@ -768,7 +768,7 @@ var Dom = {
     },
 
     ensureTrailingBreak: function(node) {
-        $(node).find(".k-br").remove();
+        $(node).find("br[type=_moz],.k-br").remove();
 
         var lastChild = node.lastChild;
         var name = lastChild && Dom.name(lastChild);
