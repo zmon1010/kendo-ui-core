@@ -167,9 +167,11 @@
             equal(view.subdomainText(), "a");
         });
 
-        test("clear should clear the tile pool", function() {
-            view.clear();
-            equal(view.pool._items.length, 0);
+        test("clear should reset the tile pool", function() {
+            view.pool.reset = function() {
+                ok(true);
+            };
+            view.reset();
         });
 
         test("destroy should clear the element and the pool", function() {
@@ -187,7 +189,6 @@
             equal(tile.options.index.x, index.x);
             equal(tile.options.index.y, index.y);
             equal(tile.url(), "javascript:void('a/4/1/1.png')");
-            ok(!tile.options.visible);
         });
 
         test("createTile should return the correct offset", function() {
@@ -261,10 +262,20 @@
             equal(pool._items.length, 0);
         });
 
-        test("should reuse the items", function() {
+        test("should remove old items", function() {
+            var oldItem = pool._items[0];
             pool.options.maxSize = 10;
             addItemsToPool(11);
-            ok(pool._items[0].options.index.equals(new Point(10, 10)));
+            ok(pool._items[0] !== oldItem);
+        });
+
+        test("reset should hide tiles", function() {
+            addItemsToPool();
+            pool.reset();
+
+            for (var i = 0; i < pool._items.length; i++) {
+                ok(!pool._items[i].options.visible);
+            }
         });
 
     })();
@@ -376,7 +387,7 @@
         });
 
         test("should render url", function() {
-            tile.load({
+            tile.show({
                 index: {
                     x: 1,
                     y: 1
@@ -395,7 +406,7 @@
         });
 
         test("should render offset", function() {
-            tile.load({
+            tile.show({
                 index: {
                     x: 1,
                     y: 1
@@ -415,7 +426,7 @@
         });
 
         test("should have id", function() {
-            tile.load({
+            tile.show({
                 index: {
                     x: 1,
                     y: 1
@@ -435,7 +446,7 @@
         });
 
         test("should set visible to true", function() {
-            tile.load({
+            tile.show({
                 index: {
                     x: 1,
                     y: 1

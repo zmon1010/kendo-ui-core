@@ -286,36 +286,4 @@ function baseLayerTests(name, TLayer) {
         layer._reset = function() { ok(true), TLayer.fn._reset.call(this); };
         layer.reset();
     });
-
-    // ------------------------------------------------------------
-    module(name + " / exportVisual", {
-        setup: function() {
-            map = new MapMock();
-            layer = new TLayer(map);
-
-            map.scroller = {
-                scrollLeft: 100,
-                scrollTop: 200,
-                element: $("<div/>").css({
-                    width: "600px", height: "400px", position: "absolute"
-                })
-            };
-        },
-        teardown: destroyLayer
-    });
-
-    test("clips root element", function() {
-        var visual = layer.exportVisual();
-        var clip = visual.clip().bbox();
-
-        deepEqual(clip.size.toArray(), [600, 400]);
-        deepEqual(clip.origin.toArray(), [0, 0]);
-    });
-
-    test("translates content element", function() {
-        var content = layer.exportVisual().children[0];
-        var matrix = content.transform().matrix();
-
-        deepEqual(matrix.toArray(), [1,0,0,1,-100,-200]);
-    });
 }

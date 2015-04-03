@@ -205,8 +205,7 @@
                     });
 
                     if (!tile.options.visible) {
-                        this.element.append(tile.element);
-                        tile.options.visible = true;
+                        tile.show();
                     }
                 }
             }
@@ -214,8 +213,12 @@
 
         createTile: function(currentIndex) {
             var options = this.tileOptions(currentIndex);
+            var tile = this.pool.get(this._center, options);
+            if (tile.element.parent().length === 0) {
+                this.element.append(tile.element);
+            }
 
-            return this.pool.get(this._center, options);
+            return tile;
         },
 
         tileOptions: function(currentIndex) {
@@ -261,8 +264,6 @@
             this._initOptions(options);
             this.createElement();
             this.show();
-            // initially the image should be
-            this.options.visible = false;
         },
 
         options: {
@@ -272,7 +273,7 @@
         },
 
         createElement: function() {
-            this.element = $("<img style='position: absolute; display: block; visibility: visible;' />")
+            this.element = $("<img style='position: absolute; display: block;' />")
                             .error(proxy(function(e) {
                                 if (this.errorUrl()) {
                                     e.target.setAttribute("src", this.errorUrl());
@@ -283,22 +284,25 @@
         },
 
         show: function(options) {
-            this.options = deepExtend({}, this.options, options);
+            this.options = options = deepExtend({}, this.options, options);
+            var id = tileId(this.options.currentIndex, this.options.zoom);
+            var element = this.element[0];
 
-            var htmlElement = this.element[0];
+            element.style.top = renderSize(this.options.offset.y);
+            element.style.left = renderSize(this.options.offset.x);
 
-            htmlElement.style.visibility = "visible";
-            htmlElement.style.display = "block";
-            htmlElement.style.top = renderSize(this.options.offset.y);
-            htmlElement.style.left = renderSize(this.options.offset.x);
-            htmlElement.setAttribute("src", this.url());
+            if (this.options.id !== id || !element.getAttribute("url")) {
+                element.setAttribute("src", this.url());
+            }
+            element.style.visibility = "visible";
 
-            this.options.id = tileId(this.options.currentIndex, this.options.zoom);
+            this.options.id = id;
             this.options.visible = true;
         },
 
         hide: function() {
             this.element[0].style.visibility = "hidden";
+            this.options.visible = false;
         },
 
         url: function() {
@@ -339,7 +343,6 @@
 
     var TilePool = Class.extend({
         init: function() {
-            // calculate max size automaticaly
             this._items = [];
         },
 
@@ -347,18 +350,14 @@
             maxSize: 100
         },
 
-        // should considered to remove the center of the screen
         get: function(center, options) {
-            var pool = this,
-                item;
+            var pool = this;
 
             if (pool._items.length >= pool.options.maxSize) {
-                item = pool._update(center, options);
-            } else {
-                item = pool._create(options);
+                pool._remove(center);
             }
 
-            return item;
+            return pool._create(options);
         },
 
         empty: function() {
@@ -405,30 +404,23 @@
             return tile;
         },
 
-        _update: function(center, options) {
-            var pool = this,
-                items = pool._items,
-                dist = -Number.MAX_VALUE,
-                currentDist, index, i, item;
+        _remove: function(center) {
+            var items = this._items;
+            var maxDist = -1;
+            var index = -1;
 
-            var id = tileId(options.currentIndex, options.zoom);
-
-            for (i = 0; i < items.length; i++) {
-                item = items[i];
-                currentDist = item.options.point.clone().distanceTo(center);
-                if (item.options.id === id) {
-                    return items[i];
-                }
-
-                if (dist < currentDist) {
+            for (var i = 0; i < items.length; i++) {
+                var dist = items[i].options.point.distanceTo(center);
+                if (dist > maxDist) {
                     index = i;
-                    dist = currentDist;
+                    maxDist = dist;
                 }
             }
 
-            items[index].show(options);
-
-            return items[index];
+            if (index !== -1) {
+                items[index].destroy();
+                items.splice(index, 1);
+            }
         }
     });
 
