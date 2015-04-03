@@ -79,5 +79,10 @@ namespace Kendo.Mvc.Examples.Controllers
 				CustomerID = order.CustomerID
 			});
 		}
-	}
+
+        public ActionResult Products_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            return Json(productService.Read().ToDataSourceResult(request));
+        }
+    }
 }

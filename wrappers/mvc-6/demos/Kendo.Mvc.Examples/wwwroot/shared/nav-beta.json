@@ -595,6 +595,30 @@
                     "kendo-ui": "This sample shows how to change the style and concert of row cells with KendoGrid Row templates.",
                     "aspnet-mvc": "This sample shows how to change the style and concert of row cells with Telrik ASP.NET MVC Grid Row templates."
                 }
+            },
+            {
+                "text": "Events",
+                "url": "grid/events",
+                "title": {
+                    "kendo-ui": "Example of using events in Kendo UI Grid control",
+                    "aspnet-mvc": "Example of using events in Telerik ASP.NET MVC Grid control"
+                },
+                "meta": {
+                    "kendo-ui": "This example demonstrates different events which are available in KendoGrid widget and the code explains how you can use them for  your project.",
+                    "aspnet-mvc": "This example demonstrates the different events which are available in Telerik ASP.NET MVC Grid component. The code explains how you can use them for your project."
+                }
+            },
+            {
+                "text": "API",
+                "url": "grid/api",
+                "title": {
+                    "kendo-ui": "KendoGrid API Demo",
+                    "aspnet-mvc": "API for ASP.NET MVC Grid control | UI for ASP.NET MVC demos"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how API Functions can manipulate the contents and behavior of Kendo UI Grid widget.",
+                    "aspnet-mvc": "See how the powerful and comprehensive API Functions allow you to manipulate the contents and behavior of the Telerik ASP.NET MVC Grid."
+                }
             }
         ],
         "category": "Data Management"
