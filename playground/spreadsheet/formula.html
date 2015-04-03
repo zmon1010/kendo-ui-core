@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../loader.js"></script>
+    <script>
+      requireSync([
+        "../../src/jquery.js",
+        "../../src/spreadsheet/calc.js"
+      ]);
+    </script>
+    <link rel="stylesheet" href="test-formula.css" />
+  </head>
+  <body>
+    <p><b>Sheet1</b></p>
+    <div class="sheet" id="sheet1"></div>
+    <p><b>Sheet2</b></p>
+    <div class="sheet" id="sheet2"></div>
+    <script src="./test-formula.js"></script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+body,
+input,
+textarea,
+button,
+select {
+  font: 14px sans-serif;
+}
+.sheet {
+  border: 1px solid #000;
+  padding: 5px;
+  margin: 1em;
+}
+.sheet table {
+  border-collapse: collapse;
+}
+.sheet table tr td {
+  border: 1px solid #ccc;
+  z-index: 0;
+}
+.sheet table tr td input {
+  border: 0;
+  padding: 2px 5px;
+  box-sizing: border-box;
+}
+.sheet table tr td input:focus {
+  background: #fea;
+}
+.sheet table tr td input.type-num {
+  text-align: right;
+}
+.sheet table tr.head td,
+.sheet table td.head {
+  text-align: center;
+  background: #ddd;
+  padding: 2px 5px;
+}
+.sheet .formula {
+  border: 1px solid #888;
+  margin-bottom: 5px;
+  background: #ddd;
+  padding: 2px 5px;
+}
