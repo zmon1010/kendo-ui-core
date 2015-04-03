@@ -64,7 +64,7 @@ namespace Kendo.Mvc.Examples.Controllers
 
 			var customers = northwind.Customers.ToList();
 
-            return northwind.Orders.Select(order => new OrderViewModel
+            return northwind.Orders.ToList().Select(order => new OrderViewModel
 			{
 				ContactName = customers.First(c => c.CustomerID == order.CustomerID).ContactName,
 				Freight = order.Freight,

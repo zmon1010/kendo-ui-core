@@ -28,8 +28,7 @@ namespace Kendo.Mvc.Examples.Models
 		public virtual DbSet<OrgChartConnection> OrgChartConnections { get; set; }
 		public virtual DbSet<OrgChartShape> OrgChartShapes { get; set; }
 		public virtual DbSet<Product> Products { get; set; }
-		public virtual DbSet<Region> Regions { get; set; }
-		public virtual DbSet<Shipper> Shippers { get; set; }
+		public virtual DbSet<Region> Regions { get; set; }		
 		public virtual DbSet<Stock> Stocks { get; set; }
 		public virtual DbSet<Supplier> Suppliers { get; set; }
 		public virtual DbSet<Task> Tasks { get; set; }
@@ -86,10 +85,7 @@ namespace Kendo.Mvc.Examples.Models
 			});			
 
 			modelBuilder.Entity<Region>()
-				.HasMany(e => e.Territories);
-
-			modelBuilder.Entity<Shipper>()
-				.HasMany(e => e.Orders);			
+				.HasMany(e => e.Territories);					
 
 			modelBuilder.Entity<Task>()
 				.HasMany(e => e.Tasks1);
@@ -143,10 +139,7 @@ namespace Kendo.Mvc.Examples.Models
 				.ForSqlServer().Table("Products");
 
 			modelBuilder.Entity<Region>()
-				.ForSqlServer().Table("Regions");
-
-			modelBuilder.Entity<Shipper>()
-				.ForSqlServer().Table("Shippers");
+				.ForSqlServer().Table("Regions");			
 
 			modelBuilder.Entity<Task>()
 				.ForSqlServer().Table("Tasks");
