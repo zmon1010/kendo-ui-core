@@ -583,6 +583,18 @@
                 "packages": [
                     "mvc-offline"
                 ]
+            },
+            {
+                "text": "Row template",
+                "url": "grid/rowtemplate",
+                "title": {
+                    "kendo-ui": "Changing row template in Kendo UI Grid widget",
+                    "aspnet-mvc": "Row Template for Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This sample shows how to change the style and concert of row cells with KendoGrid Row templates.",
+                    "aspnet-mvc": "This sample shows how to change the style and concert of row cells with Telrik ASP.NET MVC Grid Row templates."
+                }
             }
         ],
         "category": "Data Management"
