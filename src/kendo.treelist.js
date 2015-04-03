@@ -213,15 +213,16 @@ var __meta__ = {
 
         _createNewModel: function(data) {
             var model = {};
+            var fromModel = data instanceof Model;
 
-            if (data instanceof Model) {
+            if (fromModel) {
                 model = data;
             }
 
             model = DataSource.fn._createNewModel.call(this, model);
 
-            if (data.parentId) {
-                model.parentId = data.parentId;
+            if (!fromModel) {
+                model.accept(data);
             }
 
             return model;

@@ -1100,4 +1100,16 @@
 
         ok(root.loaded(), "root item must stay loaded");
     });
+
+    test("add with custom field", function() {
+        var ds = new TreeListDataSource({
+            data: [ { foo: "foo", parentId: null } ]
+        });
+
+        ds.read();
+
+        ds.add({ foo: "bar", parentId: null });
+
+        equal(ds.at(1).foo, "bar");
+    });
 })();
