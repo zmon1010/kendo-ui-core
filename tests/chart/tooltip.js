@@ -360,6 +360,95 @@
         });
 
         // ------------------------------------------------------------
+        (function() {
+            var scrollerElement;
+            var scroller;
+
+            function destroy() {
+                if (tooltip) {
+                    tooltip.destroy();
+                }
+                kendo.destroy(scrollerElement);
+                scrollerElement.remove();
+            }
+
+            function createTooltipWithScroller(options) {
+                scrollerElement = $("<div></div>").kendoMobileScroller({
+                    zoom: true
+                }).appendTo(QUnit.fixture);
+
+                scroller = scrollerElement.data("kendoMobileScroller");
+
+                chartElement = $("<div id='chart' style='height: 50px;'></div>").appendTo(scrollerElement);
+                tooltip = new dataviz.Tooltip(chartElement, options);
+                element = tooltip.element;
+            }
+
+            function assertPosition(transform) {
+                tooltip.anchor = new dataviz.Point2D(10, 20);
+                tooltip.options.animation.duration = 0;
+                tooltip.options.offsetX = 0;
+                tooltip.options.offsetY = 0;
+                tooltip.move();
+
+                var position = defaultPosition(tooltip.anchor).transform(transform);
+                var offset = tooltip.element.offset();
+
+                equal(offset.left, position.x);
+                equal(offset.top, position.y);
+            }
+
+            function defaultPosition(anchor) {
+                var chartOffset = chartElement.offset();
+                var left = chartOffset.left + anchor.x;
+                var top = chartOffset.top + anchor.y;
+                return new kendo.geometry.Point(left, top)
+            }
+
+            module("Tooltip / inside mobile scroller", {
+                setup: function() {
+                    createTooltipWithScroller();
+                },
+                teardown: destroy
+            });
+
+            test("scales offset by scroller scale", function() {
+                scroller.movable.scaleTo(1.5);
+                var transform = kendo.geometry.transform().scale(1.5);
+                assertPosition(transform);
+            });
+
+            test("scales offset by scroller scale with center the scroller offset", function() {
+                scroller.scrollTo(10, 20);
+                scroller.movable.scaleTo(1.5);
+                var transform = kendo.geometry.transform().scale(1.5, 1.5, [10, 20]);
+
+                assertPosition(transform);
+            });
+
+            test("sets default offset if scroller is not scaled", function() {
+                scroller.scrollTo(10, 20);
+                assertPosition(kendo.geometry.transform());
+            });
+
+            // ------------------------------------------------------------
+            module("Tooltip inside mobile scroller with role content", {
+                setup: function() {
+                    createTooltipWithScroller();
+                    scrollerElement.attr(kendo.attr("role"), "content");
+                },
+                teardown: destroy
+            });
+
+            test("scales offset by scroller scale", function() {
+                scroller.movable.scaleTo(1.5);
+                var transform = kendo.geometry.transform().scale(1.5);
+                assertPosition(transform);
+            });
+
+        })();
+
+        // ------------------------------------------------------------
         module("Tooltip / Inverse background", {
             setup: function() {
                 createTooltip();
