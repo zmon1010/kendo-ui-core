@@ -619,6 +619,16 @@
                     "kendo-ui": "This demo shows how API Functions can manipulate the contents and behavior of Kendo UI Grid widget.",
                     "aspnet-mvc": "See how the powerful and comprehensive API Functions allow you to manipulate the contents and behavior of the Telerik ASP.NET MVC Grid."
                 }
+            },
+            {
+                "text": "Persist state",
+                "url": "grid/persist-state",
+                "title": {
+                    "kendo-ui": "KendoGrid Persist State API Demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how setOptions and getOptions methods can manipulate the state of Kendo UI Grid widget."
+                }
             }
         ],
         "category": "Data Management"
