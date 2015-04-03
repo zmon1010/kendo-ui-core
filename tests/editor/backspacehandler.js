@@ -12,16 +12,21 @@
         }
     });
 
-    function handleBackspace() {
-        var handler = new BackspaceHandler(editor);
+    function handleKey(key) {
+        return function() {
+            var handler = new BackspaceHandler(editor);
 
-        handler.keydown({
-            preventDefault: function() {
-                defaultPrevented = true;
-            },
-            keyCode: kendo.keys.BACKSPACE
-        });
+            handler.keydown({
+                preventDefault: function() {
+                    defaultPrevented = true;
+                },
+                keyCode: key
+            });
+        }
     }
+
+    var handleBackspace = handleKey(kendo.keys.BACKSPACE);
+    var handleDelete = handleKey(kendo.keys.DELETE);
 
     test("removes selected content", function() {
         editor.selectRange(createRangeFromText(editor, 'foo|bar|baz'));
@@ -31,7 +36,7 @@
         equal(editor.value(), "foobaz");
     });
 
-    test("removes table content", function() {
+    test("removes table content from complete selection", function() {
         var range = createRangeFromText(editor, '|<table><tr><td>foo</td><td>bar</td></tr></table>|');
         editor.selectRange(range);
 
@@ -40,7 +45,7 @@
         equal(editor.value(), '');
     });
 
-    test("removes table content", function() {
+    test("removes table content from whole cell selection", function() {
         var range = createRangeFromText(editor, '<table><tr><td>|foo</td><td>bar|</td></tr></table>');
         editor.selectRange(range);
 
@@ -94,5 +99,28 @@
 
         equal(editor.value(), "foo<a></a>bar");
     });
+
+    test("delete clears table contents", function() {
+        var range = createRangeFromText(editor, '<table><tr><td>fo|o</td><td>b|ar</td></tr></table>');
+        editor.selectRange(range);
+
+        handleDelete();
+
+        equal(editor.value(), '<table><tbody><tr><td>fo</td><td>ar</td></tr></tbody></table>');
+    });
+
+    //test("does not remove table cells", function() {
+        //editor.value("<table><tr><td>foo</td><td>bar</td></tr></table>");
+
+        //var td = $(editor.body).find("td");
+        //var range = editor.createRange();
+        //range.setStartBefore(td[0]);
+        //range.setEndAfter(td[1]);
+        //editor.selectRange(range);
+
+        //handleDelete();
+
+        //equal(editor.value(), "<table><tr><td></td><td></td></tr></table>");
+    //});
 
 }());

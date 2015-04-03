@@ -267,13 +267,19 @@ var BackspaceHandler = Class.extend({
     },
     _handleSelection: function(range) {
         var ancestor = range.commonAncestorContainer;
+        var table = dom.closest(ancestor, "table");
         var emptyParagraphContent = editorNS.emptyElementContent;
 
-        if (/t(able|body|r)/i.test(dom.name(ancestor))) {
-            range.selectNode(dom.closest(ancestor, "table"));
+        if (/t(able|body)/i.test(dom.name(ancestor))) {
+            range.selectNode(table);
         }
 
         range.deleteContents();
+
+        if (table && $(table).text() === "") {
+            range.selectNode(table);
+            range.deleteContents();
+        }
 
         ancestor = range.commonAncestorContainer;
 
@@ -287,19 +293,30 @@ var BackspaceHandler = Class.extend({
         return true;
     },
     keydown: function(e) {
-        if (e.keyCode === kendo.keys.BACKSPACE) {
-            var range = this.editor.getRange();
-            var method = range.collapsed ? "_handleCaret" : "_handleSelection";
-            var startRestorePoint = new RestorePoint(range);
+        var method, startRestorePoint;
+        var range = this.editor.getRange();
+        var keyCode = e.keyCode;
+        var keys = kendo.keys;
 
-            if (this[method](range)) {
-                e.preventDefault();
+        if (keyCode === keys.BACKSPACE) {
+            method = range.collapsed ? "_handleCaret" : "_handleSelection";
+        } else if (keyCode == keys.DELETE) {
+            method = range.collapsed ? "" : "_handleSelection";
+        }
 
-                finishUpdate(this.editor, startRestorePoint);
-            }
+        if (!method) {
+            return;
+        }
+
+        startRestorePoint = new RestorePoint(range);
+
+        if (this[method](range)) {
+            e.preventDefault();
+
+            finishUpdate(this.editor, startRestorePoint);
         }
     },
-    keyup: function() {}
+    keyup: $.noop
 });
 
 var SystemHandler = Class.extend({
