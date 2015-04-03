@@ -576,6 +576,13 @@
                     "kendo-ui": "This demo shows locked columns feature of KendoGrid control.",
                     "aspnet-mvc": "Play with the demo for frozen columns functionality of Telerik ASP.NET MVC Grid."
                 }
+            },
+            {
+                "text": "Column Settings",
+                "url": "grid/columnsettings",
+                "packages": [
+                    "mvc-offline"
+                ]
             }
         ],
         "category": "Data Management"
