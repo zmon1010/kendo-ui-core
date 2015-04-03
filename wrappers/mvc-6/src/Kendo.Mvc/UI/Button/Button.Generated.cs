@@ -29,17 +29,17 @@ namespace Kendo.Mvc.UI
                 settings["enable"] = Enable;
             }
 
-            if (Icon.HasValue())
+            if (Icon?.HasValue() == true)
             {
                 settings["icon"] = Icon;
             }
 
-            if (ImageUrl.HasValue())
+            if (ImageUrl?.HasValue() == true)
             {
                 settings["imageUrl"] = ImageUrl;
             }
 
-            if (SpriteCssClass.HasValue())
+            if (SpriteCssClass?.HasValue() == true)
             {
                 settings["spriteCssClass"] = SpriteCssClass;
             }
