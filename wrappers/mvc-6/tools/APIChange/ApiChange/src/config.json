@@ -1,0 +1,14 @@
+﻿{
+	"namespaces": [
+		"Kendo.Mvc.UI.Fluent"
+	],
+	"ignored_interfaces": [
+		"IHideObjectMembers"
+	],
+	"type_map": [
+		{ "from": "System.Web", "to": "Microsoft.AspNet" },
+		{ "from": "<T>", "to": "" },
+		{ "from": "`1", "to": "" },
+		{ "from": "Action<.+>", "to": "Action", "regex": true }
+	]
+}

@@ -130,7 +130,11 @@ namespace ApiChange.Api.Introspection
             get
             {
                 QueryAggregator agg = new QueryAggregator();
-                agg.TypeQueries.Add(new TypeQuery("Kendo.Mvc.UI.Fluent"));
+                foreach (var ns in Config.Namespaces)
+                {
+                    agg.TypeQueries.Add(new TypeQuery(ns));
+                }
+
                 agg.MethodQueries.Add(MethodQuery.PublicMethods);
                 agg.FieldQueries.Add(FieldQuery.PublicFields);
 

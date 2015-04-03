@@ -143,7 +143,17 @@ namespace ApiChange.Api.Introspection
                 }
                 if (!bFound)
                 {
-                    if (baseV1.FullName.Contains("IHideObjectMembers"))
+                    var ignored = false;
+                    foreach (var name in Config.IgnoredInterfaces)
+                    {
+                        if (baseV1.FullName.Contains(name))
+                        {
+                            ignored = true;
+                            break;
+                        }
+                    }
+
+                    if (ignored)
                     {
                         continue;
                     }
