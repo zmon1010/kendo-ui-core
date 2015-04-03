@@ -526,6 +526,31 @@
                 "meta": {
                     "kendo-ui": "This demo shows multiple column headers feature of KendoGrid control."
                 }
+            },
+            {
+                "text": "Column reordering",
+                "url": "grid/column-reordering",
+                "title": {
+                    "kendo-ui": "Columns reordering in Kendo UI Grid control | Kendo UI Web demo",
+                    "aspnet-mvc": "Column Reordering in Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows column moving and reordering feature of KendoGrid control.",
+                    "aspnet-mvc": "In this demo you can see how simple it is to reorder columns in Telerik ASP.NET MVC Grid."
+                }
+            },
+            {
+                "text": "Column resizing",
+                "url": "grid/column-resizing",
+                "disableInMobile": true,
+                "title": {
+                    "kendo-ui": "Column resizing feature of Kendo UI grid control | Kendo UI Grid demo",
+                    "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "This example demonstrates how resizing of columns in KendoGrid is enabled in the widget. Use the demo source code to change width/height of the column.",
+                    "aspnet-mvc": "This demo demonstrates how you can resize columns in Telerik ASP.NET MVC Grid."
+                }
             }
         ],
         "category": "Data Management"
