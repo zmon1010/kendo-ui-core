@@ -1081,10 +1081,7 @@
                 },
                 "meta": {
                     "kendo-ui": "This example illustrates how the treelist can be bound to remote data and each level is requested asynchronously."
-                },
-                "packages": [
-                    "!mvc"
-                ]
+                }
             },
             {
                 "text": "Editing",

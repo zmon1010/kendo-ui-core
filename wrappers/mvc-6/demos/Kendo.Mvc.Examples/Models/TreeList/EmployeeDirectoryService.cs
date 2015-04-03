@@ -1,9 +1,9 @@
 ﻿namespace Kendo.Mvc.Examples.Models.TreeList
 {
-	using System.Linq;
+	using System.Linq;    
 	using Kendo.Mvc.UI;
 	using Microsoft.AspNet.Mvc.ModelBinding;
-	using Microsoft.Data.Entity;
+	using Microsoft.Data.Entity;    
 
 	public static class EmployeeDirectoryIEnumerableExtensions
     {        
@@ -71,7 +71,12 @@
 
         public virtual IQueryable<EmployeeDirectory> GetAll()
         {
-            return db.EmployeeDirectories;
+            var employees = db.EmployeeDirectories.ToList();
+            employees.ForEach(e => {
+                e.EmployeeDirectory1 = employees.Where(ee => ee.ReportsTo == e.EmployeeID).ToList();                
+            });
+
+            return employees.AsQueryable();
         }
 
         public virtual void Insert(EmployeeDirectoryModel employee, ModelStateDictionary modelState)
