@@ -629,6 +629,39 @@
                 "meta": {
                     "kendo-ui": "This demo shows how setOptions and getOptions methods can manipulate the state of Kendo UI Grid widget."
                 }
+            },
+            {
+                "text": "Globalization",
+                "url": "grid/globalization",
+                "packages": [
+                    "mvc-offline"
+                ]
+            },
+            {
+                "text": "RTL support",
+                "disableInMobile": true,
+                "url": "grid/right-to-left-support",
+                "title": {
+                    "kendo-ui": "RTL support in Kendo UI Grid component",
+                    "aspnet-mvc": "Right to left support in Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "In this example we will see how the Kendo UI Grid widget supports right-to-left spreadsheet grid for better user experience.",
+                    "aspnet-mvc": "In this demo you will be able to learn more about the right to left support in Telerik ASP.NET MVC Grid extension."
+                }
+            },
+            {
+                "text": "Keyboard navigation",
+                "disableInMobile": true,
+                "url": "grid/keyboard-navigation",
+                "title": {
+                    "kendo-ui": "Keyboard navigation in Kendo UI Grid",
+                    "aspnet-mvc": "Keyboard navigation in Telerik ASP.NET MVC Grid"
+                },
+                "meta": {
+                    "kendo-ui": "Look at this Kendo UI Grid demo to learn how different keyboard combinations could be used to navigate in the component.",
+                    "aspnet-mvc": "Look at this Telerik ASP.NET MVC Grid demo to learn how different keyboard combinations could be used to navigate in the component."
+                }
             }
         ],
         "category": "Data Management"

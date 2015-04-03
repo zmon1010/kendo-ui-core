@@ -30,7 +30,7 @@ namespace Kendo.Mvc.Examples.Controllers
 		{
 			var northwind = new SampleEntitiesDataContext();
 
-			return northwind.Employees.Select(employee => new EmployeeViewModel
+			return northwind.Employees.ToList().Select(employee => new EmployeeViewModel
 			{
 				EmployeeID = employee.EmployeeID,
 				FirstName = employee.FirstName,
