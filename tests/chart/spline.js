@@ -215,7 +215,7 @@
         };
         return segment;
     }
-    
+
     module("radar area chart smooth", {
         setup: function() {
             methodMocker.mock(LineSegment.fn, "points", function(){
@@ -236,8 +236,8 @@
         var segment = createRadarAreaSegment(linePoints, {data: seriesData, line: {style: SMOOTH}}, 0),
             closedCurve = closedCurveProcessor.process(linePoints),
             closedPath = new draw.Path();
-            
-        closedPath.segments.elements(closedCurve.concat([new draw.Segment([1,3]), new draw.Segment([1,3])]));
+
+        closedPath.segments.elements(closedCurve);
         segment.renderVisual();
         closePaths(segment.visual.children[0], closedPath);
     });

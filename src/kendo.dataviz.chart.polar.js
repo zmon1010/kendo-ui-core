@@ -1000,9 +1000,7 @@ var __meta__ = {
     });
 
     var SplineRadarAreaSegment = SplineAreaSegment.extend({
-        areaPoints: function() {
-            return [];
-        }
+        closeFill: $.noop
     });
 
     var RadarAreaChart = RadarLineChart.extend({
@@ -1072,29 +1070,33 @@ var __meta__ = {
     });
 
     var SplinePolarAreaSegment = SplineAreaSegment.extend({
-        areaPoints: function(){
-             var segment = this,
-                chart = segment.parent,
+        closeFill: function(fillPath){
+            var center = this._polarAxisCenter();
+            fillPath.lineTo(center.x, center.y);
+        },
+
+        _polarAxisCenter: function() {
+            var chart = this.parent,
                 plotArea = chart.plotArea,
                 polarAxis = plotArea.polarAxis,
                 center = polarAxis.box.center();
-            return [center];
+            return center;
         },
-        points: function() {
-            var segment = this,
-                chart = segment.parent,
-                plotArea = chart.plotArea,
-                polarAxis = plotArea.polarAxis,
-                center = polarAxis.box.center(),
-                curvePoints,
-                curveProcessor = new CurveProcessor(false),
-                linePoints = LineSegment.fn.points.call(this);
-                linePoints.push(center);
 
-            curvePoints = curveProcessor.process(linePoints);
-            curvePoints.splice(curvePoints.length - 3, curvePoints.length - 1);
-            segment.curvePoints = curvePoints;
-            return curvePoints;
+        strokeSegments: function() {
+            var segments = this._strokeSegments;
+
+            if (!segments) {
+                var center = this._polarAxisCenter(),
+                    curveProcessor = new CurveProcessor(false),
+                    linePoints = LineSegment.fn.points.call(this);
+
+                linePoints.push(center);
+                segments = this._strokeSegments  = curveProcessor.process(linePoints);
+                segments.pop();
+            }
+
+            return segments;
         }
     });
 
