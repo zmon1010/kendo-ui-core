@@ -36,7 +36,7 @@ namespace Kendo.Mvc.Examples.Controllers
 		private static IEnumerable<CustomerViewModel> GetCustomers()
 		{
 			var northwind = new SampleEntitiesDataContext();
-			return northwind.Customers.Select(customer => new CustomerViewModel
+			return northwind.Customers.ToList().Select(customer => new CustomerViewModel
 			{
 				CustomerID = customer.CustomerID,
 				CompanyName = customer.CompanyName,

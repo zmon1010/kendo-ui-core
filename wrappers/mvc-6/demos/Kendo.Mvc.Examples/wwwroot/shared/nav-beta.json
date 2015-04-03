@@ -516,6 +516,16 @@
                     "kendo-ui": "This example shows the foreign key column functionality to cross-reference tables in KendoGrid component.",
                     "aspnet-mvc": "This example shows the foreign key column functionality to cross-reference tables in the Telerik ASP.NET MVC Grid component."
                 }
+            },
+            {
+                "text": "Multi-column headers",
+                "url": "grid/multicolumnheaders",
+                "title": {
+                    "kendo-ui": "Multiple column headers in Kendo UI Grid control | Kendo UI Web demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows multiple column headers feature of KendoGrid control."
+                }
             }
         ],
         "category": "Data Management"
