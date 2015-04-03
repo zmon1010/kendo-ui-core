@@ -1,5 +1,6 @@
 using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,31 @@ namespace Kendo.Mvc.UI
     {
         public Scheduler(ViewContext viewContext) : base(viewContext)
         {
+            DataSource = new DataSource(ModelMetadataProvider);
+
+            DataSource.Type = DataSourceType.Ajax;
+
+            DataSource.Schema.Model = new SchedulerModelDescriptor(typeof(T), ModelMetadataProvider);
+        }
+
+        [Activate]
+        public IModelMetadataProvider ModelMetadataProvider
+        {
+            get;
+            set;
+        }
+
+        [Activate]
+        public IUrlGenerator UrlGenerator
+        {
+            get;
+            set;
+        }
+
+        public DataSource DataSource
+        {
+            get;
+            private set;
         }
 
         protected override void WriteHtml(TextWriter writer)
@@ -34,9 +60,34 @@ namespace Kendo.Mvc.UI
         {
             var settings = SerializeSettings();
 
-            // TODO: Manually serialized settings go here
+            var idPrefix = "#";
+            if (IsInClientTemplate)
+            {
+                idPrefix = "\\" + idPrefix;
+            }
+
+            if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
+            {
+                DataSource.Transport.StringifyDates = true;
+                if (DataSource.IsClientOperationMode)
+                {
+                    ProcessDataSource();
+                }
+            }
+
+            Dictionary<string, object> dataSource = (Dictionary<string, object>)DataSource.ToJson();
+
+            settings["dataSource"] = dataSource;
+
 
             writer.Write(Initializer.Initialize(Selector, "Scheduler", settings));
+        }
+
+        private void ProcessDataSource()
+        {
+            DataSourceRequest request = new DataSourceRequest();
+
+            DataSource.Process(request, true);
         }
     }
 }
