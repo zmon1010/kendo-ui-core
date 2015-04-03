@@ -90,6 +90,15 @@
         equal(grid.tbody.find("td").text(), "foobar");
     });
 
+    test("column with template has no data-field attribute", function() {
+        var grid = new Grid(table, {
+            dataSource: [{ foo: "bar"}],
+            columns: [ { headerTemplate: "foo", template: "#: foo #" } ]
+        });
+
+        equal(grid.wrapper.find('[' + kendo.attr("field") + ']').length, 0);
+    });
+
     test("data-kendo-id attribute is rendered for each row when model is defined", function() {
         var grid = new Grid($("<div/>").appendTo(QUnit.fixture), {
             dataSource: {

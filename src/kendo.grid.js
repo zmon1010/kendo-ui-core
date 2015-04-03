@@ -5521,16 +5521,22 @@ var __meta__ = {
                 text,
                 html = "",
                 length,
-                leafs = leafColumns(that.columns);
+                leafs = leafColumns(that.columns),
+                field;
 
             for (idx = 0, length = columns.length; idx < length; idx++) {
                 th = columns[idx].column || columns[idx];
                 text = that._headerCellText(th);
+                field = "";
 
                 var index = inArray(th, leafs);
 
                 if (!th.command) {
-                    html += "<th role='columnheader' " + kendo.attr("field") + "='" + (th.field || "") + "' ";
+                    if (th.field) {
+                        field = kendo.attr("field") + "='" + th.field + "' ";
+                    }
+
+                    html += "<th role='columnheader' " + field;
 
                     if (rowSpan && !columns[idx].colSpan) {
                         html += " rowspan='" + rowSpan + "'";
