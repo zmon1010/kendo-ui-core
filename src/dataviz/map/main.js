@@ -270,6 +270,11 @@
             };
         },
 
+        exportVisual: function() {
+            this._reset();
+            return false;
+        },
+
         _setOrigin: function(origin, zoom) {
             var size = this.viewSize(),
                 topLeft;

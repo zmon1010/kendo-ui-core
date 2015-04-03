@@ -64,6 +64,11 @@
 
             equal(surface._rootElement.getAttribute("viewBox"), "10 10 100 100");
         });
+
+        test("exportVisual returns root visual", function() {
+            var element = surface.exportVisual();
+            equal(element, surface._visual);
+        });
     })();
 
     // ------------------------------------------------------------

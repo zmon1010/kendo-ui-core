@@ -15,6 +15,8 @@
 
         Extent = dataviz.map.Extent,
 
+        geom = kendo.geometry,
+        draw = kendo.drawing,
         util = kendo.util,
         defined = util.defined,
         valueOrDefault = util.valueOrDefault;

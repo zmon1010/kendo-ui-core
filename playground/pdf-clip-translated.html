@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+    <style>
+      #test1 {
+        margin: 2em;
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+        border: 1px solid red;
+        transform: translate(100px, 100px);
+      }
+      #scroll {
+        transform: translate(300px, 300px);
+      }
+      #back {
+        transform: translate(-300px, -300px);
+      }
+    </style>
+  </head>
+  <body>
+    Kendo:
+    <button onclick="pdf('#test1')">PDF</button>
+    <button onclick="draw('#test1', 'svg')">SVG</button>
+    <button onclick="draw('#test1', 'canvas')">Canvas</button>
+    |
+    <button onclick="h2c('#test1')">html2canvas</button>
+
+    <div id="test1">
+      <div id="scroll">
+        <div id="back">
+          <img style="opacity: 0.5" src="./images/1.jpg" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
