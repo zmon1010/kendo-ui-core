@@ -239,6 +239,7 @@ var BackspaceHandler = Class.extend({
         var node = range.startContainer;
         var i = range.startOffset;
         var li = dom.closestEditableOfType(node, ['li']);
+        var header = dom.closestEditableOfType(node, 'h1,h2,h3,h4,h5,h6'.split(','));
 
         if (dom.isDataNode(node)) {
             while (i >= 0 && node.nodeValue[i-1] == "\ufeff") {
@@ -248,7 +249,28 @@ var BackspaceHandler = Class.extend({
 
             range.setStart(node, Math.max(0, i));
             range.collapse(true);
+
             this.editor.selectRange(range);
+        }
+
+        // unwrap header
+        if (header && header.previousSibling && editorNS.RangeUtils.isStartOf(range, header)) {
+            var prev = header.previousSibling;
+            var caret = dom.create(this.editor.document, "a");
+
+            prev.appendChild(caret);
+            while (header.firstChild) {
+                prev.appendChild(header.firstChild);
+            }
+
+            dom.remove(header);
+
+            range.setStartAfter(caret);
+            range.collapse(true);
+            this.editor.selectRange(range);
+            dom.remove(caret);
+
+            return true;
         }
 
         // unwrap li element

@@ -109,6 +109,22 @@
         equal(editor.value(), '<table><tbody><tr><td>fo</td><td>ar</td></tr></tbody></table>');
     });
 
+    test("backspace at start of element joins it with previous", function() {
+        editor.value('<h3>foo</h3><h3>bar</h3>');
+        var range = editor.createRange();
+        range.setStart($("h3", editor.body)[1].firstChild, 0);
+        range.collapse(true);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), '<h3>foobar</h3>');
+
+        editor.getRange().insertNode(editor.document.createElement("a"));
+
+        equal(editor.value(), '<h3>foo<a></a>bar</h3>');
+    });
+
     //test("does not remove table cells", function() {
         //editor.value("<table><tr><td>foo</td><td>bar</td></tr></table>");
 
