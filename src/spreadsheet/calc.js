@@ -2,42 +2,17 @@
     define([ "../kendo.core" ], f);
 })(function(){
 
-    kendo.spreadsheet = {};
-    var exports = kendo.spreadsheet.calc = {};
-
-    exports.parse = function(sheet, row, col, input) {
-        input = input+"";
-        if (/^'/.test(input)) {
-            return {
-                type: "str",
-                value: input.substr(1)
-            };
-        }
-        if (/^=/.test(input)) {
-            return parse(sheet, row, col, TokenStream(InputStream(input.substr(1))));
-        }
-        var num = parseFloat(input);
-        if (!isNaN(num) && input.length > 0 && num == input) {
-            return {
-                type: "num",
-                value: num
-            };
-        }
-        return {
-            type: "str",
-            value: input
-        };
-    };
-
-    exports.parse_reference = parse_reference;
-    exports.make_reference = make_reference;
-
-    // Excel formula parser and compiler to JS.
-    // code adapted from http://lisperator.net/pltut/
+    "use strict";
 
     // WARNING: removing the following jshint declaration and turning
     // == into === to make JSHint happy will break functionality.
-    /* jshint eqnull:true */
+    /* jshint eqnull:true, newcap:false, laxbreak:true */
+
+    kendo.spreadsheet = {};
+    var exports = kendo.spreadsheet.calc = {};
+
+    // Excel formula parser and compiler to JS.
+    // some code adapted from http://lisperator.net/pltut/
 
     var OPERATORS = {};
 
@@ -73,8 +48,7 @@
     // "Sheet1!C2" -> { sheet: "Sheet1", row: 2, col: 3 }
     function parse_reference(name) {
         var m;
-        name = name.toUpperCase();
-        if ((m = /^((.+)!)?(\$)?([A-Z]+)(\$)?([0-9]+)$/.exec(name))) {
+        if ((m = /^((.+)!)?(\$)?([A-Z]+)(\$)?([0-9]+)$/i.exec(name))) {
             var sheet  = m[1] && m[2];
             var relcol = m[3] ? 0 : 1, col = getcol(m[4]);
             var relrow = m[5] ? 0 : 2, row = getrow(m[6]);
@@ -89,11 +63,17 @@
     }
 
     // "Sheet1", 2, 3 -> "Sheet1!C2"
-    function make_reference(sheet, row, col) {
+    function make_reference(sheet, row, col, abs) {
         var aa = "";
         while (col > 0) {
             aa += String.fromCharCode(64 + col % 26);
             col = Math.floor(col / 26);
+        }
+        if (abs & 2) {
+            row = "$" + row;
+        }
+        if (abs & 1) {
+            aa = "$" + aa;
         }
         if (sheet) {
             return sheet + "!" + aa + row;
@@ -165,7 +145,7 @@
             }
             else if (is("op", "+") || is("op", "-")) {
                 exp = {
-                    type: "unary",
+                    type: "prefix",
                     op: input.next().value,
                     exp: parse_expression(commas)
                 };
@@ -179,7 +159,7 @@
             if (is("punc", "(") || is("sym")) {
                 return {
                     type: "binary",
-                    op: "x",
+                    op: " ",
                     left: exp,
                     right: parse_expression(commas)
                 };
@@ -189,6 +169,9 @@
         }
         function maybe_call(exp) {
             if (is("punc", "(")) {
+                if (exp.type != "sym") {
+                    input.croak("Expecting function name");
+                }
                 var args = [];
                 input.next();
                 while (!input.eof()) {
@@ -199,10 +182,21 @@
                     skip("op", ",");
                 }
                 skip("punc", ")");
-                return {
+                exp = {
                     type: "call",
                     func: exp,
                     args: args
+                };
+            }
+            return maybe_percent(exp);
+        }
+        function maybe_percent(exp) {
+            if (is("op", "%")) {
+                input.next();
+                return {
+                    type: "postfix",
+                    op: "%",
+                    exp: exp
                 };
             } else {
                 return exp;
@@ -226,6 +220,63 @@
             }
             return left;
         }
+    }
+
+    function print(sheet, row, col, ast) {
+        return (function print(node, prec){
+            function open_paren() {
+                if (OPERATORS[op] < prec || (!prec && op == ",")) {
+                    ret += "(";
+                    parens = true;
+                }
+            }
+            function close_paren() {
+                if (parens) {
+                    ret += ")";
+                }
+            }
+            var type = node.type, ret = "", op = node.op, parens = false;
+            if (type == "num") {
+                ret = node.value + "";
+            }
+            else if (type == "str") {
+                ret = '"' + node.value.replace(/\x22/g, "\\\"") + '"';
+            }
+            else if (type == "prefix") {
+                open_paren();
+                ret += op + print(node.exp, OPERATORS[op]);
+                close_paren();
+            }
+            else if (type == "postfix") {
+                open_paren();
+                ret += print(node.exp, OPERATORS[op]) + op;
+                close_paren();
+            }
+            else if (type == "binary") {
+                open_paren();
+                ret += print(node.left, OPERATORS[op])
+                    +  op
+                    +  print(node.right, OPERATORS[op]);
+                close_paren();
+            }
+            else if (type == "call") {
+                ret = print(node.func, 0) + "(" + node.args.map(function(arg){
+                    return print(arg, 0);
+                }).join(", ") + ")";
+            }
+            else if (type == "sym") {
+                ret = node.value;
+            }
+            else if (type == "ref") {
+                ret = make_reference(
+                    node.sheet == sheet ? null : node.sheet, // sheet name
+                    node.row + (node.rel & 2 ? row : 0),     // row
+                    node.col + (node.rel & 1 ? col : 0),     // col
+                    node.rel^3                               // whether to add the $
+                );
+            }
+            return ret;
+        })(ast);
     }
 
     function TokenStream(input) {
@@ -280,7 +331,7 @@
             var id = read_while(is_id);
             return {
                 type  : "sym",
-                value : id.toUpperCase()
+                value : id
             };
         }
         function read_escaped(end) {
@@ -380,6 +431,36 @@
             throw new Error(msg + " (" + line + ":" + col + ")");
         }
     }
+
+    //// exports
+
+    exports.parse = function(sheet, row, col, input) {
+        input = input+"";
+        if (/^'/.test(input)) {
+            return {
+                type: "str",
+                value: input.substr(1)
+            };
+        }
+        if (/^=/.test(input)) {
+            return parse(sheet, row, col, TokenStream(InputStream(input.substr(1))));
+        }
+        var num = parseFloat(input);
+        if (!isNaN(num) && input.length > 0 && num == input) {
+            return {
+                type: "num",
+                value: num
+            };
+        }
+        return {
+            type: "str",
+            value: input
+        };
+    };
+
+    exports.parse_reference = parse_reference;
+    exports.make_reference = make_reference;
+    exports.print = print;
 
     return kendo;
 
