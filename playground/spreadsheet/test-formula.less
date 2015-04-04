@@ -13,7 +13,6 @@ body, input, textarea, button, select {
     tr {
       td {
         border: 1px solid #ccc;
-        z-index: 0;
         input {
           border: 0;
           padding: 2px 5px;
@@ -24,6 +23,9 @@ body, input, textarea, button, select {
           &.type-num {
             text-align: right;
           }
+          &.type-error {
+            background: #faa;
+          }
         }
       }
     }
@@ -31,6 +33,7 @@ body, input, textarea, button, select {
       text-align: center;
       background: #ddd;
       padding: 2px 5px;
+      border-color: #888;
     }
   }
   .formula {

@@ -15,7 +15,6 @@ select {
 }
 .sheet table tr td {
   border: 1px solid #ccc;
-  z-index: 0;
 }
 .sheet table tr td input {
   border: 0;
@@ -28,11 +27,15 @@ select {
 .sheet table tr td input.type-num {
   text-align: right;
 }
+.sheet table tr td input.type-error {
+  background: #faa;
+}
 .sheet table tr.head td,
 .sheet table td.head {
   text-align: center;
   background: #ddd;
   padding: 2px 5px;
+  border-color: #888;
 }
 .sheet .formula {
   border: 1px solid #888;
