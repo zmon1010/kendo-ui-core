@@ -24,6 +24,7 @@
         });
     })([
         [ ":" ],
+        [ " " ],
         [ "," ],
         [ "%" ],
         [ "^" ],
@@ -54,10 +55,19 @@
             var relrow = m[5] ? 0 : 2, row = getrow(m[6]);
             return {
                 type  : "ref",
+                ref   : "cell",
                 sheet : sheet,
                 col   : col,
                 row   : row,
                 rel   : relcol | relrow
+            };
+        }
+        if ((m = /^(.+)!(.+)$/i.exec(name))) {
+            return {
+                type  : "ref",
+                ref   : "name",
+                sheet : m[1],
+                name  : m[2]
             };
         }
     }
@@ -194,7 +204,7 @@
                 skip("punc", ")");
                 exp = {
                     type: "call",
-                    func: exp,
+                    func: exp.value,
                     args: args
                 };
             }
@@ -270,7 +280,7 @@
                 close_paren();
             }
             else if (type == "call") {
-                ret = print(node.func, 0) + "(" + node.args.map(function(arg){
+                ret = node.func + "(" + node.args.map(function(arg){
                     return print(arg, 0);
                 }).join(", ") + ")";
             }
@@ -278,12 +288,18 @@
                 ret = node.value;
             }
             else if (type == "ref") {
-                ret = make_reference(
-                    node.sheet == sheet ? null : node.sheet, // sheet name
-                    node.row + (node.rel & 2 ? row : 0),     // row
-                    node.col + (node.rel & 1 ? col : 0),     // col
-                    node.rel^3                               // whether to add the $
-                );
+                if (node.ref == "cell") {
+                    ret = make_reference(
+                        node.sheet == sheet ? null : node.sheet, // sheet name
+                        node.row + (node.rel & 2 ? row : 0),     // row
+                        node.col + (node.rel & 1 ? col : 0),     // col
+                        node.rel^3                               // whether to add the $
+                    );
+                } else if (node.ref == "name") {
+                    ret = node.sheet + "!" + node.name;
+                } else {
+                    throw new Error("Unsupported reference type " + node.ref);
+                }
             }
             else if (type == "bool") {
                 ret = (node.value+"").toUpperCase();
