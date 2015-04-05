@@ -96,7 +96,11 @@
                 return input.next();
             } else {
                 var tok = input.peek();
-                input.croak("Expected " + type + " (" + value + ") but found " + tok.type + " (" + tok.value + ")");
+                if (tok) {
+                    input.croak("Expected " + type + " «" + value + "» but found " + tok.type + " «" + tok.value + "»");
+                } else {
+                    input.croak("Expected " + type + " «" + value + "»");
+                }
             }
         }
         function is(type, value) {
@@ -180,9 +184,9 @@
                 }
                 var args = [];
                 input.next();
-                while (!input.eof()) {
+                while (1) {
                     args.push(parse_expression(false));
-                    if (is("punc", ")")) {
+                    if (input.eof() || is("punc", ")")) {
                         break;
                     }
                     skip("op", ",");
