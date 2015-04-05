@@ -115,6 +115,12 @@
         }
         function parse_symbol() {
             var tok = input.next();
+            if (tok.upper == "TRUE" || tok.upper == "FALSE") {
+                return {
+                    type: "bool",
+                    value: tok.upper == "TRUE"
+                };
+            }
             var ref = parse_reference(tok.value);
             if (ref) {
                 if (!ref.sheet) {
@@ -275,6 +281,9 @@
                     node.rel^3                               // whether to add the $
                 );
             }
+            else if (type == "bool") {
+                ret = (node.value+"").toUpperCase();
+            }
             return ret;
         })(ast);
     }
@@ -331,7 +340,8 @@
             var id = read_while(is_id);
             return {
                 type  : "sym",
-                value : id
+                value : id,
+                upper : id.toUpperCase()
             };
         }
         function read_escaped(end) {
