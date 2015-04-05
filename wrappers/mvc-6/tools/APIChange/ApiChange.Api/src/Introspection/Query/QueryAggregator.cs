@@ -130,7 +130,7 @@ namespace ApiChange.Api.Introspection
             get
             {
                 QueryAggregator agg = new QueryAggregator();
-                foreach (var ns in Config.Namespaces)
+                foreach (var ns in Config.Current.Namespaces)
                 {
                     agg.TypeQueries.Add(new TypeQuery(ns));
                 }

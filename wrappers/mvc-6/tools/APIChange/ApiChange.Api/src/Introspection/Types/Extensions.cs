@@ -488,8 +488,8 @@ namespace ApiChange.Api.Introspection
                     ParameterDefinition pa = m1.Parameters[i];
                     ParameterDefinition pb = m2.Parameters[i];
 
-                    var paType = ResolveTypeAliases(pa.ParameterType.FullName);
-                    var pbType = ResolveTypeAliases(pb.ParameterType.FullName);
+                    var paType = pa.ParameterType.FullName.ResolveTypeAliases();
+                    var pbType = pb.ParameterType.FullName.ResolveTypeAliases();
 
                     if (paType != pbType)
                     {
@@ -503,12 +503,19 @@ namespace ApiChange.Api.Introspection
             return lret;
         }
 
-        private static string ResolveTypeAliases(string p)
+        public static string ResolveTypeAliases(this string p)
         {
-            p = p.Replace("System.Web", "Microsoft.AspNet");
-            p = p.Replace("<T>", "");
-            p = p.Replace("`1", "");
-            p = Regex.Replace(p, "Action<.+>", "Action");
+            foreach (var alias in Config.Current.Aliases)
+            {
+                if (alias.Regex)
+                {
+                    p = Regex.Replace(p, alias.From, alias.To);
+                }
+                else
+                {
+                    p = p.Replace(alias.From, alias.To);
+                }
+            }
 
             return p;
         }

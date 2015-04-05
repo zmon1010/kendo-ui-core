@@ -82,7 +82,7 @@ namespace ApiChange.Api.Introspection
 
         bool ShallowTypeComapare(TypeDefinition v1, TypeDefinition v2)
         {
-            return v1.FullName == v2.FullName;
+            return v1.FullName.ResolveTypeAliases() == v2.FullName.ResolveTypeAliases();
         }
 
 

@@ -144,7 +144,7 @@ namespace ApiChange.Api.Introspection
                 if (!bFound)
                 {
                     var ignored = false;
-                    foreach (var name in Config.IgnoredInterfaces)
+                    foreach (var name in Config.Current.Ignored)
                     {
                         if (baseV1.FullName.Contains(name))
                         {
