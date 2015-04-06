@@ -1182,6 +1182,20 @@ var __meta__ = {
             plotArea.createValueAxis();
         },
 
+        alignAxes: function() {
+            var axis = this.valueAxis;
+            var range = axis.range();
+            var crossingValue = axis.options.reverse ? range.max : range.min;
+            var slot = axis.getSlot(crossingValue);
+            var center = this.polarAxis.getSlot(0).c;
+            var axisBox = axis.box.translate(
+                center.x - slot.x1,
+                center.y - slot.y1
+            );
+
+            axis.reflow(axisBox);
+        },
+
         createValueAxis: function() {
             var plotArea = this,
                 tracker = plotArea.valueAxisRangeTracker,
@@ -1236,20 +1250,6 @@ var __meta__ = {
 
             plotArea.axisBox = axisBox;
             plotArea.alignAxes(axisBox);
-        },
-
-        alignAxes: function() {
-            var plotArea = this,
-                valueAxis = plotArea.valueAxis,
-                slot = valueAxis.getSlot(valueAxis.options.min),
-                slotEdge = valueAxis.options.reverse ? 2 : 1,
-                center = plotArea.polarAxis.getSlot(0).c,
-                box = valueAxis.box.translate(
-                    center.x - slot[X + slotEdge],
-                    center.y - slot[Y + slotEdge]
-                );
-
-            valueAxis.reflow(box);
         },
 
         backgroundBox: function() {

@@ -28,6 +28,22 @@
         equal(valueAxis.options.roundToMajorUnit, false);
     });
 
+    test("Y axis is centered", function() {
+        createPlotArea([{ type: "polarLine", data: [] }]);
+        plotArea.reflow(new Box2D(0, 0, 100, 200));
+
+        var slot = valueAxis.getSlot(0, 0);
+        deepEqual([slot.x1, slot.y1], [50, 100]);
+    });
+
+    test("reversed Y axis is centered", function() {
+        createPlotArea([{ type: "polarLine", data: [[0, 100]] }], { yAxis: { reverse: true } });
+        plotArea.reflow(new Box2D(0, 0, 100, 200));
+
+        var slot = valueAxis.getSlot(100, 100);
+        deepEqual([slot.x1, slot.y1], [50, 100]);
+    });
+
     // ------------------------------------------------------------
     module("Polar Plot Area / Legend");
 
