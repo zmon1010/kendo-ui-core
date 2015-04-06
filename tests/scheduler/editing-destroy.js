@@ -124,8 +124,15 @@
     });
 
     test("the destroy confirmation uses the text set through the options", function() {
-        var scheduler = setup({ editable: { confirmation: "foo" } }),
-            text;
+        var scheduler = setup({ editable: { confirmation: "foo" } });
+
+        scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
+
+        equal($(".k-popup-message").text(), "foo");
+    });
+
+    test("the destroy confirmation uses the text set through the messages options", function() {
+        var scheduler = setup({editable: true, messages: { editable: {confirmation: "foo"} } });
 
         scheduler.removeEvent(scheduler.wrapper.find(".k-event").data("uid"));
 

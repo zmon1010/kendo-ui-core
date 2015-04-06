@@ -2239,6 +2239,9 @@ var __meta__ = {
                     editWindowOccurrence: "Edit current occurrence",
                     editWindowSeries: "Edit the series"
                 },
+                editable: {
+                    confirmation: DELETECONFIRM
+                },
                 editor: {
                     title: "Title",
                     start: "Start",
@@ -2803,7 +2806,8 @@ var __meta__ = {
             if (editable === true || editable.confirmation !== false) {
                 var messages = this.options.messages;
 
-                var text = typeof editable.confirmation === STRING ? editable.confirmation : DELETECONFIRM;
+                var text = typeof editable.confirmation === STRING ? editable.confirmation : messages.editable.confirmation;
+
                 var buttons = [
                     { name: "destroy", text: messages.destroy, click: function() { callback(); } }
                 ];
@@ -3456,7 +3460,7 @@ var __meta__ = {
             if (options.timezone && !(dataSource instanceof SchedulerDataSource)) {
                 dataSource = extend(true, dataSource, { schema: { timezone: options.timezone } });
             } else if(dataSource instanceof SchedulerDataSource) {
-                options.timezone = dataSource.schema ? dataSource.schema.timezone : "";
+                options.timezone = dataSource.options.schema ? dataSource.options.schema.timezone : "";
             }
 
             if (that.dataSource && that._refreshHandler) {
