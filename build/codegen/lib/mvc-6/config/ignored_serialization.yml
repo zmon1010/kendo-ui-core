@@ -22,3 +22,10 @@
 - datepicker.monthTemplate.empty
 - datepicker.monthTemplate.emptyId
 - tooltip.filter
+- calendar.footer
+- calendar.monthTemplate
+- calendar.monthTemplate.content
+- calendar.monthTemplate.contentId
+- calendar.monthTemplate.empty
+- calendar.monthTemplate.emptyId
+

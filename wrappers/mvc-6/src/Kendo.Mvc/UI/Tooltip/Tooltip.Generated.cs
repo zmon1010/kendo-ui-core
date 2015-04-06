@@ -44,11 +44,6 @@ namespace Kendo.Mvc.UI
                 settings["callout"] = Callout;
             }
 
-            if (Filter?.HasValue() == true)
-            {
-                settings["filter"] = Filter;
-            }
-
             if (Iframe.HasValue)
             {
                 settings["iframe"] = Iframe;

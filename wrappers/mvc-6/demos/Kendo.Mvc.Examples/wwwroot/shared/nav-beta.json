@@ -1,5 +1,113 @@
 [
     {
+        "text": "Calendar",
+        "name": "calendar",
+        "api": "web/calendar",
+        "documentation": {
+            "kendo-ui": "getting-started/web/calendar/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/calendar/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/calendar/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/calendar/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/calendar",
+            "aspnet-mvc": "aspnet-mvc/calendar",
+            "jsp-ui": "jsp/calendar",
+            "php-ui": "php/calendar"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/calendar",
+            "aspnet-mvc": "aspnet-mvc/calendar",
+            "jsp-ui": "jsp/calendar",
+            "php-ui": "php/calendar"
+        },
+        "spriteCssClass": "calendarIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "calendar/index",
+                "title": {
+                    "kendo-ui": "Example of Kendo UI jQuery-based Calendar",
+                    "aspnet-mvc": "Example of ASP.NET MVC Calendar"
+                },
+                "meta": {
+                    "kendo-ui": "Explore the example of HTML5 calendar widget, included in Kendo UI Web, to find how easy it is to add a calendar to your website or web app.",
+                    "aspnet-mvc": "Explore the example of ASP.NET MVC calendar control to find how easy it is to add a calendar to your website or web app."
+                }
+            },
+            {
+                "text": "Customizing templates",
+                "url": "calendar/template",
+                "title": {
+                    "kendo-ui": "Customize the template of Kendo UI Calendar widget | Kendo UI Web demos",
+                    "aspnet-mvc": "Custom templates for ASP.NET MVC Calendar | ASP.NET MVC demos"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how Kendo UI Calendar allows you to customize the content in your template.",
+                    "aspnet-mvc": "This demo shows how ASP.NET MVC Calendar allows you to customize the content in your template."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "calendar/events",
+                "title": {
+                    "kendo-ui": "Events, triggered in Kendo UI Calendar | Kendo UI Web Demos",
+                    "aspnet-mvc": "Events, triggered in ASP.NET MVC Calendar | ASP.NET MVC Demos"
+                },
+                "meta": {
+                    "kendo-ui": "This example of Kendo UI Calendar widget shows events which are available in the component.",
+                    "aspnet-mvc": "This example of ASP.NET MVC Calendar control shows events which are available in the component."
+                }
+            },
+            {
+                "text": "API",
+                "url": "calendar/api",
+                "title": {
+                    "kendo-ui": "Demo for Kendo UI Calendar Widget API",
+                    "aspnet-mvc": "Demo for ASP.NET MVC Calendar Control API"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how Kendo UI Calendar Widget API works and what kind of functions it supports.",
+                    "aspnet-mvc": "This demo shows how the ASP.NET MVC Calendar API works and what kind of functions it supports."
+                }
+            },
+            {
+                "packages": [
+                    "mvc-offline"
+                ],
+                "text": "Globalization",
+                "url": "calendar/globalization"
+            },
+            {
+                "text": "RTL support",
+                "disableInMobile": true,
+                "url": "calendar/right-to-left-support",
+                "title": {
+                    "kendo-ui": "Right-to-left functionality, enabled in Kendo UI Calendar widget",
+                    "aspnet-mvc": "Right-to-left functionality, enabled in ASP.NET MVC Calendar"
+                },
+                "meta": {
+                    "kendo-ui": "Kendo UI Calendar component supports RTL functionality. Look at the demo to see how to easily apply RTL support to the widget.",
+                    "aspnet-mvc": "ASP.NET MVC Calendar component supports RTL functionality. Look at the demo to see how to easily apply RTL support to the control."
+                }
+            },
+            {
+                "text": "Keyboard navigation",
+                "disableInMobile": true,
+                "url": "calendar/keyboard-navigation",
+                "title": {
+                    "kendo-ui": "Keyboard navigation demo for Kendo UI Calendar widget",
+                    "aspnet-mvc": "Keyboard navigation demo for ASP.NET MVC Calendar"
+                },
+                "meta": {
+                    "kendo-ui": "You can easily navigate in Kendo UI Calendar by using the keyboard. This demo shows the functionality, just look at the notes and play with the example.",
+                    "aspnet-mvc": "You can easily navigate in ASP.NET MVC Calendar by using the keyboard. This demo shows the functionality, just look at the notes and play with the example."
+                }
+            }
+        ],
+        "category": "Scheduling"
+    },
+    {
         "text": "DatePicker",
         "name": "datepicker",
         "api": "web/datepicker",

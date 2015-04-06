@@ -1,0 +1,28 @@
+:options:
+    - :name: dates
+      :merge: true
+      :type: DateTime[]
+
+    - :name: start
+      :type: String
+      :enum_type: CalendarView
+
+    - :name: depth
+      :type: String
+      :enum_type: CalendarView
+      :description: Specifies the navigation depth.
+
+    - :name: monthTemplate
+      :type: Object
+
+    - :name: monthTemplate.empty
+      :type: String
+
+    - :name: monthTemplate.emptyId
+      :type: String
+
+    - :name: monthTemplate.content
+      :type: String
+
+    - :name: monthTemplate.contentId
+      :type: String
