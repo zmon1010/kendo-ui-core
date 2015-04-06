@@ -117,19 +117,14 @@
 
         diagram.DefaultConnectors = [{
             name: TOP,
-            description: "Top Connector"
-        }, {
-            name: RIGHT,
-            description: "Right Connector"
         }, {
             name: BOTTOM,
-            description: "Bottom Connector"
         }, {
-            name: LEFT,
-            Description: "Left Connector"
+            name: LEFT
+        }, {
+            name: RIGHT
         }, {
             name: AUTO,
-            Description: "Auto Connector",
             position: function (shape) {
                 return shape.getPosition("center");
             }
@@ -194,70 +189,6 @@
 
         function isAutoConnector(connector) {
             return connector.options.name.toLowerCase() === AUTO.toLowerCase();
-        }
-
-        function resolveConnectors(connection) {
-            var minDist = MAXINT,
-                sourcePoint, targetPoint,
-                source = connection.source(),
-                target = connection.target(),
-                autoSourceShape,
-                autoTargetShape,
-                sourceConnector,
-                preferred = [0, 2, 3, 1, 4],
-                k;
-            if (source instanceof Point) {
-                sourcePoint = source;
-            } else if (source instanceof Connector) {
-                if (isAutoConnector(source)) {
-                    autoSourceShape = source.shape;
-                } else {
-                    connection._resolvedSourceConnector = source;
-                    sourcePoint = source.position();
-                }
-            }
-
-            if (target instanceof Point) {
-                targetPoint = target;
-            } else if (target instanceof Connector) {
-                if (isAutoConnector(target)) {
-                    autoTargetShape = target.shape;
-                } else {
-                    connection._resolvedTargetConnector = target;
-                    targetPoint = target.position();
-                }
-            }
-
-            if (sourcePoint) {
-                if (autoTargetShape) {
-                    connection._resolvedTargetConnector = closestConnector(sourcePoint, autoTargetShape);
-                }
-            } else if (autoSourceShape) {
-                if (targetPoint) {
-                    connection._resolvedSourceConnector = closestConnector(targetPoint, autoSourceShape);
-                } else if (autoTargetShape) {
-                    for (var i = 0; i < autoSourceShape.connectors.length; i++) {
-                        if (autoSourceShape.connectors.length == 5) // presuming this means the default connectors
-                        {
-                            // will emphasize the vertical or horizontal direction, which matters when using the cascading router and distances which are equal for multiple connectors.
-                            k = preferred[i];
-                        } else {
-                            k = i;
-                        }
-                        sourceConnector = autoSourceShape.connectors[k];
-                        if (!isAutoConnector(sourceConnector)) {
-                            var currentSourcePoint = sourceConnector.position(),
-                                currentTargetConnector = closestConnector(currentSourcePoint, autoTargetShape);
-                            var dist = math.round(currentTargetConnector.position().distanceTo(currentSourcePoint)); // rounding prevents some not needed connectors switching.
-                            if (dist < minDist) {
-                                minDist = dist;
-                                connection._resolvedSourceConnector = sourceConnector;
-                                connection._resolvedTargetConnector = currentTargetConnector;
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         function closestConnector(point, shape) {
@@ -646,8 +577,8 @@
                         }
                     } else {
                         this._setBounds(value);
-                        this.refreshConnections();
                         this._triggerBoundsChange();
+                        this.refreshConnections();
                     }
                 } else {
                     bounds = this._bounds;
@@ -1465,8 +1396,9 @@
                 pts.push(this.targetPoint());
                 return pts;
             },
+
             refresh: function () {
-                resolveConnectors(this);
+                this._resolveConnectors();
                 var globalSourcePoint = this.sourcePoint(), globalSinkPoint = this.targetPoint(),
                     boundsTopLeft, localSourcePoint, localSinkPoint, middle;
 
@@ -1483,6 +1415,123 @@
                 if (this.adorner) {
                     this.adorner.refresh();
                 }
+            },
+
+            _resolveConnectors: function () {
+                var connection = this,
+                    sourcePoint, targetPoint,
+                    source = connection.source(),
+                    target = connection.target(),
+                    autoSourceShape,
+                    autoTargetShape;
+
+                if (source instanceof Point) {
+                    sourcePoint = source;
+                } else if (source instanceof Connector) {
+                    if (isAutoConnector(source)) {
+                        autoSourceShape = source.shape;
+                    } else {
+                        connection._resolvedSourceConnector = source;
+                        sourcePoint = source.position();
+                    }
+                }
+
+                if (target instanceof Point) {
+                    targetPoint = target;
+                } else if (target instanceof Connector) {
+                    if (isAutoConnector(target)) {
+                        autoTargetShape = target.shape;
+                    } else {
+                        connection._resolvedTargetConnector = target;
+                        targetPoint = target.position();
+                    }
+                }
+
+                if (sourcePoint) {
+                    if (autoTargetShape) {
+                        connection._resolvedTargetConnector = closestConnector(sourcePoint, autoTargetShape);
+                    }
+                } else if (autoSourceShape) {
+                    if (targetPoint) {
+                        connection._resolvedSourceConnector = closestConnector(targetPoint, autoSourceShape);
+                    } else if (autoTargetShape) {
+                        this._resolveAutoConnectors(autoSourceShape, autoTargetShape);
+                    }
+                }
+            },
+
+            _resolveAutoConnectors: function(autoSourceShape, autoTargetShape) {
+                var minNonConflict = MAXINT;
+                var minDist = MAXINT;
+                var sourceConnectors = autoSourceShape.connectors;
+                var targetConnectors;
+                var minNonConflictSource, minNonConflictTarget;
+                var sourcePoint, targetPoint;
+                var minSource, minTarget;
+                var sourceConnector, targetConnector;
+                var sourceIdx, targetIdx;
+                var dist;
+
+                for (sourceIdx = 0; sourceIdx < sourceConnectors.length; sourceIdx++) {
+                    sourceConnector = sourceConnectors[sourceIdx];
+                    if (!isAutoConnector(sourceConnector)) {
+                        sourcePoint = sourceConnector.position();
+                        targetConnectors = autoTargetShape.connectors;
+
+                        for (targetIdx = 0; targetIdx < targetConnectors.length; targetIdx++) {
+                            targetConnector = targetConnectors[targetIdx];
+                            if (!isAutoConnector(targetConnector)) {
+                                targetPoint = targetConnector.position();
+                                dist = math.round(sourcePoint.distanceTo(targetPoint));
+
+                                if (dist < minNonConflict && this.diagram && this._testRoutePoints(sourcePoint, targetPoint, sourceConnector, targetConnector)) {
+                                    minNonConflict = dist;
+                                    minNonConflictSource = sourceConnector;
+                                    minNonConflictTarget = targetConnector;
+                                }
+
+                                if (dist < minDist) {
+                                    minSource = sourceConnector;
+                                    minTarget = targetConnector;
+                                    minDist = dist;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (minNonConflictSource) {
+                    minSource = minNonConflictSource;
+                    minTarget = minNonConflictTarget;
+                }
+
+                this._resolvedSourceConnector = minSource;
+                this._resolvedTargetConnector = minTarget;
+            },
+
+            _testRoutePoints: function(sourcePoint, targetPoint, sourceConnector, targetConnector) {
+                var router = this._router;
+                var passRoute = true;
+                if (router instanceof CascadingRouter) {
+                    var points = router.routePoints(sourcePoint, targetPoint, sourceConnector, targetConnector),
+                        start, end,
+                        exclude, rect;
+                    points.unshift(sourcePoint);
+                    points.push(targetPoint);
+                    exclude = [sourceConnector.shape, targetConnector.shape];
+                    for (var idx = 1; idx < points.length; idx++) {
+                        start = points[idx - 1];
+                        end = points[idx];
+                        rect = new Rect(math.min(start.x, end.x), math.min(start.y, end.y),
+                                        math.abs(start.x - end.x), math.abs(start.y - end.y));
+
+                        if (this.diagram._shapesQuadTree.hitTestRect(rect, exclude)) {
+                            passRoute = false;
+                            break;
+                        }
+                    }
+                }
+                return passRoute;
             },
 
             redraw: function (options) {
@@ -2270,9 +2319,10 @@
                 }
 
                 connection.diagram = this;
+                connection.updateOptionsFromModel();
+                connection.refresh();
                 this.mainLayer.append(connection.visual);
                 this.connections.push(connection);
-                connection.updateOptionsFromModel();
 
                 return connection;
             },

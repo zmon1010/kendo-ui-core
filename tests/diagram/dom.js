@@ -1727,6 +1727,42 @@
     })();
 
     (function() {
+        var Shape = dataviz.diagram.Shape;
+        var Connection = dataviz.diagram.Connection;
+        var shape1, shape2, shape3;
+        var connection;
+
+        // ------------------------------------------------------------
+        module("Connection / cascading / resolve auto connectors", {
+            setup: function() {
+                createDiagram();
+                shape1 = diagram.addShape({width: 100, height: 100});
+                shape2 = diagram.addShape({y: 100, width: 100, height: 100});
+                shape3 = diagram.addShape({x: 100, y: 100, width: 100, height: 100});
+
+                connection = diagram.connect(shape1, shape3, {
+                    type: "cascading"
+                });
+            },
+
+            teardown: teardown
+        });
+
+        test("chooses closest connectors with route that does not overlap any other shapes", function() {
+            equal(connection._resolvedSourceConnector.options.name, "Right");
+            equal(connection._resolvedTargetConnector.options.name, "Top");
+        });
+
+        test("fall backs to closest connectors if there isn't a route that does not overlap any other shapes", function() {
+            diagram.addShape({x: 100, width: 100, height: 100});
+            connection.refresh();
+            equal(connection._resolvedSourceConnector.options.name, "Bottom");
+            equal(connection._resolvedTargetConnector.options.name, "Left");
+        });
+
+    })();
+
+    (function() {
         var Connection = dataviz.diagram.Connection;
         var PathDefiner = dataviz.diagram.PathDefiner;
         var connection;
