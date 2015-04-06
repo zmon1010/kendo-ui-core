@@ -116,9 +116,9 @@
             BUTTON_TEMPLATE = '<a class="k-button k-button-icontext #=className#" href="\\#"><span class="#=iconClass# #=imageClass#"></span>#=text#</a>';
 
         diagram.DefaultConnectors = [{
-            name: TOP,
+            name: TOP
         }, {
-            name: BOTTOM,
+            name: BOTTOM
         }, {
             name: LEFT
         }, {
@@ -4736,8 +4736,8 @@
                 var bottomRight = rect.bottomRight();
                 var x = Math.floor(rect.x / rootSize);
                 var y = Math.floor(rect.y / rootSize);
-                var bottomX = Math.floor(bottomRight.x / rootSize),
-                    bottomY = Math.floor(bottomRight.y / rootSize)
+                var bottomX = Math.floor(bottomRight.x / rootSize);
+                var bottomY = Math.floor(bottomRight.y / rootSize);
                 var sectors = [
                     [x],
                     [y]
