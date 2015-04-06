@@ -90,6 +90,8 @@ var __meta__ = {
     var COLUMNMENUINIT = "columnMenuInit";
     var COLUMNLOCK = "columnLock";
     var COLUMNUNLOCK = "columnUnlock";
+    var whitespaceRegExp = "[\\x20\\t\\r\\n\\f]";
+    var filterRowRegExp = new RegExp("(^|" + whitespaceRegExp + ")" + "(k-filter-row)" + "(" + whitespaceRegExp + "|$)");
 
     var classNames = {
         wrapper: "k-treelist k-grid k-widget",
@@ -502,6 +504,50 @@ var __meta__ = {
         return options instanceof TreeListDataSource ? options : new TreeListDataSource(options);
     };
 
+    function isCellVisible() {
+        return this.style.display !== "none";
+    }
+
+    function leafDataCells(container) {
+        var rows = container.find(">tr:not(.k-filter-row)");
+
+        var filter = function() {
+            var el = $(this);
+            return !el.hasClass("k-group-cell") && !el.hasClass("k-hierarchy-cell");
+        };
+
+        var cells = $();
+        if (rows.length > 1) {
+            cells = rows.find("th")
+                .filter(filter)
+                .filter(function() { return this.rowSpan > 1; });
+        }
+
+        cells = cells.add(rows.last().find("th").filter(filter));
+
+        var indexAttr = kendo.attr("index");
+        cells.sort(function(a, b) {
+            a = $(a);
+            b = $(b);
+
+            var indexA = a.attr(indexAttr);
+            var indexB = b.attr(indexAttr);
+
+            if (indexA === undefined) {
+                indexA = $(a).index();
+            }
+            if (indexB === undefined) {
+                indexB = $(b).index();
+            }
+
+            indexA = parseInt(indexA, 10);
+            indexB = parseInt(indexB, 10);
+            return indexA > indexB ? 1 : (indexA < indexB ? -1 : 0);
+        });
+
+        return cells;
+    }
+
     function createPlaceholders(options) {
         var spans = [];
         var className = options.className;
@@ -525,6 +571,38 @@ var __meta__ = {
 
         return width;
     }
+
+   function syncTableHeight(table1, table2) {
+       table1 = table1[0];
+       table2 = table2[0];
+
+       if (table1.rows.length !== table2.rows.length) {
+           var lockedHeigth = table1.offsetHeight;
+           var tableHeigth = table2.offsetHeight;
+
+           var row;
+           var diff;
+           if (lockedHeigth > tableHeigth) {
+               row = table2.rows[table2.rows.length - 1];
+
+               if (filterRowRegExp.test(row.className)) {
+                   row = table2.rows[table2.rows.length - 2];
+               }
+
+               diff = lockedHeigth - tableHeigth;
+           } else {
+               row = table1.rows[table1.rows.length - 1];
+
+               if (filterRowRegExp.test(row.className)) {
+                   row = table1.rows[table1.rows.length - 2];
+               }
+
+               diff = tableHeigth - lockedHeigth;
+           }
+           row.style.height = row.offsetHeight + diff + "px";
+       }
+   }
+
 
     var Editor = kendo.Observable.extend({
         init: function(element, options) {
@@ -1967,6 +2045,178 @@ var __meta__ = {
                     width: indicatorWidth * 3
                 })
                 .data("th", th);
+
+            var that = this;
+            resizeHandle.off("dblclick" + NS).on("dblclick" + NS, function () {
+                //TODO handle frozen columns index
+                var index= th.index();
+                if ($.contains(that.thead[0], th[0])) {
+                    index += grep(that.columns, function (val,idx) { return val.locked && !val.hidden; }).length;
+                }
+                that.autoFitColumn(index);
+            });
+        },
+
+        autoFitColumn: function (column) {
+            var that = this,
+                options = that.options,
+                columns = that.columns,
+                index,
+                browser = kendo.support.browser,
+                th,
+                header,
+                headerTable,
+                isLocked,
+                visibleLocked = that.lockedHeader ? leafDataCells(that.lockedHeader.find(">table>thead")).filter(isCellVisible).length : 0,
+                col;
+
+            //  retrieve the column object, depending on the method argument
+            if (typeof column == "number") {
+                column = columns[column];
+            } else if (isPlainObject(column)) {
+                column = grep(columns, function (item) {
+                    return item === column;
+                })[0];
+            } else {
+                column = grep(columns, function (item) {
+                    return item.field === column;
+                })[0];
+            }
+
+            if (!column || column.hidden) {
+                return;
+            }
+
+            index = inArray(column, columns);
+            isLocked = column.locked;
+
+            if (isLocked) {
+                headerTable = that.lockedHeader.children("table");
+            } else {
+                headerTable = that.thead.parent();
+            }
+
+            th = headerTable.find("[data-index='" + index + "']");
+
+            var contentTable = isLocked ? that.lockedTable : that.table,
+                footer = that.footer || $();
+
+            if (that.footer && that.lockedContent) {
+                footer = isLocked ? that.footer.children(".k-grid-footer-locked") : that.footer.children(".k-grid-footer-wrap");
+            }
+
+            var footerTable = footer.find("table").first();
+
+            if (that.lockedHeader && visibleLocked >= index && !isLocked) {
+                index -= visibleLocked;
+            }
+
+            // adjust column index, depending on previous hidden columns
+            for (var j = 0; j < columns.length; j++) {
+                if (columns[j] === column) {
+                    break;
+                } else {
+                    if (columns[j].hidden) {
+                        index--;
+                    }
+                }
+            }
+
+            // get col elements
+            if (options.scrollable) {
+                col = headerTable.find("col:not(.k-group-col):not(.k-hierarchy-col):eq(" + index + ")")
+                    .add(contentTable.children("colgroup").find("col:not(.k-group-col):not(.k-hierarchy-col):eq(" + index + ")"))
+                    .add(footerTable.find("colgroup").find("col:not(.k-group-col):not(.k-hierarchy-col):eq(" + index + ")"));
+            } else {
+                col = contentTable.children("colgroup").find("col:not(.k-group-col):not(.k-hierarchy-col):eq(" + index + ")");
+            }
+
+            var tables = headerTable.add(contentTable).add(footerTable);
+
+            var oldColumnWidth = th.outerWidth();
+
+            // reset the table and autofitted column widths
+            // if scrolling is disabled, we need some additional repainting of the table
+            col.width("");
+            tables.css("table-layout", "fixed");
+            col.width("auto");
+            tables.addClass("k-autofitting");
+            tables.css("table-layout", "");
+
+            var newTableWidth = Math.max(headerTable.width(), contentTable.width(), footerTable.width());
+            var newColumnWidth = Math.ceil(Math.max(th.outerWidth(), contentTable.find("tr").eq(0).children("td:visible").eq(index).outerWidth(), footerTable.find("tr").eq(0).children("td:visible").eq(index).outerWidth()));
+
+            col.width(newColumnWidth);
+            column.width = newColumnWidth;
+
+            // if all visible columns have widths, the table needs a pixel width as well
+            if (options.scrollable) {
+                var cols = headerTable.find("col"),
+                    colWidth,
+                    totalWidth = 0;
+                for (var idx = 0, length = cols.length; idx < length; idx += 1) {
+                    colWidth = cols[idx].style.width;
+                    if (colWidth && colWidth.indexOf("%") == -1) {
+                        totalWidth += parseInt(colWidth, 10);
+                    } else {
+                        totalWidth = 0;
+                        break;
+                    }
+                }
+
+                if (totalWidth) {
+                    tables.each(function () {
+                        this.style.width = totalWidth + "px";
+                    });
+                }
+            }
+
+            if (browser.msie && browser.version == 8) {
+                tables.css("display", "inline-table");
+                setTimeout(function () {
+                    tables.css("display", "table");
+                }, 1);
+            }
+
+            tables.removeClass("k-autofitting");
+
+            that.trigger(COLUMNRESIZE, {
+                column: column,
+                oldWidth: oldColumnWidth,
+                newWidth: newColumnWidth
+            });
+
+            that._applyLockedContainersWidth();
+            that._syncLockedContentHeight();
+            that._syncLockedHeaderHeight();
+        },
+
+        _adjustLockedHorizontalScrollBar: function() {
+            var table = this.table,
+                content = table.parent();
+
+            var scrollbar = table[0].offsetWidth > content[0].clientWidth ? kendo.support.scrollbar() : 0;
+            this.lockedContent.height(content.height() - scrollbar);
+        },
+
+        _syncLockedContentHeight: function() {
+            if (this.lockedTable) {
+                if (!this.touchScroller) {
+                    this._adjustLockedHorizontalScrollBar();
+                }
+                this._adjustRowsHeight(this.table, this.lockedTable);
+            }
+        },
+
+        _syncLockedHeaderHeight: function() {
+            if (this.lockedHeader) {
+                var lockedTable = this.lockedHeader.children("table");
+                var table = this.thead.parent();
+
+                this._adjustRowsHeight(lockedTable, table);
+
+                syncTableHeight(lockedTable, table);
+            }
         },
 
         _resizable: function() {
