@@ -868,5 +868,306 @@
         ok(lastC.targetConnector.options.name == "Auto", "Attached to Auto");
     });
 
+     // ------------------------------------------------------------
+    (function() {
+        var CascadingRouter = diagram.CascadingRouter;
+        var router;
+        var connection;
+        var sourceShape;
+        var targetShape;
+        var sourceConnector;
+        var targetConnector;
+        var sourcePosition;
+        var targetPosition;
+
+        function initRouter() {
+            sourceShape = new diagram.Shape({width: 100, height: 100});
+            targetShape = new diagram.Shape({x: 300, y: 300, width: 100, height: 100});
+            connection = new diagram.Connection(sourceShape, targetShape);
+            router = new CascadingRouter(connection);
+        }
+
+        module("CascadingRouter / connector side", {
+            setup: initRouter
+        });
+
+        test("determines connector side based on the closest position", function() {
+            var targetPoint = new Point();
+            equal(router._connectorSide(sourceShape.getConnector("top"), targetPoint), "Top");
+            equal(router._connectorSide(sourceShape.getConnector("bottom"), targetPoint), "Bottom");
+            equal(router._connectorSide(sourceShape.getConnector("left"), targetPoint), "Left");
+            equal(router._connectorSide(sourceShape.getConnector("right"), targetPoint), "Right");
+        });
+
+        test("determines connector side based on the closest position for rotated shapes", function() {
+            var targetPoint = new Point();
+            sourceShape.rotate(90);
+            equal(router._connectorSide(sourceShape.getConnector("top"), targetPoint), "Right");
+            equal(router._connectorSide(sourceShape.getConnector("bottom"), targetPoint), "Left");
+            equal(router._connectorSide(sourceShape.getConnector("left"), targetPoint), "Top");
+            equal(router._connectorSide(sourceShape.getConnector("right"), targetPoint), "Bottom");
+        });
+
+        test("determines connector side based on the closest position for custom connectors", function() {
+            var targetPoint = new Point();
+            sourceShape.redraw({
+                connectors: [{name: "foo", position: function(shape) {
+                    var bounds = shape.bounds();
+                    return new Point(bounds.x + 10, bounds.y + 20);
+                }}]
+            });
+            equal(router._connectorSide(sourceShape.getConnector("foo"), targetPoint), "Left");
+        });
+
+        test("determines the connector side based on the target point if the side distance is the same", function() {
+            sourceShape.redraw({
+                connectors: [{name: "foo", position: function(shape) {
+                    var bounds = shape.bounds();
+                    return new Point(bounds.x + 10, bounds.y + 10);
+                }}]
+            });
+            equal(router._connectorSide(sourceShape.getConnector("foo"), new Point(-100, -50)), "Left");
+            equal(router._connectorSide(sourceShape.getConnector("foo"), new Point(-50, -100)), "Top");
+        });
+
+        // ------------------------------------------------------------
+        module("CascadingRouter / connectors routes / top source", {
+            setup: function() {
+               initRouter();
+               sourceConnector = sourceShape.getConnector("top");
+               sourcePosition = sourceConnector.position();
+            }
+        });
+
+        test("left target uses single intermediate point with source x and target y", function() {
+            targetConnector = targetShape.getConnector("left");
+            targetPosition = targetConnector.position();
+
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 1);
+            equal(points[0].x, sourcePosition.x);
+            equal(points[0].y, targetPosition.y);
+        });
+
+        test("right target uses single intermediate point with source x and target y", function() {
+            targetConnector = targetShape.getConnector("right");
+            targetPosition = targetConnector.position();
+
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 1);
+            equal(points[0].x, sourcePosition.x);
+            equal(points[0].y, targetPosition.y);
+        });
+
+        test("bottom target uses two intermediate points with source x and target x and middle y", function() {
+            targetConnector = targetShape.getConnector("bottom");
+            targetPosition = targetConnector.position();
+
+            var middle = sourcePosition.y + (targetPosition.y - sourcePosition.y) / 2;
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 2);
+            equal(points[0].x, sourcePosition.x);
+            equal(points[0].y, middle);
+            equal(points[1].x, targetPosition.x);
+            equal(points[1].y, middle);
+        });
+
+        test("top target uses two intermediate points with source x and target x and min y minus same side distance", function() {
+            targetConnector = targetShape.getConnector("top");
+            targetPosition = targetConnector.position();
+
+            var y = sourcePosition.y - router.SAME_SIDE_DISTANCE;
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 2);
+            equal(points[0].x, sourcePosition.x);
+            equal(points[0].y, y);
+            equal(points[1].x, targetPosition.x);
+            equal(points[1].y, y);
+        });
+
+        // ------------------------------------------------------------
+        module("CascadingRouter / connectors routes / bottom source", {
+            setup: function() {
+               initRouter();
+               sourceConnector = sourceShape.getConnector("bottom");
+               sourcePosition = sourceConnector.position();
+            }
+        });
+
+        test("left target uses single intermediate point with source x and target y", function() {
+            targetConnector = targetShape.getConnector("left");
+            targetPosition = targetConnector.position();
+
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 1);
+            equal(points[0].x, sourcePosition.x);
+            equal(points[0].y, targetPosition.y);
+        });
+
+        test("right target uses single intermediate point with source x and target y", function() {
+            targetConnector = targetShape.getConnector("right");
+            targetPosition = targetConnector.position();
+
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 1);
+            equal(points[0].x, sourcePosition.x);
+            equal(points[0].y, targetPosition.y);
+        });
+
+        test("bottom target uses two intermediate points with source x and target x and max y plus same side distance", function() {
+            targetConnector = targetShape.getConnector("bottom");
+            targetPosition = targetConnector.position();
+
+            var y = targetPosition.y + router.SAME_SIDE_DISTANCE;
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 2);
+            equal(points[0].x, sourcePosition.x);
+            equal(points[0].y, y);
+            equal(points[1].x, targetPosition.x);
+            equal(points[1].y, y);
+        });
+
+        test("top target uses two intermediate points with source x and target x and middle y", function() {
+            targetConnector = targetShape.getConnector("top");
+            targetPosition = targetConnector.position();
+
+            var middle = sourcePosition.y + (targetPosition.y - sourcePosition.y) / 2;
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 2);
+            equal(points[0].x, sourcePosition.x);
+            equal(points[0].y, middle);
+            equal(points[1].x, targetPosition.x);
+            equal(points[1].y, middle);
+        });
+
+        // ------------------------------------------------------------
+        module("CascadingRouter / connectors routes / left source", {
+            setup: function() {
+               initRouter();
+               sourceConnector = sourceShape.getConnector("left");
+               sourcePosition = sourceConnector.position();
+            }
+        });
+
+        test("left target uses two intermediate points with source y and target y and min x minus same side distance", function() {
+            targetConnector = targetShape.getConnector("left");
+            targetPosition = targetConnector.position();
+
+            var x = sourcePosition.x - router.SAME_SIDE_DISTANCE;
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 2);
+            equal(points[0].x, x);
+            equal(points[0].y, sourcePosition.y);
+            equal(points[1].x, x);
+            equal(points[1].y, targetPosition.y);
+        });
+
+        test("right target uses two intermediate points with source y and target y and middle x", function() {
+            targetConnector = targetShape.getConnector("right");
+            targetPosition = targetConnector.position();
+
+            var middle = sourcePosition.x + (targetPosition.x - sourcePosition.x) / 2;
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 2);
+            equal(points[0].x, middle);
+            equal(points[0].y, sourcePosition.y);
+            equal(points[1].x, middle);
+            equal(points[1].y, targetPosition.y);
+        });
+
+        test("bottom target uses single intermediate point with target x and source y", function() {
+            targetConnector = targetShape.getConnector("bottom");
+            targetPosition = targetConnector.position();
+
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 1);
+            equal(points[0].x, targetPosition.x);
+            equal(points[0].y, sourcePosition.y);
+        });
+
+        test("top target uses single intermediate point with target x and source y", function() {
+            targetConnector = targetShape.getConnector("top");
+            targetPosition = targetConnector.position();
+
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 1);
+            equal(points[0].x, targetPosition.x);
+            equal(points[0].y, sourcePosition.y);
+        });
+
+        // ------------------------------------------------------------
+        module("CascadingRouter / connectors routes / right source", {
+            setup: function() {
+               initRouter();
+               sourceConnector = sourceShape.getConnector("right");
+               sourcePosition = sourceConnector.position();
+            }
+        });
+
+        test("left target uses two intermediate points with source y and target y and middle x", function() {
+            targetConnector = targetShape.getConnector("left");
+            targetPosition = targetConnector.position();
+
+            var middle = sourcePosition.x + (targetPosition.x - sourcePosition.x) / 2;
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 2);
+            equal(points[0].x, middle);
+            equal(points[0].y, sourcePosition.y);
+            equal(points[1].x, middle);
+            equal(points[1].y, targetPosition.y);
+        });
+
+        test("right target uses two intermediate points with source y and target y and max x plus same side distance", function() {
+            targetConnector = targetShape.getConnector("right");
+            targetPosition = targetConnector.position();
+
+            var x = targetPosition.x + router.SAME_SIDE_DISTANCE;
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 2);
+            equal(points[0].x, x);
+            equal(points[0].y, sourcePosition.y);
+            equal(points[1].x, x);
+            equal(points[1].y, targetPosition.y);
+        });
+
+        test("bottom target uses single intermediate point with target x and source y", function() {
+            targetConnector = targetShape.getConnector("bottom");
+            targetPosition = targetConnector.position();
+
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 1);
+            equal(points[0].x, targetPosition.x);
+            equal(points[0].y, sourcePosition.y);
+        });
+
+        test("top target uses single intermediate point with target x and source y", function() {
+            targetConnector = targetShape.getConnector("top");
+            targetPosition = targetConnector.position();
+
+            var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
+
+            equal(points.length, 1);
+            equal(points[0].x, targetPosition.x);
+            equal(points[0].y, sourcePosition.y);
+        });
+
+
+    })();
+
 })(kendo.jQuery);
 
