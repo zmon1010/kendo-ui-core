@@ -1104,3 +1104,24 @@ div.k-window-content {
     display: block;
     close: both;
 }
+
+//RTL
+.k-rtl .k-calendar .k-icon.k-i-arrow-w,
+.k-rtl .k-calendar .k-link:not(.k-state-disabled):hover > .k-i-arrow-w,
+.k-rtl .k-scheduler .k-i-arrow-w,
+.k-rtl .k-scheduler .k-link:not(.k-state-disabled):hover > .k-i-arrow-w,
+.k-rtl .k-scheduler .k-state-hover .k-link .k-i-arrow-w {
+    background-position: 0 -208px;
+}
+
+.k-rtl .k-calendar .k-icon.k-i-arrow-e,
+.k-rtl .k-calendar .k-link:not(.k-state-disabled):hover > .k-i-arrow-e,
+.k-rtl .k-scheduler .k-i-arrow-e,
+.k-rtl .k-scheduler .k-link:not(.k-state-disabled):hover > .k-i-arrow-e,
+.k-rtl .k-scheduler .k-state-hover .k-link .k-i-arrow-e {
+    background-position: 0 -240px;
+}
+
+.k-rtl .k-widget.k-datetimepicker .k-picker-wrap .k-icon {
+    margin: 0 2px;
+}
