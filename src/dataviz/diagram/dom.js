@@ -4468,6 +4468,58 @@
             }
         };
 
+        var QuadRoot = Class.extend({
+            init: function() {
+                this.shapes = [];
+            },
+
+            _add: function(shape, bounds) {
+                this.shapes.push({
+                    bounds: bounds,
+                    shape: shape
+                });
+                shape._quadNode = this;
+            },
+
+            insert: function(shape, bounds) {
+                this._add(shape, bounds);
+            },
+
+            remove: function(shape) {
+                var shapes = this.shapes;
+                var length = shapes.length;
+
+                for (var idx = 0; idx < length; idx++) {
+                    if (shapes[idx].shape === shape) {
+                        shapes.splice(idx, 1);
+                        break;
+                    }
+                }
+            },
+
+            hitTestRect: function(rect, exclude) {
+                var shapes = this.shapes;
+                var length = shapes.length;
+                var hit = false;
+
+                for (var i = 0; i < length; i++) {
+                    if (this._overlaps(shapes[i].bounds, rect) && !dataviz.inArray(shapes[i].shape, exclude)) {
+                        hit = true;
+                        break;
+                    }
+                }
+                return hit;
+            },
+
+            _overlaps: function(rect1, rect2) {
+                    var rect1BottomRight = rect1.bottomRight();
+                    var rect2BottomRight = rect2.bottomRight();
+                    var overlaps = !(rect1BottomRight.x < rect2.x || rect1BottomRight.y < rect2.y ||
+                        rect2BottomRight.x < rect1.x || rect2BottomRight.y < rect1.y);
+                    return overlaps;
+            }
+        });
+
         function cloneDataItem(dataItem) {
             var result = dataItem;
             if (dataItem instanceof kendo.data.Model) {
@@ -4509,7 +4561,8 @@
             Shape: Shape,
             Connection: Connection,
             Connector: Connector,
-            DiagramToolBar: DiagramToolBar
+            DiagramToolBar: DiagramToolBar,
+            QuadRoot: QuadRoot
         });
 })(window.kendo.jQuery);
 

@@ -2408,4 +2408,71 @@
             }
         }
     });
+
+     // ------------------------------------------------------------
+    (function() {
+        var QuadRoot = dataviz.diagram.QuadRoot;
+        var bounds;
+        var shape;
+        var root;
+        var rect;
+
+
+        module("QuadRoot", {
+            setup: function() {
+                root = new QuadRoot();
+                shape = {};
+                rect = new Rect();
+            }
+        });
+
+        test("insert adds shape and bounds to shapes array", function() {
+            root.insert(shape, rect);
+            equal(root.shapes[0].shape, shape);
+            equal(root.shapes[0].bounds, rect);
+        });
+
+        test("insert sets shape quad node", function() {
+            root.insert(shape, rect);
+            equal(shape._quadNode, root);
+        });
+
+        test("remove removes shape from shapes array", function() {
+            root.insert(shape, rect);
+            root.remove(shape);
+            equal(root.shapes.length, 0);
+        });
+
+        module("QuadRoot / hitTestRect", {
+            setup: function() {
+                root = new QuadRoot();
+                shape = {};
+                rect = new Rect(100, 100, 200, 300);
+                root.insert(shape, rect);
+            }
+        });
+
+        test("returns true if passed rect overlaps a shape", function() {
+            var targetRect = new Rect(50, 100, 100, 10);
+            equal(root.hitTestRect(targetRect), true);
+        });
+
+        test("returns false if passed rect does not overlap a shape", function() {
+            var targetRect = new Rect(50, 100, 10, 10);
+            equal(root.hitTestRect(targetRect), false);
+        });
+
+        test("returns true if passed rect overlaps the border", function() {
+            var targetRect = new Rect(50, 100, 50, 10);
+
+            equal(root.hitTestRect(targetRect), true);
+        });
+
+        test("returns false if passed rect overlaps a shape but the shape is excluded", function() {
+            var targetRect = new Rect(50, 100, 100, 10);
+            equal(root.hitTestRect(targetRect, [shape]), false);
+        });
+
+    })();
+
 })();
