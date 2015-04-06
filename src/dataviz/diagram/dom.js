@@ -1626,6 +1626,8 @@
                 });
                 that.canvas.append(that.mainLayer);
 
+                that._shapesQuadTree = new ShapesQuadTree(that);
+
                 that._pan = new Point();
                 that._adorners = [];
                 that.adornerLayer = new Group({
@@ -2211,6 +2213,7 @@
 
                 that.select(false);
                 that.mainLayer.clear();
+                that._shapesQuadTree.clear();
                 that._initialize();
             },
             /**
@@ -2326,6 +2329,7 @@
                 this.shapes.push(shape);
                 shape.diagram = this;
                 this.mainLayer.append(shape.visual);
+                this._shapesQuadTree.insert(shape);
 
                 this.trigger(CHANGE, {
                     added: [shape],
@@ -3117,6 +3121,7 @@
                     this.undoRedoService.addCompositeItem(new DeleteShapeUnit(shape));
                 }
                 Utils.remove(this.shapes, shape);
+                this._shapesQuadTree.remove(shape);
 
                 for (i = 0; i < shape.connectors.length; i++) {
                     connector = shape.connectors[i];

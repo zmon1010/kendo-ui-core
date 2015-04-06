@@ -441,6 +441,10 @@
         equal(diagram.shapes.length, 1);
     });
 
+    test("adds shape to quad tree", function() {
+        equal(diagram._shapesQuadTree.rootMap[0][0].shapes.length, 1);
+    });
+
     test("appends shape to main layer", function() {
         var shape = diagram.shapes[0];
         ok($.inArray(shape.visual.drawingContainer(), diagram.mainLayer.drawingContainer().children) >= 0);
@@ -453,6 +457,77 @@
     test("sets shape id", function() {
         equal(diagram.shapes[0].options.id, "TestShape");
     });
+
+    // ------------------------------------------------------------
+    (function() {
+        var shape;
+
+        module("Diagram / remove", {
+            setup: function() {
+                createDiagram();
+                shape = diagram.addShape({
+                    width: 200,
+                    height: 100,
+                    x: 100,
+                    y: 120
+                });
+            },
+            teardown: teardown
+        });
+
+        test("removes shape from shapes", function() {
+            diagram.remove(shape);
+            equal(diagram.shapes.length, 0);
+        });
+
+        test("removes shape from quad tree", function() {
+            diagram.remove(shape);
+            equal(diagram._shapesQuadTree.rootMap[0][0].shapes.length, 0);
+        });
+
+        test("removes shape from main layer", function() {
+            diagram.remove(shape);
+            equal(diagram.mainLayer.children.length, 0);
+        });
+
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var shape;
+
+        module("Diagram / clear", {
+            setup: function() {
+                createDiagram();
+                shape = diagram.addShape({
+                    width: 200,
+                    height: 100,
+                    x: 100,
+                    y: 120
+                });
+                diagram.select(shape);
+            },
+            teardown: teardown
+        });
+
+        test("clears shapes", function() {
+            diagram.clear();
+            equal(diagram.shapes.length, 0);
+        });
+
+        test("clears quad tree", function() {
+            diagram._shapesQuadTree.clear = function() {
+                ok(true);
+            };
+            diagram.clear();
+        });
+
+        test("clears selection", function() {
+            diagram.clear();
+            equal(diagram._selectedItems.length, 0);
+        });
+
+    })();
 
     // ------------------------------------------------------------
     (function() {
