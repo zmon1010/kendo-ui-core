@@ -2475,4 +2475,119 @@
 
     })();
 
+     // ------------------------------------------------------------
+    (function() {
+        var QuadNode = dataviz.diagram.QuadNode;
+        var bounds;
+        var shape;
+        var node;
+        var rect = new Rect(0, 0, 100, 100);
+
+        function insertChildren(bounds) {
+            for (var idx = 0; idx < bounds.length; idx++) {
+                node.insert({}, bounds[idx]);
+            }
+        }
+
+        module("QuadNode", {
+            setup: function() {
+                node = new QuadNode(rect);
+                shape = {};
+            }
+        });
+
+        test("insert inserts shape if it is inside the node bounds", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            equal(node.shapes[0].shape, shape);
+            equal(node.shapes[0].bounds, bounds);
+        });
+
+        test("insert  does not insert shape if it is not inside the node bounds", function() {
+            bounds = new Rect(90, 50, 11, 50);
+            node.insert(shape, bounds);
+            equal(node.shapes.length, 0);
+        });
+
+        test("insert sets shape _quadNode", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            equal(shape._quadNode, node);
+        });
+
+        test("insert does not init children if it contains no more than 4 shapes", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            insertChildren([bounds, bounds, bounds, bounds]);
+            equal(node.children.length, 0);
+        });
+
+        test("insert inits children if it contains more than 4 shapes", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            insertChildren([bounds, bounds, bounds, bounds, bounds]);
+            equal(node.children.length, 4);
+            deepEqual(node.children[0].rect, new Rect(0, 0, 50, 50));
+            deepEqual(node.children[1].rect, new Rect(50, 0, 50, 50));
+            deepEqual(node.children[2].rect, new Rect(0, 50, 50, 50));
+            deepEqual(node.children[3].rect, new Rect(50, 50, 50, 50));
+        });
+
+        test("insert moves current shapes to children if they fit", function() {
+            insertChildren([new Rect(0, 0, 30, 30), new Rect(0, 60, 30, 30),
+                new Rect(60, 0, 30, 30), new Rect(60, 60, 30, 30), new Rect(40, 0, 30, 30)]);
+            equal(node.shapes.length, 1);
+            deepEqual(node.children[0].shapes.length, 1);
+            deepEqual(node.children[1].shapes.length, 1);
+            deepEqual(node.children[2].shapes.length, 1);
+            deepEqual(node.children[3].shapes.length, 1);
+        });
+
+        test("remove removes shape", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            node.remove(shape);
+            equal(node.shapes.length, 0);
+        });
+
+        test("hitTestRect returns false if shape is not in node bounds", function() {
+            equal(node.hitTestRect(new Rect(110, 50, 50, 50)), false);
+        });
+
+        test("hitTestRect returns false if it does not contain a shape that overlaps the rect", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            equal(node.hitTestRect(new Rect(70, 50, 19, 50)), false);
+        });
+
+        test("hitTestRect returns false if it and its children do not contain a shape that overlaps the rect", function() {
+            insertChildren([new Rect(0, 0, 30, 30), new Rect(0, 60, 30, 30),
+                new Rect(60, 0, 30, 30), new Rect(60, 60, 30, 30), new Rect(40, 0, 30, 30)]);
+            equal(node.hitTestRect(new Rect(31, 0, 8, 10)), false);
+        });
+
+        test("hitTestRect returns false if it contains a shape that overlaps the rect but it it is excluded", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            equal(node.hitTestRect(bounds, [shape]), false);
+        });
+
+        test("hitTestRect returns false if its children contain a shape that overlaps the rect but it it is excluded", function() {
+            insertChildren([new Rect(0, 0, 30, 30), new Rect(0, 60, 30, 30),
+                new Rect(60, 0, 30, 30), new Rect(60, 60, 30, 30), new Rect(40, 0, 30, 30)]);
+            equal(node.hitTestRect(new Rect(0, 0, 30, 30), [node.children[0].shapes[0].shape]), false);
+        });
+
+        test("hitTestRect returns true if it contains a shape that overlaps the rect", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            equal(node.hitTestRect(new Rect(80, 50, 10, 50)), true);
+        });
+
+        test("hitTestRect returns true if its children contain a shape that overlaps the rect", function() {
+            insertChildren([new Rect(0, 0, 30, 30), new Rect(0, 60, 30, 30),
+                new Rect(60, 0, 30, 30), new Rect(60, 60, 30, 30), new Rect(40, 0, 30, 30)]);
+            equal(node.hitTestRect(new Rect(0, 0, 30, 30)), true);
+        });
+
+    })();
+
 })();

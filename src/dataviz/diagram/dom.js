@@ -4520,6 +4520,103 @@
             }
         });
 
+        var QuadNode = QuadRoot.extend({
+            init: function(rect) {
+                QuadRoot.fn.init.call(this);
+                this.children = [];
+                this.rect = rect;
+            },
+
+            inBounds: function(rect) {
+                var nodeRect = this.rect;
+                var nodeBottomRight = nodeRect.bottomRight();
+                var bottomRight = rect.bottomRight();
+                var inBounds = nodeRect.x <= rect.x && nodeRect.y <= rect.y && bottomRight.x <= nodeBottomRight.x &&
+                    bottomRight.y <= nodeBottomRight.y;
+                return inBounds;
+            },
+
+            overlapsBounds: function(rect) {
+                return this._overlaps(this.rect, rect);
+            },
+
+            insert: function (shape, bounds) {
+                var inserted = false;
+                var children = this.children;
+                var length = children.length;
+                if (this.inBounds(bounds)) {
+                    if (!length && this.shapes.length < 4) {
+                        this._add(shape, bounds);
+                    } else {
+                        if (!length) {
+                            this._initChildren();
+                        }
+
+                        for (var idx = 0; idx < children.length; idx++) {
+                            if (children[idx].insert(shape, bounds)) {
+                                inserted = true;
+                                break;
+                            }
+                        }
+
+                        if (!inserted) {
+                            this._add(shape, bounds);
+                        }
+                    }
+                    inserted = true;
+                }
+
+                return inserted;
+            },
+
+            _initChildren: function() {
+                var rect = this.rect,
+                    children = this.children,
+                    shapes = this.shapes,
+                    center = rect.center(),
+                    halfWidth = rect.width / 2,
+                    halfHeight = rect.height / 2,
+                    childIdx, shapeIdx;
+
+                children.push(
+                    new QuadNode(new Rect(rect.x, rect.y, halfWidth, halfHeight)),
+                    new QuadNode(new Rect(center.x, rect.y, halfWidth, halfHeight)),
+                    new QuadNode(new Rect(rect.x, center.y, halfWidth, halfHeight)),
+                    new QuadNode(new Rect(center.x, center.y, halfWidth, halfHeight))
+                );
+                for (shapeIdx = shapes.length - 1; shapeIdx >= 0; shapeIdx--) {
+                    for (childIdx = 0; childIdx < children.length; childIdx++) {
+                        if (children[childIdx].insert(shapes[shapeIdx].shape, shapes[shapeIdx].bounds)) {
+                            shapes.splice(shapeIdx, 1);
+                            break;
+                        }
+                    }
+                }
+            },
+
+            hitTestRect: function(rect, exclude) {
+                var idx, result = [];
+                var children = this.children;
+                var length = children.length;
+                var hit = false;
+
+                if (this.overlapsBounds(rect)) {
+                    if (QuadRoot.fn.hitTestRect.call(this, rect, exclude)) {
+                        hit = true;
+                    } else {
+                         for (idx = 0; idx < length; idx++) {
+                            if (children[idx].hitTestRect(rect, exclude)) {
+                               hit = true;
+                               break;
+                            }
+                        }
+                    }
+                }
+
+                return hit;
+            }
+        });
+
         function cloneDataItem(dataItem) {
             var result = dataItem;
             if (dataItem instanceof kendo.data.Model) {
@@ -4562,6 +4659,7 @@
             Connection: Connection,
             Connector: Connector,
             DiagramToolBar: DiagramToolBar,
+            QuadNode: QuadNode,
             QuadRoot: QuadRoot
         });
 })(window.kendo.jQuery);
