@@ -4728,7 +4728,7 @@
             },
 
             inRoot: function(sectors) {
-                return sectors[0].length !== sectors[1].length;
+                return sectors[0].length > 1 || sectors[1].length > 1;
             },
 
             getSectors: function(rect) {
