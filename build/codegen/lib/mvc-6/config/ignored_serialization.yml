@@ -15,3 +15,9 @@
 - treelist.selectable.mode
 - treelist.selectable.type
 - treelist.editable.templateName
+- datepicker.footer
+- datepicker.monthTemplate
+- datepicker.monthTemplate.content
+- datepicker.monthTemplate.contentId
+- datepicker.monthTemplate.empty
+- datepicker.monthTemplate.emptyId

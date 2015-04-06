@@ -45,3 +45,6 @@
 - window.content
 - window.animation
 - window.resizable
+- datepicker.animation
+- datepicker.month
+

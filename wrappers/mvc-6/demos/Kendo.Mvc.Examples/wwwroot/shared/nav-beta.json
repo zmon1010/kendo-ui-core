@@ -1,5 +1,125 @@
 [
     {
+        "text": "DatePicker",
+        "name": "datepicker",
+        "api": "web/datepicker",
+        "documentation": {
+            "kendo-ui": "getting-started/web/datepicker/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/datepicker/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/datepicker/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/datepicker/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/date-time-pickers",
+            "aspnet-mvc": "aspnet-mvc/date-time-pickers",
+            "jsp-ui": "jsp/date-picker-pickers",
+            "php-ui": "php/date-time-pickers"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/datepicker",
+            "aspnet-mvc": "aspnet-mvc/datetime",
+            "jsp-ui": "jsp/date-time-pickers",
+            "php-ui": "php/date-time-pickers"
+        },
+        "spriteCssClass": "datePickerIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "datepicker/index",
+                "title": {
+                    "kendo-ui": "Kendo UI jQuery DatePicker Demo",
+                    "aspnet-mvc": "ASP.NET MVC DatePicker sample"
+                },
+                "meta": {
+                    "kendo-ui": "The demo shows how users can efforight-to-left-supportessly edit and select dates in the calendar. Combine date editing functionality and animated dropdown in a jQuery Datepicker control for your web app.",
+                    "aspnet-mvc": "This example shows Telerik DatePicker basic features to select dates and times in ASP.NET MVC application."
+                }
+            },
+            {
+                "text": "Range selection",
+                "url": "datepicker/rangeselection",
+                "title": {
+                    "kendo-ui": "Range selection in Kendo UI DatePicker | Kendo UI Web Demos",
+                    "aspnet-mvc": "Range selection in ASP.NET MVC DatePicker | ASP.NET MVC Demos"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how the Datepicker component works for range selections. You can easily enable users to select a date range in a handy manner.",
+                    "aspnet-mvc": "This demo shows how the ASP.NET MVC Datepicker component works for range selections. You can easily enable users to select a date range in a handy manner."
+                }
+            },
+            {
+                "text": "Customizing templates",
+                "url": "datepicker/template",
+                "title": {
+                    "kendo-ui": "Demo for customizing the template of Kendo UI DatePicker control",
+                    "aspnet-mvc": "Demo for customizing the template of ASP.NET MVC DatePicker"
+                },
+                "meta": {
+                    "kendo-ui": "This example demonstrates how you can use a custom template for your jQuery Kendo UI DatePicker control in your web app. Easily apply a special style for your template.",
+                    "aspnet-mvc": "This example demonstrates how you can use a custom template for your ASP.NET MVC DatePicker control in your web app. Easily apply a special style for your template."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "datepicker/events",
+                "title": {
+                    "kendo-ui": "Attach an event to Kendo UI jQuery DatePicker | Kendo UI Web Demos",
+                    "aspnet-mvc": "Attach an event to ASP.NET MVC DatePicker | ASP.NET MVC Demos"
+                },
+                "meta": {
+                    "kendo-ui": "This sample shows how to access the events, attached to a date, as well as use Kendo UI Date Picker widget to pick a date or change it manually from the dropdown calendar.",
+                    "aspnet-mvc": "This sample shows how to access the events, attached to a date, as well as use ASP.NET MVC Date Picker to pick a date or change it manually from a dropdown calendar."
+                }
+            },
+            {
+                "text": "API",
+                "url": "datepicker/api",
+                "title": {
+                    "kendo-ui": "Kendo UI DatePicker API Demo",
+                    "aspnet-mvc": "API ASP.NET MVC Datepicker example"
+                },
+                "meta": {
+                    "kendo-ui": "DatePicker API example shows how the API functions can be used to apply enable/disable functionality to jQuery-powered date picker control or open/close the calendar.",
+                    "aspnet-mvc": "This example demonstrates how the API of Telerik ASP.NET MVC Datepicker can be configured to modify the features of the extension."
+                }
+            },
+            {
+                "packages": [
+                    "mvc-offline"
+                ],
+                "text": "Globalization",
+                "url": "datepicker/globalization"
+            },
+            {
+                "text": "RTL support",
+                "disableInMobile": true,
+                "url": "datepicker/right-to-left-support",
+                "title": {
+                    "kendo-ui": "RTL support in Kendo UI DatePicker widget | Kendo UI Demo",
+                    "aspnet-mvc": "RTL support in ASP.NET MVC DatePicker control | ASP.NET MVC Demo"
+                },
+                "meta": {
+                    "kendo-ui": "See how Kendo UI DatePicker component supports RTL functionality.",
+                    "aspnet-mvc": "See how ASP.NET MVC DatePicker component supports RTL functionality."
+                }
+            },
+            {
+                "text": "Keyboard navigation",
+                "disableInMobile": true,
+                "url": "datepicker/keyboard-navigation",
+                "title": {
+                    "kendo-ui": "Keyboard navigation in Kendo UI DatePicker",
+                    "aspnet-mvc": "Keyboard navigation in ASP.NET MVC DatePicker"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows how the keyboard navigation functionality is supported in Kendo UI DatePicker widget.",
+                    "aspnet-mvc": "This example shows how the keyboard navigation functionality is supported in ASP.NET MVC DatePicker control."
+                }
+            }
+        ],
+        "category": "Editors"
+    },
+    {
         "text": "DateTimePicker",
         "name": "datetimepicker",
         "api": "web/datetimepicker",
@@ -472,11 +592,11 @@
             },
             {
                 "new": "true",
-                    "text": "Copy to Excel",
-                    "url": "grid/copy-to-excel",
-                    "title": {
-                        "kendo-ui": "Copy to Excel in Kendo UI Grid | Kendo UI Web Demo"
-                    },
+                "text": "Copy to Excel",
+                "url": "grid/copy-to-excel",
+                "title": {
+                    "kendo-ui": "Copy to Excel in Kendo UI Grid | Kendo UI Web Demo"
+                },
                 "meta": {
                     "kendo-ui": "In this example we will learn how to enable the allowCopy option of Kendo UI Grid component to allow copying data to Excel."
                 }

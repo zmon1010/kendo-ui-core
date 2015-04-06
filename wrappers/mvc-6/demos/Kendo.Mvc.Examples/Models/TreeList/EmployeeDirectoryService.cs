@@ -3,7 +3,8 @@
 	using System.Linq;    
 	using Kendo.Mvc.UI;
 	using Microsoft.AspNet.Mvc.ModelBinding;
-	using Microsoft.Data.Entity;    
+	using Microsoft.Data.Entity;
+    using Extensions;   
 
 	public static class EmployeeDirectoryIEnumerableExtensions
     {        
@@ -72,7 +73,7 @@
         public virtual IQueryable<EmployeeDirectory> GetAll()
         {
             var employees = db.EmployeeDirectories.ToList();
-            employees.ForEach(e => {
+            employees.Each(e => {
                 e.EmployeeDirectory1 = employees.Where(ee => ee.ReportsTo == e.EmployeeID).ToList();                
             });
 
