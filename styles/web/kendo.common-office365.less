@@ -61,6 +61,10 @@
     padding: .429em .714em;
 }
 
+.k-filter-row .k-button {
+    line-height: 1.14em;
+}
+
 .k-textbox > input,
 span.k-autocomplete .k-input,
 span.k-picker-wrap .k-input,
@@ -135,7 +139,7 @@ input.k-textbox
 }
 
 .k-calendar .k-content {
-    height: 17.143em;
+    height: 19.36em;
 }
 
 .k-calendar {
@@ -154,6 +158,10 @@ input.k-textbox
     min-height: 2.714em;
     line-height: 2.714em;
     padding: 0 .857em 0 .714em;
+}
+
+.k-calendar .k-meta-view .k-link {
+    padding: .357em .857em .357em .714em;
 }
 
 .k-widget.k-calendar .k-nav-fast {
@@ -476,7 +484,6 @@ span.k-tooltip {
     padding: 0;
     margin: 5px;
     line-height: inherit;
-    background: pink
 }
 
 .k-toolbar .k-button-group .k-button {
@@ -634,7 +641,15 @@ table.k-editor {
 }
 
 div.k-window-content {
-    padding: 0 .857em;
+    padding: .231em .857em;
+}
+
+.editorToolbarWindow {
+    padding: 3px .857em;
+}
+
+.k-editortoolbar-dragHandle {
+    line-height: 2em;
 }
 
 .k-window-title {
@@ -1073,6 +1088,16 @@ div.k-window-content {
     }
 }
 
+.k-filter-row {
+    .k-state-active .k-filter {
+        background-position: -48px -80px;
+    }
+
+    .k-button:active .k-i-close {
+        background-position: -48px -16px;
+    }
+
+}
 .k-checkbox-label,
 .k-radio-label {
     line-height: normal;
