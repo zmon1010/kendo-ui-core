@@ -879,12 +879,14 @@
         var targetConnector;
         var sourcePosition;
         var targetPosition;
+        var sameSideDistance;
 
         function initRouter() {
             sourceShape = new diagram.Shape({width: 100, height: 100});
             targetShape = new diagram.Shape({x: 300, y: 300, width: 100, height: 100});
             connection = new diagram.Connection(sourceShape, targetShape);
             router = new CascadingRouter(connection);
+            sameSideDistance = sourceShape.bounds().width / router.SAME_SIDE_DISTANCE_RATIO;
         }
 
         module("CascadingRouter / connector side", {
@@ -979,7 +981,7 @@
             targetConnector = targetShape.getConnector("top");
             targetPosition = targetConnector.position();
 
-            var y = sourcePosition.y - router.SAME_SIDE_DISTANCE;
+            var y = sourcePosition.y - sameSideDistance;
             var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
 
             equal(points.length, 2);
@@ -1024,7 +1026,7 @@
             targetConnector = targetShape.getConnector("bottom");
             targetPosition = targetConnector.position();
 
-            var y = targetPosition.y + router.SAME_SIDE_DISTANCE;
+            var y = targetPosition.y + sameSideDistance;
             var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
 
             equal(points.length, 2);
@@ -1061,7 +1063,7 @@
             targetConnector = targetShape.getConnector("left");
             targetPosition = targetConnector.position();
 
-            var x = sourcePosition.x - router.SAME_SIDE_DISTANCE;
+            var x = sourcePosition.x - sameSideDistance;
             var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
 
             equal(points.length, 2);
@@ -1134,7 +1136,7 @@
             targetConnector = targetShape.getConnector("right");
             targetPosition = targetConnector.position();
 
-            var x = targetPosition.x + router.SAME_SIDE_DISTANCE;
+            var x = targetPosition.x + sameSideDistance;
             var points = router.routePoints(sourcePosition, targetPosition, sourceConnector, targetConnector);
 
             equal(points.length, 2);

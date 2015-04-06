@@ -58,7 +58,10 @@
             FRICTION_MOBILE = 0.93,
             VELOCITY_MULTIPLIER = 5,
             TRANSPARENT = "transparent",
-            PAN = "pan";
+            PAN = "pan",
+            ROTATED = "rotated",
+            WIDTH = "width",
+            HEIGHT = "height";
 
         diagram.Cursors = Cursors;
 
@@ -1213,7 +1216,7 @@
         });
 
         var CascadingRouter = LinearConnectionRouter.extend({
-            SAME_SIDE_DISTANCE: 20,
+            SAME_SIDE_DISTANCE_RATIO: 5,
 
             init: function (connection) {
                 var that = this;
@@ -1265,7 +1268,7 @@
 
             _connectorSide: function(connector, targetPoint) {
                 var position = connector.position();
-                var shapeBounds = connector.shape.bounds("rotated");
+                var shapeBounds = connector.shape.bounds(ROTATED);
                 var bounds = {
                     topLeft: shapeBounds.topLeft(),
                     bottomRight: shapeBounds.bottomRight()
@@ -1291,18 +1294,23 @@
                 return minSide.name;
             },
 
+            _sameSideDistance: function(connector) {
+                var bounds = connector.shape.bounds(ROTATED);
+                return Math.min(bounds.width, bounds.height) / this.SAME_SIDE_DISTANCE_RATIO;
+            },
+
             _connectorPoints: function(start, end, sourceConnector, targetConnector) {
-                var sameSideDistance = this.SAME_SIDE_DISTANCE;
                 var sourceConnectorSide = this._connectorSide(sourceConnector, end);
                 var targetConnectorSide = this._connectorSide(targetConnector, start);
                 var deltaX = end.x - start.x;
                 var deltaY = end.y - start.y;
+                var sameSideDistance = this._sameSideDistance(sourceConnector);
                 var result = [];
+                var pointX, pointY;
 
                 if (sourceConnectorSide === TOP || sourceConnectorSide == BOTTOM) {
                     if (targetConnectorSide == TOP || targetConnectorSide == BOTTOM) {
                         if (sourceConnectorSide == targetConnectorSide) {
-                            var pointY;
                             if (sourceConnectorSide == TOP) {
                                 pointY = Math.min(start.y, end.y) - sameSideDistance;
                             } else {
@@ -1318,7 +1326,6 @@
                 } else {
                     if (targetConnectorSide == LEFT || targetConnectorSide == RIGHT) {
                         if (sourceConnectorSide == targetConnectorSide) {
-                            var pointX;
                             if (sourceConnectorSide == LEFT) {
                                 pointX = Math.min(start.x, end.x) - sameSideDistance;
                             } else {
