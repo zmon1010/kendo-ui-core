@@ -4617,6 +4617,110 @@
             }
         });
 
+        var ShapesQuadTree = Class.extend({
+            ROOT_SIZE: 1000,
+
+            init: function(diagram) {
+                diagram.bind(ITEMBOUNDSCHANGE, proxy(this._boundsChange, this));
+                diagram.bind(ITEMROTATE, proxy(this._boundsChange, this));
+                this.initRoots();
+            },
+
+            initRoots: function() {
+                this.rootMap = {};
+                this.root = new QuadRoot();
+            },
+
+            clear: function() {
+                this.initRoots();
+            },
+
+            _boundsChange: function(e) {
+                if (e.item._quadNode) {
+                    e.item._quadNode.remove(e.item);
+                    this.insert(e.item);
+                }
+            },
+
+            insert: function(shape) {
+                var bounds = shape.bounds(ROTATED);
+                var rootSize = this.ROOT_SIZE;
+                var sectors = this.getSectors(bounds);
+                var x = sectors[0][0];
+                var y = sectors[1][0];
+
+                if (this.inRoot(sectors)) {
+                    this.root.insert(shape, bounds);
+                } else {
+                    if (!this.rootMap[x]) {
+                        this.rootMap[x] = {};
+                    }
+
+                    if (!this.rootMap[x][y]) {
+                        this.rootMap[x][y] = new QuadNode(
+                            new Rect(x * rootSize, y * rootSize, rootSize, rootSize)
+                        );
+                    }
+
+                    this.rootMap[x][y].insert(shape, bounds);
+                }
+            },
+
+            remove: function(shape) {
+                if (shape._quadNode) {
+                    shape._quadNode.remove(shape);
+                }
+            },
+
+            inRoot: function(sectors) {
+                return sectors[0].length !== sectors[1].length;
+            },
+
+            getSectors: function(rect) {
+                var rootSize = this.ROOT_SIZE;
+                var bottomRight = rect.bottomRight();
+                var x = Math.floor(rect.x / rootSize);
+                var y = Math.floor(rect.y / rootSize);
+                var bottomX = Math.floor(bottomRight.x / rootSize),
+                    bottomY = Math.floor(bottomRight.y / rootSize)
+                var sectors = [
+                    [x],
+                    [y]
+                ];
+
+                if (x !== bottomX) {
+                    sectors[0].push(bottomX);
+                }
+                if (y !== bottomY) {
+                    sectors[1].push(bottomY);
+                }
+                return sectors;
+            },
+
+            hitTestRect: function(rect, exclude) {
+                var sectors = this.getSectors(rect);
+                var xIdx, yIdx, x, y;
+                var root;
+
+                if (this.root.hitTestRect(rect, exclude)) {
+                    return true;
+                }
+
+                for (xIdx = 0; xIdx < sectors[0].length; xIdx++) {
+                    x = sectors[0][xIdx];
+                    for (yIdx = 0; yIdx < sectors[1].length; yIdx++) {
+                        y = sectors[1][yIdx];
+                        root = (this.rootMap[x] || {})[y];
+                        if (root && root.hitTestRect(rect, exclude)) {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+        });
+
         function cloneDataItem(dataItem) {
             var result = dataItem;
             if (dataItem instanceof kendo.data.Model) {
@@ -4660,7 +4764,8 @@
             Connector: Connector,
             DiagramToolBar: DiagramToolBar,
             QuadNode: QuadNode,
-            QuadRoot: QuadRoot
+            QuadRoot: QuadRoot,
+            ShapesQuadTree: ShapesQuadTree
         });
 })(window.kendo.jQuery);
 

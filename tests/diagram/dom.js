@@ -2590,4 +2590,106 @@
 
     })();
 
+     // ------------------------------------------------------------
+    (function() {
+        var ShapesQuadTree = dataviz.diagram.ShapesQuadTree;
+        var QuadRoot = dataviz.diagram.QuadRoot;
+        var bounds;
+        var shape;
+        var tree;
+        var diagram;
+
+        var DiagramMock = kendo.Observable.extend({});
+        var ShapeMock = function(bounds) {
+            this._bounds = bounds || new Rect(0, 0, 100, 100);
+            this.bounds = function() {
+                return this._bounds;
+            };
+        };
+
+        module("ShapesQuadTree", {
+            setup: function() {
+                diagram = new DiagramMock();
+                tree = new ShapesQuadTree(diagram);
+                shape = new ShapeMock();
+            }
+        });
+
+        test("inits roots", function() {
+            ok($.isPlainObject(tree.rootMap));
+            ok(tree.root instanceof QuadRoot);
+        });
+
+        test("insert adds shape to sector root", function() {
+            shape = new ShapeMock(new Rect(1000, 0, 100, 100));
+            tree.insert(shape);
+
+            equal(tree.rootMap[1][0].shapes.length, 1);
+        });
+
+        test("insert adds shape to root if shape bounds span across multiple sectors", function() {
+            shape = new ShapeMock(new Rect(-50, 0, 100, 100));
+            tree.insert(shape);
+
+            equal(tree.root.shapes.length, 1);
+        });
+
+        test("remove removes shape", function() {
+            shape = new ShapeMock(new Rect(1000, 0, 100, 100));
+            tree.insert(shape);
+            tree.remove(shape);
+
+            equal(tree.rootMap[1][0].shapes.length, 0);
+        });
+
+        test("diagram itemBoundsChange removes and reinserts shape", function() {
+            shape = new ShapeMock();
+            tree.insert(shape);
+            shape._bounds = new Rect(1000, 0, 100, 100);
+            diagram.trigger("itemBoundsChange", {item: shape});
+            equal(tree.rootMap[0][0].shapes.length, 0);
+            equal(tree.rootMap[1][0].shapes.length, 1);
+        });
+
+        test("diagram itemRotate removes and reinserts shape", function() {
+            shape = new ShapeMock();
+            tree.insert(shape);
+            shape._bounds = new Rect(1000, 0, 100, 100);
+            diagram.trigger("itemRotate", {item: shape});
+            equal(tree.rootMap[0][0].shapes.length, 0);
+            equal(tree.rootMap[1][0].shapes.length, 1);
+        });
+
+        test("hitTestRect returns true if the root contains a shape that overlaps the rect", function() {
+            shape = new ShapeMock(new Rect(-50, 0, 100, 100));
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(-100, 0, 50, 50)), true);
+        });
+
+        test("hitTestRect returns false if the root contains a shape that overlaps the rect but the shape is excluded", function() {
+            shape = new ShapeMock(new Rect(-50, 0, 100, 100));
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(-100, 0, 50, 50), [shape]), false);
+        });
+
+        test("hitTestRect returns true if a sector root contains a shape that overlaps the rect", function() {
+            shape = new ShapeMock();
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(80, 0, 50, 50)), true);
+        });
+
+        test("hitTestRect returns false if a sector root contains a shape that overlaps the rect but the shape is excluded", function() {
+            shape = new ShapeMock();
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(80, 0, 50, 50), [shape]), false);
+        });
+
+        test("hitTestRect detects hits for rects that span across multiple sectors", function() {
+            shape = new ShapeMock();
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(-50, 0, 100, 50)), true);
+        });
+
+    })();
+
 })();
