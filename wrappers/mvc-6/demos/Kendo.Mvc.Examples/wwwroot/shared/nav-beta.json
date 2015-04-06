@@ -1365,9 +1365,97 @@
                 "meta": {
                     "kendo-ui": "Play with this Kendo UI ToolBar demo to learn how to include Kendo UI Editor widgets in the ToolBar."
                 }
-            }            
+            }
         ],
         "category": "Navigation"
+    },
+    {
+        "text": "Tooltip",
+        "name": "tooltip",
+        "api": "web/tooltip",
+        "documentation": {
+            "kendo-ui": "getting-started/web/tooltip/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/tooltip/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/tooltip/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/tooltip/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/tooltip",
+            "aspnet-mvc": "aspnet-mvc/tooltip",
+            "jsp-ui": "jsp/tooltip",
+            "php-ui": "php/tooltip"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/tooltip",
+            "aspnet-mvc": "aspnet-mvc/tooltip",
+            "jsp-ui": "jsp/tooltip",
+            "php-ui": "php/tooltip"
+        },
+        "spriteCssClass": "tooltipIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "tooltip/index",
+                "title": {
+                    "kendo-ui": "Basic usage of Kendo UI Tooltip Widget | Kendo UI Web demo",
+                    "aspnet-mvc": "ASP.NET MVC jQuery Tooltip Demo"
+                },
+                "meta": {
+                    "kendo-ui": "Play with this Kendo UI Tooltip demo to get familiar with the performance of the component and its core functionality.",
+                    "aspnet-mvc": "Look at this example of Telerik jQuery-based toolip in ASP.NET MVC and explore all features of the extension. "
+                }
+            },
+            {
+                "text": "Loading content with AJAX",
+                "url": "tooltip/ajax",
+                "title": {
+                    "kendo-ui": "AJAX loaded content with Kendo UI Tooltip widget",
+                    "aspnet-mvc": "AJAX loaded content with ASP.NET MVCTooltip control"
+                },
+                "meta": {
+                    "kendo-ui": "This example illustrates how the content in Kendo UI Tooltip widget can be loaded, using AJAX.",
+                    "aspnet-mvc": "This example illustrates how the content in ASP.NET MVC Tooltip control can be loaded, using AJAX."
+                },
+                "requiresServer": "true"
+            },
+            {
+                "text": "Content template",
+                "url": "tooltip/template",
+                "title": {
+                    "kendo-ui": "Content template in Kendo UI Tooltip widget | Kendo UI Web demo",
+                    "aspnet-mvc": "Content template sample for Telerik ASP.NET MVC Tooltip extension"
+                },
+                "meta": {
+                    "kendo-ui": "This example illustrates how the template can be used as content of Kendo UI Tooltip widget.",
+                    "aspnet-mvc": "This demo shows how  you can use a content template with Telerik jQuery-based tooltip for ASP.NET MVC."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "tooltip/events",
+                "title": {
+                    "kendo-ui": "Events in Kendo UI Tooltip | Kendo UI Web demo",
+                    "aspnet-mvc": "Events in Telerik ASP.NET MVC Tooltip"
+                },
+                "meta": {
+                    "kendo-ui": "In this demo we will see how all events are triggered in Kendo UI Tooltip widget.",
+                    "aspnet-mvc": "In this demo we will show how events are triggered in Telerik Tooltip extension in ASP.NET MVC."
+                }
+            },
+            {
+                "text": "API",
+                "url": "tooltip/api",
+                "title": {
+                    "kendo-ui": "API for Kendo UI Tooltip component | Kendo UI Web demo",
+                    "aspnet-mvc": "API for ASP.NET MVC Tooltip component | UI for ASP.NET MVC demo"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows how the API functions are enabled in Kendo UI Tooltip widget.",
+                    "aspnet-mvc": "This example shows how the API functions are enabled in ASP.NET MVC Tooltip control."
+                }
+            }
+        ],
+        "category": "Layout"
     },
     {
         "text": "TreeList",

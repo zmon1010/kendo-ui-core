@@ -1,0 +1,39 @@
+:options:
+    - :name: position
+      :type: String
+      :enum_type: TooltipPosition
+      :description: Represents the tooltip position.
+      :values:
+          - :value: bottom
+            :member: Bottom
+            :description: Bottom position
+
+          - :value: top
+            :member: Top
+            :description: Top position
+
+          - :value: left
+            :member: Left
+            :description: Left position
+
+          - :value: right
+            :member: Right
+            :description: Right postion
+
+          - :value: center
+            :member: Center
+            :description: Center postion
+
+    - :name: showOn
+      :type: String
+      :enum_type: TooltipShowOnEvent
+      :description: Represents the tooltip position.
+      :values:
+          - :value: mouseenter
+            :member: MouseEnter
+
+          - :value: click
+            :member: Click
+
+          - :value: focus
+            :member: Focus

@@ -21,3 +21,4 @@
 - datepicker.monthTemplate.contentId
 - datepicker.monthTemplate.empty
 - datepicker.monthTemplate.emptyId
+- tooltip.filter

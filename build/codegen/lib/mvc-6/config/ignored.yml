@@ -47,4 +47,5 @@
 - window.resizable
 - datepicker.animation
 - datepicker.month
-
+- tooltip.content
+- tooltip.animation

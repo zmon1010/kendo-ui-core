@@ -205,6 +205,7 @@ namespace :generate do
                 'docs/api/javascript/ui/scheduler.md',
                 'docs/api/javascript/ui/treelist.md',
                 'docs/api/javascript/ui/toolbar.md',
+                'docs/api/javascript/ui/tooltip.md',
                 'docs/api/javascript/ui/upload.md',
                 'docs/api/javascript/ui/window.md'
             ]
