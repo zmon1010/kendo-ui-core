@@ -69,8 +69,6 @@ namespace Kendo.Mvc.UI
 
         public string Timezone { get; set; }
 
-        public List<SchedulerToolbar<T>> Toolbar { get; set; } = new List<SchedulerToolbar<T>>();
-
         public List<SchedulerView<T>> Views { get; set; } = new List<SchedulerView<T>>();
 
         public string GroupHeaderTemplate { get; set; }
@@ -262,12 +260,6 @@ namespace Kendo.Mvc.UI
             if (Timezone?.HasValue() == true)
             {
                 settings["timezone"] = Timezone;
-            }
-
-            var toolbar = Toolbar.Select(i => i.Serialize());
-            if (toolbar.Any())
-            {
-                settings["toolbar"] = toolbar;
             }
 
             var views = Views.Select(i => i.Serialize());

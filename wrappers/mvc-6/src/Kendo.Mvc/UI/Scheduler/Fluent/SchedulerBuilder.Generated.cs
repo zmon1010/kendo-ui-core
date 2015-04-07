@@ -368,21 +368,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// List of commands that the scheduler will display in its toolbar as buttons. Currently supports only the "pdf" command.The "pdf" command exports the scheduler in PDF format.
-        /// </summary>
-        /// <param name="configurator">The configurator for the toolbar setting.</param>
-        public SchedulerBuilder<T> Toolbar(Action<SchedulerToolbarFactory<T>> configurator)
-        {
-
-            configurator(new SchedulerToolbarFactory<T>(Container.Toolbar)
-            {
-                Scheduler = Container
-            });
-
-            return this;
-        }
-
-        /// <summary>
         /// The views displayed by the scheduler and their configuration. The array items can be either objects specifying the view configuration or strings representing the view types (assuming default configuration).
 		/// By default the Kendo UI Scheduler widget displays "day" and "week" view.
         /// </summary>
