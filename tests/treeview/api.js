@@ -92,6 +92,20 @@
         equal(treeview.find(".k-state-selected").length, 1);
     });
 
+    test("select(node) removes other elements k-state-selected class if elements dataItem is not found", function() {
+        createTreeView([
+            { text: "foo", selected: true },
+            { text: "bar" }
+        ]);
+
+        treeview.find(".k-item:first").removeAttr(kendo.attr("uid"));
+        var node = treeview.find(".k-item:last");
+
+        treeviewObject.select(node);
+
+        equal(treeview.find(".k-state-selected").length, 1);
+    });
+
     test("select(selector) limits selector to treeview", function() {
         createTreeView([
             { text: "foo" }

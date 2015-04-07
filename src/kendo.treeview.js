@@ -1593,8 +1593,12 @@ var __meta__ = {
 
             element.find(".k-state-selected").each(function() {
                 var dataItem = that.dataItem(this);
-                dataItem.set("selected", false);
-                delete dataItem.selected;
+                if (dataItem) {
+                    dataItem.set("selected", false);
+                    delete dataItem.selected;
+                } else {
+                    $(this).removeClass("k-state-selected");
+                }
             });
 
             if (node.length) {
