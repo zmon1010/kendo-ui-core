@@ -382,7 +382,8 @@
 /* Shim */
 
 .km-office365 .km-shim,
-.km-phone .km-office365 .km-actionsheet-wrapper
+.km-phone .km-office365 .km-actionsheet-wrapper,
+.km-office365 .km-actionsheet-root
 {
     background: rgba(0,0,0,.4);
 }
@@ -411,6 +412,10 @@
 .km-office365 .km-popup-arrow:after
 {
     border-color: @office365-background transparent;
+}
+
+.km-office365 .km-actionsheet-root .km-popup-arrow:after {
+    border-color: transparent @office365-background transparent;
 }
 
 .km-office365 .km-left .km-popup-arrow:after,
