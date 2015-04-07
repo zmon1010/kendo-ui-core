@@ -171,6 +171,32 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Adds PDF command to the toolbar.
+        /// </summary>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().Scheduler&lt;Task&gt;()
+        ///     .Name(&quot;scheduler&quot;)
+        ///     .Toolbar(toolbar => toolbar.Pdf())
+        ///     .Pdf(pdf => pdf.FileName(&quot;SchedulerExport.pdf&quot))
+        ///     .DataSource(dataSource =&gt;
+        ///         // configure the data source
+        ///         dataSource
+        ///             .Ajax()
+        ///             .Read(&quot;Read&quot;, &quot;Scheduler&quot;)
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public SchedulerBuilder<T> Toolbar(Action<SchedulerToolbarFactory<T>> addToolbarAction)
+        {
+            SchedulerToolbarFactory<T> factory = new SchedulerToolbarFactory<T>(Component);
+
+            addToolbarAction(factory);
+
+            return this;
+        }
     }
 }
 

@@ -15,6 +15,8 @@ namespace Kendo.Mvc.UI
     {
         public Scheduler(ViewContext viewContext) : base(viewContext)
         {
+            ToolbarCommands = new List<SchedulerToolbarCommand>();
+
             DataSource = new DataSource(ModelMetadataProvider);
 
             DataSource.Type = DataSourceType.Ajax;
@@ -37,6 +39,12 @@ namespace Kendo.Mvc.UI
         }
 
         public DataSource DataSource
+        {
+            get;
+            private set;
+        }
+
+        public IList<SchedulerToolbarCommand> ToolbarCommands
         {
             get;
             private set;
@@ -75,10 +83,14 @@ namespace Kendo.Mvc.UI
                 }
             }
 
+            if (ToolbarCommands.Count > 0)
+            {
+                settings["toolbar"] = ToolbarCommands.ToJson();
+            }
+
             Dictionary<string, object> dataSource = (Dictionary<string, object>)DataSource.ToJson();
 
             settings["dataSource"] = dataSource;
-
 
             writer.Write(Initializer.Initialize(Selector, "Scheduler", settings));
         }

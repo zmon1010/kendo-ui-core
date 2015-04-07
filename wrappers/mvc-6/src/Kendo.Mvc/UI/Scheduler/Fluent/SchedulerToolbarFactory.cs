@@ -1,25 +1,31 @@
-using System;
-using System.Collections.Generic;
-
-namespace Kendo.Mvc.UI.Fluent
+﻿namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
-    /// Defines the fluent API for configuring List<SchedulerToolbar<T>>
+    /// Creates toolbar commands for the <see cref="Scheduler{T}" /> class.
     /// </summary>
-    public partial class SchedulerToolbarFactory<T>
-        where T : class, ISchedulerEvent 
+    public class SchedulerToolbarFactory<T> : IHideObjectMembers
+        where T : class, ISchedulerEvent
     {
-        public SchedulerToolbarFactory(List<SchedulerToolbar<T>> container)
+        private readonly Scheduler<T> container;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchedulerToolbarFactory{T}"/> class.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        public SchedulerToolbarFactory(Scheduler<T> container)
         {
-            Container = container;
+            this.container = container;
         }
 
-        protected List<SchedulerToolbar<T>> Container
+        /// <summary>
+        /// Enables Pdf command.
+        /// </summary>
+        /// <returns></returns>
+        public void Pdf()
         {
-            get;
-            private set;
-        }
+            SchedulerToolbarCommand command = new SchedulerToolbarCommand(SchedulerToolbarCommandType.Pdf);
 
-        // Place custom settings here
+            container.ToolbarCommands.Add(command);
+        }
     }
 }
