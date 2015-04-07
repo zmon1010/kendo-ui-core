@@ -43,21 +43,4 @@
         ok(oldWidth < instance.columns[2].width)
     });
 
-    test("autofit sets lockedContainer width after toggling row", function() {
-        createTreeList({
-            columns: [
-                { field: "id", width: 10, locked: true },
-                { field: "parentId", width: 20 },
-                { field: "text", width: 30 }
-            ]
-        });
-
-        var oldWidth = instance.columns[2].width;
-        var firstRow = instance.tbody.find("tr:first");
-
-        instance.collapse(firstRow);
-        instance.autoFitColumn(2);
-        instance.expand(firstRow);
-        equal(instance.lockedContent.height(), 220);
-    });
 })();
