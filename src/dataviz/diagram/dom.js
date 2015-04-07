@@ -1744,7 +1744,6 @@
                     offsetY: 20
                 },
                 snap: {
-                    enabled: true,
                     size: 10,
                     angle: 10
                 },

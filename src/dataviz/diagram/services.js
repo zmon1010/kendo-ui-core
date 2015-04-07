@@ -46,8 +46,12 @@
             LEFT = "Left",
             BOTTOM = "Bottom",
             DEFAULTCONNECTORNAMES = [TOP, RIGHT, BOTTOM, LEFT, AUTO],
+            DEFAULT_SNAP_SIZE = 10,
+            DEFAULT_SNAP_ANGLE = 10,
             ITEMROTATE = "itemRotate",
             ITEMBOUNDSCHANGE = "itemBoundsChange",
+            MIN_SNAP_SIZE = 5,
+            MIN_SNAP_ANGLE = 5,
             MOUSE_ENTER = "mouseEnter",
             MOUSE_LEAVE = "mouseLeave",
             ZOOM_START = "zoomStart",
@@ -1920,7 +1924,7 @@
                     }
                     this.refresh();
                 } else {
-                    if (this.diagram.options.snap.enabled === true) {
+                    if (this.diagram.options.snap) {
                         var thr = this._truncateDistance(p.minus(this._lp));
                         // threshold
                         if (thr.x === 0 && thr.y === 0) {
@@ -2010,16 +2014,18 @@
             },
 
             _truncateAngle: function (a) {
-                var snapAngle = Math.max(this.diagram.options.snap.angle, 5);
-                return this.diagram.options.snap.enabled === true ? Math.floor((a % 360) / snapAngle) * snapAngle : (a % 360);
+                var snap = this.diagram.options.snap;
+                var snapAngle = Math.max(snap.angle || DEFAULT_SNAP_ANGLE, MIN_SNAP_ANGLE);
+                return snap ? Math.floor((a % 360) / snapAngle) * snapAngle : (a % 360);
             },
 
             _truncateDistance: function (d) {
                 if (d instanceof diagram.Point) {
                     return new diagram.Point(this._truncateDistance(d.x), this._truncateDistance(d.y));
                 } else {
-                    var snapSize = Math.max(this.diagram.options.snap.size, 5);
-                    return this.diagram.options.snap.enabled === true ? Math.floor(d / snapSize) * snapSize : d;
+                    var snap = this.diagram.options.snap;
+                    var snapSize = Math.max(snap.size || DEFAULT_SNAP_SIZE, MIN_SNAP_SIZE);
+                    return snap ? Math.floor(d / snapSize) * snapSize : d;
                 }
             },
 
