@@ -58,7 +58,10 @@
             FRICTION_MOBILE = 0.93,
             VELOCITY_MULTIPLIER = 5,
             TRANSPARENT = "transparent",
-            PAN = "pan";
+            PAN = "pan",
+            ROTATED = "rotated",
+            WIDTH = "width",
+            HEIGHT = "height";
 
         diagram.Cursors = Cursors;
 
@@ -1213,100 +1216,187 @@
         });
 
         var CascadingRouter = LinearConnectionRouter.extend({
+            SAME_SIDE_DISTANCE_RATIO: 5,
+
             init: function (connection) {
                 var that = this;
                 LinearConnectionRouter.fn.init.call(that);
                 this.connection = connection;
             },
+
+            routePoints: function(start, end, sourceConnector, targetConnector) {
+                var result;
+
+                if (sourceConnector && targetConnector) {
+                    result = this._connectorPoints(start, end, sourceConnector, targetConnector);
+                } else {
+                    result = this._floatingPoints(start, end, sourceConnector);
+                }
+                return result;
+            },
+
             route: function () {
-                var link = this.connection;
+                var sourceConnector = this.connection._resolvedSourceConnector;
+                var targetConnector = this.connection._resolvedTargetConnector;
                 var start = this.connection.sourcePoint();
-                var end = this.connection.targetPoint(),
-                    points = [start, start, end, end],
-                    deltaX = end.x - start.x, // can be negative
-                    deltaY = end.y - start.y,
-                    l = points.length,
-                    shiftX,
-                    shiftY,
-                    sourceConnectorName = null,
-                    targetConnectorName = null;
+                var end = this.connection.targetPoint();
+                var points = this.routePoints(start, end, sourceConnector, targetConnector);
+                this.connection.points(points);
+            },
 
-                if (Utils.isDefined(link._resolvedSourceConnector)) {
-                    sourceConnectorName = link._resolvedSourceConnector.options.name;
-                }
-                if (Utils.isDefined(link._resolvedTargetConnector)) {
-                    targetConnectorName = link._resolvedTargetConnector.options.name;
-                }
-                function startHorizontal() {
-                    if (sourceConnectorName !== null) {
-                        if (sourceConnectorName === RIGHT || sourceConnectorName === LEFT) {
-                            return true;
-                        }
-                        if (sourceConnectorName === TOP || sourceConnectorName === BOTTOM) {
-                            return false;
-                        }
+            _connectorSides: [{
+                name: "Top",
+                axis: "y",
+                boundsPoint: "topLeft",
+                secondarySign: 1
+            }, {
+                name: "Left",
+                axis: "x",
+                boundsPoint: "topLeft",
+                secondarySign: 1
+            }, {
+                name: "Bottom",
+                axis: "y",
+                boundsPoint: "bottomRight",
+                secondarySign: -1
+            }, {
+                name: "Right",
+                axis: "x",
+                boundsPoint: "bottomRight",
+                secondarySign: -1
+            }],
+
+            _connectorSide: function(connector, targetPoint) {
+                var position = connector.position();
+                var shapeBounds = connector.shape.bounds(ROTATED);
+                var bounds = {
+                    topLeft: shapeBounds.topLeft(),
+                    bottomRight: shapeBounds.bottomRight()
+                };
+                var sides = this._connectorSides;
+                var min = kendo.util.MAX_NUM;
+                var sideDistance;
+                var minSide;
+                var axis;
+                var side;
+                for (var idx = 0; idx < sides.length; idx++) {
+                    side = sides[idx];
+                    axis = side.axis;
+                    sideDistance = Math.round(Math.abs(position[axis] - bounds[side.boundsPoint][axis]));
+                    if (sideDistance < min) {
+                        min = sideDistance;
+                        minSide = side;
+                    } else if (sideDistance === min &&
+                        (position[axis] - targetPoint[axis]) * side.secondarySign > (position[minSide.axis] - targetPoint[minSide.axis]) * minSide.secondarySign) {
+                        minSide = side;
                     }
-                    //fallback for custom connectors
-                    return Math.abs(start.x - end.x) > Math.abs(start.y - end.y);
                 }
+                return minSide.name;
+            },
 
-                if (sourceConnectorName !== null && targetConnectorName !== null && Utils.contains(DEFAULTCONNECTORNAMES, sourceConnectorName) && Utils.contains(DEFAULTCONNECTORNAMES, targetConnectorName)) {
-                    // custom routing for the default connectors
-                    if (sourceConnectorName === TOP || sourceConnectorName == BOTTOM) {
-                        if (targetConnectorName == TOP || targetConnectorName == BOTTOM) {
-                            this.connection.points([new Point(start.x, start.y + deltaY / 2), new Point(end.x, start.y + deltaY / 2)]);
+            _sameSideDistance: function(connector) {
+                var bounds = connector.shape.bounds(ROTATED);
+                return Math.min(bounds.width, bounds.height) / this.SAME_SIDE_DISTANCE_RATIO;
+            },
+
+            _connectorPoints: function(start, end, sourceConnector, targetConnector) {
+                var sourceConnectorSide = this._connectorSide(sourceConnector, end);
+                var targetConnectorSide = this._connectorSide(targetConnector, start);
+                var deltaX = end.x - start.x;
+                var deltaY = end.y - start.y;
+                var sameSideDistance = this._sameSideDistance(sourceConnector);
+                var result = [];
+                var pointX, pointY;
+
+                if (sourceConnectorSide === TOP || sourceConnectorSide == BOTTOM) {
+                    if (targetConnectorSide == TOP || targetConnectorSide == BOTTOM) {
+                        if (sourceConnectorSide == targetConnectorSide) {
+                            if (sourceConnectorSide == TOP) {
+                                pointY = Math.min(start.y, end.y) - sameSideDistance;
+                            } else {
+                                pointY = Math.max(start.y, end.y) + sameSideDistance;
+                            }
+                            result = [new Point(start.x, pointY), new Point(end.x, pointY)];
                         } else {
-                            this.connection.points([new Point(start.x, start.y + deltaY)]);
+                            result = [new Point(start.x, start.y + deltaY / 2), new Point(end.x, start.y + deltaY / 2)];
                         }
-                    } else { // LEFT or RIGHT
-                        if (targetConnectorName == LEFT || targetConnectorName == RIGHT) {
-                            this.connection.points([new Point(start.x + deltaX / 2, start.y), new Point(start.x + deltaX / 2, start.y + deltaY)]);
-                        } else {
-                            this.connection.points([new Point(end.x, start.y)]);
-                        }
+                    } else {
+                        result = [new Point(start.x, end.y)];
                     }
-
+                } else {
+                    if (targetConnectorSide == LEFT || targetConnectorSide == RIGHT) {
+                        if (sourceConnectorSide == targetConnectorSide) {
+                            if (sourceConnectorSide == LEFT) {
+                                pointX = Math.min(start.x, end.x) - sameSideDistance;
+                            } else {
+                                pointX = Math.max(start.x, end.x) + sameSideDistance;
+                            }
+                            result = [new Point(pointX, start.y), new Point(pointX, end.y)];
+                        } else {
+                            result = [new Point(start.x + deltaX / 2, start.y), new Point(start.x + deltaX / 2, start.y + deltaY)];
+                        }
+                    } else {
+                        result = [new Point(end.x, start.y)];
+                    }
                 }
-                else { // general case for custom and floating connectors
-                    this.connection.cascadeStartHorizontal = startHorizontal(this.connection);
+                return result;
+            },
 
-                    // note that this is more generic than needed for only two intermediate points.
-                    for (var k = 1; k < l - 1; ++k) {
-                        if (link.cascadeStartHorizontal) {
-                            if (k % 2 !== 0) {
-                                shiftX = deltaX / (l / 2);
-                                shiftY = 0;
-                            }
-                            else {
-                                shiftX = 0;
-                                shiftY = deltaY / ((l - 1) / 2);
-                            }
+            _floatingPoints: function(start, end, sourceConnector) {
+                var sourceConnectorSide = sourceConnector ? this._connectorSide(sourceConnector, end) : null;
+                var cascadeStartHorizontal = this._startHorizontal(start, end, sourceConnectorSide);
+                var points = [start, start, end, end];
+                var deltaX = end.x - start.x;
+                var deltaY = end.y - start.y;
+                var length = points.length;
+                var shiftX;
+                var shiftY;
+
+                // note that this is more generic than needed for only two intermediate points.
+                for (var idx = 1; idx < length - 1; ++idx) {
+                    if (cascadeStartHorizontal) {
+                        if (idx % 2 !== 0) {
+                            shiftX = deltaX / (length / 2);
+                            shiftY = 0;
                         }
                         else {
-                            if (k % 2 !== 0) {
-                                shiftX = 0;
-                                shiftY = deltaY / (l / 2);
-                            }
-                            else {
-                                shiftX = deltaX / ((l - 1) / 2);
-                                shiftY = 0;
-                            }
+                            shiftX = 0;
+                            shiftY = deltaY / ((length - 1) / 2);
                         }
-                        points[k] = new Point(points[k - 1].x + shiftX, points[k - 1].y + shiftY);
-                    }
-                    // need to fix the wrong 1.5 factor of the last intermediate point
-                    k--;
-                    if ((link.cascadeStartHorizontal && (k % 2 !== 0)) || (!link.cascadeStartHorizontal && (k % 2 === 0))) {
-                        points[l - 2] = new Point(points[l - 1].x, points[l - 2].y);
                     }
                     else {
-                        points[l - 2] = new Point(points[l - 2].x, points[l - 1].y);
+                        if (idx % 2 !== 0) {
+                            shiftX = 0;
+                            shiftY = deltaY / (length / 2);
+                        }
+                        else {
+                            shiftX = deltaX / ((length - 1) / 2);
+                            shiftY = 0;
+                        }
                     }
-
-                    this.connection.points([points[1], points[2]]);
+                    points[idx] = new Point(points[idx - 1].x + shiftX, points[idx - 1].y + shiftY);
                 }
-            }
+                // need to fix the wrong 1.5 factor of the last intermediate point
+                idx--;
+                if ((cascadeStartHorizontal && (idx % 2 !== 0)) || (!cascadeStartHorizontal && (idx % 2 === 0))) {
+                    points[length - 2] = new Point(points[length - 1].x, points[length - 2].y);
+                } else {
+                    points[length - 2] = new Point(points[length - 2].x, points[length - 1].y);
+                }
 
+                return [points[1], points[2]];
+            },
+
+            _startHorizontal: function (start, end, sourceSide) {
+                var horizontal;
+                if (sourceSide !== null && (sourceSide === RIGHT || sourceSide === LEFT)) {
+                    horizontal = true;
+                } else {
+                    horizontal = Math.abs(start.x - end.x) > Math.abs(start.y - end.y);
+                }
+
+                return horizontal;
+            }
         });
 
 // Adorners =========================================
@@ -1886,7 +1976,9 @@
                             if (shape.hasOwnProperty("layout")) {
                                 shape.layout(shape, oldBounds, newBounds);
                             }
-                            shape.rotate(shape.rotate().angle); // forces the rotation to update it's rotation center
+                            if (oldBounds.width !== newBounds.width || oldBounds.height !== newBounds.height) {
+                                shape.rotate(shape.rotate().angle); // forces the rotation to update it's rotation center
+                            }
                             changed += 1;
                         }
                     }

@@ -441,6 +441,10 @@
         equal(diagram.shapes.length, 1);
     });
 
+    test("adds shape to quad tree", function() {
+        equal(diagram._shapesQuadTree.rootMap[0][0].shapes.length, 1);
+    });
+
     test("appends shape to main layer", function() {
         var shape = diagram.shapes[0];
         ok($.inArray(shape.visual.drawingContainer(), diagram.mainLayer.drawingContainer().children) >= 0);
@@ -453,6 +457,77 @@
     test("sets shape id", function() {
         equal(diagram.shapes[0].options.id, "TestShape");
     });
+
+    // ------------------------------------------------------------
+    (function() {
+        var shape;
+
+        module("Diagram / remove", {
+            setup: function() {
+                createDiagram();
+                shape = diagram.addShape({
+                    width: 200,
+                    height: 100,
+                    x: 100,
+                    y: 120
+                });
+            },
+            teardown: teardown
+        });
+
+        test("removes shape from shapes", function() {
+            diagram.remove(shape);
+            equal(diagram.shapes.length, 0);
+        });
+
+        test("removes shape from quad tree", function() {
+            diagram.remove(shape);
+            equal(diagram._shapesQuadTree.rootMap[0][0].shapes.length, 0);
+        });
+
+        test("removes shape from main layer", function() {
+            diagram.remove(shape);
+            equal(diagram.mainLayer.children.length, 0);
+        });
+
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
+        var shape;
+
+        module("Diagram / clear", {
+            setup: function() {
+                createDiagram();
+                shape = diagram.addShape({
+                    width: 200,
+                    height: 100,
+                    x: 100,
+                    y: 120
+                });
+                diagram.select(shape);
+            },
+            teardown: teardown
+        });
+
+        test("clears shapes", function() {
+            diagram.clear();
+            equal(diagram.shapes.length, 0);
+        });
+
+        test("clears quad tree", function() {
+            diagram._shapesQuadTree.clear = function() {
+                ok(true);
+            };
+            diagram.clear();
+        });
+
+        test("clears selection", function() {
+            diagram.clear();
+            equal(diagram._selectedItems.length, 0);
+        });
+
+    })();
 
     // ------------------------------------------------------------
     (function() {
@@ -1652,6 +1727,42 @@
     })();
 
     (function() {
+        var Shape = dataviz.diagram.Shape;
+        var Connection = dataviz.diagram.Connection;
+        var shape1, shape2, shape3;
+        var connection;
+
+        // ------------------------------------------------------------
+        module("Connection / cascading / resolve auto connectors", {
+            setup: function() {
+                createDiagram();
+                shape1 = diagram.addShape({width: 100, height: 100});
+                shape2 = diagram.addShape({y: 100, width: 100, height: 100});
+                shape3 = diagram.addShape({x: 100, y: 100, width: 100, height: 100});
+
+                connection = diagram.connect(shape1, shape3, {
+                    type: "cascading"
+                });
+            },
+
+            teardown: teardown
+        });
+
+        test("chooses closest connectors with route that does not overlap any other shapes", function() {
+            equal(connection._resolvedSourceConnector.options.name, "Right");
+            equal(connection._resolvedTargetConnector.options.name, "Top");
+        });
+
+        test("fall backs to closest connectors if there isn't a route that does not overlap any other shapes", function() {
+            diagram.addShape({x: 100, width: 100, height: 100});
+            connection.refresh();
+            equal(connection._resolvedSourceConnector.options.name, "Bottom");
+            equal(connection._resolvedTargetConnector.options.name, "Left");
+        });
+
+    })();
+
+    (function() {
         var Connection = dataviz.diagram.Connection;
         var PathDefiner = dataviz.diagram.PathDefiner;
         var connection;
@@ -2408,4 +2519,288 @@
             }
         }
     });
+
+     // ------------------------------------------------------------
+    (function() {
+        var QuadRoot = dataviz.diagram.QuadRoot;
+        var bounds;
+        var shape;
+        var root;
+        var rect;
+
+
+        module("QuadRoot", {
+            setup: function() {
+                root = new QuadRoot();
+                shape = {};
+                rect = new Rect();
+            }
+        });
+
+        test("insert adds shape and bounds to shapes array", function() {
+            root.insert(shape, rect);
+            equal(root.shapes[0].shape, shape);
+            equal(root.shapes[0].bounds, rect);
+        });
+
+        test("insert sets shape quad node", function() {
+            root.insert(shape, rect);
+            equal(shape._quadNode, root);
+        });
+
+        test("remove removes shape from shapes array", function() {
+            root.insert(shape, rect);
+            root.remove(shape);
+            equal(root.shapes.length, 0);
+        });
+
+        module("QuadRoot / hitTestRect", {
+            setup: function() {
+                root = new QuadRoot();
+                shape = {};
+                rect = new Rect(100, 100, 200, 300);
+                root.insert(shape, rect);
+            }
+        });
+
+        test("returns true if passed rect overlaps a shape", function() {
+            var targetRect = new Rect(50, 100, 100, 10);
+            equal(root.hitTestRect(targetRect), true);
+        });
+
+        test("returns false if passed rect does not overlap a shape", function() {
+            var targetRect = new Rect(50, 100, 10, 10);
+            equal(root.hitTestRect(targetRect), false);
+        });
+
+        test("returns true if passed rect overlaps the border", function() {
+            var targetRect = new Rect(50, 100, 50, 10);
+
+            equal(root.hitTestRect(targetRect), true);
+        });
+
+        test("returns false if passed rect overlaps a shape but the shape is excluded", function() {
+            var targetRect = new Rect(50, 100, 100, 10);
+            equal(root.hitTestRect(targetRect, [shape]), false);
+        });
+
+    })();
+
+     // ------------------------------------------------------------
+    (function() {
+        var QuadNode = dataviz.diagram.QuadNode;
+        var bounds;
+        var shape;
+        var node;
+        var rect = new Rect(0, 0, 100, 100);
+
+        function insertChildren(bounds) {
+            for (var idx = 0; idx < bounds.length; idx++) {
+                node.insert({}, bounds[idx]);
+            }
+        }
+
+        module("QuadNode", {
+            setup: function() {
+                node = new QuadNode(rect);
+                shape = {};
+            }
+        });
+
+        test("insert inserts shape if it is inside the node bounds", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            equal(node.shapes[0].shape, shape);
+            equal(node.shapes[0].bounds, bounds);
+        });
+
+        test("insert  does not insert shape if it is not inside the node bounds", function() {
+            bounds = new Rect(90, 50, 11, 50);
+            node.insert(shape, bounds);
+            equal(node.shapes.length, 0);
+        });
+
+        test("insert sets shape _quadNode", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            equal(shape._quadNode, node);
+        });
+
+        test("insert does not init children if it contains no more than 4 shapes", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            insertChildren([bounds, bounds, bounds, bounds]);
+            equal(node.children.length, 0);
+        });
+
+        test("insert inits children if it contains more than 4 shapes", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            insertChildren([bounds, bounds, bounds, bounds, bounds]);
+            equal(node.children.length, 4);
+            deepEqual(node.children[0].rect, new Rect(0, 0, 50, 50));
+            deepEqual(node.children[1].rect, new Rect(50, 0, 50, 50));
+            deepEqual(node.children[2].rect, new Rect(0, 50, 50, 50));
+            deepEqual(node.children[3].rect, new Rect(50, 50, 50, 50));
+        });
+
+        test("insert moves current shapes to children if they fit", function() {
+            insertChildren([new Rect(0, 0, 30, 30), new Rect(0, 60, 30, 30),
+                new Rect(60, 0, 30, 30), new Rect(60, 60, 30, 30), new Rect(40, 0, 30, 30)]);
+            equal(node.shapes.length, 1);
+            deepEqual(node.children[0].shapes.length, 1);
+            deepEqual(node.children[1].shapes.length, 1);
+            deepEqual(node.children[2].shapes.length, 1);
+            deepEqual(node.children[3].shapes.length, 1);
+        });
+
+        test("remove removes shape", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            node.remove(shape);
+            equal(node.shapes.length, 0);
+        });
+
+        test("hitTestRect returns false if shape is not in node bounds", function() {
+            equal(node.hitTestRect(new Rect(110, 50, 50, 50)), false);
+        });
+
+        test("hitTestRect returns false if it does not contain a shape that overlaps the rect", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            equal(node.hitTestRect(new Rect(70, 50, 19, 50)), false);
+        });
+
+        test("hitTestRect returns false if it and its children do not contain a shape that overlaps the rect", function() {
+            insertChildren([new Rect(0, 0, 30, 30), new Rect(0, 60, 30, 30),
+                new Rect(60, 0, 30, 30), new Rect(60, 60, 30, 30), new Rect(40, 0, 30, 30)]);
+            equal(node.hitTestRect(new Rect(31, 0, 8, 10)), false);
+        });
+
+        test("hitTestRect returns false if it contains a shape that overlaps the rect but it it is excluded", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            equal(node.hitTestRect(bounds, [shape]), false);
+        });
+
+        test("hitTestRect returns false if its children contain a shape that overlaps the rect but it it is excluded", function() {
+            insertChildren([new Rect(0, 0, 30, 30), new Rect(0, 60, 30, 30),
+                new Rect(60, 0, 30, 30), new Rect(60, 60, 30, 30), new Rect(40, 0, 30, 30)]);
+            equal(node.hitTestRect(new Rect(0, 0, 30, 30), [node.children[0].shapes[0].shape]), false);
+        });
+
+        test("hitTestRect returns true if it contains a shape that overlaps the rect", function() {
+            bounds = new Rect(90, 50, 10, 50);
+            node.insert(shape, bounds);
+            equal(node.hitTestRect(new Rect(80, 50, 10, 50)), true);
+        });
+
+        test("hitTestRect returns true if its children contain a shape that overlaps the rect", function() {
+            insertChildren([new Rect(0, 0, 30, 30), new Rect(0, 60, 30, 30),
+                new Rect(60, 0, 30, 30), new Rect(60, 60, 30, 30), new Rect(40, 0, 30, 30)]);
+            equal(node.hitTestRect(new Rect(0, 0, 30, 30)), true);
+        });
+
+    })();
+
+     // ------------------------------------------------------------
+    (function() {
+        var ShapesQuadTree = dataviz.diagram.ShapesQuadTree;
+        var QuadRoot = dataviz.diagram.QuadRoot;
+        var bounds;
+        var shape;
+        var tree;
+        var diagram;
+
+        var DiagramMock = kendo.Observable.extend({});
+        var ShapeMock = function(bounds) {
+            this._bounds = bounds || new Rect(0, 0, 100, 100);
+            this.bounds = function() {
+                return this._bounds;
+            };
+        };
+
+        module("ShapesQuadTree", {
+            setup: function() {
+                diagram = new DiagramMock();
+                tree = new ShapesQuadTree(diagram);
+                shape = new ShapeMock();
+            }
+        });
+
+        test("inits roots", function() {
+            ok($.isPlainObject(tree.rootMap));
+            ok(tree.root instanceof QuadRoot);
+        });
+
+        test("insert adds shape to sector root", function() {
+            shape = new ShapeMock(new Rect(1000, 0, 100, 100));
+            tree.insert(shape);
+
+            equal(tree.rootMap[1][0].shapes.length, 1);
+        });
+
+        test("insert adds shape to root if shape bounds span across multiple sectors", function() {
+            shape = new ShapeMock(new Rect(-50, 0, 100, 100));
+            tree.insert(shape);
+
+            equal(tree.root.shapes.length, 1);
+        });
+
+        test("remove removes shape", function() {
+            shape = new ShapeMock(new Rect(1000, 0, 100, 100));
+            tree.insert(shape);
+            tree.remove(shape);
+
+            equal(tree.rootMap[1][0].shapes.length, 0);
+        });
+
+        test("diagram itemBoundsChange removes and reinserts shape", function() {
+            shape = new ShapeMock();
+            tree.insert(shape);
+            shape._bounds = new Rect(1000, 0, 100, 100);
+            diagram.trigger("itemBoundsChange", {item: shape});
+            equal(tree.rootMap[0][0].shapes.length, 0);
+            equal(tree.rootMap[1][0].shapes.length, 1);
+        });
+
+        test("diagram itemRotate removes and reinserts shape", function() {
+            shape = new ShapeMock();
+            tree.insert(shape);
+            shape._bounds = new Rect(1000, 0, 100, 100);
+            diagram.trigger("itemRotate", {item: shape});
+            equal(tree.rootMap[0][0].shapes.length, 0);
+            equal(tree.rootMap[1][0].shapes.length, 1);
+        });
+
+        test("hitTestRect returns true if the root contains a shape that overlaps the rect", function() {
+            shape = new ShapeMock(new Rect(-50, 0, 100, 100));
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(-100, 0, 50, 50)), true);
+        });
+
+        test("hitTestRect returns false if the root contains a shape that overlaps the rect but the shape is excluded", function() {
+            shape = new ShapeMock(new Rect(-50, 0, 100, 100));
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(-100, 0, 50, 50), [shape]), false);
+        });
+
+        test("hitTestRect returns true if a sector root contains a shape that overlaps the rect", function() {
+            shape = new ShapeMock();
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(80, 0, 50, 50)), true);
+        });
+
+        test("hitTestRect returns false if a sector root contains a shape that overlaps the rect but the shape is excluded", function() {
+            shape = new ShapeMock();
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(80, 0, 50, 50), [shape]), false);
+        });
+
+        test("hitTestRect detects hits for rects that span across multiple sectors", function() {
+            shape = new ShapeMock();
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(-50, 0, 100, 50)), true);
+        });
+
+    })();
+
 })();

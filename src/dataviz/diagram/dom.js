@@ -116,20 +116,15 @@
             BUTTON_TEMPLATE = '<a class="k-button k-button-icontext #=className#" href="\\#"><span class="#=iconClass# #=imageClass#"></span>#=text#</a>';
 
         diagram.DefaultConnectors = [{
-            name: TOP,
-            description: "Top Connector"
+            name: TOP
         }, {
-            name: RIGHT,
-            description: "Right Connector"
+            name: BOTTOM
         }, {
-            name: BOTTOM,
-            description: "Bottom Connector"
+            name: LEFT
         }, {
-            name: LEFT,
-            Description: "Left Connector"
+            name: RIGHT
         }, {
             name: AUTO,
-            Description: "Auto Connector",
             position: function (shape) {
                 return shape.getPosition("center");
             }
@@ -194,70 +189,6 @@
 
         function isAutoConnector(connector) {
             return connector.options.name.toLowerCase() === AUTO.toLowerCase();
-        }
-
-        function resolveConnectors(connection) {
-            var minDist = MAXINT,
-                sourcePoint, targetPoint,
-                source = connection.source(),
-                target = connection.target(),
-                autoSourceShape,
-                autoTargetShape,
-                sourceConnector,
-                preferred = [0, 2, 3, 1, 4],
-                k;
-            if (source instanceof Point) {
-                sourcePoint = source;
-            } else if (source instanceof Connector) {
-                if (isAutoConnector(source)) {
-                    autoSourceShape = source.shape;
-                } else {
-                    connection._resolvedSourceConnector = source;
-                    sourcePoint = source.position();
-                }
-            }
-
-            if (target instanceof Point) {
-                targetPoint = target;
-            } else if (target instanceof Connector) {
-                if (isAutoConnector(target)) {
-                    autoTargetShape = target.shape;
-                } else {
-                    connection._resolvedTargetConnector = target;
-                    targetPoint = target.position();
-                }
-            }
-
-            if (sourcePoint) {
-                if (autoTargetShape) {
-                    connection._resolvedTargetConnector = closestConnector(sourcePoint, autoTargetShape);
-                }
-            } else if (autoSourceShape) {
-                if (targetPoint) {
-                    connection._resolvedSourceConnector = closestConnector(targetPoint, autoSourceShape);
-                } else if (autoTargetShape) {
-                    for (var i = 0; i < autoSourceShape.connectors.length; i++) {
-                        if (autoSourceShape.connectors.length == 5) // presuming this means the default connectors
-                        {
-                            // will emphasize the vertical or horizontal direction, which matters when using the cascading router and distances which are equal for multiple connectors.
-                            k = preferred[i];
-                        } else {
-                            k = i;
-                        }
-                        sourceConnector = autoSourceShape.connectors[k];
-                        if (!isAutoConnector(sourceConnector)) {
-                            var currentSourcePoint = sourceConnector.position(),
-                                currentTargetConnector = closestConnector(currentSourcePoint, autoTargetShape);
-                            var dist = math.round(currentTargetConnector.position().distanceTo(currentSourcePoint)); // rounding prevents some not needed connectors switching.
-                            if (dist < minDist) {
-                                minDist = dist;
-                                connection._resolvedSourceConnector = sourceConnector;
-                                connection._resolvedTargetConnector = currentTargetConnector;
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         function closestConnector(point, shape) {
@@ -646,8 +577,8 @@
                         }
                     } else {
                         this._setBounds(value);
-                        this.refreshConnections();
                         this._triggerBoundsChange();
+                        this.refreshConnections();
                     }
                 } else {
                     bounds = this._bounds;
@@ -1465,8 +1396,9 @@
                 pts.push(this.targetPoint());
                 return pts;
             },
+
             refresh: function () {
-                resolveConnectors(this);
+                this._resolveConnectors();
                 var globalSourcePoint = this.sourcePoint(), globalSinkPoint = this.targetPoint(),
                     boundsTopLeft, localSourcePoint, localSinkPoint, middle;
 
@@ -1483,6 +1415,123 @@
                 if (this.adorner) {
                     this.adorner.refresh();
                 }
+            },
+
+            _resolveConnectors: function () {
+                var connection = this,
+                    sourcePoint, targetPoint,
+                    source = connection.source(),
+                    target = connection.target(),
+                    autoSourceShape,
+                    autoTargetShape;
+
+                if (source instanceof Point) {
+                    sourcePoint = source;
+                } else if (source instanceof Connector) {
+                    if (isAutoConnector(source)) {
+                        autoSourceShape = source.shape;
+                    } else {
+                        connection._resolvedSourceConnector = source;
+                        sourcePoint = source.position();
+                    }
+                }
+
+                if (target instanceof Point) {
+                    targetPoint = target;
+                } else if (target instanceof Connector) {
+                    if (isAutoConnector(target)) {
+                        autoTargetShape = target.shape;
+                    } else {
+                        connection._resolvedTargetConnector = target;
+                        targetPoint = target.position();
+                    }
+                }
+
+                if (sourcePoint) {
+                    if (autoTargetShape) {
+                        connection._resolvedTargetConnector = closestConnector(sourcePoint, autoTargetShape);
+                    }
+                } else if (autoSourceShape) {
+                    if (targetPoint) {
+                        connection._resolvedSourceConnector = closestConnector(targetPoint, autoSourceShape);
+                    } else if (autoTargetShape) {
+                        this._resolveAutoConnectors(autoSourceShape, autoTargetShape);
+                    }
+                }
+            },
+
+            _resolveAutoConnectors: function(autoSourceShape, autoTargetShape) {
+                var minNonConflict = MAXINT;
+                var minDist = MAXINT;
+                var sourceConnectors = autoSourceShape.connectors;
+                var targetConnectors;
+                var minNonConflictSource, minNonConflictTarget;
+                var sourcePoint, targetPoint;
+                var minSource, minTarget;
+                var sourceConnector, targetConnector;
+                var sourceIdx, targetIdx;
+                var dist;
+
+                for (sourceIdx = 0; sourceIdx < sourceConnectors.length; sourceIdx++) {
+                    sourceConnector = sourceConnectors[sourceIdx];
+                    if (!isAutoConnector(sourceConnector)) {
+                        sourcePoint = sourceConnector.position();
+                        targetConnectors = autoTargetShape.connectors;
+
+                        for (targetIdx = 0; targetIdx < targetConnectors.length; targetIdx++) {
+                            targetConnector = targetConnectors[targetIdx];
+                            if (!isAutoConnector(targetConnector)) {
+                                targetPoint = targetConnector.position();
+                                dist = math.round(sourcePoint.distanceTo(targetPoint));
+
+                                if (dist < minNonConflict && this.diagram && this._testRoutePoints(sourcePoint, targetPoint, sourceConnector, targetConnector)) {
+                                    minNonConflict = dist;
+                                    minNonConflictSource = sourceConnector;
+                                    minNonConflictTarget = targetConnector;
+                                }
+
+                                if (dist < minDist) {
+                                    minSource = sourceConnector;
+                                    minTarget = targetConnector;
+                                    minDist = dist;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (minNonConflictSource) {
+                    minSource = minNonConflictSource;
+                    minTarget = minNonConflictTarget;
+                }
+
+                this._resolvedSourceConnector = minSource;
+                this._resolvedTargetConnector = minTarget;
+            },
+
+            _testRoutePoints: function(sourcePoint, targetPoint, sourceConnector, targetConnector) {
+                var router = this._router;
+                var passRoute = true;
+                if (router instanceof CascadingRouter) {
+                    var points = router.routePoints(sourcePoint, targetPoint, sourceConnector, targetConnector),
+                        start, end,
+                        exclude, rect;
+                    points.unshift(sourcePoint);
+                    points.push(targetPoint);
+                    exclude = [sourceConnector.shape, targetConnector.shape];
+                    for (var idx = 1; idx < points.length; idx++) {
+                        start = points[idx - 1];
+                        end = points[idx];
+                        rect = new Rect(math.min(start.x, end.x), math.min(start.y, end.y),
+                                        math.abs(start.x - end.x), math.abs(start.y - end.y));
+
+                        if (this.diagram._shapesQuadTree.hitTestRect(rect, exclude)) {
+                            passRoute = false;
+                            break;
+                        }
+                    }
+                }
+                return passRoute;
             },
 
             redraw: function (options) {
@@ -1625,6 +1674,8 @@
                     id: "main-layer"
                 });
                 that.canvas.append(that.mainLayer);
+
+                that._shapesQuadTree = new ShapesQuadTree(that);
 
                 that._pan = new Point();
                 that._adorners = [];
@@ -2211,6 +2262,7 @@
 
                 that.select(false);
                 that.mainLayer.clear();
+                that._shapesQuadTree.clear();
                 that._initialize();
             },
             /**
@@ -2267,9 +2319,10 @@
                 }
 
                 connection.diagram = this;
+                connection.updateOptionsFromModel();
+                connection.refresh();
                 this.mainLayer.append(connection.visual);
                 this.connections.push(connection);
-                connection.updateOptionsFromModel();
 
                 return connection;
             },
@@ -2326,6 +2379,7 @@
                 this.shapes.push(shape);
                 shape.diagram = this;
                 this.mainLayer.append(shape.visual);
+                this._shapesQuadTree.insert(shape);
 
                 this.trigger(CHANGE, {
                     added: [shape],
@@ -3117,6 +3171,7 @@
                     this.undoRedoService.addCompositeItem(new DeleteShapeUnit(shape));
                 }
                 Utils.remove(this.shapes, shape);
+                this._shapesQuadTree.remove(shape);
 
                 for (i = 0; i < shape.connectors.length; i++) {
                     connector = shape.connectors[i];
@@ -4468,6 +4523,259 @@
             }
         };
 
+        var QuadRoot = Class.extend({
+            init: function() {
+                this.shapes = [];
+            },
+
+            _add: function(shape, bounds) {
+                this.shapes.push({
+                    bounds: bounds,
+                    shape: shape
+                });
+                shape._quadNode = this;
+            },
+
+            insert: function(shape, bounds) {
+                this._add(shape, bounds);
+            },
+
+            remove: function(shape) {
+                var shapes = this.shapes;
+                var length = shapes.length;
+
+                for (var idx = 0; idx < length; idx++) {
+                    if (shapes[idx].shape === shape) {
+                        shapes.splice(idx, 1);
+                        break;
+                    }
+                }
+            },
+
+            hitTestRect: function(rect, exclude) {
+                var shapes = this.shapes;
+                var length = shapes.length;
+                var hit = false;
+
+                for (var i = 0; i < length; i++) {
+                    if (this._overlaps(shapes[i].bounds, rect) && !dataviz.inArray(shapes[i].shape, exclude)) {
+                        hit = true;
+                        break;
+                    }
+                }
+                return hit;
+            },
+
+            _overlaps: function(rect1, rect2) {
+                    var rect1BottomRight = rect1.bottomRight();
+                    var rect2BottomRight = rect2.bottomRight();
+                    var overlaps = !(rect1BottomRight.x < rect2.x || rect1BottomRight.y < rect2.y ||
+                        rect2BottomRight.x < rect1.x || rect2BottomRight.y < rect1.y);
+                    return overlaps;
+            }
+        });
+
+        var QuadNode = QuadRoot.extend({
+            init: function(rect) {
+                QuadRoot.fn.init.call(this);
+                this.children = [];
+                this.rect = rect;
+            },
+
+            inBounds: function(rect) {
+                var nodeRect = this.rect;
+                var nodeBottomRight = nodeRect.bottomRight();
+                var bottomRight = rect.bottomRight();
+                var inBounds = nodeRect.x <= rect.x && nodeRect.y <= rect.y && bottomRight.x <= nodeBottomRight.x &&
+                    bottomRight.y <= nodeBottomRight.y;
+                return inBounds;
+            },
+
+            overlapsBounds: function(rect) {
+                return this._overlaps(this.rect, rect);
+            },
+
+            insert: function (shape, bounds) {
+                var inserted = false;
+                var children = this.children;
+                var length = children.length;
+                if (this.inBounds(bounds)) {
+                    if (!length && this.shapes.length < 4) {
+                        this._add(shape, bounds);
+                    } else {
+                        if (!length) {
+                            this._initChildren();
+                        }
+
+                        for (var idx = 0; idx < children.length; idx++) {
+                            if (children[idx].insert(shape, bounds)) {
+                                inserted = true;
+                                break;
+                            }
+                        }
+
+                        if (!inserted) {
+                            this._add(shape, bounds);
+                        }
+                    }
+                    inserted = true;
+                }
+
+                return inserted;
+            },
+
+            _initChildren: function() {
+                var rect = this.rect,
+                    children = this.children,
+                    shapes = this.shapes,
+                    center = rect.center(),
+                    halfWidth = rect.width / 2,
+                    halfHeight = rect.height / 2,
+                    childIdx, shapeIdx;
+
+                children.push(
+                    new QuadNode(new Rect(rect.x, rect.y, halfWidth, halfHeight)),
+                    new QuadNode(new Rect(center.x, rect.y, halfWidth, halfHeight)),
+                    new QuadNode(new Rect(rect.x, center.y, halfWidth, halfHeight)),
+                    new QuadNode(new Rect(center.x, center.y, halfWidth, halfHeight))
+                );
+                for (shapeIdx = shapes.length - 1; shapeIdx >= 0; shapeIdx--) {
+                    for (childIdx = 0; childIdx < children.length; childIdx++) {
+                        if (children[childIdx].insert(shapes[shapeIdx].shape, shapes[shapeIdx].bounds)) {
+                            shapes.splice(shapeIdx, 1);
+                            break;
+                        }
+                    }
+                }
+            },
+
+            hitTestRect: function(rect, exclude) {
+                var idx, result = [];
+                var children = this.children;
+                var length = children.length;
+                var hit = false;
+
+                if (this.overlapsBounds(rect)) {
+                    if (QuadRoot.fn.hitTestRect.call(this, rect, exclude)) {
+                        hit = true;
+                    } else {
+                         for (idx = 0; idx < length; idx++) {
+                            if (children[idx].hitTestRect(rect, exclude)) {
+                               hit = true;
+                               break;
+                            }
+                        }
+                    }
+                }
+
+                return hit;
+            }
+        });
+
+        var ShapesQuadTree = Class.extend({
+            ROOT_SIZE: 1000,
+
+            init: function(diagram) {
+                diagram.bind(ITEMBOUNDSCHANGE, proxy(this._boundsChange, this));
+                diagram.bind(ITEMROTATE, proxy(this._boundsChange, this));
+                this.initRoots();
+            },
+
+            initRoots: function() {
+                this.rootMap = {};
+                this.root = new QuadRoot();
+            },
+
+            clear: function() {
+                this.initRoots();
+            },
+
+            _boundsChange: function(e) {
+                if (e.item._quadNode) {
+                    e.item._quadNode.remove(e.item);
+                    this.insert(e.item);
+                }
+            },
+
+            insert: function(shape) {
+                var bounds = shape.bounds(ROTATED);
+                var rootSize = this.ROOT_SIZE;
+                var sectors = this.getSectors(bounds);
+                var x = sectors[0][0];
+                var y = sectors[1][0];
+
+                if (this.inRoot(sectors)) {
+                    this.root.insert(shape, bounds);
+                } else {
+                    if (!this.rootMap[x]) {
+                        this.rootMap[x] = {};
+                    }
+
+                    if (!this.rootMap[x][y]) {
+                        this.rootMap[x][y] = new QuadNode(
+                            new Rect(x * rootSize, y * rootSize, rootSize, rootSize)
+                        );
+                    }
+
+                    this.rootMap[x][y].insert(shape, bounds);
+                }
+            },
+
+            remove: function(shape) {
+                if (shape._quadNode) {
+                    shape._quadNode.remove(shape);
+                }
+            },
+
+            inRoot: function(sectors) {
+                return sectors[0].length > 1 || sectors[1].length > 1;
+            },
+
+            getSectors: function(rect) {
+                var rootSize = this.ROOT_SIZE;
+                var bottomRight = rect.bottomRight();
+                var x = Math.floor(rect.x / rootSize);
+                var y = Math.floor(rect.y / rootSize);
+                var bottomX = Math.floor(bottomRight.x / rootSize);
+                var bottomY = Math.floor(bottomRight.y / rootSize);
+                var sectors = [
+                    [x],
+                    [y]
+                ];
+
+                if (x !== bottomX) {
+                    sectors[0].push(bottomX);
+                }
+                if (y !== bottomY) {
+                    sectors[1].push(bottomY);
+                }
+                return sectors;
+            },
+
+            hitTestRect: function(rect, exclude) {
+                var sectors = this.getSectors(rect);
+                var xIdx, yIdx, x, y;
+                var root;
+
+                if (this.root.hitTestRect(rect, exclude)) {
+                    return true;
+                }
+
+                for (xIdx = 0; xIdx < sectors[0].length; xIdx++) {
+                    x = sectors[0][xIdx];
+                    for (yIdx = 0; yIdx < sectors[1].length; yIdx++) {
+                        y = sectors[1][yIdx];
+                        root = (this.rootMap[x] || {})[y];
+                        if (root && root.hitTestRect(rect, exclude)) {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+        });
+
         function cloneDataItem(dataItem) {
             var result = dataItem;
             if (dataItem instanceof kendo.data.Model) {
@@ -4509,7 +4817,10 @@
             Shape: Shape,
             Connection: Connection,
             Connector: Connector,
-            DiagramToolBar: DiagramToolBar
+            DiagramToolBar: DiagramToolBar,
+            QuadNode: QuadNode,
+            QuadRoot: QuadRoot,
+            ShapesQuadTree: ShapesQuadTree
         });
 })(window.kendo.jQuery);
 
