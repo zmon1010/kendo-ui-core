@@ -1403,6 +1403,40 @@
         equal(rows.eq(2).find("th").eq(4).text(), "master1-child2-child2");
     });
 
+    test("reorder first level header with two source child columns and no target columns", function() {
+        var grid = new Grid(div, {
+            columns: [{
+              title: "master1",
+              columns: [{ title: "master1-child1" }]
+            },  {
+              title: "master2",
+              columns: [{ title: "master2-child1" }]
+            }, {
+              title: "master3"
+            }, {
+              title: "master4"
+            }],
+            dataSource: {
+                data: data
+            }
+        });
+
+        grid.reorderColumn(2, grid.columns[0]);
+
+        var rows = grid.thead.find("tr");
+
+        equal(rows.eq(0).find("th").length, 4);
+        equal(rows.eq(1).find("th").length, 2);
+
+        equal(rows.eq(0).find("th").eq(0).text(), "master2");
+        equal(rows.eq(0).find("th").eq(1).text(), "master3");
+        equal(rows.eq(0).find("th").eq(2).text(), "master1");
+        equal(rows.eq(0).find("th").eq(3).text(), "master4");
+
+        equal(rows.eq(1).find("th").eq(0).text(), "master2-child1");
+        equal(rows.eq(1).find("th").eq(1).text(), "master1-child1");
+    });
+
     test("reorder second level header with two target child columns - ltr multiple columns insert after", function() {
         var grid = new Grid(div, {
             columns: [

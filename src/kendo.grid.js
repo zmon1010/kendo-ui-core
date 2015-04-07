@@ -722,6 +722,15 @@ var __meta__ = {
         }
         return result;
     }
+    function findParentColumnWithChildren(columns, index, source) {
+        var target;
+
+        do {
+            target = columns[Math.max(index--, 0)];
+        } while(index > -1 && target != source && !target.columns);
+
+        return target;
+    }
 
     function findReorderTarget(columns, target, source, before) {
         if (target.columns) {
@@ -746,7 +755,8 @@ var __meta__ = {
                 index += before ? -1 : 1;
             }
 
-            target = parentColumns[Math.max(index, 0)];
+            target = findParentColumnWithChildren(parentColumns,index, source);
+
             if (target && target != source && target.columns) {
                 return findReorderTarget(columns, target, source, before);
             }
