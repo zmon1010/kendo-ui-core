@@ -1976,7 +1976,9 @@
                             if (shape.hasOwnProperty("layout")) {
                                 shape.layout(shape, oldBounds, newBounds);
                             }
-                            shape.rotate(shape.rotate().angle); // forces the rotation to update it's rotation center
+                            if (oldBounds.width !== newBounds.width || oldBounds.height !== newBounds.height) {
+                                shape.rotate(shape.rotate().angle); // forces the rotation to update it's rotation center
+                            }
                             changed += 1;
                         }
                     }
