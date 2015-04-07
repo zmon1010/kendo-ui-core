@@ -36,6 +36,7 @@
     <label for="optional">Optional</label>
     <%= Html.Kendo().MultiSelect()
           .Name("optional")
+          .AutoClose(false)
           .Placeholder("Select attendees...")
           .BindTo(new List<string>() {
               "Steven White",

@@ -15,7 +15,7 @@
 	        <kendo:dataSource data="${attendees}"></kendo:dataSource>
 	    </kendo:multiSelect>
 	    <label for="optional">Optional</label>
-	    <kendo:multiSelect name="optional" placeholder="Select attendees...">
+	    <kendo:multiSelect name="optional" autoClose="false" placeholder="Select attendees...">
 	        <kendo:dataSource data="${attendees}"></kendo:dataSource>
 	    </kendo:multiSelect>
 	    <button class="k-button" id="get">Send Invitation</button>

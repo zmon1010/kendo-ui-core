@@ -54,6 +54,7 @@ $select->dataSource(array('Steven White',
                           'Andrew Suyama',
                           'Nige Buchanan',
                           'Laura Fuller'))
+       ->autoClose(false)
        ->placeholder('Choose attendees...');
 
 echo $select->render();
