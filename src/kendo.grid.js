@@ -724,10 +724,11 @@ var __meta__ = {
     }
     function findParentColumnWithChildren(columns, index, source) {
         var target;
+        var locked = source.locked;
 
         do {
             target = columns[Math.max(index--, 0)];
-        } while(index > -1 && target != source && !target.columns);
+        } while(index > -1 && target != source && !target.columns && target.locked == locked);
 
         return target;
     }
