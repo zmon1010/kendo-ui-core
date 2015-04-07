@@ -28,7 +28,10 @@
 - scheduler.datasource
 - scheduler.editable
 - scheduler.group
+- scheduler.toolbar
 - scheduler.resources
+- scheduler.pdf.margin
+- scheduler.pdf.papersize
 - treelist.columns.editor
 - treelist.datasource
 - treelist.editable.window

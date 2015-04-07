@@ -64,7 +64,6 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
-
         /// <summary>
         /// Sets the start of the work day when the  "Show business hours" button is clicked.
         /// </summary>
