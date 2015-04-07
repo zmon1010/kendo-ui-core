@@ -137,6 +137,14 @@ public class ShapeDefaultsTag extends  BaseTag  /* interfaces */ /* interfaces *
         setProperty("path", value);
     }
 
+    public boolean getSelectable() {
+        return (boolean)getProperty("selectable");
+    }
+
+    public void setSelectable(boolean value) {
+        setProperty("selectable", value);
+    }
+
     public java.lang.String getSource() {
         return (java.lang.String)getProperty("source");
     }

@@ -96,6 +96,15 @@ class DiagramShapeDefaults extends \Kendo\SerializableObject {
     }
 
     /**
+    * Specifies if the shape can be selected.
+    * @param boolean $value
+    * @return \Kendo\Dataviz\UI\DiagramShapeDefaults
+    */
+    public function selectable($value) {
+        return $this->setProperty('selectable', $value);
+    }
+
+    /**
     * The source of the shape image. Applicable when the type is set to "image".
     * @param string $value
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaults

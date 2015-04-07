@@ -331,7 +331,7 @@ data source is fired. By default the widget will bind to the data source specifi
 
     /**
     * Sets the remove event of the Diagram.
-    * Fired when the user delete a shape or connection.
+    * Fired when the user removes a shape or connection.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\Diagram
     */

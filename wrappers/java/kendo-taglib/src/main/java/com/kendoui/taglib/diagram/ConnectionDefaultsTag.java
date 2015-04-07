@@ -97,6 +97,14 @@ public class ConnectionDefaultsTag extends  BaseTag  /* interfaces */ /* interfa
         setProperty("endCap", value);
     }
 
+    public boolean getSelectable() {
+        return (boolean)getProperty("selectable");
+    }
+
+    public void setSelectable(boolean value) {
+        setProperty("selectable", value);
+    }
+
     public java.lang.String getStartCap() {
         return (java.lang.String)getProperty("startCap");
     }

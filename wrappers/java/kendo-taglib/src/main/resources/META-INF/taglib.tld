@@ -13122,7 +13122,7 @@ data source is fired. By default the widget will bind to the data source specifi
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the user delete a shape or connection.</description>
+            <description>Fired when the user removes a shape or connection.</description>
             <name>remove</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -13166,6 +13166,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <name>endCap</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the connection can be selected.</description>
+            <name>selectable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>The connection start cap configuration or type name.</description>
@@ -15540,6 +15546,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Specifies if the shape can be selected.</description>
+            <name>selectable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The source of the shape image. Applicable when the type is set to "image".</description>
             <name>source</name>
             <rtexprvalue>true</rtexprvalue>
@@ -16882,7 +16894,7 @@ See visual.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the user delete a shape or connection.</description>
+        <description>Fired when the user removes a shape or connection.</description>
         <name>diagram-remove</name>
         <tag-class>com.kendoui.taglib.diagram.RemoveFunctionTag</tag-class>
         <body-content>JSP</body-content>

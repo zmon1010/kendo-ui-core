@@ -42,6 +42,15 @@ class DiagramConnectionDefaults extends \Kendo\SerializableObject {
     }
 
     /**
+    * Specifies if the connection can be selected.
+    * @param boolean $value
+    * @return \Kendo\Dataviz\UI\DiagramConnectionDefaults
+    */
+    public function selectable($value) {
+        return $this->setProperty('selectable', $value);
+    }
+
+    /**
     * Defines the connection selection configuration.
     * @param \Kendo\Dataviz\UI\DiagramConnectionDefaultsSelection|array $value
     * @return \Kendo\Dataviz\UI\DiagramConnectionDefaults
