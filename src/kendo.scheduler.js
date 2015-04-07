@@ -2755,32 +2755,15 @@ var __meta__ = {
                 updateEvent(that.dataSource.add(exception), callback);
             };
 
-            var recurrenceMessages = that.options.messages.recurrenceMessages;
             if (event.recurrenceRule || event.isOccurrence()) {
-                var editable = that.options.editable;
-                var editRecurringMode = isPlainObject(editable) ? editable.editRecurringMode : "dialog";
+                var recurrenceMessages = that.options.messages.recurrenceMessages;
 
-                if (editRecurringMode === "dialog") {
-                    this._unbindResize();
-
-                    that.showDialog({
-                        model: event,
-                        title: recurrenceMessages.editWindowTitle,
-                        text: recurrenceMessages.editRecurring ? recurrenceMessages.editRecurring : EDITRECURRING,
-                        buttons: [
-                            { text: recurrenceMessages.editWindowOccurrence, click: updateOccurrence },
-                            { text: recurrenceMessages.editWindowSeries, click: updateSeries }
-                        ]
-                    });
-
-                    this._bindResize();
-                } else {
-                    if (editRecurringMode === "series") {
-                        updateSeries();
-                    } else if (editRecurringMode ===  "occurrence") {
-                        updateOccurrence();
-                    }
-                }
+                that._showRecurringDialog(event, updateOccurrence, updateSeries,{
+                    title: recurrenceMessages.editWindowTitle,
+                    text: recurrenceMessages.editRecurring ? recurrenceMessages.editRecurring : EDITRECURRING,
+                    occurrenceText: recurrenceMessages.editWindowOccurrence,
+                    seriesText: recurrenceMessages.editWindowSeries
+                });
             } else {
                 updateEvent(that.dataSource.getByUid(event.uid));
             }
@@ -2948,29 +2931,37 @@ var __meta__ = {
             };
 
             var recurrenceMessages = that.options.messages.recurrenceMessages;
-            var editable = that.options.editable;
-            var editRecurringMode = isPlainObject(editable) ? editable.editRecurringMode : "dialog";
+            that._showRecurringDialog(model, editOccurrence, editSeries, {
+                title: recurrenceMessages.editWindowTitle,
+                text: recurrenceMessages.editRecurring ? recurrenceMessages.editRecurring : EDITRECURRING,
+                occurrenceText: recurrenceMessages.editWindowOccurrence,
+                seriesText: recurrenceMessages.editWindowSeries
+            });
+         },
 
-            if (editRecurringMode === "dialog") {
-                this._unbindResize();
+         _showRecurringDialog: function(model, editOccurrence, editSeries, messages) {
+             var that = this;
+             var editable = that.options.editable;
+             var editRecurringMode = isPlainObject(editable) ? editable.editRecurringMode : "dialog";
 
-                that.showDialog({
-                    model: model,
-                    title: recurrenceMessages.editWindowTitle,
-                    text: recurrenceMessages.editRecurring ? recurrenceMessages.editRecurring : EDITRECURRING,
-                    buttons: [
-                        { text: recurrenceMessages.editWindowOccurrence, click: editOccurrence },
-                        { text: recurrenceMessages.editWindowSeries, click: editSeries }
-                    ]
-                });
+             if (editRecurringMode === "series") {
+                 editSeries();
+             } else if (editRecurringMode ===  "occurrence") {
+                 editOccurrence();
+             } else {
+                 this._unbindResize();
 
-                this._bindResize();
-            } else {
-                 if (editRecurringMode === "series") {
-                     editSeries();
-                 } else if (editRecurringMode ===  "occurrence") {
-                     editOccurrence();
-                 }
+                 that.showDialog({
+                     model: model,
+                     title: messages.title,
+                     text: messages.text,
+                     buttons: [
+                         { text: messages.occurrenceText, click: editOccurrence },
+                         { text: messages.seriesText, click: editSeries }
+                     ]
+                 });
+
+                 this._bindResize();
              }
         },
 
@@ -3171,30 +3162,12 @@ var __meta__ = {
             };
 
             var recurrenceMessages = that.options.messages.recurrenceMessages;
-            var editable = that.options.editable;
-            var editRecurringMode = isPlainObject(editable) ? editable.editRecurringMode : "dialog";
-
-            if (editRecurringMode === "dialog") {
-                this._unbindResize();
-
-                that.showDialog({
-                    model: model,
-                    title: recurrenceMessages.deleteWindowTitle,
-                    text: recurrenceMessages.deleteRecurring ? recurrenceMessages.deleteRecurring : DELETERECURRING,
-                    buttons: [
-                       { text: recurrenceMessages.deleteWindowOccurrence, click: deleteOccurrence },
-                       { text: recurrenceMessages.deleteWindowSeries, click: deleteSeries }
-                    ]
-                });
-
-                this._bindResize();
-            }else {
-                if (editRecurringMode === "series") {
-                    deleteSeries();
-                } else if (editRecurringMode ===  "occurrence") {
-                    deleteOccurrence();
-                }
-            }
+            that._showRecurringDialog(model, deleteOccurrence, deleteSeries, {
+                title: recurrenceMessages.deleteWindowTitle,
+                text: recurrenceMessages.deleteRecurring ? recurrenceMessages.deleteRecurring : DELETERECURRING,
+                occurrenceText: recurrenceMessages.deleteWindowOccurrence,
+                seriesText: recurrenceMessages.deleteWindowSeries
+            });
         },
 
         _unbindView: function(view) {

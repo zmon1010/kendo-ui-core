@@ -221,6 +221,25 @@
         equalWithRound($(".k-event-drag-hint").outerWidth(), 2 * slots.first().outerWidth());
     });
 
+    test("moving the occurrence shows the dialog if editable is object but no editRecurringMode is set", function() {
+        var scheduler = new kendo.ui.Scheduler(div, {
+            date: new Date("2013/6/6"),
+            views: ["month"],
+            editable: { },
+            dataSource: [
+                { id: 1, start: new Date("2013/5/26 11:00"), end: new Date("2013/5/26 11:30"), title: "", recurrenceRule: "FREQ=DAILY;COUNT=2" }
+            ]
+        });
+
+        var handle = div.find(".k-event:last");
+
+        var slots = div.find(".k-scheduler-content td");
+
+        dragdrop(scheduler, handle, slots.eq(2));
+
+        equal($(".k-window-title").text(), "Edit Recurring Item");
+    });
+
     test("moving the occurrence changes the start of the series when editRecurringMode is set to series", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),

@@ -814,6 +814,29 @@
         equal($(".k-window-title").text(), "Event");
     });
 
+    test("show recurring dialog when editRecurringMode option is object without editRecurringMode option", function() {
+        var scheduler = setup({
+            views: ["week"],
+            editable: { },
+            dataSource: {
+                data: [ { id: 1, start: new Date(), end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"} ],
+                schema: {
+                    model: {
+                        id: "id",
+                        fields: {
+                            id: {type: "number"}
+                        }
+                    }
+                }
+            }
+        });
+
+        var eventUID = scheduler.element.find(".k-event:last").data("uid");
+        scheduler.editEvent(eventUID);
+
+        equal($(".k-window-title").text(), "Edit Recurring Item");
+    });
+
     test("show recurring dialog when editRecurringMode option is set to dialog", function() {
         var scheduler = setup({
             views: ["week"],
@@ -1174,6 +1197,27 @@
         var model = scheduler.dataSource.at(0);
 
         equal(model.recurrenceException, recurrenceException);
+    });
+
+    test("delete occurrence shows dialog if editing is object but without editRecurringMode set", function() {
+        var date = new Date(2013, 10, 10, 15, 0, 0),
+            exceptionDate = new Date(2013, 10, 12, 15, 0, 0),
+            exceptionDate = kendo.timezone.apply(exceptionDate, 0),
+            recurrenceException = kendo.toString(exceptionDate, "yyyyMMddTHHmmssZ") + ";";
+
+        var scheduler = setup({
+            views: ["week"],
+            date: date,
+            editable: {
+            },
+            dataSource: {
+                data: [ new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" }) ]
+            }
+        });
+
+        scheduler.removeEvent(scheduler.element.find(".k-event").eq(2).data("uid"));
+
+        equal($(".k-window-title").text(), "Delete Recurring Item");
     });
 
     test("delete occurrence creates recurrenceException entry without showing the Edit recurrence window", function() {
