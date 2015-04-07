@@ -1,3 +1,6 @@
+- contextmenu.aligntoanchor
+- contextmenu.closeonclick
+- contextmenu.orientation
 - datetimepicker.footer
 - datetimepicker.monthTemplate
 - datetimepicker.monthTemplate.content

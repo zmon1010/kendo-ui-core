@@ -192,9 +192,10 @@ namespace :generate do
         task :wrappers do
             markdown = FileList[
                 'docs/api/javascript/ui/button.md',
+                'docs/api/javascript/ui/calendar.md',
                 'docs/api/javascript/ui/colorpalette.md',
                 'docs/api/javascript/ui/colorpicker.md',
-                'docs/api/javascript/ui/calendar.md',
+                'docs/api/javascript/ui/contextmenu.md',
                 'docs/api/javascript/ui/datepicker.md',
                 'docs/api/javascript/ui/datetimepicker.md',
                 'docs/api/javascript/ui/flatcolorpicker.md',
