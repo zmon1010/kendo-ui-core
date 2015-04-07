@@ -1,0 +1,21 @@
+:options:
+    - :name: mobile
+      :type: String
+      :enum_type: MobileMode
+      :description: Defines the mobile modes supported by Kendo UI Scheduler for ASP.NET MVC
+      :values:
+          - :value: auto
+            :member: Auto
+            :description: Autodetect if rendered by a mobile browser
+
+          - :value: phone
+            :member: Phone
+            :description: Force mobile phone rendering
+
+          - :value: tablet
+            :member: Tablet
+            :description: Force mobile tablet rendering
+
+          - :value: disabled
+            :member: Disabled
+            :description: Disables the mobile adaptive rendering

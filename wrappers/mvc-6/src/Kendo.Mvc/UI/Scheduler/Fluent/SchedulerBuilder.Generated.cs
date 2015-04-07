@@ -266,25 +266,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true and the scheduler is viewed on mobile browser it will use adaptive rendering.Can be set to a string phone or tablet which will force the widget to use adaptive rendering regardless of browser type.
-        /// </summary>
-        /// <param name="value">The value for Mobile</param>
-        public SchedulerBuilder<T> Mobile(bool value)
-        {
-            Container.Mobile = value;
-            return this;
-        }
-
-        /// <summary>
-        /// If set to true and the scheduler is viewed on mobile browser it will use adaptive rendering.Can be set to a string phone or tablet which will force the widget to use adaptive rendering regardless of browser type.
-        /// </summary>
-        public SchedulerBuilder<T> Mobile()
-        {
-            Container.Mobile = true;
-            return this;
-        }
-
-        /// <summary>
         /// Configures the Kendo UI Scheduler PDF export settings.
         /// </summary>
         /// <param name="configurator">The configurator for the pdf setting.</param>

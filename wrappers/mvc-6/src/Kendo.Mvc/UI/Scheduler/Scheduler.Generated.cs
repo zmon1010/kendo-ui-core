@@ -55,8 +55,6 @@ namespace Kendo.Mvc.UI
 
         public string MinorTimeHeaderTemplateId { get; set; }
 
-        public bool? Mobile { get; set; }
-
         public SchedulerPdfSettings<T> Pdf { get; } = new SchedulerPdfSettings<T>();
 
         public bool? Selectable { get; set; }
@@ -224,11 +222,6 @@ namespace Kendo.Mvc.UI
             else if (MinorTimeHeaderTemplate.HasValue())
             {
                 settings["minorTimeHeaderTemplate"] = MinorTimeHeaderTemplate;
-            }
-
-            if (Mobile.HasValue)
-            {
-                settings["mobile"] = Mobile;
             }
 
             var pdf = Pdf.Serialize();
