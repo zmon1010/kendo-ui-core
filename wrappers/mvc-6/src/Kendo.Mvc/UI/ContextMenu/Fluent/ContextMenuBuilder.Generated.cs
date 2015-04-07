@@ -90,33 +90,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies ContextMenu opening direction.
-        /// </summary>
-        /// <param name="value">The desired direction.</param>
-        /// <example>
-        /// <code lang="CS">
-        ///  &lt;%= Html.Kendo().ContextMenu()
-        ///             .Name("ContextMenu")
-        ///             .Direction("top")
-        /// %&gt;
-        /// </code>
-        /// </example>
-        public ContextMenuBuilder Direction(string value)
-        {
-            try
-            {
-                ContextMenuDirection direction = (ContextMenuDirection)Enum.Parse(typeof(ContextMenuDirection), value);
-                Component.Direction = direction;
-            }
-            catch (OverflowException)
-            {
-                Component.Direction = ContextMenuDirection.Left;
-            }
-
-            return this;
-        }
-
-        /// <summary>
         /// Specifies the orientation in which the menu items will be ordered
         /// </summary>
         /// <param name="value">The value for Orientation</param>
