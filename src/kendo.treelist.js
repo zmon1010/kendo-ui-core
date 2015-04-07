@@ -90,8 +90,6 @@ var __meta__ = {
     var COLUMNMENUINIT = "columnMenuInit";
     var COLUMNLOCK = "columnLock";
     var COLUMNUNLOCK = "columnUnlock";
-    var whitespaceRegExp = "[\\x20\\t\\r\\n\\f]";
-    var filterRowRegExp = new RegExp("(^|" + whitespaceRegExp + ")" + "(k-filter-row)" + "(" + whitespaceRegExp + "|$)");
 
     var classNames = {
         wrapper: "k-treelist k-grid k-widget",
@@ -585,17 +583,9 @@ var __meta__ = {
            if (lockedHeigth > tableHeigth) {
                row = table2.rows[table2.rows.length - 1];
 
-               if (filterRowRegExp.test(row.className)) {
-                   row = table2.rows[table2.rows.length - 2];
-               }
-
                diff = lockedHeigth - tableHeigth;
            } else {
                row = table1.rows[table1.rows.length - 1];
-
-               if (filterRowRegExp.test(row.className)) {
-                   row = table1.rows[table1.rows.length - 2];
-               }
 
                diff = tableHeigth - lockedHeigth;
            }
@@ -1228,10 +1218,12 @@ var __meta__ = {
                 this.dataSource.load(model)
                     .always(proxy(function() {
                         this._render();
+                        this._syncLockedContentHeight();
                     }, this));
             }
 
             this._render();
+            this._syncLockedContentHeight();
         },
 
         expand: function(row) {
