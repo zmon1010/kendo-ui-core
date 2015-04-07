@@ -76,6 +76,8 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
+
+        public bool? Selectable { get; set; }
         
         public string Source { get; set; }
         
@@ -156,6 +158,12 @@ namespace Kendo.Mvc.UI
             {
                 json["rotation"] = rotation;
             }
+
+            if (Selectable.HasValue)
+            {
+                json["selectable"] = Selectable;
+            }
+
             if (Source.HasValue())
             {
                 json["source"] = Source;

@@ -138,7 +138,18 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new DiagramShapeDefaultsRotationSettingsBuilder<TShapeModel,TConnectionModel>(container.Rotation));
             return this;
         }
-        
+
+        /// <summary>
+        /// Specifies if the shape can be selected.
+        /// </summary>
+        /// <param name="value">The value that configures the selectable.</param>
+        public DiagramShapeDefaultsSettingsBuilder<TShapeModel, TConnectionModel> Selectable(bool value)
+        {
+            container.Selectable = value;
+
+            return this;
+        }
+
         /// <summary>
         /// The source of the shape image. Applicable when the type is set to "image".
         /// </summary>

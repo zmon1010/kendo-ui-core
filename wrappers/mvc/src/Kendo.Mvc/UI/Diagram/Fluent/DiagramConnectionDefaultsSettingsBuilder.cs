@@ -84,7 +84,18 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new DiagramConnectionDefaultsHoverSettingsBuilder<TShapeModel,TConnectionModel>(container.Hover));
             return this;
         }
-        
+
+        /// <summary>
+        /// Specifies if the connection can be selected.
+        /// </summary>
+        /// <param name="value">The value that configures the selectable.</param>
+        public DiagramConnectionDefaultsSettingsBuilder<TShapeModel, TConnectionModel> Selectable(bool value)
+        {
+            container.Selectable = value;
+
+            return this;
+        }
+
         /// <summary>
         /// Defines the connection selection configuration.
         /// </summary>

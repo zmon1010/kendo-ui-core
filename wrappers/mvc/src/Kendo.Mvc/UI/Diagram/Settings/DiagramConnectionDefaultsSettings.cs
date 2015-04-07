@@ -54,6 +54,8 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
+
+        public bool? Selectable { get; set; }
         
         public DiagramConnectionDefaultsSelectionSettings Selection
         {
@@ -102,6 +104,12 @@ namespace Kendo.Mvc.UI
             {
                 json["hover"] = hover;
             }
+
+            if (Selectable.HasValue)
+            {
+                json["selectable"] = Selectable;
+            }
+
             var selection = Selection.ToJson();
             if (selection.Any())
             {
