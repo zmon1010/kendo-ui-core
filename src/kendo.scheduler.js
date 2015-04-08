@@ -842,26 +842,6 @@ var __meta__ = {
        };
     }
 
-    function dropDownResourceEditorMobile(resource, model) {
-        var attr = createValidationAttributes(model, resource.field);
-
-        return function(container) {
-            var options = '';
-            var view = resource.dataSource.view();
-
-            for (var idx = 0, length = view.length; idx < length; idx++) {
-                options += kendo.format('<option value="{0}">{1}</option>',
-                    kendo.getter(resource.dataValueField)(view[idx]),
-                    kendo.getter(resource.dataTextField)(view[idx])
-                );
-            }
-
-           $(kendo.format('<select data-{0}bind="value:{1}">{2}</select>', kendo.ns, resource.field, options))
-             .appendTo(container)
-             .attr(attr);
-       };
-    }
-
     function descriptionEditor(options) {
         var attr = createValidationAttributes(options.model, options.field);
 
