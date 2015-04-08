@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/angular.js",
+        "../src/kendo.all.js"
+      ]);
+    </script>
+    <script src="test-pdf-helpers.js"></script>
+    <style>
+      body, input {
+        font-family: "DejaVu Serif";
+      }
+      #test { margin: 1em }
+    </style>
+  </head>
+  <script>
+    angular.module("App", [ "kendo.directives" ])
+    .controller("Ctrl", [ "$scope", function($scope) {
+      $scope.getPDF = function() {
+        kendo.drawing.drawDOM("#test")
+        .then(function(group){
+          group.options.set("pdf.margin", "1cm");
+          kendo.drawing.pdf.saveAs(group, "test.pdf");
+        });
+      };
+      $scope.data = [
+        "Foo", "Bar", "Baz"
+      ];
+    }]);
+  </script>
+  <body ng-app="App" ng-controller="Ctrl">
+    <button ng-click="getPDF()">PDF</button>
+    <button onclick="draw('#test', 'svg')">SVG</button>
+    <div id="test">
+      <select kendo-combo-box>
+        <option>Foo</option>
+        <option>Bar</option>
+        <option>Baz</option>
+      </select>
+      <br/><br/>
+      <select kendo-drop-down-list>
+        <option>Foo</option>
+        <option>Bar</option>
+        <option>Baz</option>
+      </select>
+      <br/><br/>
+      <input kendo-auto-complete k-data-source="data" />
+      <br/><br/>
+      <input kendo-date-picker />
+    </div>
+  </body>
+</html>
