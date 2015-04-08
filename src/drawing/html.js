@@ -2515,7 +2515,19 @@
     }
 
     function groupInStackingContext(element, group, zIndex) {
-        var main = nodeInfo._stackingContext.group;
+        var main;
+        if (zIndex != "auto") {
+            // use the current stacking context
+            main = nodeInfo._stackingContext.group;
+            zIndex = parseFloat(zIndex);
+        } else {
+            // normal flow — use given container.  we still have to
+            // figure out where should we insert this element with the
+            // assumption that its z-index is zero, as the group might
+            // already contain elements with higher z-index.
+            main = group;
+            zIndex = 0;
+        }
         var a = main.children;
         for (var i = 0; i < a.length; ++i) {
             if (a[i]._dom_zIndex != null && a[i]._dom_zIndex > zIndex) {
@@ -2527,16 +2539,21 @@
         main.insertAt(tmp, i);
         tmp._dom_zIndex = zIndex;
 
-        // if (nodeInfo._matrix) {
-        //     tmp.transform(nodeInfo._matrix);
-        // }
-        if (nodeInfo._clipbox) {
-            var m = nodeInfo._matrix.invert();
-            var r = nodeInfo._clipbox.transformCopy(m);
-            setClipping(tmp, drawing.Path.fromRect(r));
-            // console.log(r);
-            // tmp.append(drawing.Path.fromRect(r));
-            // tmp.append(new drawing.Text(element.className || element.id, r.topLeft()));
+        if (main !== group) {
+            // console.log("Placing", element, "in", nodeInfo._stackingContext.element, "at position", i, " / ", a.length);
+            // console.log(a.slice(i+1));
+
+            // if (nodeInfo._matrix) {
+            //     tmp.transform(nodeInfo._matrix);
+            // }
+            if (nodeInfo._clipbox) {
+                var m = nodeInfo._matrix.invert();
+                var r = nodeInfo._clipbox.transformCopy(m);
+                setClipping(tmp, drawing.Path.fromRect(r));
+                // console.log(r);
+                // tmp.append(drawing.Path.fromRect(r));
+                // tmp.append(new drawing.Text(element.className || element.id, r.topLeft()));
+            }
         }
 
         return tmp;
@@ -2578,14 +2595,10 @@
         if ((tr || opacity < 1) && zIndex == "auto") {
             zIndex = 0;
         }
-        if (zIndex != "auto") {
-            group = groupInStackingContext(element, container, parseFloat(zIndex));
-        } else {
-            group = new drawing.Group();
-            container.append(group);
-        }
+        group = groupInStackingContext(element, container, zIndex);
 
         // XXX: remove at some point
+        // group._pdfElement = element;
         // group.options._pdfDebug = "";
         // if (element.id) {
         //     group.options._pdfDebug = "#" + element.id;
