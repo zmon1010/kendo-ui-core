@@ -37,7 +37,7 @@ Spreadsheet.prototype = {
             };
         }
         cell.input = data;
-        try {
+        // try {
             var x = calc.parse(sheet, row, col, data), display = x.value;
             if (x.type == "exp") {
                 cell.exp = x;
@@ -52,14 +52,14 @@ Spreadsheet.prototype = {
                 type: x.type,
                 display: display
             };
-        } catch(ex) {
-            cell.type = "error";
-            return {
-                type: "error",
-                display: "#ERROR",
-                tooltip: ex+""
-            };
-        }
+        // } catch(ex) {
+        //     cell.type = "error";
+        //     return {
+        //         type: "error",
+        //         display: "#ERROR",
+        //         tooltip: ex+""
+        //     };
+        // }
     },
 
     getDisplayData: function(sheet, row, col) {
@@ -263,6 +263,7 @@ function _onKeyDown(ev) {
                 var exp = calc.print(sheetName, row, col, window.COPY.ast);
                 input.val("=" + exp);
             }
+            input.select();
             ev.preventDefault();
         }
     });
