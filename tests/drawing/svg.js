@@ -484,6 +484,28 @@
             deepEqual(grandChild.element._kendoNode, grandChild);
         });
 
+        test("attachTo inserts element at specific position", function() {
+            var domElement = {
+                childNodes: ["foo", "bar"],
+                insertBefore: function(element, referenceNode) {
+                    equal(referenceNode, "bar");
+                }
+            };
+
+            groupNode.attachTo(domElement, 1);
+        });
+
+        test("attachTo passes null for reference node when inserting element at last position", function() {
+            var domElement = {
+                childNodes: ["foo", "bar"],
+                insertBefore: function(element, referenceNode) {
+                    ok(referenceNode === null);
+                }
+            };
+
+            groupNode.attachTo(domElement, 2);
+        });
+
         test("destroy removes element", function() {
             groupNode.attachTo(document.createElement("div"));
             groupNode.destroy();

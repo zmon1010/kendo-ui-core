@@ -193,7 +193,7 @@
             var element = container.firstChild.firstChild;
             if (element) {
                 if (defined(pos)) {
-                    domElement.insertBefore(element, domElement.childNodes[pos]);
+                    domElement.insertBefore(element, domElement.childNodes[pos] || null);
                 } else {
                     domElement.appendChild(element);
                 }
