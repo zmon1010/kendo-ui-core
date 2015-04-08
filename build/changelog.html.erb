@@ -33,13 +33,17 @@ end
 def icon_for(component)
     "<img src='/libraries/Kendo_UI_Icons_32x32/#{component_icon(component)}_kendoui.sflb' class='poBoxIcon' width='32' height='32' alt='Kendo UI #{component} Icon'>"
 end
+
+def date
+    Time.now.strftime("%B %d, %Y")
+end
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Changelog for Kendo UI v<%= VERSION %></title>
+    <title>Changelog for Kendo UI v<%= VERSION %> (<%= date %>)</title>
     <style>
         html, body {
             margin: 0;
