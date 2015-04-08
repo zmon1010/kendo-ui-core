@@ -12,7 +12,7 @@
 /*buttons*/
 @office365-button-border: #f4f4f4;
 @office365-button-background: #f4f4f4;
-@office365-button-primary-background: #0072c6; /* ???????????????????????????????? */
+@office365-button-primary-background: #0072c6;
 @office365-button-selected-background: #0072c6;
 @office365-button-selected-border: #0072c6;
 @office365-button-hover-background: #eaeaea;
@@ -20,7 +20,7 @@
 /*actionsheet, popover and modalview buttons*/
 @office365-inverse-background: #0072c6;
 @office365-inverse-hover-background: #fff;
-@office365-inverse-text: #333; /*also listview and button selected text*/
+@office365-inverse-text: #333;
 @office365-inverse-border: #e5e5e5;
 
 @switch-color: #666666;
@@ -32,7 +32,7 @@
 
 /*listview*/
 @office365-list-background: #fff;
-@office365-list-hover-background: #fff; /*also modalview title*/
+@office365-list-hover-background: #fff;
 @office365-list-selected-background: #cde6f7;
 @office365-list-group-background: #f7f7f7;
 @office365-list-group-text: #6d6d72;
@@ -43,10 +43,7 @@
     background-color: @office365-background;
 }
 
-.km-office365/*,
-.km-office365 .k-toolbar,
-.km-office365 .km-detail,
-.km-office365 .km-content*/
+.km-office365
 {
     color: @office365-text;
 }
@@ -90,18 +87,6 @@
 {
     color: @office365-secondary-text;
     background-color: @office365-button-primary-background;    
-}
-
- .km-office365 .km-modalview .km-footer .km-button.km-state-active
- {
-    //color: @office365-text;
-    //background-color: @office365-button-selected-background;
- }
-
-.km-office365 .km-navbar
-{
-    //color: @office365-secondary-text;
-    //border-color: @office365-inverse-background;
 }
 
 .km-office365 .km-navbar .km-leftitem .km-button {
@@ -216,9 +201,7 @@
     background-color: @office365-button-background;
 }
 
-.km-modalview,
-.km-office365 .km-switch-background/*,
-.km-office365 .k-slider-selection*/
+.km-modalview
 {
     background: @office365-secondary-background;
 }
@@ -418,12 +401,6 @@
     border-color: transparent @office365-background transparent;
 }
 
-.km-office365 .km-left .km-popup-arrow:after,
-.km-office365 .km-right .km-popup-arrow:after
-{
-  //  border-color: transparent @office365-background;
-}
-
 /* Loader & Pull-to-refresh */
 
 .km-office365 .km-loader
@@ -478,7 +455,6 @@
     color: @office365-secondary-text;
 }
 
-//.km-office365 .km-loader > *:not(h1),
 .km-office365 .km-filter-wrap > input,
 .km-office365 .km-switch-handle.km-state-active,
 .km-root .km-office365 .km-scroller-refresh span:not(.km-template)
