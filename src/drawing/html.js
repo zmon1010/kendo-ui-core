@@ -1275,7 +1275,7 @@
         var fake = [];
         function pseudo(kind, place) {
             var style = getComputedStyle(element, kind);
-            if (style.content && style.content != "normal" && style.content != "none") {
+            if (style.content && style.content != "normal" && style.content != "none" && style.width != "0px") {
                 var psel = element.ownerDocument.createElement(KENDO_PSEUDO_ELEMENT);
                 psel.style.cssText = getCssText(style);
                 psel.textContent = evalPseudoElementContent(element, style.content);
