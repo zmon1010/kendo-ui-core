@@ -21,6 +21,7 @@ var __meta__ = {
 
         deepExtend = kendo.deepExtend,
         isArray = $.isArray,
+        proxy = $.proxy,
         inArray = dataviz.inArray,
         math = Math;
 
@@ -31,6 +32,7 @@ var __meta__ = {
         BAR = "bar",
         BULLET = "bullet",
         PIE = "pie",
+        LEAVE = "leave",
         NO_CROSSHAIR = [BAR, BULLET];
 
     // Sparkline =============================================================
@@ -185,6 +187,8 @@ var __meta__ = {
             } else {
                 tooltip = Chart.fn._createTooltip.call(chart);
             }
+
+            tooltip.bind(LEAVE, proxy(chart._tooltipleave, chart));
 
             return tooltip;
         },

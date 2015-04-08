@@ -153,6 +153,7 @@ var __meta__ = {
         INSIDE_BASE = "insideBase",
         INSIDE_END = "insideEnd",
         INTERPOLATE = "interpolate",
+        LEAVE = "leave",
         LEFT = "left",
         LEGEND_ITEM_CLICK = "legendItemClick",
         LEGEND_ITEM_HOVER = "legendItemHover",
@@ -607,7 +608,19 @@ var __meta__ = {
                 tooltip = new Tooltip(element, options.tooltip);
             }
 
+            tooltip.bind(LEAVE, proxy(chart._tooltipleave, chart));
+
             return tooltip;
+        },
+
+        _tooltipleave: function() {
+            var chart = this,
+                plotArea = chart._plotArea,
+                highlight = chart._highlight;
+
+            plotArea.hideCrosshairs();
+
+            highlight.hide();
         },
 
         _applyDefaults: function(options, themeOptions) {
@@ -1119,18 +1132,14 @@ var __meta__ = {
         _mouseleave: function(e) {
             var chart = this,
                 plotArea = chart._plotArea,
-                crosshairs = plotArea.crosshairs,
                 tooltip = chart._tooltip,
                 highlight = chart._highlight,
-                target = e.relatedTarget,
-                i;
+                target = e.relatedTarget;
 
             if (!(target && $(target).closest(tooltip.element).length)) {
                 chart._mousemove.cancel();
 
-                for (i = 0; i < crosshairs.length; i++) {
-                    crosshairs[i].hide();
-                }
+                plotArea.hideCrosshairs();
 
                 highlight.hide();
 
@@ -8559,6 +8568,13 @@ var __meta__ = {
             }
         },
 
+        hideCrosshairs: function() {
+            var crosshairs = this.crosshairs;
+            for (var idx = 0; idx < crosshairs.length; idx++) {
+                crosshairs[idx].hide();
+            }
+        },
+
         findPane: function(name) {
             var plotArea = this,
                 panes = plotArea.panes,
@@ -10369,9 +10385,11 @@ var __meta__ = {
         }
     });
 
-    var BaseTooltip = Class.extend({
+    var BaseTooltip = Observable.extend({
         init: function(chartElement, options) {
             var tooltip = this;
+
+            Observable.fn.init.call(tooltip);
 
             tooltip.options = deepExtend({}, tooltip.options, options);
 
@@ -10561,6 +10579,7 @@ var __meta__ = {
             var target = e.relatedTarget;
             var chart = this.chartElement[0];
             if (target && target !== chart && !$.contains(chart, target)) {
+                this.trigger(LEAVE);
                 this.hide();
             }
         },

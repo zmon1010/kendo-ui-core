@@ -141,6 +141,16 @@
             element.trigger($.Event("mouseout", { relatedTarget: document.body }));
         });
 
+        test("triggers leave when moving out of the chart", function() {
+            showTooltip();
+
+            tooltip.bind("leave", function() {
+                ok(true);
+            });
+
+            element.trigger($.Event("mouseout", { relatedTarget: document.body }));
+        });
+
         test("detaches from body on destroy", function() {
             tooltip.destroy();
 

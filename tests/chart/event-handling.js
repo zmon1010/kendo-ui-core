@@ -140,4 +140,40 @@
 
     })();
 
+    // ------------------------------------------------------------
+    (function() {
+        module("tooltip leave", {
+            setup: function() {
+                setupChart({
+                    valueAxis: {
+                        crosshair: {
+                            visible: true
+                        }
+                    },
+                    tooltip:{
+                        visible: true
+                    }
+                });
+            },
+            teardown: function() {
+                destroyChart();
+            }
+        });
+
+        test("hides crosshairs ", function() {
+            chart._plotArea.crosshairs[0].hide = function() {
+                ok(true);
+            };
+            chart._tooltip.trigger("leave");
+        });
+
+        test("hides highlight ", function() {
+            chart._highlight.hide = function() {
+                ok(true);
+            };
+            chart._tooltip.trigger("leave");
+        });
+
+    })();
+
 })();
