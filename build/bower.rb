@@ -23,7 +23,7 @@ def push_bowers(meta = nil)
     sh "build/sync-bower"
 end
 
-BOWER_BUNDLES = ["bundles:aspnetmvc.commercial", "bundles:core", "bundles:appbuilder.core"]
+BOWER_BUNDLES = ["build:production:get_binaries", "bundles:aspnetmvc.commercial", "bundles:core", "bundles:appbuilder.core"]
 namespace :bower do
     task :internal_build => BOWER_BUNDLES do
         push_bowers
