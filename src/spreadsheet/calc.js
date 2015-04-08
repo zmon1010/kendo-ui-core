@@ -289,7 +289,7 @@
         // - A1:B3 (ref: "range")
         // - A:A   (ref: "col")
         // - 2:2   (ref: "row")
-        function maybe_range(bin) {
+        function maybe_range() {
             return input.ahead(3, function(a, b, c){
                 if ((a.type == "sym" || a.type == "num") &&
                     (b.type == "op" && b.value == ":") &&
@@ -410,19 +410,21 @@
             }
             else if (type == "binary") {
                 open_paren();
-                if (node.left.type == "ref" && node.left.ref == "name") {
+                var left_name = (node.op == ":" && node.left.type == "ref" && node.left.ref == "name");
+                var right_name = (node.op == ":" && node.right.type == "ref" && node.right.ref == "name");
+                if (left_name) {
                     ret += "(";
                 }
                 ret += print(node.left, OPERATORS[op]);
-                if (node.left.type == "ref" && node.left.ref == "name") {
+                if (left_name) {
                     ret += ")";
                 }
                 ret += op;
-                if (node.right.type == "ref" && node.right.ref == "name") {
+                if (right_name) {
                     ret += "(";
                 }
                 ret += print(node.right, OPERATORS[op]);
-                if (node.right.type == "ref" && node.right.ref == "name") {
+                if (right_name) {
                     ret += ")";
                 }
                 close_paren();
@@ -433,24 +435,7 @@
                 }).join(", ") + ")";
             }
             else if (type == "ref") {
-                if (node.ref == "cell") {
-                    ret = print_ref(node);
-                }
-                else if (node.ref == "name") {
-                    if (node.sheet == sheet) {
-                        ret = node.name;
-                    } else {
-                        ret = node.sheet + "!" + node.name;
-                    }
-                }
-                else if (node.ref == "range") {
-                    ret = print_ref(node.left)
-                        + ":"
-                        + print_ref(node.right, true);
-                }
-                else {
-                    throw new Error("Unsupported reference type " + node.ref);
-                }
+                ret = print_ref(node);
             }
             else if (type == "bool") {
                 ret = (node.value+"").toUpperCase();
@@ -472,31 +457,44 @@
                     ret += ")";
                 }
             }
-            function print_ref(ref, noSheet) {
-                if (ref.ref == "cell") {
+            function print_ref(node, noSheet) {
+                if (node.ref == "cell") {
                     return make_reference(
-                        noSheet || ref.sheet == sheet ? null : ref.sheet, // sheet name
-                        ref.row + (ref.rel & 2 ? row : 0),                // row
-                        ref.col + (ref.rel & 1 ? col : 0),                // col
-                        ref.rel^3                                         // whether to add the $
+                        noSheet || node.sheet == sheet ? null : node.sheet, // sheet name
+                        node.row + (node.rel & 2 ? row : 0),                // row
+                        node.col + (node.rel & 1 ? col : 0),                // col
+                        node.rel^3                                          // whether to add the $
                     );
                 }
-                if (ref.ref == "col") {
+                else if (node.ref == "col") {
                     return make_col(
-                        noSheet || ref.sheet == sheet ? null : ref.sheet,
-                        ref.col + (ref.rel ? col : 0),
-                        !ref.rel
+                        noSheet || node.sheet == sheet ? null : node.sheet,
+                        node.col + (node.rel ? col : 0),
+                        !node.rel
                     );
                 }
-                if (ref.ref == "row") {
+                else if (node.ref == "row") {
                     return make_row(
-                        noSheet || ref.sheet == sheet ? null : ref.sheet,
-                        ref.row + (ref.rel ? row : 0),
-                        !ref.rel
+                        noSheet || node.sheet == sheet ? null : node.sheet,
+                        node.row + (node.rel ? row : 0),
+                        !node.rel
                     );
                 }
-                // probably range?  doesn't make any sense, but print it.
-                return print(ref);
+                else if (node.ref == "name") {
+                    if (node.sheet == sheet) {
+                        return node.name;
+                    } else {
+                        return node.sheet + "!" + node.name;
+                    }
+                }
+                else if (node.ref == "range") {
+                    return print(node.left)
+                        + ":"
+                        + print(node.right);
+                }
+                else {
+                    throw new Error("Unknown reference type in print " + node.type);
+                }
             }
         }
     }
@@ -732,7 +730,9 @@
         }
         function next() {
             var tok = peek();
-            index++;
+            if (tok) {
+                index++;
+            }
             return tok;
         }
         function ahead(n, f) {
