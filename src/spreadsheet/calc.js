@@ -1,3 +1,5 @@
+// -*- fill-column: 100 -*-
+
 (function(f, define){
     define([ "../kendo.core" ], f);
 })(function(){
@@ -6,7 +8,8 @@
 
     // WARNING: removing the following jshint declaration and turning
     // == into === to make JSHint happy will break functionality.
-    /* jshint eqnull:true, newcap:false, laxbreak:true */
+    /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true */
+    /* global console */
 
     kendo.spreadsheet = {};
     var exports = kendo.spreadsheet.calc = {};
@@ -62,12 +65,12 @@
                 rel   : relcol | relrow
             };
         }
-        if ((m = /^(.+)!(.+)$/i.exec(name))) {
+        if ((m = /^((.*)!)?(.+)$/i.exec(name))) {
             return {
                 type  : "ref",
                 ref   : "name",
-                sheet : m[1],
-                name  : m[2]
+                sheet : m[1] && m[2],
+                name  : m[3]
             };
         }
     }
@@ -76,7 +79,7 @@
     function make_reference(sheet, row, col, abs) {
         var aa = "";
         while (col > 0) {
-            aa += String.fromCharCode(64 + col % 26);
+            aa = String.fromCharCode(64 + col % 26) + aa;
             col = Math.floor(col / 26);
         }
         if (abs & 2) {
@@ -90,6 +93,26 @@
         } else {
             return aa + row;
         }
+    }
+
+    function make_row(sheet, row, abs) {
+        if (abs) {
+            row = "$" + row;
+        }
+        if (sheet) {
+            return sheet + "!" + row;
+        } else {
+            return row;
+        }
+    }
+
+    function make_col(sheet, col, abs) {
+        var aa = "";
+        while (col > 0) {
+            aa = String.fromCharCode(64 + col % 26) + aa;
+            col = Math.floor(col / 26);
+        }
+        return make_row(sheet, aa, abs);
     }
 
     function parse(sheet, row, col, input) {
@@ -113,12 +136,14 @@
                 }
             }
         }
+
         function is(type, value) {
             var tok = input.peek();
             return tok != null &&
                 (type == null || tok.type === type) &&
                 (value == null || tok.value === value) ? tok : null;
         }
+
         function parse_expression(commas) {
             return maybe_intersect(
                 maybe_call(
@@ -127,8 +152,8 @@
                 commas
             );
         }
-        function parse_symbol() {
-            var tok = input.next();
+
+        function parse_symbol(tok) {
             if (tok.upper == "TRUE" || tok.upper == "FALSE") {
                 return {
                     type: "bool",
@@ -150,8 +175,12 @@
             }
             return ref || tok;
         }
+
         function parse_atom(commas) {
-            var exp;
+            var exp = maybe_range();
+            if (exp) {
+                return exp;
+            }
             if (is("punc", "(")) {
                 input.next();
                 exp = parse_expression(true);
@@ -161,7 +190,7 @@
                 exp = input.next();
             }
             else if (is("sym")) {
-                exp = parse_symbol();
+                exp = parse_symbol(input.next());
             }
             else if (is("op", "+") || is("op", "-")) {
                 exp = {
@@ -171,12 +200,13 @@
                 };
             }
             else {
-                input.croak("Unexpected");
+                input.croak("Parse error");
             }
             return maybe_call(exp);
         }
+
         function maybe_intersect(exp, commas) {
-            if (is("punc", "(") || is("sym")) {
+            if (is("punc", "(") || is("sym") || is("num")) {
                 return {
                     type: "binary",
                     op: " ",
@@ -187,29 +217,33 @@
                 return exp;
             }
         }
+
         function maybe_call(exp) {
             if (is("punc", "(")) {
-                if (exp.type != "sym") {
+                if (exp.type != "ref" && exp.rel != "name") {
                     input.croak("Expecting function name");
                 }
                 var args = [];
                 input.next();
-                while (1) {
-                    args.push(parse_expression(false));
-                    if (input.eof() || is("punc", ")")) {
-                        break;
+                if (!is("punc", ")")) {
+                    while (1) {
+                        args.push(parse_expression(false));
+                        if (input.eof() || is("punc", ")")) {
+                            break;
+                        }
+                        skip("op", ",");
                     }
-                    skip("op", ",");
                 }
                 skip("punc", ")");
                 exp = {
                     type: "call",
-                    func: exp.value,
+                    func: exp.name,
                     args: args
                 };
             }
             return maybe_percent(exp);
         }
+
         function maybe_percent(exp) {
             if (is("op", "%")) {
                 input.next();
@@ -222,6 +256,7 @@
                 return exp;
             }
         }
+
         function maybe_binary(left, my_prec, commas) {
             var tok = is("op");
             if (tok && (commas || tok.value != ",")) {
@@ -229,32 +264,133 @@
                 if (his_prec > my_prec) {
                     input.next();
                     var right = maybe_binary(parse_atom(commas), his_prec, commas);
-                    var binary = {
+                    return maybe_binary({
                         type: "binary",
                         op: tok.value,
                         left: left,
                         right: right
-                    };
-                    return maybe_binary(binary, my_prec, commas);
+                    }, my_prec, commas);
                 }
             }
             return left;
         }
+
+        // Attempt to resolve constant ranges at parse time.  This helps handling row or column
+        // ranges (i.e. A:A), printing ranges in normalized form, determining a formula's
+        // dependencies.  However, the following can also be a valid range, and we can't analyze it
+        // statically:
+        //
+        // ( INDIRECT(A1) : INDIRECT(A2) )
+        //
+        // therefore support for the range operators must also be present at run-time.
+        //
+        // This function will only deal with constant ranges like:
+        //
+        // - A1:B3 (ref: "range")
+        // - A:A   (ref: "col")
+        // - 2:2   (ref: "row")
+        function maybe_range(bin) {
+            return input.ahead(3, function(a, b, c){
+                if ((a.type == "sym" || a.type == "num") &&
+                    (b.type == "op" && b.value == ":") &&
+                    (c.type == "sym" || c.type == "num"))
+                {
+                    var left = getref(a);
+                    var right = getref(c);
+                    if (left != null && right != null) {
+                        if (left.ref != right.ref) {
+                            input.croak("Incompatible references in range");
+                        }
+                        return {
+                            type  : "ref",
+                            ref   : "range",
+                            sheet : right.sheet = left.sheet,
+                            left  : corner(left, right, 0),
+                            right : corner(left, right, 1)
+                        };
+                    }
+                }
+            });
+        }
+
+        function getref(tok) {
+            if (tok.type == "num" && tok.value == tok.value|0) {
+                return {
+                    type  : "ref",
+                    ref   : "row",
+                    sheet : sheet,
+                    rel   : true,
+                    row   : tok.value - row
+                };
+            }
+            var ref = parse_symbol(tok);
+            if (ref.type == "ref") {
+                if (ref.ref == "name") {
+                    var name = ref.name;
+                    var abs = name.charAt(0) == "$";
+                    if (abs) {
+                        name = name.substr(1);
+                    }
+                    var r = /^[0-9]+$/.test(name);
+                    ref = {
+                        type  : "ref",
+                        ref   : r ? "row" : "col",
+                        sheet : ref.sheet,
+                        rel   : !abs
+                    };
+                    if (r) {
+                        ref.row = getrow(name) - (abs ? 0 : row);
+                    } else {
+                        ref.col = getcol(name) - (abs ? 0 : col);
+                    }
+                }
+                return ref;
+            }
+        }
+
+        function corner(a, b, side) {
+            function adjust(num, delta, should) {
+                return should ? num + delta : num;
+            }
+            if (a.ref == "row") {
+                return (adjust(a.row, row, a.rel) < adjust(b.row, row, a.rel)
+                        ? (side ? b : a)
+                        : (side ? a : b));
+            }
+            if (a.ref == "col") {
+                return (adjust(a.col, col, a.rel) < adjust(b.col, col, a.rel)
+                        ? (side ? b : a)
+                        : (side ? a : b));
+            }
+            if (a.ref == "cell") {
+                var tmp;
+                var r1 = a.row, c1 = a.col, r2 = b.row, c2 = b.col;
+                var rr1 = a.rel & 2, rc1 = a.rel & 1;
+                var rr2 = b.rel & 2, rc2 = b.rel & 1;
+                if (adjust(r1, row, rr1) > adjust(r2, row, rr2)) {
+                    tmp = r1; r1 = r2; r2 = tmp;
+                    tmp = rr1; rr1 = rr2; rr2 = tmp;
+                }
+                if (adjust(c1, col, rc1) > adjust(c2, col, rc2)) {
+                    tmp = c1; c1 = c2; c2 = tmp;
+                    tmp = rc1; rc1 = rc2; rc2 = tmp;
+                }
+                return {
+                    type  : "ref",
+                    ref   : "cell",
+                    sheet : a.sheet,
+                    row   : side ? r2 : r1,
+                    col   : side ? c2 : c1,
+                    rel   : side ? (rr2 | rc2) : (rr1 | rc1)
+                };
+            }
+        }
     }
 
     function print(sheet, row, col, ast) {
-        return (function print(node, prec){
-            function open_paren() {
-                if (OPERATORS[op] < prec || (!prec && op == ",")) {
-                    ret += "(";
-                    parens = true;
-                }
-            }
-            function close_paren() {
-                if (parens) {
-                    ret += ")";
-                }
-            }
+        return print(ast);
+
+        function print(node, prec){
             var type = node.type, ret = "", op = node.op, parens = false;
             if (type == "num") {
                 ret = node.value + "";
@@ -274,9 +410,21 @@
             }
             else if (type == "binary") {
                 open_paren();
-                ret += print(node.left, OPERATORS[op])
-                    +  op
-                    +  print(node.right, OPERATORS[op]);
+                if (node.left.type == "ref" && node.left.ref == "name") {
+                    ret += "(";
+                }
+                ret += print(node.left, OPERATORS[op]);
+                if (node.left.type == "ref" && node.left.ref == "name") {
+                    ret += ")";
+                }
+                ret += op;
+                if (node.right.type == "ref" && node.right.ref == "name") {
+                    ret += "(";
+                }
+                ret += print(node.right, OPERATORS[op]);
+                if (node.right.type == "ref" && node.right.ref == "name") {
+                    ret += ")";
+                }
                 close_paren();
             }
             else if (type == "call") {
@@ -284,37 +432,194 @@
                     return print(arg, 0);
                 }).join(", ") + ")";
             }
-            else if (type == "sym") {
-                ret = node.value;
-            }
             else if (type == "ref") {
                 if (node.ref == "cell") {
-                    ret = make_reference(
-                        node.sheet == sheet ? null : node.sheet, // sheet name
-                        node.row + (node.rel & 2 ? row : 0),     // row
-                        node.col + (node.rel & 1 ? col : 0),     // col
-                        node.rel^3                               // whether to add the $
-                    );
-                } else if (node.ref == "name") {
-                    ret = node.sheet + "!" + node.name;
-                } else {
+                    ret = print_ref(node);
+                }
+                else if (node.ref == "name") {
+                    if (node.sheet == sheet) {
+                        ret = node.name;
+                    } else {
+                        ret = node.sheet + "!" + node.name;
+                    }
+                }
+                else if (node.ref == "range") {
+                    ret = print_ref(node.left)
+                        + ":"
+                        + print_ref(node.right, true);
+                }
+                else {
                     throw new Error("Unsupported reference type " + node.ref);
                 }
             }
             else if (type == "bool") {
                 ret = (node.value+"").toUpperCase();
             }
+            else {
+                throw new Error("Unsupported node in print: " + type);
+            }
+
             return ret;
-        })(ast);
+
+            function open_paren() {
+                if (OPERATORS[op] < prec || (!prec && op == ",")) {
+                    ret += "(";
+                    parens = true;
+                }
+            }
+            function close_paren() {
+                if (parens) {
+                    ret += ")";
+                }
+            }
+            function print_ref(ref, noSheet) {
+                if (ref.ref == "cell") {
+                    return make_reference(
+                        noSheet || ref.sheet == sheet ? null : ref.sheet, // sheet name
+                        ref.row + (ref.rel & 2 ? row : 0),                // row
+                        ref.col + (ref.rel & 1 ? col : 0),                // col
+                        ref.rel^3                                         // whether to add the $
+                    );
+                }
+                if (ref.ref == "col") {
+                    return make_col(
+                        noSheet || ref.sheet == sheet ? null : ref.sheet,
+                        ref.col + (ref.rel ? col : 0),
+                        !ref.rel
+                    );
+                }
+                if (ref.ref == "row") {
+                    return make_row(
+                        noSheet || ref.sheet == sheet ? null : ref.sheet,
+                        ref.row + (ref.rel ? row : 0),
+                        !ref.rel
+                    );
+                }
+                // probably range?  doesn't make any sense, but print it.
+                return print(ref);
+            }
+        }
+    }
+
+    function compile(exp, spreadsheet) {
+        var deps = [];
+        var code = compile(exp.ast);
+
+        function compile(node){
+            var type = node.type;
+            if (type == "num") {
+                return node.value + "";
+            }
+            else if (type == "str") {
+                return JSON.stringify(node.value);
+            }
+            else if (type == "prefix") {
+                return "Calc.prefix('" + node.op + "'," + compile(node.exp) + ")";
+            }
+            else if (type == "postfix") {
+                return "Calc.postfix('" + node.op + "'," + compile(node.exp) + ")";
+            }
+            else if (type == "binary") {
+                return "Calc.binary('" + node.op + "'," + compile(node.left) + "," + compile(node.right) + ")";
+            }
+            else if (type == "call") {
+                switch (node.func.toLowerCase()) {
+                  case "if":
+                    return compile_if(node.args);
+                  case "not":
+                    return compile_not(node.args);
+                  case "and":
+                    return compile_and(node.args);
+                  case "or":
+                    return compile_or(node.args);
+                  case "true":
+                    assert_args("TRUE", node.args, 0, 0);
+                    return "true";
+                  case "false":
+                    assert_args("FALSE", node.args, 0, 0);
+                    return "false";
+                }
+                return "Calc.func(" + JSON.stringify(node.func)
+                    + node.args.map(function(arg){
+                        return "," + compile(arg);
+                    })
+                    + ")";
+            }
+            else if (type == "ref") {
+                if (node.ref == "cell") {
+                    //ret = "Calc.make_ref(" +
+                }
+            }
+            else if (type == "bool") {
+                return "" + node.value;
+            }
+            else {
+                throw new Error("Cannot compile expression " + type);
+            }
+        }
+
+        function assert_args(sym, args, min, max) {
+            if (min != null && args.length < min) {
+                throw new Error("Insufficient arguments in " + sym);
+            }
+            if (max != null && args.length > max) {
+                throw new Error("Too many arguments in " + sym);
+            }
+        }
+
+        function compile_if(args) {
+            assert_args("IF", args, 2, 3);
+            return "("
+                + "Calc.bool(" + compile(args[0]) + ") ? "
+                + compile(args[1]) + " : "
+                + (args.length > 2 ? compile(args[2]) : "false")
+                + ")";
+        }
+
+        function compile_not(args) {
+            assert_args("NOT", args, 1, 1);
+            return "!" + compile(args[0]);
+        }
+
+        function compile_and(args) {
+            assert_args("AND", args, 1);
+            return compile_if([
+                args[0],
+                args.length > 1 ? compile_and(args.slice(1)) : {
+                    type: "bool",
+                    value: true
+                },
+                {
+                    type: "bool",
+                    value: false
+                }
+            ]);
+        }
+
+        function compile_or(args) {
+            assert_args("OR", args, 1);
+            return compile_if([
+                args[0],
+                {
+                    type: "bool",
+                    value: true
+                },
+                args.length > 1 ? compile_or(args.slice(1)) : {
+                    type: "bool",
+                    value: false
+                }
+            ]);
+        }
     }
 
     function TokenStream(input) {
-        var current = null;
+        var tokens = [], index = 0;
         return {
             next  : next,
             peek  : peek,
             eof   : eof,
-            croak : input.croak
+            croak : input.croak,
+            ahead : ahead
         };
         function is_digit(ch) {
             return /[0-9]/i.test(ch);
@@ -386,12 +691,11 @@
             return { type: "str", value: read_escaped('"') };
         }
         function read_operator() {
-            var op = read_while(function(ch, op){
-                return (op + ch) in OPERATORS;
-            });
             return {
                 type  : "op",
-                value : op
+                value : read_while(function(ch, op){
+                    return (op + ch) in OPERATORS;
+                })
             };
         }
         function read_next() {
@@ -421,12 +725,25 @@
             input.croak("Can't handle character: " + ch);
         }
         function peek() {
-            return current || (current = read_next());
+            while (tokens.length <= index) {
+                tokens.push(read_next());
+            }
+            return tokens[index];
         }
         function next() {
-            var tok = current;
-            current = null;
-            return tok || read_next();
+            var tok = peek();
+            index++;
+            return tok;
+        }
+        function ahead(n, f) {
+            var pos = index, a = [], eof = { type: "eof" };
+            while (n-- > 0) {
+                a.push(next() || eof);
+            }
+            if (!f || !(a = f.apply(a, a))) {
+                index = pos;
+            }
+            return a;
         }
         function eof() {
             return peek() == null;
@@ -458,7 +775,7 @@
             return peek() === "";
         }
         function croak(msg) {
-            throw new Error(msg + " (" + line + ":" + col + ")");
+            throw new Error(msg + " (pos " + col + ")");
         }
     }
 
@@ -473,7 +790,15 @@
             };
         }
         if (/^=/.test(input)) {
-            return parse(sheet, row, col, TokenStream(InputStream(input.substr(1))));
+            input = input.substr(1);
+            if (/\S/.test(input)) {
+                return parse(sheet, row, col, TokenStream(InputStream(input)));
+            } else {
+                return {
+                    type: "str",
+                    value: "=" + input
+                };
+            }
         }
         var num = parseFloat(input);
         if (!isNaN(num) && input.length > 0 && num == input) {
@@ -491,7 +816,6 @@
     exports.parse_reference = parse_reference;
     exports.make_reference = make_reference;
     exports.print = print;
-
-    return kendo;
+    exports.compile = compile;
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
