@@ -1205,6 +1205,58 @@
         ok(eventElement.hasClass("k-state-selected"));
     });
 
+    test("select method is fires change event when selecting events by id", 3, function() {
+        setupWidget({
+            selectable: true,
+            views: [
+                "day",
+                { type: "week", selected: true }
+            ]
+        });
+
+        var eventElement = container.find(".k-event");
+        var event = scheduler.dataSource.data()[0];
+
+        scheduler.bind("change", function(e) {
+            var selection = e;
+            var dataItem = scheduler.dataSource.view()[0];
+
+            equal(selection.events.length, 1);
+            equal(selection.events[0], dataItem);
+            ok(eventElement.hasClass("k-state-selected"));
+        });
+
+        scheduler.select({
+            events: [event.uid]
+        });
+    });
+
+    test("select method is fires change event when selecting regular slots", 3, function() {
+        setupWidget({
+            selectable: true,
+            date: new Date("2001-01-01T00:00:00.000Z"),
+            views: [
+                "day",
+                { type: "week", selected: true }
+            ]
+        });
+
+        var start = new Date("2001-01-01T05:00:00.000Z");
+        var end = new Date("2001-01-01T05:30:00.000Z");
+        var view = scheduler.view();
+
+        scheduler.bind("change", function(e) {
+            equal(+scheduler.select().start, +start);
+            equal(+scheduler.select().end, +end);
+            equal(+scheduler.slotByElement($(view.table.find(".k-state-selected")[0])).startDate, +start);
+        });
+
+        scheduler.select({
+            start: start,
+            end: end
+        });
+    });
+
     test("select method is selecting events by array of ids passed to the method", function() {
         setupWidget({
             selectable: true,

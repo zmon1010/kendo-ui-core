@@ -1822,6 +1822,8 @@ var __meta__ = {
 
             if (options.events && options.events.length) {
                 that._selectEvents(options.events, selectedGroups);
+                that._select();
+                return;
             }
 
             if (groups && (options.start && options.end)) {
@@ -1852,7 +1854,6 @@ var __meta__ = {
                         that._select();
                     }
                 }
-
             }
         },
 
