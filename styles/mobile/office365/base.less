@@ -149,8 +149,7 @@
 
 .km-office365 .km-loader
 {
-    left: 0;
-    top: 0;
+    left: 45%;
     margin: 0;
     width: 100%;
     height: 100%;
@@ -174,6 +173,27 @@
     position: absolute;
     top: 50%;
     left: 45%;
+}
+
+.km-office365 .km-scroller-pull .km-loading-left,
+.km-office365 .km-scroller-pull .km-loading-right,
+.km-office365 .km-scroller-refresh > .km-icon
+{
+    display: none;
+}
+
+.km-office365 .km-scroller-refresh .km-loading-left,
+.km-office365 .km-scroller-refresh .km-loading-right
+{
+    display: block;
+}
+
+.km-office365 .km-scroller-refresh .km-loading-left,
+.km-office365 .km-scroller-refresh .km-loading-right,
+.km-office365 .km-scroller-refresh .km-icon
+{
+    top: 0;
+    left: 0;   
 }
 
 .km-office365 .km-scroller-refresh .km-icon:before
@@ -262,7 +282,7 @@
     margin-left: -3px;
 }
 
-.km-office365 .km-scroller-refresh .km-icon:after
+.km-office365 .km-scroller-refresh .km-icon
 {
     display: none;
 }
@@ -292,8 +312,8 @@
     .transition(none);
 }
 
-.km-loading-left:before,
-.km-loading-right:before{
+.km-office365 .km-loading-left:before,
+.km-office365 .km-loading-right:before{
     content: " ";
     position: absolute;
     top: 1px;
@@ -305,10 +325,10 @@
     border: 4px dotted @office365-border-color;
 }
 
-.km-loading-left,
-.km-loading-right,
-.km-loading-left:after,
-.km-loading-right:after {
+.km-office365 .km-loading-left,
+.km-office365 .km-loading-right,
+.km-office365 .km-loading-left:after,
+.km-office365 .km-loading-right:after {
     left: 0;
     top: 0;
     display: block;
@@ -319,19 +339,19 @@
     clip: rect(0px, 20px, 40px, 0px);
 }
 
-.km-loading-left:after,
-.km-loading-right:after {
+.km-office365 .km-loading-left:after,
+.km-office365 .km-loading-right:after {
     content: " ";
     background-color: #fff;
     .animation(rotate_left_sector 4s linear 0 infinite);
 }
 
-.km-loading-right { 
+.km-office365 .km-loading-right { 
     left: 0;
     transform: rotate(180deg);
 }
 
-.km-loading-right:after {
+.km-office365 .km-loading-right:after {
     .animation(rotate_right_sector  4s linear 0 infinite);
 }
 
@@ -352,7 +372,7 @@
 }
 
 @-webkit-keyframes rotate_left_sector {
-    0% { -webkit-transform: rotate(0deg);  }
+    0% { -webkit-transform: rotate(0deg) ; }
     25% { -webkit-transform: rotate(0deg); }
     50% { -webkit-transform: rotate(180deg); }
     75% { -webkit-transform: rotate(180deg); }

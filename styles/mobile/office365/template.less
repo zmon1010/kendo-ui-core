@@ -38,7 +38,8 @@
 @office365-list-group-text: #6d6d72;
 @office365-list-border: #e5e5e5;
 
-.km-office365
+.km-office365,
+.km-office365 .km-view
 {
     background-color: @office365-background;
 }
@@ -98,7 +99,9 @@
 }
 
 .km-office365 .km-navbar .km-state-active.km-back:before,
-.km-office365 .k-toolbar .km-state-active.km-back:before {
+.km-office365 .k-toolbar .km-state-active.km-back:before,
+.km-office365 .km-state-active .km-drawer-button:after
+ {
     color: @office365-selected-color;
 }
 
@@ -339,7 +342,7 @@
 
 .km-office365 .km-list select:not([multiple]) option
 {
-    color: #333;
+    color: @office365-text;
 }
 
 /* Checkboxes and Radios */
@@ -415,8 +418,6 @@
 
 /* Active States */
 
-.km-office365 .km-detail:active,
-.km-office365 .km-state-active .km-detail,
 .km-office365 .km-state-active[style*=background]
 {
     .box-shadow(inset 0 0 0 1000px rgba(0,0,0,.2));
@@ -432,7 +433,6 @@
 .km-office365 .km-switch-label-off,
 .km-office365 .k-slider .k-draghandle,
 .km-office365 .k-slider .k-draghandle:hover,
-.km-office365 .km-scroller-pull .km-icon,
 .km-office365 .km-popup.km-pane .km-navbar,
 .km-office365 .km-popup.km-pane .k-toolbar,
 .km-office365 .km-popup.km-pane .km-tabstrip,
@@ -443,6 +443,10 @@
 .km-office365 li.km-state-active .km-listview-label
 {
     color: @office365-secondary-text;
+}
+
+.km-office365 .km-scroller-pull .km-icon {
+    color: @office365-button-primary-background;   
 }
 
 .km-office365 .km-popup .k-item
@@ -456,8 +460,8 @@
 }
 
 .km-office365 .km-filter-wrap > input,
-.km-office365 .km-switch-handle.km-state-active,
-.km-root .km-office365 .km-scroller-refresh span:not(.km-template)
+.km-office365 .km-switch-handle.km-state-active//,
+//.km-root .km-office365 .km-scroller-refresh span:not(.km-template)
 {
     background: @office365-button-selected-background;
 }
@@ -476,9 +480,10 @@
     color: @office365-button-border;
 }
 
-.km-office365 .km-rowinsert,
+.km-office365 a.km-widget.km-rowinsert,
+.km-office365 a.km-widget.km-rowdelete,
 .km-office365 .km-state-active,
-.km-office365 .km-scroller-pull,
+//.km-office365 .km-scroller-pull,
 .km-office365 .km-loader:before,
 .km-office365 .k-slider-selection,
 .km-office365 .km-touch-scrollbar,
@@ -500,6 +505,23 @@
 .km-office365 .km-list > li:active,
 .km-office365 .km-tabstrip .km-state-active {
     background: @office365-list-selected-background;
+}
+
+
+.km-office365 .km-state-active .km-detail,
+.km-office365 .km-detail.km-state-active
+{
+    color: @office365-text;
+    border-color: @office365-text;
+}
+
+.km-office365 .km-state-active .km-rowinsert,
+.km-office365 .km-rowinsert.km-state-active,
+.km-office365 .km-state-active .km-rowdelete,
+.km-office365 .km-rowdelete.km-state-active
+{
+    color: @office365-secondary-text;
+    border-color: @office365-inverse-background;
 }
 
 .km-office365 .km-filter-wrap > input:focus

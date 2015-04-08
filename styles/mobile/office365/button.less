@@ -22,15 +22,22 @@
     line-height: 2em;
     border-radius: 5em;
     font-size: .8em;
+    text-align: center;
 }
 
 .km-office365 .km-detail
 {
-    min-width: 1.4em;
-    height: 1.4em;
-    line-height: 1.4em;
+    width: 2em;
+    margin-top: -1.1em;
     border-width: @office365-border-width;
     border-style: solid;
+}
+
+.km-office365 .km-detail > .km-icon {
+    min-width: 2em;
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
 }
 
 .km-office365 .km-detaildisclose
@@ -41,10 +48,28 @@
 }
 
 .km-office365 .km-detaildisclose:after,
-.km-office365 .km-detaildisclose:before
+.km-office365 .km-detaildisclose:before,
+.km-office365 .km-widget .km-rowinsert:after,
+.km-office365 .km-widget .km-rowdelete:after,
+.km-office365 .km-widget .km-contactadd:after,
+.km-office365 .km-widget .km-detaildisclose:after,
+.km-office365 .km-widget .km-rowinsert:before,
+.km-office365 .km-widget .km-rowdelete:before,
+.km-office365 .km-widget .km-contactadd:before,
+.km-office365 .km-widget .km-detaildisclose:before,
+.km-office365 .km-detail .km-icon
 {
-    left: .1em;
-    top: 0.35em;
+    left: 0;
+    top: 0;
+    line-height: 1.8em;
+    text-align: center;
+}
+
+.km-office365 .km-detail .km-icon:after
+{    
+    line-height: 2em;
+    width: 1.7em;
+    text-align: center;  
 }
 
 .km-office365 .km-detail .km-icon:before
