@@ -92,6 +92,7 @@ namespace Kendo.Controllers
             ViewBag.Mobile = currentWidget.Mobile || currentExample.Mobile;
             ViewBag.MobileAngular = currentWidget.Mobile && currentExample.Url.IndexOf("angular") > 0;
             ViewBag.DisableInMobile = currentExample.DisableInMobile;
+            ViewBag.ShowDescription = false;
 
             return ViewResult(path);
         }
