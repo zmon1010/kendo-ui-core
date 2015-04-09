@@ -133,6 +133,15 @@
         equal(view.name, "timelineMonth");
     });
 
+    test("month view workDay start and end options are set to start and end of the day", function () {
+        var view = setupMonth({
+            title: "the title",
+            date: new Date(1980, 1, 1, 0, 0, 0)
+        });
+
+        ok(!view.content.find("td:first").hasClass("k-nonwork-hour"));
+    });
+
     test("week view name is correct", function () {
         var view = setupWeek({ title: "the title"});
 

@@ -1638,7 +1638,7 @@ var __meta__ = {
                 selectedDateFormat: "{0:D} - {1:D}",
                 selectedShortDateFormat: "{0:d} - {1:d}",
                 workDayStart: new Date(1980, 1, 1, 0, 0, 0),
-                workDayEnd: new Date(1980, 1, 1, 0, 0, 0),
+                workDayEnd: new Date(1980, 1, 1, 23, 59, 59),
                 footer: false,
                 majorTick: 1440,
                 minorTickCount: 1
