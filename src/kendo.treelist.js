@@ -1318,7 +1318,7 @@ var __meta__ = {
                 delete this._autoExpandable.expandable;
             }
 
-            var visibleColumns = grep(this.columns, not(is("hidden")))
+            var visibleColumns = grep(this.columns, not(is("hidden")));
             var expandableColumns = grep(visibleColumns, is("expandable"));
 
             if (this.columns.length && !expandableColumns.length) {
