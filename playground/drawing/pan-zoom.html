@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link type="text/css" href="../../dist/styles/web/kendo.common.css" rel="stylesheet"/>
+    <link type="text/css" href="../../dist/styles/web/kendo.silver.css" rel="stylesheet"/>
+    <link type="text/css" href="../../dist/styles/dataviz/kendo.dataviz.css" rel="stylesheet"/>
+    <link type="text/css" href="../../dist/styles/dataviz/kendo.dataviz.silver.css" rel="stylesheet"/>
+    
+    <script src="../../src/jquery.js"></script>
+    <script src="../../src/kendo.core.js"></script>
+    <script src="../../src/kendo.color.js"></script>
+                
+    <script src="../../src/kendo.data.js"></script>
+    <script src="../../src/kendo.binder.js"></script>
+               
+    <script src="../../src/kendo.popup.js"></script>
+    <script src="../../src/kendo.userevents.js"></script>
+    <script src="../../src/kendo.draganddrop.js"></script>
+    <script src="../../src/kendo.slider.js"></script>
+    <script src="../../src/kendo.colorpicker.js"></script>
+    <script src="../../src/kendo.button.js"></script>
+    <script src="../../src/kendo.numerictextbox.js"></script>
+    <script src="../../src/kendo.list.js"></script>
+    <script src="../../src/kendo.dropdownlist.js"></script>
+                
+    <script src="../../src/util/main.js"></script>
+    <script src="../../src/mixins/observers.js"></script>
+    <script src="../../src/geometry/main.js"></script>
+    <script src="../../src/drawing/core.js"></script>         
+    <script src="../../src/drawing/mixins.js"></script>
+    <script src="../../src/drawing/text-metrics.js"></script>
+    <script src="../../src/drawing/shapes.js"></script>
+    <script src="../../src/drawing/animation.js"></script>
+    <script src="../../src/drawing/parser.js"></script>
+    <script src="../../src/drawing/svg.js"></script>
+    <script src="../../src/drawing/canvas.js"></script>
+    <script src="../../src/drawing/vml.js"></script>
+                
+    <script src="../../src/kendo.dataviz.core.js"></script>
+    <script src="../../src/kendo.dataviz.chart.js"></script>
+    <script src="../../src/kendo.dataviz.sparkline.js"></script>
+    <script src="../../src/kendo.dataviz.stock.js"></script>
+    <script src="../../src/kendo.dataviz.themes.js"></script>
+</head>
+<body>
+<div id="chart"></div>
+<script>
+var draw = kendo.drawing;
+var geom = kendo.geometry;
+ $("#chart").kendoChart({
+        seriesDefaults: {
+            type: "column"
+        },
+        render: function(e) {
+            this._selectionPath = new draw.Path().visible(false).close();
+            this.surface.draw(this._selectionPath);
+        },
+        dragStart: function(e) {
+            this._selectionPath.visible(true);
+        },
+        drag: function(e) {
+            var offset = this.element.offset();
+            var x = e.originalEvent.x.startLocation - offset.left;
+            var y = e.originalEvent.y.startLocation - offset.top;
+            var width = e.originalEvent.x.location - x - offset.left;
+            var height = e.originalEvent.y.location - y -  offset.top;
+            this._selectionRect = new geom.Rect([x, y], [width, height]);
+            var newPath = draw.Path.fromRect(this._selectionRect);
+            this._selectionPath.segments.elements(newPath.segments.elements());           
+        },
+        dragEnd: function(e) {
+            this._selectionPath.visible(false);
+            var pane = this._plotArea.panes[0];
+            var chartContainer = pane.chartContainer;
+            var clipRect = chartContainer.clipBox.toRect();
+            var selectionRect = this._selectionRect;
+            
+            selectionRect.origin.translate(-clipRect.origin.x, -clipRect.origin.y);
+            var scaleX = clipRect.size.width / selectionRect.size.width;
+            var scaleY = clipRect.size.height / selectionRect.size.height;
+            var center = selectionRect.center();
+           
+            var transform = geom.transform().scale(scaleX, scaleY, center);
+            chartContainer.visual.children[0].transform(transform);
+            var axes = pane.axes;
+            var axis, vertical, range;
+            for (var idx = 0; idx < axes.length; idx++) {
+                axis = axes[idx];
+                vertical = axis.options.vertical;
+                range = axis.range();
+            }
+        },
+        series: [{
+            border: {   
+                width: 0
+            },
+            data: [{
+                value: 3.907, 
+                color: "red"
+            }, {
+                value: 7.943, 
+                color: "blue"
+            }, {
+                value: 7.848, 
+                color: "green"
+            }, {
+                value: 9.284,
+                color: "yellow"
+            }]
+        }],
+        valueAxis: {
+            labels: {
+                format: "{0}%"
+            },
+            line: {
+                visible: false
+            },
+            axisCrossingValue: 0
+        },
+        categoryAxis: {
+            categories: [2002, 2003, 2004, 2005],
+            line: {
+                visible: false
+            }
+        },
+        tooltip: {
+            visible: true,
+            format: "{0}%",
+            template: "#= series.name #: #= value #"
+        }
+    });
+</script>
+</body>
+</html>
