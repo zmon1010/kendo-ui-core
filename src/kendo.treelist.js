@@ -201,6 +201,18 @@ var __meta__ = {
         }
     });
 
+    function is(field) {
+        return function(object) {
+            return object[field];
+        };
+    }
+
+    function not(func) {
+        return function(object) {
+            return !func(object);
+        };
+    }
+
     var TreeListDataSource = DataSource.extend({
         init: function(options) {
             DataSource.fn.init.call(this, extend(true, {}, {
@@ -1119,6 +1131,8 @@ var __meta__ = {
                 this._touchScroller.destroy();
             }
 
+            this._autoExpandable = null;
+
             this._refreshHandler = this._errorHandler = this._progressHandler = null;
 
             this.thead =
@@ -1299,6 +1313,20 @@ var __meta__ = {
             }
         },
 
+        _ensureExpandableColumn: function() {
+            if (this._autoExpandable) {
+                delete this._autoExpandable.expandable;
+            }
+
+            var visibleColumns = grep(this.columns, not(is("hidden")))
+            var expandableColumns = grep(visibleColumns, is("expandable"));
+
+            if (this.columns.length && !expandableColumns.length) {
+                this._autoExpandable = visibleColumns[0];
+                visibleColumns[0].expandable = true;
+            }
+        },
+
         _columns: function() {
             var columns = this.options.columns || [];
 
@@ -1308,19 +1336,13 @@ var __meta__ = {
                 return extend({ encoded: true }, column);
             });
 
-            var expandableColumns = grep(this.columns, function(c) {
-                return c.expandable;
-            });
-
             var lockedColumns = this._lockedColumns();
             if (lockedColumns.length > 0) {
                 this._hasLockedColumns = true;
                 this.columns = lockedColumns.concat(this._nonLockedColumns());
             }
 
-            if (this.columns.length && !expandableColumns.length) {
-                this.columns[0].expandable = true;
-            }
+            this._ensureExpandableColumn();
 
             this._columnTemplates();
             this._columnAttributes();
@@ -1506,15 +1528,11 @@ var __meta__ = {
         },
 
         _lockedColumns: function() {
-            return grep(this.columns, function(column) {
-                return column.locked;
-            });
+            return grep(this.columns, is("locked"));
         },
 
         _nonLockedColumns: function() {
-            return grep(this.columns, function(column) {
-                return !column.locked;
-            });
+            return grep(this.columns, not(is("locked")));
         },
 
         _render: function(options) {
@@ -2706,6 +2724,9 @@ var __meta__ = {
             }
 
             column.hidden = hidden;
+
+            this._ensureExpandableColumn();
+
             this._renderCols();
             this._renderHeader();
             this._render();

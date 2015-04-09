@@ -416,4 +416,21 @@
 
         ok(!wasCalled, "event was triggered on already visible column");
     });
+
+    test("hideColumn moves expandable column", function() {
+        createTreeList({
+            columns: [
+                { field: "id" },
+                { field: "parentId" }
+            ]
+        });
+
+        instance.hideColumn("id");
+
+        ok(instance.columns[1].expandable);
+
+        instance.showColumn("id");
+
+        ok(!instance.columns[1].expandable);
+    });
 })();

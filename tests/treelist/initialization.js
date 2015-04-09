@@ -159,4 +159,16 @@
         ok(!instance.columns[0].encoded);
         ok(instance.columns[1].encoded);
     });
+
+    test("hidden column is not made expandable", function() {
+        createTreeList({
+            columns: [
+                { field: "id", hidden: true },
+                { field: "parentId" }
+            ]
+        });
+
+        ok(!instance.columns[0].expandable);
+        ok(instance.columns[1].expandable);
+    });
 })();
