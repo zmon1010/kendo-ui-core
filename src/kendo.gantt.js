@@ -1573,7 +1573,7 @@ var __meta__ = {
         },
 
         _attachEvents: function() {
-            this._resizeHandler = proxy(this.resize, this);
+            this._resizeHandler = proxy(this.resize, this, false);
             $(window).on("resize" + NS, this._resizeHandler);
         },
 
