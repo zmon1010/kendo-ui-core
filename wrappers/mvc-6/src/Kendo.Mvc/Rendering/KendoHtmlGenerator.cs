@@ -98,7 +98,19 @@ namespace Kendo.Mvc.Rendering
             return GenerateInput(viewContext, metadata, id, name, value, format, "datetime", htmlAttributes);
 		}
 
-		public virtual TagBuilder GenerateNumericInput(
+        public virtual TagBuilder GenerateTimeInput(
+            ViewContext viewContext,
+            ModelMetadata metadata,
+            string id,
+            string name,
+            object value,
+            string format,
+            IDictionary<string, object> htmlAttributes)
+        {
+            return GenerateInput(viewContext, metadata, id, name, value, format, "time", htmlAttributes);
+        }
+
+        public virtual TagBuilder GenerateNumericInput(
 			ViewContext viewContext,
 			ModelMetadata metadata,
 			string id,

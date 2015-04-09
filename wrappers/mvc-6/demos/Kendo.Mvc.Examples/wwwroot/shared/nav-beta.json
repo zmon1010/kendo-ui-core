@@ -1607,6 +1607,114 @@
         "category": "Scheduling"
     },
     {
+        "text": "TimePicker",
+        "name": "timepicker",
+        "api": "web/timepicker",
+        "documentation": {
+            "kendo-ui": "getting-started/web/timepicker/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/timepicker/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/timepicker/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/timepicker/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/date-time-pickers",
+            "aspnet-mvc": "aspnet-mvc/date-time-pickers",
+            "jsp-ui": "jsp/date-picker-pickers",
+            "php-ui": "php/date-time-pickers"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/datepicker",
+            "aspnet-mvc": "aspnet-mvc/datetime",
+            "jsp-ui": "jsp/date-time-pickers",
+            "php-ui": "php/date-time-pickers"
+        },
+        "spriteCssClass": "timePickerIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "timepicker/index",
+                "title": {
+                    "kendo-ui": "Kendo UI jQuery Time Picker Example",
+                    "aspnet-mvc": "ASP.NET MVC TimePicker example | UI for ASP.NET MVC demos"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows the basic usage and core functionality of Kendo UI TimePicker widget.",
+                    "aspnet-mvc": "This example shows how to configure Telerik TimePicker ASP.NET MVC extension for Kendo UI Timepicker widget."
+                }
+            },
+            {
+                "text": "Range selection",
+                "url": "timepicker/rangeselection",
+                "title": {
+                    "kendo-ui": "Kendo UI jQuery TimePicker Demo for selecting a time range",
+                    "aspnet-mvc": "ASP.NET MVC TimePicker Demo for selecting a time range"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows the flexible functionality of Kendo UI TimePicker. You can specify a range of visible hours and enable the user to select them from the dropdown list.",
+                    "aspnet-mvc": "This demo shows the flexible functionality of ASP.NET MVC TimePicker. Specify a range of visible hours and enable the user to select them from the dropdown list."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "timepicker/events",
+                "title": {
+                    "kendo-ui": "Events demo for Kendo UI jQuery TimePicker",
+                    "aspnet-mvc": "Events in Telerik ASP.NET MVC TimePicker"
+                },
+                "meta": {
+                    "kendo-ui": "This sample shows all events which are triggered upon time select, close and time change in Kendo UI TimePicker widget.",
+                    "aspnet-mvc": "This example illustrates how events are used in Telerik ASP.NET MVC TimePicker control. Play with the demo, select time and find how the functionality works."
+                }
+            },
+            {
+                "text": "API",
+                "url": "timepicker/api",
+                "title": {
+                    "kendo-ui": "API demo for Kendo UI Time Picker",
+                    "aspnet-mvc": "API demo for ASP.NET MVC Time Picker"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows API functions of Kendo UI HTML5 TimePicker component.",
+                    "aspnet-mvc": "This example shows the API functions of ASP.NET MVC TimePicker."
+                }
+            },
+            {
+                "packages": [
+                    "mvc-offline"
+                ],
+                "text": "Globalization",
+                "url": "timepicker/globalization"
+            },
+            {
+                "text": "RTL support",
+                "disableInMobile": true,
+                "url": "timepicker/right-to-left-support",
+                "title": {
+                    "kendo-ui": "Right-to-left time input in Kendo UI TimePicker",
+                    "aspnet-mvc": "Right to left support in ASP.NET MVC TimePicker"
+                },
+                "meta": {
+                    "kendo-ui": "See how end users of your webapp can type and change time values from the right to the left. Enhance the experience with RTL support in Kendo UI TimePicker.",
+                    "aspnet-mvc": "This sample illustrates the right to left functionality which Telerik ASP.NET MVC TimePicker supports."
+                }
+            },
+            {
+                "text": "Keyboard navigation",
+                "disableInMobile": true,
+                "url": "timepicker/keyboard-navigation",
+                "title": {
+                    "kendo-ui": "Keyboard navigation in Kendo UI TimePicker",
+                    "aspnet-mvc": "Keyboard navigation in ASP.NET MVC TimePicker"
+                },
+                "meta": {
+                    "kendo-ui": "Users can intuitively select time in Kendo UI TimePicker by simply using the keyboard support of the widget.",
+                    "aspnet-mvc": "Users can intuitively select time in ASP.NET MVC TimePicker by simply using the keyboard support of the control."
+                }
+            }
+        ],
+        "category": "Editors"
+    },
+    {
         "text": "TreeList",
         "name": "treelist",
         "pro": "true",

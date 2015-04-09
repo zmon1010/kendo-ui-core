@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc;
 using Kendo.Mvc.Extensions;
 
