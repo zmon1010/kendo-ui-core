@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.Mvc;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -71,7 +72,7 @@ namespace Kendo.Mvc.UI.Fluent
 
             item.Items.Clear();
 
-            (items as List<ContextMenuItem>).ForEach(menuItem => item.Items.Add(menuItem));
+            (items as List<ContextMenuItem>).Each(menuItem => item.Items.Add(menuItem));
 
             return this;
         }
