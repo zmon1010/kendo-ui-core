@@ -349,22 +349,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The views displayed by the scheduler and their configuration. The array items can be either objects specifying the view configuration or strings representing the view types (assuming default configuration).
-		/// By default the Kendo UI Scheduler widget displays "day" and "week" view.
-        /// </summary>
-        /// <param name="configurator">The configurator for the views setting.</param>
-        public SchedulerBuilder<T> Views(Action<SchedulerViewFactory<T>> configurator)
-        {
-
-            configurator(new SchedulerViewFactory<T>(Container.Views)
-            {
-                Scheduler = Container
-            });
-
-            return this;
-        }
-
-        /// <summary>
         /// The template used to render the group headers of scheduler day, week, workWeek and timeline views.The fields which can be used in the template are:
         /// </summary>
         /// <param name="value">The value for GroupHeaderTemplate</param>
