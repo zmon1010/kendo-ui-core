@@ -1966,6 +1966,13 @@ var __meta__ = {
             current = view.current();
 
             if (current && that._old !== current) {
+                var currentUid = $(current).data("uid");
+
+                if (that._old && currentUid &&
+                    currentUid === $(that._old).data("uid")) {
+                    return;
+                }
+
                 var labelFormat;
                 var data = selection;
                 var events = that._selectedEvents();

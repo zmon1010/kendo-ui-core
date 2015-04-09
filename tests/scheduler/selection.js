@@ -701,6 +701,29 @@
         });
     });
 
+    test("Scheduler does not raise change event on resize", 0, function() {
+        setupWidget();
+
+        var event = scheduler.wrapper.find(".k-event");
+
+        event.trigger({
+            type: "mousedown",
+            currentTarget: event
+        });
+
+
+        scheduler.bind("change", function(e) {
+            var selection = e;
+            var dataItem = scheduler.dataSource.view()[0];
+
+            equal(selection.events.length, 1);
+            equal(selection.events[0], dataItem);
+        });
+
+        scheduler.wrapper.trigger("resize");
+    });
+
+
     test("select event, slots argument is empty", 1, function() {
         setupWidget();
 
