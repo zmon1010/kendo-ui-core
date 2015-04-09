@@ -42,6 +42,12 @@ def function_map(colors)
     args = colors.each_with_index.map { |c,i| "--modify-var='color#{i+1}=#{c}'" }
     key = colors.hash
 
+    # add contrast variables
+    args.concat(BASE_ARRAYS['base'].each_with_index.map { |c,i| "--modify-var='base#{i+1}=#{c}'" })
+
+    args.concat(BASE_ARRAYS['hover-background'].each_with_index.map { |c,i| "--modify-var='normal_bg#{i+1}=#{c}'" })
+    args.concat(BASE_ARRAYS['selected-background'].each_with_index.map { |c,i| "--modify-var='selected_bg#{i+1}=#{c}'" })
+
     unless COLOR_MAPS[key] then
         functions = `/usr/bin/lessc #{args.join(' ')} generate-functions.less | grep 'process'`
 
@@ -146,9 +152,7 @@ def all_colors array
     array.index { |v| v =~ /^#([a-fA-F]|[0-9])+$/ }
 end
 
-def transform old_values
-    return unless all_colors old_values
-
+def color_transform old_values
     # find function that transforms a variable from BASE_ARRAYS to old_values
     best_fits = BASE_ARRAYS.map do |variable, values|
         next unless values.join(' ') =~ /^(#([a-fA-F]|[0-9])+\s*)+$/
@@ -162,9 +166,7 @@ def transform old_values
 
     function, delta, variable = best_fits.compact.min { |a, b| a[1] <=> b[1] }
 
-    return function.gsub(/VARIABLE/, variable) if delta < 2
-
-    "UNKNOWN: #{old_values.join(' ')}"
+    return [function.gsub(/VARIABLE/, variable), delta]
 end
 
 THEMES.each do |theme|
@@ -175,8 +177,23 @@ THEMES.each do |theme|
     end
 end
 
+def mode(array)
+    freq = array.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    mode_name = array.max_by { |v| freq[v] }
+    [ mode_name, 1 - freq[mode_name].to_f / array.length ]
+end
+
+OVERRIDES = {
+    'default' => {
+        'button-focused-shadow' => 'inset 0 0 3px 1px @hover-border-color'
+    }
+}
+
 def determine_actions(variables)
     actions = {}
+    unmatched = []
+    accuracy = []
+    type = "default"
 
     variables.each do |variable|
         old_values = []
@@ -188,16 +205,30 @@ def determine_actions(variables)
         old_values.map!(&method(:transform_color)) if all_colors old_values
 
         # determine action for variables
-        if same_values? old_values
+        if OVERRIDES[type][variable]
+        elsif same_values? old_values
             actions[variable] = old_values[0]
         elsif exact_match old_values
             actions[variable] = "@#{exact_match old_values}"
         elsif all_colors old_values
-            actions[variable] = transform old_values
+            actions[variable], delta = color_transform old_values
+
+            accuracy.push({ var: variable, delta: delta })
         else
-            actions[variable] = old_values[0]
+            actions[variable], delta = mode old_values
+
+            accuracy.push({ var: variable, delta: delta })
+            unmatched.push("    #{variable}: #{old_values}") if delta > 0.5
         end
     end
+
+    offenders = accuracy.sort { |a, b| a[:delta] <=> b[:delta] }.reverse.take(5)
+                    .map { |x| "    #{x[:var]} : #{x[:delta]}" }
+    score = accuracy.reduce(0) { |n, item| n + item[:delta] }
+
+    puts "Conversion accuracy score (lower is better): #{score}"
+    #puts "  Top offenders:\n#{offenders.join("\n")}"
+    puts "  Unmatched values (using mode):\n #{unmatched.join("\n")}"
 
     actions
 end
