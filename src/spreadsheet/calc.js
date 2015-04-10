@@ -499,6 +499,50 @@
         }
     }
 
+    function to_cps(node, k) {
+        return cps(node);
+
+        function cps(node, k){
+            switch (node.type) {
+              case "num"     :
+              case "str"     :
+              case "bool"    : return cps_atom(node, k);
+              case "prefix"  :
+              case "postfix" : return cps_unary(node, k);
+              case "binary"  : return cps_binary(node, k);
+              case "call"    : return cps_call(node, k);
+              case "ref"     : return cps_ref(node, k);
+            }
+        }
+
+        function cps_atom(node, k) {
+            return k(node);
+        }
+
+        function cps_unary(node, k) {
+            return cps(node.exp, function(exp){
+                return k({
+                    type: node.type,
+                    op: node.op,
+                    exp: k
+                });
+            });
+        }
+
+        function cps_binary(node) {
+            return cps(node.left, function(left){
+                return cps(node.right, function(right){
+                    return k({
+                        type: "binary",
+                        op: node.op,
+                        left: left,
+                        right: right
+                    });
+                });
+            });
+        }
+    }
+
     function compile(exp, spreadsheet) {
         var deps = [];
         var code = compile(exp.ast);
@@ -512,13 +556,13 @@
                 return JSON.stringify(node.value);
             }
             else if (type == "prefix") {
-                return "Calc.prefix('" + node.op + "'," + compile(node.exp) + ")";
+                return "Runtime.prefix('" + node.op + "'," + compile(node.exp) + ")";
             }
             else if (type == "postfix") {
-                return "Calc.postfix('" + node.op + "'," + compile(node.exp) + ")";
+                return "Runtime.postfix('" + node.op + "'," + compile(node.exp) + ")";
             }
             else if (type == "binary") {
-                return "Calc.binary('" + node.op + "'," + compile(node.left) + "," + compile(node.right) + ")";
+                return "Runtime.binary('" + node.op + "'," + compile(node.left) + "," + compile(node.right) + ")";
             }
             else if (type == "call") {
                 switch (node.func.toLowerCase()) {
@@ -537,7 +581,7 @@
                     assert_args("FALSE", node.args, 0, 0);
                     return "false";
                 }
-                return "Calc.func(" + JSON.stringify(node.func)
+                return "Runtime.func(" + JSON.stringify(node.func)
                     + node.args.map(function(arg){
                         return "," + compile(arg);
                     })
@@ -545,7 +589,7 @@
             }
             else if (type == "ref") {
                 if (node.ref == "cell") {
-                    //ret = "Calc.make_ref(" +
+                    //ret = "Runtime.make_ref(" +
                 }
             }
             else if (type == "bool") {
@@ -568,7 +612,7 @@
         function compile_if(args) {
             assert_args("IF", args, 2, 3);
             return "("
-                + "Calc.bool(" + compile(args[0]) + ") ? "
+                + "Runtime.bool(" + compile(args[0]) + ") ? "
                 + compile(args[1]) + " : "
                 + (args.length > 2 ? compile(args[2]) : "false")
                 + ")";
