@@ -185,7 +185,26 @@ end
 
 OVERRIDES = {
     'default' => {
-        'button-focused-shadow' => 'inset 0 0 3px 1px @hover-border-color'
+        'button-focused-shadow' => 'inset 0 0 3px 1px @hover-border-color',
+        'focused-item-shadow' => 'inset 0 0 3px 1px @hover-border-color',
+        'focused-active-item-shadow' => "inset 0 0 3px 1px darken(@selected-border-color, 10%)",
+        'default-icon-opacity' => '0.9',
+        'primary-button-border-color' => 'contrast(@base, lighten(@accent, 3%), darken(@accent, 3%), 0.5)',
+        'primary-gradient' => '@normal-gradient',
+        'primary-hover-gradient' => '@hover-gradient',
+        'primary-focused-gradient' => '@hover-gradient',
+        'primary-focused-active-item-shadow' => '0 0 3px 0 @accent',
+        'primary-active-gradient' => '@selected-gradient',
+        'primary-disabled-gradient' => '@normal-gradient',
+        'tooltip-text-color' => '#fff',
+        'button-focused-active-shadow' => 'inset 0 0 3px 1px darken(@selected-border-color, 10%)',
+        'checkbox-active-box-shadow' => '0 0 3px 0 @accent',
+        'checkbox-checked-active-box-shadow' => '0 0 3px 0 @accent',
+        'radio-active-box-shadow' => '0 0 3px 0 @accent',
+        'radio-checked-active-box-shadow' => '0 0 3px 0 @accent',
+        'tooltip-text-color' => '@selected-text-color',
+        'tooltip-background-color' => '@selected-background',
+        'tooltip-border-color' => 'contrast(@selected-background, lighten(@selected-background, 3%), darken(@selected-background, 3%), 0.5)'
     }
 }
 
@@ -206,6 +225,7 @@ def determine_actions(variables)
 
         # determine action for variables
         if OVERRIDES[type][variable]
+            actions[variable] = OVERRIDES[type][variable]
         elsif same_values? old_values
             actions[variable] = old_values[0]
         elsif exact_match old_values
@@ -222,13 +242,13 @@ def determine_actions(variables)
         end
     end
 
-    offenders = accuracy.sort { |a, b| a[:delta] <=> b[:delta] }.reverse.take(5)
+    offenders = accuracy.sort { |a, b| a[:delta] <=> b[:delta] }.reverse.select { |x| x[:delta] > 0.8 }
                     .map { |x| "    #{x[:var]} : #{x[:delta]}" }
     score = accuracy.reduce(0) { |n, item| n + item[:delta] }
 
     puts "Conversion accuracy score (lower is better): #{score}"
-    #puts "  Top offenders:\n#{offenders.join("\n")}"
-    puts "  Unmatched values (using mode):\n #{unmatched.join("\n")}"
+    puts "  Top offenders:\n#{offenders.join("\n")}"
+    #puts "  Unmatched values (using mode):\n #{unmatched.join("\n")}"
 
     actions
 end
