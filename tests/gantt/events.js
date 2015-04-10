@@ -24,7 +24,9 @@
 
     test("window resizing adjust content dimensions", function() {
         stub(gantt, "_adjustDimensions");
-        
+
+        gantt.wrapper.appendTo(QUnit.fixture);
+
         $(window).resize();
 
         ok(gantt.calls("_adjustDimensions"));
