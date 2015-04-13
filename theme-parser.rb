@@ -185,6 +185,8 @@ end
 
 OVERRIDES = {
     'default' => {
+        'current-time-color' => 'darken(@error-background-color, 10%)',
+        'error-border-color' => 'darken(@error-background-color, 10%)',
         'button-focused-shadow' => 'inset 0 0 3px 1px @hover-border-color',
         'focused-item-shadow' => 'inset 0 0 3px 1px @hover-border-color',
         'focused-active-item-shadow' => "inset 0 0 3px 1px darken(@selected-border-color, 10%)",
@@ -233,17 +235,17 @@ def determine_actions(variables)
         elsif all_colors old_values
             actions[variable], delta = color_transform old_values
 
-            accuracy.push({ var: variable, delta: delta })
+            accuracy.push({ var: variable, delta: delta, old_values: old_values })
         else
             actions[variable], delta = mode old_values
 
-            accuracy.push({ var: variable, delta: delta })
+            accuracy.push({ var: variable, delta: delta, old_values: old_values })
             unmatched.push("    #{variable}: #{old_values}") if delta > 0.5
         end
     end
 
     offenders = accuracy.sort { |a, b| a[:delta] <=> b[:delta] }.reverse.select { |x| x[:delta] > 0.8 }
-                    .map { |x| "    #{x[:var]} : #{x[:delta]}" }
+                    .map { |x| "    #{x[:var]} : #{x[:delta]} : #{x[:old_values]}" }
     score = accuracy.reduce(0) { |n, item| n + item[:delta] }
 
     puts "Conversion accuracy score (lower is better): #{score}"
