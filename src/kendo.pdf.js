@@ -11,7 +11,7 @@ var __meta__ = {
     depends: [ "core", "drawing" ]
 };
 
-(function(kendo){
+(function(kendo, $){
 
 kendo.PDFMixin = {
     extend: function(proto) {
@@ -105,7 +105,7 @@ kendo.PDFMixin = {
     }
 };
 
-})(kendo);
+})(kendo, window.kendo.jQuery);
 
 return kendo;
 
