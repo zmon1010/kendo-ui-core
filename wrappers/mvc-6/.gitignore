@@ -5,3 +5,4 @@
 artifacts/**
 **/bin/**
 **/Properties/debugSettings.json
+**/packages/**
