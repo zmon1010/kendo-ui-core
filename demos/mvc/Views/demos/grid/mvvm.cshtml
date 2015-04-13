@@ -46,7 +46,11 @@
         products: new kendo.data.DataSource({
             schema: {
                 model: {
-                    id: "ProductID"
+                    id: "ProductID",
+                    fields: {
+                        ProductName: { type: "string" },
+                        UnitPrice: { type: "number" }
+                    }
                 }
             },
             batch: true,
