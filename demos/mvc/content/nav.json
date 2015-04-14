@@ -5365,7 +5365,6 @@
         },
         "packages": [
             "!offline",
-            "mvc",
             "!jsp",
             "!php",
             "!offline"
@@ -5382,7 +5381,6 @@
         },
         "packages": [
             "!offline",
-            "mvc",
             "!jsp",
             "!php",
             "!offline"
