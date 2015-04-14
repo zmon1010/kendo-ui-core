@@ -248,6 +248,7 @@
     <Compile Include="Controllers\TreeList\Column_ReorderingController.cs" />
     <Compile Include="Controllers\TreeList\Column_MenuController.cs" />
     <Compile Include="Controllers\TreeList\Column_ResizingController.cs" />
+    <Compile Include="Controllers\TreeList\Pdf_ExportController.cs" />
     <Compile Include="Controllers\TreeList\Excel_ExportController.cs" />
     <Compile Include="Controllers\TreeList\Frozen_ColumnsController.cs" />
     <Compile Include="Controllers\TreeList\EventsController.cs" />
@@ -964,6 +965,7 @@
     <Content Include="Areas\aspx\Views\treelist\editing.aspx" />
     <Content Include="Areas\aspx\Views\treelist\events.aspx" />
     <Content Include="Areas\aspx\Views\treelist\index.aspx" />
+    <Content Include="Areas\aspx\Views\treelist\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\treemap\events.aspx" />
     <Content Include="Areas\aspx\Views\treemap\index.aspx" />
     <Content Include="Areas\aspx\Views\map\bubble_layer.aspx" />
@@ -3236,7 +3238,6 @@
     <Content Include="Areas\razor\Views\multiselect\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\mobile_listview\local_virtualization.cshtml" />
     <Content Include="Areas\razor\Views\toolbar\right_to_left_support.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Shared\EditorTemplates\Countries.cshtml" />
     <Content Include="Areas\razor\Views\grid\persist_state.cshtml">
       <SubType>Code</SubType>
@@ -3273,6 +3274,7 @@
     <Content Include="Content\shared\fonts\widgets-v2.ttf" />
     <Content Include="Content\shared\fonts\widgets-v2.woff" />
     <Content Include="Areas\razor\Views\treelist\excel_export.cshtml" />
+    <Content Include="Areas\razor\Views\treelist\pdf_export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />

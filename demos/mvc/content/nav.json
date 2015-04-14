@@ -5382,7 +5382,7 @@
         },
         "packages": [
             "!offline",
-            "!mvc",
+            "mvc",
             "!jsp",
             "!php",
             "!offline"
