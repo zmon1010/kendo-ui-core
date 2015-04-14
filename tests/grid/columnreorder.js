@@ -2253,4 +2253,124 @@
         equal(grid.lockedFooter.find("col").length, 3, "loocked footer");
     });
 
+    test("move master with two children over another master with two children to a single parent column - rtl", function() {
+        var grid = new Grid(div, {
+            reorderable: true,
+            columns: [
+              {
+                title: "master1",
+                width: 200
+              },
+              {
+                title: "master2",
+                width: 200
+              },
+              {
+                title: "master3",
+                columns: [{
+                  title: "master3_1",
+                  width: 100
+                },{
+
+                  title: "master3_2",
+                  width: 100
+                }]
+              },
+            {
+                title: "master4",
+                columns: [{
+                  title: "master4_1",
+                  width: 100
+                },{
+
+                  title: "master4_2",
+                  width: 100
+                }]
+              }]
+        });
+
+        grid.reorderColumn(1, grid.columns[3], true);
+
+        var rows = grid.thead.find("tr");
+
+        equal(rows.length, 2);
+        equal(rows.eq(0).find("th").eq(0).text(), "master1");
+        equal(rows.eq(0).find("th").eq(1).text(), "master4");
+        equal(rows.eq(0).find("th").eq(2).text(), "master2");
+        equal(rows.eq(0).find("th").eq(3).text(), "master3");
+
+        equal(rows.eq(1).find("th").eq(0).text(), "master4_1");
+        equal(rows.eq(1).find("th").eq(1).text(), "master4_2");
+
+        equal(rows.eq(1).find("th").eq(2).text(), "master3_1");
+        equal(rows.eq(1).find("th").eq(3).text(), "master3_2");
+    });
+
+    test("move master with two children over two other masters with two children to a single parent column - rtl", function() {
+        var grid = new Grid(div, {
+            reorderable: true,
+            columns: [
+              {
+                title: "master1",
+                width: 200
+              },
+              {
+                title: "master2",
+                width: 200
+              },
+              {
+                title: "master3",
+                columns: [{
+                  title: "master3_1",
+                  width: 100
+                },{
+
+                  title: "master3_2",
+                  width: 100
+                }]
+              },
+            {
+                title: "master4",
+                columns: [{
+                  title: "master4_1",
+                  width: 100
+                },{
+
+                  title: "master4_2",
+                  width: 100
+                }]
+              },{
+                title: "master5",
+                columns: [{
+                  title: "master5_1",
+                  width: 100
+                },{
+
+                  title: "master5_2",
+                  width: 100
+                }]
+              }]
+        });
+
+        grid.reorderColumn(1, grid.columns[4], true);
+
+        var rows = grid.thead.find("tr");
+
+        equal(rows.length, 2);
+        equal(rows.eq(0).find("th").eq(0).text(), "master1");
+        equal(rows.eq(0).find("th").eq(1).text(), "master5");
+        equal(rows.eq(0).find("th").eq(2).text(), "master2");
+        equal(rows.eq(0).find("th").eq(3).text(), "master3");
+        equal(rows.eq(0).find("th").eq(4).text(), "master4");
+
+        equal(rows.eq(1).find("th").eq(0).text(), "master5_1");
+        equal(rows.eq(1).find("th").eq(1).text(), "master5_2");
+
+        equal(rows.eq(1).find("th").eq(2).text(), "master3_1");
+        equal(rows.eq(1).find("th").eq(3).text(), "master3_2");
+
+        equal(rows.eq(1).find("th").eq(4).text(), "master4_1");
+        equal(rows.eq(1).find("th").eq(5).text(), "master4_2");
+    });
+
 })();

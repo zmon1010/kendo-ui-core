@@ -722,13 +722,14 @@ var __meta__ = {
         }
         return result;
     }
-    function findParentColumnWithChildren(columns, index, source) {
+    function findParentColumnWithChildren(columns, index, source, rtl) {
         var target;
         var locked = source.locked;
 
         do {
-            target = columns[Math.max(index--, 0)];
-        } while(index > -1 && target != source && !target.columns && target.locked == locked);
+            target = columns[index];
+            index += rtl ? 1 : -1;
+        } while(target && index > -1 && index < columns.length && target != source && !target.columns && target.locked == locked);
 
         return target;
     }
@@ -756,7 +757,8 @@ var __meta__ = {
                 index += before ? -1 : 1;
             }
 
-            target = findParentColumnWithChildren(parentColumns,index, source);
+            var sourceIndex = inArray(source, parentColumns);
+            target = findParentColumnWithChildren(parentColumns, index, source, sourceIndex > index);
 
             if (target && target != source && target.columns) {
                 return findReorderTarget(columns, target, source, before);
