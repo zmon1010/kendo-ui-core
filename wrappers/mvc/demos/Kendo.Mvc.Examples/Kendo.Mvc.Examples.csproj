@@ -248,6 +248,7 @@
     <Compile Include="Controllers\TreeList\Column_ReorderingController.cs" />
     <Compile Include="Controllers\TreeList\Column_MenuController.cs" />
     <Compile Include="Controllers\TreeList\Column_ResizingController.cs" />
+    <Compile Include="Controllers\TreeList\Excel_ExportController.cs" />
     <Compile Include="Controllers\TreeList\Frozen_ColumnsController.cs" />
     <Compile Include="Controllers\TreeList\EventsController.cs" />
     <Compile Include="Controllers\TreeList\Remote_Data_BindingController.cs" />
@@ -1338,8 +1339,11 @@
     <Content Include="Areas\aspx\Views\diagram\layout.aspx" />
     <Content Include="Areas\aspx\Views\multiselect\grouping.aspx" />
     <Content Include="Areas\aspx\Views\multiselect\virtualization.aspx" />
+    <Content Include="Areas\aspx\Views\treelist\excel_export.aspx" />
     <Content Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <Content Include="Areas\razor\Views\combobox\virtualization.cshtml" />
+    <None Include="Areas\razor\Views\combobox\grouping.cshtml" />
+    <None Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\diagram\pdf_export.cshtml" />
     <Content Include="Areas\razor\Views\diagram\export.cshtml" />
     <Content Include="Areas\razor\Views\chart_api\pdf_export.cshtml" />
@@ -3232,6 +3236,7 @@
     <Content Include="Areas\razor\Views\multiselect\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\mobile_listview\local_virtualization.cshtml" />
     <Content Include="Areas\razor\Views\toolbar\right_to_left_support.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Shared\EditorTemplates\Countries.cshtml" />
     <Content Include="Areas\razor\Views\grid\persist_state.cshtml">
       <SubType>Code</SubType>
@@ -3267,6 +3272,7 @@
     <Content Include="Content\shared\fonts\widgets-v2.eot" />
     <Content Include="Content\shared\fonts\widgets-v2.ttf" />
     <Content Include="Content\shared\fonts\widgets-v2.woff" />
+    <Content Include="Areas\razor\Views\treelist\excel_export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
