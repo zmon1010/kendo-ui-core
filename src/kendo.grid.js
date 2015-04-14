@@ -7095,6 +7095,10 @@ var __meta__ = {
                currentTable = verticalTable(currentTable, dataTable, headerTable, up);
                focusTable(currentTable, true);
                if (up && !current.is(".k-header")) {
+                   var filterRow = currentTable.find(".k-filter-row");
+                   if (filterRow.length) {
+                       return filterRow.find("th").eq(current.index());
+                   }
                    return leafDataCells(currentTable.find("thead:first")).eq(current.index());
                }
                row = currentTable.find((up ? ">thead>" : ">tbody>") + NAVROW).first();
@@ -7110,7 +7114,7 @@ var __meta__ = {
                    index = current.attr(kendo.attr("index"));
                    if (index === undefined || up) {
                        index = current.index();
-                   } else if (currentTable.parent().prev().hasClass("k-grid-content-locked")){
+                   } else if (!$(currentTable).parent().prev().hasClass("k-grid-content-locked")){
                        index -= lockedColumns;
                    }
                    current = row.children().eq(index);
@@ -7139,7 +7143,11 @@ var __meta__ = {
                    current = relatedRow(current.parent()).children(DATA_CELL).last();
                } else if (currentTable == headerTable[1]) {
                    focusTable(headerTable[0]);
-                   current = headerTable.eq(0).find("tr>" + DATA_CELL).last();
+                   if (current.parent().hasClass("k-filter-row")) {
+                     current = headerTable.eq(0).find("tr:last>" + DATA_CELL).last();
+                   } else {
+                     current = headerTable.eq(0).find("tr:first>" + DATA_CELL).last();
+                   }
                }
            }
        } else {
@@ -7161,7 +7169,11 @@ var __meta__ = {
                    current = relatedRow(current.parent()).children(DATA_CELL).first();
                } else if (currentTable == headerTable[0]) {
                    focusTable(headerTable[1]);
-                   current = headerTable.eq(1).find("tr>" + DATA_CELL).first();
+                   if (current.parent().hasClass("k-filter-row")) {
+                     current = headerTable.eq(1).find("tr:last>" + DATA_CELL).first();
+                   } else {
+                     current = headerTable.eq(1).find("tr>" + DATA_CELL).first();
+                   }
                }
            }
        } else {

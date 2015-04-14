@@ -56,7 +56,12 @@
                         }
                     },
                     columns: [
-                        { field: "Id", locked: false, width: 300 },
+                        {
+                            field: "Id", locked: false, width: 300,
+                            columns: [
+                                { field: "Id", locked: false, width: 300 }
+                            ]
+                        },
                         {
                             field: "Name",
                             locked: true,
@@ -94,7 +99,13 @@
                                 }
                             }
                         },
-                        { field: "Position", filterable: { cell: { enabled: true } }, locked: true, width: 300 },
+                        {
+                            title: "Position",
+                            locked: true,
+                            columns: [{
+                                field: "Position", filterable: { cell: { enabled: true } }, locked: true, width: 300
+                            }]
+                        },
                         {
                             field: "Grade",
                             values: [
