@@ -623,6 +623,7 @@ var __meta__ = {
             dragAndDrop: false,
             checkboxes: false,
             autoBind: true,
+            autoScroll: false,
             loadOnDemand: true,
             template: "",
             dataTextField: null
@@ -2030,22 +2031,23 @@ var __meta__ = {
         that.hovered = treeview.element;
 
         that._draggable = new ui.Draggable(treeview.element, {
-           filter: "div:not(.k-state-disabled) .k-in",
-           hint: function(node) {
-               return treeview.templates.dragClue({
-                   item: treeview.dataItem(node),
-                   treeview: treeview.options
-               });
-           },
-           cursorOffset: {
-               left: 10,
-               top: kendo.support.mobileOS ? -40 / kendo.support.zoomLevel() : 10
-           },
-           dragstart: proxy(that.dragstart, that),
-           dragcancel: proxy(that.dragcancel, that),
-           drag: proxy(that.drag, that),
-           dragend: proxy(that.dragend, that),
-           $angular: treeview.options.$angular
+            autoScrolL: treeview.options.autoScroll,
+            filter: "div:not(.k-state-disabled) .k-in",
+            hint: function(node) {
+                return treeview.templates.dragClue({
+                    item: treeview.dataItem(node),
+                    treeview: treeview.options
+                });
+            },
+            cursorOffset: {
+                left: 10,
+                top: kendo.support.mobileOS ? -40 / kendo.support.zoomLevel() : 10
+            },
+            dragstart: proxy(that.dragstart, that),
+            dragcancel: proxy(that.dragcancel, that),
+            drag: proxy(that.drag, that),
+            dragend: proxy(that.dragend, that),
+            $angular: treeview.options.$angular
         });
     }
 
