@@ -2507,7 +2507,13 @@
                     margin: MARGIN
                 });
                 axis.labels = [new LabelMock(Box2D(0, 0, 20, 20)), new LabelMock(Box2D(0, 0, 20, 30))];
-                axisBox = new Box2D(0, 0, 100, 100);
+                axis.parent = {
+                    box: new Box2D(0, 0, 100, 100),
+                    getRoot: function() {
+                        return this;
+                    }
+                };
+                axisBox = new Box2D(0, 0, 50, 50);
                 axis.getActualTickSize = function() {
                     return ACTUAL_TICK_SIZE;
                 };
@@ -2549,7 +2555,13 @@
                     margin: MARGIN
                 });
                 axis.labels = [new LabelMock(Box2D(0, 0, 20, 20)), new LabelMock(Box2D(0, 0, 30, 20))];
-                axisBox = new Box2D(0, 0, 100, 100);
+                axis.parent = {
+                    box: new Box2D(0, 0, 100, 100),
+                    getRoot: function() {
+                        return this;
+                    }
+                };
+                axisBox = new Box2D(0, 0, 50, 50);
                 axis.getActualTickSize = function() {
                     return ACTUAL_TICK_SIZE;
                 };

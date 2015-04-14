@@ -2024,7 +2024,8 @@ var __meta__ = {
                 titleSize = title ? title.box[sizeFn]() : 0,
                 space = axis.getActualTickSize() + options.margin + titleSize,
                 maxLabelSize = 0,
-                boxSize = box[sizeFn](),
+                rootBox = (this.getRoot() || {}).box || box,
+                boxSize = rootBox[sizeFn](),
                 labelSize, i;
 
             for (i = 0; i < count; i++) {
