@@ -196,7 +196,7 @@ var CleanFormatCommand = Command.extend({
     exec: function() {
         var listFormatter = new Editor.ListFormatter('ul');
         var range = this.lockRange(true);
-        var remove = this.options.remove || "strong,em,span,sup,sub,del".split(",");
+        var remove = this.options.remove || "strong,em,span,sup,sub,del,b,i,u,font".split(",");
 
         RangeUtils.wrapSelectedElements(range);
 

@@ -110,4 +110,10 @@ test("unwraps blockquotes", function() {
     equal(cleanedContent('<blockquote>foo</blockquote>'), '<p>foo</p>');
 });
 
+test("removes presentational tags", function() {
+    equal(cleanedContent('<p><i>foo</i></p>'), '<p>foo</p>');
+    equal(cleanedContent('<p><b>foo</b></p>'), '<p>foo</p>');
+    equal(cleanedContent('<p><u>foo</u></p>'), '<p>foo</p>');
+});
+
 }());
