@@ -70,12 +70,14 @@ def same_values?(array)
     array.uniq.length == 1
 end
 
+files = ARGV.each { |f| Dir.glob(f) }.flatten.sort
+
 type = "default"
+type = "metro" if files[0].include? "metro"
+
 dir = File.dirname(__FILE__)
 template_content = File.read(File.join(dir, "variable-origins-#{type}.erb"))
 template = ERB.new(template_content, 0, '%<>')
-
-files = ARGV.each { |f| Dir.glob(f) }.flatten.sort
 
 ####
 # extract values from skins
@@ -207,14 +209,22 @@ OVERRIDES = {
         'tooltip-text-color' => '@selected-text-color',
         'tooltip-background-color' => '@selected-background',
         'tooltip-border-color' => 'contrast(@selected-background, lighten(@selected-background, 3%), darken(@selected-background, 3%), 0.5)'
+    },
+    'metro' => {
+        'task-summary-selected-color' => 'contrast(@base, lighten(@selected-background-color, 15%), darken(@selected-background-color, 25%), 0.5)',
+        'shadow-color' => 'fadeout(contrast(@base), 80%)',
+        'task-summary-color' => 'contrast(@base, lighten(@widget-text-color, 25%), darken(@widget-text-color, 25%), 0.5)',
+        'nested-alt-background-color' => 'contrst(@normal-text-color, darken(@alt-background-color, 8%), lighten(@alt-background-color, 8%), 0.5)',
+        'disabled-text-color' => '#cccccc',
+        'draghandle-shadow' => '0 1px 1px 0 fadeout(darken(@normal-text-color, 10%), 70%)',
+        'draghandle-hover-shadow' => '@draghandle-shadow'
     }
 }
 
-def determine_actions(variables)
+def determine_actions(type, variables)
     actions = {}
     unmatched = []
     accuracy = []
-    type = "default"
 
     variables.each do |variable|
         old_values = []
@@ -226,7 +236,7 @@ def determine_actions(variables)
         old_values.map!(&method(:transform_color)) if all_colors old_values
 
         # determine action for variables
-        if OVERRIDES[type][variable]
+        if OVERRIDES[type] and OVERRIDES[type][variable]
             actions[variable] = OVERRIDES[type][variable]
         elsif same_values? old_values
             actions[variable] = old_values[0]
@@ -244,7 +254,7 @@ def determine_actions(variables)
         end
     end
 
-    offenders = accuracy.sort { |a, b| a[:delta] <=> b[:delta] }.reverse.select { |x| x[:delta] > 0.8 }
+    offenders = accuracy.sort { |a, b| a[:delta] <=> b[:delta] }.reverse.select { |x| x[:delta] > 0.2 }
                     .map { |x| "    #{x[:var]} : #{x[:delta]} : #{x[:old_values]}" }
     score = accuracy.reduce(0) { |n, item| n + item[:delta] }
 
@@ -257,7 +267,7 @@ end
 
 def apply_actions variables, actions
     variables.map do |variable|
-        value = actions[variable]
+        value = actions[variable] || '""';
 
         "@#{variable}: #{value};"
     end
@@ -267,7 +277,7 @@ end
 ####
 # write new type
 
-type_content = apply_actions(rewritten, determine_actions(rewritten)) + "\n" + theme_template
+type_content = apply_actions(rewritten, determine_actions(type, rewritten)) + "\n" + theme_template
 
 File.open(File.join(theme_dir, "type-#{type}.less"), "w") do |f|
   f.write type_content.gsub(/\r?\n/, "\n")
