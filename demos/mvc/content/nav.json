@@ -6431,7 +6431,6 @@
             "kendo-ui": "This example illustrates how jQuery and HTML5-based forms can be styled with Kendo UI Web."
         },
         "packages": [
-          "!mvc",
           "!jsp",
           "!php"
         ]
@@ -6475,7 +6474,11 @@
         },
         "meta": {
             "kendo-ui": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
-        }
+        },
+        "packages": [
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "Radio buttons",
@@ -6486,7 +6489,11 @@
         },
         "meta": {
             "kendo-ui": "This example shows how different styling can be applied to icons by using Kendo UI Web framework."
-        }
+        },
+        "packages": [
+          "!jsp",
+          "!php"
+        ]
       }
     ],
     "category": "Interactivity & UX"

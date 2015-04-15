@@ -240,6 +240,7 @@
     <Compile Include="Controllers\Scheduler\SignalRController.cs" />
     <Compile Include="Controllers\Scheduler\TimelineController.cs" />
     <Compile Include="Controllers\Styling\CheckboxesController.cs" />
+    <Compile Include="Controllers\Styling\IndexController.cs" />
     <Compile Include="Controllers\Styling\RadioButtonsController.cs" />
     <Compile Include="Controllers\TabStrip\Tab_PositionController.cs" />
     <Compile Include="Controllers\ToolBar\Right_To_Left_SupportController.cs" />
@@ -1344,6 +1345,7 @@
     <Content Include="Areas\aspx\Views\treelist\excel_export.aspx" />
     <Content Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <Content Include="Areas\razor\Views\combobox\virtualization.cshtml" />
+    <Content Include="Areas\aspx\Views\styling\index.aspx" />
     <None Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <None Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\diagram\pdf_export.cshtml" />
@@ -3275,6 +3277,7 @@
     <Content Include="Content\shared\fonts\widgets-v2.woff" />
     <Content Include="Areas\razor\Views\treelist\excel_export.cshtml" />
     <Content Include="Areas\razor\Views\treelist\pdf_export.cshtml" />
+    <Content Include="Areas\razor\Views\styling\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
