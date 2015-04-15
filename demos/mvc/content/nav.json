@@ -6112,7 +6112,7 @@
     ]
   },
   {
-    "packages": [ "!mvc", "!jsp", "!php" ],
+    "packages": [ "!jsp", "!php" ],
     "text": "Globalization",
     "name": "globalization",
     "api": "framework/kendo",

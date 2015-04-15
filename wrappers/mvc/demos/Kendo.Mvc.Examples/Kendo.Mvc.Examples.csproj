@@ -212,6 +212,7 @@
     <Compile Include="Controllers\Gantt\ResourcesController.cs" />
     <Compile Include="Controllers\Gantt\Right_To_Left_SupportController.cs" />
     <Compile Include="Controllers\Gantt\ServerBindingController.cs" />
+    <Compile Include="Controllers\Globalization\IndexController.cs" />
     <Compile Include="Controllers\Grid\Filter_Multi_CheckboxesController.cs" />
     <Compile Include="Controllers\Grid\Persist_StateController.cs" />
     <Compile Include="Controllers\Grid\Multicolumnheaders.cs" />
@@ -3281,6 +3282,7 @@
     <Content Include="Areas\razor\Views\treelist\pdf_export.cshtml" />
     <Content Include="Areas\razor\Views\styling\index.cshtml" />
     <Content Include="Areas\razor\Views\pdf_export\index.cshtml" />
+    <Content Include="Areas\razor\Views\globalization\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
