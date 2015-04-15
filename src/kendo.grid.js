@@ -7106,6 +7106,7 @@ var __meta__ = {
                row = currentTable.find((up ? ">thead>" : ">tbody>") + NAVROW).first();
            }
 
+
            if (!up && current[0].colSpan > 1 && current.is(".k-header")) { // is not leaf header column
                current = childColumnsCells(current).eq(1);
            } else {
@@ -7113,9 +7114,13 @@ var __meta__ = {
                    var parents = parentColumnsCells(current);
                    current = parents.eq(parents.length - 2);
                } else {
+                   if (current.parent().hasClass("k-filter-row") && up) {
+                       return leafDataCells(row.parent()).eq(dataCellIndex(current));
+                   }
+
                    index = current.attr(kendo.attr("index"));
                    if (index === undefined || up) {
-                       index = current.index();
+                       index = dataCellIndex(current);
                    } else if (!$(currentTable).parent().prev().hasClass("k-grid-content-locked")){
                        index -= lockedColumns;
                    }
@@ -7131,6 +7136,10 @@ var __meta__ = {
        }
 
        return current;
+   }
+
+   function dataCellIndex(cell) {
+       return cell.parent().children(DATA_CELL).index(cell);
    }
 
    function moveLeft(current, currentTable, dataTable, headerTable, relatedRow) {

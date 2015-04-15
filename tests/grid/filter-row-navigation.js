@@ -208,4 +208,63 @@
         equal(grid.current()[0], grid.thead.find(".k-filter-row th:last")[0]);
     });
 
+    test("multicolumn moves UP from filter cell to header leaf cell", function() {
+        var grid = setup({
+            columns: [
+                { field: "bar" },
+                { width: 300, columns: [{ width: 300, field: "foo" }] }
+            ]
+        });
+        grid.current(grid.thead.find(".k-filter-row th:first"));
+        grid.thead.parent().press(keys.UP);
+        equal(grid.current()[0], grid.thead.find("tr:first th")[0]);
+    });
+
+    test("multicolumn moves UP from filter cell to header leaf cell with grouping", function() {
+        var grid = setup({
+            dataSource: {
+                group: { field: "foo" }
+            },
+            columns: [
+                { field: "bar" },
+                { width: 300, columns: [{ width: 300, field: "foo" }] }
+            ]
+        });
+        grid.current(grid.thead.find(".k-filter-row th:not(.k-group-cell):first"));
+        grid.thead.parent().press(keys.UP);
+        equal(grid.current()[0], grid.thead.find("tr:first th:not(.k-group-cell)")[0]);
+    });
+
+    test("moves DOWN from data cell to another", function() {
+        var grid = setup({
+            dataSource: {
+                data: [{foo: 1, bar: 1}, {foo: 1, bar:2}, {foo: 3, bar:3}],
+                group: { field: "foo" }
+            },
+            columns: [
+                { field: "bar" },
+                { width: 300, columns: [{ width: 300, field: "foo" }] }
+            ]
+        });
+        grid.current(grid.tbody.find("tr:not(.k-grouping-row):eq(0) td:not(.k-group-cell):first"));
+        grid.thead.parent().press(keys.DOWN);
+        equal(grid.current()[0], grid.tbody.find("tr:not(.k-grouping-row):eq(1) td:not(.k-group-cell):first")[0]);
+    });
+
+    test("moves UP from data cell to another", function() {
+        var grid = setup({
+            dataSource: {
+                data: [{foo: 1, bar: 1}, {foo: 1, bar:2}, {foo: 3, bar:3}],
+                group: { field: "foo" }
+            },
+            columns: [
+                { field: "bar" },
+                { width: 300, columns: [{ width: 300, field: "foo" }] }
+            ]
+        });
+        grid.current(grid.tbody.find("tr:not(.k-grouping-row):eq(1) td:not(.k-group-cell):first"));
+        grid.thead.parent().press(keys.UP);
+        equal(grid.current()[0], grid.tbody.find("tr:not(.k-grouping-row):eq(0) td:not(.k-group-cell):first")[0]);
+    });
+
 })();
