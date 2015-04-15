@@ -13,23 +13,23 @@ function Spreadsheet() {
 Spreadsheet.prototype = {
 
     // async (return promise)
-    fetchCellData: function(sheet, row, col) {
+    fetchCellData: function(sheet, col, row) {
 
     },
 
     // async (return promise)
-    fetchRange: function(sheet, r1, c1, r2, c2) {
+    fetchRange: function(sheet, c1, r1, c2, r2) {
 
     },
 
     // sync (return data)
-    getCellData: function(sheet, row, col) {
+    getCellData: function(sheet, col, row) {
 
     },
 
-    setInputData: function(sheet, row, col, data) {
-        this._deleteCell(sheet, row, col);
-        var cell = this._getCell(sheet, row, col, true);
+    setInputData: function(sheet, col, row, data) {
+        this._deleteCell(sheet, col, row);
+        var cell = this._getCell(sheet, col, row, true);
         if (!/\S/.test(data)) {
             return {
                 type: "str",
@@ -38,10 +38,10 @@ Spreadsheet.prototype = {
         }
         cell.input = data;
         // try {
-            var x = calc.parse(sheet, row, col, data), display = x.value;
+            var x = calc.parse(sheet, col, row, data), display = x.value;
             if (x.type == "exp") {
                 cell.exp = x;
-                cell.input = "=" + calc.print(sheet, row, col, x.ast);
+                cell.input = "=" + calc.print(sheet, col, row, x.ast);
                 display = "...";
             } else {
                 cell.value = x.value;
@@ -62,21 +62,21 @@ Spreadsheet.prototype = {
         // }
     },
 
-    getDisplayData: function(sheet, row, col) {
-        var cell = this._getCell(sheet, row, col, false);
+    getDisplayData: function(sheet, col, row) {
+        var cell = this._getCell(sheet, col, row, false);
         if (cell) {
             return cell.display;
         }
     },
 
-    getInputData: function(sheet, row, col) {
-        var cell = this._getCell(sheet, row, col, false);
+    getInputData: function(sheet, col, row) {
+        var cell = this._getCell(sheet, col, row, false);
         if (cell) {
             return cell.input;
         }
     },
 
-    _deleteCell: function(sheetName, row, col) {
+    _deleteCell: function(sheetName, col, row) {
         sheetName = sheetName.toLowerCase();
         var sheet = this.sheets[sheetName];
         if (sheet) {
@@ -93,7 +93,7 @@ Spreadsheet.prototype = {
         }
     },
 
-    _getCell: function(sheetName, row, col, create) {
+    _getCell: function(sheetName, col, row, create) {
         sheetName = sheetName.toLowerCase();
         var sheet = this.sheets[sheetName];
         if (!sheet) {
@@ -117,7 +117,7 @@ Spreadsheet.prototype = {
         var cellData = rowData[col];
         if (!cellData) {
             if (create) {
-                cellData = rowData[col] = this._makeCell(row, col);
+                cellData = rowData[col] = this._makeCell(col, row);
             } else {
                 return null;
             }
@@ -125,7 +125,7 @@ Spreadsheet.prototype = {
         return cellData;
     },
 
-    _makeCell: function(row, col) {
+    _makeCell: function(col, row) {
         return {};
     }
 };
@@ -158,7 +158,7 @@ function makeElements(container) {
     }
 }
 
-function _getInput(sheet, row, col) {
+function _getInput(sheet, col, row) {
     sheet = $(sheet);
     return $("input[data-row='" + row + "'][data-col='" + col + "']", sheet);
 }
@@ -168,24 +168,24 @@ function withInput(input, f) {
     var sheet = input.closest(".sheet");
     var row = input.data("row"), col = input.data("col");
     var sheetName = sheet[0].id;
-    f(input, sheet, sheetName, row, col);
+    f(input, sheet, sheetName, col, row);
 }
 
 function _onFocus(ev) {
-    withInput(this, function(input, sheet, sheetName, row, col){
+    withInput(this, function(input, sheet, sheetName, col, row){
         var formula = $(".formula", sheet);
-        var text = SPREADSHEET.getInputData(sheetName, row, col);
+        var text = SPREADSHEET.getInputData(sheetName, col, row);
         if (!text || !/\S/.test(text)) {
             text = "";
         }
-        formula.text(calc.make_reference(null, row, col) + ": " + (text || "—empty—"));
+        formula.text(calc.make_reference(null, col, row) + ": " + (text || "—empty—"));
         input.val(text).select();
     });
 }
 
 function _saveInput(input) {
-    withInput(input, function(input, sheet, sheetName, row, col){
-        var x = SPREADSHEET.setInputData(sheetName, row, col, input.val());
+    withInput(input, function(input, sheet, sheetName, col, row){
+        var x = SPREADSHEET.setInputData(sheetName, col, row, input.val());
         input.val(x.display);
         input[0].className = "type-" + x.type;
         if (x.tooltip) {
@@ -205,39 +205,39 @@ function _onChange(ev) {
 }
 
 function _onKeyDown(ev) {
-    withInput(this, function(input, sheet, sheetName, row, col){
+    withInput(this, function(input, sheet, sheetName, col, row){
         if (ev.keyCode == 38) {
             // UP
-            _getInput(sheet, row - 1, col).focus().select();
+            _getInput(sheet, col, row - 1).focus().select();
             ev.preventDefault();
         } else if (ev.keyCode == 40 || ev.keyCode == 13) {
             // DOWN or ENTER
-            _getInput(sheet, row + 1, col).focus().select();
+            _getInput(sheet, col, row + 1).focus().select();
             ev.preventDefault();
         } else if (ev.keyCode == 27) {
             // ESCAPE
             input
-                .val(SPREADSHEET.getInputData(sheetName, row, col))
+                .val(SPREADSHEET.getInputData(sheetName, col, row))
                 .select();
             ev.preventDefault();
         } else if (ev.keyCode == 37) {
             // LEFT
             if (input[0].selectionStart == 0) {
-                _getInput(sheet, row, col - 1).focus().select();
+                _getInput(sheet, col - 1, row).focus().select();
                 ev.preventDefault();
             }
         } else if (ev.keyCode == 39) {
             // RIGHT
             if (input[0].selectionEnd == input.val().length) {
-                _getInput(sheet, row, col + 1).focus().select();
+                _getInput(sheet, col + 1, row).focus().select();
                 ev.preventDefault();
             }
         } else if (ev.keyCode == 9) {
             // TAB
             var diff = ev.shiftKey ? -1 : 1;
-            var next = _getInput(sheet, row, col + diff);
+            var next = _getInput(sheet, col + diff, row);
             if (next.length == 0 && !ev.shiftKey) {
-                next = _getInput(sheet, row + 1, 1);
+                next = _getInput(sheet, 1, row + 1);
             }
             next.focus().select();
             ev.preventDefault();
@@ -248,7 +248,7 @@ function _onKeyDown(ev) {
             ev.preventDefault();
         } else if (ev.keyCode == 67 && ev.shiftKey && ev.ctrlKey) {
             // C-S-c
-            var cell = SPREADSHEET._getCell(sheetName, row, col);
+            var cell = SPREADSHEET._getCell(sheetName, col, row);
             if (!cell || !cell.exp) {
                 alert("No expression here");
             } else {
@@ -260,7 +260,7 @@ function _onKeyDown(ev) {
             if (!window.COPY) {
                 alert("Copy an expression first");
             } else {
-                var exp = calc.print(sheetName, row, col, window.COPY.ast);
+                var exp = calc.print(sheetName, col, row, window.COPY.ast);
                 input.val("=" + exp);
             }
             input.select();
@@ -278,8 +278,8 @@ function fillElements(data) {
         var cont = $("#" + sheet.toLowerCase());
         $.each(data, function(key, val){
             var x = calc.parse_reference(key);
-            var input = _getInput(cont, x.row, x.col);
-            var x = SPREADSHEET.setInputData(sheet, x.row, x.col, val);
+            var input = _getInput(cont, x.col, x.row);
+            var x = SPREADSHEET.setInputData(sheet, x.col, x.row, val);
             input.val(x.display);
             input[0].className = "type-" + x.type;
         });

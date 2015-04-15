@@ -28,6 +28,10 @@
     methods(Ref, {
         simplify: function() {
             return this;
+        },
+        setSheet: function(sheet) {
+            this.sheet = sheet;
+            return this;
         }
     });
 
@@ -37,6 +41,12 @@
 
     var NULL = new NullRef();
 
+    /* -----[ Name reference ]----- */
+
+    var NameRef = Ref.define(function NameRef(name){
+        this.name = name;
+    });
+
     /* -----[ Cell reference ]----- */
 
     var CellRef = Ref.define(function CellRef(col, row) {
@@ -44,11 +54,32 @@
         this.row = row;
     });
 
+    methods(CellRef, {
+        intersect: function(ref) {
+            if (CellRef.is(ref)) {
+                if (ref.row == this.row && ref.col == this.col) {
+                    return this;
+                } else {
+                    return NULL;
+                }
+            }
+            return ref.intersect(this);
+        }
+    });
+
     /* -----[ Column reference ]----- */
 
     var ColRef = Ref.define(function ColRef(left, right) {
         this.left = left;
         this.right = right;
+    });
+
+    methods(ColRef, {
+        intersect: function(ref) {
+            if (CellRef.is(ref)) {
+                
+            }
+        }
     });
 
     /* -----[ Row reference ]----- */
@@ -124,9 +155,9 @@
                     // topLeft
                     new CellRef(Math.max(this.topLeft.col, ref.left),
                                 this.topLeft.row),
+                    // bottomRight
                     new CellRef(Math.min(this.bottomRight.col, ref.right),
                                 this.bottomRight.row)
-                    // bottomRight
                 );
             } else {
                 return NULL;

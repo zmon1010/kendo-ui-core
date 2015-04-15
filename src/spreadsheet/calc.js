@@ -37,6 +37,9 @@
         [ "=", "<", ">", "<=", ">=", "<>" ]
     ]);
 
+    var TRUE = { type: "bool", value: true };
+    var FALSE = { type: "bool", value: false };
+
     function getcol(str) {
         str = str.toUpperCase();
         for (var col = 0, i = 0; i < str.length; ++i) {
@@ -76,7 +79,7 @@
     }
 
     // "Sheet1", 2, 3 -> "Sheet1!C2"
-    function make_reference(sheet, row, col, abs) {
+    function make_reference(sheet, col, row, abs) {
         var aa = "";
         while (col > 0) {
             aa = String.fromCharCode(64 + col % 26) + aa;
@@ -115,7 +118,7 @@
         return make_row(sheet, aa, abs);
     }
 
-    function parse(sheet, row, col, input) {
+    function parse(sheet, col, row, input) {
         return {
             type: "exp",
             sheet: sheet,
@@ -139,9 +142,10 @@
 
         function is(type, value) {
             var tok = input.peek();
-            return tok != null &&
-                (type == null || tok.type === type) &&
-                (value == null || tok.value === value) ? tok : null;
+            return tok != null
+                && (type == null || tok.type === type)
+                && (value == null || tok.value === value)
+                ? tok : null;
         }
 
         function parse_expression(commas) {
@@ -155,10 +159,7 @@
 
         function parse_symbol(tok) {
             if (tok.upper == "TRUE" || tok.upper == "FALSE") {
-                return {
-                    type: "bool",
-                    value: tok.upper == "TRUE"
-                };
+                return tok.upper == "TRUE" ? TRUE : FALSE;
             }
             var ref = parse_reference(tok.value);
             if (ref) {
@@ -387,7 +388,7 @@
         }
     }
 
-    function print(sheet, row, col, ast) {
+    function print(sheet, col, row, ast) {
         return print(ast);
 
         function print(node, prec){
@@ -461,8 +462,8 @@
                 if (node.ref == "cell") {
                     return make_reference(
                         noSheet || node.sheet == sheet ? null : node.sheet, // sheet name
-                        node.row + (node.rel & 2 ? row : 0),                // row
                         node.col + (node.rel & 1 ? col : 0),                // col
+                        node.row + (node.rel & 2 ? row : 0),                // row
                         node.rel^3                                          // whether to add the $
                     );
                 }
@@ -500,7 +501,8 @@
     }
 
     function to_cps(node, k) {
-        return cps(node);
+        var GENSYM = 0;
+        return cps(node.ast, k);
 
         function cps(node, k){
             switch (node.type) {
@@ -513,6 +515,7 @@
               case "call"    : return cps_call(node, k);
               case "ref"     : return cps_ref(node, k);
             }
+            throw new Error("Cannot CPS " + node.type);
         }
 
         function cps_atom(node, k) {
@@ -524,12 +527,12 @@
                 return k({
                     type: node.type,
                     op: node.op,
-                    exp: k
+                    exp: exp
                 });
             });
         }
 
-        function cps_binary(node) {
+        function cps_binary(node, k) {
             return cps(node.left, function(left){
                 return cps(node.right, function(right){
                     return k({
@@ -541,14 +544,140 @@
                 });
             });
         }
+
+        function cps_if(co, th, el, k) {
+            return cps(co, function(co){
+                return {
+                    type: "if",
+                    co: co,
+                    th: cps(th, k),
+                    el: cps(el || FALSE, k)
+                };
+            });
+        }
+
+        function cps_and(args, k) {
+            if (args.length === 0) {
+                return cps_atom(TRUE, k);
+            }
+            return cps({
+                type: "call",
+                func: "IF",
+                args: [
+                    // first item
+                    args[0],
+                    // if true, apply AND for the rest
+                    {
+                        type: "call",
+                        func: "AND",
+                        args: args.slice(1)
+                    },
+                    // otherwise return false
+                    FALSE
+                ]
+            }, k);
+        }
+
+        function cps_or(args, k) {
+            if (args.length === 0) {
+                return cps_atom(FALSE, k);
+            }
+            return cps({
+                type: "call",
+                func: "IF",
+                args: [
+                    // first item
+                    args[0],
+                    // if true, return true
+                    TRUE,
+                    // otherwise apply OR for the rest
+                    {
+                        type: "call",
+                        func: "OR",
+                        args: args.slice(1)
+                    }
+                ]
+            }, k);
+        }
+
+        function cps_not(exp, k) {
+            return cps(exp, function(exp){
+                return k({
+                    type: "not",
+                    exp: exp
+                });
+            });
+        }
+
+        function cps_ref(node, k) {
+            if (node.ref == "cell" || node.ref == "range") {
+                // constant reference
+                return cps_atom(node, k);
+            }
+            return {
+                type: "call",
+                func: "-fetch",
+                args: [ make_continuation(k), node ]
+            };
+        }
+
+        function cps_call(node, k) {
+            switch (node.func.toLowerCase()) {
+              case "if":
+                return cps_if(node.args[0], node.args[1], node.args[2], k);
+              case "not":
+                return cps_not(node.args[0], k);
+              case "and":
+                return cps_and(node.args, k);
+              case "or":
+                return cps_or(node.args, k);
+              case "true":
+                return k(TRUE);
+              case "false":
+                return k(FALSE);
+            }
+            // actual function
+            return (function loop(args, i){
+                if (i == node.args.length) {
+                    return {
+                        type : "call",
+                        func : node.func,
+                        args : args
+                    };
+                }
+                else {
+                    return cps(node.args[i], function(value){
+                        return loop(args.concat([ value ]), i + 1);
+                    });
+                }
+            })([ make_continuation(k) ], 0);
+        }
+
+        function gensym(name) {
+            if (!name) {
+                name = "";
+            }
+            name = "_" + name;
+            return name + (++GENSYM);
+        }
+
+        function make_continuation(k) {
+            var cont = gensym("R");
+            return {
+                type : "lambda",
+                vars : [ cont ],
+                body : k({ type: "var", name: cont })
+            };
+        }
     }
 
-    function compile(exp, spreadsheet) {
-        var deps = [];
-        var code = compile(exp.ast);
+    function compile(exp) {
+        var code = "var promise = $.Deferred();\n";
+        code += compile(exp.cps);
+        return code;
 
         function compile(node){
-            var type = node.type;
+            var type = node.type, ret;
             if (type == "num") {
                 return node.value + "";
             }
@@ -556,101 +685,57 @@
                 return JSON.stringify(node.value);
             }
             else if (type == "prefix") {
-                return "Runtime.prefix('" + node.op + "'," + compile(node.exp) + ")";
+                return "Runtime.prefix('" + node.op + "', " + compile(node.exp) + ")";
             }
             else if (type == "postfix") {
-                return "Runtime.postfix('" + node.op + "'," + compile(node.exp) + ")";
+                return "Runtime.postfix('" + node.op + "', " + compile(node.exp) + ")";
             }
             else if (type == "binary") {
-                return "Runtime.binary('" + node.op + "'," + compile(node.left) + "," + compile(node.right) + ")";
+                return "Runtime.binary('" + node.op + "', " + compile(node.left) + "," + compile(node.right) + ")";
+            }
+            else if (type == "return") {
+                return "promise.resolve(" + compile(node.value) + ")";
             }
             else if (type == "call") {
-                switch (node.func.toLowerCase()) {
-                  case "if":
-                    return compile_if(node.args);
-                  case "not":
-                    return compile_not(node.args);
-                  case "and":
-                    return compile_and(node.args);
-                  case "or":
-                    return compile_or(node.args);
-                  case "true":
-                    assert_args("TRUE", node.args, 0, 0);
-                    return "true";
-                  case "false":
-                    assert_args("FALSE", node.args, 0, 0);
-                    return "false";
-                }
                 return "Runtime.func(" + JSON.stringify(node.func)
                     + node.args.map(function(arg){
-                        return "," + compile(arg);
-                    })
+                        return ", " + compile(arg);
+                    }).join("")
                     + ")";
             }
             else if (type == "ref") {
                 if (node.ref == "cell") {
-                    //ret = "Runtime.make_ref(" +
+                    ret = "new Runtime.CellRef(" + node.col + ", " + node.row + ")";
+                } else if (node.ref == "range") {
+                    ret = "new Runtime.RangeRef(" + compile(node.left) + ", " + compile(node.right) + ")";
+                } else if (node.ref == "name") {
+                    ret = "new Runtime.NameRef(" + JSON.stringify(node.name) + ")";
                 }
+                if (node.sheet) {
+                    ret += ".setSheet(" + JSON.stringify(node.sheet) + ")";
+                }
+                return ret;
             }
             else if (type == "bool") {
                 return "" + node.value;
             }
+            else if (type == "if") {
+                return "(" + compile(node.co) + " ? " + compile(node.th) + " : " + compile(node.el) + ")";
+            }
+            else if (type == "not") {
+                return "!" + compile(node.exp);
+            }
+            else if (type == "lambda") {
+                return "function("
+                    + node.vars.join(", ")
+                    + "){ " + compile(node.body) + " }";
+            }
+            else if (type == "var") {
+                return node.name;
+            }
             else {
                 throw new Error("Cannot compile expression " + type);
             }
-        }
-
-        function assert_args(sym, args, min, max) {
-            if (min != null && args.length < min) {
-                throw new Error("Insufficient arguments in " + sym);
-            }
-            if (max != null && args.length > max) {
-                throw new Error("Too many arguments in " + sym);
-            }
-        }
-
-        function compile_if(args) {
-            assert_args("IF", args, 2, 3);
-            return "("
-                + "Runtime.bool(" + compile(args[0]) + ") ? "
-                + compile(args[1]) + " : "
-                + (args.length > 2 ? compile(args[2]) : "false")
-                + ")";
-        }
-
-        function compile_not(args) {
-            assert_args("NOT", args, 1, 1);
-            return "!" + compile(args[0]);
-        }
-
-        function compile_and(args) {
-            assert_args("AND", args, 1);
-            return compile_if([
-                args[0],
-                args.length > 1 ? compile_and(args.slice(1)) : {
-                    type: "bool",
-                    value: true
-                },
-                {
-                    type: "bool",
-                    value: false
-                }
-            ]);
-        }
-
-        function compile_or(args) {
-            assert_args("OR", args, 1);
-            return compile_if([
-                args[0],
-                {
-                    type: "bool",
-                    value: true
-                },
-                args.length > 1 ? compile_or(args.slice(1)) : {
-                    type: "bool",
-                    value: false
-                }
-            ]);
         }
     }
 
@@ -825,7 +910,7 @@
 
     //// exports
 
-    exports.parse = function(sheet, row, col, input) {
+    exports.parse = function(sheet, col, row, input) {
         input = input+"";
         if (/^'/.test(input)) {
             return {
@@ -836,7 +921,7 @@
         if (/^=/.test(input)) {
             input = input.substr(1);
             if (/\S/.test(input)) {
-                return parse(sheet, row, col, TokenStream(InputStream(input)));
+                return parse(sheet, col, row, TokenStream(InputStream(input)));
             } else {
                 return {
                     type: "str",
@@ -861,5 +946,21 @@
     exports.make_reference = make_reference;
     exports.print = print;
     exports.compile = compile;
+
+    (function(){
+        var exp = "=SUM(A:C)";
+        //exp = "=print( IF(true, \"FOO\", \"BAR\") )";
+        var ast = exports.parse("Sheet1", 5, 5, exp);
+        ast.cps = to_cps(ast, function(ret){
+            return {
+                type: "return",
+                value: ret
+            };
+        });
+        var code = compile(ast);
+        console.log(JSON.stringify(ast.cps, null, 2));
+        console.log("---");
+        console.log(code);
+    })();
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
