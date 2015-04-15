@@ -227,6 +227,7 @@
     <Compile Include="Controllers\Mobile_ListView\Local_VirtualizationController.cs" />
     <Compile Include="Controllers\MultiSelect\GroupingController.cs" />
     <Compile Include="Controllers\MultiSelect\VirtualizationController.cs" />
+    <Compile Include="Controllers\Pdf_Export\IndexController.cs" />
     <Compile Include="Controllers\PivotGrid\Excel_ExportController.cs" />
     <Compile Include="Controllers\PivotGrid\KPIController.cs" />
     <Compile Include="Controllers\PivotGrid\Pdf_ExportController.cs" />
@@ -1346,6 +1347,7 @@
     <Content Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <Content Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\aspx\Views\styling\index.aspx" />
+    <Content Include="Areas\aspx\Views\pdf_export\index.aspx" />
     <None Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <None Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\diagram\pdf_export.cshtml" />
@@ -3278,6 +3280,7 @@
     <Content Include="Areas\razor\Views\treelist\excel_export.cshtml" />
     <Content Include="Areas\razor\Views\treelist\pdf_export.cshtml" />
     <Content Include="Areas\razor\Views\styling\index.cshtml" />
+    <Content Include="Areas\razor\Views\pdf_export\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />

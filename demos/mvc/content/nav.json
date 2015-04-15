@@ -6071,7 +6071,7 @@
     ]
   },
   {
-    "packages": [ "!mvc", "!jsp", "!php" ],
+    "packages": [ "!jsp", "!php" ],
     "category": "Framework",
     "text": "PDF Export",
     "name": "export",
@@ -6083,7 +6083,8 @@
         "new": "true",
         "disableInMobile": true,
         "packages": [
-          "!mvc"
+          "!jsp",
+          "!php"
         ],
         "title": {
             "kendo-ui": "Kendo UI Drawing API Export functionality"
@@ -6097,7 +6098,9 @@
         "new": "true",
         "disableInMobile": true,
         "packages": [
-          "!mvc"
+          "!mvc",
+          "!jsp",
+          "!php"
         ],
         "title": {
             "kendo-ui": "Kendo UI PDF Export customizations"
