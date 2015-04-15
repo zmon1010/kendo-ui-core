@@ -6364,7 +6364,7 @@
     "category": "Framework"
   },
   {
-    "packages": [ "!mvc", "!jsp", "!php" ],
+    "packages": [ "!jsp", "!php" ],
     "text": "Validator",
     "name": "validator",
     "api": "web/validator",
@@ -6397,7 +6397,12 @@
         },
         "meta": {
             "kendo-ui": "This demo illustrates how to implement a custom validation rule for the Kendo UI Validator component in Kendo UI Web framework."
-        }
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
       },
       {
         "text": "AngularJS",

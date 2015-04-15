@@ -194,6 +194,7 @@
     <Compile Include="Controllers\Collapsible\NestedController.cs" />
     <Compile Include="Controllers\ComboBox\GroupingController.cs" />
     <Compile Include="Controllers\ComboBox\VirtualizationController.cs" />
+    <Compile Include="Controllers\Validator\IndexController.cs" />
     <Compile Include="Controllers\Diagram\ApiController.cs" />
     <Compile Include="Controllers\Diagram\ExportController.cs" />
     <Compile Include="Controllers\Diagram\EditingController.cs" />
@@ -1349,6 +1350,8 @@
     <Content Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\aspx\Views\styling\index.aspx" />
     <Content Include="Areas\aspx\Views\pdf_export\index.aspx" />
+    <Content Include="Areas\aspx\Views\globalization\index.aspx" />
+    <Content Include="Areas\aspx\Views\validator\index.aspx" />
     <None Include="Areas\razor\Views\combobox\grouping.cshtml" />
     <None Include="Areas\razor\Views\combobox\virtualization.cshtml" />
     <Content Include="Areas\razor\Views\diagram\pdf_export.cshtml" />
@@ -3283,6 +3286,7 @@
     <Content Include="Areas\razor\Views\styling\index.cshtml" />
     <Content Include="Areas\razor\Views\pdf_export\index.cshtml" />
     <Content Include="Areas\razor\Views\globalization\index.cshtml" />
+    <Content Include="Areas\razor\Views\validator\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
