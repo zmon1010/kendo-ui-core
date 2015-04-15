@@ -518,17 +518,22 @@
     });
 
     test("clicking custom command buttons executes their click action", function() {
+        var handler = spy();
+
         createTreeList({
             dataSource: [ { id: 1 } ],
             columns: [
                 { field: "id" },
                 { command: [
-                    { name: "foo", className: "foo", click: function() { ok(true); } }
+                    "edit",
+                    { name: "foo", className: "foo", click: handler }
                 ] }
             ]
         });
 
         instance.content.find(".foo").click();
+
+        equal(handler.calls, 1);
     });
 
     test("`this` in custom command click action is referencing to the widget", function() {

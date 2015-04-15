@@ -1275,7 +1275,7 @@ var __meta__ = {
 
         _commandByName: function(name) {
             var columns = this.columns;
-            var i, j, commands;
+            var i, j, commands, currentName;
 
             name = name.toLowerCase();
 
@@ -1288,7 +1288,13 @@ var __meta__ = {
                 commands = columns[i].command;
                 if (commands) {
                     for (j = 0; j < commands.length; j++) {
-                        if (commands[j].name.toLowerCase() == name) {
+                        currentName = commands[j].name;
+
+                        if (!currentName) {
+                            continue;
+                        }
+
+                        if (currentName.toLowerCase() == name) {
                             return commands[j];
                         }
                     }
