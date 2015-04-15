@@ -106,7 +106,11 @@ var PopupTool = Tool.extend({
     },
 
     update: function(ui) {
-        this.popup().close();
+        var popup = this.popup();
+
+        if (popup.wrapper && popup.wrapper.css("display") == "block") {
+            popup.close();
+        }
 
         ui.removeClass("k-state-hover");
     },

@@ -176,6 +176,12 @@ var FormattingTool = DelayedExecutionTool.extend({
             i, context,
             ancestor = dom.commonAncestor.apply(null, nodes);
 
+        if (this._ancestor == ancestor) {
+            return;
+        } else {
+            this._ancestor = ancestor;
+        }
+
         for (i = 0; i < items.length; i++) {
             context = items[i].context;
 
@@ -189,6 +195,10 @@ var FormattingTool = DelayedExecutionTool.extend({
         selectBox.value(this.getFormattingValue(dataSource.view(), nodes));
 
         selectBox.wrapper.toggleClass("k-state-disabled", !dataSource.view().length);
+    },
+
+    destroy: function() {
+        this._ancestor = null;
     }
 });
 
