@@ -360,8 +360,7 @@ namespace :demos do
         sh "rsync -rvz dist/demos/staging/content/cdn/ #{KENDO_ORIGIN_HOST}:/usr/share/nginx/html/staging/#{CURRENT_COMMIT}/"
     end
 
-    task :staging_site => [
-        :upload_to_cdn,
+    task :staging_site_content => [
         'themebuilder:staging',
         'dist/demos/staging',
         'dist/demos/staging/src/aspnetmvc/controllers',
@@ -374,6 +373,24 @@ namespace :demos do
         'dist/demos/staging/content/cdn/themebuilder',
         'dist/demos/staging/content/cdn/styles',
         'dist/demos/staging/content/cdn/styles/telerik',
+    ]
+
+    task :staging_site_no_cdn => [
+        :js,
+        :less,
+        :release,
+        :staging_site_content,
+        patched_web_config('dist/demos/staging/Web.config', 'demos/mvc/Web.config', {
+            :cdn_root => 'content/cdn/',
+            :themebuilder_root => STAGING_CDN_ROOT + CURRENT_COMMIT + '/themebuilder',
+            :dojo_root => '/dojo-staging/',
+            :dojo_runner => 'http://kendobuild'
+        })
+    ]
+
+    task :staging_site => [
+        :upload_to_cdn,
+        :staging_site_content,
         patched_web_config('dist/demos/staging/Web.config', 'demos/mvc/Web.config', {
             :cdn_root => STAGING_CDN_ROOT + CURRENT_COMMIT,
             :themebuilder_root => STAGING_CDN_ROOT + CURRENT_COMMIT + '/themebuilder',
