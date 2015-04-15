@@ -4293,7 +4293,13 @@ var __meta__ = {
         _setAnimationOptions: function() {
             var options = this.options;
             var animation = options.animation || {};
-            var origin = this.categoryAxis.getSlot(0);
+            var origin;
+            if (this.options.isStacked) {
+                var valueAxis = this.seriesValueAxis(options.series[0]);
+                origin = valueAxis.getSlot(valueAxis.startValue());
+            } else {
+                origin = this.categoryAxis.getSlot(0);
+            }
 
             animation.origin = new geom.Point(origin.x1, origin.y1);
             animation.vertical = !options.invertAxes;

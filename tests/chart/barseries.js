@@ -121,6 +121,40 @@
             ok(series.animation);
         });
 
+        test("sets animation origin to the start of the category axis", function() {
+            var slot = plotArea.categoryAxis.getSlot(0);
+            ok(series.animation.options.origin.equals({x: slot.x1, y: slot.y1}));
+        });
+
+        test("sets animation origin to the value axis start slot if the chart is stacked", function() {
+            var total = 3;
+            var plotArea = stubPlotArea(getCategorySlot, function(a, b) {
+                    return new Box2D(0, a, 0, (b || a));
+                }, {
+                    categoryAxis: {
+                        categories: ["A", "B"]
+                    }
+                }
+            );
+
+            plotArea.valueAxis.startValue = function() {
+                return 1;
+            };
+
+            setupBarChart(plotArea, {
+                series: [
+                    {
+                        data: [-1]
+                    }, {
+                        data: [1]
+                    }
+                ],
+                isStacked: true
+            });
+
+            ok(series.animation.options.origin.equals({x: 0, y: 1}));
+        });
+
         test("does not create animation on bars", function() {
             ok(!series.points[0].animation);
         });
