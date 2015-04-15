@@ -11,7 +11,7 @@
           - :value: horizontal
             :member: Horizontal
             :description: Defines a horizontal ProgressBar
-            
+
     - :name: type
       :type: String
       :enum_type: ProgressBarType
