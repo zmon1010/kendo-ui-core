@@ -7087,17 +7087,19 @@ var __meta__ = {
 
    function moveVertical(current, currentTable, dataTable, headerTable, up, lockedColumns) {
        var row, index;
+       var hasMultiColumns = current && current[0].rowSpan;
+       var rowSpan = hasMultiColumns || 1;
        var nextFn = up ? "prevAll" : "nextAll";
 
        if (current) {
-           row = current.parent()[nextFn](NAVROW).first();
-           if (!row[0] && (up || current.is("th")) || (!up && current[0].rowSpan > 1)) {
+           row = current.parent()[nextFn](NAVROW).eq(rowSpan - 1);
+           if (!row[0] && (up || current.is("th")) || (!up && !hasMultiColumns)) {
                currentTable = verticalTable(currentTable, dataTable, headerTable, up);
                focusTable(currentTable, true);
                if (up && !current.is(".k-header")) {
                    var filterRow = currentTable.find(".k-filter-row");
                    if (filterRow.length) {
-                       return filterRow.find("th").eq(current.index());
+                       return filterRow.find("th" + DATA_CELL).eq(current.index());
                    }
                    return leafDataCells(currentTable.find("thead:first")).eq(current.index());
                }
@@ -7117,7 +7119,7 @@ var __meta__ = {
                    } else if (!$(currentTable).parent().prev().hasClass("k-grid-content-locked")){
                        index -= lockedColumns;
                    }
-                   current = row.children().eq(index);
+                   current = row.children(DATA_CELL).eq(index);
                }
            }
 

@@ -100,10 +100,13 @@
                             }
                         },
                         {
-                            title: "Position",
+                            title: "Position group",
                             locked: true,
                             columns: [{
-                                field: "Position", filterable: { cell: { enabled: true } }, locked: true, width: 300
+                                field: "Position", filterable: { cell: { enabled: true } }, locked: true, width: 300,
+                                columns: [{
+                                    field: "Position", filterable: { cell: { enabled: true } }, locked: true, width: 300
+                                }]
                             }]
                         },
                         {

@@ -32,14 +32,14 @@
         }
     });
 
-    test("moves DOWN from header cell to filter-cell", function() {
+    test("moves DOWN from header cell to filter cell", function() {
         var grid = setup();
         grid.current(grid.thead.find("th:first"));
         grid.thead.parent().press(keys.DOWN);
         ok(grid.current().parent().hasClass("k-filter-row"));
     });
 
-    test("moves DOWN from filter cell to data-cell", function() {
+    test("moves DOWN from filter cell to data cell", function() {
         var grid = setup();
         grid.current(grid.thead.find(".k-filter-row th:first"));
         grid.thead.parent().press(keys.DOWN);
@@ -167,4 +167,45 @@
         grid.thead.parent().press(keys.LEFT);
         equal(grid.current()[0], grid.lockedHeader.find("tr:first th:last")[0]);
     });
+
+    test("multicolumn moves DOWN from header leaf cell to filter cell", function() {
+        var grid = setup({
+            columns: [
+                { width: 300, columns: [{ width: 300, field: "foo" }] },
+                { field: "bar" }
+            ]
+        });
+        grid.current(grid.thead.find("tr:first th:last"));
+        grid.thead.parent().press(keys.DOWN);
+        equal(grid.current()[0], grid.thead.find(".k-filter-row th:last")[0]);
+    });
+
+    test("multicolumn moves DOWN from header leaf cell to filter cell with frozen columns", function() {
+        var grid = setup({
+            columns: [
+                { template: "", locked : true },
+                { width: 300, columns: [{ width: 300, field: "foo" }] },
+                { field: "bar" }
+            ]
+        });
+        grid.current(grid.thead.find("tr:first th:last"));
+        grid.thead.parent().press(keys.DOWN);
+        equal(grid.current()[0], grid.thead.find(".k-filter-row th:last")[0]);
+    });
+
+    test("multicolumn moves DOWN from header leaf cell to filter cell with grouping", function() {
+        var grid = setup({
+            dataSource: {
+                group: { field: "foo" }
+            },
+            columns: [
+                { width: 300, columns: [{ width: 300, field: "foo" }] },
+                { field: "bar" }
+            ]
+        });
+        grid.current(grid.thead.find("tr:first th:last"));
+        grid.thead.parent().press(keys.DOWN);
+        equal(grid.current()[0], grid.thead.find(".k-filter-row th:last")[0]);
+    });
+
 })();
