@@ -23,6 +23,10 @@ class Issue
         @components = filtered_labels(:w) | filtered_labels(:f) | filtered_labels(:c)
     end
 
+    def breaking?
+        @labels.include? "Breaking Change"
+    end
+
     def filtered_labels(prefix)
         @labels.grep(/#{prefix}:/i) { |l| l.split(":")[1].strip }
     end
