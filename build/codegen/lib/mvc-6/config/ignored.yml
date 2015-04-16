@@ -36,7 +36,6 @@
 - scheduler.resources
 - scheduler.pdf.margin
 - scheduler.pdf.papersize
-- scheduler.mobile
 - scheduler.views
 - treelist.columns.editor
 - treelist.datasource

@@ -197,6 +197,15 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Enables the adaptive rendering when viewed on mobile browser
+        /// </summary>
+        public SchedulerBuilder<T> Mobile()
+        {
+            Container.Mobile = MobileMode.Auto;
+            return this;
+        }
     }
 }
 

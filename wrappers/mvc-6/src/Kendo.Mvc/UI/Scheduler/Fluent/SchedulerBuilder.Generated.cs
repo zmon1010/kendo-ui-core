@@ -418,6 +418,16 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
 
+        /// <summary>
+        /// Defines the mobile modes supported by Kendo UI Scheduler for ASP.NET MVC
+        /// </summary>
+        /// <param name="value">The value for Mobile</param>
+        public SchedulerBuilder<T> Mobile(MobileMode value)
+        {
+            Container.Mobile = value;
+            return this;
+        }
+
 
         
         /// <summary>

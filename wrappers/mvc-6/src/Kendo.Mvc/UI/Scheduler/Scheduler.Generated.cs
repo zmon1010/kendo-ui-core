@@ -81,6 +81,8 @@ namespace Kendo.Mvc.UI
 
         public double? WorkWeekEnd { get; set; }
 
+        public MobileMode? Mobile { get; set; }
+
 
         protected override Dictionary<string, object> SerializeSettings()
         {
@@ -289,6 +291,11 @@ namespace Kendo.Mvc.UI
             if (WorkWeekEnd.HasValue)
             {
                 settings["workWeekEnd"] = WorkWeekEnd;
+            }
+
+            if (Mobile.HasValue)
+            {
+                settings["mobile"] = Mobile?.Serialize();
             }
 
             return settings;
