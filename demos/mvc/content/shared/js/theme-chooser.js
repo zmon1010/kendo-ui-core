@@ -136,8 +136,7 @@
             { name: "WP8 Dark", value: "wp-dark", colors: [ "#01abaa", "#ffffff", "#000000" ]  },
             { name: "Flat Skin", value: "flat", colors: [ "#10c4b2", "#dcdcdc", "#f4f4f4" ]  },
             { name: "Material Light", value: "material-light", colors: [ "#3f51b5", "#283593", "#fff" ]  },
-            { name: "Material Dark", value: "material-dark", colors: [ "#3f51b5", "#1c1c1c", "#4d4d4d" ]  },
-            { name: "Office 365", value: "office365", colors: [ "#0072c6", "#cde6f7", "#fff" ]  }
+            { name: "Material Dark", value: "material-dark", colors: [ "#3f51b5", "#1c1c1c", "#4d4d4d" ]  }
         ],
         sizes: [
             { name: "Standard", value: "common" },
