@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $result = new DataSourceResult('sqlite:..//sample.db');
 
-    echo json_encode($result->read('Customers', array('ContactName', 'ContactTitle', 'CompanyName', 'Country'), $request));
+    echo json_encode($result->read('Customers', array('CustomerID', 'ContactName', 'ContactTitle', 'CompanyName', 'Country'), $request));
 
     exit;
 }
@@ -68,41 +68,42 @@ $grid = new \Kendo\UI\Grid('grid');
 
 $contactName = new \Kendo\UI\GridColumn();
 $contactName->field('ContactName')
+            ->template("<div class='customer-photo'style='background-image: url(../content/web/Customers/#:data.CustomerID#.jpg);'></div><div class='customer-name'>#: ContactName #</div>")
             ->title('Contact Name')
-            ->width(140);
-            
+            ->width(240);
+
 $contactTitle = new \Kendo\UI\GridColumn();
 $contactTitle->field('ContactTitle')
             ->title('Contact Title')
-            ->width(190);            
+            ->width(190);
 
 $companyName = new \Kendo\UI\GridColumn();
 $companyName->field('CompanyName')
             ->title('Company Name');
-            
+
 $Country = new \Kendo\UI\GridColumn();
 $Country->field('Country')
-        ->width(110);            
+        ->width(110);
 
 $pageable = new Kendo\UI\GridPageable();
 $pageable->refresh(true)
       ->pageSizes(true)
       ->buttonCount(5);
-        
+
 $grid->addColumn($contactName, $contactTitle, $companyName, $Country)
-     ->dataSource($dataSource)     
+     ->dataSource($dataSource)
      ->sortable(true)
      ->groupable(true)
      ->pageable($pageable)
      ->attr('style', 'height:380px');
-      
+
 ?>
 
 <div id="clientsDb">
 <?php
 echo $grid->render();
 ?>
-</div>  
+</div>
 
 <style>
     #clientsDb {
@@ -111,6 +112,26 @@ echo $grid->render();
         margin: 20px auto 0;
         padding: 51px 4px 0 4px;
         background: url('../content/web/grid/clientsDb.png') no-repeat 0 0;
+    }
+
+        .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
     }
 </style>
 
