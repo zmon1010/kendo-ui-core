@@ -1928,7 +1928,7 @@
                 }
             });
 
-            test("renders custom visual if the visual option is set", 2, function() {
+            test("renders custom visual if the visual option is set", 3, function() {
                 renderTextBox({
                     visual: function() {
                         ok(true);
@@ -1938,7 +1938,7 @@
                 ok(textBox.visual === customVisual);
             });
 
-            test("appends custom visual", 2, function() {
+            test("appends custom visual", 3, function() {
                 createTextBox({
                     visual: function() {
                         ok(true);
@@ -1973,7 +1973,9 @@
             test("passes the textbox initial box as rect", 1, function() {
                 renderTextBox({
                     visual: function(e) {
-                        ok(e.rect.equals(RECT));
+                        if (e.rect.size.width !== 0 || e.rect.size.height !== 0) {
+                            ok(e.rect.equals(RECT));
+                        }
                     }
                 });
             });
@@ -1981,8 +1983,10 @@
             test("the createVisual function returns the reflowed visual", function() {
                 createTextBox({
                     visual: function(e) {
-                        var defaultVisual = e.createVisual();
-                        ok(defaultVisual.bbox().equals(new geom.Rect([10, 20], [120, 15])));
+                        if (e.rect.size.width !== 0 || e.rect.size.height !== 0) {
+                            var defaultVisual = e.createVisual();
+                            ok(defaultVisual.bbox().equals(new geom.Rect([10, 20], [120, 15])));
+                        }
                     }
                 }, Box2D(0, 0, 10, 10));
 

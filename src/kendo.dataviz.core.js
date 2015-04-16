@@ -1345,7 +1345,7 @@ var __meta__ = {
             var rotation = options.rotation;
             textbox.container.options.align = align;
 
-            if (visual && !textbox._boxReflow && targetBox.hasSize()) {
+            if (visual && !textbox._boxReflow) {
                 textbox.visual = visual({
                     text: textbox.content,
                     rect: targetBox.toRect(),
