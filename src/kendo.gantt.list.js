@@ -210,7 +210,7 @@ var __meta__ = {
             colgroup = kendoDomElement("colgroup", null, this._cols());
             thead = kendoDomElement("thead", { "role": "rowgroup" }, [kendoDomElement("tr", { "role": "row" }, this._ths())]);
             table = kendoDomElement("table", {
-                "style": { "min-width": this.options.listWidth + "px" },
+                "style": { "minWidth": this.options.listWidth + "px" },
                 "role": "grid"
             }, [colgroup, thead]);
 
@@ -227,7 +227,7 @@ var __meta__ = {
             colgroup = kendoDomElement("colgroup", null, this._cols());
             tbody = kendoDomElement("tbody", { "role": "rowgroup" }, this._trs(tasks));
             table = kendoDomElement("table", {
-                "style": { "min-width": this.options.listWidth + "px" },
+                "style": { "minWidth": this.options.listWidth + "px" },
                 "tabIndex": 0,
                 "role": "treegrid"
             }, [colgroup, tbody]);
