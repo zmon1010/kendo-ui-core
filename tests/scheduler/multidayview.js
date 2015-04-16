@@ -2259,7 +2259,7 @@
 
         var row = view.content.find("tr:first");
         var endOffset = row.find("td:nth-child(3)").offset();
-        var endSlot = view._slotByPosition(endOffset.left-1, endOffset.top);
+        var endSlot = view._slotByPosition(Math.floor(endOffset.left-1), endOffset.top);
         var endDate = endSlot.startDate().getDay();
 
         equal(endDate, 2);
