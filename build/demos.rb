@@ -375,19 +375,6 @@ namespace :demos do
         'dist/demos/staging/content/cdn/styles/telerik',
     ]
 
-    task :staging_site_no_cdn => [
-        :js,
-        :less,
-        :release,
-        :staging_site_content,
-        patched_web_config('dist/demos/staging/Web.config', 'demos/mvc/Web.config', {
-            :cdn_root => 'content/cdn/',
-            :themebuilder_root => STAGING_CDN_ROOT + CURRENT_COMMIT + '/themebuilder',
-            :dojo_root => '/dojo-staging/',
-            :dojo_runner => 'http://kendobuild'
-        })
-    ]
-
     task :staging_site => [
         :upload_to_cdn,
         :staging_site_content,
@@ -398,6 +385,19 @@ namespace :demos do
             :dojo_runner => 'http://kendobuild'
         })
     ]
+
+    task :staging_site_no_cdn => [
+        :js,
+        :less,
+        :release,
+        :staging_site_content,
+        'dist/demos/staging/Web.config'
+    ] do |t|
+        web_config = t.prerequisites.last
+        config = File.read(web_config).gsub(/.*CDN_ROOT.*/, '<add key="CDN_ROOT" value="content/cdn" />')
+
+        File.open(web_config, "w") {|file| file.puts config }
+    end
 
     zip 'dist/demos/staging.zip' => :staging_site
 
