@@ -1316,6 +1316,8 @@ var __meta__ = {
                 } else if (command.click) {
                     command.click.call(this, e);
                 }
+
+                e.preventDefault();
             }
         },
 
