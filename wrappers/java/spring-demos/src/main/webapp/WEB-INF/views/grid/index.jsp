@@ -14,7 +14,9 @@
     	<kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5">
     	</kendo:grid-pageable>
         <kendo:grid-columns>
-            <kendo:grid-column title="Contact Name" field="contactName" width="140" />
+            <kendo:grid-column title="Contact Name" field="contactName" width="240" 
+            	template="<div class='customer-photo' style='background-image: url(../resources/web/Customers/#:data.customerId#.jpg);'></div><div class='customer-name'>#: contactName #</div>">            	
+            </kendo:grid-column>
             <kendo:grid-column title="Contact Title" field="contactTitle" width="190" />
             <kendo:grid-column title="Company Name" field="companyName" />
             <kendo:grid-column title="Country" field="country" width="110" />
@@ -45,5 +47,25 @@
 	    padding: 51px 4px 0 4px;
         background: url('${backgroundUrl}') no-repeat 0 0;
      }
+     
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
  </style>  
 <demo:footer />
