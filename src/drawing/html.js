@@ -183,10 +183,11 @@
             var adjust = 0;
 
             $(container).css({
-                display  : "block",
-                position : "absolute",
-                left     : "-10000px",
-                top      : "-10000px"
+                display   : "block",
+                position  : "absolute",
+                boxSizing : "content-box",
+                left      : "-10000px",
+                top       : "-10000px"
             });
 
             if (pageWidth) {
@@ -349,6 +350,7 @@
                 var page = doc.createElement("KENDO-PDF-PAGE");
                 $(page).css({
                     display  : "block",
+                    boxSizing: "content-box",
                     width    : pageWidth || "auto",
                     padding  : (margin.top + "px " +
                                 margin.right + "px " +
