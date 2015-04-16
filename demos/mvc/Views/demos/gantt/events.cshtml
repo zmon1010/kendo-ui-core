@@ -76,7 +76,6 @@
             $(document).ready(function() {
                 var serviceRoot = "http://demos.telerik.com/kendo-ui/service";
                 var tasksDataSource = new kendo.data.GanttDataSource({
-                    batch: false,
                     transport: {
                         read: {
                             url: serviceRoot + "/GanttTasks",
@@ -137,8 +136,8 @@
                             dataType: "jsonp"
                         },
                         parameterMap: function(options, operation) {
-                            if (operation !== "read" && options.models) {
-                                return { models: kendo.stringify(options.models) };
+                            if (operation !== "read") {
+                                return { models: kendo.stringify(options.models || [options]) };
                             }
                         }
                     },
