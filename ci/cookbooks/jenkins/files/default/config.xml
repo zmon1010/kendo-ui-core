@@ -7,7 +7,7 @@
     <string>jenkins.security.RekeySecretAdminMonitor</string>
   </disabledAdministrativeMonitors>
   <version>1.552</version>
-  <numExecutors>3</numExecutors>
+  <numExecutors>5</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/>
@@ -41,7 +41,7 @@
       <name>kendoiis</name>
       <description>Windows slave</description>
       <remoteFS>C:\Jenkins</remoteFS>
-      <numExecutors>2</numExecutors>
+      <numExecutors>3</numExecutors>
       <mode>EXCLUSIVE</mode>
       <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
       <launcher class="hudson.slaves.JNLPLauncher"/>
@@ -84,6 +84,8 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>qa-staging</string>
+        <string>selenium2-no-timeout</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -107,11 +109,9 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>admin-tools</string>
-        <string>bower-upload</string>
         <string>nuget-upload</string>
         <string>production-CI-DownloadBuilder</string>
         <string>production-upload-appbuilder</string>
-        <string>selenium2-experimental-iis</string>
         <string>stable-upload-release</string>
         <string>sync-from-core-production</string>
       </jobNames>

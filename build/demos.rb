@@ -394,7 +394,7 @@ namespace :demos do
         'dist/demos/staging/Web.config'
     ] do |t|
         web_config = t.prerequisites.last
-        config = File.read(web_config).gsub(/.*CDN_ROOT.*/, '<add key="CDN_ROOT" value="content/cdn" />')
+        config = File.read(web_config).gsub(/.*CDN_ROOT.*/, '<add key="CDN_ROOT" value="~/content/cdn" />')
 
         File.open(web_config, "w") {|file| file.puts config }
     end

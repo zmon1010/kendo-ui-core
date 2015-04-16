@@ -70,22 +70,25 @@ fi
 
 git checkout private-production &amp;&gt;/dev/null
 
-git cherry-pick previous..core/production
+for commit in `git rev-list --reverse --topo-order previous..core/production`;
+do
+    if [ `git cat-file -p $commit | grep ^parent | wc -l` -eq 1 ];
+    then
+        git cherry-pick $commit || echo &quot;WARNING:  Could not cherry pick $commit&quot;;
 
-CHERRY_PICK_RESULT=$?
+        CHERRY_PICK_RESULT=$?
 
-if [ &quot;$CHERRY_PICK_RESULT&quot; -eq 0 ]; then
-    git push origin private-production:production
-else
-    git status
-    git cherry-pick --abort
-    git reset --hard
-fi
+        if [ $CHERRY_PICK_RESULT -gt 0 ]; then
+            git status
+            git cherry-pick --abort
+            git reset --hard
+        fi
+    fi
+done
 
 git tag -f previous core/production
 
-exit $CHERRY_PICK_RESULT
-</command>
+git push origin private-production:production</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

@@ -70,17 +70,25 @@ fi
 
 git checkout private-master &amp;&gt;/dev/null
 
-git cherry-pick previous..core/master
 
-CHERRY_PICK_RESULT=$?
+for commit in `git rev-list --reverse --topo-order previous..core/master`;
+do
+    if [ `git cat-file -p $commit | grep ^parent | wc -l` -eq 1 ];
+    then
+        git cherry-pick $commit || echo &quot;WARNING:  Could not cherry pick $commit&quot;;
 
-if [ &quot;$CHERRY_PICK_RESULT&quot; -eq 0 ]; then
-    git push origin private-master:master
-else
-    git status
-    git cherry-pick --abort
-    git reset --hard
-fi
+        CHERRY_PICK_RESULT=$?
+
+        if [ $CHERRY_PICK_RESULT -gt 0 ]; then
+            git status
+            git cherry-pick --abort
+            git reset --hard
+        fi
+    fi
+done
+
+git push origin private-master:master
+
 
 git tag -f previous core/master
 

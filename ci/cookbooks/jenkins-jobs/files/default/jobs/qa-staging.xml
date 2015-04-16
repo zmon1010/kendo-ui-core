@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Deploys the online demos to the staging server.</description>
+  <description>Builds the online demos and deploy them on KendoIIS</description>
   <logRotator class="hudson.tasks.LogRotator">
-    <daysToKeep>1</daysToKeep>
-    <numToKeep>1</numToKeep>
+    <daysToKeep>2</daysToKeep>
+    <numToKeep>10</numToKeep>
     <artifactDaysToKeep>2</artifactDaysToKeep>
     <artifactNumToKeep>10</artifactNumToKeep>
   </logRotator>
@@ -37,17 +37,20 @@
       <hudson.plugins.git.extensions.impl.PerBuildTag/>
     </extensions>
   </scm>
-  <assignedNode>master</assignedNode>
+  <assignedNode>windows</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
-  <blockBuildWhenDownstreamBuilding>true</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>DOCS_BRANCH=master ./build/run-build-task build:master:demos</command>
+      <command>BETA=true DOCS_BRANCH=master ./build/run-build-task demos:staging_site_no_cdn</command>
     </hudson.tasks.Shell>
+    <hudson.tasks.BatchFile>
+      <command>xcopy dist\demos\staging c:\shares\staging-kendo-ui /E /Y</command>
+    </hudson.tasks.BatchFile>
     <hudson.tasks.Shell>
       <command>git reset --hard</command>
     </hudson.tasks.Shell>
