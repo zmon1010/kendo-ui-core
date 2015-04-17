@@ -1549,6 +1549,9 @@ var __meta__ = {
             var messages = this.options.messages;
             var data = this.dataSource.rootNodes();
             var aggregates = this.dataSource.aggregates();
+            var selected = this.select().map(function(_, row) {
+                return $(row).attr("data-uid");
+            });
 
             this._absoluteIndex = 0;
 
@@ -1573,6 +1576,7 @@ var __meta__ = {
                 this._contentTree.render(this._trs({
                     columns: this._nonLockedColumns(),
                     aggregates: options.aggregates,
+                    selected: selected,
                     data: data,
                     visible: true,
                     level: 0
@@ -1583,6 +1587,7 @@ var __meta__ = {
                     this._lockedContentTree.render(this._trs({
                         columns: this._lockedColumns(),
                         aggregates: options.aggregates,
+                        selected: selected,
                         data: data,
                         visible: true,
                         level: 0
@@ -1820,6 +1825,10 @@ var __meta__ = {
                     attr.style = { display: "none" };
                 }
 
+                if ($.inArray(model.uid, options.selected) >= 0) {
+                    className.push(classNames.selected);
+                }
+
                 if (hasChildren) {
                     className.push(classNames.group);
                 }
@@ -1841,6 +1850,7 @@ var __meta__ = {
                         columns: columns,
                         parentId: model.id,
                         aggregates: aggregates,
+                        selected: options.selected,
                         visible: options.visible && !!model.expanded,
                         data: childNodes,
                         level: level + 1
@@ -2465,6 +2475,10 @@ var __meta__ = {
 
         select: function(value) {
             var selectable = this.selectable;
+
+            if (!selectable) {
+                return $();
+            }
 
             if (typeof value !== "undefined") {
                 if (!selectable.options.multiple) {

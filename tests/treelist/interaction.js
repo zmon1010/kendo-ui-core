@@ -629,6 +629,23 @@
         ok(!footerCells.hasClass("k-state-selected"));
     });
 
+    test("selected row is persisted on expand/collapse", function() {
+        createTreeList({
+            selectable: true
+        });
+
+        var content = instance.content;
+
+        instance.select(content.find("tr").eq(1));
+
+        equal(content.find(".k-state-selected").length, 1);
+
+        content.find(".k-i-collapse").mousedown();
+        content.find(".k-i-expand").mousedown();
+
+        equal(content.find(".k-state-selected").length, 1);
+    });
+
     module("TreeList Excel export", cleanup);
 
     function exportToExcel(options, callback) {
