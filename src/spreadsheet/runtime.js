@@ -1,7 +1,7 @@
 // -*- fill-column: 100 -*-
 
 (function(f, define){
-    define([ "./calc" ], f);
+    define([ "../kendo.core.js" ], f);
 })(function(){
 
     "use strict";
@@ -11,6 +11,7 @@
     /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true */
     /* global console */
 
+    kendo.spreadsheet = { calc: {} };
     var exports = kendo.spreadsheet.calc.Runtime = {};
 
     /* -----[ References ]----- */
@@ -49,9 +50,10 @@
 
     /* -----[ Cell reference ]----- */
 
-    var CellRef = Ref.define(function CellRef(col, row) {
+    var CellRef = Ref.define(function CellRef(col, row, rel) {
         this.col = col;
         this.row = row;
+        this.rel = rel;
     });
 
     methods(CellRef, {
@@ -67,33 +69,12 @@
         }
     });
 
-    /* -----[ Column reference ]----- */
-
-    var ColRef = Ref.define(function ColRef(left, right) {
-        this.left = left;
-        this.right = right;
-    });
-
-    methods(ColRef, {
-        intersect: function(ref) {
-            if (CellRef.is(ref)) {
-                
-            }
-        }
-    });
-
-    /* -----[ Row reference ]----- */
-
-    var RowRef = Ref.define(function RowRef(top, bottom) {
-        this.top = top;
-        this.bottom = bottom;
-    });
-
     /* -----[ Range reference ]----- */
 
     var RangeRef = Ref.define(function RangeRef(tl, br) {
         this.topLeft = tl;
         this.bottomRight = br;
+        this.normalize();
     });
 
     methods(RangeRef, {
@@ -108,10 +89,6 @@
                 && cell.col <= this.bottomRight.col;
         },
         contains: function(ref) {
-            if (ColRef.is(ref) || RowRef.is(ref)) {
-                // a range is limited
-                return false;
-            }
             if (CellRef.is(ref)) {
                 return this._containsCell(ref);
             }
@@ -142,39 +119,7 @@
                     // bottomRight
                     new CellRef(Math.min(a_right, b_right),
                                 Math.min(a_bottom, b_bottom))
-                );
-            } else {
-                return NULL;
-            }
-        },
-        _intersectCol: function(ref) {
-            if (this.topLeft.col <= ref.right &&
-                this.bottomRight.col >= ref.left)
-            {
-                return new RangeRef(
-                    // topLeft
-                    new CellRef(Math.max(this.topLeft.col, ref.left),
-                                this.topLeft.row),
-                    // bottomRight
-                    new CellRef(Math.min(this.bottomRight.col, ref.right),
-                                this.bottomRight.row)
-                );
-            } else {
-                return NULL;
-            }
-        },
-        _intersectRow: function(ref) {
-            if (this.topLeft.row <= ref.bottom &&
-                this.bottomRight.row >= ref.top)
-            {
-                return new RangeRef(
-                    // topLeft
-                    new CellRef(this.topLeft.col,
-                                Math.max(this.topLeft.row, ref.top)),
-                    // bottomRight
-                    new CellRef(this.bottomRight.col,
-                                Math.min(this.bottomRight.row, ref.bottom))
-                );
+                ).setSheet(this.sheet);
             } else {
                 return NULL;
             }
@@ -189,12 +134,6 @@
             if (RangeRef.is(ref)) {
                 return this._intersectRange(ref).simplify();
             }
-            if (ColRef.is(ref)) {
-                return this._intersectCol(ref).simplify();
-            }
-            if (RowRef.is(ref)) {
-                return this._intersectRow(ref).simplify();
-            }
         },
 
         simplify: function() {
@@ -202,7 +141,30 @@
                 this.topLeft.col == this.bottomRight.col)
             {
                 return new CellRef(this.topLeft.col,
-                                   this.topLeft.row);
+                                   this.topLeft.row).setSheet(this.sheet);
+            }
+            return this;
+        },
+
+        normalize: function() {
+            var a = this.topLeft, b = this.bottomRight;
+            var r1 = a.row, c1 = a.col, r2 = b.row, c2 = b.col;
+            var rr1 = a.rel & 2, rc1 = a.rel & 1;
+            var rr2 = b.rel & 2, rc2 = b.rel & 1;
+            var tmp, changes = false;
+            if (r1 > r2) {
+                changes = true;
+                tmp = r1; r1 = r2; r2 = tmp;
+                tmp = rr1; rr1 = rr2; rr2 = tmp;
+            }
+            if (c1 > c2) {
+                changes = true;
+                tmp = c1; c1 = c2; c2 = tmp;
+                tmp = rc1; rc1 = rc2; rc2 = tmp;
+            }
+            if (changes) {
+                this.topLeft = new CellRef(c1, r1, rc1 | rr1);
+                this.bottomRight = new CellRef(c2, r2, rc2 | rr2);
             }
             return this;
         }
@@ -218,16 +180,33 @@
         }
     }
 
-    // (function(){
-    //     var col = new ColRef(3, 6);
-    //     var tl = new CellRef(1, 1);
-    //     var br = new CellRef(10, 10);
-    //     var r = new RangeRef(tl, br);
-    //     var r2 = new RangeRef(
-    //         new CellRef(10, 10),
-    //         new CellRef(12, 12)
-    //     );
-    //     console.log(r.intersect(r2));
-    // })();
+    /* -----[ exports ]----- */
+
+    exports.NULL = NULL;
+    exports.Ref = Ref;
+    exports.NullRef = NullRef;
+    exports.NameRef = NameRef;
+    exports.CellRef = CellRef;
+    exports.RangeRef = RangeRef;
+
+    exports.makeFormula = function(args) {
+        return args;
+    };
+
+    exports.makeCellRef = function(sheet, col, row, rel) {
+        return new CellRef(col, row, rel).setSheet(sheet);
+    };
+
+    exports.makeRangeRef = function(sheet, tl, br) {
+        return new RangeRef(tl, br).setSheet(sheet);
+    };
+
+    exports.makeNameRef = function(sheet, name) {
+        return new NameRef(name).setSheet(sheet);
+    };
+
+    exports.isRef = function(thing) {
+        return thing instanceof Ref;
+    };
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

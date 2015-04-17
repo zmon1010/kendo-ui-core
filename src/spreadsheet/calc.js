@@ -1,18 +1,17 @@
 // -*- fill-column: 100 -*-
 
 (function(f, define){
-    define([ "../kendo.core" ], f);
+    define([ "./runtime" ], f);
 })(function(){
 
     "use strict";
 
     // WARNING: removing the following jshint declaration and turning
     // == into === to make JSHint happy will break functionality.
-    /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true */
+    /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true, -W054 */
     /* global console */
 
-    kendo.spreadsheet = {};
-    var exports = kendo.spreadsheet.calc = {};
+    var exports = kendo.spreadsheet.calc;
 
     // Excel formula parser and compiler to JS.
     // some code adapted from http://lisperator.net/pltut/
@@ -118,6 +117,10 @@
         return make_row(sheet, aa, abs);
     }
 
+    function adjust(num, delta, should) {
+        return should ? num + delta : num;
+    }
+
     function parse(sheet, col, row, input) {
         return {
             type: "exp",
@@ -163,9 +166,6 @@
             }
             var ref = parse_reference(tok.value);
             if (ref) {
-                if (!ref.sheet) {
-                    ref.sheet = sheet;
-                }
                 // update relative references
                 if (ref.rel & 1) { // relative col
                     ref.col -= col;
@@ -319,7 +319,6 @@
                 return {
                     type  : "ref",
                     ref   : "row",
-                    sheet : sheet,
                     rel   : true,
                     row   : tok.value - row
                 };
@@ -350,9 +349,6 @@
         }
 
         function corner(a, b, side) {
-            function adjust(num, delta, should) {
-                return should ? num + delta : num;
-            }
             if (a.ref == "row") {
                 return (adjust(a.row, row, a.rel) < adjust(b.row, row, a.rel)
                         ? (side ? b : a)
@@ -461,7 +457,7 @@
             function print_ref(node, noSheet) {
                 if (node.ref == "cell") {
                     return make_reference(
-                        noSheet || node.sheet == sheet ? null : node.sheet, // sheet name
+                        noSheet ? null : node.sheet, // sheet name
                         node.col + (node.rel & 1 ? col : 0),                // col
                         node.row + (node.rel & 2 ? row : 0),                // row
                         node.rel^3                                          // whether to add the $
@@ -469,20 +465,20 @@
                 }
                 else if (node.ref == "col") {
                     return make_col(
-                        noSheet || node.sheet == sheet ? null : node.sheet,
+                        noSheet ? null : node.sheet,
                         node.col + (node.rel ? col : 0),
                         !node.rel
                     );
                 }
                 else if (node.ref == "row") {
                     return make_row(
-                        noSheet || node.sheet == sheet ? null : node.sheet,
+                        noSheet ? null : node.sheet,
                         node.row + (node.rel ? row : 0),
                         !node.rel
                     );
                 }
                 else if (node.ref == "name") {
-                    if (node.sheet == sheet) {
+                    if (!node.sheet) {
                         return node.name;
                     } else {
                         return node.sheet + "!" + node.name;
@@ -500,8 +496,18 @@
         }
     }
 
+    var GENSYM = 0;
+
+    function gensym(name) {
+        if (!name) {
+            name = "";
+        }
+        name = "_" + name;
+        return name + (++GENSYM);
+    }
+
     function to_cps(node, k) {
-        var GENSYM = 0;
+        GENSYM = 0;
         return cps(node.ast, k);
 
         function cps(node, k){
@@ -617,7 +623,10 @@
             return {
                 type: "call",
                 func: "-fetch",
-                args: [ make_continuation(k), node ]
+                args: [
+                    make_continuation(k),
+                    node
+                ]
             };
         }
 
@@ -653,14 +662,6 @@
             })([ make_continuation(k) ], 0);
         }
 
-        function gensym(name) {
-            if (!name) {
-                name = "";
-            }
-            name = "_" + name;
-            return name + (++GENSYM);
-        }
-
         function make_continuation(k) {
             var cont = gensym("R");
             return {
@@ -672,9 +673,39 @@
     }
 
     function compile(exp) {
-        var code = "var promise = $.Deferred();\n";
-        code += compile(exp.cps);
-        return code;
+        var references = [];
+        var the_col = exp.col;
+        var the_row = exp.row;
+        var the_sheet = exp.sheet;
+        var code = compile(exp.cps);
+
+        code = [
+            '"use strict"',
+            "var references = [" + references.map(function(code){
+                return "\n    " + code;
+            }).join(",") + " ]",
+            "var formula = function(callback, SS) {",
+            "  var formula = this",
+            "  " + code,
+            "}",
+            "return Runtime.makeFormula({ refs: references, func: formula, sheet: "
+                + JSON.stringify(the_sheet)
+                + ", col: " + the_col
+                + ", row: " + the_row + " })"
+        ].join(";\n");
+
+        return new Function("Runtime", code)(exports.Runtime);
+        // return code;
+
+        // function adjust(num) {
+        //     return num;
+        // }
+
+        function get_reference(code) {
+            var index = references.length;
+            references[index] = code;
+            return "formula.references[" + index + "]";
+        }
 
         function compile(node){
             var type = node.type, ret;
@@ -694,27 +725,35 @@
                 return "Runtime.binary('" + node.op + "', " + compile(node.left) + "," + compile(node.right) + ")";
             }
             else if (type == "return") {
-                return "promise.resolve(" + compile(node.value) + ")";
+                return "callback(" + compile(node.value) + ")";
             }
             else if (type == "call") {
-                return "Runtime.func(" + JSON.stringify(node.func)
-                    + node.args.map(function(arg){
-                        return ", " + compile(arg);
-                    }).join("")
-                    + ")";
+                if (/^-/.test(node.func)) {
+                    ret = "SS." + node.func.substr(1)
+                        + "(" + node.args.map(compile).join(", ") + ")";
+                } else {
+                    ret = "SS.func(" + JSON.stringify(node.func)
+                        + node.args.map(function(arg){
+                            return ", " + compile(arg);
+                        }).join("")
+                        + ")";
+                }
+                return ret;
             }
             else if (type == "ref") {
                 if (node.ref == "cell") {
-                    ret = "new Runtime.CellRef(" + node.col + ", " + node.row + ")";
+                    ret = cellref(node);
                 } else if (node.ref == "range") {
-                    ret = "new Runtime.RangeRef(" + compile(node.left) + ", " + compile(node.right) + ")";
+                    ret = "Runtime.makeRangeRef("
+                        + JSON.stringify(node.sheet || the_sheet) + ", "
+                        + in_range(node.left, 0) + ", "
+                        + in_range(node.right, 1) + ")";
                 } else if (node.ref == "name") {
-                    ret = "new Runtime.NameRef(" + JSON.stringify(node.name) + ")";
+                    ret = "Runtime.makeNameRef("
+                        + JSON.stringify(node.sheet || the_sheet) + ", "
+                        + JSON.stringify(node.name) + ")";
                 }
-                if (node.sheet) {
-                    ret += ".setSheet(" + JSON.stringify(node.sheet) + ")";
-                }
-                return ret;
+                return get_reference(ret);
             }
             else if (type == "bool") {
                 return "" + node.value;
@@ -736,6 +775,37 @@
             else {
                 throw new Error("Cannot compile expression " + type);
             }
+        }
+
+        function cellref(node) {
+            return "Runtime.makeCellRef("
+                + JSON.stringify(node.sheet || the_sheet) + ", "
+                + adjust(node.col, the_col, node.rel & 1) + ", "
+                + adjust(node.row, the_row, node.rel & 2) + ", "
+                + node.rel + ")";
+        }
+
+        function in_range(node, side) {
+            if (node.type == "ref") {
+                if (node.ref == "row") {
+                    return "Runtime.makeCellRef("
+                        + JSON.stringify(node.sheet || the_sheet) + ", "
+                        + (side ? "Infinity" : "-Infinity") + ", "
+                        + adjust(node.row, the_row, node.rel) + ", "
+                        + (node.rel ? 2 : 0) + ")";
+                }
+                if (node.ref == "col") {
+                    return "new Runtime.CellRef("
+                        + JSON.stringify(node.sheet || the_sheet) + ", "
+                        + adjust(node.col, the_col, node.rel) + ", "
+                        + (side ? "Infinity" : "-Infinity") + ", "
+                        + (node.rel ? 1 : 0) + ")";
+                }
+                if (node.ref == "cell") {
+                    return cellref(node);
+                }
+            }
+            return compile(node);
         }
     }
 
@@ -948,7 +1018,7 @@
     exports.compile = compile;
 
     (function(){
-        var exp = "=SUM(A:C)";
+        var exp = "=SUM(Sheet2!A:C, D1:E3, 5:8, INDIRECT(G1):INDIRECT(H1)) + BOO";
         //exp = "=print( IF(true, \"FOO\", \"BAR\") )";
         var ast = exports.parse("Sheet1", 5, 5, exp);
         ast.cps = to_cps(ast, function(ret){
@@ -957,10 +1027,11 @@
                 value: ret
             };
         });
-        var code = compile(ast);
+        var formula = compile(ast);
         console.log(JSON.stringify(ast.cps, null, 2));
         console.log("---");
-        console.log(code);
+        console.log(formula);
+        console.log(formula.func+"");
     })();
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
