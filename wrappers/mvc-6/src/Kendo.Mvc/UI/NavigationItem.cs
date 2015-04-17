@@ -1,11 +1,10 @@
 ﻿namespace Kendo.Mvc.UI
 {
-    using System;
-    using Microsoft.AspNet.Routing;
-    using System.Collections.Generic;
     // using System.Web.Script.Serialization;
     using Kendo.Mvc;
-    using Infrastructure;
+    using Microsoft.AspNet.Routing;
+    using System;
+    using System.Collections.Generic;
 
     public abstract class NavigationItem<T> : LinkedObjectBase<T>, INavigatable, IHideObjectMembers, IHtmlAttributesContainer, IContentContainer where T : NavigationItem<T>
     {

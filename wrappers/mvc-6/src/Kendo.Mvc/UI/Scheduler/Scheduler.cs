@@ -88,6 +88,18 @@ namespace Kendo.Mvc.UI
                 settings["toolbar"] = ToolbarCommands.ToJson();
             }
 
+            if (Mobile != MobileMode.Disabled)
+            {
+                if (Mobile == MobileMode.Auto)
+                {
+                    settings["mobile"] = true;
+                }
+                else
+                {
+                    settings["mobile"] = Mobile.ToString().ToLowerInvariant();
+                }
+            }
+
             Dictionary<string, object> dataSource = (Dictionary<string, object>)DataSource.ToJson();
 
             settings["dataSource"] = dataSource;

@@ -8,6 +8,7 @@
 - datetimepicker.monthTemplate.empty
 - datetimepicker.monthTemplate.emptyId
 - grid.sortable.sortMode
+- scheduler.mobile
 - numerictextbox.enable
 - numerictextbox.max
 - numerictextbox.min

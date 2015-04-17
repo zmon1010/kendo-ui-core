@@ -293,11 +293,6 @@ namespace Kendo.Mvc.UI
                 settings["workWeekEnd"] = WorkWeekEnd;
             }
 
-            if (Mobile.HasValue)
-            {
-                settings["mobile"] = Mobile?.Serialize();
-            }
-
             return settings;
         }
     }
