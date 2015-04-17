@@ -3982,6 +3982,206 @@ var __meta__ = {
         },
 
         _navigatable: function() {
+            var that = this;
+
+            that.options.navigatable = true;
+            if (!that.options.navigatable) {
+                return;
+            }
+
+            //data tables - locked and non-locked
+            var dataTables = that.table.add(that.lockedTable);
+            //header tables - locked and non-locked
+            var headerTables = that.thead.parent().add($(">table", that.lockedHeader));
+
+            //the over wich keys will be handled
+            var tables = dataTables;
+
+            if (that.options.scrollable) {
+                //add the header table when the widget is scrollable
+                tables = tables.add(headerTables);
+                //data tables will recive first focus on TAB
+                headerTables.attr(TABINDEX, -1);
+            }
+
+            //TODO - change, this state *must* not be saved this way
+            this._navigatableTables = tables;
+
+            //dettach all previous events
+            tables.off("mousedown" + NS + " focus" + NS + " focusout" + NS + " keydown" + NS);
+
+            //prevent propagation when clicked inside detail grid
+            dataTables
+                .attr(TABINDEX, math.max(dataTables.attr(TABINDEX) || 0, 0))
+                .on("mousedown" + NS + " keydown" + NS, ".k-detail-cell", function(e) {
+                    if (e.target !== e.currentTarget) {
+                        e.stopImmediatePropagation();
+                    }
+                });
+
+            tables
+                //handle click on tables, will attempt to focus the table
+                .on((kendo.support.touch ? "touchstart" + NS : "mousedown" + NS), NAVROW + ">" + NAVCELL, proxy(tableClick, that))
+                .on("focus" + NS, proxy(that._tableFocus, that))
+                .on("focusout" + NS, proxy(that._tableBlur, that))
+                .on("keydown" + NS, proxy(that._tableKeyDown, that));
+        },
+
+        _setTabIndex: function(table) {
+            this._navigatableTables.attr(TABINDEX, -1);
+
+            table.attr(TABINDEX, 0);
+        },
+
+        _tableFocus: function(e) {
+            if (kendo.support.touch) {
+                return;
+            }
+
+            var current = this.current();
+            var table = $(e.currentTarget);
+
+            //if there is already current, highlighted it
+            //otherwise highlight the first possible cell
+            if (current && current.is(":visible")) {
+                current.addClass(FOCUSED);
+            } else {
+                this.current(table.find(FIRSTNAVITEM));
+            }
+
+            this._setTabIndex(table);
+        },
+
+        _tableBlur: function(e) {
+            var current = this.current();
+
+            if (current) {
+                current.removeClass(FOCUSED);
+            }
+        },
+
+        _tableKeyDown: function(e) {
+            var table = $(e.currentTarget);
+            var current = this.current();
+
+            if (e.keyCode == kendo.keys.UP) {
+                var row = current.parent();
+                var index = row.children(DATA_CELL).index(current);
+                var cell;
+
+                row = this._verticalRow(row, current, true);
+
+                if (!row[0]) {
+                    table = this._verticalTable(table, true);
+
+                    focusTable(table, true); //not sure for the argument here
+
+                    //TODO find last row in upper table
+                    row = this._firstHeaderCell(table);
+                }
+
+                cell = this._verticalCell(row, current, index, true);
+
+                this.current(cell);
+            }
+
+            if (e.keyCode == kendo.keys.DOWN) {
+                var row = current.parent();
+                var index = row.children(DATA_CELL).index(current);
+                var cell;
+
+                row = this._verticalRow(row, current);
+
+                if (!row[0]) {
+                    table = this._verticalTable(table);
+
+                    focusTable(table, true);
+
+                    //TODO find last row in upper table
+                    row = this._firstDataCell(table);
+                }
+
+                cell = this._verticalCell(row, current, index);
+
+                this.current(cell);
+            }
+
+            //prevent scrolling while pressing the keys
+            e.preventDefault();
+        },
+
+        _firstDataCell: function(table) {
+            return table.find(NAVROW).children(DATA_CELL);
+        },
+
+        _firstHeaderCell: function(table) {
+            var filterRow = table.find(".k-filter-row");
+            if (filterRow.length) {
+                return filterRow.children(DATA_CELL);
+            }
+
+            return leafDataCells(table.children("thead"));
+        },
+
+        _verticalTable: function(table, up) {
+            var step = this._navigatableTables.length / 2;
+            var index = $.inArray(table[0], this._navigatableTables);
+
+            if (up) {
+                step *= -1;
+            }
+            index += step;
+
+            if (index >= 0) {
+                //TODO find next/prev table
+                table = this._navigatableTables.eq(index);
+            }
+
+            return table;
+        },
+
+        _verticalRow: function(row, current, up) {
+            //handles multi-column headers
+            if (current.hasClass("k-header")) {
+                //TODO Refactor bellow functions
+                var fn = up ?  parentColumnsCells : childColumnsCells;
+
+                var result = fn(current);
+                //exclude self
+                if (up) {
+                    return result;
+                }
+
+                return result.slice(1);
+            }
+
+            //TODO find next/prev row
+            row = row[up ? "prevAll" : "nextAll"](NAVROW).first();
+
+            return row.children(DATA_CELL);
+        },
+
+        _verticalCell: function(elements, current, index, up) {
+            //handles multi-column headers
+            if (current.hasClass("k-header")) {
+                //get last/first
+                if (up) {
+                    index = elements.length - 2;
+                } else {
+                    var dataIndex = current.attr(kendo.attr("index"));
+                    index = dataIndex !== undefined ? dataIndex : 0;
+                }
+            }
+
+            if (elements.length > index) {
+                return elements.eq(index);
+            }
+
+            //if there aren't enough elements try select the first
+            return elements.eq(0);
+        },
+
+        __navigatable: function() {
             var that = this,
                 currentProxy = proxy(that.current, that),
                 table = that.table.add(that.lockedTable),
