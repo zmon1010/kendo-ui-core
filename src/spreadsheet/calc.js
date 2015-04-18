@@ -665,7 +665,7 @@
         function make_continuation(k) {
             var cont = gensym("R");
             return {
-                type : "lambda",
+                type : "cont",
                 vars : [ cont ],
                 body : k({ type: "var", name: cont })
             };
@@ -684,9 +684,15 @@
             "var references = [" + references.map(function(code){
                 return "\n    " + code;
             }).join(",") + " ]",
-            "var formula = function(callback, SS) {",
+            "var formula = function(SS) {",
             "  var formula = this",
-            "  " + code,
+            "  var promise = $.Deferred()",
+            "  promise.always(function(arg){ formula.inProgress = false; SS.onFormula(formula, arg) })",
+            "  var error = function(){ promise.reject.apply(promise, arguments) }",
+            "  if ('value' in formula) { promise.resolve(formula.value) }"
+                + "  else if (formula.inProgress) { error(Runtime.makeError('CIRCULAR')) }\n"
+                + "  else formula.inProgress = true, " + code,
+            "  return promise",
             "}",
             "return Runtime.makeFormula({ refs: references, func: formula, sheet: "
                 + JSON.stringify(the_sheet)
@@ -704,7 +710,7 @@
         function get_reference(code) {
             var index = references.length;
             references[index] = code;
-            return "formula.references[" + index + "]";
+            return "formula.refs[" + index + "]";
         }
 
         function compile(node){
@@ -722,21 +728,29 @@
                 return "Runtime.postfix('" + node.op + "', " + compile(node.exp) + ")";
             }
             else if (type == "binary") {
-                return "Runtime.binary('" + node.op + "', " + compile(node.left) + "," + compile(node.right) + ")";
+                return "Runtime.binary('" + node.op + "', " + compile(node.left) + ", " + compile(node.right) + ")";
             }
             else if (type == "return") {
-                return "callback(" + compile(node.value) + ")";
+                return "promise.resolve(formula.value = " + compile(node.value) + ")";
             }
             else if (type == "call") {
+                var args = node.args.slice();
+                var cont = args[0] && args[0].type == "cont" ? args[0] : null;
+                if (cont) {
+                    args.shift();
+                }
                 if (/^-/.test(node.func)) {
                     ret = "SS." + node.func.substr(1)
-                        + "(" + node.args.map(compile).join(", ") + ")";
+                        + "(" + args.map(compile).join(", ") + ")";
                 } else {
                     ret = "SS.func(" + JSON.stringify(node.func)
-                        + node.args.map(function(arg){
+                        + args.map(function(arg){
                             return ", " + compile(arg);
                         }).join("")
                         + ")";
+                }
+                if (cont) {
+                    ret += ".then(" + compile(cont) + ").fail(error)";
                 }
                 return ret;
             }
@@ -764,7 +778,7 @@
             else if (type == "not") {
                 return "!" + compile(node.exp);
             }
-            else if (type == "lambda") {
+            else if (type == "lambda" || type == "cont") {
                 return "function("
                     + node.vars.join(", ")
                     + "){ " + compile(node.body) + " }";
@@ -1015,23 +1029,31 @@
     exports.parse_reference = parse_reference;
     exports.make_reference = make_reference;
     exports.print = print;
-    exports.compile = compile;
-
-    (function(){
-        var exp = "=SUM(Sheet2!A:C, D1:E3, 5:8, INDIRECT(G1):INDIRECT(H1)) + BOO";
-        //exp = "=print( IF(true, \"FOO\", \"BAR\") )";
-        var ast = exports.parse("Sheet1", 5, 5, exp);
-        ast.cps = to_cps(ast, function(ret){
+    exports.compile = function(x) {
+        x.cps = to_cps(x, function(ret){
             return {
                 type: "return",
                 value: ret
             };
         });
-        var formula = compile(ast);
-        console.log(JSON.stringify(ast.cps, null, 2));
-        console.log("---");
-        console.log(formula);
-        console.log(formula.func+"");
-    })();
+        return compile(x);
+    };
+
+    // (function(){
+    //     var exp = "=SUM(A1:C3)";
+    //     //exp = "=print( IF(true, \"FOO\", \"BAR\") )";
+    //     var ast = exports.parse("Sheet1", 5, 5, exp);
+    //     ast.cps = to_cps(ast, function(ret){
+    //         return {
+    //             type: "return",
+    //             value: ret
+    //         };
+    //     });
+    //     var formula = compile(ast);
+    //     console.log(JSON.stringify(ast.cps, null, 2));
+    //     console.log("---");
+    //     console.log(formula);
+    //     console.log(formula.func+"");
+    // })();
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

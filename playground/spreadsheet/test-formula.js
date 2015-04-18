@@ -1,4 +1,5 @@
 var calc = kendo.spreadsheet.calc;
+var Runtime = calc.Runtime;
 
 function HOP(obj, key) {
     return Object.prototype.hasOwnProperty.call(obj, key);
@@ -6,30 +7,104 @@ function HOP(obj, key) {
 
 function Spreadsheet() {
     this.sheets = {};
-    this.formulas = {};
-    this.deps = {};
 }
 
 Spreadsheet.prototype = {
 
-    // async (return promise)
-    fetchCellData: function(sheet, col, row) {
-
+    onFormula: function(f, value) {
+        var cell = this._getCell(f.sheet, f.col, f.row);
+        if (typeof value == "number") {
+            cell.type = "num";
+        } else if (typeof value == "string") {
+            cell.type = "str";
+        }
+        cell.value = value;
+        this.updateDisplay(f.sheet, f.col, f.row);
     },
 
-    // async (return promise)
-    fetchRange: function(sheet, c1, r1, c2, r2) {
-
+    _resolveCells: function(promise, a) {
+        var self = this, isArray = Array.isArray(a);
+        if (!isArray) {
+            a = [a];
+        }
+        var formulas = a.filter(function(cell){ return cell.formula; });
+        formulas = formulas.map(function(cell){
+            return cell.formula.func(self);
+        });
+        $.when(formulas).then(function(){
+            if (!isArray) {
+                a = a[0];
+            }
+            promise.resolve(a);
+        });
     },
 
-    // sync (return data)
-    getCellData: function(sheet, col, row) {
+    fetch: function(ref) {
+        var promise = $.Deferred();
+        if (Runtime.CellRef.is(ref)) {
+            this._resolveCells(promise, this._getCell(ref.sheet, ref.col, ref.row));
+        }
+        else if (Runtime.RangeRef.is(ref)) {
+            var a = [];
+            for (var row = ref.topLeft.row; row <= ref.bottomRight.row; ++row) {
+                for (var col = ref.topLeft.col; col <= ref.bottomRight.col; ++col) {
+                    var cell = this._getCell(ref.sheet, col, row);
+                    if (cell != null) {
+                        a.push(cell);
+                    }
+                }
+            }
+            this._resolveCells(promise, a);
+        }
+        return promise;
+    },
 
+    func: function(name) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        return Runtime.functions[name].apply(this, args);
+    },
+
+    recalculate: function() {
+        var self = this, cells = this.getVisibleFormulas();
+        cells.forEach(function(cell){
+            delete cell.formula.value;
+        });
+        cells.forEach(function(cell){
+            cell.formula.func(self);
+        });
+    },
+
+    getVisibleFormulas: function() {
+        var formulas = [], self = this;
+        self.forVisibleSheets(function(sheet){
+            self.forVisibleCells(sheet, function(cell){
+                if (cell.formula) {
+                    formulas.push(cell);
+                }
+            });
+        });
+        return formulas;
+    },
+
+    forVisibleSheets: function(f) {
+        Object.keys(this.sheets).forEach(f);
+    },
+
+    forVisibleCells: function(sheetName, f) {
+        var sheet = this.sheets[sheetName];
+        Object.keys(sheet.data).forEach(function(row){
+            var rowData = sheet.data[row];
+            Object.keys(rowData).forEach(function(col){
+                var cellData = rowData[col];
+                f(cellData);
+            });
+        });
     },
 
     setInputData: function(sheet, col, row, data) {
-        this._deleteCell(sheet, col, row);
-        var cell = this._getCell(sheet, col, row, true);
+        var self = this;
+        self._deleteCell(sheet, col, row);
+        var cell = self._getCell(sheet, col, row, true);
         if (!/\S/.test(data)) {
             return {
                 type: "str",
@@ -38,20 +113,21 @@ Spreadsheet.prototype = {
         }
         cell.input = data;
         // try {
-            var x = calc.parse(sheet, col, row, data), display = x.value;
-            if (x.type == "exp") {
-                cell.exp = x;
-                cell.input = "=" + calc.print(sheet, col, row, x.ast);
-                display = "...";
-            } else {
-                cell.value = x.value;
-            }
-            cell.type = x.type;
-            cell.display = display;
-            return {
-                type: x.type,
-                display: display
-            };
+        var x = calc.parse(sheet, col, row, data), display = x.value;
+        if (x.type == "exp") {
+            cell.exp = x;
+            cell.input = "=" + calc.print(sheet, col, row, x.ast);
+            cell.formula = calc.compile(x);
+            display = "...";
+        } else {
+            cell.value = x.value;
+        }
+        cell.type = x.type;
+        cell.display = display;
+        return {
+            type: x.type,
+            display: display
+        };
         // } catch(ex) {
         //     cell.type = "error";
         //     return {
@@ -73,6 +149,19 @@ Spreadsheet.prototype = {
         var cell = this._getCell(sheet, col, row, false);
         if (cell) {
             return cell.input;
+        }
+    },
+
+    updateDisplay: function(sheet, col, row) {
+        var cell = this._getCell(sheet, col, row);
+        var input = _getInput("#" + sheet, col, row);
+        cell.display = cell.value;
+        input.val(cell.display);
+        input[0].className = "type-" + cell.type;
+        if (cell.tooltip) {
+            input[0].setAttribute("title", cell.tooltip);
+        } else {
+            input[0].removeAttribute("title");
         }
     },
 
@@ -186,13 +275,8 @@ function _onFocus(ev) {
 function _saveInput(input) {
     withInput(input, function(input, sheet, sheetName, col, row){
         var x = SPREADSHEET.setInputData(sheetName, col, row, input.val());
-        input.val(x.display);
-        input[0].className = "type-" + x.type;
-        if (x.tooltip) {
-            input[0].setAttribute("title", x.tooltip);
-        } else {
-            input[0].removeAttribute("title");
-        }
+        SPREADSHEET.updateDisplay(sheetName, col, row);
+        SPREADSHEET.recalculate();
     });
 }
 
@@ -284,6 +368,7 @@ function fillElements(data) {
             input[0].className = "type-" + x.type;
         });
     });
+    SPREADSHEET.recalculate();
 }
 
 // init
@@ -296,6 +381,7 @@ fillElements({
         A2: 20
     },
     sheet2: {
+        A1: "=sum(C1, B1)",
         B1: 5,
         B2: 10,
         B3: 15,

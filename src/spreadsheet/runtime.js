@@ -8,10 +8,11 @@
 
     // WARNING: removing the following jshint declaration and turning
     // == into === to make JSHint happy will break functionality.
-    /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true */
+    /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true, validthis:true */
     /* global console */
 
-    kendo.spreadsheet = { calc: {} };
+    var calc = {};
+    kendo.spreadsheet = { calc: calc };
     var exports = kendo.spreadsheet.calc.Runtime = {};
 
     /* -----[ References ]----- */
@@ -20,9 +21,6 @@
 
     Ref.define = function(ctor) {
         ctor.prototype = new Ref();
-        ctor.is = function(thing) {
-            return thing instanceof ctor;
-        };
         return ctor;
     };
 
@@ -170,15 +168,100 @@
         }
     });
 
+    /* -----[ Errors ]----- */
+
+    function CalcError(type) {
+        this.type = type;
+    }
+
+    methods(CalcError, {
+        toString: function() {
+            return "#" + this.type;
+        }
+    });
+
     // utils ------------------------
 
     function methods(obj, methods) {
+        obj.is = function(thing) {
+            return thing instanceof obj;
+        };
         for (var i in methods) {
             if (Object.prototype.hasOwnProperty.call(methods, i)) {
                 obj.prototype[i] = methods[i];
             }
         }
     }
+
+    function slice(a, i) {
+        if (i == null) {
+            i = 0;
+        }
+        var n = a.length, ret = new Array(n - i);
+        while (i < n) {
+            ret[i] = a[i++];
+        }
+        return ret;
+    }
+
+    function last(a) {
+        return a[a.length - 1];
+    }
+
+    // spreadsheet functions --------
+
+    function withResolvedCells(f) {
+        return function() {
+            var SS = this;
+            var promise = $.Deferred();
+            var args = slice(arguments).map(function(x){
+                if (x instanceof Ref) {
+                    x = SS.fetch(x);
+                }
+                return x;
+            });
+            $.when.apply($, args).then(function(){
+                var val = f.apply(SS, arguments);
+                if (CalcError.is(val)) {
+                    promise.reject(val);
+                } else {
+                    promise.resolve(val);
+                }
+            });
+            return promise;
+        };
+    }
+
+    function forNumbers(a, f) {
+        for (var i = 0; i < a.length; ++i) {
+            var x = a[i];
+            if (Array.isArray(x)) {
+                forNumbers(x, f);
+            } else if (typeof x == "number") {
+                f(x);
+            } else if (x.type == "num") {
+                f(x.value);
+            }
+        }
+    }
+
+    var functions = {
+        sum: withResolvedCells(function(){
+            var sum = 0;
+            forNumbers(arguments, function(num){
+                sum += num;
+            });
+            return sum;
+        }),
+        average: withResolvedCells(function(){
+            var sum = 0, count = 0;
+            forNumbers(arguments, function(num){
+                ++count;
+                sum += num;
+            });
+            return sum / count;
+        })
+    };
 
     /* -----[ exports ]----- */
 
@@ -188,6 +271,8 @@
     exports.NameRef = NameRef;
     exports.CellRef = CellRef;
     exports.RangeRef = RangeRef;
+    exports.CalcError = CalcError;
+    exports.functions = functions;
 
     exports.makeFormula = function(args) {
         return args;
@@ -205,8 +290,8 @@
         return new NameRef(name).setSheet(sheet);
     };
 
-    exports.isRef = function(thing) {
-        return thing instanceof Ref;
+    exports.makeError = function(type) {
+        return new CalcError(type);
     };
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
