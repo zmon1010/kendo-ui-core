@@ -28,7 +28,7 @@ Spreadsheet.prototype = {
             return cell ? [ cell ] : [];
         }
         if (Runtime.RangeRef.is(ref)) {
-            // XXX: infinite ranges?
+            ref = ref.intersect(this.getSheetBounds(ref.sheet));
             var a = [];
             for (var row = ref.topLeft.row; row <= ref.bottomRight.row; ++row) {
                 for (var col = ref.topLeft.col; col <= ref.bottomRight.col; ++col) {
@@ -89,6 +89,28 @@ Spreadsheet.prototype = {
         cells.forEach(function(cell){
             cell.formula.func(self);
         });
+    },
+
+    getSheetBounds: function(sheetName) {
+        var sheet = this.sheets[sheetName];
+        var maxrow = 1, maxcol = 1;
+        Object.keys(sheet.data).forEach(function(row){
+            var cells = sheet.data[row];
+            row = parseFloat(row);
+            if (row > maxrow) {
+                maxrow = row;
+            }
+            var col = Math.max.apply(Math, Object.keys(cells).map(parseFloat));
+            if (col > maxcol) {
+                maxcol = col;
+            }
+        });
+        return new Runtime.RangeRef(
+            // top-left
+            new Runtime.CellRef(1, 1),
+            // bottom-right
+            new Runtime.CellRef(maxcol, maxrow)
+        );
     },
 
     getVisibleFormulas: function() {
@@ -398,6 +420,7 @@ fillElements({
         A2: 20,
         C1: '=sum((A1,A2))',
         C2: '=sum(((A1,A3,A5,A7,A9) A1:B10))',
+        D1: '=sum(A:C)',
     },
     sheet2: {
         A1: "=sum(C1, B1)",

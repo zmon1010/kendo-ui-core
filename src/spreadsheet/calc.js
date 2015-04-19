@@ -770,10 +770,10 @@
                 return "" + node.value;
             }
             else if (type == "if") {
-                return "(" + compile(node.co) + " ? " + compile(node.th) + " : " + compile(node.el) + ")";
+                return "(Runtime.bool(SS, " + compile(node.co) + ") ? " + compile(node.th) + " : " + compile(node.el) + ")";
             }
             else if (type == "not") {
-                return "!" + compile(node.exp);
+                return "!Runtime.bool(SS, " + compile(node.exp) + ")";
             }
             else if (type == "lambda" || type == "cont") {
                 return "function("
@@ -806,7 +806,7 @@
                         + (node.rel ? 2 : 0) + ")";
                 }
                 if (node.ref == "col") {
-                    return "new Runtime.CellRef("
+                    return "Runtime.makeCellRef("
                         + JSON.stringify(node.sheet || the_sheet) + ", "
                         + adjust(node.col, the_col, node.rel) + ", "
                         + (side ? "Infinity" : "-Infinity") + ", "

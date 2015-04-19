@@ -446,6 +446,17 @@
     exports.CalcError = CalcError;
     exports.functions = FUNCS;
 
+    exports.bool = function(ss, val) {
+        val = ss.getData(val);
+        if (typeof val == "string") {
+            return val.toLowerCase() == "true";
+        }
+        if (typeof val == "number") {
+            return val !== 0;
+        }
+        return val != null;
+    };
+
     exports.binary = function(ss, promise, op, left, right) {
         return BINARY[op](ss, promise, left, right);
     };
