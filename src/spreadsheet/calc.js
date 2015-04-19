@@ -721,14 +721,11 @@
             else if (type == "str") {
                 return JSON.stringify(node.value);
             }
-            else if (type == "prefix") {
-                return "Runtime.prefix('" + node.op + "', " + compile(node.exp) + ")";
-            }
-            else if (type == "postfix") {
-                return "Runtime.postfix('" + node.op + "', " + compile(node.exp) + ")";
+            else if (type == "prefix" || type == "postfix") {
+                return "Runtime.unary(SS, promise, '" + node.op + "', " + compile(node.exp) + ")";
             }
             else if (type == "binary") {
-                return "Runtime.binary('" + node.op + "', " + compile(node.left) + ", " + compile(node.right) + ")";
+                return "Runtime.binary(SS, promise, '" + node.op + "', " + compile(node.left) + ", " + compile(node.right) + ")";
             }
             else if (type == "return") {
                 return "promise.resolve(formula.value = " + compile(node.value) + ")";

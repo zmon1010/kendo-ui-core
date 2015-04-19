@@ -22,29 +22,13 @@ Spreadsheet.prototype = {
         this.updateDisplay(f.sheet, f.col, f.row);
     },
 
-    _resolveCells: function(promise, a) {
-        var self = this, isArray = Array.isArray(a);
-        if (!isArray) {
-            a = [a];
-        }
-        var formulas = a.filter(function(cell){ return cell.formula; });
-        formulas = formulas.map(function(cell){
-            return cell.formula.func(self);
-        });
-        $.when(formulas).then(function(){
-            if (!isArray) {
-                a = a[0];
-            }
-            promise.resolve(a);
-        });
-    },
-
-    fetch: function(ref) {
-        var promise = $.Deferred();
+    _getRefCells: function(ref) {
         if (Runtime.CellRef.is(ref)) {
-            this._resolveCells(promise, this._getCell(ref.sheet, ref.col, ref.row));
+            var cell = this._getCell(ref.sheet, ref.col, ref.row);
+            return cell ? [ cell ] : [];
         }
-        else if (Runtime.RangeRef.is(ref)) {
+        if (Runtime.RangeRef.is(ref)) {
+            // XXX: infinite ranges?
             var a = [];
             for (var row = ref.topLeft.row; row <= ref.bottomRight.row; ++row) {
                 for (var col = ref.topLeft.col; col <= ref.bottomRight.col; ++col) {
@@ -54,9 +38,42 @@ Spreadsheet.prototype = {
                     }
                 }
             }
-            this._resolveCells(promise, a);
+            return a;
         }
+        if (Runtime.UnionRef.is(ref)) {
+            var a = [];
+            for (var i = 0; i < ref.refs.length; ++i) {
+                a = a.concat(this._getRefCells(ref.refs[i]));
+            }
+            return a;
+        }
+        console.error("Unsupported reference", ref);
+        return [];
+    },
+
+    _resolveCells: function(promise, a, single) {
+        var self = this;
+        var formulas = a.filter(function(cell){ return cell.formula; });
+        formulas = formulas.map(function(cell){
+            return cell.formula.func(self);
+        });
+        $.when(formulas).then(function(){
+            promise.resolve(single ? a[0] : a);
+        });
+    },
+
+    fetch: function(ref) {
+        var promise = $.Deferred();
+        this._resolveCells(promise, this._getRefCells(ref), Runtime.CellRef.is(ref));
         return promise;
+    },
+
+    getData: function(ref) {
+        if (Runtime.CellRef.is(ref)) {
+            var cell = this._getCell(ref.sheet, ref.col, ref.row);
+            return cell ? cell.value : null;
+        }
+        return ref;
     },
 
     func: function(name) {
@@ -378,7 +395,9 @@ makeElements(".sheet");
 fillElements({
     sheet1: {
         A1: 10,
-        A2: 20
+        A2: 20,
+        C1: '=sum((A1,A2))',
+        C2: '=sum(((A1,A3,A5,A7,A9) A1:B10))',
     },
     sheet2: {
         A1: "=sum(C1, B1)",

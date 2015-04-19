@@ -17,14 +17,7 @@
 
     /* -----[ References ]----- */
 
-    function Ref(){}
-
-    Ref.define = function(ctor) {
-        ctor.prototype = new Ref();
-        return ctor;
-    };
-
-    methods(Ref, {
+    var Ref = defclass(null, function Ref(){}, {
         simplify: function() {
             return this;
         },
@@ -36,25 +29,23 @@
 
     /* -----[ Null reference ]----- */
 
-    var NullRef = Ref.define(function NullRef(){});
+    var NullRef = defclass(Ref, function NullRef(){});
 
     var NULL = new NullRef();
 
     /* -----[ Name reference ]----- */
 
-    var NameRef = Ref.define(function NameRef(name){
+    var NameRef = defclass(Ref, function NameRef(name){
         this.name = name;
     });
 
     /* -----[ Cell reference ]----- */
 
-    var CellRef = Ref.define(function CellRef(col, row, rel) {
+    var CellRef = defclass(Ref, function CellRef(col, row, rel) {
         this.col = col;
         this.row = row;
         this.rel = rel;
-    });
-
-    methods(CellRef, {
+    }, {
         intersect: function(ref) {
             if (CellRef.is(ref)) {
                 if (ref.row == this.row && ref.col == this.col) {
@@ -69,13 +60,11 @@
 
     /* -----[ Range reference ]----- */
 
-    var RangeRef = Ref.define(function RangeRef(tl, br) {
+    var RangeRef = defclass(Ref, function RangeRef(tl, br) {
         this.topLeft = tl;
         this.bottomRight = br;
         this.normalize();
-    });
-
-    methods(RangeRef, {
+    }, {
         _containsRange: function(range) {
             return this._containsCell(range.topLeft)
                 && this._containsCell(range.bottomRight);
@@ -132,6 +121,10 @@
             if (RangeRef.is(ref)) {
                 return this._intersectRange(ref).simplify();
             }
+            if (UnionRef.is(ref)) {
+                return ref.intersect(this);
+            }
+            console.error("Unknown reference", ref);
         },
 
         simplify: function() {
@@ -168,13 +161,37 @@
         }
     });
 
+    /* -----[ Union reference ]----- */
+
+    var UnionRef = defclass(Ref, function UnionRef(refs){
+        this.refs = refs;
+    }, {
+        intersect: function(ref) {
+            var a = [];
+            for (var i = 0; i < this.refs.length; ++i) {
+                var x = ref.intersect(this.refs[i]);
+                if (!NullRef.is(x)) {
+                    a.push(x);
+                }
+            }
+            if (a.length > 0) {
+                return new UnionRef(a).simplify();
+            }
+            return NULL;
+        },
+        simplify: function() {
+            if (this.refs.length == 1) {
+                return this.refs[0].simplify();
+            }
+            return this;
+        }
+    });
+
     /* -----[ Errors ]----- */
 
-    function CalcError(type) {
+    var CalcError = defclass(null, function CalcError(type) {
         this.type = type;
-    }
-
-    methods(CalcError, {
+    }, {
         toString: function() {
             return "#" + this.type;
         }
@@ -182,10 +199,20 @@
 
     // utils ------------------------
 
-    function methods(obj, methods) {
-        obj.is = function(thing) {
-            return thing instanceof obj;
+    function defclass(base, ctor, proto) {
+        if (base) {
+            ctor.prototype = new base();
+        }
+        ctor.is = function(thing) {
+            return thing instanceof ctor;
         };
+        if (proto) {
+            methods(ctor, proto);
+        }
+        return ctor;
+    }
+
+    function methods(obj, methods) {
         for (var i in methods) {
             if (Object.prototype.hasOwnProperty.call(methods, i)) {
                 obj.prototype[i] = methods[i];
@@ -245,7 +272,8 @@
         }
     }
 
-    var functions = {
+    var FUNCS = {
+
         sum: withResolvedCells(function(){
             var sum = 0;
             forNumbers(arguments, function(num){
@@ -253,6 +281,7 @@
             });
             return sum;
         }),
+
         average: withResolvedCells(function(){
             var sum = 0, count = 0;
             forNumbers(arguments, function(num){
@@ -260,6 +289,148 @@
                 sum += num;
             });
             return sum / count;
+        }),
+
+        indirect: withResolvedCells(function(thing){
+
+        }),
+
+        rand: function() {
+            var promise = $.Deferred();
+            promise.resolve(Math.random());
+            return promise;
+        }
+
+    };
+
+    function binaryNumeric(func) {
+        return function(ss, promise, left, right) {
+            left = ss.getData(left) || 0;
+            right = ss.getData(right) || 0;
+            if (typeof left == "number" && typeof right == "number") {
+                return func(left, right, promise);
+            }
+            promise.reject(new CalcError("VALUE"));
+        };
+    }
+
+    function binaryCompare(func) {
+        return function(ss, promise, left, right) {
+            left = ss.getData(left);
+            right = ss.getData(right);
+            if (typeof left == "string" && typeof right != "string") {
+                right = right == null ? "" : right + "";
+            }
+            if (typeof left != "string" && typeof right == "string") {
+                left = left == null ? "" : left + "";
+            }
+            if (typeof left == "number" && right == null) {
+                right = 0;
+            }
+            if (typeof right == "number" && left == null) {
+                left = 0;
+            }
+            return func(left, right, promise);
+        };
+    }
+
+    var BINARY = {
+        // arithmetic
+        "+": binaryNumeric(function(left, right){
+            return left + right;
+        }),
+        "-": binaryNumeric(function(left, right){
+            return left - right;
+        }),
+        "*": binaryNumeric(function(left, right){
+            return left * right;
+        }),
+        "/": binaryNumeric(function(left, right, promise){
+            if (right === 0) {
+                promise.reject(new CalcError("DIV/0"));
+            } else {
+                return left / right;
+            }
+        }),
+        "^": binaryNumeric(function(left, right){
+            return Math.pow(left, right);
+        }),
+
+        // text concat
+        "&": function(ss, promise, left, right) {
+            left = ss.getData(left);
+            right = ss.getData(right);
+            if (left == null) { left = ""; }
+            if (right == null) { right = ""; }
+            return "" + left + right;
+        },
+
+        // boolean
+        "=": function(ss, promise, left, right) {
+            left = ss.getData(left);
+            right = ss.getData(right);
+            return left === right;
+        },
+        "<>": function(ss, promise, left, right) {
+            left = ss.getData(left);
+            right = ss.getData(right);
+            return left !== right;
+        },
+        "<": binaryCompare(function(left, right){
+            return left < right;
+        }),
+        "<=": binaryCompare(function(left, right){
+            return left <= right;
+        }),
+        ">": binaryCompare(function(left, right){
+            return left > right;
+        }),
+        ">=": binaryCompare(function(left, right){
+            return left >= right;
+        }),
+
+        // range
+        ":": function(ss, promise, left, right) {
+            if (CellRef.is(left) && CellRef.is(right)) {
+                return new RangeRef(left, right);
+            }
+            promise.reject(new CalcError("REF"));
+        },
+        // union
+        ",": function(ss, promise, left, right) {
+            if (Ref.is(left) && Ref.is(right)) {
+                return new UnionRef([ left, right ]);
+            }
+            promise.reject(new CalcError("REF"));
+        },
+        // intersect
+        " ": function(ss, promise, left, right) {
+            if (Ref.is(left) && Ref.is(right)) {
+                return left.intersect(right);
+            }
+            promise.reject(new CalcError("REF"));
+        }
+    };
+
+    function unaryNumeric(func) {
+        return function(ss, promise, exp) {
+            exp = ss.getData(exp) || 0;
+            if (typeof exp == "number") {
+                return func(exp, promise);
+            }
+            promise.reject(new CalcError("VALUE"));
+        };
+    }
+
+    var UNARY = {
+        "+": unaryNumeric(function(exp) {
+            return exp;
+        }),
+        "-": unaryNumeric(function(exp) {
+            return -exp;
+        }),
+        "%": unaryNumeric(function(exp) {
+            return exp/100;
         })
     };
 
@@ -271,8 +442,17 @@
     exports.NameRef = NameRef;
     exports.CellRef = CellRef;
     exports.RangeRef = RangeRef;
+    exports.UnionRef = UnionRef;
     exports.CalcError = CalcError;
-    exports.functions = functions;
+    exports.functions = FUNCS;
+
+    exports.binary = function(ss, promise, op, left, right) {
+        return BINARY[op](ss, promise, left, right);
+    };
+
+    exports.unary = function(ss, promise, op, exp) {
+        return UNARY[op](ss, promise, exp);
+    };
 
     exports.makeFormula = function(args) {
         return args;
