@@ -29,6 +29,9 @@
 - grid.sortable.mode
 - grid.selectable
 - grid.toolbar
+- radialgauge.gaugearea.border
+- radialgauge.gaugearea.margin
+- radialgauge.renderas
 - scheduler.datasource
 - scheduler.editable
 - scheduler.group
