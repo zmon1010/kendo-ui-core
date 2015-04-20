@@ -4063,64 +4063,125 @@ var __meta__ = {
         _tableKeyDown: function(e) {
             var table = $(e.currentTarget);
             var current = this.current();
+            var cell;
+            var handled = false;
 
             if (e.keyCode == kendo.keys.UP) {
-                var row = current.parent();
-                var index = row.children(DATA_CELL).index(current);
-                var cell;
+                cell = this._prevCell(table, current);
 
-                row = this._verticalRow(row, current, true);
-
-                if (!row[0]) {
+                if (!cell[0]) {
                     table = this._verticalTable(table, true);
 
-                    focusTable(table, true); //not sure for the argument here
+                    focusTable(table, true);
 
-                    //TODO find last row in upper table
-                    row = this._firstHeaderCell(table);
+                    cell = this._prevCell(table, current);
                 }
 
-                cell = this._verticalCell(row, current, index, true);
-
-                this.current(cell);
+                handled = true;
             }
 
             if (e.keyCode == kendo.keys.DOWN) {
-                var row = current.parent();
-                var index = row.children(DATA_CELL).index(current);
-                var cell;
+                cell = this._nextCell(table, current);
 
-                row = this._verticalRow(row, current);
-
-                if (!row[0]) {
+                if (!cell[0]) {
                     table = this._verticalTable(table);
 
                     focusTable(table, true);
 
-                    //TODO find last row in upper table
-                    row = this._firstDataCell(table);
+                    cell = this._nextCell(table, current);
+
                 }
 
-                cell = this._verticalCell(row, current, index);
+                handled = true;
+            }
 
+            if (handled) {
                 this.current(cell);
+                //prevent scrolling while pressing the keys
+                e.preventDefault();
             }
-
-            //prevent scrolling while pressing the keys
-            e.preventDefault();
         },
 
-        _firstDataCell: function(table) {
-            return table.find(NAVROW).children(DATA_CELL);
-        },
+        _columnDataIndex: function(table, current) {
+            var index = current.attr("data-index");
 
-        _firstHeaderCell: function(table) {
-            var filterRow = table.find(".k-filter-row");
-            if (filterRow.length) {
-                return filterRow.children(DATA_CELL);
+            if (!index) {
+                return undefined;
             }
 
-            return leafDataCells(table.children("thead"));
+            var lockedColumnsCount = lockedColumns(this.columns).length;
+            if (lockedColumnsCount && !table.closest("div").hasClass("k-grid-content-locked")[0]) {
+                return index - lockedColumnsCount;
+            }
+
+            return index;
+        },
+
+        _prevCell: function(table, current) {
+            var cells;
+            var row = current.parent();
+            var rows = table.find(NAVROW);
+            var rowIndex = rows.index(row);
+            //data-index in case of last level of multi-level columns
+            var index = this._columnDataIndex(table, current);
+
+            //current is in the header, but not at the last level of multi-level columns
+            if (index || current.hasClass("k-header")) {
+                cells = parentColumnsCells(current);
+                return cells.eq(cells.length - 2);
+            }
+
+            index = row.children(DATA_CELL).index(current);
+
+            if (row.hasClass("k-filter-row")) {
+                return leafDataCells(table.find("thead")).eq(index);
+            }
+
+            if (rowIndex == -1) {
+                //navigate to header table
+                row = table.find(".k-filter-row");
+                if (!row[0]) {
+                    return leafDataCells(table.find("thead")).eq(index);
+                }
+            } else {
+                row =  rowIndex == 0 ? $() : rows.eq(rowIndex - 1);
+            }
+
+            cells = row.children(DATA_CELL);
+            if (cells.length > index) {
+                return cells.eq(index);
+            }
+
+            return cells.eq(0);
+        },
+
+        _nextCell: function(table, current) {
+            var cells;
+            var row = current.parent();
+            var rows = table.find(NAVROW);
+            var rowIndex = rows.index(row);
+            //data-index in case of last level of multi-level columns
+            var index = this._columnDataIndex(table, current);
+
+            //current is in the header, but not at the last level of multi-level columns
+            if (!index && current.hasClass("k-header")) {
+                return childColumnsCells(current).eq(1);
+            }
+
+            index = index ? parseInt(index, 10) : row.children(DATA_CELL).index(current);
+
+            if (rowIndex == -1) {
+                row = rows.eq(0);
+            } else {
+                row = rows.eq(rowIndex + current[0].rowSpan);
+            }
+
+            cells = row.children(DATA_CELL);
+            if (cells.length > index) {
+                return cells.eq(index);
+            }
+
+            return cells.eq(0);
         },
 
         _verticalTable: function(table, up) {
@@ -4138,47 +4199,6 @@ var __meta__ = {
             }
 
             return table;
-        },
-
-        _verticalRow: function(row, current, up) {
-            //handles multi-column headers
-            if (current.hasClass("k-header")) {
-                //TODO Refactor bellow functions
-                var fn = up ?  parentColumnsCells : childColumnsCells;
-
-                var result = fn(current);
-                //exclude self
-                if (up) {
-                    return result;
-                }
-
-                return result.slice(1);
-            }
-
-            //TODO find next/prev row
-            row = row[up ? "prevAll" : "nextAll"](NAVROW).first();
-
-            return row.children(DATA_CELL);
-        },
-
-        _verticalCell: function(elements, current, index, up) {
-            //handles multi-column headers
-            if (current.hasClass("k-header")) {
-                //get last/first
-                if (up) {
-                    index = elements.length - 2;
-                } else {
-                    var dataIndex = current.attr(kendo.attr("index"));
-                    index = dataIndex !== undefined ? dataIndex : 0;
-                }
-            }
-
-            if (elements.length > index) {
-                return elements.eq(index);
-            }
-
-            //if there aren't enough elements try select the first
-            return elements.eq(0);
         },
 
         __navigatable: function() {
