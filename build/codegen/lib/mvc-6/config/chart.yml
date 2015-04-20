@@ -1,0 +1,77 @@
+:options:
+    - :name: seriesColors
+      :merge: true
+      :type: String[]
+
+    - :name: categoryAxis.axisCrossingValue
+      :merge: true
+      :type: Object[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.days
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.hours
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.minutes
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.months
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.seconds
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.years
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.weeks
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.baseUnitStep
+      :merge: true
+      :type: int
+
+    - :name: categoryAxis.categories
+      :merge: true
+      :type: Object[]
+
+    - :name: categoryAxis.max
+      :merge: true
+      :type: Object
+
+    - :name: categoryAxis.min
+      :merge: true
+      :type: Object
+
+    - :name: categoryAxis.select.from
+      :merge: true
+      :type: Object
+
+    - :name: categoryAxis.select.to
+      :merge: true
+      :type: Object
+
+    - :name: categoryAxis.select.min
+      :merge: true
+      :type: Object
+
+    - :name: categoryAxis.select.max
+      :merge: true
+      :type: Object
+
+    - :name: series.target.line.width
+      :merge: true
+      :type: double
+
+    - :name: valueAxis.axisCrossingValue
+      :merge: true
+      :type: Object[]
+

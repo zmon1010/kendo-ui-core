@@ -1,4 +1,9 @@
 - button.content
+- chart.axisdefaults
+- chart.datasource
+- chart.categoryaxis.notes.data
+- chart.series.data
+- chart.seriesdefaults
 - colorpalette.palette
 - contextmenu.animation
 - contextmenu.datasource
