@@ -103,7 +103,7 @@ namespace Kendo.Extensions
 
             var className = "";
 
-            var pro = widget.Pro && product != "kendo-ui";
+            var pro = widget.Pro && product == "online";
 
             if (pro && (widget.New || widget.Beta)) {
                 className = "multiple-tags";
