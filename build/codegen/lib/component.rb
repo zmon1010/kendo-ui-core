@@ -67,6 +67,12 @@ module CodeGen
 
                 if option[:merge]
                     target = @options.find { |o| o.name == option[:name] }
+                    if target.nil?
+                        full_name = (@name + '.' + option[:name]).downcase
+                        target = all_options.find { |o| o.full_name.downcase == full_name }
+                    end
+
+                    raise "Unable to find target for merging: #{option[:name]}" if target.nil?
                     option.each { |key, value| target.send("#{key}=", value) unless key == :merge }
                 else
                     @options.delete_if { |o| o.name == option[:name] }
