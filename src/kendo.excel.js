@@ -216,13 +216,13 @@ kendo.ExcelExporter = kendo.Class.extend({
         var rows = [];
         var footer = false;
 
-        var cells = $.map(this.columns, function(column) {
+        var cells = $.map(this.columns, $.proxy(function(column) {
             if (column.groupFooterTemplate) {
                 footer = true;
                 return {
                     background: "#dfdfdf",
                     color: "#333",
-                    value: column.groupFooterTemplate(dataItem.aggregates[column.field])
+                    value: column.groupFooterTemplate($.extend({}, this.dataSource.aggregates(), dataItem.aggregates, dataItem.aggregates[column.field]))
                 };
             } else {
                 return {
@@ -230,7 +230,7 @@ kendo.ExcelExporter = kendo.Class.extend({
                     color: "#333"
                 };
             }
-        });
+        }, this));
 
         if (footer) {
             rows.push({
