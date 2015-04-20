@@ -438,8 +438,9 @@
                 } else {
                     return x;
                 }
+            } else {
+                this.promise.reject(new CalcError("REF"));
             }
-            this.promise.reject(new CalcError("REF"));
         }
     };
 
@@ -483,6 +484,9 @@
         }
         if (typeof val == "number") {
             return val !== 0;
+        }
+        if (typeof val == "boolean") {
+            return val;
         }
         return val != null;
     };
