@@ -110,7 +110,7 @@
                 {
                     if (widget.ShouldInclude((string)ViewBag.NavProduct))
                     {
-                    <li>@Html.WidgetLink(widget)</li>
+                    <li>@Html.WidgetLink(widget, (string)ViewBag.NavProduct))</li>
                     }
                 }
                 </ul>

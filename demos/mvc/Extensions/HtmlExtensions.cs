@@ -88,7 +88,7 @@ namespace Kendo.Extensions
 #endif
         }
 
-        public static IHtmlString WidgetLink(this HtmlHelper html, NavigationWidget widget)
+        public static IHtmlString WidgetLink(this HtmlHelper html, NavigationWidget widget, string product)
         {
             var viewBag = html.ViewContext.Controller.ViewBag;
 
@@ -103,7 +103,9 @@ namespace Kendo.Extensions
 
             var className = "";
 
-            if (widget.Pro && (widget.New || widget.Beta)) {
+            var pro = widget.Pro && product != "kendo-ui";
+
+            if (pro && (widget.New || widget.Beta)) {
                 className = "multiple-tags";
             }
 
@@ -119,7 +121,7 @@ namespace Kendo.Extensions
             link.AppendFormat("href=\"{0}\">", href);
             link.Append(text);
 
-            if (widget.Pro)
+            if (pro)
             {
                 link.Append("<span title=\"Available only in Kendo UI Professional\" class=\"pro-widget\"></span>");
             }
