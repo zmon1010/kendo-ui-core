@@ -536,6 +536,27 @@
         equal(handler.calls, 1);
     });
 
+    test("clicking custom toolbar command buttons executes their click action", function() {
+        var handler = spy();
+
+        createTreeList({
+            dataSource: [ { id: 1 } ],
+            toolbar: [
+                { name: "foo", className: "foo", click: handler }
+            ],
+            columns: [
+                { field: "id" },
+                { command: [
+                    "edit"
+                ] }
+            ]
+        });
+
+        instance.element.find(".foo").click();
+
+        equal(handler.calls, 1);
+    });
+
     test("`this` in custom command click action is referencing to the widget", function() {
         createTreeList({
             dataSource: [ { id: 1 } ],

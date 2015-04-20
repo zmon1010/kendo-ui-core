@@ -1275,6 +1275,7 @@ var __meta__ = {
 
         _commandByName: function(name) {
             var columns = this.columns;
+            var toolbar = $.isArray(this.options.toolbar) ? this.options.toolbar : [];
             var i, j, commands, currentName;
 
             name = name.toLowerCase();
@@ -1298,6 +1299,19 @@ var __meta__ = {
                             return commands[j];
                         }
                     }
+                }
+            }
+
+            // custom command in toolbar
+            for (i = 0; i < toolbar.length; i++) {
+                currentName = toolbar[i].name;
+
+                if (!currentName) {
+                    continue;
+                }
+
+                if (currentName.toLowerCase() == name) {
+                    return toolbar[i];
                 }
             }
         },
