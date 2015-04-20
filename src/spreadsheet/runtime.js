@@ -193,7 +193,7 @@
         this.type = type;
     }, {
         toString: function() {
-            return "#" + this.type;
+            return "#" + this.type + "!";
         }
     });
 
@@ -224,9 +224,9 @@
         if (i == null) {
             i = 0;
         }
-        var n = a.length, ret = new Array(n - i);
+        var n = a.length, ret = new Array(n - i), j = 0;
         while (i < n) {
-            ret[i] = a[i++];
+            ret[j++] = a[i++];
         }
         return ret;
     }
@@ -239,16 +239,16 @@
 
     function withResolvedCells(f) {
         return function() {
-            var SS = this;
+            var self = this;
             var promise = $.Deferred();
             var args = slice(arguments).map(function(x){
                 if (x instanceof Ref) {
-                    x = SS.fetch(x);
+                    x = self.ss.fetch(x);
                 }
                 return x;
             });
             $.when.apply($, args).then(function(){
-                var val = f.apply(SS, arguments);
+                var val = f.apply(self, arguments);
                 if (CalcError.is(val)) {
                     promise.reject(val);
                 } else {
@@ -266,7 +266,11 @@
                 forNumbers(x, f);
             } else if (typeof x == "number") {
                 f(x);
-            } else if (x.type == "num") {
+            } else if (x != null && x.type == "num") {
+                // XXX: should have a proper way to figure out if it's a cell
+                //      this is different from our CellRef objects; it's a cell coming
+                //      from the spreadsheet itself.  the only assumptions we make
+                //      is that it has a type and a value.
                 f(x.value);
             }
         }
@@ -292,32 +296,51 @@
         }),
 
         indirect: withResolvedCells(function(thing){
-
+            thing = this.ss.getData(thing);
+            try {
+                if (typeof thing != "string") {
+                    throw 1;
+                }
+                var x = calc.parse_formula(this.formula.sheet, 0, 0, thing);
+                if (x.ast.type != "ref") {
+                    throw 1;
+                }
+                var f = calc.compile(x);
+                var ref = f.refs[0];
+                // return through ss.fetch to make sure the data is in.
+                return this.ss.fetch(ref);
+            } catch(ex) {
+                this.error(new CalcError("REF"));
+            }
         }),
 
         rand: function() {
             var promise = $.Deferred();
             promise.resolve(Math.random());
             return promise;
+        },
+
+        "-fetch": function(ref) {
+            return this.ss.fetch(ref);
         }
 
     };
 
     function binaryNumeric(func) {
-        return function(ss, promise, left, right) {
-            left = ss.getData(left) || 0;
-            right = ss.getData(right) || 0;
+        return function(left, right) {
+            left = this.ss.getData(left) || 0;
+            right = this.ss.getData(right) || 0;
             if (typeof left == "number" && typeof right == "number") {
-                return func(left, right, promise);
+                return func(left, right, this.promise);
             }
-            promise.reject(new CalcError("VALUE"));
+            this.promise.reject(new CalcError("VALUE"));
         };
     }
 
     function binaryCompare(func) {
-        return function(ss, promise, left, right) {
-            left = ss.getData(left);
-            right = ss.getData(right);
+        return function(left, right) {
+            left = this.ss.getData(left);
+            right = this.ss.getData(right);
             if (typeof left == "string" && typeof right != "string") {
                 right = right == null ? "" : right + "";
             }
@@ -330,7 +353,10 @@
             if (typeof right == "number" && left == null) {
                 left = 0;
             }
-            return func(left, right, promise);
+            if (typeof right == "number" && typeof left == "number") {
+                return func(left, right, this.promise);
+            }
+            this.promise.reject(new CalcError("VALUE"));
         };
     }
 
@@ -357,23 +383,23 @@
         }),
 
         // text concat
-        "&": function(ss, promise, left, right) {
-            left = ss.getData(left);
-            right = ss.getData(right);
+        "&": function(left, right) {
+            left = this.ss.getData(left);
+            right = this.ss.getData(right);
             if (left == null) { left = ""; }
             if (right == null) { right = ""; }
             return "" + left + right;
         },
 
         // boolean
-        "=": function(ss, promise, left, right) {
-            left = ss.getData(left);
-            right = ss.getData(right);
+        "=": function(left, right) {
+            left = this.ss.getData(left);
+            right = this.ss.getData(right);
             return left === right;
         },
-        "<>": function(ss, promise, left, right) {
-            left = ss.getData(left);
-            right = ss.getData(right);
+        "<>": function(left, right) {
+            left = this.ss.getData(left);
+            right = this.ss.getData(right);
             return left !== right;
         },
         "<": binaryCompare(function(left, right){
@@ -390,35 +416,40 @@
         }),
 
         // range
-        ":": function(ss, promise, left, right) {
+        ":": function(left, right) {
             if (CellRef.is(left) && CellRef.is(right)) {
                 return new RangeRef(left, right);
             }
-            promise.reject(new CalcError("REF"));
+            this.promise.reject(new CalcError("REF"));
         },
         // union
-        ",": function(ss, promise, left, right) {
+        ",": function(left, right) {
             if (Ref.is(left) && Ref.is(right)) {
                 return new UnionRef([ left, right ]);
             }
-            promise.reject(new CalcError("REF"));
+            this.promise.reject(new CalcError("REF"));
         },
         // intersect
-        " ": function(ss, promise, left, right) {
+        " ": function(left, right) {
             if (Ref.is(left) && Ref.is(right)) {
-                return left.intersect(right);
+                var x = left.intersect(right);
+                if (NullRef.is(x)) {
+                    this.promise.reject(new CalcError("NULL"));
+                } else {
+                    return x;
+                }
             }
-            promise.reject(new CalcError("REF"));
+            this.promise.reject(new CalcError("REF"));
         }
     };
 
     function unaryNumeric(func) {
-        return function(ss, promise, exp) {
-            exp = ss.getData(exp) || 0;
+        return function(exp) {
+            exp = this.ss.getData(exp) || 0;
             if (typeof exp == "number") {
-                return func(exp, promise);
+                return func(exp, this.promise);
             }
-            promise.reject(new CalcError("VALUE"));
+            this.promise.reject(new CalcError("VALUE"));
         };
     }
 
@@ -444,10 +475,9 @@
     exports.RangeRef = RangeRef;
     exports.UnionRef = UnionRef;
     exports.CalcError = CalcError;
-    exports.functions = FUNCS;
 
-    exports.bool = function(ss, val) {
-        val = ss.getData(val);
+    exports.bool = function(context, val) {
+        val = context.ss.getData(val);
         if (typeof val == "string") {
             return val.toLowerCase() == "true";
         }
@@ -457,12 +487,17 @@
         return val != null;
     };
 
-    exports.binary = function(ss, promise, op, left, right) {
-        return BINARY[op](ss, promise, left, right);
+    exports.binary = function(context, op, left, right) {
+        return BINARY[op].call(context, left, right);
     };
 
-    exports.unary = function(ss, promise, op, exp) {
-        return UNARY[op](ss, promise, exp);
+    exports.unary = function(context, op, exp) {
+        return UNARY[op].call(context, exp);
+    };
+
+    exports.func = function(context, fname) {
+        var args = slice(arguments, 2);
+        return FUNCS[fname].apply(context, args);
     };
 
     exports.makeFormula = function(args) {

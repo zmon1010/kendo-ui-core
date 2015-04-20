@@ -47,6 +47,9 @@ Spreadsheet.prototype = {
             }
             return a;
         }
+        if (Runtime.NullRef.is(ref)) {
+            return [];
+        }
         console.error("Unsupported reference", ref);
         return [];
     },
@@ -72,13 +75,10 @@ Spreadsheet.prototype = {
         if (Runtime.CellRef.is(ref)) {
             var cell = this._getCell(ref.sheet, ref.col, ref.row);
             return cell ? cell.value : null;
+        } else if (ref instanceof Spreadsheet.Cell) {
+            return ref.value;
         }
         return ref;
-    },
-
-    func: function(name) {
-        var args = Array.prototype.slice.call(arguments, 1);
-        return Runtime.functions[name].apply(this, args);
     },
 
     recalculate: function() {
@@ -254,9 +254,11 @@ Spreadsheet.prototype = {
     },
 
     _makeCell: function(col, row) {
-        return {};
+        return new Spreadsheet.Cell();
     }
 };
+
+Spreadsheet.Cell = function(){};
 
 var SPREADSHEET = new Spreadsheet();
 
@@ -418,15 +420,22 @@ fillElements({
     sheet1: {
         A1: 10,
         A2: 20,
+        B1: "=A1+A2",
         C1: '=sum((A1,A2))',
         C2: '=sum(((A1,A3,A5,A7,A9) A1:B10))',
         D1: '=sum(A:C)',
+        E1: '=sum(sum(A1:A3 A1:B3)+10, C1:D3)'
     },
     sheet2: {
-        A1: "=sum(C1, B1)",
-        B1: 5,
-        B2: 10,
-        B3: 15,
-        C1: "=  sum  (  b1  :  b3  )"
+        A1: 10,
+        A2: 20,
+        B1: "=A1+A2",
+        D1: "a1:b4",
+        E1: "=sum(indirect(D1))"
+        // A1: "=sum(C1, B1)",
+        // B1: 5,
+        // B2: 10,
+        // B3: 15,
+        // C1: "=  sum  (  b1  :  b3  )"
     }
 });

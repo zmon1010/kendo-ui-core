@@ -11,7 +11,9 @@
     /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true, -W054 */
     /* global console */
 
+    var $ = kendo.jQuery;
     var exports = kendo.spreadsheet.calc;
+    var Runtime = exports.Runtime;
 
     // Excel formula parser and compiler to JS.
     // some code adapted from http://lisperator.net/pltut/
@@ -122,6 +124,9 @@
     }
 
     function parse(sheet, col, row, input) {
+        if (typeof input == "string") {
+            input = TokenStream(InputStream(input));
+        }
         return {
             type: "exp",
             sheet: sheet,
@@ -689,6 +694,7 @@
             "  var promise = $.Deferred()",
             "  promise.always(function(arg){ formula.inProgress = false; SS.onFormula(formula, arg) })",
             "  var error = function(){ promise.reject.apply(promise, arguments) }",
+            "  var context = { ss: SS, formula: formula, promise: promise, error: error }",
             "  if ('value' in formula) { promise.resolve(formula.value) }"
                 + "  else if (formula.inProgress) { error(Runtime.makeError('CIRCULAR')) }\n"
                 + "  else formula.inProgress = true, " + code,
@@ -700,7 +706,7 @@
                 + ", row: " + the_row + " })"
         ].join(";\n");
 
-        return new Function("Runtime", code)(exports.Runtime);
+        return new Function("Runtime", "$", code)(Runtime, $);
         // return code;
 
         // function adjust(num) {
@@ -722,13 +728,13 @@
                 return JSON.stringify(node.value);
             }
             else if (type == "prefix" || type == "postfix") {
-                return "Runtime.unary(SS, promise, '" + node.op + "', " + compile(node.exp) + ")";
+                return "Runtime.unary(context, '" + node.op + "', " + compile(node.exp) + ")";
             }
             else if (type == "binary") {
-                return "Runtime.binary(SS, promise, '" + node.op + "', " + compile(node.left) + ", " + compile(node.right) + ")";
+                return "Runtime.binary(context, '" + node.op + "', " + compile(node.left) + ", " + compile(node.right) + ")";
             }
             else if (type == "return") {
-                return "promise.resolve(formula.value = " + compile(node.value) + ")";
+                return "promise.resolve(formula.value = SS.getData(" + compile(node.value) + "))";
             }
             else if (type == "call") {
                 var args = node.args.slice();
@@ -736,16 +742,11 @@
                 if (cont) {
                     args.shift();
                 }
-                if (/^-/.test(node.func)) {
-                    ret = "SS." + node.func.substr(1)
-                        + "(" + args.map(compile).join(", ") + ")";
-                } else {
-                    ret = "SS.func(" + JSON.stringify(node.func)
-                        + args.map(function(arg){
-                            return ", " + compile(arg);
-                        }).join("")
-                        + ")";
-                }
+                ret = "Runtime.func(context, " + JSON.stringify(node.func)
+                    + args.map(function(arg){
+                        return ", " + compile(arg);
+                    }).join("")
+                    + ")";
                 if (cont) {
                     ret += ".then(" + compile(cont) + ").fail(error)";
                 }
@@ -770,10 +771,10 @@
                 return "" + node.value;
             }
             else if (type == "if") {
-                return "(Runtime.bool(SS, " + compile(node.co) + ") ? " + compile(node.th) + " : " + compile(node.el) + ")";
+                return "(Runtime.bool(context, " + compile(node.co) + ") ? " + compile(node.th) + " : " + compile(node.el) + ")";
             }
             else if (type == "not") {
-                return "!Runtime.bool(SS, " + compile(node.exp) + ")";
+                return "!Runtime.bool(context, " + compile(node.exp) + ")";
             }
             else if (type == "lambda" || type == "cont") {
                 return "function("
@@ -991,6 +992,7 @@
 
     //// exports
 
+    exports.parse_formula = parse;
     exports.parse = function(sheet, col, row, input) {
         input = input+"";
         if (/^'/.test(input)) {
@@ -1002,7 +1004,7 @@
         if (/^=/.test(input)) {
             input = input.substr(1);
             if (/\S/.test(input)) {
-                return parse(sheet, col, row, TokenStream(InputStream(input)));
+                return parse(sheet, col, row, input);
             } else {
                 return {
                     type: "str",
