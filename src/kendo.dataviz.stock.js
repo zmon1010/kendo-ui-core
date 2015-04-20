@@ -742,6 +742,7 @@ var __meta__ = {
                 name: NAVIGATOR_AXIS + "_labels",
                 maxDateGroups: 20,
                 baseUnitStep: "auto",
+                plotBands: [],
                 autoBaseUnitSteps: {
                     minutes: []
                 }
@@ -751,6 +752,7 @@ var __meta__ = {
                 majorTicks: {
                     width: 0.5
                 },
+                plotBands: [],
                 labels: { visible: false, mirror: true }
             })
         );

@@ -234,6 +234,21 @@
             });
         });
 
+        test("plotBands are applied on main axis", function() {
+            createStockChart({
+                navigator: {
+                    categoryAxis: {
+                        plotBands: [{}]
+                    }
+                }
+            });
+
+            equal(chart._navigator.mainAxis().options.plotBands.length, 1);
+            $.each(["_navigator_labels", "_navigator_ticks"], function() {
+                equal(chart._plotArea.namedCategoryAxes[this].options.plotBands.length, 0);
+            });
+        });
+
         test("extends valueAxis options", function() {
             createStockChart({
                 navigator: {
