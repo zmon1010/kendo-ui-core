@@ -212,6 +212,28 @@
             equal(chart._navigator.mainAxis().options.maxDateGroups, 100);
         });
 
+        test("majorTicks visibility can be hidden on categoryAxis", function() {
+            createStockChart({
+                navigator: {
+                    categoryAxis: {
+                        majorTicks: { visible: false }
+                    }
+                }
+            });
+
+            $.each(["_navigator_labels", "_navigator_ticks"], function() {
+                equal(chart._plotArea.namedCategoryAxes[this].options.majorTicks.visible, false);
+            });
+        });
+
+        test("majorTicks visibility are shown on categoryAxis", function() {
+            createStockChart({ });
+
+            $.each(["_navigator_labels", "_navigator_ticks"], function() {
+                equal(chart._plotArea.namedCategoryAxes[this].options.majorTicks.visible, true);
+            });
+        });
+
         test("extends valueAxis options", function() {
             createStockChart({
                 navigator: {

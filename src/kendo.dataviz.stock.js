@@ -713,6 +713,7 @@ var __meta__ = {
             roundToBaseUnit: !justifyAxis,
             justified: justifyAxis,
             _collapse: false,
+            majorTicks: { visible: true },
             tooltip: { visible: false },
             labels: { step: 1 },
             autoBind: !naviOptions.dataSource,
@@ -743,13 +744,11 @@ var __meta__ = {
                 baseUnitStep: "auto",
                 autoBaseUnitSteps: {
                     minutes: []
-                },
-                majorTicks: { visible: true }
+                }
             }), deepExtend({}, base, user, {
                 name: NAVIGATOR_AXIS + "_ticks",
                 maxDateGroups: 200,
                 majorTicks: {
-                    visible: true,
                     width: 0.5
                 },
                 labels: { visible: false, mirror: true }
