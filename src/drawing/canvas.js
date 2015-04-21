@@ -488,7 +488,7 @@
 
             var img = this.img = new Image();
 
-            if (cors) {
+            if (cors && !(/^data:/i.test(srcElement.src()))) {
                 img.crossOrigin = cors;
             }
 
