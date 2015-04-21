@@ -2254,7 +2254,7 @@
 
           case "canvas":
             try {
-                renderImage(element, element.toDataURL("image/jpeg"), group);
+                renderImage(element, element.toDataURL("image/png"), group);
             } catch(ex) {
                 // tainted; can't draw it, ignore.
             }

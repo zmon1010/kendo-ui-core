@@ -444,7 +444,7 @@
             if (!(/^data:/i.test(url))) {
                 img.crossOrigin = "Anonymous";
             }
-            if (HAS_TYPED_ARRAYS) {
+            if (HAS_TYPED_ARRAYS && !(/^data:/i.test(url))) {
                 // IE10 fails to load images from another domain even when the server sends the
                 // proper CORS headers.  a XHR, however, will be able to load the data.
                 // http://stackoverflow.com/a/19734516/154985
