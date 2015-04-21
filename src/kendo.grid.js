@@ -4067,29 +4067,43 @@ var __meta__ = {
             var handled = false;
 
             if (e.keyCode == kendo.keys.UP) {
-                cell = this._prevCell(table, current);
+                cell = this._prevVerticalCell(table, current);
 
                 if (!cell[0]) {
                     table = this._verticalTable(table, true);
 
                     focusTable(table, true);
 
-                    cell = this._prevCell(table, current);
+                    cell = this._prevVerticalCell(table, current);
                 }
 
                 handled = true;
             }
 
             if (e.keyCode == kendo.keys.DOWN) {
-                cell = this._nextCell(table, current);
+                cell = this._nextVerticalCell(table, current);
 
                 if (!cell[0]) {
                     table = this._verticalTable(table);
 
                     focusTable(table, true);
 
-                    cell = this._nextCell(table, current);
+                    cell = this._nextVerticalCell(table, current);
+                }
 
+                handled = true;
+            }
+
+            if (e.keyCode == kendo.keys.RIGHT) {
+                var index = table.find(NAVROW).index(current.parent());
+                cell = this._nextHorizontalCell(table, current, index);
+
+                if (!cell[0]) {
+                    table = this._horizontalTable(table, true);
+
+                    focusTable(table, true);
+
+                    cell = this._nextHorizontalCell(table, current, index);
                 }
 
                 handled = true;
@@ -4102,7 +4116,29 @@ var __meta__ = {
             }
         },
 
-        _columnDataIndex: function(table, current) {
+        _nextHorizontalCell: function(table, current, originalIndex) {
+            var cells = current.nextAll(DATA_CELL);
+
+            if (!cells.length) {
+                var rows = table.find(NAVROW);
+                var rowIndex = rows.index(current.parent());
+                //no sibling cells are found, check for changed table
+                if (rowIndex == -1) {
+                    if (current.hasClass("k-header")) {
+                    }
+
+                    if (current.parent().hasClass("k-filter-row")) {
+                        return rows.last().children(DATA_CELL).first();
+                    }
+
+                    return rows.eq(originalIndex).children(DATA_CELL).first();
+                }
+            }
+
+            return cells.first();
+        },
+
+        _currentDataIndex: function(table, current) {
             var index = current.attr("data-index");
 
             if (!index) {
@@ -4117,13 +4153,13 @@ var __meta__ = {
             return index;
         },
 
-        _prevCell: function(table, current) {
+        _prevVerticalCell: function(table, current) {
             var cells;
             var row = current.parent();
             var rows = table.find(NAVROW);
             var rowIndex = rows.index(row);
-            //data-index in case of last level of multi-level columns
-            var index = this._columnDataIndex(table, current);
+            //get data-index in case of last level of multi-level columns
+            var index = this._currentDataIndex(table, current);
 
             //current is in the header, but not at the last level of multi-level columns
             if (index || current.hasClass("k-header")) {
@@ -4133,12 +4169,14 @@ var __meta__ = {
 
             index = row.children(DATA_CELL).index(current);
 
+            //if current is inside filter row
             if (row.hasClass("k-filter-row")) {
                 return leafDataCells(table.find("thead")).eq(index);
             }
 
+            //move up to header table
             if (rowIndex == -1) {
-                //navigate to header table
+                //is there filter row in the header table
                 row = table.find(".k-filter-row");
                 if (!row[0]) {
                     return leafDataCells(table.find("thead")).eq(index);
@@ -4155,13 +4193,13 @@ var __meta__ = {
             return cells.eq(0);
         },
 
-        _nextCell: function(table, current) {
+        _nextVerticalCell: function(table, current) {
             var cells;
             var row = current.parent();
             var rows = table.find(NAVROW);
             var rowIndex = rows.index(row);
-            //data-index in case of last level of multi-level columns
-            var index = this._columnDataIndex(table, current);
+            //get data-index in case of last level of multi-level columns
+            var index = this._currentDataIndex(table, current);
 
             //current is in the header, but not at the last level of multi-level columns
             if (!index && current.hasClass("k-header")) {
@@ -4170,6 +4208,7 @@ var __meta__ = {
 
             index = index ? parseInt(index, 10) : row.children(DATA_CELL).index(current);
 
+            //move down to data table
             if (rowIndex == -1) {
                 row = rows.eq(0);
             } else {
@@ -4194,11 +4233,24 @@ var __meta__ = {
             index += step;
 
             if (index >= 0) {
-                //TODO find next/prev table
                 table = this._navigatableTables.eq(index);
             }
 
             return table;
+        },
+
+        _horizontalTable: function(table, right) {
+            var length = this._navigatableTables.length;
+            var step =  length / 2;
+            var index = $.inArray(table[0], this._navigatableTables);
+
+            var newIndex = index + (right ? 1 : -1);
+
+            if (newIndex < 0 || newIndex == length || newIndex == step) {
+                return table;
+            }
+
+            return this._navigatableTables.eq(newIndex);
         },
 
         __navigatable: function() {
