@@ -60,7 +60,7 @@ Spreadsheet.prototype = {
         formulas = formulas.map(function(cell){
             return cell.formula.func(self);
         });
-        $.when(formulas).then(function(){
+        $.when.apply($, formulas).then(function(){
             promise.resolve(single ? a[0] : a);
         });
     },
@@ -71,12 +71,29 @@ Spreadsheet.prototype = {
         return promise;
     },
 
+    fetchMany: function(a) {
+        var x = [];
+        for (var i = 0; i < a.length; ++i) {
+            x.push(this.fetch(a[i]));
+        }
+        var promise = $.Deferred();
+        $.when.apply($, x).then(function(){
+            promise.resolve.apply(promise, arguments);
+        }).fail(function(arg){
+            promise.reject.apply(promise, arguments);
+        });
+        return promise;
+    },
+
     getData: function(ref) {
-        if (Runtime.CellRef.is(ref)) {
-            var cell = this._getCell(ref.sheet, ref.col, ref.row);
-            return cell ? cell.value : null;
-        } else if (ref instanceof Spreadsheet.Cell) {
+        if (ref instanceof Spreadsheet.Cell) {
             return ref.value;
+        }
+        if (ref instanceof Runtime.Ref) {
+            var data = this._getRefCells(ref).map(function(cell){
+                return cell.value;
+            });
+            return Runtime.CellRef.is(ref) ? data[0] : data;
         }
         return ref;
     },
@@ -194,6 +211,9 @@ Spreadsheet.prototype = {
     updateDisplay: function(sheet, col, row) {
         var cell = this._getCell(sheet, col, row);
         var input = _getInput("#" + sheet, col, row);
+        if (input[0] === document.activeElement) {
+            return;
+        }
         cell.display = cell.value;
         input.val(cell.display);
         input[0].className = "type-" + cell.type;
@@ -417,6 +437,12 @@ function fillElements(data) {
 makeElements(".sheet");
 
 fillElements({
+    // sheet1: {
+    //     A1: '=A2*A3',
+    //     A2: 10,
+    //     A3: '=currency("USD", "EUR")'
+    // }
+
     sheet1: {
         A1: 10,
         A2: 20,
@@ -424,7 +450,14 @@ fillElements({
         C1: '=sum((A1,A2))',
         C2: '=sum(((A1,A3,A5,A7,A9) A1:B10))',
         D1: '=sum(A:C)',
-        E1: '=sum(sum(A1:A3 A1:B3)+10, C1:D3)'
+        E1: '=sum(sum(A1:A3 A1:B3)+10, C1:D3)',
+        F1: '=E1 * H1 & " USD"',
+        G1: "EUR/USD →",
+        H1: '=currency("USD", "EUR")',
+
+        A5: "CHF",
+        A6: "EUR",
+        A7: "=currency(A5, A6)"
     },
     sheet2: {
         A1: 10,

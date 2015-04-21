@@ -556,6 +556,22 @@
             });
         }
 
+        // function cps_unary(node, k) {
+        //     return cps({
+        //         type: "call",
+        //         func: "unary" + node.op,
+        //         args: [ node.exp ]
+        //     }, k);
+        // }
+
+        // function cps_binary(node, k) {
+        //     return cps({
+        //         type: "call",
+        //         func: "binary" + node.op,
+        //         args: [ node.left, node.right ]
+        //     }, k);
+        // }
+
         function cps_if(co, th, el, k) {
             return cps(co, function(co){
                 return {
@@ -689,16 +705,9 @@
             "var references = [" + references.map(function(code){
                 return "\n    " + code;
             }).join(",") + " ]",
-            "var formula = function(SS) {",
-            "  var formula = this",
-            "  var promise = $.Deferred()",
-            "  promise.always(function(arg){ formula.inProgress = false; SS.onFormula(formula, arg) })",
-            "  var error = function(){ promise.reject.apply(promise, arguments) }",
-            "  var context = { ss: SS, formula: formula, promise: promise, error: error }",
-            "  if ('value' in formula) { promise.resolve(formula.value) }"
-                + "  else if (formula.inProgress) { error(Runtime.makeError('CIRCULAR')) }\n"
-                + "  else formula.inProgress = true, " + code,
-            "  return promise",
+            "var formula = function(context) {",
+            "  var formula = context.formula, SS = context.ss, promise = context.promise, error = context.error",
+            code,
             "}",
             "return Runtime.makeFormula({ refs: references, func: formula, sheet: "
                 + JSON.stringify(the_sheet)
@@ -706,7 +715,7 @@
                 + ", row: " + the_row + " })"
         ].join(";\n");
 
-        return new Function("Runtime", "$", code)(Runtime, $);
+        return new Function("Runtime", code)(Runtime, $);
         // return code;
 
         // function adjust(num) {
@@ -1037,22 +1046,5 @@
         });
         return compile(x);
     };
-
-    // (function(){
-    //     var exp = "=SUM(A1:C3)";
-    //     //exp = "=print( IF(true, \"FOO\", \"BAR\") )";
-    //     var ast = exports.parse("Sheet1", 5, 5, exp);
-    //     ast.cps = to_cps(ast, function(ret){
-    //         return {
-    //             type: "return",
-    //             value: ret
-    //         };
-    //     });
-    //     var formula = compile(ast);
-    //     console.log(JSON.stringify(ast.cps, null, 2));
-    //     console.log("---");
-    //     console.log(formula);
-    //     console.log(formula.func+"");
-    // })();
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

@@ -55,6 +55,9 @@
                 }
             }
             return ref.intersect(this);
+        },
+        toString: function() {
+            return calc.make_reference(null, this.col, this.row);
         }
     });
 
@@ -158,6 +161,10 @@
                 this.bottomRight = new CellRef(c2, r2, rc2 | rr2);
             }
             return this;
+        },
+
+        toString: function() {
+            return this.topLeft() + ":" + this.bottomRight();
         }
     });
 
@@ -184,6 +191,10 @@
                 return this.refs[0].simplify();
             }
             return this;
+        },
+
+        toString: function() {
+            return this.refs.join(",");
         }
     });
 
@@ -239,16 +250,9 @@
 
     function withResolvedCells(f) {
         return function() {
-            var self = this;
             var promise = $.Deferred();
-            var args = slice(arguments).map(function(x){
-                if (x instanceof Ref) {
-                    x = self.ss.fetch(x);
-                }
-                return x;
-            });
-            $.when.apply($, args).then(function(){
-                var val = f.apply(self, arguments);
+            resolveCells(this, arguments, function(){
+                var val = f.apply(this, arguments);
                 if (CalcError.is(val)) {
                     promise.reject(val);
                 } else {
@@ -259,19 +263,28 @@
         };
     }
 
-    function forNumbers(a, f) {
+    function resolveCells(self, a, f) {
+        var args = slice(a).map(function(x){
+            if (x instanceof Ref) {
+                x = self.ss.fetch(x);
+            }
+            return x;
+        });
+        $.when.apply($, args).then(function(){
+            for (var i = 0, args = []; i < arguments.length; ++i) {
+                args[i] = self.ss.getData(arguments[i]);
+            }
+            f.apply(self, args);
+        });
+    }
+
+    function forNumbers(self, a, f) {
         for (var i = 0; i < a.length; ++i) {
-            var x = a[i];
+            var x = self.ss.getData(a[i]);
             if (Array.isArray(x)) {
-                forNumbers(x, f);
+                forNumbers(self, x, f);
             } else if (typeof x == "number") {
                 f(x);
-            } else if (x != null && x.type == "num") {
-                // XXX: should have a proper way to figure out if it's a cell
-                //      this is different from our CellRef objects; it's a cell coming
-                //      from the spreadsheet itself.  the only assumptions we make
-                //      is that it has a type and a value.
-                f(x.value);
             }
         }
     }
@@ -280,7 +293,7 @@
 
         sum: withResolvedCells(function(){
             var sum = 0;
-            forNumbers(arguments, function(num){
+            forNumbers(this, arguments, function(num){
                 sum += num;
             });
             return sum;
@@ -288,7 +301,7 @@
 
         average: withResolvedCells(function(){
             var sum = 0, count = 0;
-            forNumbers(arguments, function(num){
+            forNumbers(this, arguments, function(num){
                 ++count;
                 sum += num;
             });
@@ -296,7 +309,6 @@
         }),
 
         indirect: withResolvedCells(function(thing){
-            thing = this.ss.getData(thing);
             try {
                 if (typeof thing != "string") {
                     throw 1;
@@ -325,6 +337,58 @@
         }
 
     };
+
+    {// XXX: just for testing, remove at some point
+
+        FUNCS.currency = function() {
+            var promise = $.Deferred();
+            resolveCells(this, arguments, function(query, base){
+                if (typeof query != "string" || typeof base != "string") {
+                    return promise.reject(new CalcError("VALUE"));
+                }
+                query = query.toUpperCase();
+                base = base.toUpperCase();
+                $.ajax({
+                    url: "http://api.fixer.io/latest",
+                    data: {
+                        base: base
+                    }
+                }).done(function(response) {
+                    var rates = response.rates;
+                    var val = rates[query];
+                    if (val == null) {
+                        if (query == base) {
+                            promise.resolve(1);
+                        } else {
+                            promise.reject(new CalcError("CURRENCY"));
+                        }
+                    } else {
+                        promise.resolve(val);
+                    }
+                }).fail(function() {
+                    console.error(arguments);
+                    promise.reject(new CalcError("NET"));
+                });
+            });
+            return promise;
+        };
+
+        FUNCS.asum = function() {
+            var promise = $.Deferred();
+            var self = this, args = arguments;
+            setTimeout(function(){
+                resolveCells(self, args, function(){
+                    var sum = 0;
+                    forNumbers(self, arguments, function(num){
+                        sum += num;
+                    });
+                    promise.resolve(sum);
+                });
+            }, 500);
+            return promise;
+        };
+
+    }
 
     function binaryNumeric(func) {
         return function(left, right) {
@@ -501,11 +565,40 @@
 
     exports.func = function(context, fname) {
         var args = slice(arguments, 2);
-        return FUNCS[fname].apply(context, args);
+        return FUNCS[fname.toLowerCase()].apply(context, args);
     };
 
-    exports.makeFormula = function(args) {
-        return args;
+    exports.makeFormula = function(formula) {
+        var func = formula.func;
+        formula.func = function(SS) {
+            if (formula.inProgress) {
+                return formula.inProgress;
+            }
+            var promise = $.Deferred();
+            if ("value" in formula) {
+                promise.resolve(formula.value);
+                return promise;
+            }
+            formula.inProgress = promise;
+            promise.always(function(arg){
+                formula.inProgress = null;
+                SS.onFormula(formula, arg);
+            });
+            var error = function(){
+                promise.reject.apply(promise, arguments);
+            };
+            var context = {
+                ss: SS,
+                formula: formula,
+                promise: promise,
+                error: error
+            };
+            SS.fetchMany(formula.refs).then(function(){
+                func(context);
+            });
+            return promise;
+        };
+        return formula;
     };
 
     exports.makeCellRef = function(sheet, col, row, rel) {
