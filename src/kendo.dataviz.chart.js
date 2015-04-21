@@ -10412,7 +10412,12 @@ var __meta__ = {
                 );
             }
 
-            tooltip.element = $(tooltip.template(tooltip.options));
+            var padding = getSpacing(tooltip.options.padding || {}, "auto");
+            tooltip.element = $(tooltip.template(tooltip.options)).css({
+                "padding-top": padding.top, "padding-right": padding.right,
+                "padding-bottom": padding.bottom, "padding-left": padding.left
+            });
+
             tooltip.move = proxy(tooltip.move, tooltip);
             tooltip._mouseleave = proxy(tooltip._mouseleave, tooltip);
 

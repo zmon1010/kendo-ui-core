@@ -193,6 +193,22 @@
             equal(element.css("border-top-width"), "1px");
         });
 
+        test("sets padding (all values)", function() {
+            createTooltip({ padding: 16 });
+            equal(element.css("padding-top"), "16px");
+            equal(element.css("padding-right"), "16px");
+            equal(element.css("padding-bottom"), "16px");
+            equal(element.css("padding-left"), "16px");
+        });
+
+        test("sets padding (single value)", function() {
+            createTooltip({ padding: { top: 16 } });
+            equal(element.css("padding-top"), "16px");
+            equal(element.css("padding-right"), "");
+            equal(element.css("padding-bottom"), "");
+            equal(element.css("padding-left"), "");
+        });
+
         test("sets opacity", function() {
             createTooltip({ opacity: 0.5 });
             equal(element.css("opacity"), 0.5);
