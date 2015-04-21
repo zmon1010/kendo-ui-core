@@ -228,6 +228,7 @@
                 this.element = $(doc.createElement("span"))
                     .addClass("k-marker k-marker-" + kendo.toHyphens(options.shape || "pin"))
                     .attr("title", options.title)
+                    .attr(options.attributes || {})
                     .data("kendoMarker", this)
                     .css("zIndex", options.zIndex);
 

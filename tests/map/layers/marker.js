@@ -87,6 +87,12 @@
             equal(marker.element.attr("title"), "foo");
         });
 
+        test("renders attributes", function() {
+            marker = new Marker({ attributes: { foo: "bar" } });
+            marker.addTo(layer);
+            equal(marker.element.attr("foo"), "bar");
+        });
+
         test("renders no z-index by default", function() {
             marker = new Marker();
             marker.addTo(layer);
