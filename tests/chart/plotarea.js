@@ -396,6 +396,40 @@
             equal(plotArea.categoryAxis.options.justified, false);
         });
 
+        test("categoryAxis justified is set to false with step line series", function() {
+            var plotArea = new dataviz.CategoricalPlotArea([{
+                    type: "line",
+                    line: {
+                        style: "step"
+                    },
+                    data: [100]
+                }], {
+                categoryAxis: {
+                    categories: ["A", "B"],
+                    justified: true
+                }
+            });
+
+            equal(plotArea.categoryAxis.options.justified, false);
+        });
+
+        test("categoryAxis justified is set to false with step area series", function() {
+            var plotArea = new dataviz.CategoricalPlotArea([{
+                    type: "area",
+                    line: {
+                        style: "step"
+                    },
+                    data: [100]
+                }], {
+                categoryAxis: {
+                    categories: ["A", "B"],
+                    justified: true
+                }
+            });
+
+            equal(plotArea.categoryAxis.options.justified, false);
+        });
+
         test("categoryAxis justified is not altered with bar series on secondary axis", function() {
             var plotArea = new dataviz.CategoricalPlotArea([{
                     type: "line",

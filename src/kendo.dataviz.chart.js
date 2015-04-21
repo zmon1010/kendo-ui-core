@@ -9721,6 +9721,16 @@ var __meta__ = {
                 seriesIx,
                 seriesAxis;
 
+            for (seriesIx = 0; seriesIx < plotArea.series.length; seriesIx++) {
+                var currentSeries = plotArea.series[seriesIx];
+                if (currentSeries.type === LINE || currentSeries.type === AREA) {
+                    var line = currentSeries.line;
+                    if (line && line.style === STEP) {
+                        centeredSeries.push(currentSeries);
+                    }
+                }
+            }
+
             for (seriesIx = 0; seriesIx < centeredSeries.length; seriesIx++) {
                 seriesAxis = centeredSeries[seriesIx].categoryAxis || "";
                 if (seriesAxis === categoryAxisName || (!seriesAxis && categoryAxisIndex === 0)) {
