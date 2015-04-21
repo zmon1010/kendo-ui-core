@@ -53,5 +53,18 @@ namespace Kendo.Mvc.UI.Tests.Map.Fluent
         {
             builder.Tooltip(tooltip => tooltip.Content("foo")).ShouldBeSameAs(builder);
         }
+
+        [Fact]
+        public void Sets_marker_html_attributes()
+        {
+            builder.HtmlAttributes(new { foo = "bar" });
+            marker.HtmlAttributes["foo"].ShouldEqual("bar");
+        }
+
+        [Fact]
+        public void Setting_marker_html_attributes_returns_builder()
+        {
+            builder.HtmlAttributes(new { }).ShouldBeSameAs(builder);
+        }
     }
 }

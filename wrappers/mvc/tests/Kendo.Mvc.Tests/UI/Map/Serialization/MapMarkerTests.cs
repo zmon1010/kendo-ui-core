@@ -60,5 +60,18 @@ namespace Kendo.Mvc.UI.Tests.Map.Serialization
         {
             marker.ToJson().ContainsKey("tooltip").ShouldBeFalse();
         }
+
+        [Fact]
+        public void Serializes_attributes()
+        {
+            marker.HtmlAttributes.Add("foo", "bar");
+            marker.ToJson().ContainsKey("attributes").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Does_not_serialize_attributes()
+        {
+            marker.ToJson().ContainsKey("attributes").ShouldBeFalse();
+        }
     }
 }

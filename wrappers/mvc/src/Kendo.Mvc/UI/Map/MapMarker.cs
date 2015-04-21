@@ -70,6 +70,11 @@ namespace Kendo.Mvc.UI
                 var shapeName = Shape.ToString();
                 json["shape"] = shapeName.ToLowerInvariant()[0] + shapeName.Substring(1);
             }
+
+            if (HtmlAttributes.Any())
+            {
+                json["attributes"] = HtmlAttributes;
+            }
         }
     }
 }
