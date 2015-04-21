@@ -1717,7 +1717,7 @@ var __meta__ = {
                     "role": "columnheader"
                 };
 
-                attr = extend({}, attr, column.headerAttributes);
+                attr = extend(true, {}, attr, column.headerAttributes);
 
                 ths.push(kendoDomElement("th", attr, children));
             }
@@ -1978,7 +1978,7 @@ var __meta__ = {
                 }
 
                 if (column.attributes) {
-                    extend(attr, column.attributes);
+                    extend(true, attr, column.attributes);
                 }
 
                 if (column.command) {

@@ -125,6 +125,24 @@
         ok(headerCells.eq(2).is(":visible"));
     });
 
+    test("hideColumn hides th element when headerAttributes style is defined", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10 },
+                { field: "parentId", width: 20, headerAttributes: { style: "foo: bar" } },
+                { field: "text", width: 30 }
+            ]
+        });
+
+        instance.hideColumn(1);
+        var headerCells = instance.thead.find("th");
+
+        equal(headerCells.length, 3);
+        ok(headerCells.eq(0).is(":visible"));
+        ok(!headerCells.eq(1).is(":visible"), "column header is still visible");
+        ok(headerCells.eq(2).is(":visible"));
+    });
+
     test("intially hidden column renders data cells hidden", function() {
         createTreeList({
             columns: [
@@ -144,6 +162,24 @@
 
     test("hideColumn hides data cells", function() {
         createTreeList();
+
+        instance.hideColumn(1);
+        var cells = instance.content.find("tr").first().children();
+
+        equal(cells.length, 3);
+        ok(cells.eq(0).is(":visible"));
+        ok(!cells.eq(1).is(":visible"), "data cell is still visible");
+        ok(cells.eq(2).is(":visible"));
+    });
+
+    test("hideColumn hides data cells when attributes style is defined", function() {
+        createTreeList({
+            columns: [
+                { field: "id", width: 10 },
+                { field: "parentId", width: 20, attributes: { style: "foo: bar" } },
+                { field: "text", width: 30 }
+            ]
+        });
 
         instance.hideColumn(1);
         var cells = instance.content.find("tr").first().children();
