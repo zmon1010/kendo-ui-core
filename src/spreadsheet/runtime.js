@@ -289,6 +289,59 @@
         }
     }
 
+    function binaryNumeric(func) {
+        return function(left, right) {
+            var promise = $.Deferred();
+            left = this.ss.getData(left) || 0;
+            right = this.ss.getData(right) || 0;
+            if (typeof left == "number" && typeof right == "number") {
+                func(left, right, promise);
+            } else {
+                promise.reject(new CalcError("VALUE"));
+            }
+            return promise;
+        };
+    }
+
+    function binaryCompare(func) {
+        return function(left, right) {
+            var promise = $.Deferred();
+            left = this.ss.getData(left);
+            right = this.ss.getData(right);
+            if (typeof left == "string" && typeof right != "string") {
+                right = right == null ? "" : right + "";
+            }
+            if (typeof left != "string" && typeof right == "string") {
+                left = left == null ? "" : left + "";
+            }
+            if (typeof left == "number" && right == null) {
+                right = 0;
+            }
+            if (typeof right == "number" && left == null) {
+                left = 0;
+            }
+            if (typeof right == "number" && typeof left == "number") {
+                func(left, right, promise);
+            } else {
+                promise.reject(new CalcError("VALUE"));
+            }
+            return promise;
+        };
+    }
+
+    function unaryNumeric(func) {
+        return function(exp) {
+            var promise = $.Deferred();
+            exp = this.ss.getData(exp) || 0;
+            if (typeof exp == "number") {
+                func(exp, promise);
+            } else {
+                promise.reject(new CalcError("VALUE"));
+            }
+            return promise;
+        };
+    }
+
     var FUNCS = {
 
         sum: withResolvedCells(function(){
@@ -334,7 +387,117 @@
 
         "-fetch": function(ref) {
             return this.ss.fetch(ref);
-        }
+        },
+
+        /* -----[ binary ops ]----- */
+
+        // arithmetic
+        "binary+": binaryNumeric(function(left, right, promise){
+            promise.resolve(left + right);
+        }),
+        "binary-": binaryNumeric(function(left, right, promise){
+            promise.resolve(left - right);
+        }),
+        "binary*": binaryNumeric(function(left, right, promise){
+            promise.resolve(left * right);
+        }),
+        "binary/": binaryNumeric(function(left, right, promise){
+            if (right === 0) {
+                promise.reject(new CalcError("DIV/0"));
+            } else {
+                promise.resolve(left / right);
+            }
+        }),
+        "binary^": binaryNumeric(function(left, right, promise){
+            promise.resolve(Math.pow(left, right));
+        }),
+
+        // text concat
+        "binary&": function(left, right) {
+            var promise = $.Deferred();
+            left = this.ss.getData(left);
+            right = this.ss.getData(right);
+            if (left == null) { left = ""; }
+            if (right == null) { right = ""; }
+            promise.resolve("" + left + right);
+            return promise;
+        },
+
+        // boolean
+        "binary=": function(left, right) {
+            var promise = $.Deferred();
+            left = this.ss.getData(left);
+            right = this.ss.getData(right);
+            promise.resolve(left === right);
+            return promise;
+        },
+        "binary<>": function(left, right) {
+            var promise = $.Deferred();
+            left = this.ss.getData(left);
+            right = this.ss.getData(right);
+            promise.resolve(left !== right);
+            return promise;
+        },
+        "binary<": binaryCompare(function(left, right, promise){
+            promise.resolve(left < right);
+        }),
+        "binary<=": binaryCompare(function(left, right, promise){
+            promise.resolve(left <= right);
+        }),
+        "binary>": binaryCompare(function(left, right, promise){
+            promise.resolve(left > right);
+        }),
+        "binary>=": binaryCompare(function(left, right, promise){
+            promise.resolve(left >= right);
+        }),
+
+        // range
+        "binary:": function(left, right) {
+            var promise = $.Deferred();
+            if (CellRef.is(left) && CellRef.is(right)) {
+                promise.resolve(new RangeRef(left, right));
+            } else {
+                promise.reject(new CalcError("REF"));
+            }
+            return promise;
+        },
+        // union
+        "binary,": function(left, right) {
+            var promise = $.Deferred();
+            if (Ref.is(left) && Ref.is(right)) {
+                promise.resolve(new UnionRef([ left, right ]));
+            } else {
+                promise.reject(new CalcError("REF"));
+            }
+            return promise;
+        },
+        // intersect
+        "binary ": function(left, right) {
+            var promise = $.Deferred();
+            if (Ref.is(left) && Ref.is(right)) {
+                var x = left.intersect(right);
+                if (NullRef.is(x)) {
+                    promise.reject(new CalcError("NULL"));
+                } else {
+                    promise.resolve(x);
+                }
+            } else {
+                promise.reject(new CalcError("REF"));
+            }
+            return promise;
+        },
+
+        /* -----[ unary ops ]----- */
+
+        "unary+": unaryNumeric(function(exp, promise) {
+            promise.resolve(exp);
+        }),
+        "unary-": unaryNumeric(function(exp, promise) {
+            promise.resolve(-exp);
+        }),
+        "unary%": unaryNumeric(function(exp, promise) {
+            promise.resolve(exp/100);
+        })
 
     };
 
@@ -390,146 +553,6 @@
 
     }
 
-    function binaryNumeric(func) {
-        return function(left, right) {
-            left = this.ss.getData(left) || 0;
-            right = this.ss.getData(right) || 0;
-            if (typeof left == "number" && typeof right == "number") {
-                return func(left, right, this.promise);
-            }
-            this.promise.reject(new CalcError("VALUE"));
-        };
-    }
-
-    function binaryCompare(func) {
-        return function(left, right) {
-            left = this.ss.getData(left);
-            right = this.ss.getData(right);
-            if (typeof left == "string" && typeof right != "string") {
-                right = right == null ? "" : right + "";
-            }
-            if (typeof left != "string" && typeof right == "string") {
-                left = left == null ? "" : left + "";
-            }
-            if (typeof left == "number" && right == null) {
-                right = 0;
-            }
-            if (typeof right == "number" && left == null) {
-                left = 0;
-            }
-            if (typeof right == "number" && typeof left == "number") {
-                return func(left, right, this.promise);
-            }
-            this.promise.reject(new CalcError("VALUE"));
-        };
-    }
-
-    var BINARY = {
-        // arithmetic
-        "+": binaryNumeric(function(left, right){
-            return left + right;
-        }),
-        "-": binaryNumeric(function(left, right){
-            return left - right;
-        }),
-        "*": binaryNumeric(function(left, right){
-            return left * right;
-        }),
-        "/": binaryNumeric(function(left, right, promise){
-            if (right === 0) {
-                promise.reject(new CalcError("DIV/0"));
-            } else {
-                return left / right;
-            }
-        }),
-        "^": binaryNumeric(function(left, right){
-            return Math.pow(left, right);
-        }),
-
-        // text concat
-        "&": function(left, right) {
-            left = this.ss.getData(left);
-            right = this.ss.getData(right);
-            if (left == null) { left = ""; }
-            if (right == null) { right = ""; }
-            return "" + left + right;
-        },
-
-        // boolean
-        "=": function(left, right) {
-            left = this.ss.getData(left);
-            right = this.ss.getData(right);
-            return left === right;
-        },
-        "<>": function(left, right) {
-            left = this.ss.getData(left);
-            right = this.ss.getData(right);
-            return left !== right;
-        },
-        "<": binaryCompare(function(left, right){
-            return left < right;
-        }),
-        "<=": binaryCompare(function(left, right){
-            return left <= right;
-        }),
-        ">": binaryCompare(function(left, right){
-            return left > right;
-        }),
-        ">=": binaryCompare(function(left, right){
-            return left >= right;
-        }),
-
-        // range
-        ":": function(left, right) {
-            if (CellRef.is(left) && CellRef.is(right)) {
-                return new RangeRef(left, right);
-            }
-            this.promise.reject(new CalcError("REF"));
-        },
-        // union
-        ",": function(left, right) {
-            if (Ref.is(left) && Ref.is(right)) {
-                return new UnionRef([ left, right ]);
-            }
-            this.promise.reject(new CalcError("REF"));
-        },
-        // intersect
-        " ": function(left, right) {
-            if (Ref.is(left) && Ref.is(right)) {
-                var x = left.intersect(right);
-                if (NullRef.is(x)) {
-                    this.promise.reject(new CalcError("NULL"));
-                } else {
-                    return x;
-                }
-            } else {
-                this.promise.reject(new CalcError("REF"));
-            }
-        }
-    };
-
-    function unaryNumeric(func) {
-        return function(exp) {
-            exp = this.ss.getData(exp) || 0;
-            if (typeof exp == "number") {
-                return func(exp, this.promise);
-            }
-            this.promise.reject(new CalcError("VALUE"));
-        };
-    }
-
-    var UNARY = {
-        "+": unaryNumeric(function(exp) {
-            return exp;
-        }),
-        "-": unaryNumeric(function(exp) {
-            return -exp;
-        }),
-        "%": unaryNumeric(function(exp) {
-            return exp/100;
-        })
-    };
-
     /* -----[ exports ]----- */
 
     exports.NULL = NULL;
@@ -553,14 +576,6 @@
             return val;
         }
         return val != null;
-    };
-
-    exports.binary = function(context, op, left, right) {
-        return BINARY[op].call(context, left, right);
-    };
-
-    exports.unary = function(context, op, exp) {
-        return UNARY[op].call(context, exp);
     };
 
     exports.func = function(context, fname) {

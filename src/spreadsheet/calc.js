@@ -534,43 +534,20 @@
         }
 
         function cps_unary(node, k) {
-            return cps(node.exp, function(exp){
-                return k({
-                    type: node.type,
-                    op: node.op,
-                    exp: exp
-                });
-            });
+            return cps({
+                type: "call",
+                func: "unary" + node.op,
+                args: [ node.exp ]
+            }, k);
         }
 
         function cps_binary(node, k) {
-            return cps(node.left, function(left){
-                return cps(node.right, function(right){
-                    return k({
-                        type: "binary",
-                        op: node.op,
-                        left: left,
-                        right: right
-                    });
-                });
-            });
+            return cps({
+                type: "call",
+                func: "binary" + node.op,
+                args: [ node.left, node.right ]
+            }, k);
         }
-
-        // function cps_unary(node, k) {
-        //     return cps({
-        //         type: "call",
-        //         func: "unary" + node.op,
-        //         args: [ node.exp ]
-        //     }, k);
-        // }
-
-        // function cps_binary(node, k) {
-        //     return cps({
-        //         type: "call",
-        //         func: "binary" + node.op,
-        //         args: [ node.left, node.right ]
-        //     }, k);
-        // }
 
         function cps_if(co, th, el, k) {
             return cps(co, function(co){
@@ -702,6 +679,7 @@
 
         code = [
             '"use strict"',
+            "// " + print(the_sheet, the_col, the_row, exp.ast) + " //",
             "var references = [" + references.map(function(code){
                 return "\n    " + code;
             }).join(",") + " ]",
@@ -714,6 +692,8 @@
                 + ", col: " + the_col
                 + ", row: " + the_row + " })"
         ].join(";\n");
+
+        //console.log("/***********/\n" + code);
 
         return new Function("Runtime", code)(Runtime, $);
         // return code;
