@@ -60,7 +60,7 @@
         var cells = instance.content.find("td");
 
         equal(cells.eq(0).text(), 1);
-        equal(cells.eq(1).text(), "null");
+        equal(cells.eq(1).text(), "");
     });
 
     test("refreshes DOM on dataSource change", function() {
@@ -270,6 +270,21 @@
 
         equal(instance.content.find("tr:first>td:last").text(), "foo");
         equal(instance.content.find("tr:last>td:last").text(), "");
+    });
+
+    test("render empty cell if column value is null", function() {
+        createTreeList({
+            columns: [ "parentId" ],
+            dataSource: {
+                data: [
+                    { id: 1,  parentId: null },
+                    { id: 2, parentId: 1 }
+                ]
+            }
+        });
+
+        equal(instance.content.find("tr:first>td").text(), "");
+        equal(instance.content.find("tr:last>td").text(), "1");
     });
 
     test("format column value", function() {

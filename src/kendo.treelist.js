@@ -2007,7 +2007,7 @@ var __meta__ = {
                 }
             }
 
-            if (typeof value == "undefined") {
+            if (value === null || typeof value == "undefined") {
                 value = "";
             }
 

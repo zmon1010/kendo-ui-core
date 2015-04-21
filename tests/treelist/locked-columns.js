@@ -115,7 +115,7 @@
         equal(lockedCells.eq(0).text(), "1");
 
         equal(cells.length, 2);
-        equal(cells.eq(0).text(), "null");
+        equal(cells.eq(0).text(), "");
         equal(cells.eq(1).text(), "foo");
     });
 
