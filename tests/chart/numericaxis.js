@@ -466,6 +466,21 @@
             equal(getAxisTextBoxes()[0].options.zIndex, 2);
         });
 
+        // ------------------------------------------------------------
+        module("Numeric Axis / Configuration / Labels / Globalization", {
+            setup: function() {
+                kendo.culture().numberFormat["."] = ",";
+                createNumericAxis();
+            },
+            teardown: function() {
+                kendo.culture().numberFormat["."] = ".";
+            }
+        });
+
+        test("creates labels with global format", function() {
+            equalTexts(getAxisTexts(), ["0", "0,2", "0,4", "0,6", "0,8", "1", "1,2"]);
+        });
+
     })();
 
     (function() {

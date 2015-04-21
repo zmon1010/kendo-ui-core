@@ -2598,6 +2598,9 @@ var __meta__ = {
                 width: 1,
                 color: BLACK
             },
+            labels: {
+                format: "#.####################"
+            },
             zIndex: 1
         },
 
