@@ -73,7 +73,7 @@ module CodeGen
                     end
 
                     raise "Unable to find target for merging: #{option[:name]}" if target.nil?
-                    option.each { |key, value| target.send("#{key}=", value) unless key == :merge }
+                    option.each { |key, value| target.send("#{key}=", value) unless key == :merge || key == :name }
                 else
                     @options.delete_if { |o| o.name == option[:name] }
 
