@@ -100,6 +100,27 @@
         this.root = remove(this.root, value);
     };
 
+    AATree.prototype.findRun = function(value) {
+        var node = this.root;
+        while (node != NilNode)
+        {
+            if (value < node.value.start)
+            {
+                node = node.left;
+            }
+            else if (value > node.value.end)
+            {
+                node = node.right;
+            }
+            else
+            {
+                return node.value;
+            }
+        }
+
+        return null;
+    };
+
     module("aa tree", {
 
     });
@@ -158,18 +179,71 @@
     test("benchmark", 0, function() {
         var tree = new AATree();
 
-        console.profile("insert");
         for (var i = 0; i < 1e5; i ++) {
             tree.insert(parseInt(Math.sin(i) * 10000));
         }
-        console.profileEnd("insert");
 
-        console.profile("delete");
         for (var i = 0; i < 1e5; i ++) {
             tree.remove(parseInt(Math.sin(i) * 10000));
         }
-        console.profileEnd("delete");
-
     });
     */
+
+
+   function Run(start, end, value) {
+       this.start = start;
+       this.end = end;
+       this.value = value;
+   }
+
+   Run.prototype.valueOf = function() {
+       return this.start;
+   }
+
+   module("Range");
+
+
+   test("range works in AA tree", function() {
+        var tree = new AATree();
+        var run1 = new Run(0, 9);
+        var run2 = new Run(10, 19);
+        tree.insert(run1);
+        tree.insert(run2);
+
+        equal(tree.root.value, run1);
+        equal(tree.root.right.value, run2);
+   });
+
+   test("range works in AA tree in reverse insert mode", function() {
+        var tree = new AATree();
+        var run1 = new Run(0, 9);
+        var run2 = new Run(10, 19);
+        tree.insert(run2);
+        tree.insert(run1);
+
+        equal(tree.root.value, run1);
+        equal(tree.root.right.value, run2);
+   });
+
+    test("insert 2 ranges splits it", 3, function() {
+        var tree = new AATree();
+        tree.insert(new Run(0, 9));
+        tree.insert(new Run(10, 19));
+        tree.insert(new Run(20, 29));
+
+        equal(tree.root.value.start, 10);
+        equal(tree.root.left.value.start, 0);
+        equal(tree.root.right.value.start, 20);
+    });
+
+
+    test("find finds the correct range", 3, function() {
+        var tree = new AATree();
+        var run = new Run(0, 9);
+        tree.insert(run);
+
+        equal(tree.findRun(1), run);
+        equal(tree.findRun(0), run);
+        equal(tree.findRun(9), run);
+    });
 })();
