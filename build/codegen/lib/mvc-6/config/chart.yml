@@ -5,7 +5,7 @@
 
     - :name: categoryAxis.axisCrossingValue
       :merge: true
-      :type: Object[]
+      :type: object[]
 
     - :name: categoryAxis.autoBaseUnitSteps.days
       :merge: true
@@ -41,31 +41,31 @@
 
     - :name: categoryAxis.categories
       :merge: true
-      :type: Object[]
+      :type: object[]
 
     - :name: categoryAxis.max
       :merge: true
-      :type: Object
+      :type: object
 
     - :name: categoryAxis.min
       :merge: true
-      :type: Object
+      :type: object
 
     - :name: categoryAxis.select.from
       :merge: true
-      :type: Object
+      :type: object
 
     - :name: categoryAxis.select.to
       :merge: true
-      :type: Object
+      :type: object
 
     - :name: categoryAxis.select.min
       :merge: true
-      :type: Object
+      :type: object
 
     - :name: categoryAxis.select.max
       :merge: true
-      :type: Object
+      :type: object
 
     - :name: series.target.line.width
       :merge: true
@@ -73,5 +73,29 @@
 
     - :name: valueAxis.axisCrossingValue
       :merge: true
-      :type: Object[]
+      :type: object[]
+
+    - :name: xAxis.axisCrossingValue
+      :merge: true
+      :type: object[]
+
+    - :name: xAxis.min
+      :merge: true
+      :type: object
+
+    - :name: xAxis.max
+      :merge: true
+      :type: object
+
+    - :name: yAxis.axisCrossingValue
+      :merge: true
+      :type: object[]
+
+    - :name: yAxis.min
+      :merge: true
+      :type: object
+
+    - :name: yAxis.max
+      :merge: true
+      :type: object
 
