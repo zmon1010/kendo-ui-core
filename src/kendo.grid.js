@@ -4101,9 +4101,11 @@ var __meta__ = {
                 if (!cell[0]) {
                     table = this._horizontalTable(table, true);
 
-                    focusTable(table, true);
-
                     cell = this._nextHorizontalCell(table, current, index);
+
+                    if (cell[0] !== current[0]) {
+                        focusTable(table, true);
+                    }
                 }
 
                 handled = true;
@@ -4119,18 +4121,29 @@ var __meta__ = {
         _nextHorizontalCell: function(table, current, originalIndex) {
             var cells = current.nextAll(DATA_CELL);
 
+            //TODO add check for locked columns
             if (!cells.length) {
                 var rows = table.find(NAVROW);
                 var rowIndex = rows.index(current.parent());
-                //no sibling cells are found, check for changed table
+                //no sibling cells are found and we've changed the table
                 if (rowIndex == -1) {
                     if (current.hasClass("k-header")) {
+                        var headerRows = [];
+                        mapColumnToCellRows([nonLockedColumns(this.columns)[0]], childColumnsCells(rows.eq(0).children().first()), headerRows, 0, 0);
+
+                        if (headerRows[originalIndex]) {
+                            return headerRows[originalIndex][0];
+                        }
+
+                        return current;
                     }
 
+                    //current is in filter row
                     if (current.parent().hasClass("k-filter-row")) {
                         return rows.last().children(DATA_CELL).first();
                     }
 
+                    //get the same row index in the table
                     return rows.eq(originalIndex).children(DATA_CELL).first();
                 }
             }
