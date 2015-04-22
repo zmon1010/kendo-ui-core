@@ -6,7 +6,6 @@ var subProcess = require('child_process'),
 
 var everliveConfiguration = {
     url: 'http://api.everlive.com/v1',
-    url: 'http://api.everlive.com/v1',
     // apiKey: 'xtHQnSO9us8WwznQ',
     // masterKey: '1o71N1LipdrX9aqGpxeknUpjaXZbq5C1',
     apiKey: 'T1zJXvnrJFQYX22O',
@@ -21,7 +20,7 @@ var everliveConfiguration = {
     },
 
     createAuthorizationHeader: function () {
-        return util.format('Authorization : Bearer %s', this.masterKey);
+        return util.format('Authorization: masterkey %s', this.masterKey);
     },
 
     _createApplicationUrl: function () {
@@ -42,8 +41,8 @@ function parseCommandLineArgs() {
 }
 
 var curlHelper = {
-    createUploadRequest: function (packagePath, releaseNotesPath, uploadUrl) {
-        return util.format('curl -s -F upload=@%s -F upload=@%s --form press=OK %s', packagePath, releaseNotesPath, uploadUrl);
+    createUploadRequest: function (packagePath, releaseNotesPath, uploadUrl, header) {
+        return util.format('curl -s -F upload=@%s -F upload=@%s --form press=OK %s -H "%s"', packagePath, releaseNotesPath, uploadUrl, header);
     },
     createPostRequest: function (url, data, header) {
         var jsonData = JSON.stringify(data).replace(/"/g, '\\"');
@@ -59,6 +58,9 @@ var curlHelper = {
             }
             else {
                 var response = JSON.parse(stdout);
+                if(response && response.errorCode) {
+                    throw new Error(response.message);
+                }
                 if (typeof successCallback === "function") {
                     successCallback(response.Result);
                 }
@@ -93,7 +95,7 @@ function extractUploadedFileIds(result) {
 }
 
 var args = parseCommandLineArgs();
-var uploadRequest = curlHelper.createUploadRequest(args.packagePath, args.releaseNotesPath, everliveConfiguration.buildFilesUploadUrl());
+var uploadRequest = curlHelper.createUploadRequest(args.packagePath, args.releaseNotesPath, everliveConfiguration.buildFilesUploadUrl(), everliveConfiguration.createAuthorizationHeader());
 
 curlHelper.execute(uploadRequest, function (result) {
     var uploadedFilesIds = extractUploadedFileIds(result);
