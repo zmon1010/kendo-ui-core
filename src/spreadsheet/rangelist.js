@@ -177,7 +177,7 @@
         }
 
         map(tree, root.left, callback);
-        tree.insert(callback(root));
+        tree.insert(callback(root.value));
         map(tree, root.right, callback);
     }
 
@@ -188,12 +188,20 @@
     };
 
     function RangeList(start, end, value) {
-        this.tree = new RangeTree();
-        this.tree.insert(new Range(start, end, value));
+        if (end == undefined) {
+            this.tree = start;
+        } else {
+            this.tree = new RangeTree();
+            this.tree.insert(new Range(start, end, value));
+        }
     }
 
     RangeList.prototype.values = function() {
         return this.tree.values();
+    }
+
+    RangeList.prototype.map = function(callback) {
+        return new RangeList(this.tree.map(callback));
     }
 
     RangeList.prototype.value = function(start, end, value) {
