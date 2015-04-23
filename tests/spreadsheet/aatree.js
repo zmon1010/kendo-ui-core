@@ -88,24 +88,24 @@
         return root;
     }
 
-    function Run(start, end, value) {
+    function Range(start, end, value) {
         this.start = start;
         this.end = end;
         this.value = value;
     }
 
-    Run.prototype.valueOf = function() {
+    Range.prototype.valueOf = function() {
         return this.start;
     }
 
     /*
-    Run.prototype.within = function(index) {
+    range.prototype.within = function(index) {
         return index >= this.start && index <= this.end;
     }
     */
 
-    Run.prototype.intersects = function(run) {
-        return run.start < this.end && run.end > this.start;
+    Range.prototype.intersects = function(range) {
+        return range.start <= this.end && range.end >= this.start;
     }
 
     function AATree() {
@@ -120,7 +120,7 @@
         this.root = remove(this.root, value);
     };
 
-    AATree.prototype.findRun = function(value) {
+    AATree.prototype.findrange = function(value) {
         var node = this.root;
         while (node != NilNode)
         {
@@ -141,28 +141,44 @@
         return null;
     };
 
-    function intersecting(root, run, runs) {
+    function values(root, result) {
+        if (root === NilNode) {
+            return;
+        }
+
+        values(root.left, result);
+        result.push(root.value);
+        values(root.right, result);
+    }
+
+    AATree.prototype.values = function() {
+        var result = [];
+        values(this.root, result);
+        return result;
+    }
+
+    function intersecting(root, range, ranges) {
         if (root == NilNode) return;
 
         var value = root.value;
 
-        if (run.start < value.start) {
-            intersecting(root.left, run, runs);
+        if (range.start < value.start) {
+            intersecting(root.left, range, ranges);
         }
 
-        if (value.intersects(run)) {
-            runs.push(value);
+        if (value.intersects(range)) {
+            ranges.push(value);
         }
 
-        if (run.end > value.end) {
-            intersecting(root.right, run, runs);
+        if (range.end > value.end) {
+            intersecting(root.right, range, ranges);
         }
     }
 
-    AATree.prototype.intersecting = function(run) {
-        var runs = [];
-        intersecting(this.root, run, runs);
-        return runs;
+    AATree.prototype.intersecting = function(range) {
+        var ranges = [];
+        intersecting(this.root, range, ranges);
+        return ranges;
     };
 
     module("aa tree", {
@@ -219,6 +235,19 @@
         equal(tree.root.right.value, 3);
     });
 
+    test("values returns a list of the values", 3, function() {
+        var tree = new AATree();
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(3);
+
+        var values = tree.values();
+
+        equal(values[0], 1);
+        equal(values[1], 2);
+        equal(values[2], 3);
+    });
+
     /*
     test("benchmark", 0, function() {
         var tree = new AATree();
@@ -237,31 +266,31 @@
 
    test("range works in AA tree", function() {
         var tree = new AATree();
-        var run1 = new Run(0, 9);
-        var run2 = new Run(10, 19);
-        tree.insert(run1);
-        tree.insert(run2);
+        var range1 = new Range(0, 9);
+        var range2 = new Range(10, 19);
+        tree.insert(range1);
+        tree.insert(range2);
 
-        equal(tree.root.value, run1);
-        equal(tree.root.right.value, run2);
+        equal(tree.root.value, range1);
+        equal(tree.root.right.value, range2);
    });
 
    test("range works in AA tree in reverse insert mode", function() {
         var tree = new AATree();
-        var run1 = new Run(0, 9);
-        var run2 = new Run(10, 19);
-        tree.insert(run2);
-        tree.insert(run1);
+        var range1 = new Range(0, 9);
+        var range2 = new Range(10, 19);
+        tree.insert(range2);
+        tree.insert(range1);
 
-        equal(tree.root.value, run1);
-        equal(tree.root.right.value, run2);
+        equal(tree.root.value, range1);
+        equal(tree.root.right.value, range2);
    });
 
     test("insert 2 ranges splits the tree", 3, function() {
         var tree = new AATree();
-        tree.insert(new Run(0, 9));
-        tree.insert(new Run(10, 19));
-        tree.insert(new Run(20, 29));
+        tree.insert(new Range(0, 9));
+        tree.insert(new Range(10, 19));
+        tree.insert(new Range(20, 29));
 
         equal(tree.root.value.start, 10);
         equal(tree.root.left.value.start, 0);
@@ -269,50 +298,201 @@
     });
 
     test("intersects with works for overlaps", function() {
-        var run1 = new Run(0, 9);
-        var run2 = new Run(5, 14);
-        var run3 = new Run(10, 19);
-        var run4 = new Run(-10, -5);
+        var range1 = new Range(0, 9);
+        var range2 = new Range(5, 14);
+        var range3 = new Range(10, 19);
+        var range4 = new Range(-10, -5);
 
-        ok(run1.intersects(run2));
-        ok(!run1.intersects(run3));
-        ok(!run1.intersects(run4));
+        ok(range1.intersects(range2));
+        ok(!range1.intersects(range3));
+        ok(!range1.intersects(range4));
+    });
+
+    test("intersects with works on edges", function() {
+        var range1 = new Range(0, 9);
+        var range2 = new Range(9, 14);
+
+        ok(range1.intersects(range2));
     });
 
     module("AA tree search", {});
 
     test("find finds the correct range", 3, function() {
         var tree = new AATree();
-        var run = new Run(0, 9);
-        tree.insert(run);
+        var range = new Range(0, 9);
+        tree.insert(range);
 
-        equal(tree.findRun(1), run);
-        equal(tree.findRun(0), run);
-        equal(tree.findRun(9), run);
+        equal(tree.findrange(1), range);
+        equal(tree.findrange(0), range);
+        equal(tree.findrange(9), range);
     });
 
     test("find finds the correct second range", 1, function() {
         var tree = new AATree();
-        var run1 = new Run(0, 9);
-        var run2 = new Run(10, 19);
-        tree.insert(run1);
-        tree.insert(run2);
+        var range1 = new Range(0, 9);
+        var range2 = new Range(10, 19);
+        tree.insert(range1);
+        tree.insert(range2);
 
-        equal(tree.findRun(12), run2);
+        equal(tree.findrange(12), range2);
     });
 
     test("intersecting finds all matching ranges", 4, function() {
         var tree = new AATree();
-        tree.insert(new Run(0, 9));
-        tree.insert(new Run(10, 19));
-        tree.insert(new Run(20, 29));
-        tree.insert(new Run(30, 39));
-        tree.insert(new Run(40, 49));
+        tree.insert(new Range(0, 9));
+        tree.insert(new Range(10, 19));
+        tree.insert(new Range(20, 29));
+        tree.insert(new Range(30, 39));
+        tree.insert(new Range(40, 49));
 
-        var found = tree.intersecting(new Run(15, 39));
+        var found = tree.intersecting(new Range(15, 39));
         equal(found.length, 3);
         equal(found[0].start, 10);
         equal(found[1].end, 29);
         equal(found[2].end, 39);
     });
+
+
+    function CompressedList(start, end, value) {
+        this.tree = new AATree();
+        this.tree.insert(new Range(start, end, value));
+    }
+
+    CompressedList.prototype.values = function() {
+        return this.tree.values();
+    }
+
+    CompressedList.prototype.value = function(start, end, value) {
+        var ranges = this.tree.intersecting(new Range(start - 1, end + 1, value));
+
+        for (var i = 0, length = ranges.length; i < length; i++) {
+            var range = ranges[i];
+            this.tree.remove(range);
+
+            if (range.start < start) {
+                if (range.value !== value) {
+                    this.tree.insert(new Range(range.start, start - 1, range.value));
+                } else {
+                    start = range.start;
+                }
+            }
+
+            if (range.end > end) {
+                if (range.value !== value) {
+                    this.tree.insert(new Range(end + 1, range.end, range.value));
+                } else {
+                    end = range.end;
+                }
+            }
+        }
+
+        this.tree.insert(new Range(start, end, value));
+    }
+
+    module("Compressed list");
+
+    test("starts with a single default range", function() {
+        var list = new CompressedList(0, 100, "default");
+
+        var values = list.values();
+        equal(values[0].start, 0);
+        equal(values[0].end, 100);
+        equal(values[0].value, "default");
+    });
+
+    test("splits ranges on insert", 9, function() {
+        var list = new CompressedList(0, 100, "default");
+
+        list.value(10, 20, "red");
+
+        var values = list.values();
+
+        equal(values[0].start, 0);
+        equal(values[0].end, 9);
+        equal(values[0].value, "default");
+
+        equal(values[1].start, 10);
+        equal(values[1].end, 20);
+        equal(values[1].value, "red");
+
+        equal(values[2].start, 21);
+        equal(values[2].end, 100);
+        equal(values[2].value, "default");
+    });
+
+    test("replaces range on match", 4, function() {
+        var list = new CompressedList(0, 100, "default");
+        list.value(0, 100, "red");
+
+        var values = list.values();
+
+        equal(values.length, 1);
+        equal(values[0].start, 0);
+        equal(values[0].end, 100);
+        equal(values[0].value, "red");
+    });
+
+    test("merges range when value is the same (start)", 4, function() {
+        var list = new CompressedList(0, 100, "default");
+        list.value(10, 20, "red");
+        list.value(15, 30, "red");
+
+        var values = list.values();
+
+        equal(values.length, 3);
+        equal(values[1].start, 10);
+        equal(values[1].end, 30);
+        equal(values[1].value, "red");
+    });
+
+    test("merges range when value is the same (end)", 4, function() {
+        var list = new CompressedList(0, 100, "default");
+        list.value(10, 20, "red");
+        list.value(5, 15, "red");
+
+        var values = list.values();
+
+        equal(values.length, 3);
+        equal(values[1].start, 5);
+        equal(values[1].end, 20);
+        equal(values[1].value, "red");
+    });
+
+    test("merges neighbour ranges with same value (end)", 4, function() {
+        var list = new CompressedList(0, 100, "default");
+        list.value(10, 20, "red");
+        list.value(21, 30, "red");
+
+        var values = list.values();
+
+        equal(values.length, 3);
+        equal(values[1].start, 10);
+        equal(values[1].end, 30);
+        equal(values[1].value, "red");
+    });
+
+    test("merges neighbour ranges with same value (start)", 4, function() {
+        var list = new CompressedList(0, 100, "default");
+        list.value(21, 30, "red");
+        list.value(10, 20, "red");
+
+        var values = list.values();
+
+        equal(values.length, 3);
+        equal(values[1].start, 10);
+        equal(values[1].end, 30);
+        equal(values[1].value, "red");
+    });
+
+    // Pontential performance tweak - do not perform unnecessary re-creaction of a range
+    /*
+    test("merges neighbour ranges with same value (end)", 1, function() {
+        var list = new CompressedList(0, 100, "default");
+        list.value(10, 20, "red");
+        var red = list.values()[1];
+        list.value(21, 30, "blue");
+
+        equal(list.values()[1], red);
+    });
+    */
 })();
