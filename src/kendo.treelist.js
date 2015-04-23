@@ -2243,7 +2243,7 @@ var __meta__ = {
 
         _syncLockedContentHeight: function() {
             if (this.lockedTable) {
-                if (!this.touchScroller) {
+                if (!this._touchScroller) {
                     this._adjustLockedHorizontalScrollBar();
                 }
                 this._adjustRowsHeight(this.table, this.lockedTable);
