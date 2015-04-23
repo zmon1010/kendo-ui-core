@@ -88,6 +88,26 @@
         return root;
     }
 
+    function Run(start, end, value) {
+        this.start = start;
+        this.end = end;
+        this.value = value;
+    }
+
+    Run.prototype.valueOf = function() {
+        return this.start;
+    }
+
+    /*
+    Run.prototype.within = function(index) {
+        return index >= this.start && index <= this.end;
+    }
+    */
+
+    Run.prototype.intersects = function(run) {
+        return run.start < this.end && run.end > this.start;
+    }
+
     function AATree() {
         this.root = NilNode;
     }
@@ -119,6 +139,30 @@
         }
 
         return null;
+    };
+
+    function intersecting(root, run, runs) {
+        if (root == NilNode) return;
+
+        var value = root.value;
+
+        if (run.start < value.start) {
+            intersecting(root.left, run, runs);
+        }
+
+        if (value.intersects(run)) {
+            runs.push(value);
+        }
+
+        if (run.end > value.end) {
+            intersecting(root.right, run, runs);
+        }
+    }
+
+    AATree.prototype.intersecting = function(run) {
+        var runs = [];
+        intersecting(this.root, run, runs);
+        return runs;
     };
 
     module("aa tree", {
@@ -189,19 +233,7 @@
     });
     */
 
-
-   function Run(start, end, value) {
-       this.start = start;
-       this.end = end;
-       this.value = value;
-   }
-
-   Run.prototype.valueOf = function() {
-       return this.start;
-   }
-
    module("Range");
-
 
    test("range works in AA tree", function() {
         var tree = new AATree();
@@ -225,7 +257,7 @@
         equal(tree.root.right.value, run2);
    });
 
-    test("insert 2 ranges splits it", 3, function() {
+    test("insert 2 ranges splits the tree", 3, function() {
         var tree = new AATree();
         tree.insert(new Run(0, 9));
         tree.insert(new Run(10, 19));
@@ -236,6 +268,18 @@
         equal(tree.root.right.value.start, 20);
     });
 
+    test("intersects with works for overlaps", function() {
+        var run1 = new Run(0, 9);
+        var run2 = new Run(5, 14);
+        var run3 = new Run(10, 19);
+        var run4 = new Run(-10, -5);
+
+        ok(run1.intersects(run2));
+        ok(!run1.intersects(run3));
+        ok(!run1.intersects(run4));
+    });
+
+    module("AA tree search", {});
 
     test("find finds the correct range", 3, function() {
         var tree = new AATree();
@@ -245,5 +289,30 @@
         equal(tree.findRun(1), run);
         equal(tree.findRun(0), run);
         equal(tree.findRun(9), run);
+    });
+
+    test("find finds the correct second range", 1, function() {
+        var tree = new AATree();
+        var run1 = new Run(0, 9);
+        var run2 = new Run(10, 19);
+        tree.insert(run1);
+        tree.insert(run2);
+
+        equal(tree.findRun(12), run2);
+    });
+
+    test("intersecting finds all matching ranges", 4, function() {
+        var tree = new AATree();
+        tree.insert(new Run(0, 9));
+        tree.insert(new Run(10, 19));
+        tree.insert(new Run(20, 29));
+        tree.insert(new Run(30, 39));
+        tree.insert(new Run(40, 49));
+
+        var found = tree.intersecting(new Run(15, 39));
+        equal(found.length, 3);
+        equal(found[0].start, 10);
+        equal(found[1].end, 29);
+        equal(found[2].end, 39);
     });
 })();
