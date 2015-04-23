@@ -73,6 +73,7 @@
         "./kendo.gantt",
         "./kendo.treelist",
         "./kendo.pivotgrid",
+        "./kendo.spreadsheet",
         "./kendo.pivot.configurator",
         "./kendo.angular",
         "./kendo.webcomponents",
