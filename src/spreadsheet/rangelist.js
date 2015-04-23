@@ -171,6 +171,22 @@
         return ranges;
     };
 
+    function map(tree, root, callback) {
+        if (root === NilNode) {
+            return;
+        }
+
+        map(tree, root.left, callback);
+        tree.insert(callback(root));
+        map(tree, root.right, callback);
+    }
+
+    RangeTree.prototype.map = function(callback) {
+        var tree = new RangeTree();
+        map(tree, this.root, callback);
+        return tree;
+    };
+
     function RangeList(start, end, value) {
         this.tree = new RangeTree();
         this.tree.insert(new Range(start, end, value));

@@ -40,6 +40,33 @@
         equal(tree.root.right.value, 3);
     });
 
+    test("map produces new tree", 6, function() {
+        var tree = new RangeTree();
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(3);
+
+        var i = 0;
+        tree = tree.map(function(range) {
+            i ++;
+            if (i == 1) {
+                equal(range.value, 1);
+            } else if (i == 2) {
+                equal(range.value, 2);
+            } else if (i == 3) {
+                equal(range.value, 3);
+            }
+
+            return new Range(range.start, range.end, range.value * 2)
+        });
+
+        var values = tree.values();
+
+        equal(values[1].value, 4);
+        equal(values[0].value, 2);
+        equal(values[2].value, 6);
+    });
+
     test("removing an item works", 2, function() {
         var tree = new RangeTree();
         tree.insert(1);
