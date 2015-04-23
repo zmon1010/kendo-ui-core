@@ -1039,7 +1039,7 @@ var __meta__ = {
     }
 
     function childColumnsCells(cell) {
-        var container = cell.closest("table");
+        var container = cell.closest("thead");
         var result = $().add(cell);
 
         var row = cell.closest("tr");
@@ -4061,50 +4061,51 @@ var __meta__ = {
         },
 
         _tableKeyDown: function(e) {
-            var table = $(e.currentTarget);
             var current = this.current();
+            //thead or tbody
+            var container = current.parent().parent();
             var cell;
             var handled = false;
 
             if (e.keyCode == kendo.keys.UP) {
-                cell = this._prevVerticalCell(table, current);
+                cell = this._prevVerticalCell(container, current);
 
                 if (!cell[0]) {
-                    table = this._verticalTable(table, true);
+                    container = this._verticalContainer(container, true);
 
-                    focusTable(table, true);
+                    focusTable(container.parent(), true);
 
-                    cell = this._prevVerticalCell(table, current);
+                    cell = this._prevVerticalCell(container, current);
                 }
 
                 handled = true;
             }
 
             if (e.keyCode == kendo.keys.DOWN) {
-                cell = this._nextVerticalCell(table, current);
+                cell = this._nextVerticalCell(container, current);
 
                 if (!cell[0]) {
-                    table = this._verticalTable(table);
+                    container = this._verticalContainer(container);
 
-                    focusTable(table, true);
+                    focusTable(container.parent(), true);
 
-                    cell = this._nextVerticalCell(table, current);
+                    cell = this._nextVerticalCell(container, current);
                 }
 
                 handled = true;
             }
 
             if (e.keyCode == kendo.keys.RIGHT) {
-                var index = table.find(NAVROW).index(current.parent());
-                cell = this._nextHorizontalCell(table, current, index);
+                var index = container.find(NAVROW).index(current.parent());
+                cell = this._nextHorizontalCell(container, current, index);
 
                 if (!cell[0]) {
-                    table = this._horizontalTable(table, true);
+                    container = this._horizontalContainer(container, true);
 
-                    cell = this._nextHorizontalCell(table, current, index);
+                    cell = this._nextHorizontalCell(container, current, index);
 
                     if (cell[0] !== current[0]) {
-                        focusTable(table, true);
+                        focusTable(container.parent(), true);
                     }
                 }
 
@@ -4166,13 +4167,13 @@ var __meta__ = {
             return index;
         },
 
-        _prevVerticalCell: function(table, current) {
+        _prevVerticalCell: function(container, current) {
             var cells;
             var row = current.parent();
-            var rows = table.find(NAVROW);
+            var rows = container.find(NAVROW);
             var rowIndex = rows.index(row);
             //get data-index in case of last level of multi-level columns
-            var index = this._currentDataIndex(table, current);
+            var index = this._currentDataIndex(container, current);
 
             //current is in the header, but not at the last level of multi-level columns
             if (index || current.hasClass("k-header")) {
@@ -4184,15 +4185,15 @@ var __meta__ = {
 
             //if current is inside filter row
             if (row.hasClass("k-filter-row")) {
-                return leafDataCells(table.find("thead")).eq(index);
+                return leafDataCells(container).eq(index);
             }
 
-            //move up to header table
+            //move up to header container
             if (rowIndex == -1) {
-                //is there filter row in the header table
-                row = table.find(".k-filter-row");
+                //is there filter row in the header container
+                row = container.find(".k-filter-row");
                 if (!row[0]) {
-                    return leafDataCells(table.find("thead")).eq(index);
+                    return leafDataCells(container).eq(index);
                 }
             } else {
                 row =  rowIndex == 0 ? $() : rows.eq(rowIndex - 1);
@@ -4206,13 +4207,13 @@ var __meta__ = {
             return cells.eq(0);
         },
 
-        _nextVerticalCell: function(table, current) {
+        _nextVerticalCell: function(container, current) {
             var cells;
             var row = current.parent();
-            var rows = table.find(NAVROW);
+            var rows = container.find(NAVROW);
             var rowIndex = rows.index(row);
             //get data-index in case of last level of multi-level columns
-            var index = this._currentDataIndex(table, current);
+            var index = this._currentDataIndex(container, current);
 
             //current is in the header, but not at the last level of multi-level columns
             if (!index && current.hasClass("k-header")) {
@@ -4221,7 +4222,7 @@ var __meta__ = {
 
             index = index ? parseInt(index, 10) : row.children(DATA_CELL).index(current);
 
-            //move down to data table
+            //move down to data container
             if (rowIndex == -1) {
                 row = rows.eq(0);
             } else {
@@ -4236,7 +4237,8 @@ var __meta__ = {
             return cells.eq(0);
         },
 
-        _verticalTable: function(table, up) {
+        _verticalContainer: function(container, up) {
+            var table = container.closest("table");
             var step = this._navigatableTables.length / 2;
             var index = $.inArray(table[0], this._navigatableTables);
 
@@ -4249,10 +4251,11 @@ var __meta__ = {
                 table = this._navigatableTables.eq(index);
             }
 
-            return table;
+            return table.find(up ? "thead" : "tbody");
         },
 
-        _horizontalTable: function(table, right) {
+        _horizontalContainer: function(container, right) {
+            var table = container.closest("table");
             var length = this._navigatableTables.length;
             var step =  length / 2;
             var index = $.inArray(table[0], this._navigatableTables);
