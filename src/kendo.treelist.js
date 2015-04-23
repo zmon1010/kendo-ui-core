@@ -870,6 +870,13 @@ var __meta__ = {
 
                 if (touchScroller && touchScroller.movable) {
                     this._touchScroller = touchScroller;
+
+                    touchScroller.movable.bind("change", function(e) {
+                        scrollables.scrollLeft(-e.sender.x);
+                        if (lockedContent) {
+                            lockedContent.scrollTop(-e.sender.y);
+                        }
+                    });
                 }
             }
         },
