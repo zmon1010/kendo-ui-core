@@ -67,6 +67,23 @@
       :merge: true
       :type: object
 
+    - :name: renderAs
+      :description: Gets or sets the preferred widget rendering mode.
+      :type: String
+      :enum_type: RenderingMode
+      :values:
+          - :value: svg
+            :member: SVG
+            :description: Attempts to render the widget as an inline SVG document.
+
+          - :value: canvas
+            :member: Canvas
+            :description: Attempts to render the widget as Canvas element.
+
+          - :value: vml
+            :member: VML
+            :description: Attempts to render the widget as VML elements.
+
     - :name: series.target.line.width
       :merge: true
       :type: double
