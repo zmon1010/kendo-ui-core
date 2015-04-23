@@ -108,10 +108,10 @@ namespace Kendo.Mvc.UI.Fluent
 		/// If a type value is missing, the type is assumed to be the one specified in seriesDefaults.
         /// </summary>
         /// <param name="configurator">The configurator for the series setting.</param>
-        public ChartBuilder Series(Action<ChartSerieFactory> configurator)
+        public ChartBuilder Series(Action<ChartSeriesFactory> configurator)
         {
 
-            configurator(new ChartSerieFactory(Container.Series)
+            configurator(new ChartSeriesFactory(Container.Series)
             {
                 Chart = Container
             });

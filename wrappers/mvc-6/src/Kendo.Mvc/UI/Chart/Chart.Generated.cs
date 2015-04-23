@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI
 
         public ChartPlotAreaSettings PlotArea { get; } = new ChartPlotAreaSettings();
 
-        public List<ChartSerie> Series { get; set; } = new List<ChartSerie>();
+        public List<ChartSeries> Series { get; set; } = new List<ChartSeries>();
 
         public String[] SeriesColors { get; set; }
 
