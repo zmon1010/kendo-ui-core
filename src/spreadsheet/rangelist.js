@@ -181,6 +181,10 @@
     }
 
     RangeList.prototype.value = function(start, end, value) {
+        if (value === undefined) {
+            return this.tree.intersecting(new Range(start, end))[0].value;
+        }
+
         var ranges = this.tree.intersecting(new Range(start - 1, end + 1, value));
 
         for (var i = 0, length = ranges.length; i < length; i++) {

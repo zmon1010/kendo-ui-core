@@ -214,6 +214,11 @@
         equal(values[0].value, "red");
     });
 
+    test("returns value for a given range", 1, function() {
+        var list = new RangeList(0, 100, "default");
+        equal(list.value(10, 20), "default");
+    });
+
     test("merges range when value is the same (start)", 4, function() {
         var list = new RangeList(0, 100, "default");
         list.value(10, 20, "red");
