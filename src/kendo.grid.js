@@ -4112,6 +4112,23 @@ var __meta__ = {
                 handled = true;
             }
 
+            if (e.keyCode == kendo.keys.LEFT) {
+                var index = container.find(NAVROW).index(current.parent());
+                cell = this._prevHorizontalCell(container, current, index);
+
+                if (!cell[0]) {
+                    container = this._horizontalContainer(container);
+
+                    cell = this._prevHorizontalCell(container, current, index);
+
+                    if (cell[0] !== current[0]) {
+                        focusTable(container.parent(), true);
+                    }
+                }
+
+                handled = true;
+            }
+
             if (handled) {
                 this.current(cell);
                 //prevent scrolling while pressing the keys
@@ -4130,7 +4147,7 @@ var __meta__ = {
                 if (rowIndex == -1) {
                     if (current.hasClass("k-header")) {
                         var headerRows = [];
-                        mapColumnToCellRows([nonLockedColumns(this.columns)[0]], childColumnsCells(rows.eq(0).children().first()), headerRows, 0, 0);
+                        mapColumnToCellRows([lockedColumns(this.columns)[0]], childColumnsCells(rows.eq(0).children().first()), headerRows, 0, 0);
 
                         if (headerRows[originalIndex]) {
                             return headerRows[originalIndex][0];
@@ -4144,8 +4161,42 @@ var __meta__ = {
                         return rows.last().children(DATA_CELL).first();
                     }
 
-                    //get the same row index in the table
+                    //get the same row index in the new table
                     return rows.eq(originalIndex).children(DATA_CELL).first();
+                }
+            }
+
+            return cells.first();
+        },
+
+        _prevHorizontalCell: function(table, current, originalIndex) {
+            var cells = current.prevAll(DATA_CELL);
+
+            //TODO add check for locked columns
+            if (!cells.length) {
+                var rows = table.find(NAVROW);
+                var rowIndex = rows.index(current.parent());
+                //no sibling cells are found and we've changed the table
+                if (rowIndex == -1) {
+                    if (current.hasClass("k-header")) {
+                        var headerRows = [];
+                        var columns = lockedColumns(this.columns);
+                        mapColumnToCellRows([columns[columns.length - 1]], childColumnsCells(rows.eq(0).children().last()), headerRows, 0, 0);
+
+                        if (headerRows[originalIndex]) {
+                            return headerRows[originalIndex][0];
+                        }
+
+                        return current;
+                    }
+
+                    //current is in filter row
+                    if (current.parent().hasClass("k-filter-row")) {
+                        return rows.last().children(DATA_CELL).last();
+                    }
+
+                    //get the same row index in the new table
+                    return rows.eq(originalIndex).children(DATA_CELL).last();
                 }
             }
 
@@ -4216,7 +4267,9 @@ var __meta__ = {
             var index = this._currentDataIndex(container, current);
 
             //current is in the header, but not at the last level of multi-level columns
-            if (!index && current.hasClass("k-header")) {
+            //and we are not changing the table
+            if (rowIndex != -1 && index == undefined && current.hasClass("k-header")) {
+                //offset by one as the result includes the current
                 return childColumnsCells(current).eq(1);
             }
 
@@ -4255,18 +4308,25 @@ var __meta__ = {
         },
 
         _horizontalContainer: function(container, right) {
-            var table = container.closest("table");
             var length = this._navigatableTables.length;
-            var step =  length / 2;
-            var index = $.inArray(table[0], this._navigatableTables);
-
-            var newIndex = index + (right ? 1 : -1);
-
-            if (newIndex < 0 || newIndex == length || newIndex == step) {
-                return table;
+            if (length <= 2) {
+                return container;
             }
 
-            return this._navigatableTables.eq(newIndex);
+            var table = container.closest("table");
+            var index = $.inArray(table[0], this._navigatableTables);
+
+            index += right ? 1 : -1;
+
+            if (right && (index == 2 || index == length)) {
+                return container;
+            }
+
+            if (!right && (index == 1 || index < 0)) {
+                return container;
+            }
+
+            return this._navigatableTables.eq(index).find("thead, tbody");
         },
 
         __navigatable: function() {
