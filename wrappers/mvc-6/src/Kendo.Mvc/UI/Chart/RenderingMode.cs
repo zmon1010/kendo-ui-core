@@ -1,7 +1,7 @@
 namespace Kendo.Mvc.UI
 {
     /// <summary>
-    /// Gets or sets the preferred widget rendering mode.
+    /// Specifies the preferred widget rendering mode.
     /// </summary>
     public enum RenderingMode
     {

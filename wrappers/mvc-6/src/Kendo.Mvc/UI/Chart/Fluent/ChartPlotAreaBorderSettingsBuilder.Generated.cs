@@ -21,22 +21,22 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The dash type of the border.The following dash types are supported:
-        /// </summary>
-        /// <param name="value">The value for DashType</param>
-        public ChartPlotAreaBorderSettingsBuilder DashType(string value)
-        {
-            Container.DashType = value;
-            return this;
-        }
-
-        /// <summary>
         /// The width of the border in pixels. By default the border width is set to zero which means that the border will not appear.
         /// </summary>
         /// <param name="value">The value for Width</param>
         public ChartPlotAreaBorderSettingsBuilder Width(double value)
         {
             Container.Width = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the line dash type.
+        /// </summary>
+        /// <param name="value">The value for DashType</param>
+        public ChartPlotAreaBorderSettingsBuilder DashType(ChartDashType value)
+        {
+            Container.DashType = value;
             return this;
         }
 

@@ -221,7 +221,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Gets or sets the preferred widget rendering mode.
+        /// Specifies the preferred widget rendering mode.
         /// </summary>
         /// <param name="value">The value for RenderAs</param>
         public ChartBuilder RenderAs(RenderingMode value)

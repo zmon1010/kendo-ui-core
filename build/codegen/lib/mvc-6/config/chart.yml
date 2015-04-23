@@ -67,8 +67,41 @@
       :merge: true
       :type: object
 
+    - :name: plotArea.border.dashType
+      :description: Specifies the line dash type.
+      :type: String
+      :enum_type: ChartDashType
+      :values:
+          - :value: solid
+            :member: Solid
+            :description: A solid line.
+
+          - :value: dot
+            :member: Dot
+            :description: A line consisting of dots.
+
+          - :value: dash
+            :member: Dash
+            :description: A line consisting of dashes.
+
+          - :value: longDash
+            :member: LongDash
+            :description: A line consisting of a repeating pattern of long dashes.
+
+          - :value: dashDot
+            :member: DashDot
+            :description: A line consisting of a repeating pattern of dashes and dots.
+
+          - :value: longDashDot
+            :member: LongDashDot
+            :description: A line consisting of a repeating pattern of long dashes and dots.
+
+          - :value: longDashDotDot
+            :member: LongDashDotDot
+            :description: A line consisting of a repeating pattern of long dashes and two dots.
+
     - :name: renderAs
-      :description: Gets or sets the preferred widget rendering mode.
+      :description: Specifies the preferred widget rendering mode.
       :type: String
       :enum_type: RenderingMode
       :values:
