@@ -22,6 +22,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The border of the labels.
+        /// </summary>
+        /// <param name="configurator">The configurator for the border setting.</param>
+        public RadialGaugeScaleLabelsSettingsBuilder Border(Action<RadialGaugeScaleLabelsBorderSettingsBuilder> configurator)
+        {
+
+            Container.Border.RadialGauge = Container.RadialGauge;
+            configurator(new RadialGaugeScaleLabelsBorderSettingsBuilder(Container.Border));
+
+            return this;
+        }
+
+        /// <summary>
         /// The text color of the labels.
 		/// Any valid CSS color string will work here, including hex and rgb.
         /// </summary>

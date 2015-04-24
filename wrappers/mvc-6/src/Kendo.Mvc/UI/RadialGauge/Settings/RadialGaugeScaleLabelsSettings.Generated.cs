@@ -13,6 +13,8 @@ namespace Kendo.Mvc.UI
     {
         public string Background { get; set; }
 
+        public RadialGaugeScaleLabelsBorderSettings Border { get; } = new RadialGaugeScaleLabelsBorderSettings();
+
         public string Color { get; set; }
 
         public string Font { get; set; }
@@ -37,6 +39,12 @@ namespace Kendo.Mvc.UI
             if (Background?.HasValue() == true)
             {
                 settings["background"] = Background;
+            }
+
+            var border = Border.Serialize();
+            if (border.Any())
+            {
+                settings["border"] = border;
             }
 
             if (Color?.HasValue() == true)

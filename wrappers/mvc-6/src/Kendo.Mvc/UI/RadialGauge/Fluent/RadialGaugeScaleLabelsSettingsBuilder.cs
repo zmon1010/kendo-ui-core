@@ -80,17 +80,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="dashType">The labels border dash type.</param>      
         public RadialGaugeScaleLabelsSettingsBuilder Border(int width, string color, ChartDashType dashType)
         {
-            Container.Border = new ChartElementBorder(width, color, dashType);
-            return this;
-        }
+            Container.Border.Width = width;
+            Container.Border.Color = color;
+            Container.Border.DashType = dashType;
 
-        /// <summary>
-        /// Configures the label border
-        /// </summary>
-        /// <param name="configurator">The border configuration action</param>
-        public RadialGaugeScaleLabelsSettingsBuilder Border(Action<ChartBorderBuilder> configurator)
-        {
-            configurator(new ChartBorderBuilder(Container.Border));
             return this;
         }
 

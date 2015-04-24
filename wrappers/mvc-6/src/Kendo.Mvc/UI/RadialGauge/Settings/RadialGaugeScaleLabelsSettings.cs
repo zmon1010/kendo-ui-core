@@ -15,7 +15,6 @@ namespace Kendo.Mvc.UI
         {
             Margin = new ChartSpacing();
             Padding = new ChartSpacing();
-            Border = new ChartElementBorder();
         }
 
         /// <summary>
@@ -37,18 +36,6 @@ namespace Kendo.Mvc.UI
         /// The label padding.
         /// </value>
         public ChartSpacing Padding
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the label border.
-        /// </summary>
-        /// <value>
-        /// The label border.
-        /// </value>
-        public ChartElementBorder Border
         {
             get;
             set;
@@ -80,12 +67,6 @@ namespace Kendo.Mvc.UI
             if (padding.Any())
             {
                 settings["padding"] = padding;
-            }
-
-            var border = Border.Serialize();
-            if (border.Any())
-            {
-                settings["border"] = border;
             }
 
             if (Opacity.HasValue)

@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class RadialGaugeGaugeAreaSettings 
     {
+        public RadialGaugeGaugeAreaBorderSettings Border { get; } = new RadialGaugeGaugeAreaBorderSettings();
+
         public double? Height { get; set; }
 
         public double? Width { get; set; }
@@ -23,6 +25,12 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            var border = Border.Serialize();
+            if (border.Any())
+            {
+                settings["border"] = border;
+            }
 
             if (Height.HasValue)
             {

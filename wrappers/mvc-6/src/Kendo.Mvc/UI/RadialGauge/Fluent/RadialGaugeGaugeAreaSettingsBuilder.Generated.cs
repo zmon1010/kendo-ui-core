@@ -11,6 +11,19 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
+        /// The border of the gauge area.
+        /// </summary>
+        /// <param name="configurator">The configurator for the border setting.</param>
+        public RadialGaugeGaugeAreaSettingsBuilder Border(Action<RadialGaugeGaugeAreaBorderSettingsBuilder> configurator)
+        {
+
+            Container.Border.RadialGauge = Container.RadialGauge;
+            configurator(new RadialGaugeGaugeAreaBorderSettingsBuilder(Container.Border));
+
+            return this;
+        }
+
+        /// <summary>
         /// The height of the gauge area.  By default, the vertical gauge is 200px and
 		/// the horizontal one is 60px.
         /// </summary>

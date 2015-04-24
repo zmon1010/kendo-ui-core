@@ -7,9 +7,9 @@ using System.Linq;
 namespace Kendo.Mvc.UI
 {
     /// <summary>
-    /// Kendo UI RadialGaugeScaleLabelsBorderSettings class
+    /// Kendo UI RadialGaugeGaugeAreaBorderSettings class
     /// </summary>
-    public partial class RadialGaugeScaleLabelsBorderSettings 
+    public partial class RadialGaugeGaugeAreaBorderSettings 
     {
         public string Color { get; set; }
 
