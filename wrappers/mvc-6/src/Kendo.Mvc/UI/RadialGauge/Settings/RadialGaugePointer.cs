@@ -17,6 +17,8 @@ namespace Kendo.Mvc.UI
 
         public double? Value { get; set; }
 
+        public double? Opacity { get; set; }
+
         public RadialGauge RadialGauge { get; set; }
 
         public Dictionary<string, object> Serialize()
@@ -37,6 +39,11 @@ namespace Kendo.Mvc.UI
             if (Value.HasValue)
             {
                 settings["value"] = Value;
+            }
+
+            if (Opacity.HasValue)
+            {
+                settings["opacity"] = Opacity;
             }
 
             return settings;

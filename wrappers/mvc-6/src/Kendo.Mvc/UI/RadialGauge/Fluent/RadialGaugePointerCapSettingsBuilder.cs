@@ -39,5 +39,18 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Size = value;
             return this;
         }
+
+        /// <summary>
+        /// Sets the cap opacity.
+        /// </summary>
+        /// <param name="opacity">
+        /// The cap opacity in the range from 0 (transparent) to 1 (opaque).
+        /// The default value is 1.
+        /// </param>
+        public RadialGaugePointerCapSettingsBuilder Opacity(double opacity)
+        {
+            Container.Opacity = opacity;
+            return this;
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace Kendo.Mvc.UI
 
             if (DashType.HasValue)
             {
-                settings["dashType"] = DashType.ToString().ToLowerInvariant();
+                settings["dashType"] = DashType?.Serialize();
             }
 
             return settings;

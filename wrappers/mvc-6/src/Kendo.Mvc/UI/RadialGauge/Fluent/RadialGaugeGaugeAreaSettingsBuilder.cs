@@ -47,6 +47,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Sets the gauge area margin.
+        /// </summary>
+        /// <param name="margin">The gauge area margin.</param>         
+        public RadialGaugeGaugeAreaSettingsBuilder Margin(int margin)
+        {
+            Container.Margin = new ChartSpacing(margin);
+            return this;
+        }
+
+        /// <summary>
         /// Sets the gauge area border.
         /// </summary>
         /// <param name="width">The border width.</param>

@@ -52,5 +52,18 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Value = value;
             return this;
         }
+
+        /// <summary>
+        /// Sets the pointer opacity.
+        /// </summary>
+        /// <param name="opacity">
+        /// The pointer opacity in the range from 0 (transparent) to 1 (opaque).
+        /// The default value is 1.
+        /// </param>
+        public RadialGaugePointerBuilder Opacity(double opacity)
+        {
+            Container.Opacity = opacity;
+            return this;
+        }
     }
 }
