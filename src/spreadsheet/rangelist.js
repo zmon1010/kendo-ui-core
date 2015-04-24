@@ -204,12 +204,34 @@
         return new RangeList(this.tree.map(callback));
     }
 
+    RangeList.prototype.intersecting = function(start, end) {
+        return this.tree.intersecting(new Range(start, end));
+    }
+
     RangeList.prototype.value = function(start, end, value) {
         if (value === undefined) {
             return this.tree.intersecting(new Range(start, end))[0].value;
         }
 
         var ranges = this.tree.intersecting(new Range(start - 1, end + 1, value));
+
+        var firstRange = ranges[0], lastRange = ranges[ranges.length - 1];
+
+        if (firstRange.end < start) {
+            if (firstRange.value === value) {
+                start = firstRange.start;
+            } else {
+                ranges.shift();
+            }
+        }
+
+        if (lastRange.start > end) {
+            if (lastRange.value === value) {
+                end = lastRange.end;
+            } else {
+                ranges.pop();
+            }
+        }
 
         for (var i = 0, length = ranges.length; i < length; i++) {
             var range = ranges[i];
