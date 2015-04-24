@@ -6566,12 +6566,15 @@ var __meta__ = {
             kendo.ui.progress(element, toggle);
         },
 
-        _resize: function() {
+        _resize: function(size, force) {
             if (this.content) {
                 this._setContentWidth();
                 this._setContentHeight();
             }
-            if (this.virtualScrollable) {
+            if (this.virtualScrollable && (force || this._rowHeight)) {
+                if (force) {
+                    this._rowHeight = null;
+                }
                 this.virtualScrollable.repaintScrollbar();
             }
         },
