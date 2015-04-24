@@ -4062,6 +4062,7 @@
     })();
 
     (function() {
+        var DEFAULT_ICON_SIZE = 7;
         var Note = dataviz.Note;
         var customVisual;
         var box;
@@ -4069,7 +4070,12 @@
         var visual;
 
         function createNote(options) {
-            note = new Note(1, "foo", "bar", "baz", "qux", options);
+            note = new Note(1, "foo", "bar", "baz", "qux", kendo.deepExtend({
+                line: {
+                    length: 10,
+                    width: 1
+                }
+            }, options));
 
             box = new Box2D(0, 0, 10, 10);
             note.reflow(box);
@@ -4079,7 +4085,77 @@
         }
 
         // ------------------------------------------------------------
-        module("Note", {
+        module("Note");
+
+        test("sets default icon size if no size is set and label position is outside", function() {
+            createNote({
+                label: {
+                    position: "outside"
+                }
+            });
+            equal(note.marker.box.width(), DEFAULT_ICON_SIZE);
+            equal(note.marker.box.height(), DEFAULT_ICON_SIZE);
+        });
+
+        test("circle icon size is set based on the max of the label width and height if no size is set and label position is inside", function() {
+            createNote({
+                label: {
+                    position: "inside"
+                },
+                icon: {
+                    type: "circle"
+                }
+            });
+
+            var size = Math.max(note.label.box.width(), note.label.box.height());
+            equal(note.marker.box.width(), size);
+            equal(note.marker.box.height(), size);
+        });
+
+        test("non circle icon size is set based on the label width and height if no size is set and label position is inside", function() {
+            createNote({
+                label: {
+                    position: "inside"
+                },
+                icon: {
+                    type: "square"
+                }
+            });
+
+            equal(note.marker.box.width(), note.label.box.width());
+            equal(note.marker.box.height(), note.label.box.height());
+        });
+
+        test("sets icon size from the options if set and label position is outside", function() {
+            createNote({
+                label: {
+                    position: "outside"
+                },
+                icon: {
+                    size: 30
+                }
+            });
+
+            equal(note.marker.box.width(), 30);
+            equal(note.marker.box.height(), 30);
+        });
+
+        test("sets icon size from the options if set and label position is inside", function() {
+            createNote({
+                label: {
+                    position: "inside"
+                },
+                icon: {
+                    size: 30
+                }
+            });
+
+            equal(note.marker.box.width(), 30);
+            equal(note.marker.box.height(), 30);
+        });
+
+        // ------------------------------------------------------------
+        module("Note / custom visual", {
             setup: function() {
                 customVisual = new draw.Path();
             }

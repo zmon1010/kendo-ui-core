@@ -56,6 +56,7 @@ var __meta__ = {
         CROSS = "cross",
         DEFAULT_FONT = "12px sans-serif",
         DEFAULT_HEIGHT = 400,
+        DEFAULT_ICON_SIZE = 7,
         DEFAULT_PRECISION = 6,
         DEFAULT_WIDTH = 600,
         DEG_TO_RAD = math.PI / 180,
@@ -2282,7 +2283,7 @@ var __meta__ = {
 
                     note.label = new TextBox(text, deepExtend({}, label));
 
-                    if (label.position === INSIDE) {
+                    if (label.position === INSIDE && !defined(size)) {
                         if (icon.type === CIRCLE) {
                             size = math.max(note.label.box.width(), note.label.box.height());
                         } else {
@@ -2293,8 +2294,8 @@ var __meta__ = {
                     }
                 }
 
-                icon.width = width || size;
-                icon.height = height || size;
+                icon.width = width || size || DEFAULT_ICON_SIZE;
+                icon.height = height || size || DEFAULT_ICON_SIZE;
 
                 marker = new ShapeElement(deepExtend({}, icon));
 

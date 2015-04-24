@@ -232,7 +232,6 @@ var __meta__ = {
                 },
                 notes: {
                     icon: {
-                        size: 7,
                         border: {
                             width: 1
                         }
