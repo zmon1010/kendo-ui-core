@@ -1338,42 +1338,32 @@ var __meta__ = {
         },
 
         reflow: function(targetBox) {
-            var textbox = this;
-            var options = textbox.options;
+            var options = this.options;
             var visual = options.visual;
             var align = options.align;
             var rotation = options.rotation;
-            textbox.container.options.align = align;
+            this.container.options.align = align;
 
-            if (visual && !textbox._boxReflow) {
-                textbox.visual = visual({
-                    text: textbox.content,
-                    rect: targetBox.toRect(),
-                    options: textbox.visualOptions(),
-                    createVisual: function() {
-                        textbox._boxReflow = true;
-                        textbox.reflow(targetBox);
-                        textbox._boxReflow = false;
-                        return textbox.getDefaultVisual();
-                    }
-                });
+            if (visual && !this._boxReflow) {
+                this.visual = visual(this.visualContext(targetBox));
+
                 var visualBox = targetBox;
-                if (textbox.visual) {
-                    visualBox = rectToBox(textbox.visual.clippedBBox() || new geom.Rect());
+                if (this.visual) {
+                    visualBox = rectToBox(this.visual.clippedBBox() || new geom.Rect());
                 }
-                textbox.box = textbox.contentBox = textbox.paddingBox = visualBox;
+                this.box = this.contentBox = this.paddingBox = visualBox;
             } else {
-                BoxElement.fn.reflow.call(textbox, targetBox);
+                BoxElement.fn.reflow.call(this, targetBox);
 
                 if (rotation) {
                     var margin = getSpacing(options.margin);
-                    var box = textbox.box.unpad(margin);
-                    textbox.normalBox = box.clone();
+                    var box = this.box.unpad(margin);
+                    this.normalBox = box.clone();
                     box.rotate(rotation);
-                    textbox.align(targetBox, X, align);
-                    textbox.align(targetBox, Y, options.vAlign);
+                    this.align(targetBox, X, align);
+                    this.align(targetBox, Y, options.vAlign);
                     box.translate(margin.left - margin.right, margin.top - margin.bottom);
-                    textbox.rotatedBox = box.clone();
+                    this.rotatedBox = box.clone();
                     box.pad(margin);
                 }
             }
@@ -1416,6 +1406,22 @@ var __meta__ = {
                 margin: options.margin,
                 padding: options.padding,
                 visible: options.visible
+            };
+        },
+
+        visualContext: function(targetBox) {
+            var textbox = this;
+
+            return {
+                text: textbox.content,
+                rect: targetBox.toRect(),
+                options: textbox.visualOptions(),
+                createVisual: function() {
+                    textbox._boxReflow = true;
+                    textbox.reflow(targetBox);
+                    textbox._boxReflow = false;
+                    return textbox.getDefaultVisual();
+                }
             };
         },
 
@@ -1500,6 +1506,16 @@ var __meta__ = {
             label.dataItem = dataItem;
 
             TextBox.fn.init.call(label, text, options);
+        },
+
+        visualContext: function(targetBox) {
+            var context = TextBox.fn.visualContext.call(this, targetBox);
+            context.value = this.value;
+            context.dataItem = this.dataItem;
+            context.format = this.options.format;
+            context.culture = this.options.culture;
+
+            return context;
         },
 
         click: function(widget, e) {

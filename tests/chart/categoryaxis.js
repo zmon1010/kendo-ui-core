@@ -1579,6 +1579,16 @@
             equal(plotArea.categoryAxis.labels.length, 3);
         });
 
+        test("template has access to value", function() {
+            createBoundChart({
+                categoryAxis: {
+                    labels: {
+                        template: "#= ok(typeof value == 'string') #"
+                    }
+                }
+            });
+        });
+
         test("template has access to data item", function() {
             createBoundChart({
                 categoryAxis: {
@@ -1638,6 +1648,56 @@
 
             equal(plotArea.namedCategoryAxes["Axis A"].labels.length, 3);
             equal(plotArea.namedCategoryAxes["Axis B"].labels.length, 3);
+        });
+
+        test("visual has access to value", function() {
+            createBoundChart({
+                categoryAxis: {
+                    labels: {
+                        visual: function(e) {
+                            ok(typeof e.value == 'string');
+                        }
+                    }
+                }
+            });
+        });
+
+        test("visual has access to data item", function() {
+            createBoundChart({
+                categoryAxis: {
+                    labels: {
+                        visual: function(e) {
+                            ok(typeof e.dataItem.value == 'number');
+                        }
+                    }
+                }
+            });
+        });
+
+        test("template has access to default format", function() {
+            createBoundChart({
+                categoryAxis: {
+                    labels: {
+                        format: 'foo',
+                        visual: function(e) {
+                            equal(e.format, 'foo');
+                        }
+                    }
+                }
+            });
+        });
+
+        test("template has access to default culture", function() {
+            createBoundChart({
+                categoryAxis: {
+                    labels: {
+                        culture: 'foo',
+                        visual: function(e) {
+                            equal(e.culture, 'foo');
+                        }
+                    }
+                }
+            });
         });
 
     })();
