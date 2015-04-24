@@ -1747,6 +1747,23 @@
 
             equal(categoryAxis.notes[0].text, "Foo");
         });
+
+        test("positions line on pixel", function() {
+            createCategoryAxis({
+                notes: {
+                    data: [{
+                        value: 1,
+                        icon: {
+                            visible: false
+                        }
+                    }]
+                }
+            });
+
+            var note = categoryAxis.notes[0];
+            note.createVisual();
+            equal(note.visual.bbox().origin.x % 1, 0.5);
+        });
     })();
 
     (function() {

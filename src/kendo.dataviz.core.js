@@ -2449,6 +2449,7 @@ var __meta__ = {
                     }
                 });
 
+                alignPathToPixel(path);
                 this.visual.append(path);
             }
         },
