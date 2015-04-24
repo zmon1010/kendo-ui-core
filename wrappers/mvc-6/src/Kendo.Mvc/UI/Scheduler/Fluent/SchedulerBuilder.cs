@@ -206,6 +206,60 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Mobile = MobileMode.Auto;
             return this;
         }
+
+        /// <summary>
+        /// Sets the editing configuration of the scheduler.
+        /// </summary>
+        /// <param name="configurator">The lambda which configures the editing</param>
+        /// <example>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+        ///     .Name(&quot;scheduler&quot;)
+        ///     .Date(new DateTime(2013, 6, 13))
+        ///     .Editable(editable =&gt;
+        ///     {
+        ///         editable.Confirmation(false);
+        ///         editable.TemplateId(&quot;customEditTemplate&quot;);
+        ///     })
+        ///     .DataSource(d =&gt; d
+        ///         .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        ///             .Read(&quot;Read&quot;, &quot;Scheduler&quot;)
+        ///             .Create(&quot;Create&quot;, &quot;Scheduler&quot;)
+        ///             .Destroy(&quot;Destroy&quot;, &quot;Scheduler&quot;)
+        ///             .Update(&quot;Update&quot;, &quot;Scheduler&quot;)
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public SchedulerBuilder<T> Editable(Action<SchedulerEditableSettingsBuilder<T>> configurator)
+        {
+            configurator(new SchedulerEditableSettingsBuilder<T>(Component.Editable));
+
+            return this;
+        }
+
+        /// <summary>
+        /// If set to false the user would not be able to create new scheduler events and modify or delete existing ones.
+        /// </summary>
+        /// <param name="isEditable">The isEditable</param>
+        /// <example>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+        ///     .Name(&quot;scheduler&quot;)
+        ///     .Date(new DateTime(2013, 6, 13))
+        ///     .Editable(false)
+        ///     .DataSource(d =&gt; d
+        ///         .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        ///             .Read(&quot;Read&quot;, &quot;Scheduler&quot;)
+        ///     )
+        /// )
+        /// </code>
+        /// </example>
+        public SchedulerBuilder<T> Editable(bool isEditable)
+        {
+            Component.Editable.Enabled = isEditable;
+            return this;
+        }
     }
 }
 

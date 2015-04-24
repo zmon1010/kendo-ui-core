@@ -17,6 +17,17 @@ namespace Kendo.Mvc.UI
         {
             ToolbarCommands = new List<SchedulerToolbarCommand>();
 
+
+            Editable = new SchedulerEditableSettings<T>()
+            {
+                PopUp = new Window(viewContext)
+                {
+                    Modal = true,
+                    Draggable = true,
+                    Title = Kendo.Mvc.Resources.Messages.Scheduler_Editor_EditorTitle
+                }
+            };
+
             DataSource = new DataSource(ModelMetadataProvider);
 
             DataSource.Type = DataSourceType.Ajax;
@@ -33,6 +44,12 @@ namespace Kendo.Mvc.UI
 
         [Activate]
         public IUrlGenerator UrlGenerator
+        {
+            get;
+            set;
+        }
+
+        public SchedulerEditableSettings<T> Editable
         {
             get;
             set;
@@ -72,6 +89,21 @@ namespace Kendo.Mvc.UI
             if (IsInClientTemplate)
             {
                 idPrefix = "\\" + idPrefix;
+            }
+
+            if (Editable.Enabled == false)
+            {
+                settings["editable"] = false;
+            }
+            else
+            {
+                Editable.InitializeEditor(ViewContext, ModelMetadataProvider);
+
+                IDictionary<string, object> editable = Editable.ToJson();
+                if (editable.Count > 0)
+                {
+                    settings["editable"] = editable;
+                }
             }
 
             if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
