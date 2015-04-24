@@ -3907,47 +3907,66 @@ var __meta__ = {
             return selectable.value();
         },
 
-        current: function(element) {
-            var that = this,
-                scrollable = that.options.scrollable,
-                current = that._current,
-                table = that.table.add(that.thead.parent());
+        _updateCurrentAttr: function(current, next) {
+            $(current)
+                .removeClass(FOCUSED)
+                .removeAttr("id")
+                .closest("table")
+                .removeAttr("aria-activedescendant");
 
-            if (element !== undefined && element.length) {
-                if (!current || current[0] !== element[0]) {
-                    if (current) {
-                        current.removeClass(FOCUSED).removeAttr("id");
-                        table.removeAttr("aria-activedescendant");
-                    }
+            next
+                .attr("id", this._cellId)
+                .addClass(FOCUSED)
+                .closest("table")
+                .attr("aria-activedescendant", this._cellId);
 
-                    element.attr("id", that._cellId);
-                    that._current = element.addClass(FOCUSED);
+            this._current = next;
+        },
 
-                    table.attr("aria-activedescendant", that._cellId);
+        _scrollCurrent: function() {
+            var scrollable = this.options.scrollable;
+            var current = this._current;
 
-                    if(element.length && scrollable) {
-                        var content = element.closest("table").parent();
-                        if (content.is(".k-grid-content")) {
-                            that._scrollTo(element.parent()[0], that.content[0]);
-                        } else if (content.is(".k-grid-content-locked")) {
-                            that._scrollTo(that._relatedRow(element.parent())[0], that.content[0]);
-                            if (!scrollable.virtual) {
-                                that.lockedContent[0].scrollTop = that.content[0].scrollTop;
-                            }
-                        }
+            if (!current || !scrollable) {
+                return;
+            }
 
-                        if (!content.is(".k-grid-content-locked,.k-grid-header-locked")) {
-                            if (scrollable.virtual) {
-                                that._scrollTo(element[0], that.content.find(">.k-virtual-scrollable-wrap")[0]);
-                            } else {
-                                that._scrollTo(element[0], that.content[0]);
-                            }
-                        }
-                    }
+            var row = current.parent();
+            var table = row.closest("table");
+            var tableContainer = table.parent();
+            var content = this.content[0];
+
+            if (tableContainer.hasClass("k-grid-content")) {
+                this._scrollTo(row[0], tableContainer[0]);
+            } else if (tableContainer.hasClass("k-grid-content-locked")) {
+                this._scrollTo(this._relatedRow(row)[0], content);
+                if (!scrollable.virtual) {
+                    this.lockedContent[0].scrollTop = content.scrollTop;
                 }
             }
 
-            return that._current;
+            if (!tableContainer.is(".k-grid-content-locked,.k-grid-header-locked")) {
+                if (scrollable.virtual) {
+                    this._scrollTo(current[0], $(content).find(">.k-virtual-scrollable-wrap")[0]);
+                } else {
+                    this._scrollTo(current[0], content);
+                }
+            }
+        },
+
+        current: function(next) {
+            var current = this._current;
+            next = $(next);
+
+            if (next.length) {
+                if (!current || current[0] !== next[0]) {
+                    this._updateCurrentAttr(current, next);
+
+                    this._scrollCurrent();
+                }
+            }
+
+            return this._current;
         },
 
         _removeCurrent: function() {
