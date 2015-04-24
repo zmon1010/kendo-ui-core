@@ -2323,6 +2323,11 @@
                 this.mainLayer.append(connection.visual);
                 this.connections.push(connection);
 
+                this.trigger(CHANGE, {
+                    added: [connection],
+                    removed: []
+                });
+
                 return connection;
             },
 

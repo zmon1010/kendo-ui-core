@@ -1576,6 +1576,7 @@
     });
 
     (function() {
+        var Connection = dataviz.diagram.Connection;
         var source, target, shape1, shape2, connection;
 
         // ------------------------------------------------------------
@@ -1724,6 +1725,46 @@
             equal(connection._resolvedSourceConnector.options.name, "Right");
             equal(connection.sourceConnector.options.name, "Auto");
         });
+
+
+        // ------------------------------------------------------------
+        module("Diagram / connection events", {
+            setup: setup,
+            teardown: teardown
+        });
+
+        test("addConnection triggers change", 2, function() {
+            var connection = new Connection(new Point(), new Point(100, 100));
+            diagram.bind("change", function(args) {
+                equal(args.added.length, 1);
+                ok(args.added[0] === connection);
+            });
+
+            diagram.addConnection(connection);
+        });
+
+        test("connect triggers change", 2, function() {
+            shape1 = diagram.addShape({ x: 100, y: 100 });
+            shape2 = diagram.addShape({ x: 160, y: 160 });
+            diagram.bind("change", function(args) {
+                equal(args.added.length, 1);
+                ok(args.added[0] instanceof Connection);
+            });
+
+            diagram.connect(shape1, shape2);
+        });
+
+        test("removing connection triggers change", 2, function() {
+            var connection = new Connection(new Point(), new Point(100, 100));
+            diagram.addConnection(connection);
+            diagram.bind("change", function(args) {
+                equal(args.removed.length, 1);
+                ok(args.removed[0] instanceof Connection);
+            });
+
+            diagram.remove(connection);
+        });
+
     })();
 
     (function() {
