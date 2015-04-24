@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The dash type of the border.The following dash types are supported:
         /// </summary>
         /// <param name="value">The value for DashType</param>
-        public ChartYAxisLabelsBorderSettingsBuilder DashType(string value)
+        public ChartYAxisLabelsBorderSettingsBuilder DashType(ChartDashType value)
         {
             Container.DashType = value;
             return this;

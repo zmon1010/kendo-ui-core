@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The dash type of the major grid lines.The following dash types are supported:
         /// </summary>
         /// <param name="value">The value for DashType</param>
-        public ChartCategoryAxisMajorGridLinesSettingsBuilder DashType(string value)
+        public ChartCategoryAxisMajorGridLinesSettingsBuilder DashType(ChartDashType value)
         {
             Container.DashType = value;
             return this;

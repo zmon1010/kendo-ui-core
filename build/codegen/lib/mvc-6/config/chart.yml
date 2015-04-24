@@ -117,6 +117,10 @@
             :member: VML
             :description: Attempts to render the widget as VML elements.
 
+    - :name: !ruby/regexp '/.*dashType$/i'
+      :merge: true
+      :enum_type: ChartDashType
+
     - :name: series.target.line.width
       :merge: true
       :type: double

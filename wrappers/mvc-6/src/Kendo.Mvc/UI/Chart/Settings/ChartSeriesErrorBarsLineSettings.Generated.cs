@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     {
         public double? Width { get; set; }
 
-        public string DashType { get; set; }
+        public ChartDashType? DashType { get; set; }
 
 
         public Chart Chart { get; set; }
@@ -27,9 +27,9 @@ namespace Kendo.Mvc.UI
                 settings["width"] = Width;
             }
 
-            if (DashType?.HasValue() == true)
+            if (DashType.HasValue)
             {
-                settings["dashType"] = DashType;
+                settings["dashType"] = DashType?.Serialize();
             }
 
             return settings;

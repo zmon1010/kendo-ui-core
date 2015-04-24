@@ -13,7 +13,7 @@ namespace Kendo.Mvc.UI
     {
         public string Color { get; set; }
 
-        public string DashType { get; set; }
+        public ChartDashType? DashType { get; set; }
 
         public string Type { get; set; }
 
@@ -37,9 +37,9 @@ namespace Kendo.Mvc.UI
                 settings["color"] = Color;
             }
 
-            if (DashType?.HasValue() == true)
+            if (DashType.HasValue)
             {
-                settings["dashType"] = DashType;
+                settings["dashType"] = DashType?.Serialize();
             }
 
             if (Type?.HasValue() == true)

@@ -24,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The dash type of the line.The following dash types are supported:
         /// </summary>
         /// <param name="value">The value for DashType</param>
-        public ChartValueAxisLineSettingsBuilder DashType(string value)
+        public ChartValueAxisLineSettingsBuilder DashType(ChartDashType value)
         {
             Container.DashType = value;
             return this;

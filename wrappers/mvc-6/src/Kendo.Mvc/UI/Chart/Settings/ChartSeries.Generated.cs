@@ -29,7 +29,7 @@ namespace Kendo.Mvc.UI
 
         public string CurrentField { get; set; }
 
-        public string DashType { get; set; }
+        public ChartDashType? DashType { get; set; }
 
         public string DownColor { get; set; }
 
@@ -221,9 +221,9 @@ namespace Kendo.Mvc.UI
                 settings["currentField"] = CurrentField;
             }
 
-            if (DashType?.HasValue() == true)
+            if (DashType.HasValue)
             {
-                settings["dashType"] = DashType;
+                settings["dashType"] = DashType?.Serialize();
             }
 
             if (DownColor?.HasValue() == true)
