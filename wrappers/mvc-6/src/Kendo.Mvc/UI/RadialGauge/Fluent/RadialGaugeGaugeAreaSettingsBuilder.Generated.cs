@@ -35,6 +35,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The margin of the gauge area.
+        /// </summary>
+        /// <param name="configurator">The configurator for the margin setting.</param>
+        public RadialGaugeGaugeAreaSettingsBuilder Margin(Action<RadialGaugeGaugeAreaMarginSettingsBuilder> configurator)
+        {
+
+            Container.Margin.RadialGauge = Container.RadialGauge;
+            configurator(new RadialGaugeGaugeAreaMarginSettingsBuilder(Container.Margin));
+
+            return this;
+        }
+
+        /// <summary>
         /// The width of the gauge area.  By default the vertical gauge is 60px
 		/// and horizontal gauge is 200px.
         /// </summary>

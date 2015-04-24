@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -52,7 +53,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="margin">The gauge area margin.</param>         
         public RadialGaugeGaugeAreaSettingsBuilder Margin(int margin)
         {
-            Container.Margin = new ChartSpacing(margin);
+            Container.Margin.All(margin);
             return this;
         }
 

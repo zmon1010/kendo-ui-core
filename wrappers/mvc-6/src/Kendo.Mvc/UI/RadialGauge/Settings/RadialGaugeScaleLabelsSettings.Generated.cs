@@ -21,6 +21,10 @@ namespace Kendo.Mvc.UI
 
         public string Format { get; set; }
 
+        public RadialGaugeScaleLabelsMarginSettings Margin { get; } = new RadialGaugeScaleLabelsMarginSettings();
+
+        public RadialGaugeScaleLabelsPaddingSettings Padding { get; } = new RadialGaugeScaleLabelsPaddingSettings();
+
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
@@ -60,6 +64,18 @@ namespace Kendo.Mvc.UI
             if (Format?.HasValue() == true)
             {
                 settings["format"] = Format;
+            }
+
+            var margin = Margin.Serialize();
+            if (margin.Any())
+            {
+                settings["margin"] = margin;
+            }
+
+            var padding = Padding.Serialize();
+            if (padding.Any())
+            {
+                settings["padding"] = padding;
             }
 
             if (TemplateId.HasValue())

@@ -11,36 +11,6 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class RadialGaugeScaleLabelsSettings 
     {
-        public RadialGaugeScaleLabelsSettings()
-        {
-            Margin = new ChartSpacing();
-            Padding = new ChartSpacing();
-        }
-
-        /// <summary>
-        /// Gets or sets the label margin.
-        /// </summary>
-        /// <value>
-        /// The label margin.
-        /// </value>
-        public ChartSpacing Margin
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the label padding.
-        /// </summary>
-        /// <value>
-        /// The label padding.
-        /// </value>
-        public ChartSpacing Padding
-        {
-            get;
-            set;
-        }
-
         /// <summary>
         /// Gets or sets the label opacity.
         /// </summary>
@@ -56,18 +26,6 @@ namespace Kendo.Mvc.UI
         public Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
-
-            var margin = Margin.Serialize();
-            if (margin.Any())
-            {
-                settings["margin"] = margin;
-            }
-
-            var padding = Padding.Serialize();
-            if (padding.Any())
-            {
-                settings["padding"] = padding;
-            }
 
             if (Opacity.HasValue)
             {

@@ -15,6 +15,8 @@ namespace Kendo.Mvc.UI
 
         public double? Height { get; set; }
 
+        public RadialGaugeGaugeAreaMarginSettings Margin { get; } = new RadialGaugeGaugeAreaMarginSettings();
+
         public double? Width { get; set; }
 
         public string Background { get; set; }
@@ -35,6 +37,12 @@ namespace Kendo.Mvc.UI
             if (Height.HasValue)
             {
                 settings["height"] = Height;
+            }
+
+            var margin = Margin.Serialize();
+            if (margin.Any())
+            {
+                settings["margin"] = margin;
             }
 
             if (Width.HasValue)

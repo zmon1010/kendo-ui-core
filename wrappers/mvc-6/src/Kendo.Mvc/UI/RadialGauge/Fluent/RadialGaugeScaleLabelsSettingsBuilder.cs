@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -42,7 +43,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="margin">The labels margin.</param>       
         public RadialGaugeScaleLabelsSettingsBuilder Margin(int margin)
         {
-            Container.Margin = new ChartSpacing(margin);
+            Container.Margin.All(margin);
             return this;
         }
 
@@ -68,7 +69,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="padding">The labels padding.</param>       
         public RadialGaugeScaleLabelsSettingsBuilder Padding(int padding)
         {
-            Container.Padding = new ChartSpacing(padding);
+            Container.Padding.All(padding);
             return this;
         }
 

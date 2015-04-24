@@ -7,9 +7,9 @@ using System.Linq;
 namespace Kendo.Mvc.UI
 {
     /// <summary>
-    /// Kendo UI RadialGaugeGaugeAreaSettings class
+    /// Kendo UI RadialGaugeScaleLabelsMarginSettings class
     /// </summary>
-    public partial class RadialGaugeGaugeAreaSettings
+    public partial class RadialGaugeScaleLabelsMarginSettings : ISpacing
     {
         public Dictionary<string, object> Serialize()
         {

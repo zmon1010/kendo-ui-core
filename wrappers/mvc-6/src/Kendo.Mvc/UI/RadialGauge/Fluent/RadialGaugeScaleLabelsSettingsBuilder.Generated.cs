@@ -66,6 +66,32 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The margin of the labels.
+        /// </summary>
+        /// <param name="configurator">The configurator for the margin setting.</param>
+        public RadialGaugeScaleLabelsSettingsBuilder Margin(Action<RadialGaugeScaleLabelsMarginSettingsBuilder> configurator)
+        {
+
+            Container.Margin.RadialGauge = Container.RadialGauge;
+            configurator(new RadialGaugeScaleLabelsMarginSettingsBuilder(Container.Margin));
+
+            return this;
+        }
+
+        /// <summary>
+        /// The padding of the labels.
+        /// </summary>
+        /// <param name="configurator">The configurator for the padding setting.</param>
+        public RadialGaugeScaleLabelsSettingsBuilder Padding(Action<RadialGaugeScaleLabelsPaddingSettingsBuilder> configurator)
+        {
+
+            Container.Padding.RadialGauge = Container.RadialGauge;
+            configurator(new RadialGaugeScaleLabelsPaddingSettingsBuilder(Container.Padding));
+
+            return this;
+        }
+
+        /// <summary>
         /// The label template.
 		/// Template variables:
         /// </summary>
