@@ -15,29 +15,26 @@
     NilNode.right = NilNode;
 
     function skew(root) {
-        if (root.level !== 0) {
-            if (root.left.level === root.level) {
-                var temp = root;
-                root = root.left;
-                temp.left = root.right;
-                root.right = temp;
-            }
-
-            root.right = skew(root.right);
+        if (root.left.level === root.level) {
+            var temp = root;
+            root = root.left;
+            temp.left = root.right;
+            root.right = temp;
         }
 
         return root;
     }
 
     function split(root) {
-        if (root.right.right.level === root.level && root.level !== 0) {
+        if (root.right.right.level === root.level) {
             var temp = root;
             root = root.right;
             temp.right = root.left;
             root.left = temp;
             root.level += 1;
-            root.right = split(root.right);
+            // root.right = split(root.right);
         }
+
         return root;
     }
 
@@ -53,28 +50,30 @@
     }
 
     function remove(root, value) {
-        if (root !== NilNode) {
-            var diff = root.value - value;
-            if (diff === 0) {
-                if (root.left !== NilNode && root.right !== NilNode) {
-                    var heir = root.left;
+        if (root === NilNode) {
+            return root;
+        }
 
-                    while (heir.right !== NilNode) {
-                        heir = heir.right;
-                    }
+        var diff = root.value - value;
+        if (diff === 0) {
+            if (root.left !== NilNode && root.right !== NilNode) {
+                var heir = root.left;
 
-                    root.value = heir.value;
-                    root.left = remove(root.left, root.value);
-                } else if (root.left === NilNode) {
-                    root = root.right;
-                } else {
-                    root = root.left;
+                while (heir.right !== NilNode) {
+                    heir = heir.right;
                 }
-            } else if (diff > 0) {
-                root.left = remove(root.left, value);
+
+                root.value = heir.value;
+                root.left = remove(root.left, root.value);
+            } else if (root.left === NilNode) {
+                root = root.right;
             } else {
-                root.right = remove(root.right, value);
+                root = root.left;
             }
+        } else if (diff > 0) {
+            root.left = remove(root.left, value);
+        } else {
+            root.right = remove(root.right, value);
         }
 
         if (root.left.level  < (root.level - 1) || root.right.level < (root.level - 1)) {
@@ -82,7 +81,12 @@
             if (root.right.level > root.level) {
                 root.right.level = root.level;
             }
-            root = split(skew(root));
+
+            root = skew(root);
+            root.right = skew(root.right);
+            root.right.right = skew(root.right.right);
+            root = split(root);
+            root.right = split(root.right);
         }
 
         return root;
