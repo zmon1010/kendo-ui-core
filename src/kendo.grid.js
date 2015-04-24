@@ -5747,7 +5747,7 @@ var __meta__ = {
 
                 var count = removeEmptyRows(this.thead);
                 if (rows.length < count) {
-                    removeRowSpanValue(table, count);
+                    removeRowSpanValue(table, count - rows.length);
                 }
 
                 trFilter = table.find(".k-filter-row");

@@ -1447,6 +1447,23 @@
         equal(grid.thead.find("tr:last th")[0].rowSpan, 1);
     });
 
+    test("rowspan is recalculated - multiple header and single header columns are locked", function() {
+        var grid = setup({
+            columns: [
+                { title: "master1", locked: true, columns: [{ title: "master1-child" }] },
+                { title: "master2", locked: true },
+                { title: "master3", columns: [{ title: "master1-child", columns: [ { title: "master3-child-child" }] }] }
+            ]
+        });
+
+        var rows = grid.lockedHeader.find("tr");
+
+        equal(rows.eq(0).find("th")[0].rowSpan, 1);
+        equal(rows.eq(0).find("th")[1].rowSpan, 2);
+        equal(rows.eq(1).find("th")[0].rowSpan, 1);
+    });
+
+
     test("footer col elements are move to the locked container with multiple headers", function() {
         var grid = setup({
             autoBind: false,
