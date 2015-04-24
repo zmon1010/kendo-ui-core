@@ -57,7 +57,7 @@
 @font-face {
   font-family: 'widgets';
   src: url('fonts/widgets-v2.eot');
-  src: url('fonts/widgets-v2.eot') format('embedded-opentype'),
+  src: url('fonts/widgets-v2.eot?#iefix') format('embedded-opentype'),
        url('fonts/widgets-v2.woff') format('woff'),
        url('fonts/widgets-v2.ttf') format('truetype'),
        url('fonts/widgets-v2.svg') format('svg');

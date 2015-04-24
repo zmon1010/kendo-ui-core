@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'KendoMobileDemos';
   src: url('demos.eot');
-  src: url('demos.eot') format('embedded-opentype'), url('demos.woff') format('woff'), url('demos.ttf') format('truetype'), url('demos.svg') format('svg');
+  src: url('demos.eot?#iefix') format('embedded-opentype'), url('demos.woff') format('woff'), url('demos.ttf') format('truetype'), url('demos.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
