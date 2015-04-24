@@ -11,11 +11,23 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class RadialGaugeScaleMinorTicksSettings 
     {
+        /// <summary>
+        /// Gets or sets the ticks dash type.
+        /// </summary>
+        public ChartDashType? DashType
+        {
+            get;
+            set;
+        }
+
         public Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
 
-            // Do manual serialization here
+            if (DashType.HasValue)
+            {
+                settings["dashType"] = DashType.ToString().ToLowerInvariant();
+            }
 
             return settings;
         }

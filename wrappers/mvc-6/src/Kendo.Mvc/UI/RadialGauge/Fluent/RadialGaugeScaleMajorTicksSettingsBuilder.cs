@@ -6,7 +6,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// <summary>
     /// Defines the fluent API for configuring RadialGaugeScaleMajorTicksSettings
     /// </summary>
-    public partial class RadialGaugeScaleMajorTicksSettingsBuilder
+    public partial class RadialGaugeScaleMajorTicksSettingsBuilder : IHideObjectMembers
         
     {
         public RadialGaugeScaleMajorTicksSettingsBuilder(RadialGaugeScaleMajorTicksSettings container)
@@ -20,6 +20,14 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// Sets the ticks dashType
+        /// </summary>
+        /// <param name="dashType">The ticks dashType.</param>      
+        public RadialGaugeScaleMajorTicksSettingsBuilder DashType(ChartDashType dashType)
+        {
+            Container.DashType = dashType;
+            return this;
+        }
     }
 }

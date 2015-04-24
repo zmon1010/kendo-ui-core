@@ -46,7 +46,11 @@
 - progressbar.value
 - radialgauge.gaugearea.border
 - radialgauge.gaugearea.margin
+- radialgauge.pointer
 - radialgauge.renderas
+- radialgauge.scale.labels.margin
+- radialgauge.scale.labels.padding
+- radialgauge.scale.labels.border
 - scheduler.datasource
 - scheduler.editable
 - scheduler.group

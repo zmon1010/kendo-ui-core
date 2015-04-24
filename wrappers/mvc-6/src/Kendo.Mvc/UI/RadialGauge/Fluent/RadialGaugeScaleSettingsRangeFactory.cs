@@ -20,6 +20,20 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// Defines a item.
+        /// </summary>
+        public virtual RadialGaugeScaleSettingsRangeBuilder Add(double from, double to, string color)
+        {
+            var item = new RadialGaugeScaleSettingsRange();
+            item.RadialGauge = RadialGauge;
+            item.From = from;
+            item.To = to;
+            item.Color = color;
+
+            Container.Add(item);
+
+            return new RadialGaugeScaleSettingsRangeBuilder(item);
+        }
     }
 }

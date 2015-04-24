@@ -67,14 +67,36 @@ namespace Kendo.Mvc.UI.Fluent
         /// )
         /// </code>
         /// </example>
-        //public RadialGaugeBuilder Pointers(Action<GaugeRadialPointerFactory> configurator)
-        //{
-        //    GaugeRadialPointerFactory factory = new GaugeRadialPointerFactory(Component);
+        public RadialGaugeBuilder Pointers(Action<RadialGaugePointerFactory> configurator)
+        {
+            RadialGaugePointerFactory factory = new RadialGaugePointerFactory(Container.Pointers);
 
-        //    configurator(factory);
+            configurator(factory);
 
-        //    return this;
-        //}
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the pointer
+        /// </summary>
+        /// <param name="configurator">The configurator</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;%= Html.Kendo().RadialGauge()
+        ///            .Name("radialGauge")
+        ///            .Pointer(pointer => pointer
+        ///                .Value(10)
+        ///            )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public RadialGaugeBuilder Pointer(Action<RadialGaugePointerBuilder> configurator)
+        {
+
+            configurator(new RadialGaugePointerBuilder(Container.Pointer));
+
+            return this;
+        }
     }
 }
 

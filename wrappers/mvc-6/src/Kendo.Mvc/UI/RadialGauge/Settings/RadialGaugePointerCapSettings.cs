@@ -11,11 +11,25 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class RadialGaugePointerCapSettings 
     {
+        public string Color { get; set; }
+
+        public double? Size { get; set; }
+
+        public RadialGauge RadialGauge { get; set; }
+
         public Dictionary<string, object> Serialize()
         {
-            var settings = SerializeSettings();
+            var settings = new Dictionary<string, object>();
 
-            // Do manual serialization here
+            if (Color?.HasValue() == true)
+            {
+                settings["color"] = Color;
+            }
+
+            if (Size.HasValue)
+            {
+                settings["size"] = Size;
+            }
 
             return settings;
         }

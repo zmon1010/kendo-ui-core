@@ -22,19 +22,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The border of the labels.
-        /// </summary>
-        /// <param name="configurator">The configurator for the border setting.</param>
-        public RadialGaugeScaleLabelsSettingsBuilder Border(Action<RadialGaugeScaleLabelsBorderSettingsBuilder> configurator)
-        {
-
-            Container.Border.RadialGauge = Container.RadialGauge;
-            configurator(new RadialGaugeScaleLabelsBorderSettingsBuilder(Container.Border));
-
-            return this;
-        }
-
-        /// <summary>
         /// The text color of the labels.
 		/// Any valid CSS color string will work here, including hex and rgb.
         /// </summary>
@@ -62,36 +49,6 @@ namespace Kendo.Mvc.UI.Fluent
         public RadialGaugeScaleLabelsSettingsBuilder Format(string value)
         {
             Container.Format = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The margin of the labels.
-        /// </summary>
-        /// <param name="value">The value for Margin</param>
-        public RadialGaugeScaleLabelsSettingsBuilder Margin(double value)
-        {
-            Container.Margin = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The padding of the labels.
-        /// </summary>
-        /// <param name="value">The value for Padding</param>
-        public RadialGaugeScaleLabelsSettingsBuilder Padding(double value)
-        {
-            Container.Padding = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The labels positions.
-        /// </summary>
-        /// <param name="value">The value for Position</param>
-        public RadialGaugeScaleLabelsSettingsBuilder Position(string value)
-        {
-            Container.Position = value;
             return this;
         }
 
@@ -124,6 +81,16 @@ namespace Kendo.Mvc.UI.Fluent
         public RadialGaugeScaleLabelsSettingsBuilder Visible(bool value)
         {
             Container.Visible = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the labels position
+        /// </summary>
+        /// <param name="value">The value for Position</param>
+        public RadialGaugeScaleLabelsSettingsBuilder Position(GaugeRadialScaleLabelsPosition value)
+        {
+            Container.Position = value;
             return this;
         }
 

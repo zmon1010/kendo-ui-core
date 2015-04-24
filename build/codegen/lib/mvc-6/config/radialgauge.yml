@@ -2,3 +2,16 @@
     - :name: gaugeArea.background
       :type: String
       :description: The background of the gauge area. Any valid CSS color string will work here, including hex and rgb.
+      
+    - :name: scale.labels.position
+      :type: String
+      :enum_type: GaugeRadialScaleLabelsPosition
+      :description: Sets the labels position
+      :values:
+          - :value: inside
+            :member: Inside
+            :description: The labels are positioned inside.
+
+          - :value: outside
+            :member: Outside
+            :description: The labels are positioned outside.

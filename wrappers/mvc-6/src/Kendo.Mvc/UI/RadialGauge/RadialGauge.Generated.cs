@@ -13,8 +13,6 @@ namespace Kendo.Mvc.UI
     {
         public RadialGaugeGaugeAreaSettings GaugeArea { get; } = new RadialGaugeGaugeAreaSettings();
 
-        public List<RadialGaugePointer> Pointer { get; set; } = new List<RadialGaugePointer>();
-
         public RadialGaugeScaleSettings Scale { get; } = new RadialGaugeScaleSettings();
 
         public bool? Transitions { get; set; }
@@ -30,21 +28,10 @@ namespace Kendo.Mvc.UI
                 settings["gaugeArea"] = gaugeArea;
             }
 
-            var pointer = Pointer.Select(i => i.Serialize());
-            if (pointer.Any())
-            {
-                settings["pointer"] = pointer;
-            }
-
             var scale = Scale.Serialize();
             if (scale.Any())
             {
                 settings["scale"] = scale;
-            }
-
-            if (Transitions.HasValue)
-            {
-                settings["transitions"] = Transitions;
             }
 
             return settings;

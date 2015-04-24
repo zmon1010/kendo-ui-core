@@ -13,25 +13,19 @@ namespace Kendo.Mvc.UI
     {
         public string Background { get; set; }
 
-        public RadialGaugeScaleLabelsBorderSettings Border { get; } = new RadialGaugeScaleLabelsBorderSettings();
-
         public string Color { get; set; }
 
         public string Font { get; set; }
 
         public string Format { get; set; }
 
-        public double? Margin { get; set; }
-
-        public double? Padding { get; set; }
-
-        public string Position { get; set; }
-
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
 
         public bool? Visible { get; set; }
+
+        public GaugeRadialScaleLabelsPosition? Position { get; set; }
 
 
         public RadialGauge RadialGauge { get; set; }
@@ -43,12 +37,6 @@ namespace Kendo.Mvc.UI
             if (Background?.HasValue() == true)
             {
                 settings["background"] = Background;
-            }
-
-            var border = Border.Serialize();
-            if (border.Any())
-            {
-                settings["border"] = border;
             }
 
             if (Color?.HasValue() == true)
@@ -64,21 +52,6 @@ namespace Kendo.Mvc.UI
             if (Format?.HasValue() == true)
             {
                 settings["format"] = Format;
-            }
-
-            if (Margin.HasValue)
-            {
-                settings["margin"] = Margin;
-            }
-
-            if (Padding.HasValue)
-            {
-                settings["padding"] = Padding;
-            }
-
-            if (Position?.HasValue() == true)
-            {
-                settings["position"] = Position;
             }
 
             if (TemplateId.HasValue())
@@ -97,6 +70,11 @@ namespace Kendo.Mvc.UI
             if (Visible.HasValue)
             {
                 settings["visible"] = Visible;
+            }
+
+            if (Position.HasValue)
+            {
+                settings["position"] = Position?.Serialize();
             }
 
             return settings;

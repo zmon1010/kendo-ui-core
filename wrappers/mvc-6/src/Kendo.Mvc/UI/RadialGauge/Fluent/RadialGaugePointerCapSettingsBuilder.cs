@@ -7,7 +7,6 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring RadialGaugePointerCapSettings
     /// </summary>
     public partial class RadialGaugePointerCapSettingsBuilder
-        
     {
         public RadialGaugePointerCapSettingsBuilder(RadialGaugePointerCapSettings container)
         {
@@ -20,6 +19,25 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// The color of the cap.
+		/// Any valid CSS color string will work here, including hex and rgb.
+        /// </summary>
+        /// <param name="value">The value for Color</param>
+        public RadialGaugePointerCapSettingsBuilder Color(string value)
+        {
+            Container.Color = value;
+            return this;
+        }
+
+        /// <summary>
+        /// The size of the cap in percents. (from 0 to 1)
+        /// </summary>
+        /// <param name="value">The value for Size</param>
+        public RadialGaugePointerCapSettingsBuilder Size(double value)
+        {
+            Container.Size = value;
+            return this;
+        }
     }
 }

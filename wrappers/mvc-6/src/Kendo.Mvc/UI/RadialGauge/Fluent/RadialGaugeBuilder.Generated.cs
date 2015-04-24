@@ -24,21 +24,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The pointer configuration options. It accepts an Array of pointers, each with it's own configuration options.
-        /// </summary>
-        /// <param name="configurator">The configurator for the pointer setting.</param>
-        public RadialGaugeBuilder Pointer(Action<RadialGaugePointerFactory> configurator)
-        {
-
-            configurator(new RadialGaugePointerFactory(Container.Pointer)
-            {
-                RadialGauge = Container
-            });
-
-            return this;
-        }
-
-        /// <summary>
         /// Configures the scale.
         /// </summary>
         /// <param name="configurator">The configurator for the scale setting.</param>

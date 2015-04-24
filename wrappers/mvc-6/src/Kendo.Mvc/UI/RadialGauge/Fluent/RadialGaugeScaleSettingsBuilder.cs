@@ -20,6 +20,27 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// Configures the major ticks.
+        /// </summary>
+        /// <param name="configurator">The configuration action.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;%= Html.Kendo().LinearGauge()
+        ///            .Name("linearGauge")
+        ///            .Scale(scale => scale
+        ///                .Line(line => line
+        ///                    .Visible(false)
+        ///                )
+        ///            )
+        /// %&gt;
+        /// </code>
+        /// </example>
+        //public TScaleBuilder Line(Action<GaugeLineBuilder> configurator)
+        //{
+        //    configurator(new GaugeLineBuilder(Scale.Line));
+
+        //    return this as TScaleBuilder;
+        //}
     }
 }

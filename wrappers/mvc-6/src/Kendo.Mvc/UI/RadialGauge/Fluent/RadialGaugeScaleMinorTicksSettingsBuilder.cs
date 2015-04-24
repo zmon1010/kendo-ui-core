@@ -20,6 +20,14 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// Sets the ticks dashType
+        /// </summary>
+        /// <param name="dashType">The ticks dashType.</param>       
+        public RadialGaugeScaleMinorTicksSettingsBuilder DashType(ChartDashType dashType)
+        {
+            Container.DashType = dashType;
+            return this;
+        }
     }
 }

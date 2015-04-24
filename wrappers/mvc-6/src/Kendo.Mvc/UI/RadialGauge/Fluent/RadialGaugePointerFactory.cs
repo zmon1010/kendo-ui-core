@@ -7,8 +7,9 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring List<RadialGaugePointer>
     /// </summary>
     public partial class RadialGaugePointerFactory
-        
     {
+        public RadialGauge RadialGauge { get; set; }
+
         public RadialGaugePointerFactory(List<RadialGaugePointer> container)
         {
             Container = container;
@@ -20,6 +21,16 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// Adds an item to the collection
+        /// </summary>
+        public virtual RadialGaugePointerBuilder Add()
+        {
+            var item = new RadialGaugePointer();
+            item.RadialGauge = RadialGauge;
+            Container.Add(item);
+
+            return new RadialGaugePointerBuilder(item);
+        }
     }
 }
