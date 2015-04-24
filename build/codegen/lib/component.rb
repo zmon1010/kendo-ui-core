@@ -63,25 +63,25 @@ module CodeGen
 
             return unless metadata[:options]
 
+            all_targets = all_options
             metadata[:options].each do |option|
-
+                name = option[:name]
                 if option[:merge]
-                    target = @options.find { |o| o.name == option[:name] }
-                    if target.nil?
-                        full_name = (@name + '.' + option[:name]).downcase
-                        target = all_options.find { |o| o.full_name.downcase == full_name }
+                    if !name.instance_of? Regexp
+                        name = /^#{Regexp.quote name}$/i
                     end
 
-                    raise "Unable to find target for merging: #{option[:name]}" if target.nil?
-                    option.each { |key, value| target.send("#{key}=", value) unless key == :merge || key == :name }
+                    targets = all_targets.find_all { |o| o.full_name.sub(/^#{@name}\./i, '') =~ name }
+                    raise "Unable to find target for merging: #{option[:name]}" if targets.empty?
+
+                    targets.each do |target|
+                        option.each { |key, value| target.send("#{key}=", value) unless key == :merge || key == :name }
+                    end
                 else
-                    @options.delete_if { |o| o.name == option[:name] }
-
+                    @options.delete_if { |o| o.name == name }
                     option[:remove_existing] = true
-
                     add_option(option)
                 end
-
             end
         end
 
