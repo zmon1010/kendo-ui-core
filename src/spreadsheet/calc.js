@@ -517,6 +517,7 @@
 
         function cps(node, k){
             switch (node.type) {
+              case "ref"     :
               case "num"     :
               case "str"     :
               case "bool"    : return cps_atom(node, k);
@@ -524,7 +525,6 @@
               case "postfix" : return cps_unary(node, k);
               case "binary"  : return cps_binary(node, k);
               case "call"    : return cps_call(node, k);
-              case "ref"     : return cps_ref(node, k);
             }
             throw new Error("Cannot CPS " + node.type);
         }
@@ -613,21 +613,6 @@
             });
         }
 
-        function cps_ref(node, k) {
-            if (node.ref == "cell" || node.ref == "range") {
-                // constant reference
-                return cps_atom(node, k);
-            }
-            return {
-                type: "call",
-                func: "-fetch",
-                args: [
-                    make_continuation(k),
-                    node
-                ]
-            };
-        }
-
         function cps_call(node, k) {
             switch (node.func.toLowerCase()) {
               case "if":
@@ -644,20 +629,53 @@
                 return k(FALSE);
             }
             // actual function
-            return (function loop(args, i){
-                if (i == node.args.length) {
-                    return {
-                        type : "call",
-                        func : node.func,
-                        args : args
-                    };
+            // return (function loop(args, i){
+            //     if (i == node.args.length) {
+            //         return {
+            //             type : "call",
+            //             func : node.func,
+            //             args : args
+            //         };
+            //     }
+            //     else {
+            //         return cps(node.args[i], function(value){
+            //             return loop(args.concat([ value ]), i + 1);
+            //         });
+            //     }
+            // })([ make_continuation(k) ], 0);
+
+            var should_resolve = false;
+            for (var i = 0; i < node.args.length; ++i) {
+                var x = node.args[i];
+                if (!/^(?:ref|num|str|bool)$/.test(x.type)) {
+                    should_resolve = true;
+                    break;
                 }
-                else {
-                    return cps(node.args[i], function(value){
-                        return loop(args.concat([ value ]), i + 1);
-                    });
+            }
+            if (!should_resolve) {
+                return k(node);
+            }
+
+            var names = [], vars = [];
+
+            return {
+                type: "resolve",
+                args: node.args.map(function(arg){
+                    var name = gensym("V");
+                    vars.push({ type: "var", name: name });
+                    names.push(name);
+                    return cps(arg, function(x){ return x; });
+                }),
+                then: {
+                    type: "lambda",
+                    vars: names,
+                    body: k({
+                        type: "call",
+                        func: node.func,
+                        args: vars
+                    })
                 }
-            })([ make_continuation(k) ], 0);
+            };
         }
 
         function make_continuation(k) {
@@ -684,7 +702,7 @@
                 return "\n    " + code;
             }).join(",") + " ]",
             "var formula = function(context) {",
-            "  var formula = context.formula, SS = context.ss, promise = context.promise, error = context.error",
+            "  var formula = context.formula, SS = context.ss",
             code,
             "}",
             "return Runtime.makeFormula({ refs: references, func: formula, sheet: "
@@ -693,6 +711,8 @@
                 + ", row: " + the_row + " })"
         ].join(";\n");
 
+        //XXX
+        exp.code = code;
         //console.log("/***********/\n" + code);
 
         return new Function("Runtime", code)(Runtime, $);
@@ -723,7 +743,9 @@
                 return "Runtime.binary(context, '" + node.op + "', " + compile(node.left) + ", " + compile(node.right) + ")";
             }
             else if (type == "return") {
-                return "promise.resolve(formula.value = SS.getData(" + compile(node.value) + "))";
+                return "Runtime.Promise.when([ "
+                    + compile(node.value)
+                    + " ], context.resolve)";
             }
             else if (type == "call") {
                 var args = node.args.slice();
@@ -737,7 +759,7 @@
                     }).join("")
                     + ")";
                 if (cont) {
-                    ret += ".then(" + compile(cont) + ").fail(error)";
+                    ret += ".then(" + compile(cont) + ")";
                 }
                 return ret;
             }
@@ -768,7 +790,12 @@
             else if (type == "lambda" || type == "cont") {
                 return "function("
                     + node.vars.join(", ")
-                    + "){ " + compile(node.body) + " }";
+                    + "){ return(" + compile(node.body) + ") }";
+            }
+            else if (type == "resolve") {
+                return "Runtime.Promise.when("
+                    + "[ " + node.args.map(compile).join(", ") + " ], "
+                    + compile(node.then) + ")";
             }
             else if (type == "var") {
                 return node.name;

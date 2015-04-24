@@ -29,6 +29,9 @@ Spreadsheet.prototype = {
         }
         if (Runtime.RangeRef.is(ref)) {
             ref = ref.intersect(this.getSheetBounds(ref.sheet));
+            if (!Runtime.RangeRef.is(ref)) {
+                return this._getRefCells(ref);
+            }
             var a = [];
             for (var row = ref.topLeft.row; row <= ref.bottomRight.row; ++row) {
                 for (var col = ref.topLeft.col; col <= ref.bottomRight.col; ++col) {
@@ -54,43 +57,19 @@ Spreadsheet.prototype = {
         return [];
     },
 
-    _resolveCells: function(promise, a, single) {
-        var self = this;
-        var formulas = a.filter(function(cell){ return cell.formula; });
-        formulas = formulas.map(function(cell){
-            return cell.formula.func(self);
-        });
-        $.when.apply($, formulas).then(function(){
-            promise.resolve(single ? a[0] : a);
-        });
-    },
-
-    fetch: function(ref) {
-        var promise = $.Deferred();
-        this._resolveCells(promise, this._getRefCells(ref), Runtime.CellRef.is(ref));
-        return promise;
-    },
-
-    fetchMany: function(a) {
-        var x = [];
-        for (var i = 0; i < a.length; ++i) {
-            x.push(this.fetch(a[i]));
-        }
-        var promise = $.Deferred();
-        $.when.apply($, x).then(function(){
-            promise.resolve.apply(promise, arguments);
-        }).fail(function(arg){
-            promise.reject.apply(promise, arguments);
-        });
-        return promise;
-    },
-
     getData: function(ref) {
+        var self = this;
         if (ref instanceof Spreadsheet.Cell) {
+            if (ref.formula) {
+                return ref.formula.func(self);
+            }
             return ref.value;
         }
         if (ref instanceof Runtime.Ref) {
-            var data = this._getRefCells(ref).map(function(cell){
+            var data = self._getRefCells(ref).map(function(cell){
+                if (cell.formula) {
+                    return cell.formula.func(self);
+                }
                 return cell.value;
             });
             return Runtime.CellRef.is(ref) ? data[0] : data;
@@ -437,6 +416,9 @@ function fillElements(data) {
 makeElements(".sheet");
 
 fillElements({
+    // sheet1: {
+    //     A1: '=CURRENCY("USD", "EUR") + CURRENCY("USD", "EUR")'
+    // }
     // sheet1: {
     //     A1: '=A2*A3',
     //     A2: 10,

@@ -200,11 +200,11 @@
 
     /* -----[ Errors ]----- */
 
-    var CalcError = defclass(null, function CalcError(type) {
-        this.type = type;
+    var CalcError = defclass(null, function CalcError(code) {
+        this.code = code;
     }, {
         toString: function() {
-            return "#" + this.type + "!";
+            return "#" + this.code + "!";
         }
     });
 
@@ -248,39 +248,20 @@
 
     // spreadsheet functions --------
 
-    function withResolvedCells(f) {
-        return function() {
-            var promise = $.Deferred();
-            resolveCells(this, arguments, function(){
-                var val = f.apply(this, arguments);
-                if (CalcError.is(val)) {
-                    promise.reject(val);
-                } else {
-                    promise.resolve(val);
-                }
-            });
-            return promise;
-        };
-    }
-
     function resolveCells(self, a, f) {
-        var args = slice(a).map(function(x){
+        var data = [];
+        slice(a).forEach(function(x){
             if (x instanceof Ref) {
-                x = self.ss.fetch(x);
+                x = self.ss.getData(x);
             }
-            return x;
+            data = data.concat(x);
         });
-        $.when.apply($, args).then(function(){
-            for (var i = 0, args = []; i < arguments.length; ++i) {
-                args[i] = self.ss.getData(arguments[i]);
-            }
-            f.apply(self, args);
-        });
+        return Promise.when(data, f, self);
     }
 
     function forNumbers(self, a, f) {
         for (var i = 0; i < a.length; ++i) {
-            var x = self.ss.getData(a[i]);
+            var x = a[i];
             if (Array.isArray(x)) {
                 forNumbers(self, x, f);
             } else if (typeof x == "number") {
@@ -290,78 +271,85 @@
     }
 
     function binaryNumeric(func) {
-        return function(left, right) {
-            var promise = $.Deferred();
-            left = this.ss.getData(left) || 0;
-            right = this.ss.getData(right) || 0;
-            if (typeof left == "number" && typeof right == "number") {
-                func(left, right, promise);
-            } else {
-                promise.reject(new CalcError("VALUE"));
-            }
-            return promise;
+        return function() {
+            return resolveCells(this, arguments, function(left, right){
+                if (left == null) {
+                    left = 0;
+                }
+                if (right == null) {
+                    right = 0;
+                }
+                if (typeof left == "number" && typeof right == "number") {
+                    return func.call(this, left, right);
+                } else {
+                    this.error(new CalcError("VALUE"));
+                }
+            });
         };
     }
 
     function binaryCompare(func) {
-        return function(left, right) {
-            var promise = $.Deferred();
-            left = this.ss.getData(left);
-            right = this.ss.getData(right);
-            if (typeof left == "string" && typeof right != "string") {
-                right = right == null ? "" : right + "";
-            }
-            if (typeof left != "string" && typeof right == "string") {
-                left = left == null ? "" : left + "";
-            }
-            if (typeof left == "number" && right == null) {
-                right = 0;
-            }
-            if (typeof right == "number" && left == null) {
-                left = 0;
-            }
-            if (typeof right == "number" && typeof left == "number") {
-                func(left, right, promise);
-            } else {
-                promise.reject(new CalcError("VALUE"));
-            }
-            return promise;
+        return function() {
+            return resolveCells(this, arguments, function(left, right){
+                if (typeof left == "string" && typeof right != "string") {
+                    right = right == null ? "" : right + "";
+                }
+                if (typeof left != "string" && typeof right == "string") {
+                    left = left == null ? "" : left + "";
+                }
+                if (typeof left == "number" && right == null) {
+                    right = 0;
+                }
+                if (typeof right == "number" && left == null) {
+                    left = 0;
+                }
+                if (typeof right == "number" && typeof left == "number") {
+                    return func.call(this, left, right);
+                } else {
+                    this.error(new CalcError("VALUE"));
+                }
+            });
         };
     }
 
     function unaryNumeric(func) {
-        return function(exp) {
-            var promise = $.Deferred();
-            exp = this.ss.getData(exp) || 0;
-            if (typeof exp == "number") {
-                func(exp, promise);
-            } else {
-                promise.reject(new CalcError("VALUE"));
-            }
-            return promise;
+        return function() {
+            return resolveCells(this, arguments, function(exp){
+                if (exp == null) {
+                    exp = 0;
+                }
+                if (typeof exp == "number") {
+                    return func.call(this, exp);
+                } else {
+                    this.error(new CalcError("VALUE"));
+                }
+            });
         };
     }
 
     var FUNCS = {
 
-        sum: withResolvedCells(function(){
-            var sum = 0;
-            forNumbers(this, arguments, function(num){
-                sum += num;
+        sum: function(){
+            return resolveCells(this, arguments, function(){
+                var sum = 0;
+                forNumbers(this, arguments, function(num){
+                    sum += num;
+                });
+                return sum;
             });
-            return sum;
-        }),
+        },
 
-        average: withResolvedCells(function(){
+        average: function(){
             var sum = 0, count = 0;
             forNumbers(this, arguments, function(num){
                 ++count;
                 sum += num;
             });
             return sum / count;
-        }),
+        },
 
-        indirect: withResolvedCells(function(thing){
+        // XXX: does more work than needed
+        indirect: function(thing){
             try {
                 if (typeof thing != "string") {
                     throw 1;
@@ -371,120 +359,100 @@
                     throw 1;
                 }
                 var f = calc.compile(x);
-                var ref = f.refs[0];
-                // return through ss.fetch to make sure the data is in.
-                return this.ss.fetch(ref);
+                return f.refs[0];
             } catch(ex) {
                 this.error(new CalcError("REF"));
             }
-        }),
-
-        rand: function() {
-            var promise = $.Deferred();
-            promise.resolve(Math.random());
-            return promise;
         },
 
-        "-fetch": function(ref) {
-            return this.ss.fetch(ref);
+        rand: function() {
+            return Math.random();
         },
 
         /* -----[ binary ops ]----- */
 
         // arithmetic
-        "binary+": binaryNumeric(function(left, right, promise){
-            promise.resolve(left + right);
+        "binary+": binaryNumeric(function(left, right){
+            return left + right;
         }),
-        "binary-": binaryNumeric(function(left, right, promise){
-            promise.resolve(left - right);
+        "binary-": binaryNumeric(function(left, right){
+            return left - right;
         }),
-        "binary*": binaryNumeric(function(left, right, promise){
-            promise.resolve(left * right);
+        "binary*": binaryNumeric(function(left, right){
+            return left * right;
         }),
-        "binary/": binaryNumeric(function(left, right, promise){
+        "binary/": binaryNumeric(function(left, right){
             if (right === 0) {
-                promise.reject(new CalcError("DIV/0"));
+                this.error(new CalcError("DIV/0"));
             } else {
-                promise.resolve(left / right);
+                return left / right;
             }
         }),
-        "binary^": binaryNumeric(function(left, right, promise){
-            promise.resolve(Math.pow(left, right));
+        "binary^": binaryNumeric(function(left, right){
+            return Math.pow(left, right);
         }),
 
         // text concat
-        "binary&": function(left, right) {
-            var promise = $.Deferred();
-            left = this.ss.getData(left);
-            right = this.ss.getData(right);
-            if (left == null) { left = ""; }
-            if (right == null) { right = ""; }
-            promise.resolve("" + left + right);
-            return promise;
+        "binary&": function() {
+            return resolveCells(this, arguments, function(left, right){
+                if (left == null) { left = ""; }
+                if (right == null) { right = ""; }
+                return "" + left + right;
+            });
         },
 
         // boolean
-        "binary=": function(left, right) {
-            var promise = $.Deferred();
-            left = this.ss.getData(left);
-            right = this.ss.getData(right);
-            promise.resolve(left === right);
-            return promise;
+        "binary=": function() {
+            return resolveCells(this, arguments, function(left, right){
+                return left === right;
+            });
         },
-        "binary<>": function(left, right) {
-            var promise = $.Deferred();
-            left = this.ss.getData(left);
-            right = this.ss.getData(right);
-            promise.resolve(left !== right);
-            return promise;
+        "binary<>": function() {
+            return resolveCells(this, arguments, function(left, right){
+                return left !== right;
+            });
         },
-        "binary<": binaryCompare(function(left, right, promise){
-            promise.resolve(left < right);
+        "binary<": binaryCompare(function(left, right){
+            return left < right;
         }),
-        "binary<=": binaryCompare(function(left, right, promise){
-            promise.resolve(left <= right);
+        "binary<=": binaryCompare(function(left, right){
+            return left <= right;
         }),
-        "binary>": binaryCompare(function(left, right, promise){
-            promise.resolve(left > right);
+        "binary>": binaryCompare(function(left, right){
+            return left > right;
         }),
-        "binary>=": binaryCompare(function(left, right, promise){
-            promise.resolve(left >= right);
+        "binary>=": binaryCompare(function(left, right){
+            return left >= right;
         }),
 
         // range
         "binary:": function(left, right) {
-            var promise = $.Deferred();
             if (CellRef.is(left) && CellRef.is(right)) {
-                promise.resolve(new RangeRef(left, right));
+                return new RangeRef(left, right);
             } else {
-                promise.reject(new CalcError("REF"));
+                this.error(new CalcError("REF"));
             }
-            return promise;
         },
         // union
         "binary,": function(left, right) {
-            var promise = $.Deferred();
             if (Ref.is(left) && Ref.is(right)) {
-                promise.resolve(new UnionRef([ left, right ]));
+                return new UnionRef([ left, right ]);
             } else {
-                promise.reject(new CalcError("REF"));
+                this.error(new CalcError("REF"));
             }
-            return promise;
         },
         // intersect
         "binary ": function(left, right) {
-            var promise = $.Deferred();
             if (Ref.is(left) && Ref.is(right)) {
                 var x = left.intersect(right);
                 if (NullRef.is(x)) {
-                    promise.reject(new CalcError("NULL"));
+                    this.error(new CalcError("NULL"));
                 } else {
-                    promise.resolve(x);
+                    return x;
                 }
             } else {
-                promise.reject(new CalcError("REF"));
+                this.error(new CalcError("REF"));
             }
-            return promise;
         },
 
         /* -----[ unary ops ]----- */
@@ -504,13 +472,14 @@
     {// XXX: just for testing, remove at some point
 
         FUNCS.currency = function() {
-            var promise = $.Deferred();
-            resolveCells(this, arguments, function(query, base){
+            var self = this;
+            return resolveCells(this, arguments, function(query, base){
                 if (typeof query != "string" || typeof base != "string") {
-                    return promise.reject(new CalcError("VALUE"));
+                    return self.error(new CalcError("VALUE"));
                 }
                 query = query.toUpperCase();
                 base = base.toUpperCase();
+                var promise = new Promise();
                 $.ajax({
                     url: "http://api.fixer.io/latest",
                     data: {
@@ -523,21 +492,21 @@
                         if (query == base) {
                             promise.resolve(1);
                         } else {
-                            promise.reject(new CalcError("CURRENCY"));
+                            self.error(new CalcError("CURRENCY"));
                         }
                     } else {
                         promise.resolve(val);
                     }
                 }).fail(function() {
                     console.error(arguments);
-                    promise.reject(new CalcError("NET"));
+                    self.error(new CalcError("NET"));
                 });
+                return promise;
             });
-            return promise;
         };
 
         FUNCS.asum = function() {
-            var promise = $.Deferred();
+            var promise = new Promise();
             var self = this, args = arguments;
             setTimeout(function(){
                 resolveCells(self, args, function(){
@@ -553,6 +522,66 @@
 
     }
 
+    /* -----[ Promise ]----- */
+
+    var Promise = defclass(null, function Promise() {
+        this.resolved = false;
+        this.value = null;
+        this._clients = [];
+    }, {
+        then: function(f) {
+            this._clients.push(f);
+            if (this.resolved) {
+                this._execute();
+            }
+            return this;
+        },
+        resolve: function(value) {
+            if (!this.resolved) {
+                this.resolved = true;
+                this.value = value;
+                this._execute();
+            }
+        },
+        _execute: function() {
+            var a = this._clients, n = a.length;
+            this._clients = [];
+            for (var i = 0; i < n; ++i) {
+                a[i](this.value);
+            }
+        }
+    });
+
+    Promise.when = function(a, func, obj) {
+        var i = a.length, args = new Array(i), count = 0;
+        while (--i >= 0) {
+            var x = a[i];
+            if (x instanceof Promise) {
+                wait(x, i);
+            } else {
+                args[i] = x;
+            }
+        }
+        if (!count) {
+            return func.apply(obj, args);
+        }
+        var ret = new Promise();
+        return ret;
+        function wait(p, i) {
+            if (p.resolved) {
+                args[i] = p.value;
+            } else {
+                ++count;
+                p.then(function(val){
+                    args[i] = val;
+                    if (!--count) {
+                        ret.resolve(func.apply(obj, args));
+                    }
+                });
+            }
+        }
+    };
+
     /* -----[ exports ]----- */
 
     exports.NULL = NULL;
@@ -563,6 +592,7 @@
     exports.RangeRef = RangeRef;
     exports.UnionRef = UnionRef;
     exports.CalcError = CalcError;
+    exports.Promise = Promise;
 
     exports.bool = function(context, val) {
         val = context.ss.getData(val);
@@ -589,29 +619,31 @@
             if (formula.inProgress) {
                 return formula.inProgress;
             }
-            var promise = $.Deferred();
             if ("value" in formula) {
-                promise.resolve(formula.value);
+                return formula.value;
+            } else {
+                var promise = new Promise();
+                formula.inProgress = promise;
+                promise.then(function(arg){
+                    formula.inProgress = null;
+                    SS.onFormula(formula, arg);
+                });
+                var context = {
+                    ss: SS,
+                    formula: formula,
+                    resolve: function(val) {
+                        formula.value = val;
+                        promise.resolve(val);
+                        return val;
+                    },
+                    error: function(val) {
+                        promise.resolve(val);
+                        return val;
+                    }
+                };
+                func(context);
                 return promise;
             }
-            formula.inProgress = promise;
-            promise.always(function(arg){
-                formula.inProgress = null;
-                SS.onFormula(formula, arg);
-            });
-            var error = function(){
-                promise.reject.apply(promise, arguments);
-            };
-            var context = {
-                ss: SS,
-                formula: formula,
-                promise: promise,
-                error: error
-            };
-            SS.fetchMany(formula.refs).then(function(){
-                func(context);
-            });
-            return promise;
         };
         return formula;
     };
