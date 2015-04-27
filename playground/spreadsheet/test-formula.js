@@ -60,18 +60,24 @@ Spreadsheet.prototype = {
     getData: function(ref) {
         var self = this;
         if (ref instanceof Spreadsheet.Cell) {
-            if (ref.formula) {
-                return ref.formula.func(self);
-            }
             return ref.value;
         }
         if (ref instanceof Runtime.Ref) {
             var data = self._getRefCells(ref).map(function(cell){
-                if (cell.formula) {
-                    return cell.formula.func(self);
-                }
                 return cell.value;
             });
+            return Runtime.CellRef.is(ref) ? data[0] : data;
+        }
+        return ref;
+    },
+
+    getRefCells: function(ref) {
+        var self = this;
+        if (ref instanceof Spreadsheet.Cell) {
+            return ref;
+        }
+        if (ref instanceof Runtime.Ref) {
+            var data = self._getRefCells(ref);
             return Runtime.CellRef.is(ref) ? data[0] : data;
         }
         return ref;
@@ -416,6 +422,9 @@ function fillElements(data) {
 makeElements(".sheet");
 
 fillElements({
+    sheet1: {
+        B1: '=sum(A:A)'
+    }
     // sheet1: {
     //     A1: '=CURRENCY("USD", "EUR") + CURRENCY("USD", "EUR")'
     // }
@@ -425,32 +434,32 @@ fillElements({
     //     A3: '=currency("USD", "EUR")'
     // }
 
-    sheet1: {
-        A1: 10,
-        A2: 20,
-        B1: "=A1+A2",
-        C1: '=sum((A1,A2))',
-        C2: '=sum(((A1,A3,A5,A7,A9) A1:B10))',
-        D1: '=sum(A:C)',
-        E1: '=sum(sum(A1:A3 A1:B3)+10, C1:D3)',
-        F1: '=E1 * H1 & " USD"',
-        G1: "EUR/USD →",
-        H1: '=currency("USD", "EUR")',
+    // sheet1: {
+    //     A1: 10,
+    //     A2: 20,
+    //     B1: "=A1+A2",
+    //     C1: '=sum((A1,A2))',
+    //     C2: '=sum(((A1,A3,A5,A7,A9) A1:B10))',
+    //     D1: '=sum(A:C)',
+    //     E1: '=sum(sum(A1:A3 A1:B3)+10, C1:D3)',
+    //     F1: '=E1 * H1 & " USD"',
+    //     G1: "EUR/USD →",
+    //     H1: '=currency("USD", "EUR")',
 
-        A5: "CHF",
-        A6: "EUR",
-        A7: "=currency(A5, A6)"
-    },
-    sheet2: {
-        A1: 10,
-        A2: 20,
-        B1: "=A1+A2",
-        D1: "a1:b4",
-        E1: "=sum(indirect(D1))"
-        // A1: "=sum(C1, B1)",
-        // B1: 5,
-        // B2: 10,
-        // B3: 15,
-        // C1: "=  sum  (  b1  :  b3  )"
-    }
+    //     A5: "CHF",
+    //     A6: "EUR",
+    //     A7: "=currency(A5, A6)"
+    // },
+    // sheet2: {
+    //     A1: 10,
+    //     A2: 20,
+    //     B1: "=A1+A2",
+    //     D1: "a1:b4",
+    //     E1: "=sum(indirect(D1))"
+    //     // A1: "=sum(C1, B1)",
+    //     // B1: 5,
+    //     // B2: 10,
+    //     // B3: 15,
+    //     // C1: "=  sum  (  b1  :  b3  )"
+    // }
 });

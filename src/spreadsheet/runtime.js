@@ -248,15 +248,54 @@
 
     // spreadsheet functions --------
 
-    function resolveCells(self, a, f) {
-        var data = [];
-        slice(a).forEach(function(x){
-            if (x instanceof Ref) {
-                x = self.ss.getData(x);
+    function resolveCells(context, a, f) {
+        var formulas = [];
+
+        for (var i = 0; i < a.length; ++i) {
+            var x = a[i];
+            if (Ref.is(x)) {
+                x = context.ss.getRefCells(x);
+                if (Array.isArray(x)) {
+                    add(x);
+                } else if (x && x.formula) {
+                    formulas.push(x);
+                }
             }
-            data = data.concat(x);
-        });
-        return Promise.when(data, f, self);
+        }
+
+        if (!formulas.length) {
+            return f(context);
+        }
+
+        for (var pending = formulas.length, i = 0; i < formulas.length; ++i) {
+            fetch(formulas[i]);
+        }
+        function fetch(cell) {
+            cell.formula.func(context.ss, function(val){
+                if (!--pending) {
+                    f(context);
+                }
+            });
+        }
+        function add(a) {
+            for (var i = 0; i < a.length; ++i) {
+                var cell = a[i];
+                if (cell.formula) {
+                    formulas.push(cell);
+                }
+            }
+        }
+    }
+
+    function cellValues(self, a, f) {
+        var ret = [];
+        for (var i = 0; i < a.length; ++i) {
+            ret = ret.concat(self.ss.getData(a[i]));
+        }
+        if (f) {
+            return f.apply(self, ret);
+        }
+        return ret;
     }
 
     function forNumbers(self, a, f) {
@@ -271,8 +310,8 @@
     }
 
     function binaryNumeric(func) {
-        return function() {
-            return resolveCells(this, arguments, function(left, right){
+        return function(callback, args) {
+            cellValues(this, args, function(left, right){
                 if (left == null) {
                     left = 0;
                 }
@@ -280,7 +319,7 @@
                     right = 0;
                 }
                 if (typeof left == "number" && typeof right == "number") {
-                    return func.call(this, left, right);
+                    callback(func.call(this, left, right));
                 } else {
                     this.error(new CalcError("VALUE"));
                 }
@@ -289,8 +328,8 @@
     }
 
     function binaryCompare(func) {
-        return function() {
-            return resolveCells(this, arguments, function(left, right){
+        return function(callback, args) {
+            cellValues(this, args, function(left, right){
                 if (typeof left == "string" && typeof right != "string") {
                     right = right == null ? "" : right + "";
                 }
@@ -304,7 +343,7 @@
                     left = 0;
                 }
                 if (typeof right == "number" && typeof left == "number") {
-                    return func.call(this, left, right);
+                    callback(func.call(this, left, right));
                 } else {
                     this.error(new CalcError("VALUE"));
                 }
@@ -313,13 +352,13 @@
     }
 
     function unaryNumeric(func) {
-        return function() {
-            return resolveCells(this, arguments, function(exp){
+        return function(callback, args) {
+            cellValues(this, args, function(exp){
                 if (exp == null) {
                     exp = 0;
                 }
                 if (typeof exp == "number") {
-                    return func.call(this, exp);
+                    callback(func.call(this, exp));
                 } else {
                     this.error(new CalcError("VALUE"));
                 }
@@ -329,17 +368,17 @@
 
     var FUNCS = {
 
-        sum: function(){
-            return resolveCells(this, arguments, function(){
-                var sum = 0;
-                forNumbers(this, arguments, function(num){
-                    sum += num;
-                });
-                return sum;
+        sum: function(callback, args){
+            args = cellValues(this, args);
+            var sum = 0;
+            forNumbers(this, args, function(num){
+                sum += num;
             });
+            callback(sum);
         },
 
-        average: function(){
+        average: function(callback, args){
+            args = cellValues(this, args);
             var sum = 0, count = 0;
             forNumbers(this, arguments, function(num){
                 ++count;
@@ -349,24 +388,29 @@
         },
 
         // XXX: does more work than needed
-        indirect: function(thing){
-            try {
-                if (typeof thing != "string") {
-                    throw 1;
+        indirect: function(callback, args){
+            cellValues(this, args, function(thing){
+                try {
+                    if (typeof thing != "string") {
+                        throw 1;
+                    }
+                    var x = calc.parse_formula(this.formula.sheet, 0, 0, thing);
+                    if (x.ast.type != "ref") {
+                        throw 1;
+                    }
+                    var f = calc.compile(x), ref = f.refs[0];
+                    resolveCells(this, [ ref ], function(){
+                        callback(ref);
+                    });
+                } catch(ex) {
+                    console.error(ex);
+                    this.error(new CalcError("REF"));
                 }
-                var x = calc.parse_formula(this.formula.sheet, 0, 0, thing);
-                if (x.ast.type != "ref") {
-                    throw 1;
-                }
-                var f = calc.compile(x);
-                return f.refs[0];
-            } catch(ex) {
-                this.error(new CalcError("REF"));
-            }
+            });
         },
 
-        rand: function() {
-            return Math.random();
+        rand: function(callback) {
+            callback(Math.random());
         },
 
         /* -----[ binary ops ]----- */
@@ -393,23 +437,23 @@
         }),
 
         // text concat
-        "binary&": function() {
-            return resolveCells(this, arguments, function(left, right){
+        "binary&": function(callback, args) {
+            cellValues(this, args, function(left, right){
                 if (left == null) { left = ""; }
                 if (right == null) { right = ""; }
-                return "" + left + right;
+                callback(left + right);
             });
         },
 
         // boolean
-        "binary=": function() {
-            return resolveCells(this, arguments, function(left, right){
-                return left === right;
+        "binary=": function(callback, args) {
+            cellValues(this, args, function(left, right){
+                callback(left === right);
             });
         },
-        "binary<>": function() {
-            return resolveCells(this, arguments, function(left, right){
-                return left !== right;
+        "binary<>": function(callback, args) {
+            cellValues(this, args, function(left, right){
+                callback(left !== right);
             });
         },
         "binary<": binaryCompare(function(left, right){
@@ -426,29 +470,32 @@
         }),
 
         // range
-        "binary:": function(left, right) {
+        "binary:": function(callback, args) {
+            var left = args[0], right = args[1];
             if (CellRef.is(left) && CellRef.is(right)) {
-                return new RangeRef(left, right);
+                callback(new RangeRef(left, right));
             } else {
                 this.error(new CalcError("REF"));
             }
         },
         // union
-        "binary,": function(left, right) {
+        "binary,": function(callback, args) {
+            var left = args[0], right = args[1];
             if (Ref.is(left) && Ref.is(right)) {
-                return new UnionRef([ left, right ]);
+                callback(new UnionRef([ left, right ]));
             } else {
                 this.error(new CalcError("REF"));
             }
         },
         // intersect
-        "binary ": function(left, right) {
+        "binary ": function(callback, args) {
+            var left = args[0], right = args[1];
             if (Ref.is(left) && Ref.is(right)) {
                 var x = left.intersect(right);
                 if (NullRef.is(x)) {
                     this.error(new CalcError("NULL"));
                 } else {
-                    return x;
+                    callback(x);
                 }
             } else {
                 this.error(new CalcError("REF"));
@@ -457,29 +504,28 @@
 
         /* -----[ unary ops ]----- */
 
-        "unary+": unaryNumeric(function(exp, promise) {
-            promise.resolve(exp);
+        "unary+": unaryNumeric(function(exp) {
+            return exp;
         }),
-        "unary-": unaryNumeric(function(exp, promise) {
-            promise.resolve(-exp);
+        "unary-": unaryNumeric(function(exp) {
+            return -exp;
         }),
-        "unary%": unaryNumeric(function(exp, promise) {
-            promise.resolve(exp/100);
+        "unary%": unaryNumeric(function(exp) {
+            return exp/100;
         })
 
     };
 
     {// XXX: just for testing, remove at some point
 
-        FUNCS.currency = function() {
-            var self = this;
-            return resolveCells(this, arguments, function(query, base){
+        FUNCS.currency = function(callback, args) {
+            cellValues(this, args, function(query, base){
+                var self = this;
                 if (typeof query != "string" || typeof base != "string") {
                     return self.error(new CalcError("VALUE"));
                 }
                 query = query.toUpperCase();
                 base = base.toUpperCase();
-                var promise = new Promise();
                 $.ajax({
                     url: "http://api.fixer.io/latest",
                     data: {
@@ -490,97 +536,33 @@
                     var val = rates[query];
                     if (val == null) {
                         if (query == base) {
-                            promise.resolve(1);
+                            callback(1);
                         } else {
                             self.error(new CalcError("CURRENCY"));
                         }
                     } else {
-                        promise.resolve(val);
+                        callback(val);
                     }
                 }).fail(function() {
                     console.error(arguments);
                     self.error(new CalcError("NET"));
                 });
-                return promise;
             });
         };
 
-        FUNCS.asum = function() {
-            var promise = new Promise();
-            var self = this, args = arguments;
+        FUNCS.asum = function(callback, args) {
+            var self = this;
             setTimeout(function(){
-                resolveCells(self, args, function(){
-                    var sum = 0;
-                    forNumbers(self, arguments, function(num){
-                        sum += num;
-                    });
-                    promise.resolve(sum);
+                var sum = 0;
+                var values = cellValues(self, args);
+                forNumbers(self, values, function(num){
+                    sum += num;
                 });
+                callback(sum);
             }, 500);
-            return promise;
         };
 
     }
-
-    /* -----[ Promise ]----- */
-
-    var Promise = defclass(null, function Promise() {
-        this.resolved = false;
-        this.value = null;
-        this._clients = [];
-    }, {
-        then: function(f) {
-            this._clients.push(f);
-            if (this.resolved) {
-                this._execute();
-            }
-            return this;
-        },
-        resolve: function(value) {
-            if (!this.resolved) {
-                this.resolved = true;
-                this.value = value;
-                this._execute();
-            }
-        },
-        _execute: function() {
-            var a = this._clients, n = a.length;
-            this._clients = [];
-            for (var i = 0; i < n; ++i) {
-                a[i](this.value);
-            }
-        }
-    });
-
-    Promise.when = function(a, func, obj) {
-        var i = a.length, args = new Array(i), count = 0;
-        while (--i >= 0) {
-            var x = a[i];
-            if (x instanceof Promise) {
-                wait(x, i);
-            } else {
-                args[i] = x;
-            }
-        }
-        if (!count) {
-            return func.apply(obj, args);
-        }
-        var ret = new Promise();
-        return ret;
-        function wait(p, i) {
-            if (p.resolved) {
-                args[i] = p.value;
-            } else {
-                ++count;
-                p.then(function(val){
-                    args[i] = val;
-                    if (!--count) {
-                        ret.resolve(func.apply(obj, args));
-                    }
-                });
-            }
-        }
-    };
 
     /* -----[ exports ]----- */
 
@@ -592,7 +574,6 @@
     exports.RangeRef = RangeRef;
     exports.UnionRef = UnionRef;
     exports.CalcError = CalcError;
-    exports.Promise = Promise;
 
     exports.bool = function(context, val) {
         val = context.ss.getData(val);
@@ -608,41 +589,35 @@
         return val != null;
     };
 
-    exports.func = function(context, fname) {
-        var args = slice(arguments, 2);
-        return FUNCS[fname.toLowerCase()].apply(context, args);
+    exports.func = function(context, fname, callback) {
+        var args = slice(arguments, 3);
+        return FUNCS[fname.toLowerCase()].call(context, callback, args);
     };
 
     exports.makeFormula = function(formula) {
         var func = formula.func;
-        formula.func = function(SS) {
-            if (formula.inProgress) {
-                return formula.inProgress;
-            }
+        formula.func = function(SS, callback) {
             if ("value" in formula) {
-                return formula.value;
+                if (callback) {
+                    callback(formula.value);
+                }
             } else {
-                var promise = new Promise();
-                formula.inProgress = promise;
-                promise.then(function(arg){
-                    formula.inProgress = null;
-                    SS.onFormula(formula, arg);
-                });
-                var context = {
+                resolveCells({
                     ss: SS,
                     formula: formula,
                     resolve: function(val) {
-                        formula.value = val;
-                        promise.resolve(val);
-                        return val;
+                        SS.onFormula(formula, val);
+                        if (callback) {
+                            callback(val);
+                        }
                     },
                     error: function(val) {
-                        promise.resolve(val);
-                        return val;
+                        SS.onFormula(formula, val);
+                        if (callback) {
+                            callback(val);
+                        }
                     }
-                };
-                func(context);
-                return promise;
+                }, formula.refs, func);
             }
         };
         return formula;

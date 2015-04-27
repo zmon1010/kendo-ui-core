@@ -629,59 +629,26 @@
                 return k(FALSE);
             }
             // actual function
-            // return (function loop(args, i){
-            //     if (i == node.args.length) {
-            //         return {
-            //             type : "call",
-            //             func : node.func,
-            //             args : args
-            //         };
-            //     }
-            //     else {
-            //         return cps(node.args[i], function(value){
-            //             return loop(args.concat([ value ]), i + 1);
-            //         });
-            //     }
-            // })([ make_continuation(k) ], 0);
-
-            var should_resolve = false;
-            for (var i = 0; i < node.args.length; ++i) {
-                var x = node.args[i];
-                if (!/^(?:ref|num|str|bool)$/.test(x.type)) {
-                    should_resolve = true;
-                    break;
+            return (function loop(args, i){
+                if (i == node.args.length) {
+                    return {
+                        type : "call",
+                        func : node.func,
+                        args : args
+                    };
                 }
-            }
-            if (!should_resolve) {
-                return k(node);
-            }
-
-            var names = [], vars = [];
-
-            return {
-                type: "resolve",
-                args: node.args.map(function(arg){
-                    var name = gensym("V");
-                    vars.push({ type: "var", name: name });
-                    names.push(name);
-                    return cps(arg, function(x){ return x; });
-                }),
-                then: {
-                    type: "lambda",
-                    vars: names,
-                    body: k({
-                        type: "call",
-                        func: node.func,
-                        args: vars
-                    })
+                else {
+                    return cps(node.args[i], function(value){
+                        return loop(args.concat([ value ]), i + 1);
+                    });
                 }
-            };
+            })([ make_continuation(k) ], 0);
         }
 
         function make_continuation(k) {
             var cont = gensym("R");
             return {
-                type : "cont",
+                type : "lambda",
                 vars : [ cont ],
                 body : k({ type: "var", name: cont })
             };
@@ -712,7 +679,7 @@
         ].join(";\n");
 
         //XXX
-        exp.code = code;
+        //exp.code = code;
         //console.log("/***********/\n" + code);
 
         return new Function("Runtime", code)(Runtime, $);
@@ -743,25 +710,14 @@
                 return "Runtime.binary(context, '" + node.op + "', " + compile(node.left) + ", " + compile(node.right) + ")";
             }
             else if (type == "return") {
-                return "Runtime.Promise.when([ "
-                    + compile(node.value)
-                    + " ], context.resolve)";
+                return "context.resolve(" + compile(node.value) + ")";
             }
             else if (type == "call") {
-                var args = node.args.slice();
-                var cont = args[0] && args[0].type == "cont" ? args[0] : null;
-                if (cont) {
-                    args.shift();
-                }
-                ret = "Runtime.func(context, " + JSON.stringify(node.func)
-                    + args.map(function(arg){
+                return "Runtime.func(context, " + JSON.stringify(node.func)
+                    + node.args.map(function(arg){
                         return ", " + compile(arg);
                     }).join("")
                     + ")";
-                if (cont) {
-                    ret += ".then(" + compile(cont) + ")";
-                }
-                return ret;
             }
             else if (type == "ref") {
                 if (node.ref == "cell") {
@@ -787,15 +743,10 @@
             else if (type == "not") {
                 return "!Runtime.bool(context, " + compile(node.exp) + ")";
             }
-            else if (type == "lambda" || type == "cont") {
+            else if (type == "lambda") {
                 return "function("
                     + node.vars.join(", ")
                     + "){ return(" + compile(node.body) + ") }";
-            }
-            else if (type == "resolve") {
-                return "Runtime.Promise.when("
-                    + "[ " + node.args.map(compile).join(", ") + " ], "
-                    + compile(node.then) + ")";
             }
             else if (type == "var") {
                 return node.name;
