@@ -3924,33 +3924,36 @@ var __meta__ = {
         },
 
         _scrollCurrent: function() {
-            var scrollable = this.options.scrollable;
             var current = this._current;
 
-            if (!current || !scrollable) {
+            if (!current || !this.options.scrollable) {
                 return;
             }
 
             var row = current.parent();
-            var table = row.closest("table");
-            var tableContainer = table.parent();
-            var content = this.content[0];
+            var tableContainer = row.closest("table").parent();
 
-            if (tableContainer.hasClass("k-grid-content")) {
-                this._scrollTo(row[0], tableContainer[0]);
-            } else if (tableContainer.hasClass("k-grid-content-locked")) {
-                this._scrollTo(this._relatedRow(row)[0], content);
-                if (!scrollable.virtual) {
-                    this.lockedContent[0].scrollTop = content.scrollTop;
-                }
+            var isInLockedContainer = tableContainer.is(".k-grid-content-locked,.k-grid-header-locked");
+            var isInContent = tableContainer.is(".k-grid-content-locked,.k-grid-content");
+
+            var horizontalContainer = $(this.content).find(">.k-virtual-scrollable-wrap").andSelf().last()[0];
+            var verticalContainer = $(this.content).find(">.k-scrollbar-vertical").andSelf().last()[0];
+
+            //adjust scroll vertically
+            if (isInContent) {
+                console.log(1);
+                this._scrollTo(this._relatedRow(row)[0], verticalContainer);
             }
 
-            if (!tableContainer.is(".k-grid-content-locked,.k-grid-header-locked")) {
-                if (scrollable.virtual) {
-                    this._scrollTo(current[0], $(content).find(">.k-virtual-scrollable-wrap")[0]);
-                } else {
-                    this._scrollTo(current[0], content);
-                }
+            //TODO verify for locked columns & virtual scrolling
+            if (this.lockedContent) {
+                //sync locked and non-locked content scrollTop
+                this.lockedContent[0].scrollTop = verticalContainer.scrollTop;
+            }
+
+            //adjust scroll horizontally, if not inside locked tables
+            if (!isInLockedContainer) {
+                this._scrollTo(current[0], horizontalContainer);
             }
         },
 
