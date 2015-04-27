@@ -101,7 +101,11 @@ namespace Kendo.Mvc.UI
             }
             if (Editor.HasValue())
             {
-                json["editor"] = Editor;
+                json["editor"] = Editor
+                    .Trim()
+                    .EscapeHtmlEntities()
+                    .Replace("\r\n", string.Empty)
+                    .Replace("jQuery(\"#", "jQuery(\"\\#");
             }
             
             if (Encoded.HasValue)
