@@ -199,6 +199,10 @@ input.k-textbox
     padding: .429em .571em;
 }
 
+.k-treeview .k-checkbox {
+    margin-top: .5em;
+}
+
 div.k-tooltip {
     border-radius: 3px;
     padding: 1.167em;
@@ -225,6 +229,12 @@ span.k-tooltip {
 .k-grouping-header,
 .k-grid-toolbar {
     padding: 0.429em;
+}
+
+.k-header > .k-grid-filter,
+.k-header > .k-header-column-menu {
+    margin: -0.5em -0.4em -0.4em;
+    padding: .4em .2em .5em;
 }
 
 .k-grouping-header {
@@ -411,6 +421,10 @@ span.k-tooltip {
 .k-panelbar-expand,
 .k-panelbar-collapse {
     right: 14px;
+}
+
+.k-panelbar .k-image {
+    margin-top: .6em;
 }
 
 .k-menu .k-item > .k-link {
@@ -701,11 +715,13 @@ div.k-window-content {
         background-position: -165px -6px;
     }
 
-    .k-collapse-next {
+    .k-collapse-next,
+    .k-expand-prev {
         background-position: -5px -142px;
     }
 
-    .k-collapse-prev {
+    .k-collapse-prev,
+    .k-expand-next {
         background-position: -6px -174px;
     }
 }
@@ -715,11 +731,13 @@ div.k-window-content {
         background-position: -38px -309px;
     }
 
-    .k-collapse-next {
+    .k-collapse-next,
+    .k-expand-prev {
         background-position: 2px -165px;
     }
 
-    .k-collapse-prev {
+    .k-collapse-prev,
+    .k-expand-next {
         background-position: 2px -134px;
     }
 }
@@ -729,11 +747,13 @@ div.k-window-content {
         background-position: -181px -6px;
     }
 
-    .k-collapse-next {
+    .k-collapse-next,
+    .k-expand-prev {
         background-position: -21px -142px;
     }
 
-    .k-collapse-prev {
+    .k-collapse-prev,
+    .k-expand-next {
         background-position: -22px -174px;
     }
 }
@@ -743,11 +763,13 @@ div.k-window-content {
         background-position: -70px -309px;
     }
 
-    .k-collapse-next {
+    .k-collapse-next,
+    .k-expand-prev {
         background-position: -14px -165px;
     }
 
-    .k-collapse-prev {
+    .k-collapse-prev,
+    .k-expand-next {
         background-position: -14px -134px;
     }
 }
@@ -1071,4 +1093,18 @@ div.k-window-content {
 
 .k-rtl .k-widget.k-datetimepicker .k-picker-wrap .k-icon {
     margin: 0 2px;
+}
+
+.k-rtl .k-widget.k-slider .k-state-hover .k-i-arrow-e,
+.k-rtl .k-widget.k-slider .k-button:hover .k-i-arrow-e,
+.k-rtl .k-widget.k-slider .k-button:active .k-i-arrow-e,
+.k-rtl .k-widget.k-slider .k-button:active .k-i-arrow-e {
+    background-position: 0 -48px;
+}
+
+.k-rtl .k-widget.k-slider .k-state-hover .k-i-arrow-w,
+.k-rtl .k-widget.k-slider .k-button:hover .k-i-arrow-w,
+.k-rtl .k-widget.k-slider .k-textbox:hover .k-i-arrow-w,
+.k-rtl .k-widget.k-slider .k-button:active .k-i-arrow-w {
+    background-position: 0 -16px;   
 }
