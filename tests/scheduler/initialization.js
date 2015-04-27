@@ -919,11 +919,21 @@
         ok(scheduler.toolbar.find(".k-view-day"));
     });
 
-    //check all views? for having the selectedDateFormat
     test("responsive date format is correctly rendered", function() {
 
         var scheduler = new Scheduler(container, {
             views: ["day"]
+        });
+
+        equal(scheduler.toolbar.find(".k-sm-date-format").length, 1);
+        equal(scheduler.toolbar.find(".k-lg-date-format").length, 1);
+    });
+
+    test("responsive date format is correctly rendered", function() {
+
+        var scheduler = new Scheduler(container, {
+            views: ["day"],
+            mobile: "phone"
         });
 
         equal(scheduler.toolbar.find(".k-sm-date-format").length, 1);

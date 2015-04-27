@@ -117,8 +117,8 @@ var __meta__ = {
                 '<ul class="k-reset k-header k-scheduler-navigation">' +
                    '<li class="k-state-default k-nav-prev"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-w"></span></a></li>' +
                    '<li class="k-state-default k-nav-current">' +
-                        '<span data-#=ns#bind="text: formattedShortDate"></span>' +
-                        '<span data-#=ns#bind="text: formattedDate"></span>' +
+                        '<span class="k-sm-date-format" data-#=ns#bind="text: formattedShortDate"></span>' +
+                        '<span class="k-lg-date-format" data-#=ns#bind="text: formattedDate"></span>' +
                     '</li>' +
                    '<li class="k-state-default k-nav-next"><a role="button" href="\\#" class="k-link"><span class="k-icon k-i-arrow-e"></span></a></li>' +
                 '</ul>' +
