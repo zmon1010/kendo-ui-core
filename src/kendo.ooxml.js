@@ -12,7 +12,7 @@ var __meta__ = {
     depends: [ "core" ]
 };
 
-(function(kendo){
+(function($, kendo){
 
 var RELS = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n' +
            '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
@@ -715,7 +715,7 @@ kendo.ooxml = {
     Worksheet: Worksheet
 };
 
-})(kendo);
+})(kendo.jQuery, kendo);
 
 return kendo;
 
