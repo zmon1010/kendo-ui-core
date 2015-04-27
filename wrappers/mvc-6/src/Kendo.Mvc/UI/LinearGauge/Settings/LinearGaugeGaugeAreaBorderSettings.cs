@@ -11,11 +11,16 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class LinearGaugeGaugeAreaBorderSettings 
     {
+        public double? Opacity { get; set; }
+
         public Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
 
-            // Do manual serialization here
+            if (Opacity.HasValue)
+            {
+                settings["opacity"] = Opacity;
+            }
 
             return settings;
         }

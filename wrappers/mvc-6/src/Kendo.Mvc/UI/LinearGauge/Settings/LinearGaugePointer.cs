@@ -15,11 +15,11 @@ namespace Kendo.Mvc.UI
 
         public string Color { get; set; }
 
-        public double? Margin { get; set; }
+        public LinearGaugePointerMarginSettings Margin { get; set; } = new LinearGaugePointerMarginSettings();
 
         public double? Opacity { get; set; }
 
-        public string Shape { get; set; }
+        public GaugeLinearPointerShape? Shape { get; set; }
 
         public double? Size { get; set; }
 
@@ -44,9 +44,10 @@ namespace Kendo.Mvc.UI
                 settings["color"] = Color;
             }
 
-            if (Margin.HasValue)
+            var margin = Margin.Serialize();
+            if (margin.Any())
             {
-                settings["margin"] = Margin;
+                 settings["margin"] = margin;
             }
 
             if (Opacity.HasValue)
@@ -54,9 +55,9 @@ namespace Kendo.Mvc.UI
                 settings["opacity"] = Opacity;
             }
 
-            if (Shape?.HasValue() == true)
+            if (Shape.HasValue)
             {
-                settings["shape"] = Shape;
+                settings["shape"] = Shape?.Serialize();
             }
 
             if (Size.HasValue)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -34,6 +35,34 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Sets the pointer border
+        /// </summary>
+        /// <param name="width">The pointer border width.</param>
+        /// <param name="color">The pointer border color.</param>
+        /// <param name="dashType">The pointer dash type.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().LinearGauge()
+        ///           .Name("linearGauge")
+        ///           .Pointer(pointer => pointer
+        ///               .Border(1, "#000", ChartDashType.Dot)
+        ///           )
+        ///           .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>        
+        public LinearGaugePointerBuilder Border(int width, string color, ChartDashType dashType)
+        {
+            Container.Border.LinearGauge = Container.LinearGauge;
+
+            Container.Border.Width = width;
+            Container.Border.Color = color;
+            Container.Border.DashType = dashType;
+
+            return this;
+        }
+
+        /// <summary>
         /// The color of the pointer.
         /// </summary>
         /// <param name="value">The value for Color</param>
@@ -49,7 +78,34 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="value">The value for Margin</param>
         public LinearGaugePointerBuilder Margin(double value)
         {
-            Container.Margin = value;
+            Container.Margin.All(value);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the pointer margin.
+        /// </summary>
+        /// <param name="top">The pointer top margin.</param>
+        /// <param name="right">The pointer right margin.</param>
+        /// <param name="bottom">The pointer bottom margin.</param>
+        /// <param name="left">The pointer left margin.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().LinearGauge()
+        ///           .Name("linearGauge")
+        ///           .Pointer(pointer => pointer
+        ///               .Margin(20, 20, 20, 20)
+        ///           )
+        ///           .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>   
+        public LinearGaugePointerBuilder Margin(double top, double right, double bottom, double left)
+        {
+            Container.Margin.Top = top;
+            Container.Margin.Right = right;
+            Container.Margin.Bottom = bottom;
+            Container.Margin.Left = left;
             return this;
         }
 
@@ -68,7 +124,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// The shape of the pointer.
         /// </summary>
         /// <param name="value">The value for Shape</param>
-        public LinearGaugePointerBuilder Shape(string value)
+        public LinearGaugePointerBuilder Shape(GaugeLinearPointerShape value)
         {
             Container.Shape = value;
             return this;

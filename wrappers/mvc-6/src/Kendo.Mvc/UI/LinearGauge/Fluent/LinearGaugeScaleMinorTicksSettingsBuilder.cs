@@ -20,6 +20,11 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        public LinearGaugeScaleMinorTicksSettingsBuilder DashType(ChartDashType dashType)
+        {
+            Container.DashType = dashType;
+
+            return this;
+        }
     }
 }

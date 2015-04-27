@@ -34,6 +34,32 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Sets the track border.
+        /// </summary>
+        /// <param name="width">The pointer border width.</param>
+        /// <param name="color">The pointer border color.</param>
+        /// <param name="dashType">The pointer dash type.</param>
+        /// <example>
+        /// <code lang="CS">
+        /// &lt;% Html.Kendo().LinearGauge()
+        ///           .Name("linearGauge")
+        ///           .Pointer(pointer => pointer
+        ///               .Track(track => track.Border(1, "#000", ChartDashType.Dot))
+        ///           )         
+        ///           .Render();
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public LinearGaugePointerTrackSettingsBuilder Border(int width, string color, ChartDashType dashType)
+        {
+            Container.Border.Width = width;
+            Container.Border.Color = color;
+            Container.Border.DashType = dashType;
+
+            return this;
+        }
+
+        /// <summary>
         /// The color of the track.
         /// </summary>
         /// <param name="value">The value for Color</param>

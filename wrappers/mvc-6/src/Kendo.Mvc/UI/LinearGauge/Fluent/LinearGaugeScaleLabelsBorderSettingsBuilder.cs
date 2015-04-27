@@ -20,6 +20,15 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// The opacity of the border.
+        /// </summary>
+        /// <param name="value">The value for Opacity</param>
+        public LinearGaugeScaleLabelsBorderSettingsBuilder Opacity(double value)
+        {
+            Container.Opacity = value;
+
+            return this;
+        }
     }
 }

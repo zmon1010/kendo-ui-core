@@ -20,6 +20,10 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        public LinearGaugeGaugeAreaBorderSettingsBuilder Opacity(double opacity)
+        {
+            Container.Opacity = opacity;
+            return this;
+        }
     }
 }
