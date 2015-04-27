@@ -41,7 +41,7 @@
     function insert(root, value) {
        if (root === NilNode) {
             return new RangeTreeNode(1, value, NilNode, NilNode);
-        } else if (root.value - value > 0) {
+        } else if (root.value.start - value.start > 0) {
             root.left = insert(root.left, value);
         } else {
             root.right = insert(root.right, value);
@@ -54,7 +54,7 @@
             return root;
         }
 
-        var diff = root.value - value;
+        var diff = root.value.start - value.start;
         if (diff === 0) {
             if (root.left !== NilNode && root.right !== NilNode) {
                 var heir = root.left;
@@ -96,10 +96,6 @@
         this.start = start;
         this.end = end;
         this.value = value;
-    }
-
-    Range.prototype.valueOf = function() {
-        return this.start;
     }
 
     Range.prototype.intersects = function(range) {

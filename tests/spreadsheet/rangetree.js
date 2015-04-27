@@ -2,96 +2,97 @@
     var RangeTree = kendo.spreadsheet.RangeTree;
     var RangeList = kendo.spreadsheet.RangeList;
     var Range = kendo.spreadsheet.Range;
-    module("aa tree");
 
-    test("supports insert", 1, function() {
-        var tree = new RangeTree();
-        tree.insert(1);
-
-        equal(tree.root.value, 1);
+    var tree;
+    module("aa tree", {
+        setup: function() {
+            tree = new RangeTree();
+        }
     });
 
+    function insert(value) {
+       tree.insert(new Range(value, value, value));
+    }
+
+    test("supports insert", 1, function() {
+        insert(1);
+        equal(tree.root.value.value, 1);
+    });
+
+
     test("insert greater number puts it on the right", 1, function() {
-        var tree = new RangeTree();
-        tree.insert(1);
+        insert(1);
+        insert(2);
 
-        tree.insert(2);
-
-        equal(tree.root.right.value, 2);
+        equal(tree.root.right.value.value, 2);
     });
 
     test("insert lesser number skews it", 2, function() {
-        var tree = new RangeTree();
-        tree.insert(1);
-        tree.insert(0);
-
-        equal(tree.root.value, 0);
-        equal(tree.root.right.value, 1);
+        insert(1);
+        insert(0);
+        equal(tree.root.value.value, 0);
+        equal(tree.root.right.value.value, 1);
     });
 
     test("insert 2 greater number splits it", 3, function() {
-        var tree = new RangeTree();
-        tree.insert(1);
-        tree.insert(2);
-        tree.insert(3);
+        insert(1);
+        insert(2);
+        insert(3);
 
-        equal(tree.root.value, 2);
-        equal(tree.root.left.value, 1);
-        equal(tree.root.right.value, 3);
+        equal(tree.root.value.value, 2);
+        equal(tree.root.left.value.value, 1);
+        equal(tree.root.right.value.value, 3);
     });
 
     test("map produces new tree", 6, function() {
-        var tree = new RangeTree();
-        tree.insert(1);
-        tree.insert(2);
-        tree.insert(3);
+        insert(1);
+        insert(2);
+        insert(3);
 
         var i = 0;
-        tree = tree.map(function(value) {
+        tree = tree.map(function(range) {
             i ++;
             if (i == 1) {
-                equal(value, 1);
+                equal(range.value, 1);
             } else if (i == 2) {
-                equal(value, 2);
+                equal(range.value, 2);
             } else if (i == 3) {
-                equal(value, 3);
+                equal(range.value, 3);
             }
 
-            return value * 2;
+            return new Range(range.start, range.end, range.value * 2);
         });
 
         var values = tree.values();
 
-        equal(values[1], 4);
-        equal(values[0], 2);
-        equal(values[2], 6);
+        equal(values[1].value, 4);
+        equal(values[0].value, 2);
+        equal(values[2].value, 6);
     });
 
     test("removing an item works", 2, function() {
-        var tree = new RangeTree();
-        tree.insert(1);
-        tree.insert(2);
-        tree.insert(3);
-        tree.insert(4);
-        tree.insert(5);
+        insert(1);
+        insert(2);
+        insert(3);
+        insert(4);
+        insert(5);
 
-        tree.remove(4);
+        tree.remove(new Range(4, 4, 4));
 
-        equal(tree.root.value, 2);
-        equal(tree.root.right.value, 3);
+        equal(tree.root.value.value, 2);
+        equal(tree.root.right.value.value, 3);
     });
 
     test("values returns a list of the values", 3, function() {
-        var tree = new RangeTree();
-        tree.insert(1);
-        tree.insert(2);
-        tree.insert(3);
+        insert(1);
+        insert(2);
+        insert(3);
 
         var values = tree.values();
 
-        equal(values[0], 1);
-        equal(values[1], 2);
-        equal(values[2], 3);
+        equal(values[0].value, 1);
+        equal(values[1].value, 2);
+        equal(values[2].value, 3);
     });
 
     /*
@@ -298,15 +299,12 @@
         equal(values[1].value, "red");
     });
 
-    // Pontential performance tweak - do not perform unnecessary re-creaction of a range
-    /*
-     test("merges neighbour ranges with same value (end)", 1, function() {
-     var list = new RangeList(0, 100, "default");
-     list.value(10, 20, "red");
-     var red = list.values()[1];
-     list.value(21, 30, "blue");
+    test("merges neighbour ranges with same value (end)", 1, function() {
+        var list = new RangeList(0, 100, "default");
+        list.value(10, 20, "red");
+        var red = list.values()[1];
+        list.value(21, 30, "blue");
 
-     equal(list.values()[1], red);
-     });
-     */
+        equal(list.values()[1], red);
+    });
 })();
