@@ -294,10 +294,10 @@ var __meta__ = {
             } else if (!that._fetching && that.options.prefetch) {
 
                 if (firstItemIndex < (currentSkip + take) - take * prefetchAt && firstItemIndex > take) {
-                    dataSource.prefetch(currentSkip - take, take);
+                    dataSource.prefetch(currentSkip - take, take, $.noop);
                 }
                 if (lastItemIndex > currentSkip + take * prefetchAt) {
-                    dataSource.prefetch(currentSkip + take, take);
+                    dataSource.prefetch(currentSkip + take, take, $.noop);
                 }
 
             }
@@ -3934,15 +3934,22 @@ var __meta__ = {
             var tableContainer = row.closest("table").parent();
 
             var isInLockedContainer = tableContainer.is(".k-grid-content-locked,.k-grid-header-locked");
-            var isInContent = tableContainer.is(".k-grid-content-locked,.k-grid-content");
+            var isInContent = tableContainer.is(".k-grid-content-locked,.k-grid-content,.k-virtual-scrollable-wrap");
 
             var horizontalContainer = $(this.content).find(">.k-virtual-scrollable-wrap").andSelf().last()[0];
             var verticalContainer = $(this.content).find(">.k-scrollbar-vertical").andSelf().last()[0];
 
             //adjust scroll vertically
             if (isInContent) {
-                console.log(1);
-                this._scrollTo(this._relatedRow(row)[0], verticalContainer);
+                if (this.options.scrollable.virtual) {
+                    var index = row.index();
+                    var height = index * this._averageRowHeight();
+                    if (verticalContainer.clientHeight < height) {
+                        verticalContainer.scrollTop += this._averageRowHeight();
+                    }
+                } else {
+                    this._scrollTo(this._relatedRow(row)[0], verticalContainer);
+                }
             }
 
             //TODO verify for locked columns & virtual scrolling
@@ -4095,9 +4102,11 @@ var __meta__ = {
                 if (!cell[0]) {
                     container = this._verticalContainer(container, true);
 
-                    focusTable(container.parent(), true);
-
                     cell = this._prevVerticalCell(container, current);
+
+                    if (cell[0]) {
+                        focusTable(container.parent(), true);
+                    }
                 }
 
                 handled = true;
@@ -4109,9 +4118,12 @@ var __meta__ = {
                 if (!cell[0]) {
                     container = this._verticalContainer(container);
 
-                    focusTable(container.parent(), true);
-
                     cell = this._nextVerticalCell(container, current);
+                    if (cell[0]) {
+                        focusTable(container.parent(), true);
+                    } else if (this.options.scrollable.virtual) {
+                        this.virtualScrollable.verticalScrollbar[0].scrollTop += this._averageRowHeight();
+                    }
                 }
 
                 handled = true;
@@ -7047,7 +7059,14 @@ var __meta__ = {
             if (currentIndex >= 0) {
                 that._removeCurrent();
                 if (!isCurrentInHeader) {
-                    that.current(that.table.add(that.lockedTable).find(FIRSTNAVITEM).first());
+
+                    var rowHeight = this._averageRowHeight();
+                    var height = this.virtualScrollable.element.innerHeight();
+                    var firstItemIndex = math.max(math.floor(this.virtualScrollable.element.scrollTop() / rowHeight), 0);
+                    var lastItemIndex = math.max(firstItemIndex + math.floor(height / rowHeight), 0);
+                    var row = this.table.find("tr").eq(lastItemIndex).find("td").first();
+                    this.current(row);
+                    //that.current(that.table.add(that.lockedTable).find(FIRSTNAVITEM).first());
                 } else {
                     that.current(that.thead.find("th:not(.k-group-cell)").eq(currentIndex));
                 }
