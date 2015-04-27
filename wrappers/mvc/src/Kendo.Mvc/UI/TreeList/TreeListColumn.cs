@@ -105,6 +105,7 @@ namespace Kendo.Mvc.UI
                     .Trim()
                     .EscapeHtmlEntities()
                     .Replace("\r\n", string.Empty)
+                    .Replace("</script>", "<\\/script>")
                     .Replace("jQuery(\"#", "jQuery(\"\\#");
             }
             

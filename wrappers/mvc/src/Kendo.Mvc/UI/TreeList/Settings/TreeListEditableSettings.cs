@@ -81,7 +81,9 @@ namespace Kendo.Mvc.UI
                 var html = EditorHtml.Trim()
                                 .EscapeHtmlEntities()
                                 .Replace("\r\n", string.Empty)
-                                .Replace("jQuery(\"#", "jQuery(\"\\#");
+                                .Replace("</script>", "<\\/script>")
+                                .Replace("jQuery(\"#", "jQuery(\"\\\\#")
+                                .Replace("#", "\\#");
 
                 options["template"] = html;
             }
@@ -94,7 +96,9 @@ namespace Kendo.Mvc.UI
                 return;
             }
 
-            if (TemplateName.HasValue() || (!Template.HasValue() && !TemplateId.HasValue()))
+            var isPopup = !String.IsNullOrEmpty(Mode) && Mode.ToLower().Equals("popup");
+
+            if (TemplateName.HasValue() || isPopup)
             {
                 var popupSlashes = new Regex("(?<=data-val-regex-pattern=\")([^\"]*)", RegexOptions.Multiline);
                 var helper = new HtmlHelper<T>(viewContext, new TreeListViewDataContainer<T>(DefaultDataItem(), viewData));
