@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -20,6 +21,20 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <param name="margin">The labels margin.</param>  
+        public LinearGaugeScaleLabelsSettingsBuilder Margin(int margin)
+        {
+            Container.Margin.All(margin);
+
+            return this;
+        }
+
+        /// <param name="padding">The labels padding.</param>     
+        public LinearGaugeScaleLabelsSettingsBuilder Padding(int padding)
+        {
+            Container.Padding.All(padding);
+
+            return this;
+        }
     }
 }

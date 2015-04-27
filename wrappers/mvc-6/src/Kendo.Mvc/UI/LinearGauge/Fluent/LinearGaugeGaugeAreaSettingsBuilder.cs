@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -12,6 +13,13 @@ namespace Kendo.Mvc.UI.Fluent
         public LinearGaugeGaugeAreaSettingsBuilder(LinearGaugeGaugeAreaSettings container)
         {
             Container = container;
+        }
+
+        public LinearGaugeGaugeAreaSettingsBuilder Margin(int margin)
+        {
+            Container.Margin.All(margin);
+
+            return this;
         }
 
         protected LinearGaugeGaugeAreaSettings Container

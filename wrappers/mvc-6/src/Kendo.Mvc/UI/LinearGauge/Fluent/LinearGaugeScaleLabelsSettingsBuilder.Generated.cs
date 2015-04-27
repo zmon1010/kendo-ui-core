@@ -68,20 +68,26 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// The margin of the labels.
         /// </summary>
-        /// <param name="value">The value for Margin</param>
-        public LinearGaugeScaleLabelsSettingsBuilder Margin(double value)
+        /// <param name="configurator">The configurator for the margin setting.</param>
+        public LinearGaugeScaleLabelsSettingsBuilder Margin(Action<LinearGaugeScaleLabelsMarginSettingsBuilder> configurator)
         {
-            Container.Margin = value;
+
+            Container.Margin.LinearGauge = Container.LinearGauge;
+            configurator(new LinearGaugeScaleLabelsMarginSettingsBuilder(Container.Margin));
+
             return this;
         }
 
         /// <summary>
         /// The padding of the labels.
         /// </summary>
-        /// <param name="value">The value for Padding</param>
-        public LinearGaugeScaleLabelsSettingsBuilder Padding(double value)
+        /// <param name="configurator">The configurator for the padding setting.</param>
+        public LinearGaugeScaleLabelsSettingsBuilder Padding(Action<LinearGaugeScaleLabelsPaddingSettingsBuilder> configurator)
         {
-            Container.Padding = value;
+
+            Container.Padding.LinearGauge = Container.LinearGauge;
+            configurator(new LinearGaugeScaleLabelsPaddingSettingsBuilder(Container.Padding));
+
             return this;
         }
 

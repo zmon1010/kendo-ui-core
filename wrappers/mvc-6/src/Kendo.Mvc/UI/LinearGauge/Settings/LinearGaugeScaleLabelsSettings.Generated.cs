@@ -21,9 +21,9 @@ namespace Kendo.Mvc.UI
 
         public string Format { get; set; }
 
-        public double? Margin { get; set; }
+        public LinearGaugeScaleLabelsMarginSettings Margin { get; } = new LinearGaugeScaleLabelsMarginSettings();
 
-        public double? Padding { get; set; }
+        public LinearGaugeScaleLabelsPaddingSettings Padding { get; } = new LinearGaugeScaleLabelsPaddingSettings();
 
         public string Template { get; set; }
 
@@ -64,14 +64,16 @@ namespace Kendo.Mvc.UI
                 settings["format"] = Format;
             }
 
-            if (Margin.HasValue)
+            var margin = Margin.Serialize();
+            if (margin.Any())
             {
-                settings["margin"] = Margin;
+                settings["margin"] = margin;
             }
 
-            if (Padding.HasValue)
+            var padding = Padding.Serialize();
+            if (padding.Any())
             {
-                settings["padding"] = Padding;
+                settings["padding"] = padding;
             }
 
             if (TemplateId.HasValue())

@@ -37,10 +37,13 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// The margin of the gauge area.
         /// </summary>
-        /// <param name="value">The value for Margin</param>
-        public LinearGaugeGaugeAreaSettingsBuilder Margin(double value)
+        /// <param name="configurator">The configurator for the margin setting.</param>
+        public LinearGaugeGaugeAreaSettingsBuilder Margin(Action<LinearGaugeGaugeAreaMarginSettingsBuilder> configurator)
         {
-            Container.Margin = value;
+
+            Container.Margin.LinearGauge = Container.LinearGauge;
+            configurator(new LinearGaugeGaugeAreaMarginSettingsBuilder(Container.Margin));
+
             return this;
         }
 
