@@ -33,4 +33,5 @@
 - calendar.monthTemplate.contentId
 - calendar.monthTemplate.empty
 - calendar.monthTemplate.emptyId
+- lineargauge.transitions
 - radialgauge.transitions

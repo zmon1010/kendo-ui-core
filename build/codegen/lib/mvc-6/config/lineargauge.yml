@@ -1,0 +1,12 @@
+:options:
+    - :name: gaugeArea.background
+      :type: String
+      :description: The background of the gauge area. Any valid CSS color string will work here, including hex and rgb.
+      
+    - :name: !ruby/regexp '/.*dashType$/i'
+      :merge: true
+      :enum_type: ChartDashType
+
+    - :name: !ruby/regexp '/.*RenderAs$/i'
+      :merge: true
+      :enum_type: RenderingMode
