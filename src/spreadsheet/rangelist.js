@@ -214,10 +214,10 @@
 
     RangeList.prototype.value = function(start, end, value) {
         if (value === undefined) {
-            return this.tree.intersecting(new Range(start, end))[0].value;
+            return this.intersecting(start, end)[0].value;
         }
 
-        var ranges = this.tree.intersecting(new Range(start - 1, end + 1, value));
+        var ranges = this.intersecting(start - 1, end + 1);
 
         var firstRange = ranges[0], lastRange = ranges[ranges.length - 1];
 
@@ -239,21 +239,25 @@
 
         for (var i = 0, length = ranges.length; i < length; i++) {
             var range = ranges[i];
+            var rangeValue = range.value;
+            var rangeStart = range.start;
+            var rangeEnd = range.end;
+
             this.tree.remove(range);
 
-            if (range.start < start) {
-                if (range.value !== value) {
-                    this.tree.insert(new Range(range.start, start - 1, range.value));
+            if (rangeStart < start) {
+                if (rangeValue !== value) {
+                    this.tree.insert(new Range(rangeStart, start - 1, rangeValue));
                 } else {
-                    start = range.start;
+                    start = rangeStart;
                 }
             }
 
-            if (range.end > end) {
-                if (range.value !== value) {
-                    this.tree.insert(new Range(end + 1, range.end, range.value));
+            if (rangeEnd > end) {
+                if (rangeValue !== value) {
+                    this.tree.insert(new Range(end + 1, rangeEnd, rangeValue));
                 } else {
-                    end = range.end;
+                    end = rangeEnd;
                 }
             }
         }
