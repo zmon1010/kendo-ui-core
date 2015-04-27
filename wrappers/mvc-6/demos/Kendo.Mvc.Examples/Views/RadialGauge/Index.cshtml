@@ -28,7 +28,7 @@
 <div id="gauge-container">
     @(Html.Kendo().RadialGauge()
         .Name("gauge")
-        //.Pointer(pointer => pointer.Value(65))
+        .Pointer(pointer => pointer.Value(65))
         .Scale(scale => scale
             .MinorUnit(5)
             .StartAngle(-30)
