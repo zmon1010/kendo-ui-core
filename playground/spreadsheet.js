@@ -3,6 +3,29 @@ var ROWS = 1048576;
 var COLUMN_WIDTH = 64;
 var ROW_HEIGHT = 20;
 
+
+var widths = new kendo.spreadsheet.RangeList(0, COLUMNS, COLUMN_WIDTH, true);
+var heights = new kendo.spreadsheet.RangeList(0, ROWS, ROW_HEIGHT, true);
+var cellValues = new kendo.spreadsheet.RangeList(0, ROWS * COLUMNS - 1, "");
+var colors = new kendo.spreadsheet.RangeList(0, ROWS * COLUMNS - 1, "beige");
+
+
+console.profile("value");
+
+for (var i = 0, len = 1000; i < len; i++) {
+   cellValues.value(i, i, i);
+}
+
+console.profileEnd("value");
+
+colors.value(1, 50, "green");
+
+widths.value(1, 5, 120);
+widths.value(50, 50, 200);
+
+heights.value(1, 1, 40);
+heights.value(50, 50, 200);
+
 var wrapper = document.getElementById("wrapper");
 var container = document.getElementById("container");
 var area = document.getElementById("area");
@@ -12,99 +35,6 @@ var viewportWidth = wrapper.clientWidth;
 var viewportHeight = wrapper.clientHeight;
 container.style.width = viewportWidth + "px";
 container.style.height = viewportHeight + "px";
-
-var widths = new kendo.spreadsheet.RangeList(0, COLUMNS, COLUMN_WIDTH);
-var heights = new kendo.spreadsheet.RangeList(0, ROWS, ROW_HEIGHT);
-var cellValues = new kendo.spreadsheet.RangeList(0, ROWS * COLUMNS - 1, "");
-var colors = new kendo.spreadsheet.RangeList(0, ROWS * COLUMNS - 1, "beige");
-
-
-
-function Queue(capacity) {
-    this.capacity = capacity;
-    this.array = new Array(capacity);
-    this.length = 0;
-    this.headIndex = 0;
-    this.tailIndex = 0;
-}
-
-Queue.prototype = {
-    push: function(item) {
-        if (this.length == this.capacity) {
-            throw new Error("The queue is full.");
-        }
-
-        this.array[this.tailIndex] = item;
-        this.tailIndex = (this.tailIndex + 1) % this.capacity;
-
-        this.length++;
-
-    },
-    shift: function() {
-        if (this.length == 0) {
-            throw new Error("The queue is empty.");
-        }
-
-        var result = this.array[this.headIndex];
-
-        this.array[this.headIndex] = null;
-
-        this.headIndex = (this.headIndex + 1) % this.capacity;
-
-        this.length--;
-
-        return result;
-    }
-}
-
-function split(start, end) {
-    var queue = new Queue((end-start) >> 1);
-    queue.push([start, end]);
-
-    var result = [];
-    while (queue.length > 0) {
-        var interval = queue.shift();
-
-        var middle = (interval[0] + interval[1]) >> 1;
-
-        cellValues.value(middle, middle, middle);
-
-        if (middle + 1 <= interval[1]) {
-            queue.push([
-                middle+1,
-                interval[1]
-            ])
-        }
-
-        if (interval[0] <= middle - 1) {
-            queue.push([
-                interval[0],
-                middle - 1
-            ]);
-        }
-
-
-    }
-}
-
-console.time("value");
-
-for (var i = 0, len = 1000; i < len; i++) {
-   cellValues.value(i, i, i);
-}
-// split(0, len);
-
-console.timeEnd("value");
-
-console.log(splitCount, skewCount, insertCount, deleteCount);
-
-colors.value(1, 50, "green");
-
-widths.value(1, 5, 120);
-widths.value(50, 50, 200);
-
-heights.value(1, 1, 40);
-heights.value(50, 50, 200);
 
 var currentHeight = 0;
 
