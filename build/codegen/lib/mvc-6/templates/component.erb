@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI
         {
             var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
 
-            // Do custom rendering here
+            writer.Write(tag.ToString());
 
             base.WriteHtml(writer);
         }
