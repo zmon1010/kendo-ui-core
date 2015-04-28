@@ -56,7 +56,7 @@
 
     function onSelect(e) {
         if ("kendoConsole" in window) {
-            var dataItem = this.dataItem(e.item.index());
+            var dataItem = this.dataItem(e.item);
             kendoConsole.log("event :: select (" + dataItem.Text + " : " + dataItem.Value + ")" );
         }
     }
