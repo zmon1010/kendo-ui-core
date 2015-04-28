@@ -48,6 +48,15 @@
         equal(list.value(10, 20), "default");
     });
 
+    test("does not insert range with default value", 1, function() {
+        var list = new SparseRangeList(0, 100, "default");
+        list.value(10, 20, "default");
+
+        var values = list.intersecting(0, 100);
+
+        equal(values.length, 1);
+    });
+
     test("merges range when value is the same (start)", 4, function() {
         var list = new SparseRangeList(0, 100, "default");
         list.value(10, 20, "red");
@@ -107,5 +116,52 @@
         list.value(21, 30, "blue");
 
         equal(list.intersecting(0, 100)[1], red);
+    });
+
+    test("returns sorted indices for a given range", 4, function() {
+        var list = new SparseRangeList(0, 100, 0);
+        list.value(11, 11, 2);
+        list.value(12, 12, 1);
+        list.value(13, 13, 3);
+
+        var indices = list.sortedIndices(11, 13);
+        equal(indices.length, 3);
+        equal(indices[0], 1);
+        equal(indices[1], 0);
+        equal(indices[2], 2);
+    });
+
+    test("returns sorted indices for a given range with holes", 5, function() {
+        var list = new SparseRangeList(0, 100, 0);
+        list.value(11, 11, 2);
+        list.value(12, 12, 1);
+        list.value(14, 14, 3);
+
+
+        var start = 11;
+        var indices = list.sortedIndices(start, start + 3);
+
+        equal(indices.length, 4);
+
+        equal(indices[0], 13 - start);
+        equal(indices[1], 12 - start);
+        equal(indices[2], 11 - start);
+        equal(indices[3], 14 - start);
+    });
+
+    test("sorts a range from given indices", 4, function() {
+        var list = new SparseRangeList(0, 100, 0);
+        list.value(11, 11, 2);
+        list.value(12, 12, 1);
+        list.value(14, 14, 3);
+
+        list.sort(11, 14, [2, 1, 0, 3]);
+
+        var values = list.intersecting(0, 100);
+        equal(values.length, 5);
+
+        equal(values[1].value, 1);
+        equal(values[2].value, 2);
+        equal(values[3].value, 3);
     });
 })();

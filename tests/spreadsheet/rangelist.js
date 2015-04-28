@@ -111,4 +111,31 @@
 
         equal(list.values()[1], red);
     });
+
+    test("returns sorted indices for a given range", 4, function() {
+        var list = new RangeList(0, 100, 0);
+        list.value(11, 11, 2);
+        list.value(12, 12, 1);
+        list.value(13, 13, 3);
+
+        var indices = list.sortedIndices(11, 13);
+        equal(indices.length, 3);
+        equal(indices[0], 1);
+        equal(indices[1], 0);
+        equal(indices[2], 2);
+    });
+
+    test("sorts a range from given indices", 3, function() {
+        var list = new RangeList(0, 100, 0);
+        list.value(11, 11, 2);
+        list.value(12, 12, 1);
+        list.value(13, 13, 3);
+
+        list.sort(11, 13, [1, 0, 2]);
+
+        var values = list.values();
+        equal(values[1].value, 1);
+        equal(values[2].value, 2);
+        equal(values[3].value, 3);
+    });
 })();
