@@ -25,13 +25,13 @@ namespace Kendo.Mvc.UI
             {
                 Type = DataSourceType.Ajax,
                 ServerAggregates = true,
-                ServerFiltering = true,                
+                ServerFiltering = true,
                 ServerPaging = true,
                 ServerSorting = true
             };
             DataSource.Schema.Model = new TreeListModelDescriptor(typeof(T));
 
-//>> Initialization
+            //>> Initialization
         
             ColumnMenu = new TreeListColumnMenuSettings();
                 
@@ -60,7 +60,7 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
-//>> Fields
+        //>> Fields
         
         public bool? AutoBind { get; set; }
         
@@ -138,7 +138,7 @@ namespace Kendo.Mvc.UI
 
             Editable.InitializeEditor(ViewContext, ViewData);
 
-//>> Serialization
+            //>> Serialization
         
             if (AutoBind.HasValue)
             {
@@ -278,6 +278,12 @@ namespace Kendo.Mvc.UI
                         {
                             return match.Groups[0].Value.Replace("\\", "\\\\");
                         });
+
+                        editorHtml = editorHtml.Trim()
+                            .EscapeHtmlEntities()
+                            .Replace("\r\n", string.Empty)
+                            .Replace("</script>", "<\\/script>")
+                            .Replace("jQuery(\"#", "jQuery(\"\\#");
                     }
 
                     column.Editor = editorHtml;
