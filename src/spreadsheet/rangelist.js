@@ -280,21 +280,19 @@
         return result;
     }
 
+    function valueComparer(a, b) { return a.value - b.value; }
+
     RangeList.prototype.sortedIndices = function(start, end) {
         var result = this.expandedValues(start, end);
-
-        result.sort(function(a, b) { return a.value - b.value; });
-
-        return result.map(function(item) { return item.index; });
+        result.sort(valueComparer);
+        return result;
     }
 
     RangeList.prototype.sort = function(start, end, indices) {
         var values = this.expandedValues(start, end);
 
         for (var i = 0, len = indices.length; i < len; i++) {
-            var newIndex = i + start;
-            var value = values[indices[i]].value;
-            this.value(newIndex, newIndex, value);
+            this.value(i + start, i + start, values[indices[i].index].value);
         }
     }
 

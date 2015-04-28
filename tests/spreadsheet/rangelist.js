@@ -120,9 +120,9 @@
 
         var indices = list.sortedIndices(11, 13);
         equal(indices.length, 3);
-        equal(indices[0], 1);
-        equal(indices[1], 0);
-        equal(indices[2], 2);
+        equal(indices[0].index, 1);
+        equal(indices[1].index, 0);
+        equal(indices[2].index, 2);
     });
 
     test("sorts a range from given indices", 3, function() {
@@ -131,7 +131,7 @@
         list.value(12, 12, 1);
         list.value(13, 13, 3);
 
-        list.sort(11, 13, [1, 0, 2]);
+        list.sort(11, 13, [{index: 1}, {index: 0}, {index: 2}]);
 
         var values = list.values();
         equal(values[1].value, 1);

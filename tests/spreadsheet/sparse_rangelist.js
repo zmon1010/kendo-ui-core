@@ -126,9 +126,9 @@
 
         var indices = list.sortedIndices(11, 13);
         equal(indices.length, 3);
-        equal(indices[0], 1);
-        equal(indices[1], 0);
-        equal(indices[2], 2);
+        equal(indices[0].index, 1);
+        equal(indices[1].index, 0);
+        equal(indices[2].index, 2);
     });
 
     test("returns sorted indices for a given range with holes", 5, function() {
@@ -143,10 +143,10 @@
 
         equal(indices.length, 4);
 
-        equal(indices[0], 13 - start);
-        equal(indices[1], 12 - start);
-        equal(indices[2], 11 - start);
-        equal(indices[3], 14 - start);
+        equal(indices[0].index, 13 - start);
+        equal(indices[1].index, 12 - start);
+        equal(indices[2].index, 11 - start);
+        equal(indices[3].index, 14 - start);
     });
 
     test("sorts a range from given indices", 4, function() {
@@ -155,7 +155,7 @@
         list.value(12, 12, 1);
         list.value(14, 14, 3);
 
-        list.sort(11, 14, [2, 1, 0, 3]);
+        list.sort(11, 14, [{ index: 2}, {index: 1},{index: 0}, {index: 3}]);
 
         var values = list.intersecting(0, 100);
         equal(values.length, 5);
