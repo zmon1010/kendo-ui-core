@@ -22,7 +22,7 @@ Spreadsheet.prototype = {
         this.updateDisplay(f.sheet, f.col, f.row);
     },
 
-    _getRefCells: function(ref) {
+    getRefCells: function(ref) {
         if (Runtime.CellRef.is(ref)) {
             var cell = this._getCell(ref.sheet, ref.col, ref.row);
             return cell ? [ cell ] : [];
@@ -30,7 +30,7 @@ Spreadsheet.prototype = {
         if (Runtime.RangeRef.is(ref)) {
             ref = ref.intersect(this.getSheetBounds(ref.sheet));
             if (!Runtime.RangeRef.is(ref)) {
-                return this._getRefCells(ref);
+                return this.getRefCells(ref);
             }
             var a = [];
             for (var row = ref.topLeft.row; row <= ref.bottomRight.row; ++row) {
@@ -46,7 +46,7 @@ Spreadsheet.prototype = {
         if (Runtime.UnionRef.is(ref)) {
             var a = [];
             for (var i = 0; i < ref.refs.length; ++i) {
-                a = a.concat(this._getRefCells(ref.refs[i]));
+                a = a.concat(this.getRefCells(ref.refs[i]));
             }
             return a;
         }
@@ -63,21 +63,9 @@ Spreadsheet.prototype = {
             return ref.value;
         }
         if (ref instanceof Runtime.Ref) {
-            var data = self._getRefCells(ref).map(function(cell){
+            var data = self.getRefCells(ref).map(function(cell){
                 return cell.value;
             });
-            return Runtime.CellRef.is(ref) ? data[0] : data;
-        }
-        return ref;
-    },
-
-    getRefCells: function(ref) {
-        var self = this;
-        if (ref instanceof Spreadsheet.Cell) {
-            return ref;
-        }
-        if (ref instanceof Runtime.Ref) {
-            var data = self._getRefCells(ref);
             return Runtime.CellRef.is(ref) ? data[0] : data;
         }
         return ref;

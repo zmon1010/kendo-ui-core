@@ -254,12 +254,7 @@
         for (var i = 0; i < a.length; ++i) {
             var x = a[i];
             if (Ref.is(x)) {
-                x = context.ss.getRefCells(x);
-                if (Array.isArray(x)) {
-                    add(x);
-                } else if (x && x.formula) {
-                    formulas.push(x);
-                }
+                add(context.ss.getRefCells(x));
             }
         }
 
@@ -342,7 +337,7 @@
                 if (typeof right == "number" && left == null) {
                     left = 0;
                 }
-                if (typeof right == "number" && typeof left == "number") {
+                if (typeof right == typeof left) {
                     callback(func.call(this, left, right));
                 } else {
                     this.error(new CalcError("VALUE"));
@@ -606,6 +601,7 @@
                     ss: SS,
                     formula: formula,
                     resolve: function(val) {
+                        formula.value = val = cellValues(this, [ val ])[0];
                         SS.onFormula(formula, val);
                         if (callback) {
                             callback(val);
