@@ -210,12 +210,14 @@
         equal(values[0].value, "default");
     });
 
-    test("splits ranges on insert", 9, function() {
+    test("splits ranges on insert", 10, function() {
         var list = new RangeList(0, 100, "default");
 
         list.value(10, 20, "red");
 
         var values = list.values();
+
+        equal(values.length, 3);
 
         equal(values[0].start, 0);
         equal(values[0].end, 9);

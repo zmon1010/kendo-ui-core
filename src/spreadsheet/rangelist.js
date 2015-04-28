@@ -14,82 +14,82 @@
     NilNode.left = NilNode;
     NilNode.right = NilNode;
 
-    function skew(root) {
-        if (root.left.level === root.level) {
-            var temp = root;
-            root = root.left;
-            temp.left = root.right;
-            root.right = temp;
+    function skew(node) {
+        if (node.left.level === node.level) {
+            var temp = node;
+            node = node.left;
+            temp.left = node.right;
+            node.right = temp;
         }
 
-        return root;
+        return node;
     }
 
-    function split(root) {
-        if (root.right.right.level === root.level) {
-            var temp = root;
-            root = root.right;
-            temp.right = root.left;
-            root.left = temp;
-            root.level += 1;
-            // root.right = split(root.right);
+    function split(node) {
+        if (node.right.right.level === node.level) {
+            var temp = node;
+            node = node.right;
+            temp.right = node.left;
+            node.left = temp;
+            node.level += 1;
         }
 
-        return root;
+        return node;
     }
 
-    function insert(root, value) {
-       if (root === NilNode) {
+    function insert(node, value) {
+        if (node === NilNode) {
             return new RangeTreeNode(1, value, NilNode, NilNode);
-        } else if (root.value.start - value.start > 0) {
-            root.left = insert(root.left, value);
+        } else if (node.value.start - value.start > 0) {
+            node.left = insert(node.left, value);
         } else {
-            root.right = insert(root.right, value);
+            node.right = insert(node.right, value);
         }
-        return split(skew(root));
+
+        return split(skew(node));
     }
 
-    function remove(root, value) {
-        if (root === NilNode) {
-            return root;
+    function remove(node, value) {
+        if (node === NilNode) {
+            return node;
         }
 
-        var diff = root.value.start - value.start;
+        var diff = node.value.start - value.start;
         if (diff === 0) {
-            if (root.left !== NilNode && root.right !== NilNode) {
-                var heir = root.left;
+            if (node.left !== NilNode && node.right !== NilNode) {
+                var heir = node.left;
 
                 while (heir.right !== NilNode) {
                     heir = heir.right;
                 }
 
-                root.value = heir.value;
-                root.left = remove(root.left, root.value);
-            } else if (root.left === NilNode) {
-                root = root.right;
+                node.value = heir.value;
+                node.left = remove(node.left, node.value);
+            } else if (node.left === NilNode) {
+                node = node.right;
             } else {
-                root = root.left;
+                node = node.left;
             }
         } else if (diff > 0) {
-            root.left = remove(root.left, value);
+            node.left = remove(node.left, value);
         } else {
-            root.right = remove(root.right, value);
+            node.right = remove(node.right, value);
         }
 
-        if (root.left.level  < (root.level - 1) || root.right.level < (root.level - 1)) {
-            root.level -= 1;
-            if (root.right.level > root.level) {
-                root.right.level = root.level;
+        if (node.left.level < (node.level - 1) || node.right.level < (node.level - 1)) {
+            node.level -= 1;
+            if (node.right.level > node.level) {
+                node.right.level = node.level;
             }
 
-            root = skew(root);
-            root.right = skew(root.right);
-            root.right.right = skew(root.right.right);
-            root = split(root);
-            root.right = split(root.right);
+            node = skew(node);
+            node.right = skew(node.right);
+            node.right.right = skew(node.right.right);
+            node = split(node);
+            node.right = split(node.right);
         }
 
-        return root;
+        return node;
     }
 
     function Range(start, end, value) {
@@ -129,14 +129,14 @@
         return null;
     };
 
-    function values(root, result) {
-        if (root === NilNode) {
+    function values(node, result) {
+        if (node === NilNode) {
             return;
         }
 
-        values(root.left, result);
-        result.push(root.value);
-        values(root.right, result);
+        values(node.left, result);
+        result.push(node.value);
+        values(node.right, result);
     }
 
     RangeTree.prototype.values = function() {
@@ -145,15 +145,15 @@
         return result;
     }
 
-    function intersecting(root, range, ranges) {
-        if (root === NilNode) {
+    function intersecting(node, range, ranges) {
+        if (node === NilNode) {
             return;
         }
 
-        var value = root.value;
+        var value = node.value;
 
         if (range.start < value.start) {
-            intersecting(root.left, range, ranges);
+            intersecting(node.left, range, ranges);
         }
 
         if (value.intersects(range)) {
@@ -161,7 +161,7 @@
         }
 
         if (range.end > value.end) {
-            intersecting(root.right, range, ranges);
+            intersecting(node.right, range, ranges);
         }
     }
 
