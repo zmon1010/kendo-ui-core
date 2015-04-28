@@ -262,14 +262,12 @@
     }
 
     RangeList.prototype.expandedValues = function(start, end) {
-
         var ranges = this.intersecting(start, end);
         var result = [];
 
         var rangeIndex = 0;
 
         for (var i = start; i <= end; i++) {
-
             while (ranges[rangeIndex].end < i) {
                 rangeIndex ++;
             }
@@ -289,6 +287,11 @@
     }
 
     RangeList.prototype.sort = function(start, end, indices) {
+        if (this.intersecting(start, end).length === 1) {
+            // console.log("skipping");
+            return;
+        }
+
         var values = this.expandedValues(start, end);
 
         for (var i = 0, len = indices.length; i < len; i++) {

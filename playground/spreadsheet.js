@@ -11,10 +11,54 @@ var colors = new kendo.spreadsheet.RangeList(0, ROWS * COLUMNS - 1, "beige");
 
 
 
-for (var i = 0, len = 1000 * 1000; i < len; i++) {
-   cellValues.value(len - i, len - i, i);
+console.profile("value");
+for (var i = 0, len = 1000; i < len; i++) {
+    for (var j = 0, len = 1000; j < len; j++) {
+        var idx = i * ROWS + j;
+        cellValues.value(idx, idx, 1000000 - ((i + 1)  * (j + 1)));
+    }
 }
+console.log("last cell", idx);
 
+console.profileEnd("value");
+
+$("button").click(function() {
+    var address = [0, 0];
+    var length = 999;
+
+    var start = address[0] * ROWS + address[1];
+    var end = start + length;
+
+    var node = cellValues.tree.root;
+    while (node.right.level !== 0) {
+        node = node.right;
+    }
+
+
+    var lastValueAddress = node.value.end;
+
+    console.log("last value found", lastValueAddress);
+
+    console.profile("sort")
+
+    var indices = cellValues.sortedIndices(start, end);
+
+    for (var i = 0, len = COLUMNS; i < len; i++) {
+        start = i * ROWS + address[1];
+
+        if (start >= lastValueAddress) {
+            console.log("gone in last range", start);
+            break;
+        }
+
+        cellValues.sort(start, start + length, indices);
+    }
+
+    drawTable(0, viewportWidth, 0, viewportHeight);
+    console.profileEnd("sort");
+});
+
+/*
 var indices = cellValues.sortedIndices(0, len);
 
 console.profile("sort1");
@@ -22,6 +66,7 @@ cellValues.sort(0, len, indices);
 console.profileEnd("sort1");
 
 colors.value(1, 50, "green");
+*/
 
 widths.value(1, 5, 120);
 widths.value(50, 50, 200);
@@ -240,4 +285,3 @@ function scroll() {
 
     drawTable(left, right, top, bottom);
 }
-
