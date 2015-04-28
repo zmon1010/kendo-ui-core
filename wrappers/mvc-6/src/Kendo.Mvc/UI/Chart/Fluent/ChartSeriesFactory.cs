@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
@@ -20,6 +21,21 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// Adds an area series
+        /// </summary>
+        public virtual ChartSeriesBuilder Area(IEnumerable data)
+        {
+            var item = new ChartSeries()
+            {
+                Type = "area",
+                Data = data
+            };
+
+            item.Chart = Chart;
+            Container.Add(item);
+
+            return new ChartSeriesBuilder(item);
+        }
     }
 }
