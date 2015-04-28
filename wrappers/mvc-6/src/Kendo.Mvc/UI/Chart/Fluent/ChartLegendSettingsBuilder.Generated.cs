@@ -153,16 +153,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The positions of the chart legend.The supported values are:
-        /// </summary>
-        /// <param name="value">The value for Position</param>
-        public ChartLegendSettingsBuilder Position(string value)
-        {
-            Container.Position = value;
-            return this;
-        }
-
-        /// <summary>
         /// If set to true the legend items will be reversed.Available in versions 2013.3.1306 and later.
         /// </summary>
         /// <param name="value">The value for Reverse</param>
@@ -198,6 +188,16 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartLegendSettingsBuilder Width(double value)
         {
             Container.Width = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the legend position.
+        /// </summary>
+        /// <param name="value">The value for Position</param>
+        public ChartLegendSettingsBuilder Position(ChartLegendPosition value)
+        {
+            Container.Position = value;
             return this;
         }
 

@@ -67,6 +67,31 @@
       :merge: true
       :type: object
 
+    - :name: legend.position
+      :description: Specifies the legend position.
+      :type: String
+      :enum_type: ChartLegendPosition
+      :values:
+          - :value: top
+            :member: Top
+            :description: The legend is positioned on the top
+
+          - :value: bottom
+            :member: Bottom
+            :description: The legend is positioned on the bottom
+
+          - :value: left
+            :member: Left
+            :description: The legend is positioned on the left
+
+          - :value: right
+            :member: Right
+            :description: The legend is positioned on the right
+
+          - :value: custom
+            :member: Custom
+            :description: The legend is positioned using OffsetX and OffsetY
+
     - :name: plotArea.border.dashType
       :description: Specifies the line dash type.
       :type: String

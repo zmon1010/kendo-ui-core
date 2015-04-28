@@ -35,13 +35,13 @@ namespace Kendo.Mvc.UI
 
         public ChartLegendPaddingSettings Padding { get; } = new ChartLegendPaddingSettings();
 
-        public string Position { get; set; }
-
         public bool? Reverse { get; set; }
 
         public bool? Visible { get; set; }
 
         public double? Width { get; set; }
+
+        public ChartLegendPosition? Position { get; set; }
 
 
         public Chart Chart { get; set; }
@@ -116,11 +116,6 @@ namespace Kendo.Mvc.UI
                 settings["padding"] = padding;
             }
 
-            if (Position?.HasValue() == true)
-            {
-                settings["position"] = Position;
-            }
-
             if (Reverse.HasValue)
             {
                 settings["reverse"] = Reverse;
@@ -134,6 +129,11 @@ namespace Kendo.Mvc.UI
             if (Width.HasValue)
             {
                 settings["width"] = Width;
+            }
+
+            if (Position.HasValue)
+            {
+                settings["position"] = Position?.Serialize();
             }
 
             return settings;
