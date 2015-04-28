@@ -177,7 +177,7 @@
         tree.insert(new Range(30, 39));
         tree.insert(new Range(40, 49));
 
-        var found = tree.intersecting(new Range(15, 39));
+        var found = tree.intersecting(15, 39);
         equal(found.length, 3);
         equal(found[0].start, 10);
         equal(found[1].end, 29);
