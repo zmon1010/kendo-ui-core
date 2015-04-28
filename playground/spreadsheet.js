@@ -6,13 +6,13 @@ var ROW_HEIGHT = 20;
 
 var widths = new kendo.spreadsheet.RangeList(0, COLUMNS, COLUMN_WIDTH, true);
 var heights = new kendo.spreadsheet.RangeList(0, ROWS, ROW_HEIGHT, true);
-var cellValues = new kendo.spreadsheet.RangeList(0, ROWS * COLUMNS - 1, "");
+var cellValues = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "");
 var colors = new kendo.spreadsheet.RangeList(0, ROWS * COLUMNS - 1, "beige");
 
 
 console.profile("value");
 
-for (var i = 0, len = 1000 * 1000; i < len; i++) {
+for (var i = 0, len = 1000 * 1000; i < len; i+= 2) {
    cellValues.value(len - i, len - i, len - i);
 }
 
