@@ -1,5 +1,180 @@
 [
-    {
+  {
+    "text": "Area Charts",
+    "name": "area-charts",
+    "pro": "true",
+    "api": "dataviz/chart",
+    "documentation": {
+       "kendo-ui": "getting-started/dataviz/chart/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/chart/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/chart/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/charts",
+       "aspnet-mvc": "aspnet-mvc/chart",
+       "jsp-ui": "jsp/chart",
+       "php-ui": "php/chart"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/charts",
+       "aspnet-mvc": "aspnet-mvc/chart",
+       "jsp-ui": "jsp/chart",
+       "php-ui": "php/chart"
+    },
+    "spriteCssClass": "chartAreaIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "area-charts/index",
+        "title": {
+            "kendo-ui": "Kendo UI jQuery-based Area Charts Demo",
+            "aspnet-mvc": "ASP.NET MVC Area Charts control | UI for ASP.NET MVC Demos"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates how Kendo UI Area Charts component can be added to your web page in order to visualize quantitive data. Learn how to define your area chart.",
+            "aspnet-mvc": "This example shows how to use Telerik ASP.NET MVC Area Charts extension to visualize filled areas on a diagram. "
+        }
+      },
+      {
+        "text": "Stacked area",
+        "url": "area-charts/stacked-area",
+        "title": {
+            "kendo-ui": "Kendo UI jQuery stacked area chart example",
+            "aspnet-mvc": "ASP.NET MVC stacked area chart example"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how the stacked area is created with KendoChart. Learn how to visualize series that should be stacked in the chart.",
+            "aspnet-mvc": "Learn how to visualize series that should be stacked in an ASP.NET MVC chart."
+        }
+      },
+      {
+        "text": "100% Stacked area",
+        "url": "area-charts/stacked100-area",
+        "title": {
+            "kendo-ui": "Kendo UI jQuery 100% stacked area chart example",
+            "aspnet-mvc": "ASP.NET MVC 100% stacked area chart example"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how a 100% stacked area chart is created with KendoChart. Learn how to visualize series that should be stacked to 100% in the chart.",
+            "aspnet-mvc": "Learn how to visualize series that should be stacked to 100% in an ASP.NET MVC chart."
+        }
+      },
+      {
+        "text": "Stepped Area",
+        "url": "area-charts/step-area",
+        "title": {
+            "kendo-ui": "Example of using Kendo UI Area Chart with step line style",
+            "aspnet-mvc": "Stepped area demo for Telerik ASP.NET MVC Area Charts"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to configure step line style for the Kendo UI Area Chart",
+            "aspnet-mvc": "In this example we illustrate how stepped area can be configured for Telerik Area charts for ASP.NET MVC."
+        }
+      },
+      {
+        "text": "Smooth Area",
+        "url": "area-charts/smooth-area",
+        "title": {
+            "kendo-ui": "Example of using Kendo UI Area Chart with smooth line (spline) style",
+            "aspnet-mvc": "Configure smooth line (spline) style for ASP.NET MVC Area Chart"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to configure smooth line (spline) style for the Kendo UI Area Chart",
+            "aspnet-mvc": "This demo shows how to configure smooth line (spline) style for the ASP.NET MVC Area Chart."
+        }
+      },
+      {
+        "text": "Date axis",
+        "url": "area-charts/date-axis",
+        "title": {
+            "kendo-ui": "Date axis sample for Kendo UI Area Charts",
+            "aspnet-mvc": "Date axis sample for ASP.NET MVC Area Charts"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how you can set specific base date units in your Kendo UI Area Chart to help you visualize a seasonal trend in your app.",
+            "aspnet-mvc": "This demo shows how you can set specific base date units in your ASP.NET MVC Area Chart to help you visualize a seasonal trend in your app."
+        }
+      },
+      {
+        "text": "Logarithmic axis",
+        "url": "area-charts/logarithmic-axis",
+        "title": {
+            "kendo-ui": "Logarithmic axis sample for Kendo UI Area Charts",
+            "aspnet-mvc": "Logarithmic axis sample for ASP.NET MVC Area Charts"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how you can use a logarithmic axis for the Kendo UI Area Chart.",
+            "aspnet-mvc": "This demo shows how you can use a logarithmic axis for the ASP.NET MVC Area Chart."
+        },
+        "requiresServer": "true"
+      },
+      {
+        "text": "Multi-axis",
+        "url": "area-charts/multiple-axes",
+        "title": {
+            "kendo-ui": "Multi-axis demo for Kendo UI Area Charts component",
+            "aspnet-mvc": "Multi-axis demo for ASP.NET MVC Area Chart"
+        },
+        "meta": {
+            "kendo-ui": "Ensure the best performance of HTML5 charting and visualize data on multiple axis with Kendo UI Area Charts  in order to provide solid business reports for end users.",
+            "aspnet-mvc": "Leverage the best charting performance and visualize data on multiple axis with ASP.NET MVC Area Charts to provide solid business reports for end users."
+        }
+      },
+      {
+        "text": "Error Bars",
+        "url": "area-charts/error-bars",
+        "title": {
+            "kendo-ui": "Example of using ErrorBars for Kendo UI Area Chart",
+            "aspnet-mvc": "Example of using ErrorBars for ASP.NET MVC Area Chart"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how to use ErrorBars for Kendo UI Area Chart",
+            "aspnet-mvc": "This demo shows how to use ErrorBars for ASP.NET MVC Area Chart"
+        }
+      },
+      {
+        "text": "Binding to remote data",
+        "url": "area-charts/remote-data-binding",
+        "title": {
+            "kendo-ui": "Example of jQuery & HTML5 Kendo UI Area Chart bound to remote data",
+            "aspnet-mvc": "Example of ASP.NET MVC Area Chart bound to remote data"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how Kendo UI Area Chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data.",
+            "aspnet-mvc": "See how the ASP.NET MVC Area Chart can be bound to remote data by configuring the DataSource transport which defines how the DataSource interacts with remote data."
+        },
+        "requiresServer": "true"
+      },
+      {
+        "text": "Binding to local data",
+        "url": "area-charts/local-data-binding",
+        "title": {
+            "kendo-ui": "Kendo UI Area Charts binding to local data example",
+            "aspnet-mvc": "ASP.NET MVC Area Charts binding to local data example"
+        },
+        "meta": {
+            "kendo-ui": "This sample demonstrates that Kendo UI HTML5 chart can use existing objects as data points.",
+            "aspnet-mvc": "This sample demonstrates how ASP.NET MVC Area Chart can use existing objects as data points."
+        }
+      },
+      {
+        "text": "Binding to grouped data",
+        "url": "area-charts/grouped-data",
+        "title": {
+            "kendo-ui": "Kendo UI Area Charts | Example of binding to grouped data",
+            "aspnet-mvc": "ASP.NET MVC Area Charts | Example of binding to grouped data"
+        },
+        "meta": {
+            "kendo-ui": "With this example you will learn how to bind grouping data to Kendo UI Area Charts.",
+            "aspnet-mvc": "With this example you will learn how to bind grouping data to ASP.NET MVC Area Charts."
+        },
+        "requiresServer": "true"
+      }
+    ],
+    "category": "Charts"
+  },
+  {
         "text": "Calendar",
         "name": "calendar",
         "api": "web/calendar",
