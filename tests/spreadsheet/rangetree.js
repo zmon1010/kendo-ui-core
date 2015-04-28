@@ -1,10 +1,9 @@
 (function() {
     var RangeTree = kendo.spreadsheet.RangeTree;
-    var RangeList = kendo.spreadsheet.RangeList;
     var Range = kendo.spreadsheet.Range;
 
     var tree;
-    module("aa tree", {
+    module("range tree", {
         setup: function() {
             tree = new RangeTree();
         }
@@ -95,23 +94,9 @@
         equal(values[2].value, 3);
     });
 
-    /*
-     test("benchmark", 0, function() {
-     var tree = new RangeTree();
-
-     for (var i = 0; i < 1e5; i ++) {
-     tree.insert(parseInt(Math.sin(i) * 10000));
-     }
-
-     for (var i = 0; i < 1e5; i ++) {
-     tree.remove(parseInt(Math.sin(i) * 10000));
-     }
-     });
-    */
-
     module("Range");
 
-    test("range works in AA tree", function() {
+    test("range works in range tree", function() {
         var tree = new RangeTree();
         var range1 = new Range(0, 9);
         var range2 = new Range(10, 19);
@@ -122,7 +107,7 @@
         equal(tree.root.right.value, range2);
     });
 
-    test("range works in AA tree in reverse insert mode", function() {
+    test("range works in range tree in reverse insert mode", function() {
         var tree = new RangeTree();
         var range1 = new Range(0, 9);
         var range2 = new Range(10, 19);
@@ -162,7 +147,7 @@
         ok(range1.intersects(range2));
     });
 
-    module("AA tree search", {});
+    module("range tree search", {});
 
     test("find finds the correct range", 3, function() {
         var tree = new RangeTree();
@@ -197,116 +182,5 @@
         equal(found[0].start, 10);
         equal(found[1].end, 29);
         equal(found[2].end, 39);
-    });
-
-    module("Compressed list");
-
-    test("starts with a single default range", function() {
-        var list = new RangeList(0, 100, "default");
-
-        var values = list.values();
-        equal(values[0].start, 0);
-        equal(values[0].end, 100);
-        equal(values[0].value, "default");
-    });
-
-    test("splits ranges on insert", 10, function() {
-        var list = new RangeList(0, 100, "default");
-
-        list.value(10, 20, "red");
-
-        var values = list.values();
-
-        equal(values.length, 3);
-
-        equal(values[0].start, 0);
-        equal(values[0].end, 9);
-        equal(values[0].value, "default");
-
-        equal(values[1].start, 10);
-        equal(values[1].end, 20);
-        equal(values[1].value, "red");
-
-        equal(values[2].start, 21);
-        equal(values[2].end, 100);
-        equal(values[2].value, "default");
-    });
-
-    test("replaces range on match", 4, function() {
-        var list = new RangeList(0, 100, "default");
-        list.value(0, 100, "red");
-
-        var values = list.values();
-
-        equal(values.length, 1);
-        equal(values[0].start, 0);
-        equal(values[0].end, 100);
-        equal(values[0].value, "red");
-    });
-
-    test("returns value for a given range", 1, function() {
-        var list = new RangeList(0, 100, "default");
-        equal(list.value(10, 20), "default");
-    });
-
-    test("merges range when value is the same (start)", 4, function() {
-        var list = new RangeList(0, 100, "default");
-        list.value(10, 20, "red");
-        list.value(15, 30, "red");
-
-        var values = list.values();
-
-        equal(values.length, 3);
-        equal(values[1].start, 10);
-        equal(values[1].end, 30);
-        equal(values[1].value, "red");
-    });
-
-    test("merges range when value is the same (end)", 4, function() {
-        var list = new RangeList(0, 100, "default");
-        list.value(10, 20, "red");
-        list.value(5, 15, "red");
-
-        var values = list.values();
-
-        equal(values.length, 3);
-        equal(values[1].start, 5);
-        equal(values[1].end, 20);
-        equal(values[1].value, "red");
-    });
-
-    test("merges neighbour ranges with same value (end)", 4, function() {
-        var list = new RangeList(0, 100, "default");
-        list.value(10, 20, "red");
-        list.value(21, 30, "red");
-
-        var values = list.values();
-
-        equal(values.length, 3);
-        equal(values[1].start, 10);
-        equal(values[1].end, 30);
-        equal(values[1].value, "red");
-    });
-
-    test("merges neighbour ranges with same value (start)", 4, function() {
-        var list = new RangeList(0, 100, "default");
-        list.value(21, 30, "red");
-        list.value(10, 20, "red");
-
-        var values = list.values();
-
-        equal(values.length, 3);
-        equal(values[1].start, 10);
-        equal(values[1].end, 30);
-        equal(values[1].value, "red");
-    });
-
-    test("merges neighbour ranges with same value (end)", 1, function() {
-        var list = new RangeList(0, 100, "default");
-        list.value(10, 20, "red");
-        var red = list.values()[1];
-        list.value(21, 30, "blue");
-
-        equal(list.values()[1], red);
     });
 })();

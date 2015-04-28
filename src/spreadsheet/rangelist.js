@@ -261,9 +261,95 @@
         this.tree.insert(new Range(start, end, value));
     }
 
+    function SparseRangeList(start, end, value) {
+        this.tree = new RangeTree();
+        this.range = new Range(start, end, value);
+    }
+
+    SparseRangeList.prototype.intersecting = function(start, end) {
+        var ranges = this.tree.intersecting(new Range(start, end));
+        var result = [];
+
+        if (!ranges.length) {
+            return [this.range];
+        }
+
+        for (var i = 0, len = ranges.length; i < len; i++) {
+            var range = ranges[i];
+            if (range.start > start) {
+                result.push(new Range(start, range.start - 1, this.range.value));
+            }
+
+            result.push(range);
+            start = range.end + 1;
+        }
+
+        if (range.end < end) {
+            result.push(new Range(range.end + 1, end, this.range.value));
+        }
+
+        return result;
+    }
+
+    SparseRangeList.prototype.value = function(start, end, value) {
+        if (value === undefined) {
+            return this.intersecting(start, end)[0].value;
+        }
+
+        var ranges = this.tree.intersecting(new Range(start - 1, end + 1));
+
+        if (ranges.length) {
+            var firstRange = ranges[0], lastRange = ranges[ranges.length - 1];
+
+            if (firstRange.end < start) {
+                if (firstRange.value === value) {
+                    start = firstRange.start;
+                } else {
+                    ranges.shift();
+                }
+            }
+
+            if (lastRange.start > end) {
+                if (lastRange.value === value) {
+                    end = lastRange.end;
+                } else {
+                    ranges.pop();
+                }
+            }
+
+            for (var i = 0, length = ranges.length; i < length; i++) {
+                var range = ranges[i];
+                var rangeValue = range.value;
+                var rangeStart = range.start;
+                var rangeEnd = range.end;
+
+                this.tree.remove(range);
+
+                if (rangeStart < start) {
+                    if (rangeValue !== value) {
+                        this.tree.insert(new Range(rangeStart, start - 1, rangeValue));
+                    } else {
+                        start = rangeStart;
+                    }
+                }
+
+                if (rangeEnd > end) {
+                    if (rangeValue !== value) {
+                        this.tree.insert(new Range(end + 1, rangeEnd, rangeValue));
+                    } else {
+                        end = rangeEnd;
+                    }
+                }
+            }
+        }
+
+        this.tree.insert(new Range(start, end, value));
+    }
+
     kendo.spreadsheet = {
         RangeTree: RangeTree,
         RangeList: RangeList,
+        SparseRangeList: SparseRangeList,
         Range: Range
     };
 
