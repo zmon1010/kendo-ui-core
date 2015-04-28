@@ -12,7 +12,15 @@ namespace Kendo.Mvc.UI.Fluent
         {
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// The chart title.
+        /// </summary>
+        /// <param name="title">The value of the Chart title</param>
+        public ChartBuilder Title(string title)
+        {
+            Container.Title.Text = title;
+            return this;
+        }
     }
 }
 
