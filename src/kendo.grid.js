@@ -267,6 +267,40 @@ var __meta__ = {
             }
         },
 
+        itemIndex: function(row) {
+            var rangeStart = this._rangeStart || this.dataSource.skip() || 0;
+            return rangeStart + row.index();
+        },
+
+        position: function(index) {
+            var rangeStart = this._rangeStart || this.dataSource.skip() || 0;
+            if (index > rangeStart) {
+                return index - rangeStart + 1;
+            }
+
+            return rangeStart - index - 1;
+        },
+
+        scrollIntoView: function(row) {
+            var element = this.verticalScrollbar[0];
+            var containerHeight = element.clientHeight;
+            var containerScroll = element.scrollTop;
+            var rangeStart = this._rangeStart || this.dataSource.skip() || 0;
+            var elementOffset = (rangeStart + row.index()) * this.itemHeight;
+            var elementHeight = row[0].offsetHeight;
+
+            if (elementOffset + elementHeight > containerHeight + containerScroll) {
+
+                if (elementHeight <= containerHeight) {
+                    element.scrollTop = (elementOffset + elementHeight - containerHeight);
+                } else {
+                    element.scrollTop = elementOffset;
+                }
+            } else if (containerScroll > elementOffset) {
+                element.scrollTop = elementOffset - this.itemHeight;
+            }
+        },
+
         _fetch: function(firstItemIndex, lastItemIndex, scrollingUp) {
             var that = this,
                 dataSource = that.dataSource,
@@ -3942,11 +3976,8 @@ var __meta__ = {
             //adjust scroll vertically
             if (isInContent) {
                 if (this.options.scrollable.virtual) {
-                    var index = row.index();
-                    var height = index * this._averageRowHeight();
-                    if (verticalContainer.clientHeight < height) {
-                        verticalContainer.scrollTop += this._averageRowHeight();
-                    }
+                    this._rowVirtualIndex = this.virtualScrollable.itemIndex(row);
+                    this.virtualScrollable.scrollIntoView(row);
                 } else {
                     this._scrollTo(this._relatedRow(row)[0], verticalContainer);
                 }
@@ -7060,12 +7091,10 @@ var __meta__ = {
                 that._removeCurrent();
                 if (!isCurrentInHeader) {
 
-                    var rowHeight = this._averageRowHeight();
-                    var height = this.virtualScrollable.element.innerHeight();
-                    var firstItemIndex = math.max(math.floor(this.virtualScrollable.element.scrollTop() / rowHeight), 0);
-                    var lastItemIndex = math.max(firstItemIndex + math.floor(height / rowHeight), 0);
-                    var row = this.table.find("tr").eq(lastItemIndex).find("td").first();
-                    this.current(row);
+                    var index = this.virtualScrollable.position(this._rowVirtualIndex);
+
+                    var td = this.table.find("tr").eq(index).find("td").first();
+                    this.current(td);
                     //that.current(that.table.add(that.lockedTable).find(FIRSTNAVITEM).first());
                 } else {
                     that.current(that.thead.find("th:not(.k-group-cell)").eq(currentIndex));
