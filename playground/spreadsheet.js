@@ -10,13 +10,16 @@ var cellValues = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, ""
 var colors = new kendo.spreadsheet.RangeList(0, ROWS * COLUMNS - 1, "beige");
 
 
-console.profile("value");
 
-for (var i = 0, len = 1000 * 1000; i < len; i+= 2) {
-   cellValues.value(len - i, len - i, len - i);
+for (var i = 0, len = 1000 * 1000; i < len; i++) {
+   cellValues.value(len - i, len - i, i);
 }
 
-console.profileEnd("value");
+var indices = cellValues.sortedIndices(0, len);
+
+console.profile("sort1");
+cellValues.sort(0, len, indices);
+console.profileEnd("sort1");
 
 colors.value(1, 50, "green");
 
