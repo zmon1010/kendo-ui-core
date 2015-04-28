@@ -12,8 +12,8 @@ var colors = new kendo.spreadsheet.RangeList(0, ROWS * COLUMNS - 1, "beige");
 
 console.profile("value");
 
-for (var i = 0, len = 1000; i < len; i++) {
-   cellValues.value(i, i, i);
+for (var i = 0, len = 1000 * 1000; i < len; i++) {
+   cellValues.value(len - i, len - i, len - i);
 }
 
 console.profileEnd("value");
@@ -163,16 +163,18 @@ function drawTable(left, right, top, bottom) {
         trs.push(tree.element("tr", attr));
     }
 
-    var startCellIndex = columnStart * ROWS + rowStart;
-    var endCellIndex = columnEnd * ROWS + rowEnd;
 
-
-    var values = cellValues.intersecting(startCellIndex, endCellIndex);
-    var backgrounds = colors.intersecting(startCellIndex, endCellIndex);
-
-    var vIndex = 0, bIndex = 0, cwIndex = 0;
+    var cwIndex = 0;
 
     for (ci = columnStart; ci <= columnEnd; ci ++) {
+        var startCellIndex = ci * ROWS + rowStart;
+        var endCellIndex = ci * ROWS + rowEnd;
+
+        var values = cellValues.intersecting(startCellIndex, endCellIndex);
+        var backgrounds = colors.intersecting(startCellIndex, endCellIndex);
+
+        var vIndex = 0, bIndex = 0;
+
         while (columnWidths[cwIndex].end < ci) {
             cwIndex ++;
         }
