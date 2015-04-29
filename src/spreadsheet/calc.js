@@ -11,7 +11,6 @@
     /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true, -W054 */
     /* global console */
 
-    var $ = kendo.jQuery;
     var exports = kendo.spreadsheet.calc;
     var Runtime = exports.Runtime;
 
@@ -41,6 +40,10 @@
     var TRUE = { type: "bool", value: true };
     var FALSE = { type: "bool", value: false };
 
+    var REL_COL = 1;
+    var REL_ROW = 2;
+    var REL_SHT = 4;
+
     function getcol(str) {
         str = str.toUpperCase();
         for (var col = 0, i = 0; i < str.length; ++i) {
@@ -58,41 +61,43 @@
         var m;
         if ((m = /^((.+)!)?(\$)?([A-Z]+)(\$)?([0-9]+)$/i.exec(name))) {
             var sheet  = m[1] && m[2];
-            var relcol = m[3] ? 0 : 1, col = getcol(m[4]);
-            var relrow = m[5] ? 0 : 2, row = getrow(m[6]);
-            return {
-                type  : "ref",
-                ref   : "cell",
-                sheet : sheet,
-                col   : col,
-                row   : row,
-                rel   : relcol | relrow
-            };
+            var relcol = m[3] ? 0 : REL_COL, col = getcol(m[4]);
+            var relrow = m[5] ? 0 : REL_ROW, row = getrow(m[6]);
+            var relsht = sheet ? 0 : REL_SHT;
+            return new Runtime.makeCellRef(sheet, col, row, relcol | relrow | relsht);
         }
         if ((m = /^((.*)!)?(.+)$/i.exec(name))) {
-            return {
-                type  : "ref",
-                ref   : "name",
-                sheet : m[1] && m[2],
-                name  : m[3]
-            };
+            var sheet  = m[1] && m[2];
+            var name = m[3];
+            return new Runtime.makeNameRef(sheet, name);
         }
     }
 
     // "Sheet1", 2, 3 -> "Sheet1!C2"
-    function make_reference(sheet, col, row, abs) {
+    function make_reference(sheet, col, row, rel) {
         var aa = "";
-        while (col > 0) {
-            aa = String.fromCharCode(64 + col % 26) + aa;
-            col = Math.floor(col / 26);
+
+        if (!isFinite(row)) {
+            row = "";
         }
-        if (abs & 2) {
+        else if (rel != null && 0 === rel & REL_ROW) {
             row = "$" + row;
         }
-        if (abs & 1) {
-            aa = "$" + aa;
+
+        if (!isFinite(col)) {
+            col = "";
         }
-        if (sheet) {
+        else {
+            while (col > 0) {
+                aa = String.fromCharCode(64 + col % 26) + aa;
+                col = Math.floor(col / 26);
+            }
+            if (rel != null && 0 === rel & REL_COL) {
+                aa = "$" + aa;
+            }
+        }
+
+        if (sheet && (rel == null || 0 === rel & REL_SHT)) {
             return sheet + "!" + aa + row;
         } else {
             return aa + row;
@@ -100,6 +105,9 @@
     }
 
     function make_row(sheet, row, abs) {
+        if (!isFinite(row)) {
+            return "";
+        }
         if (abs) {
             row = "$" + row;
         }
@@ -111,16 +119,15 @@
     }
 
     function make_col(sheet, col, abs) {
+        if (!isFinite(col)) {
+            return "";
+        }
         var aa = "";
         while (col > 0) {
             aa = String.fromCharCode(64 + col % 26) + aa;
             col = Math.floor(col / 26);
         }
         return make_row(sheet, aa, abs);
-    }
-
-    function adjust(num, delta, should) {
-        return should ? num + delta : num;
     }
 
     function parse(sheet, col, row, input) {
@@ -171,15 +178,12 @@
             }
             var ref = parse_reference(tok.value);
             if (ref) {
-                // update relative references
-                if (ref.rel & 1) { // relative col
-                    ref.col -= col;
+                if (ref.sheet == null) {
+                    ref.sheet = sheet;
                 }
-                if (ref.rel & 2) { // relative row
-                    ref.row -= row;
-                }
+                return ref;
             }
-            return ref || tok;
+            return tok;
         }
 
         function parse_atom(commas) {
@@ -226,7 +230,7 @@
 
         function maybe_call(exp) {
             if (is("punc", "(")) {
-                if (exp.type != "ref" && exp.rel != "name") {
+                if (exp.type != "ref" || exp.ref != "name") {
                     input.croak("Expecting function name");
                 }
                 var args = [];
@@ -292,41 +296,28 @@
         //
         // This function will only deal with constant ranges like:
         //
-        // - A1:B3 (ref: "range")
-        // - A:A   (ref: "col")
-        // - 2:2   (ref: "row")
+        // - A1:B3
+        // - A:A
+        // - 2:2
+
         function maybe_range() {
             return input.ahead(3, function(a, b, c){
                 if ((a.type == "sym" || a.type == "num") &&
                     (b.type == "op" && b.value == ":") &&
                     (c.type == "sym" || c.type == "num"))
                 {
-                    var left = getref(a);
-                    var right = getref(c);
-                    if (left != null && right != null) {
-                        if (left.ref != right.ref) {
-                            input.croak("Incompatible references in range");
-                        }
-                        return {
-                            type  : "ref",
-                            ref   : "range",
-                            sheet : right.sheet = left.sheet,
-                            left  : corner(left, right, 0),
-                            right : corner(left, right, 1)
-                        };
+                    var topLeft = getref(a, true);
+                    var bottomRight = getref(c, false);
+                    if (topLeft != null && bottomRight != null) {
+                        return Runtime.makeRangeRef(topLeft, bottomRight);
                     }
                 }
             });
         }
 
-        function getref(tok) {
+        function getref(tok, isFirst) {
             if (tok.type == "num" && tok.value == tok.value|0) {
-                return {
-                    type  : "ref",
-                    ref   : "row",
-                    rel   : true,
-                    row   : tok.value - row
-                };
+                return Runtime.makeCellRef(sheet, isFirst ? -Infinity : +Infinity, tok.value, 2 | 4);
             }
             var ref = parse_symbol(tok);
             if (ref.type == "ref") {
@@ -336,61 +327,21 @@
                     if (abs) {
                         name = name.substr(1);
                     }
-                    var r = /^[0-9]+$/.test(name);
-                    ref = {
-                        type  : "ref",
-                        ref   : r ? "row" : "col",
-                        sheet : ref.sheet,
-                        rel   : !abs
-                    };
-                    if (r) {
-                        ref.row = getrow(name) - (abs ? 0 : row);
+                    if (/^[0-9]+$/.test(name)) {
+                        // row ref
+                        return Runtime.makeCellRef(ref.sheet || sheet, isFirst ? -Infinity : +Infinity, getrow(name), (abs ? 0 : 2) | (ref.sheet ? 0 : 4));
                     } else {
-                        ref.col = getcol(name) - (abs ? 0 : col);
+                        // col ref
+                        return Runtime.makeCellRef(ref.sheet, getcol(name), isFirst ? -Infinity : +Infinity, (abs ? 0 : 1) | (ref.sheet ? 0 : 4));
                     }
                 }
                 return ref;
             }
         }
-
-        function corner(a, b, side) {
-            if (a.ref == "row") {
-                return (adjust(a.row, row, a.rel) < adjust(b.row, row, a.rel)
-                        ? (side ? b : a)
-                        : (side ? a : b));
-            }
-            if (a.ref == "col") {
-                return (adjust(a.col, col, a.rel) < adjust(b.col, col, a.rel)
-                        ? (side ? b : a)
-                        : (side ? a : b));
-            }
-            if (a.ref == "cell") {
-                var tmp;
-                var r1 = a.row, c1 = a.col, r2 = b.row, c2 = b.col;
-                var rr1 = a.rel & 2, rc1 = a.rel & 1;
-                var rr2 = b.rel & 2, rc2 = b.rel & 1;
-                if (adjust(r1, row, rr1) > adjust(r2, row, rr2)) {
-                    tmp = r1; r1 = r2; r2 = tmp;
-                    tmp = rr1; rr1 = rr2; rr2 = tmp;
-                }
-                if (adjust(c1, col, rc1) > adjust(c2, col, rc2)) {
-                    tmp = c1; c1 = c2; c2 = tmp;
-                    tmp = rc1; rc1 = rc2; rc2 = tmp;
-                }
-                return {
-                    type  : "ref",
-                    ref   : "cell",
-                    sheet : a.sheet,
-                    row   : side ? r2 : r1,
-                    col   : side ? c2 : c1,
-                    rel   : side ? (rr2 | rc2) : (rr1 | rc1)
-                };
-            }
-        }
     }
 
-    function print(sheet, col, row, ast) {
-        return print(ast);
+    function print(sheet, col, row, exp) {
+        return print(exp.ast);
 
         function print(node, prec){
             var type = node.type, ret = "", op = node.op, parens = false;
@@ -462,24 +413,10 @@
             function print_ref(node, noSheet) {
                 if (node.ref == "cell") {
                     return make_reference(
-                        noSheet ? null : node.sheet, // sheet name
-                        node.col + (node.rel & 1 ? col : 0),                // col
-                        node.row + (node.rel & 2 ? row : 0),                // row
-                        node.rel^3                                          // whether to add the $
-                    );
-                }
-                else if (node.ref == "col") {
-                    return make_col(
-                        noSheet ? null : node.sheet,
-                        node.col + (node.rel ? col : 0),
-                        !node.rel
-                    );
-                }
-                else if (node.ref == "row") {
-                    return make_row(
-                        noSheet ? null : node.sheet,
-                        node.row + (node.rel ? row : 0),
-                        !node.rel
+                        noSheet ? null : node.sheet,                   // sheet name
+                        node.col + (node.rel & REL_COL ? col - exp.col : 0), // col
+                        node.row + (node.rel & REL_ROW ? row - exp.row : 0), // row
+                        node.rel                                       // whether to add the $
                     );
                 }
                 else if (node.ref == "name") {
@@ -490,9 +427,9 @@
                     }
                 }
                 else if (node.ref == "range") {
-                    return print(node.left)
+                    return print_ref(node.topLeft, true)
                         + ":"
-                        + print(node.right);
+                        + print_ref(node.bottomRight, true);
                 }
                 else {
                     throw new Error("Unknown reference type in print " + node.type);
@@ -663,35 +600,22 @@
         var code = compile(exp.cps);
 
         code = [
-            '"use strict"',
-            "// " + print(the_sheet, the_col, the_row, exp.ast) + " //",
-            "var references = [" + references.map(function(code){
-                return "\n    " + code;
-            }).join(",") + " ]",
-            "var formula = function(context) {",
+            "return function(context) { 'use strict'",
+            //"/* " + print(the_sheet, the_col, the_row, exp) + " */",
             "  var formula = context.formula, SS = context.ss",
             code,
-            "}",
-            "return Runtime.makeFormula({ refs: references, func: formula, sheet: "
-                + JSON.stringify(the_sheet)
-                + ", col: " + the_col
-                + ", row: " + the_row + " })"
+            "}"
         ].join(";\n");
 
-        //XXX
-        //exp.code = code;
-        //console.log("/***********/\n" + code);
+        return Runtime.makeFormula({
+            sheet: the_sheet, col: the_col, row: the_row,
+            refs: references,
+            func: new Function("Runtime", code)(Runtime)
+        });
 
-        return new Function("Runtime", code)(Runtime, $);
-        // return code;
-
-        // function adjust(num) {
-        //     return num;
-        // }
-
-        function get_reference(code) {
+        function get_reference(ref) {
             var index = references.length;
-            references[index] = code;
+            references[index] = ref;
             return "formula.refs[" + index + "]";
         }
 
@@ -720,19 +644,7 @@
                     + ")";
             }
             else if (type == "ref") {
-                if (node.ref == "cell") {
-                    ret = cellref(node);
-                } else if (node.ref == "range") {
-                    ret = "Runtime.makeRangeRef("
-                        + JSON.stringify(node.sheet || the_sheet) + ", "
-                        + in_range(node.left, 0) + ", "
-                        + in_range(node.right, 1) + ")";
-                } else if (node.ref == "name") {
-                    ret = "Runtime.makeNameRef("
-                        + JSON.stringify(node.sheet || the_sheet) + ", "
-                        + JSON.stringify(node.name) + ")";
-                }
-                return get_reference(ret);
+                return get_reference(node);
             }
             else if (type == "bool") {
                 return "" + node.value;
@@ -754,37 +666,6 @@
             else {
                 throw new Error("Cannot compile expression " + type);
             }
-        }
-
-        function cellref(node) {
-            return "Runtime.makeCellRef("
-                + JSON.stringify(node.sheet || the_sheet) + ", "
-                + adjust(node.col, the_col, node.rel & 1) + ", "
-                + adjust(node.row, the_row, node.rel & 2) + ", "
-                + node.rel + ")";
-        }
-
-        function in_range(node, side) {
-            if (node.type == "ref") {
-                if (node.ref == "row") {
-                    return "Runtime.makeCellRef("
-                        + JSON.stringify(node.sheet || the_sheet) + ", "
-                        + (side ? "Infinity" : "-Infinity") + ", "
-                        + adjust(node.row, the_row, node.rel) + ", "
-                        + (node.rel ? 2 : 0) + ")";
-                }
-                if (node.ref == "col") {
-                    return "Runtime.makeCellRef("
-                        + JSON.stringify(node.sheet || the_sheet) + ", "
-                        + adjust(node.col, the_col, node.rel) + ", "
-                        + (side ? "Infinity" : "-Infinity") + ", "
-                        + (node.rel ? 1 : 0) + ")";
-                }
-                if (node.ref == "cell") {
-                    return cellref(node);
-                }
-            }
-            return compile(node);
         }
     }
 

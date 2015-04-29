@@ -28,14 +28,14 @@ Spreadsheet.prototype = {
             return cell ? [ cell ] : [];
         }
         if (Runtime.RangeRef.is(ref)) {
-            ref = ref.intersect(this.getSheetBounds(ref.sheet));
+            ref = ref.intersect(this.getSheetBounds(ref.topLeft.sheet));
             if (!Runtime.RangeRef.is(ref)) {
                 return this.getRefCells(ref);
             }
             var a = [];
             for (var row = ref.topLeft.row; row <= ref.bottomRight.row; ++row) {
                 for (var col = ref.topLeft.col; col <= ref.bottomRight.col; ++col) {
-                    var cell = this._getCell(ref.sheet, col, row);
+                    var cell = this._getCell(ref.topLeft.sheet, col, row);
                     if (cell != null) {
                         a.push(cell);
                     }
@@ -97,9 +97,9 @@ Spreadsheet.prototype = {
         });
         return new Runtime.RangeRef(
             // top-left
-            new Runtime.CellRef(1, 1),
+            new Runtime.CellRef(1, 1).setSheet(sheetName),
             // bottom-right
-            new Runtime.CellRef(maxcol, maxrow)
+            new Runtime.CellRef(maxcol, maxrow).setSheet(sheetName)
         );
     },
 
@@ -145,7 +145,7 @@ Spreadsheet.prototype = {
         var x = calc.parse(sheet, col, row, data), display = x.value;
         if (x.type == "exp") {
             cell.exp = x;
-            cell.input = "=" + calc.print(sheet, col, row, x.ast);
+            cell.input = "=" + calc.print(sheet, col, row, x);
             cell.formula = calc.compile(x);
             display = "...";
         } else {
@@ -378,7 +378,7 @@ function _onKeyDown(ev) {
             if (!window.COPY) {
                 alert("Copy an expression first");
             } else {
-                var exp = calc.print(sheetName, col, row, window.COPY.ast);
+                var exp = calc.print(sheetName, col, row, window.COPY);
                 input.val("=" + exp);
             }
             input.select();

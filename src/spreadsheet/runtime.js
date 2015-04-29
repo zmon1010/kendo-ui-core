@@ -37,6 +37,9 @@
 
     var NameRef = defclass(Ref, function NameRef(name){
         this.name = name;
+    }, {
+        type: "ref",
+        ref: "name"
     });
 
     /* -----[ Cell reference ]----- */
@@ -46,9 +49,11 @@
         this.row = row;
         this.rel = rel;
     }, {
+        type: "ref",
+        ref: "cell",
         intersect: function(ref) {
             if (CellRef.is(ref)) {
-                if (ref.row == this.row && ref.col == this.col) {
+                if (ref.row == this.row && ref.col == this.col && ref.sheet == this.sheet) {
                     return this;
                 } else {
                     return NULL;
@@ -57,7 +62,7 @@
             return ref.intersect(this);
         },
         toString: function() {
-            return calc.make_reference(null, this.col, this.row);
+            return calc.make_reference(null, this.col, this.row, this.rel);
         }
     });
 
@@ -68,12 +73,15 @@
         this.bottomRight = br;
         this.normalize();
     }, {
+        type: "ref",
+        ref: "range",
         _containsRange: function(range) {
             return this._containsCell(range.topLeft)
                 && this._containsCell(range.bottomRight);
         },
         _containsCell: function(cell) {
-            return cell.row >= this.topLeft.row
+            return cell.sheet == this.topLeft.sheet
+                && cell.row >= this.topLeft.row
                 && cell.col >= this.topLeft.col
                 && cell.row <= this.bottomRight.row
                 && cell.col <= this.bottomRight.col;
@@ -89,6 +97,10 @@
         },
 
         _intersectRange: function(ref) {
+            var sheet = this.topLeft.sheet;
+            if (sheet != ref.topLeft.sheet) {
+                return NULL;
+            }
             var a_left    = this.topLeft.col;
             var a_top     = this.topLeft.row;
             var a_right   = this.bottomRight.col;
@@ -105,11 +117,11 @@
                 return new RangeRef(
                     // topLeft
                     new CellRef(Math.max(a_left, b_left),
-                                Math.max(a_top, b_top)),
+                                Math.max(a_top, b_top)).setSheet(sheet),
                     // bottomRight
                     new CellRef(Math.min(a_right, b_right),
-                                Math.min(a_bottom, b_bottom))
-                ).setSheet(this.sheet);
+                                Math.min(a_bottom, b_bottom)).setSheet(sheet)
+                );
             } else {
                 return NULL;
             }
@@ -135,7 +147,8 @@
                 this.topLeft.col == this.bottomRight.col)
             {
                 return new CellRef(this.topLeft.col,
-                                   this.topLeft.row).setSheet(this.sheet);
+                                   this.topLeft.row,
+                                   this.topLeft.rel).setSheet(this.topLeft.sheet);
             }
             return this;
         },
@@ -623,8 +636,8 @@
         return new CellRef(col, row, rel).setSheet(sheet);
     };
 
-    exports.makeRangeRef = function(sheet, tl, br) {
-        return new RangeRef(tl, br).setSheet(sheet);
+    exports.makeRangeRef = function(tl, br) {
+        return new RangeRef(tl, br);
     };
 
     exports.makeNameRef = function(sheet, name) {
