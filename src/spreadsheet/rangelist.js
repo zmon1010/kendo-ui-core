@@ -310,6 +310,8 @@
         this.range = new Range(start, end, value);
     }
 
+    SparseRangeList.prototype = Object.create(RangeList.prototype);
+
     SparseRangeList.prototype.intersecting = function(start, end) {
         var ranges = this.tree.intersecting(start, end);
         var result = [];
@@ -340,12 +342,6 @@
             this.tree.insert(new Range(start, end, value));
         }
     }
-
-    SparseRangeList.prototype.value = RangeList.prototype.value;
-
-    SparseRangeList.prototype.sortedIndices = RangeList.prototype.sortedIndices;
-    SparseRangeList.prototype.expandedValues = RangeList.prototype.expandedValues;
-    SparseRangeList.prototype.sort = RangeList.prototype.sort;
 
     kendo.spreadsheet = {
         RangeTree: RangeTree,
