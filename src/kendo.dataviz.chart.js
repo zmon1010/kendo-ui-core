@@ -10460,7 +10460,7 @@ var __meta__ = {
                 element = tooltip.element,
                 offset;
 
-            if (!tooltip.anchor) {
+            if (!tooltip.anchor || !tooltip.element) {
                 return;
             }
 
