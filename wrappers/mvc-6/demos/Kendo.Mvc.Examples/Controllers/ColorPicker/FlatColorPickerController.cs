@@ -4,7 +4,7 @@ namespace Kendo.Mvc.Examples.Controllers
 {
 	public partial class ColorPickerController : Controller
 	{
-		public IActionResult Flat_Color_Picker()
+		public IActionResult FlatColorPicker()
 		{
 			return View();
 		}

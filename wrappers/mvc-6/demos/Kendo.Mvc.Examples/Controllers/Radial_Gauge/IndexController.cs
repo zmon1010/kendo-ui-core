@@ -2,9 +2,9 @@
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class RadialGaugeController : Controller
+    public partial class Radial_GaugeController : Controller
     {
-        public IActionResult Scale_Options()
+        public IActionResult Index()
         {
             return View();
         }

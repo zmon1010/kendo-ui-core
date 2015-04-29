@@ -2,9 +2,9 @@
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class RadialGaugeController : Controller
+    public partial class Radial_GaugeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Export()
         {
             return View();
         }

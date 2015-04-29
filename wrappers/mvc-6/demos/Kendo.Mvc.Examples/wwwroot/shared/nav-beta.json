@@ -175,6 +175,150 @@
     "category": "Charts"
   },
   {
+    "text": "Button",
+    "name": "button",
+    "api": "web/button",
+    "documentation": {
+       "kendo-ui": "getting-started/web/button/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/button/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/button/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/button/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/button",
+       "aspnet-mvc": "aspnet-mvc/buttonw",
+       "jsp-ui": "jsp/button",
+       "php-ui": "php/button"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/button",
+       "aspnet-mvc": "aspnet-mvc/button",
+       "jsp-ui": "jsp/button",
+       "php-ui": "php/button"
+    },
+    "spriteCssClass": "buttonIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "button/index",
+        "title": {
+            "kendo-ui": "Demo and source code for Kendo UI Button widget",
+            "aspnet-mvc": "ASP.NET MVC Button HTMLHelper extension sample"
+        },
+        "meta": {
+            "kendo-ui": "How jQuery-based Button widget works, view demo source code of Kendo UI Button.",
+            "aspnet-mvc": "This demo illustrates how to configure Kendo UI jQuery-based button in ASP.NET MVC."
+        }
+      },
+      {
+        "packages": [
+          "online"
+        ],
+        "text": "Multiple buttons",
+        "url": "button/multiple",
+        "title": {
+            "kendo-ui": "Using Multiple Kendo UI Button widgets"
+        },
+        "meta": {
+            "kendo-ui": "Using multiple buttons via a single Button widget instance."
+        }
+      },
+      {
+        "text": "Images",
+        "url": "button/images",
+        "title": {
+            "kendo-ui": "Using Kendo UI Buttons with images and icons",
+            "aspnet-mvc": "Using ASP.NET MVC Buttons with images and icons"
+        },
+        "meta": {
+            "kendo-ui": "Using buttons with images and icons.",
+            "aspnet-mvc": "This online demo will show you how to embed images and icons in your ASP.NET MVC Button."
+        }
+      },
+      {
+        "text": "Events",
+        "url": "button/events",
+        "title": {
+            "kendo-ui": "Kendo UI Button events",
+            "aspnet-mvc": "ASP.NET MVC Button events demo"
+        },
+        "meta": {
+            "kendo-ui": "How jQuery-based Button widget works, view demo source code of Kendo UI Button.",
+            "aspnet-mvc": "Take a look at this ASP.NET MVC Button example to find out how events are triggered in the Button control."
+        }
+      },
+      {
+        "text": "API",
+        "url": "button/api",
+        "title": {
+            "kendo-ui": "Kendo UI Button API",
+            "aspnet-mvc": "ASP.NET MVC Button component API"
+        },
+        "meta": {
+            "kendo-ui": "How jQuery-based Button widget works, view demo source code of Kendo UI Button.",
+            "aspnet-mvc": "See how the API functions of ASP.NET MVC Button give you the option to enable and disable it."
+        }
+      },
+      {
+        "text": "RTL support",
+        "disableInMobile": true,
+        "url": "button/right-to-left-support",
+        "title": {
+            "kendo-ui": "Kendo UI Button RTL Support",
+            "aspnet-mvc": "ASP.NET MVC Button Component RTL Support Demo"
+        },
+        "meta": {
+            "kendo-ui": "How jQuery-based Button widget works, view demo source code of Kendo UI Button.",
+            "aspnet-mvc": "We will demonstrate how the right-to-left feature is implemented in the ASP.NET MVC Button control."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "disableInMobile": true,
+        "url": "button/keyboard-navigation",
+        "title": {
+            "kendo-ui": "Kendo UI Button Keyboard Navigation",
+            "aspnet-mvc": "ASP.NET MVC Button Control Keyboard Navigation"
+        },
+        "meta": {
+            "kendo-ui": "How jQuery-based Button widget works, view demo source code of Kendo UI Button.",
+            "aspnet-mvc": "Look at this ASP.NET MVC demo which illustrates how the keyboard navigation feature is supported in Telerik Button."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "button/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI Button"
+        },
+        "meta": {
+            "kendo-ui": "Enabled, events, visible MVVM binding support in Kendo UI AutoComplete"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "button/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Button"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directive support in Kendo UI Button"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Navigation"
+  },
+  {
         "text": "Calendar",
         "name": "calendar",
         "api": "web/calendar",
@@ -282,6 +426,149 @@
         ],
         "category": "Scheduling"
     },
+    {
+    "text": "ColorPicker",
+    "name": "colorpicker",
+    "api": "web/colorpicker",
+    "documentation": {
+       "kendo-ui": "getting-started/web/colorpicker/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/colorpicker/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/colorpicker/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/colorpicker/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/color-picker",
+       "aspnet-mvc": "aspnet-mvc/color-picker",
+       "jsp-ui": "jsp/color-picker",
+       "php-ui": "php/color-picker"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/colorpicker",
+       "aspnet-mvc": "aspnet-mvc/colorpicker",
+       "jsp-ui": "jsp/colorpicker",
+       "php-ui": "php/colorpicker"
+    },
+    "spriteCssClass": "colorPickerIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "colorpicker/index",
+        "title": {
+            "kendo-ui": "Kendo UI ColorPicker widget | Kendo UI Web Demos",
+            "aspnet-mvc": "ASP.NET MVC Color Picker extension demo"
+        },
+        "meta": {
+            "kendo-ui": "This example shows the basic functions of Kendo UI ColorPicker component.",
+            "aspnet-mvc": "This demo illustrates the basic functionality of ASP.NET MVC HTML Helper for Kendo UI ColorPicker widget."
+        }
+      },
+      {
+        "text": "Flat color picker",
+        "url": "colorpicker/flatcolorpicker",
+        "title": {
+            "kendo-ui": "Kendo UI FlatColorPicker demo",
+            "aspnet-mvc": "Flat color picker demo for ASP.NET MVC ColorPicker extension"
+        },
+        "meta": {
+            "kendo-ui": "In this example we will show how the Kendo UI FlatColorPicker, a part of the Kendo UI framework, works.",
+            "aspnet-mvc": "This sample demonstrates how Telerik ASP.NET MVC helper could be used for your flat color picker scenario."
+        }
+      },
+      {
+        "text": "Standalone Palette",
+        "url": "colorpicker/palette",
+        "title": {
+            "kendo-ui": "Standalone Palette Demo in Kendo UI ColorPicker widget",
+            "aspnet-mvc": "Standalone Palette Demo in ASP.NET MVC ColorPicker control"
+        },
+        "meta": {
+            "kendo-ui": "In this demo you will take a look at the rich standalone palette of Kendo UI ColorPicker component. Grab the source code and play with the demo!",
+            "aspnet-mvc": "In this demo you will take a look at the rich standalone palette of ASP.NET MVC ColorPicker component. Grab the source code and play with the demo!"
+        }
+      },
+      {
+        "text": "Palette presets",
+        "url": "colorpicker/palette-presets",
+        "title": {
+            "kendo-ui": "Palette presets in Kendo UI ColorPicker widget | Kendo UI Demo",
+            "aspnet-mvc": "Palette presets in ASP.NET MVC ColorPicker"
+        },
+        "meta": {
+            "kendo-ui": "Select a color based on a preset color palette in Kendo UI ColorPicker widget. This demo allows you to play with the palette presets in the component.",
+            "aspnet-mvc": "This example shows how to easily use  palette presents of Telerik ASP.NET MVC ColorPicker extension. Look at the code and implement it for  user scenario."
+        }
+      },
+      {
+        "text": "Keyboard support",
+        "disableInMobile": true,
+        "url": "colorpicker/keyboard-navigation",
+        "title": {
+            "kendo-ui": "Keyboard support enabled in Kendo UI ColorPicker widget",
+            "aspnet-mvc": "Keyboard support of ASP.NET MVC ColorPicker extension"
+        },
+        "meta": {
+            "kendo-ui": "In this demo we review the keyboard support that is enabled in Kendo UI ColorPicker.",
+            "aspnet-mvc": "This example demonstrates the keyboard support functionality of Telerik ASP.NET MVC ColorPicker control."
+        }
+      },
+      {
+        "text": "Events",
+        "url": "colorpicker/events",
+        "disableInMobile": true,
+        "title": {
+            "kendo-ui": "Events in Kendo UI ColorPicker widget",
+            "aspnet-mvc": "Events in ASP.NET MVC ColorPicker control"
+        },
+        "meta": {
+            "kendo-ui": "In this example we will examine the events that are fired in Kendo UI jQuery-powered ColorPicker component.",
+            "aspnet-mvc": "In this example we will examine the events that are fired in ASP.NET MVC ColorPicker component."
+        }
+      },
+      {
+        "text": "API",
+        "url": "colorpicker/api",
+        "title": {
+            "kendo-ui": "API for Kendo UI ColorPicker | Kendo UI Demo",
+            "aspnet-mvc": "API for ASP.NET MVC ColorPicker | UI for ASP.NET MVC demos"
+        },
+        "meta": {
+            "kendo-ui": "This Kendo UI demo shows the API of Kendo UI drop-down color picker widget.",
+            "aspnet-mvc": "This example for using Kendo UI ColorPicker widget in ASP.NET MVC shows how you can set values, enable/disable, open/close them by using ColorPicker API."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "colorpicker/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI ColorPicker"
+        },
+        "meta": {
+            "kendo-ui": "Enabled, events, value and visible MVVM binding support in Kendo UI ColorPicker"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+{
+        "text": "AngularJS",
+        "url": "colorpicker/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI ColorPicker"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directive support for Kendo UI ColorPicker"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Editors"
+  },
     {
         "text": "DatePicker",
         "name": "datepicker",
@@ -1070,6 +1357,114 @@
         "category": "Data Management"
     },
     {
+    "text": "Linear Gauge",
+    "name": "linear-gauge",
+    "pro": "true",
+    "spriteCssClass": "gaugeLinearIcon",
+    "api": "dataviz/lineargauge",
+    "documentation": {
+       "kendo-ui": "getting-started/dataviz/lineargauge/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/lineargauge/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/lineargauge/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/lineargauge/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/gauges",
+       "aspnet-mvc": "aspnet-mvc/gauge",
+       "jsp-ui": "jsp/gauge",
+       "php-ui": "php/gauge"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/gauges",
+       "aspnet-mvc": "aspnet-mvc/gauge",
+       "jsp-ui": "jsp/gauge",
+       "php-ui": "php/gauge"
+    },
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "linear-gauge/index",
+        "title": {
+            "kendo-ui": "Kendo UI jQuery-powered Linear Gauge Example",
+            "aspnet-mvc": "ASP.NET MVC Linear Gauge Example"
+        },
+        "meta": {
+            "kendo-ui": "This example shows how you can easily implement Kendo UI Linear Gauge in your HTML5 web application. Draw end users attention to a certain range of values.",
+            "aspnet-mvc": "This example shows how you can easily implement ASP.NET MVC Linear Gauge in your MVC web application. Draw end users attention to a certain range of values."
+        }
+      },
+      {
+        "text": "Scale options",
+        "url": "linear-gauge/scale-options",
+        "title": {
+            "kendo-ui": "Scale customization example for Kendo UI Linear Gauge",
+            "aspnet-mvc": "Scale customization example for ASP.NET MVC Linear Gauge"
+        },
+        "meta": {
+            "kendo-ui": "This sample illustrates how you can customize Kendo UI Linear Gauge by changing the location of the gauge scale and its appearance.",
+            "aspnet-mvc": "This sample illustrates how you can customize ASP.NET MVC Linear Gauge by changing the location of the gauge scale and its appearance."
+        }
+      },
+      {
+        "text": "Multiple pointers",
+        "url": "linear-gauge/multiple-pointers",
+        "new": "true",
+        "title": {
+            "kendo-ui": "Kendo UI Linear Gauge multiple pointers demo",
+            "aspnet-mvc": "ASP.NET MVC Linear Gauge multiple pointers demo"
+        },
+        "meta": {
+            "kendo-ui": "This example shows how easily you can configure the Linear gauge to use multiple pointers.",
+            "aspnet-mvc": "This example shows how easily you can configure the ASP.NET MVC Linear gauge to use multiple pointers."
+        }
+      },
+      {
+        "text": "Export to PDF, Image, SVG",
+        "url": "linear-gauge/export",
+        "new": "true",
+        "title": {
+            "kendo-ui": "Kendo UI Linear Gauge export demo",
+            "aspnet-mvc": "ASP.NET MVC Linear Gauge export demo"
+        },
+        "meta": {
+            "kendo-ui": "This example shows how easily you can export the linear gauge to PDF, Image and SVG.",
+            "aspnet-mvc": "This example shows how easily you can export the ASP.NET MVC linear gauge to PDF, Image and SVG."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "linear-gauge/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI Linear Gauge"
+        },
+        "meta": {
+            "kendo-ui": "Value and visible MVVM binding support in Kendo UI Linear Gauge"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "linear-gauge/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Linear Gauge"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directives support in Kendo UI Linear Gauge"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Gauges"
+  },
+    {
         "text": "Notification",
         "name": "notification",
         "api": "web/notification",
@@ -1440,6 +1835,271 @@
         ],
         "category": "Editors"
     },
+    {
+        "text": "ProgressBar",
+        "name": "progressbar",
+        "api": "web/progressbar",
+        "documentation": {
+            "kendo-ui": "getting-started/web/progressbar/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/progressbar/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/progressbar/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/progressbar/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/progressbar",
+            "aspnet-mvc": "aspnet-mvc/progressbar",
+            "jsp-ui": "jsp/progressbar",
+            "php-ui": "php/progressbar"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/progressbar",
+            "aspnet-mvc": "aspnet-mvc/progressbar",
+            "jsp-ui": "jsp/progressbar",
+            "php-ui": "php/progressbar"
+        },
+        "spriteCssClass": "progressBarIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "progressbar/index",
+                "title": {
+                    "kendo-ui": "Basic usage of Kendo UI ProgressBar widget",
+                    "aspnet-mvc": "Basic usage of ASP.NET MVC ProgressBar control"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows the core widget features",
+                    "aspnet-mvc": "This example shows the core features of ASP.NET MVC ProgressBar component."
+                }
+            },
+            {
+                "text": "Chunk ProgressBar",
+                "url": "progressbar/chunk",
+                "title": {
+                    "kendo-ui": "Displaying a progress in chunks",
+                    "aspnet-mvc": "Displaying a progress in chunks in ASP.NET MVC ProgressBar"
+                },
+                "meta": {
+                    "kendo-ui": "See how you can display chunks of progress in Kendo UI ProgressBar.",
+                    "aspnet-mvc": "See how you can display chunks of progress in ASP.NET MVC ProgressBar."
+                }
+            },
+            {
+                "text": "Vertical ProgressBar",
+                "url": "progressbar/vertical",
+                "title": {
+                    "kendo-ui": "Displaying a vertical progress",
+                    "aspnet-mvc": "Displaying a vertical progress in ASP.NET MVC ProgressBar"
+                },
+                "meta": {
+                    "kendo-ui": "Kendo UI ProgressBar can be oriented both horizontally and vertically. See how and play with the demo.",
+                    "aspnet-mvc": "ASP.NET MVC ProgressBar can be oriented both horizontally and vertically. See how and play with the demo."
+                }
+            },
+            {
+                "text": "Custom Label",
+                "url": "progressbar/customlabel",
+                "title": {
+                    "kendo-ui": "Displaying a custom progress label in Kendo UI Progressbar",
+                    "aspnet-mvc": "Displaying a custom progress label in ASP.NET MVC ProgressBar"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how you can display custom progress label in Kendo UI HTML5 ProgressBar to indicate the level of progress.",
+                    "aspnet-mvc": "This demo shows how you can display custom progress label in ASP.NET MVC ProgressBar to indicate the level of progress."
+                }
+            },
+            {
+                "text": "Events",
+                "url": "progressbar/events",
+                "title": {
+                    "kendo-ui": "Events in Kendo UI ProgressBar widget",
+                    "aspnet-mvc": "Events in ASP.NET MVC ProgressBar control"
+                },
+                "meta": {
+                    "kendo-ui": "This example demonstrates how events work in Kendo UI ProgressBar control.",
+                    "aspnet-mvc": "This example demonstrates how events work in ASP.NET MVC ProgressBar control."
+                }
+            },
+            {
+                "text": "API",
+                "url": "progressbar/api",
+                "title": {
+                    "kendo-ui": "Kendo UI ProgressBar API demo",
+                    "aspnet-mvc": "ASP.NET MVC ProgressBar API demo"
+                },
+                "meta": {
+                    "kendo-ui": "This sample shows the API functions of Kendo UI ProgressBar component.",
+                    "aspnet-mvc": "This sample shows the API functions of ASP.NET MVC ProgressBar component."
+                }
+            },
+            {
+                "text": "RTL Support",
+                "disableInMobile": true,
+                "url": "progressbar/right-to-left-support",
+                "title": {
+                    "kendo-ui": "Kendo UI ProgressBar RTL Support",
+                    "aspnet-mvc": "ASP.NET MVC ProgressBar RTL Support"
+                },
+                "meta": {
+                    "kendo-ui": "Demo about the right-to-left (RTL) support of the Kendo UI ProgressBar component.",
+                    "aspnet-mvc": "Demo about the right-to-left (RTL) support of the ASP.NET MVC ProgressBar component."
+                }
+            },
+            {
+                "text": "MVVM",
+                "url": "progressbar/mvvm",
+                "title": {
+                    "kendo-ui": "MVVM support for Kendo UI ProgressBar"
+                },
+                "meta": {
+                    "kendo-ui": ""
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            },
+            {
+                "text": "AngularJS",
+                "url": "progressbar/angular",
+                "title": {
+                    "kendo-ui": "AngularJS support for Kendo UI ProgressBar"
+                },
+                "meta": {
+                    "kendo-ui": ""
+                },
+                "packages": [
+                    "!mvc",
+                    "!jsp",
+                    "!php"
+                ]
+            }
+        ],
+        "category": "Interactivity & UX"
+    },
+    {
+    "text": "Radial Gauge",
+    "name": "radial-gauge",
+    "pro": "true",
+    "spriteCssClass": "gaugeRadialIcon",
+    "api": "dataviz/radialgauge",
+    "documentation": {
+       "kendo-ui": "getting-started/dataviz/radialgauge/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/radialgauge/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/radialgauge/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/radialgauge/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/gauges",
+       "aspnet-mvc": "aspnet-mvc/gauge",
+       "jsp-ui": "jsp/gauge",
+       "php-ui": "php/gauge"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/gauges",
+       "aspnet-mvc": "aspnet-mvc/gauge",
+       "jsp-ui": "jsp/gauge",
+       "php-ui": "php/gauge"
+    },
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "radial-gauge/index",
+        "title": {
+            "kendo-ui": "Demo for core features in Kendo UI Radial Gauge widget",
+            "aspnet-mvc": "Demo for core features in ASP.NET MVC Radial Gauge control"
+        },
+        "meta": {
+            "kendo-ui": "This sample demonstrates the core functionality of Kendo UI Radial Gauge which helps you easily visualize an indicator within a range of values.",
+            "aspnet-mvc": "This sample demonstrates the core functionality of ASP.NET MVC Radial Gauge which helps you easily visualize an indicator within a range of values."
+        }
+      },
+      {
+        "text": "Scale options",
+        "url": "radial-gauge/scale-options",
+        "title": {
+            "kendo-ui": "Kendo UI Radial Gauge scale customization demo",
+            "aspnet-mvc": "ASP.NET MVC Radial Gauge scale customization demo"
+        },
+        "meta": {
+            "kendo-ui": "This example shows how you can easily use simple options to configure the gauge, enable/disable scale ranges and gauge labels.",
+            "aspnet-mvc": "This example shows how you can easily use simple options to configure the ASP.NET MVC radial gauge, enable/disable scale ranges and gauge labels."
+        }
+      },
+      {
+        "text": "Multiple pointers",
+        "url": "radial-gauge/multiple-pointers",
+        "new": "true",
+        "title": {
+            "kendo-ui": "Kendo UI Radial Gauge multiple pointers demo",
+            "aspnet-mvc": "ASP.NET MVC Radial Gauge multiple pointers demo"
+        },
+        "meta": {
+            "kendo-ui": "This example shows how easily you can configure the radial gauge to use multiple pointers.",
+            "aspnet-mvc": "This example shows how easily you can configure the ASP.NET MVC radial gauge to use multiple pointers."
+        }
+      },
+      {
+        "text": "Export to PDF, Image, SVG",
+        "url": "radial-gauge/export",
+        "new": "true",
+        "title": {
+            "kendo-ui": "Kendo UI Radial Gauge export demo",
+            "aspnet-mvc": "ASP.NET MVC Radial Gauge export demo"
+        },
+        "meta": {
+            "kendo-ui": "This example shows how easily you can export the radial gauge to PDF, Image and SVG.",
+            "aspnet-mvc": "This example shows how easily you can export the ASP.NET MVC radial gauge to PDF, Image and SVG."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "radial-gauge/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI Radial Gauge"
+        },
+        "meta": {
+            "kendo-ui": "Value and visible MVVM binding support in Kendo UI Radial Gauge"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "radial-gauge/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Radial Gauge"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directives support in Kendo UI Radial Gauge"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "Car Dashboard",
+        "url": "radial-gauge/car-dashboard",
+        "title": {
+            "kendo-ui": "Sample car dashboard, built with Kendo UI DataViz components"
+        },
+        "meta": {
+            "kendo-ui": "This sample demonstrates the use of Kendo UI Gauges"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Gauges"
+  },
     {
         "text": "Upload",
         "name": "upload",

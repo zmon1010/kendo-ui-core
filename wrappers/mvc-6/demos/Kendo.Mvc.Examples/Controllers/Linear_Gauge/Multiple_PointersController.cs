@@ -2,7 +2,7 @@
 
 namespace Kendo.Mvc.Examples.Controllers
 {
-    public partial class RadialGaugeController : Controller
+    public partial class Linear_GaugeController : Controller
     {
         public IActionResult Multiple_Pointers()
         {
