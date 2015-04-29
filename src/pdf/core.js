@@ -470,7 +470,9 @@
 
         function _load(url) {
             img.src = url;
-            if (img.complete) {
+            if (img.complete && !kendo.support.browser.msie) {
+                // IE, bless it's little heart, says img.complete == true even though the image is
+                // not loaded (width=0), therefore we must go the onload route (ticket 929635).
                 _onload();
             } else {
                 img.onload = _onload;
