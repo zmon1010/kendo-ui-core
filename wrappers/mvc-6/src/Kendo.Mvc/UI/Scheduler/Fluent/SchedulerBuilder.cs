@@ -260,6 +260,94 @@ namespace Kendo.Mvc.UI.Fluent
             Component.Editable.Enabled = isEditable;
             return this;
         }
+
+        /// <summary>
+        /// Sets the resources grouping configuration of the scheduler.
+        /// </summary>
+        /// <param name="configuration">The lambda which configures the scheduler grouping</param>
+        /// <example>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().Scheduler&lt;Task&gt;()
+        ///    .Name(&quot;Scheduler&quot;)
+        ///    .Resources(resource =&gt;
+        ///    {
+        ///        resource.Add(m =&gt; m.TaskID)
+        ///            .Title(&quot;Color&quot;)
+        ///            .Multiple(true)
+        ///            .DataTextField(&quot;Text&quot;)
+        ///            .DataValueField(&quot;Value&quot;)
+        ///            .DataSource(d =&gt; d.Read(&quot;Attendies&quot;, &quot;Scheduler&quot;));
+        ///    })
+        ///    .DataSource(dataSource =&gt; dataSource
+        ///        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        ///    ))
+        /// </code>
+        /// </example>
+        public SchedulerBuilder<T> Group(Action<SchedulerGroupBuilder> configuration)
+        {
+            var factory = new SchedulerGroupBuilder(Component.Group);
+
+            configuration(factory);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the resources configuration of the scheduler.
+        /// </summary>
+        /// <param name="addResourceAction">The lambda which configures the scheduler resources</param>
+        /// <example>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().Scheduler&lt;Task&gt;()
+        ///    .Name(&quot;Scheduler&quot;)
+        ///    .Resources(resource =&gt;
+        ///    {
+        ///        resource.Add(m =&gt; m.TaskID)
+        ///            .Title(&quot;Color&quot;)
+        ///            .Multiple(true)
+        ///            .DataTextField(&quot;Text&quot;)
+        ///            .DataValueField(&quot;Value&quot;)
+        ///            .DataSource(d =&gt; d.Read(&quot;Attendies&quot;, &quot;Scheduler&quot;));
+        ///    })
+        ///    .DataSource(dataSource =&gt; dataSource
+        ///        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        ///    ))
+        /// </code>
+        /// </example>
+        public SchedulerBuilder<T> Resources(Action<SchedulerResourceFactory<T>> addResourceAction)
+        {
+            SchedulerResourceFactory<T> factory = new SchedulerResourceFactory<T>(Component);
+
+            addResourceAction(factory);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the views configuration of the scheduler.
+        /// </summary>
+        /// <param name="addViewAction">The lambda which configures the scheduler views</param>
+        /// <example>
+        /// <code lang="Razor">
+        /// @(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+        ///     .Name(&quot;scheduler&quot;)
+        ///     .Date(new DateTime(2013, 6, 13))
+        ///     .Views(views =&gt; {
+        ///         views.DayView();
+        ///         views.AgendaView();
+        ///     })
+        ///     .BindTo(Model)
+        /// )
+        /// </code>
+        /// </example>
+        public SchedulerBuilder<T> Views(Action<SchedulerViewFactory<T>> addViewAction)
+        {
+            SchedulerViewFactory<T> factory = new SchedulerViewFactory<T>(Component);
+
+            addViewAction(factory);
+
+            return this;
+        }
     }
 }
 

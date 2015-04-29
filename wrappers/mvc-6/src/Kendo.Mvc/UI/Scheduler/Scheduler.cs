@@ -10,7 +10,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI Scheduler component
     /// </summary>
-    public partial class Scheduler<T> : WidgetBase
+    public partial class Scheduler<T> : WidgetBase, IScheduler<T>
         where T : class, ISchedulerEvent 
     {
         public Scheduler(ViewContext viewContext) : base(viewContext)
@@ -27,6 +27,12 @@ namespace Kendo.Mvc.UI
                     Title = Kendo.Mvc.Resources.Messages.Scheduler_Editor_EditorTitle
                 }
             };
+
+            Group = new SchedulerGroupSettings();
+
+            Views = new List<SchedulerViewBase>();
+
+            Resources = new List<SchedulerResource<T>>();
 
             DataSource = new DataSource(ModelMetadataProvider);
 
@@ -67,6 +73,24 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
+        public IList<SchedulerViewBase> Views
+        {
+            get;
+            private set;
+        }
+
+        public IList<SchedulerResource<T>> Resources
+        {
+            get;
+            private set;
+        }
+
+        public SchedulerGroupSettings Group
+        {
+            get;
+            set;
+        }
+
         protected override void WriteHtml(TextWriter writer)
         {
             var tag = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
@@ -104,6 +128,22 @@ namespace Kendo.Mvc.UI
                 {
                     settings["editable"] = editable;
                 }
+            }
+
+            if (Views.Count > 0)
+            {
+                settings["views"] = Views.ToJson();
+            }
+
+            if (Resources.Count > 0)
+            {
+                settings["resources"] = Resources.ToJson();
+            }
+
+            var group = Group.ToJson();
+            if (group.Count > 0)
+            {
+                settings["group"] = group;
             }
 
             if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
