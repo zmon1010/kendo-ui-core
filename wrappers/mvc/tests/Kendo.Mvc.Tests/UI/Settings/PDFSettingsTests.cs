@@ -37,5 +37,18 @@ namespace Kendo.Mvc.UI.Tests
         {
             pdf.ToJson().ContainsKey("proxyURL").ShouldBeFalse();
         }
+
+        [Fact]
+        public void Serializes_proxyTarget()
+        {
+            pdf.ProxyTarget = "foo";
+            pdf.ToJson()["proxyTarget"].ShouldEqual("foo");
+        }
+
+        [Fact]
+        public void Does_not_serialize_default_proxyTarget()
+        {
+            pdf.ToJson().ContainsKey("proxyTarget").ShouldBeFalse();
+        }
     }
 }

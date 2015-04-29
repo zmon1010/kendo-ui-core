@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
 
         public string ProxyURL { get; set; }
 
+        public string ProxyTarget { get; set; }
+
         public object PaperSize { get; set; }
 
         public string FileName { get; set; }
@@ -47,6 +49,11 @@ namespace Kendo.Mvc.UI
             if (ProxyURL.HasValue())
             {
                 json["proxyURL"] = ProxyURL;
+            }
+
+            if (ProxyTarget.HasValue())
+            {
+                json["proxyTarget"] = ProxyTarget;
             }
 
             if (FileName.HasValue())

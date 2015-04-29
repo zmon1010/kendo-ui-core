@@ -87,6 +87,18 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Set the a name or keyword indicating where to display the document returned from the proxy.
+        /// The default is "_self".
+        /// </summary>
+        /// <param name="target">The proxy target</param>
+        public PDFSettingsBuilder ProxyTarget(string target)
+        {
+            pdf.ProxyTarget = target;
+
+            return this;
+        }
+
+        /// <summary>
         /// Specifies the margins in "pt" units.
         /// </summary>
         public PDFSettingsBuilder Margin(double top, double right, double bottom, double left)

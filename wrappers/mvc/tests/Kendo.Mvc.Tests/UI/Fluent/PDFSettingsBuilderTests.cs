@@ -41,5 +41,18 @@ namespace Kendo.Mvc.UI.Html.Tests
         {
             builder.ProxyURL("Foo").ShouldEqual(builder);
         }
+
+        [Fact]
+        public void ProxyTarget_sets_ProxyTarget()
+        {
+            builder.ProxyTarget("Foo");
+            pdf.ProxyTarget.ShouldEqual("Foo");
+        }
+
+        [Fact]
+        public void ProxyTarget_returns_builder()
+        {
+            builder.ProxyTarget("Foo").ShouldEqual(builder);
+        }
     }
 }
