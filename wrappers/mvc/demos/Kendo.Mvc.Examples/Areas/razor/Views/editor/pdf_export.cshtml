@@ -4,7 +4,11 @@
       .StyleSheets(css => css
         .Add(Url.Content("~/Content/web/Editor/pdf-export-styles.css"))
       )
-      .Pdf(pdf=>pdf.Margin(20,20,20,20).PaperSize("a4"))
+      .Pdf(pdf => pdf
+          .Margin(20, 20, 20, 20)
+          .PaperSize("A4")
+          .ProxyURL(Url.Action("Pdf_Export_Save", "Editor"))
+      )
       .Tools(tools => tools
           .Clear()
           .Pdf()
