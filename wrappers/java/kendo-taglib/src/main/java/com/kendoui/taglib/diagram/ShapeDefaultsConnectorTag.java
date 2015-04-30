@@ -4,7 +4,7 @@ package com.kendoui.taglib.diagram;
 
 import com.kendoui.taglib.BaseTag;
 
-
+import com.kendoui.taglib.json.Function;
 
 
 
@@ -61,12 +61,16 @@ public class ShapeDefaultsConnectorTag extends  BaseTag  /* interfaces */ /* int
         setProperty("name", value);
     }
 
-    public java.lang.String getPosition() {
-        return (java.lang.String)getProperty("position");
+    public String getPosition() {
+        Function property = ((Function)getProperty("position"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
     }
 
-    public void setPosition(java.lang.String value) {
-        setProperty("position", value);
+    public void setPosition(String value) {
+        setProperty("position", new Function(value));
     }
 
 //<< Attributes

@@ -15604,13 +15604,13 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
         <body-content>JSP</body-content>
         <attribute>
-            <description></description>
+            <description>The connector name.</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description></description>
+            <description>The function that positions the connector.</description>
             <name>position</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -15619,7 +15619,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
 
     <tag>
-        <description></description>
+        <description>The function that positions the connector.</description>
         <name>diagram-shapeDefaults-connector-position</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsConnectorPositionFunctionTag</tag-class>
         <body-content>JSP</body-content>

@@ -24,11 +24,16 @@ class DiagramShapeConnector extends \Kendo\SerializableObject {
     }
 
     /**
+    * Sets the position option of the DiagramShapeConnector.
     * The function that positions the connector.
-    * @param string|\Kendo\JavaScriptFunction $value
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\Dataviz\UI\DiagramShapeConnector
     */
     public function position($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
         return $this->setProperty('position', $value);
     }
 
