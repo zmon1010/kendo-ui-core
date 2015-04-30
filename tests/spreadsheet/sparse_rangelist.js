@@ -164,4 +164,16 @@
         equal(values[2].value, 2);
         equal(values[3].value, 3);
     });
+
+    test("finds its last range start", 1, function() {
+        var list = new SparseRangeList(0, 100, 0);
+        list.value(10, 10, 3);
+        list.value(40, 50, 4);
+        equal(list.lastRangeStart(), 51);
+    })
+
+    test("finds its last range start when empty", 1, function() {
+        var list = new SparseRangeList(0, 100, 0);
+        equal(list.lastRangeStart(), 0);
+    })
 })();

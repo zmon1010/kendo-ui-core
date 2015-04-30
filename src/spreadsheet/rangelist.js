@@ -343,6 +343,20 @@
         }
     }
 
+    SparseRangeList.prototype.lastRangeStart = function() {
+        var node = this.tree.root;
+
+        if (node === NilNode) {
+            return this.range.start;
+        }
+
+        while(node.right !== NilNode) {
+            node = node.right;
+        }
+
+        return node.value.end + 1;
+    }
+
     kendo.spreadsheet = {
         RangeTree: RangeTree,
         RangeList: RangeList,

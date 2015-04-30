@@ -27,15 +27,7 @@ $("button").click(function() {
     var start = address[0] * ROWS + address[1];
     var end = start + length;
 
-    var node = cellValues.tree.root;
-    while (node.right.level !== 0) {
-        node = node.right;
-    }
-
-
-    var lastValueAddress = node.value.end;
-
-    console.log("last value found", lastValueAddress);
+    var lastValueAddress = cellValues.lastRangeStart();
 
     console.profile("sort")
 
