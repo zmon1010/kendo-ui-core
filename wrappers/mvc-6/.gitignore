@@ -6,3 +6,4 @@ artifacts/**
 **/bin/**
 **/Properties/debugSettings.json
 **/packages/**
+apidiff.txt
