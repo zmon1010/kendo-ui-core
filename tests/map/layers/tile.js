@@ -274,7 +274,7 @@
             pool.reset();
 
             for (var i = 0; i < pool._items.length; i++) {
-                ok(!pool._items[i].options.visible);
+                ok(!pool._items[i].visible);
             }
         });
 
@@ -293,7 +293,7 @@
         options.urlTemplate = options.urlTemplate || "";
         options.errorUrlTemplate = options.errorUrlTemplate || "";
 
-        return new ImageTile({
+        return new ImageTile("key", {
             index: new Point(options.index.x, options.index.y),
             currentIndex: new Point(options.currentIndex.x, options.currentIndex.y),
             offset: new Point(options.offset.x, options.offset.y),
@@ -355,21 +355,15 @@
         });
 
         test("should have id", function() {
-            tile = createImageTile({
-                index: {
-                    x: 1,
-                    y: 1
-                },
-                zoom: 1
-            });
-
-            ok(tile.options.id === "x:1y:1zoom:1");
-        });
-
-        test("initial visible should be false", function() {
             tile = createImageTile();
 
-            ok(!tile.visible);
+            ok(tile.id);
+        });
+
+        test("initial visible should be true", function() {
+            tile = createImageTile();
+
+            ok(tile.visible);
         });
 
         test("destroy should remove the element", function() {
@@ -387,7 +381,7 @@
         });
 
         test("should render url", function() {
-            tile.show({
+            tile = createImageTile({
                 index: {
                     x: 1,
                     y: 1
@@ -399,14 +393,15 @@
                 offset: {
                     x: 20,
                     y: 10
-                }
+                },
+                urlTemplate: "foo"
             });
 
             equal(tile.element.attr("src"), tile.url());
         });
 
         test("should render offset", function() {
-            tile.show({
+            tile = createImageTile({
                 index: {
                     x: 1,
                     y: 1
@@ -425,26 +420,6 @@
             equal(parseInt(tile.element.css("left")), 20);
         });
 
-        test("should have id", function() {
-            tile.show({
-                index: {
-                    x: 1,
-                    y: 1
-                },
-                currentIndex: {
-                    x: 1,
-                    y: 1
-                },
-                offset: {
-                    x: 1,
-                    y: 1
-                },
-                zoom: 1
-            });
-
-            equal(tile.options.id, "x:1y:1zoom:1");
-        });
-
         test("should set visible to true", function() {
             tile.show({
                 index: {
@@ -461,7 +436,7 @@
                 }
             });
 
-            ok(tile.options.visible);
+            ok(tile.visible);
         });
 
     })();
