@@ -14,6 +14,32 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Serializes_seconds_format()
+        {
+            dateFormats.Seconds = "HH:mm";
+            GetJson()["seconds"].ShouldEqual("HH:mm");
+        }
+
+        [Fact]
+        public void Does_not_serialize_default_seconds_format()
+        {
+            GetJson().ContainsKey("seconds").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Serializes_minutes_format()
+        {
+            dateFormats.Minutes = "HH:mm";
+            GetJson()["minutes"].ShouldEqual("HH:mm");
+        }
+
+        [Fact]
+        public void Does_not_serialize_default_minutes_format()
+        {
+            GetJson().ContainsKey("minutes").ShouldBeFalse();
+        }
+
+        [Fact]
         public void Serializes_hours_format()
         {
             dateFormats.Hours = "HH:mm";
@@ -37,6 +63,19 @@ namespace Kendo.Mvc.UI.Tests
         public void Does_not_serialize_default_days_format()
         {
             GetJson().ContainsKey("days").ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Serializes_weeks_format()
+        {
+            dateFormats.Weeks = "HH:mm";
+            GetJson()["weeks"].ShouldEqual("HH:mm");
+        }
+
+        [Fact]
+        public void Does_not_serialize_default_weeks_format()
+        {
+            GetJson().ContainsKey("weeks").ShouldBeFalse();
         }
 
         [Fact]
