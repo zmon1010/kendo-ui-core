@@ -42,14 +42,31 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Defines the name of the JavaScript function that positions the connector.
+        /// </summary>
+        /// <param name="value">The name of the function that positions the connector.</param>
+        public DiagramShapeConnectorBuilder<TShapeModel, TConnectionModel> Position(string value)
+        {
+            container.Position = new ClientHandlerDescriptor
+            {
+                HandlerName = value
+            };
+
+            return this;
+        }
         
         /// <summary>
-        /// The function that positions the connector.
+        /// Defines the inline handler that positions the connector.
         /// </summary>
-        /// <param name="value">The value that configures the position.</param>
-        public DiagramShapeConnectorBuilder<TShapeModel,TConnectionModel> Position(string value)
+        /// <param name="handler">The inline handler that positions the connector.</param>
+        public DiagramShapeConnectorBuilder<TShapeModel, TConnectionModel> Position(Func<object, object> handler)
         {
-            container.Position = value;
+            container.Position = new ClientHandlerDescriptor
+            {
+                TemplateDelegate = handler
+            };
 
             return this;
         }

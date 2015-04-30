@@ -21,7 +21,7 @@ namespace Kendo.Mvc.UI
         
         public string Name { get; set; }
         
-        public string Position { get; set; }
+        public ClientHandlerDescriptor Position { get; set; }
         
         //<< Fields
 
