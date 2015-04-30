@@ -9,20 +9,16 @@ var heights = new kendo.spreadsheet.RangeList(0, ROWS, ROW_HEIGHT, true);
 var cellValues = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "");
 var colors = new kendo.spreadsheet.RangeList(0, ROWS * COLUMNS - 1, "beige");
 
-console.profile("value");
-
-for (var i = 0, len = 1000; i < len; i++) {
-    for (var j = 0, len = 1000; j < len; j++) {
+for (var i = 0, len = 100; i < len; i++) {
+    for (var j = 0, len = 100; j < len; j++) {
         var idx = i * ROWS + j;
-        cellValues.value(idx, idx, 1000000 - ((i + 1)  * (j + 1)));
+        cellValues.value(idx, idx, 10000 - ((i + 1)  * (j + 1)));
     }
 }
 
-console.profileEnd("value");
-
 $("button").click(function() {
     var address = [0, 0];
-    var length = 999;
+    var length = 99;
 
     var start = address[0] * ROWS + address[1];
     var end = start + length;
