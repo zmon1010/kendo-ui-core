@@ -5824,7 +5824,7 @@ var __meta__ = {
             if (hasFilterRow) {
                 var filterRow = $("<tr/>");
                 filterRow.addClass("k-filter-row");
-                if (hasDetails) {
+                if (hasDetails || tr.find(".k-hierarchy-cell").length) { // handles server side detail template
                     filterRow.prepend('<th class="k-hierarchy-cell">&nbsp;</th>');
                 }
 
