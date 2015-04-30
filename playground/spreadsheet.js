@@ -9,16 +9,14 @@ var heights = new kendo.spreadsheet.RangeList(0, ROWS, ROW_HEIGHT, true);
 var cellValues = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "");
 var colors = new kendo.spreadsheet.RangeList(0, ROWS * COLUMNS - 1, "beige");
 
-
-
 console.profile("value");
+
 for (var i = 0, len = 1000; i < len; i++) {
     for (var j = 0, len = 1000; j < len; j++) {
         var idx = i * ROWS + j;
         cellValues.value(idx, idx, 1000000 - ((i + 1)  * (j + 1)));
     }
 }
-console.log("last cell", idx);
 
 console.profileEnd("value");
 
@@ -57,16 +55,6 @@ $("button").click(function() {
     drawTable(0, viewportWidth, 0, viewportHeight);
     console.profileEnd("sort");
 });
-
-/*
-var indices = cellValues.sortedIndices(0, len);
-
-console.profile("sort1");
-cellValues.sort(0, len, indices);
-console.profileEnd("sort1");
-
-colors.value(1, 50, "green");
-*/
 
 widths.value(1, 5, 120);
 widths.value(50, 50, 200);
@@ -128,11 +116,9 @@ function visibleRange(list, start, end, max) {
     var endSegment = null;
     var lastPage = false
 
-
     if (end >= max) {
         lastPage = true;
     }
-
 
     var ranges = list.intersecting(start, end);
 
@@ -164,8 +150,6 @@ function visibleRange(list, start, end, max) {
 }
 
 wrapper.onscroll = scroll;
-
-var start = new Date();
 
 var totalHeight = currentHeight - 1;
 var totalWidth = currentWidth - 1;
@@ -210,7 +194,6 @@ function drawTable(left, right, top, bottom) {
 
         trs.push(tree.element("tr", attr));
     }
-
 
     var cwIndex = 0;
 
