@@ -18,11 +18,17 @@
     /* -----[ References ]----- */
 
     var Ref = defclass(null, function Ref(){}, {
+        hasSheet: function() {
+            return this._hasSheet;
+        },
         simplify: function() {
             return this;
         },
-        setSheet: function(sheet) {
+        setSheet: function(sheet, hasSheet) {
             this.sheet = sheet;
+            if (hasSheet != null) {
+                this._hasSheet = hasSheet;
+            }
             return this;
         }
     });
@@ -61,16 +67,25 @@
             }
             return ref.intersect(this);
         },
-        toString: function() {
-            return calc.make_reference(null, this.col, this.row, this.rel);
+        print: function(tcol, trow, orig) {
+            var col = this.col, row = this.row, rel = this.rel;
+            if (rel & 1) {
+                // relative col
+                col = col - orig.col + tcol;
+            }
+            if (rel & 2) {
+                // relative row
+                row = row - orig.row + trow;
+            }
+            return calc.make_reference(this._hasSheet && this.sheet, col, row, rel);
         }
     });
 
     /* -----[ Range reference ]----- */
 
     var RangeRef = defclass(Ref, function RangeRef(tl, br) {
-        this.topLeft = tl;
-        this.bottomRight = br;
+        this.topLeft = new CellRef(tl.col, tl.row, tl.rel);
+        this.bottomRight = new CellRef(br.col, br.row, br.rel);
         this.normalize();
     }, {
         type: "ref",
@@ -80,7 +95,7 @@
                 && this._containsCell(range.bottomRight);
         },
         _containsCell: function(cell) {
-            return cell.sheet == this.topLeft.sheet
+            return cell.sheet == this.sheet
                 && cell.row >= this.topLeft.row
                 && cell.col >= this.topLeft.col
                 && cell.row <= this.bottomRight.row
@@ -97,8 +112,7 @@
         },
 
         _intersectRange: function(ref) {
-            var sheet = this.topLeft.sheet;
-            if (sheet != ref.topLeft.sheet) {
+            if (this.sheet != ref.sheet) {
                 return NULL;
             }
             var a_left    = this.topLeft.col;
@@ -117,11 +131,11 @@
                 return new RangeRef(
                     // topLeft
                     new CellRef(Math.max(a_left, b_left),
-                                Math.max(a_top, b_top)).setSheet(sheet),
+                                Math.max(a_top, b_top)),
                     // bottomRight
                     new CellRef(Math.min(a_right, b_right),
-                                Math.min(a_bottom, b_bottom)).setSheet(sheet)
-                );
+                                Math.min(a_bottom, b_bottom))
+                ).setSheet(this.sheet, this.hasSheet());
             } else {
                 return NULL;
             }
@@ -146,9 +160,11 @@
             if (this.topLeft.row == this.bottomRight.row &&
                 this.topLeft.col == this.bottomRight.col)
             {
-                return new CellRef(this.topLeft.col,
-                                   this.topLeft.row,
-                                   this.topLeft.rel).setSheet(this.topLeft.sheet);
+                return new CellRef(
+                    this.topLeft.col,
+                    this.topLeft.row,
+                    this.topLeft.rel
+                ).setSheet(this.sheet, this.hasSheet());
             }
             return this;
         },
@@ -176,8 +192,14 @@
             return this;
         },
 
-        toString: function() {
-            return this.topLeft() + ":" + this.bottomRight();
+        print: function(tcol, trow, orig) {
+            var ret = this.topLeft.print(tcol, trow, orig)
+                + ":"
+                + this.bottomRight.print(tcol, trow, orig);
+            if (this.hasSheet()) {
+                ret = this.sheet + "!" + ret;
+            }
+            return ret;
         }
     });
 
@@ -327,7 +349,7 @@
                     right = 0;
                 }
                 if (typeof left == "number" && typeof right == "number") {
-                    callback(func.call(this, left, right));
+                    func.call(this, callback, left, right);
                 } else {
                     this.error(new CalcError("VALUE"));
                 }
@@ -411,7 +433,6 @@
                         callback(ref);
                     });
                 } catch(ex) {
-                    console.error(ex);
                     this.error(new CalcError("REF"));
                 }
             });
@@ -424,24 +445,24 @@
         /* -----[ binary ops ]----- */
 
         // arithmetic
-        "binary+": binaryNumeric(function(left, right){
-            return left + right;
+        "binary+": binaryNumeric(function(callback, left, right){
+            callback(left + right);
         }),
-        "binary-": binaryNumeric(function(left, right){
-            return left - right;
+        "binary-": binaryNumeric(function(callback, left, right){
+            callback(left - right);
         }),
-        "binary*": binaryNumeric(function(left, right){
-            return left * right;
+        "binary*": binaryNumeric(function(callback, left, right){
+            callback(left * right);
         }),
-        "binary/": binaryNumeric(function(left, right){
+        "binary/": binaryNumeric(function(callback, left, right){
             if (right === 0) {
                 this.error(new CalcError("DIV/0"));
             } else {
-                return left / right;
+                callback(left / right);
             }
         }),
-        "binary^": binaryNumeric(function(left, right){
-            return Math.pow(left, right);
+        "binary^": binaryNumeric(function(callback, left, right){
+            callback(Math.pow(left, right));
         }),
 
         // text concat
@@ -481,7 +502,7 @@
         "binary:": function(callback, args) {
             var left = args[0], right = args[1];
             if (CellRef.is(left) && CellRef.is(right)) {
-                callback(new RangeRef(left, right));
+                callback(new RangeRef(left, right).setSheet(left.sheet || this.formula.sheet, left.hasSheet()));
             } else {
                 this.error(new CalcError("REF"));
             }
@@ -632,16 +653,16 @@
         return formula;
     };
 
-    exports.makeCellRef = function(sheet, col, row, rel) {
-        return new CellRef(col, row, rel).setSheet(sheet);
+    exports.makeCellRef = function(col, row, rel) {
+        return new CellRef(col, row, rel);
     };
 
     exports.makeRangeRef = function(tl, br) {
         return new RangeRef(tl, br);
     };
 
-    exports.makeNameRef = function(sheet, name) {
-        return new NameRef(name).setSheet(sheet);
+    exports.makeNameRef = function(name) {
+        return new NameRef(name);
     };
 
     exports.makeError = function(type) {

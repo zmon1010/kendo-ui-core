@@ -42,7 +42,6 @@
 
     var REL_COL = 1;
     var REL_ROW = 2;
-    var REL_SHT = 4;
 
     function getcol(str) {
         str = str.toUpperCase();
@@ -63,13 +62,12 @@
             var sheet  = m[1] && m[2];
             var relcol = m[3] ? 0 : REL_COL, col = getcol(m[4]);
             var relrow = m[5] ? 0 : REL_ROW, row = getrow(m[6]);
-            var relsht = sheet ? 0 : REL_SHT;
-            return new Runtime.makeCellRef(sheet, col, row, relcol | relrow | relsht);
+            return new Runtime.makeCellRef(col, row, relcol | relrow).setSheet(sheet, !!sheet);
         }
         if ((m = /^((.*)!)?(.+)$/i.exec(name))) {
             var sheet  = m[1] && m[2];
             var name = m[3];
-            return new Runtime.makeNameRef(sheet, name);
+            return new Runtime.makeNameRef(name).setSheet(sheet, !!sheet);
         }
     }
 
@@ -80,7 +78,7 @@
         if (!isFinite(row)) {
             row = "";
         }
-        else if (rel != null && 0 === rel & REL_ROW) {
+        else if (rel != null && !(rel & REL_ROW)) {
             row = "$" + row;
         }
 
@@ -92,12 +90,12 @@
                 aa = String.fromCharCode(64 + col % 26) + aa;
                 col = Math.floor(col / 26);
             }
-            if (rel != null && 0 === rel & REL_COL) {
+            if (rel != null && !(rel & REL_COL)) {
                 aa = "$" + aa;
             }
         }
 
-        if (sheet && (rel == null || 0 === rel & REL_SHT)) {
+        if (sheet) {
             return sheet + "!" + aa + row;
         } else {
             return aa + row;
@@ -309,7 +307,11 @@
                     var topLeft = getref(a, true);
                     var bottomRight = getref(c, false);
                     if (topLeft != null && bottomRight != null) {
-                        return Runtime.makeRangeRef(topLeft, bottomRight);
+                        if (topLeft.sheet != bottomRight.sheet) {
+                            input.croak("Invalid range");
+                        } else {
+                            return Runtime.makeRangeRef(topLeft, bottomRight).setSheet(topLeft.sheet, topLeft.hasSheet());
+                        }
                     }
                 }
             });
@@ -317,7 +319,7 @@
 
         function getref(tok, isFirst) {
             if (tok.type == "num" && tok.value == tok.value|0) {
-                return Runtime.makeCellRef(sheet, isFirst ? -Infinity : +Infinity, tok.value, 2 | 4);
+                return Runtime.makeCellRef(isFirst ? -Infinity : +Infinity, tok.value, 2).setSheet(sheet, false);
             }
             var ref = parse_symbol(tok);
             if (ref.type == "ref") {
@@ -329,10 +331,18 @@
                     }
                     if (/^[0-9]+$/.test(name)) {
                         // row ref
-                        return Runtime.makeCellRef(ref.sheet || sheet, isFirst ? -Infinity : +Infinity, getrow(name), (abs ? 0 : 2) | (ref.sheet ? 0 : 4));
+                        return Runtime.makeCellRef(
+                            isFirst ? -Infinity : +Infinity,
+                            getrow(name),
+                            (abs ? 0 : REL_ROW)
+                        ).setSheet(ref.sheet || sheet, ref.hasSheet());
                     } else {
                         // col ref
-                        return Runtime.makeCellRef(ref.sheet, getcol(name), isFirst ? -Infinity : +Infinity, (abs ? 0 : 1) | (ref.sheet ? 0 : 4));
+                        return Runtime.makeCellRef(
+                            getcol(name),
+                            isFirst ? -Infinity : +Infinity,
+                            (abs ? 0 : REL_COL)
+                        ).setSheet(ref.sheet || sheet, ref.hasSheet());
                     }
                 }
                 return ref;
@@ -388,7 +398,7 @@
                 }).join(", ") + ")";
             }
             else if (type == "ref") {
-                ret = print_ref(node);
+                ret = node.print(col, row, exp);
             }
             else if (type == "bool") {
                 ret = (node.value+"").toUpperCase();
@@ -408,31 +418,6 @@
             function close_paren() {
                 if (parens) {
                     ret += ")";
-                }
-            }
-            function print_ref(node, noSheet) {
-                if (node.ref == "cell") {
-                    return make_reference(
-                        noSheet ? null : node.sheet,                   // sheet name
-                        node.col + (node.rel & REL_COL ? col - exp.col : 0), // col
-                        node.row + (node.rel & REL_ROW ? row - exp.row : 0), // row
-                        node.rel                                       // whether to add the $
-                    );
-                }
-                else if (node.ref == "name") {
-                    if (!node.sheet) {
-                        return node.name;
-                    } else {
-                        return node.sheet + "!" + node.name;
-                    }
-                }
-                else if (node.ref == "range") {
-                    return print_ref(node.topLeft, true)
-                        + ":"
-                        + print_ref(node.bottomRight, true);
-                }
-                else {
-                    throw new Error("Unknown reference type in print " + node.type);
                 }
             }
         }

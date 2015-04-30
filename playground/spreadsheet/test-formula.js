@@ -28,14 +28,14 @@ Spreadsheet.prototype = {
             return cell ? [ cell ] : [];
         }
         if (Runtime.RangeRef.is(ref)) {
-            ref = ref.intersect(this.getSheetBounds(ref.topLeft.sheet));
+            ref = ref.intersect(this.getSheetBounds(ref.sheet));
             if (!Runtime.RangeRef.is(ref)) {
                 return this.getRefCells(ref);
             }
             var a = [];
             for (var row = ref.topLeft.row; row <= ref.bottomRight.row; ++row) {
                 for (var col = ref.topLeft.col; col <= ref.bottomRight.col; ++col) {
-                    var cell = this._getCell(ref.topLeft.sheet, col, row);
+                    var cell = this._getCell(ref.sheet, col, row);
                     if (cell != null) {
                         a.push(cell);
                     }
@@ -95,12 +95,12 @@ Spreadsheet.prototype = {
                 maxcol = col;
             }
         });
-        return new Runtime.RangeRef(
+        return Runtime.makeRangeRef(
             // top-left
-            new Runtime.CellRef(1, 1).setSheet(sheetName),
+            Runtime.makeCellRef(1, 1, 0),
             // bottom-right
-            new Runtime.CellRef(maxcol, maxrow).setSheet(sheetName)
-        );
+            Runtime.makeCellRef(maxcol, maxrow, 0)
+        ).setSheet(sheetName, false);
     },
 
     getVisibleFormulas: function() {
@@ -410,9 +410,12 @@ function fillElements(data) {
 makeElements(".sheet");
 
 fillElements({
-    sheet1: {
-        B1: '=sum(A:A)'
-    }
+    // sheet1: {
+    //     A1: "e4",
+    //     A2: "g6",
+    //     B2: '=sum(indirect(A2):indirect(A1))',
+    //     B1: '=sum(A:A)'
+    // }
     // sheet1: {
     //     A1: '=CURRENCY("USD", "EUR") + CURRENCY("USD", "EUR")'
     // }
