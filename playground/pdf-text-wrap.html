@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+    <style>
+      body { font: 12px "DejaVu Serif"; }
+      .test {
+        width: 100px;
+        border: 1px solid black;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="pdf('#test1')">PDF</button>
+    <button id="svg" onclick="draw('#test1', 'svg')">SVG</button>
+    <button onclick="draw('#test1', 'canvas')">Canvas</button>
+    |
+    <button onclick="h2c('#test1')">html2canvas</button>
+
+    <div id="test1">
+      <div class="test">
+        this-is-some-long-text-that-should-wrap-at-the-dashes-but-apparently-that-doesn't-work-properly-in-the-browser-of-my-life-internet-exporer
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function(){
+        setTimeout(function(){
+          $("#svg").click();
+        }, 500);
+      });
+    </script>
+  </body>
+</html>
