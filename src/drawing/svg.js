@@ -236,7 +236,10 @@
 
         removeSelf: function() {
             if (this.element) {
-                this.element.parentNode.removeChild(this.element);
+                var parentNode = this.element.parentNode;
+                if (parentNode) {
+                    parentNode.removeChild(this.element);
+                }
                 this.element = null;
             }
 
