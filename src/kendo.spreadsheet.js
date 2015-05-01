@@ -1,6 +1,8 @@
 (function(f, define){
     define([
-        "./spreadsheet/rangelist"
+        "./spreadsheet/rangelist",
+        "./spreadsheet/grid",
+        "./spreadsheet/sorter"
     ], f);
 })(function(){
     var __meta__ = {

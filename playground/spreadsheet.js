@@ -7,7 +7,7 @@ var ROW_HEIGHT = 20;
 var widths = new kendo.spreadsheet.RangeList(0, COLUMNS, COLUMN_WIDTH, true);
 var heights = new kendo.spreadsheet.RangeList(0, ROWS, ROW_HEIGHT, true);
 var cellValues = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "");
-var colors = new kendo.spreadsheet.RangeList(0, ROWS * COLUMNS - 1, "beige");
+var colors = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "beige");
 
 for (var i = 0, len = 100; i < len; i++) {
     for (var j = 0, len = 100; j < len; j++) {
@@ -16,34 +16,23 @@ for (var i = 0, len = 100; i < len; i++) {
     }
 }
 
+var Area = kendo.spreadsheet.Area;
+var Address = kendo.spreadsheet.Address;
+var Grid = kendo.spreadsheet.Grid;
+var Sorter = kendo.spreadsheet.Sorter;
+
+var grid = new Grid(ROWS, COLUMNS);
+var sorter = new Sorter(grid, [ cellValues, colors ]);
+
 $("button").click(function() {
-    var address = [0, 0];
-    var length = 99;
-
-    var start = address[0] * ROWS + address[1];
-    var end = start + length;
-
-    var lastValueAddress = cellValues.lastRangeStart();
-
+    var area = new Area(new Address(0, 1), new Address(99, 1));
     console.profile("sort")
-
-    var indices = cellValues.sortedIndices(start, end);
-
-    for (var i = 0, len = COLUMNS; i < len; i++) {
-        start = i * ROWS + address[1];
-
-        if (start >= lastValueAddress) {
-            console.log("gone in last range", start);
-            break;
-        }
-
-        cellValues.sort(start, start + length, indices);
-    }
-
-    drawTable(0, viewportWidth, 0, viewportHeight);
+    sorter.sortBy(area, cellValues);
     console.profileEnd("sort");
+    drawTable(0, viewportWidth, 0, viewportHeight);
 });
 
+colors.value(1, 50, "green");
 widths.value(1, 5, 120);
 widths.value(50, 50, 200);
 
