@@ -214,6 +214,9 @@
 
     RangeList.prototype.value = function(start, end, value) {
         if (value === undefined) {
+            if (end === undefined) {
+                end = start;
+            }
             return this.intersecting(start, end)[0].value;
         }
 
