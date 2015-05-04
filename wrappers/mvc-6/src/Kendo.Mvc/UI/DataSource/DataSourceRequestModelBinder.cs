@@ -6,57 +6,54 @@ using Microsoft.AspNet.Mvc.ModelBinding;
 
 namespace Kendo.Mvc.UI
 {
-	public class DataSourceRequestModelBinder : IModelBinder
-	{
-		public virtual async Task<bool> BindModelAsync(ModelBindingContext bindingContext)
-		{
-			DataSourceRequest req = new DataSourceRequest();
+    public class DataSourceRequestModelBinder : IModelBinder
+    {
+        public virtual async Task<bool> BindModelAsync(ModelBindingContext bindingContext)
+        {
+            var request = new DataSourceRequest();
 
-			await Task.Factory.ContinueWhenAll(
-				new[] {
-					TryGetValue<string>(bindingContext, DataSourceRequestUrlParameters.Sort, (request, sort) =>
-						request.Sorts = DataSourceDescriptorSerializer.Deserialize<SortDescriptor>(sort)
-					),
-					 TryGetValue<int>(bindingContext, DataSourceRequestUrlParameters.Page, (request, currentPage) => request.Page = currentPage),
-					TryGetValue<int>(bindingContext, DataSourceRequestUrlParameters.PageSize, (request, pageSize) => request.PageSize = pageSize),
-					TryGetValue<string>(bindingContext, DataSourceRequestUrlParameters.Filter, (request, filter) =>
-						request.Filters = FilterDescriptorFactory.Create(filter)
-					),
-					TryGetValue<string>(bindingContext, DataSourceRequestUrlParameters.Group, (request, group) =>
-						request.Groups = DataSourceDescriptorSerializer.Deserialize<GroupDescriptor>(group)
-					),
-					TryGetValue<string>(bindingContext, DataSourceRequestUrlParameters.Aggregates, (request, aggregates) =>
-						request.Aggregates = DataSourceDescriptorSerializer.Deserialize<AggregateDescriptor>(aggregates)
-					)
-				},
-				(results) => results.Each(x => x.Result(req))
-			);
 
-			bindingContext.Model = req;
+            await TryGetValue(bindingContext, DataSourceRequestUrlParameters.Sort, (string sort) =>
+                request.Sorts = DataSourceDescriptorSerializer.Deserialize<SortDescriptor>(sort)
+            );
 
-			return true;
-		}
+            await TryGetValue(bindingContext, DataSourceRequestUrlParameters.Page, (int currentPage) => request.Page = currentPage);
 
-		private Task<Action<DataSourceRequest>> TryGetValue<T>(ModelBindingContext bindingContext, string key, Action<DataSourceRequest, T> setter)
-		{
-			if (bindingContext.ModelMetadata.BinderModelName.HasValue())
-			{
-				key = bindingContext.ModelName + "-" + key;
-			}
+            await TryGetValue(bindingContext, DataSourceRequestUrlParameters.PageSize, (int pageSize) => request.PageSize = pageSize);
 
-			return bindingContext.ValueProvider
-				.GetValueAsync(key)
-				.ContinueWith(x =>
-				{
-					var value = x.Result;
-					Action<DataSourceRequest> action = (r) => { };
+            await TryGetValue(bindingContext, DataSourceRequestUrlParameters.Filter, (string filter) =>
+                request.Filters = FilterDescriptorFactory.Create(filter)
+            );
 
-					if (value != null)
-					{
-						action = r => setter(r, (T)value.ConvertTo(typeof(T)));
-					}
-					return action;
-				});
-		}
-	}
+            await TryGetValue(bindingContext, DataSourceRequestUrlParameters.Group, (string group) =>
+                request.Groups = DataSourceDescriptorSerializer.Deserialize<GroupDescriptor>(group)
+            );
+
+            await TryGetValue(bindingContext, DataSourceRequestUrlParameters.Aggregates, (string aggregates) =>
+                request.Aggregates = DataSourceDescriptorSerializer.Deserialize<AggregateDescriptor>(aggregates)
+            );
+
+            bindingContext.Model = request;
+
+            return true;
+        }
+
+        private Task TryGetValue<T>(ModelBindingContext bindingContext, string key, Action<T> action)
+        {
+            if (bindingContext.ModelMetadata.BinderModelName.HasValue())
+            {
+                key = bindingContext.ModelName + "-" + key;
+            }
+
+            return bindingContext.ValueProvider
+                .GetValueAsync(key)
+                .ContinueWith(result => {
+                    var value = result.Result;
+                    if (value != null)
+                    {
+                        action((T)value.ConvertTo(typeof(T)));
+                    }
+                });
+        }
+    }
 }
