@@ -396,6 +396,14 @@
         };
     }
 
+    function DIVIDE(callback, left, right){
+        if (right === 0) {
+            this.error(new CalcError("DIV/0"));
+        } else {
+            callback(left / right);
+        }
+    }
+
     var FUNCS = {
 
         sum: function(callback, args){
@@ -410,11 +418,11 @@
         average: function(callback, args){
             args = cellValues(this, args);
             var sum = 0, count = 0;
-            forNumbers(this, arguments, function(num){
+            forNumbers(this, args, function(num){
                 ++count;
                 sum += num;
             });
-            return sum / count;
+            DIVIDE.call(this, callback, sum, count);
         },
 
         // XXX: does more work than needed
@@ -454,13 +462,7 @@
         "binary*": binaryNumeric(function(callback, left, right){
             callback(left * right);
         }),
-        "binary/": binaryNumeric(function(callback, left, right){
-            if (right === 0) {
-                this.error(new CalcError("DIV/0"));
-            } else {
-                callback(left / right);
-            }
-        }),
+        "binary/": binaryNumeric(DIVIDE),
         "binary^": binaryNumeric(function(callback, left, right){
             callback(Math.pow(left, right));
         }),

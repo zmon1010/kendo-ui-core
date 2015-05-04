@@ -263,7 +263,7 @@ function makeElements(container) {
     for (var col = 1; col <= 10; ++col) {
         head.append("<td>" + String.fromCharCode(64+col) + "</td>");
     }
-    for (var row = 1; row <= 10; ++row) {
+    for (var row = 1; row <= 100; ++row) {
         var tr = $("<tr>").appendTo(table);
         tr.append("<td class='head'>" + row + "</td>")
         for (var col = 1; col <= 10; ++col) {
