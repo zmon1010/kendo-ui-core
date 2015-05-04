@@ -2,7 +2,7 @@
 @base: #f8fafb; // ListView background
 @background: #fff;
 
-@border-radius: 2px;
+@border-radius: 4px;
 
 @normal-background: #fff;
 @normal-text-color: #32364c; //Dark text color
@@ -16,17 +16,50 @@
 @selected-text-color: #888e90;
 @selected-gradient: none;
 
-/*@error: #be5138;
-@warning: #be9938;
-@success: #2b893c;
-@info: #0c779b;*/
 
-// graphics
-//@image-folder: "Black";
-//@texture: none;
-//@fallback-texture: url('textures/glass.png');
-
-//@import "type-default.less";
-
-//new vars
 @accentSecond: #00acc1;
+
+// Button 
+.km-nova .km-button {
+    color: @hover-text-color; 
+    background: @background;
+    border-color: @hover-text-color;
+}
+
+.km-nova .km-button.km-state-active {
+    background: @selected-background;
+}
+
+// Primary Button
+.km-nova .km-primary {
+    color: @background;
+    background: @accent;
+    border-color: @accent;
+}
+
+.km-nova .km-primary.km-state-active {
+    background: hsv(hsvHue(@accent), hsvSaturation(@accent), hsvValue(@accent) - 10); 
+    border-color: hsv(hsvHue(@accent), hsvSaturation(@accent), hsvValue(@accent) - 10); 
+}
+
+// ButtonGroup
+.km-nova .km-buttongroup .km-state-active {
+    color: @background;
+    background-color: darken(@selected-background, 33%);
+}
+
+.km-nova .km-buttongroup.km-primary .km-button {
+    color: @accent;
+    border-color: @accent;
+}
+
+.km-nova .km-buttongroup.km-primary .km-state-active {
+    color: @background;
+    background: @accent;
+} 
+
+
+// Link button => km-link-button
+.km-nova .km-link-button {
+    color: @accentSecond;
+}

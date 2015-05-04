@@ -3,3 +3,31 @@
 @import "base.less";
 
 /* Button */
+/* Medium button - default state */
+.km-nova .km-button,
+.km-nova .km-buttongroup .km-button {
+    font-size: .93rem;
+    padding: .67rem;
+    border-radius: @border-radius;
+    border-width: 1px;
+    border-style: solid;    
+    vertical-align: middle;
+}
+
+.km-nova .km-buttongroup .km-button {
+    border-width: 1px 0 1px 1px;
+}
+
+/* Small button */
+.km-nova .km-button.km-small,
+.km-nova .km-buttongroup.km-small .km-button { 
+    font-size: .8rem;
+    padding: 0.4rem;
+}
+
+/* Large button */
+.km-nova .km-button.km-large,
+.km-nova .km-buttongroup.km-large .km-button {
+    font-size: 1.07rem;
+    padding: .93rem;
+}
