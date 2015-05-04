@@ -154,8 +154,7 @@ var InsertHtmlTool = Tool.extend({
 
 var UndoRedoStack = Class.extend({
     init: function() {
-        this.stack = [];
-        this.currentCommandIndex = -1;
+        this.clear();
     },
 
     push: function (command) {
@@ -173,6 +172,11 @@ var UndoRedoStack = Class.extend({
         if (this.canRedo()) {
             this.stack[++this.currentCommandIndex].redo();
         }
+    },
+
+    clear: function() {
+        this.stack = [];
+        this.currentCommandIndex = -1;
     },
 
     canUndo: function () {

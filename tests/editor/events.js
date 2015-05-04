@@ -309,4 +309,18 @@ test("blurring the editor blurs the textarea (jQuery validate compatibility)", f
     ok(called);
 });
 
+test("execute event can be prevented", function() {
+    editor.value("bar");
+
+    editor.undoRedoStack.clear();
+
+    editor.bind('execute', function(e) {
+        e.preventDefault();
+    });
+
+    editor.exec('bold');
+
+    ok(!editor.undoRedoStack.canUndo());
+});
+
 }());

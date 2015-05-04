@@ -844,9 +844,9 @@
         },
 
         exec: function (name, params) {
-            var that = this,
-                range,
-                tool, command = null;
+            var that = this;
+            var command = null;
+            var range, tool, prevented;
 
             if (!name) {
                 throw new Error("kendoEditor.exec(): `name` parameter cannot be empty");
@@ -882,7 +882,11 @@
                     command = tool.command(extend({ range: range }, params));
                 }
 
-                that.trigger("execute", { name: name, command: command });
+                prevented = that.trigger("execute", { name: name, command: command });
+
+                if (prevented) {
+                    return;
+                }
 
                 if (/^(undo|redo)$/i.test(name)) {
                     that.undoRedoStack[name]();

@@ -79,7 +79,13 @@ test("canUndo is true after undoing the second command", function() {
     undoRedoStack.undo();
 
     ok(undoRedoStack.canUndo());
+});
 
+test("clear clears stack", function() {
+    undoRedoStack.push({ undo: function() { } });
+    undoRedoStack.clear();
+
+    ok(!undoRedoStack.canUndo());
 });
 
 }());
