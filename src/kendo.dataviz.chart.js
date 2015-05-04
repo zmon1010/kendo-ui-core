@@ -1006,6 +1006,7 @@ var __meta__ = {
                 tooltipOptions = chart.options.tooltip,
                 point;
 
+
             if (chart._suppressHover || !highlight || highlight.isHighlighted(element) || chart._sharedTooltip()) {
                 return;
             }
@@ -10469,6 +10470,7 @@ var __meta__ = {
                 element.css({ top: offset.top, left: offset.left });
             }
 
+            tooltip.visible = true;
             tooltip._ensureElement(document.body);
             element
                 .stop(true, true)
@@ -10477,8 +10479,6 @@ var __meta__ = {
                     left: offset.left,
                     top: offset.top
                 }, options.animation.duration);
-
-            tooltip.visible = true;
         },
 
         _clearShowTimeout: function() {
@@ -10606,10 +10606,14 @@ var __meta__ = {
         },
 
         _hideElement: function() {
-            if (this.element) {
-                this.element.fadeOut({
+            var tooltip = this;
+            var element = this.element;
+            if (element) {
+                element.fadeOut({
                     always: function(){
-                        $(this).off(MOUSELEAVE_NS).remove();
+                        if (!tooltip.visible) {
+                            element.off(MOUSELEAVE_NS).remove();
+                        }
                     }
                 });
             }
