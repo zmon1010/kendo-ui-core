@@ -45,7 +45,14 @@
         this.name = name;
     }, {
         type: "ref",
-        ref: "name"
+        ref: "name",
+        print: function(tcol, trow, orig) {
+            var ret = this.name;
+            if (this.hasSheet()) {
+                ret = this.sheet + "!" + ret;
+            }
+            return ret;
+        }
     });
 
     /* -----[ Cell reference ]----- */
