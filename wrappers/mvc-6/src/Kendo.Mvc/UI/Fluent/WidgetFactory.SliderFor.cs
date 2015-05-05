@@ -61,5 +61,10 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return SliderFor<double>(expression);
         }
+
+        public virtual SliderBuilder<double> SliderFor(Expression<Func<TModel, Nullable<double>>> expression)
+        {
+            return SliderFor<double>(expression);
+        }
     }
 }
