@@ -1,12 +1,12 @@
 (function(f, define){
-    define([ "./kendo.datepicker", "./kendo.numerictextbox", "./kendo.dropdownlist" ], f);
+    define([ "./kendo.datepicker", "./kendo.numerictextbox", "./kendo.dropdownlist", "./kendo.binder" ], f);
 })(function(){
 
 var __meta__ = {
     id: "filtermenu",
     name: "Filtering Menu",
     category: "framework",
-    depends: [ "datepicker", "numerictextbox", "dropdownlist" ],
+    depends: [ "datepicker", "numerictextbox", "dropdownlist", "binder" ],
     advanced: true
 };
 
