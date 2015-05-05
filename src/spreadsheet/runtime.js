@@ -296,7 +296,10 @@
         for (var i = 0; i < a.length; ++i) {
             var x = a[i];
             if (Ref.is(x)) {
-                add(context.ss.getRefCells(x));
+                if (!add(context.ss.getRefCells(x))) {
+                    context.error(new CalcError("CIRCULAR"));
+                    return;
+                }
             }
         }
 
@@ -318,9 +321,13 @@
             for (var i = 0; i < a.length; ++i) {
                 var cell = a[i];
                 if (cell.formula) {
+                    if (cell.formula === context.formula) {
+                        return false;
+                    }
                     formulas.push(cell);
                 }
             }
+            return true;
         }
     }
 
