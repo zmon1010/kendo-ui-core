@@ -25,3 +25,7 @@
 :scheduler:
     - :name: T
       :constraint: class, ISchedulerEvent
+      
+:slider:
+    - :name: T
+      :constraint: struct, IComparable

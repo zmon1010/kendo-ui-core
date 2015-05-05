@@ -1,0 +1,54 @@
+:options:
+    - :name: value
+      :merge: true
+      :type: T?
+      
+    - :name: min
+      :merge: true
+      :type: T?
+      
+    - :name: max
+      :merge: true
+      :type: T?
+
+    - :name: smallStep
+      :merge: true
+      :type: T?
+      
+    - :name: largeStep
+      :merge: true
+      :type: T?
+      
+    - :name: orientation
+      :type: String
+      :enum_type: SliderOrientation
+      :description: The orientation of a Slider
+      :values:
+          - :value: horizontal
+            :member: Horizontal
+            :description: The slider is oriented horizontally
+
+          - :value: vertical
+            :member: Vertical
+            :description: The slider is oriented vertically
+            
+    - :name: tickPlacement
+      :type: String
+      :enum_type: SliderTickPlacement
+      :description: Denotes the location of the tick marks in the Slider
+      :values:
+          - :value: none
+            :member: None
+            :description: No tick marks appear in the component
+
+          - :value: topLeft
+            :member: TopLeft
+            :description: Tick marks are located on the top of a horizontal component or on the left of a vertical component
+            
+          - :value: bottomRight
+            :member: BottomRight
+            :description: Tick marks are located on the bottom of a horizontal component or on the right side of a vertical component
+            
+          - :value: both
+            :member: Both
+            :description: Tick marks are located on both sides of the component

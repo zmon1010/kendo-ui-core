@@ -15,7 +15,15 @@ namespace Kendo.Mvc.Rendering
 			object value,
 			IDictionary<string, object> htmlAttributes);
 
-		TagBuilder GenerateDateInput(
+        TagBuilder GenerateRangeInput(
+            ViewContext viewContext,
+            ModelMetadata metadata,
+            string id,
+            string name,
+            object value,
+            IDictionary<string, object> htmlAttributes);
+
+        TagBuilder GenerateDateInput(
             ViewContext viewContext,
             ModelMetadata metadata,
             string id,
