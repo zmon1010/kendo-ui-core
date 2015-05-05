@@ -7,7 +7,6 @@
     editor_module("editor backspace handler", {
         setup: function() {
             editor = $("#editor-fixture").data("kendoEditor");
-            editor.focus();
             defaultPrevented = false;
         }
     });
@@ -123,6 +122,17 @@
         editor.getRange().insertNode(editor.document.createElement("a"));
 
         equal(editor.value(), '<h3>foo<a></a>bar</h3>');
+    });
+
+    test("does not prevent default action if selection is not changed", function() {
+        editor.value('<p>foo</p><p>bar</p>');
+        var range = editor.createRange();
+        range.selectNodeContents(editor.body);
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        ok(!defaultPrevented);
     });
 
     //test("does not remove table cells", function() {

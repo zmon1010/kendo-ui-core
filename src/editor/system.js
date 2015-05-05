@@ -295,6 +295,7 @@ var BackspaceHandler = Class.extend({
         var ancestor = range.commonAncestorContainer;
         var table = dom.closest(ancestor, "table");
         var emptyParagraphContent = editorNS.emptyElementContent;
+        var result = false;
 
         if (/t(able|body)/i.test(dom.name(ancestor))) {
             range.selectNode(table);
@@ -305,6 +306,7 @@ var BackspaceHandler = Class.extend({
         if (table && $(table).text() === "") {
             range.selectNode(table);
             range.deleteContents();
+            result = true;
         }
 
         ancestor = range.commonAncestorContainer;
@@ -314,9 +316,11 @@ var BackspaceHandler = Class.extend({
             range.setStart(ancestor, 0);
             range.collapse(true);
             this.editor.selectRange(range);
+
+            result = true;
         }
 
-        return true;
+        return result;
     },
     keydown: function(e) {
         var method, startRestorePoint;
