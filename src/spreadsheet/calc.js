@@ -577,6 +577,15 @@
         }
     }
 
+    var make_closure = (function(cache){
+        return function(code) {
+            if (Object.prototype.hasOwnProperty.call(cache, code)) {
+                return cache[code];
+            }
+            return cache[code] = new Function("Runtime", code)(Runtime);
+        };
+    })({});
+
     function compile(exp) {
         var references = [];
         var the_col = exp.col;
@@ -595,7 +604,7 @@
         return Runtime.makeFormula({
             sheet: the_sheet, col: the_col, row: the_row,
             refs: references,
-            func: new Function("Runtime", code)(Runtime)
+            func: make_closure(code)
         });
 
         function get_reference(ref) {
