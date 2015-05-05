@@ -68,7 +68,7 @@ namespace Kendo.Mvc.UI
 
             if (Landscape)
             {
-                json["lanscape"] = Landscape;
+                json["landscape"] = Landscape;
             }
 
             if (Margin != null && Margin.Any())
