@@ -48,7 +48,6 @@
     }
 
     function encodeUTF8(input) {
-        input = input.replace(/\r\n/g,"\n");
         var output = "";
 
         for (var i = 0; i < input.length; i++) {

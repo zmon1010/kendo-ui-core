@@ -15,4 +15,8 @@
     test("encodes UTF-8 3-byte characters", function() {
         equal(encodeBase64("我"), "5oiR");
     });
-})();
+
+    test("preserves DOS line endings", function() {
+        equal(kendo.util.encodeBase64("foo\r\nbar\r\n"), "Zm9vDQpiYXINCg==");
+    });
+})()
