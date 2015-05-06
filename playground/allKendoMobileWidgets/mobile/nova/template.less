@@ -42,23 +42,6 @@
     border-color: hsv(hsvHue(@accent), hsvSaturation(@accent), hsvValue(@accent) - 10); 
 }
 
-// ButtonGroup
-.km-nova .km-buttongroup .km-state-active {
-    color: @background;
-    background-color: darken(@selected-background, 33%);
-}
-
-.km-nova .km-buttongroup.km-primary .km-button {
-    color: @accent;
-    border-color: @accent;
-}
-
-.km-nova .km-buttongroup.km-primary .km-state-active {
-    color: @background;
-    background: @accent;
-} 
-
-
 // Link button => km-link-button
 .km-nova .km-link-button {
     color: @accentSecond;
@@ -133,13 +116,27 @@
 }
 
 .km-nova .km-navbar .km-button,
-.km-nova .k-toolbar .km-button,
-.km-nova .km-buttongroup .km-button
-{
+.km-nova .k-toolbar .km-button {
     background: transparent;
     border-color: transparent;
     .box-shadow(none);
 }
+
+// ButtonGroup
+.km-nova .km-buttongroup .km-state-active {
+    color: @background;
+    background-color: darken(@selected-background, 33%);
+}
+
+.km-nova .km-buttongroup.km-primary .km-button {
+    color: @accent;
+    border-color: @accent;
+}
+
+.km-nova .km-buttongroup.km-primary .km-state-active {
+    color: @background;
+    background: @accent;
+} 
 
 /* Accent NavBar */
 .km-nova .km-accent.km-navbar,
