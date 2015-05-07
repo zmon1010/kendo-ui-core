@@ -18,13 +18,8 @@
 
 .lighten(@amount) when not (@amount = @threshold) {
     @mod1: lighten(@color1, @amount);
-    @mod2: lighten(@color2, @amount);
-    @mod3: lighten(@color3, @amount);
-    @mod4: lighten(@color4, @amount);
-    @mod5: lighten(@color5, @amount);
-    @mod6: lighten(@color6, @amount);
 
-    process: ~"lighten(@VARIABLE, @{amount})=[ @{mod1} @{mod2} @{mod3} @{mod4} @{mod5} @{mod6} ]";
+    process: ~"lighten(@VARIABLE, @{amount})=[ @{mod1} ]";
 
     .lighten(@amount + @step);
 }
@@ -33,26 +28,16 @@
 
 .darken(@amount) when not (@amount = @threshold) {
     @mod1: darken(@color1, @amount);
-    @mod2: darken(@color2, @amount);
-    @mod3: darken(@color3, @amount);
-    @mod4: darken(@color4, @amount);
-    @mod5: darken(@color5, @amount);
-    @mod6: darken(@color6, @amount);
 
-    process: ~"darken(@VARIABLE, @{amount})=[ @{mod1} @{mod2} @{mod3} @{mod4} @{mod5} @{mod6} ]";
+    process: ~"darken(@VARIABLE, @{amount})=[ @{mod1} ]";
 
     .darken(@amount + @step);
 }
 
 .contrast() {
     @mod1: contrast(@color1);
-    @mod2: contrast(@color2);
-    @mod3: contrast(@color3);
-    @mod4: contrast(@color4);
-    @mod5: contrast(@color5);
-    @mod6: contrast(@color6);
 
-    process: ~"contrast(@VARIABLE)=[ @{mod1} @{mod2} @{mod3} @{mod4} @{mod5} @{mod6} ]";
+    process: ~"contrast(@VARIABLE)=[ @{mod1} ]";
 }
 
 .contrast_hover_bg(@light_amount, @dark_amount) when (@light_amount = @threshold) and (@dark_amount = @threshold) { }
@@ -63,13 +48,8 @@
 
 .contrast_hover_bg(@light_amount, @dark_amount) when not (@light_amount = @threshold) and not (@dark_amount = @threshold) {
     @mod1: contrast(@normal_bg1, lighten(@color1, @light_amount), darken(@color1, @dark_amount), 0.5);
-    @mod2: contrast(@normal_bg2, lighten(@color2, @light_amount), darken(@color2, @dark_amount), 0.5);
-    @mod3: contrast(@normal_bg3, lighten(@color3, @light_amount), darken(@color3, @dark_amount), 0.5);
-    @mod4: contrast(@normal_bg4, lighten(@color4, @light_amount), darken(@color4, @dark_amount), 0.5);
-    @mod5: contrast(@normal_bg5, lighten(@color5, @light_amount), darken(@color5, @dark_amount), 0.5);
-    @mod6: contrast(@normal_bg6, lighten(@color6, @light_amount), darken(@color6, @dark_amount), 0.5);
 
-    process: ~"contrast(@hover-background, lighten(@VARIABLE, @{light_amount}), darken(@VARIABLE, @{dark_amount}), 0.5)=[ @{mod1} @{mod2} @{mod3} @{mod4} @{mod5} @{mod6} ]";
+    process: ~"contrast(@hover-background, lighten(@VARIABLE, @{light_amount}), darken(@VARIABLE, @{dark_amount}), 0.5)=[ @{mod1} ]";
 
     .contrast_hover_bg(@light_amount + @step, @dark_amount);
 }
@@ -82,13 +62,8 @@
 
 .contrast_selected_bg(@light_amount, @dark_amount) when not (@light_amount = @threshold) and not (@dark_amount = @threshold) {
     @mod1: contrast(@selected_bg1, lighten(@color1, @light_amount), darken(@color1, @dark_amount), 0.5);
-    @mod2: contrast(@selected_bg2, lighten(@color2, @light_amount), darken(@color2, @dark_amount), 0.5);
-    @mod3: contrast(@selected_bg3, lighten(@color3, @light_amount), darken(@color3, @dark_amount), 0.5);
-    @mod4: contrast(@selected_bg4, lighten(@color4, @light_amount), darken(@color4, @dark_amount), 0.5);
-    @mod5: contrast(@selected_bg5, lighten(@color5, @light_amount), darken(@color5, @dark_amount), 0.5);
-    @mod6: contrast(@selected_bg6, lighten(@color6, @light_amount), darken(@color6, @dark_amount), 0.5);
 
-    process: ~"contrast(@selected-background, lighten(@VARIABLE, @{light_amount}), darken(@VARIABLE, @{dark_amount}), 0.5)=[ @{mod1} @{mod2} @{mod3} @{mod4} @{mod5} @{mod6} ]";
+    process: ~"contrast(@selected-background, lighten(@VARIABLE, @{light_amount}), darken(@VARIABLE, @{dark_amount}), 0.5)=[ @{mod1} ]";
 
     .contrast_selected_bg(@light_amount + @step, @dark_amount);
 }
@@ -101,13 +76,8 @@
 
 .contrast_base(@light_amount, @dark_amount) when not (@light_amount = @threshold) and not (@dark_amount = @threshold) {
     @mod1: contrast(@base1, lighten(@color1, @light_amount), darken(@color1, @dark_amount), 0.5);
-    @mod2: contrast(@base2, lighten(@color2, @light_amount), darken(@color2, @dark_amount), 0.5);
-    @mod3: contrast(@base3, lighten(@color3, @light_amount), darken(@color3, @dark_amount), 0.5);
-    @mod4: contrast(@base4, lighten(@color4, @light_amount), darken(@color4, @dark_amount), 0.5);
-    @mod5: contrast(@base5, lighten(@color5, @light_amount), darken(@color5, @dark_amount), 0.5);
-    @mod6: contrast(@base6, lighten(@color6, @light_amount), darken(@color6, @dark_amount), 0.5);
 
-    process: ~"contrast(@base, lighten(@VARIABLE, @{light_amount}), darken(@VARIABLE, @{dark_amount}), 0.5)=[ @{mod1} @{mod2} @{mod3} @{mod4} @{mod5} @{mod6} ]";
+    process: ~"contrast(@base, lighten(@VARIABLE, @{light_amount}), darken(@VARIABLE, @{dark_amount}), 0.5)=[ @{mod1} ]";
 
     .contrast_base(@light_amount + @step, @dark_amount);
 }
@@ -116,13 +86,8 @@
 
 .saturate(@amount) when not (@amount = @threshold) {
     @mod1: saturate(@color1, @amount);
-    @mod2: saturate(@color2, @amount);
-    @mod3: saturate(@color3, @amount);
-    @mod4: saturate(@color4, @amount);
-    @mod5: saturate(@color5, @amount);
-    @mod6: saturate(@color6, @amount);
 
-    process: ~"saturate(@VARIABLE, @{amount})=[ @{mod1} @{mod2} @{mod3} @{mod4} @{mod5} @{mod6} ]";
+    process: ~"saturate(@VARIABLE, @{amount})=[ @{mod1} ]";
 
     .saturate(@amount + @step);
 }
@@ -131,13 +96,8 @@
 
 .desaturate(@amount) when not (@amount = @threshold) {
     @mod1: desaturate(@color1, @amount);
-    @mod2: desaturate(@color2, @amount);
-    @mod3: desaturate(@color3, @amount);
-    @mod4: desaturate(@color4, @amount);
-    @mod5: desaturate(@color5, @amount);
-    @mod6: desaturate(@color6, @amount);
 
-    process: ~"desaturate(@VARIABLE, @{amount})=[ @{mod1} @{mod2} @{mod3} @{mod4} @{mod5} @{mod6} ]";
+    process: ~"desaturate(@VARIABLE, @{amount})=[ @{mod1} ]";
 
     .desaturate(@amount + @step);
 }

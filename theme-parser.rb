@@ -67,13 +67,14 @@ def name_from(lower)
 end
 
 def same_values?(array)
-    array.uniq.length == 1
+    array.length > 1 and array.uniq.length == 1
 end
 
 files = ARGV.each { |f| Dir.glob(f) }.flatten.sort
 
 type = "default"
 type = "metro" if files[0].include? "metro"
+type = "bootstrap" if files[0].include? "bootstrap"
 
 dir = File.dirname(__FILE__)
 template_content = File.read(File.join(dir, "variable-origins-#{type}.erb"))
