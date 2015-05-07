@@ -1,0 +1,149 @@
+@accent: #ff4350;
+@base: #f8fafb; // ListView background
+@background: #fff;
+
+@border-radius: 4px;
+
+@normal-background: #fff;
+@normal-text-color: #32364c; //Dark text color
+@normal-gradient: none;
+
+@hover-background: #f8fafb; //Normal button background
+@hover-text-color: #888e90; //Hover button color
+@hover-gradient: none;
+
+@selected-background: #f5f6f6; // Button pressed 
+@selected-text-color: #888e90;
+@selected-gradient: none;
+
+
+@accentSecond: #00acc1;
+
+// Button 
+.km-nova .km-button {
+    color: @hover-text-color; 
+    background: @background;
+    border-color: @hover-text-color;
+}
+
+.km-nova .km-button.km-state-active {
+    background: @selected-background;
+}
+
+// Primary Button
+.km-nova .km-primary {
+    color: @background;
+    background: @accent;
+    border-color: @accent;
+}
+
+.km-nova .km-primary.km-state-active {
+    background: hsv(hsvHue(@accent), hsvSaturation(@accent), hsvValue(@accent) - 10); 
+    border-color: hsv(hsvHue(@accent), hsvSaturation(@accent), hsvValue(@accent) - 10); 
+}
+
+// Link button => km-link-button
+.km-nova .km-link-button {
+    color: @accentSecond;
+}
+
+// TabStrip
+.km-nova .km-footer {
+    background: @normal-text-color;
+}
+
+.km-nova .km-tabstrip,
+.km-nova .km-navbar,
+.km-nova .k-toolbar,
+.km-nova .km-tabstrip { 
+    background-image: -ms-linear-gradient(top, @normal-text-color 0%, #0B1F31 100%);
+    background-image: -moz-linear-gradient(top, @normal-text-color 0%, #0B1F31 100%);
+    background-image: -o-linear-gradient(top, @normal-text-color 0%, #0B1F31 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, @normal-text-color), color-stop(1, #0B1F31));
+    background-image: -webkit-linear-gradient(top, @normal-text-color 0%, #0B1F31 100%);
+    background-image: linear-gradient(to bottom, @normal-text-color 0%, #0B1F31 100%);
+}
+
+.km-nova .km-navbar,
+.km-nova .k-toolbar,
+.km-nova .km-tabstrip,
+.km-nova .km-navbar .km-back:before,
+.km-nova .k-toolbar .km-back:before,
+.km-nova .km-navbar .km-button,
+.km-nova .km-view-title {
+    color: @background;
+}
+
+.km-nova .km-tabstrip .km-button {
+    color: @background;
+    background: transparent;
+    border-color: transparent;
+}
+
+.km-nova .km-tabstrip .km-button.km-state-active {
+    background-image: -ms-linear-gradient(top, #202333 0%, #081421 100%);
+    background-image: -moz-linear-gradient(top, #202333 0%, #081421 100%);
+    background-image: -o-linear-gradient(top, #202333 0%, #081421 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #202333), color-stop(1, #081421));
+    background-image: -webkit-linear-gradient(top, #202333 0%, #081421 100%);
+    background-image: linear-gradient(to bottom, #202333 0%, #081421 100%);
+}
+
+.km-nova .km-light .km-view-title {
+    color: @accent;
+}
+
+.km-nova .km-light.km-navbar,
+.km-nova .km-light.k-toolbar,
+.km-nova .km-light.km-tabstrip
+{
+    background: @background;
+    .box-shadow(0 1px 40px 4px @hover-background);
+}
+
+.km-nova .km-accent.km-navbar,
+.km-nova .km-accent.k-toolbar,
+.km-nova .km-accent.km-tabstrip
+{
+    background: @accent;    
+}
+
+/* Light NavBar button */
+.km-nova .km-light.km-navbar .km-back:before,
+.km-nova .km-light.k-toolbar .km-back:before,
+.km-nova .km-light.km-navbar .km-button {
+    color: @accent;
+}
+
+.km-nova .km-navbar .km-button,
+.km-nova .k-toolbar .km-button {
+    background: transparent;
+    border-color: transparent;
+    .box-shadow(none);
+}
+
+// ButtonGroup
+.km-nova .km-buttongroup .km-state-active {
+    color: @background;
+    background-color: darken(@selected-background, 33%);
+}
+
+.km-nova .km-buttongroup.km-primary .km-button {
+    color: @accent;
+    border-color: @accent;
+}
+
+.km-nova .km-buttongroup.km-primary .km-state-active {
+    color: @background;
+    background: @accent;
+} 
+
+/* Accent NavBar */
+.km-nova .km-accent.km-navbar,
+.km-nova .km-accent.k-toolbar,
+.km-nova .km-accent.km-tabstrip,
+.km-nova .km-accent.km-navbar .km-back:before,
+.km-nova .km-accent.k-toolbar .km-back:before,
+.km-nova .km-accent.km-navbar .km-button {
+    color: @background;
+}

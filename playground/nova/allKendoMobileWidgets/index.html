@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+  <script src="http://cdn.kendostatic.com/2014.3.1411/js/jquery.min.js"></script>
+    <script src="http://cdn.kendostatic.com/2014.3.1411/js/kendo.all.min.js"></script>
+<!-- <link href="mobile/kendo.mobile.all.less" rel="stylesheet/less" type="text/css" /> -->
+<link href="mobile/kendo.mobile.nova.less" rel="stylesheet/less" type="text/css" />
+<!-- <script src="src/less.js" type="text/javascript"></script>    -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.0/less.js" type="text/javascript"></script>     
+</head>
+<body>
+    <div data-role="view" data-title="Views">
+        <header data-role="header">
+            <div data-role="navbar">
+                <a data-align="left" data-icon="arrow-w" data-role="backbutton" class="back-button"></a>
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>Sources
+                <ul>
+                    <li><a href="#navBarView">NavBar</a></li>
+                    <li><a href="#secondview">Local View</a></li>
+                    <li><a href="#actiosheetView">ActionSheet</a></li>
+                    <li><a href="#mobileButtonView">MobileButton</a></li>
+                    <li><a href="#formsView">Forms View</a></li>
+                    <li><a href="#modalView">ModalView</a></li>
+                    <li><a href="#switchView">Switch</a></li>
+                    <li><a href="#loadingPopup">Loading popup</a></li>
+                    <li><a href="#generalContentView">General content</a></li>                   
+                </ul>
+            </li>
+        </ul>
+
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>Types
+                <ul>
+                    <li><a href="#stretchview">Stretched View</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div data-role="footer">
+            <div data-role="footer">
+     <!-- TabStrip Icons only - default-->
+        <div data-role="tabstrip">
+            <a href="#tabstrip-profile" data-icon="contacts">
+            </a><a href="#tabstrip-sales" data-icon="history">
+            </a><a href="#tabstrip-rating" data-icon="favorites">
+            </a><a href="#tabstrip-settings" data-icon="settings"></a>
+        </div>
+        <div class="separator" style="background: #fff; height: 20px;"></div>
+           <!-- TabStrip Icons + text -->
+        <div data-role="tabstrip">
+            <a href="#tabstrip-profile" data-icon="contacts">Profile
+            </a><a href="#tabstrip-sales" data-icon="history">Sales
+            </a><a href="#tabstrip-rating" data-icon="favorites">Rating
+            </a><a href="#tabstrip-settings" data-icon="settings">Settings</a>
+        </div>
+        </div>
+    </div>
+
+    </div>
+
+    <div data-role="view" id="secondview" data-layout="mobile-view" data-title="Local View">
+        <div style="background: pink; color: #fff; padding: 50px 0; text-align: center;">
+            <p>Hi, I'm a local view.</p>
+        </div>
+    </div>
+
+    <!-- ActionSheet View -->
+    <div data-role="view" id="actiosheetView" data-layout="mobile-view" data-title="Local View">
+        <h3 id="actionResult"></h3>
+        <ul data-role="listview" data-source="inbox" data-template="inboxItem" class="inboxList"></ul>
+
+        <ul data-role="actionsheet" id="inboxActions" data-open="onOpen" data-popup='{"direction": "left"}'>
+            <li class="km-actionsheet-title">Monday Meeting:</li>
+            <li><a href="#" data-action="reply">Reply</a></li>
+            <li><a href="#" data-action="replyAll">Reply All</a></li>
+            <li><a href="#" data-action="archive">Archive</a></li>
+        </ul>
+    </div>
+
+    <script type="script/x-kendo-template" id="inboxItem">
+        <h3 class="time">#: Time#</h3>
+        <h3>#: From #</h3>
+        <a class="reply" data-role="button" data-rel="actionsheet" href="\\#inboxActions" data-actionsheet-context="#:ID#">Reply</a>
+        <h2>#: Subject#</h2>
+        <p>#: Text#</p>
+    </script>
+
+    <!-- MobileButton and ButtonGroup View-->
+    <div data-role="view" id="mobileButtonView" data-layout="mobile-view" data-title="MobileButton View" data-show="mobileButtonsViewInit">
+        <div>
+            <p>Button</p>
+            <a class="km-small" data-role="button">Normal MobileButton</a>
+            <a class="" data-role="button">Medium MobileButton</a>
+            <a class="km-large" data-role="button">Large MobileButton</a>
+        </div><hr/>
+        <div>
+            <p>Primary Button</p>
+            <a class="km-primary km-small" data-role="button">Primary MobileButton</a>
+            <a class="km-primary" data-role="button">Medium primary MobileButton</a>
+            <a class="km-primary km-large" data-role="button">Large primary MobileButton</a>
+        </div>
+        <hr/>
+        <!-- ButtonGroup -->
+        <div>
+            <p>Small BUttonGroup</p>
+            <ul id="small-select-period" class="km-small">
+                <li>
+                    Monthy
+                </li>
+                <li>
+                    Quarter
+                </li>
+                <li>
+                    Year
+                </li>
+            </ul>
+            <hr/>
+            <p>Primary Small ButtonGroup</p>
+            <ul id="small-primary-select-period" class="km-small km-primary">
+                <li>
+                    Month
+                </li>
+                <li>
+                    Quarter
+                </li>
+                <li>
+                    Year
+                </li>
+            </ul><hr/>
+        </div>
+        <div>
+            <p>Medium ButtonGroup</p>
+            <ul id="medium-select-period" class="">
+                <li>
+                    Month
+                </li>
+                <li>
+                    Quarter
+                </li>
+                <li>
+                    Year
+                </li>
+            </ul><hr/>
+            <p>Primamy Medium ButtonGroup</p>
+            <ul id="medium-primary-select-period" class="km-primary">
+                <li>
+                    Month
+                </li>
+                <li>
+                    Quarter
+                </li>
+                <li>
+                    Year
+                </li>
+            </ul><hr/>
+        </div>
+        <div>
+            <p>Large ButtonGroup</p>
+            <ul id="large-select-period" class="km-large">
+                <li>
+                    Month
+                </li>
+                <li>
+                    Quarter
+                </li>
+                <li>
+                    Year
+                </li>
+            </ul><hr/>
+            <p>Primary Large ButtonGroup</p>
+            <ul id="large-primary-select-period" class="km-primary km-large">
+                <li>
+                    Month
+                </li>
+                <li>
+                    Quarter
+                </li>
+                <li>
+                    Year
+                </li>
+            </ul><hr/>
+        </div>
+       
+        <div>
+            <p>Link button</p>
+            <a class="km-link-button" data-role="button">Primary MobileButton</a>
+        </div>
+</div>
+
+    <!-- Forms View-->
+    <div data-role="view" id="formsView" data-layout="mobile-view" data-init="initForm" data-title="Forms View" data-show="mobileSalesViewInit">
+        <form action="./index.html">
+            <ul data-role="listview" data-style="inset">
+                <li>
+                    <label>Select element
+                        <select>
+                            <option value="First Option">First Option</option>
+                            <option value="Second Option">Second Option</option>
+                            <option value="Third Option">Third Option</option>
+                            <option value="Fourth Option">Fourth Option</option>
+                        </select>
+                    </label>
+                </li>
+                <li>
+                    <label>DropDownList
+                        <select id="dropdown">
+                            <option value="First Option">First Option</option>
+                            <option value="Second Option">Second Option</option>
+                            <option value="Third Option">Third Option</option>
+                            <option value="Fourth Option">Fourth Option</option>
+                            <option value="First Option">Fifth Option</option>
+                            <option value="Sixth Option">Sixth Option</option>
+                        </select>
+                    </label>
+                </li>
+                <li>
+                    <label>Slider
+                        <input id="slider" type="range" max="100" />
+                    </label>
+                </li>
+                <li>
+                    <label>Type text
+                        <input type="text" value="Text" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type password
+                        <input type="password" value="password" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type search
+                        <input type="search" value="search" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type url
+                        <input type="url" value="http://www.telerik.com" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type email
+                        <input type="email" value="kendoui@telerik.com" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type number
+                        <input type="number" value="20" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type tel
+                        <input type="tel" value="+44 22 11 10" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type date
+                        <input type="date" value="2012-03-22" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type time
+                        <input type="time" value="22:30" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type month
+                        <input type="month" value="2012-01" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type datetime-local
+                        <input type="datetime-local" value="2012-03-22T20:15" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Textarea
+                        <textarea style="resize: none">Multiline Text
+                        </textarea>
+                    </label>
+                </li>
+            </ul>
+        </form>
+    </div>
+
+    <!--ModalView -->
+    <div data-role="view" id="modalView" data-layout="mobile-view" data-title="Stretched View">
+        <div class="wrapper">
+            <a data-role="button" data-rel="modalview" href="#modalview-login" id="modalview-open-button">Login</a>
+        </div>
+    </div>
+
+    <div data-role="modalview" id="modalview-login" style="width: 90%;">
+        <div data-role="header">
+            <div data-role="navbar">
+                <span>Login</span>
+                <a data-click="closeModalViewLogin" data-role="button" data-align="right">Cancel</a>
+            </div>
+        </div>
+
+        <ul data-role="listview" data-style="inset">
+            <li>
+                <label for="username">Username:
+                    <input type="text" id="username" />
+                </label>
+            </li>
+            <li>
+                <label for="password">Password:
+                    <input type="password" id="password" />
+                </label>
+            </li>
+        </ul>
+        <div data-role="footer">
+            <div data-role="navbar">
+                <a data-click="closeModalViewLogin" id="modalview-login-button" type="button" data-role="button" data-align="right">Login</a>
+                <a data-click="closeModalViewLogin" id="modalview-reg-button" type="button" data-role="button" data-align="right">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Switch -->
+    <div data-role="view" id="switchView" data-layout="mobile-view" data-title="Stretched View" data-stretch="true" data-init="mobileSwitchInit">
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>Profile
+                <ul>
+                    <li>
+                        <h2>Eduardo <span>Saavedra</span></h2></li>
+                    <li>Brand Manager at Marketing Team</li>
+                </ul>
+            </li>
+
+            <li>Password
+                <ul>
+                    <li>User cannot change pasword
+                        <input data-role="switch" id="email-switch" checked="checked" />
+                    </li>
+                    <li>Password never expires
+                        <input id="wink-switch" />
+                    </li>
+                </ul>
+            </li>
+
+            <li>Newsletter Subscription
+                <ul>
+                    <li>Subscribed
+                        <input id="subscription-switch" />
+                    </li>
+                </ul>
+            </li>
+        </ul>    
+    </div>
+
+
+    <!-- NavBar View -->    
+    <div data-role="view" id="navBarView" data-layout="mobile-view" data-title="MobileButton View" data-show="mobileButtonsViewInit">
+        <header data-role="header">
+        <div data-role="navbar">
+          <!-- NavBar default -->
+            <a class="nav-button" href="#/" data-align="left" data-role="backbutton">Back</a>
+            <span data-role="view-title">Contacts</span>
+            <a data-align="right" data-icon="stop" data-role="button" href="#:back">Ungroup</a>
+        </div>
+          <div class="separator" style="background: #fff; height: 20px;"></div>
+            <!-- NavBar light -->
+         <div data-role="navbar" class="km-light">
+            <a class="nav-button" href="#/" data-align="left" data-role="backbutton">Back</a>
+            <span data-role="view-title">Contacts</span>
+            <a data-align="right" data-icon="stop" data-role="button" href="#:back">Ungroup</a>
+        </div>
+
+         <div class="separator" style="background: #fff; height: 20px;"></div>
+         <!-- NavBar accent -->
+         <div data-role="navbar" class="km-accent">
+            <a class="nav-button" href="#/" data-align="left" data-role="backbutton">Back</a>
+            <span data-role="view-title">Contacts</span>
+            <a data-align="right" data-icon="stop" data-role="button" href="#:back">Ungroup</a>
+        </div>
+
+    </header>
+</div>
+
+    <!-- General content -->
+    <div data-role="view" id="generalContentView" data-layout="mobile-view" data-title="MobileButton View" data-show="mobileButtonsViewInit">
+        <div class="heading-section">
+            <span>Headings default</span>
+            <h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <h4>Heading 4</h4>
+            <h5>Heading 5</h5>
+            <h6>Heading 6</h6>
+        </div>
+
+
+       <div class="heading-section">
+            <span>Headings - light weight</span>
+            <h1 class="km-light-font">Heading 1</h1>
+            <h2 class="km-light-font">Heading 2</h2>
+            <h3 class="km-light-font">Heading 3</h3>
+            <h4 class="km-light-font">Heading 4</h4>
+            <h5 class="km-light-font">Heading 5</h5>
+            <h6 class="km-light-font">Heading 6</h6>
+        </div>
+
+
+        <div class="heading-section">
+            <span>Headings - medium weight</span>
+            <h1 class="km-medium-font">Heading 1</h1>
+            <h2 class="km-medium-font">Heading 2</h2>
+            <h3 class="km-medium-font">Heading 3</h3>
+            <h4 class="km-medium-font">Heading 4</h4>
+            <h5 class="km-medium-font">Heading 5</h5>
+            <h6 class="km-medium-font">Heading 6</h6>
+        </div>
+
+
+        <div class="heading-section">
+            <span>Headings - bold weight</span>
+            <h1 class="km-bold-font">Heading 1</h1>
+            <h2 class="km-bold-font">Heading 2</h2>
+            <h3 class="km-bold-font">Heading 3</h3>
+            <h4 class="km-bold-font">Heading 4</h4>
+            <h5 class="km-bold-font">Heading 5</h5>
+            <h6 class="km-bold-font">Heading 6</h6>
+        </div>
+    <hr />    
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    </p>
+</div>
+
+
+
+
+    <!-- Loading popup -->    
+    <div data-role="view" id="loadingPopup" data-layout="mobile-view" data-title="MobileButton View" data-show="mobileSalesViewInit" data-init="viewInit">
+        <!-- Button -->
+       <button id="show" data-role="button">Show Loading Popup</button>
+    </div>
+
+
+
+    <div data-role="view" id="stretchview" data-layout="mobile-view" data-title="Stretched View" data-stretch="true">
+        <div style="background: yellow; color: #fff; padding-top: 50px; text-align: center;">
+            <p>Hi, I'm a stretched view.</p>
+            <p>Use me for full screen content that doesn't need scrolling.</p>
+        </div>
+    </div>
+
+    <div data-role="layout" data-id="mobile-view">
+        <header data-role="header" style="background: red;">
+            <div data-role="navbar">
+                <a class="nav-button" data-align="left" data-role="backbutton">Back</a>
+                <span data-role="view-title"></span>
+                <a data-align="right" data-role="button" class="nav-button" href="#/">Index</a>
+            </div>
+        </header>
+    </div>
+
+        
+
+<script>
+//var app = new kendo.mobile.Application(document.body);
+var app = new kendo.mobile.Application($(document.body), {
+    skin: 'nova'
+});
+
+function mobileButtonsViewInit() {
+   // var listviews = this.element.find("ul.km-listview");
+
+    $("#small-select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+
+    $("#small-primary-select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+   
+    $("#medium-select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+   $("#medium-primary-select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+
+    $("#large-select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+    $("#large-primary-select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+
+console.log(1)
+        localStorage.clear()
+    less.refresh()
+}
+
+
+var inbox = [{
+    ID: 1,
+    From: "John Doe",
+    Subject: "Monday meeting",
+    Text: "Hi Tom, Since Monday I'll be out of office, I'm rescheduling the meeting for Tuesday.",
+    Time: "07:56"
+}, {
+    ID: 2,
+    From: "Sarah Connor",
+    Subject: "Regarding org chart changes",
+    Text: "Tom, I checked the new org chart last night and I have some reservations about it...",
+    Time: "08:22"
+}, {
+    ID: 3,
+    From: "Jane Parker",
+    Subject: "Your Costume is ready",
+    Text: "Hi mr. Sawyer, I'm sorry for the delay, your Halloween costume is ready. The bears...",
+    Time: "10:14"
+}, {
+    ID: 4,
+    From: "Joe Harper",
+    Subject: "I'm sorry, Tom",
+    Text: "Hi Tom, my aunt comes for a visit this Saturday, so I can't come back to St. Pete...",
+    Time: "10:14"
+}, {
+    ID: 5,
+    From: "Becky Thatcher",
+    Subject: "Out tonight?",
+    Text: "Honey, wanna go out tonight to grab some chicken? My weekly vouchers for cooking...",
+    Time: "10:14"
+}];
+
+function mobileSalesViewInit() {
+    var listviews = this.element.find("ul.km-listview");
+
+    $("#select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+}
+
+function initForm() {
+    var body = $(".km-pane");
+
+    if (kendo.ui.DropDownList) {
+        $("#dropdown").kendoDropDownList({
+            // The options are needed only for the desktop demo, remove them for mobile.
+            popup: {
+                appendTo: body
+            },
+            animation: {
+                open: {
+                    effects: body.hasClass("km-android") ? "fadeIn" : body.hasClass("km-ios") || body.hasClass("km-wp") ? "slideIn:up" : "slideIn:down"
+                }
+            }
+        });
+    }
+
+    if (kendo.ui.Slider) {
+        $("#slider").kendoSlider({
+            tooltip: {
+                enabled: false
+            }
+        });
+    }
+}
+
+function closeModalViewLogin() {
+    $("#modalview-login").kendoMobileModalView("close");
+}
+
+function mobileSwitchInit() {
+    $("#wink-switch").kendoMobileSwitch();
+
+    $("#subscription-switch").kendoMobileSwitch({
+        checked: true,
+        onLabel: "YES",
+        offLabel: "NO"
+    });
+}
+
+ var showButton, interval, loaderElement;
+
+    function viewInit(e) {
+        showButton = $("#show").bind(kendo.support.mouseup, function() {
+                        showButton.animate({ opacity: 0 });
+                        startLoading();
+                     });
+
+        loaderElement = kendo.mobile.application.pane.loader.element.find("h1");
+    }
+
+
+    function hideLoader() {
+        clearInterval(interval);
+        kendo.mobile.application.hideLoading(); //hide loading popup
+        kendo.mobile.application.changeLoadingMessage("Loading...");
+        loaderElement.removeClass("loaderHeading");
+    }
+
+    function viewHide(e) {
+        showButton.animate({ opacity: 1 });
+        hideLoader();
+    }
+
+    function startLoading() {
+        hideLoader();
+        var seconds = 10;
+
+        loaderElement.addClass("loaderHeading");
+        kendo.mobile.application.changeLoadingMessage(seconds + " seconds left!");
+
+        kendo.mobile.application.showLoading(); //show loading popup
+
+        interval = setInterval(function() {
+            kendo.mobile.application.changeLoadingMessage(--seconds + " seconds left!"); //update text of the loading popup
+
+            if (seconds == 0) {
+                showButton.animate({ opacity: 1 });
+                hideLoader();
+            }
+        }, 10000);
+    }
+
+
+
+function viewShow() {
+    alert(1)
+    localStorage.clear()
+    less.refresh()
+
+}
+</script>
+
+<style>
+
+html
+{
+    font: normal 12px "HelveticaNeue Light", "Roboto Light", "Slate Light", "Segoe WP", sans-serif !important;
+}
+
+.customButtonStyling {
+    margin: 20px;
+}
+
+.wrapper {
+    text-align: center;
+}
+
+#modalview-open-button {
+    margin: 20px auto;
+    padding: .5em;
+    display: inline-block;
+    font-size: 1.1em;
+    width: 200px;
+    height: 100px;
+}   
+
+ .km-contacts:after {
+    content: "\e319";
+}
+
+ .km-camera-fill:after {
+    content: "\E305";
+}
+
+ .km-favorites:after {
+    content: "\e20c";
+}
+
+ .km-settings:after {
+    content: "\e0a4";
+}
+
+.km-office365 .km-navbar .km-back:before, .km-office365 .k-toolbar .km-back:before {
+    width: .875em;
+    height: .875em;
+
+    margin-top: -1px;
+    line-height: 3.125em;
+    vertical-align: top;
+}
+
+.km-office365 .km-navbar .km-leftitem .km-button {
+    padding: .5em;
+
+    margin-top: .125em;
+    margin-bottom: 0;
+}
+
+
+
+/*.km-office365 .km-loading-left {
+    background: green !important;
+}
+
+.km-office365 .km-loading-right {
+    background: pink !important;
+}
+
+.km-office365 .km-loading-right:after {
+    background: black !important;
+}
+
+
+
+.km-office365 .km-loading-right:before {
+    background: brown !important;
+}
+
+.km-office365 .km-loading-left,
+.km-office365 .km-loading-right,
+.km-office365 .km-loading-left:after,
+.km-office365 .km-loading-right:after {
+   
+}
+*/
+
+/*Not*/
+/*.km-office365 .km-loading-left:before {
+    background: purple !important;
+ 
+} 
+
+.km-office365 .km-loading-left:after {
+    background: orange !important;
+} */
+/*----------*/
+
+
+
+/*.km-loading-left:before, .km-loading-right:before {
+    border-color: blue !important;
+}*/
+
+.km-office365 .km-loading-left {
+/*    left: 100px !important;
+    display: block !important;
+    width: 200px !important;
+    height: 200px !important;
+    background: green;
+    border-radius: 0 !important;*/
+}
+
+/*.km-loader {
+    background: lightBlue !important;
+}
+
+.km-view {
+    background: yellow !important;
+}
+*/
+.km-office365 .km-loader {
+/*  left: 0;
+  top: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: none;*/
+}
+
+.km-office365 .km-loading-right { 
+    -webkit-transform: rotate(180deg) !important;
+    transform: rotate(180deg) !important;
+}
+
+
+
+.km-loading-left:before {
+  /*  left: 0 !important;*/
+  left: 1px !important;
+}
+
+.km-loading-right:before {
+ /*left: 0px !important;*/
+/* background: red !important;*/
+left: 0 !important;
+}
+.km-loading-left {background: orange !important;border-radius: 0 !important;}
+.km-loading-right {background: blue !important;border-radius: 0 !important; }
+
+.km-loading-left:before {background: red !important; border-color: green !important;}
+.km-loading-right:before {background: green !important; margin-left: 2px !important; border-color: pink !important;}
+
+.km-loading-left:after {background: pink !important; border-color: red !important;}
+.km-loading-right:after {background: purple !important; border-color: orange !important;}
+
+.km-loading-left:after, 
+.km-loading-right:after {
+
+}
+
+.heading-section {
+    display: inline-block;
+    width: 22%;
+}
+
+.heading-section span {
+    display: inline-block;
+    margin: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+
+/* .km-loading-left:after, 
+ .km-loading-right:after {left: 0 !important;}*/
+
+
+</style>
+
+</body>
+</html>
