@@ -374,7 +374,7 @@ namespace Kendo.Mvc.UI
 			var bindingContext = new ModelBindingContext
 			{
 				ValueProvider = ActionBindingContext.Value.ValueProvider,
-				ModelMetadata = ModelMetadataProvider.GetMetadataForType(null, typeof(T))
+				ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
 			};
 
 			var result = binder.BindModelAsync(bindingContext).Result; // make it run synchronously

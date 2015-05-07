@@ -71,7 +71,7 @@
 
                 var entity = task.ToEntity();
                 db.Tasks.Attach(entity);
-                db.Entry(entity).SetState(EntityState.Modified);
+                db.Entry(entity).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }

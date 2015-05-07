@@ -8,15 +8,15 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual SliderBuilder<TValue> SliderFor<TValue>(Expression<Func<TModel, TValue>> expression)
             where TValue : struct, IComparable
         {
-            var metadata = GetModelMetadata(expression);
-            var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
+            var explorer = GetModelExplorer(expression);
+            var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
 
             TValue? minimum = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
             TValue? maximum = GetRangeValidationParameter<TValue>(rules, MaximumValidator);
 
             var slider = Slider<TValue>()
                             .Expression(GetExpressionName(expression))
-                            .Value((Nullable<TValue>)metadata.Model);
+                            .Value((TValue?)explorer.Model);
 
             if (minimum.HasValue)
             {
@@ -34,15 +34,15 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual SliderBuilder<TValue> SliderFor<TValue>(Expression<Func<TModel, Nullable<TValue>>> expression)
             where TValue : struct, IComparable
         {
-            var metadata = GetModelMetadata(expression);
-            var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
+            var explorer = GetModelExplorer(expression);
+            var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
 
             TValue? minimum = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
             TValue? maximum = GetRangeValidationParameter<TValue>(rules, MaximumValidator);
 
             var slider = Slider<TValue>()
                             .Expression(GetExpressionName(expression))
-                            .Value((Nullable<TValue>)metadata.Model);
+                            .Value((TValue?)explorer.Model);
 
             if (minimum.HasValue)
             {

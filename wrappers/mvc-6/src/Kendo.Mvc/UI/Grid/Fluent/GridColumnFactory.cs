@@ -4,10 +4,10 @@ namespace Kendo.Mvc.UI.Fluent
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq.Expressions;
-#if ASPNETCORE50
+#if DNXCORE50
 	using System.Reflection;
 #endif
-	using Kendo.Mvc.Extensions;
+    using Kendo.Mvc.Extensions;
 	using Kendo.Mvc.UI;
 	using Microsoft.AspNet.Mvc;
 	using Microsoft.AspNet.Mvc.Rendering;

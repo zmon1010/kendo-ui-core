@@ -99,7 +99,7 @@
             {
                 var entity = employee.ToEntity();
                 db.EmployeeDirectories.Attach(entity);				
-                db.Entry(entity).SetState(EntityState.Modified);
+                db.Entry(entity).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }

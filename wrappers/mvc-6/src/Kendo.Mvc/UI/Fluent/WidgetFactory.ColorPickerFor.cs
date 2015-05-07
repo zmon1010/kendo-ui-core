@@ -15,7 +15,7 @@ namespace Kendo.Mvc.UI.Fluent
 		/// </example>
 		public virtual ColorPickerBuilder ColorPickerFor(Expression<Func<TModel, String>> expression)
 		{
-			var metadata = GetModelMetadata(expression);
+			var metadata = GetModelExplorer(expression);
 			//var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
 
 			var widget = ColorPicker()

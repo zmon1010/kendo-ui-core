@@ -10,7 +10,7 @@
     {
         public ModelDescriptor(Type modelType, IModelMetadataProvider modelMetadataProvider)
         {            
-            var metadata = modelMetadataProvider.GetMetadataForType(null, modelType);                
+            var metadata = modelMetadataProvider.GetMetadataForType(modelType);                
             Fields = Translate(metadata);
         }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNet.Mvc.ModelBinding.Validation;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.Rendering.Expressions;
 using System;
@@ -29,16 +30,16 @@ namespace Kendo.Mvc.UI.Fluent
             set;
         }
 
-        protected ModelMetadata GetModelMetadata<TProperty>(Expression<Func<TModel, TProperty>> expression)
+        protected ModelExplorer GetModelExplorer<TProperty>(Expression<Func<TModel, TProperty>> expression)
         {
-            var metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
-            if (metadata == null)
+            var explorer = ExpressionMetadataProvider.FromLambdaExpression(expression, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
+            if (explorer == null)
             {
                 var expressionName = GetExpressionName(expression);
                 throw new InvalidOperationException("No model metadata: " + expressionName);
             }
 
-            return metadata;
+            return explorer;
         }
 
         protected string GetExpressionName<TProperty>(Expression<Func<TModel, TProperty>> expression)

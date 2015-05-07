@@ -8,7 +8,7 @@ namespace Kendo.Mvc.UI.Fluent
     {		
 		public virtual MaskedTextBoxBuilder MaskedTextBoxFor<TProperty>(Expression<Func<TModel, TProperty>> expression)
 		{
-			var metadata = GetModelMetadata(expression);
+			var metadata = GetModelExplorer(expression);
 			var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
 			var model = metadata.Model;
 

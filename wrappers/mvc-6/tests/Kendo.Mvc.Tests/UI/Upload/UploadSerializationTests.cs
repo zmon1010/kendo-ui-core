@@ -1,7 +1,6 @@
 ﻿namespace Kendo.Mvc.UI.Html.Tests
 {
 	using System.IO;
-	using System.Web.Routing;
 	using Kendo.Mvc;
 	using Kendo.Mvc.UI;
 	using Xunit;

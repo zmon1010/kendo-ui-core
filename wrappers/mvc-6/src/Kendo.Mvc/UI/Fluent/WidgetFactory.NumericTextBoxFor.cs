@@ -16,13 +16,13 @@ namespace Kendo.Mvc.UI.Fluent
 		public virtual NumericTextBoxBuilder<TValue> NumericTextBoxFor<TValue>(Expression<Func<TModel, Nullable<TValue>>> expression)
 			where TValue : struct
 		{
-			var metadata = GetModelMetadata(expression);
-			var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);			
+			var explorer = GetModelExplorer(expression);
+			var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);			
 
 			var widget = NumericTextBox<TValue>()					
 					.Expression(GetExpressionName(expression))
-					.Format(ExtractEditFormat(metadata.EditFormatString))
-					.Value((Nullable<TValue>)metadata.Model);
+					.Format(ExtractEditFormat(explorer.Metadata.EditFormatString))
+					.Value((TValue?)explorer.Model);
 
 			var min = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
 			if (min.HasValue)
@@ -50,13 +50,13 @@ namespace Kendo.Mvc.UI.Fluent
 		public virtual NumericTextBoxBuilder<TValue> NumericTextBoxFor<TValue>(Expression<Func<TModel, TValue>> expression)
 			where TValue : struct
 		{
-			var metadata = GetModelMetadata(expression);
-			var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
+			var explorer = GetModelExplorer(expression);
+			var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
 
 			var widget = NumericTextBox<TValue>()
 					.Expression(GetExpressionName(expression))
-					.Format(ExtractEditFormat(metadata.EditFormatString))
-					.Value((Nullable<TValue>)metadata.Model);
+					.Format(ExtractEditFormat(explorer.Metadata.EditFormatString))
+					.Value((TValue?)explorer.Model);
 
 			var min = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
 			if (min.HasValue)

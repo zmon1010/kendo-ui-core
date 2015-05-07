@@ -71,7 +71,7 @@ namespace Kendo.Mvc.UI
                 Format = CultureInfo.DateTimeFormat.ShortDatePattern;
             }
 
-            var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
+            var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider).Metadata;
             var tag = Generator.GenerateDateInput(ViewContext, metadata, Id, Name, Value, Format, HtmlAttributes);
 
             if (!Enabled)

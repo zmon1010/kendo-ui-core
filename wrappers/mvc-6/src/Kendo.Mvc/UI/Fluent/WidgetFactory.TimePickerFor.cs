@@ -16,13 +16,13 @@ namespace Kendo.Mvc.UI.Fluent
         /// </example>
         public virtual TimePickerBuilder TimePickerFor(Expression<Func<TModel, Nullable<TimeSpan>>> expression)
         {
-            var metadata = GetModelMetadata(expression);
-            var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
+            var explorer = GetModelExplorer(expression);
+            var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
 
             var widget = TimePicker()
                     .Expression(GetExpressionName(expression))
-                    .Format(ExtractEditFormat(metadata.EditFormatString))
-                    .Value(metadata.Model as TimeSpan?);           
+                    .Format(ExtractEditFormat(explorer.Metadata.EditFormatString))
+                    .Value(explorer.Model as TimeSpan?);           
 
             return widget;
         }
@@ -63,13 +63,13 @@ namespace Kendo.Mvc.UI.Fluent
         /// </example>
         private TimePickerBuilder TimePickerOfTValueFor<TValue>(Expression<Func<TModel, TValue>> expression)
         {
-            var metadata = GetModelMetadata(expression);
-            var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
+            var explorer = GetModelExplorer(expression);
+            var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
 
             var widget = TimePicker()
                     .Expression(GetExpressionName(expression))
-                    .Format(ExtractEditFormat(metadata.EditFormatString))
-                    .Value(metadata.Model as DateTime?);
+                    .Format(ExtractEditFormat(explorer.Metadata.EditFormatString))
+                    .Value(explorer.Model as DateTime?);
 
             var min = GetRangeValidationParameter<DateTime>(rules, MinimumValidator);
             if (min.HasValue)
@@ -88,13 +88,13 @@ namespace Kendo.Mvc.UI.Fluent
 
         public virtual TimePickerBuilder TimePickerFor(Expression<Func<TModel, TimeSpan>> expression)
         {
-            var metadata = GetModelMetadata(expression);
-            var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
+            var explorer = GetModelExplorer(expression);
+            var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
 
             var widget = TimePicker()
                     .Expression(GetExpressionName(expression))
-                    .Format(ExtractEditFormat(metadata.EditFormatString))
-                    .Value(metadata.Model as TimeSpan?);
+                    .Format(ExtractEditFormat(explorer.Metadata.EditFormatString))
+                    .Value(explorer.Model as TimeSpan?);
 
             var min = GetRangeValidationParameter<TimeSpan>(rules, MinimumValidator);
             if (min.HasValue)

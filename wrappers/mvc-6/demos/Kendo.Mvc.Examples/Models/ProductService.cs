@@ -78,7 +78,7 @@ namespace Kendo.Mvc.Examples.Models
             }
 
             entities.Products.Attach(entity);
-            entities.Entry(entity).SetState(EntityState.Modified);
+            entities.Entry(entity).State = EntityState.Modified;
             entities.SaveChanges();
         }
 

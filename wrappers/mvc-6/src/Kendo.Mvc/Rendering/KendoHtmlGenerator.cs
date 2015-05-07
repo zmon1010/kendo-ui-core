@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Kendo.Mvc.Extensions;
+using Microsoft.AspNet.Mvc.ModelBinding.Validation;
 
 namespace Kendo.Mvc.Rendering
 {
@@ -15,17 +16,20 @@ namespace Kendo.Mvc.Rendering
     {
         private readonly ActionBindingContext _actionBindingContext;
         private readonly IModelMetadataProvider _metadataProvider;
+        private readonly IServiceProvider _requestServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KendoHtmlGenerator"/> class.
         /// </summary>
         public KendoHtmlGenerator(
             IScopedInstance<ActionBindingContext> actionBindingContext,
-            IModelMetadataProvider metadataProvider)
+            IModelMetadataProvider metadataProvider,
+            IServiceProvider requestServices)
 
         {
             _actionBindingContext = actionBindingContext.Value;
             _metadataProvider = metadataProvider;
+            _requestServices = requestServices;
         }
 		private TagBuilder GenerateInput(
 		   ViewContext viewContext,
@@ -186,14 +190,15 @@ namespace Kendo.Mvc.Rendering
             string name)
         {
             metadata = metadata ??
-                ExpressionMetadataProvider.FromStringExpression(name, viewContext.ViewData, _metadataProvider);
+                ExpressionMetadataProvider.FromStringExpression(name, viewContext.ViewData, _metadataProvider).Metadata;
 
-            return _actionBindingContext
-                .ValidatorProvider
-                .GetValidators(metadata)
-                .OfType<IClientModelValidator>()
+            var validatorProviderContext = new ModelValidatorProviderContext(metadata);
+            _actionBindingContext.ValidatorProvider.GetValidators(validatorProviderContext);
+
+            return validatorProviderContext
+                .Validators.OfType<IClientModelValidator>()
                 .SelectMany(v => v.GetClientValidationRules(
-                    new ClientModelValidationContext(metadata, _metadataProvider)));
+                    new ClientModelValidationContext(metadata, _metadataProvider, _requestServices)));
         }
 
         private static object GetModelStateValue(ViewContext viewContext, string key, Type destinationType)

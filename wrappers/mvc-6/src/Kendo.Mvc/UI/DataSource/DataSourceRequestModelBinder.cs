@@ -8,7 +8,7 @@ namespace Kendo.Mvc.UI
 {
     public class DataSourceRequestModelBinder : IModelBinder
     {
-        public virtual async Task<bool> BindModelAsync(ModelBindingContext bindingContext)
+        public virtual async Task<ModelBindingResult> BindModelAsync(ModelBindingContext bindingContext)
         {
             var request = new DataSourceRequest();
 
@@ -35,7 +35,7 @@ namespace Kendo.Mvc.UI
 
             bindingContext.Model = request;
 
-            return true;
+            return new ModelBindingResult(request, bindingContext.ModelName, isModelSet: true);
         }
 
         private Task TryGetValue<T>(ModelBindingContext bindingContext, string key, Action<T> action)

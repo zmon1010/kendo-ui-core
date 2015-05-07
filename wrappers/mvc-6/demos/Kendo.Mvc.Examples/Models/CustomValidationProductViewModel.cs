@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-using Microsoft.AspNet.Mvc.ModelBinding;
 using System.Text.RegularExpressions;
-using System;
+using Microsoft.AspNet.Mvc.ModelBinding.Validation;
 
 namespace Kendo.Mvc.Examples.Models
 {

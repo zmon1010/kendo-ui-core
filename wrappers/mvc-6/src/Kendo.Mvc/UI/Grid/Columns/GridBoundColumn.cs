@@ -61,7 +61,7 @@ namespace Kendo.Mvc.UI
             if (typeof(TModel).IsPlainType())
             {
 				var viewDataDictionary = new ViewDataDictionary<TModel>(Grid.ModelMetadataProvider, new ModelStateDictionary());
-				Metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, viewDataDictionary, Grid.ModelMetadataProvider);
+				Metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, viewDataDictionary, Grid.ModelMetadataProvider).Metadata;
 
                 MemberType = Metadata.ModelType;
                 Title = Metadata.DisplayName;

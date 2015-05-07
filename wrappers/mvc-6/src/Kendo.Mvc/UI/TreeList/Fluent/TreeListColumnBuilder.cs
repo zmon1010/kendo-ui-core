@@ -54,10 +54,10 @@ namespace Kendo.Mvc.UI.Fluent
 			if (typeof(T).IsPlainType())
 			{
 				var viewDataDictionary = new ViewDataDictionary<T>(Container.TreeList.ModelMetadataProvider, new ModelStateDictionary());
-				var metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, viewDataDictionary, Container.TreeList.ModelMetadataProvider);
+				var provider = ExpressionMetadataProvider.FromLambdaExpression(expression, viewDataDictionary, Container.TreeList.ModelMetadataProvider);
 
-				Container.Title = metadata.DisplayName;
-				Container.Format = metadata.DisplayFormatString;
+				Container.Title = provider.Metadata.DisplayName;
+				Container.Format = provider.Metadata.DisplayFormatString;
 			}
 
 			if (string.IsNullOrEmpty(Container.Title))

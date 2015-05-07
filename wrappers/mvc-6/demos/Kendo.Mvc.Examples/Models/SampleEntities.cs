@@ -6,9 +6,11 @@ namespace Kendo.Mvc.Examples.Models
 {
     public class SampleEntitiesDataContext : DbContext
     {
-		protected override void OnConfiguring(DbContextOptions options)
-		{
-			options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Sample.mdf;Integrated Security=True;");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Sample.mdf;Integrated Security=True;");
+
+            base.OnConfiguring(optionsBuilder);
         }
 
 		public virtual DbSet<Category> Categories { get; set; }
@@ -36,6 +38,7 @@ namespace Kendo.Mvc.Examples.Models
 		public virtual DbSet<UrbanArea> UrbanAreas { get; set; }
 		public virtual DbSet<Weather> Weathers { get; set; }
 
+        /*
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<CustomerDemographic>()				
@@ -150,5 +153,6 @@ namespace Kendo.Mvc.Examples.Models
 			modelBuilder.Entity<UrbanArea>()
 				.ForSqlServer().Table("UrbanAreas");
 		}
+        */
 	}
 }

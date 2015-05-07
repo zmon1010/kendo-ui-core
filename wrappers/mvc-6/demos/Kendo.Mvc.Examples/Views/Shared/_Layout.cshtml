@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNet.Mvc.Razor;
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title>@ViewBag.Title</title>
@@ -41,7 +40,7 @@
 		</div>
 				
 		@{
-			ViewData["ViewPath"] = ((RazorView)ViewContext.View).RazorPage.Path;
+			ViewData["ViewPath"] = ((Microsoft.AspNet.Mvc.Razor.RazorView)ViewContext.View).RazorPage.Path;
 		}
 		@Html.Partial("~/Views/Shared/_Source.cshtml", ViewData)
 

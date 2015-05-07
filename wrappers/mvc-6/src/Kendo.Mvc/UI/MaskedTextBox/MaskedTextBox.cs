@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI
 
 		protected override void WriteHtml(TextWriter writer)
         {
-			var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
+			var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider).Metadata;
 			var tag = Generator.GenerateTextInput(ViewContext, metadata, Id, Name, Value, string.Empty, HtmlAttributes);
 
 			if (!Enable.GetValueOrDefault(true))

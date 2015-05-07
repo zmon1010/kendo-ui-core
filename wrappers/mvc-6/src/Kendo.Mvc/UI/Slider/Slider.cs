@@ -50,8 +50,8 @@ namespace Kendo.Mvc.UI
                 }
             }
 
-            var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
-            var tag = Generator.GenerateRangeInput(ViewContext, metadata, Id, Name, Value, HtmlAttributes);
+            var explorer = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
+            var tag = Generator.GenerateRangeInput(ViewContext, explorer.Metadata, Id, Name, Value, HtmlAttributes);
 
             if (SmallStep.HasValue)
             {

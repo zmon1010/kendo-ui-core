@@ -4,6 +4,8 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
+using Microsoft.AspNet.Hosting;
+using Microsoft.Framework.WebEncoders;
 
 namespace Kendo.Mvc.Extensions
 {
@@ -23,16 +25,20 @@ namespace Kendo.Mvc.Extensions
 		{
 			var actionContext = new ActionContext(viewContext.HttpContext, new RouteData(), new ActionDescriptor());
 			var viewDataDictionary = new ViewDataDictionary<T>(metadataProvider, new ModelStateDictionary());
-			return new ViewContext(actionContext, viewContext.GetService<IView>(), viewDataDictionary, new StringWriter());			
+            var tempDataDictionary = new TempDataDictionary(viewContext.GetService<IHttpContextAccessor>(), viewContext.GetService<ITempDataProvider>());
+			return new ViewContext(actionContext, viewContext.GetService<IView>(), viewDataDictionary, tempDataDictionary, new StringWriter());			
 		}
 
 		public static HtmlHelper<T> CreateHtmlHelper<T>(this ViewContext viewContext)
 		{
-			var generator = viewContext.GetService<IHtmlGenerator>();
-			var viewEngine = viewContext.GetService<ICompositeViewEngine>();
-			var modelMetadataProvider = viewContext.GetService<IModelMetadataProvider>();
-
-			return new HtmlHelper<T>(generator, viewEngine, modelMetadataProvider);
+			return new HtmlHelper<T>(
+                viewContext.GetService<IHtmlGenerator>(),
+                viewContext.GetService<ICompositeViewEngine>(),
+                viewContext.GetService<IModelMetadataProvider>(),
+                viewContext.GetService<IHtmlEncoder>(),
+                viewContext.GetService<IUrlEncoder>(),
+                viewContext.GetService<IJavaScriptStringEncoder>()
+            );
 		}
         public static string GetFullHtmlFieldName(this ViewContext viewContext, string name)
         {

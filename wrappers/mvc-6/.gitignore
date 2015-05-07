@@ -7,3 +7,4 @@ artifacts/**
 **/Properties/debugSettings.json
 **/packages/**
 apidiff.txt
+**/project.lock.json
