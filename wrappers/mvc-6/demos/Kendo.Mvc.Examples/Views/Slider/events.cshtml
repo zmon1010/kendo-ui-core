@@ -13,7 +13,7 @@
               .Change("sliderChange"))
           .HtmlAttributes(new { @class = "temperature" }))
 
-    @*@(Html.Kendo().RangeSlider()
+    @(Html.Kendo().RangeSlider()
           .Name("rangeslider")
           .Min(0)
           .Max(10)
@@ -22,7 +22,7 @@
           .Events(events => events
               .Slide("rangeSliderSlide")
               .Change("rangeSliderChange"))
-          .HtmlAttributes(new { @class = "humidity" }))*@
+          .HtmlAttributes(new { @class = "humidity" }))
 </div>
 
 <script>

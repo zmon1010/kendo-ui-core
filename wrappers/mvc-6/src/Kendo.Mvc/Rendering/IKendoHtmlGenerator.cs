@@ -73,6 +73,11 @@ namespace Kendo.Mvc.Rendering
             ViewContext viewContext,
             string id,
             string name,
-            IDictionary<string, object> htmlAttributes);		
-	}
+            IDictionary<string, object> htmlAttributes);
+
+        IDictionary<string, object> GetValidationAttributes(
+            ViewContext viewContext,
+            ModelMetadata metadata,
+            string name);
+    }
 }

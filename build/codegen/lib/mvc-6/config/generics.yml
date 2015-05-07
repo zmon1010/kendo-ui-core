@@ -29,3 +29,7 @@
 :slider:
     - :name: T
       :constraint: struct, IComparable
+      
+:rangeslider:
+    - :name: T
+      :constraint: struct, IComparable

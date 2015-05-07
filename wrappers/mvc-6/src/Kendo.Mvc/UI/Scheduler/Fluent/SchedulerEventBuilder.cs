@@ -256,7 +256,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user clicks the "destroy" button.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user performs "destroy" action.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the remove event.</param>
         public SchedulerEventBuilder Remove(string handler)
@@ -267,7 +267,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the user clicks the "destroy" button.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the user performs "destroy" action.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public SchedulerEventBuilder Remove(Func<object, object> handler)

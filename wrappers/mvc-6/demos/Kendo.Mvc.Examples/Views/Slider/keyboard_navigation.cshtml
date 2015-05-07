@@ -9,13 +9,13 @@
         .Value(18)
         .HtmlAttributes(new { @class = "temperature" }))
 <br /><br /><br />
-@*@(Html.Kendo().RangeSlider()
+@(Html.Kendo().RangeSlider()
         .Name("rangeslider")
         .Min(0)
         .Max(30)
         .SmallStep(1)
         .LargeStep(10)
-        .HtmlAttributes(new { @class = "humidity" }))*@
+        .HtmlAttributes(new { @class = "humidity" }))
 
 <script>
     $(document.body).keydown(function (e) {

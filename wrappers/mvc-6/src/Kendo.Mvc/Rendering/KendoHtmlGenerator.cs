@@ -161,7 +161,7 @@ namespace Kendo.Mvc.Rendering
 
         // Only render attributes if client-side validation is enabled, and then only if we've
         // never rendered validation for a field with this name in this form.
-        protected virtual IDictionary<string, object> GetValidationAttributes(
+        public virtual IDictionary<string, object> GetValidationAttributes(
             ViewContext viewContext,
             ModelMetadata metadata,
             string name)
