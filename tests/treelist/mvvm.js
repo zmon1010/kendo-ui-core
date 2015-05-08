@@ -32,6 +32,22 @@
         equal(instance.dataSource.data().length, 2);
     });
 
+    test("pushing items into ObservableArray updates data source data", function() {
+        var data = new kendo.data.ObservableArray(rootItems.slice());
+        var dataSource = new kendo.data.TreeListDataSource({
+            data: data
+        });
+
+        bindHtml("<div data-role='treelist' data-bind='source: dataSource' />", {
+            dataSource: dataSource
+        });
+
+        data.push({ id: 3, parentId: null });
+        equal(instance.dataSource.data().length, 3);
+        equal(instance.dataSource.view().length, 3);
+        equal(data.length, 3);
+    });
+
     test("bind column template", function() {
         var observable = kendo.observable({ items: rootItems.slice() });
 

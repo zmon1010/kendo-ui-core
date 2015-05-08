@@ -240,16 +240,31 @@ var __meta__ = {
             return model;
         },
 
-        _readData: function(newData) {
-            var result = [];
-            var data = this.data();
-            var i, length;
+        _shouldWrap: function(data) {
+            return true;
+        },
 
-            for (i = 0, length = data.length; i < length; i++) {
-                result.push(data[i]);
+        _readData: function(newData) {
+            var data = this.data();
+            newData = DataSource.fn._readData.call(this, newData);
+
+            this._concat(newData, data);
+
+            if (newData instanceof ObservableArray) {
+                return newData;
             }
 
-            return result.concat(DataSource.fn._readData.call(this, newData));
+            return data;
+        },
+
+        _concat: function(source, target) {
+            var targetLength = target.length;
+
+            for (var i = 0; i < source.length; i++) {
+                target[targetLength++] = source[i];
+            }
+
+            target.length = targetLength;
         },
 
         _readAggregates: function(data) {
