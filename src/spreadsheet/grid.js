@@ -3,9 +3,9 @@
 })(function(){
 
 (function(kendo) {
-    function Grid(rowCount, columnCount) {
-        this.rowCount = rowCount;
+    function Grid(columnCount, rowCount) {
         this.columnCount = columnCount;
+        this.rowCount = rowCount;
     }
 
     Grid.prototype.index = function(address) {
@@ -26,9 +26,9 @@
         }
     }
 
-    function Address(row, column) {
-        this.row = row;
+    function Address(column, row) {
         this.column = column;
+        this.row = row;
     }
 
     function Area(start, end) {

@@ -25,7 +25,7 @@ var grid = new Grid(ROWS, COLUMNS);
 var sorter = new Sorter(grid, [ cellValues, colors ]);
 
 $("button").click(function() {
-    var area = new Area(new Address(0, 1), new Address(99, 1));
+    var area = new Area(new Address(1, 0), new Address(1, 99));
     console.profile("sort")
     sorter.sortBy(area, cellValues);
     console.profileEnd("sort");
