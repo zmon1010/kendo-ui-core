@@ -8,15 +8,15 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual RangeSliderBuilder<TValue> RangeSliderFor<TValue>(Expression<Func<TModel, TValue[]>> expression)
             where TValue : struct, IComparable
         {
-            var metadata = GetModelMetadata(expression);
-            var rules = HtmlHelper.GetClientValidationRules(metadata, expression.Name);
+            var explorer = GetModelExplorer(expression);
+            var rules = HtmlHelper.GetClientValidationRules(explorer, expression.Name);
 
             TValue? minimum = GetRangeValidationParameter<TValue>(rules, MinimumValidator);
             TValue? maximum = GetRangeValidationParameter<TValue>(rules, MaximumValidator);
 
             var rangeSlider = RangeSlider<TValue>()
                                 .Expression(GetExpressionName(expression))
-                                .Values((TValue[])metadata.Model);
+                                .Values((TValue[])explorer.Model);
 
             if (minimum.HasValue)
             {

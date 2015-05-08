@@ -43,7 +43,7 @@ namespace Kendo.Mvc.UI
                 }
             }
 
-            var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
+            var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider).Metadata;
             var wrapper = Generator.GenerateTag("div", ViewContext, Id, Name, HtmlAttributes);
             wrapper.MergeAttributes(Generator.GetValidationAttributes(ViewContext, metadata, Name));
 
