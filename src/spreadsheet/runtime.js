@@ -305,13 +305,11 @@
 
     /* -----[ Formula ]----- */
 
-    var Formula = defclass(CellRef, function Formula(sheet, col, row, refs, handler){
-        CellRef.call(this, col, row, 3);
-        this.setSheet(sheet, false);
+    var Formula = defclass(null, function Formula(refs, handler){
         this.refs = refs;
         this.handler = handler;
     }, {
-        func: function(SS, callback) {
+        func: function(SS, sheet, col, row, callback) {
             var formula = this;
             if ("value" in formula) {
                 if (callback) {
@@ -321,19 +319,22 @@
                 resolveCells({
                     ss: SS,
                     formula: formula,
+                    sheet: sheet,
+                    col: col,
+                    row: row,
                     resolve: function(val) {
                         val = cellValues(this, [ val ])[0];
                         if (val == null) {
                             val = 0;
                         }
                         formula.value = val;
-                        SS.onFormula(formula, val);
+                        SS.onFormula(sheet, col, row, val);
                         if (callback) {
                             callback(val);
                         }
                     },
                     error: function(val) {
-                        SS.onFormula(formula, val);
+                        SS.onFormula(sheet, col, row, val);
                         if (callback) {
                             callback(val);
                         }
@@ -342,7 +343,6 @@
             }
         },
         adjust: function(operation, start, delta) {
-            CellRef.prototype.adjust.apply(this, arguments);
             var refs = this.refs;
             refs.forEach(function(ref, i){
                 refs[i] = refs[i].adjust(operation, start, delta);
@@ -411,7 +411,7 @@
             fetch(formulas[i]);
         }
         function fetch(cell) {
-            cell.formula.func(context.ss, function(val){
+            cell.formula.func(context.ss, cell.sheet, cell.col, cell.row, function(val){
                 if (!--pending) {
                     f(context);
                 }
@@ -546,7 +546,7 @@
                     if (typeof thing != "string") {
                         throw 1;
                     }
-                    var x = calc.parse_formula(this.formula.sheet, 0, 0, thing);
+                    var x = calc.parse_formula(this.sheet, 0, 0, thing);
                     if (x.ast.type != "ref") {
                         throw 1;
                     }
@@ -739,8 +739,8 @@
         return FUNCS[fname.toLowerCase()].call(context, callback, args);
     };
 
-    exports.makeFormula = function(sheet, col, row, refs, handler) {
-        return new Formula(sheet, col, row, refs, handler);
+    exports.makeFormula = function(refs, handler) {
+        return new Formula(refs, handler);
     };
 
     exports.makeCellRef = function(col, row, rel) {

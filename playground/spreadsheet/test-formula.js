@@ -11,15 +11,15 @@ function Spreadsheet() {
 
 Spreadsheet.prototype = {
 
-    onFormula: function(f, value) {
-        var cell = this._getCell(f.sheet, f.col, f.row);
+    onFormula: function(sheet, col, row, value) {
+        var cell = this._getCell(sheet, col, row);
         if (typeof value == "number") {
             cell.type = "num";
         } else if (typeof value == "string") {
             cell.type = "str";
         }
         cell.value = value;
-        this.updateDisplay(f.sheet, f.col, f.row);
+        this.updateDisplay(sheet, col, row);
     },
 
     getRefCells: function(ref) {
@@ -77,7 +77,7 @@ Spreadsheet.prototype = {
             delete cell.formula.value;
         });
         cells.forEach(function(cell){
-            cell.formula.func(self);
+            cell.formula.func(self, cell.sheet, cell.col, cell.row);
         });
     },
 
@@ -120,12 +120,11 @@ Spreadsheet.prototype = {
     },
 
     forVisibleCells: function(sheetName, f) {
-        var sheet = this.sheets[sheetName];
+        var self = this, sheet = self.sheets[sheetName];
         Object.keys(sheet.data).forEach(function(row){
             var rowData = sheet.data[row];
             Object.keys(rowData).forEach(function(col){
-                var cellData = rowData[col];
-                f(cellData);
+                f(self._getCell(sheetName, col|0, row|0));
             });
         });
     },
@@ -179,7 +178,7 @@ Spreadsheet.prototype = {
             if (!cell.formula)
                 return cell.input;
             console.log(cell, row, col);
-            return "=" + calc.print(sheet, col, row, cell.exp);
+            return "=" + calc.print(sheet, col, row, cell.exp, cell);
         }
     },
 
@@ -245,6 +244,9 @@ Spreadsheet.prototype = {
                 return null;
             }
         }
+        cellData.sheet = sheetName;
+        cellData.col = col;
+        cellData.row = row;
         return cellData;
     },
 
@@ -271,7 +273,7 @@ Spreadsheet.prototype = {
     },
 
     insertCols: function(sheetName, col, n) {
-        
+
     },
 
     deleteCols: function(sheetName, col, n) {
@@ -311,11 +313,11 @@ function makeElements(container) {
 
     var head = $("<tr class='head'><td></td>").appendTo(table);
     for (var col = 1; col <= 10; ++col) {
-        head.append("<td class='colhead'>" + String.fromCharCode(64+col) + "</td>");
+        head.append("<td class='colhead'>");
     }
     for (var row = 1; row <= 100; ++row) {
-        var tr = $("<tr>").appendTo(table);
-        tr.append("<td class='head rowhead'>" + row + "</td>");
+        var tr = $("<tr class='row'>").appendTo(table);
+        tr.append("<td class='head rowhead'>");
         for (var col = 1; col <= 10; ++col) {
             var td = $("<td>").appendTo(tr);
             var input = $("<input style='width: 100%' />")
@@ -422,7 +424,7 @@ function _onKeyDown(ev) {
             if (!cell || !cell.exp) {
                 alert("No expression here");
             } else {
-                window.COPY = cell.exp;
+                window.COPY = cell;
             }
             ev.preventDefault();
         } else if (ev.keyCode == 86 && ev.shiftKey && ev.ctrlKey) {
@@ -430,7 +432,7 @@ function _onKeyDown(ev) {
             if (!window.COPY) {
                 alert("Copy an expression first");
             } else {
-                var exp = calc.print(sheetName, col, row, window.COPY);
+                var exp = calc.print(sheetName, col, row, window.COPY.exp, window.COPY);
                 input.val("=" + exp);
             }
             input.select();

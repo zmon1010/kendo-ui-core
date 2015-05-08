@@ -134,9 +134,6 @@
         }
         return {
             type: "exp",
-            sheet: sheet,
-            row: row,
-            col: col,
             ast: parse_expression(input, true)
         };
 
@@ -350,7 +347,7 @@
         }
     }
 
-    function print(sheet, col, row, exp) {
+    function print(sheet, col, row, exp, orig) {
         return print(exp.ast);
 
         function print(node, prec){
@@ -398,7 +395,7 @@
                 }).join(", ") + ")";
             }
             else if (type == "ref") {
-                ret = node.print(col, row, exp);
+                ret = node.print(col, row, orig);
             }
             else if (type == "bool") {
                 ret = (node.value+"").toUpperCase();
@@ -588,9 +585,6 @@
 
     function compile(exp) {
         var references = [];
-        var the_col = exp.col;
-        var the_row = exp.row;
-        var the_sheet = exp.sheet;
         var code = compile(exp.cps);
 
         code = [
@@ -601,7 +595,7 @@
             "}"
         ].join(";\n");
 
-        return Runtime.makeFormula(the_sheet, the_col, the_row, references, make_closure(code));
+        return Runtime.makeFormula(references, make_closure(code));
 
         function get_reference(ref) {
             var index = references.length;

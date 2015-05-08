@@ -13,6 +13,8 @@ select {
   overflow: auto;
 }
 .sheet table {
+  counter-reset: therow;
+  counter-reset: thecol;
   border-collapse: collapse;
 }
 .sheet table tr td {
@@ -38,6 +40,21 @@ select {
   background: #ddd;
   padding: 2px 5px;
   border-color: #888;
+}
+.sheet table tr.row {
+  counter-increment: therow;
+}
+.sheet table td.rowhead {
+  width: 2em;
+}
+.sheet table td.rowhead:before {
+  content: counter(therow);
+}
+.sheet table td.colhead {
+  counter-increment: thecol;
+}
+.sheet table td.colhead:before {
+  content: counter(thecol, upper-alpha);
 }
 .sheet .formula {
   border: 1px solid #888;

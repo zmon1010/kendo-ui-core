@@ -11,6 +11,8 @@ body, input, textarea, button, select {
   max-height: 500px;
   overflow: auto;
   table {
+    counter-reset: therow;
+    counter-reset: thecol;
     border-collapse: collapse;
     tr {
       td {
@@ -36,6 +38,21 @@ body, input, textarea, button, select {
       background: #ddd;
       padding: 2px 5px;
       border-color: #888;
+    }
+    tr.row {
+      counter-increment: therow;
+    }
+    td.rowhead {
+      width: 2em;
+      &:before {
+        content: counter(therow);
+      }
+    }
+    td.colhead {
+      counter-increment: thecol;
+      &:before {
+        content: counter(thecol, upper-alpha);
+      }
     }
   }
   .formula {
