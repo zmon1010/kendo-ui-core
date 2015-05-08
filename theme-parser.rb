@@ -75,9 +75,16 @@ files = ARGV.each { |f| Dir.glob(f) }.flatten.sort
 type = "default"
 type = "metro" if files[0].include? "metro"
 type = "bootstrap" if files[0].include? "bootstrap"
+type = "highcontrast" if files[0].include? "highcontrast"
+type = "flat" if files[0].include? "flat"
+type = "material" if files[0].include? "material"
+type = "fiori" if files[0].include? "fiori"
+type = "office365" if files[0].include? "office365"
 
 dir = File.dirname(__FILE__)
-template_content = File.read(File.join(dir, "variable-origins-#{type}.erb"))
+origins = "variable-origins-#{type}.erb"
+origins = "variable-origins-default.erb" unless File.exist?(File.join(dir, origins))
+template_content = File.read(File.join(dir, origins))
 template = ERB.new(template_content, 0, '%<>')
 
 ####
