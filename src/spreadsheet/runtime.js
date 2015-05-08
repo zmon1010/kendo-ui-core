@@ -30,12 +30,17 @@
                 this._hasSheet = hasSheet;
             }
             return this;
-        }
+        },
+        adjust: function(){}
     });
 
     /* -----[ Null reference ]----- */
 
-    var NullRef = defclass(Ref, function NullRef(){});
+    var NullRef = defclass(Ref, function NullRef(){}, {
+        print: function() {
+            return "#NULL!";
+        }
+    });
 
     var NULL = new NullRef();
 
@@ -84,7 +89,26 @@
                 // relative row
                 row = row - orig.row + trow;
             }
+            if (col < 1 || row < 1) {
+                return "#REF!";
+            }
             return calc.make_reference(this._hasSheet && this.sheet, col, row, rel);
+        },
+        adjust: function(operation, start, delta) {
+            var col = this.col, row = this.row;
+            switch (operation) {
+              case "col":
+                if (col >= start) {
+                    this.col += delta;
+                }
+                break;
+              case "row":
+                if (this.row >= start) {
+                    this.row += delta;
+                }
+                break;
+            }
+            return (this.col < 1 || this.row < 1) ? NULL : this;
         }
     });
 
@@ -207,6 +231,35 @@
                 ret = this.sheet + "!" + ret;
             }
             return ret;
+        },
+
+        adjust: function(operation, start, delta) {
+            var tl = this.topLeft.adjust(operation, start, delta);
+            var br = this.bottomRight.adjust(operation, start, delta);
+            if (NullRef.is(tl) && NullRef.is(br)) {
+                return NULL;
+            }
+            switch (operation) {
+              case "col":
+                if (NullRef.is(tl)) {
+                    tl.col = start;
+                }
+                else if (NullRef.is(br)) {
+                    br.col = start;
+                }
+                break;
+              case "row":
+                if (NullRef.is(tl)) {
+                    tl.row = start;
+                }
+                else if (NullRef.is(br)) {
+                    br.row = start;
+                }
+                break;
+            }
+            this.topLeft = tl;
+            this.bottomRight = br;
+            return this.simplify();
         }
     });
 
@@ -247,6 +300,53 @@
     }, {
         toString: function() {
             return "#" + this.code + "!";
+        }
+    });
+
+    /* -----[ Formula ]----- */
+
+    var Formula = defclass(CellRef, function Formula(sheet, col, row, refs, handler){
+        CellRef.call(this, col, row, 3);
+        this.setSheet(sheet, false);
+        this.refs = refs;
+        this.handler = handler;
+    }, {
+        func: function(SS, callback) {
+            var formula = this;
+            if ("value" in formula) {
+                if (callback) {
+                    callback(formula.value);
+                }
+            } else {
+                resolveCells({
+                    ss: SS,
+                    formula: formula,
+                    resolve: function(val) {
+                        val = cellValues(this, [ val ])[0];
+                        if (val == null) {
+                            val = 0;
+                        }
+                        formula.value = val;
+                        SS.onFormula(formula, val);
+                        if (callback) {
+                            callback(val);
+                        }
+                    },
+                    error: function(val) {
+                        SS.onFormula(formula, val);
+                        if (callback) {
+                            callback(val);
+                        }
+                    }
+                }, formula.refs, this.handler);
+            }
+        },
+        adjust: function(operation, start, delta) {
+            CellRef.prototype.adjust.apply(this, arguments);
+            var refs = this.refs;
+            refs.forEach(function(ref, i){
+                refs[i] = refs[i].adjust(operation, start, delta);
+            });
         }
     });
 
@@ -639,34 +739,8 @@
         return FUNCS[fname.toLowerCase()].call(context, callback, args);
     };
 
-    exports.makeFormula = function(formula) {
-        var func = formula.func;
-        formula.func = function(SS, callback) {
-            if ("value" in formula) {
-                if (callback) {
-                    callback(formula.value);
-                }
-            } else {
-                resolveCells({
-                    ss: SS,
-                    formula: formula,
-                    resolve: function(val) {
-                        formula.value = val = cellValues(this, [ val ])[0];
-                        SS.onFormula(formula, val);
-                        if (callback) {
-                            callback(val);
-                        }
-                    },
-                    error: function(val) {
-                        SS.onFormula(formula, val);
-                        if (callback) {
-                            callback(val);
-                        }
-                    }
-                }, formula.refs, func);
-            }
-        };
-        return formula;
+    exports.makeFormula = function(sheet, col, row, refs, handler) {
+        return new Formula(sheet, col, row, refs, handler);
     };
 
     exports.makeCellRef = function(col, row, rel) {

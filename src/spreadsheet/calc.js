@@ -601,11 +601,7 @@
             "}"
         ].join(";\n");
 
-        return Runtime.makeFormula({
-            sheet: the_sheet, col: the_col, row: the_row,
-            refs: references,
-            func: make_closure(code)
-        });
+        return Runtime.makeFormula(the_sheet, the_col, the_row, references, make_closure(code));
 
         function get_reference(ref) {
             var index = references.length;

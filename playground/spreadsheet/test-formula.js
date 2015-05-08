@@ -145,7 +145,6 @@ Spreadsheet.prototype = {
         var x = calc.parse(sheet, col, row, data), display = x.value;
         if (x.type == "exp") {
             cell.exp = x;
-            cell.input = "=" + calc.print(sheet, col, row, x);
             cell.formula = calc.compile(x);
             display = "...";
         } else {
@@ -177,7 +176,10 @@ Spreadsheet.prototype = {
     getInputData: function(sheet, col, row) {
         var cell = this._getCell(sheet, col, row, false);
         if (cell) {
-            return cell.input;
+            if (!cell.formula)
+                return cell.input;
+            console.log(cell, row, col);
+            return "=" + calc.print(sheet, col, row, cell.exp);
         }
     },
 
@@ -248,8 +250,56 @@ Spreadsheet.prototype = {
 
     _makeCell: function(col, row) {
         return new Spreadsheet.Cell();
+    },
+
+    insertRows: function(sheetName, row, n) {
+        var sheet = this.sheets[sheetName];
+        var args = [ row, 0 ];
+        while (n-- > 0) {
+            args.push({});
+        }
+        [].splice.apply(sheet.data, args);
+    },
+
+    deleteRows: function(sheetName, row, n) {
+        var sheet = this.sheets[sheetName];
+        reduceProps(sheet.data, row, n);
+        this.getVisibleFormulas().forEach(function(cell){
+            console.log(cell);
+            cell.formula.adjust("row", row, -n);
+        });
+    },
+
+    insertCols: function(sheetName, col, n) {
+        
+    },
+
+    deleteCols: function(sheetName, col, n) {
+
     }
 };
+
+function numericAsc(a, b) {
+    return parseFloat(a) - parseFloat(b);
+}
+
+function numericDesc(a, b) {
+    return parseFloat(b) - parseFloat(a);
+}
+
+function reduceProps(object, start, n) {
+    Object.keys(object).sort(numericAsc).forEach(function(key){
+        key = parseFloat(key);
+        if (key >= start && key < start + n) {
+            delete object[key];
+        }
+        else if (key > start) {
+            var tmp = object[key];
+            delete object[key];
+            object[key-n] = tmp;
+        }
+    });
+}
 
 Spreadsheet.Cell = function(){};
 
@@ -261,14 +311,14 @@ function makeElements(container) {
 
     var head = $("<tr class='head'><td></td>").appendTo(table);
     for (var col = 1; col <= 10; ++col) {
-        head.append("<td>" + String.fromCharCode(64+col) + "</td>");
+        head.append("<td class='colhead'>" + String.fromCharCode(64+col) + "</td>");
     }
     for (var row = 1; row <= 100; ++row) {
         var tr = $("<tr>").appendTo(table);
-        tr.append("<td class='head'>" + row + "</td>")
+        tr.append("<td class='head rowhead'>" + row + "</td>");
         for (var col = 1; col <= 10; ++col) {
             var td = $("<td>").appendTo(tr);
-            var input = $("<input style='width: 100%' data-row='" + row + "' data-col='" + col + "' />")
+            var input = $("<input style='width: 100%' />")
                 .appendTo(td);
             input.on({
                 focus   : _onFocus,
@@ -279,18 +329,20 @@ function makeElements(container) {
             });
         }
     }
+    table.find(".colhead").on("mousedown", _adjustCol);
+    table.find(".rowhead").on("mousedown", _adjustRow);
 }
 
 function _getInput(sheet, col, row) {
-    sheet = $(sheet);
-    return $("input[data-row='" + row + "'][data-col='" + col + "']", sheet);
+    return $("table tr:nth-child(" + (row+1) + ") td:nth-child(" + (col+1) + ") input", sheet);
 }
 
 function withInput(input, f) {
     input = $(input);
     var sheet = input.closest(".sheet");
-    var row = input.data("row"), col = input.data("col");
     var sheetName = sheet[0].id;
+    var td = input.closest("td"), tr = input.closest("tr");
+    var col = td[0].cellIndex, row = tr[0].rowIndex;
     f(input, sheet, sheetName, col, row);
 }
 
@@ -391,6 +443,33 @@ function _onInput(ev) {
 
 }
 
+function _adjustCol(ev) {
+    ev.preventDefault();
+    var td = ev.target;
+    var col = td.cellIndex;
+    var sheet = $(td).closest(".sheet");
+    var sheetName = sheet[0].id;
+    if (ev.shiftKey) {
+        SPREADSHEET.deleteCols(sheetName, col, 1);
+    } else {
+        SPREADSHEET.insertCols(sheetName, col, 1);
+    }
+}
+
+function _adjustRow(ev) {
+    ev.preventDefault();
+    var td = ev.target, tr = td.parentNode;
+    var row = tr.rowIndex;
+    var sheet = $(td).closest(".sheet");
+    var sheetName = sheet[0].id;
+    if (ev.shiftKey) {
+        SPREADSHEET.deleteRows(sheetName, row, 1);
+        tr.remove();
+    } else {
+        SPREADSHEET.insertRows(sheetName, row, 1);
+    }
+}
+
 function fillElements(data) {
     $.each(data, function(sheet, data){
         var cont = $("#" + sheet.toLowerCase());
@@ -410,12 +489,11 @@ function fillElements(data) {
 makeElements(".sheet");
 
 fillElements({
-    // sheet1: {
-    //     A1: "e4",
-    //     A2: "g6",
-    //     B2: '=sum(indirect(A2):indirect(A1))',
-    //     B1: '=sum(A:A)'
-    // }
+    sheet1: {
+        a3: "1",
+        b3: "1",
+        c3: "=a3+b3"
+    }
     // sheet1: {
     //     A1: '=CURRENCY("USD", "EUR") + CURRENCY("USD", "EUR")'
     // }
