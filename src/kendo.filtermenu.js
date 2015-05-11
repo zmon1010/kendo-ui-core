@@ -839,9 +839,9 @@ var __meta__ = {
                 this.checkSource.data(distinct(this.dataSource.data(),this.field));
                 this.refresh();
             } else {
-                ui.progress(that.container, true);
+                this._attachProgress();
+
                 this.checkSource.fetch(function() {
-                    ui.progress(that.container, false);
                     that.refresh.call(that);
                 });
             }
@@ -860,6 +860,23 @@ var __meta__ = {
 
             this.trigger(INIT, { field: this.field, container: this.form });
         },
+
+        _attachProgress: function() {
+            var that = this;
+
+            this._progressHandler = function() {
+                ui.progress(that.container, true);
+            };
+
+            this._progressHideHandler = function() {
+                ui.progress(that.container, false);
+            };
+
+            this.checkSource
+                .bind("progress", this._progressHandler)
+                .bind("change", this._progressHideHandler);
+        },
+
         _createForm: function() {
             var options = this.options;
             var html = "<ul class='k-reset k-multicheck-wrap'></ul><button type='submit' class='k-button k-primary'>" + options.messages.filter + "</button>";
@@ -1054,6 +1071,14 @@ var __meta__ = {
 
             if (that.checkChangeHandler) {
                 that.checkSource.unbind(CHANGE, that.checkChangeHandler);
+            }
+
+            if (that._progressHandler) {
+                that.checkSource.unbind("progress", that._progressHandler);
+            }
+
+            if (that._progressHideHandler) {
+                that.checkSource.unbind("change", that._progressHideHandler);
             }
 
             that.element = that.checkSource = that.container = that.checkBoxAll = that._link = that._refreshHandler = that.checkAllHandler = null;
