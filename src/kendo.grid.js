@@ -1618,6 +1618,7 @@ var __meta__ = {
 
             var initialData = dataSource.options.data && dataSource._data;
             dataSource.options.data = null;
+
             result.dataSource = $.extend(true, {}, dataSource.options);
 
             result.dataSource.data = initialData;
@@ -1627,6 +1628,10 @@ var __meta__ = {
             result.dataSource.sort = dataSource.sort();
             result.dataSource.group = dataSource.group();
             result.dataSource.aggregate = dataSource.aggregate();
+
+            if (result.dataSource.transport) {
+                result.dataSource.transport.dataSource = null;
+            }
 
             result.$angular = undefined;
 
