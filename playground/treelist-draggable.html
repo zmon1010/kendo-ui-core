@@ -19,7 +19,11 @@
     <div id="treelist"></div>
 
     <script>
-        require([ "../src/kendo.treelist", "../src/kendo.draganddrop" ], function() {
+        require([
+                "../src/kendo.treelist",
+                "../src/kendo.draganddrop",
+                "../src/kendo.treeview"
+            ], function() {
             var dataSource = new kendo.data.TreeListDataSource({
                 data: [
                   { id: 1, Name: "Daryl Sweeney", Position: "CEO", Phone: "(555) 924-9726", parentId: null },
@@ -38,7 +42,8 @@
                 }
             });
 
-            $("#treelist")
+
+            var treelist = $("#treelist")
                 .kendoTreeList({
                     dataSource: dataSource,
                     height: 540,
@@ -47,46 +52,15 @@
                         { field: "Name" },
                         { field: "Phone" }
                     ]
-                })
-                .kendoDraggable({
-                    cursorOffset: { left: 10, top: 10 },
-                    filter: "tr",
-                    autoScroll: true,
-                    hint: function(row) {
-                        return "<div class='k-header k-drag-clue'>" +
-                                    "<span class='k-icon k-drag-status' />" +
-                                    row.find("td:eq(1)").text() +
-                                "</div>";
-                    },
-                    dragstart: function(e) {
-                        console.log(e);
-                    },
-                    valid: function() {
-                        return false;
-                    },
-                    drag: function(e) {
-                        var statusClass = "k-insert-middle";
-                        var status = this.hint.children(".k-drag-status")[0];
+                }).data("kendoTreeList");
 
-                        var dropTarget = $(kendo.eventTarget(e));
-                        var tr = dropTarget.closest("tr");
-                        var treelist = tr.closest(".k-treelist");
 
-                        // parent
-                        if (treelist.attr("id") != "treelist" || !tr.length) {
-                            statusClass = "k-denied";
-                        } else if (this.options.contains()) {
-                            statusClass = "k-denied";
-                        }
-
-                        if (status) {
-                            status.className = "k-icon k-drag-status " + statusClass;
-                        }
-                    },
-                    dragend: function(e) {
-                        console.log(e);
-                    }
-                });
+            var dragging = new kendo.ui.HierarchicalDragAndDrop(treelist, {
+                filter: "tr",
+                hintText: function(row) {
+                    return row.find("td:eq(1)").text();
+                }
+            });
         });
     </script>
 </body>

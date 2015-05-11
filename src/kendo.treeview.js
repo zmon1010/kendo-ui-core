@@ -340,7 +340,7 @@ var __meta__ = {
             if (enabled && !dragging) {
                 this.dragging = new HierarchicalDragAndDrop(this, {
                     filter: "div:not(.k-state-disabled) .k-in",
-                    hint: proxy(this._dragHint, this)
+                    hintText: proxy(this._hintText, this)
                 });
             } else if (!enabled && dragging) {
                 dragging.destroy();
@@ -348,7 +348,7 @@ var __meta__ = {
             }
         },
 
-        _dragHint: function(node) {
+        _hintText: function(node) {
             return this.templates.dragClue({
                 item: this.dataItem(node),
                 treeview: this.options
@@ -456,10 +456,7 @@ var __meta__ = {
                     return cssClass;
                 },
                 dragClue: templateNoWith(
-                    "<div class='k-header k-drag-clue'>" +
-                        "<span class='k-icon k-drag-status' />" +
-                        "#= data.treeview.template(data) #" +
-                    "</div>"
+                    "#= data.treeview.template(data) #"
                 ),
                 group: templateNoWith(
                     "<ul class='#= data.r.groupCssClass(data.group) #'#= data.r.groupAttributes(data.group) #>" +
@@ -2034,33 +2031,39 @@ var __meta__ = {
         }
     });
 
-    function HierarchicalDragAndDrop(widget, options) {
-        this.widget = widget;
-        this.hovered = widget.element;
+    var HierarchicalDragAndDrop = kendo.Class.extend({
+        init: function (widget, options) {
+            this.widget = widget;
+            this.hovered = widget.element;
+            this.options = options;
 
-        this._draggable = new ui.Draggable(widget.element, {
-            autoScrolL: widget.options.autoScroll,
-            filter: options.filter,
-            hint: options.hint,
-            cursorOffset: {
-                left: 10,
-                top: kendo.support.mobileOS ? -40 / kendo.support.zoomLevel() : 10
-            },
-            dragstart: proxy(this.dragstart, this),
-            dragcancel: proxy(this.dragcancel, this),
-            drag: proxy(this.drag, this),
-            dragend: proxy(this.dragend, this),
-            $angular: widget.options.$angular
-        });
-    }
+            this._draggable = new ui.Draggable(widget.element, {
+                filter: options.filter,
+                autoScrolL: widget.options.autoScroll,
+                cursorOffset: {
+                    left: 10,
+                    top: kendo.support.mobileOS ? -40 / kendo.support.zoomLevel() : 10
+                },
+                hint: proxy(this._hint, this),
+                dragstart: proxy(this.dragstart, this),
+                dragcancel: proxy(this.dragcancel, this),
+                drag: proxy(this.drag, this),
+                dragend: proxy(this.dragend, this),
+                $angular: widget.options.$angular
+            });
+        },
 
-    HierarchicalDragAndDrop.prototype = {
+        _hint: function(element) {
+            return "<div class='k-header k-drag-clue'>" +
+                        "<span class='k-icon k-drag-status' />" +
+                        this.options.hintText(element) +
+                    "</div>"
+        },
+
         _removeTouchHover: function() {
-            var that = this;
-
-            if (kendo.support.touch && that.hovered) {
-                that.hovered.find("." + KSTATEHOVER).removeClass(KSTATEHOVER);
-                that.hovered = false;
+            if (kendo.support.touch && this.hovered) {
+                this.hovered.find("." + KSTATEHOVER).removeClass(KSTATEHOVER);
+                this.hovered = false;
             }
         },
 
@@ -2075,15 +2078,14 @@ var __meta__ = {
         },
 
         dragstart: function (e) {
-            var that = this,
-                widget = that.widget,
-                sourceNode = that.sourceNode = e.currentTarget.closest(NODE);
+            var widget = this.widget;
+            var sourceNode = this.sourceNode = e.currentTarget.closest(NODE);
 
             if (widget.trigger(DRAGSTART, { sourceNode: sourceNode[0] })) {
                 e.preventDefault();
             }
 
-            that.dropHint = $("<div class='k-drop-hint' />")
+            this.dropHint = $("<div class='k-drop-hint' />")
                 .css(VISIBILITY, "hidden")
                 .appendTo(widget.element);
         },
@@ -2248,7 +2250,9 @@ var __meta__ = {
         destroy: function() {
             this._draggable.destroy();
         }
-    };
+    });
+
+    ui.HierarchicalDragAndDrop = HierarchicalDragAndDrop;
 
     ui.plugin(TreeView);
 })(window.kendo.jQuery);
