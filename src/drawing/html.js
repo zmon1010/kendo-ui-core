@@ -12,7 +12,6 @@
 
     /* jshint eqnull:true */
     /* jshint -W069 */
-    /* global console */
 
     /* -----[ local vars ]----- */
 
@@ -461,7 +460,7 @@
 
     drawDOM.getFontFaces = getFontFaces;
 
-    var parseGradient = (function(){
+    var parseBackgroundImage = (function(){
         var tok_linear_gradient  = /^((-webkit-|-moz-|-o-|-ms-)?linear-gradient\s*)\(/;
         var tok_radial_gradient  = /^((-webkit-|-moz-|-o-|-ms-)?radial-gradient\s*)\(/;
         var tok_percent          = /^([-0-9.]+%)/;
@@ -472,13 +471,15 @@
         var tok_popen            = /^(\()/;
         var tok_pclose           = /^(\))/;
         var tok_comma            = /^(,)/;
+        var tok_url              = /^(url)\(/;
+        var tok_content          = /^(.*?)\)/;
 
-        var cache = {};
+        var cache1 = {}, cache2 = {};
 
-        return function(input) {
+        function parse(input) {
             var orig = input;
-            if (hasOwnProperty(cache, orig)) {
-                return cache[orig];
+            if (hasOwnProperty(cache1, orig)) {
+                return cache1[orig];
             }
             function skip_ws() {
                 var m = tok_whitespace.exec(input);
@@ -566,17 +567,37 @@
                         angle   : angle,
                         to      : to1 && to2 ? to1 + " " + to2 : to1 ? to1 : to2 ? to2 : null,
                         stops   : stops,
-                        reverse : reverse,
-                        orig    : orig
+                        reverse : reverse
                     };
                 }
             }
 
-            var tok = read(tok_linear_gradient);
-            if (tok) {
+            function read_url() {
+                if (read(tok_popen)) {
+                    var url = read(tok_content);
+                    url = url.replace(/^['"]+|["']+$/g, "");
+                    read(tok_pclose);
+                    return { type: "url", url: url };
+                }
+            }
+
+            var tok;
+
+            if ((tok = read(tok_linear_gradient))) {
                 tok = read_linear_gradient(tok);
             }
-            return (cache[orig] = tok);
+            else if ((tok = read(tok_url))) {
+                tok = read_url();
+            }
+
+            return (cache1[orig] = tok || { type: "none" });
+        }
+
+        return function(input) {
+            if (hasOwnProperty(cache2, input)) {
+                return cache2[input];
+            }
+            return (cache2[input] = splitProperty(input).map(parse));
         };
     })();
 
@@ -819,18 +840,19 @@
             }
         }
         (function dive(element){
-            var bg = backgroundImageURL(getPropertyValue(getComputedStyle(element), "background-image"));
             if (/^img$/i.test(element.tagName)) {
                 add(element.src);
             }
-            if (bg) {
-                add(bg);
-            }
-            for (var i = element.firstChild; i; i = i.nextSibling) {
-                if (i.nodeType == 1) {
-                    dive(i);
+            parseBackgroundImage(
+                getPropertyValue(
+                    getComputedStyle(element), "background-image"
+                )
+            ).forEach(function(bg){
+                if (bg.type == "url") {
+                    add(bg.url);
                 }
-            }
+            });
+            slice.call(element.children).forEach(dive);
         })(element);
         var count = urls.length;
         function next() {
@@ -896,13 +918,6 @@
             n = Math.floor(n / 26);
         } while (n > 0);
         return result;
-    }
-
-    function backgroundImageURL(backgroundImage) {
-        var m = /^\s*url\((['"]?)(.*?)\1\)\s*$/i.exec(backgroundImage);
-        if (m) {
-            return m[2];
-        }
     }
 
     function pushNodeInfo(element, style, group) {
@@ -996,7 +1011,7 @@
     function actuallyGetRangeBoundingRect(range) {
         if (browser.msie) {
             var a = range.getClientRects();
-            if (a.length == 2 && a[1].width == 0) {
+            if (a.length == 2 && a[1].width === 0) {
                 return a[0];
             }
         }
@@ -1357,7 +1372,7 @@
         var backgroundColor = getPropertyValue(style, "background-color");
         backgroundColor = parseColor(backgroundColor);
 
-        var backgroundImage = splitProperty( getPropertyValue(style, "background-image") );
+        var backgroundImage = parseBackgroundImage( getPropertyValue(style, "background-image") );
         var backgroundRepeat = splitProperty( getPropertyValue(style, "background-repeat") );
         var backgroundPosition = splitProperty( getPropertyValue(style, "background-position") );
         var backgroundOrigin = splitProperty( getPropertyValue(style, "background-origin") );
@@ -1602,42 +1617,38 @@
                 background.append(path);
             }
 
-            var bgImage, bgRepeat, bgPosition, bgOrigin, bgSize;
-
             for (var i = backgroundImage.length; --i >= 0;) {
-                bgImage = backgroundImage[i];
-                bgRepeat = backgroundRepeat[i] || backgroundRepeat[backgroundRepeat.length - 1];
-                bgPosition = backgroundPosition[i] || backgroundPosition[backgroundPosition.length - 1];
-                bgOrigin = backgroundOrigin[i] || backgroundOrigin[backgroundOrigin.length - 1];
-                bgSize = backgroundSize[i] || backgroundSize[backgroundSize.length - 1];
-                drawOneBackground( background, box, bgImage, bgRepeat, bgPosition, bgOrigin, bgSize );
+                drawOneBackground(
+                    background, box,
+                    backgroundImage[i],
+                    backgroundRepeat[i % backgroundRepeat.length],
+                    backgroundPosition[i % backgroundPosition.length],
+                    backgroundOrigin[i % backgroundOrigin.length],
+                    backgroundSize[i % backgroundSize.length]
+                );
             }
         }
 
-        function drawOneBackground(group, box, backgroundImage, backgroundRepeat, backgroundPosition, backgroundOrigin, backgroundSize) {
-            if (!backgroundImage || (backgroundImage == "none")) {
+        function drawOneBackground(group, box, background, backgroundRepeat, backgroundPosition, backgroundOrigin, backgroundSize) {
+            if (!background || (background == "none")) {
                 return;
             }
 
-            // SVG taints the canvas, can't draw it.
-            if (/^url\(\"data:image\/svg/i.test(backgroundImage)) {
-                return;
-            }
-
-            var url = backgroundImageURL(backgroundImage);
-            if (url) {
-                var img = IMAGE_CACHE[url];
+            if (background.type == "url") {
+                // SVG taints the canvas, can't draw it.
+                if (/^url\(\"data:image\/svg/i.test(background.url)) {
+                    return;
+                }
+                var img = IMAGE_CACHE[background.url];
                 if (img && img.width > 0 && img.height > 0) {
                     drawBackgroundImage(group, box, img.width, img.height, function(group, rect){
-                        group.append(new drawing.Image(url, rect));
+                        group.append(new drawing.Image(background.url, rect));
                     });
                 }
-            }
-            else {
-                var gradient = parseGradient(backgroundImage);
-                if (gradient) {
-                    drawBackgroundImage(group, box, box.width, box.height, gradientRenderer(gradient));
-                }
+            } else if (background.type == "linear") {
+                drawBackgroundImage(group, box, box.width, box.height, gradientRenderer(background));
+            } else {
+                return;
             }
 
             function drawBackgroundImage(group, box, img_width, img_height, renderBG) {
