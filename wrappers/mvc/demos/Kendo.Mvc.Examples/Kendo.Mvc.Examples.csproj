@@ -2117,7 +2117,7 @@
     <Content Include="Content\web\foods\8.jpg" />
     <Content Include="Content\web\foods\80.jpg" />
     <Content Include="Content\web\foods\9.jpg" />
-    <Content Include="Content\web\framework\company-logo.svg" />
+    <Content Include="Content\web\framework\company-logo.png" />
     <Content Include="Content\web\fx\blogs-screenshot.png" />
     <Content Include="Content\web\fx\cart.png" />
     <Content Include="Content\web\fx\groceries.jpg" />
