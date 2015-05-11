@@ -1,18 +1,17 @@
-var COLUMNS = 16384;
-var ROWS = 1048576;
+var COLUMNS = 100;
+var ROWS = 100;
 var COLUMN_WIDTH = 64;
 var ROW_HEIGHT = 20;
 
-
-var widths = new kendo.spreadsheet.RangeList(0, COLUMNS, COLUMN_WIDTH, true);
-var heights = new kendo.spreadsheet.RangeList(0, ROWS, ROW_HEIGHT, true);
+var widths = new kendo.spreadsheet.RangeList(0, COLUMNS - 1, COLUMN_WIDTH, true);
+var heights = new kendo.spreadsheet.RangeList(0, ROWS - 1, ROW_HEIGHT, true);
 var cellValues = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "");
 var colors = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "beige");
 
 for (var i = 0, len = 100; i < len; i++) {
     for (var j = 0, len = 100; j < len; j++) {
         var idx = i * ROWS + j;
-        cellValues.value(idx, idx, 10000 - ((i + 1)  * (j + 1)));
+        cellValues.value(idx, idx, ((i + 1)  * (j + 1)));
     }
 }
 
@@ -32,22 +31,20 @@ $("button").click(function() {
     drawTable(0, viewportWidth, 0, viewportHeight);
 });
 
+/*
 colors.value(1, 50, "green");
 widths.value(1, 5, 120);
 widths.value(50, 50, 200);
 
 heights.value(1, 1, 40);
 heights.value(50, 50, 200);
+*/
 
 var wrapper = document.getElementById("wrapper");
 var container = document.getElementById("container");
 var area = document.getElementById("area");
 
 
-var viewportWidth = wrapper.clientWidth;
-var viewportHeight = wrapper.clientHeight;
-container.style.width = viewportWidth + "px";
-container.style.height = viewportHeight + "px";
 
 var currentHeight = 0;
 
@@ -75,9 +72,6 @@ function color(index) {
     return colors.value(index, index);
 }
 
-var maxWidth = wrapper.scrollWidth - (wrapper.offsetWidth - viewportWidth);
-var maxHeight = wrapper.scrollHeight - (wrapper.offsetHeight - viewportHeight);
-
 kendo.support.kineticScrollNeeded = true;
 
 if (kendo.support.kineticScrollNeeded) {
@@ -86,14 +80,17 @@ if (kendo.support.kineticScrollNeeded) {
     container = area;
 }
 
+
 var tree = new kendo.dom.Tree(container);
 
-function visibleRange(list, start, end, max) {
+var scrollBar = kendo.support.scrollbar();
+
+function visibleRange(list, start, end, total) {
     var startSegment = null;
     var endSegment = null;
     var lastPage = false
 
-    if (end >= max) {
+    if (end >= total + scrollBar) {
         lastPage = true;
     }
 
@@ -128,30 +125,35 @@ function visibleRange(list, start, end, max) {
 
 wrapper.onscroll = scroll;
 
-var totalHeight = currentHeight - 1;
-var totalWidth = currentWidth - 1;
+var viewportWidth = wrapper.clientWidth;
+var viewportHeight = wrapper.clientHeight;
+
+var totalHeight = currentHeight;
+var totalWidth = currentWidth;
+
+container.style.height = totalHeight + "px";
+container.style.width = totalWidth + "px";
 
 function drawTable(left, right, top, bottom) {
-    var rows = visibleRange(pxHeights, top, bottom, maxHeight);
-    var columns = visibleRange(pxWidths, left, right, maxWidth);
+    var rows = visibleRange(pxHeights, top, bottom, totalHeight);
+    var columns = visibleRange(pxWidths, left, right, totalWidth);
     var rowStart = rows.start;
     var rowEnd = rows.end;
     var columnStart = columns.start;
     var columnEnd = columns.end;
 
-    var x = - columns.offset - 1;
-    var y = - rows.offset - 1;
+    var x = - columns.offset;
+    var y = - rows.offset;
 
     if (kendo.support.kineticScrollNeeded) {
-        x += left / ((totalWidth - wrapper.clientWidth) / (wrapper.scrollWidth - wrapper.clientWidth));
-        y += top / ((totalHeight - wrapper.clientHeight) / (wrapper.scrollHeight - wrapper.clientHeight));
+        x += left;
+        y += top;
     }
 
     var cols = [];
     var trs = [];
 
     var columnWidths = widths.intersecting(columnStart, columnEnd);
-
 
     var rowHeights = heights.intersecting(rowStart, rowEnd);
 
@@ -227,7 +229,7 @@ function drawTable(left, right, top, bottom) {
 drawTable(0, viewportWidth, 0, viewportHeight);
 
 function scroll() {
-    var top = Math.floor(wrapper.scrollTop * ((totalHeight - wrapper.clientHeight) / (wrapper.scrollHeight - wrapper.clientHeight)));
+    var top = wrapper.scrollTop;
     var bottom = top + viewportHeight;
 
     if (top < 0) {
@@ -235,7 +237,7 @@ function scroll() {
         top = 0;
     }
 
-    var left = Math.floor(wrapper.scrollLeft * ((totalWidth - wrapper.clientWidth) / (wrapper.scrollWidth - wrapper.clientWidth)));
+    var left = wrapper.scrollLeft;
     var right = left + viewportWidth;
 
     if (left < 0) {

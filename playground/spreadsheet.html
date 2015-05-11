@@ -29,11 +29,6 @@
                 }
             }
 
-            #area {
-                height: 10000000px;
-                width: 1000000px;
-            }
-
             #container {
                 position: fixed;
                 overflow: hidden;
@@ -51,6 +46,7 @@
                 height: 100%;
             }
 
+
             #area canvas {
                 position:absolute;
             }
@@ -66,6 +62,22 @@
                 overflow: hidden;
                 font-size: 11px;
                 height: 20px;
+            }
+
+            #area table tr:first-child td {
+                border-top: 0;
+            }
+
+            #area table tr:last-child td {
+                border-bottom: 0;
+            }
+
+            #area table td:last-child {
+                border-right: 0;
+            }
+
+            #area table td:first-child {
+                border-left: 0;
             }
 
             .cell {
