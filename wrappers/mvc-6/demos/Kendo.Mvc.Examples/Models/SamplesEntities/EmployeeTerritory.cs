@@ -9,18 +9,18 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace Kendo.Mvc.Examples.Models
 {
-    public partial class GanttResourceAssignment
+    public partial class EmployeeTerritories
     {
-        public GanttResourceAssignment()
+        public EmployeeTerritories()
         {
         }
         
         // Properties
-        public int ID { get; set; }
-        public int ResourceID { get; set; }
-        public int TaskID { get; set; }
-        public decimal Units { get; set; }
+        public int EmployeeID { get; set; }
+        public string TerritoryID { get; set; }
         
         // Navigation Properties
+        public virtual Employee Employee { get; set; }
+        public virtual Territory Territory { get; set; }
     }
 }

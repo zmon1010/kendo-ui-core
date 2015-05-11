@@ -1,52 +1,36 @@
+// 
+// Generated code
+// 
+
+using System;
+using System.Collections.Generic;
+using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Metadata;
+
 namespace Kendo.Mvc.Examples.Models
 {
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
-
-	public partial class Supplier
+    public partial class Supplier
     {
         public Supplier()
         {
             Products = new HashSet<Product>();
         }
-
+        
+        // Properties
         public int SupplierID { get; set; }
-
-        [Required]
-        [StringLength(40)]
-        public string CompanyName { get; set; }
-
-        [StringLength(30)]
-        public string ContactName { get; set; }
-
-        [StringLength(30)]
-        public string ContactTitle { get; set; }
-
-        [StringLength(60)]
         public string Address { get; set; }
-
-        [StringLength(15)]
         public string City { get; set; }
-
-        [StringLength(15)]
-        public string Region { get; set; }
-
-        [StringLength(10)]
-        public string PostalCode { get; set; }
-
-        [StringLength(15)]
+        public string CompanyName { get; set; }
+        public string ContactName { get; set; }
+        public string ContactTitle { get; set; }
         public string Country { get; set; }
-
-        [StringLength(24)]
-        public string Phone { get; set; }
-
-        [StringLength(24)]
         public string Fax { get; set; }
-
-        [Column(TypeName = "ntext")]
         public string HomePage { get; set; }
-
+        public string Phone { get; set; }
+        public string PostalCode { get; set; }
+        public string Region { get; set; }
+        
+        // Navigation Properties
         public virtual ICollection<Product> Products { get; set; }
     }
 }

@@ -9,18 +9,19 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace Kendo.Mvc.Examples.Models
 {
-    public partial class GanttResourceAssignment
+    public partial class Shipper
     {
-        public GanttResourceAssignment()
+        public Shipper()
         {
+            Orders = new HashSet<Order>();
         }
         
         // Properties
-        public int ID { get; set; }
-        public int ResourceID { get; set; }
-        public int TaskID { get; set; }
-        public decimal Units { get; set; }
+        public int ShipperID { get; set; }
+        public string CompanyName { get; set; }
+        public string Phone { get; set; }
         
         // Navigation Properties
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

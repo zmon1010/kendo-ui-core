@@ -9,18 +9,18 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace Kendo.Mvc.Examples.Models
 {
-    public partial class CustomerDemographic
+    public partial class CustomerCustomerDemo
     {
-        public CustomerDemographic()
+        public CustomerCustomerDemo()
         {
-            CustomerCustomerDemo = new HashSet<CustomerCustomerDemo>();
         }
         
         // Properties
+        public string CustomerID { get; set; }
         public string CustomerTypeID { get; set; }
-        public string CustomerDesc { get; set; }
         
         // Navigation Properties
-        public virtual ICollection<CustomerCustomerDemo> CustomerCustomerDemo { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual CustomerDemographic CustomerType { get; set; }
     }
 }

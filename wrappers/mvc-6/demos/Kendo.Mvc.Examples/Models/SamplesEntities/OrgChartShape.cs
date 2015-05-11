@@ -1,15 +1,25 @@
+// 
+// Generated code
+// 
+
+using System;
+using System.Collections.Generic;
+using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Metadata;
+
 namespace Kendo.Mvc.Examples.Models
 {
-	using System.ComponentModel.DataAnnotations;
-
-	public partial class OrgChartShape
+    public partial class OrgChartShape
     {
+        public OrgChartShape()
+        {
+        }
+        
+        // Properties
         public int Id { get; set; }
-
-        [StringLength(200)]
-        public string JobTitle { get; set; }
-
-        [StringLength(50)]
         public string Color { get; set; }
+        public string JobTitle { get; set; }
+        
+        // Navigation Properties
     }
 }

@@ -1,12 +1,7 @@
 ﻿{
-    "Data": {
-        "DefaultConnection": { 
-            "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-Kendo.Mvc.Examples-c7aeef71-267b-4984-9570-fd4a7cd7843c;Trusted_Connection=True;MultipleActiveResultSets=true"
+   "Data": {
+        "DefaultConnection": {            
+            "ConnectionString": "Server=(localdb)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Sample.mdf;Integrated Security=True;"
         }
-    },
-    "EntityFramework": {
-        "ApplicationDbContext": {
-            "ConnectionStringKey": "Data:DefaultConnection:ConnectionString"
-        }
-    }
+    }  
 }
