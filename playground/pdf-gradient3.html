@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>html { font-size: 12px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.min.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.moonlight.min.css" />
+
+    <script src="html2canvas.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js",
+        "./test-pdf-helpers.js",
+        "./console.time.js"
+      ]);
+    </script>
+  </head>
+  <body>
+    <button onclick="pdf('#test1')">PDF</button>
+    <button onclick="draw('#test1', 'svg')">SVG</button>
+    <button onclick="draw('#test1', 'canvas')">Canvas</button>
+    |
+    <button onclick="h2c('#test1')">html2canvas</button>
+
+    <style>
+      .multi {
+        background: radial-gradient(16px at 60px 50% , #000000 0%, #000000 14px, rgba(0, 0, 0, 0.3) 18px, rgba(0, 0, 0, 0) 19px),
+                    linear-gradient(to right bottom, red, rgba(255, 255, 0, 0.2) 50%, green, #0ff, #00f),
+                    url("images/4.jpg");
+        background-repeat: no-repeat, no-repeat;
+        background-size: 50% auto, 50% 50%;
+        background-position: 50% 50%, 0 0;
+        width: 400px;
+        height: 400px;
+      }
+    </style>
+
+    <div id="test1">
+      <div class="multi">
+      </div>
+    </div>
+  </body>
+</html>
