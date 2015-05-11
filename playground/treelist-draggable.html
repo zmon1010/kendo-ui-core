@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Treelist draggable</title>
+
+    <style> body { font-family: Tahoma } </style>
+
+    <meta name="viewport" content="width=device-width,user-scalable=1,initial-scale=1.0" />
+
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css">
+
+    <script src="../src/jquery.js"></script>
+    <script src="require.js"></script>
+</head>
+<body>
+
+    <div id="treelist"></div>
+
+    <script>
+        require([ "../src/kendo.treelist", "../src/kendo.draganddrop" ], function() {
+            var dataSource = new kendo.data.TreeListDataSource({
+                data: [
+                  { id: 1, Name: "Daryl Sweeney", Position: "CEO", Phone: "(555) 924-9726", parentId: null },
+                  { id: 2, Name: "Guy Wooten", Position: "Chief Technical Officer", Phone: "(438) 738-4935", parentId: 1 },
+                  { id: 32, Name: "Buffy Weber", Position: "VP, Engineering", Phone: "(699) 838-6121", parentId: 2 },
+                  { id: 3, Name: "Priscilla Frank", Position: "Chief Product Officer", Phone: "(217) 280-5300", parentId: 1 },
+                  { id: 4, Name: "Ursula Holmes", Position: "EVP, Product Strategy", Phone: "(370) 983-8796", parentId: 3 },
+                  { id: 24, Name: "Melvin Carrillo", Position: "Director, Developer Relations", Phone: "(344) 496-9555", parentId: 3 }
+                ],
+
+                schema: {
+                    model: {
+                        id: "id",
+                        expanded: true
+                    }
+                }
+            });
+
+            $("#treelist")
+                .kendoTreeList({
+                    dataSource: dataSource,
+                    height: 540,
+                    columns: [
+                        { field: "Position" },
+                        { field: "Name" },
+                        { field: "Phone" }
+                    ]
+                })
+                .kendoDraggable({
+                    cursorOffset: { left: 10, top: 10 },
+                    filter: "tr",
+                    autoScroll: true,
+                    hint: function(row) {
+                        return "<div class='k-header k-drag-clue'>" +
+                                    "<span class='k-icon k-drag-status' />" +
+                                    row.find("td:eq(1)").text() +
+                                "</div>";
+                    },
+                    dragstart: function(e) {
+                        console.log(e);
+                    },
+                    valid: function() {
+                        return false;
+                    },
+                    drag: function(e) {
+                        var statusClass = "k-insert-middle";
+                        var status = this.hint.children(".k-drag-status")[0];
+
+                        var dropTarget = $(kendo.eventTarget(e));
+                        var tr = dropTarget.closest("tr");
+                        var treelist = tr.closest(".k-treelist");
+
+                        // parent
+                        if (treelist.attr("id") != "treelist" || !tr.length) {
+                            statusClass = "k-denied";
+                        } else if (this.options.contains()) {
+                            statusClass = "k-denied";
+                        }
+
+                        if (status) {
+                            status.className = "k-icon k-drag-status " + statusClass;
+                        }
+                    },
+                    dragend: function(e) {
+                        console.log(e);
+                    }
+                });
+        });
+    </script>
+</body>
+</html>

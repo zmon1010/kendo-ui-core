@@ -338,11 +338,21 @@ var __meta__ = {
             var dragging = this.dragging;
 
             if (enabled && !dragging) {
-                this.dragging = new TreeViewDragAndDrop(this);
+                this.dragging = new HierarchicalDragAndDrop(this, {
+                    filter: "div:not(.k-state-disabled) .k-in",
+                    hint: proxy(this._dragHint, this)
+                });
             } else if (!enabled && dragging) {
                 dragging.destroy();
                 this.dragging = null;
             }
+        },
+
+        _dragHint: function(node) {
+            return this.templates.dragClue({
+                item: this.dataItem(node),
+                treeview: this.options
+            });
         },
 
         _templates: function() {
@@ -2024,34 +2034,27 @@ var __meta__ = {
         }
     });
 
-    function TreeViewDragAndDrop(treeview) {
-        var that = this;
+    function HierarchicalDragAndDrop(widget, options) {
+        this.widget = widget;
+        this.hovered = widget.element;
 
-        that.treeview = treeview;
-        that.hovered = treeview.element;
-
-        that._draggable = new ui.Draggable(treeview.element, {
-            autoScrolL: treeview.options.autoScroll,
-            filter: "div:not(.k-state-disabled) .k-in",
-            hint: function(node) {
-                return treeview.templates.dragClue({
-                    item: treeview.dataItem(node),
-                    treeview: treeview.options
-                });
-            },
+        this._draggable = new ui.Draggable(widget.element, {
+            autoScrolL: widget.options.autoScroll,
+            filter: options.filter,
+            hint: options.hint,
             cursorOffset: {
                 left: 10,
                 top: kendo.support.mobileOS ? -40 / kendo.support.zoomLevel() : 10
             },
-            dragstart: proxy(that.dragstart, that),
-            dragcancel: proxy(that.dragcancel, that),
-            drag: proxy(that.drag, that),
-            dragend: proxy(that.dragend, that),
-            $angular: treeview.options.$angular
+            dragstart: proxy(this.dragstart, this),
+            dragcancel: proxy(this.dragcancel, this),
+            drag: proxy(this.drag, this),
+            dragend: proxy(this.dragend, this),
+            $angular: widget.options.$angular
         });
     }
 
-    TreeViewDragAndDrop.prototype = {
+    HierarchicalDragAndDrop.prototype = {
         _removeTouchHover: function() {
             var that = this;
 
@@ -2073,21 +2076,21 @@ var __meta__ = {
 
         dragstart: function (e) {
             var that = this,
-                treeview = that.treeview,
+                widget = that.widget,
                 sourceNode = that.sourceNode = e.currentTarget.closest(NODE);
 
-            if (treeview.trigger(DRAGSTART, { sourceNode: sourceNode[0] })) {
+            if (widget.trigger(DRAGSTART, { sourceNode: sourceNode[0] })) {
                 e.preventDefault();
             }
 
             that.dropHint = $("<div class='k-drop-hint' />")
                 .css(VISIBILITY, "hidden")
-                .appendTo(treeview.element);
+                .appendTo(widget.element);
         },
 
         drag: function (e) {
             var that = this,
-                treeview = that.treeview,
+                widget = that.widget,
                 sourceNode = that.sourceNode,
                 dropTarget = that.dropTarget = $(kendo.eventTarget(e)),
                 statusClass, closestTree = dropTarget.closest(".k-treeview"),
@@ -2141,8 +2144,8 @@ var __meta__ = {
                         }
                     }
                 } else if (dropTarget[0] != that.dropHint[0]) {
-                    if (closestTree[0] != treeview.element[0]) {
-                        // moving node to different treeview without children
+                    if (closestTree[0] != widget.element[0]) {
+                        // moving node to different widget without children
                         statusClass = "k-add";
                     } else {
                         statusClass = "k-denied";
@@ -2150,7 +2153,7 @@ var __meta__ = {
                 }
             }
 
-            treeview.trigger(DRAG, {
+            widget.trigger(DRAG, {
                 sourceNode: sourceNode[0],
                 dropTarget: dropTarget[0],
                 pageY: e.y.location,
@@ -2174,7 +2177,7 @@ var __meta__ = {
 
         dragend: function () {
             var that = this,
-                treeview = that.treeview,
+                widget = that.widget,
                 dropPosition = "over",
                 sourceNode = that.sourceNode,
                 destinationNode,
@@ -2205,7 +2208,7 @@ var __meta__ = {
                 dropPosition: dropPosition
             };
 
-            dropPrevented = treeview.trigger(DROP, e);
+            dropPrevented = widget.trigger(DROP, e);
 
             dropHint.remove();
             that._removeTouchHover();
@@ -2218,9 +2221,9 @@ var __meta__ = {
             that._draggable.dropped = true;
 
             function triggerDragEnd(sourceNode) {
-                treeview.updateIndeterminate();
+                widget.updateIndeterminate();
 
-                treeview.trigger(DRAGEND, {
+                widget.trigger(DRAGEND, {
                     sourceNode: sourceNode && sourceNode[0],
                     destinationNode: destinationNode[0],
                     dropPosition: dropPosition
@@ -2230,12 +2233,12 @@ var __meta__ = {
             // perform reorder / move
             // different handling is necessary because append might be async in remote bound tree
             if (dropPosition == "over") {
-                treeview.append(sourceNode, destinationNode, triggerDragEnd);
+                widget.append(sourceNode, destinationNode, triggerDragEnd);
             } else {
                 if (dropPosition == "before") {
-                    sourceNode = treeview.insertBefore(sourceNode, destinationNode);
+                    sourceNode = widget.insertBefore(sourceNode, destinationNode);
                 } else if (dropPosition == "after") {
-                    sourceNode = treeview.insertAfter(sourceNode, destinationNode);
+                    sourceNode = widget.insertAfter(sourceNode, destinationNode);
                 }
 
                 triggerDragEnd(sourceNode);

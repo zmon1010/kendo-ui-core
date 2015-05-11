@@ -5228,6 +5228,16 @@
         }
       },
       {
+        "text": "Drag & drop",
+        "url": "treelist/dragdrop",
+        "title": {
+            "kendo-ui": "Kendo UI TreeList widget | Kendo UI Web demo"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates how to use drag & drop to allow users to rearrange treelist items"
+        }
+      },
+      {
         "text": "Editing",
         "url": "treelist/editing",
         "title": {
