@@ -286,16 +286,19 @@ var __meta__ = {
         },
 
         _filterCallback: function(query) {
+            var i, item;
+            var map = {};
             var result = [];
             var data = query.toArray();
-            var map = {};
-            var i, parent, item;
 
             for (i = 0; i < data.length; i++) {
                 item = data[i];
 
                 while (item) {
-                    map[item.id] = true;
+                    if (!map[item.id]) {
+                        map[item.id] = true;
+                        result.push(item);
+                    }
 
                     if (!map[item.parentId]) {
                         map[item.parentId] = true;
@@ -310,7 +313,7 @@ var __meta__ = {
                 }
             }
 
-            return new Query(data.concat(result));
+            return new Query(result);
         },
 
         _subtree: function(map, id) {
