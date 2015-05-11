@@ -11,6 +11,7 @@ namespace Kendo.Mvc.UI
         public TreeListFilterableSettings()
         {
             Enabled = false;
+            Messages = new FilterableMessages();
         
             //>> Initialization
         
@@ -18,6 +19,8 @@ namespace Kendo.Mvc.UI
         }
 
         public bool Enabled { get; set; }
+
+        public FilterableMessages Messages { get; private set; }
 
         //>> Fields
         
@@ -27,6 +30,13 @@ namespace Kendo.Mvc.UI
 
         protected override void Serialize(IDictionary<string, object> json)
         {
+            var messages = Messages.ToJson();
+
+            if (messages.Any())
+            {
+                json["messages"] = messages;
+            }
+
             //>> Serialization
         
             if (Extra.HasValue)
