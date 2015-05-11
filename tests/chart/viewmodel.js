@@ -2034,6 +2034,41 @@
                 }));
             });
 
+            test("sets noclip on custom visual", function() {
+                renderTextBox({
+                    noclip: true,
+                    visual: function() {
+                        return customVisual;
+                    }
+                });
+
+                ok(textBox.visual.options.noclip);
+            });
+
+            test("sets zIndex on custom visual", function() {
+                renderTextBox({
+                    zIndex: 4,
+                    visual: function() {
+                        return customVisual;
+                    }
+                });
+
+                equal(textBox.visual.options.zIndex, 4);
+            });
+
+            test("creates animation for custom visual", function() {
+                renderTextBox({
+                    animation: {
+                        type: "fadein"
+                    },
+                    visual: function() {
+                        return customVisual;
+                    }
+                });
+
+                ok(textBox.animation);
+            });
+
         })();
 
     })();
