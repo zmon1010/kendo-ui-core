@@ -10,6 +10,9 @@
                         <li>
                             Selected: <span id="selectedFromGroup"></span>
                         </li>
+                        <li>
+                            <button class="togglePlayerControlsVisibility k-button">Hide player controls</button>
+                        </li>
                     </ul>
                 </div>
                 <div class="box-col">
@@ -17,6 +20,9 @@
                     <ul class="options">
                         <li>
                             <button class="toggleRepeat k-button">Enable/Disable Repeat</button>
+                        </li>
+                        <li>
+                            <button class="toggleRepeatVisibility k-button">Hide Repeat</button>
                         </li>
                     </ul>
                 </div>
@@ -49,8 +55,9 @@
                 $(document).ready(function() {
                     $("#toolbar").kendoToolBar({
                         items: [
-                            { 
+                            {
                                 type: "buttonGroup",
+                                id: "playerControls",
                                 buttons: [
                                     { id: "play", text: "play", togglable: true, group: "player" },
                                     { id: "pause", text: "pause", togglable: true, group: "player", selected: true },
@@ -58,7 +65,7 @@
                                 ]
                             },
                             { type: "button", togglable: true, id: "repeat", text: "repeat" },
-                            { 
+                            {
                                 type: "splitButton",
                                 id: "save",
                                 text: "save",
@@ -80,12 +87,40 @@
                         $("#selectedFromGroup").text(selected.text());
                     });
 
+                    $(".togglePlayerControlsVisibility").click(function(e) {
+                        var toolbar = $("#toolbar").data("kendoToolBar"),
+                            buttonGroup = $("#playerControls"),
+                            isVisible = buttonGroup.is(":visible");
+
+                        if (isVisible) {
+                            toolbar.hide(buttonGroup);
+                            $(e.target).text("Show player controls");
+                        } else {
+                            toolbar.show(buttonGroup);
+                            $(e.target).text("Hide player controls");
+                        }
+                    });
+
                     $(".toggleRepeat").click(function() {
                         var toolbar = $("#toolbar").data("kendoToolBar"),
                             repeatButton = $("#repeat"),
                             isDisabled = repeatButton.hasClass("k-state-disabled");
 
                         toolbar.enable(repeatButton, isDisabled);
+                    });
+
+                    $(".toggleRepeatVisibility").click(function(e) {
+                        var toolbar = $("#toolbar").data("kendoToolBar"),
+                            repeatButton = $("#repeat"),
+                            isVisible = repeatButton.is(":visible");
+
+                        if (isVisible) {
+                            toolbar.hide(repeatButton);
+                            $(e.target).text("Show Repeat");
+                        } else {
+                            toolbar.show(repeatButton);
+                            $(e.target).text("Hide Repeat");
+                        }
                     });
 
                     $(".removeItem").click(function() {
