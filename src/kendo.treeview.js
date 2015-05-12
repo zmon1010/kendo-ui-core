@@ -338,9 +338,57 @@ var __meta__ = {
             var dragging = this.dragging;
 
             if (enabled && !dragging) {
+                var widget = this;
+
                 this.dragging = new HierarchicalDragAndDrop(this, {
+                    autoScroll: this.options.autoScroll,
                     filter: "div:not(.k-state-disabled) .k-in",
-                    hintText: proxy(this._hintText, this)
+                    allowedContainers: ".k-treeview",
+                    itemSelector: ".k-treeview .k-item",
+                    hintText: proxy(this._hintText, this),
+                    contains: function(source, destination) {
+                        return $.contains(source, destination)
+                    },
+                    dropHintContainer: function(item) {
+                        return item;
+                    },
+                    itemFromTarget: function(target) {
+                        var item = target.closest(".k-top,.k-mid,.k-bot");
+                        return {
+                            item: item,
+                            content: target.closest(".k-in"),
+                            first: item.hasClass("k-top"),
+                            last: item.hasClass("k-bot")
+                        }
+                    },
+                    dropPositionFrom: function(dropHint) {
+                        return dropHint.prevAll(".k-in").length > 0 ? "after" : "before";
+                    },
+                    dragEnd: function(source, destination, position) {
+                        function triggerDragEnd(source) {
+                            widget.updateIndeterminate();
+
+                            widget.trigger(DRAGEND, {
+                                sourceNode: source && source[0],
+                                destinationNode: destination[0],
+                                dropPosition: position
+                            });
+                        }
+
+                        // perform reorder / move
+                        // different handling is necessary because append might be async in remote bound tree
+                        if (position == "over") {
+                            widget.append(source, destination, triggerDragEnd);
+                        } else {
+                            if (position == "before") {
+                                source = widget.insertBefore(source, destination);
+                            } else if (position == "after") {
+                                source = widget.insertAfter(source, destination);
+                            }
+
+                            triggerDragEnd(source);
+                        }
+                    },
                 });
             } else if (!enabled && dragging) {
                 dragging.destroy();
@@ -2039,7 +2087,7 @@ var __meta__ = {
 
             this._draggable = new ui.Draggable(widget.element, {
                 filter: options.filter,
-                autoScrolL: widget.options.autoScroll,
+                autoScrolL: options.autoScroll,
                 cursorOffset: {
                     left: 10,
                     top: kendo.support.mobileOS ? -40 / kendo.support.zoomLevel() : 10
@@ -2079,7 +2127,7 @@ var __meta__ = {
 
         dragstart: function (e) {
             var widget = this.widget;
-            var sourceNode = this.sourceNode = e.currentTarget.closest(NODE);
+            var sourceNode = this.sourceNode = e.currentTarget.closest(this.options.itemSelector);
 
             if (widget.trigger(DRAGSTART, { sourceNode: sourceNode[0] })) {
                 e.preventDefault();
@@ -2091,62 +2139,64 @@ var __meta__ = {
         },
 
         drag: function (e) {
-            var that = this,
-                widget = that.widget,
-                sourceNode = that.sourceNode,
-                dropTarget = that.dropTarget = $(kendo.eventTarget(e)),
-                statusClass, closestTree = dropTarget.closest(".k-treeview"),
-                hoveredItem, hoveredItemPos, itemHeight, itemTop, itemContent, delta,
-                insertOnTop, insertOnBottom, addChild;
+            var options = this.options;
+            var widget = this.widget;
+            var sourceNode = this.sourceNode;
+            var target = this.dropTarget = $(kendo.eventTarget(e));
+            var container = target.closest(options.allowedContainers);
+            var hoveredItem, itemHeight, itemTop, itemContent, delta;
+            var insertOnTop, insertOnBottom, addChild;
+            var itemData, position, statusClass;
 
-            if (!closestTree.length) {
+            if (!container.length) {
                 // dragging node outside of treeview
                 statusClass = "k-denied";
-                that._removeTouchHover();
-            } else if ($.contains(sourceNode[0], dropTarget[0])) {
+                this._removeTouchHover();
+            } else if (options.contains(sourceNode[0], target[0])) {
                 // dragging node within itself
                 statusClass = "k-denied";
             } else {
                 // moving or reordering node
                 statusClass = "k-insert-middle";
 
-                hoveredItem = dropTarget.closest(".k-top,.k-mid,.k-bot");
+                var itemData = options.itemFromTarget(target);
+                hoveredItem = itemData.item;
 
                 if (hoveredItem.length) {
                     itemHeight = hoveredItem.outerHeight();
                     itemTop = kendo.getOffset(hoveredItem).top;
-                    itemContent = dropTarget.closest(".k-in");
+                    itemContent = itemData.content;
                     delta = itemHeight / (itemContent.length > 0 ? 4 : 2);
 
                     insertOnTop = e.y.location < (itemTop + delta);
                     insertOnBottom = (itemTop + itemHeight - delta) < e.y.location;
-                    that._removeTouchHover();
+                    this._removeTouchHover();
                     addChild = itemContent.length && !insertOnTop && !insertOnBottom;
-                    that.hovered = addChild ? closestTree : false;
+                    this.hovered = addChild ? container : false;
 
-                    that.dropHint.css(VISIBILITY, addChild ? "hidden" : "visible");
+                    this.dropHint.css(VISIBILITY, addChild ? "hidden" : "visible");
                     itemContent.toggleClass(KSTATEHOVER, addChild);
 
                     if (addChild) {
                         statusClass = "k-add";
                     } else {
-                        hoveredItemPos = hoveredItem.position();
-                        hoveredItemPos.top += insertOnTop ? 0 : itemHeight;
+                        position = hoveredItem.position();
+                        position.top += insertOnTop ? 0 : itemHeight;
 
-                        that.dropHint
-                            .css(hoveredItemPos)
-                            [insertOnTop ? "prependTo" : "appendTo"](dropTarget.closest(NODE).children("div:first"));
+                        this.dropHint.css(position)
+                            [insertOnTop ? "prependTo" : "appendTo"]
+                            (options.dropHintContainer(hoveredItem));
 
-                        if (insertOnTop && hoveredItem.hasClass("k-top")) {
+                        if (insertOnTop && itemData.first) {
                             statusClass = "k-insert-top";
                         }
 
-                        if (insertOnBottom && hoveredItem.hasClass("k-bot")) {
+                        if (insertOnBottom && itemData.last) {
                             statusClass = "k-insert-bottom";
                         }
                     }
-                } else if (dropTarget[0] != that.dropHint[0]) {
-                    if (closestTree[0] != widget.element[0]) {
+                } else if (target[0] != this.dropHint[0]) {
+                    if (container[0] != widget.element[0]) {
                         // moving node to different widget without children
                         statusClass = "k-add";
                     } else {
@@ -2155,9 +2205,10 @@ var __meta__ = {
                 }
             }
 
+            // TODO: trigger events via callbacks
             widget.trigger(DRAG, {
                 sourceNode: sourceNode[0],
-                dropTarget: dropTarget[0],
+                dropTarget: target[0],
                 pageY: e.y.location,
                 pageX: e.x.location,
                 statusClass: statusClass.substring(2),
@@ -2167,10 +2218,10 @@ var __meta__ = {
             });
 
             if (statusClass.indexOf("k-insert") !== 0) {
-                that.dropHint.css(VISIBILITY, "hidden");
+                this.dropHint.css(VISIBILITY, "hidden");
             }
 
-            that._hintStatus(statusClass);
+            this._hintStatus(statusClass);
         },
 
         dragcancel: function() {
@@ -2188,14 +2239,14 @@ var __meta__ = {
                 e, dropPrevented;
 
             if (dropHint.css(VISIBILITY) == "visible") {
-                dropPosition = dropHint.prevAll(".k-in").length > 0 ? "after" : "before";
-                destinationNode = dropHint.closest(NODE);
+                dropPosition = this.options.dropPositionFrom(dropHint);
+                destinationNode = dropHint.closest(this.options.itemSelector);
             } else if (dropTarget) {
-                destinationNode = dropTarget.closest(".k-treeview .k-item");
+                destinationNode = dropTarget.closest(this.options.itemSelector);
 
                 // moving node to root element
                 if (!destinationNode.length) {
-                    destinationNode = dropTarget.closest(".k-treeview");
+                    destinationNode = dropTarget.closest(this.options.allowedContainers);
                 }
             }
 
@@ -2222,29 +2273,7 @@ var __meta__ = {
 
             that._draggable.dropped = true;
 
-            function triggerDragEnd(sourceNode) {
-                widget.updateIndeterminate();
-
-                widget.trigger(DRAGEND, {
-                    sourceNode: sourceNode && sourceNode[0],
-                    destinationNode: destinationNode[0],
-                    dropPosition: dropPosition
-                });
-            }
-
-            // perform reorder / move
-            // different handling is necessary because append might be async in remote bound tree
-            if (dropPosition == "over") {
-                widget.append(sourceNode, destinationNode, triggerDragEnd);
-            } else {
-                if (dropPosition == "before") {
-                    sourceNode = widget.insertBefore(sourceNode, destinationNode);
-                } else if (dropPosition == "after") {
-                    sourceNode = widget.insertAfter(sourceNode, destinationNode);
-                }
-
-                triggerDragEnd(sourceNode);
-            }
+            this.options.dragEnd(sourceNode, destinationNode, dropPosition);
         },
 
         destroy: function() {
