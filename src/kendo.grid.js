@@ -267,9 +267,9 @@ var __meta__ = {
             }
         },
 
-        itemIndex: function(row) {
+        itemIndex: function(rowIndex) {
             var rangeStart = this._rangeStart || this.dataSource.skip() || 0;
-            return rangeStart + row.index();
+            return rangeStart + rowIndex;
         },
 
         position: function(index) {
@@ -282,23 +282,46 @@ var __meta__ = {
         },
 
         scrollIntoView: function(row) {
-            var element = this.verticalScrollbar[0];
-            var containerHeight = element.clientHeight;
-            var containerScroll = element.scrollTop;
-            var rangeStart = this._rangeStart || this.dataSource.skip() || 0;
-            var elementOffset = (rangeStart + row.index()) * this.itemHeight;
+            var container = row.closest("div")[0];
+            var containerHeight = container.clientHeight;
+            var containerScroll = container.scrollTop;
+            var elementOffset = row[0].offsetTop;
             var elementHeight = row[0].offsetHeight;
 
-            if (elementOffset + elementHeight > containerHeight + containerScroll) {
+            console.log(elementOffset, elementHeight, containerScroll, containerHeight, this.verticalScrollbar[0].scrollTop);
 
-                if (elementHeight <= containerHeight) {
-                    element.scrollTop = (elementOffset + elementHeight - containerHeight);
-                } else {
-                    element.scrollTop = elementOffset;
-                }
-            } else if (containerScroll > elementOffset) {
-                element.scrollTop = elementOffset - this.itemHeight;
+            if (containerScroll > elementOffset) {
+                console.log("scroll up");
+                this.verticalScrollbar[0].scrollTop -= containerHeight / 2;
+                console.log(this.verticalScrollbar[0].scrollTop);
+            } else if (elementOffset + elementHeight >=  containerScroll + containerHeight) {
+                debugger;
+                console.log("scroll down");
+                this.verticalScrollbar[0].scrollTop += containerHeight / 2;
+                console.log(this.verticalScrollbar[0].scrollTop);
             }
+//            var isVisible = elementOffset + elementHeight < containerHeight + containerScroll;
+//            if (!isVisible) {
+//                if (elementHeight <= containerHeight) {
+//                    //element.scrollTop = (elementOffset + elementHeight - containerHeight) + containerHeight / 2;
+//                    element.scrollTop +=  (containerHeight / 2);
+//                } else {
+//                    element.scrollTop = elementOffset;
+//                }
+//            } else if (containerScroll > elementOffset) {
+//                element.scrollTop = elementOffset - containerHeight / 2;
+//            }
+
+//            if (elementOffset + elementHeight > containerHeight + containerScroll) {
+//
+//                if (elementHeight <= containerHeight) {
+//                    element.scrollTop = (elementOffset + elementHeight - containerHeight);
+//                } else {
+//                    element.scrollTop = elementOffset;
+//                }
+//            } else if (containerScroll > elementOffset) {
+//                element.scrollTop = elementOffset - this.itemHeight;
+//            }
         },
 
         _fetch: function(firstItemIndex, lastItemIndex, scrollingUp) {
@@ -3976,7 +3999,9 @@ var __meta__ = {
             //adjust scroll vertically
             if (isInContent) {
                 if (this.options.scrollable.virtual) {
-                    this._rowVirtualIndex = this.virtualScrollable.itemIndex(row);
+                    var rowIndex = Math.max(inArray(row[0], this.items()), 0);
+                    this._rowVirtualIndex = this.virtualScrollable.itemIndex(rowIndex);
+                    console.log("save virtual index", this._rowVirtualIndex, row.text());
                     this.virtualScrollable.scrollIntoView(row);
                 } else {
                     this._scrollTo(this._relatedRow(row)[0], verticalContainer);
@@ -7037,10 +7062,10 @@ var __meta__ = {
 
             if (navigatable && (that._isActiveInTable() || (that._editContainer && that._editContainer.data("kendoWindow")))) {
                 isCurrentInHeader = current.is("th");
-                currentIndex = 0;
-                if (isCurrentInHeader) {
-                    currentIndex = that.thead.find("th:not(.k-group-cell)").index(current);
-                }
+                currentIndex = current
+                    .parent()
+                    .children(":not(.k-group-cell):not(.k-hierarchy-cell)")
+                    .index(current);
             }
 
             that._destroyEditable();
@@ -7089,15 +7114,21 @@ var __meta__ = {
 
             if (currentIndex >= 0) {
                 that._removeCurrent();
-                if (!isCurrentInHeader) {
+                if (isCurrentInHeader) {
+                    that.current(that.thead.find("th:not(.k-group-cell)").eq(currentIndex));
+                } else {
+                    var rowIndex = this.virtualScrollable.position(this._rowVirtualIndex);
 
-                    var index = this.virtualScrollable.position(this._rowVirtualIndex);
+                    console.log("load virtual index", rowIndex);
 
-                    var td = this.table.find("tr").eq(index).find("td").first();
+                    var td = this.table
+                        .find("tr")
+                        .eq(rowIndex)
+                        .children(":not(.k-group-cell):not(.k-hierarchy-cell)")
+                        .eq(currentIndex);
+
                     this.current(td);
                     //that.current(that.table.add(that.lockedTable).find(FIRSTNAVITEM).first());
-                } else {
-                    that.current(that.thead.find("th:not(.k-group-cell)").eq(currentIndex));
                 }
 
                 if (that._current) {
