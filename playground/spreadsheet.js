@@ -3,8 +3,8 @@ var ROWS = 1000;
 var COLUMN_WIDTH = 64;
 var ROW_HEIGHT = 20;
 
-var widths = new kendo.spreadsheet.Axis(COLUMNS - 1, COLUMN_WIDTH);
-var heights = new kendo.spreadsheet.Axis(ROWS - 1, ROW_HEIGHT);
+var widths = new kendo.spreadsheet.Axis(COLUMNS, COLUMN_WIDTH);
+var heights = new kendo.spreadsheet.Axis(ROWS, ROW_HEIGHT);
 
 var cellValues = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "");
 var colors = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "beige");
@@ -23,14 +23,6 @@ var Sorter = kendo.spreadsheet.Sorter;
 
 var grid = new Grid(ROWS, COLUMNS);
 var sorter = new Sorter(grid, [ cellValues, colors ]);
-
-$("button").click(function() {
-    var area = new Area(new Address(1, 0), new Address(1, 99));
-    console.profile("sort")
-    sorter.sortBy(area, cellValues);
-    console.profileEnd("sort");
-    drawTable(0, viewportWidth, 0, viewportHeight);
-});
 
 widths.value(1, 5, 120);
 widths.value(50, 50, 200);
@@ -73,18 +65,18 @@ container.style.height = heights.total + "px";
 container.style.width = widths.total + "px";
 
 function drawTable(left, right, top, bottom) {
-    heights.visible(top, bottom);
-    widths.visible(left, right);
+    var visibleRows = heights.visible(top, bottom);
+    var visibleColumns = widths.visible(left, right);
 
-    var rowStart = heights.start;
-    var rowEnd = heights.end;
-    var rowHeights = heights.visibleValues;
-    var y = - heights.offset;
+    var rowStart = visibleRows.start;
+    var rowEnd = visibleRows.end;
+    var rowHeights = visibleRows.values;
+    var y = - visibleRows.offset;
 
-    var columnStart = widths.start;
-    var columnEnd = widths.end;
-    var columnWidths = widths.visibleValues;
-    var x = - widths.offset;
+    var columnStart = visibleColumns.start;
+    var columnEnd = visibleColumns.end;
+    var columnWidths = visibleColumns.values;
+    var x = - visibleColumns.offset;
 
     if (kendo.support.kineticScrollNeeded) {
         x += left;
@@ -164,6 +156,14 @@ function drawTable(left, right, top, bottom) {
 }
 
 drawTable(0, viewportWidth, 0, viewportHeight);
+
+$("button").click(function() {
+    var area = new Area(new Address(1, 0), new Address(1, 99));
+    console.profile("sort")
+    sorter.sortBy(area, cellValues);
+    console.profileEnd("sort");
+    drawTable(0, viewportWidth, 0, viewportHeight);
+});
 
 function scroll() {
     var top = wrapper.scrollTop;

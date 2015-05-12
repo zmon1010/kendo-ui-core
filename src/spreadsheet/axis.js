@@ -4,22 +4,10 @@
 
 (function(kendo) {
     function Axis(count, value) {
-        this.values = new kendo.spreadsheet.RangeList(0, count, value, true);
+        this.values = new kendo.spreadsheet.RangeList(0, count - 1, value, true);
         this.scrollBarSize = kendo.support.scrollbar();
         this._refresh();
     }
-
-    Axis.prototype._refresh = function() {
-        var current = 0;
-        this.pxValues = this.values.map(function(range) {
-            var start = current;
-            current += (range.end - range.start + 1) * range.value;
-            var end = current - 1;
-            return new kendo.spreadsheet.Range(start, end, range);
-        });
-
-        this.total = current;
-    };
 
     Axis.prototype.value = function(start, end, value) {
         this.values.value(start, end, value);
@@ -35,7 +23,7 @@
             lastPage = true;
         }
 
-        var ranges = this.pxValues.intersecting(start, end);
+        var ranges = this.pixelValues.intersecting(start, end);
 
         startSegment = ranges[0];
         endSegment = ranges[ranges.length - 1];
@@ -57,10 +45,24 @@
             offset += endSegment.value.value - (endOffset - (endIndex - endSegment.value.start) * endSegment.value.value);
         }
 
-        this.visibleValues = this.values.intersecting(startIndex, endIndex);
-        this.offset = offset;
-        this.start = startIndex;
-        this.end = endIndex;
+        return {
+            values: this.values.intersecting(startIndex, endIndex),
+            offset: offset,
+            start: startIndex,
+            end: endIndex
+        };
+    };
+
+    Axis.prototype._refresh = function() {
+        var current = 0;
+        this.pixelValues = this.values.map(function(range) {
+            var start = current;
+            current += (range.end - range.start + 1) * range.value;
+            var end = current - 1;
+            return new kendo.spreadsheet.Range(start, end, range);
+        });
+
+        this.total = current;
     };
 
     kendo.spreadsheet.Axis = Axis;

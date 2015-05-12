@@ -4,7 +4,7 @@
     var axis;
     module("Sheet Axis", {
         setup: function() {
-            axis = new Axis(999, 15); // count, value
+            axis = new Axis(1000, 15); // count, value
         }
     });
 
@@ -18,25 +18,25 @@
     });
 
     test("updates visual range", function() {
-        axis.visible(20, 200);
-        equal(axis.offset, 5);
-        equal(axis.start, 1);
-        equal(axis.end, 13);
+        var visible = axis.visible(20, 200);
+        equal(visible.offset, 5);
+        equal(visible.start, 1);
+        equal(visible.end, 13);
     });
 
     test("updates visual range (last page)", function() {
-        axis.visible(14000, 15100);
-        equal(axis.offset, -95);
-        equal(axis.start, 933);
-        equal(axis.end, 999);
+        var visible = axis.visible(14000, 15100);
+        equal(visible.offset, -95);
+        equal(visible.start, 933);
+        equal(visible.end, 999);
     });
 
     test("updates visual range (last page)", function() {
         axis.value(10, 19, 10)
         axis.value(30, 39, 10)
-        axis.visible(130, 280);
+        var visible = axis.visible(130, 280);
 
-        var visibleValues = axis.visibleValues;
+        var visibleValues = visible.values;
 
         equal(visibleValues.length, 3);
         equal(visibleValues[0].value, 15);
