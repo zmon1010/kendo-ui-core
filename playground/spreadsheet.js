@@ -64,6 +64,42 @@ var viewportHeight = wrapper.clientHeight;
 container.style.height = heights.total + "px";
 container.style.width = widths.total + "px";
 
+
+function HtmlTable(rowHeight, columnWidth) {
+    this.rowHeight = rowHeight;
+    this.columnWidth = columnWidth;
+    this.cols = [];
+    this.trs = [];
+}
+
+HtmlTable.prototype = {
+    addColumn: function(width) {
+        this.cols.push(kendo.dom.element("col", { style: { width: width + "px" } }));
+    },
+
+    addRow: function(height) {
+        var attr = null;
+
+        if (height != this.rowHeight) {
+            attr = { style: { height: height + "px" } };
+        }
+
+        this.trs.push(kendo.dom.element("tr", attr));
+    },
+
+    addCell: function(rowIndex, text, style) {
+        this.trs[rowIndex].children.push(kendo.dom.element("td", { style: style }, [ kendo.dom.text(text) ]));
+    },
+
+    toDomTree: function(x, y) {
+        return kendo.dom.element("table", { style: { left: x + "px", top: y + "px" }},
+            [
+                kendo.dom.element("colgroup", null, this.cols),
+                kendo.dom.element("tbody", null, this.trs)
+            ]);
+    }
+}
+
 function drawTable(left, right, top, bottom) {
     var visibleRows = heights.visible(top, bottom);
     var visibleColumns = widths.visible(left, right);
@@ -78,81 +114,33 @@ function drawTable(left, right, top, bottom) {
     var columnWidths = visibleColumns.values;
     var x = - visibleColumns.offset;
 
+    var table = new HtmlTable(ROW_HEIGHT, COLUMN_WIDTH);
+
     if (kendo.support.kineticScrollNeeded) {
         x += left;
         y += top;
     }
 
-    var cols = [];
-    var trs = [];
-
-    var rhIndex = 0;
-
     for (var ri = rowStart; ri <= rowEnd; ri ++) {
-        while (rowHeights[rhIndex].end < ri) {
-            rhIndex ++;
-        }
-
-        var height = rowHeights[rhIndex].value;
-        var attr = null;
-
-        if (height != ROW_HEIGHT) {
-            attr = { style: { height: height + "px" } };
-        }
-
-        trs.push(tree.element("tr", attr));
+        table.addRow(rowHeights.at(ri));
     }
-
-    var cwIndex = 0;
 
     for (ci = columnStart; ci <= columnEnd; ci ++) {
         var startCellIndex = ci * ROWS + rowStart;
         var endCellIndex = ci * ROWS + rowEnd;
 
-        var values = cellValues.intersecting(startCellIndex, endCellIndex);
-        var backgrounds = colors.intersecting(startCellIndex, endCellIndex);
+        var values = cellValues.iterator(startCellIndex, endCellIndex);
+        var backgrounds = colors.iterator(startCellIndex, endCellIndex);
 
-        var vIndex = 0, bIndex = 0;
-
-        while (columnWidths[cwIndex].end < ci) {
-            cwIndex ++;
-        }
-
-        cols.push(tree.element("col", { style: { width: columnWidths[cwIndex].value + "px" } }));
+        table.addColumn(columnWidths.at(ci));
 
         for (ri = rowStart; ri <= rowEnd; ri ++) {
             var index = ci * ROWS + ri;
-            var tr = trs[ri - rowStart];
-            var td = tree.element("td");
-            tr.children.push(td);
-
-            while (values[vIndex].end < index) {
-                vIndex ++;
-            }
-
-            while (backgrounds[bIndex].end < index) {
-                bIndex ++;
-            }
-
-            td.children[0] = tree.text(values[vIndex].value);
-            td.attr = { style: { backgroundColor: backgrounds[bIndex].value } };
+            table.addCell(ri - rowStart, values.at(index), { backgroundColor: backgrounds.at(index) } );
         }
     }
 
-    var tableAttr = {
-        style: {}
-    };
-
-    tableAttr.style.left = x + "px";
-    tableAttr.style.top = y + "px";
-
-    tree.render([
-        tree.element("table", tableAttr,
-            [
-                tree.element("colgroup", null, cols),
-                tree.element("tbody", null, trs)
-            ])
-    ]);
+    tree.render([ table.toDomTree(x, y) ]);
 }
 
 drawTable(0, viewportWidth, 0, viewportHeight);
