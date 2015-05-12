@@ -74,7 +74,7 @@
   font-variant: normal;
   text-transform: none;
   line-height: 1em;
-  margin-left: .2em;
+  /* margin-left: .2em; Responsive */
   color: #00B312;
 }
 
@@ -597,6 +597,35 @@ div.submenu-box ol {
     background-color: #f5f7f8;
     border-bottom: 1px solid #e2e4e7;
     text-align: right;
+    position: relative;
+}
+
+.themechooser:before,
+.themechooser:after {
+  display: block;
+  content: " ";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 25px;
+  bottom: -26px;
+  background: url("horizontal-ruler-bottom.png") repeat-x -301px 0;
+}
+
+.themechooser:after {
+  background: url("units.png") no-repeat -300px 0;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min-device-pixel-ratio: 2) {
+  .themechooser:before {
+    background: url("horizontal-ruler-bottom_2x.png") repeat-x -1px 0;
+    background-size: 50px 9px;
+  }
+  .themechooser:after {
+    background: url("units_2x.png") no-repeat 0px 0;
+    background-size: 1024px 25px;
+  }
 }
 
 .themechooser .tc-activator
@@ -666,13 +695,12 @@ div.submenu-box ol {
     border: 0;
     text-align: left;
     overflow: hidden;
-    padding: 25px 87px 40px;
+    padding: 3.333em 7.5em;
 }
 
 .tc-theme-list ul
 {
     float: left;
-    width: 160px;
     overflow: hidden;
     margin-right: 15px;
     border-width: 0;
@@ -683,7 +711,8 @@ div.submenu-box ol {
 {
     -webkit-columns: 5;
     -moz-columns: 5;
-    width: 780px;
+    max-width: 780px;
+    box-shadow: none;
 }
 
 .tc-column h4+ul
@@ -1840,7 +1869,7 @@ ul.keyboard-legend li a {
     float: left;
     margin-top: 1.617em;
     margin-bottom: 1.717em;
-    margin-left: 1.833em;
+    margin-left: 1.667em;
 }
 
 .kendo-ui.logo {
@@ -2154,7 +2183,7 @@ a.footer-links:hover,
     float: left;
     clear: left;
     background-color: #f5f7f8;
-    height: 100%;
+    /*height: 100%;*/
 }
 
 #nav {
@@ -2693,7 +2722,7 @@ html.k-materialblack .demo-section.k-content {
 .box-col {
     display: block;
     float: left;
-    padding: 0 3em 1em 0;
+    padding: 0 3em 1.667em 0;
 }
 
 .box li,
@@ -2778,43 +2807,7 @@ html.k-materialblack .demo-section.k-content {
     font-size: .9em;
 }
 
-/*@media only screen and (max-width : 1720px) {
-  .application {
-      width: 180px;
-  }
-}
-
-@media only screen and (max-width : 1352px) {
-  #overview {
-      padding-left: 20px;
-      padding-right: 20px;
-  }
-  #overview,
-  #applications-and-tools {
-      max-width: 1100px;
-      text-align: left;
-  }
-
-  #overview-widgets h2, #most-popular h3, #most-popular .overview-col {
-      padding-left: 0;
-  }
-
-  .application {
-      max-width: 240px;
-  }
-}
-
-@media only screen and (max-width : 1252px) {
-  #overview,
-  #applications-and-tools {
-      max-width: 940px;
-      text-align: left;
-  }
-
-  .application {
-      max-width: 200px;
-  }
-}*/
+/* Responsive Styles */
 
 @media only screen and (min-width : 1500px) {
   #overview-widgets ul li {
@@ -2938,6 +2931,64 @@ html.k-materialblack .demo-section.k-content {
     width: 25%;
   }
   
+  
+/* Single Demo Page */
+
+  #example-search-wrapper {
+    float: none;
+    position: absolute;
+    width: 299px;
+    border-right: 1px solid #e2e4e7;
+    left: -300px;
+  }
+  
+  #example-nav-bar {
+    float: none;
+    position: absolute;
+    left: -300px;
+  }
+  
+  #nav-wrapper {
+    float: none;
+    position: absolute;
+    left: -300px;
+  }
+  
+  .themechooser:before,
+  .themechooser:after {
+    background-position: -1px 0;
+  }
+  
+  .themechooser:after {
+    background-position: 0 0;
+  }
+  
+  .tc-theme-list{
+    padding: 3.333em;
+  }
+  
+  #exampleTitle {
+    margin: 1.667em;
+  }
+  
+  #exampleWrap {
+    margin: 3.333em;
+  }
+  
+  #codeStrip {
+    margin: 3.333em;
+  }
+  
+  #wrappers-source-code {
+    margin: 3.333em 3.333em -1em;
+  }
+  
+  #resources-technologies {
+    margin: 3.333em 0 0;
+    padding: 3.333em 3.333em 1.667em;
+    border-width: 1px 0 0;
+  }
+  
 }
 
 @media only screen and (max-width : 900px) {
@@ -2962,6 +3013,57 @@ html.k-materialblack .demo-section.k-content {
     width: 100%;
   }
   
+/* Single Demo Page */
+
+  .tc-theme-list {
+    padding: 1.667em;
+  }
+  
+  #exampleTitle {
+    margin: 1.667em 0.833em 0.833em;
+  }
+  
+  #exampleWrap {
+    margin: 1.667em;
+  }
+  
+  #wrappers-source-code {
+    margin: 3.333em 1.667em 0;
+  }
+  
+  #wrappers-source-code h2 {
+    float: left;
+  }
+  
+  .other-source {
+    float: left;
+    margin-bottom: 2em;
+  }
+  
+  #codeStrip {
+    margin: 1.667em 1.667em 3.333em;
+  }
+  
+  #resources-technologies {
+    margin: 1.667em 0 0;
+    padding: 1.667em 1.667em 0;
+    border-width: 1px 0 0;
+  }
+  
+  #example .box {
+    margin: 1.667rem auto;
+    padding: 1.667rem;
+  }
+  
+  #codeStrip .prettyprint {
+    padding: 5px;
+  }
+  
+  .tc-theme-list .themes-grid {
+    -moz-columns: 3;
+    -webkit-columns: 3;
+    max-width: 700px;
+  }
 }
 
 @media only screen and (max-width : 720px) {
@@ -3035,6 +3137,14 @@ html.k-materialblack .demo-section.k-content {
   .application {
     width: 50%;
   }
+  
+  #codeStrip .try-kendo {
+    display: none;
+  }
+  
+  #codeStrip .documentation-link {
+    padding: 11px;
+  }
 }
 
 @media only screen and (max-width : 520px) {
@@ -3076,6 +3186,21 @@ html.k-materialblack .demo-section.k-content {
   #widgets-all .overview-col.col-four:before {
     display: none;
   }
+  
+/* Single Demo Page */
+
+  #exampleWrap #example .box.description {
+    margin-left: -1.667rem;
+    margin-right: -1.667rem;
+    border-width: 1px 0;
+  }
+  
+  .tc-theme-list .themes-grid {
+    -moz-columns: 2;
+    -webkit-columns: 2;
+    max-width: 500px;
+  }
+
 }
 
 @media only screen and (max-width : 420px) {
@@ -3092,6 +3217,35 @@ html.k-materialblack .demo-section.k-content {
     font-size: 14px;
   }
   
+  .tc-theme-list .themes-grid {
+    -moz-columns: 1;
+    -webkit-columns: 1;
+  }
+  
+  .tc-column:first-child {
+    margin-right: 0;
+    padding-right: 0;
+  }
+  
+  .tc-item {
+    width: 100%;
+    padding: 10px 20px;
+  }
+  
+  .tc-theme-list ul {
+    margin-right: 0;
+  }
+  
+  .tc-column h4+ul {
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+  
+  #source-code > div.k-content {
+    height: 300px;
+    overflow: scroll;
+    -webkit-touch-overflow: scroll;
+  }
 }
 
 @media only screen and (max-width : 320px) {
