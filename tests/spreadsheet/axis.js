@@ -38,9 +38,8 @@
 
         var visibleValues = visible.values;
 
-        equal(visibleValues.length, 3);
-        equal(visibleValues[0].value, 15);
-        equal(visibleValues[1].value, 10);
-        equal(visibleValues[2].value, 15);
+        equal(visibleValues.at(8), 15);
+        equal(visibleValues.at(12), 10);
+        equal(visibleValues.at(22), 15);
     });
 })();

@@ -46,7 +46,7 @@
         }
 
         return {
-            values: this.values.intersecting(startIndex, endIndex),
+            values: this.values.iterator(startIndex, endIndex),
             offset: offset,
             start: startIndex,
             end: endIndex

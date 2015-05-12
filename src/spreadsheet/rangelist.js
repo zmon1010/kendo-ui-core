@@ -308,6 +308,23 @@
         }
     }
 
+    function Iterator(ranges) {
+        this.index = 0;
+        this.ranges = ranges;
+    }
+
+    Iterator.prototype.at = function(index) {
+        while (this.ranges[this.index].end < index) {
+            this.index ++;
+        }
+
+        return this.ranges[this.index].value;
+    }
+
+    RangeList.prototype.iterator = function(start, end) {
+        return new Iterator(this.intersecting(start, end));
+    }
+
     function SparseRangeList(start, end, value) {
         this.tree = new RangeTree();
         this.range = new Range(start, end, value);
