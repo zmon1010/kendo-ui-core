@@ -19,9 +19,9 @@
             switch (value)
             {
                 case GaugeLinearPointerShape.BarIndicator:
-                    return "inside";
+                    return "barIndicator";
                 case GaugeLinearPointerShape.Arrow:
-                    return "outside";
+                    return "arrow";
             }
 
             return value.ToString();

@@ -50,5 +50,15 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Width = value;
             return this;
         }
+
+        /// <summary>
+        /// The opacity of the border.
+        /// </summary>
+        /// <param name="value">The value for Opacity</param>
+        public LinearGaugePointerBorderSettingsBuilder Opacity(double value)
+        {
+            Container.Opacity = value;
+            return this;
+        }
     }
 }
