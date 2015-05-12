@@ -45,6 +45,12 @@
             offset += endSegment.value.value - (endOffset - (endIndex - endSegment.value.start) * endSegment.value.value);
         }
 
+        offset = -offset;
+
+        if (kendo.support.kineticScrollNeeded) {
+            offset += start;
+        }
+
         return {
             values: this.values.iterator(startIndex, endIndex),
             offset: offset,

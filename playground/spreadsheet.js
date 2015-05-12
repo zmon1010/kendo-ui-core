@@ -1,69 +1,24 @@
+kendo.support.kineticScrollNeeded = true;
+
 var COLUMNS = 1000;
 var ROWS = 1000;
 var COLUMN_WIDTH = 64;
 var ROW_HEIGHT = 20;
 
-var widths = new kendo.spreadsheet.Axis(COLUMNS, COLUMN_WIDTH);
-var heights = new kendo.spreadsheet.Axis(ROWS, ROW_HEIGHT);
+function Sheet() {
+    this.widths = new kendo.spreadsheet.Axis(COLUMNS, COLUMN_WIDTH);
+    this.heights = new kendo.spreadsheet.Axis(ROWS, ROW_HEIGHT);
 
-var cellValues = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "");
-var colors = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "beige");
-
-for (var i = 0, len = 100; i < len; i++) {
-    for (var j = 0, len = 100; j < len; j++) {
-        var idx = i * ROWS + j;
-        cellValues.value(idx, idx, ((i + 1)  * (j + 1)));
-    }
+    this.values = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "");
+    this.colors = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "beige");
 }
 
-var Area = kendo.spreadsheet.Area;
-var Address = kendo.spreadsheet.Address;
-var Grid = kendo.spreadsheet.Grid;
-var Sorter = kendo.spreadsheet.Sorter;
-
-var grid = new Grid(ROWS, COLUMNS);
-var sorter = new Sorter(grid, [ cellValues, colors ]);
-
-widths.value(1, 5, 120);
-widths.value(50, 50, 200);
-heights.value(1, 1, 40);
-heights.value(50, 50, 200);
-
-colors.value(1, 50, "green");
-
-var wrapper = document.getElementById("wrapper");
-var container = document.getElementById("container");
-var area = document.getElementById("area");
-
-function cellValue(index) {
-    return cellValues.value(index, index);
+Sheet.prototype.view = function(left, right, top, bottom) {
+    return {
+        rows: this.heights.visible(top, bottom),
+        columns: this.widths.visible(left, right)
+    };
 }
-
-function color(index) {
-    return colors.value(index, index);
-}
-
-kendo.support.kineticScrollNeeded = true;
-
-if (kendo.support.kineticScrollNeeded) {
-    area.removeChild(container);
-    area.style.position = "relative";
-    container = area;
-}
-
-
-var tree = new kendo.dom.Tree(container);
-
-var scrollBar = kendo.support.scrollbar();
-
-wrapper.onscroll = scroll;
-
-var viewportWidth = wrapper.clientWidth;
-var viewportHeight = wrapper.clientHeight;
-
-container.style.height = heights.total + "px";
-container.style.width = widths.total + "px";
-
 
 function HtmlTable(rowHeight, columnWidth) {
     this.rowHeight = rowHeight;
@@ -100,75 +55,115 @@ HtmlTable.prototype = {
     }
 }
 
-function drawTable(left, right, top, bottom) {
-    var visibleRows = heights.visible(top, bottom);
-    var visibleColumns = widths.visible(left, right);
-
-    var rowStart = visibleRows.start;
-    var rowEnd = visibleRows.end;
-    var rowHeights = visibleRows.values;
-    var y = - visibleRows.offset;
-
-    var columnStart = visibleColumns.start;
-    var columnEnd = visibleColumns.end;
-    var columnWidths = visibleColumns.values;
-    var x = - visibleColumns.offset;
-
-    var table = new HtmlTable(ROW_HEIGHT, COLUMN_WIDTH);
+function SheetView(wrapper) {
+    this.wrapper = wrapper;
+    var container = document.getElementById("container");
+    var area = document.getElementById("area");
 
     if (kendo.support.kineticScrollNeeded) {
-        x += left;
-        y += top;
+        area.removeChild(container);
+        area.style.position = "relative";
+        container = area;
     }
 
-    for (var ri = rowStart; ri <= rowEnd; ri ++) {
-        table.addRow(rowHeights.at(ri));
-    }
+    this.container = container;
 
-    for (ci = columnStart; ci <= columnEnd; ci ++) {
-        var startCellIndex = ci * ROWS + rowStart;
-        var endCellIndex = ci * ROWS + rowEnd;
+    this.tree = new kendo.dom.Tree(this.container);
 
-        var values = cellValues.iterator(startCellIndex, endCellIndex);
-        var backgrounds = colors.iterator(startCellIndex, endCellIndex);
-
-        table.addColumn(columnWidths.at(ci));
-
-        for (ri = rowStart; ri <= rowEnd; ri ++) {
-            var index = ci * ROWS + ri;
-            table.addCell(ri - rowStart, values.at(index), { backgroundColor: backgrounds.at(index) } );
-        }
-    }
-
-    tree.render([ table.toDomTree(x, y) ]);
+    this.wrapper.onscroll = this.scroll.bind(this);
 }
 
-drawTable(0, viewportWidth, 0, viewportHeight);
-
-$("button").click(function() {
-    var area = new Area(new Address(1, 0), new Address(1, 99));
-    console.profile("sort")
-    sorter.sortBy(area, cellValues);
-    console.profileEnd("sort");
-    drawTable(0, viewportWidth, 0, viewportHeight);
-});
-
-function scroll() {
-    var top = wrapper.scrollTop;
-    var bottom = top + viewportHeight;
+SheetView.prototype.scroll = function() {
+    var top = this.wrapper.scrollTop;
+    var bottom = top + this.wrapper.clientHeight;
 
     if (top < 0) {
         bottom -= top;
         top = 0;
     }
 
-    var left = wrapper.scrollLeft;
-    var right = left + viewportWidth;
+    var left = this.wrapper.scrollLeft;
+    var right = left + this.wrapper.clientWidth;
 
     if (left < 0) {
         right -= left;
         left = 0;
     }
 
-    drawTable(left, right, top, bottom);
+    this.renderAt(left, right, top, bottom);
 }
+
+SheetView.prototype.sheet = function(sheet) {
+    this._sheet = sheet;
+    this.container.style.height = sheet.heights.total + "px";
+    this.container.style.width = sheet.widths.total + "px";
+}
+
+SheetView.prototype.render = function() {
+    this.renderAt(0, this.wrapper.clientWidth, 0, this.wrapper.clientHeight);
+}
+
+SheetView.prototype.renderAt = function(left, right, top, bottom) {
+    var sheet = this._sheet;
+    var view = sheet.view(left, right, top, bottom);
+    var rows = view.rows;
+    var columns = view.columns;
+
+    var table = new HtmlTable(ROW_HEIGHT, COLUMN_WIDTH);
+
+    for (var ri = rows.start; ri <= rows.end; ri ++) {
+        table.addRow(rows.values.at(ri));
+    }
+
+    for (ci = columns.start; ci <= columns.end; ci ++) {
+        var startCellIndex = ci * ROWS + rows.start;
+        var endCellIndex = ci * ROWS + rows.end;
+
+        var values = sheet.values.iterator(startCellIndex, endCellIndex);
+        var backgrounds = sheet.colors.iterator(startCellIndex, endCellIndex);
+
+        table.addColumn(columns.values.at(ci));
+
+        for (ri = rows.start; ri <= rows.end; ri ++) {
+            var index = ci * ROWS + ri;
+            table.addCell(ri - rows.start, values.at(index), { backgroundColor: backgrounds.at(index) } );
+        }
+    }
+
+    this.tree.render([ table.toDomTree(columns.offset, rows.offset) ]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+var sheet = new Sheet();
+
+for (var i = 0, len = 100; i < len; i++) {
+    for (var j = 0, len = 100; j < len; j++) {
+        var idx = i * ROWS + j;
+        sheet.values.value(idx, idx, ((i + 1)  * (j + 1)));
+    }
+}
+
+sheet.widths.value(1, 5, 120);
+sheet.widths.value(50, 50, 200);
+sheet.heights.value(1, 1, 40);
+sheet.heights.value(50, 50, 200);
+
+sheet.colors.value(1, 50, "green");
+
+var sheetView = new SheetView(document.getElementById("wrapper"));
+
+sheetView.sheet(sheet);
+
+sheetView.render();
+
+/*
+var Area = kendo.spreadsheet.Area;
+var Address = kendo.spreadsheet.Address;
+var Grid = kendo.spreadsheet.Grid;
+var Sorter = kendo.spreadsheet.Sorter;
+
+var grid = new Grid(ROWS, COLUMNS);
+var sorter = new Sorter(grid, [ cellValues, colors ]);
+*/
+
