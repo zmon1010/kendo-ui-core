@@ -1,10 +1,11 @@
-var COLUMNS = 100;
-var ROWS = 100;
+var COLUMNS = 1000;
+var ROWS = 1000;
 var COLUMN_WIDTH = 64;
 var ROW_HEIGHT = 20;
 
-var widths = new kendo.spreadsheet.RangeList(0, COLUMNS - 1, COLUMN_WIDTH, true);
-var heights = new kendo.spreadsheet.RangeList(0, ROWS - 1, ROW_HEIGHT, true);
+var widths = new kendo.spreadsheet.Axis(COLUMNS - 1, COLUMN_WIDTH);
+var heights = new kendo.spreadsheet.Axis(ROWS - 1, ROW_HEIGHT);
+
 var cellValues = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "");
 var colors = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "beige");
 
@@ -31,38 +32,16 @@ $("button").click(function() {
     drawTable(0, viewportWidth, 0, viewportHeight);
 });
 
-/*
-colors.value(1, 50, "green");
 widths.value(1, 5, 120);
 widths.value(50, 50, 200);
-
 heights.value(1, 1, 40);
 heights.value(50, 50, 200);
-*/
+
+colors.value(1, 50, "green");
 
 var wrapper = document.getElementById("wrapper");
 var container = document.getElementById("container");
 var area = document.getElementById("area");
-
-
-
-var currentHeight = 0;
-
-var pxHeights = heights.map(function(range) {
-    var start = currentHeight;
-    currentHeight += (range.end - range.start + 1) * range.value;
-    var end = currentHeight - 1;
-    return new kendo.spreadsheet.Range(start, end, range);
-});
-
-var currentWidth = 0;
-
-var pxWidths = widths.map(function(range) {
-    var start = currentWidth;
-    currentWidth += (range.end - range.start + 1) * range.value;
-    var end = currentWidth - 1;
-    return new kendo.spreadsheet.Range(start, end, range);
-});
 
 function cellValue(index) {
     return cellValues.value(index, index);
@@ -85,65 +64,27 @@ var tree = new kendo.dom.Tree(container);
 
 var scrollBar = kendo.support.scrollbar();
 
-function visibleRange(list, start, end, total) {
-    var startSegment = null;
-    var endSegment = null;
-    var lastPage = false
-
-    if (end >= total + scrollBar) {
-        lastPage = true;
-    }
-
-    var ranges = list.intersecting(start, end);
-
-    startSegment = ranges[0];
-    endSegment = ranges[ranges.length - 1];
-
-    var startOffset = start - startSegment.start; // 10px;
-
-    var startIndex = ((startOffset / startSegment.value.value) >> 0) + startSegment.value.start;
-
-    var offset = startOffset - (startIndex - startSegment.value.start) * startSegment.value.value;
-
-    var endOffset = end - endSegment.start;
-    var endIndex = ((endOffset / endSegment.value.value) >> 0) + endSegment.value.start;
-
-    if (endIndex > endSegment.value.end) {
-        endIndex = endSegment.value.end;
-    }
-
-    if (lastPage) {
-        offset += endSegment.value.value - (endOffset - (endIndex - endSegment.value.start) * endSegment.value.value);
-    }
-
-    return {
-        offset: offset,
-        start: startIndex,
-        end: endIndex
-    };
-}
-
 wrapper.onscroll = scroll;
 
 var viewportWidth = wrapper.clientWidth;
 var viewportHeight = wrapper.clientHeight;
 
-var totalHeight = currentHeight;
-var totalWidth = currentWidth;
-
-container.style.height = totalHeight + "px";
-container.style.width = totalWidth + "px";
+container.style.height = heights.total + "px";
+container.style.width = widths.total + "px";
 
 function drawTable(left, right, top, bottom) {
-    var rows = visibleRange(pxHeights, top, bottom, totalHeight);
-    var columns = visibleRange(pxWidths, left, right, totalWidth);
-    var rowStart = rows.start;
-    var rowEnd = rows.end;
-    var columnStart = columns.start;
-    var columnEnd = columns.end;
+    heights.visible(top, bottom);
+    widths.visible(left, right);
 
-    var x = - columns.offset;
-    var y = - rows.offset;
+    var rowStart = heights.start;
+    var rowEnd = heights.end;
+    var rowHeights = heights.visibleValues;
+    var y = - heights.offset;
+
+    var columnStart = widths.start;
+    var columnEnd = widths.end;
+    var columnWidths = widths.visibleValues;
+    var x = - widths.offset;
 
     if (kendo.support.kineticScrollNeeded) {
         x += left;
@@ -152,10 +93,6 @@ function drawTable(left, right, top, bottom) {
 
     var cols = [];
     var trs = [];
-
-    var columnWidths = widths.intersecting(columnStart, columnEnd);
-
-    var rowHeights = heights.intersecting(rowStart, rowEnd);
 
     var rhIndex = 0;
 

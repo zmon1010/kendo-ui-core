@@ -2,6 +2,7 @@
     define([
         "./spreadsheet/rangelist",
         "./spreadsheet/grid",
+        "./spreadsheet/axis",
         "./spreadsheet/sorter"
     ], f);
 })(function(){
