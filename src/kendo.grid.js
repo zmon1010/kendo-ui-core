@@ -3976,7 +3976,7 @@ var __meta__ = {
             //adjust scroll vertically
             if (isInContent) {
                 if (this.options.scrollable.virtual) {
-                    var rowIndex = Math.max(inArray(row[0], this.items()), 0);
+                    var rowIndex = Math.max(inArray(row[0], this._items(row.parent())), 0);
                     this._rowVirtualIndex = this.virtualScrollable.itemIndex(rowIndex);
                     this.virtualScrollable.scrollIntoView(row);
                 } else {
@@ -3984,7 +3984,6 @@ var __meta__ = {
                 }
             }
 
-            //TODO verify for locked columns & virtual scrolling
             if (this.lockedContent) {
                 //sync locked and non-locked content scrollTop
                 this.lockedContent[0].scrollTop = verticalContainer.scrollTop;
@@ -4123,6 +4122,11 @@ var __meta__ = {
 
         _tableKeyDown: function(e) {
             var current = this.current();
+
+            if (!current) {
+                return;
+            }
+
             //thead or tbody
             var container = current.parent().parent();
             var cell;
@@ -7038,10 +7042,7 @@ var __meta__ = {
 
             if (navigatable && (that._isActiveInTable() || (that._editContainer && that._editContainer.data("kendoWindow")))) {
                 isCurrentInHeader = current.is("th");
-                currentIndex = current
-                    .parent()
-                    .children(":not(.k-group-cell):not(.k-hierarchy-cell)")
-                    .index(current);
+                currentIndex = that.cellIndex(current);
             }
 
             that._destroyEditable();
@@ -7094,11 +7095,14 @@ var __meta__ = {
                     that.current(that.thead.find("th:not(.k-group-cell)").eq(currentIndex));
                 } else {
                     var rowIndex = this.virtualScrollable.position(this._rowVirtualIndex);
+                    var row = $();
 
-                    var td = this.table
-                        .find("tr")
-                        .eq(rowIndex)
-                        .children(":not(.k-group-cell):not(.k-hierarchy-cell)")
+                    if (this.lockedTable) {
+                        row = this.lockedTable.find(">tbody>tr").eq(rowIndex);
+                    }
+                    row = row.add(this.tbody.children().eq(rowIndex));
+
+                    var td = row.find(">td:not(.k-group-cell):not(.k-hierarchy-cell)")
                         .eq(currentIndex);
 
                     this.current(td);
