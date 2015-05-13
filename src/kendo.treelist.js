@@ -409,7 +409,8 @@ var __meta__ = {
                 }
 
                 if (hasLoadedChildren) {
-                    data.splice.apply(data, [i+1, 0].concat(children));
+                    //cannot use splice due to IE8 bug
+                    data = data.slice(0, i + 1).concat(children, data.slice(i + 1));
                 }
             }
 
