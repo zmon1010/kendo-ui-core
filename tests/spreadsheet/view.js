@@ -24,7 +24,6 @@
     });
 
     test("builds correct table", function() {
-
         var sheet = new kendo.spreadsheet.Sheet(10, 10, 10, 10);
 
         for (var i = 0, len = 100; i < len; i++) {
@@ -45,6 +44,5 @@
         }
 
         view.render();
-
     });
 })();
