@@ -22,7 +22,7 @@
         COLUMNS = 50,
         ROW_HEIGHT = 20,
         COLUMN_WIDTH = 64,
-        FIXED = !kendo.support.kineticScrollNeeded;
+        FIXED = false;
 
     var Spreadsheet = kendo.ui.Widget.extend({
         init: function(element, options) {
