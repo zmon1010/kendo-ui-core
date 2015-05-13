@@ -269,59 +269,36 @@ var __meta__ = {
 
         itemIndex: function(rowIndex) {
             var rangeStart = this._rangeStart || this.dataSource.skip() || 0;
+
             return rangeStart + rowIndex;
         },
 
         position: function(index) {
             var rangeStart = this._rangeStart || this.dataSource.skip() || 0;
+            var pageSize = this.dataSource.pageSize();
+            var result;
+
             if (index > rangeStart) {
-                return index - rangeStart + 1;
+                result = index - rangeStart + 1;
+            } else {
+                result = rangeStart - index - 1;
             }
 
-            return rangeStart - index - 1;
+            return result > pageSize ? pageSize : result;
         },
 
         scrollIntoView: function(row) {
-            var container = row.closest("div")[0];
+            var container = this.wrapper[0];
             var containerHeight = container.clientHeight;
-            var containerScroll = container.scrollTop;
+            var containerScroll = this._scrollTop || container.scrollTop;
             var elementOffset = row[0].offsetTop;
             var elementHeight = row[0].offsetHeight;
 
-            console.log(elementOffset, elementHeight, containerScroll, containerHeight, this.verticalScrollbar[0].scrollTop);
-
             if (containerScroll > elementOffset) {
-                console.log("scroll up");
                 this.verticalScrollbar[0].scrollTop -= containerHeight / 2;
-                console.log(this.verticalScrollbar[0].scrollTop);
             } else if (elementOffset + elementHeight >=  containerScroll + containerHeight) {
-                debugger;
-                console.log("scroll down");
                 this.verticalScrollbar[0].scrollTop += containerHeight / 2;
-                console.log(this.verticalScrollbar[0].scrollTop);
             }
-//            var isVisible = elementOffset + elementHeight < containerHeight + containerScroll;
-//            if (!isVisible) {
-//                if (elementHeight <= containerHeight) {
-//                    //element.scrollTop = (elementOffset + elementHeight - containerHeight) + containerHeight / 2;
-//                    element.scrollTop +=  (containerHeight / 2);
-//                } else {
-//                    element.scrollTop = elementOffset;
-//                }
-//            } else if (containerScroll > elementOffset) {
-//                element.scrollTop = elementOffset - containerHeight / 2;
-//            }
-
-//            if (elementOffset + elementHeight > containerHeight + containerScroll) {
-//
-//                if (elementHeight <= containerHeight) {
-//                    element.scrollTop = (elementOffset + elementHeight - containerHeight);
-//                } else {
-//                    element.scrollTop = elementOffset;
-//                }
-//            } else if (containerScroll > elementOffset) {
-//                element.scrollTop = elementOffset - this.itemHeight;
-//            }
         },
 
         _fetch: function(firstItemIndex, lastItemIndex, scrollingUp) {
@@ -4001,7 +3978,6 @@ var __meta__ = {
                 if (this.options.scrollable.virtual) {
                     var rowIndex = Math.max(inArray(row[0], this.items()), 0);
                     this._rowVirtualIndex = this.virtualScrollable.itemIndex(rowIndex);
-                    console.log("save virtual index", this._rowVirtualIndex, row.text());
                     this.virtualScrollable.scrollIntoView(row);
                 } else {
                     this._scrollTo(this._relatedRow(row)[0], verticalContainer);
@@ -4337,7 +4313,7 @@ var __meta__ = {
                     return leafDataCells(container).eq(index);
                 }
             } else {
-                row =  rowIndex == 0 ? $() : rows.eq(rowIndex - 1);
+                row =  rowIndex === 0 ? $() : rows.eq(rowIndex - 1);
             }
 
             cells = row.children(DATA_CELL);
@@ -4358,7 +4334,7 @@ var __meta__ = {
 
             //current is in the header, but not at the last level of multi-level columns
             //and we are not changing the table
-            if (rowIndex != -1 && index == undefined && current.hasClass("k-header")) {
+            if (rowIndex != -1 && index === undefined && current.hasClass("k-header")) {
                 //offset by one as the result includes the current
                 return childColumnsCells(current).eq(1);
             }
@@ -7119,8 +7095,6 @@ var __meta__ = {
                 } else {
                     var rowIndex = this.virtualScrollable.position(this._rowVirtualIndex);
 
-                    console.log("load virtual index", rowIndex);
-
                     var td = this.table
                         .find("tr")
                         .eq(rowIndex)
@@ -7128,7 +7102,6 @@ var __meta__ = {
                         .eq(currentIndex);
 
                     this.current(td);
-                    //that.current(that.table.add(that.lockedTable).find(FIRSTNAVITEM).first());
                 }
 
                 if (that._current) {
