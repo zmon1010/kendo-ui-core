@@ -20,9 +20,7 @@
 
     <script>
         require([
-                "../src/kendo.treelist",
-                "../src/kendo.draganddrop",
-                "../src/kendo.treeview"
+                "../src/kendo.treelist"
             ], function() {
             var dataSource = new kendo.data.TreeListDataSource({
                 data: [
@@ -46,6 +44,7 @@
             var treelist = $("#treelist")
                 .kendoTreeList({
                     dataSource: dataSource,
+                    sortable: true,
                     height: 540,
                     columns: [
                         { field: "Position" },

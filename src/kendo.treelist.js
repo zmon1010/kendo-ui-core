@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.dom", "./kendo.data", "./kendo.columnsorter", "./kendo.editable", "./kendo.window", "./kendo.filtermenu", "./kendo.selectable", "./kendo.resizable" ], f);
+    define([ "./kendo.dom", "./kendo.data", "./kendo.columnsorter", "./kendo.editable", "./kendo.window", "./kendo.filtermenu", "./kendo.selectable", "./kendo.resizable", "./kendo.treeview.draganddrop" ], f);
 })(function(){
 
 var __meta__ = {
@@ -29,10 +29,15 @@ var __meta__ = {
         description: "Support for row selection",
         depends: [ "selectable" ]
     }, {
-        id: "grid-column-resize",
+        id: "treelist-column-resize",
         name: "Column resizing",
         description: "Support for column resizing",
         depends: [ "resizable" ]
+    }, {
+        id: "treelist-dragging",
+        name: "Drag & Drop",
+        description: "Support for drag & drop of rows",
+        depends: [ "treeview.draganddrop" ]
     }, {
         id: "treelist-excel-export",
         name: "Excel export",

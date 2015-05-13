@@ -55,6 +55,7 @@
         "./kendo.timepicker",
         "./kendo.toolbar",
         "./kendo.datetimepicker",
+        "./kendo.treeview.draganddrop",
         "./kendo.treeview",
         "./kendo.slider",
         "./kendo.splitter",
