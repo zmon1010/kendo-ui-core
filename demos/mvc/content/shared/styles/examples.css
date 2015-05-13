@@ -74,7 +74,6 @@
   font-variant: normal;
   text-transform: none;
   line-height: 1em;
-  /* margin-left: .2em; Responsive */
   color: #00B312;
 }
 
@@ -109,6 +108,7 @@ h3>a,
 a
 {
     text-decoration:none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 /*global*/
@@ -147,15 +147,6 @@ a:hover
     font-weight: normal;
 }
 
-/*.overview #header,
-.overview .suite-demos-nav,
-.overview .demos-nav,
-.overview #footer
-{
-    iPad fix
-    min-width:990px;
-}
-
 header*/
 #header h1
 {
@@ -182,11 +173,6 @@ header*/
 {
     margin:25px -8px 0 0;
 }
-
-/**+html .kendo-nav
-{
-    min-width:648px;
-}*/
 
 .main-nav>li,
 .kendo-nav>li
@@ -1314,7 +1300,6 @@ pre.prettyprint
 
 #codeStrip .k-tabstrip .k-link
 {
-    /*padding:5px 10px;*/
     margin:10px 0 10px 5px;
     color: #000;
 }
@@ -1824,33 +1809,6 @@ ul.keyboard-legend li a {
     opacity:.9;
 }
 
-/*#draggable
-{
-    cursor: pointer;
-    position: absolute;
-    top: 80px;
-    left: 30px;
-    border: 1px solid #ff8000;
-    width: 78px;
-    height: 78px;
-    border-radius: 37px;
-    box-shadow: 2px 0 10px #9d9d9d;
-    background: #ffcc00 url(../../web/dragdrop/draggable.png) 50% 50% no-repeat;
-    background: url(../../web/dragdrop/draggable.png) 50% 50% no-repeat, -moz-linear-gradient(top, #ffcc00 0%, #ff8000 100%);
-    background: url(../../web/dragdrop/draggable.png) 50% 50% no-repeat, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffcc00), color-stop(100%,#ff8000));
-    background: url(../../web/dragdrop/draggable.png) 50% 50% no-repeat, -webkit-linear-gradient(top, #ffcc00 0%,#ff8000 100%);
-    background: url(../../web/dragdrop/draggable.png) 50% 50% no-repeat, -o-linear-gradient(top, #ffcc00 0%,#ff8000 100%);
-    background: url(../../web/dragdrop/draggable.png) 50% 50% no-repeat, -ms-linear-gradient(top, #ffcc00 0%,#ff8000 100%);
-    background: url(../../web/dragdrop/draggable.png) 50% 50% no-repeat, linear-gradient(top, #ffcc00 0%,#ff8000 100%);
-}
-
-#draggable.hollow
-{
-    cursor: default;
-    background: #ececec;
-    border-color: #cbcbcb;
-}*/
-
 .floatWrap.narrowCol
 {
     position: relative;
@@ -2018,11 +1976,6 @@ a.footer-links:hover,
 }
 
 #example-nav-bar {
-    width: 299px;
-    float: left;
-    clear: left;
-    background-color: #f5f7f8;
-    border-right: 1px solid #e2e4e7;
     border-top: 1px solid #e2e4e7;
 }
 
@@ -2174,16 +2127,10 @@ a.footer-links:hover,
 }
 
 #nav-wrapper {
-    width: 299px;
     border-top: 1px solid #e2e4e7;
-    border-right: 1px solid #e2e4e7;
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
-    float: left;
-    clear: left;
-    background-color: #f5f7f8;
-    /*height: 100%;*/
 }
 
 #nav {
@@ -2259,12 +2206,74 @@ a.footer-links:hover,
     display: none;
 }
 
+#example-sidebar {
+    width: 299px;
+    min-width: 299px;
+    float: left;
+    border-right: 1px solid #e2e4e7;
+    background-color: #f5f7f8;
+    z-index: 3;
+}
+
 #main {
     float: none;
     width: auto;
     position: relative;
-    overflow-x: hidden;
+    overflow-x: auto;
     overflow-y: auto;
+    -webkit-touch-overflow: scroll;
+}
+
+#sidebar-toggle {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 56px;
+  width: 56px;
+  line-height: 52px;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+}
+
+#sidebar-toggle span {
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 3px;
+  background-color: #333;
+}
+
+#sidebar-toggle span:before,
+#sidebar-toggle span:after {
+  display: block;
+  content: " ";
+  position: absolute;
+  width: 24px;
+  height: 3px;
+  background-color: #333;
+  -webkit-transition-duration: .1s;
+  -moz-transition-duration: .1s;
+  -o-transition-duration: .1s;
+  transition-duration: .1s;
+}
+
+#sidebar-toggle span:before {
+  top: -7px;
+}
+
+#sidebar-toggle span:after {
+  bottom: -7px;
+}
+
+#sidebar-toggle:hover span:before {
+  top: -9px;
+}
+
+#sidebar-toggle:hover span:after {
+  bottom: -9px;
 }
 
 #example-search-wrapper,
@@ -2272,12 +2281,6 @@ a.footer-links:hover,
     position: relative;
     text-align: center;
     background-color: #f5f7f8;
-}
-
-#example-search-wrapper {
-    width: 299px;
-    float: left;
-    border-right: 1px solid #e2e4e7;
 }
 
 #layout-search-wrapper {
@@ -2317,8 +2320,8 @@ a.footer-links:hover,
      vertical-align: middle;
 }
 
-#example-search-wrapper .search {
-    margin: 1em;
+#example-search-wrapper {
+    padding: 1em;
 }
 
 #layout-search-wrapper .search {
@@ -2462,15 +2465,6 @@ a.footer-links:hover,
     color: #036c9c;
 }
 
-/*#overview-widgets,
-#applications-and-tools,
-#overview-applications,
-#overview-tools {
-    display: inline-block;
-    *display: inline;
-    zoom:1;
-}*/
-
 #applications-and-tools {
     vertical-align: top;
 }
@@ -2612,10 +2606,6 @@ h5 {
 #overview-widgets h2 strong {
     font-weight: normal;
 }
-
-/*.overview-col {
-    min-width: 180px;
-}*/
 
 #most-popular .overview-col {
     padding-left: 0;
@@ -2934,24 +2924,15 @@ html.k-materialblack .demo-section.k-content {
   
 /* Single Demo Page */
 
-  #example-search-wrapper {
-    float: none;
-    position: absolute;
-    width: 299px;
-    border-right: 1px solid #e2e4e7;
-    left: -300px;
+  #example-sidebar {
+    position: fixed;
+    top: auto;
   }
   
-  #example-nav-bar {
-    float: none;
-    position: absolute;
-    left: -300px;
-  }
-  
-  #nav-wrapper {
-    float: none;
-    position: absolute;
-    left: -300px;
+  #example-sidebar.k-rpanel-expanded {
+    -webkit-box-shadow: 5px 0 15px 0 rgba(0,0,0,.15);
+    -moz-box-shadow: 5px 0 15px 0 rgba(0,0,0,.15);
+    box-shadow: 5px 0 15px 0 rgba(0,0,0,.15);
   }
   
   .themechooser:before,
@@ -3036,7 +3017,6 @@ html.k-materialblack .demo-section.k-content {
   }
   
   .other-source {
-    float: left;
     margin-bottom: 2em;
   }
   
@@ -3138,6 +3118,13 @@ html.k-materialblack .demo-section.k-content {
     width: 50%;
   }
   
+  
+  .other-source {
+    float: left;
+    clear: left;
+    margin-top: 1.6em;
+  }
+  
   #codeStrip .try-kendo {
     display: none;
   }
@@ -3230,6 +3217,7 @@ html.k-materialblack .demo-section.k-content {
   .tc-item {
     width: 100%;
     padding: 10px 20px;
+    font-size: 16px;
   }
   
   .tc-theme-list ul {
