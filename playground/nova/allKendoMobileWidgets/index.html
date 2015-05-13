@@ -20,6 +20,7 @@
         <ul data-role="listview" data-style="inset" data-type="group">
             <li>Sources
                 <ul>
+                    <li><a href="#listViewView">ListView</a></li>
                     <li><a href="#navBarView">NavBar</a></li>
                     <li><a href="#secondview">Local View</a></li>
                     <li><a href="#actiosheetView">ActionSheet</a></li>
@@ -60,6 +61,50 @@
         </div>
         </div>
     </div>
+
+    </div>
+
+    <!-- ListViewView-->
+     <!-- ActionSheet View -->
+    <div data-role="view" id="listViewView" data-layout="mobile-view" data-title="Local View" data-show="viewShow">
+        <!-- Default ListView-->
+         <ul data-role="listview" data-style="inset" data-type="group">
+                <li>
+                    Africa
+                    <ul>
+                        <li><a>Nairobi</a></li>
+                    </ul>
+                </li>
+                <li>
+                    America
+                    <ul>
+                        <li><a>Boston</a></li>
+                        <li><a>Ottawa</a></li>
+                        <li><a>San Francisco</a></li>
+                    </ul>
+                </li>
+                <li>
+                    Asia
+                    <ul>
+                        <li><a>Bombay</a></li>
+                    </ul>
+                </li>
+                <li>
+                    Australia
+                    <ul>
+                        <li><a>Melbourne</a></li>
+                        <li><a>Sydney</a></li>
+                    </ul>
+                </li>
+                <li>
+                    Europe
+                    <ul>
+                        <li><a>Cannes</a></li>
+                        <li><a>Liverpool</a></li>
+                        <li><a>London</a></li>
+                    </ul>
+                </li>
+            </ul>
 
     </div>
 
@@ -686,7 +731,7 @@ function mobileSwitchInit() {
 
 
 function viewShow() {
-    alert(1)
+    //alert(1)
     localStorage.clear()
     less.refresh()
 
