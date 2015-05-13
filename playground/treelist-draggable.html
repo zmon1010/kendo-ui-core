@@ -57,45 +57,34 @@
 
             var dragging = new kendo.ui.HierarchicalDragAndDrop(treelist, {
                 autoScroll: true,
-                filter: "tr",
+                filter: "tbody>tr",
                 itemSelector: "tr",
                 allowedContainers: "#treelist",
                 hintText: function(row) {
                     return row.find("td:eq(1)").text();
                 },
                 contains: function(source, destination) {
-                    // TODO: return true if source contains destination
-                    return false;
-                },
-                dropHintContainer: function(item) {
-                    return item.children("td:first");
+                    var dest = treelist.dataItem(destination);
+                    var src = treelist.dataItem(source);
+
+                    return src == dest || treelist.dataSource.contains(src, dest);
                 },
                 itemFromTarget: function(target) {
                     var tr = target.closest("tr");
-                    return {
-                        item: tr,
-                        content: tr
-                        // TODO: return first/last if row is first or last child of parent
-                    };
+                    return { item: tr, content: tr };
+                },
+                dragEnd: function(source, destination) {
+                    var dest = treelist.dataItem(destination);
+                    var src = treelist.dataItem(source);
+
+                    src.set("parentId", dest ? dest.id : null);
+                },
+                reorderable: false,
+                dropHintContainer: function(item) {
+                    return item.children("td:eq(1)"); // expandable column
                 },
                 dropPositionFrom: function(dropHint) {
                     return dropHint.prevAll(".k-i-none").length > 0 ? "after" : "before";
-                },
-                dragEnd: function(source, destination, position) {
-                    var dest = treelist.dataItem(destination);
-                    var src = treelist.dataItem(source);
-                    var newParentId;
-
-                    if (position == "over") {
-                        newParentId = dest ? dest.id : null;
-                    } else {
-                        var parent = treelist.dataSource.parentNode(dest);
-                        newParentId = parent ? parent.id : null;
-                    }
-
-                    src.set("parentId", newParentId);
-
-                    treelist.content.find("tr.k-state-hover").removeClass("k-state-hover");
                 }
             });
         });

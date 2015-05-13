@@ -461,6 +461,20 @@ var __meta__ = {
             );
         },
 
+        contains: function(root, child) {
+            var rootId = root.id;
+
+            while (child) {
+                if (child.parentId === rootId) {
+                    return true;
+                }
+
+                child = this.parentNode(child);
+            }
+
+            return false;
+        },
+
         _byParentId: function(id, defaultId) {
             var result = [];
             var view = this.view();

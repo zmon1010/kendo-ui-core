@@ -1128,4 +1128,44 @@
 
         equal(ds.at(1).foo, "bar");
     });
+
+    test("contains returns true for child item", function() {
+        var ds = new TreeListDataSource({
+            data: [
+                { id: 1, parentId: null },
+                { id: 2, parentId: 1 }
+            ]
+        });
+
+        ds.read();
+
+        ok(ds.contains(ds.get(1), ds.get(2)));
+    });
+
+    test("contains returns false for unrelated items", function() {
+        var ds = new TreeListDataSource({
+            data: [
+                { id: 1, parentId: null },
+                { id: 2, parentId: null }
+            ]
+        });
+
+        ds.read();
+
+        ok(ds.contains(ds.get(1), ds.get(2)) === false);
+    });
+
+    test("contains returns true for deeply nested item", function() {
+        var ds = new TreeListDataSource({
+            data: [
+                { id: 1, parentId: null },
+                { id: 2, parentId: 1 },
+                { id: 3, parentId: 2 }
+            ]
+        });
+
+        ds.read();
+
+        ok(ds.contains(ds.get(1), ds.get(3)));
+    });
 })();

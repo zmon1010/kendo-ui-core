@@ -2149,33 +2149,46 @@ var __meta__ = {
             var itemData, position, statusClass;
 
             if (!container.length) {
-                // dragging node outside of treeview
+                // dragging outside of allowed widgets
                 statusClass = "k-denied";
                 this._removeTouchHover();
             } else if (options.contains(sourceNode[0], target[0])) {
-                // dragging node within itself
+                // dragging item within itself
                 statusClass = "k-denied";
             } else {
-                // moving or reordering node
+                // moving or reordering item
                 statusClass = "k-insert-middle";
 
                 var itemData = options.itemFromTarget(target);
                 hoveredItem = itemData.item;
 
                 if (hoveredItem.length) {
-                    itemHeight = hoveredItem.outerHeight();
-                    itemTop = kendo.getOffset(hoveredItem).top;
-                    itemContent = itemData.content;
-                    delta = itemHeight / (itemContent.length > 0 ? 4 : 2);
-
-                    insertOnTop = e.y.location < (itemTop + delta);
-                    insertOnBottom = (itemTop + itemHeight - delta) < e.y.location;
                     this._removeTouchHover();
-                    addChild = itemContent.length && !insertOnTop && !insertOnBottom;
+                    itemHeight = hoveredItem.outerHeight();
+                    itemContent = itemData.content;
+
+                    if (options.reorderable === false) {
+                        addChild = true;
+                        insertOnTop = false;
+                        insertOnBottom = false;
+                    } else {
+                        delta = itemHeight / (itemContent.length > 0 ? 4 : 2);
+                        itemTop = kendo.getOffset(hoveredItem).top;
+
+                        insertOnTop = e.y.location < (itemTop + delta);
+                        insertOnBottom = (itemTop + itemHeight - delta) < e.y.location;
+                        addChild = itemContent.length && !insertOnTop && !insertOnBottom;
+                    }
+
                     this.hovered = addChild ? container : false;
 
                     this.dropHint.css(VISIBILITY, addChild ? "hidden" : "visible");
-                    itemContent.toggleClass(KSTATEHOVER, addChild);
+
+                    if (this._lastHover && this._lastHover[0] != itemContent[0]) {
+                        this._lastHover.removeClass(KSTATEHOVER);
+                    }
+
+                    this._lastHover = itemContent.toggleClass(KSTATEHOVER, addChild);
 
                     if (addChild) {
                         statusClass = "k-add";
@@ -2216,6 +2229,10 @@ var __meta__ = {
                     statusClass = value;
                 }
             });
+
+            if (statusClass == "k-denied" && this._lastHover) {
+                this._lastHover.removeClass(KSTATEHOVER);
+            }
 
             if (statusClass.indexOf("k-insert") !== 0) {
                 this.dropHint.css(VISIBILITY, "hidden");
@@ -2265,6 +2282,9 @@ var __meta__ = {
 
             dropHint.remove();
             that._removeTouchHover();
+            if (this._lastHover) {
+                this._lastHover.removeClass(KSTATEHOVER);
+            }
 
             if (!e.valid || dropPrevented) {
                 that._draggable.dropped = e.valid;
@@ -2277,6 +2297,7 @@ var __meta__ = {
         },
 
         destroy: function() {
+            this._lastHover = this.hovered = null;
             this._draggable.destroy();
         }
     });
