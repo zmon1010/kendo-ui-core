@@ -22,12 +22,14 @@ var __meta__ = {
     var KSTATEHOVER = "k-state-hover";
 
     var HierarchicalDragAndDrop = ui.HierarchicalDragAndDrop = kendo.Class.extend({
-        init: function (widget, options) {
-            this.widget = widget;
-            this.hovered = widget.element;
-            this.options = options;
+        init: function (element, options) {
+            this.element = element;
+            this.hovered = element;
+            this.options = extend({
+                dragstart: $.noop, drag: $.noop, drop: $.noop, dragend: $.noop
+            }, options);
 
-            this._draggable = new ui.Draggable(widget.element, {
+            this._draggable = new ui.Draggable(element, {
                 filter: options.filter,
                 autoScrolL: options.autoScroll,
                 cursorOffset: {
@@ -39,7 +41,7 @@ var __meta__ = {
                 dragcancel: proxy(this.dragcancel, this),
                 drag: proxy(this.drag, this),
                 dragend: proxy(this.dragend, this),
-                $angular: widget.options.$angular
+                $angular: options.$angular
             });
         },
 
@@ -68,38 +70,40 @@ var __meta__ = {
         },
 
         dragstart: function (e) {
-            var widget = this.widget;
-            var sourceNode = this.sourceNode = e.currentTarget.closest(this.options.itemSelector);
+            this.source = e.currentTarget.closest(this.options.itemSelector);
 
-            if (widget.trigger(DRAGSTART, { sourceNode: sourceNode[0] })) {
+            if (this.options.dragstart(this.source)) {
                 e.preventDefault();
             }
 
-            this.dropHint = $("<div class='k-drop-hint' />")
-                .css(VISIBILITY, "hidden")
-                .appendTo(widget.element);
+            if (this.options.reorderable) {
+                this.dropHint = $("<div class='k-drop-hint' />")
+                    .css(VISIBILITY, "hidden")
+                    .appendTo(this.element);
+            } else {
+                this.dropHint = $();
+            }
         },
 
         drag: function (e) {
             var options = this.options;
-            var widget = this.widget;
-            var sourceNode = this.sourceNode;
+            var source = this.source;
             var target = this.dropTarget = $(kendo.eventTarget(e));
             var container = target.closest(options.allowedContainers);
             var hoveredItem, itemHeight, itemTop, itemContent, delta;
             var insertOnTop, insertOnBottom, addChild;
-            var itemData, position, statusClass;
+            var itemData, position, status;
 
             if (!container.length) {
-                // dragging outside of allowed widgets
-                statusClass = "k-denied";
+                // dragging outside of allowed elements
+                status = "k-denied";
                 this._removeTouchHover();
-            } else if (options.contains(sourceNode[0], target[0])) {
+            } else if (options.contains(source[0], target[0])) {
                 // dragging item within itself
-                statusClass = "k-denied";
+                status = "k-denied";
             } else {
                 // moving or reordering item
-                statusClass = "k-insert-middle";
+                status = "k-insert-middle";
 
                 itemData = options.itemFromTarget(target);
                 hoveredItem = itemData.item;
@@ -109,17 +113,17 @@ var __meta__ = {
                     itemHeight = hoveredItem.outerHeight();
                     itemContent = itemData.content;
 
-                    if (options.reorderable === false) {
-                        addChild = true;
-                        insertOnTop = false;
-                        insertOnBottom = false;
-                    } else {
+                    if (options.reorderable) {
                         delta = itemHeight / (itemContent.length > 0 ? 4 : 2);
                         itemTop = kendo.getOffset(hoveredItem).top;
 
                         insertOnTop = e.y.location < (itemTop + delta);
                         insertOnBottom = (itemTop + itemHeight - delta) < e.y.location;
                         addChild = itemContent.length && !insertOnTop && !insertOnBottom;
+                    } else {
+                        addChild = true;
+                        insertOnTop = false;
+                        insertOnBottom = false;
                     }
 
                     this.hovered = addChild ? container : false;
@@ -133,7 +137,7 @@ var __meta__ = {
                     this._lastHover = itemContent.toggleClass(KSTATEHOVER, addChild);
 
                     if (addChild) {
-                        statusClass = "k-add";
+                        status = "k-add";
                     } else {
                         position = hoveredItem.position();
                         position.top += insertOnTop ? 0 : itemHeight;
@@ -143,44 +147,43 @@ var __meta__ = {
                             (options.dropHintContainer(hoveredItem));
 
                         if (insertOnTop && itemData.first) {
-                            statusClass = "k-insert-top";
+                            status = "k-insert-top";
                         }
 
                         if (insertOnBottom && itemData.last) {
-                            statusClass = "k-insert-bottom";
+                            status = "k-insert-bottom";
                         }
                     }
                 } else if (target[0] != this.dropHint[0]) {
-                    if (container[0] != widget.element[0]) {
-                        // moving node to different widget without children
-                        statusClass = "k-add";
+                    if (container[0] != this.element[0]) {
+                        // moving node to different element
+                        status = "k-add";
                     } else {
-                        statusClass = "k-denied";
+                        status = "k-denied";
                     }
                 }
             }
 
-            // TODO: trigger events via callbacks
-            widget.trigger(DRAG, {
-                sourceNode: sourceNode[0],
-                dropTarget: target[0],
+            this.options.drag({
+                source: source,
+                target: target,
                 pageY: e.y.location,
                 pageX: e.x.location,
-                statusClass: statusClass.substring(2),
-                setStatusClass: function (value) {
-                    statusClass = value;
+                status: status.substring(2),
+                setStatus: function(value) {
+                    status = value;
                 }
             });
 
-            if (statusClass == "k-denied" && this._lastHover) {
+            if (status == "k-denied" && this._lastHover) {
                 this._lastHover.removeClass(KSTATEHOVER);
             }
 
-            if (statusClass.indexOf("k-insert") !== 0) {
+            if (status.indexOf("k-insert") !== 0) {
                 this.dropHint.css(VISIBILITY, "hidden");
             }
 
-            this._hintStatus(statusClass);
+            this._hintStatus(status);
         },
 
         dragcancel: function() {
@@ -188,54 +191,56 @@ var __meta__ = {
         },
 
         dragend: function () {
-            var that = this,
-                widget = that.widget,
-                dropPosition = "over",
-                sourceNode = that.sourceNode,
-                destinationNode,
-                dropHint = that.dropHint,
-                dropTarget = that.dropTarget,
+            var position = "over",
+                source = this.source,
+                destination,
+                dropHint = this.dropHint,
+                dropTarget = this.dropTarget,
                 e, dropPrevented;
 
             if (dropHint.css(VISIBILITY) == "visible") {
-                dropPosition = this.options.dropPositionFrom(dropHint);
-                destinationNode = dropHint.closest(this.options.itemSelector);
+                position = this.options.dropPositionFrom(dropHint);
+                destination = dropHint.closest(this.options.itemSelector);
             } else if (dropTarget) {
-                destinationNode = dropTarget.closest(this.options.itemSelector);
+                destination = dropTarget.closest(this.options.itemSelector);
 
                 // moving node to root element
-                if (!destinationNode.length) {
-                    destinationNode = dropTarget.closest(this.options.allowedContainers);
+                if (!destination.length) {
+                    destination = dropTarget.closest(this.options.allowedContainers);
                 }
             }
 
             e = {
-                sourceNode: sourceNode[0],
-                destinationNode: destinationNode[0],
-                valid: that._hintStatus() != "k-denied",
+                sourceNode: source[0],
+                destinationNode: destination[0],
+                valid: this._hintStatus() != "k-denied",
                 setValid: function(newValid) {
                     this.valid = newValid;
                 },
                 dropTarget: dropTarget[0],
-                dropPosition: dropPosition
+                dropPosition: position
             };
 
-            dropPrevented = widget.trigger(DROP, e);
+            dropPrevented = this.options.drop(e);
 
             dropHint.remove();
-            that._removeTouchHover();
+            this._removeTouchHover();
             if (this._lastHover) {
                 this._lastHover.removeClass(KSTATEHOVER);
             }
 
             if (!e.valid || dropPrevented) {
-                that._draggable.dropped = e.valid;
+                this._draggable.dropped = e.valid;
                 return;
             }
 
-            that._draggable.dropped = true;
+            this._draggable.dropped = true;
 
-            this.options.dragEnd(sourceNode, destinationNode, dropPosition);
+            this.options.dragend({
+                source: source,
+                destination: destination,
+                position: position
+            });
         },
 
         destroy: function() {

@@ -340,7 +340,9 @@ var __meta__ = {
             if (enabled && !dragging) {
                 var widget = this;
 
-                this.dragging = new ui.HierarchicalDragAndDrop(this, {
+                this.dragging = new ui.HierarchicalDragAndDrop(this.element, {
+                    reorderable: true,
+                    $angular: this.options.$angular,
                     autoScroll: this.options.autoScroll,
                     filter: "div:not(.k-state-disabled) .k-in",
                     allowedContainers: ".k-treeview",
@@ -364,7 +366,27 @@ var __meta__ = {
                     dropPositionFrom: function(dropHint) {
                         return dropHint.prevAll(".k-in").length > 0 ? "after" : "before";
                     },
-                    dragEnd: function(source, destination, position) {
+                    dragstart: function(source) {
+                        return widget.trigger(DRAGSTART, { sourceNode: source[0] });
+                    },
+                    drag: function(options) {
+                        widget.trigger(DRAG, {
+                            sourceNode: options.source[0],
+                            dropTarget: options.target[0],
+                            pageY: options.pageY,
+                            pageX: options.pageX,
+                            statusClass: options.status,
+                            setStatusClass: options.setStatus
+                        });
+                    },
+                    drop: function(options) {
+                        return widget.trigger(DROP, options);
+                    },
+                    dragend: function(options) {
+                        var source = options.source;
+                        var destination = options.destination;
+                        var position = options.position;
+
                         function triggerDragEnd(source) {
                             widget.updateIndeterminate();
 
