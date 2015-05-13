@@ -246,6 +246,7 @@
                 // }
 
                 if (template) {
+                    var count = pages.length;
                     pages.forEach(function(page, i){
                         var el = template({
                             element    : page,
@@ -254,15 +255,24 @@
                         });
                         if (el) {
                             page.appendChild(el);
+                            cacheImages(el, function(){
+                                if (--count === 0) {
+                                    next();
+                                }
+                            });
                         }
                     });
+                } else {
+                    next();
                 }
 
-                // allow another timeout here to make sure the images
-                // are rendered in the new DOM nodes.
-                setTimeout(function(){
-                    callback({ pages: pages, container: container });
-                }, 10);
+                function next() {
+                    // allow another timeout here to make sure the images
+                    // are rendered in the new DOM nodes.
+                    setTimeout(function(){
+                        callback({ pages: pages, container: container });
+                    }, 10);
+                }
             }
 
             function splitElement(element) {
