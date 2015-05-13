@@ -19,21 +19,22 @@
 
     test("updates visual range", function() {
         var visible = axis.visible(20, 200);
-        equal(visible.offset, 5);
+        equal(visible.offset, 15);
         equal(visible.start, 1);
         equal(visible.end, 13);
     });
 
     test("updates visual range (last page)", function() {
         var visible = axis.visible(14000, 15100);
-        equal(visible.offset, -95);
+        equal(visible.offset, 14095);
         equal(visible.start, 933);
         equal(visible.end, 999);
     });
 
     test("updates visual range (last page)", function() {
-        axis.value(10, 19, 10)
-        axis.value(30, 39, 10)
+        axis.value(10, 19, 10);
+        axis.value(30, 39, 10);
+
         var visible = axis.visible(130, 280);
 
         var visibleValues = visible.values;

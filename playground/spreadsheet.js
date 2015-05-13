@@ -6,8 +6,8 @@ var COLUMN_WIDTH = 64;
 var ROW_HEIGHT = 20;
 
 function Sheet() {
-    this.widths = new kendo.spreadsheet.Axis(COLUMNS, COLUMN_WIDTH);
-    this.heights = new kendo.spreadsheet.Axis(ROWS, ROW_HEIGHT);
+    this.widths = new kendo.spreadsheet.Axis(COLUMNS, COLUMN_WIDTH, !kendo.support.kineticScrollNeeded);
+    this.heights = new kendo.spreadsheet.Axis(ROWS, ROW_HEIGHT, !kendo.support.kineticScrollNeeded);
 
     this.values = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "");
     this.colors = new kendo.spreadsheet.SparseRangeList(0, ROWS * COLUMNS - 1, "beige");
