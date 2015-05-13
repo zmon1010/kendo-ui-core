@@ -3,9 +3,9 @@
 })(function(){
 
 (function(kendo) {
-    function Sheet(columns, rows, columnWidth, rowHeight) {
+    function Sheet(columns, rows, columnWidth, rowHeight, fixed) {
         this.widths = new kendo.spreadsheet.Axis(columns, columnWidth, fixed);
-        this.heights = new kendo.spreadsheet.Axis(rows, rowHeight, !kendo.support.kineticScrollNeeded);
+        this.heights = new kendo.spreadsheet.Axis(rows, rowHeight, fixed);
 
         var cellsCount = rows * columns - 1;
 

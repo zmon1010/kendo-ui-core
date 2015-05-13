@@ -102,7 +102,7 @@
         var rows = view.rows;
         var columns = view.columns;
 
-        var table = new HtmlTable(ROW_HEIGHT, COLUMN_WIDTH);
+        var table = new HtmlTable(this.rowHeight, this.columnWidth);
 
         for (var ri = rows.start; ri <= rows.end; ri ++) {
             table.addRow(rows.values.at(ri));
