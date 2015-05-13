@@ -11,7 +11,7 @@
           ]);
         </script>
         <style>
-            #wrapper {
+            .k-spreadsheet {
                 border: 1px solid black;
                 width: 1500px;
                 height: 1200px;
@@ -19,44 +19,24 @@
             }
 
             @media only screen and (max-device-width: 667px) {
-                #wrapper {
+                .k-spreadsheet-wrapper {
                     width: 100%;
                     -webkit-overflow-scrolling: touch;
                 }
-
-                form {
-                    display: none;
-                }
             }
 
-            #container {
-                position: fixed;
-                overflow: hidden;
+            .k-spreadsheet-view {
+                position: relative;
             }
 
-            #area table {
+            .k-spreadsheet-view table {
                 table-layout: fixed;
                 position: absolute;
                 border-collapse: collapse;
                 box-sizing: border-box;
             }
 
-            #container table {
-                width: 100%;
-                height: 100%;
-            }
-
-
-            #area canvas {
-                position:absolute;
-            }
-
-            #container canvas {
-                width: 100%;
-                height: 100%;
-            }
-
-            #area table td {
+            .k-spreadsheet-view table td {
                 border: 1px solid gray;
                 box-sizing: border-box;
                 overflow: hidden;
@@ -64,41 +44,44 @@
                 height: 20px;
             }
 
-            #area table tr:first-child td {
+            .k-spreadsheet-view table tr:first-child td {
                 border-top: 0;
             }
 
-            #area table tr:last-child td {
+            .k-spreadsheet-view table tr:last-child td {
                 border-bottom: 0;
             }
 
-            #area table td:last-child {
+            .k-spreadsheet-view table td:last-child {
                 border-right: 0;
             }
 
-            #area table td:first-child {
+            .k-spreadsheet-view table td:first-child {
                 border-left: 0;
             }
 
-            .cell {
-                box-sizing: border-box;
-                border: 1px solid gray;
+
+            /* Alternative rendering support */
+
+            .k-spreadsheet-fixed {
+                position: fixed;
                 overflow: hidden;
-                font-size: 11px;
-                position: absolute;
             }
 
-            form {
-                float: right;
+            .k-spreadsheet-fixed .k-spreadsheet-view {
+                position: static;
+            }
+
+            .k-spreadsheet-fixed table {
+                width: 100%;
+                height: 100%;
             }
         </style>
     </head>
     <body>
         <button>Sort first 100 rows</button>
-        <div id="wrapper">
-            <div id="area">
-                <div id="container"></div>
-            </div>
+
+        <div id="spreadsheet">
         </div>
 
         <script type="text/javascript" src="spreadsheet.js"></script>

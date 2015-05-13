@@ -3,10 +3,10 @@
 })(function(){
 
 (function(kendo) {
-    function Axis(count, value, staticTable) {
+    function Axis(count, value, fixed) {
         this.values = new kendo.spreadsheet.RangeList(0, count - 1, value, true);
         this.scrollBarSize = kendo.support.scrollbar();
-        this.staticTable = staticTable;
+        this.fixed = fixed;
         this._refresh();
     }
 
@@ -48,7 +48,7 @@
 
         offset = -offset;
 
-        if (!this.staticTable) {
+        if (!this.fixed) {
             offset += start;
         }
 

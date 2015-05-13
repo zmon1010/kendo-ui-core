@@ -8,8 +8,14 @@
         this.rowCount = rowCount;
     }
 
-    Grid.prototype.index = function(address) {
-        return address.column * this.rowCount + address.row;
+    Grid.prototype.index = function(column, row) {
+        if (arguments.length === 1) {
+            var address = column;
+            row = address.row;
+            column = address.column;
+        }
+
+        return column * this.rowCount + row;
     }
 
     Grid.prototype.address = function(index) {
