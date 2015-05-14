@@ -167,6 +167,31 @@
         equalBackgroundColor(events.eq(1), "red");
     });
 
+    test("resource color is applied as the background of the event in day view if resource value is boolean false", function() {
+        var scheduler = new kendo.ui.Scheduler(div, {
+            date: new Date("2013/6/6"),
+            resources: [
+                {
+                    field: "foo",
+                    dataSource: [
+                        { text: "", value: false, color: "red" },
+                        { text: "", value: true, color: "green" }
+                    ]
+                }
+            ],
+            dataSource: [
+                { start: new Date("2013/6/6 10:30"), end: new Date("2013/6/6 11:33"), title: "", foo: true },
+                { start: new Date("2013/6/6 11:00"), end: new Date("2013/6/6 11:33"), title: "", foo: false }
+            ],
+            views: [ "day" ]
+        });
+
+        var events = scheduler.element.find(".k-event");
+
+        equalBackgroundColor(events.eq(0), "green");
+        equalBackgroundColor(events.eq(1), "red");
+    });
+
     test("resource color is applied as the background of the event in day view when using valuePrimitive is false", function() {
         var scheduler = new kendo.ui.Scheduler(div, {
             date: new Date("2013/6/6"),

@@ -11,6 +11,7 @@ var __meta__ = {
     hidden: true
 };
 
+/* jshint eqnull: true */
 (function($) {
     var kendo = window.kendo,
         ui = kendo.ui,
@@ -1546,7 +1547,7 @@ var __meta__ = {
                 var field = resource.field;
                 var eventResources = kendo.getter(field)(event);
 
-                if (!eventResources) {
+                if (eventResources == null) {
                     continue;
                 }
 
