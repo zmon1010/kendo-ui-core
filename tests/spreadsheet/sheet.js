@@ -18,4 +18,14 @@
     test("rowHeight returns the height of the specified row", function() {
         equal(sheet.rowHeight(0), defaults.rowHeight);
     });
+
+    test("columnWidth sets the width of the specified column", function() {
+        sheet.columnWidth(0, 100);
+
+        equal(sheet._widths.values.iterator(0, 0).at(0), 100);
+    });
+
+    test("columnWidth returns the width of the specified column", function() {
+        equal(sheet.columnWidth(0), defaults.columnWidth);
+    });
 })();

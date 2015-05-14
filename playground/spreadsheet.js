@@ -11,7 +11,8 @@ for (var i = 0, len = 50; i < len; i++) {
     }
 }
 
-sheet.widths.value(1, 5, 120);
+sheet.columnWidth(1, 120);
+sheet.columnWidth(2, 120);
 sheet.rowHeight(1, 40);
 sheet.rowHeight(50, 200);
 
