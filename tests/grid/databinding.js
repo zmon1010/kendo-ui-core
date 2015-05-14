@@ -162,6 +162,68 @@
         equal(grid.thead.find(".k-filter-row").length, 1);
     });
 
+    test("resetting dataSource destroys the filter-row - non scrollable", function() {
+        var grid = new Grid(dom, {
+            scrollable: false,
+            filterable: {
+                mode: "row"
+            },
+            dataSource: {
+                data: [{foo: 1}]
+            }
+        });
+
+        var filterCell = grid.thead.find(".k-filter-row th>span").getKendoFilterCell();
+
+        var filterCellStub = stub(filterCell, { destroy: filterCell.destroy });
+
+        grid.setDataSource(new kendo.data.DataSource({
+            data:[{text: 1, value: 1}, {text:2, value:2}]
+        }));
+
+        equal(filterCellStub.calls("destroy"), 1);
+    });
+
+    test("resetting dataSource destroys the filter-row - scrollable", function() {
+        var grid = new Grid(dom, {
+            scrollable: true,
+            filterable: {
+                mode: "row"
+            },
+            dataSource: {
+                data: [{foo: 1}]
+            }
+        });
+
+        var filterCell = grid.thead.find(".k-filter-row th>span").getKendoFilterCell();
+
+        var filterCellStub = stub(filterCell, { destroy: filterCell.destroy });
+
+        grid.setDataSource(new kendo.data.DataSource({
+            data:[{text: 1, value: 1}, {text:2, value:2}]
+        }));
+
+        equal(filterCellStub.calls("destroy"), 1);
+    });
+
+    test("resetting dataSource removes previous filter-row - scrollable grid", function() {
+        var grid = new Grid(dom, {
+            scrollable: true,
+            filterable: {
+                mode: "row"
+            },
+            dataSource: {
+                data: [{foo: 1}]
+            }
+        });
+
+        grid.setDataSource(new kendo.data.DataSource({
+            data:[{text: 1, value: 1}, {text:2, value:2}]
+        }));
+
+        equal(grid.thead.find(".k-filter-row").length, 1);
+    });
+
     test("setDataSource resets the data area scroll offset to zero", function () {
         var grid = new Grid(dom, {
             dataSource: {

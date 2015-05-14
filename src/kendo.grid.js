@@ -5833,7 +5833,7 @@ var __meta__ = {
                     filterRow.prepend('<th class="k-hierarchy-cell">&nbsp;</th>');
                 }
 
-                var existingFilterRow = thead.find(".k-filter-row");
+                var existingFilterRow = (that.thead || thead).find(".k-filter-row");
                 if (existingFilterRow.length) {
                     kendo.destroy(existingFilterRow);
                     existingFilterRow.remove();
