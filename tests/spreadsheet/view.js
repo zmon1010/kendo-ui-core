@@ -17,10 +17,10 @@
 
         var rectangle = view.visibleRectangle();
 
-        equal(rectangle.top, 1000)
-        equal(rectangle.left, 1200)
-        equal(rectangle.right, 1400)
-        equal(rectangle.bottom, 1200)
+        equal(rectangle.top, 1000);
+        equal(rectangle.left, 1200);
+        equal(rectangle.right, 1400 - kendo.support.scrollbar());
+        equal(rectangle.bottom, 1200 - kendo.support.scrollbar());
     });
 
     test("builds correct table", function() {
