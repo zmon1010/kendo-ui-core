@@ -4070,6 +4070,10 @@ var __meta__ = {
             //dettach all previous events
             tables.off("mousedown" + NS + " focus" + NS + " focusout" + NS + " keydown" + NS);
 
+            headerTables
+                .on("keydown" + NS, proxy(that._openHeaderMenu, that))
+                .find("a.k-link").attr("tabIndex", -1);
+
             //prevent propagation when clicked inside detail grid
             dataTables
                 .attr(TABINDEX, math.max(dataTables.attr(TABINDEX) || 0, 0))
@@ -4085,6 +4089,13 @@ var __meta__ = {
                 .on("focus" + NS, proxy(that._tableFocus, that))
                 .on("focusout" + NS, proxy(that._tableBlur, that))
                 .on("keydown" + NS, proxy(that._tableKeyDown, that));
+        },
+
+        _openHeaderMenu: function(e) {
+            if (e.altKey && e.keyCode == keys.DOWN) {
+                this.current().find(".k-grid-filter, .k-header-column-menu").click();
+                e.stopImmediatePropagation();
+            }
         },
 
         _setTabIndex: function(table) {
@@ -4157,8 +4168,6 @@ var __meta__ = {
                     cell = this._nextVerticalCell(container, current);
                     if (cell[0]) {
                         focusTable(container.parent(), true);
-                    } else if (this.options.scrollable.virtual) {
-                        this.virtualScrollable.verticalScrollbar[0].scrollTop += this._averageRowHeight();
                     }
                 }
 
@@ -4203,6 +4212,8 @@ var __meta__ = {
                 this.current(cell);
                 //prevent scrolling while pressing the keys
                 e.preventDefault();
+                //required in hierarchy
+                e.stopPropagation();
             }
         },
 
@@ -7089,29 +7100,7 @@ var __meta__ = {
                 }
             }
 
-            if (currentIndex >= 0) {
-                that._removeCurrent();
-                if (isCurrentInHeader) {
-                    that.current(that.thead.find("th:not(.k-group-cell)").eq(currentIndex));
-                } else {
-                    var rowIndex = this.virtualScrollable.position(this._rowVirtualIndex);
-                    var row = $();
-
-                    if (this.lockedTable) {
-                        row = this.lockedTable.find(">tbody>tr").eq(rowIndex);
-                    }
-                    row = row.add(this.tbody.children().eq(rowIndex));
-
-                    var td = row.find(">td:not(.k-group-cell):not(.k-hierarchy-cell)")
-                        .eq(currentIndex);
-
-                    this.current(td);
-                }
-
-                if (that._current) {
-                    focusTable(that._current.closest("table")[0], true);
-                }
-            }
+            that._restoreCurrent(currentIndex, isCurrentInHeader);
 
             if (that.touchScroller) {
                 that.touchScroller.contentResized();
@@ -7125,6 +7114,35 @@ var __meta__ = {
 
             that.trigger(DATABOUND);
        },
+
+        _restoreCurrent: function(currentIndex, isCurrentInHeader) {
+            if (currentIndex < 0) {
+                return;
+            }
+
+            this._removeCurrent();
+
+            if (isCurrentInHeader) {
+                this.current(this.thead.find("th:not(.k-group-cell)").eq(currentIndex));
+            } else {
+                var rowIndex = this.virtualScrollable.position(this._rowVirtualIndex);
+                var row = $();
+
+                if (this.lockedTable) {
+                    row = this.lockedTable.find(">tbody>tr").eq(rowIndex);
+                }
+                row = row.add(this.tbody.children().eq(rowIndex));
+
+                var td = row.find(">td:not(.k-group-cell):not(.k-hierarchy-cell)")
+                    .eq(currentIndex);
+
+                this.current(td);
+            }
+
+            if (this._current) {
+                focusTable(that._current.closest("table")[0], true);
+            }
+        },
 
        _angularItems: function(cmd) {
 
