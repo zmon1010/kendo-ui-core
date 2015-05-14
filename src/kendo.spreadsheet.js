@@ -10,9 +10,9 @@
 })(function(){
     var __meta__ = {
         id: "spreadsheet",
-        name: "SpreadSheet",
+        name: "Spreadsheet",
         category: "web",
-        description: "SpreadSheet component",
+        description: "Spreadsheet component",
         depends: [],
         features: []
     };
