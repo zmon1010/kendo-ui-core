@@ -75,6 +75,10 @@ namespace Kendo.Mvc.Rendering
             string name,
             IDictionary<string, object> htmlAttributes);
 
+        TagBuilder GenerateTag(
+            string tagName,
+            IDictionary<string, object> htmlAttributes);
+
         IDictionary<string, object> GetValidationAttributes(
             ViewContext viewContext,
             ModelMetadata metadata,

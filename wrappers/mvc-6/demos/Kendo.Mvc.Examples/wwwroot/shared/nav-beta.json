@@ -2700,6 +2700,110 @@
         "category": "Scheduling"
     },
     {
+        "text": "Splitter",
+        "name": "splitter",
+        "api": "web/splitter",
+        "documentation": {
+            "kendo-ui": "getting-started/web/splitter/overview",
+            "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/splitter/overview",
+            "jsp-ui": "getting-started/using-kendo-with/jsp/tags/splitter/overview",
+            "php-ui": "getting-started/using-kendo-with/php/widgets/splitter/overview"
+        },
+        "forum": {
+            "kendo-ui": "kendo-ui/splitter",
+            "aspnet-mvc": "aspnet-mvc/splitter",
+            "jsp-ui": "jsp/splitter",
+            "php-ui": "php/splitter"
+        },
+        "codelibrary": {
+            "kendo-ui": "kendo-ui/splitter",
+            "aspnet-mvc": "aspnet-mvc/splitter",
+            "jsp-ui": "jsp/splitter",
+            "php-ui": "php/splitter"
+        },
+        "spriteCssClass": "splitterIcon",
+        "items": [
+            {
+                "text": "Basic usage",
+                "url": "splitter/index",
+                "title": {
+                    "kendo-ui": "Features, supported in Kendo UI Splitter widget | Kendo UI Web demo",
+                    "aspnet-mvc": "Splitter example in ASP.NET MVC | UI for ASP.NET MVC demos"
+                },
+                "meta": {
+                    "kendo-ui": "This demo illustrates the basic usage and core functionality of Kendo UI Splitter.",
+                    "aspnet-mvc": "In this Splitter demo you will learn how to configure Kendo UI jQuery-powered Splitter in ASP.NET MVC."
+                }
+            },
+            {
+                "text": "Loading content with AJAX",
+                "url": "splitter/ajax",
+                "title": {
+                    "kendo-ui": "AJAX Content in Kendo UI Splitter widget | Kendo UI Web demo",
+                    "aspnet-mvc": "Loading content with AJAX in Telerik ASP.NET MVC Splitter"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows how AJAX content is loaded in the container's display area of Kendo UI Splitter control.",
+                    "aspnet-mvc": "This demo shows how Telerik ASP.NET MVC Splitter control enables you to load content with AJAX."
+                },
+                "requiresServer": "true"
+            },
+            {
+                "text": "Events",
+                "url": "splitter/events",
+                "title": {
+                    "kendo-ui": "Events in Kendo UI Splitter widget | Kendo UI Web demo",
+                    "aspnet-mvc": "Events in ASP.NET MVC Splitter control | UI for ASP.NET MVC demo"
+                },
+                "meta": {
+                    "kendo-ui": "This demo shows the events which change the behavior of Kendo UI Splitter. Find more about resize events and Javascript function names to be called before the panel is collapsed.",
+                    "aspnet-mvc": "See the events that change the behavior of ASP.NET MVC Splitter. Learn about resize events and Javascript function names to be called before the panel is collapsed."
+                },
+                "requiresServer": "true"
+            },
+            {
+                "text": "API",
+                "url": "splitter/api",
+                "title": {
+                    "kendo-ui": "Kendo UI Splitter API Demo",
+                    "aspnet-mvc": "ASP.NET MVC Splitter API Demo"
+                },
+                "meta": {
+                    "kendo-ui": "This example shows how API of Kendo UI Splitter widget works. Find all API functions to expand/collapse content and resize the pane.",
+                    "aspnet-mvc": "This example shows how API of ASP.NET MVC Splitter control works. Find all API functions to expand/collapse content and resize the pane."
+                },
+                "requiresServer": "true"
+            },
+            {
+                "text": "RTL support",
+                "disableInMobile": true,
+                "url": "splitter/right-to-left-support",
+                "title": {
+                    "kendo-ui": "Right-to-left support in Kendo UI Splitter control | Kendo UI Web demo",
+                    "aspnet-mvc": "Right-to-left support in ASP.NET MVC Splitter control"
+                },
+                "meta": {
+                    "kendo-ui": "In this demo we will play with the right-to-left text input and visualization which is enabled in Kendo UI Splitter widget.",
+                    "aspnet-mvc": "In this demo we will play with the right-to-left text input and visualization which is enabled in ASP.NET MVC Splitter control."
+                }
+            },
+            {
+                "text": "Keyboard navigation",
+                "disableInMobile": true,
+                "url": "splitter/keyboard-navigation",
+                "title": {
+                    "kendo-ui": "Keyboard navigation support in Kendo UI Slider",
+                    "aspnet-mvc": "Keyboard navigation support in ASP.NET MVC Slider"
+                },
+                "meta": {
+                    "kendo-ui": "Users can easily manipulate the behaviour of Kendo UI Slider by using different keyboard keys and combinations.",
+                    "aspnet-mvc": "Users can easily manipulate the behaviour of ASP.NET MVC Slider by using different keyboard keys and combinations."
+                }
+            }
+        ],
+        "category": "Layout"
+    },
+    {
         "text": "TimePicker",
         "name": "timepicker",
         "api": "web/timepicker",

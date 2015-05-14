@@ -64,7 +64,7 @@ namespace Kendo.Mvc.Tests
 
 			var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
 			var viewData = new ViewDataDictionary(provider, new ModelStateDictionary());
-            var viewContext = new ViewContext(actionContext, Mock.Of<IView>(), viewData, Mock.Of<ITempDataDictionary>(), TextWriter.Null);
+            var viewContext = new ViewContext(actionContext, Mock.Of<IView>(), viewData, Mock.Of<ITempDataDictionary>(), new Mock<TextWriter>() { CallBase = true }.Object);
 
             return viewContext;
 		}

@@ -73,3 +73,6 @@
 - window.appendto
 - window.content
 - window.resizable
+- splitter.panes.max
+- splitter.panes.min
+- splitter.panes.contentUrl

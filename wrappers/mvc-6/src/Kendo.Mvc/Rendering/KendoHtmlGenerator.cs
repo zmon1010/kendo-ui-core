@@ -137,7 +137,16 @@ namespace Kendo.Mvc.Rendering
 			return GenerateInput(viewContext, metadata, id, name, value, format, "number", htmlAttributes);
 		}
 
-		public virtual TagBuilder GenerateTag(
+        public virtual TagBuilder GenerateTag(
+            string tagName,            
+            IDictionary<string, object> htmlAttributes)
+        {            
+            var tagBuilder = new TagBuilder(tagName);            
+            tagBuilder.MergeAttributes(htmlAttributes, replaceExisting: true);
+            return tagBuilder;
+        }
+
+        public virtual TagBuilder GenerateTag(
             string tagName,
             ViewContext viewContext,
             string id,

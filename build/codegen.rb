@@ -216,7 +216,8 @@ namespace :generate do
                 'docs/api/javascript/ui/toolbar.md',
                 'docs/api/javascript/ui/tooltip.md',
                 'docs/api/javascript/ui/upload.md',
-                'docs/api/javascript/ui/window.md'
+                'docs/api/javascript/ui/window.md',
+                'docs/api/javascript/ui/splitter.md'
             ]
 
             components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }
