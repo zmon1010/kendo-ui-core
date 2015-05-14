@@ -45,6 +45,9 @@
                 .kendoTreeList({
                     dataSource: dataSource,
                     sortable: true,
+                    editable: {
+                        move: true
+                    },
                     height: 540,
                     columns: [
                         { field: "Position" },
@@ -53,46 +56,6 @@
                     ]
                 }).data("kendoTreeList");
 
-
-            var dragging = new kendo.ui.HierarchicalDragAndDrop(treelist.element, {
-                $angular: treelist.$angular,
-                autoScroll: true,
-                filter: "tbody>tr",
-                itemSelector: "tr",
-                allowedContainers: "#treelist",
-                hintText: function(row) {
-                    return row.find("td:eq(1)").text();
-                },
-                contains: function(source, destination) {
-                    var dest = treelist.dataItem(destination);
-                    var src = treelist.dataItem(source);
-
-                    return src == dest || treelist.dataSource.contains(src, dest);
-                },
-                itemFromTarget: function(target) {
-                    var tr = target.closest("tr");
-                    return { item: tr, content: tr };
-                },
-                dragstart: function() {
-                    treelist.wrapper.addClass("k-treelist-dragging");
-                },
-                drop: function() {
-                    treelist.wrapper.removeClass("k-treelist-dragging");
-                },
-                dragend: function(e) {
-                    var dest = treelist.dataItem(e.destination);
-                    var src = treelist.dataItem(e.source);
-
-                    src.set("parentId", dest ? dest.id : null);
-                },
-                reorderable: false,
-                dropHintContainer: function(item) {
-                    return item.children("td:eq(1)"); // expandable column
-                },
-                dropPositionFrom: function(dropHint) {
-                    return dropHint.prevAll(".k-i-none").length > 0 ? "after" : "before";
-                }
-            });
         });
     </script>
 

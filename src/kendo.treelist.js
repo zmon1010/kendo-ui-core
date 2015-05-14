@@ -877,6 +877,7 @@ var __meta__ = {
             this._reorderable();
             this._columnMenu();
             this._minScreenSupport();
+            this._draggable();
 
             if (this.options.autoBind) {
                 this.dataSource.fetch();
@@ -890,6 +891,54 @@ var __meta__ = {
             }
 
             kendo.notify(this);
+        },
+
+        _draggable: function() {
+            var editable = this.options.editable;
+
+            if (!editable || !editable.move) {
+                return;
+            }
+
+            this._dragging = new kendo.ui.HierarchicalDragAndDrop(this.wrapper, {
+                $angular: this.$angular,
+                autoScroll: true,
+                filter: "tbody>tr",
+                itemSelector: "tr",
+                allowedContainers: "#" + this.wrapper.attr("id"),
+                hintText: function(row) {
+                    return row.find("td:eq(1)").text();
+                },
+                contains: proxy(function(source, destination) {
+                    var dest = this.dataItem(destination);
+                    var src = this.dataItem(source);
+
+                    return src == dest || this.dataSource.contains(src, dest);
+                }, this),
+                itemFromTarget: function(target) {
+                    var tr = target.closest("tr");
+                    return { item: tr, content: tr };
+                },
+                dragstart: proxy(function() {
+                    this.wrapper.addClass("k-treelist-dragging");
+                }, this),
+                drop: proxy(function() {
+                    this.wrapper.removeClass("k-treelist-dragging");
+                }, this),
+                dragend: proxy(function(e) {
+                    var dest = this.dataItem(e.destination);
+                    var src = this.dataItem(e.source);
+
+                    src.set("parentId", dest ? dest.id : null);
+                }, this),
+                reorderable: false,
+                dropHintContainer: function(item) {
+                    return item.children("td:eq(1)"); // expandable column
+                },
+                dropPositionFrom: function(dropHint) {
+                    return dropHint.prevAll(".k-i-none").length > 0 ? "after" : "before";
+                }
+            });
         },
 
         _scrollable: function() {
@@ -1147,6 +1196,11 @@ var __meta__ = {
 
             if (this._resizeHandler) {
                 $(window).off("resize" + NS, this._resizeHandler);
+            }
+
+            if (this._dragging) {
+                this._dragging.destroy();
+                this._dragging = null;
             }
 
             if (this.resizable) {
