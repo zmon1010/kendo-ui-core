@@ -1,0 +1,17 @@
+:options:
+    - :name: axis
+      :type: String
+      :enum_type: SortableAxis
+      :description: Represents the Sortable widget Axis
+      :values:
+          - :value: x
+            :member: X
+            :description: X axis
+
+          - :value: y
+            :member: Y
+            :description: Y axis
+            
+          - :value: 0
+            :member: None
+            :description: Default value

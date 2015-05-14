@@ -55,6 +55,9 @@
 - scheduler.resources
 - scheduler.toolbar
 - scheduler.views
+- sortable.container
+- sortable.hint
+- sortable.placeholder
 - timepicker.animation
 - tooltip.animation
 - tooltip.content

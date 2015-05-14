@@ -1977,6 +1977,264 @@
         ],
         "category": "Interactivity & UX"
     },
+      {
+    "text": "Slider",
+    "name": "slider",
+    "disableInMobile": true,
+    "api": "web/slider",
+    "documentation": {
+       "kendo-ui": "getting-started/web/slider/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/slider/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/slider/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/slider/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/slider",
+       "aspnet-mvc": "aspnet-mvc/slider",
+       "jsp-ui": "jsp/slider",
+       "php-ui": "php/slider"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/slider",
+       "aspnet-mvc": "aspnet-mvc/slider",
+       "jsp-ui": "jsp/slider",
+       "php-ui": "php/slider"
+    },
+    "spriteCssClass": "sliderIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "slider/index",
+        "title": {
+            "kendo-ui": "Kendo jQuery Slider Control Demo",
+            "aspnet-mvc": "ASP.NET MVC Slider Extension Demo"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the basic functionality of Kendo UI slider widget, included in Kendo UI Web framework.",
+            "aspnet-mvc": "This example illustrates how Telerik ASP.NET MVC Slider extension for Kendo UI Slider widget allows end users to interact with slider's main feature."
+        }
+      },
+      {
+        "text": "Events",
+        "url": "slider/events",
+        "title": {
+            "kendo-ui": "Events demo in Kendo UI Slider Widget",
+            "aspnet-mvc": "Events demo in ASP.NET MVC Slider control"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how events are handled and triggered in Kendo UI HTML&jQuery Slider.",
+            "aspnet-mvc": "This demo shows how events are handled and triggered in ASP.NET MVC Slider."
+        }
+      },
+      {
+        "text": "API",
+        "url": "slider/api",
+        "title": {
+            "kendo-ui": "Kendo UI Slider API Functions Example",
+            "aspnet-mvc": "API for Telerik ASP.NET MVC Slider control"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows API Functions of KendoSlider. Demo Source Code will help you find out how to handle events and the behavior of the component.",
+            "aspnet-mvc": "This sample demonstrates how to use ASP.NET MVC Slider API functions. Play with range slider API functions and examine the demo for your specific scenario."
+        }
+      },
+      {
+        "text": "RTL support",
+        "disableInMobile": true,
+        "url": "slider/right-to-left-support",
+        "title": {
+            "kendo-ui": "Right-to-left support in Kendo UI Slider | Kendo UI Web Demos",
+            "aspnet-mvc": "Right-to-left support in ASP.NET MVC Slider | ASP.NET MVC Demos"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates how the right-to-left feature is enabled in Kendo UI Slider widget.",
+            "aspnet-mvc": "This demo illustrates how the right-to-left feature is enabled in ASP.NET MVC Slider control."
+        }
+      },
+      {
+        "text": "Keyboard navigation",
+        "disableInMobile": true,
+        "url": "slider/keyboard-navigation",
+        "title": {
+            "kendo-ui": "Keyboard navigation in Kendo UI Slider | Kendo UI Web Demos",
+            "aspnet-mvc": "Keyboard navigation in ASP.NET MVC Slider | ASP.NET MVC Demo"
+        },
+        "meta": {
+            "kendo-ui": "This demo illustrates the keyboard navigation feature of Telerik Kendo UI Slider control.",
+            "aspnet-mvc": "This demo illustrates the keyboard navigation feature of Telerik ASP.NET MVC Slider control."
+        }
+      },
+      {
+        "text": "MVVM",
+        "url": "slider/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI Slider"
+        },
+        "meta": {
+            "kendo-ui": "Enabled, events, value and visible MVVM binding support in Kendo UI Slider"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+    {
+        "text": "AngularJS",
+        "url": "slider/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Slider"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directive support for Kendo UI Slider"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Editors"
+  },
+    {
+    "text": "Sortable",
+    "name": "sortable",
+    "api": "web/sortable",
+    "documentation": {
+       "kendo-ui": "getting-started/web/sortable/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/sortable/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/sortable/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/sortable/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/sortable",
+       "aspnet-mvc": "aspnet-mvc/sortable",
+       "jsp-ui": "jsp/sortable",
+       "php-ui": "php/sortable"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/sortable",
+       "aspnet-mvc": "aspnet-mvc/sortable",
+       "jsp-ui": "jsp/sortable",
+       "php-ui": "php/sortable"
+    },
+    "spriteCssClass": "sortableIcon",
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "sortable/index",
+        "title": {
+            "kendo-ui": "Demo for Sortable Component in Kendo UI jQuery framework",
+            "aspnet-mvc": "Demo for Sortable Component in ASP.NET MVC"
+        },
+        "meta": {
+            "kendo-ui": "This example illustrates the basic functionality of Kendo UI Sortable component which provides a cross-browser, touch-friendly way to reorder HTML elements via drag and drop.",
+            "aspnet-mvc": "See the basic functionality of ASP.NET MVC Sortable component which provides a cross-browser, touch-friendly way to reorder HTML elements via drag and drop."
+        }
+      },
+      {
+        "text": "Filter / Disable items",
+        "url": "sortable/filter-disable",
+        "title": {
+            "kendo-ui": "Demo for filter and disable items functionality of Kendo UI Sortable Component",
+            "aspnet-mvc": "Filter and disable items in ASP.NET MVC Sortable control"
+        },
+        "meta": {
+            "kendo-ui": "This example illustrates the filter and disable items functionality of Kendo UI Sortable component which provides a cross-browser, touch-friendly way to reorder HTML elements via drag and drop.",
+            "aspnet-mvc": "See how you can filter and disable items in ASP.NET MVC Sortable which provides a cross-browser, touch-friendly way to reorder HTML elements via drag and drop."
+        }
+      },
+      {
+        "text": "Handlers",
+        "url": "sortable/handlers",
+        "title": {
+            "kendo-ui": "Demo for handler functionality of Kendo UI Sortable Component",
+            "aspnet-mvc": "Demo for handler functionality of ASP.NET MVC Sortable Component"
+        },
+        "meta": {
+            "kendo-ui": "This example illustrates the handler feature of Kendo UI Sortable component which provides a cross-browser, touch-friendly way to reorder HTML elements via drag and drop.",
+            "aspnet-mvc": "See the handler feature of ASP.NET MVC Sortable control which provides a cross-browser, touch-friendly way to reorder HTML elements via drag and drop."
+        }
+      },
+      {
+        "text": "Axis / Container constraints",
+        "url": "sortable/constraints",
+        "title": {
+            "kendo-ui": "Demo for axis / container functionality of Kendo UI Sortable Component",
+            "aspnet-mvc": "Demo for axis / container functionality of ASP.NET MVC Sortable"
+        },
+        "meta": {
+            "kendo-ui": "This example illustrates the axis / container restriction feature of Kendo UI Sortable component which provides a cross-browser, touch-friendly way to reorder HTML elements via drag and drop.",
+            "aspnet-mvc": "See the axis/container restriction feature of ASP.NET MVC Sortable, which provides a cross-browser, touch-friendly way to reorder HTML elements via drag and drop."
+        }
+      },
+      {
+        "text": "Linked Lists",
+        "url": "sortable/linkedlists",
+        "title": {
+            "kendo-ui": "Demo for linked list functionality of Kendo UI Sortable Component",
+            "aspnet-mvc": "Linked list functionality of ASP.NET MVC Sortable control"
+        },
+        "meta": {
+            "kendo-ui": "This example illustrates the linked lists feature of Kendo UI Sortable component which provides a cross-browser, touch-friendly way to reorder HTML elements via drag and drop.",
+            "aspnet-mvc": "Check out the linked lists feature of ASP.NET MVC Sortable component which provides a cross-browser, touch-friendly way to reorder HTML elements via drag and drop."
+        }
+      },
+      {
+        "text": "Events",
+        "url": "sortable/events",
+        "title": {
+            "kendo-ui": "Events example for Kendo UI Sortable Component",
+            "aspnet-mvc": "Events example for ASP.NET MVC Sortable Component"
+        },
+        "meta": {
+            "kendo-ui": "This example shows events of Kendo UI Sortable widget.",
+            "aspnet-mvc": "This example shows events of ASP.NET MVC Sortable control."
+        }
+      },
+      {
+        "text": "Sortable panels",
+        "url": "sortable/sortable-panels",
+        "title": {
+            "kendo-ui": "Panels example for Kendo UI Sortable Component",
+            "aspnet-mvc": "Panels example for ASP.NET MVC Sortable Component"
+        },
+        "meta": {
+            "kendo-ui": "This example demonstrates the usage of Kendo UI Sortable widget.",
+            "aspnet-mvc": "See how to sort panels with simple drag and drop in ASP.NET MVC Sortable."
+        }
+      },
+      {
+        "text": "Integration - Grid",
+        "url": "sortable/integration-grid",
+        "title": {
+            "kendo-ui": "Kendo UI Grid integration with Sortable Component",
+            "aspnet-mvc": "ASP.NET MVC Grid integration with Sortable Component"
+        },
+        "meta": {
+            "kendo-ui": "This example demonstrates Kendo UI Grid integration with Sortable Component.",
+            "aspnet-mvc": "This example demonstrates ASP.NET MVC Grid integration with Sortable Component."
+        }
+      },
+      {
+        "text": "AngularJS",
+        "url": "sortable/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Sortable"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directive support for Kendo UI Sortable"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Interactivity & UX"
+  },
     {
     "text": "Radial Gauge",
     "name": "radial-gauge",

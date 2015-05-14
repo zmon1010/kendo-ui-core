@@ -210,6 +210,7 @@ namespace :generate do
                 'docs/api/javascript/ui/rangeslider.md',
                 'docs/api/javascript/ui/scheduler.md',
                 'docs/api/javascript/ui/slider.md',
+                'docs/api/javascript/ui/sortable.md',
                 'docs/api/javascript/ui/timepicker.md',
                 'docs/api/javascript/ui/treelist.md',
                 'docs/api/javascript/ui/toolbar.md',

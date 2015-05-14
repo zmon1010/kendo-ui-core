@@ -35,3 +35,11 @@
 - calendar.monthTemplate.emptyId
 - lineargauge.transitions
 - radialgauge.transitions
+- sortable.disabled
+- sortable.filter
+- sortable.handler
+- sortable.ignore
+- sortable.holdToDrag
+- sortable.axis
+- sortable.cursor
+- sortable.connectWith
