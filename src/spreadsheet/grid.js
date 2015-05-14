@@ -9,8 +9,9 @@
     }
 
     Grid.prototype.index = function(column, row) {
-        if (arguments.length === 1) {
+        if (row === undefined) {
             var address = column;
+
             row = address.row;
             column = address.column;
         }

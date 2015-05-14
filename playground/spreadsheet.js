@@ -6,8 +6,7 @@ var sheet = spreadsheet.activeSheet();
 
 for (var i = 0, len = 50; i < len; i++) {
     for (var j = 0, len = 200; j < len; j++) {
-        var idx = i * 200 + j;
-        sheet.values.value(idx, idx, i + ":" + j);
+        sheet.range(i, j).value(i + ":" + j);
     }
 }
 

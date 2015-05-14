@@ -98,7 +98,7 @@
     View.prototype.renderAt = function(rectangle) {
         var sheet = this._sheet;
         var view = sheet.view(rectangle);
-        var grid = sheet.grid;
+        var grid = sheet._grid;
         var rows = view.rows;
         var columns = view.columns;
 
@@ -112,7 +112,7 @@
             var startCellIndex = grid.index(ci, rows.start);
             var endCellIndex = grid.index(ci, rows.end);
 
-            var values = sheet.values.iterator(startCellIndex, endCellIndex);
+            var values = sheet._values.iterator(startCellIndex, endCellIndex);
             var backgrounds = sheet.colors.iterator(startCellIndex, endCellIndex);
 
             table.addColumn(columns.values.at(ci));

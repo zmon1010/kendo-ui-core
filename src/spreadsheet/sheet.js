@@ -9,10 +9,10 @@
 
         var cellsCount = rows * columns - 1;
 
-        this.values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "");
+        this._values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "");
         this.colors = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "beige");
 
-        this.grid = new kendo.spreadsheet.Grid(columns, rows);
+        this._grid = new kendo.spreadsheet.Grid(columns, rows);
     }
 
     Sheet.prototype = {
@@ -33,6 +33,9 @@
         },
         totalWidth: function() {
             return this._columns.total;
+        },
+        range: function(row, column, numRows, numColumns) {
+            return new kendo.spreadsheet.Range(this, row, column, numRows, numColumns);
         }
     }
 

@@ -27,7 +27,7 @@
         var sheet = new kendo.spreadsheet.Sheet(10, 10, 10, 10);
 
         for (var i = 0, len = 100; i < len; i++) {
-            sheet.values.value(i, i, i);
+            sheet._values.value(i, i, i);
         }
 
         var element = $("<div style='width:110px;height:110px' />").appendTo(QUnit.fixture);

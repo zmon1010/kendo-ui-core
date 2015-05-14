@@ -28,4 +28,8 @@
     test("columnWidth returns the width of the specified column", function() {
         equal(sheet.columnWidth(0), defaults.columnWidth);
     });
+
+    test("range returns a Range object", function() {
+        ok(sheet.range(0, 0) instanceof kendo.spreadsheet.Range);
+    });
 })();

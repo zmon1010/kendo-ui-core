@@ -1,6 +1,7 @@
 (function(f, define){
     define([
         "./spreadsheet/rangelist",
+        "./spreadsheet/range",
         "./spreadsheet/sheet",
         "./spreadsheet/view",
         "./spreadsheet/grid",
