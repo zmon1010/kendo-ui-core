@@ -67,16 +67,6 @@
 
 <script>
     angular.module("kendoDemo", [ 'kendo.directives' ]).controller("appController", function($scope) {
-        var mobileTheme = window.kendoMobileTheme;
-
-        var options = { hideAddressBar: false };
-
-        if (mobileTheme === "flat") {
-            options.skin = "flat";
-            } else {
-            options.platform = mobileTheme;
-        }
-
         $scope.appOptions = options;
     });
 </script>

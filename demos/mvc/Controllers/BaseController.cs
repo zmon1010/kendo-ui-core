@@ -119,11 +119,9 @@ namespace Kendo.Controllers
                 theme = themeCookie.Value;
             }
 
-            var MobileThemeCookie = HttpContext.Request.Cookies["mobileTheme"];
             var CommonFileCookie = HttpContext.Request.Cookies["commonFile"];
 
             ViewBag.Theme = theme;
-            ViewBag.MobileTheme = MobileThemeCookie == null ? "ios7" : MobileThemeCookie.Value;
             ViewBag.CommonFile = CommonFileCookie == null ? "common-material" : CommonFileCookie.Value;
         }
 

@@ -6,8 +6,6 @@ DEMOS_CS = FileList['demos/mvc/**/*.cs']
 
 DEMOS_BULDFILES = FileList['build/demos.rb'].include('build/templates/**/*.erb')
 
-BUNDLE_INDEX_TEMPLATE = ERB.new(File.read('build/templates/bundle-index.html.erb'))
-
 OFFLINE_DEMO_TEMPLATE_OPTIONS = {
     "/spa/Sushi.html" => {
         skip_back_button: true,
@@ -86,7 +84,7 @@ def include_item?(item)
     (!invert && match) || (invert && !match)
 end
 
-def find_demo_src (filename, path)
+def find_demo_src(filename, path)
     filename = filename.sub(path, 'demos/mvc/Views/demos').pathmap('%X.cshtml')
 
     DEMOS_CSHTML.find { |file| file == filename }
@@ -104,20 +102,15 @@ def find_navigation_item(categories, filename)
     return nil, nil
 end
 
-def offline_navigation(path)
-
-    categories = YAML.load(File.read("demos/mvc/content/nav.json"))
-
+def offline_navigation
     offline = []
+    categories = YAML.load(File.read("demos/mvc/content/nav.json"))
 
     categories.each do |category|
 
-        next if path.include?('mobile.commercial') && category['name'] == 'adaptive'
-        next if path.include?('web') && category['name'] == 'mobile'
-
         if include_item?(category)
             category['items'] = category['items'].find_all do |item|
-                include_item?(item) && !(item['external'] && path.include?('web.commercial'))
+                include_item?(item)
             end
 
             offline.push(category)
@@ -132,11 +125,13 @@ def offline_demos(categories, path)
     demos = []
 
     categories.each do |category|
-
         category['items'].each do |item|
             demos.push("#{path}/#{item['url']}.html") unless item['external']
         end
+    end
 
+    YAML.load(File.read("demos/mvc/content/mobile-nav.json")).each do |item|
+        demos.push("#{path}/#{item['url']}.html")
     end
 
     FileList[demos]
@@ -156,28 +151,19 @@ def demos(options)
          :from => FileList['demos/mvc/content/**/*'].exclude('**/docs/*'),
          :root => 'demos/mvc/content/'
 
-    # Build the index.html page of the demos
-    file "#{path}/index.html" => [path, 'build/templates/bundle-index.html.erb'] do |t|
+    categories = offline_navigation
 
-        File.open(t.name, 'w') do |file|
-            file.write BUNDLE_INDEX_TEMPLATE.result(binding) # 'binding' is the current scope
-        end
+    files = files + offline_demos(categories, path).include("#{path}/index.html");
 
+    file "#{path}/mobile.html" => DEMOS_BULDFILES.include("build/templates/suite-index.html.erb") do |t|
+        cp "build/templates/mobile.html", t.name
     end
 
-    suite_path  = "#{path}"
-
-    categories = offline_navigation(path)
-
-    files = files + offline_demos(categories, suite_path).include("#{suite_path}/index.html");
-
-    # Build the index.html page of the suite
-    file "#{suite_path}/index.html" => DEMOS_BULDFILES.include("build/templates/suite-index.html.erb") do |t|
+    file "#{path}/index.html" => DEMOS_BULDFILES.include("build/templates/suite-index.html.erb") do |t|
 
         template = ERB.new(File.read("build/templates/suite-index.html.erb"))
 
         File.write(t.name, template.result(binding))
-
     end
 
     template = ERB.new(File.read("build/templates/#{template_dir}/example.html.erb"), 0, '%<>')
@@ -204,13 +190,15 @@ def demos(options)
 
         category, item = find_navigation_item(categories, t.name)
 
-        requiresServer = item['requiresServer'].nil? ? false : item['requiresServer']
+        if item
+            requiresServer = item['requiresServer'].nil? ? false : item['requiresServer']
+            title = item['text'] # used by the template and passed via 'binding'
+            File.write(t.name, template.result(binding));
+        else
+            body.gsub!("../content", "content")
+            File.write(t.name, body);
+        end
 
-        mobile = (category['mobile'] && !item['disableInMobile']) || item['mobile']
-
-        title = item['text'] # used by the template and passed via 'binding'
-
-        File.write(t.name, template.result(binding));
     end
 
     files

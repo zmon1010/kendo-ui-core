@@ -10,16 +10,10 @@ namespace Kendo.Controllers
     {
         public ActionResult Index()
         {
-            if (IsMobileDevice())
-            {
-                return Redirect(Url.RouteUrl("MobileDeviceIndex"));
-            }
-
             ViewBag.Product = CurrentProduct();
             ViewBag.NavProduct = CurrentNavProduct();
 
             ViewBag.Theme = "material";
-            ViewBag.MobileTheme = "ios7";
             ViewBag.CommonFile = "common-material";
 
             LoadNavigation();

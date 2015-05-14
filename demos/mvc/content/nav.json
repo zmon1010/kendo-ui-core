@@ -125,7 +125,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "autocomplete/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left support in Kendo UI AutoComplete widget",
@@ -138,7 +137,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "autocomplete/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI AutoComplete widget",
@@ -269,7 +267,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "button/right-to-left-support",
         "title": {
             "kendo-ui": "Kendo UI Button RTL Support",
@@ -282,7 +279,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "button/keyboard-navigation",
         "title": {
             "kendo-ui": "Kendo UI Button Keyboard Navigation",
@@ -325,6 +321,43 @@
       }
     ],
     "category": "Navigation"
+  },
+  {
+    "text": "ButtonGroup",
+    "name": "buttongroup",
+    "api": "mobile/buttongroup",
+    "category": "Navigation",
+    "documentation": {
+       "kendo-ui": "getting-started/mobile/buttongroup",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilebuttongroup/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/button-group",
+       "aspnet-mvc": "aspnet-mvc/buttongroup"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/buttongroup",
+       "aspnet-mvc": "aspnet-mvc/buttongroup"
+    },
+    "spriteCssClass": "mobileButtonGroupIcon",
+    "packages": [ "!jsp", "!php" ],
+    "items": [
+      {
+        "text": "Basic Usage",
+        "url": "buttongroup/index",
+        "title": {
+            "kendo-ui": "Mobile ButtonGroup widget demo | Kendo UI Demos"
+        },
+        "meta": {
+            "kendo-ui": "This example demonstrates the Mobile ButtonGroup"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ]
   },
   {
     "text": "Calendar",
@@ -407,7 +440,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "calendar/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left functionality, enabled in Kendo UI Calendar widget",
@@ -420,7 +452,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "calendar/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation demo for Kendo UI Calendar widget",
@@ -539,7 +570,6 @@
       },
       {
         "text": "Keyboard support",
-        "disableInMobile": true,
         "url": "colorpicker/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard support enabled in Kendo UI ColorPicker widget",
@@ -553,7 +583,6 @@
       {
         "text": "Events",
         "url": "colorpicker/events",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Events in Kendo UI ColorPicker widget",
             "aspnet-mvc": "Events in ASP.NET MVC ColorPicker control"
@@ -747,7 +776,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "combobox/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left support in Kendo UI ComboBox widget",
@@ -760,7 +788,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "combobox/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard nagivation in Kendo UI ComboBox | Kendo UI Web demos",
@@ -897,7 +924,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "datepicker/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI DatePicker widget | Kendo UI Demo",
@@ -910,7 +936,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "datepicker/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI DatePicker",
@@ -1047,7 +1072,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "datetimepicker/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left support in Kendo UI DateTimePicker control | Kendo UI Demo",
@@ -1060,7 +1084,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "datetimepicker/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI DateTimePicker widget",
@@ -1250,7 +1273,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "dropdownlist/right-to-left-support",
         "title": {
             "kendo-ui": "RTL feature in Kendo UI DropDownList",
@@ -1263,7 +1285,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "dropdownlist/keyboard-navigation",
         "title": {
             "kendo-ui": "Kendo UI DropdownList | Keyboard navigation demo",
@@ -1311,7 +1332,6 @@
     "text": "Editor",
     "name": "editor",
     "pro": "true",
-    "disableInMobile": true,
     "api": "web/editor",
     "documentation": {
        "kendo-ui": "getting-started/web/editor/overview",
@@ -1336,7 +1356,6 @@
       {
         "text": "Basic usage",
         "url": "editor/index",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Demo for jQuery WYSIWYG editor in Kendo UI Web framework",
             "aspnet-mvc": "Basic usage demo for ASP.NET MVC Editor"
@@ -1362,7 +1381,6 @@
       {
         "text": "Custom tools",
         "url": "editor/custom-tools",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Custom tools for Kendo UI WYSIWYG jQuery Editor",
             "aspnet-mvc": "Custom tools for ASP.NET MVC WYSIWYG Editor"
@@ -1375,7 +1393,6 @@
       {
         "text": "File and image browser",
         "url": "editor/imagebrowser",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "File and image browser in Kendo UI Editor | Kendo UI demo",
             "aspnet-mvc": "Image browser in ASP.NET MVC Editor | ASP.NET MVC demo"
@@ -1394,7 +1411,6 @@
       {
         "text": "All tools",
         "url": "editor/all-tools",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "All tools demo in Kendo UI HTML5-based Editor widget",
             "aspnet-mvc": "All tools demo in ASP.NET MVC Editor control"
@@ -1407,7 +1423,6 @@
       {
         "text": "Snippets",
         "url": "editor/snippets",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Demo for snippets feature of Kendo UI Editor widget",
             "aspnet-mvc": "Demo for snippets feature of ASP.NET MVC Editor control"
@@ -1420,7 +1435,6 @@
       {
         "text": "Styles",
         "url": "editor/styles",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Style tool demo for Kendo UI HTML5-based web editor | Kendo UI Demos",
             "aspnet-mvc": "Style tool demo for ASP.NET MVC web editor | ASP.NET MVC Demos"
@@ -1452,7 +1466,6 @@
       {
         "text": "API",
         "url": "editor/api",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "API demo for Kendo UI Web Editor component",
             "aspnet-mvc": "API demo for ASP.NET MVC Editor component"
@@ -1464,7 +1477,6 @@
       },
       {
         "text": "Localization",
-        "disableInMobile": true,
         "url": "editor/localization",
         "title": {
             "kendo-ui": "Localization support in Kendo UI Editor"
@@ -1480,7 +1492,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "editor/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI Editor",
@@ -1493,7 +1504,6 @@
       },
       {
         "text": "PDF Export",
-        "disableInMobile": true,
         "new": "true",
         "url": "editor/pdf-export",
         "title": {
@@ -1507,7 +1517,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "editor/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI Editor",
@@ -1521,7 +1530,6 @@
       {
         "text": "MVVM",
         "url": "editor/mvvm",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "MVVM support in Kendo UI Editor"
         },
@@ -1537,7 +1545,6 @@
 {
         "text": "AngularJS",
         "url": "editor/angular",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "AngularJS support in Kendo UI Editor"
         },
@@ -1836,7 +1843,6 @@
       },
       {
         "text": "Virtualization of local data",
-        "disableInMobile": true,
         "url": "grid/virtualization-local-data",
         "title": {
             "kendo-ui": "Example of local data virtualization in Kendo UI Grid control"
@@ -2052,7 +2058,6 @@
       {
         "text": "Column resizing",
         "url": "grid/column-resizing",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Column resizing feature of Kendo UI grid control | Kendo UI Grid demo",
             "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC Grid"
@@ -2065,7 +2070,6 @@
       {
         "text": "Column menu",
         "url": "grid/column-menu",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Column menu in Kendo UI Grid",
             "aspnet-mvc": "Column menu functionality of Telerik ASP.NET MVC Grid"
@@ -2171,7 +2175,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "grid/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI Grid component",
@@ -2184,7 +2187,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "grid/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI Grid",
@@ -2216,7 +2218,6 @@
         "title": {
             "kendo-ui": "Adaptive Rendering of Kendo UI Grid"
         },
-        "mobile": "true",
         "packages": [
           "!mvc",
           "!jsp",
@@ -2323,7 +2324,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "listview/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI ListView",
@@ -2336,7 +2336,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "listview/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI ListView widget",
@@ -2575,7 +2574,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "maskedtextbox/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI MaskedTextBox widget",
@@ -2765,7 +2763,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "menu/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left support in Kendo UI Menu control | Kendo UI Web Demo",
@@ -2778,7 +2775,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "menu/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI Menu",
@@ -2957,7 +2953,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "multiselect/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI MultiSelect widget | Kendo UI Web demo",
@@ -2970,7 +2965,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "multiselect/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI MultiSelect component | Kendo UI Web demo",
@@ -3100,7 +3094,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "notification/right-to-left-support",
         "title": {
             "kendo-ui": "RTL Support of Kendo UI Notification | Kendo UI Web demo",
@@ -3213,7 +3206,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "numerictextbox/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI NumericTextBox widget",
@@ -3226,7 +3218,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "numerictextbox/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI NumericTextBox",
@@ -3370,7 +3361,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "panelbar/right-to-left-support",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI PanelBar widget | Kendo UI Web demo",
@@ -3383,7 +3373,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "panelbar/keyboard-navigation",
         "title": {
             "kendo-ui": "Demo for keyboard navigation feature in Kendo UI Collapsible Panel",
@@ -3728,7 +3717,6 @@
       },
       {
         "text": "RTL Support",
-        "disableInMobile": true,
         "url": "progressbar/right-to-left-support",
         "title": {
             "kendo-ui": "Kendo UI ProgressBar RTL Support",
@@ -3777,7 +3765,6 @@
     "name": "gantt",
     "api": "web/gantt",
     "pro": "true",
-    "disableInMobile" : true,
     "documentation": {
        "kendo-ui": "getting-started/web/gantt/overview",
        "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/gantt/overview",
@@ -3865,7 +3852,6 @@
       },
       {
         "text": "RTL Support",
-        "disableInMobile": true,
         "url": "gantt/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left (RTL) support of Kendo UI Gantt"
@@ -3942,7 +3928,6 @@
       {
         "text": "Basic usage",
         "url": "responsive-panel/index",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Kendo jQuery ResponsivePanel Control Demo",
             "aspnet-mvc": "ASP.NET MVC ResponsivePanel Control Demo"
@@ -3983,7 +3968,6 @@
       {
         "text": "Basic usage",
         "url": "scheduler/index",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Kendo jQuery Scheduler Control Demo",
             "aspnet-mvc": "ASP.NET MVC Scheduler Control Demo"
@@ -3996,7 +3980,6 @@
       {
         "text": "Custom data source",
         "url": "scheduler/custom-datasource",
-        "disableInMobile": true,
         "packages": [
           "mvc-offline"
         ]
@@ -4004,7 +3987,6 @@
       {
         "text": "Timeline view",
         "url": "scheduler/timeline",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Timeline view in Kendo UI Scheduler"
         },
@@ -4028,7 +4010,6 @@
       {
         "text": "Binding to Telerik Backend Services",
         "url": "scheduler/backend-services",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Binding to Telerik Backend Services | Kendo UI Scheduler demo"
         },
@@ -4060,7 +4041,6 @@
       {
         "text": "Resources",
         "url": "scheduler/resources",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Resources in Kendo UI Scheduler",
             "aspnet-mvc": "Resources in ASP.NET MVC Scheduler"
@@ -4073,7 +4053,6 @@
       {
         "text": "Horizontal Grouping",
         "url": "scheduler/resources-grouping-horizontal",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Horizontal resources grouping in Kendo UI Scheduler",
             "aspnet-mvc": "Horizontal resources grouping in ASP.NET MVC Scheduler control"
@@ -4086,7 +4065,6 @@
       {
         "text": "Vertical Grouping",
         "url": "scheduler/resources-grouping-vertical",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Vertical resources grouping in Kendo UI Scheduler",
             "aspnet-mvc": "Vertical resources grouping in ASP.NET MVC Scheduler control"
@@ -4106,7 +4084,6 @@
       {
         "text": "Templates",
         "url": "scheduler/templates",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Templates in Kendo UI Scheduler",
             "aspnet-mvc": "Templates in ASP.NET MVC Scheduler"
@@ -4119,7 +4096,6 @@
       {
         "text": "Events",
         "url": "scheduler/events",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Events in Kendo UI Scheduler",
             "aspnet-mvc": "Events in ASP.NET MVC Scheduler"
@@ -4132,7 +4108,6 @@
       {
         "text": "API",
         "url": "scheduler/api",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "API in Kendo UI Scheduler",
             "aspnet-mvc": "API in Telerik ASP.NET MVC Scheduler component"
@@ -4145,7 +4120,6 @@
       {
         "text": "Globalization",
         "url": "scheduler/globalization",
-        "disableInMobile": true,
         "packages": [
           "mvc-offline"
         ]
@@ -4153,7 +4127,6 @@
       {
         "text": "Restrictions",
         "url": "scheduler/restriction",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Restricting events resizing and moving",
             "aspnet-mvc": "Restrictions in ASP.NET MVC Scheduler | UI for ASP.NET MVC Demos"
@@ -4166,7 +4139,6 @@
       {
         "text": "Event move & resize",
         "url": "scheduler/move-resize",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Moving and resizing events",
             "aspnet-mvc": "Moving and resizing events in ASP.NET MVC Scheduler"
@@ -4179,7 +4151,6 @@
       {
         "text": "Selection",
         "url": "scheduler/selection",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Selection and Keyboard navigation in Kendo UI Scheduler",
             "aspnet-mvc": "Selection and Keyboard navigation in ASP.NET MVC Scheduler"
@@ -4192,7 +4163,6 @@
       {
         "text": "Localization",
         "url": "scheduler/localization",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Kendo UI Scheduler localization demo"
         },
@@ -4207,7 +4177,6 @@
       },
       {
         "text": "RTL Support",
-        "disableInMobile": true,
         "url": "scheduler/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left (RTL) support of Kendo UI Scheduler",
@@ -4221,7 +4190,6 @@
       {
         "text": "MVVM",
         "url": "scheduler/mvvm",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "MVVM support in Kendo UI Scheduler"
         },
@@ -4240,7 +4208,6 @@
         "title": {
             "kendo-ui": "Adaptive Rendering of Kendo UI Scheduler"
         },
-        "mobile": "true",
         "packages": [
           "!mvc",
           "!jsp",
@@ -4250,7 +4217,6 @@
       {
         "text": "AngularJS",
         "url": "scheduler/angular",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "AngularJS support in Kendo UI Scheduler"
         },
@@ -4269,7 +4235,6 @@
   {
     "text": "Slider",
     "name": "slider",
-    "disableInMobile": true,
     "api": "web/slider",
     "documentation": {
        "kendo-ui": "getting-started/web/slider/overview",
@@ -4329,7 +4294,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "slider/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left support in Kendo UI Slider | Kendo UI Web Demos",
@@ -4342,7 +4306,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "slider/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI Slider | Kendo UI Web Demos",
@@ -4625,7 +4588,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "splitter/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left support in Kendo UI Splitter control | Kendo UI Web demo",
@@ -4638,7 +4600,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "splitter/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation support in Kendo UI Slider",
@@ -4795,7 +4756,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "tabstrip/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI TabStrip widget | Kendo UI Web Demos",
@@ -4808,7 +4768,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "tabstrip/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI TabStrip",
@@ -4933,7 +4892,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "timepicker/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-left time input in Kendo UI TimePicker",
@@ -4946,7 +4904,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "timepicker/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation in Kendo UI TimePicker",
@@ -4993,7 +4950,6 @@
   {
     "text": "ToolBar",
     "name": "toolbar",
-    "disableInMobile": true,
     "api": "web/toolbar",
     "documentation": {
        "kendo-ui": "getting-started/web/toolbar/overview",
@@ -5320,7 +5276,6 @@
       {
         "text": "Column menu",
         "url": "treelist/column-menu",
-        "disableInMobile": true,
         "new": "true",
         "title": {
             "kendo-ui": "Column menu in Kendo UI TreeList",
@@ -5438,6 +5393,39 @@
       }
     ],
     "category": "Data Management"
+  },
+  {
+    "text": "ScrollView",
+    "name": "scrollview",
+    "api": "mobile/scrollview",
+    "category": "Data Management",
+    "spriteCssClass": "mobileScrollViewIcon",
+    "packages": [ "!jsp", "!php" ],
+    "documentation": {
+       "kendo-ui": "getting-started/mobile/scrollview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilescrollview/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/scrollview",
+       "aspnet-mvc": "aspnet-mvc/scrollview"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/scrollview",
+       "aspnet-mvc": "aspnet-mvc/scrollview"
+    },
+    "items": [
+      {
+        "text": "Basic Usage",
+        "url": "scrollview/index",
+        "title": {
+            "kendo-ui": "Mobile ScrollView widget demo | Kendo UI Demos"
+        },
+        "meta": {
+            "kendo-ui": "This example demonstrates the ScrollView widget basic usage"
+        },
+        "packages": [ "!mvc", "!jsp", "!php" ]
+      }
+    ]
   },
   {
     "text": "TreeView",
@@ -5599,7 +5587,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "treeview/right-to-left-support",
         "title": {
             "kendo-ui": "RTL Support in Kendo UI TreeView component",
@@ -5612,7 +5599,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "treeview/keyboard-navigation",
         "title": {
             "kendo-ui": "Kendo UI TreeView control | Keyboard support demo",
@@ -5758,7 +5744,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "upload/right-to-left-support",
         "title": {
             "kendo-ui": "RTL support in Kendo UI Upload",
@@ -5806,7 +5791,6 @@
     "text": "Window",
     "name": "window",
     "api": "web/window",
-    "disableInMobile": true,
     "documentation": {
        "kendo-ui": "getting-started/web/window/overview",
        "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/window/overview",
@@ -5904,7 +5888,6 @@
       },
       {
         "text": "RTL support",
-        "disableInMobile": true,
         "url": "window/right-to-left-support",
         "title": {
             "kendo-ui": "Right-to-Left window position of Kendo UI Window control",
@@ -5917,7 +5900,6 @@
       },
       {
         "text": "Keyboard navigation",
-        "disableInMobile": true,
         "url": "window/keyboard-navigation",
         "title": {
             "kendo-ui": "Keyboard navigation support | Kendo UI Window Demo",
@@ -6081,7 +6063,6 @@
         "text": "Document Export",
         "url": "pdf-export/index",
         "new": "true",
-        "disableInMobile": true,
         "packages": [
           "!jsp",
           "!php"
@@ -6096,7 +6077,6 @@
         "text": "Page Layout",
         "url": "pdf-export/page-layout",
         "new": "true",
-        "disableInMobile": true,
         "packages": [
           "!mvc",
           "!jsp",
@@ -6228,7 +6208,6 @@
       {
         "text": "Style binding",
         "url": "mvvm/style",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Example of using the style binding in Kendo UI MVVM"
         },
@@ -6280,7 +6259,6 @@
       {
         "text": "Custom binding",
         "url": "mvvm/custom",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Example of creating custom bindings in Kendo UI MVVM"
         },
@@ -6306,7 +6284,6 @@
        "kendo-ui": "kendo-ui/spa"
     },
     "spriteCssClass": "spaIcon",
-    "disableInMobile": true,
     "items": [
       {
         "text": "Launch",
@@ -6327,7 +6304,6 @@
     "packages": [ "!mvc", "!jsp", "!php" ],
     "text": "Templates",
     "name": "templates",
-    "disableInMobile": true,
     "api": "framework/kendo",
     "documentation": {
        "kendo-ui": "getting-started/framework/templates/overview"
@@ -6406,7 +6382,6 @@
       },
       {
         "text": "AngularJS",
-        "disableInMobile": true,
         "url": "validator/angular",
         "title": {
             "kendo-ui": "AngularJS support in Kendo UI Validator"
@@ -6899,7 +6874,6 @@
       {
         "text": "Pan and zoom",
         "url": "bar-charts/pan-and-zoom",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Pan and zoom in Bar charts | Kendo UI Bar Chart demo"
         },
@@ -8286,7 +8260,6 @@
       },
       {
         "text": "AngularJS",
-        "disableInMobile": true,
         "url": "diagram/angular",
         "title": {
             "kendo-ui": "AngularJS support in Kendo UI Diagram"
@@ -9093,7 +9066,6 @@
       {
         "text": "Pan and zoom",
         "url": "scatter-charts/pan-and-zoom",
-        "disableInMobile": true,
         "title": {
             "kendo-ui": "Pan and zoom in Kendo UI Scatter Charts"
         },
@@ -9472,1375 +9444,6 @@
     "category": "Charts"
   },
   {
-    "text": "ActionSheet",
-    "name": "actionsheet",
-    "api": "mobile/actionsheet",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/actionsheet",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobileapplication/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/action-sheet",
-       "aspnet-mvc": "aspnet-mvc/actionsheet"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/actionsheet",
-       "aspnet-mvc": "aspnet-mvc/actionsheet"
-    },
-    "spriteCssClass": "mobileActionSheetIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "actionsheet/index",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile ActionSheet Demo",
-            "aspnet-mvc": "ASP.NET MVC extension demo for Kendo UI jQuery Action Sheet"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how Mobile ActionSheet component in Kendo UI Mobile framework works in your app in order to provide iOS-like experience.",
-            "aspnet-mvc": "This example demonstrates how to use the ASP.NET MVC HTML helper extension for Kendo UI ActionSheet widget."
-        }
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "actionsheet/adaptive",
-        "title": {
-            "kendo-ui": "Mobile ActionSheet widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile Actionsheet may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "actionsheet/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile Actionsheet"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile Actionsheet"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "Application",
-    "name": "application",
-    "api": "mobile/application",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/application",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobileapplication/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/application",
-       "aspnet-mvc": "aspnet-mvc/application"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/application",
-       "aspnet-mvc": "aspnet-mvc/application"
-    },
-    "spriteCssClass": "mobileAppIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Overview",
-        "url": "application/index",
-        "title": {
-            "kendo-ui": "Example of a web-based mobile app, built with Kendo UI mobile framework",
-            "aspnet-mvc": "ASP.NET MVC Mobile Application HtmlHelper extension demo"
-        },
-        "meta": {
-            "kendo-ui": "This example shows how Kendo UI Mobile Application provides all tools for native-like web-based mobile app development.",
-            "aspnet-mvc": "ASP.NET MVC MobileApplication extension enables you to configure  Kendo UI Mobile Application widget from server-side code. Explore the demo to learn more."
-        }
-      },
-      {
-        "text": "Loading popup",
-        "url": "application/loadingpopup",
-        "title": {
-            "kendo-ui": "Loading popup demo for Kendo UI Mobile Application",
-        "aspnet-mvc": "Loading popup demo for ASP.NET MVC Mobile Application HTML Helper"
-        },
-        "meta": {
-            "kendo-ui": "This demo illustrates how the loading popup in Kendo UI Mobile application can be disabled/enabled, and how a popup effect can be added by using the respective values.",
-            "aspnet-mvc": "This example shows how the loading popup feature works in Telerik Mobile application extension for ASP.NET MVC."
-        }
-      },
-      {
-        "text": "View transitions",
-        "url": "application/transitions",
-        "title": {
-            "kendo-ui": "View transitions demo for Kendo UI Mobile Application",
-            "aspnet-mvc": "View transition demo for Telerik ASP.NET MVC Mobile Application"
-        },
-        "meta": {
-            "kendo-ui": "This example shows which transition needs to be applied when navigating in Kendo UI Mobile Application.",
-            "aspnet-mvc": "In this example we show the View transition capability of Telerik Mobile Application component for ASP.NET MVC."
-        }
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "new": "true",
-        "disableInMobile": true,
-        "url": "application/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile Application"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile Application"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "Mobile Button",
-    "name": "mobile-button",
-    "api": "mobile/button",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/button",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilebutton/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/mobile-button",
-       "aspnet-mvc": "aspnet-mvc/button"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/mobile-button",
-       "aspnet-mvc": "aspnet-mvc/mobile-button"
-    },
-    "spriteCssClass": "mobileButtonIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "mobile-button/index",
-        "title": {
-            "kendo-ui": "jQuery-based Kendo UI Mobile Button demo",
-            "aspnet-mvc": "ASP.NET MVC Mobile Button demo"
-        },
-        "meta": {
-            "kendo-ui": "This example shows the core functionality of the flexible Kendo UI jQuery-based mobile button which would perfectly blend into any app and on any mobile device.",
-            "aspnet-mvc": "This example shows the core functionality of the flexible ASP.NET MVC mobile button which would perfectly blend into any app and on any mobile device."
-        }
-      },
-      {
-        "text": "Badges",
-        "url": "mobile-button/badges",
-        "title": {
-            "kendo-ui": "jQuery-based Kendo UI Mobile Button Badges demo",
-            "aspnet-mvc": "ASP.NET MVC Mobile Button Badges demo"
-        },
-        "meta": {
-            "kendo-ui": "This example shows how Kendo UI jQuery-based mobile button supports Badges.",
-            "aspnet-mvc": "This example shows how the ASP.NET MVC mobile button supports Badges."
-        }
-      },
-      {
-        "text": "Events",
-        "url": "mobile-button/events",
-        "title": {
-            "kendo-ui": "Events in Kendo UI mobile button",
-            "aspnet-mvc": "Events in ASP.NET MVC mobile button"
-        },
-        "meta": {
-            "kendo-ui": "This sample demonstrates which events can be triggered in Kendo UI Mobile Button. The component has events enabled for your ease of use and flexibility.",
-            "aspnet-mvc": "This sample demonstrates which events can be triggered in ASP.NET MVC Mobile Button. The component has events enabled for your ease of use and flexibility."
-        }
-      },
-      {
-        "text": "Customizing appearance",
-        "url": "mobile-button/appearance",
-        "title": {
-            "kendo-ui": "Customizing the appearance of Kendo UI mobile button",
-            "aspnet-mvc": "Customizing the appearance of ASP.NET MVC mobile button"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how you can easily customize the appearance and styling of Kendo UI Mobile Button to deliver rich experience for end users of the mobile app.",
-            "aspnet-mvc": "This demo shows how you can easily customize the appearance and styling of ASP.NET MVC Mobile Button to deliver rich experience for end users of the mobile app."
-        }
-      },
-      {
-        "text": "MVVM",
-        "url": "mobile-button/mvvm",
-        "title": {
-            "kendo-ui": "MVVM support in Kendo UI Mobile Button"
-        },
-        "meta": {
-            "kendo-ui": "Enabled, events and visible MVVM binding support in Kendo UI Mobile Button"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "button/adaptive",
-        "title": {
-            "kendo-ui": "Mobile Button widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile Button may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "mobile-button/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile Button"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile Button"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-
-  },
-  {
-    "text": "ButtonGroup",
-    "name": "buttongroup",
-    "api": "mobile/buttongroup",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/buttongroup",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilebuttongroup/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/button-group",
-       "aspnet-mvc": "aspnet-mvc/buttongroup"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/buttongroup",
-       "aspnet-mvc": "aspnet-mvc/buttongroup"
-    },
-    "spriteCssClass": "mobileButtonGroupIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "buttongroup/index",
-        "title": {
-            "kendo-ui": "Example of Kendo UI Mobile Button Group",
-            "aspnet-mvc": "ASP.NET MVC Button Group sample "
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the core functionality of Kendo UI Mobile Button Group. When the horizontal group button is active, its corresponding items are visualized on the screen.",
-            "aspnet-mvc": "In this example you will see in action the basic functionality of Telerik Button Group helper for ASP.NET MVC."
-        }
-      },
-      {
-        "text": "NavBar usage",
-        "url": "buttongroup/navbar",
-        "title": {
-            "kendo-ui": "Example of Kendo UI Mobile Button Group in a NavBar",
-            "aspnet-mvc": "Example of ASP.NET MVC Mobile Button Group in a NavBar"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the core functionality of Kendo UI Mobile Button Group when placed in a NavBar.",
-            "aspnet-mvc": "This demo shows the core functionality of ASP.NET MVC Mobile Button Group when placed in a NavBar."
-        }
-      },
-      {
-        "text": "Badges",
-        "url": "buttongroup/badges",
-        "title": {
-            "kendo-ui": "Example of Kendo UI Mobile Button Group used with badges",
-            "aspnet-mvc": "Adding badges to Telerik ASP.NET MVC ButtonGroup"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the core functionality of Kendo UI Mobile Button Group when used with badges.",
-            "aspnet-mvc": "In this demo you will see how to add and use badges for Telerik ButtonGroup in ASP.NET MVC."
-        }
-      },
-      {
-        "text": "Events",
-        "url": "buttongroup/events",
-        "title": {
-            "kendo-ui": "Events in Kendo UI Mobile Button Group | Kendo ButtonGroup Demo",
-            "aspnet-mvc": "Events in ASP.NET MVC Mobile Button Group"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the events which can be bound to Kendo UI ButtonGroup widget.",
-            "aspnet-mvc": "This demo shows the events which can be bound to the ASP.NET MVC ButtonGroup component."
-        }
-      },
-      {
-        "text": "Customizing appearance",
-        "url": "buttongroup/appearance",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile Button Group Theming",
-            "aspnet-mvc": "ASP.NET MVC Mobile Button Group Theming"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how you can customize the appearance of Kendo UI ButtonGroup mobile widget. You have full control over the style of the buttons group.",
-            "aspnet-mvc": "This demo shows how you can customize the appearance of ASP.NET MVC Mobile ButtonGroup. You have full control over the style of the buttons group."
-        }
-      },
-      {
-        "text": "MVVM",
-        "url": "buttongroup/mvvm",
-        "title": {
-            "kendo-ui": "MVVM support in Kendo UI Mobile ButtonGroup"
-        },
-        "meta": {
-            "kendo-ui": "Events and visible MVVM binding support in Kendo UI Mobile ButtonGroup"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "buttongroup/adaptive",
-        "title": {
-            "kendo-ui": "Mobile ButtonGroup widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile ButtonGroup may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "disableInMobile": true,
-        "mobile": true,
-        "url": "buttongroup/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile ButtonGroup"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile ButtonGroup"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "Collapsible",
-    "name": "collapsible",
-    "new": "true",
-    "api": "mobile/collapsible",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/collapsible",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/collapsible/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/collapsible",
-       "aspnet-mvc": "aspnet-mvc/collapsible"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/collapsible",
-       "aspnet-mvc": "aspnet-mvc/collapsible"
-    },
-    "spriteCssClass": "mobileCollapsibleIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "collapsible/index",
-        "title": {
-            "kendo-ui": "Example of Kendo UI Mobile Collapsible",
-            "aspnet-mvc": "ASP.NET MVC Collapsible sample "
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the core functionality of Kendo UI Mobile Collapsible.",
-            "aspnet-mvc": "In this example you will see in action the basic functionality of Telerik Collapsible helper for ASP.NET MVC."
-        }
-      },
-      {
-        "text": "Nested collapsibles",
-        "url": "collapsible/nested",
-        "title": {
-            "kendo-ui": "Example of Kendo UI Mobile Collapsible nesting",
-            "aspnet-mvc": "Nesting Telerik ASP.NET MVC Collapsible"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how to nest Kendo UI Mobile Collapsible widgets.",
-            "aspnet-mvc": "This demo shows how to nest Telerik Collapsible widgets in ASP.NET MVC."
-        }
-      },
-      {
-        "text": "Events",
-        "url": "collapsible/events",
-        "title": {
-            "kendo-ui": "Events in Kendo UI Mobile Collapsible | Kendo Collapsible Demo",
-            "aspnet-mvc": "Events in ASP.NET MVC Mobile Collapsible"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the events which can be bound to Kendo UI Collapsible.",
-            "aspnet-mvc": "This demo shows the events which can be bound to the ASP.NET MVC Collapsible component."
-        }
-      },
-      {
-        "text": "MVVM",
-        "url": "collapsible/mvvm",
-        "title": {
-            "kendo-ui": "MVVM support in Kendo UI Mobile Collapsible"
-        },
-        "meta": {
-            "kendo-ui": "Events and visible MVVM binding support in Kendo UI Mobile Collapsible"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "disableInMobile": true,
-        "mobile": true,
-        "url": "collapsible/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile Collapsible"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile Collapsible"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "Drawer",
-    "name": "drawer",
-    "api": "mobile/drawer",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/drawer",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobiledrawer/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/drawer",
-       "aspnet-mvc": "aspnet-mvc/drawer"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/drawer",
-       "aspnet-mvc": "aspnet-mvc/drawer"
-    },
-    "spriteCssClass": "mobileDrawerIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "drawer/index",
-        "title": {
-            "kendo-ui": "Example of Kendo UI Mobile Drawer",
-            "aspnet-mvc": "Example of ASP.NET MVC Mobile Drawer"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the core functionality of Kendo UI Mobile Drawer. When the user swipes the screen to the right or taps the top button, the drawer widget is revealed",
-            "aspnet-mvc": "See the core functionality of ASP.NET MVC Mobile Drawer. When the user swipes the screen to the right or taps the top button the drawer control is revealed."
-        }
-      },
-      {
-        "text": "Two way drawers",
-        "url": "drawer/two-way-drawers",
-        "title": {
-            "kendo-ui": "Example of left and right drawers",
-            "aspnet-mvc": "Example of left and right drawers in ASP.NET MVC Mobile Drawer"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the two drawers (left and right) applied to the same application.",
-            "aspnet-mvc": "This demo shows the two drawers (left and right) applied to the same ASP.NET MVC application."
-        }
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "drawer/adaptive",
-        "title": {
-            "kendo-ui": "Mobile Drawer widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile Drawer may be used outside of a Kendo UI mobile application alongside Kendo UI web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "drawer/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile Drawer"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile Drawer"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "Forms",
-    "name": "mobile-forms",
-    "spriteCssClass": "mobileAppIcon",
-    "mobile": true,
-    "packages": ["!mvc", "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Overview",
-        "url": "mobile-forms/index",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile Forms Demo",
-            "aspnet-mvc": "ASP.NET MVC Mobile Forms Demo"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows which form elements, added to a mobile view, are supported and styled in Kendo UI Mobile framework.",
-            "aspnet-mvc": "This demo shows the basic functionality of Telerik ASP.NET MVC Mobile Forms control."
-        }
-      },
-      {
-        "text": "Checks and Radios",
-        "url": "mobile-forms/checkboxes",
-        "title": {
-            "kendo-ui": "Checkboxes example for Kendo UI Mobile Application",
-            "aspnet-mvc": "Checkboxes example for ASP.NET MVC Mobile Application"
-        },
-        "meta": {
-            "kendo-ui": "This demo illustrates how checkboxes and radio buttons are enabled in Kendo UI Mobile Application.",
-            "aspnet-mvc": "This demo illustrates how checkboxes and radio buttons are enabled in ASP.NET MVC Mobile Application."
-        }
-      },
-      {
-        "text": "Customizing appearance",
-        "url": "mobile-forms/appearance",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile Customizing Form Appearance Demo",
-            "aspnet-mvc": "ASP.NET MVC Mobile Customizing Form Appearance Demo"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how you can style the labels and form elements in a Kendo UI Mobile application to appear on separate rows.",
-            "aspnet-mvc": "This demo shows how you can style the labels and form elements in a ASP.NET MVC Mobile application to appear on separate rows."
-        }
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "Layout",
-    "name": "mobile-layout",
-    "api": "mobile/layout",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/layout",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilelayout/overview"
-    },
-    "spriteCssClass": "mobileAppIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Overview",
-        "url": "mobile-layout/index",
-        "title": {
-            "kendo-ui": "Kendo UI jQuery-based Mobile Layout Demo",
-            "aspnet-mvc": "ASP.NET MVC Mobile Layout Demo"
-        },
-        "meta": {
-            "kendo-ui": "This sample shows how Kendo UI Mobile Layout is used to share headers and footers between multiple views on different mobile devices.",
-            "aspnet-mvc": "This sample shows how ASP.NET MVC Mobile Layout is used to share headers and footers between multiple views on different mobile devices."
-        }
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "new": "true",
-        "disableInMobile": true,
-        "url": "mobile-layout/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Layout"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Layout"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "ListView",
-    "name": "mobile-listview",
-    "api": "mobile/listview",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/listview",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilelistview/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/mobile-listview",
-       "aspnet-mvc": "aspnet-mvc/listview-mobile"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/mobile-listview",
-       "aspnet-mvc": "aspnet-mvc/mobile-listview"
-    },
-    "spriteCssClass": "mobileListViewIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "mobile-listview/index",
-        "title": {
-            "kendo-ui": "Features of Kendo UI Mobile ListView widget",
-            "aspnet-mvc": "Mobile ListView control demo | UI for ASP.NET MVC Demos"
-        },
-        "meta": {
-            "kendo-ui": "This demo illustrates the core functionality of Kendo UI jQuery List widget. It allows you to display flat or grouped list of items in your mobile application.",
-            "aspnet-mvc": "Take a look at the basic functionality of ASP.NET MVC Mobile ListView. "
-        }
-      },
-      {
-        "text": "Detail Buttons",
-        "url": "mobile-listview/detailbuttons",
-        "title": {
-            "kendo-ui": "Detail buttons, nested in Kendo UI Mobile ListView example",
-            "aspnet-mvc": "Detail buttons, nested in ASP.NET MVC Mobile ListView example"
-        },
-        "meta": {
-            "kendo-ui": "This demo illustrates how nested DetailButton widgets can be integrated in Kendo UI Mobile ListView control in order to enable your users to execute more than one action on a given row.",
-            "aspnet-mvc": "See how nested DetailButton controls can be integrated in ASP.NET MVC Mobile ListView control to enable your users to execute more than one action on a given row."
-        }
-      },
-      {
-        "text": "Data binding",
-        "url": "mobile-listview/databinding",
-        "title": {
-            "kendo-ui": "Data Binding Demo for Kendo UI Mobile List View",
-            "aspnet-mvc": "Data Binding Demo for ASP.NET MVC Mobile List View"
-        },
-        "meta": {
-            "kendo-ui": "This example shows how Kendo UI Mobile ListView can be bound to remote data and local JS arrays by using Kendo UI DataSource component.",
-            "aspnet-mvc": "This example shows how ASP.NET MVC Mobile ListView can be bound to remote data and local JS arrays by using Kendo UI DataSource component."
-        }
-      },
-      {
-        "text": "Hierarchical data binding",
-        "url": "mobile-listview/hierarchical-databinding",
-        "title": {
-            "kendo-ui": "Hierarchical Data Binding Demo for Kendo UI Mobile List View",
-            "aspnet-mvc": "Hierarchical Data Binding Demo for ASP.NET MVC Mobile List View"
-        },
-        "meta": {
-            "kendo-ui": "This example shows how Kendo UI Mobile ListView can be bound to hierarchical remote data using Kendo UI Hierarchical DataSource component.",
-            "aspnet-mvc": "This example shows how ASP.NET MVC Mobile ListView can be bound to hierarchical remote data."
-        }
-      },
-      {
-        "text": "Pull to refresh",
-        "url": "mobile-listview/pull-to-refresh",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile ListView Refresh Function Demo",
-            "aspnet-mvc": "ASP.NET MVC Mobile ListView Pull-to-Refresh Demo"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how the refresh function in Kendo UI Mobile ListView actually works. Once the new elements are appended to the list, you simply invoke the function \"pull to refresh\".",
-            "aspnet-mvc": "This demo shows how to refresh your ASP.NET MVC Mobile ListView. Once the new elements are appended to the list you simply invoke the function \"pull to refresh\"."
-        }
-      },
-      {
-        "text": "Endless scrolling",
-        "url": "mobile-listview/endless-scrolling",
-        "title": {
-            "kendo-ui": "Infinite scrolling demo for Kendo UI Mobile ListView",
-            "aspnet-mvc": "Infinite scrolling demo for ASP.NET MVC Mobile ListView"
-        },
-        "meta": {
-            "kendo-ui": "This example shows the endless scrolling functionality which Kendo UI Mobile ListView supports. It illustrates how more list items are automatically loaded and displayed on the screen.",
-            "aspnet-mvc": "This example shows the endless scrolling functionality of ASP.NET MVC Mobile ListView. See how list items are load automatically as you scroll down."
-        }
-      },
-      {
-        "text": "Pull to refresh + Endless scrolling",
-        "url": "mobile-listview/pull-with-endless",
-        "title": {
-            "kendo-ui": "Pull to refresh and endless scrolling demo | Kendo UI Mobile ListView widget",
-            "aspnet-mvc": "Pull-to-refresh and endless scrolling in ASP.NET MVC Mobile ListView"
-        },
-        "meta": {
-            "kendo-ui": "This example shows how the pull to refresh function of Kendo UI Mobile ListView works out of the box with the endless scrolling feature.",
-            "aspnet-mvc": "This example shows how the pull to refresh function of ASP.NET MVC Mobile ListView works out of the box with the endless scrolling feature."
-        }
-      },
-      {
-        "text": "Press to load more",
-        "url": "mobile-listview/press-to-load-more",
-        "title": {
-            "kendo-ui": "Demo for Load More option in Kendo UI Mobile ListView",
-            "aspnet-mvc": "Demo for Load More option in ASP.NET MVC Mobile ListView"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the load more option in Kendo UI ListView can be implemented for applications in which the user needs to pull much data.",
-            "aspnet-mvc": "This example demonstrates how the load more option in ASP.NET MVC ListView can be implemented for applications in which the user needs to pull much data."
-        }
-      },
-      {
-        "text": "Fixed Headers",
-        "url": "mobile-listview/fixedheaders",
-        "title": {
-            "kendo-ui": "Fixed header option demo | Kendo UI Mobile ListView",
-            "aspnet-mvc": "Fixed header option demo | ASP.NET MVC Mobile ListView"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how you can get a fixed header in Kendo UI Mobile ListView. It allows the native scrolling, but the header is always positioned on top.",
-            "aspnet-mvc": "This demo shows how you can get a fixed header in ASP.NET MVC Mobile ListView. It allows native scrolling but the header is always positioned on top."
-        }
-      },
-      {
-        "text": "Custom templates",
-        "url": "mobile-listview/templates",
-        "title": {
-            "kendo-ui": "Custom templates for group items | Kendo UI Mobile List View",
-            "aspnet-mvc": "Custom templates for group items | ASP.NET MVC Mobile List View"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how custom templates can be applied to Kendo UI ListView widget to override the appearance of the group items.",
-            "aspnet-mvc": "This demo shows how custom templates can be applied to the ASP.NET MVC ListView conmponent to override the appearance of the group items."
-        }
-      },
-      {
-        "text": "Editing",
-        "url": "mobile-listview/editing",
-        "title": {
-            "kendo-ui": "Editing operations in Kendo UI Mobile ListView | Kendo UI ListView demo",
-            "aspnet-mvc": "Editing operations in ASP.NET MVC Mobile ListView"
-        },
-        "meta": {
-            "kendo-ui": "In this example you will learn how you can easily use editing operations in Kendo UI Mobile ListView.",
-            "aspnet-mvc": "In this example you will learn how you can easily use editing operations in ASP.NET MVC Mobile ListView."
-        }
-      },
-      {
-        "text": "Filtering",
-        "url": "mobile-listview/filtering",
-        "title": {
-            "kendo-ui": "Filtering in Kendo UI Mobile ListView | Kendo UI ListView demo",
-            "aspnet-mvc": "Filtering in ASP.NET MVC Mobile ListView"
-        },
-        "meta": {
-            "kendo-ui": "Play with Kendo UI Mobile ListView demo to see the filtering capability in action. Keyword-based filtering is perfomed against the content in each list item.",
-            "aspnet-mvc": "Play with ASP.NET MVC Mobile ListView to see the filtering capability in action. Keyword-based filtering is perfomed against the content in each list item."
-        }
-      },
-      {
-        "text": "Local data virtualization",
-        "url": "mobile-listview/local-virtualization",
-        "title": {
-            "kendo-ui": "Local data virtualization in Kendo UI Mobile ListView | Kendo UI ListView demo",
-            "aspnet-mvc": "Local data virtualization in ASP.NET MVC Mobile ListView"
-        },
-        "meta": {
-            "kendo-ui": "Play with Kendo UI Mobile ListView demo to see the local data virtualization filtering capability in action.",
-            "aspnet-mvc": "Play with ASP.NET MVC Mobile ListView demo to see the local data virtualization filtering capability in action. "
-        }
-      },
-      {
-        "text": "MVVM",
-        "url": "mobile-listview/mvvm",
-        "title": {
-            "kendo-ui": "MVVM support in Kendo UI Mobile ListView"
-        },
-        "meta": {
-            "kendo-ui": "Source, events and visible MVVM binding support in Kendo UI Mobile ListView"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "Responsive images",
-        "new": "true",
-        "url": "mobile-listview/responsive-images",
-        "title": {
-            "kendo-ui": "Mobile ListView widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile ListView is used alongside the responsive images feature of Telerik Backend Services"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "listview/adaptive",
-        "title": {
-            "kendo-ui": "Mobile ListView widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile ListView may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "mobile-listview/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile ListView"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile ListView"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "ModalView",
-    "name": "modalview",
-    "packages": [ "!jsp", "!php" ],
-    "api": "mobile/modalview",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/modalview",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilemodalview/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/modal-view",
-       "aspnet-mvc": "aspnet-mvc/modalview"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/modalview",
-       "aspnet-mvc": "aspnet-mvc/modalview"
-    },
-    "spriteCssClass": "mobileModalViewIcon",
-    "mobile": true,
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "modalview/index",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile ModalView Demo",
-            "aspnet-mvc": "ASP.NET MVC Mobile ModalView control demo | ASP.NET MVC Demos"
-        },
-        "meta": {
-            "kendo-ui": "The demo shows how Kendo UI ModalView widget can be opened when any other mobile navigational widget is tapped.",
-            "aspnet-mvc": "The demo shows how ASP.NET MVC ModalView control can be opened when any other mobile navigational control is tapped."
-        }
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "modalview/adaptive",
-        "title": {
-            "kendo-ui": "Mobile ModalView widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile ModalView may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "modalview/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile ModalView"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile ModalView"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "NavBar",
-    "name": "navbar",
-    "api": "mobile/navbar",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/navbar",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilelanavbar/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/navbar",
-       "aspnet-mvc": "aspnet-mvc/navbar"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/navbar",
-       "aspnet-mvc": "aspnet-mvc/navbar"
-    },
-    "spriteCssClass": "mobileNavBarIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "navbar/index",
-        "title": {
-            "kendo-ui": "Example of Kendo UI Mobile NavBar widget",
-            "aspnet-mvc": "Example of ASP.NET MVC Mobile NavBar control"
-        },
-        "meta": {
-            "kendo-ui": "This demo illustrates the core functionality of Kendo UI Mobile NavBar component which provides buttons, displayed in the navigation bar of a mobile application.",
-            "aspnet-mvc": "This demo illustrates the core functionality of ASP.NET MVC Mobile NavBar component which provides buttons, displayed in the navigation bar of a mobile application."
-        }
-      },
-      {
-        "text": "Customizing appearance",
-        "url": "navbar/appearance",
-        "title": {
-            "kendo-ui": "Example of customizing Kendo UI Mobile NavBar appearance",
-            "aspnet-mvc": "Example of customizing ASP.NET MVC Mobile NavBar appearance"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how the background color of jQuery-based Kendo UI Mobile NavBar can be customized by setting the CSS properties of the background color.",
-            "aspnet-mvc": "This demo shows how the background color of ASP.NET MVC Mobile NavBar can be customized by setting the CSS properties of the background color."
-        }
-      },
-      {
-        "text": "ToolBar as ActionBar",
-        "url": "navbar/adaptive-toolbar",
-        "title": {
-            "kendo-ui": "Example of using the ToolBar web widget as an ActionBar"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how the ToolBar web widget when used in a mobile app transforms in an ActionBar widget (Android inspired scenario)."
-        }
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "navbar/adaptive",
-        "title": {
-            "kendo-ui": "Mobile NavBar widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile Navbar may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "navbar/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile NavBar"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile NavBar"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "PopOver",
-    "name": "popover",
-    "tablet": true,
-    "api": "mobile/popover",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/popover",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilepopover/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/pop-over",
-       "aspnet-mvc": "aspnet-mvc/popover"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/popover",
-       "aspnet-mvc": "aspnet-mvc/popover"
-    },
-    "spriteCssClass": "mobilePopOverIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "popover/index",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile Layout demo | Kendo UI PopOver widget demo",
-            "aspnet-mvc": "ASP.NET MVC Mobile PopOver demo"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows the core function of Kendo UI Popover which is a transient view, displayed when the user taps on a navigational jQuery-based mobile widget or area on the screen.",
-            "aspnet-mvc": "See the core function of ASP.NET MVC Popover which is a transient view, displayed when the user taps on a navigational mobile control or area on the screen."
-        }
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "popover/adaptive",
-        "title": {
-            "kendo-ui": "Mobile PopOver widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile PopOver may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "popover/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile PopOver"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile PopOver"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "Scroller",
-    "name": "scroller",
-    "api": "mobile/scroller",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/scroller",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilescroller/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/scroller",
-       "aspnet-mvc": "aspnet-mvc/scroller"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/scroller",
-       "aspnet-mvc": "aspnet-mvc/scroller"
-    },
-    "spriteCssClass": "mobileScrollerIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "scroller/index",
-        "title": {
-            "kendo-ui": "Content scrolling example | Kendo UI Mobile Scroller Demo",
-            "aspnet-mvc": "Mobile Scroller control demo | ASP.NET MVC Demos"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how Kendo UI Mobile Scroller widget enables the touch-friendly kinetic content scrolling.",
-            "aspnet-mvc": "This example demonstrates the basic functionality of ASP.NET MVC mobile Scroller control. View the source code and play with demos."
-        }
-      },
-      {
-        "text": "Pull to refresh",
-        "url": "scroller/pull-to-refresh",
-        "title": {
-            "kendo-ui": "Pull to Refresh function | Kendo UI Mobile Content Scrolling widget demo",
-            "aspnet-mvc": "Pull to Refresh function | ASP.NET MVC Mobile Content Scrolling"
-        },
-        "meta": {
-            "kendo-ui": "This example shows the option \"Pull to Refresh\" in Kendo UI Scroller. If the value is true, then the scroller will display a hint when user pulls the container beyond the top limit.",
-            "aspnet-mvc": "Pull to refresh in ASP.NET MVC Mobile Scroller. If the value is true then the scroller will display a hint as the user pulls the container beyond the top limit."
-        }
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "scroller/adaptive",
-        "title": {
-            "kendo-ui": "Mobile Scroller widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile Scroller may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "scroller/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile Scroller"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile Scroller"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "ScrollView",
-    "name": "scrollview",
-    "api": "mobile/scrollview",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/scrollview",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilescrollview/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/scrollview",
-       "aspnet-mvc": "aspnet-mvc/scrollview"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/scrollview",
-       "aspnet-mvc": "aspnet-mvc/scrollview"
-    },
-    "spriteCssClass": "mobileScrollViewIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "scrollview/index",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile ScrollView Example",
-            "aspnet-mvc": "ASP.NET MVC Mobile ScrollView Example"
-        },
-        "meta": {
-            "kendo-ui": "This demo illustrates the intuitive scrolling on a touch device by using Kendo UI ScrollView widget in your HTML5 app.",
-            "aspnet-mvc": "This demo illustrates the intuitive scrolling on a touch device by using ASP.NET MVC ScrollView control in your ASP.NET MVC app."
-        }
-      },
-      {
-        "text": "Data binding",
-        "url": "scrollview/databinding",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile ScrollView DataBinding Example"
-        },
-        "packages": [
-          "!mvc"
-        ],
-        "meta": {
-            "kendo-ui": "This demo illustrates the data virtualization on a touch device by using Kendo UI ScrollView widget in your HTML5 app."
-        }
-      },
-      {
-        "text": "Custom template",
-        "url": "scrollview/custom-template",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile ScrollView Template Customization Example"
-        },
-        "packages": [
-          "!mvc"
-        ],
-        "meta": {
-            "kendo-ui": "This demo illustrates the data virtualization on a touch device by using Kendo UI ScrollView widget in your HTML5 app."
-        }
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "scrollview/adaptive",
-        "title": {
-            "kendo-ui": "Mobile ScrollView widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile ScrollView may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "scrollview/angular",
-        "title": {
-            "kendo-ui": "AngularJS support for Kendo UI Mobile ScrollView"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile ScrollView"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "SplitView",
-    "name": "SplitView",
-    "api": "mobile/splitview",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/splitview",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobilesplitview/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/split-view",
-       "aspnet-mvc": "aspnet-mvc/splitview"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/splitview",
-       "aspnet-mvc": "aspnet-mvc/splitview"
-    },
-    "spriteCssClass": "mobileSplitViewIcon",
-    "mobile": true,
-    "tablet": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Overview",
-        "url": "splitview/index",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile SplitView component demo",
-            "aspnet-mvc": "ASP.NET MVC SplitView demo"
-        },
-        "meta": {
-            "kendo-ui": "This example illustrates the core functionality of Kendo UI SplitView which is a tablet-specific view, consisting of two or more jQuery-based mobile pane widgets.",
-            "aspnet-mvc": "This ASP.NET MVC SplitView example illustrates the core functionality of the extension for Kendo UI SplitView widget."
-        }
-      },
-      {
-        "text": "Customizing appearance",
-        "url": "splitview/appearance",
-        "title": {
-            "kendo-ui": "Customizing the appearance of Kendo UI Mobile SplitView",
-            "aspnet-mvc": "Customizing the appearance of ASP.NET MVC Mobile SplitView"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how the appearance of Kendo UI SplitView widget can be easily customized.",
-            "aspnet-mvc": "This demo shows how the appearance of ASP.NET MVC SplitView control can be easily customized."
-        }
-      },
-      {
-        "text": "AngularJS",
-        "new": "true",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "splitview/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile SplitView"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile SplitView"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
-  },
-  {
     "text": "Switch",
     "name": "switch",
     "api": "mobile/switch",
@@ -10857,74 +9460,17 @@
        "aspnet-mvc": "aspnet-mvc/switch"
     },
     "spriteCssClass": "mobileSwitchIcon",
-    "mobile": true,
+    "category": "Editors",
     "packages": [ "!jsp", "!php" ],
     "items": [
       {
-        "text": "Basic usage",
+        "text": "Basic Usage",
         "url": "switch/index",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile Flip Switch Demo",
-            "aspnet-mvc": "Mobile Switch control demo | UI for ASP.NET MVC Demos"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how Kendo UI Switch widget is used on apps for binary on/off or true/false (yes/no) data input.",
-            "aspnet-mvc": "This demo shows how ASP.NET MVC Switch control is used on apps for binary on/off or true/false (yes/no) data input."
-        }
-      },
-      {
-        "text": "Events",
-        "url": "switch/events",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile Switch widget events examples",
-            "aspnet-mvc": "ASP.NET MVC Mobile Switch control events examples"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows all events, enabled for Kendo UI Mobile Switch component. The events correlate to the value of the switch widget.",
-            "aspnet-mvc": "This demo shows all events, enabled for ASP.NET MVC Mobile Switch component. The events correlate to the value of the switch control."
-        }
-      },
-      {
-        "text": "MVVM",
-        "url": "switch/mvvm",
-        "title": {
-            "kendo-ui": "MVVM support in Kendo UI Mobile Switch"
-        },
-        "meta": {
-            "kendo-ui": "Checked, enabled, events and visible MVVM binding support in Kendo UI Mobile Switch"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "switch/adaptive",
         "title": {
             "kendo-ui": "Mobile Switch widget demo | Kendo UI Demos"
         },
         "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile Switch may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "switch/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile Switch"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile Switch"
+            "kendo-ui": "This example demonstrates the Switch widget"
         },
         "packages": [
           "!mvc",
@@ -10932,127 +9478,31 @@
           "!php"
         ]
       }
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "TabStrip",
-    "name": "mobile-tabstrip",
-    "api": "mobile/tabstrip",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/tabstrip",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobiletabstrip/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/mobile-tabstrip",
-       "aspnet-mvc": "aspnet-mvc/tabstrip-mobile"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/mobile-tabstrip",
-       "aspnet-mvc": "aspnet-mvc/mobile-tabstrip"
-    },
-    "spriteCssClass": "mobileTabStripIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Basic usage",
-        "url": "mobile-tabstrip/index",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile TabStrip Demo",
-            "aspnet-mvc": "ASP.NET MVC Mobile Tabstrip control demo | ASP.NET MVC Demos"
-        },
-        "meta": {
-            "kendo-ui": "This sample demonstrates how Kendo UI Mobile TabStrip widget is used inside a mobile view to show an application-wide group of navigation buttons.",
-            "aspnet-mvc": "This example demonstrates the basic functionality of Telerik ASP.NET MVC Mobile Tabstrip. Take a look at the source code and play with the demos."
-        }
-      },
-      {
-        "text": "Badges",
-        "url": "mobile-tabstrip/badges",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile TabStrip Badge Demo",
-            "aspnet-mvc": "ASP.NET MVC Mobile TabStrip Badge Demo"
-        },
-        "meta": {
-            "kendo-ui": "This sample demonstrates how Kendo UI Mobile TabStrip widget can show badges on its buttons.",
-            "aspnet-mvc": "This sample demonstrates how ASP.NET MVC Mobile TabStrip control can show badges on its buttons."
-        }
-      },
-      {
-        "text": "Customizing appearance",
-        "url": "mobile-tabstrip/appearance",
-        "title": {
-            "kendo-ui": "Example of Kendo UI TabStrip Customized Appearance",
-            "aspnet-mvc": "Example of ASP.NET MVC TabStrip Customized Appearance"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how the application-wide group of navigation buttons in Kendo UI TabStrip can be easily customized by using custom icons.",
-            "aspnet-mvc": "This demo shows how the application-wide group of navigation buttons in ASP.NET MVC TabStrip can be easily customized by using custom icons."
-        }
-      },
-      {
-        "text": "Adaptive Usage",
-        "disableInMobile": true,
-        "url": "mobile-tabstrip/adaptive",
-        "title": {
-            "kendo-ui": "Mobile Tabstrip widget demo | Kendo UI Demos"
-        },
-        "meta": {
-            "kendo-ui": "This example demonstrates how the Mobile Tabstrip may be used outside of a Kendo UI Mobile Application alongside Kendo UI Web Widgets"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "disableInMobile": true,
-        "url": "mobile-tabstrip/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile TabStrip"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile TabStrip"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
+    ]
   },
   {
     "text": "Touch Events",
     "name": "touchevents",
     "api": "mobile/touch",
+    "category": "Framework",
     "documentation": {
        "kendo-ui": "getting-started/mobile/touch"
     },
     "spriteCssClass": "mobileAppIcon",
-    "mobile": true,
     "packages": [ "!mvc", "!jsp", "!php" ],
     "items": [
       {
         "text": "Touch Events",
         "url": "touchevents/index",
         "title": {
-            "kendo-ui": "Touch Events Demo in Kendo UI jQuery-powered mobile framework"
+            "kendo-ui": "Kendo UI Touch Events Demo"
         },
         "meta": {
-            "kendo-ui": "Play with this Kendo UI Mobile demo to explore the touch events in Kendo UI Mobile advanced mobile app framework."
+            "kendo-ui": ""
         }
       },
       {
         "text": "AngularJS",
-        "mobile": true,
-        "new": "true",
-        "disableInMobile": true,
         "url": "touchevents/angular",
         "title": {
             "kendo-ui": "AngularJS support in Kendo UI Touch Events"
@@ -11066,88 +9516,12 @@
           "!php"
         ]
       }
-
-    ],
-    "category": "Mobile"
-  },
-  {
-    "text": "View",
-    "name": "mobile-view",
-    "api": "mobile/view",
-    "documentation": {
-       "kendo-ui": "getting-started/mobile/view",
-       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/mobileview/overview"
-    },
-    "forum": {
-       "kendo-ui": "kendo-ui/view",
-       "aspnet-mvc": "aspnet-mvc/view"
-    },
-    "codelibrary": {
-       "kendo-ui": "kendo-ui/view",
-       "aspnet-mvc": "aspnet-mvc/view"
-    },
-    "spriteCssClass": "mobileAppIcon",
-    "mobile": true,
-    "packages": [ "!jsp", "!php" ],
-    "items": [
-      {
-        "text": "Overview",
-        "url": "mobile-view/index",
-        "title": {
-            "kendo-ui": "Kendo UI Mobile View widget demo",
-            "aspnet-mvc": "ASP.NET MVC Mobile View demo"
-        },"meta": {
-            "kendo-ui": "This example shows how Kendo UI Mobile View component is used to represent a screen in an HTML5 Mobile Application.",
-            "aspnet-mvc": "This example shows how ASP.NET MVC Mobile View component is used to represent a screen in an ASP.NET MVC Mobile Application."
-        },
-        "packages": [
-          "!mvc"
-        ],
-        "meta": {
-            "kendo-ui": "This example shows how Kendo UI Mobile View component is used to represent a screen in Kendo UI Mobile Application."
-        }
-      },
-      {
-        "text": "Zoomable View",
-        "url": "mobile-view/zoomable",
-        "title": {
-            "kendo-ui": "Zoomable View in Kendo UI Mobile App Framework | Kendo UI Mobile Demo"
-        },
-        "meta": {
-            "kendo-ui": "In this Kendo UI Mobile demo you will see how the contents of the mobile view can be zoomed by simply using pinch/zoom gestures."
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "AngularJS",
-        "mobile": true,
-        "new": "true",
-        "disableInMobile": true,
-        "url": "mobile-view/angular",
-        "title": {
-            "kendo-ui": "AngularJS support in Kendo UI Mobile View"
-        },
-        "meta": {
-            "kendo-ui": "AngularJS directive support for Kendo UI Mobile View"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      }
-    ],
-    "category": "Mobile"
+    ]
   },
   {
       "text": "Single Page Applications",
       "name": "spa",
       "packages": [ "offline" ],
-      "disableInMobile": true,
       "items": [
           {
             "text": "Aeroviewr",
@@ -11172,12 +9546,20 @@
       ]
   },
   {
-      "text": "Sample Mobile Applications",
-      "name": "mobile-apps",
-      "mobile": "true",
-      "disableInMobile": true,
+      "text": "Kendo UI Mobile",
+      "name": "mobile",
       "packages": [ "offline" ],
       "items": [
+          {
+            "text": "Hybrid Framework Demos",
+            "url": "mobile",
+            "title": {
+                "kendo-ui": "Hybrid Framework Demos"
+            },
+            "meta": {
+                "kendo-ui": "Hybrid Framework Demos"
+            }
+          },
           {
             "text": "Cuteness.io",
             "url": "mobile-apps/cuteness",

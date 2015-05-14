@@ -7,7 +7,6 @@
 }
 <script>
     window.kendoTheme = "@ViewBag.Theme";
-    window.kendoMobileTheme = "@ViewBag.MobileTheme";
     window.kendoCommonFile = "@ViewBag.CommonFile";
 </script>
 
@@ -18,87 +17,83 @@
 </script>
 
 @Html.Partial("WebSearchScript")
-
-<div id="example-search-wrapper" class="search-wrapper">
-    <div class="search">
-        <input id="example-search" placeholder="Search demos"/>
+<div id="example-sidebar">
+    <div id="example-search-wrapper" class="search-wrapper">
+        <div class="search">
+            <input id="example-search" placeholder="Search demos"/>
+        </div>
     </div>
-</div>
-<div id="example-nav-bar">
-    <a href="#" title="See all components" id="back-forward" class="back-nav">All Components</a>
-</div>
-<div id="nav-wrapper">
-
-    <div id="nav">
-
-        <div id="root-nav">
-
-
-    @foreach (IGrouping<string, NavigationWidget> category in ViewBag.Categories)
-    {
-        <ul class="root-nav-categories">
-            @if (category.Any(c => c.ShouldInclude((string)ViewBag.NavProduct)))
+    <div id="example-nav-bar">
+        <a href="#" title="See all components" id="back-forward" class="back-nav">All Components</a>
+    </div>
+    <div id="nav-wrapper">
+        <div id="nav">
+            <div id="root-nav">
+            @foreach (IGrouping<string, NavigationWidget> category in ViewBag.Categories)
             {
-            <li>
-                <h3>@category.Key</h3>
-                <ul class="root-nav-widgets">
-                @foreach (var widget in category)
-                {
-                    if (widget.ShouldInclude((string)ViewBag.NavProduct))
+                <ul class="root-nav-categories">
+                    @if (category.Any(c => c.ShouldInclude((string)ViewBag.NavProduct)))
                     {
-                    <li>@Html.WidgetLink(widget, (string)ViewBag.NavProduct)</li>
+                    <li>
+                        <h3>@category.Key</h3>
+                        <ul class="root-nav-widgets">
+                        @foreach (var widget in category)
+                        {
+                            if (widget.ShouldInclude((string)ViewBag.NavProduct))
+                            {
+                            <li>@Html.WidgetLink(widget, (string)ViewBag.NavProduct)</li>
+                            }
+                        }
+                        </ul>
+                    </li>
+                    }
+                </ul>
+            }
+            </div>
+            <div id="example-nav">
+                <h3>@ViewBag.CurrentWidget.Text</h3>
+                <ul>
+                @foreach (NavigationExample example in ViewBag.CurrentWidget.Items)
+                {
+                    if (example.ShouldInclude(navProduct))
+                    {
+                        <li>@Html.ExampleLink(example)</li>
                     }
                 }
                 </ul>
-            </li>
-            }
-        </ul>
-    }
+            </div>
         </div>
+        <script>
+            $("#back-forward").on("click", function (e) {
+                if ($(this).hasClass("back-nav")) {
+                    $(this).removeClass("back-nav").addClass("forward-nav").text("@ViewBag.CurrentWidget.Text").attr("title", "See @ViewBag.CurrentWidget.Text demos");
+                    $("#nav").addClass("root");
 
-        <div id="example-nav">
-
-        <h3>@ViewBag.CurrentWidget.Text</h3>
-            <ul>
-            @foreach (NavigationExample example in ViewBag.CurrentWidget.Items)
-            {
-                if (example.ShouldInclude(navProduct))
-                {
-                    <li>@Html.ExampleLink(example)</li>
                 }
+                else {
+                    $(this).removeClass("forward-nav").addClass("back-nav").text("All Components").attr("title", "See all components");
+                    $("#nav").removeClass("root");
+                }
+
+
+
+                e.preventDefault();
+            });
+
+            function setSearchListWidth() {
+                $("#example-search").data("kendoExampleSearch").list.width(500);
             }
-            </ul>
-        </div>
+
+            $(document).ready(function () {
+                resizeContainers();
+                setSearchListWidth();
+            });
+        </script>
     </div>
-
-    <script>
-        $("#back-forward").on("click", function(e) {
-            if ($(this).hasClass("back-nav")) {
-                $(this).removeClass("back-nav").addClass("forward-nav").text("@ViewBag.CurrentWidget.Text").attr("title", "See @ViewBag.CurrentWidget.Text demos");
-                $("#nav").addClass("root");
-
-            }
-            else {
-                $(this).removeClass("forward-nav").addClass("back-nav").text("All Components").attr("title", "See all components");
-                $("#nav").removeClass("root");
-            }
-
-
-
-            e.preventDefault();
-        });
-
-        function setSearchListWidth() {
-            $("#example-search").data("kendoExampleSearch").list.width(500);
-        }
-
-        $(document).ready(function () {
-            resizeContainers();
-            setSearchListWidth();
-        });
-    </script>
 </div>
 <div id="main">
+    <a href="#" id="sidebar-toggle"><span></span></a>
+
     @Html.Partial("ThemeChooser")
 
     <h1 id="exampleTitle">
@@ -235,7 +230,7 @@
         @if (html || php || jsp || mvc)
         {
             <div class="other-source">
-                <h4>@ViewBag.CurrentWidget.Text demo also available for:</h4>
+                <h4>Also available for:</h4>
                 <ul>
                     @if (html)
                     {
@@ -388,39 +383,4 @@
     });
 
     setTimeout(function(){ prettyPrint(); }, 100);
-
-    @if (ViewBag.Mobile)
-    {
-        <text>
-            kendo.history.stop();
-
-            $(function() {
-                var mobileTheme = window.kendoMobileTheme;
-
-                window.ThemeChooserViewModel.setMobileTheme(mobileTheme);
-
-                var options = {
-                    layout: "examples",
-                    updateDocumentTitle: false,
-                    hideAddressBar: false
-                };
-
-                if (mobileTheme === "flat") {
-                    options.skin = "flat";
-                } else {
-                    options.platform = mobileTheme;
-                }
-
-                window.mobileAppOptions;
-
-@if (!ViewBag.MobileAngular) {
-    <text>
-                if (!(kendo.support.browser.msie && kendo.support.browser.version < 10) && !kendo.support.browser.opera) {
-                    window.app = new kendo.mobile.Application($("#mobile-application-container"), options);
-                }
-    </text>
-}
-            });
-        </text>
-    }
 </script>
