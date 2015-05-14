@@ -27,31 +27,44 @@
         <a href="#" title="See all components" id="back-forward" class="back-nav">All Components</a>
     </div>
     <div id="nav-wrapper">
-
         <div id="nav">
-
             <div id="root-nav">
-
-
-        @foreach (IGrouping<string, NavigationWidget> category in ViewBag.Categories)
-        {
-            <ul class="root-nav-categories">
-                @if (category.Any(c => c.ShouldInclude((string)ViewBag.NavProduct)))
-                {
-                <li>
-                    <h3>@category.Key</h3>
-                    <ul class="root-nav-widgets">
-                    @foreach (var widget in category)
+            @foreach (IGrouping<string, NavigationWidget> category in ViewBag.Categories)
+            {
+                <ul class="root-nav-categories">
+                    @if (category.Any(c => c.ShouldInclude((string)ViewBag.NavProduct)))
                     {
-                    <li>@Html.WidgetLink(widget, (string)ViewBag.NavProduct)</li>
+                    <li>
+                        <h3>@category.Key</h3>
+                        <ul class="root-nav-widgets">
+                        @foreach (var widget in category)
+                        {
+                            if (widget.ShouldInclude((string)ViewBag.NavProduct))
+                            {
+                            <li>@Html.WidgetLink(widget, (string)ViewBag.NavProduct)</li>
+                            }
+                        }
+                        </ul>
+                    </li>
+                    }
+                </ul>
+            }
+            </div>
+            <div id="example-nav">
+                <h3>@ViewBag.CurrentWidget.Text</h3>
+                <ul>
+                @foreach (NavigationExample example in ViewBag.CurrentWidget.Items)
+                {
+                    if (example.ShouldInclude(navProduct))
+                    {
+                        <li>@Html.ExampleLink(example)</li>
                     }
                 }
                 </ul>
             </div>
         </div>
-
         <script>
-            $("#back-forward").on("click", function(e) {
+            $("#back-forward").on("click", function (e) {
                 if ($(this).hasClass("back-nav")) {
                     $(this).removeClass("back-nav").addClass("forward-nav").text("@ViewBag.CurrentWidget.Text").attr("title", "See @ViewBag.CurrentWidget.Text demos");
                     $("#nav").addClass("root");
