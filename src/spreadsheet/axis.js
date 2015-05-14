@@ -11,8 +11,12 @@
     }
 
     Axis.prototype.value = function(start, end, value) {
-        this.values.value(start, end, value);
-        this._refresh();
+        if (value !== undefined) {
+            this.values.value(start, end, value);
+            this._refresh();
+        } else {
+            return this.values.iterator(start, end).at(0);
+        }
     };
 
     Axis.prototype.visible = function(start, end) {

@@ -12,8 +12,8 @@ for (var i = 0, len = 50; i < len; i++) {
 }
 
 sheet.widths.value(1, 5, 120);
-sheet.heights.value(1, 1, 40);
-sheet.heights.value(50, 50, 200);
+sheet.rowHeight(1, 40);
+sheet.rowHeight(50, 200);
 
 sheet.colors.value(1, 50, "green");
 

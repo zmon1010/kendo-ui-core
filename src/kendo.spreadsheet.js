@@ -18,10 +18,6 @@
     };
 
     var Widget = kendo.ui.Widget,
-        ROWS = 200,
-        COLUMNS = 50,
-        ROW_HEIGHT = 20,
-        COLUMN_WIDTH = 64,
         FIXED = false;
 
     var Spreadsheet = kendo.ui.Widget.extend({
@@ -29,7 +25,8 @@
             Widget.fn.init.call(this, element, options);
 
             this._view = new kendo.spreadsheet.View(this.element, FIXED);
-            this._sheet = new kendo.spreadsheet.Sheet(COLUMNS, ROWS, COLUMN_WIDTH, ROW_HEIGHT, FIXED);
+            this._sheet = new kendo.spreadsheet.Sheet(this.options.columns,
+                this.options.rows, this.options.columnWidth, this.options.rowHeight, FIXED);
             this._view.sheet(this.activeSheet());
             this.refresh();
         },
@@ -43,7 +40,11 @@
         },
 
         options: {
-            name: "Spreadsheet"
+            name: "Spreadsheet",
+            rows: 200,
+            columns: 50,
+            rowHeight: 20,
+            columnWidth: 64
         }
     });
 

@@ -60,7 +60,7 @@
 
     View.prototype.sheet = function(sheet) {
         this._sheet = sheet;
-        this.container[0].style.height = sheet.heights.total + "px";
+        this.container[0].style.height = sheet.totalHeight() + "px";
         this.container[0].style.width = sheet.widths.total + "px";
     }
 
