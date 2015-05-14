@@ -3959,8 +3959,9 @@ var __meta__ = {
 
         _scrollCurrent: function() {
             var current = this._current;
+            var scrollable = this.options.scrollable;
 
-            if (!current || !this.options.scrollable) {
+            if (!current || !scrollable) {
                 return;
             }
 
@@ -3970,28 +3971,27 @@ var __meta__ = {
             var isInLockedContainer = tableContainer.is(".k-grid-content-locked,.k-grid-header-locked");
             var isInContent = tableContainer.is(".k-grid-content-locked,.k-grid-content,.k-virtual-scrollable-wrap");
 
-            var horizontalContainer = $(this.content).find(">.k-virtual-scrollable-wrap").andSelf().last()[0];
-            var verticalContainer = $(this.content).find(">.k-scrollbar-vertical").andSelf().last()[0];
+            var scrollableContainer = $(this.content).find(">.k-virtual-scrollable-wrap").andSelf().last()[0];
 
             //adjust scroll vertically
             if (isInContent) {
-                if (this.options.scrollable.virtual) {
+                if (scrollable.virtual) {
                     var rowIndex = Math.max(inArray(row[0], this._items(row.parent())), 0);
                     this._rowVirtualIndex = this.virtualScrollable.itemIndex(rowIndex);
                     this.virtualScrollable.scrollIntoView(row);
                 } else {
-                    this._scrollTo(this._relatedRow(row)[0], verticalContainer);
+                    this._scrollTo(this._relatedRow(row)[0], scrollableContainer);
                 }
             }
 
             if (this.lockedContent) {
                 //sync locked and non-locked content scrollTop
-                this.lockedContent[0].scrollTop = verticalContainer.scrollTop;
+                this.lockedContent[0].scrollTop = scrollableContainer.scrollTop;
             }
 
             //adjust scroll horizontally, if not inside locked tables
             if (!isInLockedContainer) {
-                this._scrollTo(current[0], horizontalContainer);
+                this._scrollTo(current[0], scrollableContainer);
             }
         },
 
