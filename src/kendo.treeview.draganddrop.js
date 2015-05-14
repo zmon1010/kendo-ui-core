@@ -211,14 +211,14 @@ var __meta__ = {
             }
 
             e = {
-                sourceNode: source[0],
-                destinationNode: destination[0],
+                source: source[0],
+                destination: destination[0],
                 valid: this._hintStatus() != "k-denied",
                 setValid: function(newValid) {
                     this.valid = newValid;
                 },
                 dropTarget: dropTarget[0],
-                dropPosition: position
+                position: position
             };
 
             dropPrevented = this.options.drop(e);

@@ -73,6 +73,12 @@
                     var tr = target.closest("tr");
                     return { item: tr, content: tr };
                 },
+                dragstart: function() {
+                    treelist.wrapper.addClass("k-treelist-dragging");
+                },
+                drop: function() {
+                    treelist.wrapper.removeClass("k-treelist-dragging");
+                },
                 dragend: function(e) {
                     var dest = treelist.dataItem(e.destination);
                     var src = treelist.dataItem(e.source);

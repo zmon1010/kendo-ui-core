@@ -380,7 +380,14 @@ var __meta__ = {
                         });
                     },
                     drop: function(options) {
-                        return widget.trigger(DROP, options);
+                        return widget.trigger(DROP, {
+                            sourceNode: options.source,
+                            destinationNode: options.destination,
+                            valid: options.valid,
+                            setValid: options.setValid,
+                            dropTarget: options.dropTarget,
+                            dropPosition: options.position
+                        });
                     },
                     dragend: function(options) {
                         var source = options.source;
