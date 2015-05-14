@@ -66,7 +66,7 @@
             var start = current;
             current += (range.end - range.start + 1) * range.value;
             var end = current - 1;
-            return new kendo.spreadsheet.Range(start, end, range);
+            return new kendo.spreadsheet.ValueRange(start, end, range);
         });
 
         this.total = current;

@@ -381,7 +381,7 @@
         RangeTree: RangeTree,
         RangeList: RangeList,
         SparseRangeList: SparseRangeList,
-        Range: Range
+        ValueRange: Range
     };
 
 })(kendo);

@@ -1,6 +1,6 @@
 (function() {
     var RangeTree = kendo.spreadsheet.RangeTree;
-    var Range = kendo.spreadsheet.Range;
+    var ValueRange = kendo.spreadsheet.ValueRange;
 
     var tree;
     module("range tree", {
@@ -10,7 +10,7 @@
     });
 
     function insert(value) {
-       tree.insert(new Range(value, value, value));
+       tree.insert(new ValueRange(value, value, value));
     }
 
     test("supports insert", 1, function() {
@@ -59,7 +59,7 @@
                 equal(range.value, 3);
             }
 
-            return new Range(range.start, range.end, range.value * 2);
+            return new ValueRange(range.start, range.end, range.value * 2);
         });
 
         var values = tree.values();
@@ -76,7 +76,7 @@
         insert(4);
         insert(5);
 
-        tree.remove(new Range(4, 4, 4));
+        tree.remove(new ValueRange(4, 4, 4));
 
         equal(tree.root.value.value, 2);
         equal(tree.root.right.value.value, 3);
@@ -94,12 +94,12 @@
         equal(values[2].value, 3);
     });
 
-    module("Range");
+    module("ValueRange");
 
     test("range works in range tree", function() {
         var tree = new RangeTree();
-        var range1 = new Range(0, 9);
-        var range2 = new Range(10, 19);
+        var range1 = new ValueRange(0, 9);
+        var range2 = new ValueRange(10, 19);
         tree.insert(range1);
         tree.insert(range2);
 
@@ -109,8 +109,8 @@
 
     test("range works in range tree in reverse insert mode", function() {
         var tree = new RangeTree();
-        var range1 = new Range(0, 9);
-        var range2 = new Range(10, 19);
+        var range1 = new ValueRange(0, 9);
+        var range2 = new ValueRange(10, 19);
         tree.insert(range2);
         tree.insert(range1);
 
@@ -120,9 +120,9 @@
 
     test("insert 2 ranges splits the tree", 3, function() {
         var tree = new RangeTree();
-        tree.insert(new Range(0, 9));
-        tree.insert(new Range(10, 19));
-        tree.insert(new Range(20, 29));
+        tree.insert(new ValueRange(0, 9));
+        tree.insert(new ValueRange(10, 19));
+        tree.insert(new ValueRange(20, 29));
 
         equal(tree.root.value.start, 10);
         equal(tree.root.left.value.start, 0);
@@ -130,10 +130,10 @@
     });
 
     test("intersects with works for overlaps", function() {
-        var range1 = new Range(0, 9);
-        var range2 = new Range(5, 14);
-        var range3 = new Range(10, 19);
-        var range4 = new Range(-10, -5);
+        var range1 = new ValueRange(0, 9);
+        var range2 = new ValueRange(5, 14);
+        var range3 = new ValueRange(10, 19);
+        var range4 = new ValueRange(-10, -5);
 
         ok(range1.intersects(range2));
         ok(!range1.intersects(range3));
@@ -141,8 +141,8 @@
     });
 
     test("intersects with works on edges", function() {
-        var range1 = new Range(0, 9);
-        var range2 = new Range(9, 14);
+        var range1 = new ValueRange(0, 9);
+        var range2 = new ValueRange(9, 14);
 
         ok(range1.intersects(range2));
     });
@@ -151,7 +151,7 @@
 
     test("find finds the correct range", 3, function() {
         var tree = new RangeTree();
-        var range = new Range(0, 9);
+        var range = new ValueRange(0, 9);
         tree.insert(range);
 
         equal(tree.findrange(1), range);
@@ -161,8 +161,8 @@
 
     test("find finds the correct second range", 1, function() {
         var tree = new RangeTree();
-        var range1 = new Range(0, 9);
-        var range2 = new Range(10, 19);
+        var range1 = new ValueRange(0, 9);
+        var range2 = new ValueRange(10, 19);
         tree.insert(range1);
         tree.insert(range2);
 
@@ -171,11 +171,11 @@
 
     test("intersecting finds all matching ranges", 4, function() {
         var tree = new RangeTree();
-        tree.insert(new Range(0, 9));
-        tree.insert(new Range(10, 19));
-        tree.insert(new Range(20, 29));
-        tree.insert(new Range(30, 39));
-        tree.insert(new Range(40, 49));
+        tree.insert(new ValueRange(0, 9));
+        tree.insert(new ValueRange(10, 19));
+        tree.insert(new ValueRange(20, 29));
+        tree.insert(new ValueRange(30, 39));
+        tree.insert(new ValueRange(40, 49));
 
         var found = tree.intersecting(15, 39);
         equal(found.length, 3);
