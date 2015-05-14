@@ -28,10 +28,18 @@
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
 
-            this.view = new kendo.spreadsheet.View(this.element, FIXED);
-            this.activeSheet = new kendo.spreadsheet.Sheet(COLUMNS, ROWS, COLUMN_WIDTH, ROW_HEIGHT, FIXED);
-            this.view.sheet(this.activeSheet);
-            this.view.render();
+            this._view = new kendo.spreadsheet.View(this.element, FIXED);
+            this._sheet = new kendo.spreadsheet.Sheet(COLUMNS, ROWS, COLUMN_WIDTH, ROW_HEIGHT, FIXED);
+            this._view.sheet(this.activeSheet());
+            this.refresh();
+        },
+
+        refresh: function() {
+            this._view.render();
+        },
+
+        activeSheet: function() {
+            return this._sheet;
         },
 
         options: {
