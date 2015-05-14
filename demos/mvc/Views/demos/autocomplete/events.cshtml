@@ -1,8 +1,9 @@
 
         <div id="example">
-            <div id="taxi">
-                <label for="states">Select a state in USA:</label>
-                <input id="states"/>
+            <div class="demo-section k-header">
+                <h4>Select a state in USA:</h4>
+                <input id="states" style="width: 100%;"/>
+                <div class="demo-hint">Hint: type "m"</div>
             </div>
             <div class="box">                
                 <h4>Console log</h4>
@@ -117,25 +118,5 @@
                     });
                 });
             </script>
-
-            <style>
-                #taxi {
-                    width: 240px;
-                    height: 160px;
-                    padding: 70px 0 0 200px;
-                    background: url('../content/web/autocomplete/taxi.png') transparent no-repeat 0 0;
-                    margin: 20px auto;
- 		}
-                #taxi label {
-                    display: block;
-                    color: #333;
-                    padding-bottom: 5px;
- 		}
-                .k-autocomplete {
-                    display: block;
-                    clear: left;
-                    width: 200px;
-                    vertical-align: middle;
-                }
-            </style>
+            
         </div>
