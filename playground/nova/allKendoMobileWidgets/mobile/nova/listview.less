@@ -3,7 +3,109 @@
 @import "base.less";
 
 /* ListView */
-.km-nova .km-list > li {
-    border-widht: 1px;
+
+.km-nova .km-listinset,
+.km-nova .km-listgroupinset
+{
+    margin: 0;
+}
+
+.km-nova .km-list > li
+{
+    font-size: 1.125em;
+    padding-left: 0.89em;
+    background: transparent;
+    border-radius: 0;
+    border-width: 1px 0 0;
     border-style: solid;
+
+    line-height: 1.7em;
+}
+
+.km-nova .km-list > .km-load-more+li {
+    border-top: 0;
+}
+
+//.km-nova .km-listview-link:after
+//{
+    /*width: .66rem;
+    height: .64rem;
+    border-width: 0;
+    box-shadow: inset -.2rem .2rem 0 currentcolor;*/
+    //display: none;
+//}
+
+.km-nova .km-list li > .km-listview-link,
+.km-nova .km-list li > .km-listview-label
+{
+    margin-left: -1em;
+    padding-left: 1em;
+    border-radius: 0;
+}
+
+.km-nova .km-group-title
+{
+    font-size: .875em;
+    position: -webkit-sticky;
+    text-indent: 1em;
+    margin-top: 0;
+    font-weight: normal;
+    text-transform: uppercase;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.km-nova .km-listgroup .km-group-title,
+.km-nova .km-listgroupinset .km-group-title
+{
+    line-height: 2em;
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+
+.km-nova .km-listview .km-switch
+{
+    margin-top: -1.3rem;
+}
+
+/* Filter box */
+
+.km-nova .km-filter-wrap
+{
+    color: inherit;
+    background: currentcolor;
+}
+
+.km-nova .km-filter-wrap > input
+{
+    padding: 0 1.8em;
+    color: transparent;
+    background: transparent;
+}
+
+.km-nova .km-filter-wrap > input::-webkit-input-placeholder { text-align: center; }
+.km-nova .km-filter-wrap > input::-moz-placeholder { text-align: center; }
+.km-nova .km-filter-wrap > input::-ms-input-placeholder { text-align: center; }
+
+.km-nova .km-filter-wrap > input:focus::-webkit-input-placeholder { text-align: left; }
+.km-nova .km-filter-wrap > input:focus::-moz-placeholder { text-align: left; }
+.km-nova .km-filter-wrap > input:focus::-ms-input-placeholder { text-align: left; }
+
+.km-nova .km-filter-wrap:before,
+.km-nova .km-filter-reset .km-clear
+{
+    position: absolute;
+    top: 50%;
+    margin-top: -.55em;
+}
+
+.km-nova .km-filter-wrap:before
+{
+    font-size: 1em;
+    content: "\e21e";
+}
+
+.km-nova .km-filter-wrap .km-clear:after
+{
+    content: "\e031";
 }

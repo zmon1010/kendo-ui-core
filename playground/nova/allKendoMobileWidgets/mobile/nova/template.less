@@ -135,8 +135,32 @@
 
 .km-nova .km-buttongroup.km-primary .km-state-active {
     color: @background;
-    background: @accent;
+    background-color: @accent;
 } 
+
+/* Inverse ButtonGroup */
+.km-nova .km-inverse .km-button {    
+    color: @background;
+    background-color: darken(@selected-background, 33%);
+    border-color: @background;
+}
+
+.km-nova .km-inverse .km-state-active {    
+    color: darken(@selected-background, 33%);
+    background-color: @background;
+}
+
+.km-nova .km-inverse.km-primary .km-button {
+    color: @background;
+    border-color: @background;
+    background-color: @accent;
+}
+
+.km-nova .km-inverse.km-primary .km-state-active {
+    color: @accent;
+    background-color: @background;    
+} 
+/* ... */
 
 /* Accent NavBar */
 .km-nova .km-accent.km-navbar,
@@ -154,6 +178,62 @@
 }
 
 /* ListView */
-.km-nova .km-list > li {
-    border-color: darken(@base, 8%); // Calculate to #dfe0e1
+.km-nova .km-list > li
+{
+    //background: @office365-list-background;
+    border-color: darken(@base, 8%); // Calculate to #dfe0e1;
+    color: @normal-text-color;
+    /*border-top-color: @office365-list-border;
+    border-image: -webkit-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
+    border-image: -moz-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
+    border-image: -ms-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;*/
+}
+
+/*.km-office365 .km-list > li:hover
+{
+    background-color: @office365-list-hover-background;
+}
+
+.km-office365 .km-listinset > li:first-child,
+.km-office365 .km-listgroupinset .km-list > li:first-child
+{
+    border-color: @office365-button-border;
+}
+
+.km-office365 .km-listinset > li:last-child,
+.km-office365 .km-listgroupinset .km-list > li:last-child
+{
+    border-color: @office365-button-border;
+}
+
+.km-office365 .km-list > li:last-child
+{
+    .box-shadow(inset 0 -1px 0 @office365-border-color);
+}
+
+.km-office365 .km-listview-link:after,
+.km-office365 .km-state-active .km-listview-link:after
+{
+    color: lighten(@office365-text, 30);
+    border-color: currentcolor;
+}
+*/
+
+.km-nova .km-group-title
+{
+    background: @base;
+    border-color: darken(@base, 8%); // Calculate to #dfe0e1;
+    color: @normal-text-color;
+}
+
+/* Generic content */
+.km-nova .km-thumbnail {
+    border-color: darken(@base, 8%); // Calculate to #dfe0e1;
+}
+
+.km-nova .km-listview-link:after
+{
+    color: darken(@base, 8%); // Calculate to #dfe0e1;
+    //-webkit-box-shadow: inset -.2rem .2rem 0 @ios7-lighter-background;
+    //box-shadow: inset -.2rem .2rem 0 @ios7-lighter-background;
 }
