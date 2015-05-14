@@ -891,14 +891,13 @@ pre.prettyprint
     overflow-x: hidden;
     text-align: left;
     height: 200px;
-    min-width: 300px;
     border: 1px solid rgba(20,53,80,0.1);
     background-color: #ffffff;
 }
 
 .demo-section .box-col .console
 {
-    width: 500px;
+    min-width: 200px;
 }
 
 .console .count
@@ -1742,7 +1741,8 @@ ul.keyboard-legend {
     text-align: left;
 }
 
-ul.keyboard-legend li {
+ul.keyboard-legend li,
+.demo-section .box-col ul.keyboard-legend li {
     display: block;
     margin: 0;
     padding: 4px 0;
