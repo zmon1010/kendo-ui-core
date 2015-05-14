@@ -2134,10 +2134,9 @@ a.footer-links:hover,
 }
 
 #nav {
-    width: 600px;
-
+    width: 598px;
     white-space: nowrap;
-    margin-left: -300px;
+    margin-left: -299px;
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -ms-transition: all 0.3s ease-out;
@@ -2717,7 +2716,7 @@ html.k-materialblack .demo-section.k-content {
 
 .box li,
 .demo-section .box-col li {
-    margin-bottom: .6em;
+    line-height: 3em;
 }
 .box li:last-child {
     margin-bottom: 0;
