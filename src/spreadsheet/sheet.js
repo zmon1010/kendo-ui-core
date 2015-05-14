@@ -4,8 +4,8 @@
 
 (function(kendo) {
     function Sheet(columns, rows, columnWidth, rowHeight, fixed) {
-        this._widths = new kendo.spreadsheet.Axis(columns, columnWidth, fixed);
-        this._heights = new kendo.spreadsheet.Axis(rows, rowHeight, fixed);
+        this._columns = new kendo.spreadsheet.Axis(columns, columnWidth, fixed);
+        this._rows = new kendo.spreadsheet.Axis(rows, rowHeight, fixed);
 
         var cellsCount = rows * columns - 1;
 
@@ -18,21 +18,21 @@
     Sheet.prototype = {
         view: function(rectangle) {
             return {
-                rows: this._heights.visible(rectangle.top, rectangle.bottom),
-                columns: this._widths.visible(rectangle.left, rectangle.right)
+                rows: this._rows.visible(rectangle.top, rectangle.bottom),
+                columns: this._columns.visible(rectangle.left, rectangle.right)
             };
         },
         columnWidth: function(columnIndex, width) {
-            return this._widths.value(columnIndex, columnIndex, width);
+            return this._columns.value(columnIndex, columnIndex, width);
         },
         rowHeight: function(rowIndex, height) {
-            return this._heights.value(rowIndex, rowIndex, height);
+            return this._rows.value(rowIndex, rowIndex, height);
         },
         totalHeight: function() {
-            return this._heights.total;
+            return this._rows.total;
         },
         totalWidth: function() {
-            return this._widths.total;
+            return this._columns.total;
         }
     }
 
