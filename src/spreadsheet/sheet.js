@@ -10,7 +10,7 @@
         var cellsCount = rows * columns - 1;
 
         this._values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "");
-        this.colors = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "beige");
+        this._backgrounds = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "beige");
 
         this._grid = new kendo.spreadsheet.Grid(columns, rows);
     }

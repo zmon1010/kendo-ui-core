@@ -40,4 +40,11 @@
 
         equal(range.value(), "foo");
     });
+
+    test("background returns the background of a range", function() {
+        range.background("foo");
+
+        equal(range.background(), "foo");
+    });
+
 })();

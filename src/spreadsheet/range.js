@@ -22,18 +22,27 @@
     }
 
     Range.prototype = {
-        value: function(value) {
+        _property: function(list, value) {
             if (value !== undefined) {
                 for (var ci = this._columnStart; ci <= this._columnEnd; ci++) {
                     var start = this._sheet._grid.index(ci, this._rowStart);
                     var end = this._sheet._grid.index(ci, this._rowEnd);
-                    this._sheet._values.value(start, end, value);
+
+                    list.value(start, end, value);
                 }
+
+                return this;
             } else {
                 var index = this._sheet._grid.index(this._columnStart, this._rowEnd);
 
-                return this._sheet._values.value(index, index);
+                return list.value(index, index);
             }
+        },
+        value: function(value) {
+            return this._property(this._sheet._values, value);
+        },
+        background: function(value) {
+            return this._property(this._sheet._backgrounds, value);
         }
     }
 

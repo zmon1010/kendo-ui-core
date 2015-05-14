@@ -113,7 +113,7 @@
             var endCellIndex = grid.index(ci, rows.end);
 
             var values = sheet._values.iterator(startCellIndex, endCellIndex);
-            var backgrounds = sheet.colors.iterator(startCellIndex, endCellIndex);
+            var backgrounds = sheet._backgrounds.iterator(startCellIndex, endCellIndex);
 
             table.addColumn(columns.values.at(ci));
 

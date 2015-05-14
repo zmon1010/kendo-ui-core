@@ -14,7 +14,5 @@ sheet.columnWidth(1, 120);
 sheet.columnWidth(2, 120);
 sheet.rowHeight(1, 40);
 sheet.rowHeight(50, 200);
-
-sheet.colors.value(1, 50, "green");
-
+sheet.range(1, 0, 50).background("green");
 spreadsheet.refresh();
