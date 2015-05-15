@@ -1,10 +1,8 @@
 <div id="example" ng-app="KendoDemos">
-    <div class="demo-section k-content" ng-controller="MyCtrl">
-    <div class="box-col">
+    <div class="demo-section k-header" ng-controller="MyCtrl">
+    <div>
         <h4>Static data</h4>
-        <label>Country in Europe:</label>
-        <select kendo-combo-box
-                style="width: 300px;" >
+        <select kendo-combo-box style="width: 100%" >
           <option>Albania</option>
           <option>Andorra</option>
           <option>Armenia</option>
@@ -57,9 +55,8 @@
           <option>Vatican City</option>
         </select>
     </div>
-    <div class="boxc-col">
+    <div style="padding-top: 1em;">
         <h4>Remote data</h4>
-        <label>Product:</label>
         <select kendo-combo-box
                 k-placeholder="'Select product'"
                 k-data-text-field="'ProductName'"
@@ -68,7 +65,7 @@
                 k-auto-bind="false"
                 k-min-length="3"
                 k-data-source="productsDataSource"
-                style="width: 300px;" >
+                style="width: 100%" >
         </select>
     </div>
 </div>

@@ -1,6 +1,6 @@
 <div id="example">
     <div class="demo-section k-header">
-        <div class="box-col" data-bind="visible: isPrimitive">
+        <div data-bind="visible: isPrimitive">
             <h4>ComboBox</h4>
             <input data-role="combobox"
                    data-placeholder="Type a product e.g. 'Chai'"
@@ -16,13 +16,13 @@
                                 open: onOpen,
                                 close: onClose
                               }"
-                   style="width: 300px"
+                   style="width: 100%"
             />
             <p class="demo-hint">
                 <strong>data-value-primitive</strong> is set to <strong>true</strong>
             </p>
         </div>
-        <div class="box-col" data-bind="invisible: isPrimitive">
+        <div data-bind="invisible: isPrimitive">
             <h4>ComboBox</h4>
             <input data-role="combobox"
                    data-placeholder="Type a product e.g. 'Chai'"
@@ -37,29 +37,25 @@
                                 open: onOpen,
                                 close: onClose
                               }"
-                   style="width: 300px"
+                   style="width: 100%"
             />
             <p class="demo-hint">
                 <strong>data-value-primitive</strong> is <strong>not</strong> set.
             </p>
         </div>
-        <div class="box-col console-section">
+        <div style="padding-top: 1em;">
             <h4>Console</h4>
             <div class="console"></div>
         </div>
     </div>
-    <div class="box">
-        <div class="box-col" style="width: 300px">
+    <div class="box wide">
+        <div class="box-col">
             <h4>Configuration</h4>
-            <div>
-                <label><input type="checkbox" data-bind="checked: isPrimitive, events: { change: primitiveChanged }">Set <strong>data-value-primitive</strong></label>
-            </div>
-            <div>
-                <label><input type="checkbox" data-bind="checked: isEnabled">Enable</label>
-            </div>
-            <div>
-                <label><input type="checkbox" data-bind="checked: isVisible">Visible</label>
-            </div>
+            <ul>
+                <li><label><input type="checkbox" data-bind="checked: isPrimitive, events: { change: primitiveChanged }">Set <strong>data-value-primitive</strong></label></li>
+                <li><label><input type="checkbox" data-bind="checked: isEnabled">Enable ComboBox</label></li>
+                <li><label><input type="checkbox" data-bind="checked: isVisible">Visible</label></li>
+            </ul>
         </div>
         <div class="box-col">
             <h4>Information</h4>
