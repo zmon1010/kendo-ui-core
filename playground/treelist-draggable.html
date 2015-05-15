@@ -19,9 +19,8 @@
     <div id="treelist"></div>
 
     <script>
-        require([
-                "../src/kendo.treelist"
-            ], function() {
+        require([ "../src/kendo.treelist" ], function() {
+
             var dataSource = new kendo.data.TreeListDataSource({
                 data: [
                   { id: 1, Name: "Daryl Sweeney", Position: "CEO", Phone: "(555) 924-9726", parentId: null },
@@ -55,24 +54,7 @@
                         { field: "Phone" }
                     ]
                 }).data("kendoTreeList");
-
         });
     </script>
-
-    <style>
-
-        .k-treelist .k-drop-hint
-        {
-            position: absolute;
-            z-index: 10000;
-            visibility: hidden;
-            width: 80px;
-            height: 5px;
-            margin-top: -3px;
-            background-color: transparent;
-            background-repeat: no-repeat;
-        }
-
-    </style>
 </body>
 </html>
