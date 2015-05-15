@@ -6471,7 +6471,7 @@ var __meta__ = {
             }
 
             if (column.columns && column.columns.length) {
-                position = columnVisiblePosition(column, columns);
+                position =  columnPosition(column, columns);
 
                 setColumnVisibility(column, true);
 

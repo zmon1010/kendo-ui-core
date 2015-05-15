@@ -1426,6 +1426,28 @@
         ok(rows.eq(2).find("th").eq(0).is(":visible"));
     });
 
+    test("show second multiline group column header with previous multiline header hidden", function() {
+        var grid = setup({
+            columns: [
+                { title: "master", width: 10 },
+                { title: "master1", hidden: true, columns: [{ title: "master1-child", columns: [{ title: "master1-child-child", width: 20 }] }, { title: "master1-child1", width: 30 }] },
+                { title: "master2", hidden: true, columns: [{ title: "master2-child", width: 40 }, { title: "master2-child1", width: 50 }] }
+            ]
+        });
+
+        grid.showColumn(2);
+
+        var rows = grid.thead.find("tr");
+        ok(rows.eq(0).find("th").eq(0).is(":visible"));
+        ok(!rows.eq(0).find("th").eq(1).is(":visible"));
+        ok(rows.eq(0).find("th").eq(2).is(":visible"));
+        ok(!rows.eq(1).find("th").eq(0).is(":visible"));
+        ok(!rows.eq(1).find("th").eq(1).is(":visible"));
+        ok(rows.eq(1).find("th").eq(2).is(":visible"));
+        ok(rows.eq(1).find("th").eq(3).is(":visible"));
+        ok(!rows.eq(2).find("th").eq(0).is(":visible"));
+    });
+
     test("show multiline group locked column header - multiline headers", function() {
         var grid = setup({
             columns: [
