@@ -33,6 +33,19 @@ namespace Kendo.Mvc.UI.Tests
         }
 
         [Fact]
+        public void Serializes_allPages()
+        {
+            pdf.AllPages = true;
+            pdf.ToJson()["allPages"].ShouldEqual(true);
+        }
+
+        [Fact]
+        public void Does_not_serialize_default_allPages()
+        {
+            pdf.ToJson().ContainsKey("allPages").ShouldBeFalse();
+        }
+
+        [Fact]
         public void Does_not_serialize_default_proxyURL()
         {
             pdf.ToJson().ContainsKey("proxyURL").ShouldBeFalse();

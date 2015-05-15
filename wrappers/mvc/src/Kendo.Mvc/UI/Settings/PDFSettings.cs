@@ -43,7 +43,7 @@ namespace Kendo.Mvc.UI
         {
             if (AllPages.HasValue)
             {
-                json["allPages"] = ProxyURL;
+                json["allPages"] = AllPages;
             }
 
             if (ProxyURL.HasValue())
