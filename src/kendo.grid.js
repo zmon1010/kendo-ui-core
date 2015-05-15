@@ -1186,13 +1186,13 @@ var __meta__ = {
         return result;
     }
 
-    function formatGroupValue(value, format, columnValues) {
-        var isForiegnKey = columnValues && columnValues.length && isPlainObject(columnValues[0]) && "value" in columnValues[0],
-            groupValue = isForiegnKey ? convertToObject(columnValues)[value] : value;
+    function formatGroupValue(value, format, columnValues, encoded) {
+        var isForeignKey = columnValues && columnValues.length && isPlainObject(columnValues[0]) && "value" in columnValues[0],
+            groupValue = isForeignKey ? convertToObject(columnValues)[value] : value;
 
         groupValue = groupValue != null ? groupValue : "";
 
-        return format ? kendo.format(format, groupValue) : groupValue;
+        return format ? kendo.format(format, groupValue) : (encoded === false ? groupValue : kendo.htmlEncode(groupValue));
     }
 
     function setCellVisibility(cells, index, visible) {
@@ -6073,7 +6073,7 @@ var __meta__ = {
                 field = group.field,
                 column = grep(leafColumns(that.columns), function(column) { return column.field == field; })[0] || { },
                 template = column.groupHeaderTemplate,
-                text =  (column.title || field) + ': ' + formatGroupValue(group.value, column.format, column.values),
+                text = (column.title || field) + ': ' + formatGroupValue(group.value, column.format, column.values, column.encoded),
                 footerDefaults = that._groupAggregatesDefaultObject || {},
                 aggregates = extend({}, footerDefaults, group.aggregates),
                 data = extend({}, { field: group.field, value: group.value, aggregates: aggregates }, group.aggregates[group.field]),
