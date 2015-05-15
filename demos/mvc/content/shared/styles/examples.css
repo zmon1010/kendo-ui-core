@@ -1741,7 +1741,7 @@ ul.keyboard-legend {
     text-align: left;
 }
 
-ul.keyboard-legend li,
+#example ul.keyboard-legend li,
 .demo-section .box-col ul.keyboard-legend li {
     display: block;
     margin: 0;
