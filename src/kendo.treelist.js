@@ -907,7 +907,9 @@ var __meta__ = {
                 itemSelector: "tr",
                 allowedContainers: "#" + this.wrapper.attr("id"),
                 hintText: function(row) {
-                    return row.find("td:eq(1)").text();
+                    var text = function() { return $(this).text(); };
+                    var separator = "<span class='k-header k-drag-separator' />";
+                    return row.children("td").map(text).toArray().join(separator);
                 },
                 contains: proxy(function(source, destination) {
                     var dest = this.dataItem(destination);
