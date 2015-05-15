@@ -1,6 +1,6 @@
 <div id="example">
     <div class="demo-section k-header">
-        <div class="box-col">
+        <div>
             <h4>Enter some content</h4>
             <textarea data-role="editor"
                       data-tools="['bold',
@@ -14,15 +14,15 @@
                       data-bind="visible: isVisible,
                                  value: html,
                                  events: { change: onChange }"
-                      style="width: 480px; height: 200px;"></textarea>
+                      style="height: 200px;"></textarea>
         </div>
-        <div class="box-col console-section">
+        <div style="padding-top: 1em;">
             <h4>Console</h4>
             <div class="console"></div>
         </div>
     </div>
-    <div class="box">
-        <div class="box-col" style="width: 480px">
+    <div class="box wide">
+        <div class="box-col">
             <h4>Configuration</h4>
             <div>
                 <label><input type="checkbox" data-bind="checked: isVisible">Visible</label>

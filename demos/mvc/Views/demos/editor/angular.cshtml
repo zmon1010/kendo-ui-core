@@ -2,11 +2,9 @@
 
 <div id="example" ng-app="KendoDemos">
     <div ng-controller="MyCtrl">
-        <div class="box">
             <textarea kendo-editor k-ng-model="html"></textarea>
-        </div>
 
-        <div class="box">
+        <div class="box wide">
             <textarea ng-bind-html="html" style="width: 100%; height: 5em"></textarea>
         </div>
     </div>
@@ -20,9 +18,3 @@
               "<br /> That's when the Angular scope gets updated.</p>";
       })
 </script>
-
-<style>
-    .box .k-editor-toolbar li {
-        margin-bottom: 0;
-    }
-</style>

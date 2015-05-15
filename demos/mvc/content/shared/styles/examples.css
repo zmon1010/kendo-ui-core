@@ -3071,6 +3071,34 @@ html.k-materialblack .demo-section.k-content {
 @media only screen and (max-width : 720px) {
 
 /* Homepage */
+  
+  .btn {
+    border: 0;
+    line-height: 2em;
+    border-radius: 0;
+    margin: 0;
+  }
+  
+  .btn-primary {
+    margin-right: 0;
+  }
+  
+  #logo-bar {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  #logo-bar a {
+    display: block;
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  
+  #logo-bar span {
+    display: none;
+  }
+  
   #overview {
     padding-bottom: 260px;
   }
@@ -3141,6 +3169,17 @@ html.k-materialblack .demo-section.k-content {
   }
   
   
+  
+  .themechooser .tc-activator {
+    line-height: 3em;
+  }
+  
+  #sidebar-toggle {
+    height: 42px;
+    width: 42px;
+    line-height: 38px;
+  }
+  
   .other-source {
     float: left;
     clear: left;
@@ -3208,16 +3247,6 @@ html.k-materialblack .demo-section.k-content {
     -moz-columns: 2;
     -webkit-columns: 2;
     max-width: 500px;
-  }
-  
-  .themechooser .tc-activator {
-    line-height: 3em;
-  }
-  
-  #sidebar-toggle {
-    height: 42px;
-    width: 42px;
-    line-height: 38px;
   }
   
   #exampleTitle, #wrappers-source-code h2 {
