@@ -155,7 +155,11 @@ var __meta__ = {
                         }
                     }
                 } else if (target[0] != this.dropHint[0]) {
-                    if (container[0] != this.element[0]) {
+                    if (this._lastHover) {
+                        this._lastHover.removeClass(KSTATEHOVER);
+                    }
+
+                    if (!$.contains(this.element[0], container[0])) {
                         // moving node to different element
                         status = "k-add";
                     } else {
