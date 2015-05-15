@@ -43,7 +43,9 @@ var detailNavDataSource = new kendo.data.DataSource({
     }
 });
 
-var searchDataSource = new kendo.data.DataSource();
+var searchDataSource = new kendo.data.DataSource({
+  group: { field: "section" }
+});
 
 function onlineExamples(section, product, reject) {
     return $.grep(section.items, function (item) {
