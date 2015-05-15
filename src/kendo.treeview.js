@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.data", "./kendo.draganddrop" ], f);
+    define([ "./kendo.data", "./kendo.treeview.draganddrop" ], f);
 })(function(){
 
 var __meta__ = {
@@ -338,11 +338,98 @@ var __meta__ = {
             var dragging = this.dragging;
 
             if (enabled && !dragging) {
-                this.dragging = new TreeViewDragAndDrop(this);
+                var widget = this;
+
+                this.dragging = new ui.HierarchicalDragAndDrop(this.element, {
+                    reorderable: true,
+                    $angular: this.options.$angular,
+                    autoScroll: this.options.autoScroll,
+                    filter: "div:not(.k-state-disabled) .k-in",
+                    allowedContainers: ".k-treeview",
+                    itemSelector: ".k-treeview .k-item",
+                    hintText: proxy(this._hintText, this),
+                    contains: function(source, destination) {
+                        return $.contains(source, destination);
+                    },
+                    dropHintContainer: function(item) {
+                        return item;
+                    },
+                    itemFromTarget: function(target) {
+                        var item = target.closest(".k-top,.k-mid,.k-bot");
+                        return {
+                            item: item,
+                            content: target.closest(".k-in"),
+                            first: item.hasClass("k-top"),
+                            last: item.hasClass("k-bot")
+                        };
+                    },
+                    dropPositionFrom: function(dropHint) {
+                        return dropHint.prevAll(".k-in").length > 0 ? "after" : "before";
+                    },
+                    dragstart: function(source) {
+                        return widget.trigger(DRAGSTART, { sourceNode: source[0] });
+                    },
+                    drag: function(options) {
+                        widget.trigger(DRAG, {
+                            sourceNode: options.source[0],
+                            dropTarget: options.target[0],
+                            pageY: options.pageY,
+                            pageX: options.pageX,
+                            statusClass: options.status,
+                            setStatusClass: options.setStatus
+                        });
+                    },
+                    drop: function(options) {
+                        return widget.trigger(DROP, {
+                            sourceNode: options.source,
+                            destinationNode: options.destination,
+                            valid: options.valid,
+                            setValid: options.setValid,
+                            dropTarget: options.dropTarget,
+                            dropPosition: options.position
+                        });
+                    },
+                    dragend: function(options) {
+                        var source = options.source;
+                        var destination = options.destination;
+                        var position = options.position;
+
+                        function triggerDragEnd(source) {
+                            widget.updateIndeterminate();
+
+                            widget.trigger(DRAGEND, {
+                                sourceNode: source && source[0],
+                                destinationNode: destination[0],
+                                dropPosition: position
+                            });
+                        }
+
+                        // perform reorder / move
+                        // different handling is necessary because append might be async in remote bound tree
+                        if (position == "over") {
+                            widget.append(source, destination, triggerDragEnd);
+                        } else {
+                            if (position == "before") {
+                                source = widget.insertBefore(source, destination);
+                            } else if (position == "after") {
+                                source = widget.insertAfter(source, destination);
+                            }
+
+                            triggerDragEnd(source);
+                        }
+                    }
+                });
             } else if (!enabled && dragging) {
                 dragging.destroy();
                 this.dragging = null;
             }
+        },
+
+        _hintText: function(node) {
+            return this.templates.dragClue({
+                item: this.dataItem(node),
+                treeview: this.options
+            });
         },
 
         _templates: function() {
@@ -446,10 +533,7 @@ var __meta__ = {
                     return cssClass;
                 },
                 dragClue: templateNoWith(
-                    "<div class='k-header k-drag-clue'>" +
-                        "<span class='k-icon k-drag-status' />" +
-                        "#= data.treeview.template(data) #" +
-                    "</div>"
+                    "#= data.treeview.template(data) #"
                 ),
                 group: templateNoWith(
                     "<ul class='#= data.r.groupCssClass(data.group) #'#= data.r.groupAttributes(data.group) #>" +
@@ -2023,229 +2107,6 @@ var __meta__ = {
             return that.templates.group(options);
         }
     });
-
-    function TreeViewDragAndDrop(treeview) {
-        var that = this;
-
-        that.treeview = treeview;
-        that.hovered = treeview.element;
-
-        that._draggable = new ui.Draggable(treeview.element, {
-            autoScrolL: treeview.options.autoScroll,
-            filter: "div:not(.k-state-disabled) .k-in",
-            hint: function(node) {
-                return treeview.templates.dragClue({
-                    item: treeview.dataItem(node),
-                    treeview: treeview.options
-                });
-            },
-            cursorOffset: {
-                left: 10,
-                top: kendo.support.mobileOS ? -40 / kendo.support.zoomLevel() : 10
-            },
-            dragstart: proxy(that.dragstart, that),
-            dragcancel: proxy(that.dragcancel, that),
-            drag: proxy(that.drag, that),
-            dragend: proxy(that.dragend, that),
-            $angular: treeview.options.$angular
-        });
-    }
-
-    TreeViewDragAndDrop.prototype = {
-        _removeTouchHover: function() {
-            var that = this;
-
-            if (kendo.support.touch && that.hovered) {
-                that.hovered.find("." + KSTATEHOVER).removeClass(KSTATEHOVER);
-                that.hovered = false;
-            }
-        },
-
-        _hintStatus: function(newStatus) {
-            var statusElement = this._draggable.hint.find(".k-drag-status")[0];
-
-            if (newStatus) {
-                statusElement.className = "k-icon k-drag-status " + newStatus;
-            } else {
-                return $.trim(statusElement.className.replace(/k-(icon|drag-status)/g, ""));
-            }
-        },
-
-        dragstart: function (e) {
-            var that = this,
-                treeview = that.treeview,
-                sourceNode = that.sourceNode = e.currentTarget.closest(NODE);
-
-            if (treeview.trigger(DRAGSTART, { sourceNode: sourceNode[0] })) {
-                e.preventDefault();
-            }
-
-            that.dropHint = $("<div class='k-drop-hint' />")
-                .css(VISIBILITY, "hidden")
-                .appendTo(treeview.element);
-        },
-
-        drag: function (e) {
-            var that = this,
-                treeview = that.treeview,
-                sourceNode = that.sourceNode,
-                dropTarget = that.dropTarget = $(kendo.eventTarget(e)),
-                statusClass, closestTree = dropTarget.closest(".k-treeview"),
-                hoveredItem, hoveredItemPos, itemHeight, itemTop, itemContent, delta,
-                insertOnTop, insertOnBottom, addChild;
-
-            if (!closestTree.length) {
-                // dragging node outside of treeview
-                statusClass = "k-denied";
-                that._removeTouchHover();
-            } else if ($.contains(sourceNode[0], dropTarget[0])) {
-                // dragging node within itself
-                statusClass = "k-denied";
-            } else {
-                // moving or reordering node
-                statusClass = "k-insert-middle";
-
-                hoveredItem = dropTarget.closest(".k-top,.k-mid,.k-bot");
-
-                if (hoveredItem.length) {
-                    itemHeight = hoveredItem.outerHeight();
-                    itemTop = kendo.getOffset(hoveredItem).top;
-                    itemContent = dropTarget.closest(".k-in");
-                    delta = itemHeight / (itemContent.length > 0 ? 4 : 2);
-
-                    insertOnTop = e.y.location < (itemTop + delta);
-                    insertOnBottom = (itemTop + itemHeight - delta) < e.y.location;
-                    that._removeTouchHover();
-                    addChild = itemContent.length && !insertOnTop && !insertOnBottom;
-                    that.hovered = addChild ? closestTree : false;
-
-                    that.dropHint.css(VISIBILITY, addChild ? "hidden" : "visible");
-                    itemContent.toggleClass(KSTATEHOVER, addChild);
-
-                    if (addChild) {
-                        statusClass = "k-add";
-                    } else {
-                        hoveredItemPos = hoveredItem.position();
-                        hoveredItemPos.top += insertOnTop ? 0 : itemHeight;
-
-                        that.dropHint
-                            .css(hoveredItemPos)
-                            [insertOnTop ? "prependTo" : "appendTo"](dropTarget.closest(NODE).children("div:first"));
-
-                        if (insertOnTop && hoveredItem.hasClass("k-top")) {
-                            statusClass = "k-insert-top";
-                        }
-
-                        if (insertOnBottom && hoveredItem.hasClass("k-bot")) {
-                            statusClass = "k-insert-bottom";
-                        }
-                    }
-                } else if (dropTarget[0] != that.dropHint[0]) {
-                    if (closestTree[0] != treeview.element[0]) {
-                        // moving node to different treeview without children
-                        statusClass = "k-add";
-                    } else {
-                        statusClass = "k-denied";
-                    }
-                }
-            }
-
-            treeview.trigger(DRAG, {
-                sourceNode: sourceNode[0],
-                dropTarget: dropTarget[0],
-                pageY: e.y.location,
-                pageX: e.x.location,
-                statusClass: statusClass.substring(2),
-                setStatusClass: function (value) {
-                    statusClass = value;
-                }
-            });
-
-            if (statusClass.indexOf("k-insert") !== 0) {
-                that.dropHint.css(VISIBILITY, "hidden");
-            }
-
-            that._hintStatus(statusClass);
-        },
-
-        dragcancel: function() {
-            this.dropHint.remove();
-        },
-
-        dragend: function () {
-            var that = this,
-                treeview = that.treeview,
-                dropPosition = "over",
-                sourceNode = that.sourceNode,
-                destinationNode,
-                dropHint = that.dropHint,
-                dropTarget = that.dropTarget,
-                e, dropPrevented;
-
-            if (dropHint.css(VISIBILITY) == "visible") {
-                dropPosition = dropHint.prevAll(".k-in").length > 0 ? "after" : "before";
-                destinationNode = dropHint.closest(NODE);
-            } else if (dropTarget) {
-                destinationNode = dropTarget.closest(".k-treeview .k-item");
-
-                // moving node to root element
-                if (!destinationNode.length) {
-                    destinationNode = dropTarget.closest(".k-treeview");
-                }
-            }
-
-            e = {
-                sourceNode: sourceNode[0],
-                destinationNode: destinationNode[0],
-                valid: that._hintStatus() != "k-denied",
-                setValid: function(newValid) {
-                    this.valid = newValid;
-                },
-                dropTarget: dropTarget[0],
-                dropPosition: dropPosition
-            };
-
-            dropPrevented = treeview.trigger(DROP, e);
-
-            dropHint.remove();
-            that._removeTouchHover();
-
-            if (!e.valid || dropPrevented) {
-                that._draggable.dropped = e.valid;
-                return;
-            }
-
-            that._draggable.dropped = true;
-
-            function triggerDragEnd(sourceNode) {
-                treeview.updateIndeterminate();
-
-                treeview.trigger(DRAGEND, {
-                    sourceNode: sourceNode && sourceNode[0],
-                    destinationNode: destinationNode[0],
-                    dropPosition: dropPosition
-                });
-            }
-
-            // perform reorder / move
-            // different handling is necessary because append might be async in remote bound tree
-            if (dropPosition == "over") {
-                treeview.append(sourceNode, destinationNode, triggerDragEnd);
-            } else {
-                if (dropPosition == "before") {
-                    sourceNode = treeview.insertBefore(sourceNode, destinationNode);
-                } else if (dropPosition == "after") {
-                    sourceNode = treeview.insertAfter(sourceNode, destinationNode);
-                }
-
-                triggerDragEnd(sourceNode);
-            }
-        },
-
-        destroy: function() {
-            this._draggable.destroy();
-        }
-    };
 
     ui.plugin(TreeView);
 })(window.kendo.jQuery);

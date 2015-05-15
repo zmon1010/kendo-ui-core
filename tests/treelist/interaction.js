@@ -745,4 +745,28 @@
             }
         );
     });
+
+    module("drag & drop", cleanup);
+
+    function createDraggableTreeList(options) {
+        createTreeList($.extend({
+            editable: {
+                move: true
+            }
+        }, options));
+    }
+
+    test("setting editable.move initializes drag&drop", function() {
+        createDraggableTreeList();
+
+        ok(instance._dragging instanceof kendo.ui.HierarchicalDragAndDrop);
+    });
+
+    test("destroying treelist destroys dragging", function() {
+        createDraggableTreeList();
+
+        kendo.destroy(dom);
+
+        ok(!instance._dragging);
+    });
 })();
