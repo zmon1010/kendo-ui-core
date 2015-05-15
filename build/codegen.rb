@@ -191,6 +191,7 @@ namespace :generate do
         desc 'Generate MVC v6 wrappers'
         task :wrappers do
             markdown = FileList[
+                'docs/api/javascript/dataviz/ui/barcode.md',
                 'docs/api/javascript/dataviz/ui/chart.md',
                 'docs/api/javascript/dataviz/ui/lineargauge.md',
                 'docs/api/javascript/dataviz/ui/radialgauge.md',
