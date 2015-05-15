@@ -2736,10 +2736,11 @@ html.k-materialblack .demo-section.k-content {
     padding: 0 3em 1.667em 0;
 }
 
-.box li,
-.demo-section .box-col li {
+.box ul:not(.km-widget) li,
+.demo-section .box-col ul:not(.km-widget) li {
     line-height: 3em;
 }
+
 .box li:last-child {
     margin-bottom: 0;
 }
