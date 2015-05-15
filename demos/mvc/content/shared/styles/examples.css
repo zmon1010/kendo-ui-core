@@ -2380,6 +2380,7 @@ a.footer-links:hover,
     background-color: #f5f7f8;
     height: 290px;
     border-color: #d5dade;
+    border-radius: 0;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -2398,6 +2399,10 @@ a.footer-links:hover,
 
 #example-search-list li.k-state-hover {
     background: #cad0d6;
+    border-radius: 0;
+}
+
+#example-search-list li.k-state-focused {
     border-radius: 0;
 }
 
