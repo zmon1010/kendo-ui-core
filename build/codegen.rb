@@ -195,6 +195,7 @@ namespace :generate do
                 'docs/api/javascript/dataviz/ui/chart.md',
                 'docs/api/javascript/dataviz/ui/lineargauge.md',
                 'docs/api/javascript/dataviz/ui/radialgauge.md',
+                'docs/api/javascript/dataviz/ui/qrcode.md',
                 'docs/api/javascript/ui/button.md',
                 'docs/api/javascript/ui/calendar.md',
                 'docs/api/javascript/ui/colorpalette.md',

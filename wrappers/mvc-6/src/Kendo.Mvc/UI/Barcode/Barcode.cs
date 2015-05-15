@@ -15,6 +15,9 @@ namespace Kendo.Mvc.UI
     {
         public Barcode(ViewContext viewContext) : base(viewContext)
         {
+            this.Encoding = BarcodeSymbology.Code128;
+            this.Text = new BarcodeTextSettings();
+            this.Text.Visible = true;
         }
 
         public BarcodeSymbology Encoding { get; set; }

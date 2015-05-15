@@ -1,4 +1,6 @@
 - barcode.checksum
+- qrcode.encoding
+- qrcode.errorcorrection
 - contextmenu.aligntoanchor
 - contextmenu.closeonclick
 - contextmenu.orientation

@@ -1,0 +1,42 @@
+:options:
+    - :name: value
+      :merge: true
+      :type: string
+      
+    - :name: !ruby/regexp '/.*RenderAs$/i'
+      :merge: true
+      :enum_type: RenderingMode
+
+    - :name: encoding
+      :type: String
+      :enum_type: QREncoding
+      :description: Specifies a QR code encoding mode.
+      :values:
+          - :value: ISO_8859_1
+            :member: ISO_8859_1
+            :description: Specifies the default encoding - ISO/IEC 8859-1.
+
+          - :value: UTF_8
+            :member: UTF_8
+            :description: Specifies a UTF-8 encoding.
+            
+    - :name: errorCorrection
+      :type: String
+      :enum_type: QRErrorCorrectionLevel
+      :description: Specifies a QR code error correction level.
+      :values:
+          - :value: L
+            :member: L
+            :description: Specifies a Low error correction level. Approximately 7% of the codewords can be restored.
+
+          - :value: M
+            :member: M
+            :description: Specifies a Medium error correction level. Approximately 15% of the codewords can be restored.
+            
+          - :value: Q
+            :member: Q
+            :description: Specifies a Quartile error correction level. Approximately 25% of the codewords can be restored.
+
+          - :value: H
+            :member: H
+            :description: Specifies a High error correction level. Approximately 30% of the codewords can be restored.

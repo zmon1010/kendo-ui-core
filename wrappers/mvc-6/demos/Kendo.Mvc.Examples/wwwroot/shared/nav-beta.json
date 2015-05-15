@@ -175,6 +175,91 @@
     "category": "Charts"
   },
   {
+    "text": "Barcode",
+    "name": "barcode",
+    "pro": "true",
+    "spriteCssClass": "barcodeIcon",
+    "api": "dataviz/barcode",
+    "documentation": {
+       "kendo-ui": "getting-started/dataviz/barcode/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/barcode/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/barcode/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/barcode/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/barcode",
+       "aspnet-mvc": "aspnet-mvc/barcode",
+       "jsp-ui": "jsp/barcode",
+       "php-ui": "php/barcode"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/barcode",
+       "aspnet-mvc": "aspnet-mvc/barcode",
+       "jsp-ui": "jsp/barcode",
+       "php-ui": "php/barcode"
+    },
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "barcode/index",
+        "title": {
+            "kendo-ui": "Kendo UI Barcode Demo",
+            "aspnet-mvc": "ASP.NET MVC Barcode Demo"
+        },
+        "meta": {
+            "kendo-ui": "This sample demonstrates the core functionality of Kendo UI Barcode which helps you easily encode data in machine readable format.",
+            "aspnet-mvc": "This sample demonstrates the core functionality of ASP.NET MVC Barcode which helps you easily encode data in machine readable format."
+        }
+      },
+      {
+        "text": "API",
+        "url": "barcode/api",
+        "title": {
+            "kendo-ui": "Kendo UI Barcode API Demo",
+            "aspnet-mvc": "ASP.NET MVC Barcode API Demo"
+        },
+        "meta": {
+            "kendo-ui": "This sample demonstrates the different symbologies the Barcode support and the different options that could be set",
+            "aspnet-mvc": "This sample demonstrates the different symbologies the ASP.NET MVC Barcode supports and the different options that could be set."
+        },
+        "packages": [
+          "!offline"
+        ]
+      },
+      {
+        "text": "MVVM",
+        "url": "barcode/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI Barcode"
+        },
+        "meta": {
+            "kendo-ui": "Value MVVM binding support in Kendo UI Barcode"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "barcode/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Barcode"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directive support in Kendo UI Barcode"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Barcodes"
+  },
+  {
     "text": "Button",
     "name": "button",
     "api": "web/button",
@@ -1977,6 +2062,91 @@
         ],
         "category": "Interactivity & UX"
     },
+    {
+    "text": "QR Code",
+    "name": "qrcode",
+    "pro": "true",
+    "spriteCssClass": "qrcodeIcon",
+    "api": "dataviz/qrcode",
+    "documentation": {
+       "kendo-ui": "getting-started/dataviz/qrcode/overview",
+       "aspnet-mvc": "getting-started/using-kendo-with/aspnet-mvc/helpers/rqcode/overview",
+       "jsp-ui": "getting-started/using-kendo-with/jsp/tags/qrcode/overview",
+       "php-ui": "getting-started/using-kendo-with/php/widgets/qrcode/overview"
+    },
+    "forum": {
+       "kendo-ui": "kendo-ui/qrcode",
+       "aspnet-mvc": "aspnet-mvc/qrcode",
+       "jsp-ui": "jsp/qrcode",
+       "php-ui": "php/qrcode"
+    },
+    "codelibrary": {
+       "kendo-ui": "kendo-ui/qrcode",
+       "aspnet-mvc": "aspnet-mvc/qrcode",
+       "jsp-ui": "jsp/qrcode",
+       "php-ui": "php/qrcode"
+    },
+    "items": [
+      {
+        "text": "Basic usage",
+        "url": "qrcode/index",
+        "title": {
+            "kendo-ui": "Kendo UI QRCode Demo",
+            "aspnet-mvc": "ASP.NET MVC QRCode Demo"
+        },
+        "meta": {
+            "kendo-ui": "This sample demonstrates the core functionality of Kendo UI QRCode which helps you easily encode large amounts of data in a machine readable format.",
+            "aspnet-mvc": "This sample demonstrates the core functionality of ASP.NET MVC QRCode which helps you easily encode large amounts of data in a machine readable format."
+        }
+      },
+      {
+        "text": "API",
+        "url": "qrcode/api",
+        "title": {
+            "kendo-ui": "Kendo UI QRCode API demo",
+            "aspnet-mvc": "ASP.NET MVC QRCode API demo"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how Kendo UI QRCode Widget API works and what kind of functions it supports.",
+            "aspnet-mvc": "This demo shows how ASP.NET MVC QRCode control API works and what kind of functions it supports."
+        },
+        "packages": [
+          "!offline"
+        ]
+      },
+      {
+        "text": "MVVM",
+        "url": "qrcode/mvvm",
+        "title": {
+            "kendo-ui": "MVVM support in Kendo UI QR Code"
+        },
+        "meta": {
+            "kendo-ui": "Value MVVM binding support in Kendo UI QR Code"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      },
+      {
+        "text": "AngularJS",
+        "url": "qrcode/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI QR Code"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directive support in Kendo UI QR Code"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ]
+      }
+    ],
+    "category": "Barcodes"
+  },
       {
     "text": "Slider",
     "name": "slider",
