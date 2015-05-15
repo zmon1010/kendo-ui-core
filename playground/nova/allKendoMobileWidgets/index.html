@@ -324,7 +324,7 @@
         <form action="./index.html">
             <ul data-role="listview" data-style="inset">
                 <li>
-                    <label>Select element
+                    <label class="km-required">Select element
                         <select>
                             <option value="First Option">First Option</option>
                             <option value="Second Option">Second Option</option>
@@ -346,12 +346,12 @@
                     </label>
                 </li>
                 <li>
-                    <label>Slider
+                    <label class="km-required">Slider
                         <input id="slider" type="range" max="100" />
                     </label>
                 </li>
                 <li>
-                    <label>Type text
+                    <label class="km-required">Type text
                         <input type="text" value="Text" />
                     </label>
                 </li>
@@ -424,6 +424,107 @@
                 </li>
             </ul>
         </form>
+        <div class="separator" style="background: red; height: 20px;"></div>
+            <form action="./index.html">
+            <ul data-role="listview" data-style="inset"> 
+                <li>
+                    <fieldset>
+                        <legend>Notes</legend>
+                        <input type="radio" name="radio" id="radio"> <label for="radio">Your notes here</label>
+                    </fieldset>
+                </li>             
+                <li>
+                    <label class="km-label-above km-required">Slider
+                        <input id="slider" type="range" max="100" />
+                    </label>
+                </li>
+                <li>
+                    <label class="km-label-above">Type text
+                        <input type="text" value="Text" />
+                    </label>
+                </li>
+                <li>
+                    <label class="km-label-above km-required">
+                        Type password
+                        <input type="password" value="password" />
+                    </label>
+                </li>
+                <li>
+                    <label class="km-label-above">
+                        Type search
+                        <input type="search" value="search" />
+                    </label>
+                </li>
+                <li>
+                    <label class="km-icon-label">
+                        Type url
+                        <input type="url" value="http://www.telerik.com" />
+                    </label>
+                </li>
+                <li>
+                    <label class="km-icon-label">
+                        Type email
+                        <input type="email" value="kendoui@telerik.com" />
+                    </label>
+                </li>
+                <li>
+                    <label class="km-icon-label">
+                        Type number
+                        <input type="number" value="20" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type tel
+                        <input type="tel" value="+44 22 11 10" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type date
+                        <input type="date" value="2012-03-22" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type time
+                        <input type="time" value="22:30" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type month
+                        <input type="month" value="2012-01" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Type datetime-local
+                        <input type="datetime-local" value="2012-03-22T20:15" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Textarea
+                        <textarea style="resize: none">Multiline Text
+                        </textarea>
+                    </label>
+                </li>
+            </ul>            
+        </form>  
+        <div class="separator" style="background: red; height: 20px;"></div>
+        <form action="demo_form.asp" method="get">
+          <input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>
+          <input type="checkbox" name="vehicle" value="Car" checked> I have a car<br>
+        </form>
+          
+
+        <div class="separator" style="background: red; height: 20px;"></div>         
+        <form>
+            <input type="radio" name="sex" value="male" checked>Male
+            <br>
+            <input type="radio" name="sex" value="female">Female
+            </form> 
     </div>
 
     <!--ModalView -->

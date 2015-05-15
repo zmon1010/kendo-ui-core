@@ -1,3 +1,5 @@
 .km-listview-icons -> listView with icons
 .km-listview-thumbnail -> listView with thumbnails
 .km-thumbnail -> thumbnails
+.km-label-above -> forms -> labels above the fields
+.km-icon-label -> forms -> labels with icons
