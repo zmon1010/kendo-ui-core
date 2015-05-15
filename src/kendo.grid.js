@@ -338,6 +338,10 @@ var __meta__ = {
             return fetching;
         },
 
+        fetching: function() {
+            return this._fetching;
+        },
+
         _page: function(skip, take) {
             var that = this,
                 delayLoading = !that.options.prefetch,
@@ -4133,8 +4137,11 @@ var __meta__ = {
 
         _tableKeyDown: function(e) {
             var current = this.current();
+            var requestInProgress = this.virtualScrollable && this.virtualScrollable.fetching();
 
-            if (!current) {
+            // do not handle key down if request in progress
+            // or there isn't current set
+            if (requestInProgress || !current) {
                 return;
             }
 
@@ -7140,7 +7147,7 @@ var __meta__ = {
             }
 
             if (this._current) {
-                focusTable(that._current.closest("table")[0], true);
+                focusTable(this._current.closest("table")[0], true);
             }
         },
 
