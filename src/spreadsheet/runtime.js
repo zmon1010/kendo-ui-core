@@ -31,7 +31,9 @@
             }
             return this;
         },
-        adjust: function(){}
+        adjust: function(){
+            return this;
+        }
     });
 
     /* -----[ Null reference ]----- */
@@ -69,6 +71,10 @@
     }, {
         type: "ref",
         ref: "cell",
+        clone: function() {
+            return new CellRef(this.col, this.row, this.rel)
+                .setSheet(this.sheet, this.hasSheet());
+        },
         intersect: function(ref) {
             if (CellRef.is(ref)) {
                 if (ref.row == this.row && ref.col == this.col && ref.sheet == this.sheet) {
@@ -89,32 +95,39 @@
                 // relative row
                 row = row - orig.row + trow;
             }
-            if (col < 1 || row < 1) {
+            if ((isFinite(col) && col < 1) || (isFinite(row) && row < 1)) {
                 return "#REF!";
             }
             return calc.make_reference(this._hasSheet && this.sheet, col, row, rel);
         },
         adjust: function(operation, start, delta) {
-            var col = this.col, row = this.row;
+            var ret = this.clone();
             switch (operation) {
               case "col":
-                if (col >= start) {
-                    this.col += delta;
+                if (ret.col == start && delta < 0) {
+                    return NULL;
+                }
+                if (ret.col >= start) {
+                    ret.col += delta;
                 }
                 break;
               case "row":
-                if (this.row >= start) {
-                    this.row += delta;
+                if (ret.row == start && delta < 0) {
+                    return NULL;
+                }
+                if (ret.row >= start) {
+                    ret.row += delta;
                 }
                 break;
             }
-            return (this.col < 1 || this.row < 1) ? NULL : this;
+            return (ret.col < 1 || ret.row < 1) ? NULL : ret;
         }
     });
 
     /* -----[ Range reference ]----- */
 
     var RangeRef = defclass(Ref, function RangeRef(tl, br) {
+        // we want to drop any sheet information from the cells here.
         this.topLeft = new CellRef(tl.col, tl.row, tl.rel);
         this.bottomRight = new CellRef(br.col, br.row, br.rel);
         this.normalize();
@@ -242,18 +255,22 @@
             switch (operation) {
               case "col":
                 if (NullRef.is(tl)) {
-                    tl.col = start;
+                    this.topLeft.col = start;
+                    tl = this.topLeft;
                 }
                 else if (NullRef.is(br)) {
-                    br.col = start;
+                    this.bottomRight.col = start;
+                    br = this.bottomRight;
                 }
                 break;
               case "row":
                 if (NullRef.is(tl)) {
-                    tl.row = start;
+                    this.topLeft.row = start;
+                    tl = this.topLeft;
                 }
                 else if (NullRef.is(br)) {
-                    br.row = start;
+                    this.bottomRight.row = start;
+                    br = this.bottomRight;
                 }
                 break;
             }
@@ -343,10 +360,9 @@
             }
         },
         adjust: function(operation, start, delta) {
-            var refs = this.refs;
-            refs.forEach(function(ref, i){
-                refs[i] = refs[i].adjust(operation, start, delta);
-            });
+            for (var i = 0; i < this.refs.length; ++i) {
+                this.refs[i] = this.refs[i].adjust(operation, start, delta);
+            }
         }
     });
 

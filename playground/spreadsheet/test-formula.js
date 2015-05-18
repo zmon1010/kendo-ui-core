@@ -177,7 +177,6 @@ Spreadsheet.prototype = {
         if (cell) {
             if (!cell.formula)
                 return cell.input;
-            console.log(cell, row, col);
             return "=" + calc.print(sheet, col, row, cell.exp, cell);
         }
     },
@@ -256,20 +255,20 @@ Spreadsheet.prototype = {
 
     insertRows: function(sheetName, row, n) {
         var sheet = this.sheets[sheetName];
-        var args = [ row, 0 ];
-        while (n-- > 0) {
-            args.push({});
-        }
-        [].splice.apply(sheet.data, args);
+        increaseProps(sheet.data, row, n);
+        this.getVisibleFormulas().forEach(function(cell){
+            cell.formula.adjust("row", row, n);
+        });
+        this.recalculate();
     },
 
     deleteRows: function(sheetName, row, n) {
         var sheet = this.sheets[sheetName];
         reduceProps(sheet.data, row, n);
         this.getVisibleFormulas().forEach(function(cell){
-            console.log(cell);
             cell.formula.adjust("row", row, -n);
         });
+        this.recalculate();
     },
 
     insertCols: function(sheetName, col, n) {
@@ -303,6 +302,17 @@ function reduceProps(object, start, n) {
     });
 }
 
+function increaseProps(object, start, n) {
+    Object.keys(object).sort(numericDesc).forEach(function(key){
+        key = parseFloat(key);
+        if (key >= start) {
+            var tmp = object[key];
+            delete object[key];
+            object[key+n] = tmp;
+        }
+    });
+}
+
 Spreadsheet.Cell = function(){};
 
 var SPREADSHEET = new Spreadsheet();
@@ -320,19 +330,17 @@ function makeElements(container) {
         tr.append("<td class='head rowhead'>");
         for (var col = 1; col <= 10; ++col) {
             var td = $("<td>").appendTo(tr);
-            var input = $("<input style='width: 100%' />")
-                .appendTo(td);
-            input.on({
-                focus   : _onFocus,
-                blur    : _onBlur,
-                keydown : _onKeyDown,
-                input   : _onInput,
-                change  : _onChange
-            });
+            $("<input style='width: 100%' />").appendTo(td);
         }
     }
-    table.find(".colhead").on("mousedown", _adjustCol);
-    table.find(".rowhead").on("mousedown", _adjustRow);
+    $(container)
+        .on("mousedown", ".colhead", _adjustCol)
+        .on("mousedown", ".rowhead", _adjustRow)
+        .on("focus", "input", _onFocus)
+        .on("blur", "input", _onBlur)
+        .on("keydown", "input", _onKeyDown)
+        .on("input", "input", _onInput)
+        .on("change", "input", _onChange);
 }
 
 function _getInput(sheet, col, row) {
@@ -465,9 +473,10 @@ function _adjustRow(ev) {
     var sheet = $(td).closest(".sheet");
     var sheetName = sheet[0].id;
     if (ev.shiftKey) {
+        $(tr).remove();
         SPREADSHEET.deleteRows(sheetName, row, 1);
-        tr.remove();
     } else {
+        $(tr).clone().insertBefore(tr).find("input").val("").removeClass();
         SPREADSHEET.insertRows(sheetName, row, 1);
     }
 }
@@ -492,9 +501,20 @@ makeElements(".sheet");
 
 fillElements({
     sheet1: {
-        a3: "1",
-        b3: "1",
-        c3: "=a3+b3"
+        A1: 1,
+        A2: 2,
+        A3: 3,
+        B1: 4,
+        B2: 5,
+        B3: 6,
+        C1: 7,
+        C2: 8,
+        C3: 9,
+        //E5: "=sum(A1:C3)",
+        E5: "=A1"
+    },
+    sheet2: {
+        A1: "=sum(sheet1!a1:c3)"
     }
     // sheet1: {
     //     A1: '=CURRENCY("USD", "EUR") + CURRENCY("USD", "EUR")'

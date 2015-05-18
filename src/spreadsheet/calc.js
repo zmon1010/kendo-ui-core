@@ -304,7 +304,7 @@
                     var topLeft = getref(a, true);
                     var bottomRight = getref(c, false);
                     if (topLeft != null && bottomRight != null) {
-                        if (topLeft.sheet != bottomRight.sheet) {
+                        if (bottomRight.hasSheet() && topLeft.sheet != bottomRight.sheet) {
                             input.croak("Invalid range");
                         } else {
                             return Runtime.makeRangeRef(topLeft, bottomRight).setSheet(topLeft.sheet, topLeft.hasSheet());
@@ -348,6 +348,7 @@
     }
 
     function print(sheet, col, row, exp, orig) {
+        var references = orig.formula.refs, refindex = 0;
         return print(exp.ast);
 
         function print(node, prec){
@@ -395,6 +396,7 @@
                 }).join(", ") + ")";
             }
             else if (type == "ref") {
+                node = references[refindex++]; // pick up adjusted references
                 ret = node.print(col, row, orig);
             }
             else if (type == "bool") {
@@ -579,18 +581,18 @@
             if (Object.prototype.hasOwnProperty.call(cache, code)) {
                 return cache[code];
             }
-            return cache[code] = new Function("Runtime", code)(Runtime);
+            return (cache[code] = new Function("Runtime", code)(Runtime));
         };
     })({});
 
-    function compile(exp) {
+    function make_js(cps) {
         var references = [];
-        var code = compile(exp.cps);
+        var code = js(cps);
 
         code = [
             "return function(context) { 'use strict'",
             //"/* " + print(the_sheet, the_col, the_row, exp) + " */",
-            "  var formula = context.formula, SS = context.ss",
+            "  var formula = context.formula",
             code,
             "}"
         ].join(";\n");
@@ -603,8 +605,8 @@
             return "formula.refs[" + index + "]";
         }
 
-        function compile(node){
-            var type = node.type, ret;
+        function js(node){
+            var type = node.type;
             if (type == "num") {
                 return node.value + "";
             }
@@ -612,18 +614,18 @@
                 return JSON.stringify(node.value);
             }
             else if (type == "prefix" || type == "postfix") {
-                return "Runtime.unary(context, '" + node.op + "', " + compile(node.exp) + ")";
+                return "Runtime.unary(context, '" + node.op + "', " + js(node.exp) + ")";
             }
             else if (type == "binary") {
-                return "Runtime.binary(context, '" + node.op + "', " + compile(node.left) + ", " + compile(node.right) + ")";
+                return "Runtime.binary(context, '" + node.op + "', " + js(node.left) + ", " + js(node.right) + ")";
             }
             else if (type == "return") {
-                return "context.resolve(" + compile(node.value) + ")";
+                return "context.resolve(" + js(node.value) + ")";
             }
             else if (type == "call") {
                 return "Runtime.func(context, " + JSON.stringify(node.func)
                     + node.args.map(function(arg){
-                        return ", " + compile(arg);
+                        return ", " + js(arg);
                     }).join("")
                     + ")";
             }
@@ -634,15 +636,15 @@
                 return "" + node.value;
             }
             else if (type == "if") {
-                return "(Runtime.bool(context, " + compile(node.co) + ") ? " + compile(node.th) + " : " + compile(node.el) + ")";
+                return "(Runtime.bool(context, " + js(node.co) + ") ? " + js(node.th) + " : " + js(node.el) + ")";
             }
             else if (type == "not") {
-                return "!Runtime.bool(context, " + compile(node.exp) + ")";
+                return "!Runtime.bool(context, " + js(node.exp) + ")";
             }
             else if (type == "lambda") {
                 return "function("
                     + node.vars.join(", ")
-                    + "){ return(" + compile(node.body) + ") }";
+                    + "){ return(" + js(node.body) + ") }";
             }
             else if (type == "var") {
                 return node.name;
@@ -861,13 +863,12 @@
     exports.make_reference = make_reference;
     exports.print = print;
     exports.compile = function(x) {
-        x.cps = to_cps(x, function(ret){
+        return make_js(to_cps(x, function(ret){
             return {
                 type: "return",
                 value: ret
             };
-        });
-        return compile(x);
+        }));
     };
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
