@@ -293,7 +293,7 @@ var __meta__ = {
             }
 
             return result;
-        };
+        },
 
         reduceRight: function(callback, initialValue) {
             var idx = this.length - 1,
@@ -310,7 +310,7 @@ var __meta__ = {
             }
 
             return result;
-        };
+        },
 
         filter: function(callback) {
             var idx = 0,
