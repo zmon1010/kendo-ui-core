@@ -1196,6 +1196,24 @@
             equal(text.options.padding.bottom, 0);
         });
 
+        test("textbox targetbox has positive width if position is outsideEnd and the label is aboveAxis", function() {
+            barLabel = new BarLabel("content", {
+                vertical: false,
+                padding: {
+                    top: 0,
+                    bottom: 0
+                },
+                margin: 0,
+                position: "outsideEnd"
+            });
+            text = barLabel.children[0];
+            text.contentBox = Box2D(0, 0, 50, 50);
+            text.reflow = function(targetBox) {
+                ok(targetBox.width() > 0);
+            };
+            barLabel.reflow(Box2D(0, 0, 100, 100));
+        });
+
         // ------------------------------------------------------------
         module("BarLabel / Align to clip box / vertical", {
             setup: function() {

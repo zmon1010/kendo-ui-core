@@ -1780,8 +1780,8 @@ var __meta__ = {
                     text.options.align = CENTER;
                     if (aboveAxis) {
                         targetBox = new Box2D(
-                            targetBox.x2 + box.width(), targetBox.y1,
-                            targetBox.x2, targetBox.y2
+                            targetBox.x2, targetBox.y1,
+                            targetBox.x2 + box.width(), targetBox.y2
                         );
                     } else {
                         targetBox = new Box2D(
