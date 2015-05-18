@@ -2181,8 +2181,10 @@ var __meta__ = {
 
                     if (mirror) {
                         labelX += labelOffset;
+                        label.options.rotationOrigin = LEFT;
                     } else {
                         labelX -= labelOffset + label.box.width();
+                        label.options.rotationOrigin = RIGHT;
                     }
 
                     labelBox = label.box.move(labelX, labelPos);
@@ -2199,8 +2201,10 @@ var __meta__ = {
 
                     if (mirror) {
                         labelY -= labelOffset + label.box.height();
+                        label.options.rotationOrigin = BOTTOM;
                     } else {
                         labelY += labelOffset;
+                        label.options.rotationOrigin = TOP;
                     }
 
                     labelBox = Box2D(firstTickPosition, labelY,

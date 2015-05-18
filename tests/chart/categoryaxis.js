@@ -1826,6 +1826,17 @@
             equal(axis.box.height(), 70 + ACTUAL_TICK_SIZE + MARGIN);
         });
 
+        test("sets label rotation origin to top", function() {
+            axis.reflow(axisBox);
+            equal(axis.labels[0].options.rotationOrigin, "top");
+        });
+
+        test("sets label rotation origin to bottom if labels are mirrored", function() {
+            axis.options.labels.mirror = true;
+            axis.reflow(axisBox);
+            equal(axis.labels[0].options.rotationOrigin, "bottom");
+        });
+
         // ------------------------------------------------------------
         module("Category Axis / Vertical / reflow", {
             setup: function() {
@@ -1870,6 +1881,17 @@
             axis.labels.push(new LabelMock(Box2D(0, 0, 61 - ACTUAL_TICK_SIZE - MARGIN, 20)));
             axis.reflow(axisBox);
             equal(axis.box.width(), 70 + ACTUAL_TICK_SIZE + MARGIN);
+        });
+
+        test("sets label rotation origin to right", function() {
+            axis.reflow(axisBox);
+            equal(axis.labels[0].options.rotationOrigin, "right");
+        });
+
+        test("sets label rotation origin to bottom if labels are mirrored", function() {
+            axis.options.labels.mirror = true;
+            axis.reflow(axisBox);
+            equal(axis.labels[0].options.rotationOrigin, "left");
         });
     })();
 })();
