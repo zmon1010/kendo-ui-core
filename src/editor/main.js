@@ -53,6 +53,11 @@
         separatorTemplate:
             '<span class="k-separator" />',
 
+        moreTemplate:
+            '<a href="" role="button" class="k-tool k-more-button"' +
+            '#= data.popup ? " data-popup" : "" #' +
+            ' unselectable="on"><span unselectable="on" class="k-icon k-i-more"></span></a>',
+
         formatByName: function(name, format) {
             for (var i = 0; i < format.length; i++) {
                 if ($.inArray(name, format[i].tags) >= 0) {
@@ -206,6 +211,8 @@
             that.toolbar = new editorNS.Toolbar(toolbarContainer[0], toolbarOptions);
 
             that.toolbar.bindTo(that);
+
+            that.toolbar.resize();
 
             if (type == "textarea") {
                 setTimeout(function () {

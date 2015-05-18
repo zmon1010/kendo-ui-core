@@ -11,9 +11,67 @@
     var proxy = $.proxy;
     var keys = kendo.keys;
     var NS = ".kendoEditor";
+    var EditorUtils = kendo.ui.editor.EditorUtils;
+    var ToolTemplate = kendo.ui.editor.ToolTemplate;
+    var Tool = kendo.ui.editor.Tool;
 
     var focusable = "a.k-tool:not(.k-state-disabled)," +
                     ".k-widget.k-colorpicker,.k-selectbox,.k-dropdown,.k-combobox .k-input";
+
+    var MoreTool = Tool.extend({
+        initialize: function(ui, options) {
+            var that = this;
+
+            that._popup(ui, options);
+
+            ui.attr({ unselectable: "on" });
+            ui.on("click", function() {
+                that.popup.toggle();
+            });
+        },
+
+        options: {
+            name: "more",
+        },
+
+        command: $.noop,
+
+        destroy: function() {
+            this.popup.destroy();
+        },
+
+        _popup: function(ui, options) {
+            var popupTemplate = "<div class='k-more-popup'>foo</div>";
+
+            this.popup = $(popupTemplate).appendTo("body").kendoPopup({
+                anchor: ui,
+                copyAnchorStyles: false,
+                open: proxy(this._open, this),
+                activate: proxy(this._activate, this),
+                close: proxy(this._close, this)
+            }).data("kendoPopup");
+
+            options.editor.morePopup = this.popup;
+        },
+
+        _open: function(e) {
+            
+        },
+
+        _activate: function(e) {
+            
+        },
+
+        _close: function(e) {
+            
+        }
+    });
+
+    EditorUtils.registerTool("more", new MoreTool({
+        key: "",
+        ctrl: true,
+        template: new ToolTemplate({ template: EditorUtils.moreTemplate })
+    }));
 
     var Toolbar = Widget.extend({
         init: function(element, options) {
@@ -26,6 +84,12 @@
             if (options.popup) {
                 that._initPopup();
             }
+
+            that._resizeHandler = kendo.onResize(function() {
+                that.resize();
+            });
+
+            that.element.addClass("k-toolbar-resizable");
         },
 
         events: [
@@ -117,6 +181,7 @@
             that._editor = editor;
 
             // re-initialize the tools
+            editor.options.tools.push("more");
             that.tools = that.expandTools(editor.options.tools);
             that.render();
 
@@ -136,7 +201,7 @@
 
             that._attachEvents();
 
-            that.items().each(function initializeTool() {
+            that.items().each(function initializeTool(x, y) {
                 var toolName = that._toolName(this),
                     tool = that.tools[toolName],
                     options = tool && tool.options,
@@ -323,7 +388,7 @@
                 groupName, newGroupName,
                 toolConfig = that._editor.options.tools,
                 browser = kendo.support.browser,
-                group, i;
+                group, i, groupPosition = 0;
 
             function stringify(template) {
                 var result;
@@ -343,12 +408,20 @@
 
             function endGroup() {
                 if (group.children().length) {
-                    group.appendTo(element);
+                    if (!group.hasClass("k-more-tool")) {
+                        group.css("visibility", "hidden");
+                    }
+                    group.appendTo(element).data("position", groupPosition);
+                    groupPosition++;
                 }
             }
 
-            function startGroup() {
-                group = $("<li class='k-tool-group' role='presentation' />");
+            function startGroup(toolName) {
+                if (toolName !== "more") {
+                    group = $("<li class='k-tool-group' role='presentation' />");
+                } else {
+                    group = $("<li class='k-more-tool' />");
+                }
             }
 
             element.empty();
@@ -368,7 +441,7 @@
                 if (toolName == "break") {
                     endGroup();
                     $("<li class='k-row-break' />").appendTo(that.element);
-                    startGroup();
+                    startGroup(toolName);
                 }
 
                 if (!template) {
@@ -379,7 +452,7 @@
 
                 if (groupName != newGroupName) {
                     endGroup();
-                    startGroup();
+                    startGroup(toolName);
                     groupName = newGroupName;
                 }
 
@@ -389,7 +462,7 @@
 
                 if (newGroupName == "custom") {
                     endGroup();
-                    startGroup();
+                    startGroup(toolName);
                 }
 
                 if (options.exec && toolElement.hasClass("k-tool")) {
@@ -447,6 +520,10 @@
 
             if (this.window) {
                 this.window.destroy();
+            }
+
+            if (that._resizeHandler) {
+                kendo.unbindResize(that._resizeHandler);
             }
         },
 
@@ -529,7 +606,7 @@
             }
 
             var tool = $.grep(className.split(" "), function (x) {
-                return !/^k-(widget|tool|tool-icon|state-hover|header|combobox|dropdown|selectbox|colorpicker)$/i.test(x);
+                return !/^k-(widget|tool|tool-icon|icon|state-hover|header|combobox|dropdown|selectbox|colorpicker)$/i.test(x);
             });
 
             return tool[0] ? tool[0].substring(tool[0].lastIndexOf("-") + 1) : "custom";
@@ -561,7 +638,122 @@
                 tool.css("display", tool.hasClass("k-state-disabled") ? "none" : "");
             });
             this.updateGroups();
+        },
+        //>>>>>>>>>>>> resizable functionality
+
+        _resize: function(e) {
+            var containerWidth = e.width;
+
+            this._refreshWidths();
+
+            this._shrink(containerWidth);
+            this._stretch(containerWidth);
+        },
+
+        _refreshWidths: function() {
+            this.element.children("li").each(function(idx, element) {
+                var group = $(element);
+                group.data("outerWidth", group.outerWidth(true));
+            });
+        },
+
+        _shrink: function(width) {
+            var group, visibleGroups;
+
+            if (width < this._groupsWidth()) {
+                visibleGroups = this._visibleGroups().filter(":not(.k-more-tool)");
+
+                for (var i = visibleGroups.length - 1; i >= 0; i--) {
+                    group = visibleGroups.eq(i);
+                    if (width > this._groupsWidth()) {
+                        break;
+                    } else {
+                        this._hideGroup(group);
+                    }
+                }
+            }
+        },
+
+        _stretch: function(width) {
+            var group, hiddenGroups;
+
+            if (width > this._groupsWidth()) {
+                hiddenGroups = this._hiddenGroups();
+
+                for (var i = 0; i < hiddenGroups.length ; i++) {
+                    group = hiddenGroups.eq(i);
+                    if (width < this._groupsWidth() || !this._showGroup(group, width)) {
+                        break;
+                    }
+                }
+            }
+        },
+
+        _hiddenGroups: function() {
+            var popup = this.options.editor.morePopup;
+
+            var hiddenGroups = this.element.children("li.k-tool-group").filter(function() {
+                return ($(this).css('visibility') == 'hidden' || $(this).css('display') == 'none');
+            });
+
+            hiddenGroups = hiddenGroups.add(popup.element.children("li"));
+
+            hiddenGroups.sort(function(a, b) {
+                return ($(a).data("position") > $(b).data("position")) ? 1 : -1;
+            });
+
+            return hiddenGroups;
+        },
+
+        _visibleGroups: function() {
+            return this.element.children("li.k-tool-group, li.k-more-tool").filter(function() {
+                return !($(this).css('visibility') == 'hidden' || $(this).css('display') == 'none');
+            });
+        },
+
+        _groupsWidth: function() {
+            var width = 0;
+
+            this._visibleGroups().each(function() {
+                width += $(this).data("outerWidth");
+            });
+
+            return Math.ceil(width);
+        },
+
+        _hideGroup: function(group) {
+            if (true) {
+                var popup = this.options.editor.morePopup;
+                group.detach().prependTo(popup.element).addClass("k-overflow-tool-group");
+            } else {
+                group.hide();
+            }
+        },
+
+        _showGroup: function(group, width) {
+            var position, previous;
+
+            if (group.length && width > this._groupsWidth() + group.data("outerWidth")) {
+                if (group.css("visibility") !== "visible") {
+                    group.css("visibility", "visible");
+                } else if (group.hasClass("k-overflow-tool-group")) {
+                    position = group.data("position");
+
+                    previous = this.element.children().filter(function(idx, element) {
+                        return $(element).data("position") === position - 1;
+                    });
+
+                    group.detach().insertAfter(previous).removeClass("k-overflow-tool-group");
+                } else {
+                    group.show();
+                }
+
+                return true;
+            }
+
+            return false;
         }
+
     });
 
 $.extend(editorNS, {
