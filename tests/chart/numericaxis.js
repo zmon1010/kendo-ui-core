@@ -481,6 +481,63 @@
             equalTexts(getAxisTexts(), ["0", "0,2", "0,4", "0,6", "0,8", "1", "1,2"]);
         });
 
+        // ------------------------------------------------------------
+        module("Numeric Axis / Configuration / Labels / rotation");
+
+        test("normalizes labels rotation options if object is passed", function() {
+            createNumericAxis({
+                labels: {
+                    rotation: {
+                        angle: 30,
+                        align: "center"
+                    }
+                }
+            });
+
+            equal(numericAxis.labels[0].options.rotation, 30);
+            equal(numericAxis.labels[0].options.alignRotation, "center");
+        });
+
+        test("sets labels rotation to zero if auto is set as value", function() {
+            createNumericAxis({
+                labels: {
+                    rotation: {
+                        angle: "auto"
+                    }
+                }
+            });
+
+            equal(numericAxis.labels[0].options.rotation, 0);
+
+            createNumericAxis({
+                labels: {
+                    rotation: "auto"
+                }
+            });
+
+            equal(numericAxis.labels[0].options.rotation, 0);
+        });
+
+        test("sets autoRotateLabels option to true if auto is set as rotation value", function() {
+            createNumericAxis({
+                labels: {
+                    rotation: {
+                        angle: "auto"
+                    }
+                }
+            });
+
+            equal(numericAxis.options.autoRotateLabels, true);
+
+            createNumericAxis({
+                labels: {
+                    rotation: "auto"
+                }
+            });
+
+            equal(numericAxis.options.autoRotateLabels, true);
+        });
+
     })();
 
     (function() {

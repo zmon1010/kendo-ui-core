@@ -63,6 +63,63 @@
         }
 
         // ------------------------------------------------------------
+        module("Category Axis / Configuration / Labels");
+
+        test("normalizes labels rotation options if object is passed", function() {
+            createCategoryAxis({
+                labels: {
+                    rotation: {
+                        angle: 30,
+                        align: "center"
+                    }
+                }
+            });
+
+            equal(categoryAxis.labels[0].options.rotation, 30);
+            equal(categoryAxis.labels[0].options.alignRotation, "center");
+        });
+
+        test("sets labels rotation to zero if auto is set as value", function() {
+            createCategoryAxis({
+                labels: {
+                    rotation: {
+                        angle: "auto"
+                    }
+                }
+            });
+
+            equal(categoryAxis.labels[0].options.rotation, 0);
+
+            createCategoryAxis({
+                labels: {
+                    rotation: "auto"
+                }
+            });
+
+            equal(categoryAxis.labels[0].options.rotation, 0);
+        });
+
+        test("sets autoRotateLabels option to true if auto is set as rotation value", function() {
+            createCategoryAxis({
+                labels: {
+                    rotation: {
+                        angle: "auto"
+                    }
+                }
+            });
+
+            equal(categoryAxis.options.autoRotateLabels, true);
+
+            createCategoryAxis({
+                labels: {
+                    rotation: "auto"
+                }
+            });
+
+            equal(categoryAxis.options.autoRotateLabels, true);
+        });
+
+        // ------------------------------------------------------------
         module("Category Axis / Horizontal / Rendering", {
             setup: function() {
                 createCategoryAxis();

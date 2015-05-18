@@ -37,6 +37,7 @@ var __meta__ = {
         map = $.map,
         noop = $.noop,
         indexOf = $.inArray,
+        isPlainObject = $.isPlainObject,
         trim = $.trim,
         math = Math,
         deepExtend = kendo.deepExtend;
@@ -1790,8 +1791,19 @@ var __meta__ = {
 
             if (labelOptions.visible) {
                 var labelsCount = axis.labelsCount(),
+                    rotation = labelOptions.rotation,
                     label,
                     i;
+
+                if (isPlainObject(rotation)) {
+                    labelOptions.alignRotation = rotation.align;
+                    labelOptions.rotation = rotation.angle;
+                }
+
+                if (labelOptions.rotation == "auto") {
+                    labelOptions.rotation = 0;
+                    options.autoRotateLabels = true;
+                }
 
                 for (i = labelOptions.skip; i < labelsCount; i += step) {
                     label = axis.createAxisLabel(i, labelOptions);
