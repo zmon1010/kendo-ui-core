@@ -3,3 +3,4 @@
 .km-thumbnail -> thumbnails
 .km-label-above -> forms -> labels above the fields
 .km-icon-label -> forms -> labels with icons
+.km-navbar-buttongroup -> navBar with buttonGroup

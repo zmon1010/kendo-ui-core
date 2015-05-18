@@ -596,14 +596,14 @@
 
 
     <!-- NavBar View -->    
-    <div data-role="view" id="navBarView" data-layout="mobile-view" data-title="NavBar View" data-show="mobileButtonsViewInit" data-init="initializeNavBar">
+    <div data-role="view" id="navBarView" data-layout="mobile-view" data-show="mobileButtonsViewInit" data-init="initializeNavBar">
         <header data-role="header">
         <div data-role="navbar">
           <!-- NavBar default -->
             <a class="nav-button" href="#/" data-align="left" data-role="backbutton">Back</a>
             <span data-role="view-title">Contacts</span>
             <a data-align="right" data-icon="stop" data-role="button" href="#:back">Ungroup</a>
-            <span class="km-subtitle">Subtitle</span>
+            <span class="km-view-subtitle">Subtitle</span>
         </div>
           <div class="separator" style="background: #fff; height: 20px;"></div>
             <!-- NavBar light -->
@@ -622,7 +622,7 @@
         </div>
         <div class="separator" style="background: #fff; height: 20px;"></div>
         <!--ButtonGroup in the NavBr-->
-        <div data-role="navbar" >
+        <div data-role="navbar">
             <ul data-role="buttongroup" data-index="0" data-select="regroup">
                 <li>
                     Button 1
@@ -654,8 +654,9 @@
         </div>
         <div class="separator" style="background: #fff; height: 20px;"></div>
         <!--ButtonGroup in the NavBr-->
-        <div id="my-navbar" class="km-accent">
-            <span data-role="view-title"></span>
+        <div id="my-navbar" class="km-accent km-navbar-buttongroup" data-role="navbar">
+           <!--  <span data-role="view-title">Accent NavBar with ButtonGroup</span> -->
+            <span data-role="view-title">Contacts</span>
             <ul data-role="buttongroup" data-index="0" data-select="regroup">
                 <li>
                     Button 1
@@ -973,8 +974,13 @@ function mobileSwitchInit() {
     }
 
 function initializeNavBar(){
-    $("#my-navbar").kendoMobileNavBar();
-     $("#my-navbar").kendoMobileNavBar("title", "NavBar Title");
+    /*$("#my-navbar").kendoMobileNavBar({
+        title: "test"
+
+    });*/
+    // $("#my-navbar").kendoMobileNavBar("title", "NavBar Title");
+    //var navbar = $("#my-navbar").data("kendoMobileNavBar");
+ //    navbar.title("changed");
 }
 
 function viewShow() {
