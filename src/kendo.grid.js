@@ -4138,19 +4138,26 @@ var __meta__ = {
         _tableKeyDown: function(e) {
             var current = this.current();
             var requestInProgress = this.virtualScrollable && this.virtualScrollable.fetching();
+            var target = $(e.target);
+            var canHandle = !e.isDefaultPrevented() && !target.is(":button,a,:input,a>.k-icon");
 
             // do not handle key down if request in progress
             // or there isn't current set
-            if (requestInProgress || !current) {
+            if (requestInProgress) {
+                return;
+            }
+
+            current = current ? current : $(this.lockedTable).add(this.table).find(FIRSTNAVITEM);
+            if (!current.length) {
                 return;
             }
 
             //thead or tbody
             var container = current.parent().parent();
-            var cell;
+            var cell, index;
             var handled = false;
 
-            if (e.keyCode == kendo.keys.UP) {
+            if (canHandle && e.keyCode == keys.UP) {
                 cell = this._prevVerticalCell(container, current);
 
                 if (!cell[0]) {
@@ -4166,7 +4173,7 @@ var __meta__ = {
                 handled = true;
             }
 
-            if (e.keyCode == kendo.keys.DOWN) {
+            if (canHandle && e.keyCode == keys.DOWN) {
                 cell = this._nextVerticalCell(container, current);
 
                 if (!cell[0]) {
@@ -4181,8 +4188,8 @@ var __meta__ = {
                 handled = true;
             }
 
-            if (e.keyCode == kendo.keys.RIGHT) {
-                var index = container.find(NAVROW).index(current.parent());
+            if (canHandle && e.keyCode == keys.RIGHT) {
+                index = container.find(NAVROW).index(current.parent());
                 cell = this._nextHorizontalCell(container, current, index);
 
                 if (!cell[0]) {
@@ -4198,8 +4205,8 @@ var __meta__ = {
                 handled = true;
             }
 
-            if (e.keyCode == kendo.keys.LEFT) {
-                var index = container.find(NAVROW).index(current.parent());
+            if (canHandle && e.keyCode == keys.LEFT) {
+                index = container.find(NAVROW).index(current.parent());
                 cell = this._prevHorizontalCell(container, current, index);
 
                 if (!cell[0]) {
@@ -4215,6 +4222,18 @@ var __meta__ = {
                 handled = true;
             }
 
+            if (e.keyCode == keys.ENTER || e.keyCode == keys.F2) {
+                handled = this._handleEnterKey(current, e.currentTarget, target);
+            }
+
+            if (e.keyCode == keys.ESC) {
+                handled = this._handleEscKey(current, e.currentTarget);
+            }
+
+            if (e.keyCode == keys.TAB) {
+                handled = this._handleTabKey(current, e.currentTarget, target, e.shiftKey);
+            }
+
             if (handled) {
                 this.current(cell);
                 //prevent scrolling while pressing the keys
@@ -4222,6 +4241,108 @@ var __meta__ = {
                 //required in hierarchy
                 e.stopPropagation();
             }
+        },
+
+        _handleTabKey: function(current, currentTable, target, shiftKey) {
+            var isInCell = this.options.editable && this._editMode() == "incell";
+            var cell;
+
+            current = $(current);
+            if (isInCell) {
+                cell = $(activeElement()).closest(".k-edit-cell");
+
+                if (cell[0] && cell[0] !== current[0]) {
+                    current = cell;
+                }
+            }
+
+            cell = tabNext(current, currentTable, $(this.lockedTable).add(this.table), proxy(this._relatedRow, this), shiftKey);
+
+            if (cell.length && !current.is("th") && isInCell) {
+                this._handleEditing(current, cell, cell.closest("table"));
+                return true;
+            }
+
+            return false;
+        },
+
+        _handleEscKey: function(current, currentTable) {
+            var active = activeElement();
+            var handled = false;
+            var isInCell = this._editMode() == "incell";
+
+            if (current && $.contains(current[0], active) && !current.hasClass("k-edit-cell") && !current.parent().hasClass("k-grid-edit-row")) {
+                focusTable(currentTable, true);
+
+                return true;
+            }
+
+            if (this._editContainer && (!current || this._editContainer.has(current[0]) || current[0] === this._editContainer[0])) {
+                if (isInCell) {
+                    this.closeCell(true);
+                } else {
+                    var currentIndex = $(current).parent().index();
+                    if (active) {
+                        active.blur();
+                    }
+                    this.cancelRow();
+                    if (currentIndex >= 0) {
+                        this.current(this.table.find(">tbody>tr").eq(currentIndex).children().filter(NAVCELL).first());
+                    }
+                }
+
+                if (browser.msie && browser.version < 9) {
+                    document.body.focus();
+                }
+                focusTable(isInCell ? currentTable : this.table[0], true);
+
+                return true;
+            }
+
+            return false;
+        },
+
+        _handleEnterKey: function(current, currentTable, target) {
+            var handled = false;
+            var isInCell = this._editMode() == "incell";
+
+//            current = current ? current : this.table.find(FIRSTNAVITEM);
+//
+//            if (!current.length) {
+//                return false;
+//            }
+
+            if (!target.is("table") && !$.contains(current[0], target[0])) {
+                current = target.closest("[role=gridcell]");
+            }
+
+            if (current.is("th")) {
+                // sort the column
+                current.find(".k-link").click();
+                return true;
+            }
+
+            if (current.parent().is(".k-master-row,.k-grouping-row")) {
+                current.parent().find(".k-icon:first").click();
+                handled = true;
+            } else {
+                var focusable = current.find(":kendoFocusable:first");
+                if (!current.hasClass("k-edit-cell") && focusable[0] && current.hasClass("k-state-focused")) {
+                    focusable.focus();
+                    handled = true;
+                } else if (this.options.editable && !target.is(":button,.k-button,textarea")) {
+                    var container = target.closest("[role=gridcell]");
+                    if (!container[0]) {
+                        container = current;
+                    }
+
+                    //TODO - verify this with locked columns
+                    this._handleEditing(container, false, isInCell ? currentTable : this.table[0]);
+                    handled = true;
+                }
+            }
+
+            return handled;
         },
 
         _nextHorizontalCell: function(table, current, originalIndex) {
@@ -7060,7 +7181,7 @@ var __meta__ = {
 
             if (navigatable && (that._isActiveInTable() || (that._editContainer && that._editContainer.data("kendoWindow")))) {
                 isCurrentInHeader = current.is("th");
-                currentIndex = that.cellIndex(current);
+                currentIndex = Math.max(that.cellIndex(current), 0);
             }
 
             that._destroyEditable();
@@ -7132,7 +7253,11 @@ var __meta__ = {
             if (isCurrentInHeader) {
                 this.current(this.thead.find("th:not(.k-group-cell)").eq(currentIndex));
             } else {
-                var rowIndex = this.virtualScrollable.position(this._rowVirtualIndex);
+                var rowIndex = 0;
+                if (this._rowVirtualIndex) {
+                    rowIndex = this.virtualScrollable.position(this._rowVirtualIndex);
+                }
+
                 var row = $();
 
                 if (this.lockedTable) {
