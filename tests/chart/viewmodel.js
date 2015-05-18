@@ -1970,23 +1970,39 @@
                 });
             });
 
-            test("passes the textbox initial box as rect", 1, function() {
+            test("passes the textbox original size as rect initially", 1, function() {
+                var initial = true;
                 renderTextBox({
                     visual: function(e) {
-                        if (e.rect.size.width !== 0 || e.rect.size.height !== 0) {
+                        if (initial) {
+                            ok(e.rect.equals(e.createVisual().bbox()));
+                        }
+                        initial = false;
+                    }
+                });
+            });
+
+            test("passes the textbox target box as rect", 1, function() {
+                var initial = true;
+                renderTextBox({
+                    visual: function(e) {
+                        if (!initial) {
                             ok(e.rect.equals(RECT));
                         }
+                        initial = false;
                     }
                 });
             });
 
             test("the createVisual function returns the reflowed visual", function() {
+                var initial = true;
                 createTextBox({
                     visual: function(e) {
-                        if (e.rect.size.width !== 0 || e.rect.size.height !== 0) {
+                        if (!initial) {
                             var defaultVisual = e.createVisual();
                             ok(defaultVisual.bbox().equals(new geom.Rect([10, 20], [120, 15])));
                         }
+                        initial = false;
                     }
                 }, Box2D(0, 0, 10, 10));
 

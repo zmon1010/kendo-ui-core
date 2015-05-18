@@ -1346,6 +1346,12 @@ var __meta__ = {
             this.container.options.align = align;
 
             if (visualFn && !this._boxReflow) {
+                if (!targetBox.hasSize()) {
+                    this._boxReflow = true;
+                    this.reflow(targetBox);
+                    this._boxReflow = false;
+                    targetBox = this.box;
+                }
                 this.visual = visualFn(this.visualContext(targetBox));
 
                 var visualBox = targetBox;
