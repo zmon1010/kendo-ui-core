@@ -45,6 +45,7 @@
 - notification.animation
 - notification.templates
 - progressbar.value
+- pivotgrid.datasource
 - lineargauge.pointer
 - radialgauge.pointer
 - radialgauge.renderas
@@ -59,6 +60,9 @@
 - sortable.container
 - sortable.hint
 - sortable.placeholder
+- splitter.panes.max
+- splitter.panes.min
+- splitter.panes.contentUrl
 - timepicker.animation
 - tooltip.animation
 - tooltip.content
@@ -74,6 +78,3 @@
 - window.appendto
 - window.content
 - window.resizable
-- splitter.panes.max
-- splitter.panes.min
-- splitter.panes.contentUrl
