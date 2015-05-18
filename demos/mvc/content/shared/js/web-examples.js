@@ -11,10 +11,14 @@ $(function () {
         },
         height: 300
     });
-    
+
     $("#example-sidebar").kendoResponsivePanel({
         breakpoint: 1200,
         orientation: "left",
         toggleButton: "#sidebar-toggle"
+    });
+
+    $("#sidebar-toggle").click(function() {
+        $("#example-search").focus();
     });
 });
