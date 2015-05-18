@@ -92,7 +92,7 @@ var __meta__ = {
     };
 
     var RESOURCESEDITOR = function(container, options) {
-        $('<a href="#" class="' + options.styles.button + '">' + options.messages.assingButton + '</a>').click(options.click).appendTo(container);
+        $('<a href="#" class="' + options.styles.button + '">' + options.messages.assignButton + '</a>').click(options.click).appendTo(container);
     };
 
     var ganttStyles = {
@@ -1489,7 +1489,7 @@ var __meta__ = {
                     end: "End",
                     percentComplete: "Complete",
                     resources: "Resources",
-                    assingButton: "Assign",
+                    assignButton: "Assign",
                     resourcesHeader: "Resources",
                     unitsHeader: "Units"
                 }
