@@ -4170,6 +4170,7 @@ var __meta__ = {
                     }
                 }
 
+                this.current(cell);
                 handled = true;
             }
 
@@ -4185,6 +4186,7 @@ var __meta__ = {
                     }
                 }
 
+                this.current(cell);
                 handled = true;
             }
 
@@ -4202,6 +4204,7 @@ var __meta__ = {
                     }
                 }
 
+                this.current(cell);
                 handled = true;
             }
 
@@ -4219,6 +4222,7 @@ var __meta__ = {
                     }
                 }
 
+                this.current(cell);
                 handled = true;
             }
 
@@ -4231,11 +4235,10 @@ var __meta__ = {
             }
 
             if (e.keyCode == keys.TAB) {
-                handled = this._handleTabKey(current, e.currentTarget, target, e.shiftKey);
+                handled = this._handleTabKey(current, e.currentTarget, e.shiftKey);
             }
 
             if (handled) {
-                this.current(cell);
                 //prevent scrolling while pressing the keys
                 e.preventDefault();
                 //required in hierarchy
@@ -4243,23 +4246,25 @@ var __meta__ = {
             }
         },
 
-        _handleTabKey: function(current, currentTable, target, shiftKey) {
+        _handleTabKey: function(current, currentTable, shiftKey) {
             var isInCell = this.options.editable && this._editMode() == "incell";
             var cell;
 
-            current = $(current);
-            if (isInCell) {
-                cell = $(activeElement()).closest(".k-edit-cell");
-
-                if (cell[0] && cell[0] !== current[0]) {
-                    current = cell;
-                }
+            if (!isInCell || current.is("th")) {
+                return false;
             }
 
-            cell = tabNext(current, currentTable, $(this.lockedTable).add(this.table), proxy(this._relatedRow, this), shiftKey);
+            cell = $(activeElement()).closest(".k-edit-cell");
 
-            if (cell.length && !current.is("th") && isInCell) {
+            if (cell[0] && cell[0] !== current[0]) {
+                current = cell;
+            }
+
+            cell = this._tabNext(current, currentTable, shiftKey);
+
+            if (cell.length) {
                 this._handleEditing(current, cell, cell.closest("table"));
+
                 return true;
             }
 
@@ -4268,49 +4273,43 @@ var __meta__ = {
 
         _handleEscKey: function(current, currentTable) {
             var active = activeElement();
-            var handled = false;
             var isInCell = this._editMode() == "incell";
 
-            if (current && $.contains(current[0], active) && !current.hasClass("k-edit-cell") && !current.parent().hasClass("k-grid-edit-row")) {
-                focusTable(currentTable, true);
+            if (!isInEdit(current)) {
+                if (current.has(active).length) {
+                    // return focus back to the table
+                    focusTable(currentTable, true);
 
-                return true;
+                    return true;
+                }
+                return false;
             }
 
-            if (this._editContainer && (!current || this._editContainer.has(current[0]) || current[0] === this._editContainer[0])) {
-                if (isInCell) {
-                    this.closeCell(true);
-                } else {
-                    var currentIndex = $(current).parent().index();
-                    if (active) {
-                        active.blur();
-                    }
-                    this.cancelRow();
-                    if (currentIndex >= 0) {
-                        this.current(this.table.find(">tbody>tr").eq(currentIndex).children().filter(NAVCELL).first());
-                    }
+            if (isInCell) {
+                this.closeCell(true);
+            } else {
+                var currentIndex = $(current).parent().index();
+                if (active) {
+                    active.blur();
                 }
-
-                if (browser.msie && browser.version < 9) {
-                    document.body.focus();
+                this.cancelRow();
+                if (currentIndex >= 0) {
+                    this.current(this.items().eq(currentIndex).children(NAVCELL).first());
                 }
-                focusTable(isInCell ? currentTable : this.table[0], true);
-
-                return true;
             }
 
-            return false;
+            if (browser.msie && browser.version < 9) {
+                document.body.focus();
+            }
+
+            focusTable(currentTable, true);
+
+            return true;
         },
 
         _handleEnterKey: function(current, currentTable, target) {
             var handled = false;
             var isInCell = this._editMode() == "incell";
-
-//            current = current ? current : this.table.find(FIRSTNAVITEM);
-//
-//            if (!current.length) {
-//                return false;
-//            }
 
             if (!target.is("table") && !$.contains(current[0], target[0])) {
                 current = target.closest("[role=gridcell]");
@@ -4336,8 +4335,8 @@ var __meta__ = {
                         container = current;
                     }
 
-                    //TODO - verify this with locked columns
-                    this._handleEditing(container, false, isInCell ? currentTable : this.table[0]);
+                    this._handleEditing(container, false, currentTable);
+
                     handled = true;
                 }
             }
@@ -4720,6 +4719,26 @@ var __meta__ = {
                     e.stopPropagation();
                 }
             });
+        },
+
+        _tabNext: function (current, currentTable, back) {
+            var switchRow = true;
+            var next = back ? current.prevAll(DATA_CELL + ":first") : current.nextAll(":visible:first");
+
+            if (!next.length) {
+                next = current.parent();
+                if (this.lockedTable) {
+                    switchRow = (back && currentTable == this.lockedTable[0]) || (!back && currentTable == this.table[0]);
+                    next = this._relatedRow(next);
+                }
+
+                if (switchRow) {
+                    next = next[back ? "prevAll" : "nextAll"]("tr:not(.k-grouping-row):not(.k-detail-row):visible:first");
+                }
+                next = next.children(DATA_CELL + (back ? ":last" : ":first"));
+            }
+
+            return next;
         },
 
         _handleEditing: function(current, next, table) {
@@ -7780,6 +7799,12 @@ var __meta__ = {
        }
 
        return current;
+   }
+
+   function isInEdit(cell) {
+       return cell &&
+           (cell.hasClass("k-edit-cell") ||
+            cell.parent().hasClass("k-grid-edit-row"));
    }
 
    function tabNext(current, currentTable, dataTable, relatedRow, back) {
