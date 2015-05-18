@@ -32,19 +32,20 @@
 
         $("#chart").kendoChart({
             series: [{
-                type: "column",
+                type: "bar",
                 data: [1,2,3]
             }],
             valueAxis: [{
-               //axisCrossingValue: 100,
+               axisCrossingValue: 100,
                visible: true
             }],
             categoryAxis: [{
-                axisCrossingValue: 100,
+                //majorTicks: {visible: false},              
                 justified: false,
                 categories: categories,
                 labels: {
-                    rotation: 30
+                    rotationOrigin: "left",
+                    rotation: -30
                     // rotation: {
                         // angle: 30,
                         // align: "center"

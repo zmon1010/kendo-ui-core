@@ -1546,6 +1546,70 @@ var __meta__ = {
                 dataItem: label.dataItem,
                 axis: label.parent.options
             });
+        },
+
+        rotate: function() {
+            if (this.options.alignRotation != CENTER) {
+                var box = this.normalBox.toRect();
+                var transform = this.rotationTransform();
+                this.box = rectToBox(box.bbox(transform.matrix()));
+            } else {
+                TextBox.fn.rotate.call(this);
+            }
+            return this.box;
+        },
+
+        rotationTransform: function() {
+            var options = this.options;
+            var rotation = options.rotation;
+            if (!rotation) {
+                return null;
+            }
+
+            if (options.alignRotation == CENTER) {
+                return TextBox.fn.rotationTransform.call(this);
+            }
+
+            var rotationMatrix = geom.transform().rotate(rotation).matrix();
+            var box = this.normalBox.toRect();
+            var rect = this.targetBox.toRect();
+
+            var rotationOrigin = options.rotationOrigin || TOP;
+            var alignAxis = rotationOrigin == TOP || rotationOrigin == BOTTOM ? X : Y;
+            var distanceAxis = rotationOrigin == TOP || rotationOrigin == BOTTOM ? Y : X;
+            var axisAnchor = rotationOrigin == TOP || rotationOrigin == LEFT ? rect.origin : rect.bottomRight();
+
+            var topLeft = box.topLeft().transformCopy(rotationMatrix);
+            var topRight = box.topRight().transformCopy(rotationMatrix);
+            var bottomRight = box.bottomRight().transformCopy(rotationMatrix);
+            var bottomLeft = box.bottomLeft().transformCopy(rotationMatrix);
+            var rotatedBox = geom.Rect.fromPoints(topLeft, topRight, bottomRight, bottomLeft);
+
+            var translate = {};
+            translate[distanceAxis] = rect.origin[distanceAxis] - rotatedBox.origin[distanceAxis];
+
+            var distanceLeft = math.abs(topLeft[distanceAxis] + translate[distanceAxis] - axisAnchor[distanceAxis]);
+            var distanceRight = math.abs(topRight[distanceAxis] + translate[distanceAxis] - axisAnchor[distanceAxis]);
+            var alignStart;
+            var alignEnd;
+
+            if (round(distanceLeft, DEFAULT_PRECISION) === round(distanceRight, DEFAULT_PRECISION)) {
+                alignStart = topLeft;
+                alignEnd = topRight;
+            } else if (distanceRight < distanceLeft) {
+                alignStart = topRight;
+                alignEnd = bottomRight;
+            } else {
+                alignStart = topLeft;
+                alignEnd = bottomLeft;
+            }
+
+            var alignCenter = alignStart[alignAxis] + (alignEnd[alignAxis] - alignStart[alignAxis]) / 2;
+            translate[alignAxis] = rect.center()[alignAxis] - alignCenter;
+
+            return geom.transform()
+                .translate(translate.x, translate.y)
+                .rotate(rotation);
         }
     });
 
