@@ -41,7 +41,7 @@
         },
 
         _popup: function(ui, options) {
-            var popupTemplate = "<div class='k-more-popup'>foo</div>";
+            var popupTemplate = "<ul class='k-more-popup'></ul>";
 
             this.popup = $(popupTemplate).appendTo("body").kendoPopup({
                 anchor: ui,
@@ -55,15 +55,15 @@
         },
 
         _open: function(e) {
-            
+
         },
 
         _activate: function(e) {
-            
+
         },
 
         _close: function(e) {
-            
+
         }
     });
 
@@ -103,8 +103,12 @@
             links: ["insertImage", "insertFile", "createLink", "unlink"],
             lists: ["insertUnorderedList", "insertOrderedList", "indent", "outdent"],
             tables: [ "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn" ],
-            advanced: [ "viewHtml", "cleanFormatting", "print", "pdf" ]
+            advanced: [ "viewHtml", "cleanFormatting", "print", "pdf" ],
+            fonts: [ "fontName", "fontSize" ],
+            colors: [ "foreColor", "backColor" ]
         },
+
+        overflowFlaseTools: [ "formatting", "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn", "fontName", "fontSize", "foreColor", "backColor" ],
 
         _initPopup: function() {
             this.window = $(this.element)
@@ -388,7 +392,9 @@
                 groupName, newGroupName,
                 toolConfig = that._editor.options.tools,
                 browser = kendo.support.browser,
-                group, i, groupPosition = 0;
+                group, i, groupPosition = 0,
+                overflowFlaseTools = this.overflowFlaseTools,
+                overflow;
 
             function stringify(template) {
                 var result;
@@ -419,6 +425,7 @@
             function startGroup(toolName) {
                 if (toolName !== "more") {
                     group = $("<li class='k-tool-group' role='presentation' />");
+                    group.data("overflow", $.inArray(toolName, overflowFlaseTools) === -1 ? true : false)
                 } else {
                     group = $("<li class='k-more-tool' />");
                 }
@@ -426,7 +433,8 @@
 
             element.empty();
 
-            startGroup();
+            toolName = toolConfig[0].name || toolConfig[0];
+            startGroup(toolName, overflowFlaseTools);
 
             for (i = 0; i < toolConfig.length; i++) {
                 toolName = toolConfig[i].name || toolConfig[i];
@@ -441,7 +449,7 @@
                 if (toolName == "break") {
                     endGroup();
                     $("<li class='k-row-break' />").appendTo(that.element);
-                    startGroup(toolName);
+                    startGroup(toolName, overflowFlaseTools);
                 }
 
                 if (!template) {
@@ -452,7 +460,7 @@
 
                 if (groupName != newGroupName) {
                     endGroup();
-                    startGroup(toolName);
+                    startGroup(toolName, overflowFlaseTools);
                     groupName = newGroupName;
                 }
 
@@ -462,7 +470,7 @@
 
                 if (newGroupName == "custom") {
                     endGroup();
-                    startGroup(toolName);
+                    startGroup(toolName, overflowFlaseTools);
                 }
 
                 if (options.exec && toolElement.hasClass("k-tool")) {
@@ -722,7 +730,7 @@
         },
 
         _hideGroup: function(group) {
-            if (true) {
+            if (group.data("overflow")) {
                 var popup = this.options.editor.morePopup;
                 group.detach().prependTo(popup.element).addClass("k-overflow-tool-group");
             } else {
