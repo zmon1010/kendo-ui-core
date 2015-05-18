@@ -1341,9 +1341,7 @@ var __meta__ = {
         reflow: function(targetBox) {
             var options = this.options;
             var visualFn = options.visual;
-            var align = options.align;
-            var rotation = options.rotation;
-            this.container.options.align = align;
+            this.container.options.align = options.align;
 
             if (visualFn && !this._boxReflow) {
                 if (!targetBox.hasSize()) {
@@ -1366,13 +1364,12 @@ var __meta__ = {
             } else {
                 BoxElement.fn.reflow.call(this, targetBox);
 
-                if (rotation) {
+                if (options.rotation) {
                     var margin = getSpacing(options.margin);
                     var box = this.box.unpad(margin);
+                    this.targetBox = targetBox;
                     this.normalBox = box.clone();
-                    box.rotate(rotation);
-                    this.align(targetBox, X, align);
-                    this.align(targetBox, Y, options.vAlign);
+                    box = this.rotate();
                     box.translate(margin.left - margin.right, margin.top - margin.bottom);
                     this.rotatedBox = box.clone();
                     box.pad(margin);
@@ -1443,6 +1440,14 @@ var __meta__ = {
             var visual = this.visual;
             delete this.visual;
             return visual;
+        },
+
+        rotate: function() {
+            var options = this.options;
+            this.box.rotate(options.rotation);
+            this.align(this.targetBox, X, options.align);
+            this.align(this.targetBox, Y, options.vAlign);
+            return this.box;
         },
 
         rotationTransform: function() {
