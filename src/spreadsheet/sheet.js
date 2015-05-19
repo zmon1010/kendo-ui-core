@@ -10,6 +10,7 @@
         var cellsCount = rows * columns - 1;
 
         this._values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "");
+        this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "");
         this._backgrounds = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "beige");
 
         this._grid = new kendo.spreadsheet.Grid(rows, columns);
@@ -37,7 +38,7 @@
         range: function(row, column, numRows, numColumns) {
             return new kendo.spreadsheet.Range(this, row, column, numRows, numColumns);
         }
-    }
+    };
 
     kendo.spreadsheet.Sheet = Sheet;
 })(kendo);

@@ -43,8 +43,11 @@
         },
         background: function(value) {
             return this._property(this._sheet._backgrounds, value);
+        },
+        formula: function(value) {
+            return this._property(this._sheet._formulas, value);
         }
-    }
+    };
 
     kendo.spreadsheet.Range = Range;
 })(kendo);
