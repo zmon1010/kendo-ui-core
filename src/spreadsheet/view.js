@@ -38,6 +38,86 @@
         }
     }
 
+    var Glue = {
+        getRefCells: function(ref) {
+            if (ref instanceof calc.Runtime.CellRef) {
+                var formula = sheet.range(ref.row-1, ref.col-1).formula() || null;
+                var value = sheet.range(ref.row-1, ref.col-1).value();
+                if (formula != null || value != null)
+                    return [{ formula: formula, value: value, row: ref.row, col: ref.col, sheet: "sheet1" }];
+
+            }
+
+            if (ref instanceof calc.Runtime.RangeRef) {
+                debugger;
+                // ref = ref.intersect(this.getSheetBounds());
+                // if (!(ref instanceof calc.Runtime.RangeRef))
+                //     return this.getRefCells(ref);
+                var startCellIndex = sheet._grid.index(ref.topLeft.row-1, ref.topLeft.col-1);
+                var endCellIndex = sheet._grid.index(ref.bottomRight.row-1, ref.bottomRight.col-1);
+                var formulas = sheet._formulas.iterator(startCellIndex, endCellIndex);
+                var values = sheet._values.iterator(startCellIndex, endCellIndex);
+                var a = [];
+                for (var row = ref.topLeft.row; row <= ref.bottomRight.row; ++row) {
+                    for (var col = ref.topLeft.col; col <= ref.bottomRight.col; ++col) {
+                        var index = sheet._grid.index(row-1, col-1);
+                        var formula = formulas.at(index) || null;
+                        var value = values.at(index);
+                        console.log(row, col, index, value);
+                        if (formula != null || value != null) {
+                            a.push({ formula: formula, value: value, row: row, col: col, sheet: "sheet1" });
+                        }
+                    }
+                }
+
+                return a;
+            }
+
+            if (ref instanceof calc.Runtime.UnionRef) {
+                var a = [], self = this;
+                ref.refs.forEach(function(ref){
+                    a = a.concat(self.getRefCells(ref));
+                });
+                return a;
+            }
+
+            if (ref instanceof calc.Runtime.NullRef) {
+                return [];
+            }
+
+            console.error("Unsupported reference", ref);
+            return [];
+        },
+
+        getData: function(ref) {
+            var self = this;
+            if (ref instanceof calc.Runtime.Ref) {
+                var data = self.getRefCells(ref).map(function(cell){
+                    return cell.value;
+                });
+                return ref instanceof calc.Runtime.CellRef ? data[0] : data;
+            }
+            return ref;
+        },
+
+        onFormula: function(sheetName, row, col, val) {
+            console.log("onFormula:", sheetName, row, col, val);
+        }
+    };
+
+    function recalculate() {
+        var formulaCells = Glue.getRefCells(Glue.getSheetBounds()).filter(function(cell){
+            return cell.formula;
+        });
+        formulaCells.forEach(function(cell){
+            cell.formula.reset();
+        });
+
+        formulaCells.forEach(function(cell){
+            cell.formula.exec(Glue, "sheet1", cell.row, cell.col);
+        });
+    }
+
     function View(element, fixed) {
         this.wrapper = $(element);
         this.wrapper.addClass("k-spreadsheet");
@@ -104,6 +184,12 @@
 
         var table = new HtmlTable(this.rowHeight, this.columnWidth);
 
+        var formulaRanges = this._sheet._formulas.values();
+
+        for (var i = 0, len = formulaRanges.length; i < len; i++) {
+            formulaRanges[i].value.reset();
+        }
+
         for (var ri = rows.start; ri <= rows.end; ri ++) {
             table.addRow(rows.values.at(ri));
         }
@@ -113,13 +199,20 @@
             var endCellIndex = grid.index(rows.end, ci);
 
             var values = sheet._values.iterator(startCellIndex, endCellIndex);
+            var formulas = sheet._formulas.iterator(startCellIndex, endCellIndex);
             var backgrounds = sheet._backgrounds.iterator(startCellIndex, endCellIndex);
 
             table.addColumn(columns.values.at(ci));
 
             for (ri = rows.start; ri <= rows.end; ri ++) {
                 var index = grid.index(ri, ci);
+                var formula = formulas.at(index);
+
                 table.addCell(ri - rows.start, values.at(index), { backgroundColor: backgrounds.at(index) } );
+
+                if (formula) {
+                    formula.exec(Glue, "sheet1", ri, ci);
+                }
             }
         }
 
