@@ -1,12 +1,22 @@
 
         <div id="example">
-            <div id="climateCtrl">
-                <input id="slider" class="temperature" />
+            <div class="demo-section k-header">
+                <ul id="fieldlist">
+                    <li>
+                        <label>Temperature</label>
+                        <input id="slider" class="temperature" />
+                    </li>
+                    <li>
+                        <label>Humidity</label>
+                        <div id="rangeslider" class="humidity" >
+                            <input />
+                            <input />
+                        </div>
+                    </li>
+                </ul>
+                
 
-                <div id="rangeslider" class="humidity">
-                    <input />
-                    <input />
-                </div>
+
             </div>
 
             <div class="box">
@@ -53,23 +63,29 @@
                     });
                 });
             </script>
-
             <style>
-                #climateCtrl {
-                    width: 245px;
-                    height: 167px;
-                    margin: 30px auto;
-                    padding: 102px 0 0 156px;
-                    background: url('../content/web/slider/climateController.png') transparent no-repeat 0 0;
-                    font-size: 12px;
-                }
-                .humidity {
-                    margin: 67px 0 0 15px;
-                    width: 170px;
-                }
-                .demo-section {
-                    width: 380px;
-                }
+
+               #fieldlist {
+                   margin: 0 0 -2em;
+                   padding: 0;
+                   text-align: center;
+               }
+
+               #fieldlist > li {
+                   list-style: none;
+                   padding-bottom: 2em;
+               }
+
+               #fieldlist label {
+                   display: block;
+                   padding-bottom: 1em;
+                   font-weight: bold;
+                   text-transform: uppercase;
+                   font-size: 12px;
+                   color: #444;
+               }
+
             </style>
+
         </div>
 
