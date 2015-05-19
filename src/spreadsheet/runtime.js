@@ -559,11 +559,11 @@
                     if (typeof thing != "string") {
                         throw 1;
                     }
-                    var x = calc.parse_formula(this.sheet, 0, 0, thing);
-                    if (x.ast.type != "ref") {
+                    var ref = calc.parse_formula(this.sheet, 0, 0, thing);
+                    if (ref.ast.type != "ref") {
                         throw 1;
                     }
-                    var f = calc.compile(x), ref = f.refs[0];
+                    ref = ref.ast;
                     resolveCells(this, [ ref ], function(){
                         callback(ref);
                     });
