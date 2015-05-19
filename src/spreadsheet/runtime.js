@@ -1,7 +1,7 @@
 // -*- fill-column: 100 -*-
 
 (function(f, define){
-    define([ "../kendo.core.js" ], f);
+    define([ "./sheet.js" ], f);
 })(function(){
 
     "use strict";
@@ -12,8 +12,8 @@
     /* global console */
 
     var calc = {};
-    kendo.spreadsheet = { calc: calc };
-    var exports = kendo.spreadsheet.calc.Runtime = {};
+    kendo.spreadsheet.calc = calc;
+    var exports = calc.Runtime = {};
 
     /* -----[ References ]----- */
 

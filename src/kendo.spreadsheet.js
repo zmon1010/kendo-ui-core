@@ -6,7 +6,9 @@
         "./spreadsheet/view",
         "./spreadsheet/grid",
         "./spreadsheet/axis",
-        "./spreadsheet/sorter"
+        "./spreadsheet/sorter",
+        "./spreadsheet/runtime",
+        "./spreadsheet/calc"
     ], f);
 })(function(){
     var __meta__ = {
