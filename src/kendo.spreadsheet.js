@@ -28,8 +28,14 @@
             Widget.fn.init.call(this, element, options);
 
             this._view = new kendo.spreadsheet.View(this.element, FIXED);
-            this._sheet = new kendo.spreadsheet.Sheet(this.options.columns,
-                this.options.rows, this.options.columnWidth, this.options.rowHeight, FIXED);
+
+            this._sheet = new kendo.spreadsheet.Sheet(
+                this.options.rows,
+                this.options.columns,
+                this.options.rowHeight,
+                this.options.columnWidth,
+                FIXED);
+
             this._view.sheet(this.activeSheet());
             this.refresh();
         },

@@ -3,7 +3,7 @@
 })(function(){
 
 (function(kendo) {
-    function Sheet(columns, rows, columnWidth, rowHeight, fixed) {
+    function Sheet(rows, columns, rowHeight, columnWidth, fixed) {
         this._columns = new kendo.spreadsheet.Axis(columns, columnWidth, fixed);
         this._rows = new kendo.spreadsheet.Axis(rows, rowHeight, fixed);
 

@@ -4,8 +4,8 @@
 
     module("Sheet API", {
         setup: function() {
-            sheet = new kendo.spreadsheet.Sheet(defaults.columns, defaults.rows,
-            defaults.columnWidth, defaults.rowHeight);
+            sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,
+            defaults.rowHeight, defaults.columnWidth);
         }
     });
 
