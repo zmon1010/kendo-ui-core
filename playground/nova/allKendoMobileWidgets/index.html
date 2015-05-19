@@ -74,15 +74,15 @@
                 <li>
                     Africa
                     <ul>
-                        <li><a>Nairobi<span class="km-badge">9</span></a></li>
+                        <li>Nairobi<span class="km-badge">9</span></li>
                     </ul>
                 </li>
                 <li>
                     America
                     <ul>
-                        <li><a>Boston</a></li>
-                        <li><a>Ottawa</a></li>
-                        <li><a>San Francisco</a></li>
+                        <li>Boston</li>
+                        <li>Ottawa</li>
+                        <li>San Francisco</li>
                     </ul>
                 </li>
                 <li>
@@ -766,14 +766,11 @@ claimed the area for Portugal. </p>
     </div>
 </div>
 
-<script type="text/x-kendo-tmpl" id="listViewWithThumbnails-template">
-    <div class="product">
-        <img src="http://demos.telerik.com/kendo-ui/content/web/foods/#=ProductID#.jpg" alt="#=ProductName# image" class="km-thumbnail"/>
-        <h3>#:ProductName#</h3>
-        <p>#:kendo.toString(UnitPrice, "c")#</p>
-    </div>
+<script type="text/x-kendo-template" id="customListViewTemplate">
+    <img class="km-thumbnail" src="${url}" />
+    <h3 class="item-title">${name}</h3>
+    <p class="item-info">${description}</p>
 </script>
-
         
 
 <script>
@@ -855,29 +852,18 @@ var inbox = [{
 
 
 function mobileListViewEndlessScrolling() {
-        var dataSource = new kendo.data.DataSource({
-            type: "odata",
-            transport: {
-                read: {
-                    url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
-                }
-            },
-            schema: {
-                total: function () { return 77; }
-            },
-            sort: {
-                field: "ProductID",
-                dir: "desc"
-            },
-            serverPaging: true,
-            serverSorting: true,
-            pageSize: 50
-        });
+            var groupedData = [
+        { name: "Sashimi Salad", description: "Organic greens topped with market fresh sashimi, wasabi soy vinaigrette.", url: "http://demos.telerik.com/kendo-ui/content/mobile/listview/sashimi-salad.jpg", letter: "S" },
+        { name: "Seaweed Salad", description: "A nice seaweed salad.", url: "http://demos.telerik.com/kendo-ui/content/mobile/listview/seaweed-salad.jpg", letter: "S" },
+        { name: "Edamame", description: "Boiled soy beans with salt.", url: "http://demos.telerik.com/kendo-ui/content/mobile/listview/edamame.jpg", letter: "E" },
+        { name: "Maguro", description: "Tuna pieces.", url: "http://demos.telerik.com/kendo-ui/content/mobile/listview/maguro.jpg", letter: "M" },
+        { name: "Tekka Maki", description: "Tuna roll with wasabi.", url: "http://demos.telerik.com/kendo-ui/content/mobile/listview/tekka-maki.jpg", letter: "T" },
+        { name: "California Rolls", description: "Crab sticks, avocado and cucumber.", url: "http://demos.telerik.com/kendo-ui/content/mobile/listview/california-rolls.jpg", letter: "C" }
+    ];
 
         $("#listViewWithThumbnails").kendoMobileListView({
-            dataSource: dataSource,
-            template: $("#listViewWithThumbnails-template").text(),
-            endlessScroll: true
+            dataSource: kendo.data.DataSource.create({data: groupedData, group: "letter" }),
+            template: $("#customListViewTemplate").html(),
         });
     }
 
@@ -993,11 +979,11 @@ function viewShow() {
 
 <style>
 
-html
+/*html
 {
     font: normal 12px "HelveticaNeue Light", "Roboto Light", "Slate Light", "Segoe WP", sans-serif !important;
 }
-
+*/
 .customButtonStyling {
     margin: 20px;
 }
