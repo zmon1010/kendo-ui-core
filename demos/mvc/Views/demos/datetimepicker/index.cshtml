@@ -1,34 +1,18 @@
 
         <div id="example">
-            <div id="to-do">
-                    <input id="datetimepicker" />
+            
+            <div class="demo-section k-header">
+                <h4>Remind me on</h4>
+                <input id="datetimepicker" style="width: 100%;" />
             </div>
-        <script>
-            $(document).ready(function () {
-                // create DateTimePicker from input HTML element
-                $("#datetimepicker").kendoDateTimePicker({
-                    value:new Date()
+            
+            <script>
+                $(document).ready(function () {
+                    // create DateTimePicker from input HTML element
+                    $("#datetimepicker").kendoDateTimePicker({
+                        value:new Date()
+                    });
                 });
-            });
-        </script>
-        <style>
-            #to-do {
-                height: 52px;
-                width: 221px;
-                margin: 30px auto;
-                padding: 91px 0 0 188px;
-                background: url('../content/web/datepicker/todo.png') transparent no-repeat 0 0;
-            }
-            #to-do .k-datetimepicker {
-                width: 200px;
-            }
-            html.k-material #to-do {
-                height: 55px;
-                width: 260px;
-                padding: 87px 0 0 150px;
-            }
-            html.k-material #to-do .k-datetimepicker {
-                width: 240px;
-            }
-        </style>
+            </script>
+            
         </div>
