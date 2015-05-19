@@ -1,198 +1,4 @@
-@tooltip-texture: none;
-@widget-text-color: @normal-text-color;
-@inverse-text-color: @background;
-@widget-background-color: @background;
-@widget-border-color: darken(@background, 20%);
-@widget-gradient: none;
-@widget-shadow: none;
-@hover-shadow: none;
-@selected-shadow: none;
-@active-gradient: none;
-@active-shadow: none;
-@hover-background-color: @hover-background;
-@hover-border-color: @hover-background;
-@select-background-color: @base;
-@select-border-color: @hover-background;
-@select-hover-background-color: @hover-background;
-@select-group-background-color: @base;
-@button-background-color: @base;
-@button-text-color: @background;
-@group-background-color: @base;
-@group-border-color: @base;
-@content-background-color: @background;
-@selected-background-color: @accent;
-@selected-border-color: @accent;
-@active-background-color: @accent;
-@active-border-color: @accent;
-@active-text-color: @background;
-@error-background-color: @background;
-@error-border-color: lighten(@base, 4%);
-@error-text-color: lighten(@base, 4%);
-@disabled-text-color: darken(@background, 24%);
-@validation-background-color: darken(@warning, 20%);
-@validation-border-color: darken(@warning, 20%);
-@validation-text-color: @normal-text-color;
-@tooltip-background-color: @base;
-@tooltip-border-color: @base;
-@tooltip-text-color: @background;
-@notification-info-background-color: @info;
-@notification-info-text-color: darken(@accent, 11%);
-@notification-info-border-color: darken(@info, 11%);
-@notification-success-background-color: @success;
-@notification-success-text-color: darken(@hover-background, 8%);
-@notification-success-border-color: darken(@success, 11%);
-@notification-warning-background-color: @warning;
-@notification-warning-text-color: darken(@error, 27%);
-@notification-warning-border-color: darken(@warning, 3%);
-@notification-error-background-color: @error;
-@notification-error-text-color: lighten(@normal-text-color, 13%);
-@notification-error-border-color: darken(@error, 10%);
-@draghandle-border-radius: 13px;
-@draghandle-border-color: @accent;
-@draghandle-background-color: @accent;
-@draghandle-shadow: 0 0 0 0;
-@draghandle-hover-border-color: @hover-background;
-@draghandle-hover-background-color: @hover-background;
-@draghandle-hover-shadow: 0 0 0;
-@alt-background-color: darken(@background, 4%);
-@nested-alt-background-color: darken(@alt-background-color, 8%);
-@active-filter-background-color: @accent;
-@cell-border-color: darken(@background, 20%);
-@column-highlight-background-color: darken(@background, 3%);
-@input-background-color: @background;
-@input-text-color: @normal-text-color;
-@shadow-color: rgba(0,0,0,.25);
-@shadow-inset-color: transparent;
-@link-text-color: @background;
-@loading-panel-color: @background;
-@splitbar-background-color: darken(@background, 20%);
-@default-icon-opacity: 1;
-@scheduler-background-color: @background;
-@current-time-color: lighten(@base, 4%);
-@event-background-color: @hover-background;
-@event-text-color: @background;
-@event-inverse-text-color: @normal-text-color;
-@scheduler-nonwork-background-color: darken(@background, 4%);
-@resize-background-color: @background;
-@upload-progress-background-color: darken(@info, 2%);
-@upload-progress-text-color: darken(@accent, 17%);
-@upload-success-background-color: darken(@success, 1%);
-@upload-success-text-color: darken(@hover-background, 18%);
-@upload-error-background-color: saturate(@error, 1%);
-@upload-error-text-color: darken(@normal-text-color, 8%);
-@task-summary-color: lighten(@widget-text-color, 25%);
-@task-summary-selected-color: lighten(@selected-background-color, 25%);
-@main-border-radius: @border-radius;
-@list-border-radius: @main-border-radius - 1;
-@inner-border-radius: @main-border-radius - 1.2;
-@slider-border-radius: 13px;
-@header-text-color: @background;
-@header-background-color: @base;
-@focused-border-color: darken(@accent, 11%);
-@focused-shadow: none;
-@focused-item-shadow: inset 0 0 0 1px #0d9285;
-@focused-active-item-shadow: inset 0 0 0 1px #0d9285;
-@calendar-border-radius: 13px;
-@calendar-content-text-color: @normal-text-color;
-@calendar-footer-background: @base;
-@calendar-footer-text-decoration: none;
-@calendar-footer-hover-text-decoration: none;
-@calendar-footer-hover-background: @hover-background;
-@calendar-header-hover-text-decoration: underline;
-@calendar-header-hover-background: @base;
-@calendar-footer-active-background: @accent;
-@calendar-group-background-color: @background;
-@button-border-color: @base;
-@menu-border-color: @base;
-@tabstrip-items-border: @base;
-@tabstrip-active-background: @background;
-@tabstrip-tabs-color: @background;
-@form-widget-color: @background;
-@drop-down-border-color: @accent;
-@drop-down-hover-border-color: @hover-background;
-@drop-down-focused-border-color: darken(@accent, 11%);
-@drop-down-background: @accent;
-@drop-down-text-color: @background;
-@secondary-border-color: lighten(@base, 18%);
-@secondary-text-color: @background;
-@numeric-selected-background: @base;
-@panelbar-items-border: lighten(@base, 18%);
-@panelbar-content-background: @base;
-@panelbar-content-color: @background;
-@window-shadow-style: 0 0 0 1px;
-@filter-menu-content-background: @base;
-@icon-background-color: darken(@background, 20%);
-@disabled-background-color: darken(@background, 4%);
-@disabled-border-color: darken(@background, 20%);
-@disabled-gradient: none;
-@primary-button-text-color: @background;
-@primary-button-background-color: @accent;
-@primary-button-border-color: @accent;
-@primary-gradient: none;
-@primary-shadow: none;
-@primary-hover-text-color: @background;
-@primary-hover-background-color: @hover-background;
-@primary-hover-border-color: @hover-background;
-@primary-hover-gradient: none;
-@primary-hover-shadow: none;
-@primary-focused-color: @background;
-@primary-focused-border-color: @base;
-@primary-focused-gradient: none;
-@primary-focused-active-item-shadow: none;
-@primary-active-text-color: @background;
-@primary-active-background-color: @base;
-@primary-active-gradient: none;
-@primary-active-border-color: @base;
-@primary-active-shadow: none;
-@primary-disabled-text-color: darken(@background, 24%);
-@primary-disabled-background-color: darken(@background, 4%);
-@primary-disabled-border-color: darken(@background, 20%);
-@primary-disabled-gradient: none;
-@button-hover-text-color: @background;
-@button-hover-background-color: @hover-background;
-@button-hover-border-color: @hover-background;
-@button-active-background: @accent;
-@button-active-border-color: @accent;
-@button-focused-border-color: darken(@accent, 11%);
-@button-focused-shadow: none;
-@button-focused-active-shadow: none;
-@checkbox-border-color-before: transparent;
-@checkbox-border-color-after: @accent;
-@checkbox-border-radius-before: 1px;
-@checkbox-background-color: @background;
-@checkbox-hover-border-color: lighten(@hover-background, 8%);
-@checkbox-hover-box-shadow: none;
-@checkbox-checked-border-color-after: @accent;
-@checkbox-checked-border-radius-after: 1px;
-@checkbox-checked-background-color-after: @background;
-@checkbox-checked-color-after: @accent;
-@checkbox-active-border-color-before: transparent;
-@checkbox-active-border-color-after: @base;
-@checkbox-active-border-radius: 1px;
-@checkbox-active-border-radius-after: 1px;
-@checkbox-active-box-shadow: none;
-@checkbox-checked-active-border-radius-before: 1px;
-@checkbox-checked-active-box-shadow: none;
-@checkbox-checked-disabled-color-after: darken(@background, 24%);
-@checkbox-disabled-background-color-after: @background;
-@checkbox-disabled-color: darken(@background, 24%);
-@checkbox-disabled-box-shadow: none;
-@checkbox-disabled-border-color-before: darken(@background, 20%);
-@radio-border-color-before: @accent;
-@radio-background-color: @background;
-@radio-border-width-before: 1px;
-@radio-hover-border-color: lighten(@hover-background, 8%);
-@radio-hover-box-shadow: none;
-@radio-checked-border-color-before: @accent;
-@radio-checked-background-color-after: @accent;
-@radio-active-border-color-before: @base;
-@radio-active-box-shadow: none;
-@radio-checked-active-border-color-before: @base;
-@radio-checked-active-box-shadow: none;
-@radio-disabled-background-color-after: @background;
-@radio-disabled-color: darken(@background, 24%);
-@radio-disabled-box-shadow: none;
-@radio-disabled-background-color-before: @background;
+
 /* Kendo skin */
 
 // Mixins
@@ -2660,98 +2466,30 @@ html .km-pane-wrapper .km-widget,
         }
     }
 }
+@accent: #cde6f7;
+@base: #0072c6;
+@background: #fff;
 
+@border-radius: 0;
 
-.k-button-group .k-tool,
-.k-toolbar,
-.k-grid-toolbar .k-button
-{
-    border-color: @secondary-border-color;
-}
+@normal-background: #fff;
+@normal-text-color: #333333;
+@normal-gradient: none;
+@hover-background: #f4f4f4;
+@hover-text-color: #000;
+@hover-gradient: none;
+@selected-background: #cde6f7;
+@selected-text-color: #333333;
+@selected-gradient: none;
 
-.k-grid-toolbar .k-button:hover,
-.k-grid-toolbar .k-button.k-state-hovered
-{
-    border-color: @button-hover-border-color;
-}
+@error: #ffcdd2;
+@warning: #fff19d;
+@success: #c8e6c9;
+@info: #bbdefb;
 
-.k-grid-toolbar .k-button:focus,
-.k-grid-toolbar .k-button.k-state-focused
-{
-	border-color: @button-focused-border-color;
-}
+// graphics
+@image-folder: "Office365";
+@texture: none;
+@fallback-texture: none;
 
-.k-grid-toolbar,
-.k-grid,
-.k-editor-toolbar
-{
-	.k-autocomplete,
-    .k-picker-wrap,
-    .k-numeric-wrap,
-    .k-dropdown-wrap
-    {
-        background-color: @header-background-color;
-        .composite-background(@hover-gradient);
-        background-position: 50% 50%;
-        border-color: @secondary-border-color;
-    }
-
-    .k-autocomplete.k-state-hover,
-    .k-picker-wrap.k-state-hover,
-    .k-numeric-wrap.k-state-hover,
-    .k-dropdown-wrap.k-state-hover
-    {
-        background-color: @select-hover-background-color;
-        .composite-background(@hover-gradient);
-        background-position: 50% 50%;
-        border-color: @drop-down-hover-border-color;
-    }
-
-    .k-autocomplete.k-state-focused,
-    .k-picker-wrap.k-state-focused,
-    .k-numeric-wrap.k-state-focused,
-    .k-dropdown-wrap.k-state-focused
-    {
-        background-color: @select-border-color;
-        .composite-background(@hover-gradient);
-        background-position: 50% 50%;
-        border-color: @select-border-color;
-    }
-}
-
-.k-popup.k-group
-{
-
-    color: @secondary-text-color;
-    border-color: @group-border-color;
-}
-
-.k-popup.k-group
-{
-	.k-state-default > .k-select
-    {
-        border-color: @secondary-border-color;
-    }
-
-    .k-state-hover > .k-select
-    {
-        border-color: @hover-border-color;
-    }
-
-    .k-state-focused > .k-select
-    {
-        border-color: @drop-down-border-color;
-    }
-}    
-
-.k-grid-toolbar,
-.k-dropdown .k-input,
-.k-dropdown .k-state-focused .k-input,
-.k-menu .k-popup
-{
-    color: @secondary-text-color;
-}
-
-.k-checkbox:checked + .k-checkbox-label:active:after {
-    border-color: @checkbox-active-border-color-after; 
-}
+@import "type-office365.less";

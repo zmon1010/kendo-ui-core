@@ -70,16 +70,18 @@ def same_values?(array)
     array.length > 1 and array.uniq.length == 1
 end
 
-files = ARGV.each { |f| Dir.glob(f) }.flatten.sort
+FILES = ARGV.each { |f| Dir.glob(f) }.flatten.sort
 
 type = "default"
-type = "metro" if files[0].include? "metro"
-type = "bootstrap" if files[0].include? "bootstrap"
-type = "highcontrast" if files[0].include? "highcontrast"
-type = "flat" if files[0].include? "flat"
-type = "material" if files[0].include? "material"
-type = "fiori" if files[0].include? "fiori"
-type = "office365" if files[0].include? "office365"
+type = "metro" if FILES[0].include? "metro"
+type = "bootstrap" if FILES[0].include? "bootstrap"
+type = "highcontrast" if FILES[0].include? "highcontrast"
+type = "flat" if FILES[0].include? "flat"
+type = "material" if FILES[0].include? "material"
+type = "fiori" if FILES[0].include? "fiori"
+type = "office365" if FILES[0].include? "office365"
+
+type_file = "type-#{type}.less"
 
 dir = File.dirname(__FILE__)
 origins = "variable-origins-#{type}.erb"
@@ -93,7 +95,7 @@ template = ERB.new(template_content, 0, '%<>')
 OLD_VARS = {}
 BASE_VARS = {}
 
-files.each do |current|
+FILES.each do |current|
     current_lines = read(current)
 
     basename = current.sub(/\.less/,'')
@@ -102,7 +104,7 @@ files.each do |current|
 
     themeName = name_from(/kendo\.(.*).less/.match(current)[1])
 
-    new_base_content = template.result(binding)
+    new_base_content = template.result(binding).gsub(/type-default.less/, type_file)
 
     File.open("#{basename}.new.less", "w") do |f|
       f.write new_base_content
@@ -119,10 +121,8 @@ BASE_VAR_NAMES = BASE_VARS.values.first.keys
 OLD_VAR_NAMES = OLD_VARS.values.first.keys
 
 THEMES = BASE_VARS.keys
-theme_dir = File.dirname(files.first)
-theme_template = File.read(File.join(theme_dir, "theme-template.less"))
-
-rewritten = OLD_VAR_NAMES.select { |x| !(BASE_VAR_NAMES.include? x) }
+theme_dir = File.dirname(FILES.first)
+THEME_TEMPLATE = File.read(File.join(theme_dir, "theme-template.less"))
 
 BASE_ARRAYS = {}
 
@@ -222,10 +222,21 @@ OVERRIDES = {
         'task-summary-selected-color' => 'contrast(@base, lighten(@selected-background-color, 15%), darken(@selected-background-color, 25%), 0.5)',
         'shadow-color' => 'fadeout(contrast(@base), 80%)',
         'task-summary-color' => 'contrast(@base, lighten(@widget-text-color, 25%), darken(@widget-text-color, 25%), 0.5)',
-        'nested-alt-background-color' => 'contrst(@normal-text-color, darken(@alt-background-color, 8%), lighten(@alt-background-color, 8%), 0.5)',
+        'nested-alt-background-color' => 'contrast(@normal-text-color, darken(@alt-background-color, 8%), lighten(@alt-background-color, 8%), 0.5)',
         'disabled-text-color' => '#cccccc',
         'draghandle-shadow' => '0 1px 1px 0 fadeout(darken(@normal-text-color, 10%), 70%)',
         'draghandle-hover-shadow' => '@draghandle-shadow'
+    },
+    'material' => {
+        'task-summary-selected-color' => 'lighten(@header-background-color, 25%)',
+        'default-icon-opacity' => '.7',
+        'draghandle-shadow' => 'none',
+        'radio-checked-active-box-shadow' => '0 0 0 0.750em fadeout(@accent, 70%)',
+        'button-focused-shadow' => '0 6px 17px 0 #c4c4c4',
+        'radio-active-box-shadow' => '0 0 0 0.750em fadeout(@hover-background, 70%)',
+        'button-focused-active-shadow' => '0 6px 17px 0 fadeout(@hover-background, 70%)',
+        'checkbox-active-box-shadow' => '0 0 0 12px fadeout(@hover-background, 70%)',
+        'checkbox-checked-active-box-shadow' => '0 0 0 12px fadeout(@accent, 70%)'
     }
 }
 
@@ -262,7 +273,7 @@ def determine_actions(type, variables)
         end
     end
 
-    offenders = accuracy.sort { |a, b| a[:delta] <=> b[:delta] }.reverse.select { |x| x[:delta] > 0.2 }
+    offenders = accuracy.sort { |a, b| a[:delta] <=> b[:delta] }.reverse.select { |x| x[:delta] > 0.0 }
                     .map { |x| "    #{x[:var]} : #{x[:delta]} : #{x[:old_values]}" }
     score = accuracy.reduce(0) { |n, item| n + item[:delta] }
 
@@ -285,8 +296,20 @@ end
 ####
 # write new type
 
-type_content = apply_actions(rewritten, determine_actions(type, rewritten)) + "\n" + theme_template
+def type_content(type_name)
+    rewritten = OLD_VAR_NAMES.select { |x| !(BASE_VAR_NAMES.include? x) }
 
-File.open(File.join(theme_dir, "type-#{type}.less"), "w") do |f|
-  f.write type_content.gsub(/\r?\n/, "\n")
+    new_variables = apply_actions(rewritten, determine_actions(type_name, rewritten))
+
+    overrides = read(FILES.first).join("\n").split(/@import "theme-template.less";/)[-1]
+
+    [
+        new_variables,
+        THEME_TEMPLATE,
+        overrides
+    ].join("\n")
+end
+
+File.open(File.join(theme_dir, type_file), "w") do |f|
+  f.write type_content(type).gsub(/\r?\n/, "\n")
 end

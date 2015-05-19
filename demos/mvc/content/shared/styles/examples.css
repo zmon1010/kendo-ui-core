@@ -2681,11 +2681,6 @@ h5 {
     border: 1px solid rgba(20,53,80,0.05);
 }
 
-.demo-section:not(.wide),
-#example .box:not(.wide) {
-    max-width: 400px;
-}
-
 .box:after,
 .demo-section:after {
     content: "";
