@@ -4191,38 +4191,46 @@ var __meta__ = {
             }
 
             if (canHandle && e.keyCode == keys.RIGHT) {
-                index = container.find(NAVROW).index(current.parent());
-                cell = this._nextHorizontalCell(container, current, index);
-
-                if (!cell[0]) {
-                    container = this._horizontalContainer(container, true);
-
+                if (e.altKey) {
+                    this.expandRow(current.parent());
+                } else {
+                    index = container.find(NAVROW).index(current.parent());
                     cell = this._nextHorizontalCell(container, current, index);
 
-                    if (cell[0] !== current[0]) {
-                        focusTable(container.parent(), true);
-                    }
-                }
+                    if (!cell[0]) {
+                        container = this._horizontalContainer(container, true);
 
-                this.current(cell);
+                        cell = this._nextHorizontalCell(container, current, index);
+
+                        if (cell[0] !== current[0]) {
+                            focusTable(container.parent(), true);
+                        }
+                    }
+
+                    this.current(cell);
+                }
                 handled = true;
             }
 
             if (canHandle && e.keyCode == keys.LEFT) {
-                index = container.find(NAVROW).index(current.parent());
-                cell = this._prevHorizontalCell(container, current, index);
-
-                if (!cell[0]) {
-                    container = this._horizontalContainer(container);
-
+                if (e.altKey) {
+                    this.collapseRow(current.parent());
+                } else {
+                    index = container.find(NAVROW).index(current.parent());
                     cell = this._prevHorizontalCell(container, current, index);
 
-                    if (cell[0] !== current[0]) {
-                        focusTable(container.parent(), true);
-                    }
-                }
+                    if (!cell[0]) {
+                        container = this._horizontalContainer(container);
 
-                this.current(cell);
+                        cell = this._prevHorizontalCell(container, current, index);
+
+                        if (cell[0] !== current[0]) {
+                            focusTable(container.parent(), true);
+                        }
+                    }
+
+                    this.current(cell);
+                }
                 handled = true;
             }
 
@@ -4307,6 +4315,17 @@ var __meta__ = {
             return true;
         },
 
+        _toggleCurrent: function(current) {
+            var row = current.parent();
+            if (row.is(".k-master-row,.k-grouping-row")) {
+                row.find(".k-icon:first").click();
+
+                return true;
+            }
+
+            return false;
+        },
+
         _handleEnterKey: function(current, currentTable, target) {
             var editable = this.options.editable;
             var container = target.closest("[role=gridcell]");
@@ -4322,9 +4341,7 @@ var __meta__ = {
                 return true;
             }
 
-            if (current.parent().is(".k-master-row,.k-grouping-row")) {
-                current.parent().find(".k-icon:first").click();
-
+            if (!editable && this._toggleCurrent(current)) {
                 return true;
             }
 

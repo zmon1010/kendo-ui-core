@@ -629,6 +629,47 @@
         equal(document.activeElement, $("#button")[0]);
     });
 
+    test("enter key on master row expands it", function() {
+        var grid = setup({ detailTemplate: "<input class='foo' />" });
+        grid.table.focus().press(kendo.keys.ENTER);
+
+        ok(grid.items().first().find(".k-minus").length);
+    });
+
+    test("enter key on expanded master row collapse it", function() {
+        var grid = setup({ detailTemplate: "<input class='foo' />" });
+        grid.table.focus().press(kendo.keys.ENTER).press(kendo.keys.ENTER);
+
+        ok(grid.items().first().find(".k-plus").length);
+    });
+
+    test("enter key on master row does not expands it when grid is editable", function() {
+        var grid = setup({
+            detailTemplate: "<input class='foo' />",
+            editable: "incell"
+        });
+        grid.table.focus().press(kendo.keys.ENTER);
+
+        ok(grid.items().first().find(".k-plus").length, "row is expanded");
+        ok(grid.items().first().children(":not(.k-hierarchy-cell)").first().hasClass("k-edit-cell"), "first cell is not in edit mode");
+    });
+
+    test("ALT+RIGHT key on master row expands it", function() {
+        var grid = setup({ detailTemplate: "<input class='foo' />" });
+        grid.table.focus().press(kendo.keys.RIGHT, false, false, true);
+
+        ok(grid.items().first().find(".k-minus").length);
+    });
+
+    test("enter key on expanded master row collapse it", function() {
+        var grid = setup({ detailTemplate: "<input class='foo' />" });
+        grid.table.focus()
+            .press(kendo.keys.RIGHT, false, false, true)
+            .press(kendo.keys.LEFT, false, false, true);
+
+        ok(grid.items().first().find(".k-plus").length);
+    });
+
     test("esc key on focused button in column", function() {
         var grid = setup({
             columns: [ {
