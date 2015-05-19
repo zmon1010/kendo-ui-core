@@ -25,15 +25,15 @@
         _property: function(list, value) {
             if (value !== undefined) {
                 for (var ci = this._columnStart; ci <= this._columnEnd; ci++) {
-                    var start = this._sheet._grid.index(ci, this._rowStart);
-                    var end = this._sheet._grid.index(ci, this._rowEnd);
+                    var start = this._sheet._grid.index(this._rowStart, ci);
+                    var end = this._sheet._grid.index(this._rowEnd, ci);
 
                     list.value(start, end, value);
                 }
 
                 return this;
             } else {
-                var index = this._sheet._grid.index(this._columnStart, this._rowEnd);
+                var index = this._sheet._grid.index(this._rowEnd, this._columnStart);
 
                 return list.value(index, index);
             }

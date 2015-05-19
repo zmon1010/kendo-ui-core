@@ -8,9 +8,9 @@
         this.columnCount = columnCount;
     }
 
-    Grid.prototype.index = function(column, row) {
-        if (row === undefined) {
-            var address = column;
+    Grid.prototype.index = function(row, column) {
+        if (column === undefined) {
+            var address = row;
 
             row = address.row;
             column = address.column;

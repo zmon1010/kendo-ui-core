@@ -109,8 +109,8 @@
         }
 
         for (ci = columns.start; ci <= columns.end; ci ++) {
-            var startCellIndex = grid.index(ci, rows.start);
-            var endCellIndex = grid.index(ci, rows.end);
+            var startCellIndex = grid.index(rows.start, ci);
+            var endCellIndex = grid.index(rows.end, ci);
 
             var values = sheet._values.iterator(startCellIndex, endCellIndex);
             var backgrounds = sheet._backgrounds.iterator(startCellIndex, endCellIndex);
@@ -118,7 +118,7 @@
             table.addColumn(columns.values.at(ci));
 
             for (ri = rows.start; ri <= rows.end; ri ++) {
-                var index = grid.index(ci, ri);
+                var index = grid.index(ri, ci);
                 table.addCell(ri - rows.start, values.at(index), { backgroundColor: backgrounds.at(index) } );
             }
         }

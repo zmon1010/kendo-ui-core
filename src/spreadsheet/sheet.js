@@ -12,7 +12,7 @@
         this._values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "");
         this._backgrounds = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "beige");
 
-        this._grid = new kendo.spreadsheet.Grid(columns, rows);
+        this._grid = new kendo.spreadsheet.Grid(rows, columns);
     }
 
     Sheet.prototype = {
