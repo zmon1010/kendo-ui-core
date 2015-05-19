@@ -21,9 +21,9 @@
     });
 
     test("iterates over each column with the corresponding segment", function() {
-        var grid = new Grid(5, 4);
+        var grid = new Grid(4, 5);
 
-        var area = new Area(new Address(2, 1), new Address(2, 3));
+        var area = new Area(new Address(1, 2), new Address(3, 2));
         var i = 0;
 
         var maxAddress = 14; // fourth column should be the last processed

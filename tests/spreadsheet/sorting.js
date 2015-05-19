@@ -8,8 +8,8 @@
     var grid, area, sorter, values;
     module("rangelist sorter", {
         setup: function() {
-            grid = new Grid(2, 4);
-            area = new Area(new Address(0, 0), new Address(0, 2));
+            grid = new Grid(4, 2);
+            area = new Area(new Address(0, 0), new Address(2, 0));
 
             values = new SparseRangeList(0, 100, 0);
             values.value(0, 0, 2);
