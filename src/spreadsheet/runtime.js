@@ -755,11 +755,4 @@
         return new CalcError(type);
     };
 
-    exports.Ref = Ref;
-    exports.NullRef = NullRef;
-    exports.CellRef = CellRef;
-    exports.RangeRef = RangeRef;
-    exports.NameRef = NameRef;
-    exports.UnionRef = UnionRef;
-
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
