@@ -62,7 +62,7 @@
             var sheet  = m[1] && m[2];
             var relcol = m[3] ? 0 : REL_COL, col = getcol(m[4]);
             var relrow = m[5] ? 0 : REL_ROW, row = getrow(m[6]);
-            return new Runtime.makeCellRef(col, row, relcol | relrow).setSheet(sheet, !!sheet);
+            return new Runtime.makeCellRef(row, col, relcol | relrow).setSheet(sheet, !!sheet);
         }
         if ((m = /^((.*)!)?(.+)$/i.exec(name))) {
             var sheet  = m[1] && m[2];
@@ -72,7 +72,7 @@
     }
 
     // "Sheet1", 2, 3 -> "Sheet1!C2"
-    function make_reference(sheet, col, row, rel) {
+    function make_reference(sheet, row, col, rel) {
         var aa = "";
 
         if (!isFinite(row)) {
@@ -102,33 +102,7 @@
         }
     }
 
-    function make_row(sheet, row, abs) {
-        if (!isFinite(row)) {
-            return "";
-        }
-        if (abs) {
-            row = "$" + row;
-        }
-        if (sheet) {
-            return sheet + "!" + row;
-        } else {
-            return row;
-        }
-    }
-
-    function make_col(sheet, col, abs) {
-        if (!isFinite(col)) {
-            return "";
-        }
-        var aa = "";
-        while (col > 0) {
-            aa = String.fromCharCode(64 + col % 26) + aa;
-            col = Math.floor(col / 26);
-        }
-        return make_row(sheet, aa, abs);
-    }
-
-    function parse(sheet, col, row, input) {
+    function parse(sheet, row, col, input) {
         if (typeof input == "string") {
             input = TokenStream(InputStream(input));
         }
@@ -316,7 +290,7 @@
 
         function getref(tok, isFirst) {
             if (tok.type == "num" && tok.value == tok.value|0) {
-                return Runtime.makeCellRef(isFirst ? -Infinity : +Infinity, tok.value, 2).setSheet(sheet, false);
+                return Runtime.makeCellRef(tok.value, isFirst ? -Infinity : +Infinity, 2).setSheet(sheet, false);
             }
             var ref = parse_symbol(tok);
             if (ref.type == "ref") {
@@ -329,15 +303,15 @@
                     if (/^[0-9]+$/.test(name)) {
                         // row ref
                         return Runtime.makeCellRef(
-                            isFirst ? -Infinity : +Infinity,
                             getrow(name),
+                            isFirst ? -Infinity : +Infinity,
                             (abs ? 0 : REL_ROW)
                         ).setSheet(ref.sheet || sheet, ref.hasSheet());
                     } else {
                         // col ref
                         return Runtime.makeCellRef(
-                            getcol(name),
                             isFirst ? -Infinity : +Infinity,
+                            getcol(name),
                             (abs ? 0 : REL_COL)
                         ).setSheet(ref.sheet || sheet, ref.hasSheet());
                     }
@@ -347,7 +321,7 @@
         }
     }
 
-    function print(sheet, col, row, exp, orig) {
+    function print(sheet, row, col, exp, orig) {
         var references = orig.formula.refs, refindex = 0;
         return print(exp.ast);
 
@@ -397,7 +371,7 @@
             }
             else if (type == "ref") {
                 node = references[refindex++]; // pick up adjusted references
-                ret = node.print(col, row, orig);
+                ret = node.print(row, col, orig);
             }
             else if (type == "bool") {
                 ret = (node.value+"").toUpperCase();
@@ -827,7 +801,7 @@
     //// exports
 
     exports.parse_formula = parse;
-    exports.parse = function(sheet, col, row, input) {
+    exports.parse = function(sheet, row, col, input) {
         input = input+"";
         if (/^'/.test(input)) {
             return {
@@ -838,7 +812,7 @@
         if (/^=/.test(input)) {
             input = input.substr(1);
             if (/\S/.test(input)) {
-                return parse(sheet, col, row, input);
+                return parse(sheet, row, col, input);
             } else {
                 return {
                     type: "str",

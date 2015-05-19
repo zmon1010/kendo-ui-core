@@ -64,14 +64,14 @@
 
     /* -----[ Cell reference ]----- */
 
-    var CellRef = defclass(Ref, function CellRef(col, row, rel) {
-        this.col = col;
+    var CellRef = defclass(Ref, function CellRef(row, col, rel) {
         this.row = row;
+        this.col = col;
         this.rel = rel;
     }, {
         ref: "cell",
         clone: function() {
-            return new CellRef(this.col, this.row, this.rel)
+            return new CellRef(this.row, this.col, this.rel)
                 .setSheet(this.sheet, this.hasSheet());
         },
         intersect: function(ref) {
@@ -84,7 +84,7 @@
             }
             return ref.intersect(this);
         },
-        print: function(tcol, trow, orig) {
+        print: function(trow, tcol, orig) {
             var col = this.col, row = this.row, rel = this.rel;
             if (rel & 1) {
                 // relative col
@@ -97,7 +97,7 @@
             if ((isFinite(col) && col < 1) || (isFinite(row) && row < 1)) {
                 return "#REF!";
             }
-            return calc.make_reference(this._hasSheet && this.sheet, col, row, rel);
+            return calc.make_reference(this._hasSheet && this.sheet, row, col, rel);
         },
         adjust: function(operation, start, delta) {
             var ret = this.clone();
@@ -127,8 +127,8 @@
 
     var RangeRef = defclass(Ref, function RangeRef(tl, br) {
         // we want to drop any sheet information from the cells here.
-        this.topLeft = new CellRef(tl.col, tl.row, tl.rel);
-        this.bottomRight = new CellRef(br.col, br.row, br.rel);
+        this.topLeft = new CellRef(tl.row, tl.col, tl.rel);
+        this.bottomRight = new CellRef(br.row, br.col, br.rel);
         this.normalize();
     }, {
         ref: "range",
@@ -172,11 +172,11 @@
             {
                 return new RangeRef(
                     // topLeft
-                    new CellRef(Math.max(a_left, b_left),
-                                Math.max(a_top, b_top)),
+                    new CellRef(Math.max(a_top, b_top),
+                                Math.max(a_left, b_left)),
                     // bottomRight
-                    new CellRef(Math.min(a_right, b_right),
-                                Math.min(a_bottom, b_bottom))
+                    new CellRef(Math.min(a_bottom, b_bottom),
+                                Math.min(a_right, b_right))
                 ).setSheet(this.sheet, this.hasSheet());
             } else {
                 return NULL;
@@ -203,8 +203,8 @@
                 this.topLeft.col == this.bottomRight.col)
             {
                 return new CellRef(
-                    this.topLeft.col,
                     this.topLeft.row,
+                    this.topLeft.col,
                     this.topLeft.rel
                 ).setSheet(this.sheet, this.hasSheet());
             }
@@ -228,16 +228,16 @@
                 tmp = rc1; rc1 = rc2; rc2 = tmp;
             }
             if (changes) {
-                this.topLeft = new CellRef(c1, r1, rc1 | rr1);
-                this.bottomRight = new CellRef(c2, r2, rc2 | rr2);
+                this.topLeft = new CellRef(r1, c1, rc1 | rr1);
+                this.bottomRight = new CellRef(r2, c2, rc2 | rr2);
             }
             return this;
         },
 
-        print: function(tcol, trow, orig) {
-            var ret = this.topLeft.print(tcol, trow, orig)
+        print: function(trow, tcol, orig) {
+            var ret = this.topLeft.print(trow, tcol, orig)
                 + ":"
-                + this.bottomRight.print(tcol, trow, orig);
+                + this.bottomRight.print(trow, tcol, orig);
             if (this.hasSheet()) {
                 ret = this.sheet + "!" + ret;
             }
@@ -320,7 +320,7 @@
         this.refs = refs;
         this.handler = handler;
     }, {
-        exec: function(SS, sheet, col, row, callback) {
+        exec: function(SS, sheet, row, col, callback) {
             var formula = this;
             if ("value" in formula) {
                 if (callback) {
@@ -331,21 +331,21 @@
                     ss: SS,
                     formula: formula,
                     sheet: sheet,
-                    col: col,
                     row: row,
+                    col: col,
                     resolve: function(val) {
                         val = cellValues(this, [ val ])[0];
                         if (val == null) {
                             val = 0;
                         }
                         formula.value = val;
-                        SS.onFormula(sheet, col, row, val);
+                        SS.onFormula(sheet, row, col, val);
                         if (callback) {
                             callback(val);
                         }
                     },
                     error: function(val) {
-                        SS.onFormula(sheet, col, row, val);
+                        SS.onFormula(sheet, row, col, val);
                         if (callback) {
                             callback(val);
                         }
@@ -397,10 +397,6 @@
         return ret;
     }
 
-    function last(a) {
-        return a[a.length - 1];
-    }
-
     // spreadsheet functions --------
 
     function resolveCells(context, a, f) {
@@ -424,7 +420,7 @@
             fetch(formulas[i]);
         }
         function fetch(cell) {
-            cell.formula.exec(context.ss, cell.sheet, cell.col, cell.row, function(val){
+            cell.formula.exec(context.ss, cell.sheet, cell.row, cell.col, function(val){
                 if (!--pending) {
                     f(context);
                 }
@@ -756,8 +752,8 @@
         return new Formula(refs, handler);
     };
 
-    exports.makeCellRef = function(col, row, rel) {
-        return new CellRef(col, row, rel);
+    exports.makeCellRef = function(row, col, rel) {
+        return new CellRef(row, col, rel);
     };
 
     exports.makeRangeRef = function(tl, br) {
