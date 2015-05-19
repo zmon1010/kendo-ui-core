@@ -582,7 +582,7 @@
             cellValues(this, args, function(left, right){
                 if (left == null) { left = ""; }
                 if (right == null) { right = ""; }
-                callback(left + right);
+                callback("" + left + right);
             });
         },
 
