@@ -88,13 +88,21 @@ kendo.PDFMixin = {
         return kendo.drawing.drawDOM(this.wrapper);
     },
 
-    _drawPDFShadow: function(content) {
+    _drawPDFShadow: function(settings) {
+        settings = settings || {};
         var wrapper = this.wrapper;
-        var shadow = $("<div class='k-pdf-export-shadow'>")
-                     .css("width", wrapper.width());
+        var shadow = $("<div class='k-pdf-export-shadow'>");
+
+        // Content will be allowed to take up to 200" if no width is given.
+        if (settings.width) {
+            shadow.css({
+                width: settings.width,
+                overflow: "visible"
+            });
+        }
 
         wrapper.before(shadow);
-        shadow.append(content || wrapper.clone(true, true));
+        shadow.append(settings.content || wrapper.clone(true, true));
 
         var promise = kendo.drawing.drawDOM(shadow);
         promise.always(function() {

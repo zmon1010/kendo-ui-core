@@ -6866,7 +6866,9 @@ var __meta__ = {
            }
 
            function exportPage() {
-                grid._drawPDFShadow()
+                grid._drawPDFShadow({
+                    width: grid.wrapper.width()
+                })
                 .done(function(group) {
                     var pageNum = dataSource.page();
                     var totalPages = allPages ? dataSource.totalPages() : 1;

@@ -3024,7 +3024,9 @@ var __meta__ = {
             var content = this.wrapper.clone();
             content.find(listClass).css("width", listWidth);
 
-            return this._drawPDFShadow(content);
+            return this._drawPDFShadow({
+                content: content
+            });
         };
     }
 
