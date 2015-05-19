@@ -106,14 +106,12 @@
     };
 
     function recalculate() {
-        var formulaCells = Glue.getRefCells(Glue.getSheetBounds()).filter(function(cell){
-            return cell.formula;
-        });
-        formulaCells.forEach(function(cell){
-            cell.formula.reset();
-        });
-
-        formulaCells.forEach(function(cell){
+        Glue.getRefCells(Glue.getSheetBounds()).filter(function(cell){
+            if (cell.formula) {
+                cell.formula.reset();
+                return true;
+            }
+        }).forEach(function(cell){
             cell.formula.exec(Glue, "sheet1", cell.row, cell.col);
         });
     }
