@@ -74,10 +74,10 @@ Spreadsheet.prototype = {
     recalculate: function() {
         var self = this, cells = this.getVisibleFormulas();
         cells.forEach(function(cell){
-            delete cell.formula.value;
+            cell.formula.reset();
         });
         cells.forEach(function(cell){
-            cell.formula.func(self, cell.sheet, cell.col, cell.row);
+            cell.formula.exec(self, cell.sheet, cell.col, cell.row);
         });
     },
 
@@ -511,7 +511,8 @@ fillElements({
         C2: 8,
         C3: 9,
         //E5: "=sum(A1:C3)",
-        E5: "=A1"
+        E5: "=A1",
+        E6: "=SUM((a1,a2,a3), (b1,b2,b3))",
     },
     sheet2: {
         A1: "=sum(sheet1!a1:c3)"

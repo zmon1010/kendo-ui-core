@@ -134,7 +134,7 @@
         }
         return {
             type: "exp",
-            ast: parse_expression(input, true)
+            ast: parse_expression(true)
         };
 
         function skip(type, value) {

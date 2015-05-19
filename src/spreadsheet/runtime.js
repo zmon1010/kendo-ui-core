@@ -18,6 +18,7 @@
     /* -----[ References ]----- */
 
     var Ref = defclass(null, function Ref(){}, {
+        type: "ref",
         hasSheet: function() {
             return this._hasSheet;
         },
@@ -51,7 +52,6 @@
     var NameRef = defclass(Ref, function NameRef(name){
         this.name = name;
     }, {
-        type: "ref",
         ref: "name",
         print: function(tcol, trow, orig) {
             var ret = this.name;
@@ -69,7 +69,6 @@
         this.row = row;
         this.rel = rel;
     }, {
-        type: "ref",
         ref: "cell",
         clone: function() {
             return new CellRef(this.col, this.row, this.rel)
@@ -132,7 +131,6 @@
         this.bottomRight = new CellRef(br.col, br.row, br.rel);
         this.normalize();
     }, {
-        type: "ref",
         ref: "range",
         _containsRange: function(range) {
             return this._containsCell(range.topLeft)
@@ -303,10 +301,6 @@
                 return this.refs[0].simplify();
             }
             return this;
-        },
-
-        toString: function() {
-            return this.refs.join(",");
         }
     });
 
@@ -326,7 +320,7 @@
         this.refs = refs;
         this.handler = handler;
     }, {
-        func: function(SS, sheet, col, row, callback) {
+        exec: function(SS, sheet, col, row, callback) {
             var formula = this;
             if ("value" in formula) {
                 if (callback) {
@@ -359,10 +353,13 @@
                 }, formula.refs, this.handler);
             }
         },
+        reset: function() {
+            delete this.value;
+        },
         adjust: function(operation, start, delta) {
-            for (var i = 0; i < this.refs.length; ++i) {
-                this.refs[i] = this.refs[i].adjust(operation, start, delta);
-            }
+            this.refs = this.refs.map(function(ref){
+                return ref.adjust(operation, start, delta);
+            });
         }
     });
 
@@ -427,7 +424,7 @@
             fetch(formulas[i]);
         }
         function fetch(cell) {
-            cell.formula.func(context.ss, cell.sheet, cell.col, cell.row, function(val){
+            cell.formula.exec(context.ss, cell.sheet, cell.col, cell.row, function(val){
                 if (!--pending) {
                     f(context);
                 }
