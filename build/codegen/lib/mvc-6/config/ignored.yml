@@ -46,6 +46,9 @@
 - notification.templates
 - progressbar.value
 - pivotgrid.datasource
+- pivotgrid.messages
+- pivotgrid.kpiTrendTemplate
+- pivotgrid.kpiStatusTemplate
 - lineargauge.pointer
 - radialgauge.pointer
 - radialgauge.renderas

@@ -35,19 +35,9 @@ namespace Kendo.Mvc.UI
 
         public string DataCellTemplateId { get; set; }
 
-        public string KpiStatusTemplate { get; set; }
-
-        public string KpiStatusTemplateId { get; set; }
-
-        public string KpiTrendTemplate { get; set; }
-
-        public string KpiTrendTemplateId { get; set; }
-
         public string RowHeaderTemplate { get; set; }
 
         public string RowHeaderTemplateId { get; set; }
-
-        public PivotGridMessagesSettings<T> Messages { get; } = new PivotGridMessagesSettings<T>();
 
 
         protected override Dictionary<string, object> SerializeSettings()
@@ -127,32 +117,6 @@ namespace Kendo.Mvc.UI
                 settings["dataCellTemplate"] = DataCellTemplate;
             }
 
-            if (KpiStatusTemplateId.HasValue())
-            {
-                settings["kpiStatusTemplate"] = new ClientHandlerDescriptor {
-                    HandlerName = string.Format(
-                        "jQuery('{0}{1}').html()", IdPrefix, KpiStatusTemplateId
-                    )
-                };
-            }
-            else if (KpiStatusTemplate.HasValue())
-            {
-                settings["kpiStatusTemplate"] = KpiStatusTemplate;
-            }
-
-            if (KpiTrendTemplateId.HasValue())
-            {
-                settings["kpiTrendTemplate"] = new ClientHandlerDescriptor {
-                    HandlerName = string.Format(
-                        "jQuery('{0}{1}').html()", IdPrefix, KpiTrendTemplateId
-                    )
-                };
-            }
-            else if (KpiTrendTemplate.HasValue())
-            {
-                settings["kpiTrendTemplate"] = KpiTrendTemplate;
-            }
-
             if (RowHeaderTemplateId.HasValue())
             {
                 settings["rowHeaderTemplate"] = new ClientHandlerDescriptor {
@@ -164,12 +128,6 @@ namespace Kendo.Mvc.UI
             else if (RowHeaderTemplate.HasValue())
             {
                 settings["rowHeaderTemplate"] = RowHeaderTemplate;
-            }
-
-            var messages = Messages.Serialize();
-            if (messages.Any())
-            {
-                settings["messages"] = messages;
             }
 
             return settings;

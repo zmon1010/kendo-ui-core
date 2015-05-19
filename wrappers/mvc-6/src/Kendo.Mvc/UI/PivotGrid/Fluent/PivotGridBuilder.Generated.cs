@@ -171,50 +171,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The template which renders the content of the KPI Status value. By default renders "open", "hold" and "denied" status icons.The fields which can be used in the template are:For information about the tuple structure check this link.
-		/// About the data item structure review this help topic.
-        /// </summary>
-        /// <param name="value">The value for KpiStatusTemplate</param>
-        public PivotGridBuilder<T> KpiStatusTemplate(string value)
-        {
-            Container.KpiStatusTemplate = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The template which renders the content of the KPI Status value. By default renders "open", "hold" and "denied" status icons.The fields which can be used in the template are:For information about the tuple structure check this link.
-		/// About the data item structure review this help topic.
-        /// </summary>
-        /// <param name="value">The ID of the template element for KpiStatusTemplate</param>
-        public PivotGridBuilder<T> KpiStatusTemplateId(string templateId)
-        {
-            Container.KpiStatusTemplateId = templateId;
-            return this;
-        }
-
-        /// <summary>
-        /// The template which renders the content of the KPI Trend value. By default renders "increase", "decrease" and "equal" status icons.The fields which can be used in the template are:For information about the tuple structure check this link.
-		/// About the data item structure review this help topic.
-        /// </summary>
-        /// <param name="value">The value for KpiTrendTemplate</param>
-        public PivotGridBuilder<T> KpiTrendTemplate(string value)
-        {
-            Container.KpiTrendTemplate = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The template which renders the content of the KPI Trend value. By default renders "increase", "decrease" and "equal" status icons.The fields which can be used in the template are:For information about the tuple structure check this link.
-		/// About the data item structure review this help topic.
-        /// </summary>
-        /// <param name="value">The ID of the template element for KpiTrendTemplate</param>
-        public PivotGridBuilder<T> KpiTrendTemplateId(string templateId)
-        {
-            Container.KpiTrendTemplateId = templateId;
-            return this;
-        }
-
-        /// <summary>
         /// The template which renders the content of the row header cell. By default it renders the caption of the tuple member.The fields which can be used in the template are:For information about the tuple structure check this link.
         /// </summary>
         /// <param name="value">The value for RowHeaderTemplate</param>
@@ -231,19 +187,6 @@ namespace Kendo.Mvc.UI.Fluent
         public PivotGridBuilder<T> RowHeaderTemplateId(string templateId)
         {
             Container.RowHeaderTemplateId = templateId;
-            return this;
-        }
-
-        /// <summary>
-        /// The text messages displayed in the fields sections.
-        /// </summary>
-        /// <param name="configurator">The configurator for the messages setting.</param>
-        public PivotGridBuilder<T> Messages(Action<PivotGridMessagesSettingsBuilder<T>> configurator)
-        {
-
-            Container.Messages.PivotGrid = Container;
-            configurator(new PivotGridMessagesSettingsBuilder<T>(Container.Messages));
-
             return this;
         }
 

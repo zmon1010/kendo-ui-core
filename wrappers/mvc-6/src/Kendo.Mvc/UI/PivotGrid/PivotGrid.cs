@@ -1,5 +1,6 @@
 using System.IO;
 using Microsoft.AspNet.Mvc;
+using Kendo.Mvc.Extensions;
 using Microsoft.AspNet.Mvc.ModelBinding;
 
 namespace Kendo.Mvc.UI
@@ -30,6 +31,11 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public PivotGridMessages Messages
+        {
+            get;            
+        } = new PivotGridMessages();
+
         public string Configurator
         {
             get;
@@ -41,6 +47,14 @@ namespace Kendo.Mvc.UI
             get;
             private set;
         }
+
+        public string KPIStatusTemplate { get; set; }
+
+        public string KPIStatusTemplateId { get; set; }
+
+        public string KPITrendTemplate { get; set; }
+
+        public string KPITrendTemplateId { get; set; }
 
         protected override void WriteHtml(TextWriter writer)
         {
@@ -58,6 +72,40 @@ namespace Kendo.Mvc.UI
             if (!string.IsNullOrEmpty(Configurator))
             {
                 settings["configurator"] = Configurator;
+            }
+
+            if (KPIStatusTemplateId.HasValue())
+            {
+                settings["kpiStatusTemplate"] = new ClientHandlerDescriptor
+                {
+                    HandlerName = string.Format(
+                        "jQuery('{0}{1}').html()", IdPrefix, KPIStatusTemplateId
+                    )
+                };
+            }
+            else if (KPIStatusTemplate.HasValue())
+            {
+                settings["kpiStatusTemplate"] = KPIStatusTemplate;
+            }
+
+            if (KPITrendTemplateId.HasValue())
+            {
+                settings["kpiTrendTemplate"] = new ClientHandlerDescriptor
+                {
+                    HandlerName = string.Format(
+                        "jQuery('{0}{1}').html()", IdPrefix, KPITrendTemplateId
+                    )
+                };
+            }
+            else if (KPITrendTemplate.HasValue())
+            {
+                settings["kpiTrendTemplate"] = KPITrendTemplate;
+            }
+
+            var messages = Messages.ToJson();
+            if (messages.Count > 0)
+            {
+                settings["messages"] = messages;
             }
 
             settings["dataSource"] = DataSource.ToJson();
