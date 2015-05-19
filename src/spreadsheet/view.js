@@ -58,8 +58,8 @@
                 var formulas = sheet._formulas.iterator(startCellIndex, endCellIndex);
                 var values = sheet._values.iterator(startCellIndex, endCellIndex);
                 var a = [];
-                for (var row = ref.topLeft.row; row <= ref.bottomRight.row; ++row) {
-                    for (var col = ref.topLeft.col; col <= ref.bottomRight.col; ++col) {
+                for (var col = ref.topLeft.col; col <= ref.bottomRight.col; ++col) {
+                    for (var row = ref.topLeft.row; row <= ref.bottomRight.row; ++row) {
                         var index = sheet._grid.index(row-1, col-1);
                         var formula = formulas.at(index) || null;
                         var value = values.at(index);
