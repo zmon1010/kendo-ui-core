@@ -1,6 +1,7 @@
-<!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../../dist/styles/web/kendo.default.css" />
     <script src="../loader.js"></script>
     <script>
       requireSync([
@@ -9,13 +10,9 @@
         "../../src/kendo.spreadsheet.js",
       ]);
     </script>
-    <link rel="stylesheet" href="test-formula.css" />
   </head>
   <body>
-    <p><b>Sheet1</b></p>
-    <div class="sheet" id="sheet1"></div>
-    <p><b>Sheet2</b></p>
-    <div class="sheet" id="sheet2"></div>
-    <script src="./test-formula.js"></script>
+    <div id="spreadsheet"></div>
+    <script src="test-sheet.js"></script>
   </body>
 </html>
