@@ -1,6 +1,12 @@
 
-        <div id="example"> 
-           <div class="box">
+        <div id="example">
+
+           <div class="demo-section k-header">
+               <h4>Enter phone number</h4>
+               <input id="maskedtextbox" style="width: 100%;" />
+           </div>
+
+           <div class="box wide">
                 <div class="box-col">
                 <h4>Set / Get Value</h4>
                 <ul class="options">
@@ -26,9 +32,6 @@
                 </ul>
                 </div>
             </div>           
-            <div class="demo-section k-header">
-                <input id="maskedtextbox" style="width: 200px;" />
-            </div>
 
             <script>
                 $(document).ready(function() {
@@ -60,15 +63,12 @@
                         alert(maskedtextbox.value());
                     });
                 });
-           </script>           
-            <style>
-                .demo-section{
-                    width:200px;
-                }
+           </script>
 
-                #value {
-                    width: 135px;
-                    margin-left: 3px;
-                }
-            </style>
+           <style>
+               #value {
+                   width: 135px;
+                   margin-left: 3px;
+               }
+           </style>
         </div>
