@@ -16,22 +16,28 @@ namespace Kendo.Mvc.Examples.Models
 
         public IEnumerable<ProductViewModel> Read()
         {
-            return entities.Products.ToList().Select(product => new ProductViewModel
-            {
-                 ProductID = product.ProductID,
-                 ProductName = product.ProductName,
-                 UnitPrice = product.UnitPrice.HasValue ? product.UnitPrice.Value : default(decimal),
-                 UnitsInStock = product.UnitsInStock.HasValue ? product.UnitsInStock.Value : default(short),
-                 QuantityPerUnit = product.QuantityPerUnit,
-                 Discontinued = product.Discontinued,
-                 UnitsOnOrder = product.UnitsOnOrder.HasValue ? product.UnitsOnOrder.Value : default(int),
-                 CategoryID = product.CategoryID,
-                 //Category = new CategoryViewModel()
-                 //{
-                 //    CategoryID = product.Category.CategoryID,
-                 //    CategoryName = product.Category.CategoryName
-                 //},
-                 LastSupply = DateTime.Today
+            var categories = entities.Categories.ToList();
+
+            return entities.Products.ToList().Select(product => {
+                var category = categories.First(c => product.CategoryID == c.CategoryID);
+
+                return new ProductViewModel
+                {
+                    ProductID = product.ProductID,
+                    ProductName = product.ProductName,
+                    UnitPrice = product.UnitPrice.HasValue ? product.UnitPrice.Value : default(decimal),
+                    UnitsInStock = product.UnitsInStock.HasValue ? product.UnitsInStock.Value : default(short),
+                    QuantityPerUnit = product.QuantityPerUnit,
+                    Discontinued = product.Discontinued,
+                    UnitsOnOrder = product.UnitsOnOrder.HasValue ? product.UnitsOnOrder.Value : default(int),
+                    CategoryID = product.CategoryID,
+                    Category = new CategoryViewModel()
+                    {
+                        CategoryID = category.CategoryID,
+                        CategoryName = category.CategoryName
+                    },
+                    LastSupply = DateTime.Today
+                };
             });
         }
 

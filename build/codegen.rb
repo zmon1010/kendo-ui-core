@@ -220,7 +220,8 @@ namespace :generate do
                 'docs/api/javascript/ui/upload.md',
                 'docs/api/javascript/ui/window.md',
                 'docs/api/javascript/ui/splitter.md',
-                'docs/api/javascript/ui/pivotgrid.md'
+                'docs/api/javascript/ui/pivotgrid.md',
+                'docs/api/javascript/ui/pivotconfigurator.md'
             ]
 
             components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }

@@ -49,6 +49,8 @@
 - pivotgrid.messages
 - pivotgrid.kpiTrendTemplate
 - pivotgrid.kpiStatusTemplate
+- pivotconfigurator.dataSource
+- pivotconfigurator.messages
 - lineargauge.pointer
 - radialgauge.pointer
 - radialgauge.renderas
