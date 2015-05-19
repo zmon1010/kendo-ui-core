@@ -16,6 +16,7 @@
 
     @if (ViewBag.Debug)
     {
+    <!--[if gte IE 8]>
     <script>
         less = {
             env: "development",
@@ -24,6 +25,7 @@
     </script>
     <script src="@Url.Content("~/content/shared/js/less.js")"></script>
     <script>less.refresh();</script>
+    <![endif]-->
     }
     <link href="@Url.Content("~/content/shared/styles/examples.css")" rel="stylesheet" />
     @{ bool isAngularJsExample = ViewBag.CurrentExample != null &&
@@ -48,7 +50,7 @@
     <!--[if gte IE 8]>
     <script src="@Url.Content("~/content/shared/inspector/inspector.js")"></script>
     <link href="@Url.Content("~/content/shared/inspector/inspector.css")" rel="stylesheet" />
-    <!--<![endif]-->
+    <![endif]-->
     <script>
         function resizeContainers() {
             var headerHeight = $("#header").height(),

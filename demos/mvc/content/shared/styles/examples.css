@@ -2236,6 +2236,10 @@ a.footer-links:hover,
   text-decoration: none;
 }
 
+.k-ie7 #sidebar-toggle {
+    display: none;
+}
+
 #sidebar-toggle span {
   display: inline-block;
   position: relative;
