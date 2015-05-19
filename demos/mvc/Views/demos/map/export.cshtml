@@ -23,7 +23,7 @@
     <script>
     $(".export-pdf").click(function() {
         // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-        kendo.drawing.drawDOM($(".demo-section"))
+        kendo.drawing.drawDOM($("#map"))
         .then(function(group) {
             // Render the result as a PDF file
             return kendo.drawing.exportPDF(group, {
@@ -43,7 +43,7 @@
 
     $(".export-img").click(function() {
         // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-        kendo.drawing.drawDOM($(".demo-section"))
+        kendo.drawing.drawDOM($("#map"))
         .then(function(group) {
             // Render the result as a PNG image
             return kendo.drawing.exportImage(group);
@@ -60,7 +60,7 @@
 
     $(".export-svg").click(function() {
         // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-        kendo.drawing.drawDOM($(".demo-section"))
+        kendo.drawing.drawDOM($("#map"))
         .then(function(group) {
             // Render the result as a SVG document
             return kendo.drawing.exportSVG(group);
