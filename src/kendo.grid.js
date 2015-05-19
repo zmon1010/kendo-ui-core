@@ -4308,40 +4308,44 @@ var __meta__ = {
         },
 
         _handleEnterKey: function(current, currentTable, target) {
-            var handled = false;
-            var isInCell = this._editMode() == "incell";
+            var editable = this.options.editable;
+            var container = target.closest("[role=gridcell]");
 
             if (!target.is("table") && !$.contains(current[0], target[0])) {
-                current = target.closest("[role=gridcell]");
+                current = container;
             }
 
             if (current.is("th")) {
-                // sort the column
+                // sort the column, if possible
                 current.find(".k-link").click();
+
                 return true;
             }
 
             if (current.parent().is(".k-master-row,.k-grouping-row")) {
                 current.parent().find(".k-icon:first").click();
-                handled = true;
-            } else {
-                var focusable = current.find(":kendoFocusable:first");
-                if (!current.hasClass("k-edit-cell") && focusable[0] && current.hasClass("k-state-focused")) {
-                    focusable.focus();
-                    handled = true;
-                } else if (this.options.editable && !target.is(":button,.k-button,textarea")) {
-                    var container = target.closest("[role=gridcell]");
-                    if (!container[0]) {
-                        container = current;
-                    }
 
-                    this._handleEditing(container, false, currentTable);
-
-                    handled = true;
-                }
+                return true;
             }
 
-            return handled;
+            var focusable = current.find(":kendoFocusable:first");
+            if (focusable[0] && !current.hasClass("k-edit-cell") && current.hasClass("k-state-focused")) {
+                focusable.focus();
+
+                return true;
+            }
+
+            if (editable && !target.is(":button,.k-button,textarea")) {
+                if (!container[0]) {
+                    container = current;
+                }
+
+                this._handleEditing(container, false, currentTable);
+
+                return true;
+            }
+
+            return false;
         },
 
         _nextHorizontalCell: function(table, current, originalIndex) {
