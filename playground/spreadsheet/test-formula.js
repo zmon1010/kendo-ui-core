@@ -23,13 +23,13 @@ Spreadsheet.prototype = {
     },
 
     getRefCells: function(ref) {
-        if (Runtime.CellRef.is(ref)) {
+        if (ref instanceof Runtime.CellRef) {
             var cell = this._getCell(ref.sheet, ref.row, ref.col);
             return cell ? [ cell ] : [];
         }
-        if (Runtime.RangeRef.is(ref)) {
+        if (ref instanceof Runtime.RangeRef) {
             ref = ref.intersect(this.getSheetBounds(ref.sheet));
-            if (!Runtime.RangeRef.is(ref)) {
+            if (!(ref instanceof Runtime.RangeRef)) {
                 return this.getRefCells(ref);
             }
             var a = [];
@@ -43,14 +43,14 @@ Spreadsheet.prototype = {
             }
             return a;
         }
-        if (Runtime.UnionRef.is(ref)) {
+        if (ref instanceof Runtime.UnionRef) {
             var a = [];
             for (var i = 0; i < ref.refs.length; ++i) {
                 a = a.concat(this.getRefCells(ref.refs[i]));
             }
             return a;
         }
-        if (Runtime.NullRef.is(ref)) {
+        if (ref instanceof Runtime.NullRef) {
             return [];
         }
         console.error("Unsupported reference", ref);
@@ -66,7 +66,7 @@ Spreadsheet.prototype = {
             var data = self.getRefCells(ref).map(function(cell){
                 return cell.value;
             });
-            return Runtime.CellRef.is(ref) ? data[0] : data;
+            return ref instanceof Runtime.CellRef ? data[0] : data;
         }
         return ref;
     },

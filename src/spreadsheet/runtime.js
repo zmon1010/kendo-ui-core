@@ -14,10 +14,11 @@
     var calc = {};
     kendo.spreadsheet.calc = calc;
     var exports = calc.Runtime = {};
+    var Class = kendo.Class;
 
     /* -----[ References ]----- */
 
-    var Ref = defclass(null, function Ref(){}, {
+    var Ref = Class.extend({
         type: "ref",
         hasSheet: function() {
             return this._hasSheet;
@@ -39,7 +40,8 @@
 
     /* -----[ Null reference ]----- */
 
-    var NullRef = defclass(Ref, function NullRef(){}, {
+    var NullRef = Ref.extend({
+        init: function NullRef(){},
         print: function() {
             return "#NULL!";
         }
@@ -49,10 +51,11 @@
 
     /* -----[ Name reference ]----- */
 
-    var NameRef = defclass(Ref, function NameRef(name){
-        this.name = name;
-    }, {
+    var NameRef = Ref.extend({
         ref: "name",
+        init: function NameRef(name){
+            this.name = name;
+        },
         print: function(tcol, trow, orig) {
             var ret = this.name;
             if (this.hasSheet()) {
@@ -64,18 +67,19 @@
 
     /* -----[ Cell reference ]----- */
 
-    var CellRef = defclass(Ref, function CellRef(row, col, rel) {
-        this.row = row;
-        this.col = col;
-        this.rel = rel;
-    }, {
+    var CellRef = Ref.extend({
         ref: "cell",
+        init: function CellRef(row, col, rel) {
+            this.row = row;
+            this.col = col;
+            this.rel = rel;
+        },
         clone: function() {
             return new CellRef(this.row, this.col, this.rel)
                 .setSheet(this.sheet, this.hasSheet());
         },
         intersect: function(ref) {
-            if (CellRef.is(ref)) {
+            if (ref instanceof CellRef) {
                 if (ref.row == this.row && ref.col == this.col && ref.sheet == this.sheet) {
                     return this;
                 } else {
@@ -125,13 +129,14 @@
 
     /* -----[ Range reference ]----- */
 
-    var RangeRef = defclass(Ref, function RangeRef(tl, br) {
-        // we want to drop any sheet information from the cells here.
-        this.topLeft = new CellRef(tl.row, tl.col, tl.rel);
-        this.bottomRight = new CellRef(br.row, br.col, br.rel);
-        this.normalize();
-    }, {
+    var RangeRef = Ref.extend({
         ref: "range",
+        init: function RangeRef(tl, br) {
+            // we want to drop any sheet information from the cells here.
+            this.topLeft = new CellRef(tl.row, tl.col, tl.rel);
+            this.bottomRight = new CellRef(br.row, br.col, br.rel);
+            this.normalize();
+        },
         _containsRange: function(range) {
             return this._containsCell(range.topLeft)
                 && this._containsCell(range.bottomRight);
@@ -144,10 +149,10 @@
                 && cell.col <= this.bottomRight.col;
         },
         contains: function(ref) {
-            if (CellRef.is(ref)) {
+            if (ref instanceof CellRef) {
                 return this._containsCell(ref);
             }
-            if (RangeRef.is(ref)) {
+            if (ref instanceof RangeRef) {
                 return this._containsRange(ref);
             }
             return false;
@@ -183,16 +188,16 @@
             }
         },
         intersect: function(ref) {
-            if (NullRef.is(ref)) {
+            if (ref instanceof NullRef) {
                 return ref;
             }
-            if (CellRef.is(ref)) {
+            if (ref instanceof CellRef) {
                 return this._containsCell(ref) ? ref : NULL;
             }
-            if (RangeRef.is(ref)) {
+            if (ref instanceof RangeRef) {
                 return this._intersectRange(ref).simplify();
             }
-            if (UnionRef.is(ref)) {
+            if (ref instanceof UnionRef) {
                 return ref.intersect(this);
             }
             console.error("Unknown reference", ref);
@@ -247,26 +252,26 @@
         adjust: function(operation, start, delta) {
             var tl = this.topLeft.adjust(operation, start, delta);
             var br = this.bottomRight.adjust(operation, start, delta);
-            if (NullRef.is(tl) && NullRef.is(br)) {
+            if (tl instanceof NullRef && br instanceof NullRef) {
                 return NULL;
             }
             switch (operation) {
               case "col":
-                if (NullRef.is(tl)) {
+                if (tl instanceof NullRef) {
                     this.topLeft.col = start;
                     tl = this.topLeft;
                 }
-                else if (NullRef.is(br)) {
+                else if (br instanceof NullRef) {
                     this.bottomRight.col = start;
                     br = this.bottomRight;
                 }
                 break;
               case "row":
-                if (NullRef.is(tl)) {
+                if (tl instanceof NullRef) {
                     this.topLeft.row = start;
                     tl = this.topLeft;
                 }
-                else if (NullRef.is(br)) {
+                else if (br instanceof NullRef) {
                     this.bottomRight.row = start;
                     br = this.bottomRight;
                 }
@@ -280,14 +285,15 @@
 
     /* -----[ Union reference ]----- */
 
-    var UnionRef = defclass(Ref, function UnionRef(refs){
-        this.refs = refs;
-    }, {
+    var UnionRef = Ref.extend({
+        init: function UnionRef(refs){
+            this.refs = refs;
+        },
         intersect: function(ref) {
             var a = [];
             for (var i = 0; i < this.refs.length; ++i) {
                 var x = ref.intersect(this.refs[i]);
-                if (!NullRef.is(x)) {
+                if (!(x instanceof NullRef)) {
                     a.push(x);
                 }
             }
@@ -306,9 +312,10 @@
 
     /* -----[ Errors ]----- */
 
-    var CalcError = defclass(null, function CalcError(code) {
-        this.code = code;
-    }, {
+    var CalcError = Class.extend({
+        init: function CalcError(code) {
+            this.code = code;
+        },
         toString: function() {
             return "#" + this.code + "!";
         }
@@ -316,10 +323,11 @@
 
     /* -----[ Formula ]----- */
 
-    var Formula = defclass(null, function Formula(refs, handler){
-        this.refs = refs;
-        this.handler = handler;
-    }, {
+    var Formula = Class.extend({
+        init: function Formula(refs, handler){
+            this.refs = refs;
+            this.handler = handler;
+        },
         exec: function(SS, sheet, row, col, callback) {
             var formula = this;
             if ("value" in formula) {
@@ -365,27 +373,6 @@
 
     // utils ------------------------
 
-    function defclass(base, ctor, proto) {
-        if (base) {
-            ctor.prototype = new base();
-        }
-        ctor.is = function(thing) {
-            return thing instanceof ctor;
-        };
-        if (proto) {
-            methods(ctor, proto);
-        }
-        return ctor;
-    }
-
-    function methods(obj, methods) {
-        for (var i in methods) {
-            if (Object.prototype.hasOwnProperty.call(methods, i)) {
-                obj.prototype[i] = methods[i];
-            }
-        }
-    }
-
     function slice(a, i) {
         if (i == null) {
             i = 0;
@@ -404,7 +391,7 @@
 
         for (var i = 0; i < a.length; ++i) {
             var x = a[i];
-            if (Ref.is(x)) {
+            if (x instanceof Ref) {
                 if (!add(context.ss.getRefCells(x))) {
                     context.error(new CalcError("CIRCULAR"));
                     return;
@@ -626,7 +613,7 @@
         // range
         "binary:": function(callback, args) {
             var left = args[0], right = args[1];
-            if (CellRef.is(left) && CellRef.is(right)) {
+            if (left instanceof CellRef && right instanceof CellRef) {
                 callback(new RangeRef(left, right).setSheet(left.sheet || this.formula.sheet, left.hasSheet()));
             } else {
                 this.error(new CalcError("REF"));
@@ -635,7 +622,7 @@
         // union
         "binary,": function(callback, args) {
             var left = args[0], right = args[1];
-            if (Ref.is(left) && Ref.is(right)) {
+            if (left instanceof Ref && right instanceof Ref) {
                 callback(new UnionRef([ left, right ]));
             } else {
                 this.error(new CalcError("REF"));
@@ -644,9 +631,9 @@
         // intersect
         "binary ": function(callback, args) {
             var left = args[0], right = args[1];
-            if (Ref.is(left) && Ref.is(right)) {
+            if (left instanceof Ref && right instanceof Ref) {
                 var x = left.intersect(right);
-                if (NullRef.is(x)) {
+                if (x instanceof NullRef) {
                     this.error(new CalcError("NULL"));
                 } else {
                     callback(x);
