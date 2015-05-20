@@ -4081,6 +4081,8 @@ var __meta__ = {
             var path;
 
             var idx = 0;
+            var collapsed = 0;
+
             var colSpan;
             var metadata;
 
@@ -4143,6 +4145,8 @@ var __meta__ = {
                 row.rowSpan = childRow.rowSpan + 1;
                 row.collapsed += childRow.collapsed;
 
+                collapsed += childRow.collapsed;
+
                 if (nextMember) {
                     if (nextMember.measure) {
                         colSpan = this._measures(nextMember.children, tuple, " k-alt");
@@ -4171,8 +4175,8 @@ var __meta__ = {
                 }
             }
 
-            if (metadata.maxChildren < (metadata.children + row.collapsed)) {
-                metadata.maxChildren = metadata.children + row.collapsed;
+            if (metadata.maxChildren < (metadata.children + collapsed)) {
+                metadata.maxChildren = metadata.children + collapsed;
             }
 
             if (metadata.maxMembers < metadata.members) {
