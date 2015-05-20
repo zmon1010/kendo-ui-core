@@ -106,7 +106,7 @@ MVC_DEMOS = FileList[MVC_DEMOS_ROOT + '**/*']
                         .sub(DEMO_SHARED_ROOT + 'shared/images/photos/220', MVC_DEMOS_ROOT + 'Content/shared/images/photos/220')
                 )
                 .include(
-                    FileList['demos/mvc/content/nav.json']
+                    FileList['demos/mvc/content/nav.json', 'demos/mvc/content/mobile-nav.json']
                         .sub('demos/mvc/content', MVC_DEMOS_ROOT + 'Content')
                 )
                 .include(MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll')
@@ -179,6 +179,10 @@ namespace :mvc do
 
     tree :to => MVC_DEMOS_ROOT + 'Content',
          :from => 'demos/mvc/content/nav.json',
+         :root => 'demos/mvc/content/'
+
+    tree :to => MVC_DEMOS_ROOT + 'Content',
+         :from => 'demos/mvc/content/mobile-nav.json',
          :root => 'demos/mvc/content/'
 
     tree :to => MVC_DEMOS_ROOT + 'Content/web',
