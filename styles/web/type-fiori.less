@@ -1,198 +1,215 @@
-@widget-background-color: @base;
-@widget-border-color: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
-@widget-text-color: @normal-text-color;
-@inverse-text-color: contrast(@normal-text-color);
-@hover-border-color: @hover-background;
-@selected-background-color: @accent;
-@active-background-color: lighten(@base, 6%);
-@active-border-color: @accent;
-@active-text-color: contrast(@base);
-@error-background-color: @error;
-@error-border-color: #e20000;
-@error-text-color: contrast(@base, lighten(@normal-text-color, 1%), darken(@normal-text-color, 20%), 0.5);
-@disabled-text-color: #cccccc;
-@validation-background-color: @warning;
-@validation-border-color: @warning;
-@validation-text-color: darken(@base, 29%);
-@notification-info-background-color: @info;
-@notification-info-text-color: contrast(@base, lighten(@normal-text-color, 1%), darken(@normal-text-color, 7%), 0.5);
-@notification-info-border-color: contrast(@base, lighten(@info, 1%), darken(@info, 11%), 0.5);
-@notification-success-background-color: @success;
-@notification-success-text-color: contrast(@base, lighten(@normal-text-color, 1%), darken(@normal-text-color, 3%), 0.5);
-@notification-success-border-color: contrast(@base, lighten(@success, 1%), darken(@success, 11%), 0.5);
-@notification-warning-background-color: contrast(@base, lighten(@error, 27%), darken(@error, 4%), 0.5);
-@notification-warning-text-color: contrast(@base, lighten(@normal-text-color, 1%), darken(@normal-text-color, 7%), 0.5);
-@notification-warning-border-color: contrast(@base, lighten(@error, 27%), darken(@error, 6%), 0.5);
-@notification-error-background-color: contrast(@base, lighten(@error, 15%), darken(@error, 9%), 0.5);
-@notification-error-text-color: saturate(@normal-text-color, 12%);
-@notification-error-border-color: contrast(@base, lighten(@error, 15%), darken(@error, 20%), 0.5);
-@tooltip-background-color: lighten(@hover-background, 1%);
-@draghandle-border-color: saturate(@hover-background, 1%);
-@draghandle-shadow: 0 1px 1px 0 fadeout(darken(@normal-text-color, 10%), 70%);
-@draghandle-hover-border-color: @accent;
-@draghandle-hover-shadow: @draghandle-shadow;
-@alt-background-color: contrast(@base, lighten(@base, 6%), darken(@base, 4%), 0.5);
-@nested-alt-background-color: contrst(@normal-text-color, darken(@alt-background-color, 8%), lighten(@alt-background-color, 8%), 0.5);
-@column-highlight-background-color: contrast(@base, lighten(@base, 8%), darken(@base, 1%), 0.5);
-@active-filter-background-color: contrast(@base, lighten(@base, 6%), darken(@base, 6%), 0.5);
-@event-text-color: #ffffff;
-@event-inverse-text-color: darken(@success, 29%);
-@event-background-color: @accent;
-@scheduler-nonwork-background-color: contrast(@base, lighten(@base, 17%), darken(@base, 4%), 0.5);
-@resize-background-color: @normal-text-color;
-@input-background-color: @base;
-@shadow-color: fadeout(contrast(@base), 80%);
-@upload-progress-background-color: contrast(@base, lighten(@info, 2%), darken(@info, 2%), 0.5);
-@upload-progress-text-color: contrast(@base, lighten(@normal-text-color, 1%), darken(@normal-text-color, 14%), 0.5);
-@upload-success-background-color: contrast(@base, lighten(@success, 4%), darken(@success, 1%), 0.5);
-@upload-success-text-color: contrast(@base, lighten(@normal-text-color, 1%), darken(@normal-text-color, 15%), 0.5);
-@upload-error-background-color: contrast(@base, lighten(@base, 26%), darken(@base, 10%), 0.5);
-@upload-error-text-color: contrast(@base, lighten(@normal-text-color, 1%), darken(@normal-text-color, 23%), 0.5);
-@task-summary-color: contrast(@base, lighten(@widget-text-color, 25%), darken(@widget-text-color, 25%), 0.5);
-@task-summary-selected-color: contrast(@base, lighten(@selected-background-color, 15%), darken(@selected-background-color, 25%), 0.5);
-@loading-panel-color: @base;
-@splitbar-background-color: contrast(@base, lighten(@base, 1%), darken(@base, 14%), 0.5);
-@disabled-background-color: @base;
-@disabled-border-color: contrast(@base, lighten(@base, 14%), darken(@base, 10%), 0.5);
-@disabled-gradient: none;
-@tabstrip-active-background: lighten(@base, 6%);
-@primary-button-text-color: #ffffff;
-@primary-button-background-color: @accent;
-@primary-button-border-color: @accent;
-@primary-hover-text-color: #ffffff;
-@primary-hover-background-color: @hover-background;
-@primary-hover-border-color: @hover-background;
-@primary-hover-shadow: none;
-@primary-focused-color: #ffffff;
-@primary-focused-border-color: contrast(@base, lighten(@accent, 16%), darken(@accent, 29%), 0.5);
-@primary-active-background-color: @accent;
-@primary-disabled-text-color: contrast(@base, lighten(@base, 1%), darken(@base, 17%), 0.5);
-@primary-disabled-background-color: lighten(@accent, 2%);
-@primary-disabled-border-color: lighten(@accent, 2%);
-@checkbox-border-color-before: transparent;
-@checkbox-border-color-after: contrast(@base, lighten(@base, 28%), darken(@base, 14%), 0.5);
-@checkbox-border-radius-before: 0;
-@checkbox-background-color: @base;
-@checkbox-hover-border-color: @hover-background;
-@checkbox-hover-box-shadow: none;
-@checkbox-checked-border-color-after: contrast(@base, lighten(@base, 28%), darken(@base, 14%), 0.5);
-@checkbox-checked-border-radius-after: 0;
-@checkbox-checked-background-color-after: @base;
-@checkbox-checked-color-after: contrast(@base, lighten(@hover-background, 1%), darken(@hover-background, 4%), 0.5);
-@checkbox-active-border-color-before: transparent;
-@checkbox-active-border-color-after: @hover-background;
-@checkbox-active-border-radius: 0;
-@checkbox-active-border-radius-after: 0;
-@checkbox-active-box-shadow: none;
-@checkbox-checked-active-border-radius-before: 0;
-@checkbox-checked-active-box-shadow: none;
-@checkbox-checked-disabled-color-after: contrast(@base, lighten(@base, 14%), darken(@base, 21%), 0.5);
-@checkbox-disabled-background-color-after: @base;
-@checkbox-disabled-color: contrast(@base, lighten(@success, 7%), darken(@success, 17%), 0.5);
-@checkbox-disabled-box-shadow: none;
-@checkbox-disabled-border-color-before: contrast(@base, lighten(@base, 14%), darken(@base, 21%), 0.5);
-@radio-border-color-before: contrast(@base, lighten(@base, 28%), darken(@base, 14%), 0.5);
-@radio-background-color: @base;
-@radio-border-width-before: 1px;
-@radio-hover-border-color: @hover-background;
-@radio-hover-box-shadow: none;
-@radio-checked-border-color-before: contrast(@base, lighten(@base, 28%), darken(@base, 14%), 0.5);
-@radio-checked-background-color-after: contrast(@base, lighten(@hover-background, 1%), darken(@hover-background, 4%), 0.5);
-@radio-active-border-color-before: @hover-background;
-@radio-active-box-shadow: none;
-@radio-checked-active-border-color-before: @hover-background;
-@radio-checked-active-box-shadow: none;
-@radio-disabled-background-color-after: @base;
-@radio-disabled-color: contrast(@base, lighten(@success, 7%), darken(@success, 17%), 0.5);
-@radio-disabled-box-shadow: none;
-@radio-disabled-background-color-before: @base;
 @tooltip-texture: none;
+@widget-text-color: @normal-text-color;
+@inverse-text-color: @background;
 @widget-gradient: none;
+@widget-background-color: @background;
+@widget-border-color: darken(@background, 25%);
 @widget-shadow: none;
+@input-background-color: @background;
+@input-text-color: @normal-text-color;
+@link-text-color: @accent;
+@header-text-color: @normal-text-color;
+@header-background-color: darken(@background, 5%);
+@button-text-color: @normal-text-color;
+@button-background-color: darken(@background, 5%);
+@group-background-color: @background;
+@group-border-color: rgba(0, 0, 0, 0.2);
+@content-background-color: @background;
+@hover-background-color: @hover-background;
+@hover-border-color: @hover-background;
 @hover-shadow: none;
-@selected-shadow: none;
-@active-gradient: none;
-@active-shadow: none;
+@select-background-color: @accent;
+@select-border-color: @accent;
+@select-hover-background-color: @background;
+@select-group-background-color: @background;
+@selected-background-color: @accent;
+@selected-secondary-background-color: lighten(@info, 4%);
 @selected-border-color: @accent;
+@selected-shadow: none;
 @focused-border-color: @hover-background;
 @focused-shadow: none;
-@focused-item-shadow: inset 0 0 0 1px @hover-border-color;
-@focused-active-item-shadow: inset 0 0 3px 1px darken(@selected-border-color, 15%);
-@main-border-radius: 0;
-@list-border-radius: 0;
-@inner-border-radius: 0;
-@slider-border-radius: 13px;
-@draghandle-border-radius: 0;
-@default-icon-opacity: 1;
-@header-background-color: @base;
-@header-text-color: @normal-text-color;
-@button-background-color: @base;
-@button-text-color: @normal-text-color;
-@group-background-color: @base;
-@group-border-color: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
-@content-background-color: @base;
-@select-border-color: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
-@select-background-color: @base;
-@select-group-background-color: @base;
-@select-hover-background-color: @hover-background;
-@hover-background-color: @hover-background;
-@shadow-inset-color: transparent;
-@input-text-color: @normal-text-color;
-@link-text-color: @normal-text-color;
-@cell-border-color: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
-@scheduler-background-color: @base;
-@current-time-color: #e20000;
-@tooltip-border-color: lighten(@hover-background, 1%);
-@tooltip-text-color: #ffffff;
-@draghandle-background-color: saturate(@hover-background, 1%);
-@draghandle-hover-background-color: @accent;
-@calendar-border-radius: 0;
+@focused-item-shadow: none;
+@focused-active-item-shadow: none;
+@active-text-color: @normal-text-color;
+@active-gradient: none;
+@active-background-color: @background;
+@active-border-color: darken(@background, 21%);
+@active-shadow: none;
+@error-text-color: lighten(@normal-text-color, 20%);
+@error-background-color: @error;
+@error-border-color: lighten(@normal-text-color, 20%);
+@disabled-text-color: lighten(@normal-text-color, 29%);
+@notification-info-background-color: @info;
+@notification-info-text-color: @normal-text-color;
+@notification-info-border-color: @accent;
+@notification-success-background-color: @success;
+@notification-success-text-color: @normal-text-color;
+@notification-success-border-color: lighten(@normal-text-color, 15%);
+@notification-warning-background-color: @warning;
+@notification-warning-text-color: @normal-text-color;
+@notification-warning-border-color: darken(@error, 15%);
+@notification-error-background-color: @error;
+@notification-error-text-color: @normal-text-color;
+@notification-error-border-color: lighten(@normal-text-color, 20%);
+@tooltip-text-color: @normal-text-color;
+@tooltip-background-color: @background;
+@tooltip-border-color: darken(@background, 25%);
+@validation-text-color: @normal-text-color;
+@validation-background-color: @warning;
+@validation-border-color: darken(@error, 15%);
+@splitbar-background-color: darken(@background, 5%);
+@draghandle-border-radius: @border-radius;
+@draghandle-border-color: lighten(@normal-text-color, 24%);
+@draghandle-background-color: darken(@background, 5%);
+@draghandle-shadow: none;
+@draghandle-hover-border-color: lighten(@normal-text-color, 24%);
+@draghandle-hover-background-color: lighten(@normal-text-color, 27%);
+@draghandle-hover-shadow: none;
+@alt-background-color: transparent;
+@nested-alt-background-color: darken(@alt-background-color, 8%);
+@cell-border-color: darken(@background, 21%);
+@column-highlight-background-color: darken(@hover-background, 2%);
+@active-filter-background-color: @background;
+@scheduler-background-color: darken(@background, 5%);
+@current-time-color: lighten(@normal-text-color, 20%);
+@event-background-color: @accent;
+@event-text-color: @background;
+@event-inverse-text-color: @normal-text-color;
+@scheduler-nonwork-background-color: darken(@hover-background, 2%);
+@resize-background-color: @background;
+@upload-progress-background-color: lighten(@accent, 5%);
+@upload-progress-text-color: @normal-text-color;
+@upload-success-background-color: lighten(@warning, 2%);
+@upload-success-text-color: @normal-text-color;
+@upload-error-background-color: lighten(@error, 1%);
+@upload-error-text-color: @normal-text-color;
+@task-summary-color: darken(@background, 20%);
+@task-summary-selected-color: lighten(@info, 4%);
+@loading-panel-color: @background;
+@shadow-color: rgba(0, 0, 0, .2);
+@shadow-inset-color: darken(@background, 20%);
+@main-border-radius: @border-radius;
+@list-border-radius: @border-radius;
+@inner-border-radius: @border-radius;
+@slider-border-radius: @border-radius;
+@default-icon-opacity: .5;
+@calendar-border-radius: @border-radius;
 @calendar-content-text-color: @normal-text-color;
-@calendar-footer-background: @base;
+@calendar-footer-background: @background;
 @calendar-footer-text-decoration: none;
 @calendar-footer-hover-text-decoration: underline;
-@calendar-footer-hover-background: @base;
+@calendar-footer-hover-background: @background;
 @calendar-header-hover-text-decoration: none;
 @calendar-header-hover-background: @hover-background;
-@calendar-footer-active-background: @base;
-@calendar-group-background-color: @base;
-@button-border-color: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
-@menu-border-color: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
-@tabstrip-items-border: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
+@calendar-footer-active-background: @background;
+@calendar-group-background-color: @background;
+@button-border-color: darken(@background, 25%);
+@menu-border-color: transparent;
+@tabstrip-items-border: transparent;
+@tabstrip-active-background: @background;
 @tabstrip-tabs-color: @normal-text-color;
 @form-widget-color: @normal-text-color;
-@drop-down-border-color: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
-@drop-down-hover-border-color: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
-@drop-down-focused-border-color: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
-@drop-down-background: @base;
+@drop-down-border-color: darken(@background, 25%);
+@drop-down-hover-border-color: @accent;
+@drop-down-focused-border-color: @accent;
+@drop-down-background: @background;
 @drop-down-text-color: @normal-text-color;
-@secondary-border-color: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
+@secondary-border-color: darken(@background, 21%);
 @secondary-text-color: @normal-text-color;
-@numeric-selected-background: @accent;
-@panelbar-items-border: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
-@panelbar-content-background: @base;
+@secondary-background-color: @background;
+@numeric-selected-background: @hover-background;
+@panelbar-items-border: darken(@background, 25%);
+@panelbar-content-background: @background;
 @panelbar-content-color: @normal-text-color;
-@window-shadow-style: 1px 1px 7px 1px;
-@filter-menu-content-background: @base;
+@window-shadow-style: 1px 1px 13px 1px;
+@filter-menu-content-background: @background;
 @icon-background-color: transparent;
+@disabled-background-color: darken(@background, 5%);
+@disabled-border-color: darken(@background, 5%);
+@disabled-gradient: none;
+@treeview-text-color: @normal-text-color;
+@treeview-hover-text-color: @normal-text-color;
+@tabstrip-tabs-hover-color: @normal-text-color;
+@multiselect-buttons-color: @normal-text-color;
+@multiselect-buttons-background: lighten(@hover-background, 4%);
+@multiselect-buttons-border-color: lighten(@hover-background, 4%);
+@multiselect-buttons-hover-background: @hover-background;
+@multiselect-buttons-hover-border-color: @hover-background;
+@slider-selection-background-color: @accent;
+@form-widgets-border-color: darken(@hover-background, 1%);
+@pager-text-color: @normal-text-color;
+@draghandle-selected-background: @accent;
+@form-widgets-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+@concave-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
+@primary-button-text-color: @background;
+@primary-button-background-color: lighten(@accent, 9%);
+@primary-button-border-color: lighten(@accent, 4%);
 @primary-gradient: none;
-@primary-hover-gradient: none;
-@primary-focused-gradient: none;
-@primary-active-text-color: #ffffff;
-@primary-active-gradient: none;
-@primary-focused-active-item-shadow: none;
-@primary-active-border-color: @accent;
-@primary-disabled-gradient: none;
-@primary-active-shadow: none;
 @primary-shadow: none;
-@button-hover-text-color: #ffffff;
+@primary-hover-text-color: @background;
+@primary-hover-background-color: lighten(@accent, 4%);
+@primary-hover-border-color: lighten(@accent, 4%);
+@primary-hover-gradient: none;
+@primary-hover-shadow: none;
+@primary-focused-color: @background;
+@primary-focused-border-color: darken(@accent, 12%);
+@primary-focused-gradient: none;
+@primary-focused-active-item-shadow: none;
+@primary-active-text-color: @background;
+@primary-active-background-color: darken(@accent, 2%);
+@primary-active-gradient: none;
+@primary-active-border-color: darken(@accent, 2%);
+@primary-active-shadow: none;
+@primary-disabled-text-color: @background;
+@primary-disabled-background-color: darken(@info, 15%);
+@primary-disabled-border-color: darken(@info, 17%);
+@primary-disabled-gradient: none;
+@button-hover-text-color: @normal-text-color;
 @button-hover-background-color: @hover-background;
-@button-hover-border-color: @hover-background;
+@button-hover-border-color: darken(@background, 25%);
 @button-active-background: @accent;
-@button-active-border-color: @accent;
-@button-focused-border-color: contrast(@base, lighten(@base, 14%), darken(@base, 14%), 0.5);
-@button-focused-shadow: inset 0 0 0 1px @hover-border-color;
-@button-focused-active-shadow: inset 0 0 3px 1px darken(@selected-border-color, 15%);
+@button-active-border-color: darken(@accent, 12%);
+@button-focused-border-color: @accent;
+@button-focused-shadow: none;
+@button-focused-active-shadow: none;
+@accent-color: @accent;
+@checkbox-border-color-before: transparent;
+@checkbox-border-color-after: darken(@background, 25%);
+@checkbox-border-radius-before: 1px;
+@checkbox-background-color: @background;
+@checkbox-hover-border-color: @accent;
+@checkbox-hover-box-shadow: none;
+@checkbox-checked-border-color-after: darken(@background, 25%);
+@checkbox-checked-border-radius-after: 1px;
+@checkbox-checked-background-color-after: @background;
+@checkbox-checked-color-after: @accent;
+@checkbox-active-border-color-before: transparent;
+@checkbox-active-border-color-after: darken(@background, 25%);
+@checkbox-active-border-radius: 1px;
+@checkbox-active-border-radius-after: 1px;
+@checkbox-active-box-shadow: none;
+@checkbox-checked-active-border-radius-before: @border-radius;
+@checkbox-checked-active-box-shadow: none;
+@checkbox-checked-disabled-color-after: darken(@background, 27%);
+@checkbox-disabled-background-color-after: lighten(@hover-background, 4%);
+@checkbox-disabled-color: darken(@background, 25%);
+@checkbox-disabled-box-shadow: none;
+@checkbox-disabled-border-color-before: darken(@background, 25%);
+@radio-border-color-before: darken(@background, 25%);
+@radio-background-color: @background;
+@radio-border-width-before: 2px;
+@radio-hover-border-color: @accent;
+@radio-hover-box-shadow: none;
+@radio-checked-border-color-before: @accent;
+@radio-checked-background-color-after: @accent;
+@radio-active-border-color-before: darken(@background, 25%);
+@radio-active-box-shadow: none;
+@radio-checked-active-border-color-before: @accent;
+@radio-checked-active-box-shadow: none;
+@radio-disabled-background-color-after: @background;
+@radio-disabled-color: darken(@background, 25%);
+@radio-disabled-box-shadow: none;
+@radio-disabled-background-color-before: @background;
 /* Kendo skin */
 
 // Mixins
@@ -961,7 +978,7 @@ html .km-pane-wrapper .k-header
     color: @selected-text-color;
 }
 
-.k-popup .k-item > .k-group
+.k-popup .k-list .k-item > .k-group
 {
     background: @hover-border-color;
     color: @selected-text-color;
@@ -1202,25 +1219,6 @@ div.k-filebrowser-dropzone em
 .k-progressbar-indeterminate .k-state-selected
 {
     display: none;
-}
-
-.k-progressbar-horizontal > .k-state-selected,
-.k-rtl .k-progressbar-horizontal.k-progressbar-reverse > .k-state-selected,
-.k-progressbar-horizontal.k-progressbar-reverse > .k-state-selected,
-.k-rtl .k-progressbar-horizontal > .k-state-selected,
-.k-progressbar-vertical > .k-state-selected,
-.k-progressbar-vertical.k-progressbar-reverse > .k-state-selected,
-.k-progressbar > .k-state-selected.k-complete,
-.k-rtl .k-progressbar > .k-state-selected.k-complete,
-.k-progressbar-horizontal .k-first,
-.k-rtl .k-progressbar-horizontal .k-last,
-.k-rtl .k-progressbar-horizontal.k-progressbar-reverse .k-last,
-.k-progressbar-horizontal .k-last,
-.k-rtl .k-progressbar-horizontal .k-first,
-.k-progressbar-vertical .k-first,
-.k-progressbar-vertical .k-last
-{
-    border-radius: 0;
 }
 
 /* Slider */
@@ -2678,4 +2676,597 @@ html .km-pane-wrapper .km-widget,
             .guarded-border-radius(@list-border-radius);
         }
     }
+}
+
+
+.k-button
+{
+    border-radius: 2px;
+}
+
+.k-list > .k-state-focused
+{
+    border-color: @selected-border-color;
+}
+
+.k-menu > .k-state-focused,
+.k-menu-group > .k-state-focused
+{
+    background-color: @hover-background-color;
+}
+
+.k-menu-group > .k-item > .k-state-active
+{
+    background-color: @selected-secondary-background-color;
+}
+
+.k-textbox:hover,
+.k-textbox:focus
+{
+    border-color: @drop-down-hover-border-color;
+}
+
+.k-splitbar
+{
+    border-color: transparent;
+}
+
+.k-flatcolorpicker .k-hue-slider .k-draghandle:hover,
+.k-flatcolorpicker .k-transparency-slider .k-draghandle:hover,
+.k-flatcolorpicker .k-hue-slider .k-draghandle:focus,
+.k-flatcolorpicker .k-transparency-slider .k-draghandle:focus
+{
+    border-color: @hover-border-color;
+}
+
+.k-calendar .k-header,
+.k-menu.k-header,
+.k-tabstrip.k-header,
+.k-tabstrip .k-tabstrip-items .k-item,
+.k-header.k-scheduler-toolbar,
+.k-scheduler-footer > .k-header
+{
+    background-color: @secondary-background-color;
+}
+
+.k-header.k-scheduler-views,
+.k-header.k-datepicker,
+.k-header.k-datetimepicker,
+.k-header.k-timepicker,
+.k-header.k-dropdown,
+.k-scheduler-navigation > .k-header,
+.k-header.k-gantt-views,
+.k-gantt-navigation > .k-header
+{
+    background-color: transparent;
+}
+
+.k-scheduler-header th,
+.k-scheduler-times th,
+.k-calendar th
+{
+    color:#666;
+    font-weight: normal;
+    font-size: .8em;
+    text-transform: uppercase;
+}
+
+.k-tabstrip .k-tabstrip-items .k-state-hover
+{
+    border-color: transparent;
+}
+
+.k-tabstrip .k-tabstrip-items .k-state-hover .k-link
+{
+    color: @selected-border-color;
+}
+
+.k-tabstrip .k-tabstrip-items .k-state-active
+{
+    border-color: @selected-border-color;
+}
+
+.k-tabstrip .k-tabstrip-items .k-state-active .k-link
+{
+    color: @selected-border-color;
+    border-color: @selected-border-color;
+}
+
+div.k-window,
+div.k-window.k-state-focused
+{
+    border-color: #666;
+}
+
+.k-window-titlebar.k-header
+{
+    background: none;
+    color: #666;
+}
+
+.k-grid td.k-state-selected,
+.k-grid tr.k-state-selected,
+.k-list > .k-state-selected,
+.k-group > .k-item > .k-state-selected,
+.k-gantt .k-treelist .k-state-selected,
+.k-gantt .k-treelist .k-state-selected td,
+.k-gantt .k-treelist .k-alt.k-state-selected,
+.k-gantt .k-treelist .k-alt.k-state-selected > td
+{
+    background-color: @selected-secondary-background-color;
+    color: @widget-text-color;
+}
+
+.k-gantt-treelist
+{
+    background: @header-background-color;
+}
+
+.k-grid tr td,
+.k-grid tr th
+{
+    border-left-color: transparent;
+}
+
+.k-pager-wrap > .k-link,
+.k-pager-numbers .k-link,
+.k-pager-numbers .k-link:hover,
+.k-pager-numbers .k-state-selected {
+    background: none;
+    border-radius: 0;
+}
+
+.k-pager-wrap > .k-link,
+.k-pager-wrap > .k-link.k-state-disabled:hover,
+.k-pager-wrap > .k-link:hover,
+.k-pager-numbers .k-link:hover
+{
+    border-radius: 0;
+    border-color: transparent;
+}
+
+.k-pager-wrap > .k-link:hover
+{
+    border-color: @widget-border-color;
+}
+
+.k-pager-numbers .k-link {
+    border-color: transparent;
+}
+
+.k-grouping-header,
+.k-grid-toolbar
+{
+    padding: 0.714em;
+}
+
+.k-window .k-edit-buttons
+{
+    background: #000;
+}
+
+.k-scheduler .k-scheduler-views .k-state-selected,
+.k-gantt .k-gantt-views .k-state-selected
+{
+    background: none;
+}
+
+.k-gantt .k-gantt-views > li
+{
+    border-radius: 0;
+}
+
+.k-gantt .k-gantt-views .k-state-selected
+{
+    border-color: @selected-border-color;
+}
+
+.k-task-summary-complete
+{
+    border-color: @selected-border-color;
+    background: @selected-border-color;
+}
+
+.k-state-selected .k-task-summary-complete
+{
+    border-color: @primary-active-background-color;
+    background: @primary-active-background-color;
+}
+
+.k-task-milestone
+{
+    border-color: #99d101;
+    background: #99d101;
+}
+
+.k-task-dot:after
+{
+    background-color: @disabled-text-color;
+    border-color: @disabled-text-color;
+}
+
+.k-task-dot:hover:after
+{
+    background-color: #444;
+}
+
+.k-scheduler-views .k-link:link,
+.k-scheduler-views .k-link:visited,
+.k-gantt-views .k-link:link,
+.k-gantt-views .k-link:visited,
+.k-scheduler-navigation .k-nav-today .k-link,
+.k-group-indicator .k-link,
+.k-pager-numbers .k-link
+{
+    color: @widget-text-color;
+}
+
+.k-calendar .k-footer .k-nav-today,
+.k-calendar .k-link.k-nav-fast,
+.k-scheduler .k-scheduler-views > .k-state-selected > .k-link,
+.k-gantt .k-gantt-views > .k-state-selected > .k-link,
+.k-pager-numbers .k-state-selected
+{
+    color: @selected-border-color;
+}
+
+.k-scheduler .k-scheduler-toolbar ul li.k-state-hover,
+.k-gantt .k-gantt-toolbar ul li.k-state-hover
+{
+    background: none;
+    border-color: transparent;
+}
+
+.k-scheduler .k-scheduler-toolbar ul li.k-state-selected,
+.k-gantt .k-gantt-toolbar ul li.k-state-selected
+{
+    border-color: @selected-border-color;
+}
+
+.k-scheduler .k-scheduler-toolbar .k-state-hover .k-link,
+.k-gantt .k-gantt-toolbar .k-state-hover .k-link
+{
+    color: @selected-background-color;
+}
+
+.k-calendar td
+{
+    background: @header-background-color;
+    border-color: @widget-background-color;
+}
+
+.k-calendar td.k-weekend
+{
+    background: #e5e5e5;
+}
+
+.k-calendar td.k-today
+{
+    background: #ccc;
+}
+
+.k-calendar td.k-other-month
+{
+    background: transparent;
+}
+
+.k-calendar td.k-state-selected
+{
+    background: @selected-background-color;
+}
+
+.k-calendar td.k-state-hover
+{
+    background: @hover-background-color;
+    border-color: @widget-background-color;
+}
+
+.k-scheduler-table .k-other-month,
+.k-scheduler-header th
+{
+    background: #fff;
+}
+
+.k-scheduler-times tr,
+.k-scheduler-times th,
+.k-scheduler-table td,
+.k-scheduler-header th,
+.k-scheduler-header-wrap,
+.k-scheduler-times
+{
+    border-color: #fff;
+}
+
+.k-scheduler-header tr + tr > th
+{
+    border-top-color: @cell-border-color;
+}
+
+
+.k-scheduler-header th
+{
+    height: 2.714em
+}
+
+.k-scheduler .k-scheduler-datecolumn,
+.k-scheduler .k-scheduler-timecolumn
+{
+    width: 150px;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.k-state-disabled
+{
+    filter: alpha(opacity=50);
+    opacity: .5;
+}
+
+.k-dropdown .k-dropdown-wrap
+{
+    background-color: @drop-down-background;
+}
+
+.k-popup > .k-group-header,
+.k-popup > .k-virtual-wrap > .k-group-header
+{
+    color: @widget-text-color;
+}
+
+.k-popup .k-item > .k-group
+{
+    color: @widget-text-color;
+}
+
+/* Responsive styles */
+
+@media only screen and (max-width: 1024px) {
+    .k-webkit,
+    .k-ff,
+    .k-ie11 {    
+        /* Responsive Scheduler */
+        
+        .k-scheduler-toolbar > ul.k-scheduler-views {
+            right: 0;
+            top: 0;
+        }
+        
+        .k-rtl .k-scheduler-toolbar > ul.k-scheduler-views {
+            right: auto;
+            left: 0;
+        }
+        
+        .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view,
+        .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view:hover {
+            .composite-background(@widget-gradient);
+            background-position: 50% 50%;
+            background-color: transparent;
+            border-color: transparent;
+            border-radius: @main-border-radius;
+            text-align: right;
+        }
+        
+        .k-rtl .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view {
+            text-align: left;
+            padding-left: 0;
+        }
+        
+        .k-scheduler-toolbar > ul.k-scheduler-views.k-state-expanded > li {
+            border-radius: 0;
+        }
+        
+        .k-scheduler-toolbar > ul.k-scheduler-views.k-state-expanded > li.k-current-view {
+            border-radius: @inner-border-radius @inner-border-radius 0 0;
+        }
+        
+        .k-scheduler-toolbar > ul li:first-child, .k-scheduler-toolbar > ul li:first-child .k-link,
+        .k-scheduler-toolbar > ul.k-scheduler-views li,
+        .k-scheduler-toolbar > ul.k-scheduler-views li .k-link {
+            border-radius: 0;
+            padding-top: 0;
+        }
+        
+        .k-scheduler-toolbar > ul.k-scheduler-views li:last-child,
+        .k-scheduler-toolbar > ul.k-scheduler-views li:last-child .k-link {
+            border-radius: 0 0 @inner-border-radius @inner-border-radius;
+        }
+    
+        .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view:hover {
+            border-color: transparent;
+            .composite-background(@hover-gradient);
+            background-color: transparent;
+        }
+        
+        .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view > .k-link,
+        .k-scheduler-toolbar > ul.k-scheduler-views > li.k-current-view:hover > .k-link {
+            color: @header-text-color;
+            min-width: 20px;
+        }
+        
+        .k-scheduler-views > li.k-state-selected > .k-link:after {
+            display: block;
+            content: "";
+            position: absolute;
+            top: 50%;
+            margin-top: -0.5em;
+            right: 0.333em;
+            width: 16px;
+            height: 16px;
+        }
+        
+        .k-scheduler-toolbar > ul.k-scheduler-views.k-state-expanded {
+            border-width: 1px 1px 0 1px;
+            border-style: solid;
+            border-color: transparent; /*@secondary-border-color*/
+            background-color: @header-background-color;
+            border-radius: 0;
+            border-width: 1px;
+            background-image: none;
+            .box-shadow(0 2px 2px 0 @shadow-color);
+        }
+        
+        .k-rtl .k-scheduler-toolbar > ul.k-scheduler-views.k-state-expanded {
+            text-align: left;
+        }
+        
+        /* Responsive Pager */
+    
+        .k-pager-wrap .k-pager-nav,
+        .k-pager-input {
+            float:none;
+            display: inline-block;
+            vertical-align: top;
+        }
+        
+        .k-pager-numbers,
+        .k-grid .k-pager-numbers {
+            position: absolute;
+            left: 5em;
+            display: -moz-inline-flex;
+            display: -webkit-inline-flex;
+            display: inline-flex;
+            -webkit-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+            -webkit-transform: translatey(-100%);
+            -moz-transform: translatey(-100%);
+            transform: translatey(-100%);
+            margin-top: 6px;
+            overflow: visible;
+            height: auto;
+        }
+        
+        .km-pane-wrapper .k-pager-numbers .k-link,
+        .km-pane-wrapper .k-pager-numbers .k-state-selected,
+        .km-pane-wrapper .k-pager-wrap > .k-link,
+        .km-pane-wrapper .k-pager-wrap > .k-pager-info {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        
+        .k-rtl .k-pager-numbers,
+        .k-rtl .k-grid .k-pager-numbers
+        {
+            right: 5em;
+            width: 5.15em;
+        }
+        
+        .k-pager-numbers .k-current-page,
+        .k-grid .k-pager-numbers .k-current-page {
+            display: block;
+            border-left: 0;
+            -webkit-transform: translatey(100%);
+            -moz-transform: translatey(100%);
+            transform: translatey(100%);
+        }
+        
+        .k-pager-numbers li:not(.k-current-page) {
+            display: none;
+        }   
+        
+        .k-pager-wrap .k-pager-numbers .k-current-page .k-link {
+            width: 3.8em;
+            line-height: 1.429em;
+            padding: 0.643em .429em 0.643em 0.8em;
+            border-radius: @main-border-radius;
+            .composite-background(@widget-gradient);
+            background-position: 50% 50%;
+            background-color: @drop-down-background;
+            border: 1px solid @widget-border-color;
+        }
+        
+        .k-pager-numbers .k-current-page:hover .k-link {
+            border-radius: @main-border-radius;
+            background-color: @widget-background-color;
+            border: 1px solid @selected-border-color;
+        }
+        
+        .k-pager-numbers .k-current-page .k-link:after {
+            display: block;
+            content: "";
+            position: absolute;
+            top: 50%;
+            margin-top: -0.6em;
+            right: 0.8em;
+            width: 16px;
+            height: 16px;
+        }
+        
+        .k-pager-numbers + .k-link {
+            margin-left: 5.4em;
+        }
+        
+        .k-rtl .k-pager-numbers + .k-link {
+            margin-right: 5.2em;
+            margin-left: 0;
+        }
+        
+        .k-pager-wrap .k-pager-numbers .k-state-selected,
+        .k-pager-wrap .k-pager-numbers .k-link {
+            display: block;
+            margin-top: 0;
+            margin-right: 0;
+            padding: 1px 5px 1px .8em;
+            text-align: left;
+            border-width: 1px;
+        }
+        
+        .k-pager-wrap .k-pager-numbers .k-state-selected {
+            background-color: @selected-secondary-background-color;
+        }
+        
+        .k-pager-wrap .k-pager-numbers li:not(.k-current-page) .k-link:hover {
+            background-color: @hover-background-color;
+        }
+        
+        .k-pager-numbers.k-state-expanded {
+            box-sizing: border-box;
+            padding: 5px 0 0;
+            border-style: solid;
+            border-color: @widget-border-color;
+            background-color: @widget-background-color;
+            border-radius: @main-border-radius @main-border-radius 0 0;
+            .box-shadow(0 2px 2px 0 @shadow-color);
+        }
+        
+        .k-pager-numbers.k-state-expanded .k-current-page {
+            margin: -2.5em -1px 0;
+            padding: 0;
+        }
+        
+        .k-pager-numbers.k-state-expanded .k-current-page .k-link {
+            border-radius: 0 0 @main-border-radius @main-border-radius;
+            background-color: @widget-background-color;
+            border: 1px solid @selected-border-color;
+            border-top-color: @widget-border-color;
+        }
+        
+        .k-pager-numbers.k-state-expanded .k-current-page .k-link:after {
+            background-position: 0 0;
+            opacity: 1;
+        }
+        
+        .k-pager-numbers.k-state-expanded li {
+            display: inline-block;
+        }
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .k-webkit,
+    .k-ff,
+    .k-ie11 {
+        .k-pager-info {
+            display: none;
+        }
+    }    
+}
+
+@media only screen and (max-width: 480px) {
+    .k-webkit,
+    .k-ff,
+    .k-ie11 {
+        .k-pager-sizes {
+            display: none;
+        }
+    }    
 }
