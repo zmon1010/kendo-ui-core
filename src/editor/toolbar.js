@@ -55,7 +55,10 @@
         },
 
         _open: function(e) {
-
+            var isEmpty = e.sender.element.is(":empty");
+            if (isEmpty) {
+                e.preventDefault();
+            }
         },
 
         _activate: function(e) {
