@@ -446,7 +446,9 @@
 
             element.empty();
 
-            toolName = toolConfig[0].name || toolConfig[0];
+            if (toolConfig.length) {
+                toolName = toolConfig[0].name || toolConfig[0];
+            }
             startGroup(toolName, overflowFlaseTools);
 
             for (i = 0; i < toolConfig.length; i++) {
@@ -543,8 +545,8 @@
                 this.window.destroy();
             }
 
-            if (that._resizeHandler) {
-                kendo.unbindResize(that._resizeHandler);
+            if (this._resizeHandler) {
+                kendo.unbindResize(this._resizeHandler);
             }
         },
 
