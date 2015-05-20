@@ -266,20 +266,32 @@ def determine_actions(type, variables)
 
             accuracy.push({ var: variable, delta: delta, old_values: old_values })
         else
-            actions[variable], delta = mode old_values
+            value, delta = mode old_values
+
+            color = /#([a-fA-F]|[0-9])+/
+
+            if value =~ color then
+                old = value
+
+                value = value.gsub(color) { |color| (color_transform [color])[0] }
+
+                p "Improved #{old} to #{value}"
+            end
+
+            actions[variable] = value
 
             accuracy.push({ var: variable, delta: delta, old_values: old_values })
             unmatched.push("    #{variable}: #{old_values}") if delta > 0.5
         end
     end
 
-    offenders = accuracy.sort { |a, b| a[:delta] <=> b[:delta] }.reverse.select { |x| x[:delta] > 0.0 }
+    offenders = accuracy.sort { |a, b| a[:delta] <=> b[:delta] }.reverse.select { |x| x[:delta] > 0.02 }
                     .map { |x| "    #{x[:var]} : #{x[:delta]} : #{x[:old_values]}" }
     score = accuracy.reduce(0) { |n, item| n + item[:delta] }
 
     puts "Conversion accuracy score (lower is better): #{score}"
     puts "  Top offenders:\n#{offenders.join("\n")}"
-    #puts "  Unmatched values (using mode):\n #{unmatched.join("\n")}"
+    puts "  Unmatched values (using mode):\n #{unmatched.join("\n")}"
 
     actions
 end
