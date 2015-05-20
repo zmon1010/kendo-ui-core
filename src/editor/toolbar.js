@@ -651,6 +651,11 @@
 
         _resize: function(e) {
             var containerWidth = e.width;
+            var popup = this.options.editor.morePopup;
+
+            if (popup.visible()) {
+                popup.close();
+            }
 
             this._refreshWidths();
 
