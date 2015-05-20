@@ -8,7 +8,7 @@
             <div class="product" k-template>
                 <img ng-src="../content/web/foods/{{dataItem.ProductID}}.jpg" alt=" {{dataItem.ProductName}} image" />
                 <h3>{{ dataItem.ProductName }}</h3>
-                <p>{{ kendo.toString(dataItem.UnitPrice, "c") }}</p>
+				<p>{{ dataItem.UnitPrice | currency }}</p>
             </div>
         </div>
         <div kendo-pager k-data-source="source"></div>
