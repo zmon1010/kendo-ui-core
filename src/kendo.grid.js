@@ -4234,6 +4234,14 @@ var __meta__ = {
                 handled = true;
             }
 
+            if (canHandle && e.keyCode == keys.PAGEDOWN) {
+                handled = this._handlePageDown();
+            }
+
+            if (canHandle && e.keyCode == keys.PAGEUP) {
+                handled = this._handlePageUp();
+            }
+
             if (e.keyCode == keys.ENTER || e.keyCode == keys.F2) {
                 handled = this._handleEnterKey(current, e.currentTarget, target);
             }
@@ -4252,6 +4260,26 @@ var __meta__ = {
                 //required in hierarchy
                 e.stopPropagation();
             }
+        },
+
+        _handlePageDown: function() {
+            if (!this.options.pageable) {
+                return false;
+            }
+
+            this.dataSource.page(this.dataSource.page() + 1);
+
+            return true;
+        },
+
+        _handlePageUp: function() {
+            if (!this.options.pageable) {
+                return false;
+            }
+
+            this.dataSource.page(this.dataSource.page() - 1);
+
+            return true;
         },
 
         _handleTabKey: function(current, currentTable, shiftKey) {
@@ -7284,7 +7312,7 @@ var __meta__ = {
        },
 
         _restoreCurrent: function(currentIndex, isCurrentInHeader) {
-            if (currentIndex < 0) {
+            if (currentIndex === undefined || currentIndex < 0) {
                 return;
             }
 
