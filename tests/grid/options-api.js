@@ -132,6 +132,19 @@
         equal(options.dataSource.sort[0].dir, "desc");
     });
 
+    test("initial data source data is not deleted", function() {
+        var data = new kendo.data.ObservableArray([ { foo: "bar" } ]);
+        var grid = setup({
+            dataSource: {
+                data: data
+            }
+        });
+        var options = grid.getOptions();
+
+        deepEqual(options.dataSource.data, data, "cloned data source data is not correct");
+        deepEqual(grid.dataSource.options.data, data, "current data source data is removed");
+    });
+
     test("getOptions retrieves the columns", function() {
         var grid = setup();
         equal(grid.columns.length, 3);

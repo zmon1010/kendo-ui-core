@@ -1621,6 +1621,8 @@ var __meta__ = {
 
             result.dataSource = $.extend(true, {}, dataSource.options);
 
+            dataSource.options.data = initialData;
+
             result.dataSource.data = initialData;
             result.dataSource.page = dataSource.page();
             result.dataSource.filter = dataSource.filter();
