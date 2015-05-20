@@ -49,7 +49,6 @@
             }
 
             if (ref instanceof calc.Runtime.RangeRef) {
-                debugger;
                 // ref = ref.intersect(this.getSheetBounds());
                 // if (!(ref instanceof calc.Runtime.RangeRef))
                 //     return this.getRefCells(ref);

@@ -9,14 +9,23 @@
 
         var cellsCount = rows * columns - 1;
 
-        this._values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "");
-        this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "");
-        this._backgrounds = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "beige");
+        this._values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
+        this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
+        this._backgrounds = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
 
         this._grid = new kendo.spreadsheet.Grid(rows, columns);
     }
 
     Sheet.prototype = {
+        name: function(value) {
+            if (!value) {
+                return this._name;
+            }
+            else {
+                this._name = value;
+            }
+        },
+
         view: function(rectangle) {
             return {
                 rows: this._rows.visible(rectangle.top, rectangle.bottom),
