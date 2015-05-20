@@ -627,6 +627,7 @@
             formats: {},
             encoded: true,
             domain: null,
+            resizable: false,
             serialization: {
                 entities: true,
                 semantic: true,
