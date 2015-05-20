@@ -117,10 +117,11 @@
             return callback();
         }
         formulaCells.forEach(function(cell){
-            cell.formula.exec(Glue, "sheet1", cell.row, cell.col);
-            if (callback && !--count) {
-                callback();
-            }
+            cell.formula.exec(Glue, "sheet1", cell.row, cell.col, function(){
+                if (callback && !--count) {
+                    callback();
+                }
+            });
         });
     }
 
