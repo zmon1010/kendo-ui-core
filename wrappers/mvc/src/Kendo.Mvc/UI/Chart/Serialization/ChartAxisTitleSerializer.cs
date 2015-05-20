@@ -28,7 +28,8 @@ namespace Kendo.Mvc.UI
                 .Add("color", title.Color, () => title.Color.HasValue())
                 .Add("opacity", title.Opacity, () => title.Opacity.HasValue)
                 .Add("rotation", title.Rotation, () => title.Rotation.HasValue)
-                .Add("visible", title.Visible, () => title.Visible.HasValue);
+                .Add("visible", title.Visible, () => title.Visible.HasValue)
+                .Add("visual", title.Visual, () => title.Visual.HasValue());
 
             return result;
         }

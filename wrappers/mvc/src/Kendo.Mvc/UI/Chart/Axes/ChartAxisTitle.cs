@@ -10,6 +10,7 @@ namespace Kendo.Mvc.UI
             Margin = new ChartSpacing();
             Padding = new ChartSpacing();
             Border = new ChartElementBorder();
+            Visual = new ClientHandlerDescriptor();
         }
 
         /// <summary>
@@ -118,6 +119,15 @@ namespace Kendo.Mvc.UI
         /// Gets or sets the axis title visibility.
         /// </summary>
         public bool? Visible
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the title visual function
+        /// </summary>
+        public ClientHandlerDescriptor Visual
         {
             get;
             set;

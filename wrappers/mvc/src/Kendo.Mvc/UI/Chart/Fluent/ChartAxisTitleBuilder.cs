@@ -308,5 +308,33 @@ namespace Kendo.Mvc.UI.Fluent
             title.Visible = visible;
             return this;
         }
+
+        /// <summary>
+        /// Sets the function used to render the axis title.
+        /// </summary>
+        /// <param name="visualFunction">
+        ///     The JavaScript function that will be executed
+        ///     to retrieve the visual of the axis title.
+        /// </param>
+        public ChartAxisTitleBuilder Visual(Func<object, object> visualFunction)
+        {
+            title.Visual = new ClientHandlerDescriptor { TemplateDelegate = visualFunction };
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the function used to render the axis title.
+        /// </summary>
+        /// <param name="colorFunction">
+        ///     The JavaScript function that will be executed
+        ///     to retrieve the visual of the axis title.
+        /// </param>
+        public ChartAxisTitleBuilder Visual(string visualFunction)
+        {
+            title.Visual = new ClientHandlerDescriptor { HandlerName = visualFunction };
+
+            return this;
+        }
     }
 }

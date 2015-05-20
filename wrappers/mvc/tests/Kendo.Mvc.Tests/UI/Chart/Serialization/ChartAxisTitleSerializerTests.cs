@@ -145,6 +145,19 @@ namespace Kendo.Mvc.UI.Tests
             GetJson()["visible"].ShouldEqual(true);
         }
 
+        [Fact]
+        public void Serializes_visual()
+        {
+            title.Visual = new ClientHandlerDescriptor { HandlerName = "foo" };
+            GetJson().ContainsKey("visual").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Does_not_serialize_default_visual()
+        {
+            GetJson().ContainsKey("visual").ShouldBeFalse();
+        }
+
         private IDictionary<string, object> GetJson()
         {
             return title.CreateSerializer().Serialize();

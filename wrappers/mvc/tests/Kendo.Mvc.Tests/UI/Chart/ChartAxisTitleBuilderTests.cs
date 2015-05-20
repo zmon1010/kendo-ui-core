@@ -123,5 +123,18 @@ namespace Kendo.Mvc.UI.Tests.Chart
         {
             builder.Visible(false).ShouldBeSameAs(builder);
         }
+
+        [Fact]
+        public void Visual_sets_Visible()
+        {
+            builder.Visual("foo");
+            title.Visual.HandlerName.ShouldEqual("foo");
+        }
+
+        [Fact]
+        public void Visual_should_return_builder()
+        {
+            builder.Visual("foo").ShouldBeSameAs(builder);
+        }
     }
 }
