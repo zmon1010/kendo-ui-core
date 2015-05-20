@@ -681,6 +681,10 @@
 
             this._shrink(containerWidth);
             this._stretch(containerWidth);
+
+            this.element
+                .children("li.k-more-tool")
+                .css("visibility", popup.element.is(":empty") ? "hidden" : "visible");
         },
 
         _refreshWidths: function() {
