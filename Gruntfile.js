@@ -6,7 +6,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-debug-task');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadTasks('build/grunt/tasks');
 
     // support different test sets for public|private repo
@@ -274,23 +273,6 @@ module.exports = function(grunt) {
             },
             compile: {
                 src: [ "styles/**/kendo*.less" ],
-            }
-        },
-
-        watch: {
-            scripts: {
-                files: 'src/**/*.js',
-                tasks: ['jshint'],
-                options: {
-                    debounceDelay: 250
-                }
-            },
-
-            styles: {
-                files: 'styles/**/*.less',
-                options: {
-                    livereload: true
-                }
             }
         },
 
