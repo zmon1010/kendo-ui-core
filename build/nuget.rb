@@ -27,17 +27,13 @@ namespace :nuget do
             File.write(f.name, ERB.new(File.read(erb), 0, '%<>').result(binding))
         end
 
-        file nuget => [nuspec, "dist/bundles/mvc-6"] do |f|
+        file nuget => [nuspec] do |f|
             sh "cd dist/bundles && nuget pack #{nuspec.pathmap("%f")}"
         end
 
         NUGETS << nuget
 
         task :default => nuget
-
-        if erb =~ /Mvc6/
-            task :mvc6 => nuget
-        end
     end
 
     def zip_bundle(name, package)
@@ -45,13 +41,12 @@ namespace :nuget do
     end
 
     def mvc_packages(options)
-        mvc_versions = [3,4,5,6]
+        mvc_versions = [3,4,5]
 
         suffix = ".Trial" if options[:trial]
 
         mvc_versions.map { |mvc_version|
-            version_suffix = MVC_6_VERSION_SUFFIX if mvc_version == 6
-            "Telerik.UI.for.AspNet.Mvc#{mvc_version}#{suffix}.#{VERSION}#{version_suffix}.nupkg"
+            "Telerik.UI.for.AspNet.Mvc#{mvc_version}#{suffix}.#{VERSION}.nupkg"
         }.join(" ")
     end
 
