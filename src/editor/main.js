@@ -286,7 +286,9 @@
         },
 
         _resizable: function() {
-            if (this.options.resizable && this.textarea) {
+            var resizable = this.options.resizable;
+            var isResizable = $.isPlainObject(resizable) ? (resizable.content === undefined || resizable.content === true) : resizable;
+            if (isResizable && this.textarea) {
                 $("<div class='k-resize-handle'><span class='k-icon k-resize-se' /></div>")
                     .insertAfter(this.textarea);
 
