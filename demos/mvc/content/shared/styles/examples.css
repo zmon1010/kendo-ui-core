@@ -3066,6 +3066,12 @@ html.k-materialblack .demo-section.k-content {
     -webkit-columns: 3;
     max-width: 700px;
   }
+  
+  #source-code > div.k-content {
+    height: 500px;
+    overflow: scroll;
+    -webkit-touch-overflow: scroll;
+  }
 }
 
 @media only screen and (max-width : 720px) {
@@ -3193,6 +3199,11 @@ html.k-materialblack .demo-section.k-content {
   #codeStrip .documentation-link {
     padding: 11px;
   }
+  
+  #source-code > div.k-content {
+    height: 300px;
+  }
+  
 }
 
 @media only screen and (max-width : 520px) {
@@ -3302,11 +3313,6 @@ html.k-materialblack .demo-section.k-content {
     margin-right: -20px;
   }
   
-  #source-code > div.k-content {
-    height: 300px;
-    overflow: scroll;
-    -webkit-touch-overflow: scroll;
-  }
 }
 
 @media only screen and (max-width : 320px) {
