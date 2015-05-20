@@ -105,14 +105,22 @@
         }
     };
 
-    function recalculate() {
-        Glue.getRefCells(Glue.getSheetBounds()).filter(function(cell){
+    function recalculate(callback) {
+        var formulaCells = Glue.getRefCells(Glue.getSheetBounds()).filter(function(cell){
             if (cell.formula) {
                 cell.formula.reset();
                 return true;
             }
-        }).forEach(function(cell){
+        });
+        var count = formulaCells.length;
+        if (!count && callback) {
+            return callback();
+        }
+        formulaCells.forEach(function(cell){
             cell.formula.exec(Glue, "sheet1", cell.row, cell.col);
+            if (callback && !--count) {
+                callback();
+            }
         });
     }
 
