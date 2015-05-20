@@ -185,7 +185,7 @@
             that._editor = editor;
 
             // re-initialize the tools
-            editor.options.tools.push("more");
+            editor.options.tools.unshift("more");
             that.tools = that.expandTools(editor.options.tools);
             that.render();
 
