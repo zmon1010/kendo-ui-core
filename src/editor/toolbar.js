@@ -88,11 +88,13 @@
                 that._initPopup();
             }
 
-            that._resizeHandler = kendo.onResize(function() {
-                that.resize();
-            });
+            if (options.resizable && options.resizable.toolbar) {
+                that._resizeHandler = kendo.onResize(function() {
+                    that.resize();
+                });
 
-            that.element.addClass("k-toolbar-resizable");
+                that.element.addClass("k-toolbar-resizable");
+            }
         },
 
         events: [
@@ -187,8 +189,11 @@
 
             that._editor = editor;
 
+            if (that.options.resizable && that.options.resizable.toolbar) {
+                editor.options.tools.unshift("more");
+            }
+
             // re-initialize the tools
-            editor.options.tools.unshift("more");
             that.tools = that.expandTools(editor.options.tools);
             that.render();
 
@@ -396,6 +401,7 @@
                 toolConfig = that._editor.options.tools,
                 browser = kendo.support.browser,
                 group, i, groupPosition = 0,
+                resizable = that.options.resizable && that.options.resizable.toolbar,
                 overflowFlaseTools = this.overflowFlaseTools,
                 overflow;
 
@@ -417,11 +423,15 @@
 
             function endGroup() {
                 if (group.children().length) {
-                    if (!group.hasClass("k-more-tool")) {
-                        group.css("visibility", "hidden");
+                    if (resizable) {
+                        if (!group.hasClass("k-more-tool")) {
+                            group.css("visibility", "hidden");
+                        }
+                        group.data("position", groupPosition);
+                        groupPosition++;
                     }
-                    group.appendTo(element).data("position", groupPosition);
-                    groupPosition++;
+
+                    group.appendTo(element);
                 }
             }
 
@@ -654,7 +664,12 @@
 
         _resize: function(e) {
             var containerWidth = e.width;
+            var resizable = this.options.resizable && this.options.resizable.toolbar;
             var popup = this.options.editor.morePopup;
+
+            if (!resizable) {
+                return;
+            }
 
             if (popup.visible()) {
                 popup.close();
