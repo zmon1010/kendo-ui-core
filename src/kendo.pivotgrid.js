@@ -4008,6 +4008,7 @@ var __meta__ = {
                 row = element("tr", null, []);
 
                 row.parentMember = parentMember;
+                row.collapsed = 0;
                 row.colSpan = 0;
                 row.rowSpan = 1;
 
@@ -4106,8 +4107,10 @@ var __meta__ = {
 
             if (member.hasChildren) {
                 if (metadata.expanded === false) {
-                    childrenLength = 0;
+                    row.collapsed += metadata.maxChildren;
+
                     metadata.children = 0;
+                    childrenLength = 0;
                 }
 
                 cellAttr = { className: "k-icon " + (childrenLength ? STATE_EXPANDED : STATE_COLLAPSED) };
@@ -4138,6 +4141,7 @@ var __meta__ = {
 
                 row.colSpan += colSpan;
                 row.rowSpan = childRow.rowSpan + 1;
+                row.collapsed += childRow.collapsed;
 
                 if (nextMember) {
                     if (nextMember.measure) {
@@ -4167,8 +4171,8 @@ var __meta__ = {
                 }
             }
 
-            if (metadata.maxChildren < metadata.children) {
-                metadata.maxChildren = metadata.children;
+            if (metadata.maxChildren < (metadata.children + row.collapsed)) {
+                metadata.maxChildren = metadata.children + row.collapsed;
             }
 
             if (metadata.maxMembers < metadata.members) {

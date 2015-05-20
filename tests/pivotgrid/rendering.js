@@ -2678,6 +2678,99 @@
         equal(cells.eq(6).text(), "1");
     });
 
+    test("PivotGrid takes into account the collapsed member on expand", function() {
+        var axes = [
+            {
+                columns: {
+                    tuples: [
+                        { members: [ { name: "dim 0", levelNum: "0", hasChildren: true, children: [] }] },
+                        { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", hasChildren: true, children: [] }] },
+                        { members: [ { name: "dim 0_2", parentName: "dim 0", levelNum: "1", hasChildren: true, children: [] }] },
+                        { members: [ { name: "dim 0_3", parentName: "dim 0_1", levelNum: "2", children: [] }] }
+                    ]
+                },
+                rows: {
+                    tuples: [
+                        { members: [ { name: "dim 0", levelNum: "0", hasChildren: true, children: [] }] },
+                        { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] }] },
+                    ]
+                }
+            },
+            {
+                columns: {
+                    tuples: [
+                        { members: [ { name: "dim 0_2", parentName: "dim 0", levelNum: "1", hasChildren: true, children: [] }] },
+                        { members: [ { name: "dim 0_4", parentName: "dim 0_2", levelNum: "2", children: [] }] },
+                        { members: [ { name: "dim 0_5", parentName: "dim 0_2", levelNum: "2", children: [] }] }
+                    ]
+                },
+                rows: {
+                    tuples: [
+                        { members: [ { name: "dim 0", levelNum: "0", hasChildren: true, children: [] }] },
+                        { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] }] },
+                    ]
+                }
+            }
+        ];
+
+        var data = [
+            [
+                { value: 1 }, { value: 2 },
+                { value: 3 }, { value: 4 },
+                { value: 5 }, { value: 6 },
+                { value: 7 }, { value: 8 }
+            ], [
+                { value: 3 }, { value: 9 },
+                { value: 10 }, { value: 7 },
+                { value: 11 }, { value: 12 },
+            ]
+        ];
+
+        var pivotgrid = createPivot({
+            dataSource: {
+                measures: [],
+                schema: {
+                    axes: "axes",
+                    data: "data"
+                },
+                transport: {
+                    read: function(options) {
+                        options.success({
+                            axes: axes.shift(),
+                            data: data.shift()
+                        });
+                    }
+                }
+            }
+        });
+
+        //collapse first child
+        pivotgrid._columnBuilder.metadata["[\"dim 0_1\"]"].expanded = false;
+        pivotgrid.refresh();
+
+        pivotgrid.dataSource.expandColumn("dim 0_2");
+
+        var contentTable = pivotgrid.wrapper.find(".k-grid-content").find("table");
+
+        var rows = contentTable.find("tr");
+        var cells_level1 = rows.eq(0).find("td");
+        var cells_level2 = rows.eq(1).find("td");
+
+        equal(rows.length, 2);
+
+        equal(cells_level1.eq(0).text(), "6");
+        equal(cells_level1.eq(1).text(), "11");
+        equal(cells_level1.eq(2).text(), "12");
+        equal(cells_level1.eq(3).text(), "7");
+        equal(cells_level1.eq(4).text(), "5");
+
+        equal(cells_level2.eq(0).text(), "2");
+        equal(cells_level2.eq(1).text(), "9");
+        equal(cells_level2.eq(2).text(), "10");
+        equal(cells_level2.eq(3).text(), "3");
+        equal(cells_level2.eq(4).text(), "1");
+    });
+
     test("PivotGrid renders one dimension with three measures", function() {
         var tuples = [
             { members: [ { name: "level 0", levelNum: "0", children: [] }, { name: "measure 1", children: [] } ] },
