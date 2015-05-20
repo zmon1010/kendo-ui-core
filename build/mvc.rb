@@ -249,7 +249,7 @@ namespace :mvc do
         MVC_BIN_ROOT + 'Release-MVC3-Trial/Kendo.Mvc.dll',
         MVC_BIN_ROOT + 'Release-MVC5-Trial/Kendo.Mvc.dll',
         MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll',
-        MVC6_NUGET,
+        #MVC6_NUGET,
         'dist/binaries/',
         'dist/binaries/mvc-6/'
     ]

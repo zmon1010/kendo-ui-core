@@ -187,7 +187,7 @@ ROOT_MAP.merge!( {
 } )
 
 MVC_CONTENT.merge!( {
-    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples" => MVC_6_DEMOS,
+    #"wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples" => MVC_6_DEMOS,
     "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
 } )
 
@@ -467,7 +467,8 @@ bundle :name => 'aspnetmvc.trial',
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }
        .merge(MVC_CONTENT),
-       :post_build => ['mvc:copy_trials', 'mvc_6:copy_nuget'],
+       #:post_build => ['mvc:copy_trials', 'mvc_6:copy_nuget'],
+       :post_build => ['mvc:copy_trials'],
        :prerequisites => [
            'mvc:assets',
            'plugins/KendoScaffolder/KendoScaffolderExtension.vsix',
@@ -594,7 +595,7 @@ bundle :name => 'aspnetmvc.commercial',
                 .exclude('**/*.csproj'),
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }.merge(MVC_CONTENT),
-       :post_build => 'mvc_6:copy_nuget',
+       #:post_build => 'mvc_6:copy_nuget',
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test',
@@ -960,8 +961,7 @@ namespace :build do
         nugets = []
 
         NUGETS.each do |nuget|
-            version_suffix = MVC_6_VERSION_SUFFIX if nuget.match(/Mvc6/)
-            name = nuget.pathmap("%n") + ".#{VERSION}#{version_suffix}.nupkg";
+            name = nuget.pathmap("%n") + ".#{VERSION}.nupkg";
 
             dest = File.join(ARCHIVE_ROOT, destination, name)
             source = File.join("dist/bundles",  name)
