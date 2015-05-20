@@ -546,6 +546,7 @@
                 if (this._diffNumericOptions(options, [X, Y])) {
                     this._setPosition();
                 }
+                this._drawGradient();
             }
         },
 
@@ -571,6 +572,18 @@
                 createSegment(width, height),
                 createSegment(0, height)
             ]);
+            this._drawGradient();
+        },
+
+        _drawGradient: function() {
+            var fill = this.options.fill;
+            if(!fill || !fill.gradient) {
+                return;
+            }
+
+            var gradient = fill.gradient;
+            var GradientClass = (gradient.type === "radial" ? d.RadialGradient : d.LinearGradient);
+            this.drawingElement.fill(new GradientClass(gradient));
         }
     });
 
