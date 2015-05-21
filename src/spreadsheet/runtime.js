@@ -755,4 +755,14 @@
         return new CalcError(type);
     };
 
+    exports.defineFunction = function(name, func) {
+        FUNCS[name.toLowerCase()] = func;
+    };
+
+    exports.resolveCells = resolveCells;
+
+    exports.forNumbers = forNumbers;
+
+    exports.cellValues = cellValues;
+
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

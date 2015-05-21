@@ -559,7 +559,7 @@
         };
     })({});
 
-    function make_js(cps) {
+    function make_formula(cps) {
         var references = [];
         var code = js(cps);
 
@@ -837,7 +837,7 @@
     exports.make_reference = make_reference;
     exports.print = print;
     exports.compile = function(x) {
-        return make_js(to_cps(x, function(ret){
+        return make_formula(to_cps(x, function(ret){
             return {
                 type: "return",
                 value: ret
