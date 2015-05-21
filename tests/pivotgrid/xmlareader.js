@@ -43,6 +43,20 @@
         ok(!axes.rows.tuples);
     });
 
+    test("empty column and row axes and no slicer axis", function() {
+        var reader = new kendo.data.XmlaDataReader({ });
+        var response = '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ExecuteResponse xmlns="urn:schemas-microsoft-com:xml-analysis"> <return> <root> <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"> </xs:schema> <OlapInfo></OlapInfo><Axes><Axis name="Axis0"><Tuples> <Tuple> <Member Hierarchy="[Date].[Calendar]"> <UName>[Date].[Calendar].[Year].&amp;[2005]</UName> <Caption>2005</Caption> <LName>[Date].[Calendar].[Year]</LName> <LNum>1</LNum> <DisplayInfo>2</DisplayInfo> <CHILDREN_CARDINALITY>2</CHILDREN_CARDINALITY> <PARENT_UNIQUE_NAME>[Date].[Calendar].[All]</PARENT_UNIQUE_NAME> </Member> </Tuple> </Tuples> </Axis> <Axis name="Axis1"> <Tuples> <Tuple> <Member Hierarchy="[Product].[Product Name]"> <UName>[Product].[Product Name].[All]</UName> <Caption>All</Caption> <LName>[Product].[Product Name].[(All)]</LName> <LNum>0</LNum> <DisplayInfo>504</DisplayInfo> <CHILDREN_CARDINALITY>504</CHILDREN_CARDINALITY> </Member> </Tuple> </Tuples> </Axis> </Axes> <CellData> </CellData> </root> </return> </ExecuteResponse> </soap:Body> </soap:Envelope>';
+
+        var body = reader.parse(response);
+        var axes = reader.axes(body);
+
+        var columnTuples = axes.columns.tuples;
+        var rowTuples = axes.rows.tuples;
+
+        equal(columnTuples[0].members.length, 1);
+        equal(rowTuples[0].members.length, 1);
+    });
+
     test("empty tuples on column axes and no rows", function() {
         var reader = new kendo.data.XmlaDataReader({ });
         var response = '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ExecuteResponse xmlns="urn:schemas-microsoft-com:xml-analysis"> <return> <root> <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"> </xs:schema><OlapInfo></OlapInfo> <Axes> <Axis name="Axis0"> <Tuples xmlns="urn:schemas-microsoft-com:xml-analysis:mddataset" /> </Axis> </Axes>  <CellData xmlns="urn:schemas-microsoft-com:xml-analysis:mddataset" /> </root> </return> </ExecuteResponse> </soap:Body> </soap:Envelope>';

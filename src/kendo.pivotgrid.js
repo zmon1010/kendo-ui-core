@@ -2922,17 +2922,26 @@ var __meta__ = {
             root = kendo.getter("ExecuteResponse[\"return\"].root", true)(root);
 
             var axes = asArray(kendo.getter("Axes.Axis", true)(root));
-            var columns = translateAxis(axes[0]);
-            var rows = {};
+            var axis;
 
-            if (axes.length > 2) {
-                rows = translateAxis(axes[1]);
+            var result = {
+                columns: {},
+                rows: {}
+            };
+
+            for (var idx = 0; idx < axes.length; idx++) {
+                axis = axes[idx];
+
+                if (axis["@name"].toLowerCase() !== "sliceraxis") {
+                    if (!result.columns.tuples) {
+                        result.columns = translateAxis(axis);
+                    } else {
+                        result.rows = translateAxis(axis);
+                    }
+                }
             }
 
-            return {
-                columns: columns,
-                rows: rows
-            };
+            return result;
         },
         data: function(root) {
             root = kendo.getter("ExecuteResponse[\"return\"].root", true)(root);
