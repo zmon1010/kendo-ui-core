@@ -1,28 +1,32 @@
+require 'erb'
+
 THEME_BUILDER_BUILDFILE = 'build/theme_builder.rb'
+THEME_TYPES = FileList['styles/web/type-*.less']
+
+TYPE_TEMPLATE = ERB.new(File.read(File.join(File.dirname(__FILE__), 'theme_builder', 'type.js.erb')), 0, '%<>')
 
 tree :to => 'themebuilder/styles/textures',
      :from => FileList['styles/web/textures/**/*'],
      :root => 'styles/web/textures/'
 
-file 'themebuilder/scripts/template.js' => [ 'styles/web/theme-template.less',
-'themebuilder/scripts/constants.js' ] do |t|
-
-    less = File.read(t.prerequisites[0])
-
+def less2js(less)
     less = less.gsub('\\', '\\\\')
                .gsub('"', '\\"')
                .gsub("'", "\\\\\\\\'")
                .gsub(/\n/, "\\n")
                .gsub(/\r/, "")
 
-    less = "'#{less}'"
+    "'#{less}'"
+end
 
-    template_info = File.read(t.prerequisites[1])
+THEME_TYPES.each do |type|
+    type_name = File.basename(type).sub('.less', '')
 
-    less = replace_variable(template_info, 'lessTemplate', less)
+    file "themebuilder/scripts/#{type_name}.js" => type do |t|
+        name = type_name
+        less = less2js(File.read(type))
 
-    File.open(t.name, 'w') do |file|
-        file.write(less)
+        TYPE_TEMPLATE.result(binding)
     end
 end
 
@@ -79,7 +83,7 @@ end
 file_merge 'themebuilder/scripts/themebuilder.all.js' => [
     'themebuilder/scripts/less.js',
     'themebuilder/scripts/themebuilder.js',
-    'themebuilder/scripts/template.js'
+    'themebuilder/scripts/constants.js'
 ]
 file 'themebuilder/scripts/themebuilder.all.js' => THEME_BUILDER_BUILDFILE
 file 'themebuilder/scripts/themebuilder.all.min.js' => 'themebuilder/scripts/themebuilder.all.js' do
@@ -88,7 +92,6 @@ end
 
 CLEAN.include('themebuilder/scripts/themebuilder.all*js')
 CLEAN.include('themebuilder/scripts/themebuilder.all*css')
-CLEAN.include('themebuilder/scripts/template.js')
 
 file_merge 'themebuilder/styles/themebuilder.all.css' => [
     'themebuilder/styles/styles.css'
@@ -116,7 +119,7 @@ namespace :themebuilder do
     desc('Build the generated ThemeBuilder sources')
     task :sources => [
         'themebuilder/scripts/less.js',
-        'themebuilder/scripts/template.js',
+        'themebuilder/scripts/constants.js',
         'themebuilder/styles/textures'
     ]
 

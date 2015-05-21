@@ -565,6 +565,8 @@
                     themes.push(templateInfo.datavizConstants);
                 }
 
+                this.types = {};
+
                 this.themes = new ThemeCollection(themes);
 
                 this.themes.infer(this.targetDocument);
@@ -642,6 +644,9 @@
                 $(".ktb-action-import").on(CLICK, proxy(this.importTheme, this));
 
                 this._track();
+            },
+            registerType: function(type) {
+                this.types[type.name] = type.less;
             },
             showSuiteChooser: function() {
                 $("#suite-chooser").slideDown("fast", function() {
