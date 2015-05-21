@@ -800,7 +800,6 @@
 
     //// exports
 
-    exports.parse_formula = parse;
     exports.parse = function(sheet, row, col, input) {
         input = input+"";
         if (/^'/.test(input)) {
