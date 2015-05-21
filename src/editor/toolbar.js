@@ -18,62 +18,27 @@
     var focusable = "a.k-tool:not(.k-state-disabled)," +
                     ".k-widget.k-colorpicker,.k-selectbox,.k-dropdown,.k-combobox .k-input";
 
-    var MoreTool = Tool.extend({
+    var OverflowAnchor = Tool.extend({
         initialize: function(ui, options) {
-            var that = this;
-
-            that._popup(ui, options);
-
             ui.attr({ unselectable: "on" });
             ui.on("click", function() {
-                that.popup.toggle();
+                debugger;
             });
         },
 
         options: {
-            name: "more",
+            name: "overflowAnchor",
         },
 
         command: $.noop,
+        destroy: $.noop
 
-        destroy: function() {
-            this.popup.destroy();
-        },
-
-        _popup: function(ui, options) {
-            var popupTemplate = "<ul class='k-more-popup'></ul>";
-
-            this.popup = $(popupTemplate).appendTo("body").kendoPopup({
-                anchor: ui,
-                copyAnchorStyles: false,
-                open: proxy(this._open, this),
-                activate: proxy(this._activate, this),
-                close: proxy(this._close, this)
-            }).data("kendoPopup");
-
-            options.editor.morePopup = this.popup;
-        },
-
-        _open: function(e) {
-            var isEmpty = e.sender.element.is(":empty");
-            if (isEmpty) {
-                e.preventDefault();
-            }
-        },
-
-        _activate: function(e) {
-
-        },
-
-        _close: function(e) {
-
-        }
     });
 
-    EditorUtils.registerTool("more", new MoreTool({
+    EditorUtils.registerTool("overflowAnchor", new OverflowAnchor({
         key: "",
         ctrl: true,
-        template: new ToolTemplate({ template: EditorUtils.moreTemplate })
+        template: new ToolTemplate({ template: EditorUtils.overflowAnchorTemplate })
     }));
 
     var Toolbar = Widget.extend({
@@ -146,8 +111,32 @@
                 .data("kendoWindow");
         },
 
+        _initOverflowPopup: function(ui) {
+            var popupTemplate = "<ul class='k-overflow-popup'></ul>";
+
+            this.overflowPopup = $(popupTemplate).appendTo("body").kendoPopup({
+                anchor: ui,
+                copyAnchorStyles: false,
+                open: function(e) {
+                    if (this.element.is(":empty")) {
+                        e.preventDefault();
+                    }
+                }
+            }).data("kendoPopup");
+        },
+
         items: function() {
-            return this.element.children().find("> *, select");
+            var isResizable = this.options.resizable && this.options.resizable.toolbar,
+                popup, result;
+
+            result = this.element.children().find("> *, select");
+
+            if (isResizable) {
+                popup = this.overflowPopup;
+                result = result.add(popup.element.children().find("> *"));
+            }
+
+            return result;
         },
 
         focused: function() {
@@ -190,7 +179,7 @@
             that._editor = editor;
 
             if (that.options.resizable && that.options.resizable.toolbar) {
-                editor.options.tools.unshift("more");
+                editor.options.tools.unshift("overflowAnchor");
             }
 
             // re-initialize the tools
@@ -433,11 +422,11 @@
             }
 
             function startGroup(toolName) {
-                if (toolName !== "more") {
+                if (toolName !== "overflowAnchor") {
                     group = $("<li class='k-tool-group' role='presentation' />");
                     group.data("overflow", $.inArray(toolName, overflowFlaseTools) === -1 ? true : false)
                 } else {
-                    group = $("<li class='k-more-tool' />");
+                    group = $("<li class='k-overflow-tools' />");
                 }
             }
 
@@ -500,6 +489,10 @@
 
             that.updateGroups();
 
+            if (resizable) {
+                that._initOverflowPopup(that.element.find(".k-overflow-anchor"));
+            }
+
             that.angular("compile", function(){
                 return { elements: that.element };
             });
@@ -544,6 +537,10 @@
 
             if (this._resizeHandler) {
                 kendo.unbindResize(this._resizeHandler);
+            }
+
+            if (this.overflowPopup) {
+                this.overflowPopup.destroy();
             }
         },
 
@@ -664,7 +661,7 @@
         _resize: function(e) {
             var containerWidth = e.width;
             var resizable = this.options.resizable && this.options.resizable.toolbar;
-            var popup = this.options.editor.morePopup;
+            var popup = this.overflowPopup;
 
             if (!resizable) {
                 return;
@@ -679,10 +676,8 @@
             this._shrink(containerWidth);
             this._stretch(containerWidth);
 
-            debugger;
-
             this.element
-                .children("li.k-more-tool")
+                .children("li.k-overflow-tools")
                 .css("visibility", popup.element.is(":empty") ? "hidden" : "visible");
         },
 
@@ -697,7 +692,7 @@
             var group, visibleGroups;
 
             if (width < this._groupsWidth()) {
-                visibleGroups = this._visibleGroups().filter(":not(.k-more-tool)");
+                visibleGroups = this._visibleGroups().filter(":not(.k-overflow-tools)");
 
                 for (var i = visibleGroups.length - 1; i >= 0; i--) {
                     group = visibleGroups.eq(i);
@@ -726,7 +721,7 @@
         },
 
         _hiddenGroups: function() {
-            var popup = this.options.editor.morePopup;
+            var popup = this.overflowPopup;
 
             var hiddenGroups = this.element.children("li.k-tool-group").filter(":hidden");
 
@@ -740,7 +735,7 @@
         },
 
         _visibleGroups: function() {
-            return this.element.children("li.k-tool-group, li.k-more-tool").filter(":visible");
+            return this.element.children("li.k-tool-group, li.k-overflow-tools").filter(":visible");
         },
 
         _groupsWidth: function() {
@@ -755,7 +750,7 @@
 
         _hideGroup: function(group) {
             if (group.data("overflow")) {
-                var popup = this.options.editor.morePopup;
+                var popup = this.overflowPopup;
                 group.detach().prependTo(popup.element).addClass("k-overflow-tool-group");
             } else {
                 group.hide();

@@ -53,8 +53,8 @@
         separatorTemplate:
             '<span class="k-separator" />',
 
-        moreTemplate:
-            '<a href="" role="button" class="k-tool k-more-button"' +
+        overflowAnchorTemplate:
+            '<a href="" role="button" class="k-tool k-overflow-anchor"' +
             '#= data.popup ? " data-popup" : "" #' +
             ' unselectable="on"><span unselectable="on" class="k-icon k-i-more"></span></a>',
 
