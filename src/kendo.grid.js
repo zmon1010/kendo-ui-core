@@ -4158,36 +4158,11 @@ var __meta__ = {
             var handled = false;
 
             if (canHandle && e.keyCode == keys.UP) {
-                cell = this._prevVerticalCell(container, current);
-
-                if (!cell[0]) {
-                    container = this._verticalContainer(container, true);
-
-                    cell = this._prevVerticalCell(container, current);
-
-                    if (cell[0]) {
-                        focusTable(container.parent(), true);
-                    }
-                }
-
-                this.current(cell);
-                handled = true;
+                handled = this._moveUp(current, container);
             }
 
             if (canHandle && e.keyCode == keys.DOWN) {
-                cell = this._nextVerticalCell(container, current);
-
-                if (!cell[0]) {
-                    container = this._verticalContainer(container);
-
-                    cell = this._nextVerticalCell(container, current);
-                    if (cell[0]) {
-                        focusTable(container.parent(), true);
-                    }
-                }
-
-                this.current(cell);
-                handled = true;
+                handled = this._moveDown(current, container);
             }
 
             if (canHandle && e.keyCode == keys.RIGHT) {
@@ -4260,6 +4235,41 @@ var __meta__ = {
                 //required in hierarchy
                 e.stopPropagation();
             }
+        },
+
+        _moveUp: function(current, container) {
+            var next = this._prevVerticalCell(container, current);
+
+            if (!next[0]) {
+                container = this._verticalContainer(container, true);
+
+                next = this._prevVerticalCell(container, current);
+
+                if (next[0]) {
+                    focusTable(container.parent(), true);
+                }
+            }
+
+            this.current(next);
+
+            return true;
+        },
+
+        _moveDown: function(current, container) {
+            var next = this._nextVerticalCell(container, current);
+
+            if (!next[0]) {
+                container = this._verticalContainer(container);
+
+                next = this._nextVerticalCell(container, current);
+                if (next[0]) {
+                    focusTable(container.parent(), true);
+                }
+            }
+
+            this.current(next);
+
+            return true;
         },
 
         _handlePageDown: function() {
@@ -4548,16 +4558,17 @@ var __meta__ = {
         },
 
         _verticalContainer: function(container, up) {
-            var table = container.closest("table");
-            var step = this._navigatableTables.length / 2;
-            var index = $.inArray(table[0], this._navigatableTables);
+            var table = container.parent();
+            var length = this._navigatableTables.length;
+            var step = Math.floor(length / 2);
+            var index = inArray(table[0], this._navigatableTables);
 
             if (up) {
                 step *= -1;
             }
             index += step;
 
-            if (index >= 0) {
+            if (index >= 0 || index < length) {
                 table = this._navigatableTables.eq(index);
             }
 
@@ -4571,7 +4582,7 @@ var __meta__ = {
             }
 
             var table = container.closest("table");
-            var index = $.inArray(table[0], this._navigatableTables);
+            var index = inArray(table[0], this._navigatableTables);
 
             index += right ? 1 : -1;
 
