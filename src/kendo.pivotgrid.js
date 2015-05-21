@@ -1684,7 +1684,7 @@ var __meta__ = {
                     }
                 }
 
-                if (columnIndexes[idx % columnsLength] !== undefined) {
+                while (columnIndexes[idx % columnsLength] !== undefined) {
                     result[idx] = { value: "", fmtValue: "", ordinal: idx };
                     idx += 1;
                 }

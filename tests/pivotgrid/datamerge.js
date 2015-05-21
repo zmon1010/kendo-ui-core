@@ -2519,6 +2519,51 @@
         equal(data[5].ordinal, 5);
     });
 
+    test("expand of root level column axis missing measures", function() {
+        var columnTuples = [
+            {
+                tuples: [
+                    { members: [ { name: "level 0", children: [], levelNum: "0" }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "level 0", children: [], levelNum: "0" }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "level 0", children: [], levelNum: "0" }, { name: "measure 3", children: [] } ] },
+                    { members: [ { name: "level 1-0", parentName: "level 0", children: [], levelNum: "1" }, { name: "measure 3", children: [] } ] }
+                ]
+            }
+        ];
+        var data = [
+            [ { value: 1, ordinal: 0 }, { value: 2, ordinal: 1 }, { value: 3, ordinal: 2 }, { value: 6, ordinal: 3 } ]
+        ];
+
+        var dataSource = new PivotDataSource({
+            measures: { values: ["measure 1", "measure 2", "measure 3"], axis: "columns" },
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success({
+                        axes: {
+                            columns: columnTuples.shift()
+                        },
+                        data: data.shift()
+                    });
+                }
+            }
+        });
+
+        dataSource.read();
+
+        var data = dataSource.data();
+        equal(data.length, 6);
+        equal(data[3].value, "");
+        equal(data[3].ordinal, 3);
+        equal(data[4].value, "");
+        equal(data[4].ordinal, 4);
+        equal(data[5].value, 6);
+        equal(data[5].ordinal, 5);
+    });
+
     test("expand of root level row axis without root tuple", function() {
         var rowTuples = [
             {
