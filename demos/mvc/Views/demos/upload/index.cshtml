@@ -4,17 +4,14 @@
                 <h4>Information</h4>
                 <p>
                     The Upload can be used as a drop-in replacement
-                    for file input elements.
-                </p>
-                <p>
-                    This "synchronous" mode does not require
+                    for file input elements. This "synchronous" mode does not require
                     special handling on the server.
                 </p>
             </div>
             <form method="post" action="@Url.Action("submit", "upload")">
                 <div class="demo-section k-header">
                     <input name="files" id="files" type="file" />
-                    <p>
+                    <p style="padding-top: 1em;">
                         <input type="submit" value="Submit" class="k-button" />
                     </p>
                 </div>
