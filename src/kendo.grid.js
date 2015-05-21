@@ -1520,6 +1520,8 @@ var __meta__ = {
 
             Widget.fn.destroy.call(that);
 
+            this._navigatableTables = null;
+
             if (that._resizeHandler) {
                 $(window).off("resize" + NS, that._resizeHandler);
             }
@@ -4068,7 +4070,6 @@ var __meta__ = {
                 headerTables.attr(TABINDEX, -1);
             }
 
-            //TODO - change, this state *must* not be saved this way
             this._navigatableTables = tables;
 
             //dettach all previous events
@@ -4152,61 +4153,22 @@ var __meta__ = {
                 return;
             }
 
-            //thead or tbody
-            var container = current.parent().parent();
-            var cell, index;
             var handled = false;
 
             if (canHandle && e.keyCode == keys.UP) {
-                handled = this._moveUp(current, container);
+                handled = this._moveUp(current);
             }
 
             if (canHandle && e.keyCode == keys.DOWN) {
-                handled = this._moveDown(current, container);
+                handled = this._moveDown(current);
             }
 
             if (canHandle && e.keyCode == keys.RIGHT) {
-                if (e.altKey) {
-                    this.expandRow(current.parent());
-                } else {
-                    index = container.find(NAVROW).index(current.parent());
-                    cell = this._nextHorizontalCell(container, current, index);
-
-                    if (!cell[0]) {
-                        container = this._horizontalContainer(container, true);
-
-                        cell = this._nextHorizontalCell(container, current, index);
-
-                        if (cell[0] !== current[0]) {
-                            focusTable(container.parent(), true);
-                        }
-                    }
-
-                    this.current(cell);
-                }
-                handled = true;
+                handled = this._moveRight(current, e.altKey);
             }
 
             if (canHandle && e.keyCode == keys.LEFT) {
-                if (e.altKey) {
-                    this.collapseRow(current.parent());
-                } else {
-                    index = container.find(NAVROW).index(current.parent());
-                    cell = this._prevHorizontalCell(container, current, index);
-
-                    if (!cell[0]) {
-                        container = this._horizontalContainer(container);
-
-                        cell = this._prevHorizontalCell(container, current, index);
-
-                        if (cell[0] !== current[0]) {
-                            focusTable(container.parent(), true);
-                        }
-                    }
-
-                    this.current(cell);
-                }
-                handled = true;
+                handled = this._moveLeft(current, e.altKey);
             }
 
             if (canHandle && e.keyCode == keys.PAGEDOWN) {
@@ -4237,7 +4199,65 @@ var __meta__ = {
             }
         },
 
-        _moveUp: function(current, container) {
+        _moveLeft: function(current, altKey) {
+            var next, index;
+            var row = current.parent();
+            //thead or tbody
+            var container = row.parent();
+
+            if (altKey) {
+                this.collapseRow(row);
+            } else {
+                index = container.find(NAVROW).index(row);
+                next = this._prevHorizontalCell(container, current, index);
+
+                if (!next[0]) {
+                    container = this._horizontalContainer(container);
+
+                    next = this._prevHorizontalCell(container, current, index);
+
+                    if (next[0] !== current[0]) {
+                        focusTable(container.parent(), true);
+                    }
+                }
+
+                this.current(next);
+            }
+
+            return true;
+        },
+
+        _moveRight: function(current, altKey) {
+            var next, index;
+            var row = current.parent();
+            //thead or tbody
+            var container = row.parent();
+
+            if (altKey) {
+                this.expandRow(row);
+            } else {
+                index = container.find(NAVROW).index(row);
+                next = this._nextHorizontalCell(container, current, index);
+
+                if (!next[0]) {
+                    container = this._horizontalContainer(container, true);
+
+                    next = this._nextHorizontalCell(container, current, index);
+
+                    if (next[0] !== current[0]) {
+                        focusTable(container.parent(), true);
+                    }
+                }
+
+                this.current(next);
+            }
+
+            return true;
+        },
+
+        _moveUp: function(current) {
+            //thead or tbody
+            var container = current.parent().parent();
             var next = this._prevVerticalCell(container, current);
 
             if (!next[0]) {
@@ -4255,7 +4275,9 @@ var __meta__ = {
             return true;
         },
 
-        _moveDown: function(current, container) {
+        _moveDown: function(current) {
+            //thead or tbody
+            var container = current.parent().parent();
             var next = this._nextVerticalCell(container, current);
 
             if (!next[0]) {
@@ -4406,7 +4428,6 @@ var __meta__ = {
         _nextHorizontalCell: function(table, current, originalIndex) {
             var cells = current.nextAll(DATA_CELL);
 
-            //TODO add check for locked columns
             if (!cells.length) {
                 var rows = table.find(NAVROW);
                 var rowIndex = rows.index(current.parent());
@@ -4439,7 +4460,6 @@ var __meta__ = {
         _prevHorizontalCell: function(table, current, originalIndex) {
             var cells = current.prevAll(DATA_CELL);
 
-            //TODO add check for locked columns
             if (!cells.length) {
                 var rows = table.find(NAVROW);
                 var rowIndex = rows.index(current.parent());
@@ -4581,7 +4601,7 @@ var __meta__ = {
                 return container;
             }
 
-            var table = container.closest("table");
+            var table = container.parent();
             var index = inArray(table[0], this._navigatableTables);
 
             index += right ? 1 : -1;
