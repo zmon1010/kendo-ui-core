@@ -3,7 +3,7 @@
 })(function(){
 
 var __meta__ = {
-    id: "kendo.treeview.draganddrop",
+    id: "treeview.draganddrop",
     name: "Hierarchical Drag & Drop",
     category: "framework",
     depends: [ "core", "draganddrop" ],
