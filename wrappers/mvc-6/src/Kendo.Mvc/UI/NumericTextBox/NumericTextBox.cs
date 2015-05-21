@@ -20,7 +20,7 @@ namespace Kendo.Mvc.UI
         {
 			// Do custom rendering here
 
-			var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
+			var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider).Metadata;
 			var tag = Generator.GenerateNumericInput(ViewContext, metadata, Id, Name, Value, string.Empty, HtmlAttributes);
 
 			if (!Enable.GetValueOrDefault(true))

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -7,7 +8,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring GridGroupableSettings
     /// </summary>
     public partial class GridGroupableSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// When set  to false grouping is considered disabled.

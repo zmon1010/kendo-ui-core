@@ -1,0 +1,28 @@
+:options:
+    - :name: stacking
+      :type: String
+      :enum_type: NotificationStackingSettings
+      :values:
+          - :value: default
+            :member: Default
+
+          - :value: up
+            :member: Up
+
+          - :value: down
+            :member: Down
+
+          - :value: left
+            :member: Left
+
+          - :value: right
+            :member: Right
+
+    - :name: height
+      :merge: true
+      :type: string
+
+    - :name: width
+      :merge: true
+      :type: string
+

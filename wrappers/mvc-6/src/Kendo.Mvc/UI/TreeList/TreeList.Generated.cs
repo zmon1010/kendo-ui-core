@@ -35,12 +35,11 @@ namespace Kendo.Mvc.UI
 
         public bool? Scrollable { get; set; }
 
-        public bool? Selectable { get; set; }
-
         public TreeListSortableSettings<T> Sortable { get; } = new TreeListSortableSettings<T>();
 
         public List<TreeListToolbar<T>> Toolbar { get; set; } = new List<TreeListToolbar<T>>();
 
+        public TreeListSelectableSettings<T> Selectable { get; } = new TreeListSelectableSettings<T>();
 
 
         protected override Dictionary<string, object> SerializeSettings()
@@ -73,8 +72,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["columnMenu"] = columnMenu;
             }
-            else if (ColumnMenu.Enabled) {
-                settings["columnMenu"] = ColumnMenu.Enabled;
+            else if (ColumnMenu.Enabled == true)
+            {
+                settings["columnMenu"] = true;
             }
 
             var editable = Editable.Serialize();
@@ -82,8 +82,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["editable"] = editable;
             }
-            else if (Editable.Enabled) {
-                settings["editable"] = Editable.Enabled;
+            else if (Editable.Enabled == true)
+            {
+                settings["editable"] = true;
             }
 
             var excel = Excel.Serialize();
@@ -97,8 +98,9 @@ namespace Kendo.Mvc.UI
             {
                 settings["filterable"] = filterable;
             }
-            else if (Filterable.Enabled) {
-                settings["filterable"] = Filterable.Enabled;
+            else if (Filterable.Enabled == true)
+            {
+                settings["filterable"] = true;
             }
 
             if (Height.HasValue)
@@ -123,18 +125,14 @@ namespace Kendo.Mvc.UI
                 settings["scrollable"] = Scrollable;
             }
 
-            if (Selectable.HasValue)
-            {
-                settings["selectable"] = Selectable;
-            }
-
             var sortable = Sortable.Serialize();
             if (sortable.Any())
             {
                 settings["sortable"] = sortable;
             }
-            else if (Sortable.Enabled) {
-                settings["sortable"] = Sortable.Enabled;
+            else if (Sortable.Enabled == true)
+            {
+                settings["sortable"] = true;
             }
 
             var toolbar = Toolbar.Select(i => i.Serialize());

@@ -8,6 +8,15 @@ module CodeGen
             @options.find_all { |option| !option.composite? }.sort {|a, b| a.name <=> b.name }
         end
 
+        def all_options
+            all = @options.dup
+            composite_options.each do |co|
+                all.concat(co.all_options)
+            end
+
+            all.sort {|a, b| a.full_name <=> b.full_name }
+        end
+
         def composite_option_class
             CompositeOption
         end

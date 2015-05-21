@@ -18,6 +18,12 @@ module CodeGen::MVC6::Wrappers::Options
             enum_type || values
         end
 
+        def csharp_name
+            prefix = (name == 'attributes') ? "Html" : ""
+
+            prefix + name.to_csharp_name
+        end
+
         def to_declaration
             DECLARATION.result(binding)
         end

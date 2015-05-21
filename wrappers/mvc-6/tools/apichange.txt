@@ -1,0 +1,5 @@
+Download from:
+https://apichange.codeplex.com/downloads/get/134766
+
+Usage:
+apichange -old Mvc5\Kendo.Mvc.dll -new Mvc6\Kendo.Mvc.dll > Kendo.Mvc.diff.txt

@@ -1,13 +1,12 @@
 ﻿using Kendo.Mvc;
-using Microsoft.Framework.ConfigurationModel;
 
 namespace Microsoft.Framework.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddKendo(this IServiceCollection services, IConfiguration configuration = null)
+        public static IServiceCollection AddKendo(this IServiceCollection services)
         {
-            services.TryAdd(KendoServices.GetServices(configuration));
+            services.TryAdd(KendoServices.GetServices());
 
             return services;
         }

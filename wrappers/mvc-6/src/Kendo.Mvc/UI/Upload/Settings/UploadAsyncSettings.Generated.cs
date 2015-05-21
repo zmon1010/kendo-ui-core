@@ -28,6 +28,8 @@ namespace Kendo.Mvc.UI
         public bool? WithCredentials { get; set; }
 
 
+        public Upload Upload { get; set; }
+
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
@@ -42,27 +44,27 @@ namespace Kendo.Mvc.UI
                 settings["batch"] = Batch;
             }
 
-            if (RemoveField.HasValue())
+            if (RemoveField?.HasValue() == true)
             {
                 settings["removeField"] = RemoveField;
             }
 
-            if (RemoveUrl.HasValue())
+            if (RemoveUrl?.HasValue() == true)
             {
                 settings["removeUrl"] = RemoveUrl;
             }
 
-            if (RemoveVerb.HasValue())
+            if (RemoveVerb?.HasValue() == true)
             {
                 settings["removeVerb"] = RemoveVerb;
             }
 
-            if (SaveField.HasValue())
+            if (SaveField?.HasValue() == true)
             {
                 settings["saveField"] = SaveField;
             }
 
-            if (SaveUrl.HasValue())
+            if (SaveUrl?.HasValue() == true)
             {
                 settings["saveUrl"] = SaveUrl;
             }

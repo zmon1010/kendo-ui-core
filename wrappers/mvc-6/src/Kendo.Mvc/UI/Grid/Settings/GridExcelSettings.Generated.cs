@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI GridExcelSettings class
     /// </summary>
-    public partial class GridExcelSettings<T> 
+    public partial class GridExcelSettings<T> where T : class 
     {
         public bool? AllPages { get; set; }
 
@@ -22,6 +22,8 @@ namespace Kendo.Mvc.UI
         public string ProxyURL { get; set; }
 
 
+        public Grid<T> Grid { get; set; }
+
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
@@ -31,7 +33,7 @@ namespace Kendo.Mvc.UI
                 settings["allPages"] = AllPages;
             }
 
-            if (FileName.HasValue())
+            if (FileName?.HasValue() == true)
             {
                 settings["fileName"] = FileName;
             }
@@ -46,7 +48,7 @@ namespace Kendo.Mvc.UI
                 settings["forceProxy"] = ForceProxy;
             }
 
-            if (ProxyURL.HasValue())
+            if (ProxyURL?.HasValue() == true)
             {
                 settings["proxyURL"] = ProxyURL;
             }

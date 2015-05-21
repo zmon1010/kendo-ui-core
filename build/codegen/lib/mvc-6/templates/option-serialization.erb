@@ -4,7 +4,7 @@
             {
                 settings["<%= name %>"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('#{0}').html()", <%=csharp_name%>Id
+                        "jQuery('{0}{1}').html()", <%=id_prefix%>, <%=csharp_name%>Id
                     )
                 };
             }
@@ -13,17 +13,17 @@
                 settings["<%= name %>"] = <%=csharp_name%>;
             }
 %elsif csharp_type.eql?('string') || handler?
-            if (<%=csharp_name%>.HasValue())
+            if (<%=csharp_name%>?.HasValue() == true)
             {
                 settings["<%= name %>"] = <%=csharp_name%>;
             }
-%elsif csharp_array?
-            if (<%=csharp_name%> != null && <%=csharp_name%>.Any())
+%elsif csharp_array? || dictionary?
+            if (<%=csharp_name%>?.Any() == true)
             {
                 settings["<%= name %>"] = <%=csharp_name%>;
             }
-%elsif dictionary?
-            if (<%=csharp_name%>.Any())
+%elsif csharp_type.eql?('object')
+            if (<%=csharp_name%> != null)
             {
                 settings["<%= name %>"] = <%=csharp_name%>;
             }

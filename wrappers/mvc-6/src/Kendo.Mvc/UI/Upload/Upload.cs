@@ -22,6 +22,8 @@ namespace Kendo.Mvc.UI
 			private set;
 		}
 
+		public bool? Enabled { get; set; }
+
 		public UploadMessagesSettings Messages { get; } = new UploadMessagesSettings();
 
 		public Upload(ViewContext viewContext) : base(viewContext)
@@ -50,6 +52,11 @@ namespace Kendo.Mvc.UI
 			if (messages.Any())
 			{
 				settings["localization"] = messages;
+			}
+
+			if (Enabled.HasValue)
+			{
+				settings["enabled"] = Enabled;
 			}
 
 			writer.Write(Initializer.Initialize(Selector, "Upload", settings));

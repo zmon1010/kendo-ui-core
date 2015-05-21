@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -7,7 +8,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListColumnMenuSettings
     /// </summary>
     public partial class TreeListColumnMenuSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// If set to true the column menu would allow the user to select (show and hide) treelist columns. By default the column menu allows column selection.
@@ -45,10 +46,12 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the messages setting.</param>
         public TreeListColumnMenuSettingsBuilder<T> Messages(Action<TreeListColumnMenuMessagesSettingsBuilder<T>> configurator)
         {
+
+            Container.Messages.TreeList = Container.TreeList;
             configurator(new TreeListColumnMenuMessagesSettingsBuilder<T>(Container.Messages));
+
             return this;
         }
-
 
     }
 }

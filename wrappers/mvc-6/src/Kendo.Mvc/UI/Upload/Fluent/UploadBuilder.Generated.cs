@@ -1,4 +1,5 @@
 using System;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -16,7 +17,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the async setting.</param>
         public UploadBuilder Async(Action<UploadAsyncSettingsBuilder> configurator)
         {
+
+            Container.Async.Upload = Container;
             configurator(new UploadAsyncSettingsBuilder(Container.Async));
+
             return this;
         }
 
@@ -26,7 +30,12 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the files setting.</param>
         public UploadBuilder Files(Action<UploadFileFactory> configurator)
         {
-            configurator(new UploadFileFactory(Container.Files));
+
+            configurator(new UploadFileFactory(Container.Files)
+            {
+                Upload = Container
+            });
+
             return this;
         }
 

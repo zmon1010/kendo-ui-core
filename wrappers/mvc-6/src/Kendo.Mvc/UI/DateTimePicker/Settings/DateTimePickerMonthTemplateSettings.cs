@@ -11,15 +11,13 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class DateTimePickerMonthTemplateSettings 
     {
-		public string IdPrefix { get; set; }
-
 		public Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
 
 			if (ContentId.HasValue())
 			{
-				settings["content"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", IdPrefix, ContentId) };
+				settings["content"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", DateTimePicker.IdPrefix, ContentId) };
 			}
 			else if (Content.HasValue())
 			{
@@ -28,7 +26,7 @@ namespace Kendo.Mvc.UI
 
 			if (EmptyId.HasValue())
 			{
-				settings["empty"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", IdPrefix, EmptyId) };
+				settings["empty"] = new ClientHandlerDescriptor { HandlerName = string.Format("jQuery('{0}{1}').html()", DateTimePicker.IdPrefix, EmptyId) };
 			}
 			else if (Empty.HasValue())
 			{

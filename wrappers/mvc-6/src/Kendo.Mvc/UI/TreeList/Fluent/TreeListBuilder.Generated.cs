@@ -1,4 +1,5 @@
 using System;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -26,7 +27,12 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the columns setting.</param>
         public TreeListBuilder<T> Columns(Action<TreeListColumnFactory<T>> configurator)
         {
-            configurator(new TreeListColumnFactory<T>(Container.Columns));
+
+            configurator(new TreeListColumnFactory<T>(Container.Columns)
+            {
+                TreeList = Container
+            });
+
             return this;
         }
 
@@ -41,12 +47,30 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true allows users to resize columns by dragging their header borders. By default resizing is disabled.
+        /// </summary>
+        public TreeListBuilder<T> Resizable()
+        {
+            Container.Resizable = true;
+            return this;
+        }
+
+        /// <summary>
         /// If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
         /// </summary>
         /// <param name="value">The value for Reorderable</param>
         public TreeListBuilder<T> Reorderable(bool value)
         {
             Container.Reorderable = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
+        /// </summary>
+        public TreeListBuilder<T> Reorderable()
+        {
+            Container.Reorderable = true;
             return this;
         }
 
@@ -58,7 +82,10 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeListBuilder<T> ColumnMenu(Action<TreeListColumnMenuSettingsBuilder<T>> configurator)
         {
             Container.ColumnMenu.Enabled = true;
+
+            Container.ColumnMenu.TreeList = Container;
             configurator(new TreeListColumnMenuSettingsBuilder<T>(Container.ColumnMenu));
+
             return this;
         }
 
@@ -90,7 +117,10 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeListBuilder<T> Editable(Action<TreeListEditableSettingsBuilder<T>> configurator)
         {
             Container.Editable.Enabled = true;
+
+            Container.Editable.TreeList = Container;
             configurator(new TreeListEditableSettingsBuilder<T>(Container.Editable));
+
             return this;
         }
 
@@ -119,7 +149,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the excel setting.</param>
         public TreeListBuilder<T> Excel(Action<TreeListExcelSettingsBuilder<T>> configurator)
         {
+
+            Container.Excel.TreeList = Container;
             configurator(new TreeListExcelSettingsBuilder<T>(Container.Excel));
+
             return this;
         }
 
@@ -130,7 +163,10 @@ namespace Kendo.Mvc.UI.Fluent
         public TreeListBuilder<T> Filterable(Action<TreeListFilterableSettingsBuilder<T>> configurator)
         {
             Container.Filterable.Enabled = true;
+
+            Container.Filterable.TreeList = Container;
             configurator(new TreeListFilterableSettingsBuilder<T>(Container.Filterable));
+
             return this;
         }
 
@@ -169,7 +205,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the messages setting.</param>
         public TreeListBuilder<T> Messages(Action<TreeListMessagesSettingsBuilder<T>> configurator)
         {
+
+            Container.Messages.TreeList = Container;
             configurator(new TreeListMessagesSettingsBuilder<T>(Container.Messages));
+
             return this;
         }
 
@@ -179,7 +218,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the pdf setting.</param>
         public TreeListBuilder<T> Pdf(Action<TreeListPdfSettingsBuilder<T>> configurator)
         {
+
+            Container.Pdf.TreeList = Container;
             configurator(new TreeListPdfSettingsBuilder<T>(Container.Pdf));
+
             return this;
         }
 
@@ -194,23 +236,16 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// If set to true the user would be able to select treelist rows. By default selection is disabled.Can also be set to the following string values:
-        /// </summary>
-        /// <param name="value">The value for Selectable</param>
-        public TreeListBuilder<T> Selectable(bool value)
-        {
-            Container.Selectable = value;
-            return this;
-        }
-
-        /// <summary>
         /// If set to true the user could sort the treelist by clicking the column header cells. By default sorting is disabled.Can be set to a JavaScript object which represents the sorting configuration.
         /// </summary>
         /// <param name="configurator">The configurator for the sortable setting.</param>
         public TreeListBuilder<T> Sortable(Action<TreeListSortableSettingsBuilder<T>> configurator)
         {
             Container.Sortable.Enabled = true;
+
+            Container.Sortable.TreeList = Container;
             configurator(new TreeListSortableSettingsBuilder<T>(Container.Sortable));
+
             return this;
         }
 
@@ -240,10 +275,38 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the toolbar setting.</param>
         public TreeListBuilder<T> Toolbar(Action<TreeListToolbarFactory<T>> configurator)
         {
-            configurator(new TreeListToolbarFactory<T>(Container.Toolbar));
+
+            configurator(new TreeListToolbarFactory<T>(Container.Toolbar)
+            {
+                TreeList = Container
+            });
+
             return this;
         }
 
+        /// <summary>
+        /// Specifies whether TreeList selection is allowed. By default selection is disabled
+        /// </summary>
+        /// <param name="configurator">The configurator for the selectable setting.</param>
+        public TreeListBuilder<T> Selectable(Action<TreeListSelectableSettingsBuilder<T>> configurator)
+        {
+            Container.Selectable.Enabled = true;
+
+            Container.Selectable.TreeList = Container;
+            configurator(new TreeListSelectableSettingsBuilder<T>(Container.Selectable));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether TreeList selection is allowed. By default selection is disabled
+        /// </summary>
+        /// <param name="enabled">Enables or disables the selectable option.</param>
+        public TreeListBuilder<T> Selectable(bool enabled)
+        {
+            Container.Selectable.Enabled = enabled;
+            return this;
+        }
 
 
         

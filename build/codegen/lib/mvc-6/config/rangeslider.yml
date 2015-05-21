@@ -1,0 +1,32 @@
+:options:
+    - :name: selectionStart
+      :merge: true
+      :type: T?
+      
+    - :name: selectionEnd
+      :merge: true
+      :type: T?  
+      
+    - :name: min
+      :merge: true
+      :type: T?
+      
+    - :name: max
+      :merge: true
+      :type: T?
+
+    - :name: smallStep
+      :merge: true
+      :type: T?
+      
+    - :name: largeStep
+      :merge: true
+      :type: T?
+      
+    - :name: !ruby/regexp '/.*orientation$/i'
+      :merge: true
+      :enum_type: SliderOrientation
+      
+    - :name: !ruby/regexp '/.*tickPlacement$/i'
+      :merge: true
+      :enum_type: SliderTickPlacement

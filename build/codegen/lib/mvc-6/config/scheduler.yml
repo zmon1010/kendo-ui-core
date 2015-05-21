@@ -1,0 +1,5 @@
+:options:
+    - :name: mobile
+      :type: String
+      :enum_type: MobileMode
+      :description: Defines the mobile modes supported by Kendo UI Scheduler for ASP.NET MVC

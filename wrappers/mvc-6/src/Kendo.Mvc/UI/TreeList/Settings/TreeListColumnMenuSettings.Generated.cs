@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListColumnMenuSettings class
     /// </summary>
-    public partial class TreeListColumnMenuSettings<T> 
+    public partial class TreeListColumnMenuSettings<T> where T : class 
     {
         public bool? Columns { get; set; }
 
@@ -19,8 +19,9 @@ namespace Kendo.Mvc.UI
 
         public TreeListColumnMenuMessagesSettings<T> Messages { get; } = new TreeListColumnMenuMessagesSettings<T>();
 
-
         public bool Enabled { get; set; }
+
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
@@ -46,7 +47,6 @@ namespace Kendo.Mvc.UI
             {
                 settings["messages"] = messages;
             }
-
 
             return settings;
         }

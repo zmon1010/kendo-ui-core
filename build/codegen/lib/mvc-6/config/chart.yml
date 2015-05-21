@@ -1,0 +1,180 @@
+:options:
+    - :name: seriesColors
+      :merge: true
+      :type: String[]
+
+    - :name: categoryAxis.axisCrossingValue
+      :merge: true
+      :type: object[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.days
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.hours
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.minutes
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.months
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.seconds
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.years
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.autoBaseUnitSteps.weeks
+      :merge: true
+      :type: int[]
+
+    - :name: categoryAxis.baseUnitStep
+      :merge: true
+      :type: int
+
+    - :name: categoryAxis.categories
+      :merge: true
+      :type: object[]
+
+    - :name: categoryAxis.max
+      :merge: true
+      :type: object
+
+    - :name: categoryAxis.min
+      :merge: true
+      :type: object
+
+    - :name: categoryAxis.select.from
+      :merge: true
+      :type: object
+
+    - :name: categoryAxis.select.to
+      :merge: true
+      :type: object
+
+    - :name: categoryAxis.select.min
+      :merge: true
+      :type: object
+
+    - :name: categoryAxis.select.max
+      :merge: true
+      :type: object
+
+    - :name: legend.position
+      :description: Specifies the legend position.
+      :type: String
+      :enum_type: ChartLegendPosition
+      :values:
+          - :value: top
+            :member: Top
+            :description: The legend is positioned on the top
+
+          - :value: bottom
+            :member: Bottom
+            :description: The legend is positioned on the bottom
+
+          - :value: left
+            :member: Left
+            :description: The legend is positioned on the left
+
+          - :value: right
+            :member: Right
+            :description: The legend is positioned on the right
+
+          - :value: custom
+            :member: Custom
+            :description: The legend is positioned using OffsetX and OffsetY
+
+    - :name: plotArea.border.dashType
+      :description: Specifies the line dash type.
+      :type: String
+      :enum_type: ChartDashType
+      :values:
+          - :value: solid
+            :member: Solid
+            :description: A solid line.
+
+          - :value: dot
+            :member: Dot
+            :description: A line consisting of dots.
+
+          - :value: dash
+            :member: Dash
+            :description: A line consisting of dashes.
+
+          - :value: longDash
+            :member: LongDash
+            :description: A line consisting of a repeating pattern of long dashes.
+
+          - :value: dashDot
+            :member: DashDot
+            :description: A line consisting of a repeating pattern of dashes and dots.
+
+          - :value: longDashDot
+            :member: LongDashDot
+            :description: A line consisting of a repeating pattern of long dashes and dots.
+
+          - :value: longDashDotDot
+            :member: LongDashDotDot
+            :description: A line consisting of a repeating pattern of long dashes and two dots.
+
+    - :name: renderAs
+      :description: Specifies the preferred widget rendering mode.
+      :type: String
+      :enum_type: RenderingMode
+      :values:
+          - :value: svg
+            :member: SVG
+            :description: Attempts to render the widget as an inline SVG document.
+
+          - :value: canvas
+            :member: Canvas
+            :description: Attempts to render the widget as Canvas element.
+
+          - :value: vml
+            :member: VML
+            :description: Attempts to render the widget as VML elements.
+
+    - :name: !ruby/regexp '/.*dashType$/i'
+      :merge: true
+      :enum_type: ChartDashType
+
+    - :name: series.target.line.width
+      :merge: true
+      :type: double
+
+    - :name: valueAxis.axisCrossingValue
+      :merge: true
+      :type: object[]
+
+    - :name: xAxis.axisCrossingValue
+      :merge: true
+      :type: object[]
+
+    - :name: xAxis.min
+      :merge: true
+      :type: object
+
+    - :name: xAxis.max
+      :merge: true
+      :type: object
+
+    - :name: yAxis.axisCrossingValue
+      :merge: true
+      :type: object[]
+
+    - :name: yAxis.min
+      :merge: true
+      :type: object
+
+    - :name: yAxis.max
+      :merge: true
+      :type: object
+

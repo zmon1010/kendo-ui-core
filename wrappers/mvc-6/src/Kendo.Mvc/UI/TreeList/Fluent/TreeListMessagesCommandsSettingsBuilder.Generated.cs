@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -7,7 +8,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListMessagesCommandsSettings
     /// </summary>
     public partial class TreeListMessagesCommandsSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// Defines the text of the "Cancel" button that discards the changes during editing.
@@ -88,7 +89,6 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Update = value;
             return this;
         }
-
 
     }
 }

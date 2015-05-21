@@ -1,0 +1,34 @@
+:options:
+    - :name: direction
+      :type: String
+      :enum_type: ContextMenuDirection
+      :description: Represents the menu item opening direction.
+      :values:
+          - :value: bottom
+            :member: Bottom
+            :description: Bottom direction
+
+          - :value: left
+            :member: Left
+            :description: Left direction
+
+          - :value: right
+            :member: Right
+            :description: Right direction
+
+          - :value: top
+            :member: Top
+            :description: Top direction
+
+    - :name: orientation
+      :type: String
+      :enum_type: ContextMenuOrientation
+      :description: Specifies the orientation in which the menu items will be ordered
+      :values:
+          - :value: vertical
+            :member: Vertical
+            :description: Items are oredered vertically
+
+          - :value: horizontal
+            :member: Horizontal
+            :description: Items are oredered horizontally

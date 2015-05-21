@@ -1,0 +1,15 @@
+﻿{
+	"namespaces": [
+		"Kendo.Mvc.UI.Fluent"
+	],
+	"ignored": [
+		"IHideObjectMembers"
+	],
+	"aliases": [
+		{ "from": "System.Web", "to": "Microsoft.AspNet" },
+		{ "from": "<T>", "to": "" },
+		{ "from": "`1", "to": "" },
+		{ "from": "Action<.+>", "to": "Action", "regex": true },
+		{ "from": ".+PdfSettingsBuilder", "to": "PDFSettingsBuilder", "regex": true }
+	]
+}

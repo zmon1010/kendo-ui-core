@@ -9,14 +9,15 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListSortableSettings class
     /// </summary>
-    public partial class TreeListSortableSettings<T> 
+    public partial class TreeListSortableSettings<T> where T : class 
     {
         public bool? AllowUnsort { get; set; }
 
-        public string Mode { get; set; }
-
+        public TreeListSortMode? Mode { get; set; }
 
         public bool Enabled { get; set; }
+
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
@@ -27,11 +28,10 @@ namespace Kendo.Mvc.UI
                 settings["allowUnsort"] = AllowUnsort;
             }
 
-            if (Mode.HasValue())
+            if (Mode.HasValue)
             {
-                settings["mode"] = Mode;
+                settings["mode"] = Mode?.Serialize();
             }
-
 
             return settings;
         }

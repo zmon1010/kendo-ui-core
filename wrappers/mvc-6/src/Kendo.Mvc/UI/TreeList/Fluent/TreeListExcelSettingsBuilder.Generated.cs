@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -7,7 +8,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListExcelSettings
     /// </summary>
     public partial class TreeListExcelSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// Specifies the file name of the exported Excel file.
@@ -30,12 +31,30 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// Enables or disables column filtering in the Excel file. Not to be mistaken with the treelist filtering feature.
+        /// </summary>
+        public TreeListExcelSettingsBuilder<T> Filterable()
+        {
+            Container.Filterable = true;
+            return this;
+        }
+
+        /// <summary>
         /// If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.
         /// </summary>
         /// <param name="value">The value for ForceProxy</param>
         public TreeListExcelSettingsBuilder<T> ForceProxy(bool value)
         {
             Container.ForceProxy = value;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.
+        /// </summary>
+        public TreeListExcelSettingsBuilder<T> ForceProxy()
+        {
+            Container.ForceProxy = true;
             return this;
         }
 
@@ -50,7 +69,6 @@ namespace Kendo.Mvc.UI.Fluent
             Container.ProxyURL = value;
             return this;
         }
-
 
     }
 }

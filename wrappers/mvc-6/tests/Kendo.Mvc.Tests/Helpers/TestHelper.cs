@@ -6,8 +6,8 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
-using Microsoft.Framework.DependencyInjection;
 using Moq;
+using Microsoft.AspNet.Mvc.ViewComponents;
 
 namespace Kendo.Mvc.Tests
 {
@@ -64,9 +64,9 @@ namespace Kendo.Mvc.Tests
 
 			var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
 			var viewData = new ViewDataDictionary(provider, new ModelStateDictionary());
-			var viewContext = new ViewContext(actionContext, Mock.Of<IView>(), viewData, TextWriter.Null);
+            var viewContext = new ViewContext(actionContext, Mock.Of<IView>(), viewData, Mock.Of<ITempDataDictionary>(), new Mock<TextWriter>() { CallBase = true }.Object);
 
-			return viewContext;
+            return viewContext;
 		}
 	}
 }

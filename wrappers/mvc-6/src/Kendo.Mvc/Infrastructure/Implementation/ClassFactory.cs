@@ -114,7 +114,7 @@ namespace Kendo.Mvc.Infrastructure.Implementation
                         options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary),
                         syntaxTrees: new[] { syntaxTree },
                         references: new MetadataReference[] {
-#if ASPNETCORE50
+#if DNXCORE50
                             MetadataReference.CreateFromAssembly(typeof(object).GetTypeInfo().Assembly)
 #else
                             MetadataReference.CreateFromAssembly(typeof(object).Assembly)

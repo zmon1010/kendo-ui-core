@@ -9,9 +9,9 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListColumn class
     /// </summary>
-    public partial class TreeListColumn<T> 
+    public partial class TreeListColumn<T> where T : class 
     {
-        public IDictionary<string,object> Attributes { get; set; }
+        public IDictionary<string,object> HtmlAttributes { get; set; }
 
         public List<TreeListColumnCommand<T>> Command { get; set; } = new List<TreeListColumnCommand<T>>();
 
@@ -54,14 +54,15 @@ namespace Kendo.Mvc.UI
         public bool? Lockable { get; set; }
 
 
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
 
-            if (Attributes.Any())
+            if (HtmlAttributes?.Any() == true)
             {
-                settings["attributes"] = Attributes;
+                settings["attributes"] = HtmlAttributes;
             }
 
             var command = Command.Select(i => i.Serialize());
@@ -80,7 +81,7 @@ namespace Kendo.Mvc.UI
                 settings["expandable"] = Expandable;
             }
 
-            if (Field.HasValue())
+            if (Field?.HasValue() == true)
             {
                 settings["field"] = Field;
             }
@@ -90,15 +91,16 @@ namespace Kendo.Mvc.UI
             {
                 settings["filterable"] = filterable;
             }
-            else if (Filterable.Enabled) {
-                settings["filterable"] = Filterable.Enabled;
+            else if (Filterable.Enabled == true)
+            {
+                settings["filterable"] = true;
             }
 
             if (FooterTemplateId.HasValue())
             {
                 settings["footerTemplate"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('#{0}').html()", FooterTemplateId
+                        "jQuery('{0}{1}').html()", TreeList.IdPrefix, FooterTemplateId
                     )
                 };
             }
@@ -107,13 +109,12 @@ namespace Kendo.Mvc.UI
                 settings["footerTemplate"] = FooterTemplate;
             }
 
-
-            if (Format.HasValue())
+            if (Format?.HasValue() == true)
             {
                 settings["format"] = Format;
             }
 
-            if (HeaderAttributes.Any())
+            if (HeaderAttributes?.Any() == true)
             {
                 settings["headerAttributes"] = HeaderAttributes;
             }
@@ -122,7 +123,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["headerTemplate"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('#{0}').html()", HeaderTemplateId
+                        "jQuery('{0}{1}').html()", TreeList.IdPrefix, HeaderTemplateId
                     )
                 };
             }
@@ -131,21 +132,21 @@ namespace Kendo.Mvc.UI
                 settings["headerTemplate"] = HeaderTemplate;
             }
 
-
             var sortable = Sortable.Serialize();
             if (sortable.Any())
             {
                 settings["sortable"] = sortable;
             }
-            else if (Sortable.Enabled) {
-                settings["sortable"] = Sortable.Enabled;
+            else if (Sortable.Enabled == true)
+            {
+                settings["sortable"] = true;
             }
 
             if (TemplateId.HasValue())
             {
                 settings["template"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('#{0}').html()", TemplateId
+                        "jQuery('{0}{1}').html()", TreeList.IdPrefix, TemplateId
                     )
                 };
             }
@@ -154,13 +155,12 @@ namespace Kendo.Mvc.UI
                 settings["template"] = Template;
             }
 
-
-            if (Title.HasValue())
+            if (Title?.HasValue() == true)
             {
                 settings["title"] = Title;
             }
 
-            if (Width.HasValue())
+            if (Width?.HasValue() == true)
             {
                 settings["width"] = Width;
             }
@@ -184,7 +184,6 @@ namespace Kendo.Mvc.UI
             {
                 settings["lockable"] = Lockable;
             }
-
 
             return settings;
         }

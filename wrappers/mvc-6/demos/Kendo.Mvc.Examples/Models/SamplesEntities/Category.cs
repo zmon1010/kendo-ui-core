@@ -1,28 +1,28 @@
-namespace Kendo.Mvc.Examples.Models
-{    
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;    
+// 
+// Generated code
+// 
 
+using System;
+using System.Collections.Generic;
+using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Metadata;
+
+namespace Kendo.Mvc.Examples.Models
+{
     public partial class Category
     {
         public Category()
         {
             Products = new HashSet<Product>();
         }
-
+        
+        // Properties
         public int CategoryID { get; set; }
-
-        [Required]
-        [StringLength(15)]
         public string CategoryName { get; set; }
-
-        [Column(TypeName = "ntext")]
         public string Description { get; set; }
-
-        [Column(TypeName = "image")]
         public byte[] Picture { get; set; }
-
+        
+        // Navigation Properties
         public virtual ICollection<Product> Products { get; set; }
     }
 }

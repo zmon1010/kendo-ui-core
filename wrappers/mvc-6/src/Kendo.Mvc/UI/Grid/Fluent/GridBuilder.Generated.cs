@@ -1,4 +1,5 @@
 using System;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -16,7 +17,10 @@ namespace Kendo.Mvc.UI.Fluent
         public GridBuilder<T> AllowCopy(Action<GridAllowCopySettingsBuilder<T>> configurator)
         {
             Container.AllowCopy.Enabled = true;
+
+            Container.AllowCopy.Grid = Container;
             configurator(new GridAllowCopySettingsBuilder<T>(Container.AllowCopy));
+
             return this;
         }
 
@@ -70,7 +74,10 @@ namespace Kendo.Mvc.UI.Fluent
         public GridBuilder<T> ColumnMenu(Action<GridColumnMenuSettingsBuilder<T>> configurator)
         {
             Container.ColumnMenu.Enabled = true;
+
+            Container.ColumnMenu.Grid = Container;
             configurator(new GridColumnMenuSettingsBuilder<T>(Container.ColumnMenu));
+
             return this;
         }
 
@@ -101,7 +108,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the excel setting.</param>
         public GridBuilder<T> Excel(Action<GridExcelSettingsBuilder<T>> configurator)
         {
+
+            Container.Excel.Grid = Container;
             configurator(new GridExcelSettingsBuilder<T>(Container.Excel));
+
             return this;
         }
 
@@ -112,7 +122,10 @@ namespace Kendo.Mvc.UI.Fluent
         public GridBuilder<T> Groupable(Action<GridGroupableSettingsBuilder<T>> configurator)
         {
             Container.Groupable.Enabled = true;
+
+            Container.Groupable.Grid = Container;
             configurator(new GridGroupableSettingsBuilder<T>(Container.Groupable));
+
             return this;
         }
 
@@ -160,7 +173,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the pdf setting.</param>
         public GridBuilder<T> Pdf(Action<GridPdfSettingsBuilder<T>> configurator)
         {
+
+            Container.Pdf.Grid = Container;
             configurator(new GridPdfSettingsBuilder<T>(Container.Pdf));
+
             return this;
         }
 
@@ -171,7 +187,10 @@ namespace Kendo.Mvc.UI.Fluent
         public GridBuilder<T> Sortable(Action<GridSortableSettingsBuilder<T>> configurator)
         {
             Container.Sortable.Enabled = true;
+
+            Container.Sortable.Grid = Container;
             configurator(new GridSortableSettingsBuilder<T>(Container.Sortable));
+
             return this;
         }
 

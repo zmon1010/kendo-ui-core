@@ -19,11 +19,12 @@ namespace Kendo.Mvc.UI
 
         public double? Top { get; set; }
 
-
+        public string IdPrefix { get; set; } = "#";
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
 
             if (Bottom.HasValue)
             {
@@ -45,8 +46,8 @@ namespace Kendo.Mvc.UI
                 settings["top"] = Top;
             }
 
-
             return settings;
         }
+
     }
 }

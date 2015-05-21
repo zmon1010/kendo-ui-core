@@ -1,24 +1,26 @@
+// 
+// Generated code
+// 
+
+using System;
+using System.Collections.Generic;
+using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Metadata;
+
 namespace Kendo.Mvc.Examples.Models
 {
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
-
-	[Table("Region")]
     public partial class Region
     {
         public Region()
         {
             Territories = new HashSet<Territory>();
         }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        
+        // Properties
         public int RegionID { get; set; }
-
-        [Required]
-        [StringLength(50)]
         public string RegionDescription { get; set; }
-
+        
+        // Navigation Properties
         public virtual ICollection<Territory> Territories { get; set; }
     }
 }

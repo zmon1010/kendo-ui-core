@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListExcelSettings class
     /// </summary>
-    public partial class TreeListExcelSettings<T> 
+    public partial class TreeListExcelSettings<T> where T : class 
     {
         public string FileName { get; set; }
 
@@ -20,12 +20,13 @@ namespace Kendo.Mvc.UI
         public string ProxyURL { get; set; }
 
 
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
 
-            if (FileName.HasValue())
+            if (FileName?.HasValue() == true)
             {
                 settings["fileName"] = FileName;
             }
@@ -40,11 +41,10 @@ namespace Kendo.Mvc.UI
                 settings["forceProxy"] = ForceProxy;
             }
 
-            if (ProxyURL.HasValue())
+            if (ProxyURL?.HasValue() == true)
             {
                 settings["proxyURL"] = ProxyURL;
             }
-
 
             return settings;
         }

@@ -156,21 +156,21 @@ namespace Kendo.Mvc.UI
             return urlGenerator.Generate(viewContext, navigatable);
         }
 
-        ///// <summary>
-        ///// Determines whether the specified navigatable matches the current request URL.
-        ///// </summary>
-        ///// <param name="navigatable">The <see cref="INavigatable"/> object.</param>
-        ///// <param name="viewContext">The <see cref="ViewContext"/> object.</param>
-        ///// <param name="urlGenerator">The <see cref="IUrlGenerator"/> generator.</param>
-        ///// <returns></returns>
-        //public static bool IsCurrent(this INavigatable navigatable, ViewContext viewContext, IUrlGenerator urlGenerator)
-        //{
-        //    var currentUrl = viewContext.HttpContext.;
-        //    var url = urlGenerator.Generate(viewContext, navigatable);
-        //    var currentRoute = GetUrlHelper(viewContext).RouteUrl(viewContext.RouteData.Values);
-            
-        //    return !string.IsNullOrEmpty(url) && (url.IsCaseInsensitiveEqual(currentUrl) || url.IsCaseInsensitiveEqual(currentRoute));
-        //}
+        /// <summary>
+        /// Determines whether the specified navigatable matches the current request URL.
+        /// </summary>
+        /// <param name="navigatable">The <see cref="INavigatable"/> object.</param>
+        /// <param name="viewContext">The <see cref="ViewContext"/> object.</param>
+        /// <param name="urlGenerator">The <see cref="IUrlGenerator"/> generator.</param>
+        /// <returns></returns>
+        public static bool IsCurrent(this INavigatable navigatable, ViewContext viewContext, IUrlGenerator urlGenerator)
+        {
+            var currentUrl = ""; //viewContext.HttpContext.Request.; TODO implement
+            var url = urlGenerator.Generate(viewContext, navigatable);
+            var currentRoute = GetUrlHelper(viewContext).RouteUrl(viewContext.RouteData.Values);
+
+            return !string.IsNullOrEmpty(url) && (url.IsCaseInsensitiveEqual(currentUrl) || url.IsCaseInsensitiveEqual(currentRoute));
+        }
 
         private static IUrlHelper GetUrlHelper(ActionContext context)
         {

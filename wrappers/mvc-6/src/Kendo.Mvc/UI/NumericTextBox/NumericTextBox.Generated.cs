@@ -40,7 +40,7 @@ namespace Kendo.Mvc.UI
         {
             var settings = base.SerializeSettings();
 
-            if (Culture.HasValue())
+            if (Culture?.HasValue() == true)
             {
                 settings["culture"] = Culture;
             }
@@ -50,17 +50,17 @@ namespace Kendo.Mvc.UI
                 settings["decimals"] = Decimals;
             }
 
-            if (DownArrowText.HasValue())
+            if (DownArrowText?.HasValue() == true)
             {
                 settings["downArrowText"] = DownArrowText;
             }
 
-            if (Format.HasValue())
+            if (Format?.HasValue() == true)
             {
                 settings["format"] = Format;
             }
 
-            if (Placeholder.HasValue())
+            if (Placeholder?.HasValue() == true)
             {
                 settings["placeholder"] = Placeholder;
             }
@@ -70,7 +70,7 @@ namespace Kendo.Mvc.UI
                 settings["spinners"] = Spinners;
             }
 
-            if (UpArrowText.HasValue())
+            if (UpArrowText?.HasValue() == true)
             {
                 settings["upArrowText"] = UpArrowText;
             }

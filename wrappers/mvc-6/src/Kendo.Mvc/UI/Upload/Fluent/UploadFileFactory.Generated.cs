@@ -8,12 +8,16 @@ namespace Kendo.Mvc.UI.Fluent
     public partial class UploadFileFactory
         
     {
+
+        public Upload Upload { get; set; }
+
         /// <summary>
         /// Adds an item to the collection
         /// </summary>
         public virtual UploadFileBuilder Add()
         {
             var item = new UploadFile();
+            item.Upload = Upload;
             Container.Add(item);
 
             return new UploadFileBuilder(item);

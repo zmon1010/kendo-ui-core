@@ -1,0 +1,25 @@
+:options:
+    - :name: orientation
+      :type: String
+      :enum_type: ProgressBarOrientation
+      :description: Defines the orientation of the ProgressBar.
+      :values:
+          - :value: vertical
+            :member: Vertical
+            :description: Defines a vertical ProgressBar
+
+          - :value: horizontal
+            :member: Horizontal
+            :description: Defines a horizontal ProgressBar
+
+    - :name: type
+      :type: String
+      :enum_type: ProgressBarType
+      :description: Represents the supported progress types
+      :values:
+          - :value: value
+            :member: Value
+          - :value: percent
+            :member: Percent
+          - :value: chunk
+            :member: Chunk

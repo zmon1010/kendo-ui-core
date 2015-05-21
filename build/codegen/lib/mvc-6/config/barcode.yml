@@ -1,0 +1,8 @@
+:options:
+    - :name: !ruby/regexp '/.*RenderAs$/i'
+      :merge: true
+      :enum_type: RenderingMode
+      
+    - :name: !ruby/regexp '/.*dashType$/i'
+      :merge: true
+      :enum_type: ChartDashType

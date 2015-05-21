@@ -9,31 +9,29 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListEditableSettings class
     /// </summary>
-    public partial class TreeListEditableSettings<T> 
+    public partial class TreeListEditableSettings<T> where T : class 
     {
-        public string Mode { get; set; }
-
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
 
+        public string TemplateName { get; set; }
+
+        public TreeListEditMode? Mode { get; set; }
 
         public bool Enabled { get; set; }
+
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
 
-            if (Mode.HasValue())
-            {
-                settings["mode"] = Mode;
-            }
-
             if (TemplateId.HasValue())
             {
                 settings["template"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('#{0}').html()", TemplateId
+                        "jQuery('{0}{1}').html()", TreeList.IdPrefix, TemplateId
                     )
                 };
             }
@@ -42,7 +40,10 @@ namespace Kendo.Mvc.UI
                 settings["template"] = Template;
             }
 
-
+            if (Mode.HasValue)
+            {
+                settings["mode"] = Mode?.Serialize();
+            }
 
             return settings;
         }

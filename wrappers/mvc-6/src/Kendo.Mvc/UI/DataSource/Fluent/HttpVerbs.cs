@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Kendo.Mvc.UI.Fluent
+namespace Kendo.Mvc.UI
 {
     // Summary:
     //     Enumerates the HTTP verbs.

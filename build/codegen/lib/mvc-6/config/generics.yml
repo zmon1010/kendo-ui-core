@@ -21,3 +21,19 @@
 :grid:
     - :name: T
       :constraint: class
+
+:pivotgrid:
+    - :name: T
+      :constraint: class
+
+:scheduler:
+    - :name: T
+      :constraint: class, ISchedulerEvent
+
+:slider:
+    - :name: T
+      :constraint: struct, IComparable
+
+:rangeslider:
+    - :name: T
+      :constraint: struct, IComparable

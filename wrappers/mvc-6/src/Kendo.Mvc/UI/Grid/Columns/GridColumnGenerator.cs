@@ -30,7 +30,7 @@ namespace Kendo.Mvc.UI
             var viewDataDictionary = new ViewDataDictionary<T>(modelMetadataProvider, new ModelStateDictionary());
 
 			properties = properties.Select(property => new {
-                                       Order = ExpressionMetadataProvider.FromStringExpression(property.Name, viewDataDictionary, modelMetadataProvider).Order,
+                                       Order = ExpressionMetadataProvider.FromStringExpression(property.Name, viewDataDictionary, modelMetadataProvider).Metadata.Order,
                                        Property = property
                                     })
                                     .OrderBy(property => property.Order)

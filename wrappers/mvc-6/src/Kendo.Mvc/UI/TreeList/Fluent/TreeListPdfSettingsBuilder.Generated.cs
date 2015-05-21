@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -7,7 +8,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListPdfSettings
     /// </summary>
     public partial class TreeListPdfSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// The author of the PDF document.
@@ -60,6 +61,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true, the content will be forwarded to proxyURL even if the browser supports saving files locally.
+        /// </summary>
+        public TreeListPdfSettingsBuilder<T> ForceProxy()
+        {
+            Container.ForceProxy = true;
+            return this;
+        }
+
+        /// <summary>
         /// Specifies the keywords of the exported PDF file.
         /// </summary>
         /// <param name="value">The value for Keywords</param>
@@ -80,24 +90,11 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Specifies the margins of the page (numbers or strings with units). Supported
-		/// units are "mm", "cm", "in" and "pt" (default).
+        /// Set to true to reverse the paper dimensions such that width is the larger edge.
         /// </summary>
-        /// <param name="configurator">The configurator for the margin setting.</param>
-        public TreeListPdfSettingsBuilder<T> Margin(Action<TreeListPdfMarginSettingsBuilder<T>> configurator)
+        public TreeListPdfSettingsBuilder<T> Landscape()
         {
-            configurator(new TreeListPdfMarginSettingsBuilder<T>(Container.Margin));
-            return this;
-        }
-
-        /// <summary>
-        /// Specifies the paper size of the PDF document.
-		/// The default "auto" means the paper size is determined by the content.Supported values:
-        /// </summary>
-        /// <param name="value">The value for PaperSize</param>
-        public TreeListPdfSettingsBuilder<T> PaperSize(string value)
-        {
-            Container.PaperSize = value;
+            Container.Landscape = true;
             return this;
         }
 
@@ -143,7 +140,6 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Title = value;
             return this;
         }
-
 
     }
 }

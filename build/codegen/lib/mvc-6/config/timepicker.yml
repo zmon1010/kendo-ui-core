@@ -1,0 +1,8 @@
+:options:
+    - :name: dates
+      :merge: true
+      :type: DateTime[]
+
+    - :name: parseFormats
+      :merge: true
+      :type: string[]

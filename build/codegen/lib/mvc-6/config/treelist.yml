@@ -1,0 +1,63 @@
+:options:
+    - :name: sortable.mode
+      :type: String
+      :enum_type: TreeListSortMode
+      :description: Defines the sort modes supported by Kendo UI TreeList for ASP.NET MVC
+      :values:
+          - :value: single
+            :member: SingleColumn
+            :description: The user can sort only by one column at the same time
+
+          - :value: multiple
+            :member: MultipleColumn
+            :description: The user can sort by more than one column at the same time
+
+    - :name: selectable
+      :description: Specifies whether TreeList selection is allowed. By default selection is disabled
+      :default: false
+      :type:
+          - Object
+          - Boolean
+
+    - :name: selectable.mode
+      :description: Specifies whether multiple or single selection is allowed.
+      :type: String
+      :enum_type: TreeListSelectionMode
+      :values:
+          - :value: single
+            :member: Single
+            :description: The user can select only by one item at the same time
+
+          - :value: multiple
+            :member: Multiple
+            :description: The user can select by more than one item at the same time
+
+    - :name: selectable.type
+      :description: Specifies whether row or cell selection is allowed.
+      :type: String
+      :enum_type: TreeListSelectionType
+      :values:
+          - :value: row
+            :member: Row
+            :description: The user can select widget rows
+
+          - :value: cell
+            :member: Cell
+            :description: The user can select widget cells
+
+    - :name: editable.templateName
+      :description: The EditorTemplate which to be rendered as editor.
+      :type: String
+
+    - :name: editable.mode
+      :type: String
+      :enum_type: TreeListEditMode
+      :description: Represents the editing modes supported by Kendo UI TreeList for ASP.NET MVC
+      :values:
+          - :value: inline
+            :member: InLine
+            :description: Specifies in-line edit mode
+
+          - :value: popup
+            :member: PopUp
+            :description: Specifies popup edit mode

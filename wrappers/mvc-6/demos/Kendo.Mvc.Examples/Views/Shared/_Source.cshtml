@@ -6,14 +6,14 @@
 @{
 	var hosting = ViewContext.GetService<IHostingEnvironment>();
 
-	var viewPath = IOPath.Combine(hosting.WebRoot, ".." + ViewData["ViewPath"].ToString());
+	var viewPath = IOPath.Combine(hosting.WebRootPath, ".." + ViewData["ViewPath"].ToString());
 	var viewSource = IOFile.ReadAllText(viewPath);
 
 	var routeData = ViewContext.RouteData.Values;
 	var controllerName = routeData["controller"];
 	var viewName = routeData["action"];
 
-	var controllerPath = IOPath.Combine(hosting.WebRoot, "../Controllers/" + controllerName + "/" + viewName + "Controller.cs");
+	var controllerPath = IOPath.Combine(hosting.WebRootPath, "../Controllers/" + controllerName + "/" + viewName + "Controller.cs");
 
 	var controllerSource = "";
 	if (IOFile.Exists(controllerPath))

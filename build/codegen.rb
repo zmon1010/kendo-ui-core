@@ -191,12 +191,37 @@ namespace :generate do
         desc 'Generate MVC v6 wrappers'
         task :wrappers do
             markdown = FileList[
+                'docs/api/javascript/dataviz/ui/barcode.md',
+                'docs/api/javascript/dataviz/ui/chart.md',
+                'docs/api/javascript/dataviz/ui/lineargauge.md',
+                'docs/api/javascript/dataviz/ui/radialgauge.md',
+                'docs/api/javascript/dataviz/ui/qrcode.md',
+                'docs/api/javascript/ui/button.md',
+                'docs/api/javascript/ui/calendar.md',
+                'docs/api/javascript/ui/colorpalette.md',
+                'docs/api/javascript/ui/colorpicker.md',
+                'docs/api/javascript/ui/contextmenu.md',
+                'docs/api/javascript/ui/datepicker.md',
                 'docs/api/javascript/ui/datetimepicker.md',
+                'docs/api/javascript/ui/flatcolorpicker.md',
                 'docs/api/javascript/ui/grid.md',
-                'docs/api/javascript/ui/numerictextbox.md',
                 'docs/api/javascript/ui/maskedtextbox.md',
-                'docs/api/javascript/ui/upload.md'
-                #'docs/api/javascript/ui/treelist.md'
+                'docs/api/javascript/ui/notification.md',
+                'docs/api/javascript/ui/numerictextbox.md',
+                'docs/api/javascript/ui/progressbar.md',
+                'docs/api/javascript/ui/rangeslider.md',
+                'docs/api/javascript/ui/scheduler.md',
+                'docs/api/javascript/ui/slider.md',
+                'docs/api/javascript/ui/sortable.md',
+                'docs/api/javascript/ui/timepicker.md',
+                'docs/api/javascript/ui/treelist.md',
+                'docs/api/javascript/ui/toolbar.md',
+                'docs/api/javascript/ui/tooltip.md',
+                'docs/api/javascript/ui/upload.md',
+                'docs/api/javascript/ui/window.md',
+                'docs/api/javascript/ui/splitter.md',
+                'docs/api/javascript/ui/pivotgrid.md',
+                'docs/api/javascript/ui/pivotconfigurator.md'
             ]
 
             components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }

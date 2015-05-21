@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListMessagesSettings class
     /// </summary>
-    public partial class TreeListMessagesSettings<T> 
+    public partial class TreeListMessagesSettings<T> where T : class 
     {
         public TreeListMessagesCommandsSettings<T> Commands { get; } = new TreeListMessagesCommandsSettings<T>();
 
@@ -22,6 +22,7 @@ namespace Kendo.Mvc.UI
         public string Retry { get; set; }
 
 
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
@@ -33,26 +34,25 @@ namespace Kendo.Mvc.UI
                 settings["commands"] = commands;
             }
 
-            if (Loading.HasValue())
+            if (Loading?.HasValue() == true)
             {
                 settings["loading"] = Loading;
             }
 
-            if (NoRows.HasValue())
+            if (NoRows?.HasValue() == true)
             {
                 settings["noRows"] = NoRows;
             }
 
-            if (RequestFailed.HasValue())
+            if (RequestFailed?.HasValue() == true)
             {
                 settings["requestFailed"] = RequestFailed;
             }
 
-            if (Retry.HasValue())
+            if (Retry?.HasValue() == true)
             {
                 settings["retry"] = Retry;
             }
-
 
             return settings;
         }

@@ -22,11 +22,11 @@ namespace Kendo.Mvc.UI
         {
 			Editable = new GridEditableSettings<T>(this)
 			{
-				//PopUp = new Window(viewContext, Initializer)
-				//{
-				//	Modal = true,
-				//	Draggable = true
-				//}
+				PopUp = new Window(viewContext)
+				{
+					Modal = true,
+					Draggable = true
+				}
 			};
 
 			DataSource = new DataSource(ModelMetadataProvider)
@@ -176,7 +176,6 @@ namespace Kendo.Mvc.UI
 			if (!HtmlAttributes.ContainsKey("id"))
 			{
 				HtmlAttributes["id"] = Id;
-
 			}
 
 			if (DataSource.Type != DataSourceType.Custom || DataSource.CustomType == "aspnetmvc-ajax")
@@ -375,7 +374,7 @@ namespace Kendo.Mvc.UI
 			var bindingContext = new ModelBindingContext
 			{
 				ValueProvider = ActionBindingContext.Value.ValueProvider,
-				ModelMetadata = ModelMetadataProvider.GetMetadataForType(null, typeof(T))
+				ModelMetadata = ModelMetadataProvider.GetMetadataForType(typeof(T))
 			};
 
 			var result = binder.BindModelAsync(bindingContext).Result; // make it run synchronously

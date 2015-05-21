@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -7,7 +8,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring GridPdfSettings
     /// </summary>
     public partial class GridPdfSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// Exports all grid pages, starting from the first one.

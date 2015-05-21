@@ -35,17 +35,17 @@ namespace Kendo.Mvc.UI
                 settings["clearPromptChar"] = ClearPromptChar;
             }
 
-            if (Culture.HasValue())
+            if (Culture?.HasValue() == true)
             {
                 settings["culture"] = Culture;
             }
 
-            if (Mask.HasValue())
+            if (Mask?.HasValue() == true)
             {
                 settings["mask"] = Mask;
             }
 
-            if (PromptChar.HasValue())
+            if (PromptChar?.HasValue() == true)
             {
                 settings["promptChar"] = PromptChar;
             }
@@ -55,7 +55,7 @@ namespace Kendo.Mvc.UI
                 settings["unmaskOnPost"] = UnmaskOnPost;
             }
 
-            if (Value.HasValue())
+            if (Value?.HasValue() == true)
             {
                 settings["value"] = Value;
             }

@@ -9,7 +9,7 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI TreeListPdfSettings class
     /// </summary>
-    public partial class TreeListPdfSettings<T> 
+    public partial class TreeListPdfSettings<T> where T : class 
     {
         public string Author { get; set; }
 
@@ -25,10 +25,6 @@ namespace Kendo.Mvc.UI
 
         public bool? Landscape { get; set; }
 
-        public TreeListPdfMarginSettings<T> Margin { get; } = new TreeListPdfMarginSettings<T>();
-
-        public string PaperSize { get; set; }
-
         public string ProxyURL { get; set; }
 
         public string ProxyTarget { get; set; }
@@ -38,17 +34,18 @@ namespace Kendo.Mvc.UI
         public string Title { get; set; }
 
 
+        public TreeList<T> TreeList { get; set; }
 
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
 
-            if (Author.HasValue())
+            if (Author?.HasValue() == true)
             {
                 settings["author"] = Author;
             }
 
-            if (Creator.HasValue())
+            if (Creator?.HasValue() == true)
             {
                 settings["creator"] = Creator;
             }
@@ -58,7 +55,7 @@ namespace Kendo.Mvc.UI
                 settings["date"] = Date;
             }
 
-            if (FileName.HasValue())
+            if (FileName?.HasValue() == true)
             {
                 settings["fileName"] = FileName;
             }
@@ -68,7 +65,7 @@ namespace Kendo.Mvc.UI
                 settings["forceProxy"] = ForceProxy;
             }
 
-            if (Keywords.HasValue())
+            if (Keywords?.HasValue() == true)
             {
                 settings["keywords"] = Keywords;
             }
@@ -78,37 +75,25 @@ namespace Kendo.Mvc.UI
                 settings["landscape"] = Landscape;
             }
 
-            var margin = Margin.Serialize();
-            if (margin.Any())
-            {
-                settings["margin"] = margin;
-            }
-
-            if (PaperSize.HasValue())
-            {
-                settings["paperSize"] = PaperSize;
-            }
-
-            if (ProxyURL.HasValue())
+            if (ProxyURL?.HasValue() == true)
             {
                 settings["proxyURL"] = ProxyURL;
             }
 
-            if (ProxyTarget.HasValue())
+            if (ProxyTarget?.HasValue() == true)
             {
                 settings["proxyTarget"] = ProxyTarget;
             }
 
-            if (Subject.HasValue())
+            if (Subject?.HasValue() == true)
             {
                 settings["subject"] = Subject;
             }
 
-            if (Title.HasValue())
+            if (Title?.HasValue() == true)
             {
                 settings["title"] = Title;
             }
-
 
             return settings;
         }

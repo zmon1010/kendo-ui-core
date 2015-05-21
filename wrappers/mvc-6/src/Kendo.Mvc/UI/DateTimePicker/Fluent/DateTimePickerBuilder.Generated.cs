@@ -1,4 +1,5 @@
 using System;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -155,7 +156,10 @@ namespace Kendo.Mvc.UI.Fluent
         /// <param name="configurator">The configurator for the monthtemplate setting.</param>
         public DateTimePickerBuilder MonthTemplate(Action<DateTimePickerMonthTemplateSettingsBuilder> configurator)
         {
+
+            Container.MonthTemplate.DateTimePicker = Container;
             configurator(new DateTimePickerMonthTemplateSettingsBuilder(Container.MonthTemplate));
+
             return this;
         }
 

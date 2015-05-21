@@ -13,8 +13,6 @@ namespace Kendo.Mvc.UI
     {
         public UploadAsyncSettings Async { get; } = new UploadAsyncSettings();
 
-        public bool? Enabled { get; set; }
-
         public List<UploadFile> Files { get; set; } = new List<UploadFile>();
 
         public bool? Multiple { get; set; }
@@ -34,11 +32,6 @@ namespace Kendo.Mvc.UI
             if (async.Any())
             {
                 settings["async"] = async;
-            }
-
-            if (Enabled.HasValue)
-            {
-                settings["enabled"] = Enabled;
             }
 
             var files = Files.Select(i => i.Serialize());
@@ -61,7 +54,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["template"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('#{0}').html()", TemplateId
+                        "jQuery('{0}{1}').html()", IdPrefix, TemplateId
                     )
                 };
             }

@@ -1,0 +1,13 @@
+:options:
+    - :name: orientation
+      :type: String
+      :enum_type: SplitterOrientation
+      :description: Specifies the orientation in which the splitter panes will be ordered
+      :values:
+          - :value: horizontal
+            :member: Horizontal
+            :description: Panes are oredered horizontally
+
+          - :value: vertical
+            :member: Vertical
+            :description: Panes are oredered vertically

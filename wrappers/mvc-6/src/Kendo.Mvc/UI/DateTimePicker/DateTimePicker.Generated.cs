@@ -50,7 +50,7 @@ namespace Kendo.Mvc.UI
             {
                 settings["ARIATemplate"] = new ClientHandlerDescriptor {
                     HandlerName = string.Format(
-                        "jQuery('#{0}').html()", ARIATemplateId
+                        "jQuery('{0}{1}').html()", IdPrefix, ARIATemplateId
                     )
                 };
             }
@@ -59,17 +59,17 @@ namespace Kendo.Mvc.UI
                 settings["ARIATemplate"] = ARIATemplate;
             }
 
-            if (Culture.HasValue())
+            if (Culture?.HasValue() == true)
             {
                 settings["culture"] = Culture;
             }
 
-            if (Dates != null && Dates.Any())
+            if (Dates?.Any() == true)
             {
                 settings["dates"] = Dates;
             }
 
-            if (Format.HasValue())
+            if (Format?.HasValue() == true)
             {
                 settings["format"] = Format;
             }
@@ -89,12 +89,12 @@ namespace Kendo.Mvc.UI
                 settings["min"] = Min;
             }
 
-            if (ParseFormats != null && ParseFormats.Any())
+            if (ParseFormats?.Any() == true)
             {
                 settings["parseFormats"] = ParseFormats;
             }
 
-            if (TimeFormat.HasValue())
+            if (TimeFormat?.HasValue() == true)
             {
                 settings["timeFormat"] = TimeFormat;
             }

@@ -1,51 +1,38 @@
+// 
+// Generated code
+// 
+
+using System;
+using System.Collections.Generic;
+using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Metadata;
+
 namespace Kendo.Mvc.Examples.Models
 {
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-
-	public partial class Customer
+    public partial class Customer
     {
         public Customer()
         {
-            Orders = new HashSet<Order>();            
+            CustomerCustomerDemo = new HashSet<CustomerCustomerDemo>();
+            Orders = new HashSet<Order>();
         }
-
-        [StringLength(5)]
+        
+        // Properties
         public string CustomerID { get; set; }
-
-        [Required]
-        [StringLength(40)]
-        public string CompanyName { get; set; }
-
-        [StringLength(30)]
-        public string ContactName { get; set; }
-
-        [StringLength(30)]
-        public string ContactTitle { get; set; }
-
-        [StringLength(60)]
         public string Address { get; set; }
-
-        [StringLength(15)]
-        public string City { get; set; }
-
-        [StringLength(15)]
-        public string Region { get; set; }
-
-        [StringLength(10)]
-        public string PostalCode { get; set; }
-
-        [StringLength(15)]
-        public string Country { get; set; }
-
-        [StringLength(24)]
-        public string Phone { get; set; }
-
-        [StringLength(24)]
-        public string Fax { get; set; }
-
         public bool? Bool { get; set; }
-
+        public string City { get; set; }
+        public string CompanyName { get; set; }
+        public string ContactName { get; set; }
+        public string ContactTitle { get; set; }
+        public string Country { get; set; }
+        public string Fax { get; set; }
+        public string Phone { get; set; }
+        public string PostalCode { get; set; }
+        public string Region { get; set; }
+        
+        // Navigation Properties
+        public virtual ICollection<CustomerCustomerDemo> CustomerCustomerDemo { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

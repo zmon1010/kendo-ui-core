@@ -8,6 +8,9 @@ namespace Kendo.Mvc.UI.Fluent
     public partial class <%= csharp_builder_class_name %>
         <%= csharp_generic_constraints %>
     {
+
+        public <%= component_name %><%= csharp_generic_args %> <%= component_name %> { get; set; }
+
 % if builtin_names.empty?
         /// <summary>
         /// Adds an item to the collection
@@ -15,6 +18,7 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual <%= csharp_item_builder_class_name %> Add()
         {
             var item = new <%= csharp_item_class_name %>();
+            item.<%= component_name %> = <%= component_name %>;
             Container.Add(item);
 
             return new <%= csharp_item_builder_class_name %>(item);
@@ -26,6 +30,7 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual <%= csharp_item_builder_class_name %> Custom()
         {
             var item = new <%= csharp_item_class_name %>();
+            item.<%= component_name %> = <%= component_name %>;
             Container.Add(item);
 
             return new <%= csharp_item_builder_class_name %>(item);
@@ -39,6 +44,7 @@ namespace Kendo.Mvc.UI.Fluent
         public virtual <%= csharp_item_builder_class_name %> <%= name.to_csharp_name %>()
         {
             var item = new <%= csharp_item_class_name %>() { Name = "<%= name %>" };
+            item.<%= component_name %> = <%= component_name %>;
             Container.Add(item);
 
             return new <%= csharp_item_builder_class_name %>(item);

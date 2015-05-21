@@ -60,7 +60,7 @@ namespace Kendo.Mvc.UI
 
 		protected override void WriteHtml(TextWriter writer)
         {
-            var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
+            var metadata = ExpressionMetadataProvider.FromStringExpression(Name, HtmlHelper.ViewData, HtmlHelper.MetadataProvider).Metadata;
             var tag = Generator.GenerateDateTimeInput(ViewContext, metadata, Id, Name, Value, Format, HtmlAttributes);
 
             if (!Enabled)
@@ -104,8 +104,7 @@ namespace Kendo.Mvc.UI
 			{
 				settings["footer"] = EnableFooter;
 			}
-
-			MonthTemplate.IdPrefix = idPrefix;
+			
 			var month = MonthTemplate.Serialize();
 			if (month.Any())
 			{

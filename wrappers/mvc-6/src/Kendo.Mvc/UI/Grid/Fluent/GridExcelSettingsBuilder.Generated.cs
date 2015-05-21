@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -7,7 +8,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring GridExcelSettings
     /// </summary>
     public partial class GridExcelSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// If set to true the grid will export all pages of data. By default the grid exports only the current page.

@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Kendo.Mvc.Extensions;
+using Microsoft.AspNet.Mvc.ModelBinding.Validation;
 
 namespace Kendo.Mvc.Rendering
 {
@@ -14,17 +16,20 @@ namespace Kendo.Mvc.Rendering
     {
         private readonly ActionBindingContext _actionBindingContext;
         private readonly IModelMetadataProvider _metadataProvider;
+        private readonly IServiceProvider _requestServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KendoHtmlGenerator"/> class.
         /// </summary>
         public KendoHtmlGenerator(
             IScopedInstance<ActionBindingContext> actionBindingContext,
-            IModelMetadataProvider metadataProvider)
+            IModelMetadataProvider metadataProvider,
+            IServiceProvider requestServices)
 
         {
             _actionBindingContext = actionBindingContext.Value;
             _metadataProvider = metadataProvider;
+            _requestServices = requestServices;
         }
 		private TagBuilder GenerateInput(
 		   ViewContext viewContext,
@@ -62,7 +67,29 @@ namespace Kendo.Mvc.Rendering
 			return tagBuilder;
 		}
 
-		public virtual TagBuilder GenerateDateInput(
+		public virtual TagBuilder GenerateColorInput(
+			ViewContext viewContext,
+			ModelMetadata metadata,
+			string id,
+			string name,
+			object value,
+			IDictionary<string, object> htmlAttributes)
+		{
+			return GenerateInput(viewContext, metadata, id, name, value, null, "color", htmlAttributes);
+		}
+
+        public virtual TagBuilder GenerateRangeInput(
+            ViewContext viewContext,
+            ModelMetadata metadata,
+            string id,
+            string name,
+            object value,
+            IDictionary<string, object> htmlAttributes)
+        {
+            return GenerateInput(viewContext, metadata, id, name, value, null, "range", htmlAttributes);
+        }
+
+        public virtual TagBuilder GenerateDateInput(
             ViewContext viewContext,
             ModelMetadata metadata,
             string id,
@@ -86,7 +113,19 @@ namespace Kendo.Mvc.Rendering
             return GenerateInput(viewContext, metadata, id, name, value, format, "datetime", htmlAttributes);
 		}
 
-		public virtual TagBuilder GenerateNumericInput(
+        public virtual TagBuilder GenerateTimeInput(
+            ViewContext viewContext,
+            ModelMetadata metadata,
+            string id,
+            string name,
+            object value,
+            string format,
+            IDictionary<string, object> htmlAttributes)
+        {
+            return GenerateInput(viewContext, metadata, id, name, value, format, "time", htmlAttributes);
+        }
+
+        public virtual TagBuilder GenerateNumericInput(
 			ViewContext viewContext,
 			ModelMetadata metadata,
 			string id,
@@ -98,14 +137,24 @@ namespace Kendo.Mvc.Rendering
 			return GenerateInput(viewContext, metadata, id, name, value, format, "number", htmlAttributes);
 		}
 
-		public virtual TagBuilder GenerateTag(
+        public virtual TagBuilder GenerateTag(
+            string tagName,            
+            IDictionary<string, object> htmlAttributes)
+        {            
+            var tagBuilder = new TagBuilder(tagName);            
+            tagBuilder.MergeAttributes(htmlAttributes, replaceExisting: true);
+            return tagBuilder;
+        }
+
+        public virtual TagBuilder GenerateTag(
             string tagName,
             ViewContext viewContext,
             string id,
             string name,
             IDictionary<string, object> htmlAttributes)
         {
-            var fullName = GetFullHtmlFieldName(viewContext, name);
+            var fullName = viewContext.GetFullHtmlFieldName(name);
+
             if (string.IsNullOrEmpty(fullName))
             {
                 throw new InvalidOperationException(Resources.Exceptions.NameCannotBeBlank);
@@ -121,7 +170,7 @@ namespace Kendo.Mvc.Rendering
 
         // Only render attributes if client-side validation is enabled, and then only if we've
         // never rendered validation for a field with this name in this form.
-        protected virtual IDictionary<string, object> GetValidationAttributes(
+        public virtual IDictionary<string, object> GetValidationAttributes(
             ViewContext viewContext,
             ModelMetadata metadata,
             string name)
@@ -132,7 +181,7 @@ namespace Kendo.Mvc.Rendering
                 return null;
             }
 
-            var fullName = GetFullHtmlFieldName(viewContext, name);
+            var fullName = viewContext.GetFullHtmlFieldName(name);
             if (formContext.RenderedField(fullName))
             {
                 return null;
@@ -150,20 +199,15 @@ namespace Kendo.Mvc.Rendering
             string name)
         {
             metadata = metadata ??
-                ExpressionMetadataProvider.FromStringExpression(name, viewContext.ViewData, _metadataProvider);
+                ExpressionMetadataProvider.FromStringExpression(name, viewContext.ViewData, _metadataProvider).Metadata;
 
-            return _actionBindingContext
-                .ValidatorProvider
-                .GetValidators(metadata)
-                .OfType<IClientModelValidator>()
+            var validatorProviderContext = new ModelValidatorProviderContext(metadata);
+            _actionBindingContext.ValidatorProvider.GetValidators(validatorProviderContext);
+
+            return validatorProviderContext
+                .Validators.OfType<IClientModelValidator>()
                 .SelectMany(v => v.GetClientValidationRules(
-                    new ClientModelValidationContext(metadata, _metadataProvider)));
-        }
-
-        private static string GetFullHtmlFieldName(ViewContext viewContext, string name)
-        {
-            var fullName = viewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
-            return fullName;
+                    new ClientModelValidationContext(metadata, _metadataProvider, _requestServices)));
         }
 
         private static object GetModelStateValue(ViewContext viewContext, string key, Type destinationType)

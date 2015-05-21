@@ -87,5 +87,83 @@ namespace Kendo.Mvc.UI.Fluent
             settings.FilterUIHandler.HandlerName = handler;
             return this;
         }
-    }
+
+		/// <summary>
+		/// Sets the template for the checkbox rendering when Multi checkbox filtering is enabled
+		/// </summary>
+		/// <example>
+		/// <code lang="CS">
+		///  &lt;%= Html.Kendo().Grid(Model)
+		///             .Name("Grid")
+		///             .Columns(columns =>
+		///                 columns.Bound(o => o.OrderDate)
+		///                        .Filterable(filterable =>
+		///                             filterable.ItemTemplate("nameOfJavaScriptFunction")
+		///                        )
+		///             )
+		/// %&gt;
+		/// </code>
+		/// </example>
+		public GridBoundColumnFilterableBuilder ItemTemplate(string handler)
+		{
+			settings.ItemTemplate.HandlerName = handler;
+			return this;
+		}
+
+		/// <summary>
+		/// Enables / disabled the CheclAll checkboxes when Multi Checkbox filtering is enabled.
+		/// </summary>
+		public GridBoundColumnFilterableBuilder CheckAll(bool value)
+		{
+			settings.CheckAll = value;
+			return this;
+		}
+
+		/// <summary>
+		/// Enables / disabled the Multi Checkbox filtering support for this column.
+		/// </summary>
+		public GridBoundColumnFilterableBuilder Multi(bool value)
+		{
+			settings.Multi = value;
+			return this;
+		}
+
+		/// <summary>
+		/// Configures the DataSource options.
+		/// </summary>
+		/// <param name="configurator">The DataSource configurator action.</param>
+		/// <example>
+		/// <code lang="CS">
+		///  &lt;%= Html.Kendo().Grid(Model)
+		///             .Name("Grid")
+		///             .Columns(columns =>
+		///                 columns.Bound(o => o.OrderDate)
+		///                        .Filterable(filterable =>
+		///                             filterable.Cell(cell =>
+		///                                     cell.DataSource(ds =>
+		///                                         ds.Read("someAction", "someController")
+		///                                     )
+		///                                 )
+		///                         )
+		///             )
+		/// %&gt;
+		/// </code>
+		/// </example>
+		public GridBoundColumnFilterableBuilder DataSource(Action<ReadOnlyDataSourceBuilder> configurator)
+		{
+			configurator(new ReadOnlyDataSourceBuilder(settings.DataSource, this.viewContext, this.urlGenerator));
+
+			return this;
+		}
+
+		/// <summary>
+		/// Provide IEnumerable that will be used as DataSource for Multi CheckBox filtering on this column
+		/// </summary>
+		public GridBoundColumnFilterableBuilder BindTo(System.Collections.IEnumerable dataSource)
+		{
+			settings.DataSource.Data = dataSource;
+
+			return this;
+		}
+	}
 }

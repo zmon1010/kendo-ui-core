@@ -11,13 +11,40 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class TreeListEditableSettings<T> 
     {
-        public Dictionary<string, object> Serialize()
+		public TreeListEditableSettings()
+		{
+			DefaultDataItem = CreateDefaultItem;
+        }
+
+		public Func<T> DefaultDataItem { get; set; }
+
+		public string EditorHtml { get; set; }
+
+		public Dictionary<string, object> Serialize()
         {
             var settings = SerializeSettings();
 
-            // Do manual serialization here
+			SerializeEditTemplate(settings);
 
-            return settings;
+			return settings;
         }
-    }
+
+		private T CreateDefaultItem()
+		{
+			return Activator.CreateInstance<T>();
+		}
+
+		private void SerializeEditTemplate(IDictionary<string, object> options)
+		{
+			if (Enabled && EditorHtml.HasValue())
+			{
+				var html = EditorHtml.Trim()
+								.EscapeHtmlEntities()
+								.Replace("\r\n", string.Empty)
+								.Replace("jQuery(\"#", "jQuery(\"\\#");
+
+				options["template"] = html;
+			}
+		}
+	}
 }

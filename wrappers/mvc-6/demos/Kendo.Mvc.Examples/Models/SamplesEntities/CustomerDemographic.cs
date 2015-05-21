@@ -1,23 +1,26 @@
+// 
+// Generated code
+// 
+
+using System;
+using System.Collections.Generic;
+using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Metadata;
+
 namespace Kendo.Mvc.Examples.Models
 {
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
-
-	public partial class CustomerDemographic
+    public partial class CustomerDemographic
     {
         public CustomerDemographic()
         {
-            Customers = new HashSet<Customer>();
+            CustomerCustomerDemo = new HashSet<CustomerCustomerDemo>();
         }
-
-        [Key]
-        [StringLength(10)]
+        
+        // Properties
         public string CustomerTypeID { get; set; }
-
-        [Column(TypeName = "ntext")]
         public string CustomerDesc { get; set; }
-
-        public virtual ICollection<Customer> Customers { get; set; }
+        
+        // Navigation Properties
+        public virtual ICollection<CustomerCustomerDemo> CustomerCustomerDemo { get; set; }
     }
 }

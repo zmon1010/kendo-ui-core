@@ -3,10 +3,12 @@ using Kendo.Mvc.Infrastructure;
 using Kendo.Mvc.Rendering;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewComponents;
 using Microsoft.AspNet.Routing;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -36,7 +38,7 @@ namespace Kendo.Mvc.UI
             get;
             private set;
         }
-
+        
         /// <summary>
         /// Gets the unique ID of the widget
         /// </summary>
@@ -45,7 +47,7 @@ namespace Kendo.Mvc.UI
         {
             get
             {
-                return SanitizeId(HtmlAttributes.ContainsKey("id") ? (string) HtmlAttributes["id"] : Name);
+                return SanitizeId(HtmlAttributes.ContainsKey("id") ? (string) HtmlAttributes["id"] : ViewContext.GetFullHtmlFieldName(Name));
             }
         }
 
@@ -100,15 +102,23 @@ namespace Kendo.Mvc.UI
         {
             get
             {
-                return (IsInClientTemplate ? "\\#" : "#") + Id;
+                return IdPrefix + Id;
             }
         }
 
-        /// <summary>
-        /// Gets or sets the view context to rendering a view.
-        /// </summary>
-        /// <value>The view context.</value>
-        public ViewContext ViewContext
+		public string IdPrefix
+		{
+			get
+			{
+				return IsInClientTemplate ? "\\#" : "#";
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the view context to rendering a view.
+		/// </summary>
+		/// <value>The view context.</value>
+		public ViewContext ViewContext
         {
             get;
             private set;
@@ -136,9 +146,31 @@ namespace Kendo.Mvc.UI
 
         public HtmlString ToClientTemplate()
         {
-            // TODO
-            return HtmlString.Empty;
-        }
+			IsInClientTemplate = true;
+
+			var html = ToHtmlString().Replace("</script>", "<\\/script>");
+
+			//TODO: Handle AntiXssEncoder
+			//if (HttpEncoder.Current != null && HttpEncoder.Current.GetType().ToString().Contains("AntiXssEncoder"))
+			//{
+			//	html = Regex.Replace(html, "\\u0026", "&", RegexOptions.IgnoreCase);
+			//	html = Regex.Replace(html, "%23", "#", RegexOptions.IgnoreCase);
+			//	html = Regex.Replace(html, "%3D", "=", RegexOptions.IgnoreCase);
+			//	html = Regex.Replace(html, "&#32;", " ", RegexOptions.IgnoreCase);
+			//	html = Regex.Replace(html, @"\\u0026#32;", " ", RegexOptions.IgnoreCase);
+			//}
+			//escape entities in attributes encoded by the TextWriter Unicode encoding
+			html = UnicodeEntityExpression.Replace(html, (m) =>
+			{
+				return WebUtility.HtmlDecode(Regex.Unescape(@"\u" + m.Groups[1].Value + "#" + m.Groups[2].Value));
+			});
+
+			//must decode unicode symbols otherwise they will be rendered as HTML entities
+			//which will break the client template
+			html = WebUtility.HtmlDecode(html);
+
+			return new HtmlString(html);
+		}
 
         public string ToHtmlString()
         {

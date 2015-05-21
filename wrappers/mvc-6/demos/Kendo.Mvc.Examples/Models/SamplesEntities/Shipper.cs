@@ -1,24 +1,27 @@
+// 
+// Generated code
+// 
+
+using System;
+using System.Collections.Generic;
+using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Metadata;
+
 namespace Kendo.Mvc.Examples.Models
 {
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-
-	public partial class Shipper
+    public partial class Shipper
     {
         public Shipper()
         {
             Orders = new HashSet<Order>();
         }
-
+        
+        // Properties
         public int ShipperID { get; set; }
-
-        [Required]
-        [StringLength(40)]
         public string CompanyName { get; set; }
-
-        [StringLength(24)]
         public string Phone { get; set; }
-
+        
+        // Navigation Properties
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

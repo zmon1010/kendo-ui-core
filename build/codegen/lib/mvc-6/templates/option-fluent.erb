@@ -29,6 +29,18 @@
             return this;
         }
 
+% if dictionary?
+        /// <summary>
+        /// <%= description.gsub(/\r?\n/, "\r\n\t\t/// ").html_encode()%>
+        /// </summary>
+        /// <param name="value">The value for <%= csharp_name %></param>
+        public <%= csharp_owner_builder_name %> <%= csharp_name %>(object value)
+        {
+            Container.<%= csharp_name %> = value.ToDictionary();
+            return this;
+        }
+
+% end
 % end
 % if template?
         /// <summary>

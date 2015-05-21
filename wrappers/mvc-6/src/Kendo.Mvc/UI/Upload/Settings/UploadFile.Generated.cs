@@ -18,16 +18,18 @@ namespace Kendo.Mvc.UI
         public double? Size { get; set; }
 
 
+        public Upload Upload { get; set; }
+
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
 
-            if (Extension.HasValue())
+            if (Extension?.HasValue() == true)
             {
                 settings["extension"] = Extension;
             }
 
-            if (Name.HasValue())
+            if (Name?.HasValue() == true)
             {
                 settings["name"] = Name;
             }

@@ -7,8 +7,8 @@ namespace Kendo.Mvc.Examples.Controllers
 {
     public class HomeController : Controller
     {
-        [Activate]
-        protected IHostingEnvironment HostingEnvironment { get; set; }
+        [FromServices]
+        public IHostingEnvironment HostingEnvironment { get; set; }
 
         public IActionResult Index()
         {

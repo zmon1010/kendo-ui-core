@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -7,7 +8,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListColumnMenuMessagesSettings
     /// </summary>
     public partial class TreeListColumnMenuMessagesSettingsBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// The text message displayed for the column selection menu item.
@@ -48,7 +49,6 @@ namespace Kendo.Mvc.UI.Fluent
             Container.SortDescending = value;
             return this;
         }
-
 
     }
 }

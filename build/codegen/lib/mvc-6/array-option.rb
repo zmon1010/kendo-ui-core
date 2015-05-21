@@ -37,9 +37,12 @@ module CodeGen::MVC6::Wrappers::Options
         def csharp_item_class
             item_class = "#{owner.csharp_class}#{csharp_name}"
 
-            item_class.chop! if item_class.end_with? "s"
-
-            item_class
+            case item_class
+                when /Axis$/    then item_class
+                when /Series$/  then item_class
+                when /s$/       then item_class.chop
+                else                 item_class
+            end
         end
 
         def csharp_item_class_name

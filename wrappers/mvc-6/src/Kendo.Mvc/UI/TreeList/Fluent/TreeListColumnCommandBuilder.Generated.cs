@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.Extensions;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -7,7 +8,7 @@ namespace Kendo.Mvc.UI.Fluent
     /// Defines the fluent API for configuring TreeListColumnCommand
     /// </summary>
     public partial class TreeListColumnCommandBuilder<T>
-        
+        where T : class 
     {
         /// <summary>
         /// The CSS class applied to the command button.
@@ -38,7 +39,6 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Click = new ClientHandlerDescriptor { TemplateDelegate = handler };
             return this;
         }
-
         /// <summary>
         /// The name of the command. The built-in commands are "edit", "createChild" and "destroy". When set to a custom value, it is rendered as a data-command attribute.
         /// </summary>
@@ -58,7 +58,6 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Text = value;
             return this;
         }
-
 
     }
 }
