@@ -101,7 +101,7 @@
             if ((isFinite(col) && col < 1) || (isFinite(row) && row < 1)) {
                 return "#REF!";
             }
-            return calc.make_reference(this._hasSheet && this.sheet, row, col, rel);
+            return calc.makeReference(this._hasSheet && this.sheet, row, col, rel);
         },
         adjust: function(operation, start, delta) {
             var ret = this.clone();
@@ -542,7 +542,7 @@
                     if (typeof thing != "string") {
                         throw 1;
                     }
-                    var ref = calc.parse_formula(this.sheet, 0, 0, thing);
+                    var ref = calc.parseFormula(this.sheet, 0, 0, thing);
                     if (ref.ast.type != "ref") {
                         throw 1;
                     }

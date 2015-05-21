@@ -363,7 +363,7 @@ function _onFocus(ev) {
         if (!text || !/\S/.test(text)) {
             text = "";
         }
-        formula.text(calc.make_reference(null, row, col) + ": " + (text || "—empty—"));
+        formula.text(calc.makeReference(null, row, col) + ": " + (text || "—empty—"));
         input.val(text).select();
     });
 }
@@ -485,7 +485,7 @@ function fillElements(data) {
     $.each(data, function(sheet, data){
         var cont = $("#" + sheet.toLowerCase());
         $.each(data, function(key, val){
-            var x = calc.parse_reference(key);
+            var x = calc.parseReference(key);
             var input = _getInput(cont, x.row, x.col);
             var x = SPREADSHEET.setInputData(sheet, x.row, x.col, val);
             input.val(x.display);

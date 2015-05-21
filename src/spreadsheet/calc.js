@@ -56,7 +56,7 @@
     }
 
     // "Sheet1!C2" -> { sheet: "Sheet1", row: 2, col: 3 }
-    function parse_reference(name) {
+    function parseReference(name) {
         var m;
         if ((m = /^((.+)!)?(\$)?([A-Z]+)(\$)?([0-9]+)$/i.exec(name))) {
             var sheet  = m[1] && m[2];
@@ -72,7 +72,7 @@
     }
 
     // "Sheet1", 2, 3 -> "Sheet1!C2"
-    function make_reference(sheet, row, col, rel) {
+    function makeReference(sheet, row, col, rel) {
         var aa = "";
 
         if (!isFinite(row)) {
@@ -108,7 +108,7 @@
         }
         return {
             type: "exp",
-            ast: parse_expression(true)
+            ast: parseExpression(true)
         };
 
         function skip(type, value) {
@@ -132,20 +132,20 @@
                 ? tok : null;
         }
 
-        function parse_expression(commas) {
-            return maybe_intersect(
-                maybe_call(
-                    maybe_binary(parse_atom(commas), 0, commas)
+        function parseExpression(commas) {
+            return maybeIntersect(
+                maybeCall(
+                    maybeBinary(parseAtom(commas), 0, commas)
                 ),
                 commas
             );
         }
 
-        function parse_symbol(tok) {
+        function parseSymbol(tok) {
             if (tok.upper == "TRUE" || tok.upper == "FALSE") {
                 return tok.upper == "TRUE" ? TRUE : FALSE;
             }
-            var ref = parse_reference(tok.value);
+            var ref = parseReference(tok.value);
             if (ref) {
                 if (ref.sheet == null) {
                     ref.sheet = sheet;
@@ -155,49 +155,49 @@
             return tok;
         }
 
-        function parse_atom(commas) {
-            var exp = maybe_range();
+        function parseAtom(commas) {
+            var exp = maybeRange();
             if (exp) {
                 return exp;
             }
             if (is("punc", "(")) {
                 input.next();
-                exp = parse_expression(true);
+                exp = parseExpression(true);
                 skip("punc", ")");
             }
             else if (is("num") || is("str")) {
                 exp = input.next();
             }
             else if (is("sym")) {
-                exp = parse_symbol(input.next());
+                exp = parseSymbol(input.next());
             }
             else if (is("op", "+") || is("op", "-")) {
                 exp = {
                     type: "prefix",
                     op: input.next().value,
-                    exp: parse_expression(commas)
+                    exp: parseExpression(commas)
                 };
             }
             else {
                 input.croak("Parse error");
             }
-            return maybe_call(exp);
+            return maybeCall(exp);
         }
 
-        function maybe_intersect(exp, commas) {
+        function maybeIntersect(exp, commas) {
             if (is("punc", "(") || is("sym") || is("num")) {
                 return {
                     type: "binary",
                     op: " ",
                     left: exp,
-                    right: parse_expression(commas)
+                    right: parseExpression(commas)
                 };
             } else {
                 return exp;
             }
         }
 
-        function maybe_call(exp) {
+        function maybeCall(exp) {
             if (is("punc", "(")) {
                 if (exp.type != "ref" || exp.ref != "name") {
                     input.croak("Expecting function name");
@@ -206,7 +206,7 @@
                 input.next();
                 if (!is("punc", ")")) {
                     while (1) {
-                        args.push(parse_expression(false));
+                        args.push(parseExpression(false));
                         if (input.eof() || is("punc", ")")) {
                             break;
                         }
@@ -220,10 +220,10 @@
                     args: args
                 };
             }
-            return maybe_percent(exp);
+            return maybePercent(exp);
         }
 
-        function maybe_percent(exp) {
+        function maybePercent(exp) {
             if (is("op", "%")) {
                 input.next();
                 return {
@@ -236,14 +236,14 @@
             }
         }
 
-        function maybe_binary(left, my_prec, commas) {
+        function maybeBinary(left, my_prec, commas) {
             var tok = is("op");
             if (tok && (commas || tok.value != ",")) {
                 var his_prec = OPERATORS[tok.value];
                 if (his_prec > my_prec) {
                     input.next();
-                    var right = maybe_binary(parse_atom(commas), his_prec, commas);
-                    return maybe_binary({
+                    var right = maybeBinary(parseAtom(commas), his_prec, commas);
+                    return maybeBinary({
                         type: "binary",
                         op: tok.value,
                         left: left,
@@ -269,7 +269,7 @@
         // - A:A
         // - 2:2
 
-        function maybe_range() {
+        function maybeRange() {
             return input.ahead(3, function(a, b, c){
                 if ((a.type == "sym" || a.type == "num") &&
                     (b.type == "op" && b.value == ":") &&
@@ -292,7 +292,7 @@
             if (tok.type == "num" && tok.value == tok.value|0) {
                 return Runtime.makeCellRef(tok.value, isFirst ? -Infinity : +Infinity, 2).setSheet(sheet, false);
             }
-            var ref = parse_symbol(tok);
+            var ref = parseSymbol(tok);
             if (ref.type == "ref") {
                 if (ref.ref == "name") {
                     var name = ref.name;
@@ -334,17 +334,17 @@
                 ret = '"' + node.value.replace(/\x22/g, "\\\"") + '"';
             }
             else if (type == "prefix") {
-                open_paren();
+                openParen();
                 ret += op + print(node.exp, OPERATORS[op]);
-                close_paren();
+                closeParen();
             }
             else if (type == "postfix") {
-                open_paren();
+                openParen();
                 ret += print(node.exp, OPERATORS[op]) + op;
-                close_paren();
+                closeParen();
             }
             else if (type == "binary") {
-                open_paren();
+                openParen();
                 var left_name = (node.op == ":" && node.left.type == "ref" && node.left.ref == "name");
                 var right_name = (node.op == ":" && node.right.type == "ref" && node.right.ref == "name");
                 if (left_name) {
@@ -362,7 +362,7 @@
                 if (right_name) {
                     ret += ")";
                 }
-                close_paren();
+                closeParen();
             }
             else if (type == "call") {
                 ret = node.func + "(" + node.args.map(function(arg){
@@ -382,13 +382,13 @@
 
             return ret;
 
-            function open_paren() {
+            function openParen() {
                 if (OPERATORS[op] < prec || (!prec && op == ",")) {
                     ret += "(";
                     parens = true;
                 }
             }
-            function close_paren() {
+            function closeParen() {
                 if (parens) {
                     ret += ")";
                 }
@@ -406,7 +406,7 @@
         return name + (++GENSYM);
     }
 
-    function to_cps(node, k) {
+    function toCPS(node, k) {
         GENSYM = 0;
         return cps(node.ast, k);
 
@@ -415,20 +415,20 @@
               case "ref"     :
               case "num"     :
               case "str"     :
-              case "bool"    : return cps_atom(node, k);
+              case "bool"    : return cpsAtom(node, k);
               case "prefix"  :
-              case "postfix" : return cps_unary(node, k);
-              case "binary"  : return cps_binary(node, k);
-              case "call"    : return cps_call(node, k);
+              case "postfix" : return cpsUnary(node, k);
+              case "binary"  : return cpsBinary(node, k);
+              case "call"    : return cpsCall(node, k);
             }
             throw new Error("Cannot CPS " + node.type);
         }
 
-        function cps_atom(node, k) {
+        function cpsAtom(node, k) {
             return k(node);
         }
 
-        function cps_unary(node, k) {
+        function cpsUnary(node, k) {
             return cps({
                 type: "call",
                 func: "unary" + node.op,
@@ -436,7 +436,7 @@
             }, k);
         }
 
-        function cps_binary(node, k) {
+        function cpsBinary(node, k) {
             return cps({
                 type: "call",
                 func: "binary" + node.op,
@@ -444,7 +444,7 @@
             }, k);
         }
 
-        function cps_if(co, th, el, k) {
+        function cpsIf(co, th, el, k) {
             return cps(co, function(co){
                 return {
                     type: "if",
@@ -455,9 +455,9 @@
             });
         }
 
-        function cps_and(args, k) {
+        function cpsAnd(args, k) {
             if (args.length === 0) {
-                return cps_atom(TRUE, k);
+                return cpsAtom(TRUE, k);
             }
             return cps({
                 type: "call",
@@ -477,9 +477,9 @@
             }, k);
         }
 
-        function cps_or(args, k) {
+        function cpsOr(args, k) {
             if (args.length === 0) {
-                return cps_atom(FALSE, k);
+                return cpsAtom(FALSE, k);
             }
             return cps({
                 type: "call",
@@ -499,7 +499,7 @@
             }, k);
         }
 
-        function cps_not(exp, k) {
+        function cpsNot(exp, k) {
             return cps(exp, function(exp){
                 return k({
                     type: "not",
@@ -508,16 +508,16 @@
             });
         }
 
-        function cps_call(node, k) {
+        function cpsCall(node, k) {
             switch (node.func.toLowerCase()) {
               case "if":
-                return cps_if(node.args[0], node.args[1], node.args[2], k);
+                return cpsIf(node.args[0], node.args[1], node.args[2], k);
               case "not":
-                return cps_not(node.args[0], k);
+                return cpsNot(node.args[0], k);
               case "and":
-                return cps_and(node.args, k);
+                return cpsAnd(node.args, k);
               case "or":
-                return cps_or(node.args, k);
+                return cpsOr(node.args, k);
               case "true":
                 return k(TRUE);
               case "false":
@@ -537,10 +537,10 @@
                         return loop(args.concat([ value ]), i + 1);
                     });
                 }
-            })([ make_continuation(k) ], 0);
+            })([ makeContinuation(k) ], 0);
         }
 
-        function make_continuation(k) {
+        function makeContinuation(k) {
             var cont = gensym("R");
             return {
                 type : "lambda",
@@ -550,7 +550,7 @@
         }
     }
 
-    var make_closure = (function(cache){
+    var makeClosure = (function(cache){
         return function(code) {
             if (Object.prototype.hasOwnProperty.call(cache, code)) {
                 return cache[code];
@@ -559,7 +559,7 @@
         };
     })({});
 
-    function make_formula(cps) {
+    function makeFormula(cps) {
         var references = [];
         var code = js(cps);
 
@@ -571,9 +571,9 @@
             "}"
         ].join(";\n");
 
-        return Runtime.makeFormula(references, make_closure(code));
+        return Runtime.makeFormula(references, makeClosure(code));
 
-        function get_reference(ref) {
+        function getReference(ref) {
             var index = references.length;
             references[index] = ref;
             return "formula.refs[" + index + "]";
@@ -604,7 +604,7 @@
                     + ")";
             }
             else if (type == "ref") {
-                return get_reference(node);
+                return getReference(node);
             }
             else if (type == "bool") {
                 return "" + node.value;
@@ -638,35 +638,35 @@
             croak : input.croak,
             ahead : ahead
         };
-        function is_digit(ch) {
+        function isDigit(ch) {
             return /[0-9]/i.test(ch);
         }
-        function is_id_start(ch) {
+        function isIdStart(ch) {
             return /[a-z$_]/i.test(ch);
         }
-        function is_id(ch) {
-            return is_id_start(ch) || is_digit(ch) || ch == "!";
+        function isId(ch) {
+            return isIdStart(ch) || isDigit(ch) || ch == "!";
         }
-        function is_op_char(ch) {
+        function isOpChar(ch) {
             return ch in OPERATORS;
         }
-        function is_punc(ch) {
+        function isPunc(ch) {
             return ";(){}[]".indexOf(ch) >= 0;
         }
-        function is_whitespace(ch) {
+        function isWhitespace(ch) {
             return " \t\n".indexOf(ch) >= 0;
         }
-        function read_while(predicate) {
+        function readWhile(predicate) {
             var str = "";
             while (!input.eof() && predicate(input.peek(), str)) {
                 str += input.next();
             }
             return str;
         }
-        function read_number() {
+        function readNumber() {
             // XXX: TODO: exponential notation
             var has_dot = false;
-            var number = read_while(function(ch){
+            var number = readWhile(function(ch){
                 if (ch == ".") {
                     if (has_dot) {
                         return false;
@@ -674,19 +674,19 @@
                     has_dot = true;
                     return true;
                 }
-                return is_digit(ch);
+                return isDigit(ch);
             });
             return { type: "num", value: parseFloat(number) };
         }
-        function read_symbol() {
-            var id = read_while(is_id);
+        function readSymbol() {
+            var id = readWhile(isId);
             return {
                 type  : "sym",
                 value : id,
                 upper : id.toUpperCase()
             };
         }
-        function read_escaped(end) {
+        function readEscaped(end) {
             var escaped = false, str = "";
             input.next();
             while (!input.eof()) {
@@ -704,36 +704,36 @@
             }
             return str;
         }
-        function read_string() {
-            return { type: "str", value: read_escaped('"') };
+        function readString() {
+            return { type: "str", value: readEscaped('"') };
         }
-        function read_operator() {
+        function readOperator() {
             return {
                 type  : "op",
-                value : read_while(function(ch, op){
+                value : readWhile(function(ch, op){
                     return (op + ch) in OPERATORS;
                 })
             };
         }
-        function read_next() {
-            read_while(is_whitespace);
+        function readNext() {
+            readWhile(isWhitespace);
             if (input.eof()) {
                 return null;
             }
             var ch = input.peek();
             if (ch == '"') {
-                return read_string();
+                return readString();
             }
-            if (is_digit(ch)) {
-                return read_number();
+            if (isDigit(ch)) {
+                return readNumber();
             }
-            if (is_id_start(ch)) {
-                return read_symbol();
+            if (isIdStart(ch)) {
+                return readSymbol();
             }
-            if (is_op_char(ch)) {
-                return read_operator();
+            if (isOpChar(ch)) {
+                return readOperator();
             }
-            if (is_punc(ch)) {
+            if (isPunc(ch)) {
                 return {
                     type  : "punc",
                     value : input.next()
@@ -743,7 +743,7 @@
         }
         function peek() {
             while (tokens.length <= index) {
-                tokens.push(read_next());
+                tokens.push(readNext());
             }
             return tokens[index];
         }
@@ -833,11 +833,11 @@
         };
     };
 
-    exports.parse_reference = parse_reference;
-    exports.make_reference = make_reference;
+    exports.parseReference = parseReference;
+    exports.makeReference = makeReference;
     exports.print = print;
     exports.compile = function(x) {
-        return make_formula(to_cps(x, function(ret){
+        return makeFormula(toCPS(x, function(ret){
             return {
                 type: "return",
                 value: ret
