@@ -1,6 +1,6 @@
 <div id="example" ng-app="KendoDemos">
     <div class="demo-section k-content" ng-controller="MyCtrl">
-        <div class="box-col" style="width: 500px;">
+        <div>
             <h4>Hover some series</h4>
             <div kendo-sparkline
                  k-series="[{
@@ -12,9 +12,9 @@
                  k-tooltip="{ visible: false, shared: false }"
                  k-series-hover="onSeriesHover"
                  k-data-source="weather"
-                 style="height:30px"></div>
+                 style="height: 30px;" ></div>
         </div>
-        <div class="box-col">
+        <div style="padding-top: 1em;">
             <h4>Console</h4>
             <div class="console"></div>
         </div>
