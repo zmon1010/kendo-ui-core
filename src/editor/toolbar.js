@@ -424,9 +424,6 @@
             function endGroup() {
                 if (group.children().length) {
                     if (resizable) {
-                        if (!group.hasClass("k-more-tool")) {
-                            group.css("visibility", "hidden");
-                        }
                         group.data("position", groupPosition);
                         groupPosition++;
                     }
@@ -682,6 +679,8 @@
             this._shrink(containerWidth);
             this._stretch(containerWidth);
 
+            debugger;
+
             this.element
                 .children("li.k-more-tool")
                 .css("visibility", popup.element.is(":empty") ? "hidden" : "visible");
@@ -729,9 +728,7 @@
         _hiddenGroups: function() {
             var popup = this.options.editor.morePopup;
 
-            var hiddenGroups = this.element.children("li.k-tool-group").filter(function() {
-                return ($(this).css('visibility') == 'hidden' || $(this).css('display') == 'none');
-            });
+            var hiddenGroups = this.element.children("li.k-tool-group").filter(":hidden");
 
             hiddenGroups = hiddenGroups.add(popup.element.children("li"));
 
@@ -743,9 +740,7 @@
         },
 
         _visibleGroups: function() {
-            return this.element.children("li.k-tool-group, li.k-more-tool").filter(function() {
-                return !($(this).css('visibility') == 'hidden' || $(this).css('display') == 'none');
-            });
+            return this.element.children("li.k-tool-group, li.k-more-tool").filter(":visible");
         },
 
         _groupsWidth: function() {
@@ -771,9 +766,7 @@
             var position, previous;
 
             if (group.length && width > this._groupsWidth() + group.data("outerWidth")) {
-                if (group.css("visibility") !== "visible") {
-                    group.css("visibility", "visible");
-                } else if (group.hasClass("k-overflow-tool-group")) {
+                if (group.hasClass("k-overflow-tool-group")) {
                     position = group.data("position");
 
                     previous = this.element.children().filter(function(idx, element) {
