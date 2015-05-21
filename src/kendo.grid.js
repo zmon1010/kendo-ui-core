@@ -4163,11 +4163,11 @@ var __meta__ = {
                 handled = this._moveDown(current);
             }
 
-            if (canHandle && e.keyCode == keys.RIGHT) {
+            if (canHandle && e.keyCode == (isRtl ? keys.LEFT : keys.RIGHT)) {
                 handled = this._moveRight(current, e.altKey);
             }
 
-            if (canHandle && e.keyCode == keys.LEFT) {
+            if (canHandle && e.keyCode == (isRtl ? keys.RIGHT : keys.LEFT)) {
                 handled = this._moveLeft(current, e.altKey);
             }
 

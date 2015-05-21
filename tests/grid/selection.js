@@ -1081,6 +1081,30 @@
         ok(grid.lockedTable.find("tbody tr:eq(0)").hasClass("k-state-selected"));
         ok(grid.table.find("tbody tr:eq(0)").hasClass("k-state-selected"));
     });
+
+    test("move to left in RTL mode", function() {
+        div.wrap('<div class="k-rtl"></div>');
+        var grid = setup();
+
+        grid.table.focus().press(kendo.keys.LEFT);
+        var cells = grid.table.find("tr:first>td");
+
+        ok(!cells.eq(0).hasClass("k-state-focused"));
+        ok(cells.eq(1).hasClass("k-state-focused"));
+        equal(grid.current()[0], cells[1]);
+    });
+
+    test("move to right in RTL mode", function() {
+        div.wrap('<div class="k-rtl"></div>');
+        var grid = setup();
+
+        grid.table.focus().press(kendo.keys.RIGHT);
+        var cells = grid.table.find("tr:first>td");
+
+        ok(cells.eq(0).hasClass("k-state-focused"));
+        ok(!cells.eq(1).hasClass("k-state-focused"));
+        equal(grid.current()[0], cells[0]);
+    });
 })();
 
 /*
