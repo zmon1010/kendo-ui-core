@@ -153,6 +153,20 @@
         }, timeout);
     });
 
+    // these two will be used to test conditional evaluation
+    runtime.defineFunction("foo", function(callback, args){
+        if (!this.ss.fooCount)
+            this.ss.fooCount = 0;
+        ++this.ss.fooCount;
+        callback("foo");
+    });
+    runtime.defineFunction("bar", function(callback, args){
+        if (!this.ss.barCount)
+            this.ss.barCount = 0;
+        ++this.ss.barCount;
+        callback("bar");
+    });
+
     /* -----[ parser tests ]----- */
 
     test("cell reference", function(){
@@ -445,6 +459,72 @@
             equal(ss.getData(ss.makeRef("E1")), 141);
             equal(ss.getData(ss.makeRef("E2")), 141);
             equal(ss.getData(ss.makeRef("E3")), 282);
+        });
+    });
+
+    test("conditional: IF", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: 1, B1: 0, C1: true, D1: false, E1: "stuff", F1: "",
+            A2: "=if(a1, foo(), bar())", // inc foo
+            A3: "=if(b1, foo(), bar())", // inc bar
+            A4: "=if(c1, foo(), bar())", // inc foo
+            A5: "=if(d1, foo(), bar())", // inc bar
+            A6: "=if(e1, foo(), bar())", // inc bar
+            A7: "=if(f1, foo(), bar())", // inc bar
+        });
+        ss.recalculate(function(){
+            // IF is special; only one of the branches should be evaluated
+            equal(ss.fooCount, 2);
+            equal(ss.barCount, 4);
+            equal(ss.getData(ss.makeRef("a2")), "foo");
+            equal(ss.getData(ss.makeRef("a3")), "bar");
+            equal(ss.getData(ss.makeRef("a4")), "foo");
+            equal(ss.getData(ss.makeRef("a5")), "bar");
+            equal(ss.getData(ss.makeRef("a6")), "bar");
+            equal(ss.getData(ss.makeRef("a7")), "bar");
+        });
+    });
+
+    test("conditional: AND, OR", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: "=AND(false, foo())", // does not call foo
+            A2: "=AND(true, foo())",  // does call foo
+            A3: "=OR(false, bar())",  // does call bar
+            A4: "=OR(true, bar())",   // does not call bar
+        });
+        ss.recalculate(function(){
+            equal(ss.fooCount, 1);
+            equal(ss.barCount, 1);
+            // foo and bar return strings and they are falsy in
+            // conditionals
+            equal(ss.getData(ss.makeRef("A1")), false);
+            equal(ss.getData(ss.makeRef("A2")), false);
+            equal(ss.getData(ss.makeRef("A3")), false);
+            equal(ss.getData(ss.makeRef("A4")), true);
+        });
+    });
+
+    asyncTest("async conditional", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: 1, B1: 2, C1: 3,
+            A3: "=asum(100, A1:C1)",
+            A4: "=asum(100, A2:C2)",
+            A5: "=IF(A3, true, false)",
+            A6: "=IF(A4, true, false)",
+            A7: "=IF(asum(100, A1:C1) > 0, asum(100, A1:C1), 0)",
+            A8: "=IF(asum(100, A2:C2) > 0, asum(100, A2:C2), \"zero\")",
+        });
+        ss.recalculate(function(){
+            start();
+            equal(ss.getData(ss.makeRef("A3")), 6);
+            equal(ss.getData(ss.makeRef("A4")), 0);
+            equal(ss.getData(ss.makeRef("A5")), true);
+            equal(ss.getData(ss.makeRef("A6")), false);
+            equal(ss.getData(ss.makeRef("A7")), 6);
+            equal(ss.getData(ss.makeRef("A8")), "zero");
         });
     });
 
