@@ -1335,7 +1335,7 @@ var __meta__ = {
         current: function(candidate) {
             if (candidate !== undefined) {
                 this._current = candidate;
-                if ($.contains(this.content, candidate)) {
+                if (this.content.has(candidate)) {
                     this._scrollTo(candidate, this.content[0]);
                 }
             } else {
