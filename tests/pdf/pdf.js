@@ -134,6 +134,21 @@ test("saveAsPDF uses the pdf.proxyURL option", function() {
     widget.saveAsPDF();
 });
 
+test("saveAsPDF uses the pdf.proxyTarget option", function() {
+    var widget = dom.kendoPDF({
+        pdf: {
+            proxyURL: "foo",
+            proxyTarget: "bar"
+        }
+    }).data("kendoPDF");
+
+    kendo.saveAs = function(options) {
+       equal(options.proxyTarget, "bar");
+    };
+
+    widget.saveAsPDF();
+});
+
 test("saveAsPDF uses 'auto' as default paperSize", 1, function() {
     var widget = dom.kendoPDF({
     }).data("kendoPDF");

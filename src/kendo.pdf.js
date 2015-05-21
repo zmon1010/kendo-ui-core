@@ -72,7 +72,8 @@ kendo.PDFMixin = {
                 dataURI: dataURI,
                 fileName: options.fileName,
                 proxyURL: options.proxyURL,
-                forceProxy: options.forceProxy
+                forceProxy: options.forceProxy,
+                proxyTarget: options.proxyTarget
             });
 
             progress.resolve();
