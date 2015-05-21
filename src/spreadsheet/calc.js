@@ -62,12 +62,12 @@
             var sheet  = m[1] && m[2];
             var relcol = m[3] ? 0 : REL_COL, col = getcol(m[4]);
             var relrow = m[5] ? 0 : REL_ROW, row = getrow(m[6]);
-            return new Runtime.makeCellRef(row, col, relcol | relrow).setSheet(sheet, !!sheet);
+            return Runtime.makeCellRef(row, col, relcol | relrow).setSheet(sheet, !!sheet);
         }
         if ((m = /^((.*)!)?(.+)$/i.exec(name))) {
             var sheet  = m[1] && m[2];
             var name = m[3];
-            return new Runtime.makeNameRef(name).setSheet(sheet, !!sheet);
+            return Runtime.makeNameRef(name).setSheet(sheet, !!sheet);
         }
     }
 
