@@ -1345,6 +1345,7 @@ var __meta__ = {
             var that = this;
             var i, node, nodeWrapper, item, isChecked, isCollapsed;
             var context = { treeview: that.options, item: item };
+            var render = field != "expanded" && field != "checked";
 
             function setCheckedState(root, state) {
                 root.find(".k-checkbox :checkbox")
@@ -1371,15 +1372,18 @@ var __meta__ = {
                     return that.findByUid(item.uid).children("div");
                 });
 
-                that.angular("cleanup", function() { return { elements: elements }; });
+                if (render) {
+                    that.angular("cleanup", function() { return { elements: elements }; });
+                }
 
                 for (i = 0; i < items.length; i++) {
                     context.item = item = items[i];
                     nodeWrapper = elements[i];
                     node = nodeWrapper.parent();
 
-                    if (field != "expanded" && field != "checked") {
-                        nodeWrapper.children(".k-in").html(that.templates.itemContent(context));
+                    if (render) {
+                        nodeWrapper.children(".k-in")
+                            .html(that.templates.itemContent(context));
                     }
 
                     if (field == CHECKED) {
@@ -1425,14 +1429,16 @@ var __meta__ = {
                     }
                 }
 
-                that.angular("compile", function(){
-                    return {
-                        elements: elements,
-                        data: $.map(items, function(item) {
-                            return [{ dataItem: item }];
-                        })
-                    };
-                });
+                if (render) {
+                    that.angular("compile", function(){
+                        return {
+                            elements: elements,
+                            data: $.map(items, function(item) {
+                                return [{ dataItem: item }];
+                            })
+                        };
+                    });
+                }
             }
         },
 
