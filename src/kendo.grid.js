@@ -4024,27 +4024,43 @@ var __meta__ = {
         },
 
         _scrollTo: function(element, container) {
-            var elementToLowercase = element.tagName.toLowerCase(),
-                isHorizontal =  elementToLowercase === "td" || elementToLowercase === "th",
-                elementOffset = element[isHorizontal ? "offsetLeft" : "offsetTop"],
-                elementOffsetDir = element[isHorizontal ? "offsetWidth" : "offsetHeight"],
-                containerScroll = container[isHorizontal ? "scrollLeft" : "scrollTop"],
-                containerOffsetDir = container[isHorizontal ? "clientWidth" : "clientHeight"],
-                bottomDistance = elementOffset + elementOffsetDir,
-                result = 0;
+            var elementToLowercase = element.tagName.toLowerCase();
+            var isHorizontal =  elementToLowercase === "td" || elementToLowercase === "th";
+            var elementOffset = element[isHorizontal ? "offsetLeft" : "offsetTop"];
+            var elementOffsetDir = element[isHorizontal ? "offsetWidth" : "offsetHeight"];
+            var containerScroll = container[isHorizontal ? "scrollLeft" : "scrollTop"];
+            var containerOffsetDir = container[isHorizontal ? "clientWidth" : "clientHeight"];
+            var bottomDistance = elementOffset + elementOffsetDir;
+            var result = 0;
+            var ieCorrection = 0;
+            var firefoxCorrection = 0;
 
-                if (containerScroll > elementOffset) {
-                    result = elementOffset;
-                } else if (bottomDistance > (containerScroll + containerOffsetDir)) {
-                    if (elementOffsetDir <= containerOffsetDir) {
-                        result = (bottomDistance - containerOffsetDir);
-                    } else {
-                        result = elementOffset;
-                    }
-                } else {
-                    result = containerScroll;
+            if (isRtl && isHorizontal) {
+                var table = $(element).closest("table")[0];
+                if (browser.msie) {
+                    ieCorrection = table.offsetLeft;
+                } else if (browser.mozilla) {
+                    firefoxCorrection = table.offsetLeft - kendo.support.scrollbar();
                 }
-                container[isHorizontal ? "scrollLeft" : "scrollTop"] = result;
+            }
+
+            containerScroll = Math.abs(containerScroll + ieCorrection - firefoxCorrection);
+
+            if (containerScroll > elementOffset) {
+                result = elementOffset;
+            } else if (bottomDistance > (containerScroll + containerOffsetDir)) {
+                if (elementOffsetDir <= containerOffsetDir) {
+                    result = (bottomDistance - containerOffsetDir);
+                } else {
+                    result = elementOffset;
+                }
+            } else {
+                result = containerScroll;
+            }
+
+            result = Math.abs(result + ieCorrection) + firefoxCorrection;
+
+            container[isHorizontal ? "scrollLeft" : "scrollTop"] = result;
         },
 
         _navigatable: function() {
