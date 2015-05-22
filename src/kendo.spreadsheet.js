@@ -38,7 +38,13 @@
                 this.options.columnWidth,
                 FIXED);
 
+            this._sheet.name("sheet1");
+
+            this._context = new kendo.spreadsheet.FormulaContext({ "sheet1": this._sheet });
+
             this._view.sheet(this.activeSheet());
+            this._view.context(this._context);
+
             this.refresh();
         },
 

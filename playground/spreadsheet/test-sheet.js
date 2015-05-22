@@ -9,12 +9,12 @@ var calc = kendo.spreadsheet.calc;
 function fill(sheet, data) {
     for (var i in data) {
         var val = data[i];
-        var ref = calc.parse_reference(i);
+        var ref = calc.parseReference(i);
         var x = calc.parse("sheet1", ref.row, ref.col, val);
         if (x.type == "exp") {
-            sheet.range(ref.row-1, ref.col-1).formula(calc.compile(x));
+            sheet.range(ref.row, ref.col).formula(calc.compile(x));
         } else {
-            sheet.range(ref.row-1, ref.col-1).value(x.value);
+            sheet.range(ref.row, ref.col).value(x.value);
         }
     }
 

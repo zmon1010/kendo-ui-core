@@ -26,7 +26,13 @@
         },
 
         addCell: function(rowIndex, text, style) {
-            this.trs[rowIndex].children.push(kendo.dom.element("td", { style: style }, [ kendo.dom.text(text) ]));
+            if (text === null) {
+                text = "";
+            }
+
+            var td = kendo.dom.element("td", { style: style }, [ kendo.dom.text(text) ]);
+            this.trs[rowIndex].children.push(td);
+            return td;
         },
 
         toDomTree: function(x, y) {
@@ -38,72 +44,7 @@
         }
     }
 
-    var Glue = {
-        getRefCells: function(ref) {
-            if (ref instanceof calc.Runtime.CellRef) {
-                var formula = sheet.range(ref.row-1, ref.col-1).formula() || null;
-                var value = sheet.range(ref.row-1, ref.col-1).value();
-                if (formula != null || value != null)
-                    return [{ formula: formula, value: value, row: ref.row, col: ref.col, sheet: "sheet1" }];
-
-            }
-
-            if (ref instanceof calc.Runtime.RangeRef) {
-                // ref = ref.intersect(this.getSheetBounds());
-                // if (!(ref instanceof calc.Runtime.RangeRef))
-                //     return this.getRefCells(ref);
-                var startCellIndex = sheet._grid.index(ref.topLeft.row-1, ref.topLeft.col-1);
-                var endCellIndex = sheet._grid.index(ref.bottomRight.row-1, ref.bottomRight.col-1);
-                var formulas = sheet._formulas.iterator(startCellIndex, endCellIndex);
-                var values = sheet._values.iterator(startCellIndex, endCellIndex);
-                var a = [];
-                for (var col = ref.topLeft.col; col <= ref.bottomRight.col; ++col) {
-                    for (var row = ref.topLeft.row; row <= ref.bottomRight.row; ++row) {
-                        var index = sheet._grid.index(row-1, col-1);
-                        var formula = formulas.at(index) || null;
-                        var value = values.at(index);
-                        console.log(row, col, index, value);
-                        if (formula != null || value != null) {
-                            a.push({ formula: formula, value: value, row: row, col: col, sheet: "sheet1" });
-                        }
-                    }
-                }
-
-                return a;
-            }
-
-            if (ref instanceof calc.Runtime.UnionRef) {
-                var a = [], self = this;
-                ref.refs.forEach(function(ref){
-                    a = a.concat(self.getRefCells(ref));
-                });
-                return a;
-            }
-
-            if (ref instanceof calc.Runtime.NullRef) {
-                return [];
-            }
-
-            console.error("Unsupported reference", ref);
-            return [];
-        },
-
-        getData: function(ref) {
-            var self = this;
-            if (ref instanceof calc.Runtime.Ref) {
-                var data = self.getRefCells(ref).map(function(cell){
-                    return cell.value;
-                });
-                return ref instanceof calc.Runtime.CellRef ? data[0] : data;
-            }
-            return ref;
-        },
-
-        onFormula: function(sheetName, row, col, val) {
-            console.log("onFormula:", sheetName, row, col, val);
-        }
-    };
-
+    /*
     function recalculate(callback) {
         var formulaCells = Glue.getRefCells(Glue.getSheetBounds()).filter(function(cell){
             if (cell.formula) {
@@ -123,6 +64,7 @@
             });
         });
     }
+    */
 
     function View(element, fixed) {
         this.wrapper = $(element);
@@ -148,6 +90,10 @@
         this._sheet = sheet;
         this.container[0].style.height = sheet.totalHeight() + "px";
         this.container[0].style.width = sheet.totalWidth() + "px";
+    }
+
+    View.prototype.context = function(context) {
+        this._context = context;
     }
 
     View.prototype.render = function() {
@@ -200,6 +146,8 @@
             table.addRow(rows.values.at(ri));
         }
 
+        var formulaPromises = [];
+
         for (ci = columns.start; ci <= columns.end; ci ++) {
             var startCellIndex = grid.index(rows.start, ci);
             var endCellIndex = grid.index(rows.end, ci);
@@ -214,17 +162,24 @@
                 var index = grid.index(ri, ci);
                 var formula = formulas.at(index);
 
-                table.addCell(ri - rows.start, values.at(index), { backgroundColor: backgrounds.at(index) } );
+                var td = table.addCell(ri - rows.start, values.at(index), { backgroundColor: backgrounds.at(index) } );
 
                 if (formula) {
-                    formula.exec(Glue, "sheet1", ri, ci, function() {
+                    var promise = $.Deferred();
 
-                    });
+                    formula.exec(this._context, sheet.name(), ri, ci, function(value) {
+                        this.children[0].nodeValue = value;
+                        promise.resolve();
+                    }.bind(td));
+
+                    formulaPromises.push(promise);
                 }
             }
         }
 
-        this.tree.render([ table.toDomTree(columns.offset, rows.offset) ]);
+        $.when.apply(null, formulaPromises).then(function() {
+            this.tree.render([ table.toDomTree(columns.offset, rows.offset) ]);
+        }.bind(this));
     }
 
     kendo.spreadsheet.View = View;
