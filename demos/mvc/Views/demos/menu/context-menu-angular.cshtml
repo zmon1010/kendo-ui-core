@@ -1,11 +1,10 @@
 <div id="example" ng-app="KendoDemos">
   <div ng-controller="MyCtrl">
-    <div class="hasMenu" ng-style="{ 'border': '2px solid black',
-                                     'padding': '3em',
-                                     'background': menuOpen ? '#52c35d' : '' }">
+    <div class="hasMenu" ng-style="{ 'padding': '3em',
+                                     'background': menuOpen ? '#52c35d' : '#d1d1d1' }">
       Right-click me
       <span ng-show="menuOpen">- Menu is open</span>
-      <div ng-show="selected">Selected: <b>{{selected}}</b></div>
+      <div ng-show="selected" ng-style="{ 'padding-top': '1em' }">Selected: <b>{{selected}}</b></div>
     </div>
     <ul kendo-context-menu
         k-filter="'.hasMenu'"
