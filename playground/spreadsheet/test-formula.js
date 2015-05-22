@@ -97,7 +97,7 @@ Spreadsheet.prototype = {
         });
         return Runtime.makeRangeRef(
             // top-left
-            Runtime.makeCellRef(1, 1, 0),
+            Runtime.makeCellRef(0, 0, 0),
             // bottom-right
             Runtime.makeCellRef(maxrow, maxcol, 0)
         ).setSheet(sheetName, false);
@@ -344,7 +344,7 @@ function makeElements(container) {
 }
 
 function _getInput(sheet, row, col) {
-    return $("table tr:nth-child(" + (row+1) + ") td:nth-child(" + (col+1) + ") input", sheet);
+    return $("table tr:nth-child(" + (row+2) + ") td:nth-child(" + (col+2) + ") input", sheet);
 }
 
 function withInput(input, f) {
@@ -352,7 +352,7 @@ function withInput(input, f) {
     var sheet = input.closest(".sheet");
     var sheetName = sheet[0].id;
     var td = input.closest("td"), tr = input.closest("tr");
-    var col = td[0].cellIndex, row = tr[0].rowIndex;
+    var col = td[0].cellIndex - 1, row = tr[0].rowIndex - 1;
     f(input, sheet, sheetName, row, col);
 }
 
@@ -456,7 +456,7 @@ function _onInput(ev) {
 function _adjustCol(ev) {
     ev.preventDefault();
     var td = ev.target;
-    var col = td.cellIndex;
+    var col = td.cellIndex - 1;
     var sheet = $(td).closest(".sheet");
     var sheetName = sheet[0].id;
     if (ev.shiftKey) {
@@ -469,7 +469,7 @@ function _adjustCol(ev) {
 function _adjustRow(ev) {
     ev.preventDefault();
     var td = ev.target, tr = td.parentNode;
-    var row = tr.rowIndex;
+    var row = tr.rowIndex - 1;
     var sheet = $(td).closest(".sheet");
     var sheetName = sheet[0].id;
     if (ev.shiftKey) {

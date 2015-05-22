@@ -98,7 +98,7 @@
                 // relative row
                 row = row - orig.row + trow;
             }
-            if ((isFinite(col) && col < 1) || (isFinite(row) && row < 1)) {
+            if ((isFinite(col) && col < 0) || (isFinite(row) && row < 0)) {
                 return "#REF!";
             }
             return calc.makeReference(this._hasSheet && this.sheet, row, col, rel);
@@ -123,7 +123,7 @@
                 }
                 break;
             }
-            return (ret.col < 1 || ret.row < 1) ? NULL : ret;
+            return (ret.col < 0 || ret.row < 0) ? NULL : ret;
         }
     });
 

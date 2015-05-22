@@ -101,7 +101,7 @@
         },
         bounds: function() {
             return runtime.makeRangeRef(
-                runtime.makeCellRef(1, 1, 3),
+                runtime.makeCellRef(0, 0, 3),
                 runtime.makeCellRef(this.maxrow, this.maxcol, 3)
             ).setSheet("sheet1");
         },
@@ -170,22 +170,22 @@
     /* -----[ parser tests ]----- */
 
     test("cell reference", function(){
-        var exp = calc.parse("sheet1", 1, 1, "=G5");
+        var exp = calc.parse("sheet1", 0, 0, "=G5");
         hasProps(exp, {
             type: "exp",
             ast: {
                 type: "ref",
                 ref: "cell",
                 sheet: "sheet1",
-                row: 5,
-                col: 7,
+                row: 4,
+                col: 6,
                 rel: 3
             }
         })
     });
 
     test("normalizes range reference", function(){
-        var exp = calc.parse("sheet1", 1, 1, "=A4:C2");
+        var exp = calc.parse("sheet1", 0, 0, "=A4:C2");
         hasProps(exp, {
             type: "exp",
             ast: {
@@ -195,15 +195,15 @@
                 topLeft: {      // A2
                     type: "ref",
                     ref: "cell",
-                    row: 2,
-                    col: 1,
+                    row: 1,
+                    col: 0,
                     rel: 3
                 },
                 bottomRight: {  // C4
                     type: "ref",
                     ref: "cell",
-                    row: 4,
-                    col: 3,
+                    row: 3,
+                    col: 2,
                     rel: 3
                 }
             }
@@ -211,23 +211,23 @@
     });
 
     test("function call", function(){
-        var exp = calc.parse("sheet1", 1, 1, "=sum(A2, A3, A4)");
+        var exp = calc.parse("sheet1", 0, 0, "=sum(A2, A3, A4)");
         hasProps(exp, {
             type: "exp",
             ast: {
                 type: "call",
                 func: "sum",
                 args: [
-                    { type: "ref", ref: "cell", row: 2, col: 1 },
-                    { type: "ref", ref: "cell", row: 3, col: 1 },
-                    { type: "ref", ref: "cell", row: 4, col: 1 },
+                    { type: "ref", ref: "cell", row: 1, col: 0 },
+                    { type: "ref", ref: "cell", row: 2, col: 0 },
+                    { type: "ref", ref: "cell", row: 3, col: 0 },
                 ]
             }
         });
     });
 
     test("union operator", function(){
-        var exp = calc.parse("sheet1", 1, 1, "=sum((A2, A3, A4))");
+        var exp = calc.parse("sheet1", 0, 0, "=sum((A2, A3, A4))");
         hasProps(exp, {
             type: "exp",
             ast: {
@@ -236,10 +236,10 @@
                 args: [
                     { type: "binary", op: ",",
                       left: { type: "binary", op: ",",
-                              left: { type: "ref", ref: "cell", row: 2, col: 1 },
-                              right: { type: "ref", ref: "cell", row: 3, col: 1 }
+                              left: { type: "ref", ref: "cell", row: 1, col: 0 },
+                              right: { type: "ref", ref: "cell", row: 2, col: 0 }
                             },
-                      right: { type: "ref", ref: "cell", row: 4, col: 1 }
+                      right: { type: "ref", ref: "cell", row: 3, col: 0 }
                     }
                 ]
             }
@@ -247,7 +247,7 @@
     });
 
     test("intersection operator", function(){
-        var exp = calc.parse("sheet1", 1, 1, "=sum(A2:A5 A3:A4, Sheet2!FOO)");
+        var exp = calc.parse("sheet1", 0, 0, "=sum(A2:A5 A3:A4, Sheet2!FOO)");
         hasProps(exp, {
             type: "exp",
             ast: {
@@ -257,12 +257,12 @@
                     // first arg is intersection of A2:A5 x A3:A4
                     { type: "binary", op: " ",
                       left: { type: "ref", ref: "range", // A2:A5
-                              topLeft: { type: "ref", ref: "cell", row: 2, col: 1 },
-                              bottomRight: { type: "ref", ref: "cell", row: 5, col: 1 },
+                              topLeft: { type: "ref", ref: "cell", row: 1, col: 0 },
+                              bottomRight: { type: "ref", ref: "cell", row: 4, col: 0 },
                             },
                       right: { type: "ref", ref: "range", // A3:A4
-                               topLeft: { type: "ref", ref: "cell", row: 3, col: 1 },
-                               bottomRight: { type: "ref", ref: "cell", row: 4, col: 1 },
+                               topLeft: { type: "ref", ref: "cell", row: 2, col: 0 },
+                               bottomRight: { type: "ref", ref: "cell", row: 3, col: 0 },
                              },
                     },
                     // second arg is the user-defined name FOO
@@ -273,7 +273,7 @@
     });
 
     test("operator precedence", function(){
-        var exp = calc.parse("sheet1", 1, 1, "=a + b * c + d / e");
+        var exp = calc.parse("sheet1", 0, 0, "=a + b * c + d / e");
         hasProps(exp, {
             type: "exp",
             ast: {
@@ -296,24 +296,24 @@
     /* -----[ printer tests ]----- */
 
     test("print adjusts cell references", function(){
-        var exp = calc.parse("sheet1", 1, 2, "=sum(A1:A5)");
+        var exp = calc.parse("sheet1", 0, 1, "=sum(A1:A5)");
         var formula = calc.compile(exp);
-        var origCell = { formula: formula, row: 1, col: 2, sheet: "sheet1" };
+        var origCell = { formula: formula, row: 0, col: 1, sheet: "sheet1" };
 
-        var str = calc.print("sheet1", 2, 2, exp, origCell);
+        var str = calc.print("sheet1", 1, 1, exp, origCell);
         equal(str, "sum(A2:A6)");
 
-        var str = calc.print("sheet1", 3, 3, exp, origCell);
+        var str = calc.print("sheet1", 2, 2, exp, origCell);
         equal(str, "sum(B3:B7)");
     });
 
     test("print absolute references", function(){
         function testOne(input, output) {
-            var exp = calc.parse("sheet1", 1, 2, input);
+            var exp = calc.parse("sheet1", 0, 1, input);
             var formula = calc.compile(exp);
-            var origCell = { formula: formula, row: 1, col: 2, sheet: "sheet1" };
+            var origCell = { formula: formula, row: 0, col: 1, sheet: "sheet1" };
 
-            var str = calc.print("sheet1", 5, 5, exp, origCell);
+            var str = calc.print("sheet1", 4, 4, exp, origCell);
             equal(str, output);
         }
         testOne("=A1", "D5");
@@ -334,7 +334,7 @@
 
     test("reference intersection", function(){
         function ref(input) {
-            var exp = calc.parse("sheet1", 1, 1, "=" + input);
+            var exp = calc.parse("sheet1", 0, 0, "=" + input);
             hasProps(exp, {
                 type: "exp",
                 ast: {
@@ -345,7 +345,7 @@
             return exp.ast;
         }
         function print(ref) {
-            return ref.print(1, 1, { row: 1, col: 1 });
+            return ref.print(0, 0, { row: 0, col: 0 });
         }
         function intersect(r1, r2) {
             return print(ref(r1).intersect(ref(r2)))

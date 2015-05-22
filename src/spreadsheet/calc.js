@@ -48,11 +48,11 @@
         for (var col = 0, i = 0; i < str.length; ++i) {
             col = col * 26 + str.charCodeAt(i) - 64;
         }
-        return col;
+        return col - 1;
     }
 
     function getrow(str) {
-        return parseFloat(str);
+        return parseFloat(str) - 1;
     }
 
     // "Sheet1!C2" -> { sheet: "Sheet1", row: 2, col: 3 }
@@ -74,6 +74,9 @@
     // "Sheet1", 2, 3 -> "Sheet1!C2"
     function makeReference(sheet, row, col, rel) {
         var aa = "";
+
+        ++row;
+        ++col;
 
         if (!isFinite(row)) {
             row = "";
@@ -290,7 +293,7 @@
 
         function getref(tok, isFirst) {
             if (tok.type == "num" && tok.value == tok.value|0) {
-                return Runtime.makeCellRef(tok.value, isFirst ? -Infinity : +Infinity, 2).setSheet(sheet, false);
+                return Runtime.makeCellRef(tok.value - 1, isFirst ? -Infinity : +Infinity, 2).setSheet(sheet, false);
             }
             var ref = parseSymbol(tok);
             if (ref.type == "ref") {
