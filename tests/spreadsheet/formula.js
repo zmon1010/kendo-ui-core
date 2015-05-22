@@ -529,4 +529,22 @@
         });
     });
 
+    asyncTest("INDIRECT", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: 1,
+            A2: 2,
+            A3: 3,
+            B1: "a1",
+            C1: "a3",
+            A5: "=2 * indirect(\"A\" & ASUM(50, A1:A3))", // 2 * indirect('A6')
+            A6: "=asum(100, indirect(b1):indirect(c1))",
+        });
+        ss.recalculate(function(){
+            start();
+            equal(ss.getData(ss.makeRef("A5")), 12);
+            equal(ss.getData(ss.makeRef("A6")), 6);
+        });
+    });
+
 })();
