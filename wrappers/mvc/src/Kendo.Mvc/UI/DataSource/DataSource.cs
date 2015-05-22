@@ -203,7 +203,8 @@ namespace Kendo.Mvc.UI
                 json["data"] = new Dictionary<string, object>()
                     {
                         { Schema.Data,  SerializeDataSource(data) },
-                        { Schema.Total, Total }
+                        { Schema.Total, Total },
+                        { "AggregateResults", AggregateResults }
                     };
             }
         }

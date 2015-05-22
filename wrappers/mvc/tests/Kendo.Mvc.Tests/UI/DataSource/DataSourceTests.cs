@@ -312,6 +312,31 @@
             ((IDictionary<string, object>)result["data"]).ContainsKey("Data");
         }
 
+        [Fact]
+        public void Aggregates_are_serialized_when_local_binding_and_server_operations()
+        {
+            List<Customer> localData = new List<Customer> {
+                new Customer{Id = 1 , Name = "C1"},
+                new Customer{Id = 2 , Name = "C2"}
+            };
+
+            dataSource.Data = localData;
+
+            var aggregate = new AggregateDescriptor() { Member = "Id" };
+            aggregate.Aggregates.Add(new SumFunction());
+            dataSource.Aggregates.Add(aggregate);
+
+            dataSource.Type = DataSourceType.Ajax;
+            dataSource.ServerAggregates = true;
+            dataSource.ServerFiltering = true;
+            dataSource.ServerGrouping = true;
+            dataSource.ServerPaging = true;
+            dataSource.ServerSorting = true;
+            
+            var result = dataSource.ToJson();
+
+            ((IDictionary<string, object>)result["data"]).ContainsKey("AggregateResults");
+        }
 
         [Fact]
         public void Local_data_is_correctly_serialized_for_dataSource_type_custom_and_client_operations()
