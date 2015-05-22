@@ -62,13 +62,10 @@
         },
 
         getData: function(ref) {
-            if (ref instanceof Ref) {
-                var data = this.getRefCells(ref).map(function(cell){
-                    return cell.value;
-                });
-                return ref instanceof CellRef ? data[0] : data;
-            }
-            return ref;
+            var data = this.getRefCells(ref).map(function(cell){
+                return cell.value;
+            });
+            return ref instanceof CellRef ? data[0] : data;
         },
 
         onFormula: function() {
