@@ -23,6 +23,13 @@
         return new Address(index % this.rowCount, (index / this.rowCount) >> 0);
     }
 
+    Grid.prototype.normalize = function(cellRef) {
+        var clone = cellRef.clone();
+        clone.col = Math.max(0, Math.min(this.columnCount - 1, cellRef.col));
+        clone.row = Math.max(0, Math.min(this.rowCount - 1, cellRef.row));
+        return clone;
+    }
+
     Grid.prototype.forEachColumn = function(sample, max, callback) {
         var start = sample.start.row;
         var end = sample.end.row;
