@@ -2,8 +2,9 @@
 
     module("Formula parser/printer/evaluator");
 
-    var calc = kendo.spreadsheet.calc;
-    var runtime = calc.Runtime;
+    var spreadsheet = kendo.spreadsheet;
+    var calc = spreadsheet.calc;
+    var runtime = calc.runtime;
 
     // check for the existence of `props` in `obj` (deep).  does not
     // mind if `obj` contains additional properties, but those
@@ -39,13 +40,13 @@
             cell.value = value;
         },
         getRefCells: function(ref) {
-            if (ref instanceof runtime.CellRef) {
+            if (ref instanceof spreadsheet.CellRef) {
                 var cell = this.get(ref.row, ref.col);
                 return cell ? [ cell ] : [];
             }
-            if (ref instanceof runtime.RangeRef) {
+            if (ref instanceof spreadsheet.RangeRef) {
                 ref = ref.intersect(this.bounds());
-                if (!(ref instanceof runtime.RangeRef)) {
+                if (!(ref instanceof spreadsheet.RangeRef)) {
                     return this.getRefCells(ref);
                 }
                 var a = [];
@@ -62,7 +63,7 @@
                 }
                 return a;
             }
-            if (ref instanceof runtime.UnionRef) {
+            if (ref instanceof spreadsheet.UnionRef) {
                 var a = [];
                 for (var i = 0; i < ref.refs.length; ++i) {
                     a = a.concat(this.getRefCells(ref.refs[i]));
@@ -72,7 +73,7 @@
             return [];
         },
         getData: function(ref) {
-            if (!(ref instanceof runtime.Ref)) {
+            if (!(ref instanceof spreadsheet.Ref)) {
                 return ref;
             }
             var a = this.getRefCells(ref).filter(function(cell){
@@ -80,10 +81,10 @@
             }).map(function(cell){
                 return cell.value;
             });
-            return ref instanceof runtime.CellRef ? a[0] : a;
+            return ref instanceof spreadsheet.CellRef ? a[0] : a;
         },
         makeRef: function(ref) {
-            if (ref instanceof runtime.Ref) {
+            if (ref instanceof spreadsheet.Ref) {
                 return ref;
             }
             var x = calc.parse("sheet1", 0, 0, "=" + ref);
@@ -100,9 +101,9 @@
             this.data[this.id(row, col)] = val;
         },
         bounds: function() {
-            return new runtime.RangeRef(
-                new runtime.CellRef(0, 0, 3),
-                new runtime.CellRef(this.maxrow, this.maxcol, 3)
+            return new spreadsheet.RangeRef(
+                new spreadsheet.CellRef(0, 0, 3),
+                new spreadsheet.CellRef(this.maxrow, this.maxcol, 3)
             ).setSheet("sheet1");
         },
         get: function(row, col) {
@@ -341,7 +342,7 @@
                     type: "ref"
                 }
             });
-            ok(exp.ast instanceof runtime.Ref);
+            ok(exp.ast instanceof spreadsheet.Ref);
             return exp.ast;
         }
         function print(ref) {

@@ -1,5 +1,6 @@
-var calc = kendo.spreadsheet.calc;
-var Runtime = calc.Runtime;
+var spreadsheet = kendo.spreadsheet;
+var calc = spreadsheet.calc;
+var runtime = calc.runtime;
 
 function HOP(obj, key) {
     return Object.prototype.hasOwnProperty.call(obj, key);
@@ -23,13 +24,13 @@ Spreadsheet.prototype = {
     },
 
     getRefCells: function(ref) {
-        if (ref instanceof Runtime.CellRef) {
+        if (ref instanceof spreadsheet.CellRef) {
             var cell = this._getCell(ref.sheet, ref.row, ref.col);
             return cell ? [ cell ] : [];
         }
-        if (ref instanceof Runtime.RangeRef) {
+        if (ref instanceof spreadsheet.RangeRef) {
             ref = ref.intersect(this.getSheetBounds(ref.sheet));
-            if (!(ref instanceof Runtime.RangeRef)) {
+            if (!(ref instanceof spreadsheet.RangeRef)) {
                 return this.getRefCells(ref);
             }
             var a = [];
@@ -43,14 +44,14 @@ Spreadsheet.prototype = {
             }
             return a;
         }
-        if (ref instanceof Runtime.UnionRef) {
+        if (ref instanceof spreadsheet.UnionRef) {
             var a = [];
             for (var i = 0; i < ref.refs.length; ++i) {
                 a = a.concat(this.getRefCells(ref.refs[i]));
             }
             return a;
         }
-        if (ref instanceof Runtime.NullRef) {
+        if (ref instanceof spreadsheet.NullRef) {
             return [];
         }
         console.error("Unsupported reference", ref);
@@ -62,11 +63,11 @@ Spreadsheet.prototype = {
         if (ref instanceof Spreadsheet.Cell) {
             return ref.value;
         }
-        if (ref instanceof Runtime.Ref) {
+        if (ref instanceof spreadsheet.Ref) {
             var data = self.getRefCells(ref).map(function(cell){
                 return cell.value;
             });
-            return ref instanceof Runtime.CellRef ? data[0] : data;
+            return ref instanceof spreadsheet.CellRef ? data[0] : data;
         }
         return ref;
     },
@@ -95,11 +96,11 @@ Spreadsheet.prototype = {
                 maxcol = col;
             }
         });
-        return new Runtime.RangeRef(
+        return new spreadsheet.RangeRef(
             // top-left
-            new Runtime.CellRef(0, 0, 0),
+            new spreadsheet.CellRef(0, 0, 0),
             // bottom-right
-            new Runtime.CellRef(maxrow, maxcol, 0)
+            new spreadsheet.CellRef(maxrow, maxcol, 0)
         ).setSheet(sheetName, false);
     },
 
@@ -363,7 +364,7 @@ function _onFocus(ev) {
         if (!text || !/\S/.test(text)) {
             text = "";
         }
-        formula.text(calc.makeReference(null, row, col) + ": " + (text || "—empty—"));
+        formula.text(spreadsheet.Ref.display(null, row, col) + ": " + (text || "—empty—"));
         input.val(text).select();
     });
 }

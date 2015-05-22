@@ -11,8 +11,9 @@
     /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true, -W054 */
     /* global console */
 
-    var exports = kendo.spreadsheet.calc;
-    var Runtime = exports.Runtime;
+    var spreadsheet = kendo.spreadsheet;
+    var exports = spreadsheet.calc;
+    var runtime = exports.runtime;
 
     // Excel formula parser and compiler to JS.
     // some code adapted from http://lisperator.net/pltut/
@@ -40,9 +41,6 @@
     var TRUE = { type: "bool", value: true };
     var FALSE = { type: "bool", value: false };
 
-    var REL_COL = 1;
-    var REL_ROW = 2;
-
     function getcol(str) {
         str = str.toUpperCase();
         for (var col = 0, i = 0; i < str.length; ++i) {
@@ -60,48 +58,14 @@
         var m;
         if ((m = /^((.+)!)?(\$)?([A-Z]+)(\$)?([0-9]+)$/i.exec(name))) {
             var sheet  = m[1] && m[2];
-            var relcol = m[3] ? 0 : REL_COL, col = getcol(m[4]);
-            var relrow = m[5] ? 0 : REL_ROW, row = getrow(m[6]);
-            return new Runtime.CellRef(row, col, relcol | relrow).setSheet(sheet, !!sheet);
+            var relcol = m[3] ? 0 : 1, col = getcol(m[4]);
+            var relrow = m[5] ? 0 : 2, row = getrow(m[6]);
+            return new spreadsheet.CellRef(row, col, relcol | relrow).setSheet(sheet, !!sheet);
         }
         if ((m = /^((.*)!)?(.+)$/i.exec(name))) {
             var sheet  = m[1] && m[2];
             var name = m[3];
-            return new Runtime.NameRef(name).setSheet(sheet, !!sheet);
-        }
-    }
-
-    // "Sheet1", 2, 3 -> "Sheet1!C2"
-    function makeReference(sheet, row, col, rel) {
-        var aa = "";
-
-        ++row;
-        ++col;
-
-        if (!isFinite(row)) {
-            row = "";
-        }
-        else if (rel != null && !(rel & REL_ROW)) {
-            row = "$" + row;
-        }
-
-        if (!isFinite(col)) {
-            col = "";
-        }
-        else {
-            while (col > 0) {
-                aa = String.fromCharCode(64 + col % 26) + aa;
-                col = Math.floor(col / 26);
-            }
-            if (rel != null && !(rel & REL_COL)) {
-                aa = "$" + aa;
-            }
-        }
-
-        if (sheet) {
-            return sheet + "!" + aa + row;
-        } else {
-            return aa + row;
+            return new spreadsheet.NameRef(name).setSheet(sheet, !!sheet);
         }
     }
 
@@ -284,7 +248,7 @@
                         if (bottomRight.hasSheet() && topLeft.sheet != bottomRight.sheet) {
                             input.croak("Invalid range");
                         } else {
-                            return new Runtime.RangeRef(topLeft, bottomRight).setSheet(topLeft.sheet, topLeft.hasSheet());
+                            return new spreadsheet.RangeRef(topLeft, bottomRight).setSheet(topLeft.sheet, topLeft.hasSheet());
                         }
                     }
                 }
@@ -293,7 +257,7 @@
 
         function getref(tok, isFirst) {
             if (tok.type == "num" && tok.value == tok.value|0) {
-                return new Runtime.CellRef(tok.value - 1, isFirst ? -Infinity : +Infinity, 2).setSheet(sheet, false);
+                return new spreadsheet.CellRef(tok.value - 1, isFirst ? -Infinity : +Infinity, 2).setSheet(sheet, false);
             }
             var ref = parseSymbol(tok);
             if (ref.type == "ref") {
@@ -305,17 +269,17 @@
                     }
                     if (/^[0-9]+$/.test(name)) {
                         // row ref
-                        return new Runtime.CellRef(
+                        return new spreadsheet.CellRef(
                             getrow(name),
                             isFirst ? -Infinity : +Infinity,
-                            (abs ? 0 : REL_ROW)
+                            (abs ? 0 : 2)
                         ).setSheet(ref.sheet || sheet, ref.hasSheet());
                     } else {
                         // col ref
-                        return new Runtime.CellRef(
+                        return new spreadsheet.CellRef(
                             isFirst ? -Infinity : +Infinity,
                             getcol(name),
-                            (abs ? 0 : REL_COL)
+                            (abs ? 0 : 1)
                         ).setSheet(ref.sheet || sheet, ref.hasSheet());
                     }
                 }
@@ -558,7 +522,7 @@
             if (Object.prototype.hasOwnProperty.call(cache, code)) {
                 return cache[code];
             }
-            return (cache[code] = new Function("Runtime", code)(Runtime));
+            return (cache[code] = new Function("runtime", code)(runtime));
         };
     })({});
 
@@ -574,7 +538,7 @@
             "}"
         ].join(";\n");
 
-        return new Runtime.Formula(references, makeClosure(code));
+        return new runtime.Formula(references, makeClosure(code));
 
         function getReference(ref) {
             var index = references.length;
@@ -591,16 +555,16 @@
                 return JSON.stringify(node.value);
             }
             else if (type == "prefix" || type == "postfix") {
-                return "Runtime.unary(context, '" + node.op + "', " + js(node.exp) + ")";
+                return "runtime.unary(context, '" + node.op + "', " + js(node.exp) + ")";
             }
             else if (type == "binary") {
-                return "Runtime.binary(context, '" + node.op + "', " + js(node.left) + ", " + js(node.right) + ")";
+                return "runtime.binary(context, '" + node.op + "', " + js(node.left) + ", " + js(node.right) + ")";
             }
             else if (type == "return") {
                 return "context.resolve(" + js(node.value) + ")";
             }
             else if (type == "call") {
-                return "Runtime.func(context, " + JSON.stringify(node.func)
+                return "runtime.func(context, " + JSON.stringify(node.func)
                     + node.args.map(function(arg){
                         return ", " + js(arg);
                     }).join("")
@@ -613,10 +577,10 @@
                 return "" + node.value;
             }
             else if (type == "if") {
-                return "(Runtime.bool(context, " + js(node.co) + ") ? " + js(node.th) + " : " + js(node.el) + ")";
+                return "(runtime.bool(context, " + js(node.co) + ") ? " + js(node.th) + " : " + js(node.el) + ")";
             }
             else if (type == "not") {
-                return "!Runtime.bool(context, " + js(node.exp) + ")";
+                return "!runtime.bool(context, " + js(node.exp) + ")";
             }
             else if (type == "lambda") {
                 return "function("
@@ -836,7 +800,6 @@
     };
 
     exports.parseReference = parseReference;
-    exports.makeReference = makeReference;
     exports.print = print;
     exports.compile = function(x) {
         return makeFormula(toCPS(x, function(ret){
