@@ -3,38 +3,25 @@
 })(function(){
 
 (function(kendo) {
-    function Range(sheet, row, column, numRows, numColumns) {
+    function Range(rangeRef, sheet) {
         this._sheet = sheet;
-        this._rowStart = row;
-        this._columnStart = column;
-
-        if (numRows === undefined) {
-            numRows = 1;
-        }
-
-        this._rowEnd = row + numRows - 1;
-
-        if (numColumns === undefined) {
-            numColumns = 1;
-        }
-
-        this._columnEnd = column + numColumns - 1;
+        this._rangeRef = rangeRef;
     }
 
     Range.prototype = {
         _property: function(list, value) {
+            var ref = this._rangeRef;
             if (value !== undefined) {
-                for (var ci = this._columnStart; ci <= this._columnEnd; ci++) {
-                    var start = this._sheet._grid.index(this._rowStart, ci);
-                    var end = this._sheet._grid.index(this._rowEnd, ci);
+                for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col; ci++) {
+                    var start = this._sheet._grid.index(ref.topLeft.row, ci);
+                    var end = this._sheet._grid.index(ref.bottomRight.row, ci);
 
                     list.value(start, end, value);
                 }
 
                 return this;
             } else {
-                var index = this._sheet._grid.index(this._rowEnd, this._columnStart);
-
+                var index = this._sheet._grid.cellRefIndex(ref.topLeft);
                 return list.value(index, index);
             }
         },

@@ -1,10 +1,10 @@
 (function(f, define){
     define([
         "./spreadsheet/rangelist",
+        "./spreadsheet/references",
         "./spreadsheet/range",
         "./spreadsheet/sheet",
         "./spreadsheet/view",
-        "./spreadsheet/references",
         "./spreadsheet/grid",
         "./spreadsheet/axis",
         "./spreadsheet/sorter",

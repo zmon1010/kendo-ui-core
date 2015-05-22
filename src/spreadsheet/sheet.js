@@ -1,8 +1,11 @@
 (function(f, define){
-    define([ "../kendo.core" ], f);
+    define([ "../kendo.core", "./references" ], f);
 })(function(){
 
 (function(kendo) {
+    var RangeRef = kendo.spreadsheet.RangeRef;
+    var CellRef = kendo.spreadsheet.CellRef;
+
     function Sheet(rows, columns, rowHeight, columnWidth, fixed) {
         this._columns = new kendo.spreadsheet.Axis(columns, columnWidth, fixed);
         this._rows = new kendo.spreadsheet.Axis(rows, rowHeight, fixed);
@@ -45,7 +48,15 @@
             return this._columns.total;
         },
         range: function(row, column, numRows, numColumns) {
-            return new kendo.spreadsheet.Range(this, row, column, numRows, numColumns);
+            if (!numRows) {
+                numRows = 1;
+            }
+
+            if (!numColumns) {
+                numColumns = 1;
+            }
+
+            return new kendo.spreadsheet.Range(new RangeRef(new CellRef(row, column), new CellRef(row + numRows - 1, column + numColumns - 1)), this);
         }
     };
 

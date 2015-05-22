@@ -376,13 +376,9 @@
 
         return node.value.end + 1;
     }
-
-    kendo.spreadsheet = {
-        RangeTree: RangeTree,
-        RangeList: RangeList,
-        SparseRangeList: SparseRangeList,
-        ValueRange: Range
-    };
-
+    kendo.spreadsheet.RangeTree = RangeTree;
+    kendo.spreadsheet.RangeList = RangeList;
+    kendo.spreadsheet.SparseRangeList = SparseRangeList;
+    kendo.spreadsheet.ValueRange = Range;
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

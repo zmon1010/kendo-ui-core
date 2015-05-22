@@ -1,7 +1,7 @@
 // -*- fill-column: 100 -*-
 
 (function(f, define){
-    define([ "./sheet.js" ], f);
+    define([], f);
 })(function(){
 
     // WARNING: removing the following jshint declaration and turning

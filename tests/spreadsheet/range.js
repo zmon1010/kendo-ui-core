@@ -6,8 +6,7 @@
     module("Sheet API", {
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);
-
-            range = new kendo.spreadsheet.Range(sheet, 0, 0);
+            range = sheet.range(0, 0);
         }
     });
 
@@ -18,7 +17,7 @@
     });
 
     test("value sets the value of a multiple row range", function() {
-        range = new kendo.spreadsheet.Range(sheet, 0, 0, 2);
+        range = sheet.range(0, 0, 2);
 
         range.value("foo");
 
@@ -27,7 +26,7 @@
     });
 
     test("value sets the value of a multiple row and column range", function() {
-        range = new kendo.spreadsheet.Range(sheet, 0, 0, 2, 2);
+        range = sheet.range(0, 0, 2, 2);
 
         range.value("foo");
 
