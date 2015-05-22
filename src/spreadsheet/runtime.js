@@ -137,6 +137,10 @@
             this.bottomRight = new CellRef(br.row, br.col, br.rel);
             this.normalize();
         },
+        clone: function() {
+            return new RangeRef(this.topLeft, this.bottomRight)
+                .setSheet(this.sheet, this.hasSheet());
+        },
         _containsRange: function(range) {
             return this._containsCell(range.topLeft)
                 && this._containsCell(range.bottomRight);
@@ -250,36 +254,37 @@
         },
 
         adjust: function(operation, start, delta) {
-            var tl = this.topLeft.adjust(operation, start, delta);
-            var br = this.bottomRight.adjust(operation, start, delta);
+            var ret = this.clone();
+            var tl = ret.topLeft.adjust(operation, start, delta);
+            var br = ret.bottomRight.adjust(operation, start, delta);
             if (tl instanceof NullRef && br instanceof NullRef) {
                 return NULL;
             }
             switch (operation) {
               case "col":
                 if (tl instanceof NullRef) {
-                    this.topLeft.col = start;
-                    tl = this.topLeft;
+                    ret.topLeft.col = start;
+                    tl = ret.topLeft;
                 }
                 else if (br instanceof NullRef) {
-                    this.bottomRight.col = start;
-                    br = this.bottomRight;
+                    ret.bottomRight.col = start;
+                    br = ret.bottomRight;
                 }
                 break;
               case "row":
                 if (tl instanceof NullRef) {
-                    this.topLeft.row = start;
-                    tl = this.topLeft;
+                    ret.topLeft.row = start;
+                    tl = ret.topLeft;
                 }
                 else if (br instanceof NullRef) {
-                    this.bottomRight.row = start;
-                    br = this.bottomRight;
+                    ret.bottomRight.row = start;
+                    br = ret.bottomRight;
                 }
                 break;
             }
-            this.topLeft = tl;
-            this.bottomRight = br;
-            return this.simplify();
+            ret.topLeft = tl;
+            ret.bottomRight = br;
+            return ret.simplify();
         }
     });
 
