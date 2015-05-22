@@ -62,12 +62,12 @@
             var sheet  = m[1] && m[2];
             var relcol = m[3] ? 0 : REL_COL, col = getcol(m[4]);
             var relrow = m[5] ? 0 : REL_ROW, row = getrow(m[6]);
-            return Runtime.makeCellRef(row, col, relcol | relrow).setSheet(sheet, !!sheet);
+            return new Runtime.CellRef(row, col, relcol | relrow).setSheet(sheet, !!sheet);
         }
         if ((m = /^((.*)!)?(.+)$/i.exec(name))) {
             var sheet  = m[1] && m[2];
             var name = m[3];
-            return Runtime.makeNameRef(name).setSheet(sheet, !!sheet);
+            return new Runtime.NameRef(name).setSheet(sheet, !!sheet);
         }
     }
 
@@ -284,7 +284,7 @@
                         if (bottomRight.hasSheet() && topLeft.sheet != bottomRight.sheet) {
                             input.croak("Invalid range");
                         } else {
-                            return Runtime.makeRangeRef(topLeft, bottomRight).setSheet(topLeft.sheet, topLeft.hasSheet());
+                            return new Runtime.RangeRef(topLeft, bottomRight).setSheet(topLeft.sheet, topLeft.hasSheet());
                         }
                     }
                 }
@@ -293,7 +293,7 @@
 
         function getref(tok, isFirst) {
             if (tok.type == "num" && tok.value == tok.value|0) {
-                return Runtime.makeCellRef(tok.value - 1, isFirst ? -Infinity : +Infinity, 2).setSheet(sheet, false);
+                return new Runtime.CellRef(tok.value - 1, isFirst ? -Infinity : +Infinity, 2).setSheet(sheet, false);
             }
             var ref = parseSymbol(tok);
             if (ref.type == "ref") {
@@ -305,14 +305,14 @@
                     }
                     if (/^[0-9]+$/.test(name)) {
                         // row ref
-                        return Runtime.makeCellRef(
+                        return new Runtime.CellRef(
                             getrow(name),
                             isFirst ? -Infinity : +Infinity,
                             (abs ? 0 : REL_ROW)
                         ).setSheet(ref.sheet || sheet, ref.hasSheet());
                     } else {
                         // col ref
-                        return Runtime.makeCellRef(
+                        return new Runtime.CellRef(
                             isFirst ? -Infinity : +Infinity,
                             getcol(name),
                             (abs ? 0 : REL_COL)
@@ -574,7 +574,7 @@
             "}"
         ].join(";\n");
 
-        return Runtime.makeFormula(references, makeClosure(code));
+        return new Runtime.Formula(references, makeClosure(code));
 
         function getReference(ref) {
             var index = references.length;

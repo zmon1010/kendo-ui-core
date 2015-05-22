@@ -430,7 +430,11 @@
     function cellValues(self, a, f) {
         var ret = [];
         for (var i = 0; i < a.length; ++i) {
-            ret = ret.concat(self.ss.getData(a[i]));
+            var val = a[i];
+            if (val instanceof Ref) {
+                val = self.ss.getData(a[i]);
+            }
+            ret = ret.concat(val);
         }
         if (f) {
             return f.apply(self, ret);
@@ -715,9 +719,12 @@
     exports.RangeRef = RangeRef;
     exports.UnionRef = UnionRef;
     exports.CalcError = CalcError;
+    exports.Formula = Formula;
 
     exports.bool = function(context, val) {
-        val = context.ss.getData(val);
+        if (val instanceof Ref) {
+            val = context.ss.getData(val);
+        }
         if (typeof val == "string") {
             return val.toLowerCase() == "true";
         }
@@ -733,26 +740,6 @@
     exports.func = function(context, fname, callback) {
         var args = slice(arguments, 3);
         return FUNCS[fname.toLowerCase()].call(context, callback, args);
-    };
-
-    exports.makeFormula = function(refs, handler) {
-        return new Formula(refs, handler);
-    };
-
-    exports.makeCellRef = function(row, col, rel) {
-        return new CellRef(row, col, rel);
-    };
-
-    exports.makeRangeRef = function(tl, br) {
-        return new RangeRef(tl, br);
-    };
-
-    exports.makeNameRef = function(name) {
-        return new NameRef(name);
-    };
-
-    exports.makeError = function(type) {
-        return new CalcError(type);
     };
 
     exports.defineFunction = function(name, func) {

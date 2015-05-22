@@ -95,11 +95,11 @@ Spreadsheet.prototype = {
                 maxcol = col;
             }
         });
-        return Runtime.makeRangeRef(
+        return new Runtime.RangeRef(
             // top-left
-            Runtime.makeCellRef(0, 0, 0),
+            new Runtime.CellRef(0, 0, 0),
             // bottom-right
-            Runtime.makeCellRef(maxrow, maxcol, 0)
+            new Runtime.CellRef(maxrow, maxcol, 0)
         ).setSheet(sheetName, false);
     },
 

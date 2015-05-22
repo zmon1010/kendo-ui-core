@@ -100,9 +100,9 @@
             this.data[this.id(row, col)] = val;
         },
         bounds: function() {
-            return runtime.makeRangeRef(
-                runtime.makeCellRef(0, 0, 3),
-                runtime.makeCellRef(this.maxrow, this.maxcol, 3)
+            return new runtime.RangeRef(
+                new runtime.CellRef(0, 0, 3),
+                new runtime.CellRef(this.maxrow, this.maxcol, 3)
             ).setSheet("sheet1");
         },
         get: function(row, col) {
