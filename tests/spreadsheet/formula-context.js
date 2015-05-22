@@ -12,8 +12,8 @@
         getRefCells: function(ref) {
             if (ref instanceof CellRef) {
                 var sheet = this.sheet(ref);
-                var formula = sheet.range(ref.row-1, ref.col-1).formula() || null;
-                var value = sheet.range(ref.row-1, ref.col-1).value();
+                var formula = sheet.range(ref.row, ref.col).formula() || null;
+                var value = sheet.range(ref.row, ref.col).value();
 
                 if (formula != null || value != null) {
                     return [{
@@ -33,9 +33,8 @@
                 var tl = sheet._grid.normalize(ref.topLeft);
                 var br = sheet._grid.normalize(ref.bottomRight);
 
-                var startCellIndex = sheet._grid.index(tl.row-1, tl.col-1);
-
-                var endCellIndex = sheet._grid.index(br.row-1, br.col-1);
+                var startCellIndex = sheet._grid.cellRefIndex(tl);
+                var endCellIndex = sheet._grid.cellRefIndex(br);
 
                 var formulas = sheet._formulas.iterator(startCellIndex, endCellIndex);
                 var values = sheet._values.iterator(startCellIndex, endCellIndex);
@@ -44,7 +43,7 @@
 
                 for (var col = tl.col; col <= br.col; ++col) {
                     for (var row = tl.row; row <= br.row; ++row) {
-                        var index = sheet._grid.index(row-1, col-1);
+                        var index = sheet._grid.index(row, col);
                         var formula = formulas.at(index) || null;
                         var value = values.at(index);
                         if (formula != null || value != null) {
@@ -83,7 +82,7 @@
     });
 
     test("gets the correct cell state as a reference", function() {
-        var ref = new CellRef(1, 1);
+        var ref = new CellRef(0, 0);
         ref.setSheet("Sheet1");
         var states = context.getRefCells(ref);
 
@@ -92,8 +91,8 @@
         var state = states[0];
 
         equal(state.value, 1000);
-        equal(state.row, 1);
-        equal(state.col, 1);
+        equal(state.row, 0);
+        equal(state.col, 0);
         equal(state.sheet, "Sheet1");
     });
 
@@ -106,8 +105,8 @@
     });
 
     test("gets the correct range state as a reference", function() {
-        var a1 = new CellRef(1, 1);
-        var b2 = new CellRef(2, 2);
+        var a1 = new CellRef(0, 0);
+        var b2 = new CellRef(1, 1);
 
         a1.setSheet("Sheet1");
         b2.setSheet("Sheet1");
@@ -120,9 +119,9 @@
         equal(states[1].value, 2000);
     });
 
-    test("gets the correct range state as a reference (col ranges)", function() {
-        var a1 = new CellRef(-Infinity, 1);
-        var b2 = new CellRef(2, Infinity);
+    test("gets the correct range state as a reference (col)", function() {
+        var a1 = new CellRef(-Infinity, 0);
+        var b2 = new CellRef(1, Infinity);
 
         a1.setSheet("Sheet1");
         b2.setSheet("Sheet1");
@@ -136,7 +135,7 @@
     });
 
     test("gets the correct range state as a reference (row)", function() {
-        var AA = new RangeRef(new CellRef(1, -Infinity), new CellRef(1, Infinity));
+        var AA = new RangeRef(new CellRef(0, -Infinity), new CellRef(0, Infinity));
 
         AA.setSheet("Sheet1");
 
