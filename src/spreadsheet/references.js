@@ -72,14 +72,12 @@
 
     /* -----[ Null reference ]----- */
 
-    var NullRef = Ref.extend({
+    var NULL = new (Ref.extend({
         init: function NullRef(){},
         print: function() {
             return "#NULL!";
         }
-    });
-
-    var NULL = new NullRef();
+    }))();
 
     /* -----[ Name reference ]----- */
 
@@ -224,7 +222,7 @@
             }
         },
         intersect: function(ref) {
-            if (ref instanceof NullRef) {
+            if (ref === NULL) {
                 return ref;
             }
             if (ref instanceof CellRef) {
@@ -289,26 +287,26 @@
             var ret = this.clone();
             var tl = ret.topLeft.adjust(operation, start, delta);
             var br = ret.bottomRight.adjust(operation, start, delta);
-            if (tl instanceof NullRef && br instanceof NullRef) {
+            if (tl === NULL && br === NULL) {
                 return NULL;
             }
             switch (operation) {
               case "col":
-                if (tl instanceof NullRef) {
+                if (tl === NULL) {
                     ret.topLeft.col = start;
                     tl = ret.topLeft;
                 }
-                else if (br instanceof NullRef) {
+                else if (br === NULL) {
                     ret.bottomRight.col = start;
                     br = ret.bottomRight;
                 }
                 break;
               case "row":
-                if (tl instanceof NullRef) {
+                if (tl === NULL) {
                     ret.topLeft.row = start;
                     tl = ret.topLeft;
                 }
-                else if (br instanceof NullRef) {
+                else if (br === NULL) {
                     ret.bottomRight.row = start;
                     br = ret.bottomRight;
                 }
@@ -330,7 +328,7 @@
             var a = [];
             for (var i = 0; i < this.refs.length; ++i) {
                 var x = ref.intersect(this.refs[i]);
-                if (!(x instanceof NullRef)) {
+                if (x !== NULL) {
                     a.push(x);
                 }
             }
@@ -349,12 +347,11 @@
 
     /* -----[ exports ]----- */
 
+    spreadsheet.NULLREF = NULL;
     spreadsheet.Ref = Ref;
     spreadsheet.NameRef = NameRef;
-    spreadsheet.NullRef = NullRef;
     spreadsheet.CellRef = CellRef;
     spreadsheet.RangeRef = RangeRef;
     spreadsheet.UnionRef = UnionRef;
-    spreadsheet.NULL = NULL;
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

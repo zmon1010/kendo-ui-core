@@ -51,7 +51,7 @@ Spreadsheet.prototype = {
             }
             return a;
         }
-        if (ref instanceof spreadsheet.NullRef) {
+        if (ref === spreadsheet.NULLREF) {
             return [];
         }
         console.error("Unsupported reference", ref);

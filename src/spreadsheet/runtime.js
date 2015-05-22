@@ -20,10 +20,9 @@
     var Ref = spreadsheet.Ref;
     var NameRef = spreadsheet.NameRef;
     var CellRef = spreadsheet.CellRef;
-    var NullRef = spreadsheet.NullRef;
     var RangeRef = spreadsheet.RangeRef;
     var UnionRef = spreadsheet.UnionRef;
-    var NULL = spreadsheet.NULL;
+    var NULL = spreadsheet.NULLREF;
 
     /* -----[ Errors ]----- */
 
@@ -352,7 +351,7 @@
             var left = args[0], right = args[1];
             if (left instanceof Ref && right instanceof Ref) {
                 var x = left.intersect(right);
-                if (x instanceof NullRef) {
+                if (x === NULL) {
                     this.error(new CalcError("NULL"));
                 } else {
                     callback(x);
