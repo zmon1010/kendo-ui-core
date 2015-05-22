@@ -2,31 +2,37 @@ require 'erb'
 
 THEME_BUILDER_BUILDFILE = 'build/theme_builder.rb'
 THEME_TYPES = FileList['styles/web/type-*.less']
-
-TYPE_TEMPLATE = ERB.new(File.read(File.join(File.dirname(__FILE__), 'theme_builder', 'type.js.erb')), 0, '%<>')
+THEME_BUILDER_FILES = [
+    'themebuilder/scripts/less.js',
+    'themebuilder/scripts/themebuilder.js',
+    'themebuilder/scripts/constants.js'
+]
+TYPE_TEMPLATE_FILE = File.join(File.dirname(__FILE__), 'theme_builder', 'type.js.erb')
+TYPE_TEMPLATE = ERB.new(File.read(TYPE_TEMPLATE_FILE), 0, '%<>')
 
 tree :to => 'themebuilder/styles/textures',
      :from => FileList['styles/web/textures/**/*'],
      :root => 'styles/web/textures/'
 
 def less2js(less)
-    less = less.gsub('\\', '\\\\')
-               .gsub('"', '\\"')
-               .gsub("'", "\\\\\\\\'")
-               .gsub(/\n/, "\\n")
-               .gsub(/\r/, "")
-
-    "'#{less}'"
+    less.gsub('\\', '\\\\')
+        .gsub('"', '\\"')
+        .gsub("'", "\\\\\\\\'")
+        .gsub(/\n/, "\\n")
+        .gsub(/\r/, "")
 end
 
 THEME_TYPES.each do |type|
     type_name = File.basename(type).sub('.less', '')
+    less_js = "themebuilder/scripts/#{type_name}.js"
 
-    file "themebuilder/scripts/#{type_name}.js" => type do |t|
+    THEME_BUILDER_FILES.push less_js
+
+    file less_js => [type, THEME_BUILDER_BUILDFILE, TYPE_TEMPLATE_FILE] do |t|
         name = type_name
         less = less2js(File.read(type))
 
-        TYPE_TEMPLATE.result(binding)
+        File.write(t.name, TYPE_TEMPLATE.result(binding))
     end
 end
 
@@ -80,11 +86,7 @@ def replace_variable(source, name, value)
     source.gsub(/#{name}\s*=\s*.*(,|;)\s*$/, "#{name}=" + value + '\1')
 end
 
-file_merge 'themebuilder/scripts/themebuilder.all.js' => [
-    'themebuilder/scripts/less.js',
-    'themebuilder/scripts/themebuilder.js',
-    'themebuilder/scripts/constants.js'
-]
+file_merge 'themebuilder/scripts/themebuilder.all.js' => THEME_BUILDER_FILES
 file 'themebuilder/scripts/themebuilder.all.js' => THEME_BUILDER_BUILDFILE
 file 'themebuilder/scripts/themebuilder.all.min.js' => 'themebuilder/scripts/themebuilder.all.js' do
     uglifyjs('themebuilder/scripts/themebuilder.all.js', 'themebuilder/scripts/themebuilder.all.min.js');

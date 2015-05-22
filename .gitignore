@@ -34,6 +34,7 @@ styles/dataviz/*.min.css
 styles/*.css
 themebuilder/scripts/template.js
 themebuilder/**/themebuilder.all*
+themebuilder/**/type-*.js
 themebuilder/**/bootstrap.min.css
 themebuilder/styles/kendo.black.css
 themebuilder/styles/Black/
