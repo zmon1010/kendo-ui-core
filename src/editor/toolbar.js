@@ -18,12 +18,14 @@
     var focusable = "a.k-tool:not(.k-state-disabled)," +
                     ".k-widget.k-colorpicker,.k-selectbox,.k-dropdown,.k-combobox .k-input";
 
-    var OverflowAnchor = Tool.extend({
+    var OverflowAnchorTool = Tool.extend({
         initialize: function(ui, options) {
             ui.attr({ unselectable: "on" });
-            ui.on("click", function() {
-                debugger;
-            });
+
+            var toolbar = options.editor.toolbar;
+            ui.on("click", $.proxy(function() {
+                this.overflowPopup.toggle();
+            }, toolbar));
         },
 
         options: {
@@ -31,11 +33,12 @@
         },
 
         command: $.noop,
+        update: $.noop,
         destroy: $.noop
 
     });
 
-    EditorUtils.registerTool("overflowAnchor", new OverflowAnchor({
+    EditorUtils.registerTool("overflowAnchor", new OverflowAnchorTool({
         key: "",
         ctrl: true,
         template: new ToolTemplate({ template: EditorUtils.overflowAnchorTemplate })
@@ -204,7 +207,7 @@
 
             that.items().each(function initializeTool(x, y) {
                 var toolName = that._toolName(this),
-                    tool = that.tools[toolName],
+                    tool = toolName !== "more" ? that.tools[toolName] : that.tools["overflowAnchor"],
                     options = tool && tool.options,
                     messages = editor.options.messages,
                     description = options && options.tooltip || messages[toolName],
