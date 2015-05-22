@@ -8,6 +8,7 @@
     var Ref = kendo.spreadsheet.Ref;
     var CellRef = kendo.spreadsheet.CellRef;
     var RangeRef = kendo.spreadsheet.RangeRef;
+    var UnionRef = kendo.spreadsheet.UnionRef;
 
     function FormulaContext(sheets) {
         this.sheets = sheets;
@@ -59,6 +60,14 @@
 
                 return states;
             }
+            if (ref instanceof UnionRef) {
+                var a = [];
+                for (var i = 0; i < ref.refs.length; ++i) {
+                    a = a.concat(this.getRefCells(ref.refs[i]));
+                }
+                return a;
+            }
+            return [];
         },
 
         getData: function(ref) {
