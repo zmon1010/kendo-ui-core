@@ -799,6 +799,7 @@
         };
     };
 
+    exports.parseFormula = parse;
     exports.parseReference = parseReference;
     exports.print = print;
     exports.compile = function(x) {
