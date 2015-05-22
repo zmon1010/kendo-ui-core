@@ -140,7 +140,7 @@
 
                 this.element.on("change", proxy(this._change, this));
 
-                this._change();
+                this.value(this.element.val());
             },
 
             events: [
@@ -224,7 +224,7 @@
             serialize: function() {
                 return map(this.constants, function(item, key) {
                     return key + ": " + item.value + ";";
-                }).join("\n");
+                }).concat([ '@import "type-bootstrap.less";' ]).join("\n");
             },
 
             deserialize: function(themeContent, targetDocument) {
@@ -331,10 +331,21 @@
                 cachedPrototype.remove();
             },
 
+            _resolveFiles: function(less) {
+                var files = this.files;
+                return less.replace(/@import ("|')(.*)("|');/g, function(m) {
+                    console.log(m);
+                    return files[m[2]];
+                });
+            },
+
             _generateTheme: function(callback) {
-                var constants = this.serialize();
+                var less = this.serialize();
+
+                less = this._resolveFiles(less);
+
                 (new window.less.Parser()).parse(
-                    constants + this.template,
+                    less,
                     function (err, tree) {
                         var console = window.console;
 
@@ -343,7 +354,7 @@
                         }
 
                         try {
-                            callback(constants, tree.toCSS());
+                            callback(less, tree.toCSS());
                         } catch(e) {
                             console.error(e.message);
                         }
@@ -565,7 +576,7 @@
                     themes.push(templateInfo.datavizConstants);
                 }
 
-                this.types = {};
+                this.files = {};
 
                 this.themes = new ThemeCollection(themes);
 
@@ -645,8 +656,8 @@
 
                 this._track();
             },
-            registerType: function(type) {
-                this.types[type.name] = type.less;
+            registerFile: function(file) {
+                this.files[file.name] = file.content;
             },
             showSuiteChooser: function() {
                 $("#suite-chooser").slideDown("fast", function() {

@@ -26,14 +26,14 @@ THEME_TYPES.each do |type|
     type_name = File.basename(type).sub('.less', '')
     less_js = "themebuilder/scripts/#{type_name}.js"
 
-    THEME_BUILDER_FILES.push less_js
-
     file less_js => [type, THEME_BUILDER_BUILDFILE, TYPE_TEMPLATE_FILE] do |t|
-        name = type_name
+        name = File.basename(type)
         less = less2js(File.read(type))
 
         File.write(t.name, TYPE_TEMPLATE.result(binding))
     end
+
+    THEME_BUILDER_FILES.push less_js
 end
 
 def live_cdn_version
