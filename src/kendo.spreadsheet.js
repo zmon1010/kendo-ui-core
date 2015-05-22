@@ -4,6 +4,7 @@
         "./spreadsheet/range",
         "./spreadsheet/sheet",
         "./spreadsheet/view",
+        "./spreadsheet/references",
         "./spreadsheet/grid",
         "./spreadsheet/axis",
         "./spreadsheet/sorter",

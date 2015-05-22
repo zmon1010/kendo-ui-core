@@ -1,15 +1,15 @@
 (function() {
     var SparseRangeList = kendo.spreadsheet.SparseRangeList;
     var Grid = kendo.spreadsheet.Grid;
-    var Area = kendo.spreadsheet.Area;
-    var Address = kendo.spreadsheet.Address;
+    var RangeRef = kendo.spreadsheet.RangeRef;
+    var CellRef = kendo.spreadsheet.CellRef;
     var Sorter = kendo.spreadsheet.Sorter;
 
     var grid, area, sorter, values;
     module("rangelist sorter", {
         setup: function() {
             grid = new Grid(4, 2);
-            area = new Area(new Address(0, 0), new Address(2, 0));
+            area = new RangeRef(new CellRef(0, 0), new CellRef(2, 0));
 
             values = new SparseRangeList(0, 100, 0);
             values.value(0, 0, 2);
@@ -29,6 +29,7 @@
 
     test("gets sorted indices", function() {
         var indices = sorter.indices(area, values).map(function(item) { return item.index; });
+
         equal(indices.length, 3);
         equal(indices[0], 1);
         equal(indices[1], 0);

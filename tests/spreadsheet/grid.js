@@ -1,7 +1,7 @@
 (function() {
     var Grid = kendo.spreadsheet.Grid;
-    var Address = kendo.spreadsheet.Address;
-    var Area = kendo.spreadsheet.Area;
+    var CellRef = kendo.spreadsheet.CellRef;
+    var RangeRef = kendo.spreadsheet.RangeRef;
 
     module("Sheet Grid", {
         setup: function() {
@@ -10,20 +10,21 @@
 
     test("gets address index", function() {
         var grid = new Grid(1000, 1000);
-        equal(grid.index(new Address(2, 2)), 2002);
+        equal(grid.index(2, 2), 2002);
     });
 
-    test("gets address address from index", function() {
+    test("gets ref from index", function() {
         var grid = new Grid(1000, 1000);
-        var address = grid.address(2002);
-        equal(address.row, 2);
-        equal(address.column, 2);
+        var ref = grid.cellRef(2002);
+
+        equal(ref.row, 2);
+        equal(ref.col, 2);
     });
 
     test("iterates over each column with the corresponding segment", function() {
         var grid = new Grid(4, 5);
 
-        var area = new Area(new Address(1, 2), new Address(3, 2));
+        var area = new RangeRef(new CellRef(1, 2), new CellRef(3, 2));
         var i = 0;
 
         var maxAddress = 14; // fourth column should be the last processed

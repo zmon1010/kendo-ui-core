@@ -1,10 +1,8 @@
 (function() {
     var context, sheet;
-    var calc = kendo.spreadsheet.calc;
-    var CellRef = calc.Runtime.CellRef;
-    var RangeRef = calc.Runtime.RangeRef;
-    var makeCellRef = calc.Runtime.makeCellRef;
-    var makeRangeRef = calc.Runtime.makeRangeRef;
+    var spreadsheet = kendo.spreadsheet;
+    var CellRef = spreadsheet.CellRef;
+    var RangeRef = spreadsheet.RangeRef;
 
     function FormulaContext(sheets) {
         this.sheets = sheets;
@@ -12,7 +10,7 @@
 
     FormulaContext.prototype = {
         getRefCells: function(ref) {
-            if (ref instanceof calc.Runtime.CellRef) {
+            if (ref instanceof CellRef) {
                 var sheet = this.sheet(ref);
                 var formula = sheet.range(ref.row-1, ref.col-1).formula() || null;
                 var value = sheet.range(ref.row-1, ref.col-1).value();
@@ -29,7 +27,7 @@
                     return [];
                 }
             }
-            if (ref instanceof calc.Runtime.RangeRef) {
+            if (ref instanceof RangeRef) {
                 var sheet = this.sheet(ref);
 
                 var tl = sheet._grid.normalize(ref.topLeft);
@@ -85,7 +83,8 @@
     });
 
     test("gets the correct cell state as a reference", function() {
-        var ref = makeCellRef(1, 1).setSheet("Sheet1");
+        var ref = new CellRef(1, 1);
+        ref.setSheet("Sheet1");
         var states = context.getRefCells(ref);
 
         equal(states.length, 1);
@@ -99,17 +98,21 @@
     });
 
     test("returns empty array for empty cells", function() {
-        var ref = makeCellRef(9, 9).setSheet("Sheet1");
+        var ref = new CellRef(9, 9);
+        ref.setSheet("Sheet1");
         var states = context.getRefCells(ref);
 
         equal(states.length, 0);
     });
 
     test("gets the correct range state as a reference", function() {
-        var a1 = makeCellRef(1, 1).setSheet("Sheet1");
-        var b2 = makeCellRef(2, 2).setSheet("Sheet1");
+        var a1 = new CellRef(1, 1);
+        var b2 = new CellRef(2, 2);
 
-        var range = makeRangeRef(a1, b2);
+        a1.setSheet("Sheet1");
+        b2.setSheet("Sheet1");
+
+        var range = new RangeRef(a1, b2);
         range.setSheet("Sheet1");
 
         var states = context.getRefCells(range);
@@ -118,10 +121,13 @@
     });
 
     test("gets the correct range state as a reference (col ranges)", function() {
-        var a1 = makeCellRef(-Infinity, 1).setSheet("Sheet1");
-        var b2 = makeCellRef(2, Infinity).setSheet("Sheet1");
+        var a1 = new CellRef(-Infinity, 1);
+        var b2 = new CellRef(2, Infinity);
 
-        var range = makeRangeRef(a1, b2);
+        a1.setSheet("Sheet1");
+        b2.setSheet("Sheet1");
+
+        var range = new RangeRef(a1, b2);
         range.setSheet("Sheet1");
 
         var states = context.getRefCells(range);

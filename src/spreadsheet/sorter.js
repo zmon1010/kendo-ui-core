@@ -8,8 +8,8 @@
         this.lists = lists;
     }
 
-    Sorter.prototype.indices = function(area, list) {
-        return list.sortedIndices(this.grid.index(area.start), this.grid.index(area.end));
+    Sorter.prototype.indices = function(rangeRef, list) {
+        return list.sortedIndices(this.grid.cellRefIndex(rangeRef.topLeft), this.grid.cellRefIndex(rangeRef.bottomRight));
     }
 
     Sorter.prototype.sortBy = function(area, list) {
@@ -32,6 +32,7 @@
             }
         });
     }
+
     kendo.spreadsheet.Sorter = Sorter;
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

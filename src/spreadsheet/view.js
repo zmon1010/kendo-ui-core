@@ -217,7 +217,9 @@
                 table.addCell(ri - rows.start, values.at(index), { backgroundColor: backgrounds.at(index) } );
 
                 if (formula) {
-                    formula.exec(Glue, "sheet1", ri, ci);
+                    formula.exec(Glue, "sheet1", ri, ci, function() {
+
+                    });
                 }
             }
         }
