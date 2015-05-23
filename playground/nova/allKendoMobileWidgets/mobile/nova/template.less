@@ -198,8 +198,14 @@
     color: @accent;
 }
 
-.km-nova .km-list > li label {
-    color: lighten(@selected-text-color 8%);
+.km-nova .km-list > li label,
+.km-nova .km-list fieldset textarea,
+.km-nova .km-list fieldset input {
+    color: lighten(@selected-text-color, 8%);
+}
+
+.km-nova label.km-required:after {
+    color: @accent;
 }
 
 /*.km-office365 .km-list > li:hover
@@ -232,7 +238,8 @@
 }
 */
 
-.km-nova .km-group-title
+.km-nova .km-group-title,
+.km-nova .km-list fieldset legend
 {
     background: @base;
     border-color: darken(@base, 8%); // Calculate to #dfe0e1;
@@ -250,3 +257,4 @@
     //-webkit-box-shadow: inset -.2rem .2rem 0 @ios7-lighter-background;
     //box-shadow: inset -.2rem .2rem 0 @ios7-lighter-background;
 }
+
