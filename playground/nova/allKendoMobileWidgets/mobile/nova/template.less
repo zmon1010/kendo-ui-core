@@ -104,7 +104,8 @@
 
 .km-nova .km-accent.km-navbar,
 .km-nova .km-accent.k-toolbar,
-.km-nova .km-accent.km-tabstrip
+.km-nova .km-accent.km-tabstrip,
+.km-nova .km-touch-scrollbar
 {
     background: @accent;    
 }
@@ -258,3 +259,18 @@
     //box-shadow: inset -.2rem .2rem 0 @ios7-lighter-background;
 }
 
+/* Slider */
+.km-nova .k-slider .k-slider-track {
+    background-color: darken(@base, 8%); // Calculate to #dfe0e1;
+}
+
+.km-nova .k-slider-selection
+{
+    background-color: @accent;
+}
+
+.km-nova .k-slider .k-draghandle,
+.km-nova .k-slider .k-draghandle:hover
+{
+    background-color: @background;
+}
