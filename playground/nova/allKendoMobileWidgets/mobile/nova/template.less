@@ -247,6 +247,23 @@
     color: @normal-text-color;
 }
 
+/* ListView in Drawer */
+.km-nova .km-drawer .km-group-title {
+    color: @background;
+    background-color: darken(@normal-text-color, 15%);
+    border-color: lighten(@normal-text-color, 5%);
+}
+
+.km-nova  .km-drawer .km-list > li {
+    background-color: @normal-text-color;
+    border-color: lighten(@normal-text-color, 5%);
+}
+
+.km-nova .km-drawer .km-list > li > .km-listview-link,
+.km-nova .km-drawer .km-list > li .km-icon {
+    color: @background;
+}
+
 /* Generic content */
 .km-nova .km-thumbnail {
     border-color: darken(@base, 8%); // Calculate to #dfe0e1;
@@ -273,4 +290,60 @@
 .km-nova .k-slider .k-draghandle:hover
 {
     background-color: @background;
+}
+
+/* Switch */
+.km-nova .km-switch-handle.km-state-active
+{
+    color: orange;
+}
+
+.km-nova span.km-switch
+{
+    color: @accent;
+}
+
+.km-nova span.km-switch-off {
+    color: @base;
+}
+
+.km-nova .km-switch-wrapper
+{
+    background-color: green;
+}
+
+.km-nova .km-switch-background,
+.km-nova .k-slider-selection
+{
+    .linear-gradient-image(top, yellow, yellow);
+}
+
+.km-nova .km-switch-handle
+{
+    background: @background;
+    //-webkit-box-shadow: 0 3px 8px brown, 0 0 0 1px currentcolor;
+    //box-shadow: 0 3px 8px lightBlue, 0 0 0 1px currentcolor;
+    .box-shadow(0 1px 6px 1px @base);
+}
+
+.km-nova .km-switch-off .km-switch-handle
+{
+    //-webkit-box-shadow: 0 3px 8px lightBlue, 0 0 0 1px lightGreen;
+    //box-shadow: 0 3px 8px blue, 0 0 0 1px lightGreen;   
+}
+
+.km-nova .km-switch-container,
+.km-nova .km-switch-wrapper
+{
+    border-color: currentcolor;
+}
+
+
+/* ScrollView */
+.km-nova .km-pages li {
+    background: red;
+}
+
+.km-nova .km-pages .km-current-page {
+    background: green;
 }
