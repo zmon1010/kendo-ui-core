@@ -1,7 +1,7 @@
         <div id="example">
             <div class="demo-section k-header">
                 <h4>Select Customers</h4>
-                <select id="customers"></select>
+                <select id="customers" style="width: 100%;"></select>
                 <p class="demo-hint">
                     Click the MultiSelect to see the customized appearance.
                 </p>
@@ -12,14 +12,13 @@
                     $("#customers").kendoMultiSelect({
                         dataTextField: "ContactName",
                         dataValueField: "CustomerID",
-                        headerTemplate: '<div class="dropdown-header">' +
-                                '<span class="k-widget k-header">Photo</span>' +
-                                '<span class="k-widget k-header">Contact info</span>' +
+                        headerTemplate: '<div class="dropdown-header k-widget k-header">' +
+                                '<span>Photo</span>' +
+                                '<span>Contact info</span>' +
                             '</div>',
-                        itemTemplate: '<span class="k-state-default"><img src=\"../content/web/Customers/${data.CustomerID}.jpg\" alt=\"#:data.CustomerID#\" /></span>' +
+                        itemTemplate: '<span class="k-state-default" style="background-image: url(\'../content/web/Customers/#:data.CustomerID#.jpg\')"></span>' +
                                   '<span class="k-state-default"><h3>#: data.ContactName #</h3><p>#: data.CompanyName #</p></span>',
-                        tagTemplate:  '<img class="tag-image" src=\"../content/web/Customers/${data.CustomerID}.jpg\" alt=\"${data.CustomerID}\" />' +
-                                      '#: data.ContactName #',
+                        tagTemplate:  '<span class="selected-value" style="background-image: url(\'../content/web/Customers/#:data.CustomerID#.jpg\')"></span><span>#:data.ContactName#</span>',
                         dataSource: {
                             transport: {
                                 read: {
@@ -28,7 +27,7 @@
                                 }
                             }
                         },
-                        height: 300
+                        height: 400
                     });
 
                     var customers = $("#customers").data("kendoMultiSelect");
@@ -36,98 +35,80 @@
                 });
             </script>
 
-            <style>
+<style>
+
                 .dropdown-header {
-                    font-size: 1.2em;
+                    border-width: 0 0 1px 0;
+                    text-transform: uppercase;
                 }
 
                 .dropdown-header > span {
-                    -webkit-box-sizing: border-box;
-                    -moz-box-sizing: border-box;
-                    box-sizing: border-box;
-                    text-align: left;
                     display: inline-block;
-                    border-style: solid;
-                    border-width: 0 0 1px 1px;
-                    padding: .3em .6em;
-                    width: 312px;
+                    padding: 10px;
                 }
 
                 .dropdown-header > span:first-child {
-                    width: 82px;
-                    border-left-width: 0;
+                    width: 50px;
                 }
 
-                .demo-section {
-                    width: 450px;
-                }
-                .tag-image {
-                    width: auto;
+                .selected-value {
+                    display: inline-block;
+                    vertical-align: middle;
+                    width: 18px;
                     height: 18px;
-                    margin: 2px 5px 2px 0;
-                    vertical-align: top;
+                    background-size: 100%;
+                    margin-right: 5px;
+                    border-radius: 50%;
                 }
 
-                #customers-list .k-item > span{
+                #customers-list .k-item {
+                    line-height: 1em;
+                    min-width: 300px;
+                }
+                
+                /* Material Theme padding adjustment*/
+                
+                .k-material #customers-list .k-item,
+                .k-material #customers-list .k-item.k-state-hover,
+                .k-materialblack #customers-list .k-item,
+                .k-materialblack #customers-list .k-item.k-state-hover {
+                    padding-left: 5px;
+                    border-left: 0;
+                }
+
+                #customers-list .k-item > span {
                     -webkit-box-sizing: border-box;
                     -moz-box-sizing: border-box;
                     box-sizing: border-box;
                     display: inline-block;
-                    border-style: solid;
-                    border-width: 0 0 1px 1px;
                     vertical-align: top;
-                    min-height: 95px;
-                    width: 79%;
-                    padding: .6em 0 0 .6em;
+                    margin: 20px 10px 10px 5px;
                 }
 
-                #customers-list .k-item > span:first-child{
-                    width: 77px;
-                    border-left-width: 0;
-                    padding: .6em 0 0 0;
-                }
-
-                #customers-list img {
-                    -moz-box-shadow: 0 0 2px rgba(0,0,0,.4);
-                    -webkit-box-shadow: 0 0 2px rgba(0,0,0,.4);
-                    box-shadow: 0 0 2px rgba(0,0,0,.4);
-                    width: 70px;
-                    height: 77px;
+                #customers-list .k-item > span:first-child {
+                    -moz-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+                    -webkit-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+                    box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+                    margin: 10px;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    background-size: 100%;
+                    background-repeat: no-repeat;
                 }
 
                 #customers-list h3 {
-                    font-size: 1.6em;
-                    margin: 0;
+                    font-size: 1.2em;
+                    font-weight: normal;
+                    margin: 0 0 1px 0;
                     padding: 0;
                 }
 
                 #customers-list p {
                     margin: 0;
                     padding: 0;
+                    font-size: .8em;
                 }
-                
-                html.k-material .dropdown-header > span {
-                    border: 0;
-                }
-                html.k-material .dropdown-header > span {
-                    width: 354px;
-                }
-                html.k-material .dropdown-header > span:first-child {
-                    width: 90px;
-                }
-                html.k-material #customers-list .k-item > span{
-                    min-height: 80px;
-                    border-width: 0 0 1px 0;
-                }
-                html.k-material #customers-list img {
-                    width: 60px;
-                    height: 60px;
-                    border-radius: 50%;
-                }
-                html.k-material #customers-list h3 {
-                    font-size: 1.2em;
-                    line-height: 1em;
-                    margin-top: .5em;
-                }
+
             </style>
         </div>
