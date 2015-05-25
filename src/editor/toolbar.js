@@ -81,7 +81,7 @@
             colors: [ "foreColor", "backColor" ]
         },
 
-        overflowFlaseTools: [ "formatting", "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn", "fontName", "fontSize", "foreColor", "backColor" ],
+        overflowFlaseTools: [ "formatting", "fontName", "fontSize", "foreColor", "backColor" ],
 
         _initPopup: function() {
             this.window = $(this.element)

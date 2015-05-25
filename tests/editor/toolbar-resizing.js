@@ -35,8 +35,7 @@ module("editor resizable toolbar", {
                 "formatting",
                 "createLink",
                 "unlink",
-                "insertImage",
-                "createTable"
+                "insertImage"
             ]
         }
     },
@@ -77,7 +76,7 @@ test('tool groups has data overflow property', function() {
 });
 
 test('tool groups that contain tools with popup has overflow: false', function() {
-    var customOptions = { resizable: { content: false, toolbar: true }, tools: [ "fontName", "fontSize", "foreColor", "backColor", "formatting", "createTable" ] };
+    var customOptions = { resizable: { content: false, toolbar: true }, tools: [ "fontName", "fontSize", "foreColor", "backColor", "formatting" ] };
     var editor = textarea.kendoEditor(customOptions).data("kendoEditor");
     var toolbarElement = editor.toolbar.element;
 
@@ -115,7 +114,7 @@ test('tools groups with "overflow: true" that do not fit in the toolbar width ar
     });
 });
 
-test('tools groups with "overflow: false" that do not fit in the toolbar width are hidden', 5, function() {
+test('tools groups with "overflow: false" that do not fit in the toolbar width are hidden', 4, function() {
     $("#wrapper").width(600);
 
     var editor = textarea.kendoEditor(options).data("kendoEditor");
@@ -123,7 +122,7 @@ test('tools groups with "overflow: false" that do not fit in the toolbar width a
 
     var hiddenToolGroups = toolbarElement.children("li.k-tool-group:hidden");
 
-    equal(hiddenToolGroups.length, 4);
+    equal(hiddenToolGroups.length, 3);
     hiddenToolGroups.each(function(idx, element) {
        equal($(element).data("overflow"), false);
     });
@@ -169,7 +168,7 @@ test('dynamic resizing: tools groups with "overflow: true" that do not fit in th
     });
 });
 
-test('dynamic resizing: tools groups with "overflow: false" that do not fit in the toolbar width are hidden', 5, function() {
+test('dynamic resizing: tools groups with "overflow: false" that do not fit in the toolbar width are hidden', 4, function() {
     var editor = textarea.kendoEditor(options).data("kendoEditor");
     var toolbarElement = editor.toolbar.element;
 
@@ -178,7 +177,7 @@ test('dynamic resizing: tools groups with "overflow: false" that do not fit in t
 
     var hiddenToolGroups = toolbarElement.children("li.k-tool-group:hidden");
 
-    equal(hiddenToolGroups.length, 4);
+    equal(hiddenToolGroups.length, 3);
     hiddenToolGroups.each(function(idx, element) {
        equal($(element).data("overflow"), false);
     });
