@@ -396,4 +396,21 @@
 
        equal(eventArgs(handler).node, treeview.find(".k-item")[0]);
    });
+
+   test("triggering change event after checkbox click does not trigger check event", function() {
+       createTreeView({
+           checkboxes: true,
+           dataSource: [
+               { text: "foo" }
+           ],
+           check: handler
+       });
+
+       var checkbox = treeview.find(":checkbox").attr("checked", true);
+
+       checkbox.trigger("click");
+       checkbox.trigger("change");
+
+       equal(handler.calls, 1);
+   });
 })();

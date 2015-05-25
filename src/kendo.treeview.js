@@ -872,10 +872,13 @@ var __meta__ = {
             var checkbox = $(e.target);
             var isChecked = checkbox.prop(CHECKED);
             var node = checkbox.closest(NODE);
+            var dataItem = this.dataItem(node);
 
-            this.dataItem(node).set(CHECKED, isChecked);
+            if (dataItem.checked != isChecked) {
+                dataItem.set(CHECKED, isChecked);
 
-            this._trigger(CHECK, node);
+                this._trigger(CHECK, node);
+            }
         },
 
         _toggleButtonClick: function (e) {
