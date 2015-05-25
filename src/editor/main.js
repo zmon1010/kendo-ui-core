@@ -212,8 +212,6 @@
 
             that.toolbar.bindTo(that);
 
-            that.toolbar.resize();
-
             if (type == "textarea") {
                 setTimeout(function () {
                     var heightStyle = that.wrapper[0].style.height;
@@ -259,6 +257,8 @@
             $(document)
                 .on("mousedown", proxy(that._endTyping, that))
                 .on("mouseup", proxy(that._mouseup, that));
+
+            that.toolbar.resize();
 
             kendo.notify(that);
         },

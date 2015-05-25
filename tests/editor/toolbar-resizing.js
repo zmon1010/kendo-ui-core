@@ -236,4 +236,14 @@ test('overflowPopup is closed on resize', function() {
     ok(!editor.toolbar.overflowPopup.visible());
 });
 
+test('tools are refreshed on resize', function() {
+    var editor = textarea.kendoEditor(options).data("kendoEditor");
+    var refreshTools = stub(editor.toolbar, "refreshTools");
+
+    $("#wrapper").width(800);
+    editor.toolbar.resize();
+
+    equal(refreshTools.calls("refreshTools"), 1);
+});
+
 }());

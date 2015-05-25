@@ -676,6 +676,8 @@
                 popup.close(true);
             }
 
+            this.refreshTools();
+
             this._refreshWidths();
 
             this._shrink(containerWidth);
