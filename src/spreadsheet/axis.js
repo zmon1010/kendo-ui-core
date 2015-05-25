@@ -19,6 +19,18 @@
         }
     };
 
+    Axis.prototype.sum = function(start, end) {
+        var values = this.values.iterator(start, end);
+
+        var sum = 0;
+
+        for (var idx = start; idx <= end; idx ++) {
+            sum += values.at(idx);
+        }
+
+        return sum;
+    };
+
     Axis.prototype.visible = function(start, end) {
         var startSegment = null;
         var endSegment = null;

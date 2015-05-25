@@ -12,7 +12,7 @@
     test("rowHeight sets the height of the specified row", function() {
         sheet.rowHeight(0, 100);
 
-        equal(sheet._rows.values.iterator(0, 0).at(0), 100);
+        equal(sheet._grid._rows.values.iterator(0, 0).at(0), 100);
     });
 
     test("rowHeight returns the height of the specified row", function() {
@@ -22,7 +22,7 @@
     test("columnWidth sets the width of the specified column", function() {
         sheet.columnWidth(0, 100);
 
-        equal(sheet._columns.values.iterator(0, 0).at(0), 100);
+        equal(sheet._grid._columns.values.iterator(0, 0).at(0), 100);
     });
 
     test("columnWidth returns the width of the specified column", function() {

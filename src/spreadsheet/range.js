@@ -5,12 +5,12 @@
 (function(kendo) {
     function Range(rangeRef, sheet) {
         this._sheet = sheet;
-        this._rangeRef = rangeRef;
+        this._ref = rangeRef;
     }
 
     Range.prototype = {
         _property: function(list, value) {
-            var ref = this._rangeRef;
+            var ref = this._ref;
             if (value !== undefined) {
                 for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col; ci++) {
                     var start = this._sheet._grid.index(ref.topLeft.row, ci);
@@ -33,6 +33,10 @@
         },
         formula: function(value) {
             return this._property(this._sheet._formulas, value);
+        },
+        merge: function() {
+            this._sheet._mergedCells.push(this._ref);
+            return this;
         }
     };
 

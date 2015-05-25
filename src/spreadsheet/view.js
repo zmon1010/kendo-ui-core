@@ -88,8 +88,8 @@
 
     View.prototype.sheet = function(sheet) {
         this._sheet = sheet;
-        this.container[0].style.height = sheet.totalHeight() + "px";
-        this.container[0].style.width = sheet.totalWidth() + "px";
+        this.container[0].style.height = sheet._grid.totalHeight() + "px";
+        this.container[0].style.width = sheet._grid.totalWidth() + "px";
     }
 
     View.prototype.context = function(context) {
@@ -129,7 +129,7 @@
 
     View.prototype.renderAt = function(rectangle) {
         var sheet = this._sheet;
-        var view = sheet.view(rectangle);
+        var view = sheet._grid.view(rectangle);
         var grid = sheet._grid;
         var rows = view.rows;
         var columns = view.columns;
@@ -146,9 +146,9 @@
             table.addRow(rows.values.at(ri));
         }
 
-        var formulaPromises = [];
+        var promises = [];
 
-        for (ci = columns.start; ci <= columns.end; ci ++) {
+        for (var ci = columns.start; ci <= columns.end; ci ++) {
             var startCellIndex = grid.index(rows.start, ci);
             var endCellIndex = grid.index(rows.end, ci);
 
@@ -172,16 +172,48 @@
                         promise.resolve();
                     }.bind(td));
 
-                    formulaPromises.push(promise);
+                    promises.push(promise);
                 }
             }
         }
 
-        $.when.apply(null, formulaPromises).then(function() {
-            this.tree.render([ table.toDomTree(columns.offset, rows.offset) ]);
+        var mergedCells = this.renderMergedCells(promises);
+
+        $.when.apply(null, promises).then(function() {
+            this.tree.render([table.toDomTree(columns.offset, rows.offset)].concat(mergedCells) );
         }.bind(this));
+    };
+
+    View.prototype.renderMergedCells = function(promises) {
+        var mergedCells = [];
+        var sheet = this._sheet;
+        var grid = sheet._grid;
+
+        for (var i = 0, len = this._sheet._mergedCells.length; i < len; i++) {
+            var ref = this._sheet._mergedCells[i];
+            var rectangle = grid.rectangle(ref);
+            var cell = ref.topLeft;
+            var index = grid.cellRefIndex(cell);
+            var value = sheet._values.value(index, index);
+            var background = sheet._backgrounds.value(index, index);
+            // var formula = sheet._backgrounds.value(index, index);
+
+            var table = new HtmlTable(this.rowHeight, this.columnWidth);
+            table.addColumn(rectangle.width);
+            table.addRow(rectangle.height);
+            table.addCell(0, value, { backgroundColor: background } );
+
+            mergedCells.push(table.toDomTree(rectangle.x, rectangle.y));
+        }
+
+        return mergedCells;
     }
 
+    //
+    // MergedCellView
+    // - range: RangeRef
+    // intersects(view: sheet.view)
+    //
     kendo.spreadsheet.View = View;
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
