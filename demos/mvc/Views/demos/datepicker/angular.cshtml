@@ -1,10 +1,11 @@
 <div id="example" ng-app="KendoDemos">
-    <div class="demo-section k-content"ng-controller="MyCtrl">
-        <div class="box-col">
+    <div class="demo-section k-header"ng-controller="MyCtrl">
+        <div>
             <h4>Select date:</h4>
             <input kendo-date-picker
              ng-model="dateString"
-             k-ng-model="dateObject" />
+             k-ng-model="dateObject"
+             style="width: 100%;" />
 <pre>
 dateString: {{ dateString }}
 dateObject: {{ dateObject | date:"EEEE, MMMM d, yyyy" }}
@@ -13,18 +14,14 @@ dateObject instanceof Date: {{ isDate(dateObject) }}
 </pre>
             
         </div>
-        <div class="box-col">
+        <div style="padding-top: 2em;">
             <h4>Select month:</h4>
             <input kendo-date-picker
              k-options="monthSelectorOptions"
-             k-format="'MMMM yyyy'" />
+             k-format="'MMMM yyyy'"
+             style="width: 100%;" />
         </div>
     </div>
-    <style>
-        .box-col {
-            width: 400px;
-        }
-    </style>
 </div>
 
 <script>
