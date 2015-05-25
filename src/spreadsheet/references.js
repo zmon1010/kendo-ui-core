@@ -65,6 +65,9 @@
         },
         adjust: function(){
             return this;
+        },
+        absolute: function(){
+            return this;
         }
     });
 
@@ -86,7 +89,7 @@
         init: function NameRef(name){
             this.name = name;
         },
-        print: function(tcol, trow, orig) {
+        print: function(tcol, trow) {
             var ret = this.name;
             if (this.hasSheet()) {
                 ret = this.sheet + "!" + ret;
@@ -118,42 +121,35 @@
             }
             return ref.intersect(this);
         },
-        print: function(trow, tcol, orig) {
+        print: function(trow, tcol) {
             var col = this.col, row = this.row, rel = this.rel;
             if (rel & 1) {
-                // relative col
-                col = col - orig.col + tcol;
+                // relative col, add target
+                col += tcol;
             }
             if (rel & 2) {
-                // relative row
-                row = row - orig.row + trow;
+                // relative row, add target
+                row += trow;
             }
             if ((isFinite(col) && col < 0) || (isFinite(row) && row < 0)) {
                 return "#REF!";
             }
             return displayRef(this._hasSheet && this.sheet, row, col, rel);
         },
-        adjust: function(operation, start, delta) {
+        adjust: function(operation, start, delta, arow, acol) {
+        },
+        absolute: function(arow, acol) {
             var ret = this.clone();
-            switch (operation) {
-              case "col":
-                if (ret.col == start && delta < 0) {
-                    return NULL;
-                }
-                if (ret.col >= start) {
-                    ret.col += delta;
-                }
-                break;
-              case "row":
-                if (ret.row == start && delta < 0) {
-                    return NULL;
-                }
-                if (ret.row >= start) {
-                    ret.row += delta;
-                }
-                break;
+            ret.rel = 0;
+            if (this.rel & 1) {
+                // relative col, add anchor
+                ret.col += acol;
             }
-            return (ret.col < 0 || ret.row < 0) ? NULL : ret;
+            if (this.rel & 2) {
+                // relative row, add anchor
+                ret.row += arow;
+            }
+            return ret;
         }
     });
 
@@ -273,48 +269,23 @@
             return this;
         },
 
-        print: function(trow, tcol, orig) {
-            var ret = this.topLeft.print(trow, tcol, orig)
+        print: function(trow, tcol) {
+            var ret = this.topLeft.print(trow, tcol)
                 + ":"
-                + this.bottomRight.print(trow, tcol, orig);
+                + this.bottomRight.print(trow, tcol);
             if (this.hasSheet()) {
                 ret = this.sheet + "!" + ret;
             }
             return ret;
         },
 
-        adjust: function(operation, start, delta) {
-            var ret = this.clone();
-            var tl = ret.topLeft.adjust(operation, start, delta);
-            var br = ret.bottomRight.adjust(operation, start, delta);
-            if (tl === NULL && br === NULL) {
-                return NULL;
-            }
-            switch (operation) {
-              case "col":
-                if (tl === NULL) {
-                    ret.topLeft.col = start;
-                    tl = ret.topLeft;
-                }
-                else if (br === NULL) {
-                    ret.bottomRight.col = start;
-                    br = ret.bottomRight;
-                }
-                break;
-              case "row":
-                if (tl === NULL) {
-                    ret.topLeft.row = start;
-                    tl = ret.topLeft;
-                }
-                else if (br === NULL) {
-                    ret.bottomRight.row = start;
-                    br = ret.bottomRight;
-                }
-                break;
-            }
-            ret.topLeft = tl;
-            ret.bottomRight = br;
-            return ret.simplify();
+        adjust: function(operation, start, delta, arow, acol) {
+        },
+        absolute: function(arow, acol) {
+            return new RangeRef(
+                this.topLeft.absolute(arow, acol),
+                this.bottomRight.absolute(arow, acol)
+            ).setSheet(this.sheet, this.hasSheet());
         }
     });
 
@@ -342,6 +313,11 @@
                 return this.refs[0].simplify();
             }
             return this;
+        },
+        absolute: function(arow, acol) {
+            return new UnionRef(this.refs.map(function(ref){
+                return ref.absolute(arow, acol);
+            }));
         }
     });
 

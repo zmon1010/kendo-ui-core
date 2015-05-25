@@ -117,6 +117,14 @@
                 if (ref.sheet == null) {
                     ref.sheet = sheet;
                 }
+                if (ref.ref == "cell") {
+                    if (ref.rel & 1) {
+                        ref.col -= col;
+                    }
+                    if (ref.rel & 2) {
+                        ref.row -= row;
+                    }
+                }
                 return ref;
             }
             return tok;
@@ -288,8 +296,7 @@
         }
     }
 
-    function print(sheet, row, col, exp, orig) {
-        var references = orig.formula.refs, refindex = 0;
+    function print(sheet, row, col, exp) {
         return print(exp.ast);
 
         function print(node, prec){
@@ -337,8 +344,7 @@
                 }).join(", ") + ")";
             }
             else if (type == "ref") {
-                node = references[refindex++]; // pick up adjusted references
-                ret = node.print(row, col, orig);
+                ret = node.print(row, col);
             }
             else if (type == "bool") {
                 ret = (node.value+"").toUpperCase();

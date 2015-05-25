@@ -78,9 +78,9 @@
         reset: function() {
             delete this.value;
         },
-        adjust: function(operation, start, delta) {
+        adjust: function(operation, start, delta, arow, acol) {
             this.refs = this.refs.map(function(ref){
-                return ref.adjust(operation, start, delta);
+                return ref.adjust(operation, start, delta, arow, acol);
             });
         }
     });
@@ -106,7 +106,7 @@
         for (var i = 0; i < a.length; ++i) {
             var x = a[i];
             if (x instanceof Ref) {
-                if (!add(context.ss.getRefCells(x))) {
+                if (!add(context.ss.getRefCells(x.absolute(context.row, context.col)))) {
                     context.error(new CalcError("CIRCULAR"));
                     return;
                 }
@@ -146,7 +146,7 @@
         for (var i = 0; i < a.length; ++i) {
             var val = a[i];
             if (val instanceof Ref) {
-                val = self.ss.getData(a[i]);
+                val = self.ss.getData(a[i].absolute(self.row, self.col));
             }
             ret = ret.concat(val);
         }
@@ -430,7 +430,7 @@
 
     exports.bool = function(context, val) {
         if (val instanceof Ref) {
-            val = context.ss.getData(val);
+            val = context.ss.getData(val.absolute(context.row, context.col));
         }
         if (typeof val == "string") {
             return val.toLowerCase() == "true";

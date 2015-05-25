@@ -59,17 +59,10 @@ Spreadsheet.prototype = {
     },
 
     getData: function(ref) {
-        var self = this;
-        if (ref instanceof Spreadsheet.Cell) {
-            return ref.value;
-        }
-        if (ref instanceof spreadsheet.Ref) {
-            var data = self.getRefCells(ref).map(function(cell){
-                return cell.value;
-            });
-            return ref instanceof spreadsheet.CellRef ? data[0] : data;
-        }
-        return ref;
+        var data = this.getRefCells(ref).map(function(cell){
+            return cell.value;
+        });
+        return ref instanceof spreadsheet.CellRef ? data[0] : data;
     },
 
     recalculate: function() {
@@ -258,7 +251,7 @@ Spreadsheet.prototype = {
         var sheet = this.sheets[sheetName];
         increaseProps(sheet.data, row, n);
         this.getVisibleFormulas().forEach(function(cell){
-            cell.formula.adjust("row", row, n);
+            cell.formula.adjust("row", row, n, cell.row, cell.col);
         });
         this.recalculate();
     },
@@ -267,7 +260,7 @@ Spreadsheet.prototype = {
         var sheet = this.sheets[sheetName];
         reduceProps(sheet.data, row, n);
         this.getVisibleFormulas().forEach(function(cell){
-            cell.formula.adjust("row", row, -n);
+            cell.formula.adjust("row", row, -n, cell.row, cell.col);
         });
         this.recalculate();
     },
