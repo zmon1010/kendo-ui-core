@@ -812,6 +812,7 @@ div.submenu-box ol {
 {
     position:relative;
     font-size: 14px;
+    padding-top: 1px;
 }
 
 *+html #example
