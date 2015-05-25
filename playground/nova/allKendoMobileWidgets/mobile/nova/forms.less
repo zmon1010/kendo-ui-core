@@ -230,3 +230,102 @@
     padding: 1.17em 1.61em .39em;
     width: 100%;
 }
+
+.km-nova .km-legend-button {
+    display: block;
+    padding: 1.17em 1.61em .39em;
+    margin: -1.17em -1.61em -.39em;
+}
+
+.km-nova .km-inline-field {
+    display: inline-block;
+    border: 1px solid purple;
+}
+
+.km-nova .km-list .km-inline-field input[type=text]:not(.k-input),
+.km-nova .km-list .km-inline-field input[type=password],
+.km-nova .km-list .km-inline-field input[type=search],
+.km-nova .km-list .km-inline-field input[type=number],
+.km-nova .km-list .km-inline-field input[type=tel],
+.km-nova .km-list .km-inline-field input[type=url],
+.km-nova .km-list .km-inline-field input[type=email],
+.km-nova .km-list .km-inline-field input[type=file],
+.km-nova .km-list .km-inline-field input[type=month],
+.km-nova .km-list .km-inline-field input[type=color],
+.km-nova .km-list .km-inline-field input[type=week],
+.km-nova .km-list .km-inline-field input[type=date],
+.km-nova .km-list .km-inline-field input[type=time],
+.km-nova .km-list .km-inline-field input[type=datetime],
+.km-nova .km-list .km-inline-field input[type=datetime-local],
+.km-nova .km-list .km-inline-field select:not([multiple]),
+.km-nova .km-list .km-inline-field .k-dropdown,
+.km-nova .km-list .km-inline-field textarea {
+    position: relative;
+    width: 100%;
+}
+
+
+/* Checkboxes */
+.km-nova input[type=checkbox],
+.km-nova input[type=radio] {
+    display: inline;
+    opacity: 0;
+    width: 0;
+    margin: 0;
+    //position: absolute;
+}
+
+.km-nova .km-checkbox-label,
+.km-nova .km-radio-label {
+   display: block;
+   position: relative;
+   vertical-align: middle;
+   //line-height: 0.875em;
+}
+
+.km-nova .km-checkbox-label:after{
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 28px;
+  width: 28px;
+  height: 28px;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 3px;
+}
+
+.km-nova input[type=checkbox]:checked + .km-checkbox-label:after {
+  content: "\2713";
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  top: 0;
+  right: 28px;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+//Radio buttons
+.km-nova .km-radio-label:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 28px;
+  width: 28px;
+  height: 28px;
+  border-style: solid;
+  border-radius: 50%;
+  border-width: 2px;
+}
+
+.km-nova input[type=radio]:checked + .km-radio-label:before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 8px;
+  right: 36px;
+  border-radius: 50%;
+}
+

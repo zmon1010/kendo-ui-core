@@ -195,8 +195,13 @@
     color: darken(@base, 8%);
 }
 
-.km-nova .km-list > li > .km-listview-link {
+.km-nova .km-list > li > .km-listview-link,
+.km-nova .km-legend-button {
     color: @accent;
+}
+
+.km-nova .km-legend-button {
+    text-decoration: none;
 }
 
 .km-nova .km-list > li label,
@@ -346,4 +351,33 @@
 
 .km-nova .km-pages .km-current-page {
     background: green;
+}
+
+/* Checkboxes and radio buttons */
+.km-nova input[type=checkbox]:checked + .km-checkbox-label:after {
+    color: @accent;
+    border-color: darken(@base, 8%);
+}
+
+.km-nova .km-checkbox-label:after,
+.km-nova .km-radio-label:after {
+    color: darken(@base, 8%);
+}
+
+.km-nova input[type=radio]:checked + .km-radio-label:before {
+    background: @accent;
+}
+
+/* Collapsible */
+
+.km-nova .km-collapsible-header,
+.km-nova .km-collapsible-content
+{
+    color: @normal-text-color;
+    border-color: darken(@base, 8%);
+}
+
+.km-nova .km-collapsible-header .km-icon,
+.km-nova .km-expanded .km-collapsible-header .km-icon {
+    color: darken(@base, 8%);
 }

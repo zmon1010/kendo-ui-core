@@ -6,3 +6,5 @@
 .km-navbar-buttongroup -> navBar with buttonGroup
 
 .km-link-button -> link button
+.km-legend-button -> button as legend
+.km-inline-field -> inline fields

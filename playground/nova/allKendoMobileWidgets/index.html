@@ -28,6 +28,7 @@
                     <li><a href="#actiosheetView">ActionSheet</a></li>
                     <li><a href="#mobileButtonView">MobileButton</a></li>
                     <li><a href="#formsView">Forms View</a></li>
+                    <li><a href="#checkboxes">Checkboxes and RadioButtons View</a></li>
                     <li><a href="#modalView">ModalView</a></li>
                     <li><a href="#switchView">Switch</a></li>
                     <li><a href="#loadingPopup">Loading popup</a></li>
@@ -422,15 +423,29 @@
                         </textarea>
                     </label>
                 </li>
-            </ul>
-        </form>
-        <div class="separator" style="background: red; height: 20px;"></div>
-            <form action="./index.html">
-            <ul data-role="listview" data-style="inset"> 
                 <li>
                     <fieldset>
                         <legend>Notes</legend>
                         <textarea> Your notes here</textarea>
+                    </fieldset>
+                </li>
+                <li>
+                    <fieldset>
+                        <legend><a href="#" class="km-legend-button">+ Phone</a></legend>
+                        <textarea> Your notes here</textarea>
+                    </fieldset>
+                </li>
+                <li>
+                    <fieldset>
+                        <legend><a href="#" class="km-legend-button">+ Phone</a></legend>
+                            <label class="km-inline-field">
+                                Type password
+                                <input type="password" value="password" />
+                            </label>
+                            <label class="km-inline-field">
+                                Type password
+                                <input type="password" value="password" />
+                            </label>      
                     </fieldset>
                 </li>
                 <li>
@@ -457,8 +472,7 @@
                     </label>
                 </li>
                 <li>
-                    <label class="km-icon-label k-i-chart-donut">
-                        Type email
+                    <label class="km-icon-label k-i-heart km-required">
                         <input type="email" value="kendoui@telerik.com" />
                     </label>
                 </li>
@@ -506,19 +520,29 @@
                     </label>
                 </li>
             </ul>            
-        </form>  
-        <div class="separator" style="background: red; height: 20px;"></div>
-        <form action="" method="get">
-          <input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>
-          <input type="checkbox" name="vehicle" value="Car" checked="checked"> I have a car<br>
-        </form>
-          
+        </form>              
+  </div>
 
+
+<div data-role="view" id="checkboxes" data-layout="mobile-view" data-title="Stretched View">
+ <form action="" method="get">
+           <input type="checkbox" id="vehicle1" value="Bike"/>
+           <label class="km-checkbox-label" for="vehicle1">I have a bike</label><br/>
+          <input type="checkbox" id="vehicle2" checked="checked"/> 
+          <label class="km-checkbox-label" for="vehicle2">I have a car</label>
+        </form>
+        <pre>
+
+
+        </pre>
+
+     <div class="separator" style="background: red; height: 20px;"></div>
         <div class="separator" style="background: red; height: 20px;"></div>         
         <form>
-            <input type="radio" name="sex" value="male" checked>Male
-            <br>
-            <input type="radio" name="sex" value="female">Female
+           <input type="radio" name="sex" id="sex1" checked="checked"/> 
+           <label class="km-radio-label" class="km-label" for="sex1" >Male</label><br/>
+            <input type="radio" name="sex" id="sex2"/>
+            <label class="km-radio-label" class="km-label" for="sex2">Female</label>
             </form> 
     </div>
 
