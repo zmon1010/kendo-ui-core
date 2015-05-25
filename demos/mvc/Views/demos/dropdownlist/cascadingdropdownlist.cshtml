@@ -2,36 +2,21 @@
 
 
             <div class="demo-section k-header">
-                <h4>View Order Details</h4>
-                <p>
-                    <label for="categories">Categories:</label><input id="categories" style="width: 270px" />
-                </p>
-                <p>
-                    <label for="products">Products:</label><input id="products" disabled="disabled" style="width: 270px" />
-                </p>
-                <p>
-                    <label for="orders">Orders:</label><input id="orders" disabled="disabled" style="width: 270px" />
-                </p>
 
-                <button class="k-button" id="get">View Order</button>
+                <h4>Categories:</h4>
+                <input id="categories" style="width: 100%;" />
+
+                <h4 style="margin-top: 2em;">Products:</h4>
+                <input id="products" disabled="disabled" style="width: 100%;" />
+
+                <h4 style="margin-top: 2em;">Orders:</h4>
+                <input id="orders" disabled="disabled" style="width: 100%;" />
+
+                <button class="k-button k-primary" id="get" style="margin-top: 2em; float: right;">View Order</button>
+
             </div>
 
             <style>
-                .demo-section {
-                    width: 400px;
-                }
-                .demo-section p {
-                    margin-top: 1em;
-                }
-                .demo-section label {
-                    display: inline-block;
-                    width: 100px;
-                    padding-right: 5px;
-                    text-align: right;
-                }
-                .demo-section .k-button {
-                    margin: 1em 0 0 105px;
-                }
                 .k-readonly
                 {
                     color: gray;
