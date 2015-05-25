@@ -371,6 +371,7 @@ var __meta__ = {
                     },
                     drag: function(options) {
                         widget.trigger(DRAG, {
+                            originalEvent: options.originalEvent,
                             sourceNode: options.source[0],
                             dropTarget: options.target[0],
                             pageY: options.pageY,
@@ -381,6 +382,7 @@ var __meta__ = {
                     },
                     drop: function(options) {
                         return widget.trigger(DROP, {
+                            originalEvent: options.originalEvent,
                             sourceNode: options.source,
                             destinationNode: options.destination,
                             valid: options.valid,
@@ -398,6 +400,7 @@ var __meta__ = {
                             widget.updateIndeterminate();
 
                             widget.trigger(DRAGEND, {
+                                originalEvent: options.originalEvent,
                                 sourceNode: source && source[0],
                                 destinationNode: destination[0],
                                 dropPosition: position

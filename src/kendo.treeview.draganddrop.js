@@ -169,6 +169,7 @@ var __meta__ = {
             }
 
             this.options.drag({
+                originalEvent: e.originalEvent,
                 source: source,
                 target: target,
                 pageY: e.y.location,
@@ -194,13 +195,13 @@ var __meta__ = {
             this.dropHint.remove();
         },
 
-        dragend: function () {
+        dragend: function (e) {
             var position = "over",
                 source = this.source,
                 destination,
                 dropHint = this.dropHint,
                 dropTarget = this.dropTarget,
-                e, dropPrevented;
+                eventArgs, dropPrevented;
 
             if (dropHint.css(VISIBILITY) == "visible") {
                 position = this.options.dropPositionFrom(dropHint);
@@ -214,7 +215,8 @@ var __meta__ = {
                 }
             }
 
-            e = {
+            eventArgs = {
+                originalEvent: e.originalEvent,
                 source: source[0],
                 destination: destination[0],
                 valid: this._hintStatus() != "k-denied",
@@ -225,7 +227,7 @@ var __meta__ = {
                 position: position
             };
 
-            dropPrevented = this.options.drop(e);
+            dropPrevented = this.options.drop(eventArgs);
 
             dropHint.remove();
             this._removeTouchHover();
@@ -233,14 +235,15 @@ var __meta__ = {
                 this._lastHover.removeClass(KSTATEHOVER);
             }
 
-            if (!e.valid || dropPrevented) {
-                this._draggable.dropped = e.valid;
+            if (!eventArgs.valid || dropPrevented) {
+                this._draggable.dropped = eventArgs.valid;
                 return;
             }
 
             this._draggable.dropped = true;
 
             this.options.dragend({
+                originalEvent: e.originalEvent,
                 source: source,
                 destination: destination,
                 position: position
