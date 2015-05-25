@@ -246,4 +246,32 @@ test('tools are refreshed on resize', function() {
     equal(refreshTools.calls("refreshTools"), 1);
 });
 
+test('tool state does not change when the tool is send to the overflow popup', function() {
+    var editorOptions = {
+        resizable: { content: false, toolbar: true },
+        tools: [
+            "justifyLeft",
+            "justifyCenter",
+            "justifyRight",
+            "justifyFull",
+
+            "bold",
+            "italic",
+            "underline",
+            "strikethrough"
+        ]
+    };
+
+    var editor = textarea.kendoEditor(editorOptions).data("kendoEditor");
+    editor.value("foo");
+    editor.exec("bold");
+
+    ok(editor.toolbar.element.find("a[title=Bold]").hasClass("k-state-selected"));
+
+    $("#wrapper").width(200);
+    editor.toolbar.resize();
+
+    ok(editor.toolbar.overflowPopup.element.find("a[title=Bold]").hasClass("k-state-selected"));
+});
+
 }());
