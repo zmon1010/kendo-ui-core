@@ -68,6 +68,7 @@ ROOT_MAP = {
     'wrappers/aspnetmvc/Binaries/Mvc3' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC3/',
     'wrappers/aspnetmvc/Binaries/Mvc4' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Binaries/Mvc5' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release-MVC5/',
+    'wrappers/aspnetmvc/Binaries/Mvc6' => 'wrappers/mvc-6/src/Kendo.Mvc/bin/Release/',
     'wrappers/aspnetmvc/Scaffolding' => 'plugins/KendoScaffolder/',
     'wrappers/jsp/kendo-taglib' => 'wrappers/java/kendo-taglib/target/',
     'src/kendo-taglib' => 'wrappers/java/kendo-taglib/',
@@ -151,7 +152,8 @@ require './build/localization'
 MVC_BINARIES = {
     'wrappers/aspnetmvc/Binaries/Mvc3' => MVC3_DLL,
     'wrappers/aspnetmvc/Binaries/Mvc4' => MVC4_DLL,
-    'wrappers/aspnetmvc/Binaries/Mvc5' => MVC5_DLL
+    'wrappers/aspnetmvc/Binaries/Mvc5' => MVC5_DLL,
+    'wrappers/aspnetmvc/Binaries/Mvc6' => MVC6_REDIST
 }
 
 MVC_CONTENT = {
@@ -187,7 +189,7 @@ ROOT_MAP.merge!( {
 } )
 
 MVC_CONTENT.merge!( {
-    #"wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples" => MVC_6_DEMOS,
+    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples" => MVC_6_DEMOS,
     "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => FileList['demos/mvc/content/shared/*']
 } )
 
@@ -467,8 +469,7 @@ bundle :name => 'aspnetmvc.trial',
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }
        .merge(MVC_CONTENT),
-       #:post_build => ['mvc:copy_trials', 'mvc_6:copy_nuget'],
-       :post_build => ['mvc:copy_trials'],
+       :post_build => ['mvc:copy_trials', 'mvc_6:update_demo_deps'],
        :prerequisites => [
            'mvc:assets',
            'plugins/KendoScaffolder/KendoScaffolderExtension.vsix',
@@ -595,7 +596,7 @@ bundle :name => 'aspnetmvc.commercial',
                 .exclude('**/*.csproj'),
             'wrappers/aspnetmvc/Scaffolding' => FileList['plugins/KendoScaffolder/KendoScaffolderExtension.vsix']
        }.merge(MVC_CONTENT),
-       #:post_build => 'mvc_6:copy_nuget',
+       :post_build => 'mvc_6:update_demo_deps',
        :prerequisites => [
            'mvc:assets',
            'type_script:master:test',
@@ -961,7 +962,11 @@ namespace :build do
         nugets = []
 
         NUGETS.each do |nuget|
-            name = nuget.pathmap("%n") + ".#{VERSION}.nupkg";
+            if nuget.match(/Kendo.Mvc/)
+                name = nuget;
+            else
+                name = nuget.pathmap("%n") + ".#{VERSION}.nupkg";
+            end
 
             dest = File.join(ARCHIVE_ROOT, destination, name)
             source = File.join("dist/bundles",  name)

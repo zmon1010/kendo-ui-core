@@ -55,7 +55,7 @@ def update_nuget_reference name
     return unless File.exists? name
 
     content = File.read(name)
-    content.gsub!(/"Kendo.Mvc": ".*"/, '"Telerik.UI.for.AspNet.Mvc6.Trial": "' + VERSION + '-*"')
+    content.gsub!(/"Kendo.Mvc": ".*"/, '"Kendo.Mvc": "' + VERSION + '"')
 
     puts "Updating examples NuGet reference to #{VERSION}"
 
@@ -137,23 +137,12 @@ namespace :mvc_6 do
     task :assets => ['mvc_6:assets_js', 'mvc_6:assets_css', 'mvc_6:assets_shared']
 
     desc('Copy NuGet packages to offline demos')
-    task :copy_nuget => ['nuget:mvc6'] do
+    task :update_demo_deps do
         [ 'aspnetmvc.trial', 'aspnetmvc.commercial' ].each do |bundle|
-            nuget = "dist/bundles/Telerik.UI.for.AspNet.Mvc6.Trial.#{VERSION}#{MVC_6_VERSION_SUFFIX}.nupkg"
             root = "dist/bundles/#{bundle}/wrappers/aspnetmvc/Examples/VS2015"
-            dest = "#{root}/packages/Telerik.UI.for.AspNet.Mvc6.Trial/#{VERSION}#{MVC_6_VERSION_SUFFIX}"
-
-            mkdir_p dest
-            cp nuget, dest
-
-            sh "cd #{dest} && unzip *.nupkg"
             cp 'wrappers/mvc-6/NuGet.config', root
 
             update_nuget_reference "#{root}/Kendo.Mvc.Examples/project.json"
-
-            File.open("#{root}/global.json", 'w') do |file|
-                file.write '{ "packages": "packages" }'
-            end
         end
     end
 end

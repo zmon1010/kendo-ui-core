@@ -38,8 +38,12 @@ MVC6_SOURCES = FileList[MVC6_SRC_ROOT + '**/*.cs']
             .include(MVC6_SRC_ROOT + '**/*.snk')
             .include(MVC6_SRC_ROOT + '**/*.json')
 
-MVC6_REDIST = FileList[MVC6_SRC_ROOT + 'bin/Release/Kendo.Mvc.*.nupkg']
+MVC6_REDIST = FileList["Kendo.Mvc.#{VERSION}.nupkg"]
+            .include("Kendo.Mvc.#{VERSION}.symbols.nupkg")
+            .pathmap(MVC6_SRC_ROOT + "bin/Release/%f")
+
 MVC6_NUGET = "#{MVC6_SRC_ROOT}bin/Release/Kendo.Mvc.#{VERSION}.nupkg"
+MVC6_NUGET_SYMBOLS = "#{MVC6_SRC_ROOT}bin/Release/Kendo.Mvc.#{VERSION}.symbols.nupkg"
 
 rule 'Kendo.Mvc.xml' => 'wrappers/mvc/src/Kendo.Mvc/bin/Release/Kendo.Mvc.dll'
 
@@ -160,7 +164,7 @@ def project_file (*args, &block)
     ProjectFileTask.define_task(*args, &block)
 end
 
-# Update CommonAssemblyInfo.cs whenever the VERSION constant changes
+# Update project.json whenever the VERSION constant changes
 project_file MVC6_SRC_ROOT + 'project.json'
 
 namespace :mvc do
@@ -235,7 +239,8 @@ namespace :mvc do
     ]
 
     desc('Update CommonAssemblyInfo.cs with current VERSION')
-    task :assembly_version => 'wrappers/mvc/src/shared/CommonAssemblyInfo.cs'
+    task :assembly_version => FileList['wrappers/mvc/src/shared/CommonAssemblyInfo.cs',
+                                       MVC6_SRC_ROOT + 'project.json']
 
     desc('Copy the minified CSS and JavaScript to Content and Scripts folder')
     task :assets => ['mvc:assets_js', 'mvc:assets_css', 'mvc_6:assets']
@@ -249,7 +254,8 @@ namespace :mvc do
         MVC_BIN_ROOT + 'Release-MVC3-Trial/Kendo.Mvc.dll',
         MVC_BIN_ROOT + 'Release-MVC5-Trial/Kendo.Mvc.dll',
         MVC_DEMOS_ROOT + 'bin/Kendo.Mvc.Examples.dll',
-        #MVC6_NUGET,
+        MVC6_NUGET,
+        MVC6_NUGET_SYMBOLS,
         'dist/binaries/',
         'dist/binaries/mvc-6/'
     ]

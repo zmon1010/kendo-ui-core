@@ -1,5 +1,6 @@
 {
     "version": "1.0.0-*",
+    "description": "Telerik UI for ASP.NET MVC 6 Beta",
     "dependencies": {
         "Microsoft.AspNet.Mvc": "6.0.0-beta4",
         "Microsoft.Framework.Runtime.Roslyn": "1.0.0-*",
