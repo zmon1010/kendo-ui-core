@@ -3709,37 +3709,39 @@ var __meta__ = {
             var that = this;
             var content = that.content;
             var rowsHeader = that.rowsHeader;
-            var height = that.wrapper.innerHeight();
+            var innerHeight = that.wrapper.innerHeight();
             var scrollbar = kendo.support.scrollbar();
             var skipScrollbar = content[0].offsetHeight === content[0].clientHeight;
+            var height = that.options.height;
 
             if (that.wrapper.is(":visible")) {
-                if (!height) {
+                if (!innerHeight || !height || height === "100%") {
                     if (skipScrollbar) {
                         scrollbar = 0;
                     }
 
+                    content.height("auto");
                     rowsHeader.height(content.height() - scrollbar);
                     return;
                 }
 
-                height -= that.columnFields.outerHeight();
-                height -= that.columnsHeader.outerHeight();
+                innerHeight -= that.columnFields.outerHeight();
+                innerHeight -= that.columnsHeader.outerHeight();
 
-                if (height <= scrollbar * 2) { // do not set height if proper scrollbar cannot be displayed
-                    height = scrollbar * 2 + 1;
+                if (innerHeight <= scrollbar * 2) { // do not set height if proper scrollbar cannot be displayed
+                    innerHeight = scrollbar * 2 + 1;
                     if (!skipScrollbar) {
-                        height += scrollbar;
+                        innerHeight += scrollbar;
                     }
                 }
 
-                content.height(height);
+                content.height(innerHeight);
 
                 if (skipScrollbar) {
                     scrollbar = 0;
                 }
 
-                rowsHeader.height(height - scrollbar);
+                rowsHeader.height(innerHeight - scrollbar);
             }
         },
 
