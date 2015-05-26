@@ -308,7 +308,7 @@
                     if (typeof thing != "string") {
                         throw 1;
                     }
-                    var ref = calc.parseFormula(this.sheet, 0, 0, thing);
+                    var ref = calc.parseFormula(this.sheet, this.row, this.col, thing);
                     if (ref.ast.type != "ref") {
                         throw 1;
                     }

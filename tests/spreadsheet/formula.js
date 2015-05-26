@@ -301,10 +301,10 @@
         var formula = calc.compile(exp);
         var origCell = { formula: formula, row: 0, col: 1, sheet: "sheet1" };
 
-        var str = calc.print("sheet1", 1, 1, exp, origCell);
+        var str = formula.print(1, 1);
         equal(str, "sum(A2:A6)");
 
-        var str = calc.print("sheet1", 2, 2, exp, origCell);
+        var str = formula.print(2, 2);
         equal(str, "sum(B3:B7)");
     });
 
@@ -314,7 +314,7 @@
             var formula = calc.compile(exp);
             var origCell = { formula: formula, row: 0, col: 1, sheet: "sheet1" };
 
-            var str = calc.print("sheet1", 4, 4, exp, origCell);
+            var str = formula.print(4, 4);
             equal(str, output);
         }
         testOne("=A1", "D5");
