@@ -48,6 +48,10 @@
     border-color: transparent;
 }
 
+.km-nova .km-external-link {
+    color: @accentSecond;
+}
+
 // TabStrip
 .km-nova .km-footer {
     background: @normal-text-color;
@@ -264,6 +268,7 @@
     border-color: lighten(@normal-text-color, 5%);
 }
 
+.km-nova .km-drawer .km-list > li,
 .km-nova .km-drawer .km-list > li > .km-listview-link,
 .km-nova .km-drawer .km-list > li .km-icon {
     color: @background;
@@ -345,26 +350,46 @@
 
 
 /* ScrollView */
+.km-nova .km-scrollview {
+    background-color: @normal-text-color;
+}
+
+.km-nova .km-scrollview-light {
+    background-color: @base;
+}
+
 .km-nova .km-pages li {
-    background: red;
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .km-nova .km-pages .km-current-page {
-    background: green;
+    background: rgba(255, 255, 255, 1);
+    border-color: rgba(255, 255, 255, 1);
 }
 
 /* Checkboxes and radio buttons */
-.km-nova input[type=checkbox]:checked + .km-checkbox-label:after {
-    color: @accent;
-    border-color: darken(@base, 8%);
+//.km-nova input[type=checkbox]:checked + .km-checkbox-label:after {
+   // color: @accent;
+  //  border-color: darken(@base, 8%);
+//}
+
+//.km-nova .km-checkbox-label:after,
+//.km-nova .km-radio-label:after {
+  //  color: darken(@base, 8%);
+//}
+
+//.km-nova input[type=radio]:checked + .km-radio-label:before {
+  //  background: @accent;
+//}
+
+.km-nova .km-listview-label input[type=radio],
+.km-nova .km-listview-label input[type=checkbox] {
+   color: @accent;
+   border-color: darken(@base, 8%);
 }
 
-.km-nova .km-checkbox-label:after,
-.km-nova .km-radio-label:after {
-    color: darken(@base, 8%);
-}
-
-.km-nova input[type=radio]:checked + .km-radio-label:before {
+.km-nova .km-listview-label input[type=radio]:checked:after {
     background: @accent;
 }
 

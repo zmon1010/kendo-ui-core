@@ -4,7 +4,9 @@
 .km-label-above -> forms -> labels above the fields
 .km-icon-label -> forms -> labels with icons
 .km-navbar-buttongroup -> navBar with buttonGroup
+.km-external-link -> external link
 
 .km-link-button -> link button
 .km-legend-button -> button as legend
 .km-inline-field -> inline fields
+.km-scrollview-overlay -> scrollView as overlay

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+     <script src="http://cdn.kendostatic.com/2015.1.429/js/jquery.min.js"></script>
+    <script src="http://cdn.kendostatic.com/2015.1.429/js/kendo.all.min.js"></script>
+<!-- <link href="mobile/kendo.mobile.all.less" rel="stylesheet/less" type="text/css" /> -->
+<link href="mobile/kendo.mobile.nova.less" rel="stylesheet/less" type="text/css" />
+<!-- <script src="src/less.js" type="text/javascript"></script>    -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.0/less.js" type="text/javascript"></script>     
+</head>
+<body>
+   <div data-role="view" id="tabstrip-profile" data-title="Profile" data-layout="mobile-tabstrip">
+  tabstrip-profile view
+</div>
+
+<div data-role="view" id="tabstrip-sales" data-title="Sales History" data-layout="mobile-tabstrip">
+    tabstrip-sales view
+</div>
+
+<div data-role="view" id="tabstrip-rating" data-title="Rating" data-layout="mobile-tabstrip">
+    tabstrip-rating view
+</div>
+
+<div data-role="view" id="tabstrip-settings" data-title="Settings" data-layout="mobile-tabstrip">
+    tabstrip-settings view
+</div>
+
+<div data-role="layout" data-id="mobile-tabstrip">
+    <header data-role="header">
+        <div data-role="navbar">
+            <!--<a class="nav-button" data-align="left" data-role="backbutton">Back</a>-->
+            <span data-role="view-title"></span>
+            <a data-align="right" data-role="button" class="nav-button" href="#/">Index</a>
+        </div>
+    </header>
+
+    <p>TabStrip</p>
+
+    <div data-role="footer">
+        <div data-role="tabstrip" class="km-tabstrip-vertical">
+            <a href="#tabstrip-profile" data-icon="contacts">Profile
+            </a><a href="#tabstrip-sales" data-icon="history">Sales
+            </a><a href="#tabstrip-rating" data-icon="favorites">Rating
+            </a><a href="#tabstrip-settings" data-icon="settings">Settings</a>
+        </div>
+    </div>
+</div>
+
+<style>
+
+</style>
+
+
+
+<script>
+    //var app = new kendo.mobile.Application(document.body);
+var app = new kendo.mobile.Application($(document.body), {
+    skin: 'nova'
+});
+</script>
+        <style type="text/css">
+.km-tabstrip-vertical {
+    width: 68px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    height: 100%;
+      -webkit-box-orient: vertical;
+
+}
+
+.km-tabstrip-vertical .km-button {
+    display: block;
+}
+        </style>
+
+
+</body>
+</html>
