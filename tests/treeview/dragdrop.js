@@ -1,14 +1,19 @@
 (function() {
     var dnd;
+    var fixture;
 
     module("HierarchicalDragAndDrop", {
+        setup: function() {
+            fixture = QUnit.fixture;
+        },
         teardown: function() {
-            kendo.destroy(QUnit.fixture);
+            kendo.destroy(fixture);
+            fixture = null;
         }
     });
 
     function createHierarchicalDND(options) {
-        return new kendo.ui.HierarchicalDragAndDrop(QUnit.fixture, $.extend({
+        return new kendo.ui.HierarchicalDragAndDrop(fixture, $.extend({
             hintText: $.noop
         }, options));
     }
@@ -18,7 +23,7 @@
 
         dnd = createHierarchicalDND({ dragstart: handler });
 
-        dnd.dragstart({ currentTarget: QUnit.fixture });
+        dnd.dragstart({ currentTarget: fixture });
 
         equal(handler.calls, 1);
     });
@@ -31,7 +36,7 @@
             dragstart: handler
         });
 
-        var item = $("<div><span /></div>").appendTo(QUnit.fixture);
+        var item = $("<div><span /></div>").appendTo(fixture);
 
         dnd.dragstart({ currentTarget: item.children("span") });
 
@@ -48,7 +53,7 @@
 
         dnd.dragstart({
             preventDefault: handler,
-            currentTarget: QUnit.fixture
+            currentTarget: fixture
         });
 
         equal(handler.calls, 1);
@@ -57,17 +62,17 @@
     test("dragstart creates drag hint when reorderable is true", function() {
         dnd = createHierarchicalDND({ reorderable: true });
 
-        dnd.dragstart({ currentTarget: QUnit.fixture });
+        dnd.dragstart({ currentTarget: fixture });
 
-        equal(QUnit.fixture.find(".k-drop-hint").length, 1);
+        equal(fixture.find(".k-drop-hint").length, 1);
     });
 
     test("dragstart does not create drag hint when reorderable is false", function() {
         dnd = createHierarchicalDND({ reorderable: false });
 
-        dnd.dragstart({ currentTarget: QUnit.fixture });
+        dnd.dragstart({ currentTarget: fixture });
 
-        equal(QUnit.fixture.find(".k-drop-hint").length, 0);
+        equal(fixture.find(".k-drop-hint").length, 0);
     });
 
     test("drag method triggers drag handler", function() {
@@ -78,9 +83,8 @@
             drag: handler
         });
 
-        var ue = dnd._draggable.userEvents;
-        ue.press();
-        ue.move({ location: {} });
+        press(fixture, 1, 1);
+        move(fixture, 10, 10);
 
         equal(handler.calls, 1);
     });
@@ -95,10 +99,9 @@
             dragend: dragend
         });
 
-        var ue = dnd._draggable.userEvents;
-        ue.press();
-        ue.move({ location: {} });
-        ue.end({ location: {} });
+        press(fixture, 1, 1);
+        move(fixture, 10, 10);
+        release(fixture, 11, 11);
 
         equal(drop.calls, 1);
         equal(dragend.calls, 0); // invalid drag by default
@@ -115,10 +118,9 @@
             dragend: dragend
         });
 
-        var ue = dnd._draggable.userEvents;
-        ue.press();
-        ue.move({ location: {} });
-        ue.end({ location: {} });
+        press(fixture, 1, 1);
+        move(fixture, 10, 10);
+        release(fixture, 11, 11);
 
         equal(dragend.calls, 1);
     });
