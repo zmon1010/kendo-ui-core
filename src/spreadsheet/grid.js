@@ -6,11 +6,11 @@
     var CellRef = kendo.spreadsheet.CellRef;
 
     var Grid = kendo.Class.extend({
-        init: function(rowCount, columnCount, rowHeight, columnWidth, fixed) {
+        init: function(rows, columns, rowCount, columnCount) {
             this.rowCount = rowCount;
             this.columnCount = columnCount;
-            this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth, fixed);
-            this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight, fixed);
+            this._columns = columns;
+            this._rows = rows;
         },
 
         view: function(rectangle) {
@@ -18,14 +18,6 @@
                 rows: this._rows.visible(rectangle.top, rectangle.bottom),
                 columns: this._columns.visible(rectangle.left, rectangle.right)
             };
-        },
-
-        columnWidth: function(columnIndex, width) {
-            return this._columns.value(columnIndex, columnIndex, width);
-        },
-
-        rowHeight: function(rowIndex, height) {
-            return this._rows.value(rowIndex, rowIndex, height);
         },
 
         totalHeight: function() {

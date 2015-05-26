@@ -194,7 +194,6 @@
         map(tree, root.right, callback);
     }
 
-
     var RangeList = kendo.Class.extend({
         init: function(start, end, value) {
             if (end == undefined) {

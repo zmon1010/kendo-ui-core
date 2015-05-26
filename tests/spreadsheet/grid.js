@@ -9,12 +9,12 @@
     });
 
     test("gets address index", function() {
-        var grid = new Grid(1000, 1000);
+        var grid = new Grid(null, null, 1000, 1000);
         equal(grid.index(2, 2), 2002);
     });
 
     test("gets ref from index", function() {
-        var grid = new Grid(1000, 1000);
+        var grid = new Grid(null, null, 1000, 1000);
         var ref = grid.cellRef(2002);
 
         equal(ref.row, 2);
@@ -22,7 +22,7 @@
     });
 
     test("iterates over each column with the corresponding segment", function() {
-        var grid = new Grid(4, 5);
+        var grid = new Grid(null, null, 4, 5);
 
         var area = new RangeRef(new CellRef(1, 2), new CellRef(3, 2));
         var i = 0;
