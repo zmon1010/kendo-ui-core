@@ -1018,8 +1018,15 @@
 
         var axes = dataSource.axes();
         var tuple = axes.columns.tuples[0];
+        var firstMember = tuple.members[0];
 
-        equal(tuple.members[0].name, "level 0");
+        equal(firstMember.name, "level 0");
+        equal(firstMember.parentName, "");
+        equal(firstMember.levelName, "level 0");
+        equal(firstMember.levelNum, "0");
+        equal(firstMember.hasChildren, true);
+        equal(firstMember.hierarchy, "level 0");
+
         equal(tuple.members[1].measure, true);
         equal(tuple.members[1].name, "Measures");
         equal(tuple.members[1].children.length, 2);
@@ -1064,6 +1071,43 @@
         equal(tuple.members[1].children.length, 2);
         equal(tuple.members[1].children[0].name, "measure 1");
         equal(tuple.members[1].children[1].name, "measure 2");
+    });
+
+    test("copy correct member fields when create tuples for missing measures", function() {
+        var dataSource = new PivotDataSource({
+            measures: [ "measure 1", "measure 2"],
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success({
+                        axes: {
+                            columns: {
+                                tuples: [
+                                    { members: [ { name: "level 0", hasChildren: true, levelName: "level name", hierarchy: "hierarchy", children: [], levelNum: "0" }, { name: "measure 2", children: [] } ] }
+                                ]
+                            }
+                        },
+                        data: []
+                    });
+                }
+            }
+        });
+
+        dataSource.read();
+
+        var axes = dataSource.axes();
+        var tuple = axes.columns.tuples[0];
+        var firstMember = tuple.members[0];
+
+        ok(!firstMember.parentName);
+        equal(firstMember.name, "level 0");
+        equal(firstMember.levelName, "level name");
+        equal(firstMember.levelNum, "0");
+        equal(firstMember.hasChildren, true);
+        equal(firstMember.hierarchy, "hierarchy");
     });
 
     test("create tuples for missing measures (multiple dimensions)", function() {

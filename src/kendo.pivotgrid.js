@@ -1365,14 +1365,15 @@ var __meta__ = {
         },
 
         _createTuple: function(tuple, measure, buildRoot) {
-            var name;
-            var member;
-            var parentName;
             var members = tuple.members;
             var length = members.length;
             var root = { members: [] };
-            var levelNum;
+            var levelName, levelNum;
+            var name, parentName;
+            var hasChildren;
+            var hierarchy;
             var caption;
+            var member;
             var idx = 0;
 
             if (measure) {
@@ -1386,6 +1387,9 @@ var __meta__ = {
                 name = member.name;
                 parentName = member.parentName;
                 caption = member.caption || name;
+                hasChildren = member.hasChildren;
+                hierarchy = member.hierarchy;
+                levelName = member.levelName;
 
                 if (buildRoot) {
                     caption = "All";
@@ -1395,17 +1399,18 @@ var __meta__ = {
                         levelNum -= 1;
                     }
 
-                    name = parentName;
+                    hasChildren = true;
+                    name = hierarchy = levelName = parentName;
                 }
 
                 root.members.push({
                     name: name,
                     children: [],
                     caption: caption,
-                    levelName: parentName,
+                    levelName: levelName,
                     levelNum: levelNum.toString(),
-                    hasChildren: buildRoot,
-                    hierarchy: parentName,
+                    hasChildren: hasChildren,
+                    hierarchy: hierarchy,
                     parentName: !buildRoot ? parentName: ""
                 });
             }
