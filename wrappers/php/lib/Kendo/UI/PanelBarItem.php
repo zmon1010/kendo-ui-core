@@ -45,10 +45,20 @@ class PanelBarItem extends \Kendo\SerializableObject {
             $element->attr('disabled', 'disabled');
         }
 
-        $text = $this->getProperty('text');
+        $root = $element;
 
+        $url = $this->getProperty('url');
+        if ($url) {
+            $link = new \Kendo\Html\Element('a');
+            $link->attr('href', $url);
+            $element->append($link);
+
+            $root = $link;
+        }
+
+        $text = $this->getProperty('text');
         if ($text) {
-            $element->append(new \Kendo\Html\Text($text));
+            $root->append(new \Kendo\Html\Text($text));
         }
 
         return $element;
