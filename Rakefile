@@ -184,8 +184,7 @@ end
 
 ROOT_MAP.merge!( {
     "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples" => 'wrappers/mvc-6/demos/Kendo.Mvc.Examples/',
-    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared',
-    "wrappers/aspnetmvc/Examples/VS2015/packages" => 'dist/bundles/'
+    "wrappers/aspnetmvc/Examples/VS2015/Kendo.Mvc.Examples/wwwroot/shared" => 'demos/mvc/content/shared'
 } )
 
 MVC_CONTENT.merge!( {

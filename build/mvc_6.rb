@@ -139,7 +139,9 @@ namespace :mvc_6 do
     desc('Copy NuGet packages to offline demos')
     task :update_demo_deps do
         [ 'aspnetmvc.trial', 'aspnetmvc.commercial' ].each do |bundle|
-            root = "dist/bundles/#{bundle}/wrappers/aspnetmvc/Examples/VS2015"
+            root = "dist/bundles/#{bundle}/wrappers/aspnetmvc/Examples/VS2015/"
+
+            mkdir_p root
             cp 'wrappers/mvc-6/NuGet.config', root
 
             update_nuget_reference "#{root}/Kendo.Mvc.Examples/project.json"
