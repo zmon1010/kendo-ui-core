@@ -44,12 +44,33 @@
         var s1 = diagram.addShape({
             x: 100,
             y: 100,
-            content: {text: "Agraphia"}
+            content: {text: "Agraphia"},
+            fill: {
+                gradient: {
+                    type:"radial",
+                    stops: [[
+                        0, "Orange", 0.75
+                    ], [
+                        0.85, "Red", 1
+                    ]]
+                }
+            }
         });
         var s2 = diagram.addShape({
             x: 500,
             y: 100,
-            content: {text: "Bradykinesia"}
+            content: {text: "Bradykinesia"},
+            fill: {
+                gradient: {
+                    stops: [[
+                        0.15, "SteelBlue", 1
+                    ], [
+                        0.15, "DimGrey", 0.45
+                    ], [
+                        0.2, "LightSteelBlue", 0.5
+                    ]]
+                }
+            }
         });
         var con = diagram.connect(s1, s2);
         kendo.pdf.defineFont({
