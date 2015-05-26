@@ -504,7 +504,7 @@
         updateGroups: function() {
             $(this.element).children().each(function() {
                 $(this).children().filter(function(){
-                    return this.style.display !== "none";
+                    return !$(this).hasClass("k-state-disabled");
                 })
                     .removeClass("k-group-end")
                     .first().addClass("k-group-start").end()
@@ -655,10 +655,6 @@
         },
 
         update: function() {
-            this.element.children().children().each(function() {
-                var tool = $(this);
-                tool.css("display", tool.hasClass("k-state-disabled") ? "none" : "");
-            });
             this.updateGroups();
         },
         //>>>>>>>>>>>> resizable functionality
