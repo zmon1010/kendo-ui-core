@@ -70,6 +70,8 @@
     }
 
     function parse(sheet, row, col, input) {
+        var refIndex = 0;
+
         if (typeof input == "string") {
             input = TokenStream(InputStream(input));
         }
@@ -108,12 +110,15 @@
             );
         }
 
-        function parseSymbol(tok) {
+        function parseSymbol(tok, addRefIndex) {
             if (tok.upper == "TRUE" || tok.upper == "FALSE") {
                 return tok.upper == "TRUE" ? TRUE : FALSE;
             }
             var ref = parseReference(tok.value);
             if (ref) {
+                if (addRefIndex) {
+                    ref.index = refIndex++;
+                }
                 if (ref.sheet == null) {
                     ref.sheet = sheet;
                 }
@@ -144,7 +149,7 @@
                 exp = input.next();
             }
             else if (is("sym")) {
-                exp = parseSymbol(input.next());
+                exp = parseSymbol(input.next(), true);
             }
             else if (is("op", "+") || is("op", "-")) {
                 exp = {
@@ -243,7 +248,6 @@
         // - A1:B3
         // - A:A
         // - 2:2
-
         function maybeRange() {
             return input.ahead(3, function(a, b, c){
                 if ((a.type == "sym" || a.type == "num") &&
@@ -256,7 +260,9 @@
                         if (bottomRight.hasSheet() && topLeft.sheet != bottomRight.sheet) {
                             input.croak("Invalid range");
                         } else {
-                            return new spreadsheet.RangeRef(topLeft, bottomRight).setSheet(topLeft.sheet, topLeft.hasSheet());
+                            var ref = new spreadsheet.RangeRef(topLeft, bottomRight).setSheet(topLeft.sheet, topLeft.hasSheet());
+                            ref.index = refIndex++;
+                            return ref;
                         }
                     }
                 }
@@ -265,7 +271,7 @@
 
         function getref(tok, isFirst) {
             if (tok.type == "num" && tok.value == tok.value|0) {
-                return new spreadsheet.CellRef(tok.value - 1, isFirst ? -Infinity : +Infinity, 2).setSheet(sheet, false);
+                return new spreadsheet.CellRef(tok.value - 1 - row, isFirst ? -Infinity : +Infinity, 2).setSheet(sheet, false);
             }
             var ref = parseSymbol(tok);
             if (ref.type == "ref") {
@@ -278,7 +284,7 @@
                     if (/^[0-9]+$/.test(name)) {
                         // row ref
                         return new spreadsheet.CellRef(
-                            getrow(name),
+                            getrow(name) - (abs ? 0 : row),
                             isFirst ? -Infinity : +Infinity,
                             (abs ? 0 : 2)
                         ).setSheet(ref.sheet || sheet, ref.hasSheet());
@@ -286,7 +292,7 @@
                         // col ref
                         return new spreadsheet.CellRef(
                             isFirst ? -Infinity : +Infinity,
-                            getcol(name),
+                            getcol(name) - (abs ? 0 : col),
                             (abs ? 0 : 1)
                         ).setSheet(ref.sheet || sheet, ref.hasSheet());
                     }
@@ -296,75 +302,51 @@
         }
     }
 
-    function print(sheet, row, col, exp) {
-        return print(exp.ast);
+    function makePrinter(exp) {
+        var code = print(exp.ast, 0);
+        return new Function("row", "col", "kind", "return (" + code + ")");
+        function print(node, prec) {
+            switch (node.type) {
+              case "num":
+              case "str":
+              case "bool":
+                return JSON.stringify(node.value+"");
 
-        function print(node, prec){
-            var type = node.type, ret = "", op = node.op, parens = false;
-            if (type == "num") {
-                ret = node.value + "";
-            }
-            else if (type == "str") {
-                ret = '"' + node.value.replace(/\x22/g, "\\\"") + '"';
-            }
-            else if (type == "prefix") {
-                openParen();
-                ret += op + print(node.exp, OPERATORS[op]);
-                closeParen();
-            }
-            else if (type == "postfix") {
-                openParen();
-                ret += print(node.exp, OPERATORS[op]) + op;
-                closeParen();
-            }
-            else if (type == "binary") {
-                openParen();
-                var left_name = (node.op == ":" && node.left.type == "ref" && node.left.ref == "name");
-                var right_name = (node.op == ":" && node.right.type == "ref" && node.right.ref == "name");
-                if (left_name) {
-                    ret += "(";
-                }
-                ret += print(node.left, OPERATORS[op]);
-                if (left_name) {
-                    ret += ")";
-                }
-                ret += op;
-                if (right_name) {
-                    ret += "(";
-                }
-                ret += print(node.right, OPERATORS[op]);
-                if (right_name) {
-                    ret += ")";
-                }
-                closeParen();
-            }
-            else if (type == "call") {
-                ret = node.func + "(" + node.args.map(function(arg){
-                    return print(arg, 0);
-                }).join(", ") + ")";
-            }
-            else if (type == "ref") {
-                ret = node.print(row, col);
-            }
-            else if (type == "bool") {
-                ret = (node.value+"").toUpperCase();
-            }
-            else {
-                throw new Error("Unsupported node in print: " + type);
-            }
+              case "ref":
+                return "this.refs[" + (node.index++) + "].print(row, col, kind)";
 
-            return ret;
+              case "prefix":
+                return withParens(node.op, prec, function(){
+                    return JSON.stringify(node.op) + " + " + print(node.exp, OPERATORS[node.op]);
+                });
 
-            function openParen() {
-                if (OPERATORS[op] < prec || (!prec && op == ",")) {
-                    ret += "(";
-                    parens = true;
-                }
+              case "postfix":
+                return withParens(node.op, prec, function(){
+                    return print(node.exp, OPERATORS[node.op]) + " + " + JSON.stringify(node.op);
+                });
+
+              case "binary":
+                // XXX: (FOO):(BAR) where FOO and BAR are NameRef-s — should parenthesize
+                return withParens(node.op, prec, function(){
+                    return print(node.left, OPERATORS[node.op])
+                        + " + " + JSON.stringify(node.op) + " + "
+                        + print(node.right, OPERATORS[node.op]);
+                });
+
+              case "call":
+                return JSON.stringify(node.func + "(") + " + "
+                    + node.args.map(function(arg){
+                        return print(arg, 0);
+                    }).join(" + ', ' + ") + " + ')'";
             }
-            function closeParen() {
-                if (parens) {
-                    ret += ")";
-                }
+        }
+        function withParens(op, prec, f) {
+            var needParens = (OPERATORS[op] < prec || (!prec && op == ","));
+            var code = f();
+            if (needParens) {
+                return "'(' + " + code + " + ')'";
+            } else {
+                return code;
             }
         }
     }
@@ -547,9 +529,8 @@
         return new runtime.Formula(references, makeClosure(code));
 
         function getReference(ref) {
-            var index = references.length;
-            references[index] = ref;
-            return "formula.refs[" + index + "]";
+            references[ref.index] = ref;
+            return "formula.refs[" + ref.index + "]";
         }
 
         function js(node){
@@ -807,14 +788,15 @@
 
     exports.parseFormula = parse;
     exports.parseReference = parseReference;
-    exports.print = print;
     exports.compile = function(x) {
-        return makeFormula(toCPS(x, function(ret){
+        var formula = makeFormula(toCPS(x, function(ret){
             return {
                 type: "return",
                 value: ret
             };
         }));
+        formula.print = makePrinter(x);
+        return formula;
     };
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

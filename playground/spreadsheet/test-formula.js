@@ -171,7 +171,7 @@ Spreadsheet.prototype = {
         if (cell) {
             if (!cell.formula)
                 return cell.input;
-            return "=" + calc.print(sheet, row, col, cell.exp);
+            return "=" + cell.formula.print(row, col);
         }
     },
 
@@ -434,7 +434,7 @@ function _onKeyDown(ev) {
             if (!window.COPY) {
                 alert("Copy an expression first");
             } else {
-                var exp = calc.print(sheetName, row, col, window.COPY.exp);
+                var exp = window.COPY.formula.print(row, col);
                 input.val("=" + exp);
             }
             input.select();
@@ -506,7 +506,8 @@ fillElements({
         C3: 9,
         //E5: "=sum(A1:C3)",
         E5: "=B2",
-        E6: "=B$2"
+        E6: "=B$2",
+        E7: "=(a1+a2)*a3",
         // E6: "=SUM((a1,a2,a3), (b1,b2,b3))",
     },
     sheet2: {
