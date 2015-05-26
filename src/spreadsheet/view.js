@@ -44,66 +44,65 @@
         }
     });
 
-    /*
-    function recalculate(callback) {
-        var formulaCells = Glue.getRefCells(Glue.getSheetBounds()).filter(function(cell){
-            if (cell.formula) {
-                cell.formula.reset();
-                return true;
-            }
-        });
-        var count = formulaCells.length;
-        if (!count && callback) {
-            return callback();
-        }
-        formulaCells.forEach(function(cell){
-            cell.formula.exec(Glue, "sheet1", cell.row, cell.col, function(){
-                if (callback && !--count) {
-                    callback();
-                }
-            });
-        });
-    }
-    */
-
     var View = kendo.Class.extend({
         init: function(element, fixed) {
             this.wrapper = $(element);
             this.wrapper.addClass("k-spreadsheet");
-            this.element = $("<div class=k-spreadsheet-view />").appendTo(this.wrapper);
-
-            this.container = this.element;
-
-            if (fixed) {
-                this.element.wrap("<div class=k-spreadsheet-fixed-wrapper></div>").parent();
-                this.container = this.element.parent();
-            }
-
-            this.tree = new kendo.dom.Tree(this.element[0]);
-            this.wrapper.on("scroll", this.scroll.bind(this));
-        },
-
-        scroll: function() {
-            this.renderAt(this.visibleRectangle());
+            this.fixed = fixed;
         },
 
         sheet: function(sheet) {
             this._sheet = sheet;
-            this.container[0].style.height = sheet._grid.totalHeight() + "px";
-            this.container[0].style.width = sheet._grid.totalWidth() + "px";
+            this.element = $("<div class=k-spreadsheet-view />").appendTo(this.wrapper);
+            this.element[0].style.height = sheet._grid.totalHeight() + "px";
+            this.element[0].style.width = sheet._grid.totalWidth() + "px";
+            this.tree = new kendo.dom.Tree(this.element[0]);
+
+            this.panes = [
+                new Pane(this.element, this.fixed, sheet, { x: 5, y: 5 }),
+                new Pane(this.element, this.fixed, sheet, { x: 0, y: 5, width: 5 }),
+                new Pane(this.element, this.fixed, sheet, { x: 5, y: 0, height: 5 }),
+                new Pane(this.element, this.fixed, sheet, { x: 0, y: 0, width: 5, height: 5 })
+            ];
+
+            this.wrapper.on("scroll", this.render.bind(this));
+        },
+
+        render: function() {
+            var result = this.panes.map(function(pane) {
+                return pane.render(this.wrapper[0]);
+            }, this);
+
+            var merged = [];
+            merged = Array.prototype.concat.apply(merged, result);
+            this.tree.render(merged);
+        },
+
+        context: function(context) {
+            this.panes.forEach(function(pane) {
+                pane.context(context);
+            });
+        }
+    })
+
+    var Pane = kendo.Class.extend({
+        init: function(element, fixed, sheet, rectangle) {
+            this.rectangle = rectangle;
+            this._sheet = sheet;
+            this.container = this.element;
+            this.x = sheet._columns.sum(0, rectangle.x - 1);
+            this.y = sheet._rows.sum(0, rectangle.y - 1);
         },
 
         context: function(context) {
             this._context = context;
         },
 
-        render: function() {
-            this.renderAt(this.visibleRectangle());
+        render: function(element) {
+            return this.renderAt(this.visibleRectangle(element));
         },
 
-        visibleRectangle: function() {
-            var element = this.wrapper[0];
-
+        visibleRectangle: function(element) {
             var top = element.scrollTop;
             var bottom = top + element.clientHeight;
 
@@ -120,11 +119,32 @@
                 left = 0;
             }
 
+            var pane = {
+                top: top + this.y,
+                left: left + this.x
+            };
+
+            if (this.rectangle.width) {
+                pane.width = this._sheet._columns.sum(this.rectangle.x, this.rectangle.x + this.rectangle.width - 1);
+            } else {
+                pane.width = element.clientWidth - this.x;
+            }
+
+            if (this.rectangle.height) {
+                pane.height = this._sheet._rows.sum(this.rectangle.y, this.rectangle.y + this.rectangle.height - 1);
+            } else {
+                pane.height = element.clientHeight - this.y;
+            }
+
+            var leftOffset = (this.rectangle.width ? this.x : left + this.x);
+            var topOffset = (this.rectangle.height ? this.y : top + this.y);
+
             return {
-                left: left,
-                top: top,
-                right: right,
-                bottom: bottom
+                pane: pane,
+                left:  leftOffset,
+                top:  topOffset,
+                right: leftOffset + pane.width,
+                bottom: topOffset + pane.height
             };
         },
 
@@ -178,14 +198,31 @@
                 }
             }
 
-            var mergedCells = this.renderMergedCells(promises);
+            var mergedCells = this.renderMergedCells(promises, rectangle.x, rectangle.y);
 
-            $.when.apply(null, promises).then(function() {
-                this.tree.render([table.toDomTree(columns.offset, rows.offset)].concat(mergedCells) );
-            }.bind(this));
+            var style = {};
+
+            style.width = rectangle.pane.width + "px";
+            style.height = rectangle.pane.height + "px";
+            style.top = rectangle.pane.top + "px";
+            style.left = rectangle.pane.left + "px";
+
+            var x = columns.offset - rectangle.pane.left;
+
+            if (this.rectangle.width) {
+                x = 0;
+            }
+
+            var y = rows.offset - rectangle.pane.top
+
+            if (this.rectangle.height) {
+                y = 0;
+            }
+
+            return kendo.dom.element("div", { style: style, className: "k-spreadsheet-pane" }, [table.toDomTree(x, y)].concat(mergedCells));
         },
 
-        renderMergedCells: function(promises) {
+        renderMergedCells: function(promises, x, y) {
             var mergedCells = [];
             var sheet = this._sheet;
             var grid = sheet._grid;
@@ -204,7 +241,7 @@
                 table.addRow(rectangle.height);
                 table.addCell(0, value, { backgroundColor: background } );
 
-                mergedCells.push(table.toDomTree(rectangle.x, rectangle.y));
+                mergedCells.push(table.toDomTree(rectangle.x + x, rectangle.y + y));
             }
 
             return mergedCells;
