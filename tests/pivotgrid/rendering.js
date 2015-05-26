@@ -4074,6 +4074,26 @@
         ok(parseInt(contentTable.css("width")) > 100);
     });
 
+    test("PivotGrid sets width less than 100 percents if content table is narrower than pivot", function() {
+        var tuples = [{ members: [ { name: "dim 0", levelNum: "0", children: [] }] }];
+        var data = [1];
+
+        var pivotgrid = createPivot({
+            columnWidth: 30,
+            dataSource: createDataSource(tuples, data)
+        });
+
+        var headerTable = pivotgrid.wrapper.find(".k-grid-header").find("table");
+        var contentTable = pivotgrid.wrapper.find(".k-grid-content").find("table");
+
+        contentTable.wrap("<div/>");
+
+        pivotgrid.refresh();
+
+        ok(parseInt(headerTable.css("width")) < 100);
+        ok(parseInt(contentTable.css("width")) < 100);
+    });
+
     test("PivotGrid sets height to the column header if rows-field section is higher", function() {
         var pivotgrid = createPivot({
             dataSource: createDataSource()

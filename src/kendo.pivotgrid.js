@@ -3694,12 +3694,8 @@ var __meta__ = {
 
             var rowLength = contentTable.children("colgroup").children().length;
 
-            var minWidth = 100;
             var calculatedWidth = rowLength * this.options.columnWidth;
-
-            if (contentWidth < calculatedWidth) {
-                minWidth = Math.ceil((calculatedWidth / contentWidth) * 100);
-            }
+            var minWidth = Math.ceil((calculatedWidth / contentWidth) * 100);
 
             contentTable.add(this.columnsHeader.children("table"))
                         .css("width", minWidth + "%");
@@ -3778,7 +3774,7 @@ var __meta__ = {
                 return;
             }
 
-            columnBuilder.measures = this._axisMeasures("columns");
+            columnBuilder.measures = that._axisMeasures("columns");
 
             that.columnsHeaderTree.render(columnBuilder.build(columns));
             that.rowsHeaderTree.render(rowBuilder.build(rows));
