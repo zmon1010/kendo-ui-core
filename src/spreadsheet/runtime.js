@@ -78,12 +78,60 @@
         reset: function() {
             delete this.value;
         },
-        adjust: function(operation, start, delta, arow, acol) {
+        adjust: function(operation, start, delta, formulaRow, formulaCol) {
             this.refs = this.refs.map(function(ref){
-                return ref.adjust(operation, start, delta, arow, acol);
+                if (ref instanceof CellRef) {
+                    return fixCell(ref);
+                }
+                else if (ref instanceof RangeRef) {
+                    return new RangeRef(
+                        fixCell(ref.topLeft),
+                        fixCell(ref.bottomRight)
+                    ).setSheet(ref.sheet, ref.hasSheet());
+                }
+                else if (!(ref instanceof NameRef)) {
+                    throw new Error("Unknown reference in adjust");
+                }
             });
+            // debug_printRefs(
+            //     this,
+            //     formulaRow + (operation == "row" ? delta : 0),
+            //     formulaCol + (operation == "col" ? delta : 0)
+            // );
+            function fixCell(ref) {
+                return new CellRef(
+                    operation == "row" ? fixNumber(ref.row, ref.rel & 2, formulaRow) : ref.row,
+                    operation == "col" ? fixNumber(ref.col, ref.rel & 1, formulaCol) : ref.col,
+                    ref.rel
+                ).setSheet(ref.sheet, ref.hasSheet());
+            }
+            function fixNumber(num, relative, base) {
+                if (relative) {
+                    var abs = base + num;
+                    if (abs < start && start <= base) {
+                        return num - delta;
+                    } else if (base < start && start <= abs) {
+                        return num + delta;
+                    } else {
+                        return num;
+                    }
+                } else {
+                    if (num >= start) {
+                        return num + delta;
+                    } else {
+                        return num;
+                    }
+                }
+            }
         }
     });
+
+    function debug_printRefs(formula, trow, tcol) {
+        var refs = formula.refs.map(function(ref){
+            return ref.print(trow, tcol);
+        });
+        console.log(refs.join(", "));
+    }
 
     // utils ------------------------
 

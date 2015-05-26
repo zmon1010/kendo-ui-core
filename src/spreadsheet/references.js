@@ -63,9 +63,6 @@
             }
             return this;
         },
-        adjust: function(){
-            return this;
-        },
         absolute: function(){
             return this;
         }
@@ -135,8 +132,6 @@
                 return "#REF!";
             }
             return displayRef(this._hasSheet && this.sheet, row, col, rel);
-        },
-        adjust: function(operation, start, delta, arow, acol) {
         },
         absolute: function(arow, acol) {
             var ret = this.clone();
@@ -279,8 +274,6 @@
             return ret;
         },
 
-        adjust: function(operation, start, delta, arow, acol) {
-        },
         absolute: function(arow, acol) {
             return new RangeRef(
                 this.topLeft.absolute(arow, acol),

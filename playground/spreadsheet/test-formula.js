@@ -171,7 +171,7 @@ Spreadsheet.prototype = {
         if (cell) {
             if (!cell.formula)
                 return cell.input;
-            return "=" + calc.print(sheet, row, col, cell.exp, cell);
+            return "=" + calc.print(sheet, row, col, cell.exp);
         }
     },
 
@@ -249,19 +249,19 @@ Spreadsheet.prototype = {
 
     insertRows: function(sheetName, row, n) {
         var sheet = this.sheets[sheetName];
-        increaseProps(sheet.data, row, n);
         this.getVisibleFormulas().forEach(function(cell){
             cell.formula.adjust("row", row, n, cell.row, cell.col);
         });
+        increaseProps(sheet.data, row, n);
         this.recalculate();
     },
 
     deleteRows: function(sheetName, row, n) {
         var sheet = this.sheets[sheetName];
-        reduceProps(sheet.data, row, n);
         this.getVisibleFormulas().forEach(function(cell){
             cell.formula.adjust("row", row, -n, cell.row, cell.col);
         });
+        reduceProps(sheet.data, row, n);
         this.recalculate();
     },
 
@@ -434,7 +434,7 @@ function _onKeyDown(ev) {
             if (!window.COPY) {
                 alert("Copy an expression first");
             } else {
-                var exp = calc.print(sheetName, row, col, window.COPY.exp, window.COPY);
+                var exp = calc.print(sheetName, row, col, window.COPY.exp);
                 input.val("=" + exp);
             }
             input.select();
@@ -505,11 +505,12 @@ fillElements({
         C2: 8,
         C3: 9,
         //E5: "=sum(A1:C3)",
-        E5: "=A1",
-        E6: "=SUM((a1,a2,a3), (b1,b2,b3))",
+        E5: "=B2",
+        E6: "=B$2"
+        // E6: "=SUM((a1,a2,a3), (b1,b2,b3))",
     },
     sheet2: {
-        A1: "=sum(sheet1!a1:c3)"
+        // A1: "=sum(sheet1!a1:c3)"
     }
     // sheet1: {
     //     A1: '=CURRENCY("USD", "EUR") + CURRENCY("USD", "EUR")'
