@@ -2125,4 +2125,92 @@
 
     })();
 
+    (function() {
+        var axisBox;
+        var axis;
+
+        function LabelMock(box) {
+            this.box = box;
+            this.options = {};
+            this.reflow = $.noop;
+        }
+
+        function setupAxis(options) {
+            axis = new NumericAxis(0, 1, kendo.deepExtend({
+                vertical: false,
+                labels: {
+                    rotation: "auto"
+                },
+                majorUnit: 0.5,
+                max: 1,
+                min: 0
+            }, options));
+            axisBox = new Box2D(0, 0, 50, 50);
+            axis.labels = [new LabelMock(Box2D(0, 0, 10, 10)), new LabelMock(Box2D(0, 0, 20, 10))];
+        }
+
+        // ------------------------------------------------------------
+        module("Numeric Axis / autoRotateLabels", {
+            setup: function() {
+                setupAxis();
+            }
+        });
+
+        test("rotates labels with -45 degrees if there is a label with width bigger than the slot width", function() {
+            axis.reflow(axisBox);
+            axis.autoRotateLabels();
+
+            equal(axis.labels[0].options.rotation, -45);
+            equal(axis.labels[1].options.rotation, -45);
+        });
+
+        test("rotates labels with -90 degrees if there is a label with height bigger than the slot width", function() {
+            axis.labels[1].box.y2 = 20;
+            axis.reflow(axisBox);
+            axis.autoRotateLabels();
+
+            equal(axis.labels[0].options.rotation, -90);
+            equal(axis.labels[1].options.rotation, -90);
+        });
+
+        test("reflows rotated labels", 2, function() {
+            axis.reflow(axisBox);
+            axis.labels[0].reflow = axis.labels[1].reflow = function() {
+                ok(true);
+            };
+            axis.autoRotateLabels();
+        });
+
+        test("does not rotate labels if there isn't a label with width bigger than the slot width", function() {
+            axis.labels[1].box.x1 = 10;
+            axis.reflow(axisBox);
+            axis.autoRotateLabels();
+
+            ok(!axis.labels[0].options.rotation);
+            ok(!axis.labels[1].options.rotation);
+        });
+
+        test("does not rotate labels if the axis is vertical", function() {
+            axis.options.vertical = true;
+            axis.reflow(axisBox);
+            axis.autoRotateLabels();
+
+            ok(!axis.labels[0].options.rotation);
+            ok(!axis.labels[1].options.rotation);
+        });
+
+        test("does not rotate labels if auto rotation is not enabled", function() {
+            setupAxis({
+                labels: {
+                    rotation: 0
+                }
+            });
+            axis.reflow(axisBox);
+            axis.autoRotateLabels();
+
+            ok(!axis.labels[0].options.rotation);
+            ok(!axis.labels[1].options.rotation);
+        });
+    })();
+
 })();

@@ -2227,6 +2227,34 @@ var __meta__ = {
             }
         },
 
+        autoRotateLabels: function() {
+            if (this.options.autoRotateLabels && !this.options.vertical) {
+                var tickPositions = this.getMajorTickPositions();
+                var labels = this.labels;
+                var labelBox, angle, width, idx;
+                for (idx = 0; idx < labels.length; idx++) {
+                    width = tickPositions[idx + 1] - tickPositions[idx];
+                    labelBox = labels[idx].box;
+                    if (labelBox.height() > width) {
+                        angle = -90;
+                        break;
+                    }
+
+                    if (labelBox.width() > width) {
+                        angle = -45;
+                    }
+                }
+
+                if (angle) {
+                    for (idx = 0; idx < labels.length; idx++) {
+                        labels[idx].options.rotation = angle;
+                        labels[idx].reflow(Box2D());
+                    }
+                    return true;
+                }
+            }
+        },
+
         arrangeTitle: function() {
             var axis = this,
                 options = axis.options,
