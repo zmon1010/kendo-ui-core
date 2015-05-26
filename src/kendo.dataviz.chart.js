@@ -9050,10 +9050,38 @@ var __meta__ = {
             if (axes.x.length > 0 && axes.y.length > 0) {
                 plotArea.alignAxes(axes.x, axes.y);
                 plotArea.shrinkAxisWidth(panes);
+
+                plotArea.autoRotateAxisLabels(axes);
+
                 plotArea.alignAxes(axes.x, axes.y);
                 plotArea.shrinkAxisHeight(panes);
+
                 plotArea.alignAxes(axes.x, axes.y);
                 plotArea.fitAxes(panes);
+            }
+        },
+
+        autoRotateAxisLabels: function(groupedAxes) {
+            var axes = this.axes;
+            var panes = this.panes;
+            var axis, idx, rotated;
+
+            for (idx = 0; idx < axes.length; idx++) {
+                axis = axes[idx];
+                if (axis.autoRotateLabels()) {
+                    rotated = true;
+                }
+            }
+
+            if (rotated) {
+                for (idx = 0; idx < panes.length; idx++) {
+                    this.reflowPaneAxes(panes[idx]);
+                }
+
+                if (groupedAxes.x.length > 0 && groupedAxes.y.length > 0) {
+                    this.alignAxes(groupedAxes.x, groupedAxes.y);
+                    this.shrinkAxisWidth(panes);
+                }
             }
         },
 

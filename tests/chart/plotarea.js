@@ -5207,6 +5207,62 @@
     })();
 
     (function() {
+        var plotArea;
+
+        function createPlotArea() {
+            plotArea = new dataviz.CategoricalPlotArea([], {});
+        }
+
+        // ------------------------------------------------------------
+        module("PlotArea / axis labels rotation", {
+            setup: createPlotArea,
+            teardown: moduleTeardown
+        });
+
+        test("calls autoRotateAxisLabels on reflow", 2, function() {
+            plotArea.autoRotateAxisLabels = function(groupedAxis) {
+                ok(groupedAxis.x[0] === plotArea.axisX);
+                ok(groupedAxis.y[0] === plotArea.axisY);
+            };
+            plotArea.reflow(chartBox);
+        });
+
+        test("autoRotateAxisLabels rotates axis labels", function() {
+            plotArea.axisX.autoRotateLabels = plotArea.axisY.autoRotateLabels = function() {
+                ok(true);
+            };
+            plotArea.autoRotateAxisLabels();
+        });
+
+        test("autoRotateAxisLabels reflows, aligns and shrinks axes if any of the axes labels are rotated", 5, function() {
+            plotArea.axisX.autoRotateLabels = function() {
+                return true;
+            };
+
+            plotArea.axisX.reflow = plotArea.axisY.reflow = function() {
+                ok(true)
+            };
+
+            plotArea.alignAxes = function(x, y) {
+                equal(x, "foo");
+                equal(y, "bar");
+            };
+
+            plotArea.shrinkAxisWidth = function() {
+                ok(true);
+            };
+
+            plotArea.autoRotateAxisLabels({
+                x: "foo",
+                y: "bar"
+            });
+        });
+
+    })();
+
+
+
+    (function() {
         var PlotAreaStub = dataviz.PlotAreaBase.extend({
             render: function() {
                 this.addToLegend(this.series);
