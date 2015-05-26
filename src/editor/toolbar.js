@@ -176,13 +176,13 @@
 
             // detach from editor that was previously listened to
             if (that._editor) {
-                that._editor.unbind("select", proxy(that.refreshTools, that));
+                that._editor.unbind("select", proxy(that.resize, that));
             }
 
             that._editor = editor;
 
             if (that.options.resizable && that.options.resizable.toolbar) {
-                editor.options.tools.unshift("overflowAnchor");
+                editor.options.tools.push("overflowAnchor");
             }
 
             // re-initialize the tools
@@ -234,7 +234,7 @@
                 ui.closest(".k-colorpicker", that.element).next(".k-colorpicker").addClass("k-editor-widget");
             });
 
-            editor.bind("select", proxy(that.refreshTools, that));
+            editor.bind("select", proxy(that.resize, that));
 
             that.update();
 
@@ -668,6 +668,8 @@
             var resizable = this.options.resizable && this.options.resizable.toolbar;
             var popup = this.overflowPopup;
 
+            this.refreshTools();
+
             if (!resizable) {
                 return;
             }
@@ -675,8 +677,6 @@
             if (popup.visible()) {
                 popup.close(true);
             }
-
-            this.refreshTools();
 
             this._refreshWidths();
 
