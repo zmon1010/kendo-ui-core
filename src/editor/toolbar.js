@@ -771,11 +771,18 @@
                 if (group.hasClass("k-overflow-tool-group")) {
                     position = group.data("position");
 
-                    previous = this.element.children().filter(function(idx, element) {
-                        return $(element).data("position") === position - 1;
-                    });
+                    if (position === 0) {
+                        group.detach().prependTo(this.element);
+                    } else {
+                        previous = this.element.children().filter(function(idx, element) {
+                            return $(element).data("position") === position - 1;
+                        });
 
-                    group.detach().insertAfter(previous).removeClass("k-overflow-tool-group");
+                        group.detach().insertAfter(previous);
+                    }
+
+                    group.removeClass("k-overflow-tool-group");
+
                 } else {
                     group.show();
                 }
