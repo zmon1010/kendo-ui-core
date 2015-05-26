@@ -341,13 +341,11 @@ kendo.ExcelExporter = kendo.Class.extend({
                 if (column.footerTemplate) {
                     footer = true;
                     var aggregates = this.dataSource.aggregates();
-                    var ctx = aggregates[column.field] || {};
-                    ctx.data = aggregates;
 
                     return {
                         background: "#dfdfdf",
                         color: "#333",
-                        value: column.footerTemplate(ctx)
+                        value: column.footerTemplate($.extend({}, aggregates, aggregates[column.field]))
                     };
                 } else {
                     return {

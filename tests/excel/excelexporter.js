@@ -467,6 +467,28 @@ test("passes all aggregates to footerTemplate", function() {
     });
 });
 
+test("passes all aggregates to footerTemplate fn", function() {
+    dataSource = new DataSource({
+       data: [
+           { foo: "foo", bar: "bar" }
+       ],
+       aggregate: [
+           { field: "foo", aggregate: "count" }
+       ]
+    });
+
+    testWorkbook({ columns: [{
+        field: "foo",
+        footerTemplate: function(data) { return "Foo: " + data.foo.count; }
+    }, {
+            field: "bar"
+    }],
+        dataSource: dataSource
+    }, function(book) {
+        equal(book.sheets[0].rows[2].cells[0].value, "Foo: 1");
+    });
+});
+
 test("passes all aggregates to groupFooterTemplate", function() {
     dataSource = new DataSource({
        data: [
