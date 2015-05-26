@@ -357,6 +357,8 @@ else
         sh "cd #{MVC6_SRC_ROOT} && dnu restore && dnu pack --configuration Release"
     end
 
+    file MVC6_NUGET_SYMBOLS => MVC6_NUGET
+
     tree :to => 'dist/binaries/mvc-6/',
          :from => MVC6_REDIST,
          :root => MVC6_SRC_ROOT + 'bin/Release/'
