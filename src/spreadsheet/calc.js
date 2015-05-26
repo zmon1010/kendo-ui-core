@@ -308,9 +308,11 @@
         function print(node, prec) {
             switch (node.type) {
               case "num":
-              case "str":
               case "bool":
-                return JSON.stringify(node.value+"");
+                return JSON.stringify(node.value);
+
+              case "str":
+                return JSON.stringify(JSON.stringify(node.value));
 
               case "ref":
                 return "this.refs[" + (node.index++) + "].print(row, col, kind)";
