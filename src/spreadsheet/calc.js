@@ -53,7 +53,7 @@
         return parseFloat(str) - 1;
     }
 
-    // "Sheet1!C2" -> { sheet: "Sheet1", row: 2, col: 3 }
+    // "Sheet1!C2" -> { sheet: "Sheet1", row: 1, col: 2, rel: 3 } (spreadsheet.CellRef)
     function parseReference(name) {
         var m;
         if ((m = /^((.+)!)?(\$)?([A-Z]+)(\$)?([0-9]+)$/i.exec(name))) {
@@ -271,7 +271,11 @@
 
         function getref(tok, isFirst) {
             if (tok.type == "num" && tok.value == tok.value|0) {
-                return new spreadsheet.CellRef(tok.value - 1 - row, isFirst ? -Infinity : +Infinity, 2).setSheet(sheet, false);
+                return new spreadsheet.CellRef(
+                    getrow(tok.value) - row,
+                    isFirst ? -Infinity : +Infinity,
+                    2
+                ).setSheet(sheet, false);
             }
             var ref = parseSymbol(tok);
             if (ref.type == "ref") {
@@ -315,7 +319,7 @@
                 return JSON.stringify(JSON.stringify(node.value));
 
               case "ref":
-                return "this.refs[" + (node.index++) + "].print(row, col, kind)";
+                return "this.refs[" + node.index + "].print(row, col, kind)";
 
               case "prefix":
                 return withParens(node.op, prec, function(){
@@ -353,18 +357,8 @@
         }
     }
 
-    var GENSYM = 0;
-
-    function gensym(name) {
-        if (!name) {
-            name = "";
-        }
-        name = "_" + name;
-        return name + (++GENSYM);
-    }
-
     function toCPS(node, k) {
-        GENSYM = 0;
+        var GENSYM = 0;
         return cps(node.ast, k);
 
         function cps(node, k){
@@ -504,6 +498,14 @@
                 vars : [ cont ],
                 body : k({ type: "var", name: cont })
             };
+        }
+
+        function gensym(name) {
+            if (!name) {
+                name = "";
+            }
+            name = "_" + name;
+            return name + (++GENSYM);
         }
     }
 
@@ -757,7 +759,7 @@
     //// exports
 
     exports.parse = function(sheet, row, col, input) {
-        input = input+"";
+        input += "";
         if (/^'/.test(input)) {
             return {
                 type: "str",
