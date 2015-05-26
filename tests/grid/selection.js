@@ -629,6 +629,47 @@
         equal(document.activeElement, $("#button")[0]);
     });
 
+    test("enter key on master row expands it", function() {
+        var grid = setup({ detailTemplate: "<input class='foo' />" });
+        grid.table.focus().press(kendo.keys.ENTER);
+
+        ok(grid.items().first().find(".k-minus").length);
+    });
+
+    test("enter key on expanded master row collapse it", function() {
+        var grid = setup({ detailTemplate: "<input class='foo' />" });
+        grid.table.focus().press(kendo.keys.ENTER).press(kendo.keys.ENTER);
+
+        ok(grid.items().first().find(".k-plus").length);
+    });
+
+    test("enter key on master row does not expands it when grid is editable", function() {
+        var grid = setup({
+            detailTemplate: "<input class='foo' />",
+            editable: "incell"
+        });
+        grid.table.focus().press(kendo.keys.ENTER);
+
+        ok(grid.items().first().find(".k-plus").length, "row is expanded");
+        ok(grid.items().first().children(":not(.k-hierarchy-cell)").first().hasClass("k-edit-cell"), "first cell is not in edit mode");
+    });
+
+    test("ALT+RIGHT key on master row expands it", function() {
+        var grid = setup({ detailTemplate: "<input class='foo' />" });
+        grid.table.focus().press(kendo.keys.RIGHT, false, false, true);
+
+        ok(grid.items().first().find(".k-minus").length);
+    });
+
+    test("enter key on expanded master row collapse it", function() {
+        var grid = setup({ detailTemplate: "<input class='foo' />" });
+        grid.table.focus()
+            .press(kendo.keys.RIGHT, false, false, true)
+            .press(kendo.keys.LEFT, false, false, true);
+
+        ok(grid.items().first().find(".k-plus").length);
+    });
+
     test("esc key on focused button in column", function() {
         var grid = setup({
             columns: [ {
@@ -1039,6 +1080,30 @@
 
         ok(grid.lockedTable.find("tbody tr:eq(0)").hasClass("k-state-selected"));
         ok(grid.table.find("tbody tr:eq(0)").hasClass("k-state-selected"));
+    });
+
+    test("move to left in RTL mode", function() {
+        div.wrap('<div class="k-rtl"></div>');
+        var grid = setup();
+
+        grid.table.focus().press(kendo.keys.LEFT);
+        var cells = grid.table.find("tr:first>td");
+
+        ok(!cells.eq(0).hasClass("k-state-focused"));
+        ok(cells.eq(1).hasClass("k-state-focused"));
+        equal(grid.current()[0], cells[1]);
+    });
+
+    test("move to right in RTL mode", function() {
+        div.wrap('<div class="k-rtl"></div>');
+        var grid = setup();
+
+        grid.table.focus().press(kendo.keys.RIGHT);
+        var cells = grid.table.find("tr:first>td");
+
+        ok(cells.eq(0).hasClass("k-state-focused"));
+        ok(!cells.eq(1).hasClass("k-state-focused"));
+        equal(grid.current()[0], cells[0]);
     });
 })();
 
