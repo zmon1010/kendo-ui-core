@@ -4066,7 +4066,6 @@ var __meta__ = {
         _navigatable: function() {
             var that = this;
 
-            that.options.navigatable = true;
             if (!that.options.navigatable) {
                 return;
             }
@@ -7596,27 +7595,6 @@ var __meta__ = {
        return cell &&
            (cell.hasClass("k-edit-cell") ||
             cell.parent().hasClass("k-grid-edit-row"));
-   }
-
-   function tabNext(current, currentTable, dataTable, relatedRow, back) {
-       var isLocked = dataTable.length == 2;
-       var switchRow = true;
-       var next = back ? current.prevAll(DATA_CELL + ":first") : current.nextAll(":visible:first");
-
-       if (!next.length) {
-           next = current.parent();
-           if (isLocked) {
-               switchRow = (back && currentTable == dataTable[0]) || (!back && currentTable == dataTable[1]);
-               next = relatedRow(next);
-           }
-
-           if (switchRow) {
-               next = next[back ? "prevAll" : "nextAll"]("tr:not(.k-grouping-row):not(.k-detail-row):visible:first");
-           }
-           next = next.children(DATA_CELL + (back ? ":last" : ":first"));
-       }
-
-       return next;
    }
 
    function groupRowBuilder(colspan, level, text) {
