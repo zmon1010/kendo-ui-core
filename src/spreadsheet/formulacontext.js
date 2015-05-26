@@ -2,7 +2,6 @@
     define([ ], f);
 })(function() {
 
-
     var spreadsheet = kendo.spreadsheet;
     var Class = kendo.Class;
     var Ref = kendo.spreadsheet.Ref;
@@ -10,11 +9,11 @@
     var RangeRef = kendo.spreadsheet.RangeRef;
     var UnionRef = kendo.spreadsheet.UnionRef;
 
-    function FormulaContext(sheets) {
-        this.sheets = sheets;
-    }
+    var FormulaContext = kendo.Class.extend({
+        init: function (sheets) {
+            this.sheets = sheets;
+        },
 
-    FormulaContext.prototype = {
         getRefCells: function(ref) {
             if (ref instanceof CellRef) {
                 var sheet = this.sheet(ref);
@@ -87,7 +86,8 @@
         state: function(formula, value, ref) {
             return ;
         }
-    };
+
+    });
 
     spreadsheet.FormulaContext = FormulaContext;
     /*

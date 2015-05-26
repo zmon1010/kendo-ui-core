@@ -3,12 +3,11 @@
 })(function(){
 
 (function(kendo) {
-    function Range(rangeRef, sheet) {
-        this._sheet = sheet;
-        this._ref = rangeRef;
-    }
-
-    Range.prototype = {
+    var Range = kendo.Class.extend({
+        init: function(rangeRef, sheet) {
+            this._sheet = sheet;
+            this._ref = rangeRef;
+        },
         _property: function(list, value) {
             var ref = this._ref;
             if (value !== undefined) {
@@ -38,7 +37,7 @@
             this._sheet._mergedCells.push(this._ref);
             return this;
         }
-    };
+    });
 
     kendo.spreadsheet.Range = Range;
 })(kendo);

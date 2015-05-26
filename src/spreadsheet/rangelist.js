@@ -3,12 +3,14 @@
 })(function(){
 
 (function(kendo) {
-    function RangeTreeNode(level, value, left, right) {
-        this.level = level;
-        this.value = value;
-        this.left = left;
-        this.right = right;
-    }
+    var RangeTreeNode = kendo.Class.extend({
+        init: function(level, value, left, right) {
+            this.level = level;
+            this.value = value;
+            this.left = left;
+            this.right = right;
+        }
+    });
 
     var NilNode = new RangeTreeNode(0);
     NilNode.left = NilNode;
@@ -92,42 +94,65 @@
         return node;
     }
 
-    function Range(start, end, value) {
-        this.start = start;
-        this.end = end;
-        this.value = value;
-    }
+    var Range = kendo.Class.extend({
+        init: function(start, end, value) {
+            this.start = start;
+            this.end = end;
+            this.value = value;
+        },
 
-    Range.prototype.intersects = function(range) {
-        return range.start <= this.end && range.end >= this.start;
-    }
-
-    function RangeTree() {
-        this.root = NilNode;
-    }
-
-    RangeTree.prototype.insert = function(value) {
-        this.root = insert(this.root, value);
-    }
-
-    RangeTree.prototype.remove = function(value) {
-        this.root = remove(this.root, value);
-    };
-
-    RangeTree.prototype.findrange = function(value) {
-        var node = this.root;
-        while (node != NilNode) {
-            if (value < node.value.start) {
-                node = node.left;
-            } else if (value > node.value.end) {
-                node = node.right;
-            } else {
-                return node.value;
-            }
+        intersects: function(range) {
+            return range.start <= this.end && range.end >= this.start;
         }
+    });
 
-        return null;
-    };
+    var RangeTree = kendo.Class.extend({
+        init: function() {
+            this.root = NilNode;
+        },
+
+        insert: function(value) {
+            this.root = insert(this.root, value);
+        },
+
+        remove: function(value) {
+            this.root = remove(this.root, value);
+        },
+
+        findrange: function(value) {
+            var node = this.root;
+
+            while (node != NilNode) {
+                if (value < node.value.start) {
+                    node = node.left;
+                } else if (value > node.value.end) {
+                    node = node.right;
+                } else {
+                    return node.value;
+                }
+            }
+
+            return null;
+        },
+
+        values: function() {
+            var result = [];
+            values(this.root, result);
+            return result;
+        },
+
+        intersecting: function(start, end) {
+            var ranges = [];
+            intersecting(this.root, new Range(start, end), ranges);
+            return ranges;
+        },
+
+        map: function(callback) {
+            var tree = new RangeTree();
+            map(tree, this.root, callback);
+            return tree;
+        }
+    });
 
     function values(node, result) {
         if (node === NilNode) {
@@ -137,12 +162,6 @@
         values(node.left, result);
         result.push(node.value);
         values(node.right, result);
-    }
-
-    RangeTree.prototype.values = function() {
-        var result = [];
-        values(this.root, result);
-        return result;
     }
 
     function intersecting(node, range, ranges) {
@@ -165,12 +184,6 @@
         }
     }
 
-    RangeTree.prototype.intersecting = function(start, end) {
-        var ranges = [];
-        intersecting(this.root, new Range(start, end), ranges);
-        return ranges;
-    };
-
     function map(tree, root, callback) {
         if (root === NilNode) {
             return;
@@ -181,201 +194,203 @@
         map(tree, root.right, callback);
     }
 
-    RangeTree.prototype.map = function(callback) {
-        var tree = new RangeTree();
-        map(tree, this.root, callback);
-        return tree;
-    };
 
-    function RangeList(start, end, value) {
-        if (end == undefined) {
-            this.tree = start;
-        } else {
-            this.tree = new RangeTree();
-            this.tree.insert(new Range(start, end, value));
-        }
-    }
-
-    RangeList.prototype.values = function() {
-        return this.tree.values();
-    }
-
-    RangeList.prototype.map = function(callback) {
-        return new RangeList(this.tree.map(callback));
-    }
-
-    RangeList.prototype.intersecting = function(start, end) {
-        return this.tree.intersecting(start, end);
-    }
-
-    RangeList.prototype.insert = function(start, end, value) {
-        return this.tree.insert(new Range(start, end, value));
-    }
-
-    RangeList.prototype.value = function(start, end, value) {
-        if (value === undefined) {
-            if (end === undefined) {
-                end = start;
+    var RangeList = kendo.Class.extend({
+        init: function(start, end, value) {
+            if (end == undefined) {
+                this.tree = start;
+            } else {
+                this.tree = new RangeTree();
+                this.tree.insert(new Range(start, end, value));
             }
-            return this.intersecting(start, end)[0].value;
-        }
+        },
 
-        var ranges = this.tree.intersecting(start - 1, end + 1);
+        values: function() {
+            return this.tree.values();
+        },
 
-        if (ranges.length) {
-            var firstRange = ranges[0], lastRange = ranges[ranges.length - 1];
+        map: function(callback) {
+            return new RangeList(this.tree.map(callback));
+        },
 
-            if (firstRange.end < start) {
-                if (firstRange.value === value) {
-                    start = firstRange.start;
-                } else {
-                    ranges.shift();
+        intersecting: function(start, end) {
+            return this.tree.intersecting(start, end);
+        },
+
+        insert: function(start, end, value) {
+            return this.tree.insert(new Range(start, end, value));
+        },
+
+        value: function(start, end, value) {
+            if (value === undefined) {
+                if (end === undefined) {
+                    end = start;
                 }
+                return this.intersecting(start, end)[0].value;
             }
 
-            if (lastRange.start > end) {
-                if (lastRange.value === value) {
-                    end = lastRange.end;
-                } else {
-                    ranges.pop();
-                }
-            }
+            var ranges = this.tree.intersecting(start - 1, end + 1);
 
-            for (var i = 0, length = ranges.length; i < length; i++) {
-                var range = ranges[i];
-                var rangeValue = range.value;
-                var rangeStart = range.start;
-                var rangeEnd = range.end;
+            if (ranges.length) {
+                var firstRange = ranges[0], lastRange = ranges[ranges.length - 1];
 
-                this.tree.remove(range);
-
-                if (rangeStart < start) {
-                    if (rangeValue !== value) {
-                        this.insert(rangeStart, start - 1, rangeValue);
+                if (firstRange.end < start) {
+                    if (firstRange.value === value) {
+                        start = firstRange.start;
                     } else {
-                        start = rangeStart;
+                        ranges.shift();
                     }
                 }
 
-                if (rangeEnd > end) {
-                    if (rangeValue !== value) {
-                        this.insert(end + 1, rangeEnd, rangeValue);
+                if (lastRange.start > end) {
+                    if (lastRange.value === value) {
+                        end = lastRange.end;
                     } else {
-                        end = rangeEnd;
+                        ranges.pop();
+                    }
+                }
+
+                for (var i = 0, length = ranges.length; i < length; i++) {
+                    var range = ranges[i];
+                    var rangeValue = range.value;
+                    var rangeStart = range.start;
+                    var rangeEnd = range.end;
+
+                    this.tree.remove(range);
+
+                    if (rangeStart < start) {
+                        if (rangeValue !== value) {
+                            this.insert(rangeStart, start - 1, rangeValue);
+                        } else {
+                            start = rangeStart;
+                        }
+                    }
+
+                    if (rangeEnd > end) {
+                        if (rangeValue !== value) {
+                            this.insert(end + 1, rangeEnd, rangeValue);
+                        } else {
+                            end = rangeEnd;
+                        }
                     }
                 }
             }
-        }
 
-        this.insert(start, end, value);
-    }
+            this.insert(start, end, value);
+        },
 
-    RangeList.prototype.expandedValues = function(start, end) {
-        var ranges = this.intersecting(start, end);
-        var result = [];
+        expandedValues: function(start, end) {
+            var ranges = this.intersecting(start, end);
+            var result = [];
 
-        var rangeIndex = 0;
+            var rangeIndex = 0;
 
-        for (var i = start; i <= end; i++) {
-            if (ranges[rangeIndex].end < i) {
-                rangeIndex ++;
+            for (var i = start; i <= end; i++) {
+                if (ranges[rangeIndex].end < i) {
+                    rangeIndex ++;
+                }
+
+                result.push({ index: i - start, value: ranges[rangeIndex].value });
             }
 
-            result.push({ index: i - start, value: ranges[rangeIndex].value });
-        }
+            return result;
+        },
 
-        return result;
-    }
+        sortedIndices: function(start, end) {
+            var result = this.expandedValues(start, end);
+            result.sort(valueComparer);
+            return result;
+        },
+
+        sort: function(start, end, indices) {
+            if (this.intersecting(start, end).length === 1) {
+                // console.log("skipping");
+                return;
+            }
+
+            var values = this.expandedValues(start, end);
+
+            for (var i = 0, len = indices.length; i < len; i++) {
+                this.value(i + start, i + start, values[indices[i].index].value);
+            }
+        },
+
+        iterator: function(start, end) {
+            return new Iterator(this.intersecting(start, end));
+        }
+    });
 
     function valueComparer(a, b) { return a.value - b.value; }
 
-    RangeList.prototype.sortedIndices = function(start, end) {
-        var result = this.expandedValues(start, end);
-        result.sort(valueComparer);
-        return result;
-    }
 
-    RangeList.prototype.sort = function(start, end, indices) {
-        if (this.intersecting(start, end).length === 1) {
-            // console.log("skipping");
-            return;
-        }
+    var Iterator = kendo.Class.extend({
+        init: function(ranges) {
+            this.index = 0;
+            this.ranges = ranges;
+        },
 
-        var values = this.expandedValues(start, end);
-
-        for (var i = 0, len = indices.length; i < len; i++) {
-            this.value(i + start, i + start, values[indices[i].index].value);
-        }
-    }
-
-    function Iterator(ranges) {
-        this.index = 0;
-        this.ranges = ranges;
-    }
-
-    Iterator.prototype.at = function(index) {
-        while (this.ranges[this.index].end < index) {
-            this.index ++;
-        }
-
-        return this.ranges[this.index].value;
-    }
-
-    RangeList.prototype.iterator = function(start, end) {
-        return new Iterator(this.intersecting(start, end));
-    }
-
-    function SparseRangeList(start, end, value) {
-        this.tree = new RangeTree();
-        this.range = new Range(start, end, value);
-    }
-
-    SparseRangeList.prototype = Object.create(RangeList.prototype);
-
-    SparseRangeList.prototype.intersecting = function(start, end) {
-        var ranges = this.tree.intersecting(start, end);
-        var result = [];
-
-        if (!ranges.length) {
-            return [this.range];
-        }
-
-        for (var i = 0, len = ranges.length; i < len; i++) {
-            var range = ranges[i];
-            if (range.start > start) {
-                result.push(new Range(start, range.start - 1, this.range.value));
+        at: function(index) {
+            while (this.ranges[this.index].end < index) {
+                this.index ++;
             }
 
-            result.push(range);
-            start = range.end + 1;
+            return this.ranges[this.index].value;
         }
+    });
 
-        if (range.end < end) {
-            result.push(new Range(range.end + 1, end, this.range.value));
+    var SparseRangeList = RangeList.extend({
+        init: function(start, end, value) {
+            this.tree = new RangeTree();
+            this.range = new Range(start, end, value);
+        },
+
+        intersecting: function(start, end) {
+            var ranges = this.tree.intersecting(start, end);
+            var result = [];
+
+            if (!ranges.length) {
+                return [this.range];
+            }
+
+            for (var i = 0, len = ranges.length; i < len; i++) {
+                var range = ranges[i];
+                if (range.start > start) {
+                    result.push(new Range(start, range.start - 1, this.range.value));
+                }
+
+                result.push(range);
+                start = range.end + 1;
+            }
+
+            if (range.end < end) {
+                result.push(new Range(range.end + 1, end, this.range.value));
+            }
+
+            return result;
+        },
+
+        insert: function(start, end, value) {
+            if (value !== this.range.value) {
+                this.tree.insert(new Range(start, end, value));
+            }
+        },
+
+        lastRangeStart: function() {
+            var node = this.tree.root;
+
+            if (node === NilNode) {
+                return this.range.start;
+            }
+
+            while(node.right !== NilNode) {
+                node = node.right;
+            }
+
+            return node.value.end + 1;
         }
+    });
 
-        return result;
-    }
 
-    SparseRangeList.prototype.insert = function(start, end, value) {
-        if (value !== this.range.value) {
-            this.tree.insert(new Range(start, end, value));
-        }
-    }
-
-    SparseRangeList.prototype.lastRangeStart = function() {
-        var node = this.tree.root;
-
-        if (node === NilNode) {
-            return this.range.start;
-        }
-
-        while(node.right !== NilNode) {
-            node = node.right;
-        }
-
-        return node.value.end + 1;
-    }
     kendo.spreadsheet.RangeTree = RangeTree;
     kendo.spreadsheet.RangeList = RangeList;
     kendo.spreadsheet.SparseRangeList = SparseRangeList;

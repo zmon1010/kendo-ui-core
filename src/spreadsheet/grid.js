@@ -5,14 +5,14 @@
 (function(kendo) {
     var CellRef = kendo.spreadsheet.CellRef;
 
-    function Grid(rowCount, columnCount, rowHeight, columnWidth, fixed) {
-        this.rowCount = rowCount;
-        this.columnCount = columnCount;
-        this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth, fixed);
-        this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight, fixed);
-    }
+    var Grid = kendo.Class.extend({
+        init: function(rowCount, columnCount, rowHeight, columnWidth, fixed) {
+            this.rowCount = rowCount;
+            this.columnCount = columnCount;
+            this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth, fixed);
+            this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight, fixed);
+        },
 
-    Grid.prototype = {
         view: function(rectangle) {
             return {
                 rows: this._rows.visible(rectangle.top, rectangle.bottom),
@@ -73,7 +73,7 @@
                 callback(ci * this.rowCount + start, ci * this.rowCount + end);
             }
         }
-    };
+    });
 
     kendo.spreadsheet.Grid = Grid;
 })(kendo);
