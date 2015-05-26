@@ -200,7 +200,7 @@ test('resizable toolbar creates overflowPopup', function() {
     var toolbar = editor.toolbar;
     
     ok(toolbar.overflowPopup instanceof kendo.ui.Popup);
-    ok(toolbar.overflowPopup.element.is("ul.k-overflow-popup"));
+    ok(toolbar.overflowPopup.element.is("ul.k-editor-overflow-popup"));
 });
 
 test('click on "overflow" button does not open the overflowPopup if it is empty', function() {

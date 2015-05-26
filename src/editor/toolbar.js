@@ -115,7 +115,7 @@
         },
 
         _initOverflowPopup: function(ui) {
-            var popupTemplate = "<ul class='k-overflow-popup'></ul>";
+            var popupTemplate = "<ul class='k-editor-overflow-popup'></ul>";
 
             this.overflowPopup = $(popupTemplate).appendTo("body").kendoPopup({
                 anchor: ui,
