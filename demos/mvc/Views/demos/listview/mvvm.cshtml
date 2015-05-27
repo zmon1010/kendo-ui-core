@@ -1,6 +1,6 @@
 <div id="example">
-    <div class="demo-section k-header">
-        <div class="box-col" style="width: 420px;">
+    <div class="demo-section k-header wide">
+        <div>
             <h4>Update a record</h4>
             <div data-role="listview"
                  data-edit-template="edit-template"
@@ -10,19 +10,15 @@
                             events: {
                               save: onSave
                             }"
-                 style="width: 420px; height: 200px; overflow: auto"></div>
+                 style="height: 300px; overflow: auto"></div>
         </div>
-        <div class="box-col console-section">
+        <div style="padding-top: 2em;">
             <h4>Console</h4>
             <div class="console"></div>
         </div>
     </div>
     <script type="text/x-kendo-tmpl" id="template">
         <div class="product-view k-widget">
-            <div class="edit-buttons">
-                <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
-                <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
-            </div>
             <dl>
                 <dt>Product Name</dt>
                 <dd>#:ProductName#</dd>
@@ -33,15 +29,15 @@
                 <dt>Discontinued</dt>
                 <dd>#:Discontinued#</dd>
             </dl>
+            <div class="edit-buttons">
+                <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-edit"></span></a>
+                <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-delete"></span></a>
+            </div>
         </div>
     </script>
 
     <script type="text/x-kendo-tmpl" id="edit-template">
         <div class="product-view k-widget">
-            <div class="edit-buttons">
-                <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
-                <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
-            </div>
             <dl>
                 <dt>Product Name</dt>
                 <dd>
@@ -61,10 +57,14 @@
                 <dt>Discontinued</dt>
                 <dd><input type="checkbox" name="Discontinued" data-bind="checked:Discontinued"></dd>
             </dl>
+            <div class="edit-buttons">
+                <a class="k-button k-update-button" href="\\#"><span class="k-icon k-update"></span></a>
+                <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-cancel"></span></a>
+            </div>
         </div>
     </script>
-    <div class="box">
-        <div class="box-col" style="width: 420px;">
+    <div class="box wide">
+        <div class="box-col">
             <h4>Configuration</h4>
             <div>
                 <label><input type="checkbox" data-bind="checked: isVisible">Visible</label>
@@ -114,64 +114,91 @@
     });
     kendo.bind($("#example"), viewModel);
 </script>
- <style>
+<style>
+    .product-view
+    {
+        float: left;
+        width: 50%;
+        height: 300px;
+        box-sizing: border-box;
+        border-top: 0;
+        position: relative;
+    }
+    .product-view:nth-child(even) {
+        border-left-width: 0;
+    }
+    .product-view dl
+    {
+        margin: 10px 10px 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    .product-view dt, dd
+    {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        line-height: 24px;
+        font-size: 18px;
+    }
+    .product-view dt
+    {
+        font-size: 11px;
+        height: 16px;
+        line-height: 16px;
+        text-transform: uppercase;
+        opacity: 0.5;
+    }
+    
+    .product-view dd
+    {
+        height: 46px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+    }
+    
+    .product-view dd .k-widget,
+    .product-view dd .k-textbox {
+        font-size: 14px;
+    }
+    .k-listview
+    {
+        border-width: 1px 1px 1px 0;
+        padding: 0;
+        overflow: hidden;
+        min-height: 298px;
+    }
+    .edit-buttons
+    {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: right;
+        padding: 5px;
+        background-color: rgba(0,0,0,0.1);
+    }
+    span.k-invalid-msg
+    {
+        position: absolute;
+        margin-left: 6px;
+    }
+    
+    .k-add-button {
+        margin-bottom: 2em;
+    }
+    
+    @@media only screen and (max-width : 620px) {
+    
         .product-view
         {
-            float: left;
-            position: relative;
-            width: 400px;
-            margin: -1px -1px 0 0;
+            width: 100%;
         }
-        .product-view dl
-        {
-            margin: 10px 0;
-            padding: 0;
-            min-width: 0;
+        .product-view:nth-child(even) {
+            border-left-width: 1px;
         }
-        .product-view dt, dd
-        {
-            float: left;
-            margin: 0;
-            padding: 3px;
-            height: 32px;
-            width: 180px;
-            line-height: 32px;
-            overflow: hidden;
-        }
-        .product-view dt
-        {
-            clear: left;
-            padding: 3px 5px 3px 0;
-            text-align: right;
-            opacity: 0.6;
-            width: 100px;
-        }
-        .product-view .k-textbox {
-            width: auto;
-        }
-        .edit-buttons
-        {
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 160px;
-            padding: 2px 2px 0 3px;
-            background-color: rgba(0,0,0,0.1);
-        }
-        .edit-buttons .k-button
-        {
-            display: block;
-            clear: both;
-            margin-bottom: 3px;
-        }
-        .k-pager-wrap
-        {
-            border-top: 0;
-        }
-        span.k-invalid-msg
-        {
-            position: absolute;
-            margin-left: 6px;
-        }
-    </style>
+    }
+</style>
 </div>

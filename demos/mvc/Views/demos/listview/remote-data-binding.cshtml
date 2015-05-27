@@ -1,6 +1,6 @@
 <div id="example">
 
-    <div class="demo-section">
+    <div class="demo-section k-header wide">
         <div id="listView"></div>
         <div id="pager" class="k-pager-wrap"></div>
     </div>
@@ -22,7 +22,7 @@
                         dataType: "jsonp"
                     }
                 },
-                pageSize: 15
+                pageSize: 21
             });
 
             $("#pager").kendoPager({
@@ -38,15 +38,11 @@
 
     <style>
         .demo-section {
-            margin: 20px auto;
-            border: 0;
-            background: none;
-            width: 577px;
+            max-width: 860px;
         }
         #listView {
-            padding: 10px;
+            padding: 10px 5px;
             margin-bottom: -1px;
-            min-width: 555px;
             min-height: 510px;
         }
         .product {
@@ -54,7 +50,7 @@
             position: relative;
             width: 111px;
             height: 170px;
-            margin: 0;
+            margin: 0 5px;
             padding: 0;
         }
         .product img {
