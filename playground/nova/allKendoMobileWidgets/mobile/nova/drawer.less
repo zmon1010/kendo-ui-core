@@ -1,2 +1,34 @@
 @import "../common/drawer.less";
 @import "base.less";
+
+.km-nova .km-drawer .km-scroll-wrapper,
+.km-nova .km-drawer .km-scroll-container {
+    height: 100%;
+ }
+
+ .km-nova .km-drawer-vertical-tabstrip{
+    width: 4.86rem;    
+ }
+
+.km-nova .km-drawer .km-vertical-tabstrip {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.km-nova .km-vertical-tabstrip .km-button {
+    display: block;
+    width: 100%;
+    font-size: 1em;
+    padding: 0.47em 0;
+}
+
+.km-nova .km-vertical-tabstrip .km-button.km-state-active:before {
+    content: "";
+    width: 6px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
