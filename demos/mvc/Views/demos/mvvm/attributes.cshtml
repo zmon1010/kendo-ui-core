@@ -1,10 +1,12 @@
 <div id="example">
     <div class="demo-section k-header">
         <img data-bind="attr: { src: imageSrc, alt: imageAlt, title: imageTitle }" />
-
-        <label><select data-text-field="name" data-value-field="url" data-bind="source: food, value: imageSrc" ></select>src:</label>
-        <label><input type="textbox" data-bind="value: imageAlt" class="k-textbox" />alt:</label>
-        <label><input type="textbox" data-bind="value: imageTitle" class="k-textbox" />title:</label>
+        <h4 style="padding-top: 2em;">Src</h4>
+        <select data-text-field="name" data-value-field="url" data-bind="source: food, value: imageSrc" style="width: 100%;" ></select>
+        <h4 style="padding-top: 2em;">Alt</h4>
+        <input type="textbox" data-bind="value: imageAlt" class="k-textbox" style="width: 100%;" />
+        <h4 style="padding-top: 2em;">Title</h4>
+        <input type="textbox" data-bind="value: imageTitle" class="k-textbox" style="width: 100%;" />
     </div>
     <script>
         $(document).ready(function() {
@@ -24,23 +26,23 @@
             kendo.bind($("#example"), viewModel);
         });
     </script>
-    <div class="box" style="width: 500px;">
+    <div class="box wide">
     &lt;img src="<span data-bind='text: imageSrc'></span>" alt="<span data-bind='text: imageAlt'></span>" title="<span data-bind='text: imageTitle'></span>" /&gt;
     </div>
-    <div class="box">
+    <div class="box wide">
         <h4>View source code:</h4>
         <pre class="prettyprint">
-&lt;div id=&quot;example&quot;&gt;
+&lt;div class=&quot;demo-section k-header&quot;&gt;
     &lt;img data-bind=&quot;attr: { src: imageSrc, alt: imageAlt, title: imageTitle }&quot; /&gt;
-
-    &lt;label&gt;src:&lt;select data-text-field=&quot;name&quot; data-value-field=&quot;url&quot; data-bind=&quot;source: food, value: imageSrc&quot; &gt;&lt;/select&gt;&lt;/label&gt;
-    &lt;label&gt;alt:&lt;input type=&quot;textbox&quot; data-bind=&quot;value: imageAlt&quot; /&gt;&lt;/label&gt;
-    &lt;label&gt;title:&lt;input type=&quot;textbox&quot; data-bind=&quot;value: imageTitle&quot; /&gt;&lt;/label&gt;
+    &lt;h4 style=&quot;padding-top: 2em;&quot;&gt;Src&lt;/h4&gt;
+    &lt;select data-text-field=&quot;name&quot; data-value-field=&quot;url&quot; data-bind=&quot;source: food, value: imageSrc&quot; style=&quot;width: 100%;&quot; &gt;&lt;/select&gt;
+    &lt;h4 style=&quot;padding-top: 2em;&quot;&gt;Alt&lt;/h4&gt;
+    &lt;input type=&quot;textbox&quot; data-bind=&quot;value: imageAlt&quot; class=&quot;k-textbox&quot; style=&quot;width: 100%;&quot; /&gt;
+    &lt;h4 style=&quot;padding-top: 2em;&quot;&gt;Title&lt;/h4&gt;
+    &lt;input type=&quot;textbox&quot; data-bind=&quot;value: imageTitle&quot; class=&quot;k-textbox&quot; style=&quot;width: 100%;&quot; /&gt;
 &lt;/div&gt;
         </pre>
-    </div>
-    <div class="box">
-        <h4>View model source code:</h4>
+        <h4 style="padding-top: 2em;">View model source code:</h4>
         <pre class="prettyprint">
 var viewModel = kendo.observable({
     imageSrc: null,
@@ -59,42 +61,18 @@ kendo.bind($(&quot;#example&quot;), viewModel);
         </pre>
     </div>
     <style>
-        .demo-section
-        {
-            overflow: hidden;
-            width: 500px;
-        }
-
-        #example > div > label
-        {
-            height: 30px;
-            line-height: 30px;
-            vertical-align: middle;
-        }
-
-        #example > div > label > input,
-        #example > div > label > select
-        {
-            float: right;
-            width: 200px;
-        }
-
-        #example > div > label > select
-        {
-            width: 207px;
-        }
-
-        img {
-            float: left;
-            margin-right: 10px;
-        }
-
-        label {
+        .demo-section img {
+            border-radius: 100px;
+            border: 1px solid #ccc;
             display: block;
+            margin: 0 auto;
         }
-
-        #example pre {
-            font-size: 12px;
+        
+        .prettyprint {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            overflow: auto;
+            padding: 5px;
         }
     </style>
 </div>

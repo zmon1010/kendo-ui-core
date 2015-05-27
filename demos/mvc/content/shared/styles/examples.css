@@ -2257,10 +2257,11 @@ a.footer-links:hover,
   width: 24px;
   height: 3px;
   background-color: #333;
-  -webkit-transition-duration: .1s;
-  -moz-transition-duration: .1s;
-  -o-transition-duration: .1s;
-  transition-duration: .1s;
+  -webkit-transition: all 0.3s ease .2s;
+  -moz-transition: all 0.3s ease .2s;
+  -ms-transition: all 0.3s ease .2s;
+  -o-transition: all 0.3s ease .2s;
+  transition: all 0.3s ease .2s;
 }
 
 #sidebar-toggle span:before {

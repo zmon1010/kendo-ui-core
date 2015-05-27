@@ -1,20 +1,21 @@
 <div id="example">
     <div id="form-container">
         <div class="demo-section k-header">
-            Select Product: <select data-role="dropdownlist" data-option-label="Select product"
+            <h4>Select Product</h4>
+            <select data-role="dropdownlist" data-option-label="Select product"
                              data-value-field="ProductID" data-text-field="ProductName"
-                             data-bind="source: productsSource, value: selectedProduct"></select>
+                             data-bind="source: productsSource, value: selectedProduct" style="width: 100%;"></select>
 
-            <button data-bind="click: save, enabled: hasChanges" class="k-button">Submit All Changes</button>
+            <button data-bind="click: save, enabled: hasChanges" class="k-button k-primary">Submit All Changes</button>
         </div>
         <div class="demo-section k-header product-info" data-bind="visible: showForm">
             <ul>
-                <li><label>ID</label> <span data-bind="text:selectedProduct.ProductID, events: { change: change }"></span></li>
-                <li><label>Name</label> <input type="text" class="k-textbox" id="products" data-bind="value: selectedProduct.ProductName, events: { change: change }" /></li>
-                <li><label>UnitPrice</label> <input type="text" data-role="numerictextbox" data-bind="value: selectedProduct.UnitPrice, events: { change: change }" /></li>
+                <li><h4>ID: <span data-bind="text:selectedProduct.ProductID, events: { change: change }"></span></h4></li>
+                <li><h4>Name</h4> <input type="text" class="k-textbox" id="products" data-bind="value: selectedProduct.ProductName, events: { change: change }" style="width: 100%;" /></li>
+                <li><h4>UnitPrice</h4> <input type="text" data-role="numerictextbox" data-bind="value: selectedProduct.UnitPrice, events: { change: change }" style="width: 100%;" /></li>
             </ul>
 
-            <button data-bind="click: remove" class="k-button">Delete Product</button>
+            <button data-bind="click: remove" class="k-button k-primary">Delete Product</button>
 
         </div>
     </div>
@@ -77,30 +78,32 @@
             kendo.bind($("#form-container"), viewModel);
         });
     </script>
-    <div class="box">
+    <div class="box wide">
         <h4>View source code:</h4>
         <pre class="prettyprint">
-&lt;div id="form-container"&gt;
-    &lt;div class="selector"&gt;
-        Select Product: &lt;select data-role="dropdownlist" data-value-field="ProductID" data-text-field="ProductName"
-                         data-bind="source: productsSource, value: selectedProduct"&gt;&lt;/select&gt;
 
-        &lt;button data-bind="click: save, enabled: hasChanges"&gt;Publish All Changes&lt;/button&gt;
+&lt;div id=&quot;form-container&quot;&gt;
+    &lt;div class=&quot;demo-section k-header&quot;&gt;
+        &lt;h4&gt;Select Product&lt;/h4&gt;
+        &lt;select data-role=&quot;dropdownlist&quot; data-option-label=&quot;Select product&quot;
+                         data-value-field=&quot;ProductID&quot; data-text-field=&quot;ProductName&quot;
+                         data-bind=&quot;source: productsSource, value: selectedProduct&quot; style=&quot;width: 100%;&quot;&gt;&lt;/select&gt;
+
+        &lt;button data-bind=&quot;click: save, enabled: hasChanges&quot; class=&quot;k-button k-primary&quot;&gt;Submit All Changes&lt;/button&gt;
     &lt;/div&gt;
-    &lt;div class="form" data-bind="visible: showForm"&gt;
+    &lt;div class=&quot;demo-section k-header product-info&quot; data-bind=&quot;visible: showForm&quot;&gt;
         &lt;ul&gt;
-            &lt;li>&lt;label>ID&lt;/label&gt; &lt;span data-bind="text:selectedProduct.ProductID, events: { change: change }"&gt;&lt;/span>&lt;/li>
-            &lt;li>&lt;label>Name&lt;/label&gt; &lt;input type="text" class="k-textbox" id="products" data-bind="value: selectedProduct.ProductName, events: { change: change }" /&gt;&lt;/li&gt;
-            &lt;li>&lt;label>UnitPrice&lt;/label> &lt;input type="text" data-role="numerictextbox" data-bind="value: selectedProduct.UnitPrice, events: { change: change }" /&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;h4&gt;ID: &lt;span data-bind=&quot;text:selectedProduct.ProductID, events: { change: change }&quot;&gt;&lt;/span&gt;&lt;/h4&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;h4&gt;Name&lt;/h4&gt; &lt;input type=&quot;text&quot; class=&quot;k-textbox&quot; id=&quot;products&quot; data-bind=&quot;value: selectedProduct.ProductName, events: { change: change }&quot; style=&quot;width: 100%;&quot; /&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;h4&gt;UnitPrice&lt;/h4&gt; &lt;input type=&quot;text&quot; data-role=&quot;numerictextbox&quot; data-bind=&quot;value: selectedProduct.UnitPrice, events: { change: change }&quot; style=&quot;width: 100%;&quot; /&gt;&lt;/li&gt;
         &lt;/ul&gt;
 
-        &lt;button data-bind="click: remove">Delete Product&lt;/button&gt;
+        &lt;button data-bind=&quot;click: remove&quot; class=&quot;k-button k-primary&quot;&gt;Delete Product&lt;/button&gt;
+
     &lt;/div&gt;
 &lt;/div&gt;
         </pre>
-    </div>
-    <div class="box">
-        <h4>View model source code:</h4>
+        <h4 style="padding-top: 2em;">View model source code:</h4>
         <pre class="prettyprint">
 var viewModel = kendo.observable({
     productsSource: new kendo.data.DataSource({
@@ -167,18 +170,23 @@ kendo.bind($("#form-container"), viewModel);
         }
 
         .demo-section li {
-          padding-bottom: 5px;
+          padding-bottom: 1em;
           list-style: none;
-        }
-
-        .demo-section {
-           width: 600px;
-        }
-        .demo-section button {
-           float: right;
         }
         .product-info {
         	min-height: 160px;
+        }
+        
+        .demo-section .k-button {
+          display: block;
+          margin: 30px auto 0;
+        }
+        
+        .prettyprint {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            overflow: auto;
+            padding: 5px;
         }
     </style>
 </div>

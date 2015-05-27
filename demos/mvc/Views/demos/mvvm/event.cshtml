@@ -15,20 +15,18 @@
             kendo.bind($("#example"), viewModel);
         });
     </script>
-    <div class="box">
+    <div class="box wide">
         <h4>Events log:</h4>
         <div class="console"></div>
     </div>
-    <div class="box">
+    <div class="box wide">
         <h4>View source code</h4>
 <pre class="prettyprint">
 &lt;div id=&quot;example&quot;&gt;
     &lt;button data-bind=&quot;events:{ click: listener, dblclick: listener, mouseover: listener, mouseout: listener }&quot;&gt;Button&lt;/button&gt;
 &lt;/div&gt;
 </pre>
-    </div>
-    <div class="box">
-        <h4>View model source code</h4>
+        <h4 style="padding-top: 2em;">View model source code</h4>
 <pre class="prettyprint">
 var viewModel = kendo.observable({
     listener: function(e) {
@@ -40,13 +38,16 @@ kendo.bind($(&quot;#example&quot;), viewModel);
 </pre>
     </div>
     <style>
-        .demo-section {
-        	width: 250px;
-        	text-align: center;
-        }
-        #example button {
+        .demo-section button {
             width: 200px;
             height: 60px;
+        }
+
+        .prettyprint {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            overflow: auto;
+            padding: 5px;
         }
     </style>
 </div>

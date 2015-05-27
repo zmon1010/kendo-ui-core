@@ -1,16 +1,54 @@
 <div id="example">
-    <table class="metrotable">
-        <tr>
-            <th>Element</th>
-            <th>Current view model state</th>
-        </tr>
-        <tr>
-            <td>
-                <input type="text" data-bind="value: textValue" class="k-textbox" />
-                <h4>Text </h4>
-            </td>
-            <td rowspan="8" style="background-color: #efefef;">
-<pre>
+    <div class="demo-section k-header wide">
+        <div>
+            <ul class="fieldlist">
+                 <li><h4>Text</h4> <input type="text" data-bind="value: textValue" class="k-textbox" /></li>
+                 <li><h4>Text with update on keyup event</h4> <input type="text" data-value-update="keyup" data-bind="value: textValue" class="k-textbox" /></li>
+                 <li><h4>Textarea</h4> <textarea data-bind="value: textareaValue" class="k-textbox" style="height: 40px; width: 140px;"></textarea></li>
+                 <li><h4>Checkbox</h4>
+                     <label>
+                         <input type="checkbox" data-bind="checked: checkboxValue" />Check
+                     </label>
+                 </li>
+            </ul>
+        </div>
+        <div>
+            <ul class="fieldlist">
+                 <li><h4>Radio</h4>
+                     <label>
+                         <input type="radio" name="fruit" value="Apple"
+                                data-bind="checked: radioValue" />Apple
+                     </label>
+                     <label>
+                         <input type="radio" name="fruit" value="Banana"
+                                data-bind="checked: radioValue" />Banana
+                     </label>
+                     <label>
+                         <input type="radio" name="fruit" value="Orange"
+                                data-bind="checked: radioValue" />Orange
+                     </label>
+                 </li>
+                 <li><h4>Checkbox list</h4>
+                     <label>
+                         <input type="checkbox" value="Apple"
+                                data-bind="checked: checkboxListValue" />Apple
+                     </label>
+                     <label>
+                         <input type="checkbox" value="Banana"
+                                data-bind="checked: checkboxListValue" />Banana
+                     </label>
+                     <label>
+                         <input type="checkbox" value="Orange"
+                                data-bind="checked: checkboxListValue" />Orange
+                     </label>
+                 </li>
+                 <li><h4>Select</h4> <select data-bind="source: fruits, value: selectValue" style="width: 147px;"></select></li>
+                 <li><h4>Multiple select</h4> <select multiple data-bind="source: fruits, value: multipleSelectValue" style="width: 147px;"></select></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Current view model state</h4>
+            <pre class="prettyprint">
 {
     textValue: <span data-bind="text: textValue"></span>,
     textareaValue: <span data-bind="text: textareaValue"></span>,
@@ -20,77 +58,10 @@
     selectValue: <span data-bind="text: selectValue"></span>,
     multipleSelectValue: [<span data-bind="text: displayMultipleSelectValue"></span>]
 }
-</pre>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="text" data-value-update="keyup" data-bind="value: textValue" class="k-textbox" />
-                <h4>Text with update on keyup event </h4>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <textarea data-bind="value: textareaValue" class="k-textbox" style="height: 40px; width: 140px;"></textarea>
-                <h4>Textarea </h4>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label>
-                    <input type="checkbox"
-                           data-bind="checked: checkboxValue" />Check
-                </label>
-                <h4>Checkbox</h4>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label>
-                    <input type="radio" name="fruit" value="Apple"
-                           data-bind="checked: radioValue" />Apple
-                </label>
-                <label>
-                    <input type="radio" name="fruit" value="Banana"
-                           data-bind="checked: radioValue" />Banana
-                </label>
-                <label>
-                    <input type="radio" name="fruit" value="Orange"
-                           data-bind="checked: radioValue" />Orange
-                </label>
-                <h4>Radio</h4>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label>
-                    <input type="checkbox" value="Apple"
-                           data-bind="checked: checkboxListValue" />Apple
-                </label>
-                <label>
-                    <input type="checkbox" value="Banana"
-                           data-bind="checked: checkboxListValue" />Banana
-                </label>
-                <label>
-                    <input type="checkbox" value="Orange"
-                           data-bind="checked: checkboxListValue" />Orange
-                </label>
-                <h4>Checkbox list</h4>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <select data-bind="source: fruits, value: selectValue" style="width: 147px;"></select>
-                <h4>Select</h4>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <select multiple data-bind="source: fruits, value: multipleSelectValue" style="width: 147px;"></select>
-                <h4>Multiple select</h4>
-            </td>
-        </tr>
-    </table>
+            </pre>
+        </div>
+    </div>
+    
     <script>
         $(document).ready(function() {
             var viewModel = kendo.observable({
@@ -110,82 +81,79 @@
                 }
             });
 
-            kendo.bind($("table"), viewModel);
+            kendo.bind($("div.demo-section"), viewModel);
         });
     </script>
-    <div class="box">
+    <div class="box wide">
         <h4>View source code:</h4>
         <div class="code-details">
 <pre class="prettyprint">
-&lt;table&gt;
-    &lt;tr&gt;
-        &lt;th&gt;Element&lt;/th&gt;
-        &lt;th&gt;Current view model state&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;
-            &lt;h4&gt;Text&lt;/h4&gt;
-            &lt;input type=&quot;text&quot; data-bind=&quot;value: textValue&quot; /&gt;
-        &lt;/td&gt;
-        &lt;td rowspan=&quot;6&quot;&gt;
-&lt;pre&gt;
+    &lt;div class=&quot;demo-section k-header wide&quot;&gt;
+        &lt;div&gt;
+            &lt;ul class=&quot;fieldlist&quot;&gt;
+                 &lt;li&gt;&lt;h4&gt;Text&lt;/h4&gt; &lt;input type=&quot;text&quot; data-bind=&quot;value: textValue&quot; class=&quot;k-textbox&quot; /&gt;&lt;/li&gt;
+                 &lt;li&gt;&lt;h4&gt;Text with update on keyup event&lt;/h4&gt; &lt;input type=&quot;text&quot; data-value-update=&quot;keyup&quot; data-bind=&quot;value: textValue&quot; class=&quot;k-textbox&quot; /&gt;&lt;/li&gt;
+                 &lt;li&gt;&lt;h4&gt;Textarea&lt;/h4&gt; &lt;textarea data-bind=&quot;value: textareaValue&quot; class=&quot;k-textbox&quot; style=&quot;height: 40px; width: 140px;&quot;&gt;&lt;/textarea&gt;&lt;/li&gt;
+                 &lt;li&gt;&lt;h4&gt;Checkbox&lt;/h4&gt;
+                     &lt;label&gt;
+                         &lt;input type=&quot;checkbox&quot; data-bind=&quot;checked: checkboxValue&quot; /&gt;Check
+                     &lt;/label&gt;
+                 &lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;ul class=&quot;fieldlist&quot;&gt;
+                 &lt;li&gt;&lt;h4&gt;Radio&lt;/h4&gt;
+                     &lt;label&gt;
+                         &lt;input type=&quot;radio&quot; name=&quot;fruit&quot; value=&quot;Apple&quot;
+                                data-bind=&quot;checked: radioValue&quot; /&gt;Apple
+                     &lt;/label&gt;
+                     &lt;label&gt;
+                         &lt;input type=&quot;radio&quot; name=&quot;fruit&quot; value=&quot;Banana&quot;
+                                data-bind=&quot;checked: radioValue&quot; /&gt;Banana
+                     &lt;/label&gt;
+                     &lt;label&gt;
+                         &lt;input type=&quot;radio&quot; name=&quot;fruit&quot; value=&quot;Orange&quot;
+                                data-bind=&quot;checked: radioValue&quot; /&gt;Orange
+                     &lt;/label&gt;
+                 &lt;/li&gt;
+                 &lt;li&gt;&lt;h4&gt;Checkbox list&lt;/h4&gt;
+                     &lt;label&gt;
+                         &lt;input type=&quot;checkbox&quot; value=&quot;Apple&quot;
+                                data-bind=&quot;checked: checkboxListValue&quot; /&gt;Apple
+                     &lt;/label&gt;
+                     &lt;label&gt;
+                         &lt;input type=&quot;checkbox&quot; value=&quot;Banana&quot;
+                                data-bind=&quot;checked: checkboxListValue&quot; /&gt;Banana
+                     &lt;/label&gt;
+                     &lt;label&gt;
+                         &lt;input type=&quot;checkbox&quot; value=&quot;Orange&quot;
+                                data-bind=&quot;checked: checkboxListValue&quot; /&gt;Orange
+                     &lt;/label&gt;
+                 &lt;/li&gt;
+                 &lt;li&gt;&lt;h4&gt;Select&lt;/h4&gt; &lt;select data-bind=&quot;source: fruits, value: selectValue&quot; style=&quot;width: 147px;&quot;&gt;&lt;/select&gt;&lt;/li&gt;
+                 &lt;li&gt;&lt;h4&gt;Multiple select&lt;/h4&gt; &lt;select multiple data-bind=&quot;source: fruits, value: multipleSelectValue&quot; style=&quot;width: 147px;&quot;&gt;&lt;/select&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;h4&gt;Current view model state&lt;/h4&gt;
+            &lt;pre&gt;
 {
     textValue: &lt;span data-bind=&quot;text: textValue&quot;&gt;&lt;/span&gt;,
+    textareaValue: &lt;span data-bind=&quot;text: textareaValue&quot;&gt;&lt;/span&gt;,
     checkboxValue: &lt;span data-bind=&quot;text: checkboxValue&quot;&gt;&lt;/span&gt;,
     radioValue: &lt;span data-bind=&quot;text: radioValue&quot;&gt;&lt;/span&gt;,
     checkBoxListValue: [&lt;span data-bind=&quot;text: displayCheckBoxListValue&quot;&gt;&lt;/span&gt;],
     selectValue: &lt;span data-bind=&quot;text: selectValue&quot;&gt;&lt;/span&gt;,
     multipleSelectValue: [&lt;span data-bind=&quot;text: displayMultipleSelectValue&quot;&gt;&lt;/span&gt;]
 }
-&lt;/pre&gt;
-        &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;
-            &lt;h4&gt;Textarea &lt;/h4&gt;
-            &lt;textarea data-bind=&quot;value: textareaValue&quot;&gt;&lt;/textarea&gt;
-        &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;
-            &lt;h4&gt;Checkbox&lt;/h4&gt;
-            &lt;input type=&quot;checkbox&quot; data-bind=&quot;checked: checkboxValue&quot; /&gt;
-        &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;
-            &lt;h4&gt;Radio&lt;/h4&gt;
-            &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;fruit&quot; value=&quot;Apple&quot; data-bind=&quot;checked: radioValue&quot; /&gt;Apple&lt;/label&gt;
-            &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;fruit&quot; value=&quot;Banana&quot; data-bind=&quot;checked: radioValue&quot; /&gt;Banana&lt;/label&gt;
-            &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;fruit&quot; value=&quot;Orange&quot; data-bind=&quot;checked: radioValue&quot; /&gt;Orange&lt;/label&gt;
-        &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;
-            &lt;h4&gt;Checkbox list&lt;/h4&gt;
-            &lt;label&gt;&lt;input type=&quot;checkbox&quot; value=&quot;Apple&quot; data-bind=&quot;checked: checkboxListValue&quot; /&gt;Apple&lt;/label&gt;
-            &lt;label&gt;&lt;input type=&quot;checkbox&quot; value=&quot;Banana&quot; data-bind=&quot;checked: checkboxListValue&quot; /&gt;Banana&lt;/label&gt;
-            &lt;label&gt;&lt;input type=&quot;checkbox&quot; value=&quot;Orange&quot; data-bind=&quot;checked: checkboxListValue&quot; /&gt;Orange&lt;/label&gt;
-        &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;
-            &lt;h4&gt;Select&lt;/h4&gt;
-            &lt;select data-bind=&quot;source: fruits, value: selectValue&quot;&gt;&lt;/select&gt;
-        &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;
-            &lt;h4&gt;Multiple select&lt;/h4&gt;
-            &lt;select multiple data-bind=&quot;source: fruits, value: multipleSelectValue&quot;&gt;&lt;/select&gt;
-        &lt;/td&gt;
-    &lt;/tr&gt;
-&lt;/table&gt;
+            &lt;/pre&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 </pre>
         </div>
-    </div>
-    <div class="box">
-        <h4>View model source code:</h4>
+
+        <h4 style="padding-top: 2em;">View model source code:</h4>
         <div class="code-details">
 <pre class="prettyprint">
 var viewModel = kendo.observable({
@@ -205,64 +173,31 @@ var viewModel = kendo.observable({
     }
 });
 
-kendo.bind($(&quot;table&quot;), viewModel);
+kendo.bind($(&quot;div.demo-section&quot;), viewModel);
 </pre>
         </div>
     </div>
-    <style>
-        .metrotable {
-            table-layout: fixed;
-            width: 100%;
-        }
-
-        .metrotable > tbody > tr > td {
-            padding: 5px 5px 5px 0;
-            font-size: 1em;
-        }
-
-        .metrotable td > input,
-        .metrotable td > textarea,
-        .metrotable td > label,
-        .metrotable td > select
-        {
-            float: right;
-            clear: right;
-        }
-
-        .metrotable td > label
-        {
-            text-align: left;
-            width: 150px;
-        }
-
-        .metrotable td > .k-slider
-        {
-            margin-bottom: 10px;
-        }
-
-        .metrotable > tbody > tr > th {
-            border-bottom: 1px solid #CCCCCC;
-            color: #787878;
-            font-size: 1.4em;
-            font-weight: lighter;
-            padding: 0 1em 0 0;
-            text-align: left;
-        }
-
-        td h4 {
-            margin:0;
-            font-weight: normal;
-        }
-
-        td label {
+    <style>      
+        .demo-section > div {
             float: left;
-            clear: left;
+            margin-bottom: 2em;
+        }
+        .fieldlist {
+            margin: 0 3em 0 0;
+            padding: 0;
         }
 
-        td pre {
-            font-size: 12px;
-            margin-left: 50px;
-            width: 300px;
+        .fieldlist li {
+            list-style: none;
+            padding-bottom: 1.5em;
+            text-align: left;
+        }
+
+        .prettyprint {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            overflow: auto;
+            padding: 5px;
         }
     </style>
 </div>
