@@ -5432,6 +5432,11 @@ var __meta__ = {
                             filterMenu.destroy();
                         }
 
+                        filterMenu = cell.data("kendoFilterMultiCheck");
+                        if (filterMenu) {
+                           filterMenu.destroy();
+                        }
+
                         var columnFilterable = columns[idx].filterable;
 
                         var options = extend({},

@@ -1,19 +1,28 @@
 (function() {
     var Grid = kendo.ui.Grid,
         table,
+        div,
         DataSource = kendo.data.DataSource;
 
     module("grid initialization", {
         setup: function() {
             kendo.ns = "kendo-";
             table = document.createElement("table");
+            div = document.createElement("div");
             QUnit.fixture[0].appendChild(table);
+            QUnit.fixture[0].appendChild(div);
         },
         teardown: function() {
             var component = $(table).data("kendoGrid");
             if (component) {
                 component.destroy();
             }
+
+            component = $(div).data("kendoGrid");
+            if (component) {
+                component.destroy();
+            }
+
             kendo.destroy(QUnit.fixture);
             kendo.ns = "";
         }
@@ -2238,6 +2247,22 @@
 
         equal(trs.last().find("th").eq(2).attr("data-kendo-index"), "4");
         equal(trs.last().find("th").eq(2).attr("data-kendo-field"), "DailySales");
+    });
+
+    test("MultiCheck menu is destroyed when dataSource is changed", 1, function() {
+        var grid = new Grid(div, {
+            dataSource: [{ foo: 1, bar: "bar"}],
+            filterable:true,
+            columns: [
+                { field: "foo", filterable: {multi: true}  }
+            ]
+        });
+        debugger;
+        var multi = grid.thead.find("th").data("kendoFilterMultiCheck");
+        var syncSpy = spy(multi, "destroy");
+
+        grid.setDataSource(new kendo.data.DataSource());
+        equal(syncSpy.calls("destroy"), 1);
     });
 
 })();
