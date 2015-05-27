@@ -38,9 +38,13 @@
     /* -----[ Formula ]----- */
 
     var Formula = Class.extend({
-        init: function Formula(refs, handler){
+        init: function Formula(refs, handler, printer){
             this.refs = refs;
             this.handler = handler;
+            this.print = printer;
+        },
+        clone: function() {
+            return new Formula(this.refs, this.handler, this.print);
         },
         exec: function(SS, sheet, row, col, callback) {
             var formula = this;

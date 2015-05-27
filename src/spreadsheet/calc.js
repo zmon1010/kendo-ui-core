@@ -70,15 +70,22 @@
     }
 
     function parse(sheet, row, col, input) {
-        var refIndex = 0;
+        var refs = [];
 
         if (typeof input == "string") {
             input = TokenStream(InputStream(input));
         }
         return {
             type: "exp",
-            ast: parseExpression(true)
+            ast: parseExpression(true),
+            refs: refs
         };
+
+        function addReference(ref) {
+            ref.index = refs.length;
+            refs.push(ref);
+            return ref;
+        }
 
         function skip(type, value) {
             if (is(type, value)) {
@@ -110,14 +117,14 @@
             );
         }
 
-        function parseSymbol(tok, addRefIndex) {
+        function parseSymbol(tok, addRef) {
             if (tok.upper == "TRUE" || tok.upper == "FALSE") {
                 return tok.upper == "TRUE" ? TRUE : FALSE;
             }
             var ref = parseReference(tok.value);
             if (ref) {
-                if (addRefIndex) {
-                    ref.index = refIndex++;
+                if (addRef) {
+                    addReference(ref);
                 }
                 if (ref.sheet == null) {
                     ref.sheet = sheet;
@@ -260,9 +267,10 @@
                         if (bottomRight.hasSheet() && topLeft.sheet != bottomRight.sheet) {
                             input.croak("Invalid range");
                         } else {
-                            var ref = new spreadsheet.RangeRef(topLeft, bottomRight).setSheet(topLeft.sheet, topLeft.hasSheet());
-                            ref.index = refIndex++;
-                            return ref;
+                            return addReference(
+                                new spreadsheet.RangeRef(topLeft, bottomRight)
+                                    .setSheet(topLeft.sheet, topLeft.hasSheet())
+                            );
                         }
                     }
                 }
@@ -307,8 +315,7 @@
     }
 
     function makePrinter(exp) {
-        var code = print(exp.ast, 0);
-        return new Function("row", "col", "'use strict'; return (" + code + ")");
+        return makeClosure("function(row, col){return(" + print(exp.ast, 0) + ")}");
         function print(node, prec) {
             switch (node.type) {
               case "num":
@@ -351,9 +358,9 @@
         }
     }
 
-    function toCPS(node, k) {
+    function toCPS(ast, k) {
         var GENSYM = 0;
-        return cps(node.ast, k);
+        return cps(ast, k);
 
         function cps(node, k){
             switch (node.type) {
@@ -508,28 +515,39 @@
             if (Object.prototype.hasOwnProperty.call(cache, code)) {
                 return cache[code];
             }
-            return (cache[code] = new Function("runtime", code)(runtime));
+            return (cache[code] = new Function("'use strict';return(" + code + ")")());
         };
     })({});
 
-    function makeFormula(cps) {
-        var references = [];
-        var code = js(cps);
+    var FORMULA_CACHE = {};
+
+    function makeFormula(exp) {
+        var printer = makePrinter(exp);
+        var hash = printer.call(exp); // needs .refs
+        if (Object.prototype.hasOwnProperty.call(FORMULA_CACHE, hash)) {
+            // we need to clone because formulas cache the result; even if the formula is the same,
+            // its value will depend on its location, hence we need different objects.  Still, using
+            // this cache is a good idea because we'll reuse the same refs array, handler and
+            // printer instead of allocating new ones (and we skip compiling it).
+            return FORMULA_CACHE[hash].clone();
+        }
+        var code = js(toCPS(exp.ast, function(ret){
+            return {
+                type: "return",
+                value: ret
+            };
+        }));
 
         code = [
-            "return function(context) { 'use strict'",
-            //"/* " + print(the_sheet, the_col, the_row, exp) + " */",
-            "  var formula = context.formula",
+            "function(context){",
+            "var formula = context.formula, runtime = kendo.spreadsheet.calc.runtime",
             code,
             "}"
         ].join(";\n");
 
-        return new runtime.Formula(references, makeClosure(code));
-
-        function getReference(ref) {
-            references[ref.index] = ref;
-            return "formula.refs[" + ref.index + "]";
-        }
+        var formula = new runtime.Formula(exp.refs, makeClosure(code), printer);
+        FORMULA_CACHE[hash] = formula;
+        return formula;
 
         function js(node){
             var type = node.type;
@@ -556,7 +574,7 @@
                     + ")";
             }
             else if (type == "ref") {
-                return getReference(node);
+                return "formula.refs[" + node.index + "]";
             }
             else if (type == "bool") {
                 return "" + node.value;
@@ -786,15 +804,6 @@
 
     exports.parseFormula = parse;
     exports.parseReference = parseReference;
-    exports.compile = function(x) {
-        var formula = makeFormula(toCPS(x, function(ret){
-            return {
-                type: "return",
-                value: ret
-            };
-        }));
-        formula.print = makePrinter(x);
-        return formula;
-    };
+    exports.compile = makeFormula;
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

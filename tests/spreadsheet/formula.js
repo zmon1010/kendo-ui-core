@@ -348,6 +348,23 @@
         testOne("=C3", "R[-2]C[-2]");
     });
 
+    test("formula cache", function(){
+        function testOne(f1, f2) {
+            var e1 = calc.parse("sheet1", 0, 0, f1);
+            var e2 = calc.parse("sheet1", 1, 0, f2);
+            f1 = calc.compile(e1);
+            f2 = calc.compile(e2);
+            ok(f1.refs === f2.refs);
+            ok(f1.handler === f2.handler);
+            ok(f1.print === f2.print);
+        }
+
+        testOne("=B1+C1", "=B2+C2");
+        testOne("=sum(3:5)", "=sum(4:6)");
+        testOne("=sum(C2:E5)", "=sum(C3:E6)");
+        testOne("=B$1+C1", "=B$1+C2");
+    });
+
     /* -----[ reference operations ]----- */
 
     test("reference intersection", function(){
