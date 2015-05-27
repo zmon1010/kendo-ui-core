@@ -120,10 +120,8 @@ namespace :themebuilder do
 
     desc('Build the generated ThemeBuilder sources')
     task :sources => [
-        'themebuilder/scripts/less.js',
-        'themebuilder/scripts/constants.js',
         'themebuilder/styles/textures'
-    ]
+    ].concat(THEME_BUILDER_FILES)
 
     desc('Build the ThemeBuilder for live deployment')
     task :production => [

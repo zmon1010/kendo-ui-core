@@ -217,6 +217,7 @@
                 options = options || {};
                 this.template = options.template || "";
                 this.constants = options.constants || {};
+                this.files = {};
 
                 ObservableObject.fn.init.call(this);
             },
@@ -245,6 +246,10 @@
 
                     this.infer(targetDocument);
                 }
+            },
+
+            registerFile: function(file) {
+                this.files[file.name] = file.content;
             },
 
             infer: function(targetDocument) {
@@ -333,16 +338,14 @@
 
             _resolveFiles: function(less) {
                 var files = this.files;
-                return less.replace(/@import ("|')(.*)("|');/g, function(m) {
-                    console.log(m);
-                    return files[m[2]];
+                return less.replace(/@import ["'](.*)["'];/g, function(_, filename) {
+                    return files[filename];
                 });
             },
 
             _generateTheme: function(callback) {
-                var less = this.serialize();
-
-                less = this._resolveFiles(less);
+                var constants = this.serialize();
+                var less = this._resolveFiles(constants);
 
                 (new window.less.Parser()).parse(
                     less,
@@ -354,7 +357,7 @@
                         }
 
                         try {
-                            callback(less, tree.toCSS());
+                            callback(constants, tree.toCSS());
                         } catch(e) {
                             console.error(e.message);
                         }
@@ -384,21 +387,19 @@
             applyTheme: function(targetDocument) {
                 var that = this;
 
-                this._generateTheme(function(constants, cssText) {
+                this._generateTheme(function(_, cssText) {
                     that._updateStyleSheet(cssText, targetDocument);
                 });
             },
 
             source: function(format, callback) {
-                this._generateTheme(proxy(function(constants, css) {
-                    constants += '\n@import "theme-template.less";';
-
+                this._generateTheme(function(less, css) {
                     if (format == "less") {
-                        callback(constants);
+                        callback(less);
                     } else {
                         callback(css);
                     }
-                }, this));
+                });
             }
         }),
 
@@ -553,6 +554,14 @@
                 return [];
             },
 
+            registerFile: function(file) {
+                for (var i = 0; i < this.length; i++) {
+                    if (this[i] instanceof LessTheme) {
+                        this[i].registerFile(file);
+                    }
+                }
+            },
+
             apply: function(targetDocument) {
                 for (var i = 0; i < this.length; i++) {
                     this[i].applyTheme(targetDocument);
@@ -575,8 +584,6 @@
                 if (templateInfo.datavizConstants) {
                     themes.push(templateInfo.datavizConstants);
                 }
-
-                this.files = {};
 
                 this.themes = new ThemeCollection(themes);
 
@@ -657,7 +664,7 @@
                 this._track();
             },
             registerFile: function(file) {
-                this.files[file.name] = file.content;
+                this.themes.registerFile(file);
             },
             showSuiteChooser: function() {
                 $("#suite-chooser").slideDown("fast", function() {
