@@ -13,17 +13,6 @@
                 <a class="launchButton large" target="_blank" href="../aeroviewr/">Launch AeroViewr</a>
             </div>
     <style>
-        #main {
-            border-left: 0;
-        }
-        #themeWrap
-        {
-            margin-right: 0;
-        }
-
-        #example {
-            background-color: #fff;
-        }
         #websushi {
             background: url('@Url.Content("~/content/shared/images/websushi.jpg")') no-repeat center bottom transparent;
             height: 360px;
@@ -56,6 +45,21 @@
         }
         .large {
             width: 130px;
+        }
+        
+        @@media only screen and (max-width : 720px) {
+        
+            .wide-box {
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            #websushi,
+            #aeroviewr {
+                background: none;
+                padding: 30px;
+                height: 100%;
+            }
         }
     </style>
 </div>
