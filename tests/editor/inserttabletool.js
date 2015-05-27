@@ -88,7 +88,7 @@ test("mouseleave is considered as cancel", function() {
     equal(popup.element.find(".k-ct-cell.k-state-selected").length, 0);
 });
 
-test("tool can be opened with the keyboard", function() {
+test("tool can be opened with the keyboard (altKey + keyDown)", function() {
     dom.press({ altKey: true, keyCode: keys.DOWN });
 
     var element = tool.popup().element;
@@ -160,6 +160,7 @@ test("enter key triggers createTable command", function() {
     var execArgs;
 
     withMock(tool._editor, "exec", function() { execArgs = arguments; }, function() {
+        tool.popup().open();
         dom.press({ keyCode: keys.ENTER });
 
         ok(execArgs);
