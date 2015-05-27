@@ -308,29 +308,24 @@
 
     function makePrinter(exp) {
         var code = print(exp.ast, 0);
-        return new Function("row", "col", "kind", "return (" + code + ")");
+        return new Function("row", "col", "rcstyle", "'use strict'; return (" + code + ")");
         function print(node, prec) {
             switch (node.type) {
               case "num":
               case "bool":
                 return JSON.stringify(node.value);
-
               case "str":
                 return JSON.stringify(JSON.stringify(node.value));
-
               case "ref":
-                return "this.refs[" + node.index + "].print(row, col, kind)";
-
+                return "this.refs[" + node.index + "].print(row, col, rcstyle)";
               case "prefix":
                 return withParens(node.op, prec, function(){
                     return JSON.stringify(node.op) + " + " + print(node.exp, OPERATORS[node.op]);
                 });
-
               case "postfix":
                 return withParens(node.op, prec, function(){
                     return print(node.exp, OPERATORS[node.op]) + " + " + JSON.stringify(node.op);
                 });
-
               case "binary":
                 // XXX: (FOO):(BAR) where FOO and BAR are NameRef-s — should parenthesize
                 return withParens(node.op, prec, function(){
@@ -338,7 +333,6 @@
                         + " + " + JSON.stringify(node.op) + " + "
                         + print(node.right, OPERATORS[node.op]);
                 });
-
               case "call":
                 return JSON.stringify(node.func + "(") + " + "
                     + node.args.map(function(arg){

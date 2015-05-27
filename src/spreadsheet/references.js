@@ -118,20 +118,34 @@
             }
             return ref.intersect(this);
         },
-        print: function(trow, tcol) {
+        print: function(trow, tcol, rcstyle) {
             var col = this.col, row = this.row, rel = this.rel;
-            if (rel & 1) {
-                // relative col, add target
-                col += tcol;
+            if (rcstyle) {
+                if (isFinite(col)) {
+                    col = rel & 1 ? ("C[" + col + "]") : ("C" + (col + 1));
+                } else {
+                    col = "";
+                }
+                if (isFinite(row)) {
+                    row = rel & 2 ? ("R[" + row + "]") : ("R" + (row + 1));
+                } else {
+                    row = "";
+                }
+                return row + col;
+            } else {
+                if (rel & 1) {
+                    // relative col, add target
+                    col += tcol;
+                }
+                if (rel & 2) {
+                    // relative row, add target
+                    row += trow;
+                }
+                if ((isFinite(col) && col < 0) || (isFinite(row) && row < 0)) {
+                    return "#REF!";
+                }
+                return displayRef(this._hasSheet && this.sheet, row, col, rel);
             }
-            if (rel & 2) {
-                // relative row, add target
-                row += trow;
-            }
-            if ((isFinite(col) && col < 0) || (isFinite(row) && row < 0)) {
-                return "#REF!";
-            }
-            return displayRef(this._hasSheet && this.sheet, row, col, rel);
         },
         absolute: function(arow, acol) {
             var ret = this.clone();
@@ -264,10 +278,10 @@
             return this;
         },
 
-        print: function(trow, tcol) {
-            var ret = this.topLeft.print(trow, tcol)
+        print: function(trow, tcol, rcstyle) {
+            var ret = this.topLeft.print(trow, tcol, rcstyle)
                 + ":"
-                + this.bottomRight.print(trow, tcol);
+                + this.bottomRight.print(trow, tcol, rcstyle);
             if (this.hasSheet()) {
                 ret = this.sheet + "!" + ret;
             }

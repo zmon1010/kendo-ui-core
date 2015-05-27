@@ -182,7 +182,7 @@
                 col: 6,
                 rel: 3
             }
-        })
+        });
     });
 
     test("normalizes range reference", function(){
@@ -331,6 +331,23 @@
         testOne("=sum(A1:$C$3)", "sum(D5:$C$3)");
     });
 
+    test("print in RC notation", function(){
+        function testOne(input, output) {
+            var exp = calc.parse("sheet1", 4, 4, input);
+            var formula = calc.compile(exp);
+            equal(formula.print(10, 10, true), output);
+        }
+
+        testOne("=A1", "R[-4]C[-4]");
+        testOne("=A2", "R[-3]C[-4]");
+        testOne("=B1", "R[-4]C[-3]");
+        testOne("=B2", "R[-3]C[-3]");
+        testOne("=$C$3", "R3C3");
+        testOne("=$C3", "R[-2]C3");
+        testOne("=C$3", "R3C[-2]");
+        testOne("=C3", "R[-2]C[-2]");
+    });
+
     /* -----[ reference operations ]----- */
 
     test("reference intersection", function(){
@@ -346,7 +363,7 @@
             return exp.ast;
         }
         function print(ref) {
-            return ref.print(0, 0, { row: 0, col: 0 });
+            return ref.print(0, 0);
         }
         function intersect(r1, r2) {
             return print(ref(r1).intersect(ref(r2)))
