@@ -362,15 +362,18 @@ var __meta__ = {
                 formatedValue = column.format ? kendo.format(column.format, value) : value;
             }
 
+            var label;
             if (column.field === "title") {
                 children = createPlaceholders({ level: options.level, className: listStyles.iconPlaceHolder });
                 children.push(kendoDomElement("span", {
                     className: listStyles.icon + " " + (task.summary ? (task.expanded ? listStyles.iconCollapse : listStyles.iconExpand)
                         : listStyles.iconHidden)
                 }));
+
+                label = kendo.format("{0}, {1:P0}", formatedValue, task.percentComplete);
             }
 
-            children.push(kendoDomElement("span", null, [kendoTextElement(formatedValue)]));
+            children.push(kendoDomElement("span", { "aria-label": label }, [kendoTextElement(formatedValue)]));
 
             return kendoDomElement("td", { "role": "gridcell" }, children);
         },
