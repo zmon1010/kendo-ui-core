@@ -53,7 +53,8 @@ namespace Kendo.Controllers
             return File(IOFile.ReadAllBytes(path), mimeType);
         }
 
-        public String CurrentProduct() {
+        public String CurrentProduct()
+        {
             string product = "kendo-ui";
 
             // Mono/FastCGI Nginx support
@@ -68,6 +69,22 @@ namespace Kendo.Controllers
             }
 
             return product;
+        }
+
+        public String CurrentProductName()
+        {
+            string product = CurrentProduct();
+            string productName = "Kendo UI";
+
+            if (product == "aspnet-mvc") {
+                productName = "UI for ASP.NET MVC";
+            } else if (product == "php-ui") {
+                productName = "UI for PHP";
+            } else if (product == "jsp-ui") {
+                productName = "UI for JSP";
+            }
+
+            return productName;
         }
 
         public string CurrentNavProduct()

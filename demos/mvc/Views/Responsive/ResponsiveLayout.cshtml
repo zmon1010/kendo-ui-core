@@ -41,9 +41,8 @@
     }
 </head>
 <body>
-    
     <header class="responsive-header">
-        <h1>@Html.ActionLink("Responsive Kendo UI", "Index")</h1>
+        <h1>@Html.ActionLink("Responsive " + (string)ViewBag.ProductName, "Index")</h1>
         <button class="k-rpanel-toggle"><span class="k-icon k-i-hbars"></span></button>
         <div id="responsive-nav">
         <ul>
@@ -65,17 +64,19 @@
 
     <div class="responsive-section responsive-documentation-section">
         <h2>How it works</h2>
-        <p>            The concept of responsive design suggests that the layout of the project needs to adapt to the media that renders it. Media queries are one of the cornerstones of Responsive Web Design. By adding some filter criteria around CSS definitions, we can control under which conditions rules are applied to Kendo UI widgets.
+        <p>The concept of responsive design suggests that the layout of the project needs to adapt to the media that renders it. Media queries are one of the cornerstones of Responsive Web Design. By adding some filter criteria around CSS definitions, we can control under which conditions rules are applied to the widgets.
         </p>
         <a class="responsive-btn responsive-documentation-btn" href="http://docs.telerik.com/kendo-ui/using-kendo-in-responsive-web-pages#kendo-ui-and-media-queries">Read Documentation</a>
     </div>
 
+    @if (ViewBag.Product == "kendo-ui") {
     <div class="responsive-section responsive-bootstrap-section">
         <h2>Using Twitter Bootstrap?</h2>
         <a class="responsive-btn kendo-with-bootstrap-btn" href="http://demos.telerik.com/kendo-ui/bootstrap/">See Kendo UI ♥ Bootstrap Demo</a>
     </div>
+    }
 
-    <div id="responsive-footer" class="responsive-section">    
+    <div id="responsive-footer" class="responsive-section">
          <div class="copyright">
             <p>Copyrigh &copy; 2002-2015 Telerik Inc. All rights reserved</p>
         </div>
