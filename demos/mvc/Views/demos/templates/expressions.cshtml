@@ -1,20 +1,16 @@
         <div id="example">
-            <h3>Basic template</h3>
-            <div class="code-sample">
-                <h4 class="code-title">Source:</h4>
+            <div class="demo-section k-header wide">
+                <h4>Basic template</h4>
                 <pre class="prettyprint">
 var inlineTemplate = kendo.template("Hello, #= firstName # #= lastName #");
 var inlineData = { firstName: "John", lastName: "Doe" };
 $("#inline").html(inlineTemplate(inlineData));</pre>
-            </div>
-            <div class="code-sample output">
-                <h4 class="code-title">Output:</h4>
+                <h4 style="padding-top: 2em;">Output:</h4>
                 <div class="prettyprint" id="inline"></div>
             </div>
 
-            <h3>Template as script element</h3>
-            <div class="code-sample">
-                <h4 class="code-title">Source:</h4>
+            <div class="demo-section k-header wide">
+                <h4>Template as script element</h4>
                 <pre class="prettyprint">
 &lt;script id="scriptTemplate" <strong>type="text/x-kendo-template"</strong>&gt;
     Hello, #= firstName # #= lastName #
@@ -25,28 +21,23 @@ $("#inline").html(inlineTemplate(inlineData));</pre>
     var scriptData = { firstName: "John", lastName: "Doe" };
     $("#script").html(scriptTemplate(scriptData));
 &lt;/script&gt;</pre>
-            </div>
-            <div class="code-sample output">
-                <h4 class="code-title">Output:</h4>
+                <h4 style="padding-top: 2em;">Output:</h4>
                 <div class="prettyprint" id="script"></div>
             </div>
+            
 
-            <h3>Encoding HTML</h3>
-            <div class="code-sample">
-                <h4 class="code-title">Source:</h4>
+            <div class="demo-section k-header wide">
+                <h4>Encoding HTML</h4>
                 <pre class="prettyprint">
 var encodingTemplate = kendo.template("HTML tags are encoded like this - ${ html }");
 var encodingData = { html: "&lt;strong&gt;lorem ipsum&lt;/strong&gt;" };
 $("#encoding").html(encodingTemplate(encodingData));</pre>
-            </div>
-            <div class="code-sample output">
-                <h4 class="code-title">Output:</h4>
+                <h4 style="padding-top: 2em;">Output:</h4>
                 <div class="prettyprint" id="encoding"></div>
             </div>
 
-            <h3>Using JavaScript code inside the template definition</h3>
-            <div class="code-sample">
-                <h4 class="code-title">Source</h4>
+            <div class="demo-section k-header wide">
+                <h4>Using JavaScript code inside the template definition</h4>
                 <pre class="prettyprint lang-html">
 &lt;script id="javascriptTemplate" type="text/x-kendo-template"&gt;
     &lt;ul&gt;
@@ -61,9 +52,7 @@ $("#encoding").html(encodingTemplate(encodingData));</pre>
     var javascriptData = ["First", "Second", "Third"];
     $("#javascript").html(javascriptTemplate(javascriptData));
 &lt;script&gt;</pre>
-            </div>
-            <div class="code-sample output">
-                <h4 class="code-title">Output:</h4>
+                <h4 style="padding-top: 2em;">Output:</h4>
                 <div class="prettyprint" id="javascript"></div>
             </div>
 
@@ -98,27 +87,13 @@ $("#encoding").html(encodingTemplate(encodingData));</pre>
             </script>
 
             <style>
-                #example h3 {
-                    clear: both;
-                }
-
-                #example .code-sample {
-                    width: 70%;
-                    float:left;
-                    margin-bottom: 20px;
-                }
-                #example .code-sample h4 {
-                    width: auto;
-                }
-
-                #example .output {
-                    width: 24%;
-                    margin-left: 0;
-                    float:left;
-                }
                 #example pre.prettyprint {
                         height: auto;
                         min-height: 120px;
+                        overflow: auto;
+                        background-color: #fff;
+                        border: 1px solid #ccc;
+                        padding: 5px;
                 }
             </style>
         </div>
