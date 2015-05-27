@@ -335,7 +335,7 @@
         function testOne(input, output) {
             var exp = calc.parse("sheet1", 4, 4, input);
             var formula = calc.compile(exp);
-            equal(formula.print(10, 10, true), output);
+            equal(formula.print(), output);
         }
 
         testOne("=A1", "R[-4]C[-4]");

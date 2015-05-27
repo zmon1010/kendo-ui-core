@@ -118,9 +118,9 @@
             }
             return ref.intersect(this);
         },
-        print: function(trow, tcol, rcstyle) {
+        print: function(trow, tcol) {
             var col = this.col, row = this.row, rel = this.rel;
-            if (rcstyle) {
+            if (trow == null) {
                 if (isFinite(col)) {
                     col = rel & 1 ? ("C[" + col + "]") : ("C" + (col + 1));
                 } else {
@@ -278,10 +278,10 @@
             return this;
         },
 
-        print: function(trow, tcol, rcstyle) {
-            var ret = this.topLeft.print(trow, tcol, rcstyle)
+        print: function(trow, tcol) {
+            var ret = this.topLeft.print(trow, tcol)
                 + ":"
-                + this.bottomRight.print(trow, tcol, rcstyle);
+                + this.bottomRight.print(trow, tcol);
             if (this.hasSheet()) {
                 ret = this.sheet + "!" + ret;
             }
