@@ -2257,7 +2257,6 @@
                 { field: "foo", filterable: {multi: true}  }
             ]
         });
-        debugger;
         var multi = grid.thead.find("th").data("kendoFilterMultiCheck");
         var syncSpy = spy(multi, "destroy");
 
