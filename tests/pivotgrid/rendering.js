@@ -4079,7 +4079,7 @@
         var data = [1];
 
         var pivotgrid = createPivot({
-            columnWidth: 30,
+            columnWidth: 10,
             dataSource: createDataSource(tuples, data)
         });
 
@@ -4092,7 +4092,6 @@
 
         ok(parseInt(headerTable.css("width"), 10) < 100);
         ok(parseInt(contentTable.css("width"), 10) < 100);
-        console.log(parseInt(contentTable.css("width"), 10));
     });
 
     test("PivotGrid sets height to the column header if rows-field section is higher", function() {
