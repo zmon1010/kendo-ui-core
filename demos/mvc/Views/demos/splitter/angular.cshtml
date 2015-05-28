@@ -1,15 +1,11 @@
 <div id="example" ng-app="KendoDemos">
-  <div class="demo-section k-content" ng-controller="MyCtrl" style="width: 700px;">
-    <div class="box-col">
-      <h4>Orientation:</h4>
+  <div class="demo-section k-header" ng-controller="MyCtrl">
+      <h4>Splitter Orientation</h4>
       <select kendo-drop-down-list ng-model="orientation">
         <option value="horizontal">Horizontal</option>
         <option value="vertical">Vertical</option>
       </select>
-    </div>
-  
-    <div class="box-col" style="width: 450px;">
-      <h4>Splitter</h4>
+      <h4 style="padding-top: 2em;">Preview</h4>
       <div kendo-splitter
            k-panes="[ null, { contentUrl: '../content/web/loremIpsum.html' }]"
            k-orientation="orientation"
