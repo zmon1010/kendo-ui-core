@@ -2336,6 +2336,14 @@ var __meta__ = {
             if (slot) {
                 return slot.toRect();
             }
+        },
+
+        contentBox: function() {
+            var box = this.box.clone();
+            if (this.labels.length) {
+                box.wrap(this.labels[0].box).wrap(last(this.labels).box);
+            }
+            return box;
         }
     });
 
