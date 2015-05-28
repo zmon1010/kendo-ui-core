@@ -2,7 +2,7 @@ require 'tasks'
 
 TESTS = FileList["tests/**/*"]
 DEPS = [MIN_JS.sub("dist/js", "src").sub("min.js", "js"), FileList['styles/**/*.*'], KENDO_CONFIG_FILE, TESTS].flatten
-SUPPORTED_JQUERY_VERSIONS = ["1.10.2", "2.0.3"]
+SUPPORTED_JQUERY_VERSIONS = ["1.11.3", "2.1.4"]
 
 namespace :tests do
     task :java do
