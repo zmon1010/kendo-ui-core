@@ -2145,10 +2145,9 @@ var __meta__ = {
                     continue;
                 } else if (map[path + member.parentName]) {
                     return map[path + member.parentName];
+                } else if (map[parentPath + member.parentName]) {
+                    return map[parentPath + member.parentName];
                 } else {
-                    if (member.parentName) {
-                        parentPath += member.parentName;
-                    }
                     return map[parentPath];
                 }
             }
@@ -4521,8 +4520,8 @@ var __meta__ = {
             this.rows = [];
 
             if (this.data[0]) {
-                this.columnIndexes = this._indexes(this.columnAxis);
-                this.rowIndexes = this._indexes(this.rowAxis);
+                this.columnIndexes = this._indexes(this.columnAxis, this.rowLength);
+                this.rowIndexes = this._indexes(this.rowAxis, Math.ceil(this.data.length / this.rowLength));
 
                 this._buildRows();
             } else {
@@ -4532,7 +4531,7 @@ var __meta__ = {
             return element("tbody", null, this.rows);
         },
 
-        _indexes: function(axisInfo) {
+        _indexes: function(axisInfo, total) {
             var result = [];
             var axisInfoMember;
             var indexes = axisInfo.indexes;
@@ -4595,6 +4594,10 @@ var __meta__ = {
                     while(result[firstEmpty] !== undefined) {
                         firstEmpty += 1;
                     }
+                }
+
+                if (firstEmpty === total) {
+                    break;
                 }
 
                 dataIdx += skipChildren;

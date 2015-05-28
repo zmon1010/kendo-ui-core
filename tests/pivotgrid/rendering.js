@@ -1174,6 +1174,53 @@
         ok(true);
     });
 
+    test("PivotGrid renders colum header starting from specific dimension member", function() {
+        var tuples = [
+            { members: [ { name: "dim 1_1", levelNum: "1", parentName: "dim 0", hasChildren: true, children: [] }, { name: "dim 2_1", levelNum: "1", parentName: "dim 2", children: [] } ] },
+            { members: [ { name: "dim 1_2", levelNum: "2", parentName: "dim 1_1", children: [] }, { name: "dim 2_1", levelNum: "1", parentName: "dim 2", children: [] } ] }
+        ];
+
+        var pivotgrid = createPivot({
+            dataSource: new PivotDataSource({
+                columns: [
+                    { name: "dim 1_1", expand: true },
+                    { name: "dim 2_1", expand: false }
+                ],
+                measures: [],
+                schema: {
+                    axes: "axes",
+                    data: "data"
+                },
+                transport: {
+                    read: function(options) {
+                        options.success({
+                            axes: {
+                                columns: {
+                                    tuples: tuples || []
+                                }
+                            },
+                            data: []
+                        });
+                    }
+                }
+            })
+        });
+
+        var headerTable = pivotgrid.wrapper.find(".k-grid-header").find("table");
+
+        var rows = headerTable.find("tr");
+        var th_0 = rows.eq(0).find("th");
+        var th_1 = rows.eq(1).find("th");
+        var th_2 = rows.eq(2).find("th");
+
+        equal(th_0.eq(0).text(), "dim 1_1");
+        equal(th_0.eq(1).text(), "dim 1_1");
+        equal(th_1.eq(0).text(), "dim 1_2");
+
+        equal(th_2.eq(0).text(), "dim 2_1");
+        equal(th_2.eq(1).text(), "dim 2_1");
+    });
+
     module("PivotGrid rows header rendering", {
         setup: function() {
             kendo.ns = "kendo-";
@@ -4032,6 +4079,61 @@
         var icon = cell.children(":first");
 
         ok(!icon[0]);
+    });
+
+    test("PivotGrid renders data correctly when start from specific tuple", function() {
+        var columns = [
+            { members: [ { name: "dim 1_1", levelNum: "1", parentName: "dim 0", hasChildren: true, children: [] }, { name: "dim 2_1", levelNum: "1", parentName: "dim 2", children: [] } ] },
+            { members: [ { name: "dim 1_2", levelNum: "2", parentName: "dim 1_1", children: [] }, { name: "dim 2_1", levelNum: "1", parentName: "dim 2", children: [] } ] }
+        ];
+
+        var rows = [
+            { members: [ { name: "dim 3", levelNum: "0", hasChildren: true, children: [] } ] },
+            { members: [ { name: "dim 3_1", levelNum: "1", parentName: "dim 3", children: [] } ] }
+        ];
+
+        var data = [
+            { value: 1 }, { value: 2 },
+            { value: 3 }, { value: 4 }
+        ];
+
+        var pivotgrid = createPivot({
+            dataSource: new PivotDataSource({
+                columns: [
+                    { name: "dim 1_1", expand: true },
+                    { name: "dim 2_1", expand: false }
+                ],
+                rows: [
+                    { name: "dim 3", expand: true }
+                ],
+                measures: [],
+                schema: {
+                    axes: "axes",
+                    data: "data"
+                },
+                transport: {
+                    read: function(options) {
+                        options.success({
+                            axes: {
+                                columns: { tuples: columns },
+                                rows: { tuples: rows }
+                            },
+                            data: data
+                        });
+                    }
+                }
+            })
+        });
+
+        var rows = pivotgrid.wrapper.find(".k-grid-content").find("tbody").find("tr");
+        var cells_0 = rows.eq(0).find("td");
+        var cells_1 = rows.eq(1).find("td");
+
+        equal(cells_0.eq(0).text(), "4");
+        equal(cells_0.eq(1).text(), "3");
+
+        equal(cells_1.eq(0).text(), "2");
+        equal(cells_1.eq(1).text(), "1");
     });
 
     module("PivotGrid resize on render", {
