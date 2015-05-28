@@ -713,8 +713,7 @@
       },
       {
         "packages": [
-          "mvc-offline",
-          "jsp"
+          "mvc-offline"
         ],
         "text": "Client filtering",
         "url": "combobox/clientfiltering"
@@ -1209,10 +1208,8 @@
       },
       {
         "packages": [
-          "mvc-offline",
-          "jsp"
+          "mvc-offline"
         ],
-        "new": "true",
         "text": "Client filtering",
         "url": "dropdownlist/clientfiltering"
       },
@@ -2909,8 +2906,7 @@
       },
       {
         "packages": [
-          "mvc-offline",
-          "jsp"
+          "mvc-offline"
         ],
         "text": "Client filtering",
         "url": "multiselect/clientfiltering"
