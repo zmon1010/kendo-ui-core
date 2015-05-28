@@ -8900,6 +8900,7 @@ var __meta__ = {
 
                 if (i !== 0 && yAnchor.pane === axis.pane) {
                     axis.alignTo(yAnchor);
+                    axis.reflow(axis.box);
                 }
             }
 
@@ -8943,6 +8944,7 @@ var __meta__ = {
 
                 if (i !== 0) {
                     axis.alignTo(xAnchor);
+                    axis.reflow(axis.box);
                 }
             }
         },

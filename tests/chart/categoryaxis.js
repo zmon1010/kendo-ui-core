@@ -1222,7 +1222,7 @@
         });
 
         test("renders box", function() {
-            sameRectPath(plotBands, [17, 0, 788, 286.5], TOLERANCE);
+            sameRectPath(plotBands, [17, 7.5, 788, 291.75], TOLERANCE);
         });
 
         // ------------------------------------------------------------
