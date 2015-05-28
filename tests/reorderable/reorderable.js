@@ -46,7 +46,7 @@
     function equalPositions(source, target, before) {
         var position = target.offset().left + (before ? 0 : target.outerWidth());
 
-        equal(parseInt(source.css("left"), 10), position);
+        equal(parseInt(source.css("left"), 10), parseInt(position, 10));
     }
 
     test("widget name option is Reorderable", function() {

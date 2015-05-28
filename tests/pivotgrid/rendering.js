@@ -4090,8 +4090,9 @@
 
         pivotgrid.refresh();
 
-        ok(parseInt(headerTable.css("width")) < 100);
-        ok(parseInt(contentTable.css("width")) < 100);
+        ok(parseInt(headerTable.css("width"), 10) < 100);
+        ok(parseInt(contentTable.css("width"), 10) < 100);
+        console.log(parseInt(contentTable.css("width"), 10));
     });
 
     test("PivotGrid sets height to the column header if rows-field section is higher", function() {
