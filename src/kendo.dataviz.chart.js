@@ -12152,7 +12152,7 @@ var __meta__ = {
 
         if (length > 0) {
             for (i = 0; i < length; i++) {
-                axisBox = axes[i].box;
+                axisBox = axes[i].contentBox();
 
                 if (!box) {
                     box = axisBox.clone();
