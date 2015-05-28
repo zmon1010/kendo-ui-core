@@ -1,11 +1,11 @@
 <div id="example">
     
     <div class="demo-section k-header">
-        <div id="draggable"></div>
         <div id="droptarget">
             <div class="test1">Drag the small circle here ...</div>
             <div class="test2">... Or here.</div>
         </div>
+        <div id="draggable"></div>
     </div>
 
     <script>
@@ -58,15 +58,16 @@
 
     <style>
         .demo-section {
-            width: 700px;
+            padding-top: 100px;
             position: relative;
         }
         
         #draggable {
             cursor: move;
             position: absolute;
-            top: 113px;
-            left: 70px;
+            top: 30px;
+            left: 50%;
+            margin-left: -28px;
             width: 56px;
             height: 56px;
             border-radius: 50%;
@@ -75,12 +76,10 @@
         }
 
         #droptarget {
-            margin-left: 150px;
-            height: 200px;
-            text-align: center;
-            line-height: 200px;
+            padding: 20px;
             cursor: default;
             vertical-align: middle;
+            text-align: center;
             border: 2px dotted #ccc;
         }
 
@@ -88,13 +87,13 @@
         .test2 {
             vertical-align: middle;
             display: inline-block;
-            width: 230px;
+            width: 100px;
             height: 100px;
-            line-height: 100px;
-            margin: 0 10px 0;
+            line-height: 1.5em;
+            margin: 10px;
+            padding: 20px;
             font-size: 14px;
             font-weight: normal;
-            border-radius: 60px;
             color: #fff;
         }
         .test1 {
