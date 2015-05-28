@@ -8975,7 +8975,6 @@ var __meta__ = {
                         currentAxis.reflow(currentAxis.box.shrink(overflowX, 0));
                     }
                 }
-                return true;
             }
         },
 
@@ -9065,9 +9064,17 @@ var __meta__ = {
                 plotArea.autoRotateAxisLabels(axes);
 
                 plotArea.alignAxes(axes.x, axes.y);
-                plotArea.shrinkAxisHeight(panes);
+                if (plotArea.shrinkAxisWidth(panes)) {
+                    plotArea.alignAxes(axes.x, axes.y);
+                }
 
+                plotArea.shrinkAxisHeight(panes);
                 plotArea.alignAxes(axes.x, axes.y);
+
+                if (plotArea.shrinkAxisHeight(panes)) {
+                    plotArea.alignAxes(axes.x, axes.y);
+                }
+
                 plotArea.fitAxes(panes);
             }
         },
