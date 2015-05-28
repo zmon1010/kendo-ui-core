@@ -8967,18 +8967,22 @@ var __meta__ = {
                 }
             }
 
-            for (i = 0; i < axes.length; i++) {
-                currentAxis = axes[i];
+            if (overflowX !== 0) {
+                for (i = 0; i < axes.length; i++) {
+                    currentAxis = axes[i];
 
-                if (!currentAxis.options.vertical) {
-                    currentAxis.reflow(currentAxis.box.shrink(overflowX, 0));
+                    if (!currentAxis.options.vertical) {
+                        currentAxis.reflow(currentAxis.box.shrink(overflowX, 0));
+                    }
                 }
+                return true;
             }
         },
 
         shrinkAxisHeight: function(panes) {
             var i, currentPane, axes,
-                overflowY, j, currentAxis;
+                overflowY, j, currentAxis,
+                shrinked;
 
             for (i = 0; i < panes.length; i++) {
                 currentPane = panes[i];
@@ -8988,16 +8992,21 @@ var __meta__ = {
                     axisGroupBox(axes).height() - currentPane.contentBox.height()
                 );
 
-                for (j = 0; j < axes.length; j++) {
-                    currentAxis = axes[j];
+                if (overflowY !== 0) {
+                    for (j = 0; j < axes.length; j++) {
+                        currentAxis = axes[j];
 
-                    if (currentAxis.options.vertical) {
-                        currentAxis.reflow(
-                            currentAxis.box.shrink(0, overflowY)
-                        );
+                        if (currentAxis.options.vertical) {
+                            currentAxis.reflow(
+                                currentAxis.box.shrink(0, overflowY)
+                            );
+                        }
                     }
+                    shrinked = true;
                 }
             }
+
+            return shrinked;
         },
 
         fitAxes: function(panes) {
