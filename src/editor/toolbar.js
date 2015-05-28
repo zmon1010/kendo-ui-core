@@ -33,7 +33,7 @@
         },
 
         options: {
-            name: "overflowAnchor",
+            name: "overflowAnchor"
         },
 
         command: $.noop,
@@ -215,7 +215,7 @@
 
             that.items().each(function initializeTool(x, y) {
                 var toolName = that._toolName(this),
-                    tool = toolName !== "more" ? that.tools[toolName] : that.tools["overflowAnchor"],
+                    tool = toolName !== "more" ? that.tools[toolName] : that.tools.overflowAnchor,
                     options = tool && tool.options,
                     messages = editor.options.messages,
                     description = options && options.tooltip || messages[toolName],
@@ -448,7 +448,7 @@
             function startGroup(toolName) {
                 if (toolName !== "overflowAnchor") {
                     group = $("<li class='k-tool-group' role='presentation' />");
-                    group.data("overflow", $.inArray(toolName, overflowFlaseTools) === -1 ? true : false)
+                    group.data("overflow", $.inArray(toolName, overflowFlaseTools) === -1 ? true : false);
                 } else {
                     group = $("<li class='k-overflow-tools' />");
                 }
