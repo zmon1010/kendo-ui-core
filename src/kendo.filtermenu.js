@@ -352,6 +352,8 @@ var __meta__ = {
             that.refresh();
 
             that.trigger(INIT, { field: that.field, container: that.form });
+
+            kendo.cycleForm(that.form);
         },
 
         _createForm: function(role) {

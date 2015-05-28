@@ -728,6 +728,7 @@ var __meta__ = {
             Editor.fn.init.call(this, element, options);
 
             this._attachHandlers();
+            kendo.cycleForm(this.wrapper);
 
             this.open();
         },

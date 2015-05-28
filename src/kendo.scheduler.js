@@ -1427,6 +1427,8 @@ var __meta__ = {
                     that.trigger(REMOVE, { container: container, model: model });
                 });
 
+                kendo.cycleForm(container);
+
                 model.bind("change", that.toggleDateValidationHandler);
             } else {
                 that.trigger(CANCEL, { container: container, model: model });

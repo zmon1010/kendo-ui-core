@@ -1143,6 +1143,8 @@ var __meta__ = {
                 })
                 .data("kendoEditable");
 
+            kendo.cycleForm(container);
+
             if (!this.trigger("edit", { container: container, model: task })) {
                 container.data("kendoWindow").center().open();
 
