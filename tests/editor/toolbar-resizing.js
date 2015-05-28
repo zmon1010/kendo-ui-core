@@ -273,4 +273,147 @@ test('tool state does not change when the tool is send to the overflow popup', f
     ok(editor.toolbar.overflowPopup.element.find("a[title=Bold]").hasClass("k-state-selected"));
 });
 
+var editor;
+var keys = kendo.keys;
+
+module("editor resizable toolbar keyboard navigation", {
+    setup: function() {
+        QUnit.fixture.append(
+            '<div id="wrapper" style="width: 100px"><textarea cols="20" rows="4" id="editor"></textarea></div>'
+        );
+
+        textarea = $("#editor");
+
+        options = {
+            resizable: {
+                content: false,
+                toolbar: true
+            },
+            tools: [
+                "bold",
+                "italic",
+                "underline",
+                "strikethrough",
+                "createTable",
+                "justifyLeft",
+                "justifyCenter",
+                "justifyRight",
+                "justifyFull"
+            ]
+        }
+
+        $.fn.press = function (key) {
+            $(this).trigger({
+                type: "keydown",
+                keyCode: key
+            });
+        };
+
+        kendo.effects.disable();
+    },
+    teardown: function() {
+        kendo.destroy(QUnit.fixture);
+        QUnit.fixture.empty();
+    }
+});
+
+function getTool(className) {
+    var tool = editor.toolbar.overflowPopup.element.find(".k-" + className);
+
+    if (tool.hasClass("k-tool-icon")) {
+        tool = tool.closest(".k-tool");
+    }
+
+    return tool;
+}
+
+function active() {
+    return $(kendo._activeElement());
+}
+
+function isToolActive(className) {
+    return active()[0] == getTool(className)[0];
+}
+
+test('when overflowPopup is opened, first tool receives focus', function() {
+    editor = textarea.kendoEditor(options).data("kendoEditor");
+    editor.toolbar.overflowPopup.open();
+
+    ok(isToolActive("bold"));
+});
+
+test('down arrow focuses the next tool in overflowPopup', function() {
+    editor = textarea.kendoEditor(options).data("kendoEditor");
+    editor.toolbar.overflowPopup.open();
+
+    getTool("bold").press(keys.DOWN);
+
+    ok(isToolActive("italic"));
+});
+
+test('up arrow focuses previous tool in overflowPopup', function() {
+    editor = textarea.kendoEditor(options).data("kendoEditor");
+    editor.toolbar.overflowPopup.open();
+
+    getTool("underline").focus().press(keys.UP);
+
+    ok(isToolActive("italic"));
+});
+
+test('down arrow focuses last tool from next group in overflowPopup', function() {
+    editor = textarea.kendoEditor(options).data("kendoEditor");
+    editor.toolbar.overflowPopup.open();
+
+    getTool("strikethrough").focus().press(keys.DOWN);
+
+    ok(isToolActive("createTable"));
+});
+
+test('up arrow focuses first tool from previous group in overflowPopup', function() {
+    editor = textarea.kendoEditor(options).data("kendoEditor");
+    editor.toolbar.overflowPopup.open();
+
+    getTool("createTable").focus().press(keys.UP);
+
+    ok(isToolActive("strikethrough"));
+});
+
+test('down arrow changes the activeElement when createTable tool has focus', function() {
+    editor = textarea.kendoEditor(options).data("kendoEditor");
+    editor.toolbar.overflowPopup.open();
+
+    getTool("createTable").focus().press(keys.DOWN);
+
+    ok(isToolActive("justifyLeft"));
+});
+
+test('up arrow changes the activeElement when createTable tool has focus', function() {
+    editor = textarea.kendoEditor(options).data("kendoEditor");
+    editor.toolbar.overflowPopup.open();
+
+    getTool("createTable").focus().press(keys.UP);
+
+    ok(isToolActive("strikethrough"));
+});
+
+test('down arrow skips disabled tools', function() {
+    editor = textarea.kendoEditor(options).data("kendoEditor");
+    editor.toolbar.overflowPopup.open();
+
+    getTool("italic").addClass("k-state-disabled");
+    getTool("bold").focus().press(keys.DOWN);
+
+    ok(isToolActive("underline"));
+});
+
+test('up arrow skips disabled tools', function() {
+    editor = textarea.kendoEditor(options).data("kendoEditor");
+    editor.toolbar.overflowPopup.open();
+
+    getTool("underline").addClass("k-state-disabled");
+    getTool("strikethrough").focus().press(keys.UP);
+
+    ok(isToolActive("italic"));
+});
+
 }());

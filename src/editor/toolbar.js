@@ -15,8 +15,12 @@
     var ToolTemplate = kendo.ui.editor.ToolTemplate;
     var Tool = kendo.ui.editor.Tool;
 
-    var focusable = "a.k-tool:not(.k-state-disabled)," +
-                    ".k-widget.k-colorpicker,.k-selectbox,.k-dropdown,.k-combobox .k-input";
+    var focusable = ".k-tool-group:visible a.k-tool:not(.k-state-disabled)," +
+                    ".k-tool.k-overflow-anchor," +
+                    ".k-tool-group:visible .k-widget.k-colorpicker," +
+                    ".k-tool-group:visible .k-selectbox," +
+                    ".k-tool-group:visible .k-dropdown," +
+                    ".k-tool-group:visible .k-combobox .k-input";
 
     var OverflowAnchorTool = Tool.extend({
         initialize: function(ui, options) {
@@ -115,16 +119,20 @@
         },
 
         _initOverflowPopup: function(ui) {
+            var that = this;
             var popupTemplate = "<ul class='k-editor-overflow-popup'></ul>";
 
-            this.overflowPopup = $(popupTemplate).appendTo("body").kendoPopup({
+            that.overflowPopup = $(popupTemplate).appendTo("body").kendoPopup({
                 anchor: ui,
+                origin: "bottom right",
+                position: "top right",
                 copyAnchorStyles: false,
                 open: function(e) {
                     if (this.element.is(":empty")) {
                         e.preventDefault();
                     }
-                }
+                },
+                activate: proxy(that.focusOverflowPopup, that)
             }).data("kendoPopup");
         },
 
@@ -285,6 +293,19 @@
             var tabIndex = this._editor.element.attr(TABINDEX);
 
             // Chrome can't focus something which has already been focused
+            element.attr(TABINDEX, tabIndex || 0).focus()
+                .find(focusable).first().focus();
+
+            if (!tabIndex && tabIndex !== 0) {
+                element.removeAttr(TABINDEX);
+            }
+        },
+
+        focusOverflowPopup: function() {
+            var TABINDEX = "tabIndex";
+            var element = this.overflowPopup.element;
+            var tabIndex = this._editor.element.attr(TABINDEX);
+
             element.attr(TABINDEX, tabIndex || 0).focus()
                 .find(focusable).first().focus();
 
@@ -564,11 +585,13 @@
                 })
                 .on("keydown" + NS, focusable, function(e) {
                     var current = this;
+                    var resizable = that.options.resizable && that.options.resizable.toolbar;
                     var focusElement,
+                        currentContainer,
                         keyCode = e.keyCode;
 
-                    function move(direction, constrain) {
-                        var tools = that.element.find(focusable);
+                    function move(direction, container, constrain) {
+                        var tools = container.find(focusable);
                         var index = tools.index(current) + direction;
 
                         if (constrain) {
@@ -580,16 +603,28 @@
 
                     if (keyCode == keys.RIGHT || keyCode == keys.LEFT) {
                         if (!$(current).hasClass(".k-dropdown")) {
-                            focusElement = move(keyCode == keys.RIGHT ? 1 : -1, true);
+                            focusElement = move(keyCode == keys.RIGHT ? 1 : -1, that.element, true);
                         }
+                    } else if (resizable && (keyCode == keys.UP || keyCode == keys.DOWN)) {
+                        focusElement = move(keyCode == keys.DOWN ? 1 : -1, that.overflowPopup.element, true);
                     } else if (keyCode == keys.ESC) {
+                        if (that.overflowPopup.visible()) {
+                            that.overflowPopup.close();
+                        }
+
                         focusElement = that._editor;
                     } else if (keyCode == keys.TAB && !(e.ctrlKey || e.altKey)) {
+                        if (resizable) {
+                            currentContainer = $(current.parentElement).hasClass("k-overflow-tool-group") ? that.overflowPopup.element : that.element;
+                        } else {
+                            currentContainer = that.element;
+                        }
+
                         // skip tabbing to disabled tools, and focus the editing area when running out of tools
                         if (e.shiftKey) {
-                            focusElement = move(-1);
+                            focusElement = move(-1, currentContainer);
                         } else {
-                            focusElement = move(1);
+                            focusElement = move(1, currentContainer);
 
                             if (!focusElement) {
                                 focusElement = that._editor;

@@ -54,8 +54,7 @@
             '<span class="k-separator" />',
 
         overflowAnchorTemplate:
-            '<a href="" role="button" class="k-tool k-overflow-anchor"' +
-            '#= data.popup ? " data-popup" : "" #' +
+            '<a href="" role="button" class="k-tool k-overflow-anchor" data-popup' +
             ' unselectable="on"><span unselectable="on" class="k-icon k-i-more"></span></a>',
 
         formatByName: function(name, format) {
