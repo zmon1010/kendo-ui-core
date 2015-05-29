@@ -365,6 +365,53 @@
         testOne("=B$1+C1", "=B$1+C2");
     });
 
+    test("formula adjustment", function(){
+        function makeFormula(input) {
+            return calc.compile(calc.parse("sheet1", 5, 5, input));
+        }
+        var f = makeFormula("=sum(a10:c15)");
+
+        // insert 3 rows before row 7; the formula is at 5,5
+        f.adjust("row", 7, 3, 5, 5);
+        equal(f.print(5, 5), "sum(A13:C18)");
+
+        // insert 2 cols before col 1; the formula will move to 5,7
+        f.adjust("col", 1, 2, 5, 5);
+        equal(f.print(5, 7), "sum(A13:E18)");
+
+        // insert 1 col before col A; the formula moves to 5,8
+        f.adjust("col", 0, 1, 5, 7);
+        equal(f.print(5, 8), "sum(B13:F18)");
+
+        // delete col A; the formula moves back to 5,7
+        f.adjust("col", 0, -1, 5, 8);
+        equal(f.print(5, 7), "sum(A13:E18)");
+
+        // delete col E; the formula moves to 5,6
+        f.adjust("col", 4, -1, 5, 7);
+        equal(f.print(5, 6), "sum(A13:D18)");
+
+        // delete cols C and D; the formula moves to 5,4
+        f.adjust("col", 2, -2, 5, 6);
+        equal(f.print(5, 4), "sum(A13:B18)");
+
+        // delete rows 1-4; the formula moves to 1,4
+        f.adjust("row", 0, -4, 5, 4);
+        equal(f.print(1, 4), "sum(A9:B14)");
+
+        // delete row 10
+        f.adjust("row", 9, -1, 1, 4);
+        equal(f.print(1, 4), "sum(A9:B13)");
+
+        // delete rows 9 and 10
+        f.adjust("row", 8, -2, 1, 4);
+        equal(f.print(1, 4), "sum(A9:B11)");
+
+        // delete col A; the formula moves to 1,3
+        f.adjust("col", 0, -1, 1, 4);
+        equal(f.print(1, 3), "sum(A9:A11)");
+    });
+
     /* -----[ reference operations ]----- */
 
     test("reference intersection", function(){

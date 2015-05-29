@@ -189,6 +189,7 @@
                 if (exp.type != "ref" || exp.ref != "name") {
                     input.croak("Expecting function name");
                 }
+                refs.pop();     // not real reference
                 var args = [];
                 input.next();
                 if (!is("punc", ")")) {

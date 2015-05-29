@@ -253,7 +253,14 @@ Spreadsheet.prototype = {
             cell.formula.adjust("row", row, n, cell.row, cell.col);
         });
         increaseProps(sheet.data, row, n);
+        this.debugFormulas();
         this.recalculate();
+    },
+
+    debugFormulas: function() {
+        this.getVisibleFormulas().forEach(function(cell){
+            console.log(cell.formula.print(cell.row, cell.col));
+        });
     },
 
     deleteRows: function(sheetName, row, n) {
@@ -262,6 +269,7 @@ Spreadsheet.prototype = {
             cell.formula.adjust("row", row, -n, cell.row, cell.col);
         });
         reduceProps(sheet.data, row, n);
+        this.debugFormulas();
         this.recalculate();
     },
 
@@ -504,10 +512,24 @@ fillElements({
         C1: 7,
         C2: 8,
         C3: 9,
+
+        G11: 1,
+        G12: 2,
+        G13: 3,
+        H11: 4,
+        H12: 5,
+        H13: 6,
+        I11: 7,
+        I12: 8,
+        I13: 9,
+
         //E5: "=sum(A1:C3)",
-        E5: "=B2",
-        E6: "=B$2",
-        E7: "=(a1+a2)*a3",
+        // E5: "=B2",
+        // E6: "=B$2",
+        // E7: "=(a1+a2)*a3",
+        // E8: "=sum(A1:C3)",
+        E5: "=sum(B2:C3)",
+        E6: "=sum(I13:G11)"
         // E6: "=SUM((a1,a2,a3), (b1,b2,b3))",
     },
     sheet2: {

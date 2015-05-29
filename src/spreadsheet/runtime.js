@@ -85,9 +85,31 @@
         adjust: function(operation, start, delta, formulaRow, formulaCol) {
             this.refs = this.refs.map(function(ref){
                 if (ref instanceof CellRef) {
-                    return fixCell(ref);
+                    return deletesCell(ref) ? NULL : fixCell(ref);
                 }
                 else if (ref instanceof RangeRef) {
+                    var del_start = deletesCell(ref.topLeft);
+                    var del_end = deletesCell(ref.bottomRight);
+                    if (del_start && del_end) {
+                        return NULL;
+                    }
+                    if (del_start) {
+                        // this case is rather tricky to handle with relative references.  what we
+                        // want here is that the range top-left stays in place, even if the cell
+                        // itself is being deleted.  So, we (1) convert it to absolute cell based on
+                        // formula position, then make it relative to the location where the formula
+                        // will end up after the deletion.
+                        return new RangeRef(
+                            ref.topLeft
+                                .absolute(formulaRow, formulaCol)
+                                .relative(
+                                    operation == "row" ? fixNumber(formulaRow) : formulaRow,
+                                    operation == "col" ? fixNumber(formulaCol) : formulaCol,
+                                    ref.topLeft.rel
+                                ),
+                            fixCell(ref.bottomRight)
+                        ).setSheet(ref.sheet, ref.hasSheet());
+                    }
                     return new RangeRef(
                         fixCell(ref.topLeft),
                         fixCell(ref.bottomRight)
@@ -97,11 +119,17 @@
                     throw new Error("Unknown reference in adjust");
                 }
             });
-            // debug_printRefs(
-            //     this,
-            //     formulaRow + (operation == "row" ? delta : 0),
-            //     formulaCol + (operation == "col" ? delta : 0)
-            // );
+            function deletesCell(ref) {
+                if (delta >= 0) {
+                    return false;
+                }
+                ref = ref.absolute(formulaRow, formulaCol);
+                if (operation == "row") {
+                    return ref.row >= start && ref.row < start - delta;
+                } else {
+                    return ref.col >= start && ref.col < start - delta;
+                }
+            }
             function fixCell(ref) {
                 return new CellRef(
                     operation == "row" ? fixNumber(ref.row, ref.rel & 2, formulaRow) : ref.row,

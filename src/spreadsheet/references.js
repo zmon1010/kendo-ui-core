@@ -65,6 +65,9 @@
         },
         absolute: function(){
             return this;
+        },
+        relative: function(){
+            return this;
         }
     });
 
@@ -148,6 +151,9 @@
             }
         },
         absolute: function(arow, acol) {
+            if (this.rel & 3 === 0) {
+                return this;    // already absolute
+            }
             var ret = this.clone();
             ret.rel = 0;
             if (this.rel & 1) {
@@ -159,6 +165,12 @@
                 ret.row += arow;
             }
             return ret;
+        },
+        relative: function(arow, acol, rel) {
+            var row = rel & 2 ? this.row - arow : this.row;
+            var col = rel & 1 ? this.col - acol : this.col;
+            return new CellRef(row, col, rel)
+                .setSheet(this.sheet, this.hasSheet());
         }
     });
 
