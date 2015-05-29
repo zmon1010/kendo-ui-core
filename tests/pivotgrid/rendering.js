@@ -240,7 +240,9 @@
 
         equal(tr.length, 1);
         equal(th.length, 1);
+
         equal(th.text(), "dim 0");
+        equal(th.html(), "<span>dim 0</span>");
     });
 
     test("PivotGrid renders column header for 2 dimension with one tuple each", function() {
