@@ -20,6 +20,13 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
-        // Place custom settings here
+        /// <summary>
+        /// Sets the axis type to date.
+        /// </summary>
+        public ChartCategoryAxisBuilder Date()
+        {
+            Container.Type = "date";
+            return this;
+        }
     }
 }
