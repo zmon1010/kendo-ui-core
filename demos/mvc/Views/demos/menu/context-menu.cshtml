@@ -1,7 +1,7 @@
 <div id="example">
     <script src="../content/shared/js/webmail.js"></script>
 
-    <div class="demo-section k-header">
+    <div class="demo-section k-header wide">
         <h4>WebMail</h4>
         <div id="listview-context-menu"></div>
     </div>
@@ -44,15 +44,6 @@
             <img src="../content/web/toolbar/forward.png" />  Forward
         </li>
         <li class="k-separator"></li>
-        <li>
-            Mark as
-            <ul>
-                <li>Unread</li>
-                <li class="k-separator"></li>
-                <li>Important</li>
-                <li>Read</li>
-            </ul>
-        </li>
         <li>
             Label
             <ul>
@@ -120,9 +111,6 @@
 </script>
 
 <style>
-    .demo-section {
-            width: 860px;
-        }
     #listview-context-menu {
         padding: 0;
         margin-bottom: -1px;
@@ -164,5 +152,15 @@
         height: 0;
         clear: both;
         visibility: hidden;
+    }
+    
+    @@media screen and (max-width: 620px) {
+        .product h3 {
+           max-width: 100px;
+           white-space: nowrap;
+           text-overflow: ellipsis;
+           height: 15px;
+        }
+     
     }
 </style>
