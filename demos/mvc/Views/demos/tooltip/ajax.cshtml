@@ -1,5 +1,10 @@
         <div id="example">
-            <div class="demo-section k-header">
+            <div class="demo-section k-header wide">
+                <div class="dairy-description">
+                    <h2>Dairy Products</h2>
+                    <p>Queso Cabrales, Queso Manchego La Pastora, Gorgonzola Telino, Mascarpone Fabioli, Geitost, Raclette Courdavault, Camembert Pierrott, Gudbrandsdalsost, Flotemysost, Mozzarella di Giovanni</p>
+                    <p class="demo-hint" style="margin: 1em 0;">Hover an image for details.</p>
+                </div>
                 <ul id="products" class="dairy-photos">
                     <li>
                         <a href="#" data-id="1"><img src="../content/web/foods/11.jpg" /></a>
@@ -21,11 +26,6 @@
                         <a href="#" data-id="9"><img src="../content/web/foods/72.jpg" /></a>
                     </li>
                 </ul>
-                <div class="dairy-description">
-                    <h2>Dairy Products</h2>
-                    <p>Queso Cabrales, Queso Manchego La Pastora, Gorgonzola Telino, Mascarpone Fabioli, Geitost, Raclette Courdavault, Camembert Pierrott, Gudbrandsdalsost, Flotemysost, Mozzarella di Giovanni</p>
-                    <p class="demo-hint" style="margin-top: 2em;">Hover an image for details.</p>
-                </div>
             </div>
 
             <script>
@@ -51,15 +51,12 @@
 
             <style>
                 .demo-section {
-                    height: 340px;
-                    width: 700px;
+                    max-width: 760px;
                 }
                 .dairy-photos {
-                    float: left;
                     list-style-type: none;
                     margin: 0;
                     padding: 0;
-                    width: 330px;
                     line-height: 0;
                 }
                 .dairy-photos li {
@@ -86,9 +83,7 @@
                     display: inline-block;
                 }
                 .dairy-description {
-                    float: right;
-                    width: 320px;
-                    margin: 80px 0 0;
+
                 }
                 .dairy-description h2 {
                     font-size: 2.7em;
