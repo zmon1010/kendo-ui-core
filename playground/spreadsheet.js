@@ -17,7 +17,9 @@ sheet.rowHeight(1, 40);
 sheet.rowHeight(50, 200);
 
 sheet.range(1, 0, 50).background("green");
-sheet.range(3, 3, 6, 6).background("teal").value("foo").merge();
+sheet.range(2, 2, 8, 6).background("teal").value("foo").merge();
+
+sheet.frozenColumns(3).frozenRows(6);
 
 for (var i = 0, len = 50; i < len; i++) {
     var x = calc.parse("sheet1", i, 0, "=AVERAGE(L:L)");

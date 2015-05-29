@@ -55,13 +55,6 @@
             this.element = $("<div class=k-spreadsheet-view />").appendTo(this.wrapper);
             this.tree = new kendo.dom.Tree(this.fixedContainer[0]);
 
-            this.panes = [
-                new Pane(this.wrapper, sheet, { col: 5, row: 5 }),
-                new Pane(this.wrapper, sheet, { col: 0, row: 5, columnCount: 5 }),
-                new Pane(this.wrapper, sheet, { col: 5, row: 0, rowCount: 5 }),
-                new Pane(this.wrapper, sheet, { col: 0, row: 0, columnCount: 5, rowCount: 5 })
-            ];
-
             this.wrapper.on("scroll", this.render.bind(this));
         },
 
@@ -69,9 +62,27 @@
             this.element[0].style.height = this._sheet._grid.totalHeight() + "px";
             this.element[0].style.width = this._sheet._grid.totalWidth() + "px";
 
+            var frozenCol = this._sheet.frozenColumns();
+            var frozenRow = this._sheet.frozenRows();
+
+            this.panes = [ new Pane(this.wrapper, this._sheet, { row: frozenRow, col: frozenCol }) ];
+
+            if (frozenCol > 0) {
+                this.panes.push(new Pane(this.wrapper, this._sheet, { row: frozenRow, col: 0, columnCount: frozenCol }));
+            }
+
+            if (frozenRow > 0) {
+                this.panes.push(new Pane(this.wrapper, this._sheet, { row: 0, col: frozenCol, rowCount: frozenRow }));
+            }
+
+            if (frozenRow > 0 && frozenCol > 0) {
+                this.panes.push(new Pane(this.wrapper, this._sheet, { row: 0, col: 0, rowCount: frozenRow, columnCount: frozenCol }));
+            }
+
             this.panes.forEach(function(pane) {
+                pane.context(this._context);
                 pane.refresh();
-            });
+            }, this);
         },
 
         render: function() {
@@ -85,9 +96,7 @@
         },
 
         context: function(context) {
-            this.panes.forEach(function(pane) {
-                pane.context(context);
-            });
+            this._context = context;
         }
     });
 

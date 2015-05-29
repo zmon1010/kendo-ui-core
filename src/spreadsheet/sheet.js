@@ -17,6 +17,8 @@
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
             this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth);
             this._mergedCells = [];
+            this._frozenRows = 0;
+            this._frozenColumns = 0;
 
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount);
         },
@@ -37,6 +39,24 @@
 
         rowHeight: function(rowIndex, height) {
             return this._rows.value(rowIndex, rowIndex, height);
+        },
+
+        frozenRows: function(value) {
+            if (!value) {
+                return this._frozenRows;
+            }
+
+            this._frozenRows = value;
+            return this;
+        },
+
+        frozenColumns: function(value) {
+            if (!value) {
+                return this._frozenColumns;
+            }
+
+            this._frozenColumns = value;
+            return this;
         },
 
         range: function(row, column, numRows, numColumns) {
