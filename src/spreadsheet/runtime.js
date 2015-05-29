@@ -304,7 +304,7 @@
         };
     }
 
-    function DIVIDE(callback, left, right){
+    function divide(callback, left, right){
         if (right === 0) {
             this.error(new CalcError("DIV/0"));
         } else {
@@ -313,50 +313,6 @@
     }
 
     var FUNCS = {
-
-        sum: function(callback, args){
-            args = cellValues(this, args);
-            var sum = 0;
-            forNumbers(this, args, function(num){
-                sum += num;
-            });
-            callback(sum);
-        },
-
-        average: function(callback, args){
-            args = cellValues(this, args);
-            var sum = 0, count = 0;
-            forNumbers(this, args, function(num){
-                ++count;
-                sum += num;
-            });
-            DIVIDE.call(this, callback, sum, count);
-        },
-
-        // XXX: does more work than needed
-        indirect: function(callback, args){
-            cellValues(this, args, function(thing){
-                try {
-                    if (typeof thing != "string") {
-                        throw 1;
-                    }
-                    var ref = calc.parseFormula(this.sheet, this.row, this.col, thing);
-                    if (ref.ast.type != "ref") {
-                        throw 1;
-                    }
-                    ref = ref.ast;
-                    resolveCells(this, [ ref ], function(){
-                        callback(ref);
-                    });
-                } catch(ex) {
-                    this.error(new CalcError("REF"));
-                }
-            });
-        },
-
-        rand: function(callback) {
-            callback(Math.random());
-        },
 
         /* -----[ binary ops ]----- */
 
@@ -370,7 +326,7 @@
         "binary*": binaryNumeric(function(callback, left, right){
             callback(left * right);
         }),
-        "binary/": binaryNumeric(DIVIDE),
+        "binary/": binaryNumeric(divide),
         "binary^": binaryNumeric(function(callback, left, right){
             callback(Math.pow(left, right));
         }),
@@ -538,5 +494,7 @@
     exports.forNumbers = forNumbers;
 
     exports.cellValues = cellValues;
+
+    exports.divide = divide;
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

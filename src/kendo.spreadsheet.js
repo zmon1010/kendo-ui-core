@@ -10,7 +10,8 @@
         "./spreadsheet/axis",
         "./spreadsheet/sorter",
         "./spreadsheet/runtime",
-        "./spreadsheet/calc"
+        "./spreadsheet/calc",
+        "./spreadsheet/runtime.functions.js"
     ], f);
 })(function(){
     var __meta__ = {
