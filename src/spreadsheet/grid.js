@@ -5,6 +5,18 @@
 (function(kendo) {
     var CellRef = kendo.spreadsheet.CellRef;
 
+    var Rectangle = kendo.Class.extend({
+        init: function(left, top, width, height) {
+            this.left = left;
+            this.width = width;
+            this.right = left + width;
+
+            this.top = top;
+            this.height = height;
+            this.bottom = top + height;
+        }
+    })
+
     var Grid = kendo.Class.extend({
         init: function(rows, columns, rowCount, columnCount) {
             this.rowCount = rowCount;
@@ -18,6 +30,14 @@
                 rows: this._rows.visible(rectangle.top, rectangle.bottom),
                 columns: this._columns.visible(rectangle.left, rectangle.right)
             };
+        },
+
+        width: function(start, length) {
+            return this._columns.sum(start, length);
+        },
+
+        height: function(start, length) {
+            return this._rows.sum(start, length);
         },
 
         totalHeight: function() {
@@ -48,12 +68,12 @@
         },
 
         rectangle: function(ref) {
-            return {
-                x: this._columns.sum(0, ref.topLeft.col - 1),
-                y: this._rows.sum(0, ref.topLeft.row - 1),
-                width: this._columns.sum(ref.topLeft.col, ref.bottomRight.col),
-                height: this._rows.sum(ref.topLeft.row, ref.bottomRight.row)
-            };
+            return new Rectangle(
+                this.width(0, ref.topLeft.col - 1),
+                this.height(0, ref.topLeft.row - 1),
+                this.width(ref.topLeft.col, ref.bottomRight.col),
+                this.height(ref.topLeft.row, ref.bottomRight.row)
+            );
         },
 
         forEachColumn: function(sample, max, callback) {
@@ -68,5 +88,6 @@
     });
 
     kendo.spreadsheet.Grid = Grid;
+    kendo.spreadsheet.Rectangle = Rectangle;
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

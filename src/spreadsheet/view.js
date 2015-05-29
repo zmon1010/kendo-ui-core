@@ -138,35 +138,33 @@
                 left += scrollLeft;
             }
 
-            return {
-                left: left,
-                top: top,
-                right: left + rectangle.width,
-                bottom: top + rectangle.height
-            };
+            return new kendo.spreadsheet.Rectangle(left, top, rectangle.width, rectangle.height);
         },
 
         rectangle: function() {
             var element = this.scrollable[0];
+            var grid = this._sheet._grid;
+            var row = this.row;
+            var col = this.col;
 
-            var pane = {
-                top: this._sheet._rows.sum(0, this.row - 1),
-                left: this._sheet._columns.sum(0, this.col - 1)
-            };
+            var top = grid.height(0, row - 1);
+            var left = grid.width(0, col - 1);
+
+            var width, height;
 
             if (this.columnCount) {
-                pane.width = this._sheet._columns.sum(this.col, this.col + this.columnCount - 1);
+                width = grid.width(col, col + this.columnCount - 1);
             } else {
-                pane.width = element.clientWidth - pane.left;
+                width = element.clientWidth - left;
             }
 
             if (this.rowCount) {
-                pane.height = this._sheet._rows.sum(this.row, this.row + this.rowCount - 1);
+                height = grid.height(row, row + this.rowCount - 1);
             } else {
-                pane.height = element.clientHeight - pane.top;
+                height = element.clientHeight - top;
             }
 
-            return pane;
+            return new kendo.spreadsheet.Rectangle(left, top, width, height);
         },
 
         renderAt: function(rectangle) {
@@ -240,7 +238,6 @@
             style.top = this._rectangle.top  + "px";
             style.left = this._rectangle.left   + "px";
 
-
             return kendo.dom.element("div", { style: style, className: "k-spreadsheet-pane" }, [table.toDomTree(x, y)].concat(mergedCells));
         },
 
@@ -263,7 +260,7 @@
                 table.addRow(rectangle.height);
                 table.addCell(0, value, { backgroundColor: background } );
 
-                mergedCells.push(table.toDomTree(rectangle.x - left, rectangle.y - top, "k-spreadsheet-merged-cell"));
+                mergedCells.push(table.toDomTree(rectangle.left - left, rectangle.top - top, "k-spreadsheet-merged-cell"));
             }
 
             return mergedCells;
