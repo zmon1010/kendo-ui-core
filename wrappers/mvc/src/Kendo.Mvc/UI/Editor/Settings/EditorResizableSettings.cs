@@ -21,9 +21,13 @@ namespace Kendo.Mvc.UI
 
         //>> Fields
         
+        public bool? Content { get; set; }
+        
         public double? Min { get; set; }
         
         public double? Max { get; set; }
+        
+        public bool? Toolbar { get; set; }
         
         //<< Fields
 
@@ -31,6 +35,11 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
+            if (Content.HasValue)
+            {
+                json["content"] = Content;
+            }
+                
             if (Min.HasValue)
             {
                 json["min"] = Min;
@@ -39,6 +48,11 @@ namespace Kendo.Mvc.UI
             if (Max.HasValue)
             {
                 json["max"] = Max;
+            }
+                
+            if (Toolbar.HasValue)
+            {
+                json["toolbar"] = Toolbar;
             }
                 
         //<< Serialization
