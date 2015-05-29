@@ -8,6 +8,7 @@
 <% Html.Kendo().Editor()
       .Name("editor")
       .HtmlAttributes(new { style = "width: 740px;height:250px" })
+      .Resizable(resizable => resizable.Content(false).Toolbar(true))
       .Value(() =>
            { %>
             &lt;p&gt;

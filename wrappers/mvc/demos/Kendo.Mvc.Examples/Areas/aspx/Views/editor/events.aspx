@@ -14,6 +14,7 @@
           .Select("select")
           .Paste("paste")
        )
+       .Resizable(resizable => resizable.Content(false).Toolbar(true))
        .Value(() =>
            { %>
             &lt;p&gt;

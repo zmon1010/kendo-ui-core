@@ -1,6 +1,7 @@
 @(Html.Kendo().Editor()
       .Name("editor")
       .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .Resizable(resizable => resizable.Content(false).Toolbar(true))
       .Events(events => events
           .Change("change")
           .Execute("execute")
