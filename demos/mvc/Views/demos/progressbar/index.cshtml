@@ -3,7 +3,7 @@
         <h2>What are your favourite recent movies?</h2>
         <ul class="forms">
             <li>
-                <label>First favourite</label><select id="favouriteMovie1" style="width: 260px;">
+                <label>First favourite</label><select id="favouriteMovie1" style="width: 100%;">
                     <option value="fastAndFurious">Fast and Furious 6</option>
                     <option value="nowYouSeeMe">Now you see me</option>
                     <option value="theHelp">The Help</option>
@@ -12,7 +12,7 @@
                 </select>
             </li>
             <li>
-                <label>Second favourite</label><select id="favouriteMovie2" style="width: 260px;">
+                <label>Second favourite</label><select id="favouriteMovie2" style="width: 100%;">
                         <option value="fastAndFurious" selected>Fast and Furious 6</option>
                         <option value="nowYouSeeMe">Now you see me</option>
                         <option value="theHelp">The Help</option>
@@ -21,7 +21,7 @@
                     </select>
             </li>
             <li>
-                <label>Third favourite</label><select id="favouriteMovie3" style="width: 260px;">
+                <label>Third favourite</label><select id="favouriteMovie3" style="width: 100%;">
                     <option value="fastAndFurious">Fast and Furious 6</option>
                     <option value="nowYouSeeMe" selected>Now you see me</option>
                     <option value="theHelp">The Help</option>
@@ -30,7 +30,7 @@
                 </select>
             </li>
             <li>
-                <button id ="voteButton" class="k-button">Vote</button>
+                <button id ="voteButton" class="k-button k-primary">Vote</button>
             </li>
         </ul>
     </div>
@@ -106,9 +106,6 @@
     </script>
 
     <style>      
-        .demo-section {
-            width: 400px;
-        }
         
         .demo-section h2 {
             font-weight: normal;
@@ -118,23 +115,24 @@
         .forms {
             list-style-type: none;
             padding: 0;
-            margin-bottom: -10px;
+            margin: 0;
         }
         
         .forms label {
-            display: inline-block;
-            width: 120px;
-            text-align: right;
-            padding-right: 18px;
+            display: block;
+            font-size: 12px;
+            line-height: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1em;
         }
         
         .forms li {
-            margin-bottom: 10px;
+            margin-bottom: 1.5em;
         }
         
         #voteButton {
-            width: 260px;
-            margin: 10px 0 0 138px;
+            width: 100%;
         }
         
         .poll-results {
@@ -149,9 +147,9 @@
             height: 3px;
             line-height: 0;
         }
-        #example .poll-results h4, .poll-results .k-progressbar {
-            margin: 0 0 5px 0;
-            width: 400px;
+        .poll-results .k-progressbar {
+            margin-bottom: 1.5em;
+            width: 100%;
         }
     </style>
 </div>

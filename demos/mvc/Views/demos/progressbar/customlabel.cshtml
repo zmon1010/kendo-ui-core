@@ -1,22 +1,19 @@
 <div id="example">
     <div class="demo-section k-header">
-        <h4>Reset Password</h4>
-        <div>
-            <ul class="forms">
-                <li>
-                    <label>New Password</label>
-                    <input id="userPass" type="password" name="userPass" value="" class="k-textbox" style="width: 260px;" />
-                </li>
-                <li>
-                    <label>Password strength</label>
-                    <div id="passStrength" style="width: 260px;"></div>
-                </li>
-                <li>
-                    <label></label>
-                    <button id ="submitButton" class="k-button">Done</button>
-                </li>
-            </ul>
-        </div>
+        <ul class="forms">
+            <li>
+                <label>New Password</label>
+                <input id="userPass" type="password" name="userPass" value="" class="k-textbox" style="width: 100%;" />
+            </li>
+            <li>
+                <label>Password strength</label>
+                <div id="passStrength" style="width: 100%;"></div>
+            </li>
+            <li>
+                <label></label>
+                <button id ="submitButton" class="k-button k-primary">Reset Password</button>
+            </li>
+        </ul>
     </div>
     <script>
         var passProgress;
@@ -74,30 +71,27 @@
     </script>
 
     <style>
-        .demo-section {
-            width: 430px;
-        }
-        
         .forms {
             list-style-type: none;
             padding: 0;
-            margin-bottom: -10px;
+            margin: 0;
         }
         
         .forms label {
-            display: inline-block;
-            width: 130px;
-            text-align: right;
-            padding-right: 20px;
+            display: block;
+            font-size: 12px;
+            line-height: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1em;
         }
         
         .forms li {
-            margin-bottom: 10px;
+            margin-bottom: 1.5em;
         }
         
         #submitButton {
-            width: 260px;
-            margin: 10px 0 0 0;
+            width: 100%;
         }
     </style>
 </div>
