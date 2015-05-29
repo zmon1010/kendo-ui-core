@@ -92,8 +92,7 @@
 
             var merged = [];
             merged = Array.prototype.concat.apply(merged, result);
-            kendo.animationFrame(function() { this.tree.render(merged); }.bind(this));
-            // this.tree.render(merged);
+            this.tree.render(merged);
         },
 
         context: function(context) {
