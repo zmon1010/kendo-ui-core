@@ -57,7 +57,6 @@
     background: @normal-text-color;
 }
 
-.km-nova .km-tabstrip,
 .km-nova .km-navbar,
 .km-nova .k-toolbar,
 .km-nova .km-tabstrip { 
@@ -67,6 +66,10 @@
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, @normal-text-color), color-stop(1, #0B1F31));
     background-image: -webkit-linear-gradient(top, @normal-text-color 0%, #0B1F31 100%);
     background-image: linear-gradient(to bottom, @normal-text-color 0%, #0B1F31 100%);
+}
+
+.km-nova .km-vertical-tabstrip {
+    background-color: darken(@normal-text-color, 7%);
 }
 
 .km-nova .km-navbar,
@@ -111,7 +114,6 @@
 .km-nova .km-accent.km-tabstrip,
 .km-nova .km-touch-scrollbar,
 .km-nova .km-vertical-tabstrip .km-button.km-state-active:before {
-{
     background: @accent;    
 }
 
@@ -205,7 +207,8 @@
     color: @accent;
 }
 
-.km-nova .km-legend-button {
+.km-nova .km-legend-button,
+.km-nova .km-drawer a {
     text-decoration: none;
 }
 
@@ -253,8 +256,14 @@
 .km-nova .km-list fieldset legend
 {
     background: @base;
-    border-color: darken(@base, 8%); // Calculate to #dfe0e1;
+    border-color: darken(@base, 13%); // Calculate to #dfe0e1;
     color: @normal-text-color;
+}
+
+/* Drawer */
+.km-nova .km-drawer {
+    color: @background;
+    background-color: darken(@normal-text-color, 7%);
 }
 
 /* ListView in Drawer */

@@ -101,31 +101,12 @@
 
 <div data-role="drawer" id="my-drawer" style="width: 270px" data-views="['drawer-home', 'drawer-starred', 'drawer-deleted', 'drawer-spam', 'drawer-drafts', 'drawer-sent', '/kendo-ui/mobile/m/drawer/index.html']">
     <ul data-role="listview" data-type="group">
-        <li>Mailbox
-            <ul>
                 <li data-icon="inbox"><a href="#drawer-home" data-transition="none">Inbox</a></li>
                 <li data-icon="star"><a href="#drawer-starred" data-transition="none">Starred Items</a></li>
                 <li data-icon="compose"><a href="#drawer-drafts" data-transition="none">Drafts</a></li>
                 <li data-icon="sent"><a href="#drawer-sent" data-transition="none">Sent Items</a></li>
                 <li data-icon="trash"><a href="#drawer-deleted" data-transition="none">Deleted Items</a></li>
                 <li data-icon="spam"><a href="#drawer-spam" data-transition="none">Spam</a></li>
-            </ul>
-        </li>
-        <li>Tasks
-            <ul>
-                <li>To Do</li>
-                <li>In Progress</li>
-                <li>Done</li>
-                <li>High Priority</li>
-                <li>Low Priority</li>
-            </ul>
-        </li>
-        <li>Account
-            <ul>
-                <li data-icon="settings">Settings</li>
-                <li data-icon="off">Log Out</li>
-            </ul>
-        </li>
     </ul>
 </div>
 
@@ -145,69 +126,7 @@
 </script>
 
 <style>
-    .km-ios #my-drawer .km-content, .km-android #my-drawer .km-content, .km-blackberry #my-drawer .km-content,
-    .km-ios #my-drawer .km-list > li, .km-android #my-drawer .km-list > li, .km-blackberry #my-drawer .km-list > li,
-    .km-ios #my-drawer .km-listview-link > .km-icon, .km-android #my-drawer .km-listview-link > .km-icon, .km-blackberry #my-drawer .km-listview-link > .km-icon,
-    .km-ios #my-drawer .km-list li > .km-icon, .km-android #my-drawer .km-list li > .km-icon, .km-blackberry #my-drawer .km-list li > .km-icon
-    {
-        background-color: #4e4e4e;
-        color: #fff;
-    }
-
-    .km-ios #my-drawer .km-group-title,
-    .km-blackberry #my-drawer .km-group-title
-    {
-        background-color: #6e6e6e;
-        color: #fff;
-    }
-
-    .km-drawer-button:before, .km-drawer-button:after  { content: "\E077"; }
-    .km-inbox:before, .km-inbox:after { content: "\E0B0"; }
-    .km-sent:before, .km-sent:after { content: "\E0C6"; }
-    .km-trash:before, .km-trash:after { content: "\E0C3"; }
-    .km-spam:before, .km-spam:after { content: "\E0C5"; }
-    .km-star:before, .km-star:after { content: "\E0D7"; }
-    .km-settings:before, .km-settings:after { content: "\E0DA"; }
-    .km-off:before, .km-off:after { content: "\E0B9"; }
-
-    .inboxList
-    {
-        font-size: .8em;
-    }
-
-    .inboxList p,
-    .inboxList h2,
-    .inboxList h3
-    {
-        margin: 5px 2px;
-    }
-
-    .inboxList p,
-    .inboxList h3
-    {
-        color: #777;
-    }
-
-    .inboxList h3.time
-    {
-        color: #369;
-        float: left;
-        margin-right: 10px;
-    }
-
-    #drawer-spam .spam
-    {
-        color: darkred;
-        background: currentcolor;
-        display: block;
-        margin: 2em;
-        font-size: 1.4em;
-    }
-
-    #drawer-spam .spam .km-text
-    {
-        color: white;
-    }
+  
 </style>
 
 
