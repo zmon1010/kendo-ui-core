@@ -39,7 +39,7 @@
         buttonTemplate:
             '<a href="" role="button" class="k-tool"' +
             '#= data.popup ? " data-popup" : "" #' +
-            ' unselectable="on" title="#= data.title #"><span unselectable="on" class="k-tool-icon #= data.cssClass #">#= data.title #</span></a>',
+            ' unselectable="on" title="#= data.title #"><span unselectable="on" class="k-tool-icon #= data.cssClass #"></span><span class="k-tool-text">#= data.title #</span></a>',
 
         colorPickerTemplate:
             '<div class="k-colorpicker #= data.cssClass #" />',
@@ -52,6 +52,10 @@
 
         separatorTemplate:
             '<span class="k-separator" />',
+
+        overflowAnchorTemplate:
+            '<a href="" role="button" class="k-tool k-overflow-anchor" data-popup' +
+            ' unselectable="on"><span unselectable="on" class="k-icon k-i-more"></span></a>',
 
         formatByName: function(name, format) {
             for (var i = 0; i < format.length; i++) {
@@ -253,6 +257,8 @@
                 .on("mousedown", proxy(that._endTyping, that))
                 .on("mouseup", proxy(that._mouseup, that));
 
+            that.toolbar.resize();
+
             kendo.notify(that);
         },
 
@@ -279,7 +285,9 @@
         },
 
         _resizable: function() {
-            if (this.options.resizable && this.textarea) {
+            var resizable = this.options.resizable;
+            var isResizable = $.isPlainObject(resizable) ? (resizable.content === undefined || resizable.content === true) : resizable;
+            if (isResizable && this.textarea) {
                 $("<div class='k-resize-handle'><span class='k-icon k-resize-se' /></div>")
                     .insertAfter(this.textarea);
 
@@ -620,6 +628,7 @@
             formats: {},
             encoded: true,
             domain: null,
+            resizable: false,
             serialization: {
                 entities: true,
                 semantic: true,

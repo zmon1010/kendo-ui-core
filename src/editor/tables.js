@@ -215,6 +215,10 @@ var InsertTableTool = PopupTool.extend({
     _keydown: function(e) {
         PopupTool.fn._keydown.call(this, e);
 
+        if (!this._popup.visible()) {
+            return;
+        }
+
         var keys = kendo.keys;
         var key = e.keyCode;
         var cells = this._popup.element.find(".k-ct-cell");
