@@ -692,7 +692,6 @@
         update: function() {
             this.updateGroups();
         },
-        //>>>>>>>>>>>> resizable functionality
 
         _resize: function(e) {
             var containerWidth = e.width;
