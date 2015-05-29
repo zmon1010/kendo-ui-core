@@ -28,6 +28,50 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Configures the default category axis or adds a new one
+        /// </summary>
+        /// <param name="configurator">The configurator for the axis</param>
+        /// <returns></returns>
+        public ChartBuilder CategoryAxis(Action<ChartCategoryAxisBuilder> configurator)
+        {
+            configurator(new ChartCategoryAxisFactory(Container.CategoryAxis).Add());
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the default value axis or adds a new one
+        /// </summary>
+        /// <param name="configurator">The configurator for the axis</param>
+        /// <returns></returns>
+        public ChartBuilder ValueAxis(Action<ChartValueAxisBuilder> configurator)
+        {
+            configurator(new ChartValueAxisFactory(Container.ValueAxis).Add());
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the default X axis or adds a new one
+        /// </summary>
+        /// <param name="configurator">The configurator for the axis</param>
+        /// <returns></returns>
+        public ChartBuilder XAxis(Action<ChartXAxisBuilder> configurator)
+        {
+            configurator(new ChartXAxisFactory(Container.XAxis).Add());
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the default Y axis or adds a new one
+        /// </summary>
+        /// <param name="configurator">The configurator for the axis</param>
+        /// <returns></returns>
+        public ChartBuilder YAxis(Action<ChartYAxisBuilder> configurator)
+        {
+            configurator(new ChartYAxisFactory(Container.YAxis).Add());
+            return this;
+        }
     }
 }
 

@@ -82,7 +82,7 @@ module CodeGen::MVC6::Wrappers::Options
         end
 
         def to_fluent
-            FLUENT.result(binding)
+            FLUENT.result(binding) if fluent?
         end
 
         def to_serialization

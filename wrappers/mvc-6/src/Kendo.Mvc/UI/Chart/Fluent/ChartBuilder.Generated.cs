@@ -21,21 +21,6 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The category axis configuration options.
-        /// </summary>
-        /// <param name="configurator">The configurator for the categoryaxis setting.</param>
-        public ChartBuilder CategoryAxis(Action<ChartCategoryAxisFactory> configurator)
-        {
-
-            configurator(new ChartCategoryAxisFactory(Container.CategoryAxis)
-            {
-                Chart = Container
-            });
-
-            return this;
-        }
-
-        /// <summary>
         /// The chart area configuration options. Represents the entire visible area of the chart.
         /// </summary>
         /// <param name="configurator">The configurator for the chartarea setting.</param>
@@ -172,51 +157,6 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartBuilder Transitions(bool value)
         {
             Container.Transitions = value;
-            return this;
-        }
-
-        /// <summary>
-        /// The value axis configuration options.
-        /// </summary>
-        /// <param name="configurator">The configurator for the valueaxis setting.</param>
-        public ChartBuilder ValueAxis(Action<ChartValueAxisFactory> configurator)
-        {
-
-            configurator(new ChartValueAxisFactory(Container.ValueAxis)
-            {
-                Chart = Container
-            });
-
-            return this;
-        }
-
-        /// <summary>
-        /// The X-axis configuration options of the scatter chart X-axis. Supports all valueAxis options.
-        /// </summary>
-        /// <param name="configurator">The configurator for the xaxis setting.</param>
-        public ChartBuilder XAxis(Action<ChartXAxisFactory> configurator)
-        {
-
-            configurator(new ChartXAxisFactory(Container.XAxis)
-            {
-                Chart = Container
-            });
-
-            return this;
-        }
-
-        /// <summary>
-        /// The y axis configuration options of the scatter chart. Supports all valueAxis options.
-        /// </summary>
-        /// <param name="configurator">The configurator for the yaxis setting.</param>
-        public ChartBuilder YAxis(Action<ChartYAxisFactory> configurator)
-        {
-
-            configurator(new ChartYAxisFactory(Container.YAxis)
-            {
-                Chart = Container
-            });
-
             return this;
         }
 

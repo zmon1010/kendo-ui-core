@@ -3,6 +3,7 @@ module CodeGen::MVC6::Wrappers::Options
     GENERIC_ARGS = YAML.load(File.read("build/codegen/lib/mvc-6/config/generics.yml"))
     IGNORED = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored.yml")).map(&:downcase)
     IGNORED_SERIALIZATION = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored_serialization.yml")).map(&:downcase)
+    IGNORED_FLUENT = YAML.load(File.read("build/codegen/lib/mvc-6/config/ignored_fluent.yml")).map(&:downcase)
 
     CSHARP_TYPES = {
         'Number' => 'double',
@@ -58,6 +59,10 @@ module CodeGen::MVC6::Wrappers::Options
         !IGNORED_SERIALIZATION.include?(full_name)
     end
 
+    def fluent?
+        !IGNORED_FLUENT.include?(full_name)
+    end
+
     def handler?
         csharp_type.eql?('ClientHandlerDescriptor')
     end
@@ -79,7 +84,7 @@ module CodeGen::MVC6::Wrappers::Options
     end
 
     def csharp_generic
-        GENERIC_ARGS[full_name.split('.')[0].downcase.to_sym]
+        GENERIC_ARGS[full_name.split('.')[0].to_sym]
     end
 
     def csharp_owner_builder_name
