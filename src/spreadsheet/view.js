@@ -35,8 +35,8 @@
             return td;
         },
 
-        toDomTree: function(x, y) {
-            return kendo.dom.element("table", { style: { left: x + "px", top: y + "px" }},
+        toDomTree: function(x, y, className) {
+            return kendo.dom.element("table", { style: { left: x + "px", top: y + "px" }, className: className },
                 [
                     kendo.dom.element("colgroup", null, this.cols),
                     kendo.dom.element("tbody", null, this.trs)
@@ -53,8 +53,6 @@
         sheet: function(sheet) {
             this._sheet = sheet;
             this.element = $("<div class=k-spreadsheet-view />").appendTo(this.wrapper);
-            this.element[0].style.height = sheet._grid.totalHeight() + "px";
-            this.element[0].style.width = sheet._grid.totalWidth() + "px";
             this.tree = new kendo.dom.Tree(this.fixedContainer[0]);
 
             this.panes = [
@@ -65,6 +63,15 @@
             ];
 
             this.wrapper.on("scroll", this.render.bind(this));
+        },
+
+        refresh: function() {
+            this.element[0].style.height = this._sheet._grid.totalHeight() + "px";
+            this.element[0].style.width = this._sheet._grid.totalWidth() + "px";
+
+            this.panes.forEach(function(pane) {
+                pane.refresh();
+            });
         },
 
         render: function() {
@@ -93,20 +100,14 @@
 
             this.scrollable = scrollable;
             this._sheet = sheet;
-            this._rectangle = this.rectangle();
-
-            var style = {};
-
-            style.width = this._rectangle.width + "px";
-            style.height = this._rectangle.height + "px";
-            style.top = this._rectangle.top  + "px";
-            style.left = this._rectangle.left   + "px";
-
-            this._paneStyle = style;
         },
 
         context: function(context) {
             this._context = context;
+        },
+
+        refresh: function() {
+            this._rectangle = this.rectangle();
         },
 
         render: function() {
@@ -218,8 +219,6 @@
                 }
             }
 
-            var mergedCells = this.renderMergedCells(promises, rectangle.x, rectangle.y);
-
             var x = columns.offset;
 
             if (this.columnCount) {
@@ -232,10 +231,20 @@
                 y = 0;
             }
 
-            return kendo.dom.element("div", { style: this._paneStyle, className: "k-spreadsheet-pane" }, [table.toDomTree(x, y)].concat(mergedCells));
+            var mergedCells = this.renderMergedCells(promises, rectangle.left, rectangle.top);
+
+            var style = {};
+
+            style.width = this._rectangle.width + "px";
+            style.height = this._rectangle.height + "px";
+            style.top = this._rectangle.top  + "px";
+            style.left = this._rectangle.left   + "px";
+
+
+            return kendo.dom.element("div", { style: style, className: "k-spreadsheet-pane" }, [table.toDomTree(x, y)].concat(mergedCells));
         },
 
-        renderMergedCells: function(promises, x, y) {
+        renderMergedCells: function(promises, left, top) {
             var mergedCells = [];
             var sheet = this._sheet;
             var grid = sheet._grid;
@@ -254,7 +263,7 @@
                 table.addRow(rectangle.height);
                 table.addCell(0, value, { backgroundColor: background } );
 
-                mergedCells.push(table.toDomTree(rectangle.x + x, rectangle.y + y));
+                mergedCells.push(table.toDomTree(rectangle.x - left, rectangle.y - top, "k-spreadsheet-merged-cell"));
             }
 
             return mergedCells;

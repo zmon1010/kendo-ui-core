@@ -51,6 +51,7 @@
         },
 
         refresh: function() {
+            this._view.refresh();
             this._view.render();
         },
 
