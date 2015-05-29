@@ -34,9 +34,17 @@
 
     <style>
         #listView {
-            min-height: 550px;
-            width: 660px;
+            max-width: 660px;
             margin: 0 auto;
+            background: none;
+            border: none;
+        }
+        #listView:after {
+            content: "";
+            display: block;
+            clear: both;
+            height: 0;
+            line-height: 0;
         }
 
         .product {
