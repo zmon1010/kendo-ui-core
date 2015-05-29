@@ -36,7 +36,12 @@
             <script>
                 $(document).ready(function() {
                     // create Editor from textarea HTML element with default set of tools
-                    $("#editor").kendoEditor();
+                    $("#editor").kendoEditor({
+                        resizable: {
+                            content: false,
+                            toolbar: true
+                        }
+                    });
                 });
             </script>
         </div>

@@ -46,7 +46,12 @@
 
             <script>
                 $(document).ready(function() {
-                    $("#editor").kendoEditor();
+                    $("#editor").kendoEditor({
+                        resizable: {
+                            content: false,
+                            toolbar: true
+                        }
+                    });
 
                     var editor = $("#editor").data("kendoEditor");
 

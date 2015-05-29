@@ -44,6 +44,10 @@
                 }
 
                 $("#editor").kendoEditor({
+                    resizable: {
+                        content: false,
+                        toolbar: true
+                    },
                     change: onChange,
                     select: onSelect,
                     execute: onExecute,
