@@ -8,14 +8,14 @@
     var Range = kendo.spreadsheet.Range;
 
     var Sheet = kendo.Class.extend({
-        init: function(rowCount, columnCount, rowHeight, columnWidth, fixed) {
+        init: function(rowCount, columnCount, rowHeight, columnWidth) {
             var cellsCount = rowCount * columnCount - 1;
 
             this._values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
             this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
             this._backgrounds = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
-            this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight, fixed);
-            this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth, fixed);
+            this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
+            this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth);
             this._mergedCells = [];
 
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount);

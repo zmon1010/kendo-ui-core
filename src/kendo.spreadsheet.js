@@ -22,21 +22,23 @@
         features: []
     };
 
-    var Widget = kendo.ui.Widget,
-        FIXED = false;
+    var Widget = kendo.ui.Widget;
 
     var Spreadsheet = kendo.ui.Widget.extend({
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
 
-            this._view = new kendo.spreadsheet.View(this.element, FIXED);
+            this.element.addClass("k-spreadsheet");
+            this._fixedContainer = $("<div class=k-spreadsheet-fixed-container>").appendTo(this.element);
+            this._scroller = $("<div class=k-spreadsheet-scroller>").appendTo(this.element);
+            this._view = new kendo.spreadsheet.View(this._scroller, this._fixedContainer);
 
             this._sheet = new kendo.spreadsheet.Sheet(
                 this.options.rows,
                 this.options.columns,
                 this.options.rowHeight,
-                this.options.columnWidth,
-                FIXED);
+                this.options.columnWidth
+                );
 
             this._sheet.name("sheet1");
 

@@ -19,14 +19,14 @@
 
     test("updates visual range", function() {
         var visible = axis.visible(20, 200);
-        equal(visible.offset, 15);
+        equal(visible.offset, -5);
         equal(visible.start, 1);
         equal(visible.end, 13);
     });
 
     test("updates visual range (last page)", function() {
         var visible = axis.visible(14000, 15100);
-        equal(visible.offset, 14095);
+        equal(visible.offset, 95);
         equal(visible.start, 933);
         equal(visible.end, 999);
     });

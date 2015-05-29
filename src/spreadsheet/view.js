@@ -45,10 +45,9 @@
     });
 
     var View = kendo.Class.extend({
-        init: function(element, fixed) {
+        init: function(element, fixedContainer) {
             this.wrapper = $(element);
-            this.wrapper.addClass("k-spreadsheet");
-            this.fixed = fixed;
+            this.fixedContainer = fixedContainer;
         },
 
         sheet: function(sheet) {
@@ -56,13 +55,13 @@
             this.element = $("<div class=k-spreadsheet-view />").appendTo(this.wrapper);
             this.element[0].style.height = sheet._grid.totalHeight() + "px";
             this.element[0].style.width = sheet._grid.totalWidth() + "px";
-            this.tree = new kendo.dom.Tree(this.element[0]);
+            this.tree = new kendo.dom.Tree(this.fixedContainer[0]);
 
             this.panes = [
-                new Pane(this.element, this.fixed, sheet, { x: 5, y: 5 }),
-                new Pane(this.element, this.fixed, sheet, { x: 0, y: 5, width: 5 }),
-                new Pane(this.element, this.fixed, sheet, { x: 5, y: 0, height: 5 }),
-                new Pane(this.element, this.fixed, sheet, { x: 0, y: 0, width: 5, height: 5 })
+                new Pane(this.wrapper, sheet, { col: 5, row: 5 }),
+                new Pane(this.wrapper, sheet, { col: 0, row: 5, columnCount: 5 }),
+                new Pane(this.wrapper, sheet, { col: 5, row: 0, rowCount: 5 }),
+                new Pane(this.wrapper, sheet, { col: 0, row: 0, columnCount: 5, rowCount: 5 })
             ];
 
             this.wrapper.on("scroll", this.render.bind(this));
@@ -70,7 +69,7 @@
 
         render: function() {
             var result = this.panes.map(function(pane) {
-                return pane.render(this.wrapper[0]);
+                return pane.render();
             }, this);
 
             var merged = [];
@@ -83,69 +82,90 @@
                 pane.context(context);
             });
         }
-    })
+    });
 
     var Pane = kendo.Class.extend({
-        init: function(element, fixed, sheet, rectangle) {
-            this.rectangle = rectangle;
+        init: function(scrollable, sheet, config) {
+            this.col = config.col;
+            this.row = config.row;
+            this.columnCount = config.columnCount;
+            this.rowCount = config.rowCount;
+
+            this.scrollable = scrollable;
             this._sheet = sheet;
-            this.container = this.element;
-            this.x = sheet._columns.sum(0, rectangle.x - 1);
-            this.y = sheet._rows.sum(0, rectangle.y - 1);
+            this._rectangle = this.rectangle();
+
+            var style = {};
+
+            style.width = this._rectangle.width + "px";
+            style.height = this._rectangle.height + "px";
+            style.top = this._rectangle.top  + "px";
+            style.left = this._rectangle.left   + "px";
+
+            this._paneStyle = style;
         },
 
         context: function(context) {
             this._context = context;
         },
 
-        render: function(element) {
-            return this.renderAt(this.visibleRectangle(element));
+        render: function() {
+            return this.renderAt(this.visibleRectangle());
         },
 
-        visibleRectangle: function(element) {
-            var top = element.scrollTop;
-            var bottom = top + element.clientHeight;
+        visibleRectangle: function() {
+            var element = this.scrollable[0];
+            var scrollTop = element.scrollTop;
+            var scrollLeft = element.scrollLeft;
+            var rectangle = this._rectangle;
+            var top = rectangle.top;
+            var left = rectangle.left;
 
-            if (top < 0) {
-                bottom -= top;
-                top = 0;
+            if (scrollTop < 0) {
+                scrollTop = 0;
             }
 
-            var left = element.scrollLeft;
-            var right = left + element.clientWidth;
-
-            if (left < 0) {
-                right -= left;
-                left = 0;
+            if (scrollLeft < 0) {
+                scrollLeft = 0;
             }
 
-            var pane = {
-                top: top + this.y,
-                left: left + this.x
-            };
-
-            if (this.rectangle.width) {
-                pane.width = this._sheet._columns.sum(this.rectangle.x, this.rectangle.x + this.rectangle.width - 1);
-            } else {
-                pane.width = element.clientWidth - this.x;
+            if (!this.rowCount) {
+                top += scrollTop;
             }
 
-            if (this.rectangle.height) {
-                pane.height = this._sheet._rows.sum(this.rectangle.y, this.rectangle.y + this.rectangle.height - 1);
-            } else {
-                pane.height = element.clientHeight - this.y;
+            if (!this.columnCount) {
+                left += scrollLeft;
             }
-
-            var leftOffset = (this.rectangle.width ? this.x : left + this.x);
-            var topOffset = (this.rectangle.height ? this.y : top + this.y);
 
             return {
-                pane: pane,
-                left:  leftOffset,
-                top:  topOffset,
-                right: leftOffset + pane.width,
-                bottom: topOffset + pane.height
+                left: left,
+                top: top,
+                right: left + rectangle.width,
+                bottom: top + rectangle.height
             };
+        },
+
+        rectangle: function() {
+            var element = this.scrollable[0];
+
+            var pane = {
+                top: this._sheet._rows.sum(0, this.row - 1),
+                left: this._sheet._columns.sum(0, this.col - 1)
+            };
+
+            if (this.columnCount) {
+                pane.width = this._sheet._columns.sum(this.col, this.col + this.columnCount - 1);
+            } else {
+                pane.width = element.clientWidth - pane.left;
+            }
+
+            if (this.rowCount) {
+                pane.height = this._sheet._rows.sum(this.row, this.row + this.rowCount - 1);
+            } else {
+                pane.height = element.clientHeight - pane.top;
+            }
+
+            return pane;
         },
 
         renderAt: function(rectangle) {
@@ -200,26 +220,19 @@
 
             var mergedCells = this.renderMergedCells(promises, rectangle.x, rectangle.y);
 
-            var style = {};
+            var x = columns.offset;
 
-            style.width = rectangle.pane.width + "px";
-            style.height = rectangle.pane.height + "px";
-            style.top = rectangle.pane.top + "px";
-            style.left = rectangle.pane.left + "px";
-
-            var x = columns.offset - rectangle.pane.left;
-
-            if (this.rectangle.width) {
+            if (this.columnCount) {
                 x = 0;
             }
 
-            var y = rows.offset - rectangle.pane.top
+            var y = rows.offset;
 
-            if (this.rectangle.height) {
+            if (this.rowCount) {
                 y = 0;
             }
 
-            return kendo.dom.element("div", { style: style, className: "k-spreadsheet-pane" }, [table.toDomTree(x, y)].concat(mergedCells));
+            return kendo.dom.element("div", { style: this._paneStyle, className: "k-spreadsheet-pane" }, [table.toDomTree(x, y)].concat(mergedCells));
         },
 
         renderMergedCells: function(promises, x, y) {

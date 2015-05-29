@@ -4,10 +4,9 @@
 
 (function(kendo) {
     var Axis = kendo.Class.extend({
-        init: function(count, value, fixed) {
+        init: function(count, value) {
             this.values = new kendo.spreadsheet.RangeList(0, count - 1, value, true);
             this.scrollBarSize = kendo.support.scrollbar();
-            this.fixed = fixed;
             this._refresh();
         },
 
@@ -64,10 +63,6 @@
             }
 
             offset = -offset;
-
-            if (!this.fixed) {
-                offset += start;
-            }
 
             return {
                 values: this.values.iterator(startIndex, endIndex),

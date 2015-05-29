@@ -13,16 +13,26 @@
         <style>
             .k-spreadsheet {
                 border: 1px solid black;
-                width: 1500px;
-                height: 1200px;
-                overflow: scroll;
+                width: 1200px;
+                height: 800px;
+                position: relative;
             }
 
-            @media only screen and (max-device-width: 667px) {
-                .k-spreadsheet-wrapper {
-                    width: 100%;
-                    -webkit-overflow-scrolling: touch;
-                }
+            .k-spreadsheet-scroller {
+                width: 100%;
+                height: 100%;
+                overflow: scroll;
+                -webkit-overflow-scrolling: touch;
+                position: absolute;
+                z-index: 1;
+            }
+
+            .k-spreadsheet-fixed-container {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+                z-index: 2;
             }
 
             .k-spreadsheet-view {
@@ -36,7 +46,7 @@
                 box-sizing: border-box;
             }
 
-            .k-spreadsheet-view table {
+            .k-spreadsheet table {
                 table-layout: fixed;
                 border-collapse: collapse;
                 box-sizing: border-box;
@@ -45,7 +55,7 @@
                 position: absolute;
             }
 
-            .k-spreadsheet-view table td {
+            .k-spreadsheet table td {
                 border: 1px solid gray;
                 box-sizing: border-box;
                 overflow: hidden;
@@ -53,38 +63,22 @@
                 height: 20px;
             }
 
-            .k-spreadsheet-view table tr:first-child td {
+            .k-spreadsheet table tr:first-child td {
                 border-top: 0;
             }
 
-            .k-spreadsheet-view table tr:last-child td {
+            .k-spreadsheet table tr:last-child td {
                 border-bottom: 0;
             }
 
-            .k-spreadsheet-view table td:last-child {
+            .k-spreadsheet table td:last-child {
                 border-right: 0;
             }
 
-            .k-spreadsheet-view table td:first-child {
+            .k-spreadsheet table td:first-child {
                 border-left: 0;
             }
 
-
-            /* Alternative rendering support */
-
-            .k-spreadsheet-fixed {
-                position: fixed;
-                overflow: hidden;
-            }
-
-            .k-spreadsheet-fixed .k-spreadsheet-view {
-                position: static;
-            }
-
-            .k-spreadsheet-fixed table {
-                width: 100%;
-                height: 100%;
-            }
         </style>
     </head>
     <body>
@@ -94,5 +88,22 @@
         </div>
 
         <script type="text/javascript" src="spreadsheet.js"></script>
+
+        <script type="text/javascript" charset="utf-8">
+
+            var el = document.querySelector('#spreadsheet .k-spreadsheet-scroller');
+
+            function passThroughEvent(e) {
+                el.scrollTop += e.deltaY;
+                el.scrollLeft += e.deltaX;
+                /*
+                var clone = new WheelEvent(e.type, e);
+                el.dispatchEvent(clone);
+                */
+                e.preventDefault();
+            }
+
+            document.querySelector("#spreadsheet .k-spreadsheet-fixed-container").addEventListener("wheel", passThroughEvent);
+        </script>
     </body>
 </html>
