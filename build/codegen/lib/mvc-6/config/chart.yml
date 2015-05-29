@@ -146,6 +146,23 @@
       :merge: true
       :enum_type: ChartDashType
 
+    - :name: series.line.style
+      :description: Specifies the preferred line rendering style.
+      :type: String
+      :enum_type: ChartLineStyle
+      :values:
+          - :value: normal
+            :member: Normal
+            :description: Points will be connected with straight line.
+
+          - :value: step
+            :member: Step
+            :description: Points will be connected with a line at right angles.
+
+          - :value: smooth
+            :member: Smooth
+            :description: Points will be connected with smooth line.
+
     - :name: series.target.line.width
       :merge: true
       :type: double

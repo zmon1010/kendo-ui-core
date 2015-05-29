@@ -11,6 +11,8 @@ namespace Kendo.Mvc.UI
     /// </summary>
     public partial class ChartLegendItemSettings 
     {
+        public string Cursor { get; set; }
+
         public ClientHandlerDescriptor Visual { get; set; }
 
 
@@ -19,6 +21,11 @@ namespace Kendo.Mvc.UI
         protected Dictionary<string, object> SerializeSettings()
         {
             var settings = new Dictionary<string, object>();
+
+            if (Cursor?.HasValue() == true)
+            {
+                settings["cursor"] = Cursor;
+            }
 
             if (Visual?.HasValue() == true)
             {

@@ -17,7 +17,7 @@ namespace Kendo.Mvc.UI
 
         public string Width { get; set; }
 
-        public string Style { get; set; }
+        public ChartLineStyle? Style { get; set; }
 
 
         public Chart Chart { get; set; }
@@ -41,9 +41,9 @@ namespace Kendo.Mvc.UI
                 settings["width"] = Width;
             }
 
-            if (Style?.HasValue() == true)
+            if (Style.HasValue)
             {
-                settings["style"] = Style;
+                settings["style"] = Style?.Serialize();
             }
 
             return settings;

@@ -41,10 +41,10 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The supported values are:
+        /// Specifies the preferred line rendering style.
         /// </summary>
         /// <param name="value">The value for Style</param>
-        public ChartSeriesLineSettingsBuilder Style(string value)
+        public ChartSeriesLineSettingsBuilder Style(ChartLineStyle value)
         {
             Container.Style = value;
             return this;

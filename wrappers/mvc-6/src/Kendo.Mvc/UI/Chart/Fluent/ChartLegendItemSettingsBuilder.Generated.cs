@@ -11,6 +11,16 @@ namespace Kendo.Mvc.UI.Fluent
         
     {
         /// <summary>
+        /// The cursor style of the legend item.
+        /// </summary>
+        /// <param name="value">The value for Cursor</param>
+        public ChartLegendItemSettingsBuilder Cursor(string value)
+        {
+            Container.Cursor = value;
+            return this;
+        }
+
+        /// <summary>
         /// A function that can be used to create a custom visual for the legend items. The available argument fields are:
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will be evaluated.</param>
