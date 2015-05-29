@@ -30,6 +30,10 @@
 
             this.element.addClass("k-spreadsheet");
             this._fixedContainer = $("<div class=k-spreadsheet-fixed-container>").appendTo(this.element);
+
+            var scrollbar = kendo.support.scrollbar();
+            this._fixedContainer.css({ width: element.clientWidth - scrollbar, height: element.clientHeight - scrollbar });
+
             this._scroller = $("<div class=k-spreadsheet-scroller>").appendTo(this.element);
             this._view = new kendo.spreadsheet.View(this._scroller, this._fixedContainer);
 
