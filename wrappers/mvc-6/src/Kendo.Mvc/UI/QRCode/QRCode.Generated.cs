@@ -70,16 +70,6 @@ namespace Kendo.Mvc.UI
                 settings["value"] = Value;
             }
 
-            if (Encoding.HasValue)
-            {
-                settings["encoding"] = Encoding?.Serialize();
-            }
-
-            if (ErrorCorrection.HasValue)
-            {
-                settings["errorCorrection"] = ErrorCorrection?.Serialize();
-            }
-
             return settings;
         }
     }
