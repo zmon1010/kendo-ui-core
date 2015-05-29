@@ -124,6 +124,19 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// If set to true, the application will set the meta viewport tag scale value according to the device pixel ratio, and re-scale the app by setting root element font size to the respective value.
+		/// This will result in the widget borders/separators being real 1px  wide.
+		/// For example, in iPhone 4/5, the device pixel ratio is 2, which means that the scale will be set to 0.5, while the app root will receive a font-size: 2 * 0.92 inline style set.
+        /// </summary>
+        /// <param name="value">The value that configures the retina.</param>
+        public MobileApplicationBuilder Retina(bool value)
+        {
+            container.Retina = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// If set to true, the application will not use AJAX to load remote views.
         /// </summary>
         /// <param name="value">The value that configures the servernavigation.</param>

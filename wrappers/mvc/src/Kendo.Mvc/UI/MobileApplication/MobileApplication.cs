@@ -53,6 +53,8 @@ namespace Kendo.Mvc.UI
         
         public string Root { get; set; }
         
+        public bool Retina { get; set; }
+        
         public bool ServerNavigation { get; set; }
         
         public string Skin { get; set; }
