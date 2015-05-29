@@ -21,6 +21,13 @@ namespace Kendo.Mvc.UI.Fluent
             Container.Title.Text = title;
             return this;
         }
+
+        public ChartBuilder SeriesDefaults(Action<ChartSeriesDefaultsSettingsBuilder> configurator)
+        {
+            configurator(new ChartSeriesDefaultsSettingsBuilder(Container.SeriesDefaults));
+
+            return this;
+        }
     }
 }
 

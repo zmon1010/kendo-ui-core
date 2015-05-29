@@ -3,15 +3,17 @@ using Microsoft.AspNet.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Kendo.Mvc.UI
 {
     /// <summary>
     /// Kendo UI Chart component
     /// </summary>
-    public partial class Chart : WidgetBase
-        
+    public partial class Chart : WidgetBase        
     {
+        public ChartSeriesDefaultsSettings SeriesDefaults { get; } = new ChartSeriesDefaultsSettings();
+
         public Chart(ViewContext viewContext) : base(viewContext)
         {
         }
@@ -28,7 +30,11 @@ namespace Kendo.Mvc.UI
         {
             var settings = SerializeSettings();
 
-            // TODO: Manually serialized settings go here
+            var seriesDefaults = SeriesDefaults.Serialize();
+            if (seriesDefaults.Any())
+            {
+                settings["seriesDefaults"] = seriesDefaults;
+            }
 
             writer.Write(Initializer.Initialize(Selector, "Chart", settings));
         }
