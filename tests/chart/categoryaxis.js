@@ -240,7 +240,7 @@
 
         test("labels are distributed horizontally (justified)", function() {
             createCategoryAxis({ justified: true });
-            closeTextPosition("x", getAxisTexts(), [0, 776], TOLERANCE);
+            closeTextPosition("x", getAxisTexts(), [-12, 787], TOLERANCE);
         });
 
         test("labels are distributed horizontally in reverse", function() {
@@ -251,7 +251,7 @@
 
         test("labels are distributed horizontally in reverse (justified)", function() {
             createCategoryAxis({ justified: true, reverse: true });
-            closeTextPosition("x", getAxisTexts(), [776, 0], TOLERANCE);
+            closeTextPosition("x", getAxisTexts(), [787, -12], TOLERANCE);
         });
 
         test("labels are positioned below axis line", 2, function() {
@@ -266,7 +266,7 @@
         test("major ticks are distributed horizontally (justified)", function() {
             createCategoryAxis({ justified: true });
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [14.5, 786.5], TOLERANCE);
+                 [0.5, 799.5], TOLERANCE);
         });
 
         test("major ticks are distributed horizontally in reverse", function() {
@@ -278,7 +278,7 @@
         test("major ticks are distributed horizontally in reverse (justified)", function() {
             createCategoryAxis({ justified: true, reverse: true });
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [786.5, 14.5], TOLERANCE);
+                 [799.5, 0.5], TOLERANCE);
         });
 
         test("major ticks can be disabled", function() {
@@ -302,7 +302,7 @@
                 minorTicks: { visible: true }
             });
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [14.5, 272, 529, 788.5], TOLERANCE);
+                 [0.5, 266.5, 533.5, 799.5], TOLERANCE);
         });
 
         test("minor ticks are distributed horizontally in reverse", function() {
@@ -324,7 +324,7 @@
             });
 
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [788.5, 529, 271, 14.5], TOLERANCE);
+                 [799.5, 533.5, 266.5, 0.5], TOLERANCE);
         });
 
         test("minor ticks can be disabled", function() {
@@ -498,7 +498,7 @@
             createCategoryAxis({ vertical: true, justified: true });
 
             arrayClose($.map(getAxisTexts(), function(text) { return text.rect().origin.y }),
-                 [0, 585], TOLERANCE);
+                 [-7.5, 591.5], TOLERANCE);
         });
 
         test("labels are positioned to the left of the axis line", function() {
@@ -515,7 +515,7 @@
             createCategoryAxis({ vertical: true, justified: true });
 
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().y; }),
-                 [9, 593.5], TOLERANCE);
+                 [0.5, 599.5], TOLERANCE);
         });
 
         test("minor ticks are distributed vertically", function() {
@@ -538,7 +538,7 @@
             });
 
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().y; }),
-                [9, 203, 397, 593.5], TOLERANCE);
+                [0.5, 200, 399.5, 599.5], TOLERANCE);
         });
 
         test("line width 0 remove all ticks", function() {

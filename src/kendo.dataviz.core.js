@@ -1826,17 +1826,11 @@ var __meta__ = {
                 mirror = options.labels.mirror,
                 axisX = mirror ? box.x1 : box.x2,
                 axisY = mirror ? box.y2 : box.y1,
-                startMargin = 0,
-                endMargin = options.line.width;
-
-            if (justified && labels.length > 1) {
-                startMargin = labels[0].box[labelSize]() / 2;
-                endMargin = last(labels).box[labelSize]() / 2;
-            }
+                lineWidth = options.line.width || 0;
 
             return vertical ?
-                Box2D(axisX, box.y1 + startMargin, axisX, box.y2 - endMargin) :
-                Box2D(box.x1 + startMargin, axisY, box.x2 - endMargin, axisY);
+                Box2D(axisX, box.y1, axisX, box.y2 - lineWidth) :
+                Box2D(box.x1, axisY, box.x2 - lineWidth, axisY);
         },
 
         createTitle: function() {

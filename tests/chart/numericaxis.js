@@ -553,8 +553,8 @@
         module("Numeric Axis / Vertical / Rendering", {});
 
         test("creates axis line", function() {
-            var expectedLine = draw.Path.fromPoints([[MAX_LABEL_WIDTH + MARGIN, chartBox.y1 + LABEL_HEIGHT / 2],
-                [MAX_LABEL_WIDTH + MARGIN, chartBox.y2 - LABEL_HEIGHT / 2]]);
+            var expectedLine = draw.Path.fromPoints([[MAX_LABEL_WIDTH + MARGIN, chartBox.y1],
+                [MAX_LABEL_WIDTH + MARGIN, chartBox.y2]]);
             dataviz.alignPathToPixel(expectedLine);
             createNumericAxis();
 
@@ -581,8 +581,8 @@
         });
 
         test("creates axis line when max is not multiple of majorUnit", function() {
-            var expectedLine = draw.Path.fromPoints([[MAX_LABEL_WIDTH + MARGIN, chartBox.y1 + LABEL_HEIGHT / 2],
-                [MAX_LABEL_WIDTH + MARGIN, chartBox.y2 - LABEL_HEIGHT / 2]]);
+            var expectedLine = draw.Path.fromPoints([[MAX_LABEL_WIDTH + MARGIN, chartBox.y1],
+                [MAX_LABEL_WIDTH + MARGIN, chartBox.y2]]);
             dataviz.alignPathToPixel(expectedLine);
             createNumericAxis({ min: 0, max: 1, majorUnit: .3 });
 
@@ -636,7 +636,7 @@
 
         test("labels are distributed vertically", function() {
             createNumericAxis();
-            closeTextPosition("y", getAxisTexts(), [585, 487.5, 390, 291, 194, 97, 0], TOLERANCE);
+            closeTextPosition("y", getAxisTexts(), [591.5, 491.6, 391.8, 291, 192.1, 92.3, -7.5], TOLERANCE);
         });
 
         test("labels are distributed vertically in reverse", function() {
@@ -644,7 +644,7 @@
                 reverse: true
             });
 
-            closeTextPosition("y", getAxisTexts(), [585, 487.5, 390, 291, 194, 97, 0].reverse(), TOLERANCE);
+            closeTextPosition("y", getAxisTexts(), [591.5, 491.6, 391.8, 291, 192.1, 92.3, -7.5].reverse(), TOLERANCE);
         });
 
         test("labels are aligned right", function() {
@@ -667,7 +667,7 @@
             createNumericAxis();
 
             arrayClose($.map(getTicks(), function(line) {return line.segments[0].anchor().y;}),
-                 [593.5, 495, 397, 300, 203, 106, 9], TOLERANCE);
+                 [599.5, 499.5, 399.5, 300, 200.5, 100.5, 0.5], TOLERANCE);
         });
 
         test("excess space is allocated after last major tick", function() {
@@ -676,7 +676,7 @@
                 majorUnit: 0.5
             });
             arrayClose($.map(getTicks(), function(line) {return line.segments[0].anchor().y;}),
-                 [593.5, 348.5, 106], TOLERANCE);
+                 [599.5, 348.5, 100.5], TOLERANCE);
         });
 
         test("major ticks are distributed vertically in reverse", function() {
@@ -685,7 +685,7 @@
             });
 
             arrayClose($.map(getTicks(), function(line) {return line.segments[0].anchor().y;}),
-                 [593.5, 495, 397, 300, 203, 106, 9].reverse(), TOLERANCE);
+                 [599.5, 499.5, 399.5, 300, 200.5, 100.5, 0.5].reverse(), TOLERANCE);
         });
 
         test("excess space is allocated after last major tick in reverse", function() {
@@ -695,7 +695,7 @@
                 majorUnit: 0.5
             });
             arrayClose($.map(getTicks(), function(line) {return line.segments[0].anchor().y;}),
-                 [9, 251.5, 494], TOLERANCE);
+                 [0.5, 251.5, 499.5], TOLERANCE);
         });
 
         test("minor ticks can be disabled", function() {
@@ -714,12 +714,11 @@
                 minorTicks: { visible: true }
             });
             arrayClose($.map(getTicks(), function(line) {return line.segments[0].anchor().y;}),
-                 [593.5, 573.5, 554.5, 534.5, 514.5,
-                494, 476.5, 455.2, 437.5, 416.4,
-                397, 377.6, 358.2, 338.8, 319.4,
-                300, 280.6, 261.2, 241.8, 222.4,
-                203, 183.6, 164.2, 144.8, 125.4,
-                106, 86.6, 67.2, 47.8, 28.4, 9], TOLERANCE);
+                [599.5, 579.5, 559.5, 539.5, 519.5, 499.5, 
+                 479.5, 459.5, 439.5, 419.5, 399.5, 379.5, 
+                 359.5, 339.5, 319.5, 300.5, 280.5, 260.5, 
+                 240.5, 220.5, 200.5, 180.5, 160.5, 140.5, 
+                 120.5, 100.5, 80.5, 60.5, 40.5, 20.5, 0.5], TOLERANCE);
         });
 
         test("minor ticks are distributed vertically in reverse", function() {
@@ -729,12 +728,11 @@
                 minorTicks: { visible: true }
             });
             arrayClose($.map(getTicks(), function(line) {return line.segments[0].anchor().y;}),
-                 [593.5, 573.5, 554.5, 534.5, 514.5,
-                494, 476.5, 455.2, 437.5, 416.4,
-                397, 377.6, 358.2, 338.8, 319.4,
-                300, 280.6, 261.2, 241.8, 222.4,
-                203, 183.6, 164.2, 144.8, 125.4,
-                106, 86.6, 67.2, 47.8, 28.4, 9].reverse(), TOLERANCE);
+                [599.5, 579.5, 559.5, 539.5, 519.5, 499.5, 
+                 479.5, 459.5, 439.5, 419.5, 399.5, 379.5, 
+                 359.5, 339.5, 319.5, 300.5, 280.5, 260.5, 
+                 240.5, 220.5, 200.5, 180.5, 160.5, 140.5, 
+                 120.5, 100.5, 80.5, 60.5, 40.5, 20.5, 0.5].reverse(), TOLERANCE);
         });
 
         test("minor ticks are rendered after last major tick", function() {
@@ -746,7 +744,7 @@
                 minorTicks: { visible: true }
             });
             arrayClose($.map(getTicks(), function(line) {return line.segments[0].anchor().y;}),
-                [593.5, 515.5, 437.5, 358.2, 280.6, 203, 125.4, 47.8], TOLERANCE);
+                [599.5, 519.5, 439.5, 359.5, 280.5, 200.5, 120.5, 40.5], TOLERANCE);
         });
 
         test("major ticks are aligned to axis", 7, function() {
@@ -787,7 +785,7 @@
         });
 
         test("labels are distributed vertically", function() {
-            closeTextPosition("y", getAxisTexts(), [585, 390, 194, 0], TOLERANCE);
+            closeTextPosition("y", getAxisTexts(), [591.5, 391.8, 192.1, -7.5], TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -804,7 +802,7 @@
         });
 
         test("labels are distributed vertically, starting from the third", function() {
-            closeTextPosition("y", getAxisTexts(), [390, 194, 0], TOLERANCE);
+            closeTextPosition("y", getAxisTexts(), [391.8, 192.1, -7.5], TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -849,8 +847,8 @@
         });
 
         test("creates axis line", function() {
-            var expectedLine = draw.Path.fromPoints([[chartBox.x1 + (FIRST_LABEL_WIDTH / 2), chartBox.y1],
-                [chartBox.x2 - (LAST_LABEL_WIDTH / 2), chartBox.y1]]);
+            var expectedLine = draw.Path.fromPoints([[chartBox.x1, chartBox.y1],
+                [chartBox.x2, chartBox.y1]]);
             dataviz.alignPathToPixel(expectedLine);
 
             sameLinePath(getLine(), expectedLine, TOLERANCE);
@@ -872,12 +870,12 @@
         });
 
         test("labels are distributed horizontally", function() {
-            closeTextPosition("x", getAxisTexts(), [0, 122.333, 252.667, 383, 513.333, 653.333, 776], TOLERANCE);
+            closeTextPosition("x", getAxisTexts(), [-4, 121.1, 254.3, 387.5, 520.6, 661.8, 787], TOLERANCE);
         });
 
         test("labels are distributed horizontally in reverse", function() {
             createNumericAxis({ vertical: false, reverse: true });
-            closeTextPosition("x", getAxisTexts(), [784, 644, 514.5, 383, 253, 130, -8], TOLERANCE);
+            closeTextPosition("x", getAxisTexts(), [795, 653.8, 520.6, 387.5, 254.3, 129.167, -12], TOLERANCE);
         });
 
         test("labels are aligned top", 7, function() {
@@ -898,7 +896,7 @@
 
         test("major ticks are distributed horizontally", function() {
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [5, 135, 265, 396, 526, 656, 787], TOLERANCE);
+                 [0.5, 133.5, 266.5, 400.5, 533.5, 666.5, 799.5], TOLERANCE);
         });
 
         test("excess space is allocated after last major tick", function() {
@@ -908,13 +906,13 @@
                 majorUnit: 0.5
             });
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [5, 334, 663], TOLERANCE);
+                 [0, 334, 666.5], TOLERANCE);
         });
 
         test("major ticks are distributed horizontally in reverse", function() {
             createNumericAxis({ vertical: false, reverse: true });
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [5, 135, 265, 396, 526, 656, 787].reverse(), TOLERANCE);
+                 [0.5, 133.5, 266.5, 400.5, 533.5, 666.5, 799.5].reverse(), TOLERANCE);
         });
 
         test("excess space is allocated after last major tick in reverse", function() {
@@ -925,7 +923,7 @@
                 majorUnit: 0.5
             });
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [795, 465.833, 136.667], TOLERANCE);
+                 [799.5, 465.833, 133.5], TOLERANCE);
         });
 
         test("major ticks are vertical", 7, function() {
@@ -955,12 +953,10 @@
             });
 
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                [5, 31.067, 57.133, 83.2, 109.267, 135.333,
-                161.4, 187.467, 213.533, 239.6, 265.667,
-                291.733, 317.8, 343.867, 369.933, 396,
-                422.067, 448.133, 474.2, 500.267, 526.333,
-                552.4, 578.467, 604.533, 630.6, 656.667,
-                682.733, 710.5, 736.5, 762.5, 787].reverse(), TOLERANCE);
+                [0.5, 27.5, 53.5, 80.5, 107.5, 133.5, 160.5, 186.5, 
+                213.5, 240.5, 266.5, 293.5, 320.5, 346.5, 373.5, 
+                400.5, 426.5, 453.5, 479.5, 506.5, 533.5, 559.5, 
+                586.5, 613.5, 639.5, 666.5, 692.5, 719.5, 746.5, 772.5, 799.5].reverse(), TOLERANCE);
         });
 
         test("minor ticks are distributed horizontally in reverse", function() {
@@ -970,12 +966,10 @@
                 vertical: false
             });
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                [5, 31.067, 57.133, 83.2, 109.267, 135.333,
-                161.4, 187.467, 213.533, 239.6, 265.667,
-                291.733, 317.8, 343.867, 369.933, 396,
-                422.067, 448.133, 474.2, 500.267, 526.333,
-                552.4, 578.467, 604.533, 630.6, 656.667,
-                682.733, 710.5, 736.5, 762.5, 787], TOLERANCE);
+                [0.5, 27.5, 53.5, 80.5, 107.5, 133.5, 160.5, 186.5, 
+                213.5, 240.5, 266.5, 293.5, 320.5, 346.5, 373.5, 
+                400.5, 426.5, 453.5, 479.5, 506.5, 533.5, 559.5, 
+                586.5, 613.5, 639.5, 666.5, 692.5, 719.5, 746.5, 772.5, 799.5], TOLERANCE);
         });
 
         test("minor ticks are rendered after last major tick", function() {
@@ -988,7 +982,7 @@
                 minorTicks: { visible: true }
             });
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                [5, 109.267, 213.533, 317.8, 422.067, 526.333, 630.6, 736.5], TOLERANCE);
+                [0.5, 107.5, 213.5, 320.5, 426.5, 533.5, 639.5, 746.5], TOLERANCE);
         });
 
         test("minor ticks are vertical", 31, function() {
@@ -1040,7 +1034,7 @@
         });
 
         test("labels are distributed horizontally", function() {
-            closeTextPosition("x", getAxisTexts(), [0, 253, 514, 776], TOLERANCE);
+            closeTextPosition("x", getAxisTexts(), [-4, 253, 520.6, 787], TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -1059,7 +1053,7 @@
         });
 
         test("labels are distributed horizontally, starting from the thrid label", function() {
-            closeTextPosition("x", getAxisTexts(), [258, 516, 776], TOLERANCE);
+            closeTextPosition("x", getAxisTexts(), [254.3, 520.6, 787], TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -1110,7 +1104,7 @@
 
         test("positions slot for [0, 0.5]", function() {
             var slot = numericAxis.getSlot(0, 0.5);
-            arrayClose([slot.y1, slot.y2], [348.5, 591], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [348.5, 599], TOLERANCE);
         });
 
         test("positions slot for [0, 0.5] when reversed", function() {
@@ -1118,18 +1112,18 @@
                 reverse: true
             });
             var slot = numericAxis.getSlot(0, 0.5);
-            arrayClose([slot.y1, slot.y2], [9, 251], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [0, 251], TOLERANCE);
         });
 
         test("positions slot for [0.5, 1]", function() {
             var slot = numericAxis.getSlot(0.5, 1);
-            arrayClose([slot.y1, slot.y2], [106, 348.5], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [99.8, 348.5], TOLERANCE);
         });
 
         test("positions slot for [0.5, 1] when reversed", function() {
             numericAxis.options.reverse = true;
             var slot = numericAxis.getSlot(0.5, 1);
-            arrayClose([slot.y1, slot.y2], [251.5, 494], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [249.5, 499.1], TOLERANCE);
         });
 
         test("slot width is 0", function() {
@@ -1139,32 +1133,32 @@
 
         test("a value capped to minimum value", function() {
             var slot = numericAxis.getSlot(-1000, 1, true);
-            arrayClose([slot.y1, slot.y2], [106, 591], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [99.8, 599], TOLERANCE);
         });
 
         test("a value is not capped to minimum value", function() {
             var slot = numericAxis.getSlot(-100, 1);
-            arrayClose([slot.y1, slot.y2], [106, 49342], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [99.8, 50515.6], TOLERANCE);
         });
 
         test("a value capped to maximum coordinate value", function() {
             var slot = numericAxis.getSlot(-COORDINATE_LIMIT, 1);
-            arrayClose([slot.y1, slot.y2], [106, COORDINATE_LIMIT], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [99.8, COORDINATE_LIMIT], TOLERANCE);
         });
 
         test("b value capped to maximum value", function() {
             var slot = numericAxis.getSlot(0, 1000, true);
-            arrayClose([slot.y1, slot.y2], [9, 591], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [0, 599], TOLERANCE);
         });
 
         test("b value is not capped to maximum value", function() {
             var slot = numericAxis.getSlot(0, 100);
-            arrayClose([slot.y1, slot.y2], [-48157, 591], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [-49317.6, 599], TOLERANCE);
         });
 
         test("b value capped to minimum coordinate value", function() {
             var slot = numericAxis.getSlot(0, COORDINATE_LIMIT);
-            arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 591], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 599], TOLERANCE);
         });
 
         test("slot method returns slot as rect", function() {
@@ -1186,42 +1180,42 @@
 
         test("positions slot for [-0.5, 0]", function() {
             var slot = numericAxis.getSlot(-0.5, 0);
-            arrayClose([slot.y1, slot.y2], [9, 251.5], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [0, 249.5], TOLERANCE);
         });
 
         test("positions slot for [-1, -0.5]", function() {
             var slot = numericAxis.getSlot(-1, -0.5);
-            arrayClose([slot.y1, slot.y2], [251.5, 494], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [249.5, 499.1], TOLERANCE);
         });
 
         test("a value capped to maximum value", function() {
             var slot = numericAxis.getSlot(1000, -1, true);
-            arrayClose([slot.y1, slot.y2], [9, 494], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [0, 499.1], TOLERANCE);
         });
 
         test("a value is not capped to maximum value", function() {
             var slot = numericAxis.getSlot(100, -1);
-            arrayClose([slot.y1, slot.y2], [-48742, 494], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [-49916.6, 499.1], TOLERANCE);
         });
 
         test("a value capped to minimum coordinate value", function() {
             var slot = numericAxis.getSlot(COORDINATE_LIMIT, -1);
-            arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 494], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [-COORDINATE_LIMIT, 499.1], TOLERANCE);
         });
 
         test("b value capped to minimum value", function() {
             var slot = numericAxis.getSlot(0, -1000, true);
-            arrayClose([slot.y1, slot.y2], [9, 591], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [0, 599], TOLERANCE);
         });
 
         test("b value is not capped to minimum value", function() {
             var slot = numericAxis.getSlot(0, -100);
-            arrayClose([slot.y1, slot.y2], [9, 48757], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [0, 49916.6], TOLERANCE);
         });
 
         test("b value capped to maximum coordinate value", function() {
             var slot = numericAxis.getSlot(0, -COORDINATE_LIMIT);
-            arrayClose([slot.y1, slot.y2], [9, COORDINATE_LIMIT], TOLERANCE);
+            arrayClose([slot.y1, slot.y2], [0, COORDINATE_LIMIT], TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -1237,24 +1231,24 @@
 
         test("positions slot for [0, 0.5]", function() {
             var slot = numericAxis.getSlot(0, 0.5);
-            arrayClose([slot.x1, slot.x2], [5, 330.833], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [0, 332.9], TOLERANCE);
         });
 
         test("positions slot for [0, 0.5] when reversed", function() {
             numericAxis.options.reverse = true;
             var slot = numericAxis.getSlot(0, 0.5);
-            arrayClose([slot.x1, slot.x2], [461, 787], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [466, 799], TOLERANCE);
         });
 
         test("positions slot for [0.5, 1]", function() {
             var slot = numericAxis.getSlot(0.5, 1);
-            arrayClose([slot.x1, slot.x2], [330.833, 656.667], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [332.9, 665.8], TOLERANCE);
         });
 
         test("positions slot for [0.5, 1] when reversed", function() {
             numericAxis.options.reverse = true;
             var slot = numericAxis.getSlot(0.5, 1);
-            arrayClose([slot.x1, slot.x2], [135, 461], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [133.3, 466], TOLERANCE);
         });
 
         test("slot height is 0", function() {
@@ -1264,32 +1258,32 @@
 
         test("a value capped to minimum value", function() {
             var slot = numericAxis.getSlot(-1000, 1, true);
-            arrayClose([slot.x1, slot.x2], [5, 656.667], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [0, 665.8], TOLERANCE);
         });
 
         test("a value is not capped to minimum value", function() {
             var slot = numericAxis.getSlot(-100, 1);
-            arrayClose([slot.x1, slot.x2], [-65329, 656.667], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [-66583.3, 665.8], TOLERANCE);
         });
 
         test("a value capped to minimum coordinate value", function() {
             var slot = numericAxis.getSlot(-COORDINATE_LIMIT, 1);
-            arrayClose([slot.x1, slot.x2], [-COORDINATE_LIMIT, 656.667], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [-COORDINATE_LIMIT, 665.8], TOLERANCE);
         });
 
         test("b value capped to maximum value", function() {
             var slot = numericAxis.getSlot(0, 1000, true);
-            arrayClose([slot.x1, slot.x2], [5, 787], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [0, 799], TOLERANCE);
         });
 
         test("b value is not capped to maximum value", function() {
             var slot = numericAxis.getSlot(0, 100);
-            arrayClose([slot.x1, slot.x2], [5, 65337], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [0, 66583.3], TOLERANCE);
         });
 
         test("b value capped to maximum coordinate value", function() {
             var slot = numericAxis.getSlot(0, COORDINATE_LIMIT);
-            arrayClose([slot.x1, slot.x2], [5, COORDINATE_LIMIT], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [0, COORDINATE_LIMIT], TOLERANCE);
         });
 
         test("slot method returns slot as rect", function() {
@@ -1311,42 +1305,42 @@
 
         test("positions slot for [-0.5, 0]", function() {
             var slot = numericAxis.getSlot(-0.5, 0);
-            arrayClose([slot.x1, slot.x2], [470.625, 795], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [466.1, 799], TOLERANCE);
         });
 
         test("positions slot for [-1, -0.5]", function() {
             var slot = numericAxis.getSlot(-1, -0.5);
-            arrayClose([slot.x1, slot.x2], [146.249, 470.625], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [133.1, 466.1], TOLERANCE);
         });
 
         test("a value capped to maximum value", function() {
             var slot = numericAxis.getSlot(1000, -1, true);
-            arrayClose([slot.x1, slot.x2], [146.249, 795], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [133.166, 799], TOLERANCE);
         });
 
         test("a value is not capped to maximum value", function() {
             var slot = numericAxis.getSlot(100, -1);
-            arrayClose([slot.x1, slot.x2], [146.25, 65796], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [133.1, 67382.3], TOLERANCE);
         });
 
         test("a value capped to maximum coordinate value", function() {
             var slot = numericAxis.getSlot(COORDINATE_LIMIT, -1);
-            arrayClose([slot.x1, slot.x2], [146.25, COORDINATE_LIMIT], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [133.1, COORDINATE_LIMIT], TOLERANCE);
         });
 
         test("b value capped to minimum value", function() {
             var slot = numericAxis.getSlot(0, -1000, true);
-            arrayClose([slot.x1, slot.x2], [16, 796]);
+            arrayClose([slot.x1, slot.x2], [0, 799]);
         });
 
         test("b value is not capped to minimum value", function() {
             var slot = numericAxis.getSlot(0, -100);
-            arrayClose([slot.x1, slot.x2], [-64204, 796], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [-65784.3, 799], TOLERANCE);
         });
 
         test("b value capped to minimum coordinate value", function() {
             var slot = numericAxis.getSlot(0, -COORDINATE_LIMIT);
-            arrayClose([slot.x1, slot.x2], [-COORDINATE_LIMIT, 795], TOLERANCE);
+            arrayClose([slot.x1, slot.x2], [-COORDINATE_LIMIT, 799], TOLERANCE);
         });
     })();
 
@@ -1681,7 +1675,7 @@
 
         test("positioned at center", function() {
             arrayClose([titleBox.x1, titleBox.y1, titleBox.x2, titleBox.y2],
-                 [ 391, 585, 424, 600 ], TOLERANCE);
+                 [ 387, 585, 419, 600 ], TOLERANCE);
         });
 
         test("positioned left", function() {
@@ -1689,7 +1683,7 @@
             titleBox = plotArea.axisX.title.box;
 
             arrayClose([titleBox.x1, titleBox.y1, titleBox.x2, titleBox.y2],
-                 [ 13, 585, 45, 600 ], TOLERANCE);
+                 [ 17, 585, 49, 600 ], TOLERANCE);
         });
 
         test("positioned right", function() {
@@ -1697,7 +1691,7 @@
             titleBox = plotArea.axisX.title.box;
 
             arrayClose([titleBox.x1, titleBox.y1, titleBox.x2, titleBox.y2],
-                 [ 767, 585, 800, 600 ], TOLERANCE);
+                 [ 757, 585, 789, 600 ], TOLERANCE);
         });
 
         test("renders color", function() {
@@ -1732,7 +1726,7 @@
 
         test("positioned at center", function() {
             arrayClose([titleBox.x1, titleBox.y1, titleBox.x2, titleBox.y2],
-                 [ 391, 560, 424, 575 ], TOLERANCE);
+                 [ 387, 560, 419, 575 ], TOLERANCE);
         });
 
         test("positioned left", function() {
@@ -1743,7 +1737,7 @@
             titleBox = plotArea.axisX.title.box;
 
             arrayClose([titleBox.x1, titleBox.y1, titleBox.x2, titleBox.y2],
-                 [ 13, 560, 45, 575 ], TOLERANCE);
+                 [ 17, 560, 49, 575 ], TOLERANCE);
         });
 
         test("positioned right", function() {
@@ -1754,7 +1748,7 @@
             titleBox = plotArea.axisX.title.box;
 
             arrayClose([titleBox.x1, titleBox.y1, titleBox.x2, titleBox.y2],
-                 [ 767, 560, 800, 575 ], TOLERANCE);
+                 [ 757, 560, 789, 575 ], TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -1772,7 +1766,7 @@
 
         test("position at center", function() {
             arrayClose([titleBox.x1, titleBox.y1, titleBox.x2, titleBox.y2],
-                 [ 0, 274.5, 15, 307.5 ], TOLERANCE);
+                 [ 0, 276.5, 15, 307.5 ], TOLERANCE);
         });
 
         test("positioned bottom", function() {
@@ -1780,7 +1774,7 @@
             titleBox = plotArea.axisY.title.box;
 
             arrayClose([titleBox.x1, titleBox.y1, titleBox.x2, titleBox.y2],
-                 [ 0, 551.5, 16, 582 ], TOLERANCE);
+                 [ 0, 545, 16, 577 ], TOLERANCE);
         });
 
         test("positioned top", function() {
@@ -1788,7 +1782,7 @@
             titleBox = plotArea.axisY.title.box;
 
             arrayClose([titleBox.x1, titleBox.y1, titleBox.x2, titleBox.y2],
-                 [ 0, 0, 15, 33 ], TOLERANCE);
+                 [ 0, 7.5, 15, 39.5 ], TOLERANCE);
         });
 
         test("renders color", function() {
@@ -1818,7 +1812,7 @@
 
         test("position at center", function() {
             arrayClose([titleBox.x1, titleBox.y1, titleBox.x2, titleBox.y2],
-                 [ 33, 274.5, 48, 307.5 ], TOLERANCE);
+                 [ 33, 276.5, 48, 307.5 ], TOLERANCE);
         });
 
         test("positioned bottom", function() {
@@ -1829,7 +1823,7 @@
             titleBox = plotArea.axisY.title.box;
 
             arrayClose([titleBox.x1, titleBox.y1, titleBox.x2, titleBox.y2],
-                 [ 33, 551.5, 48, 582 ], TOLERANCE);
+                 [ 33, 545, 48, 577 ], TOLERANCE);
         });
 
         test("positioned top", function() {
@@ -1840,7 +1834,7 @@
             titleBox = plotArea.axisY.title.box;
 
             arrayClose([titleBox.x1, titleBox.y1, titleBox.x2, titleBox.y2],
-                 [ 33, 0, 48, 33 ], TOLERANCE);
+                 [ 33, 7.5, 48, 39.5 ], TOLERANCE);
         });
 
     })();
@@ -2146,7 +2140,7 @@
                 min: 0
             }, options));
             axisBox = new Box2D(0, 0, 50, 50);
-            axis.labels = [new LabelMock(Box2D(0, 0, 10, 10)), new LabelMock(Box2D(0, 0, 20, 10))];
+            axis.labels = [new LabelMock(Box2D(0, 0, 20, 20)), new LabelMock(Box2D(0, 0, 30, 20))];
         }
 
         // ------------------------------------------------------------
@@ -2165,7 +2159,7 @@
         });
 
         test("rotates labels with -90 degrees if there is a label with height bigger than the slot width", function() {
-            axis.labels[1].box.y2 = 20;
+            axis.labels[1].box.y2 = 30;
             axis.reflow(axisBox);
             axis.autoRotateLabels();
 
@@ -2182,7 +2176,7 @@
         });
 
         test("does not rotate labels if there isn't a label with width bigger than the slot width", function() {
-            axis.labels[1].box.x1 = 10;
+            axis.labels[1].box.x1 = 20;
             axis.reflow(axisBox);
             axis.autoRotateLabels();
 

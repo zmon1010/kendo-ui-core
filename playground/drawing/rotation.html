@@ -26,25 +26,29 @@
         var count = parseInt($("#count").val(), 10);
                 console.log(count);
         var categories = [];
+        var categories2 = [];
         for (var i = 0; i < count; i++) {
-            categories.push(new Date().toString().substr(0, 10));
+            categories.push(new Date().toString());
+            categories2.push(new Date().toString().substr(0, 5));
         }
 
         $("#chart").kendoChart({
             series: [{
-                type: "bar",
+                type: "column",             
                 data: [1,2,3]
             }],
             valueAxis: [{
-               axisCrossingValue: 100,
-               visible: true
+              
+            labels: {
+                template: "fooooo"
+            }
             }],
             categoryAxis: [{
+                 axisCrossingValue: 100,
                 //majorTicks: {visible: false},              
                 justified: false,
                 categories: categories,
                 labels: {
-                    rotationOrigin: "left",
                     rotation: -30
                     // rotation: {
                         // angle: 30,
@@ -53,6 +57,7 @@
                 }
             }]
         });
+        
 
         kendo.onResize(function() {
             $("#chart").data("kendoChart").resize();
@@ -71,7 +76,8 @@
   
       <input type="text" id="count" value="5"/>
       <button onclick="redraw()">redraw</button>
-      <div id="chart" ></div>
+      <div id="chart"></div>
+      <div id="chart2" ></div>
       <div id="surface"></div>      
   </body>
 </html>

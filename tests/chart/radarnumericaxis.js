@@ -31,7 +31,7 @@
             }, options)
         );
 
-        axis.reflow(new Box2D(300, 0, 310, 310));
+        axis.reflow(new Box2D(300, 0, 300, 300));
         axis.plotArea = {
             options: {},
             polarAxis: altAxis
@@ -54,20 +54,20 @@
     });
 
     test("renders major grid lines by default", function() {
-        equal(gridLines.length, 3);
+        equal(gridLines.length, 4);
     });
 
     test("points are placed on alt axis intervals", function() {
         var segments = gridLines[0].segments;
 
         close(segments[0].anchor().x, 300, TOLERANCE);
-        close(segments[0].anchor().y, 204, TOLERANCE);
+        close(segments[0].anchor().y, 299, TOLERANCE);
 
-        close(segments[1].anchor().x, 383, TOLERANCE);
-        close(segments[1].anchor().y, 348, TOLERANCE);
+        close(segments[1].anchor().x, 300, TOLERANCE);
+        close(segments[1].anchor().y, 300, TOLERANCE);
 
-        close(segments[2].anchor().x, 217, TOLERANCE);
-        close(segments[2].anchor().y, 348, TOLERANCE);
+        close(segments[2].anchor().x, 299, TOLERANCE);
+        close(segments[2].anchor().y, 300, TOLERANCE);
     });
 
     test("applies major grid line color", function() {
@@ -92,7 +92,7 @@
             }
         });
 
-        equal(gridLines.length, 15);
+        equal(gridLines.length, 16);
     });
 
     test("applies minor grid line color", function() {
@@ -135,7 +135,7 @@
     });
 
     test("renders major grid arcs", function() {
-        equal(gridLines.length, 3);
+        equal(gridLines.length, 4);
     });
 
     test("circle center is on alt axis center", function() {
@@ -146,9 +146,10 @@
     });
 
     test("circle radius matches value", function() {
-        close(gridLines[0].geometry().radius, 96, TOLERANCE);
-        close(gridLines[1].geometry().radius, 194, TOLERANCE);
-        close(gridLines[2].geometry().radius, 292, TOLERANCE);
+        close(gridLines[0].geometry().radius, 1, TOLERANCE);
+        close(gridLines[1].geometry().radius, 100, TOLERANCE);
+        close(gridLines[2].geometry().radius, 200, TOLERANCE);
+        close(gridLines[3].geometry().radius, 300, TOLERANCE);
     });
 
     test("applies major grid line color", function() {
@@ -174,7 +175,7 @@
             }
         });
 
-        equal(gridLines.length, 15);
+        equal(gridLines.length, 16);
     });
 
     test("applies minor grid line color", function() {
@@ -226,8 +227,8 @@
 
     test("polygon points are on circle", function() {
         arrayClose(mapSegments(plotBands[0].segments), [
-            [300, 204], [383, 348], [217, 348], [300, 204],
-            [302, 299], [298, 299], [300, 302], [302, 298]
+            [300, 200], [387, 350], [212, 350], [300, 200],
+            [300, 300], [300, 300], [300, 300], [300, 300]
         ], TOLERANCE);
     });
 
@@ -270,8 +271,8 @@
                 x: 300,
                 y: 300
             },
-            ir: 95.8,
-            r: 194.7
+            ir: 100,
+            r: 200
         }), TOLERANCE);
     });
 
@@ -305,7 +306,7 @@
     });
 
     test("value for point between gridlines (middle)", function() {
-        var p = Point2D.onCircle(center, 135, 50);
+        var p = Point2D.onCircle(center, 135, 51);
         close(axis.getValue(p), 1, 0.02);
     });
 
