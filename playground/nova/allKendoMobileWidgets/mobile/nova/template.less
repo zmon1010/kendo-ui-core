@@ -403,6 +403,25 @@
     background: @accent;
 }
 
+/* ModalView */
+.km-nova .km-modalview,
+.km-nova .km-modalview .km-footer .km-rightitem {
+    background: @background;
+}
+
+.km-nova .km-modalview .km-footer .km-button 
+{
+    color: darken(@base, 50%); // Calculate to #455a64;
+    border-color: darken(@base, 8%); // Calculate to #dfe0e1;
+}
+
+.km-nova .km-modalview .km-footer .km-rightitem .km-button:last-child,
+.km-nova .km-modalview .km-footer .km-button.km-state-active
+{
+    color: @accentSecond;
+}
+
+
 /* Collapsible */
 
 .km-nova .km-collapsible-header,

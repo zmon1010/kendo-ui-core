@@ -33,6 +33,7 @@
                     <li><a href="#switchView">Switch</a></li>
                     <li><a href="#loadingPopup">Loading popup</a></li>
                     <li><a href="#generalContentView">General content</a></li>  
+                     <li><a href="#modalView">Collapsible</a></li>  
                     <li><a href="#collapsibleView">Collapsible</a></li>                   
                 </ul>
             </li>
@@ -832,7 +833,32 @@
         </header>
     </div>
 
+
+
+    <!-- Modal View -->
+    <div data-role="view" id="modalView">
+  <a data-role="button" data-rel="modalview" href="#modalview-login" id="modalview-open-button">Login</a>
+</div>
     
+    <div data-role="modalview" id="modalview-login" style="width: 90%;">
+    <div data-role="header">
+        <div data-role="navbar">
+            <span>Login</span>
+            <a data-click="closeModalViewLogin" data-role="button" data-align="right">Cancel</a>
+        </div>
+    </div>
+
+    <ul data-role="listview" data-style="inset">
+        <li><label for="username">Username: <input type="text" id="username" /></label></li>
+        <li><label for="password">Password: <input type="password" id="password" /></label></li>
+    </ul>
+    <div data-role="footer">
+        <div data-role="navbar" class="">
+            <a data-click="closeModalViewLogin" id="modalview-login-button" type="button" data-role="button" data-align="right">Login</a>
+            <a data-click="closeModalViewLogin" id="modalview-reg-button" type="button" data-role="button" data-align="right">Register</a>
+        </div>
+    </div>
+</div>
     <!-- Collapsible -->
     <div data-role="view" id="collapsibleView">
     <div data-role="collapsible">
