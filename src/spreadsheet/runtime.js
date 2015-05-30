@@ -386,6 +386,8 @@
         "binary ": function(callback, args) {
             var left = args[0], right = args[1];
             if (left instanceof Ref && right instanceof Ref) {
+                left = left.absolute(this.row, this.col);
+                right = right.absolute(this.row, this.col);
                 var x = left.intersect(right);
                 if (x === NULL) {
                     this.error(new CalcError("NULL"));
