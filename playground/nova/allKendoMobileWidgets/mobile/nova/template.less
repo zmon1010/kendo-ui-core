@@ -19,6 +19,15 @@
 
 @accentSecond: #00acc1;
 
+/* Shim */
+
+.km-nova .km-shim,
+.km-phone .km-nova .km-actionsheet-wrapper,
+.km-nova .km-actionsheet-root
+{
+    background: rgba(0,0,0,.4);
+}
+
 // Button 
 .km-nova .km-button {
     color: @hover-text-color; 
@@ -378,28 +387,33 @@
     border-color: rgba(255, 255, 255, 1);
 }
 
-/* Checkboxes and radio buttons */
-//.km-nova input[type=checkbox]:checked + .km-checkbox-label:after {
-   // color: @accent;
-  //  border-color: darken(@base, 8%);
-//}
-
-//.km-nova .km-checkbox-label:after,
-//.km-nova .km-radio-label:after {
-  //  color: darken(@base, 8%);
-//}
-
-//.km-nova input[type=radio]:checked + .km-radio-label:before {
-  //  background: @accent;
-//}
-
-.km-nova .km-listview-label input[type=radio],
-.km-nova .km-listview-label input[type=checkbox] {
+/* Checkboxes and RadioButtons - old rendering */
+.km-nova input[type=radio],
+.km-nova input[type=checkbox] {
    color: @accent;
    border-color: darken(@base, 8%);
 }
 
-.km-nova .km-listview-label input[type=radio]:checked:after {
+.km-nova input[type=checkbox]:checked:after {
+    color: @accent;
+}
+
+.km-nova input[type=radio]:checked:after {
+    background: @accent;
+}
+
+/* Checkboxes and radio buttons */
+.km-nova .km-checkbox:checked + .km-checkbox-label:after {
+    color: @accent;
+    border-color: darken(@base, 8%);
+}
+
+.km-nova .km-checkbox-label:after,
+.km-nova .km-radio-label:after {
+    color: darken(@base, 8%);
+}
+
+.km-nova .km-radio:checked + .km-radio-label:before {
     background: @accent;
 }
 
@@ -421,6 +435,54 @@
     color: @accentSecond;
 }
 
+/* ActionSheet, Footer */
+.km-nova .km-actionsheet > li > a
+{
+    background:purple;
+    color: green;
+
+    /*border-top-color: @office365-list-border;
+    border-image: -webkit-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
+    border-image: -moz-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
+    border-image: -ms-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;*/
+}
+
+.km-nova .km-actionsheet > li:nth-last-child(2) > a
+{
+    border-image: none;   
+}
+
+.km-nova .km-footer .km-tabstrip .km-button:hover,
+.km-nova .km-actionsheet > li > a:active
+{
+    background: purple;
+}
+
+.km-nova .km-footer .km-tabstrip .km-button,
+.km-nova .km-actionsheet > li > a
+{
+    border-color: pink;
+}
+
+.km-nova .km-actionsheet > .km-actionsheet-cancel > a
+{
+    color: red;
+    background: green;
+}
+
+.km-nova .km-actionsheet-wrapper,
+.km-nova .km-popup .k-list-container
+{   
+    background: yellow;
+    border-top-color: orange;
+}
+
+.km-nova .km-popup.km-pane,
+.km-tablet .km-nova .km-actionsheet-wrapper
+{
+    background-color: purple;
+}
+
 
 /* Collapsible */
 
@@ -434,4 +496,42 @@
 .km-nova .km-collapsible-header .km-icon,
 .km-nova .km-expanded .km-collapsible-header .km-icon {
     color: darken(@base, 8%);
+}
+
+/* Copy from Kamen*/
+/* PopUp */
+
+.km-nova .km-popup
+{
+    background: blue;
+    //box-shadow: @office365-shadow;
+}
+
+.km-nova .km-actionsheet-wrapper,
+.km-nova .km-popup .k-list-container
+{   
+    background: green;
+    border-top-color: red;
+}
+
+.km-nova .km-popup.km-pane,
+.km-tablet .km-nova .km-actionsheet-wrapper
+{
+    background-color: orange;
+}
+
+.km-nova .km-popup-arrow:after
+{
+    border-color: pink;
+}
+
+.km-office365 .km-actionsheet-root .km-popup-arrow:after {
+    border-color: transparent purple;
+}
+
+/* Loader & Pull-to-refresh */
+
+.km-nova .km-loader
+{
+    background: rgba(0,0,0,.05);
 }
