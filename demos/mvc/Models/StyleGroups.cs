@@ -56,17 +56,9 @@ namespace Kendo.Models
         public static readonly IList<string> Mobile = new string[]
         {
 #if DEBUG
-            "web/kendo.CURRENT_COMMON.less",
-            "web/kendo.CURRENT_THEME.less",
-            "mobile/kendo.mobile.all.less",
-            "dataviz/kendo.dataviz.less",
-            "dataviz/kendo.dataviz.CURRENT_THEME.less"
+            "mobile/kendo.mobile.nova.less"
 #else
-            "kendo.CURRENT_COMMON.min.css",
-            "kendo.CURRENT_THEME.min.css",
-            "kendo.mobile.all.min.css",
-            "kendo.dataviz.min.css",
-            "kendo.dataviz.CURRENT_THEME.min.css"
+            "mobile/kendo.mobile.nova.min.css"
 #endif
         };
 
