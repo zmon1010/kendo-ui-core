@@ -512,6 +512,7 @@ fillElements({
         C1: 7,
         C2: 8,
         C3: 9,
+        D5: "=countif(A:C, \">=3\")",
 
         G11: 1,
         G12: 2,

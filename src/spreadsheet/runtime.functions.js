@@ -19,6 +19,7 @@
     var CalcError = runtime.CalcError;
     var resolveCells = runtime.resolveCells;
     var divide = runtime.divide;
+    var NOVALUE = {};
 
     /* -----[ Math functions ]----- */
 
@@ -39,6 +40,69 @@
             sum += num;
         });
         callback(sum);
+    });
+
+    defineFunction("sumif", function(callback, args){
+        assertArgs.call(this, args, 2, function(range, cmp){
+            cmp = parseComparator(cmp);
+            var sum = 0;
+            forNumbers(this, cellValues(this, [range]), function(num){
+                if (cmp(num)) {
+                    sum += num;
+                }
+            });
+            callback(sum);
+        });
+    });
+
+    defineFunction("count", function(callback, args){
+        var count = 0;
+        cellValues(this, args).forEach(function(val){
+            if (val != null && val !== "") {
+                count++;
+            }
+        });
+        callback(count);
+    });
+
+    defineFunction("countif", function(callback, args){
+        assertArgs.call(this, args, 2, function(range, cmp){
+            cmp = parseComparator(cmp);
+            var count = 0;
+            cellValues(this, [range]).forEach(function(val){
+                if (cmp(val)) {
+                    count++;
+                }
+            });
+            callback(count);
+        });
+    });
+
+    defNumeric("fact", 1, function(n){
+        for (var i = 2, fact = 1; i <= n; ++i) {
+            fact *= i;
+        }
+        return fact;
+    });
+
+    defNumeric("factdouble", 1, function(n){
+        n = n|0;
+        for (var i = 2 + (n&1), fact = 1; i <= n; i += 2) {
+            fact *= i;
+        }
+        return fact;
+    });
+
+    defNumeric("combin", 2, function(n, k){
+        if (n < 0 || k < 0 || k > n) {
+            this.error(new CalcError("NUM"));
+            return NOVALUE;
+        }
+        for (var f1 = k + 1, f2 = 1, p1 = 1, p2 = 1; f2 <= n - k; ++f1, ++f2) {
+            p1 *= f1;
+            p2 *= f2;
+        }
+        return p1/p2;
     });
 
     /* -----[ Statistical functions ]----- */
@@ -112,8 +176,53 @@
                 }
                 args[i] = num;
             }
-            callback(func.apply(null, args));
+            var ret = func.apply(this, args);
+            if (ret !== NOVALUE) {
+                callback(ret);
+            }
         });
+    }
+
+    function makeComparator(cmp, b) {
+        return function(a) {
+            if (typeof a != "string") {
+                a = a == null ? "" : a + "";
+            }
+            return cmp(a, b);
+        };
+    }
+
+    function compLT(a, b) { return a < b; }
+    function compLTE(a, b) { return a <= b; }
+    function compGT(a, b) { return a > b; }
+    function compGTE(a, b) { return a >= b; }
+    function compEQ(a, b) { return a === b; }
+
+    function parseComparator(cmp) {
+        var m;
+        if ((m = /^=(.*)$/.exec(cmp))) {
+            return makeComparator(compEQ, m[1]);
+        }
+        if ((m = /^<=(.*)$/.exec(cmp))) {
+            return makeComparator(compLTE, m[1]);
+        }
+        if ((m = /^<(.*)$/.exec(cmp))) {
+            return makeComparator(compLT, m[1]);
+        }
+        if ((m = /^>=(.*)$/.exec(cmp))) {
+            return makeComparator(compGTE, m[1]);
+        }
+        if ((m = /^>(.*)$/.exec(cmp))) {
+            return makeComparator(compGT, m[1]);
+        }
+        return makeComparator(compEQ, cmp);
+    }
+
+    function assertArgs(args, n, f) {
+        if (args.length != n) {
+            return this.error(new CalcError("N/A"));
+        }
+        f.apply(this, args);
     }
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
