@@ -369,3 +369,47 @@
     content: "\e012";
 }
 
+/* transitions */
+.km-root .km-nova.k-fx-slide {
+    &.k-fx-end .k-fx-current .km-content {
+        .transform(translatex(-50%));
+        -webkit-filter: brightness(70%);
+    }
+
+    /* left reverse */
+    &.k-fx-reverse {
+        &.k-fx-end .k-fx-next {
+            box-shadow: none;
+        }
+
+
+        &.k-fx-end .k-fx-current .km-content {
+            .transform(translatex(100%));
+            -webkit-filter: none;
+        }
+
+        &.k-fx-start .k-fx-next .km-content {
+            .transform(translatex(-50%));
+            -webkit-filter: brightness(70%);
+        }
+    }
+
+    /* right */
+    &.k-fx-right {
+        &.k-fx-end .k-fx-current .km-content {
+            .transform(translatex(50%));
+        }
+
+        /* right reverse */
+        &.k-fx-reverse {
+            &.k-fx-end .k-fx-current .km-content {
+                .transform(translatex(-100%));
+                -webkit-filter: none;
+            }
+
+            &.k-fx-start .k-fx-next .km-content {
+                .transform(translatex(50%));
+            }
+        }
+    }
+}
