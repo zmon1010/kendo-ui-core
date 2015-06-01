@@ -192,19 +192,19 @@
         });
 
         constants.source("less", function(source) {
-            equal(source, "@foo: #f00;\n@import \"theme-template.less\";");
+            equal(source, "@foo: #f00;");
         });
     });
 
-    test("source('css') returns css source", 1, function() {
+    test("source('less') honors file imports", function() {
         var constants = createConstants({
-            "@foo": extend(constant(".k-widget", "color"), { value: "#f00" })
+            "@typefile": {
+                readonly: true,
+                type: "file-import",
+                value: "foo.less"
+            }
         });
 
-        constants.template = ".k-widget { color: @foo; }";
-
-        constants.source("css", function(source) {
-            equal(source.replace(/\s|\n/g, ""), ".k-widget{color:#ff0000;}");
-        });
+        equal(constants.serialize(), "@import \"foo.less\";");
     });
 })();

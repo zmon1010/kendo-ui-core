@@ -215,7 +215,6 @@
         LessTheme = ObservableObject.extend({
             init: function(options) {
                 options = options || {};
-                this.template = options.template || "";
                 this.constants = options.constants || {};
                 this.files = {};
 
@@ -224,8 +223,12 @@
 
             serialize: function() {
                 return map(this.constants, function(item, key) {
-                    return key + ": " + item.value + ";";
-                }).concat([ '@import "type-bootstrap.less";' ]).join("\n");
+                    if (item.type == "file-import") {
+                        return '@import "' + item.value + '";';
+                    } else {
+                        return key + ": " + item.value + ";";
+                    }
+                }).join("\n");
             },
 
             deserialize: function(themeContent, targetDocument) {
@@ -346,6 +349,8 @@
             _generateTheme: function(callback) {
                 var constants = this.serialize();
                 var less = this._resolveFiles(constants);
+
+                console.log(constants);
 
                 (new window.less.Parser()).parse(
                     less,
@@ -652,6 +657,8 @@
                         spin: changeHandler,
                         change: changeHandler
                     });
+
+                $(".stylable-elements").kendoPanelBar("expand", ".k-item:first");
 
                 $(".ktb-action-source").on(CLICK, proxy(this.showSource, this));
                 $(".ktb-action-save").on(CLICK, proxy(this.saveSource, this));

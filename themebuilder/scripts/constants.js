@@ -91,6 +91,24 @@
                 }
             },
 
+            "@theme-type": {
+                editor: "ktb-combo",
+                type: "file-import",
+                values: [
+                    { text: "Bootstrap", value: "type-bootstrap.less" },
+                    { text: "Default", value: "type-default.less" },
+                    { text: "Fiori", value: "type-fiori.less" },
+                    { text: "Flat", value: "type-flat.less" },
+                    { text: "High Contrast", value: "type-highcontrast.less" },
+                    { text: "Material", value: "type-material.less" },
+                    { text: "Metro", value: "type-metro.less" },
+                    { text: "Office 365", value: "type-office365.less" }
+                ],
+                infer: function() {
+                    return "type-bootstrap.less";
+                }
+            },
+
             "@accent":              constant(COLOR, "a.k-link"),
             "@base":                constant(BGCOLOR, ".k-button.k-state-active"),
             "@background":          constant(BGCOLOR, ".k-widget"),
@@ -142,6 +160,7 @@
         },
         webConstantsHierarchy = {
             "Widgets": {
+                "@theme-type":          "Theme type",
                 "@accent":              "Accent color",
                 "@base":                "Widget base",
                 "@background":          "Widget background",
