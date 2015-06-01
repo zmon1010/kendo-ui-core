@@ -85,6 +85,47 @@
         }
     });
 
+    var PaneAxis = kendo.Class.extend({
+        init: function(axis, start, count) {
+           this._axis = axis;
+           this._start = start;
+           this._count = count;
+        },
+
+        range: function(max) {
+            var start = this._axis.sum(0, this._start - 1);
+
+            var end = max - start;
+
+            if (this._count) {
+                end = this._axis.sum(this._start, this._start + this._count - 1);
+            }
+
+            return {
+                start: start,
+                end: end
+            };
+        },
+
+        translate: function(value, offset) {
+            if (!this._count) {
+                return value + offset;
+            }
+
+            return value;
+        },
+
+        normalize: function(offset) {
+            if (this._count) {
+                return 0;
+            }
+
+            return offset;
+        }
+    });
+
     kendo.spreadsheet.Axis = Axis;
+    kendo.spreadsheet.PaneAxis = PaneAxis;
+
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
