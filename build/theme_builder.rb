@@ -15,9 +15,7 @@ tree :to => 'themebuilder/styles/textures',
      :root => 'styles/web/textures/'
 
 def less2js(less)
-    less.gsub('\\', '\\\\')
-        .gsub('"', '\\"')
-        .gsub("'", "\\\\\\\\'")
+    less.gsub('"', '\\"')
         .gsub(/\n/, "\\n")
         .gsub(/\r/, "")
 end
