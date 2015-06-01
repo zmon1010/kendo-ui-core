@@ -341,24 +341,23 @@
     background-color: green;
 }
 
-.km-nova .km-switch-background,
-.km-nova .k-slider-selection
-{
-    .linear-gradient-image(top, yellow, yellow);
-}
-
 .km-nova .km-switch-handle
 {
     background: @background;
     //-webkit-box-shadow: 0 3px 8px brown, 0 0 0 1px currentcolor;
     //box-shadow: 0 3px 8px lightBlue, 0 0 0 1px currentcolor;
-    .box-shadow(0 1px 6px 1px @base);
+    .box-shadow(0 2px 5px 0 darken(@base, 8%));
+    border-color: darken(@base, 8%);
 }
 
 .km-nova .km-switch-off .km-switch-handle
 {
     //-webkit-box-shadow: 0 3px 8px lightBlue, 0 0 0 1px lightGreen;
     //box-shadow: 0 3px 8px blue, 0 0 0 1px lightGreen;
+}
+
+.km-nova .km-switch-off .km-switch-container {
+    .box-shadow(inset 0 2px 5px 0 darken(@base, 8%));
 }
 
 .km-nova .km-switch-container,
