@@ -616,7 +616,7 @@
             return /[a-z$_]/i.test(ch);
         }
         function isId(ch) {
-            return isIdStart(ch) || isDigit(ch) || ch == "!";
+            return isIdStart(ch) || isDigit(ch) || ch == "!" || ch == ".";
         }
         function isOpChar(ch) {
             return ch in OPERATORS;
