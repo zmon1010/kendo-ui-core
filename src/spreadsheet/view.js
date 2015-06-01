@@ -62,32 +62,45 @@
             this.element[0].style.height = this._sheet._grid.totalHeight() + "px";
             this.element[0].style.width = this._sheet._grid.totalWidth() + "px";
 
-            var frozenCol = this._sheet.frozenColumns();
-            var frozenRow = this._sheet.frozenRows();
+            var frozenColumns = this._sheet.frozenColumns();
+            var frozenRows = this._sheet.frozenRows();
 
-            this.panes = [ new Pane(this.wrapper, this._sheet, { row: frozenRow, col: frozenCol }) ];
+            this.panes = [ new Pane(this._sheet, { row: frozenRows, col: frozenColumns }) ];
 
-            if (frozenCol > 0) {
-                this.panes.push(new Pane(this.wrapper, this._sheet, { row: frozenRow, col: 0, columnCount: frozenCol }));
+            if (frozenColumns > 0) {
+                this.panes.push(new Pane(this._sheet, { row: frozenRows, col: 0, columnCount: frozenColumns }));
             }
 
-            if (frozenRow > 0) {
-                this.panes.push(new Pane(this.wrapper, this._sheet, { row: 0, col: frozenCol, rowCount: frozenRow }));
+            if (frozenRows > 0) {
+                this.panes.push(new Pane(this._sheet, { row: 0, col: frozenColumns, rowCount: frozenRows }));
             }
 
-            if (frozenRow > 0 && frozenCol > 0) {
-                this.panes.push(new Pane(this.wrapper, this._sheet, { row: 0, col: 0, rowCount: frozenRow, columnCount: frozenCol }));
+            if (frozenRows > 0 && frozenColumns > 0) {
+                this.panes.push(new Pane(this._sheet, { row: 0, col: 0, rowCount: frozenRows, columnCount: frozenColumns }));
             }
 
             this.panes.forEach(function(pane) {
                 pane.context(this._context);
-                pane.refresh();
+                pane.refresh(this.wrapper[0].clientWidth, this.wrapper[0].clientHeight);
             }, this);
         },
 
         render: function() {
+            var element = this.wrapper[0];
+
+            var scrollTop = element.scrollTop;
+            var scrollLeft = element.scrollLeft;
+
+            if (scrollTop < 0) {
+                scrollTop = 0;
+            }
+
+            if (scrollLeft < 0) {
+                scrollLeft = 0;
+            }
+
             var result = this.panes.map(function(pane) {
-                return pane.render();
+                return pane.render(scrollLeft, scrollTop);
             }, this);
 
             var merged = [];
@@ -101,13 +114,11 @@
     });
 
     var Pane = kendo.Class.extend({
-        init: function(scrollable, sheet, config) {
+        init: function(sheet, config) {
             this.col = config.col;
             this.row = config.row;
             this.columnCount = config.columnCount;
             this.rowCount = config.rowCount;
-
-            this.scrollable = scrollable;
             this._sheet = sheet;
         },
 
@@ -115,29 +126,18 @@
             this._context = context;
         },
 
-        refresh: function() {
-            this._rectangle = this.rectangle();
+        refresh: function(width, height) {
+            this._rectangle = this.rectangle(width, height);
         },
 
-        render: function() {
-            return this.renderAt(this.visibleRectangle());
+        render: function(scrollLeft, scrollTop) {
+            return this.renderAt(this.visibleRectangle(scrollLeft, scrollTop));
         },
 
-        visibleRectangle: function() {
-            var element = this.scrollable[0];
-            var scrollTop = element.scrollTop;
-            var scrollLeft = element.scrollLeft;
+        visibleRectangle: function(scrollLeft, scrollTop) {
             var rectangle = this._rectangle;
             var top = rectangle.top;
             var left = rectangle.left;
-
-            if (scrollTop < 0) {
-                scrollTop = 0;
-            }
-
-            if (scrollLeft < 0) {
-                scrollLeft = 0;
-            }
 
             if (!this.rowCount) {
                 top += scrollTop;
@@ -150,8 +150,7 @@
             return new kendo.spreadsheet.Rectangle(left, top, rectangle.width, rectangle.height);
         },
 
-        rectangle: function() {
-            var element = this.scrollable[0];
+        rectangle: function(elementWidth, elementHeight) {
             var grid = this._sheet._grid;
             var row = this.row;
             var col = this.col;
@@ -164,19 +163,20 @@
             if (this.columnCount) {
                 width = grid.width(col, col + this.columnCount - 1);
             } else {
-                width = element.clientWidth - left;
+                width = elementWidth - left;
             }
 
             if (this.rowCount) {
                 height = grid.height(row, row + this.rowCount - 1);
             } else {
-                height = element.clientHeight - top;
+                height = elementHeight - top;
             }
 
             return new kendo.spreadsheet.Rectangle(left, top, width, height);
         },
 
         renderAt: function(rectangle) {
+            console.log(rectangle, this._rectangle);
             var sheet = this._sheet;
             var view = sheet._grid.view(rectangle);
             var grid = sheet._grid;
