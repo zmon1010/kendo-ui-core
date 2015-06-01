@@ -12,18 +12,6 @@
         }
       },
       {
-        "text": "Overview",
-        "url": "application/index",
-        "title": {
-            "kendo-ui": "Example of a web-based mobile app, built with Kendo UI mobile framework",
-            "aspnet-mvc": "ASP.NET MVC Mobile Application HtmlHelper extension demo"
-        },
-        "meta": {
-            "kendo-ui": "This example shows how Kendo UI Mobile Application provides all tools for native-like web-based mobile app development.",
-            "aspnet-mvc": "ASP.NET MVC MobileApplication extension enables you to configure  Kendo UI Mobile Application widget from server-side code. Explore the demo to learn more."
-        }
-      },
-      {
         "text": "Loading popup",
         "url": "application/loadingpopup",
         "title": {
