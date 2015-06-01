@@ -2,40 +2,44 @@
 
 
             <div class="demo-section k-header">
-                <h4>View Order Details</h4>
-                <p>
-                    <label for="categories">Categories:</label><input id="categories" style="width: 270px" />
-                </p>
-                <p>
-                    <label for="products">Products:</label><input id="products" disabled="disabled" style="width: 270px" />
-                </p>
-                <p>
-                    <label for="orders">Orders:</label><input id="orders" disabled="disabled" style="width: 270px" />
-                </p>
-
-                <button class="k-button k-primary" id="get">View Order</button>
+                <ul id="fieldlist">
+                    <li>
+                        <label for="categories">Categories</label>
+                        <input id="categories" style="width: 100%;" />
+                    </li>
+                    <li>
+                        <label for="products">Products</label>
+                        <input id="products" disabled="disabled" style="width: 100%;" />
+                    </li>
+                    <li>
+                        <label for="orders">Orders</label>
+                        <input id="orders" disabled="disabled" style="width: 100%;" />
+                    </li>
+                    <li>
+                       <button class="k-button k-primary" id="get">View Order</button>
+                    </li>
+                </ul>
             </div>
 
             <style>
-                .demo-section {
-                    width: 400px;
-                }
-                .demo-section p {
-                    margin-top: 1em;
-                }
-                .demo-section label {
-                    display: inline-block;
-                    width: 100px;
-                    padding-right: 5px;
-                    text-align: right;
-                }
-                .demo-section .k-button {
-                    margin: 1em 0 0 105px;
-                }
-                .k-readonly
-                {
-                    color: gray;
-                }
+               #fieldlist {
+                   margin: 0;
+                   padding: 0;
+               }
+       
+               #fieldlist li {
+                   list-style: none;
+                   padding-bottom: 1.5em;
+                   text-align: left;
+               }
+       
+               #fieldlist label {
+                   display: block;
+                   padding-bottom: .3em;
+                   font-weight: bold;
+                   text-transform: uppercase;
+                   font-size: 12px;
+               }
             </style>
 
             <script>
@@ -95,4 +99,4 @@
                     });
                 });
             </script>
-        </div>
+</div>

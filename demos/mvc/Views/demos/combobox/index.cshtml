@@ -1,53 +1,33 @@
 
         <div id="example" role="application">
 		    <div id="tshirt-view" class="demo-section k-header">
-			    <h2>Customize your Kendo T-shirt</h2>
-			    <img id="tshirt" src="../content/web/combobox/tShirt.png" />
-                <div id="options">
-			        <h4>T-shirt Fabric</h4>
-                    <input id="fabric" placeholder="Select fabric..." />
-
-                    <h4>T-shirt Size</h4>
-                    <select id="size" placeholder="Select size...">
-				        <option>X-Small</option>
-				        <option>Small</option>
-				        <option>Medium</option>
-				        <option>Large</option>
-				        <option>X-Large</option>
-				        <option>2X-Large</option>
-			        </select>
-
-			        <button class="k-button k-primary" id="get">Customize</button>
-			    </div>
-            </div>
-		<style>
-			.demo-section {
-				width: 500px;
-				height: 340px;
-			}
-			.demo-section h2 {
-				text-transform: uppercase;
-				font-size: 1.2em;
-				margin-bottom: 30px;
-			}
-			.demo-section h4 {
-				margin-top: 1.5em;
-			}
-			#tshirt {
-				float: left;
-				margin: 0 40px 30px 0;
-			}
-			#options {
-				padding: 20px 0 30px 30px;
-			}
-			#get {
-				margin-top: 25px;
-			}
-            .k-readonly
-            {
-                color: gray;
-            }
-		</style>
+            <h4>Customize your Kendo T-shirt</h4>
+            <img id="tshirt" src="../content/web/combobox/tShirt.png" />
+            <h4>T-shirt Fabric</h4>
+                  <input id="fabric" placeholder="Select fabric..." style="width: 100%;" />
+     
+            <h4 style="margin-top: 2em;">T-shirt Size</h4>
+            <select id="size" placeholder="Select size..." style="width: 100%;" >
+              <option>X-Small</option>
+              <option>Small</option>
+              <option>Medium</option>
+              <option>Large</option>
+              <option>X-Large</option>
+              <option>2X-Large</option>
+            </select>
+     
+            <button class="k-button k-primary" id="get" style="margin-top: 2em; float: right;">Customize</button>
+        </div>
+        <style>
+           #tshirt {
+               display: block;
+               margin: 2em auto;
+           }
+           .k-readonly
+           {
+               color: gray;
+           }
+        </style>
 
             <script>
                 $(document).ready(function() {
