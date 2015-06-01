@@ -88,7 +88,7 @@ class ReportLine
     attr_accessor :blocking, :critical, :high, :medium, :low, :open, :closed
 
     def to_s
-        "Blocking: #{@blocking || 0} Critical: #{@critical} High: #{@high} Medium: #{@medium} Low: #{@low} Closed: #{@closed} Open: #{@open}"
+        "Blocking: #{@blocking || 0} Critical: #{@critical || 0} High: #{@high} Medium: #{@medium} Low: #{@low} Closed: #{@closed} Open: #{@open}"
     end
 end
 
