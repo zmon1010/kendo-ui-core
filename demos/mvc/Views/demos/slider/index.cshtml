@@ -1,15 +1,15 @@
 <div id="example">
-    <div class="demo-section k-header" style="width: 300px;">
-        <div id="wrapper">
-            <input id="slider" class="balSlider" value="0" />
-            <div id="equalizer">
-                <input class="eqSlider" value="10" />
-                <input class="eqSlider" value="5" />
-                <input class="eqSlider" value="0" />
-                <input class="eqSlider" value="10" />
-                <input class="eqSlider" value="15" />
-            </div>
-        </div>
+    <div class="demo-section k-header">
+         <h4>Balance</h4>
+         <input id="slider" class="balSlider" value="0" />
+         <h4 style="padding-top: 2em;">Equalizer</h4>
+         <div id="equalizer">
+             <input class="eqSlider" value="10" />
+             <input class="eqSlider" value="5" />
+             <input class="eqSlider" value="0" />
+             <input class="eqSlider" value="10" />
+             <input class="eqSlider" value="15" />
+         </div>
     </div>
 
     <script>
@@ -35,26 +35,25 @@
     </script>
 
     <style>
-        #wrapper {
-            width: 300px;
-            height: 255px;
-            padding: 45px 0 0 0;
-            background: url('../content/web/slider/eqBack.png') no-repeat 0 0;
+        .demo-section {
             text-align: center;
         }
+
         #equalizer {
-            margin-top: 75px;
             padding-right: 15px;
         }
+
         div.balSlider {
-            width: 240px;
+            width: 100%;
         }
+
         div.balSlider .k-slider-selection {
             display: none;
         }
+
         div.eqSlider {
             display: inline-block;
-            margin: 0 12px;
+            margin: 1em;
             height: 122px;
             vertical-align: top;
         }
