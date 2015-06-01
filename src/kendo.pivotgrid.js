@@ -3701,6 +3701,10 @@ var __meta__ = {
             var calculatedWidth = rowLength * this.options.columnWidth;
             var minWidth = Math.ceil((calculatedWidth / contentWidth) * 100);
 
+            if (minWidth < 100) {
+                minWidth = 100;
+            }
+
             contentTable.add(this.columnsHeader.children("table"))
                         .css("width", minWidth + "%");
         },
