@@ -176,7 +176,6 @@
         },
 
         renderAt: function(rectangle) {
-            console.log(rectangle, this._rectangle);
             var sheet = this._sheet;
             var view = sheet._grid.view(rectangle);
             var grid = sheet._grid;
