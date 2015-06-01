@@ -1,12 +1,35 @@
 .km-listview-icons -> listView with icons
 .km-listview-thumbnail -> listView with thumbnails
 .km-thumbnail -> thumbnails
+.km-required -> label with required indicator
 .km-label-above -> forms -> labels above the fields
 .km-icon-label -> forms -> labels with icons
 .km-navbar-buttongroup -> navBar with buttonGroup
 .km-external-link -> external link
 
+
 .km-link-button -> link button
 .km-legend-button -> button as legend
 .km-inline-field -> inline fields
 .km-scrollview-overlay -> scrollView as overlay
+
+.km-primary -> primary buttons
+.km-small -> small buttons
+.km-large -> large buttons
+.km-inverse -> inverse buttonGroup
+.km-link-button -> link button
+.km-justified -> justified buttons
+
+.km-checkbox -> checkbox (new rendering)
+.km-checkbox-label -> checkbox label (new rendering)
+.km-radio -> radioButton (new rendering)
+.km-radio-label -> radioButton (new rendering)
+
+.km-view-subtitle -> navBar subtitle
+.km-light -> light NavBar
+.km-accent -> Accent NavBar
+.km-navbar-buttongroup -> NavBar with ButtonGroup
+
+.km-light-font -> light font
+.km-medium-font -> medium font
+.km-bold-font -> bold font
