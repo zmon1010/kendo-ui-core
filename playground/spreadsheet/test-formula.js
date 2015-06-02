@@ -517,6 +517,7 @@ fillElements({
         C4: "foo bar",
         D5: "=countif(A:C, \">=3\")",
         D6: "=countif(A4:C10, \"foo*bar\")",
+        D7: "=countifs(A1:C3, \">3\", G11:I13, \"<7\")",
 
         G11: 1,
         G12: 2,

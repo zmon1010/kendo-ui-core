@@ -305,6 +305,20 @@
                 this.topLeft.absolute(arow, acol),
                 this.bottomRight.absolute(arow, acol)
             ).setSheet(this.sheet, this.hasSheet());
+        },
+
+        height: function() {
+            if (this.topLeft.rel != this.bottomRight.rel) {
+                throw new Error("Mixed relative/absolute references");
+            }
+            return this.bottomRight.row - this.topLeft.row + 1;
+        },
+
+        width: function() {
+            if (this.topLeft.rel != this.bottomRight.rel) {
+                throw new Error("Mixed relative/absolute references");
+            }
+            return this.bottomRight.col - this.topLeft.col + 1;
         }
     });
 

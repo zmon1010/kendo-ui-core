@@ -75,6 +75,7 @@
                         if (callback) {
                             callback(val);
                         }
+                        return val;
                     }
                 }, formula.refs, this.handler);
             }
@@ -226,7 +227,7 @@
         for (var i = 0; i < a.length; ++i) {
             var val = a[i];
             if (val instanceof Ref) {
-                val = self.ss.getData(a[i].absolute(self.row, self.col));
+                val = self.ss.getData(val.absolute(self.row, self.col));
             }
             ret = ret.concat(val);
         }
