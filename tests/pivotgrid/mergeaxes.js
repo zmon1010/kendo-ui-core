@@ -1050,16 +1050,6 @@
             },
             transport: {
                 read: function(options) {
-                    /*//simulate axes left after rebind
-                    dataSource._axes = {
-                        columns: {
-                            tuples: [ { members: [ { name: "dim 0", children: [], levelNum: "0" } ] } ]
-                        },
-                        rows: {
-                            tuples: [ ]
-                        },
-                    };*/
-
                     setTimeout(function() {
                         options.success({
                             axes: {

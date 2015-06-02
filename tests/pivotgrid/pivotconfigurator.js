@@ -729,4 +729,30 @@
         var args = setting.args("add")[0];
         equal(args, "[foo].[foo]");
     });
+
+    test("PivotConfigurator shows loading screen on datasource progress", function() {
+        var configurator = createConfigurator({ });
+
+        configurator.dataSource.trigger("progress");
+
+        equal(configurator.element.children(".k-loading-mask").length, 1);
+    });
+
+    test("PivotConfigurator hides loading screen on datasource error", function() {
+        var configurator = createConfigurator({ });
+
+        configurator.dataSource.trigger("progress");
+        configurator.dataSource.trigger("error");
+
+        equal(configurator.element.children(".k-loading-mask").length, 0);
+    });
+
+    test("PivotConfigurator hides loading screen on datasource change", function() {
+        var configurator = createConfigurator({ });
+
+        configurator.dataSource.trigger("progress");
+        configurator.dataSource.trigger("change");
+
+        equal(configurator.element.children(".k-loading-mask").length, 0);
+    });
 })();
