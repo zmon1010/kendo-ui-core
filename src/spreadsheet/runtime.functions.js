@@ -186,10 +186,18 @@
         });
     }
 
-    function makeComparator(cmp, b) {
+    function makeComparator(cmp, x) {
+        if (typeof x == "string") {
+            var num = parseFloat(x);
+            if (!isNaN(num)) {
+                x = num;
+            }
+        }
         return function(a) {
-            if (typeof a != "string") {
-                a = a == null ? "" : a + "";
+            var b = x;
+            if (typeof a == "string" && typeof b == "string") {
+                a = a.toLowerCase();
+                b = b.toLowerCase();
             }
             return cmp(a, b);
         };
@@ -199,7 +207,14 @@
     function compLTE(a, b) { return a <= b; }
     function compGT(a, b) { return a > b; }
     function compGTE(a, b) { return a >= b; }
-    function compEQ(a, b) { return a === b; }
+    function compEQ(a, b) {
+        if (b instanceof RegExp) {
+            return b.test(a);
+        }
+        return a == b;
+    }
+
+    var RXCACHE = {};
 
     function parseComparator(cmp) {
         var m;
@@ -217,6 +232,25 @@
         }
         if ((m = /^>(.*)$/.exec(cmp))) {
             return makeComparator(compGT, m[1]);
+        }
+        if (/[?*]/.exec(cmp)) {
+            // has wildchars
+            var rx;
+            if (Object.prototype.hasOwnProperty.call(RXCACHE, cmp)) {
+                rx = RXCACHE[cmp];
+            } else {
+                rx = cmp.replace(/(~\?|~\*|[\]({\+\.\|\^\$\\})\[]|[?*])/g, function(s){
+                    switch (s) {
+                      case "~?" : return "\\?";
+                      case "~*" : return "\\*";
+                      case "?"  : return ".";
+                      case "*"  : return ".*";
+                      default   : return "\\" + s;
+                    }
+                });
+                rx = RXCACHE[cmp] = new RegExp("^" + rx + "$", "i");
+            }
+            return makeComparator(compEQ, rx);
         }
         return makeComparator(compEQ, cmp);
     }
