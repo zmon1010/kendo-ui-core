@@ -106,14 +106,6 @@
             return new Rectangle(columns.start, rows.start, columns.end, rows.end);
         },
 
-        width: function(start, end) {
-            return this._columns.size(start, end);
-        },
-
-        height: function(start, end) {
-            return this._rows.size(start, end);
-        },
-
         boundingRectangle: function(ref) {
             return this._grid.rectangle(ref);
         },
@@ -127,14 +119,6 @@
             var left = this._columns.translate(rectangle.left, left);
 
             return new kendo.spreadsheet.Rectangle(left, top, rectangle.width, rectangle.height);
-        },
-
-        adjustHorizontal: function(value) {
-            return this._columns.normalize(value);
-        },
-
-        adjustVertical: function(value) {
-            return this._rows.normalize(value);
         },
 
         visible: function(rectangle) {

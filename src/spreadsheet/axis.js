@@ -92,17 +92,13 @@
            this._count = count;
         },
 
-        size: function(start, end) {
-            return this._axis.sum(start, end);
-        },
-
         range: function(max) {
-            var start = this.size(0, this._start - 1);
+            var start = this._axis.sum(0, this._start - 1);
 
             var end = max - start;
 
             if (this._count) {
-                end = this.size(this._start, this._start + this._count - 1);
+                end = this._axis.sum(this._start, this._start + this._count - 1);
             }
 
             return {
@@ -112,7 +108,13 @@
         },
 
         visible: function(start, end) {
-            return this._axis.visible(start, end);
+            var result = this._axis.visible(start, end);
+
+            if (this._count) {
+                result.offset = 0;
+            }
+
+            return result;
         },
 
         translate: function(value, offset) {
@@ -121,14 +123,6 @@
             }
 
             return value;
-        },
-
-        normalize: function(offset) {
-            if (this._count) {
-                return 0;
-            }
-
-            return offset;
         }
     });
 

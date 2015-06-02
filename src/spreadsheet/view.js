@@ -181,9 +181,6 @@
                 }
             }
 
-            var x = this._grid.adjustHorizontal(columns.offset);
-            var y = this._grid.adjustVertical(rows.offset);
-
             var mergedCells = this.renderMergedCells(promises, rectangle.left, rectangle.top);
 
             var style = {};
@@ -193,7 +190,7 @@
             style.top = this._rectangle.top  + "px";
             style.left = this._rectangle.left   + "px";
 
-            return kendo.dom.element("div", { style: style, className: "k-spreadsheet-pane" }, [table.toDomTree(x, y)].concat(mergedCells));
+            return kendo.dom.element("div", { style: style, className: "k-spreadsheet-pane" }, [table.toDomTree(columns.offset, rows.offset)].concat(mergedCells));
         },
 
         renderMergedCells: function(promises, left, top) {
