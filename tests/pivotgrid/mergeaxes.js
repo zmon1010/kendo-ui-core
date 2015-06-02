@@ -1034,6 +1034,65 @@
         equal(tuple.members[1].children[1].name, "measure 2");
     });
 
+    asyncTest("skip root tuple creation if the dimensions are updated", 2, function() {
+        var deferred = $.Deferred();
+
+        var tuples = [
+            [ { members: [ { name: "dim 0", children: [], levelNum: "0" } ] } ],
+            [ { members: [ { name: "dim 1", children: [], levelNum: "0" } ] } ]
+        ];
+
+        var dataSource = new PivotDataSource({
+            measures: [ ],
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    /*//simulate axes left after rebind
+                    dataSource._axes = {
+                        columns: {
+                            tuples: [ { members: [ { name: "dim 0", children: [], levelNum: "0" } ] } ]
+                        },
+                        rows: {
+                            tuples: [ ]
+                        },
+                    };*/
+
+                    setTimeout(function() {
+                        options.success({
+                            axes: {
+                                columns: {
+                                    tuples: tuples.shift()
+                                }
+                            },
+                            data: []
+                        });
+
+                        if (!tuples.length) {
+                            deferred.resolve();
+                        }
+                    });
+                }
+            }
+        });
+
+        dataSource.rows("dim 1");
+        dataSource.columns("dim 1");
+
+        deferred.done(function() {
+            start();
+
+            var axes = dataSource.axes();
+            var tuple = axes.columns.tuples[0];
+            var firstMember = tuple.members[0];
+
+            equal(firstMember.name, "dim 1");
+            equal(firstMember.children.length, 0);
+        });
+    });
+
     test("create tuples for missing measures", function() {
         var dataSource = new PivotDataSource({
             measures: [ "measure 1", "measure 2"],

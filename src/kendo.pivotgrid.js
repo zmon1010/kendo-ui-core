@@ -994,6 +994,7 @@ var __meta__ = {
             this._measures = normalizeMeasures(measures);
             this._measuresAxis = measuresAxis;
 
+            this._skipNormalize = 0;
             this._axes = {};
         },
 
@@ -1084,7 +1085,9 @@ var __meta__ = {
                 return this._columns;
             }
 
+            this._skipNormalize += 1;
             this._clearAxesData = true;
+
             this._columns = normalizeMembers(val);
             this.query({
                 columns: val,
@@ -1098,7 +1101,9 @@ var __meta__ = {
                 return this._rows;
             }
 
+            this._skipNormalize += 1;
             this._clearAxesData = true;
+
             this._rows = normalizeMembers(val);
 
             this.query({
@@ -1113,7 +1118,9 @@ var __meta__ = {
                 return this._measures;
             }
 
+            this._skipNormalize += 1;
             this._clearAxesData = true;
+
             this.query({
                 columns: this.columnsAxisDescriptors(),
                 rows: this.rowsAxisDescriptors(),
@@ -1187,6 +1194,7 @@ var __meta__ = {
             var that = this;
 
             if (!options) {
+                this._skipNormalize += 1;
                 this._clearAxesData = true;
             }
 
@@ -1242,6 +1250,7 @@ var __meta__ = {
                 return this._filter;
             }
 
+            this._skipNormalize += 1;
             this._clearAxesData = true;
             this._query({ filter: val, page: 1 });
         },
@@ -1305,6 +1314,8 @@ var __meta__ = {
 
             columnIndexes = this._normalizeTuples(axes.columns.tuples, this._axes.columns.tuples, columnDescriptors, this._columnMeasures());
             rowIndexes = this._normalizeTuples(axes.rows.tuples, this._axes.rows.tuples, rowDescriptors, this._rowMeasures());
+
+            this._skipNormalize -= 1;
 
             if (!this.cubeBuilder) {
                 data = this._normalizeData({
@@ -1619,7 +1630,8 @@ var __meta__ = {
                 return;
             }
 
-            if (!this._hasRoot(tuples[0], source, descriptors)) {
+            if (this._skipNormalize <= 0 && !this._hasRoot(tuples[0], source, descriptors)) {
+                this._skipNormalize = 0;
                 for (; idx < length; idx++) {
                     roots.push(this._createTuple(tuples[0], measures[idx], true));
                     indexes[idx] = idx;
