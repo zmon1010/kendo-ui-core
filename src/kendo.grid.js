@@ -4160,6 +4160,8 @@ var __meta__ = {
             // do not handle key down if request in progress
             // or there isn't current set
             if (requestInProgress) {
+                // swallow key events while in progress
+                e.preventDefault();
                 return;
             }
 
