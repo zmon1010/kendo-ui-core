@@ -92,7 +92,7 @@
             },
 
             "@theme-type": {
-                editor: "ktb-combo",
+                readonly: true,
                 type: "file-import",
                 values: [
                     { text: "Bootstrap", value: "type-bootstrap.less" },

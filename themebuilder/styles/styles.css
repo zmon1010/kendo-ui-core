@@ -90,11 +90,11 @@ body {
     height: 19px;
 }
 
-.k-list {
+.ktb-small-items .k-list {
     text-align: center;
 }
 
-.k-popup .k-list .k-item {
+.ktb-small-items .k-list .k-item {
     width: 19px;
     height: 19px;
     overflow: hidden;
@@ -103,9 +103,9 @@ body {
     padding: 1px;
 }
 
-.k-popup .k-list .k-state-hover,
-.k-popup .k-list .k-state-focused,
-.k-popup .k-list .k-state-selected {
+.ktb-small-items .k-list .k-state-hover,
+.ktb-small-items .k-list .k-state-focused,
+.ktb-small-items .k-list .k-state-selected {
     padding: 0;
 }
 
@@ -113,6 +113,7 @@ body {
 #kendo-themebuilder .k-gradient-editor,
 #kendo-themebuilder .k-numerictextbox,
 #kendo-themebuilder .k-combobox,
+#kendo-themebuilder .k-dropdown,
 #kendo-themebuilder .k-shadowinput {
     width: 100px;
     margin-bottom: 5px;

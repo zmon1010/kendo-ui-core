@@ -350,8 +350,6 @@
                 var constants = this.serialize();
                 var less = this._resolveFiles(constants);
 
-                console.log(constants);
-
                 (new window.less.Parser()).parse(
                     less,
                     function (err, tree) {
@@ -615,13 +613,32 @@
                     });
                 }
 
+                function toValue(x) {
+                    return { text: x.text, value: x.value.replace(/"|'/g, "") };
+                }
+
+                function addSmallItemClass(e) {
+                    e.sender.popup.element.addClass('ktb-small-items');
+                }
+
                 $(".stylable-elements")
                     .kendoPanelBar()
                     .find(".ktb-colorinput").kendoColorInput({
+                        open: addSmallItemClass,
                         change: changeHandler
                     }).end()
                     .find(".ktb-gradient").kendoGradientEditor({
                         change: changeHandler
+                    }).end()
+                    .find(".ktb-dropdown").each(function() {
+                        var data = themebuilder.themes.valuesFor(this.id);
+
+                        $(this).kendoDropDownList({
+                            change: changeHandler,
+                            dataTextField: "text",
+                            dataValueField: "value",
+                            dataSource: new kendo.data.DataSource({ data: data })
+                        });
                     }).end()
                     .find(".ktb-combo")
                         .each(function() {
@@ -629,16 +646,13 @@
 
                             data.splice(0, 0, { text: "unchanged", value: this.value });
 
-                            data = map(data, function(x) {
-                                return { text: x.text, value: x.value.replace(/"|'/g, "") };
-                            });
-
                             $(this).kendoComboBox({
                                 autoBind: true,
                                 template: "<span class='ktb-texture-preview k-header' style='background-image:${ data.value };' />",
                                 change: changeHandler,
+                                open: addSmallItemClass,
                                 dataSource: new kendo.data.DataSource({
-                                    data: data
+                                    data: map(data, toValue)
                                 })
                             });
                         })
