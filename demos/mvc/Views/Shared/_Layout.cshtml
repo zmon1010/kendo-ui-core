@@ -57,7 +57,7 @@
                 searchWrapper = $("#example-search-wrapper").height(),
                 navbarWrapper = $("#example-nav-bar").height(),
                 htmlHeight = (kendo.support.mobileOS) ? parseFloat(window.innerHeight) : $('html').height();
-                sidebarHeight = htmlHeight - headerHeight;
+                sidebarHeight = htmlHeight - headerHeight,
                 navHeight = sidebarHeight - (searchWrapper + navbarWrapper);
             $("#example-sidebar").height(sidebarHeight);
             $("#nav-wrapper").height(navHeight - 26);

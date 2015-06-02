@@ -122,7 +122,7 @@
             { value: "moonlight", name: "Moonlight", colors: [ "#ee9f05", "#40444f", "#212a33" ]  },
             { value: "flat", name: "Flat", colors: [ "#363940", "#2eb3a6", "#fff" ]  },
             { value: "material", name: "Material", colors: [ "#3f51b5", "#283593", "#fff" ]  },
-            { value: "materialblack", name: "Material Black", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] },            
+            { value: "materialblack", name: "Material Black", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] },
             { value: "fiori", name: "Fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] },
             { value: "office365", name: "Office 365", colors: ["#0072c6", "#cde6f7", "#fff"] }
         ],
@@ -161,7 +161,7 @@
     window.ThemeChooserViewModel = ThemeChooserViewModel;
 
     $(document).ready(function() {
-        kendo.bind($(".themechooser"), ThemeChooserViewModel);
+        kendo.bind($("[data-role=themechooser]").parent(), ThemeChooserViewModel);
     });
 
     extend(ThemeChooser, {
