@@ -1,4 +1,7 @@
 <div id="example">
+    <div class="responsive-message">
+       This demo requires browser or device screen width equal or greater than 1024px.
+    </div>
     <div id="configurator"></div>
     <div id="pivotgrid"></div>
 
@@ -50,6 +53,17 @@
         {
             display: inline-block;
             vertical-align: top;
+        }
+        @@media screen and (max-width: 1023px) {
+            #pivotgrid
+            {
+                display: none;
+            }
+    
+            #configurator
+            {
+                display: none;
+            }
         }
     </style>
 </div>

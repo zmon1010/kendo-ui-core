@@ -2826,6 +2826,24 @@ html.k-materialblack .demo-section.k-content {
     padding-top: 1em;
 }
 
+.responsive-message {
+    display: none;
+    margin: 4.5em auto;
+    padding: 3em;
+    text-align: center;
+    background-color: #b2ebf2;
+    border: 1px solid #a2e7f0;
+    color: #00838f;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 1023px) {
+  .responsive-message {
+    display: block;
+  }
+}
+
+
 /* Responsive Styles */
 
 @media only screen and (min-width : 1500px) {
