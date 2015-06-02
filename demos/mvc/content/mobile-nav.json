@@ -691,18 +691,6 @@
         }
       },
       {
-        "text": "Customizing appearance",
-        "url": "mobile-tabstrip/appearance",
-        "title": {
-            "kendo-ui": "Example of Kendo UI TabStrip Customized Appearance",
-            "aspnet-mvc": "Example of ASP.NET MVC TabStrip Customized Appearance"
-        },
-        "meta": {
-            "kendo-ui": "This demo shows how the application-wide group of navigation buttons in Kendo UI TabStrip can be easily customized by using custom icons.",
-            "aspnet-mvc": "This demo shows how the application-wide group of navigation buttons in ASP.NET MVC TabStrip can be easily customized by using custom icons."
-        }
-      },
-      {
         "text": "Touch Events",
         "url": "touchevents/mobile",
         "title": {
