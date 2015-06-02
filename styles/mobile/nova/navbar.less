@@ -35,8 +35,9 @@
     margin: 0;
 }
 
-.km-nova .km-navbar-buttongroup .km-buttongroup {    
+.km-nova .km-widget.km-navbar-buttongroup .km-buttongroup {
     padding: 0.77em;
+    display: table;
 }
 
 .km-nova .km-no-title .km-buttongroup {
@@ -47,6 +48,7 @@
 .km-nova .km-no-title .km-buttongroup > .km-button {
     font-size: 1.2em;
     padding: 1.02rem;
+    -webkit-transform: translatez(0); /* Crime against humanity. iPhones go nuts otherwise */
 }
 
 /* iOS 7 transitions styles */
