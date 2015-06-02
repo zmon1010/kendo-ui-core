@@ -65,18 +65,18 @@
             var frozenColumns = this._sheet.frozenColumns();
             var frozenRows = this._sheet.frozenRows();
 
-            this.panes = [ new Pane(this._sheet, { row: frozenRows, col: frozenColumns }) ];
+            this.panes = [ new Pane(this._sheet, this._sheet._grid.pane({ row: frozenRows, column: frozenColumns })) ];
 
             if (frozenColumns > 0) {
-                this.panes.push(new Pane(this._sheet, { row: frozenRows, col: 0, columnCount: frozenColumns }));
+                this.panes.push(new Pane(this._sheet, this._sheet._grid.pane({ row: frozenRows, column: 0, columnCount: frozenColumns })));
             }
 
             if (frozenRows > 0) {
-                this.panes.push(new Pane(this._sheet, { row: 0, col: frozenColumns, rowCount: frozenRows }));
+                this.panes.push(new Pane(this._sheet, this._sheet._grid.pane({ row: 0, column: frozenColumns, rowCount: frozenRows })));
             }
 
             if (frozenRows > 0 && frozenColumns > 0) {
-                this.panes.push(new Pane(this._sheet, { row: 0, col: 0, rowCount: frozenRows, columnCount: frozenColumns }));
+                this.panes.push(new Pane(this._sheet, this._sheet._grid.pane({ row: 0, column: 0, rowCount: frozenRows, columnCount: frozenColumns })));
             }
 
             this.panes.forEach(function(pane) {
@@ -115,9 +115,8 @@
 
 
     var Pane = kendo.Class.extend({
-        init: function(sheet, config) {
-            this._rows = new kendo.spreadsheet.PaneAxis(sheet._grid._rows, config.row, config.rowCount)
-            this._columns = new kendo.spreadsheet.PaneAxis(sheet._grid._columns, config.col, config.columnCount)
+        init: function(sheet, grid) {
+            this._grid = grid;
             this._sheet = sheet;
         },
 
@@ -126,32 +125,16 @@
         },
 
         refresh: function(width, height) {
-            this._rectangle = this.rectangle(width, height);
+            this._rectangle = this._grid.rectangle(width, height);
         },
 
         render: function(scrollLeft, scrollTop) {
-            return this.renderAt(this.translate(scrollLeft, scrollTop));
-        },
-
-        translate: function(scrollLeft, scrollTop) {
-            var rectangle = this._rectangle;
-            var top = this._rows.translate(rectangle.top, scrollTop);
-            var left = this._columns.translate(rectangle.left, scrollLeft);
-
-            return new kendo.spreadsheet.Rectangle(left, top, rectangle.width, rectangle.height);
-        },
-
-        rectangle: function(width, height) {
-            var columns = this._columns.range(width);
-            var rows = this._rows.range(height);
-
-            return new kendo.spreadsheet.Rectangle(columns.start, rows.start, columns.end, rows.end);
+            return this.renderAt(this._grid.translate(this._rectangle, scrollLeft, scrollTop));
         },
 
         renderAt: function(rectangle) {
             var sheet = this._sheet;
-            var view = sheet._grid.view(rectangle);
-            var grid = sheet._grid;
+            var view = this._grid.visible(rectangle);
             var rows = view.rows;
             var columns = view.columns;
 
@@ -170,8 +153,8 @@
             var promises = [];
 
             for (var ci = columns.start; ci <= columns.end; ci ++) {
-                var startCellIndex = grid.index(rows.start, ci);
-                var endCellIndex = grid.index(rows.end, ci);
+                var startCellIndex = this._grid.index(rows.start, ci);
+                var endCellIndex = this._grid.index(rows.end, ci);
 
                 var values = sheet._values.iterator(startCellIndex, endCellIndex);
                 var formulas = sheet._formulas.iterator(startCellIndex, endCellIndex);
@@ -180,7 +163,7 @@
                 table.addColumn(columns.values.at(ci));
 
                 for (ri = rows.start; ri <= rows.end; ri ++) {
-                    var index = grid.index(ri, ci);
+                    var index = this._grid.index(ri, ci);
                     var formula = formulas.at(index);
 
                     var td = table.addCell(ri - rows.start, values.at(index), { backgroundColor: backgrounds.at(index) } );
@@ -198,8 +181,8 @@
                 }
             }
 
-            var x = this._columns.normalize(columns.offset);
-            var y = this._rows.normalize(rows.offset);
+            var x = this._grid.adjustHorizontal(columns.offset);
+            var y = this._grid.adjustVertical(rows.offset);
 
             var mergedCells = this.renderMergedCells(promises, rectangle.left, rectangle.top);
 
@@ -216,13 +199,12 @@
         renderMergedCells: function(promises, left, top) {
             var mergedCells = [];
             var sheet = this._sheet;
-            var grid = sheet._grid;
 
             for (var i = 0, len = this._sheet._mergedCells.length; i < len; i++) {
                 var ref = this._sheet._mergedCells[i];
-                var rectangle = grid.rectangle(ref);
+                var rectangle = this._grid.boundingRectangle(ref);
                 var cell = ref.topLeft;
-                var index = grid.cellRefIndex(cell);
+                var index = this._grid.cellRefIndex(cell);
                 var value = sheet._values.value(index, index);
                 var background = sheet._backgrounds.value(index, index);
                 // var formula = sheet._backgrounds.value(index, index);
