@@ -1105,6 +1105,47 @@
         ok(!cells.eq(1).hasClass("k-state-focused"));
         equal(grid.current()[0], cells[0]);
     });
+
+    test("move down in hierarchical grid", function() {
+        var grid = setup({
+            dataBound: function() {
+                this.expandRow(this.tbody.find("tr.k-master-row").first());
+            },
+            detailInit: function(e) {
+                $("<div />").appendTo(e.detailRow)
+                    .kendoGrid({
+                        dataSource: [{ foo: "foo", bar: "bar" }]
+                    });
+            }
+        });
+
+        grid.table.focus().press(kendo.keys.DOWN).press(kendo.keys.DOWN);
+        var cell = grid.items().eq(1).children(":not(.k-hierarchy-cell)").first();
+
+        ok(cell.hasClass("k-state-focused"));
+        equal(grid.current()[0], cell[0]);
+    });
+
+    test("move up in hierarchical grid", function() {
+        var grid = setup({
+            dataBound: function() {
+                this.expandRow(this.tbody.find("tr.k-master-row").first());
+            },
+            detailInit: function(e) {
+                $("<div />").appendTo(e.detailRow)
+                    .kendoGrid({
+                        dataSource: [{ foo: "foo", bar: "bar" }]
+                    });
+            }
+        });
+
+        grid.current(grid.items().eq(1).children(":not(.k-hierarchy-cell)").first());
+        grid.table.press(kendo.keys.UP);
+        var cell = grid.table.find(".k-detail-cell").first();
+
+        ok(cell.hasClass("k-state-focused"));
+        equal(grid.current()[0], cell[0]);
+    });
 })();
 
 /*

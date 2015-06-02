@@ -4523,7 +4523,7 @@ var __meta__ = {
         _prevVerticalCell: function(container, current) {
             var cells;
             var row = current.parent();
-            var rows = container.find(NAVROW);
+            var rows = container.children(NAVROW);
             var rowIndex = rows.index(row);
             //get data-index in case of last level of multi-level columns
             var index = this._currentDataIndex(container, current);
@@ -4563,7 +4563,7 @@ var __meta__ = {
         _nextVerticalCell: function(container, current) {
             var cells;
             var row = current.parent();
-            var rows = container.find(NAVROW);
+            var rows = container.children(NAVROW);
             var rowIndex = rows.index(row);
             //get data-index in case of last level of multi-level columns
             var index = this._currentDataIndex(container, current);
