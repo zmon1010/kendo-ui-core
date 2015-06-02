@@ -126,7 +126,7 @@
                 </li>
                 <li>
                     Upload
-                    <ul>
+                    <ul style="background: orange;">
                         <li>
                             <label>Photos <input type="checkbox" checked></label>
                         </li>
@@ -181,5 +181,26 @@
     <script type="text/javascript" charset="utf-8">
         new kendo.mobile.Application($(document.body), { skin: "nova" });
     </script>
+
+    <style>
+.km-nova input[type=radio],
+.km-nova input[type=checkbox]
+{
+
+    top: auto;
+}
+
+
+.km-nova input[type=radio].km-check:checked:after
+{
+    margin-top: 4px;
+    margin-left: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin-left: -1px;
+}
+
+    </style>
 </body>
 </html>
