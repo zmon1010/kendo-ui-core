@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drawer + ListView</title>
+    <meta charset="utf-8" />
+
+    <script src="../../src/jquery.js"></script>
+    <script src="../../src/angular.js"></script>
+    <script src="../../src/kendo.core.js"></script>
+    <script src="../../src/kendo.popup.js"></script>
+    <script src="../../src/kendo.fx.js"></script>
+    <script src="../../src/kendo.view.js"></script>
+    <script src="../../src/kendo.router.js"></script>
+    <script src="../../src/kendo.binder.js"></script>
+    <script src="../../src/kendo.angular.js"></script>
+    <script src="../../src/kendo.data.js"></script>
+    <script src="../../src/kendo.data.odata.js"></script>
+    <script src="../../src/kendo.binder.js"></script>
+    <script src="../../src/kendo.userevents.js"></script>
+    <script src="../../src/kendo.draganddrop.js"></script>
+    <script src="../../src/kendo.pager.js"></script>
+    <script src="../../src/kendo.slider.js"></script>
+    <script src="../../src/kendo.mobile.loader.js"></script>
+    <script src="../../src/kendo.mobile.view.js"></script>
+    <script src="../../src/kendo.mobile.pane.js"></script>
+    <script src="../../src/kendo.mobile.scroller.js"></script>
+    <script src="../../src/kendo.mobile.application.js"></script>
+    <script src="../../src/kendo.mobile.button.js"></script>
+    <script src="../../src/kendo.mobile.listview.js"></script>
+    <script src="../../src/kendo.mobile.listview.js"></script>
+    <script src="../../src/kendo.mobile.navbar.js"></script>
+    <script src="../../src/kendo.mobile.modalview.js"></script>
+    <script src="../../src/kendo.mobile.popover.js"></script>
+    <script src="../../src/kendo.mobile.scrollview.js"></script>
+    <script src="../../src/kendo.mobile.drawer.js"></script>
+    <script src="../../src/kendo.mobile.actionsheet.js"></script>
+    <script src="../../src/kendo.mobile.tabstrip.js"></script>
+    <script src="../../src/kendo.colorpicker.js"></script>
+    <script src="../../src/kendo.mobile.switch.js"></script>
+    <link href="../../styles/mobile/kendo.mobile.nova.less" rel="stylesheet/less" type="text/css" />
+    <script src="../../demos/mvc/content/shared/js/less.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div data-role="view" data-title="NavBar Title">
+        <div data-role="header">
+            <div data-role="navbar">
+                <a data-role="backbutton" data-align="left"></a>
+                <span data-role="view-title"></span>
+                <span class="km-view-subtitle">Subtitle</span>
+                <a data-role="button" data-rel="drawer" href="#drawer" data-icon="drawer-icon" data-align="right"></a>
+            </div>
+        </div>
+
+        <img src="http://i.imgur.com/4dKohsP.jpg" class="km-thumbnail" style="width: 10em; height: 10em; margin: 1em auto; display: block; float: none;">
+
+        <span>Required</span>
+
+        <form action="./index.html">
+            <ul data-role="listview" data-style="inset">
+                <li>
+                    <label class="km-required km-label-above">First Name
+                        <input value="Eduardo" type="text" />
+                    </label>
+                </li>
+                <li>
+                    <label class="km-label-above">Last Name
+                        <input value="Batista" type="text" />
+                    </label>
+                </li>
+                <li>
+                    <label class="km-label-above">Company
+                        <input value="Telerik" type="text" />
+                    </label>
+                </li>
+
+                <li>
+                    <fieldset>
+                        <legend><a href="#" class="km-legend-button">+ Phone</a></legend>
+
+                        <label class="km-inline-field km-required km-label-above">
+                            Phone Number
+                            <input type="text" value="+359 555 5555" />
+                        </label>
+                        <label class="km-label-above km-inline-field">
+                            type
+                            <select id="dropdown">
+                                <option value="First Option">Mobile</option>
+                                <option value="Second Option">Stationary</option>
+                                <option value="Third Option">iPhone</option>
+                            </select>
+                        </label>
+                    </fieldset>
+                </li>
+
+                <li>
+                    <fieldset>
+                        <legend><a href="#" class="km-legend-button">+ Email</a></legend>
+
+                        <label class="km-required km-label-above">
+                            Email
+                            <input type="text" value="petyo.ivanov@telerik.com" />
+                        </label>
+                    </fieldset>
+                </li>
+
+                <li>
+                    <fieldset>
+                        <legend>Notes</legend>
+                        <textarea> Your notes here</textarea>
+                    </fieldset>
+                </li>
+            </ul>
+
+            <ul data-role="listview" data-type="group" data-style="inset">
+                <li>
+                    Other
+                    <ul>
+                        <li>
+                            <label>Visible in other apps <input type="checkbox" checked data-role="switch"></label>
+                        </li>
+                        <li>
+                            <label>Notify me when contact is online <input type="checkbox" data-role="switch"></label>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Upload
+                    <ul>
+                        <li>
+                            <label>Photos <input type="checkbox" checked></label>
+                        </li>
+                        <li>
+                            <label>Videos <input type="checkbox" checked></label>
+                        </li>
+                        <li>
+                            <label>Documents <input type="checkbox"></label>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Videos
+                    <ul>
+                        <li>
+                            <label>Don't upload <input type="radio" name="videos" value="0" checked></label>
+                        </li>
+                        <li>
+                            <label>Good Quality (needs Wi-Fi) <input type="radio" value="1" name="videos"></label>
+                        </li>
+                        <li>
+                            <label>Best Quality (needs Wi-Fi) <input type="radio" value="2" name="videos"></label>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Volume
+                    <ul>
+                        <li>
+                            <input data-role="slider" id="slider" max="100" style="width:100%" />
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Survey
+                    <ul>
+                        <li>
+                            <h2>What is your favorite car make?</h2>
+                            <ul>
+                                <li><input type="radio" value="-1" name="cars"><label>BMW</label> </li>
+                                <li><input type="radio" name="cars" value="0" checked><label>Skoda</label> </li>
+                                <li><input type="radio" value="1" name="cars"><label>Mercedes-Benz</label> </li>
+                                <li><input type="radio" value="2" name="cars"><label>VolksWagen</label> </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </form>
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+        new kendo.mobile.Application($(document.body), { skin: "nova" });
+    </script>
+</body>
+</html>
