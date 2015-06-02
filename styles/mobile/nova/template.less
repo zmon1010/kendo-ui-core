@@ -111,6 +111,12 @@
     background-image: linear-gradient(top, #202333 0%, #081421 100%);
 }
 
+.km-nova .km-drawer .km-navbar,
+.km-nova .km-drawer .km-vertical-tabstrip .km-button.km-state-active,
+.km-nova .km-drawer .km-listview li.km-state-active {
+    background: darken(@normal-text-color, 15%);
+}
+
 .km-nova .km-light .km-view-title {
     color: @accent;
 }
@@ -127,7 +133,8 @@
 .km-nova .km-accent.k-toolbar,
 .km-nova .km-accent.km-tabstrip,
 .km-nova .km-touch-scrollbar,
-.km-nova .km-vertical-tabstrip .km-button.km-state-active:before {
+.km-nova .km-vertical-tabstrip .km-button.km-state-active:before,
+.km-nova .km-drawer .km-listview li.km-state-active:before  {
     background: @accent;
 }
 
@@ -277,6 +284,10 @@
 /* Drawer */
 .km-nova .km-drawer {
     color: @background;
+    background-color: darken(@normal-text-color, 7%);
+}
+
+.km-nova .km-drawer .km-content {
     background-color: darken(@normal-text-color, 7%);
 }
 
