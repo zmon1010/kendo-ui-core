@@ -2827,14 +2827,13 @@ html.k-materialblack .demo-section.k-content {
 }
 
 .responsive-message {
+    font-size: 17px;
     display: none;
-    margin: 4.5em auto;
-    padding: 3em;
+    margin: 4em auto;
+    padding: 2.5em;
     text-align: center;
-    background-color: #b2ebf2;
-    border: 1px solid #a2e7f0;
-    color: #00838f;
-    font-weight: bold;
+    background-color: #ffda3f;
+    color: #000;
 }
 
 @media screen and (max-width: 1023px) {
