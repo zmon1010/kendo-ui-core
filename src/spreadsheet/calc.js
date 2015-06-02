@@ -186,7 +186,12 @@
 
         function maybeCall(exp) {
             if (is("punc", "(")) {
-                if (exp.type != "ref" || exp.ref != "name") {
+                var fname;
+                if (exp.type == "bool") {
+                    fname = exp.value+"";
+                } else if (exp.type == "ref" && exp.ref == "name") {
+                    fname = exp.name;
+                } else {
                     input.croak("Expecting function name");
                 }
                 refs.pop();     // not real reference
@@ -204,7 +209,7 @@
                 skip("punc", ")");
                 exp = {
                     type: "call",
-                    func: exp.name,
+                    func: fname,
                     args: args
                 };
             }

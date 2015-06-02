@@ -158,6 +158,9 @@
         callback(Math.random());
     });
 
+    defNumeric("true", 0, function(){ return true; });
+    defNumeric("false", 0, function(){ return false; });
+
     //// utils
 
     function defNumeric(name, nargs, func) {
