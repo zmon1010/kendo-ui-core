@@ -343,9 +343,12 @@
                 });
               case "call":
                 return JSON.stringify(node.func + "(") + " + "
-                    + node.args.map(function(arg){
-                        return print(arg, 0);
-                    }).join(" + ', ' + ") + " + ')'";
+                    + (node.args.length > 0
+                       ? node.args.map(function(arg){
+                           return print(arg, 0);
+                       }).join(" + ', ' + ")
+                       : "''")
+                    + " + ')'";
             }
         }
         function withParens(op, prec, f) {
