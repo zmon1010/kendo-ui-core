@@ -343,7 +343,7 @@
 
 .km-nova .km-switch-wrapper
 {
-    background-color: green;
+    //background-color: green;
 }
 
 .km-nova .km-switch-handle
@@ -442,13 +442,13 @@
 /* ActionSheet, Footer */
 .km-nova .km-actionsheet > li > a
 {
-    background:purple;
-    color: green;
+    color: @normal-text-color;
+    background: @background;    
+}
 
-    /*border-top-color: @office365-list-border;
-    border-image: -webkit-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
-    border-image: -moz-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
-    border-image: -ms-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;*/
+.km-nova .km-shim li.km-actionsheet-title {
+    color: darken(@base, 43%); // Calculate to #9ca3a6;
+    background: @background;
 }
 
 .km-nova .km-actionsheet > li:nth-last-child(2) > a
@@ -459,32 +459,32 @@
 .km-nova .km-footer .km-tabstrip .km-button:hover,
 .km-nova .km-actionsheet > li > a:active
 {
-    background: purple;
+    //background: purple;
 }
 
 .km-nova .km-footer .km-tabstrip .km-button,
-.km-nova .km-actionsheet > li > a
+.km-nova .km-actionsheet > li > a,
+.km-nova .km-shim li.km-actionsheet-title
 {
-    border-color: pink;
+    border-color: darken(@base, 8%); // Calculate to #dfe0e1;
 }
 
 .km-nova .km-actionsheet > .km-actionsheet-cancel > a
 {
-    color: red;
-    background: green;
+    color: @normal-text-color;
 }
 
 .km-nova .km-actionsheet-wrapper,
 .km-nova .km-popup .k-list-container
 {
-    background: yellow;
+   // background: yellow;
     border-top-color: orange;
 }
 
 .km-nova .km-popup.km-pane,
 .km-tablet .km-nova .km-actionsheet-wrapper
 {
-    background-color: purple;
+    background-color: @background;
 }
 
 
@@ -514,7 +514,7 @@
 .km-nova .km-actionsheet-wrapper,
 .km-nova .km-popup .k-list-container
 {
-    background: green;
+    //background: green;
     border-top-color: red;
 }
 
@@ -526,10 +526,10 @@
 
 .km-nova .km-popup-arrow:after
 {
-    border-color: pink;
+    //border-color: pink;
 }
 
-.km-office365 .km-actionsheet-root .km-popup-arrow:after {
+.km-nova .km-actionsheet-root .km-popup-arrow:after {
     border-color: transparent purple;
 }
 
