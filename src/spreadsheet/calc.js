@@ -548,8 +548,8 @@
         }));
 
         code = [
-            "function(context){",
-            "var formula = context.formula",
+            "function(){",
+            "var context = this, refs = context.formula.absrefs",
             code,
             "}"
         ].join(";\n");
@@ -577,7 +577,7 @@
                     + ")";
             }
             else if (type == "ref") {
-                return "formula.absrefs[" + node.index + "]";
+                return "refs[" + node.index + "]";
             }
             else if (type == "bool") {
                 return "" + node.value;

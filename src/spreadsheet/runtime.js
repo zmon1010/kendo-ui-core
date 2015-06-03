@@ -81,7 +81,7 @@
             }
 
             if (!formulas.length) {
-                return f(context);
+                return f.call(context);
             }
 
             for (var pending = formulas.length, i = 0; i < formulas.length; ++i) {
@@ -90,7 +90,7 @@
             function fetch(cell) {
                 cell.formula.exec(context.ss, cell.sheet, cell.row, cell.col, function(val){
                     if (!--pending) {
-                        f(context);
+                        f.call(context);
                     }
                 });
             }
