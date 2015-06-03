@@ -549,7 +549,7 @@
 
         code = [
             "function(context){",
-            "var formula = context.formula, runtime = kendo.spreadsheet.calc.runtime",
+            "var formula = context.formula",
             code,
             "}"
         ].join(";\n");
@@ -566,17 +566,11 @@
             else if (type == "str") {
                 return JSON.stringify(node.value);
             }
-            else if (type == "prefix" || type == "postfix") {
-                return "runtime.unary(context, '" + node.op + "', " + js(node.exp) + ")";
-            }
-            else if (type == "binary") {
-                return "runtime.binary(context, '" + node.op + "', " + js(node.left) + ", " + js(node.right) + ")";
-            }
             else if (type == "return") {
                 return "context.resolve(" + js(node.value) + ")";
             }
             else if (type == "call") {
-                return "runtime.func(context, " + JSON.stringify(node.func)
+                return "context.func(" + JSON.stringify(node.func)
                     + node.args.map(function(arg){
                         return ", " + js(arg);
                     }).join("")
@@ -589,10 +583,10 @@
                 return "" + node.value;
             }
             else if (type == "if") {
-                return "(runtime.bool(context, " + js(node.co) + ") ? " + js(node.th) + " : " + js(node.el) + ")";
+                return "(context.bool(" + js(node.co) + ") ? " + js(node.th) + " : " + js(node.el) + ")";
             }
             else if (type == "not") {
-                return "!runtime.bool(context, " + js(node.exp) + ")";
+                return "!context.bool(" + js(node.exp) + ")";
             }
             else if (type == "lambda") {
                 return "function("

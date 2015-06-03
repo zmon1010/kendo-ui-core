@@ -146,8 +146,7 @@
         var self = this, timeout = args.shift();
         setTimeout(function(){
             var sum = 0;
-            var values = runtime.cellValues(self, args);
-            runtime.forNumbers(self, values, function(num){
+            self.forNumbers(args, function(num){
                 sum += num;
             });
             callback(sum);

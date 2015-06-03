@@ -13,12 +13,8 @@
     var spreadsheet = kendo.spreadsheet;
     var calc = spreadsheet.calc;
     var runtime = calc.runtime;
-    var forNumbers = runtime.forNumbers;
-    var cellValues = runtime.cellValues;
     var defineFunction = runtime.defineFunction;
     var CalcError = runtime.CalcError;
-    var resolveCells = runtime.resolveCells;
-    var divide = runtime.divide;
     var RangeRef = spreadsheet.RangeRef;
     var CellRef = spreadsheet.CellRef;
 
@@ -37,7 +33,7 @@
 
     defineFunction("sum", function(callback, args){
         var sum = 0;
-        forNumbers(this, cellValues(this, args), function(num){
+        this.forNumbers(args, function(num){
             sum += num;
         });
         callback(sum);
@@ -47,7 +43,7 @@
         assertArgs.call(this, args, 2, function(range, cmp){
             cmp = parseComparator(cmp);
             var sum = 0;
-            forNumbers(this, cellValues(this, [range]), function(num){
+            this.forNumbers(range, function(num){
                 if (cmp(num)) {
                     sum += num;
                 }
@@ -58,7 +54,7 @@
 
     defineFunction("counta", function(callback, args){
         var count = 0;
-        cellValues(this, args).forEach(function(val){
+        this.cellValues(args).forEach(function(val){
             if (val != null && val !== "") {
                 count++;
             }
@@ -68,7 +64,7 @@
 
     defineFunction("count", function(callback, args){
         var count = 0;
-        cellValues(this, args).forEach(function(val){
+        this.cellValues(args).forEach(function(val){
             if (val != null) {
                 if (typeof val == "number" || val instanceof Date || !isNaN(parseFloat(val))) {
                     count++;
@@ -80,7 +76,7 @@
 
     defineFunction("countblank", function(callback, args){
         var count = 0;
-        cellValues(this, args).forEach(function(val){
+        this.cellValues(args).forEach(function(val){
             if (val == null || val === "") {
                 count++;
             }
@@ -92,7 +88,7 @@
         assertArgs.call(this, args, 2, function(range, cmp){
             cmp = parseComparator(cmp);
             var count = 0;
-            cellValues(this, [range]).forEach(function(val){
+            this.cellValues([range]).forEach(function(val){
                 if (cmp(val)) {
                     count++;
                 }
@@ -175,17 +171,17 @@
 
     defineFunction("average", function(callback, args){
         var sum = 0, count = 0;
-        forNumbers(this, cellValues(this, args), function(num){
+        this.forNumbers(args, function(num){
             sum += num;
             ++count;
         });
-        divide.call(this, callback, sum, count);
+        this.divide(callback, sum, count);
     });
 
     // https://support.office.com/en-sg/article/AVEDEV-function-ec78fa01-4755-466c-9a2b-0c4f9eacaf6d
     defineFunction("avgdev", function(callback, args){
         var sum = 0, numbers = [];
-        forNumbers(this, cellValues(this, args), function(num){
+        this.forNumbers(args, function(num){
             sum += num;
             numbers.push(num);
         });
@@ -194,14 +190,14 @@
         numbers.forEach(function(num){
             sum += Math.abs(num - avg);
         });
-        divide.call(this, callback, sum, numbers.length);
+        this.divide(callback, sum, numbers.length);
     });
 
     /* -----[ Other ]----- */
 
     // XXX: does more work than needed
     defineFunction("indirect", function(callback, args){
-        cellValues(this, args, function(thing){
+        this.cellValues(args, function(thing){
             try {
                 if (typeof thing != "string") {
                     throw 1;
@@ -211,7 +207,7 @@
                     throw 1;
                 }
                 ref = ref.ast;
-                resolveCells(this, [ ref ], function(){
+                this.resolveCells([ ref ], function(){
                     callback(ref);
                 });
             } catch(ex) {
@@ -234,7 +230,7 @@
             if (args.length != nargs) {
                 return this.error(new CalcError("N/A"));
             }
-            args = cellValues(this, args);
+            args = this.cellValues(args);
             for (var i = 0; i < args.length; ++i) {
                 var num = args[i];
                 if (num == null || num === "") {

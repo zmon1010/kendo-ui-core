@@ -35,6 +35,138 @@
         }
     });
 
+    /* -----[ Context ]----- */
+
+    var Context = Class.extend({
+        init: function Context(callback, formula, ss, sheet, row, col) {
+            this.callback = callback;
+            this.formula = formula;
+            this.ss = ss;
+            this.sheet = sheet;
+            this.row = row;
+            this.col = col;
+        },
+
+        resolve: function(val) {
+            val = this.cellValues([ val ])[0];
+            if (val == null) {
+                val = 0;
+            }
+            this.formula.value = val;
+            this.ss.onFormula(this.sheet, this.row, this.col, val);
+            if (this.callback) {
+                this.callback(val);
+            }
+        },
+
+        error: function(val) {
+            this.ss.onFormula(this.sheet, this.row, this.col, val);
+            if (this.callback) {
+                this.callback(val);
+            }
+            return val;
+        },
+
+        resolveCells: function(a, f) {
+            var context = this, formulas = [];
+
+            for (var i = 0; i < a.length; ++i) {
+                var x = a[i];
+                if (x instanceof Ref) {
+                    if (!add(context.ss.getRefCells(x.absolute(context.row, context.col)))) {
+                        context.error(new CalcError("CIRCULAR"));
+                        return;
+                    }
+                }
+            }
+
+            if (!formulas.length) {
+                return f(context);
+            }
+
+            for (var pending = formulas.length, i = 0; i < formulas.length; ++i) {
+                fetch(formulas[i]);
+            }
+            function fetch(cell) {
+                cell.formula.exec(context.ss, cell.sheet, cell.row, cell.col, function(val){
+                    if (!--pending) {
+                        f(context);
+                    }
+                });
+            }
+            function add(a) {
+                for (var i = 0; i < a.length; ++i) {
+                    var cell = a[i];
+                    if (cell.formula) {
+                        if (cell.formula === context.formula) {
+                            return false;
+                        }
+                        formulas.push(cell);
+                    }
+                }
+                return true;
+            }
+        },
+
+        cellValues: function(a, f) {
+            var ret = [];
+            for (var i = 0; i < a.length; ++i) {
+                var val = a[i];
+                if (val instanceof Ref) {
+                    val = this.ss.getData(val.absolute(this.row, this.col));
+                }
+                ret = ret.concat(val);
+            }
+            if (f) {
+                return f.apply(this, ret);
+            }
+            return ret;
+        },
+
+        forNumbers: function(a, f) {
+            if (a instanceof Ref) {
+                a = this.cellValues([ a ]);
+            }
+            if (Array.isArray(a)) {
+                for (var i = 0; i < a.length; ++i) {
+                    this.forNumbers(a[i], f);
+                }
+            }
+            if (typeof a == "number") {
+                f(a);
+            }
+        },
+
+        func: function(fname, callback) {
+            var args = slice(arguments, 2);
+            return FUNCS[fname.toLowerCase()].call(this, callback, args);
+        },
+
+        bool: function(val) {
+            if (val instanceof Ref) {
+                val = this.ss.getData(val.absolute(this.row, this.col));
+            }
+            if (typeof val == "string") {
+                return val.toLowerCase() == "true";
+            }
+            if (typeof val == "number") {
+                return val !== 0;
+            }
+            if (typeof val == "boolean") {
+                return val;
+            }
+            return val != null;
+        },
+
+        divide: function(callback, left, right) {
+            if (right === 0) {
+                this.error(new CalcError("DIV/0"));
+            } else {
+                callback(left / right);
+            }
+        }
+    });
+
     /* -----[ Formula ]----- */
 
     var Formula = Class.extend({
@@ -46,38 +178,14 @@
         clone: function() {
             return new Formula(this.refs, this.handler, this.print);
         },
-        exec: function(SS, sheet, row, col, callback) {
-            var formula = this;
-            if ("value" in formula) {
+        exec: function(ss, sheet, row, col, callback) {
+            if ("value" in this) {
                 if (callback) {
-                    callback(formula.value);
+                    callback(this.value);
                 }
             } else {
-                resolveCells({
-                    ss: SS,
-                    formula: formula,
-                    sheet: sheet,
-                    row: row,
-                    col: col,
-                    resolve: function(val) {
-                        val = cellValues(this, [ val ])[0];
-                        if (val == null) {
-                            val = 0;
-                        }
-                        formula.value = val;
-                        SS.onFormula(sheet, row, col, val);
-                        if (callback) {
-                            callback(val);
-                        }
-                    },
-                    error: function(val) {
-                        SS.onFormula(sheet, row, col, val);
-                        if (callback) {
-                            callback(val);
-                        }
-                        return val;
-                    }
-                }, formula.refs, this.handler);
+                var ctx = new Context(callback, this, ss, sheet, row, col);
+                ctx.resolveCells(this.refs, this.handler);
             }
         },
         reset: function() {
@@ -159,13 +267,6 @@
         }
     });
 
-    function debug_printRefs(formula, trow, tcol) {
-        var refs = formula.refs.map(function(ref){
-            return ref.print(trow, tcol);
-        });
-        console.log(refs.join(", "));
-    }
-
     // utils ------------------------
 
     function slice(a, i) {
@@ -181,76 +282,9 @@
 
     // spreadsheet functions --------
 
-    function resolveCells(context, a, f) {
-        var formulas = [];
-
-        for (var i = 0; i < a.length; ++i) {
-            var x = a[i];
-            if (x instanceof Ref) {
-                if (!add(context.ss.getRefCells(x.absolute(context.row, context.col)))) {
-                    context.error(new CalcError("CIRCULAR"));
-                    return;
-                }
-            }
-        }
-
-        if (!formulas.length) {
-            return f(context);
-        }
-
-        for (var pending = formulas.length, i = 0; i < formulas.length; ++i) {
-            fetch(formulas[i]);
-        }
-        function fetch(cell) {
-            cell.formula.exec(context.ss, cell.sheet, cell.row, cell.col, function(val){
-                if (!--pending) {
-                    f(context);
-                }
-            });
-        }
-        function add(a) {
-            for (var i = 0; i < a.length; ++i) {
-                var cell = a[i];
-                if (cell.formula) {
-                    if (cell.formula === context.formula) {
-                        return false;
-                    }
-                    formulas.push(cell);
-                }
-            }
-            return true;
-        }
-    }
-
-    function cellValues(self, a, f) {
-        var ret = [];
-        for (var i = 0; i < a.length; ++i) {
-            var val = a[i];
-            if (val instanceof Ref) {
-                val = self.ss.getData(val.absolute(self.row, self.col));
-            }
-            ret = ret.concat(val);
-        }
-        if (f) {
-            return f.apply(self, ret);
-        }
-        return ret;
-    }
-
-    function forNumbers(self, a, f) {
-        for (var i = 0; i < a.length; ++i) {
-            var x = a[i];
-            if (Array.isArray(x)) {
-                forNumbers(self, x, f);
-            } else if (typeof x == "number") {
-                f(x);
-            }
-        }
-    }
-
     function binaryNumeric(func) {
         return function(callback, args) {
-            cellValues(this, args, function(left, right){
+            this.cellValues(args, function(left, right){
                 if (left == null) {
                     left = 0;
                 }
@@ -268,7 +302,7 @@
 
     function binaryCompare(func) {
         return function(callback, args) {
-            cellValues(this, args, function(left, right){
+            this.cellValues(args, function(left, right){
                 if (typeof left == "string" && typeof right != "string") {
                     right = right == null ? "" : right + "";
                 }
@@ -292,7 +326,7 @@
 
     function unaryNumeric(func) {
         return function(callback, args) {
-            cellValues(this, args, function(exp){
+            this.cellValues(args, function(exp){
                 if (exp == null) {
                     exp = 0;
                 }
@@ -303,14 +337,6 @@
                 }
             });
         };
-    }
-
-    function divide(callback, left, right){
-        if (right === 0) {
-            this.error(new CalcError("DIV/0"));
-        } else {
-            callback(left / right);
-        }
     }
 
     var FUNCS = {
@@ -327,14 +353,14 @@
         "binary*": binaryNumeric(function(callback, left, right){
             callback(left * right);
         }),
-        "binary/": binaryNumeric(divide),
+        "binary/": binaryNumeric(Context.prototype.divide),
         "binary^": binaryNumeric(function(callback, left, right){
             callback(Math.pow(left, right));
         }),
 
         // text concat
         "binary&": function(callback, args) {
-            cellValues(this, args, function(left, right){
+            this.cellValues(args, function(left, right){
                 if (left == null) { left = ""; }
                 if (right == null) { right = ""; }
                 callback("" + left + right);
@@ -343,12 +369,12 @@
 
         // boolean
         "binary=": function(callback, args) {
-            cellValues(this, args, function(left, right){
+            this.cellValues(args, function(left, right){
                 callback(left === right);
             });
         },
         "binary<>": function(callback, args) {
-            cellValues(this, args, function(left, right){
+            this.cellValues(args, function(left, right){
                 callback(left !== right);
             });
         },
@@ -417,7 +443,7 @@
     {// XXX: just for testing, remove at some point
 
         FUNCS.currency = function(callback, args) {
-            cellValues(this, args, function(query, base){
+            this.cellValues(args, function(query, base){
                 var self = this;
                 if (typeof query != "string" || typeof base != "string") {
                     return self.error(new CalcError("VALUE"));
@@ -452,8 +478,7 @@
             var self = this;
             setTimeout(function(){
                 var sum = 0;
-                var values = cellValues(self, args);
-                forNumbers(self, values, function(num){
+                self.forNumbers(args, function(num){
                     sum += num;
                 });
                 callback(sum);
@@ -467,37 +492,8 @@
     exports.CalcError = CalcError;
     exports.Formula = Formula;
 
-    exports.bool = function(context, val) {
-        if (val instanceof Ref) {
-            val = context.ss.getData(val.absolute(context.row, context.col));
-        }
-        if (typeof val == "string") {
-            return val.toLowerCase() == "true";
-        }
-        if (typeof val == "number") {
-            return val !== 0;
-        }
-        if (typeof val == "boolean") {
-            return val;
-        }
-        return val != null;
-    };
-
-    exports.func = function(context, fname, callback) {
-        var args = slice(arguments, 3);
-        return FUNCS[fname.toLowerCase()].call(context, callback, args);
-    };
-
     exports.defineFunction = function(name, func) {
         FUNCS[name.toLowerCase()] = func;
     };
-
-    exports.resolveCells = resolveCells;
-
-    exports.forNumbers = forNumbers;
-
-    exports.cellValues = cellValues;
-
-    exports.divide = divide;
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
