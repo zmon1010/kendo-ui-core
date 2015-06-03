@@ -2,11 +2,11 @@
 /// <reference path="typings/kendo-ui/kendo-ui.d.ts" />
 //
 import {Optional, Directive, Component, View, bootstrap} from 'angular2/angular2';
-import {FormBuilder, ControlGroup, ControlGroupDirective, ControlDirective, Validators, DefaultValueAccessor} from 'angular2/forms';
+import {ControlValueAccessor, FormBuilder, ControlGroup, ControlGroupDirective, ControlDirective, Validators, DefaultValueAccessor} from 'angular2/forms';
 import {ElementRef} from 'angular2/src/core/compiler/element_ref';
 
 @Component({
-    selector: 'kendo-numeric',
+    selector: 'k-numeric',
     properties: {
         value: "value"
     }
@@ -51,31 +51,68 @@ class NumericTextBox {
     }
 }
 
+@Directive({
+    selector: 'kendo-numerictextbox[control]'
+})
+class KendoValueAccessor implements ControlValueAccessor {
+    onChange: Function;
+    element: any;
+
+    constructor(el: ElementRef, controlDirective: ControlDirective) {
+        this.element = el.domElement;
+
+        this.element.addEventListener("change", () => {
+            this.onChange(this.element.value);
+        });
+
+        this.element.addEventListener("spin", () => {
+            this.onChange(this.element.value);
+        });
+
+        controlDirective.valueAccessor = this;
+    }
+
+    writeValue(value) {
+        this.element.value = value;
+    }
+}
+
+
 @Component({
     selector: 'my-app'
 })
 @View({
     template: `
-    <kendo-numeric [value]="3.14"></kendo-numeric>
-    <div [control-group]="myForm">
-        <kendo-numeric [control]="myForm.controls.age" [value]="myForm.controls.age.value"></kendo-numeric>
-        <input [control]="myForm.controls.fullName">
-        <input [control]="myForm.controls.age">
-    </div>
-    <div>
-    <label>fullName: {{ myForm.controls.fullName.value }}</label>
-    <label>age: {{ myForm.controls.age.value }}</label>
-    </div>
+    <fieldset>
+        <legend>Angular2 Component</legend>
+        <label>[value]</label><k-numeric [value]="value"></k-numeric>
+        <div [control-group]="myForm">
+            <label>[control] and [value]</label><k-numeric [control]="myForm.controls.age" [value]="myForm.controls.age.value"></k-numeric>
+            <input [control]="myForm.controls.fullName">
+        </div>
+    </fieldset>
     <button (click)="log()">log</button>
-    <button (click)="setFullName()">set full name</button>
+    <button (click)="setValue()">set value</button>
+    <div>
+        <label>age: {{ myForm.controls.age.value }}</label>
+    </div>
+    <fieldset>
+        <legend>Web Component</legend>
+        <label>[value]</label><kendo-numerictextbox [value]="value"></kendo-numerictextbox>
+        <div [control-group]="myForm">
+            <label>[control] and [value]</label><kendo-numerictextbox [control]="myForm.controls.age" [value]="myForm.controls.age.value"></kendo-numerictextbox>
+        </div>
+    </fieldset>
     `,
-    directives: [NumericTextBox, ControlGroupDirective, ControlDirective, DefaultValueAccessor]
+    directives: [NumericTextBox, ControlGroupDirective, ControlDirective, KendoValueAccessor, DefaultValueAccessor]
 })
 class MyAppComponent {
     myForm: any;
+    value: Number;
 
     constructor() {
         var builder = new FormBuilder();
+        this.value = 3.14;
 
         this.myForm = builder.group({
             fullName: ["", Validators.required],
@@ -86,6 +123,10 @@ class MyAppComponent {
 
     log() {
         console.log(this.myForm.controls.age.value);
+    }
+
+    setValue() {
+        this.value = Math.random();
     }
 
     setFullName() {

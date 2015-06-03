@@ -52,7 +52,7 @@ var NumericTextBox = (function () {
     });
     NumericTextBox = __decorate([
         angular2_1.Component({
-            selector: 'kendo-numeric',
+            selector: 'k-numeric',
             properties: {
                 value: "value"
             }
@@ -65,9 +65,33 @@ var NumericTextBox = (function () {
     ], NumericTextBox);
     return NumericTextBox;
 })();
+var KendoValueAccessor = (function () {
+    function KendoValueAccessor(el, controlDirective) {
+        var _this = this;
+        this.element = el.domElement;
+        this.element.addEventListener("change", function () {
+            _this.onChange(_this.element.value);
+        });
+        this.element.addEventListener("spin", function () {
+            _this.onChange(_this.element.value);
+        });
+        controlDirective.valueAccessor = this;
+    }
+    KendoValueAccessor.prototype.writeValue = function (value) {
+        this.element.value = value;
+    };
+    KendoValueAccessor = __decorate([
+        angular2_1.Directive({
+            selector: 'kendo-numerictextbox[control]'
+        }), 
+        __metadata('design:paramtypes', [element_ref_1.ElementRef, forms_1.ControlDirective])
+    ], KendoValueAccessor);
+    return KendoValueAccessor;
+})();
 var MyAppComponent = (function () {
     function MyAppComponent() {
         var builder = new forms_1.FormBuilder();
+        this.value = 3.14;
         this.myForm = builder.group({
             fullName: ["", forms_1.Validators.required],
             username: ["", forms_1.Validators.required],
@@ -77,6 +101,9 @@ var MyAppComponent = (function () {
     MyAppComponent.prototype.log = function () {
         console.log(this.myForm.controls.age.value);
     };
+    MyAppComponent.prototype.setValue = function () {
+        this.value = Math.random();
+    };
     MyAppComponent.prototype.setFullName = function () {
         this.myForm.controls.fullName.value = "set it";
     };
@@ -85,8 +112,8 @@ var MyAppComponent = (function () {
             selector: 'my-app'
         }),
         angular2_1.View({
-            template: "\n    <kendo-numeric [value]=\"3.14\"></kendo-numeric>\n    <div [control-group]=\"myForm\">\n        <kendo-numeric [control]=\"myForm.controls.age\" [value]=\"myForm.controls.age.value\"></kendo-numeric>\n        <input [control]=\"myForm.controls.fullName\">\n        <input [control]=\"myForm.controls.age\">\n    </div>\n    <div>\n    <label>fullName: {{ myForm.controls.fullName.value }}</label>\n    <label>age: {{ myForm.controls.age.value }}</label>\n    </div>\n    <button (click)=\"log()\">log</button>\n    <button (click)=\"setFullName()\">set full name</button>\n    ",
-            directives: [NumericTextBox, forms_1.ControlGroupDirective, forms_1.ControlDirective, forms_1.DefaultValueAccessor]
+            template: "\n    <fieldset>\n        <legend>Angular2 Component</legend>\n        <label>[value]</label><k-numeric [value]=\"value\"></k-numeric>\n        <div [control-group]=\"myForm\">\n            <label>[control] and [value]</label><k-numeric [control]=\"myForm.controls.age\" [value]=\"myForm.controls.age.value\"></k-numeric>\n            <input [control]=\"myForm.controls.fullName\">\n        </div>\n    </fieldset>\n    <button (click)=\"log()\">log</button>\n    <button (click)=\"setValue()\">set value</button>\n    <div>\n        <label>age: {{ myForm.controls.age.value }}</label>\n    </div>\n    <fieldset>\n        <legend>Web Component</legend>\n        <label>[value]</label><kendo-numerictextbox [value]=\"value\"></kendo-numerictextbox>\n        <div [control-group]=\"myForm\">\n            <label>[control] and [value]</label><kendo-numerictextbox [control]=\"myForm.controls.age\" [value]=\"myForm.controls.age.value\"></kendo-numerictextbox>\n        </div>\n    </fieldset>\n    ",
+            directives: [NumericTextBox, forms_1.ControlGroupDirective, forms_1.ControlDirective, KendoValueAccessor, forms_1.DefaultValueAccessor]
         }), 
         __metadata('design:paramtypes', [])
     ], MyAppComponent);

@@ -304,6 +304,9 @@ declare module "angular2/forms" {
     }
     class DefaultValueAccessor {
     }
+
+    class ControlValueAccessor {
+    }
 }
 
 declare module "angular2/angular2" {
