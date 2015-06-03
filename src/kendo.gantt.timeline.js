@@ -2404,6 +2404,21 @@ var __meta__ = {
                             that.trigger("clear");
                         }
                     })
+                    .on(CLICK + NS, DOT + styles.taskWrap, function(e) {
+                        e.stopPropagation();
+
+                        // Decrease z-index of wrap so the we can get to the
+                        // dependency line underneath, if there is any
+                        $(this).css("z-index", "0");
+
+                        var target = $(document.elementFromPoint(e.clientX, e.clientY));
+
+                        if (target.hasClass(styles.line)) {
+                            target.click();
+                        }
+
+                        $(this).css("z-index", "");
+                    })
                     .on(CLICK + NS, DOT + styles.tasksWrapper, function(e) {
                         if (that.selectDependency().length > 0) {
                             that.clearSelection();
