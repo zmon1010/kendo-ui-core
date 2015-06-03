@@ -97,9 +97,15 @@
         });
     });
 
-    defineFunction("countifs", function(callback, args){
-        var chunks = [], nrows, ncols;
-        for (var i = 0; i < args.length;) {
+    /* -----[ the "*IFS" functions ]----- */
+
+    // helper function: take `args` like COUNTIFS (see Excel docs) and
+    // calls `f` for each cell matching all criteria.  `f` receives
+    // `chunks` (parsed args containing matrix and predicate) and
+    // row,col of matching cells.
+    function forIFS(args, f) {
+        var chunks = [], nrows, ncols, i = 0;
+        while (i < args.length) {
             var range = args[i++];
             var crit = args[i++];
             if (!range || !crit) {
@@ -108,36 +114,75 @@
             if (!(range instanceof RangeRef)) {
                 return this.error(new CalcError("REF"));
             }
-            if (i > 2) {
+            if (nrows == null) {
+                ncols = range.width();
+                nrows = range.height();
+            } else {
                 if (range.width() != ncols || range.height() != nrows) {
                     return this.error(new CalcError("REF"));
                 }
-            } else {
-                ncols = range.width();
-                nrows = range.height();
             }
             chunks.push({
                 matrix: this.rangeToMatrix(range),
                 pred: parseComparator(crit)
             });
         }
-        var count = 0;
-        for (var row = 0; row < nrows; ++row) {
+        ROW: for (var row = 0; row < nrows; ++row) {
             COL: for (var col = 0; col < ncols; ++col) {
                 for (i = 0; i < chunks.length; ++i) {
-                    var cell = chunks[i].matrix[row][col];
+                    var cell = chunks[i].matrix.get(row, col);
                     var val = cell.value;
-                    if (val == null || val === "") {
-                        val = 0;
-                    }
-                    if (!(cell && chunks[i].pred(val))) {
+                    if (!chunks[i].pred(val == null || val === "" ? 0 : val)) {
                         continue COL;
                     }
                 }
-                count++;
+                f(chunks, row, col);
             }
         }
-        callback(count);
+    }
+
+    defineFunction("countifs", function(callback, args){
+        var count = 0;
+        var error = forIFS.call(this, args, function(){
+            count++;
+        });
+        if (!error) {
+            callback(count);
+        }
+    });
+
+    defineFunction("sumifs", function(callback, args){
+        // hack: insert a predicate that filters out non-numeric
+        // values; should also accept blank cells.  it's safe to
+        // modify args.
+        args.splice(1, 0, numericPredicate);
+        var sum = 0;
+        var error = forIFS.call(this, args, function(chunks, row, col){
+            // range to sum up is the first argument, hence chunks[0]
+            var cell = chunks[0].matrix.get(row, col);
+            if (cell.value) {
+                sum += cell.value;
+            }
+        });
+        callback(sum);
+    });
+
+    // similar to sumifs, but compute average of matching cells
+    defineFunction("averageifs", function(callback, args){
+        args.splice(1, 0, numericPredicate);
+        var sum = 0, count = 0;
+        var error = forIFS.call(this, args, function(chunks, row, col){
+            var cell = chunks[0].matrix.get(row, col);
+            var val = cell.value;
+            if (val == null || val === "") {
+                val = 0;
+            }
+            sum += val;
+            count++;
+        });
+        if (!error) {
+            this.divide(callback, sum, count);
+        }
     });
 
     defNumeric("fact", 1, function(n){
@@ -278,6 +323,9 @@
     var RXCACHE = {};
 
     function parseComparator(cmp) {
+        if (typeof cmp == "function") {
+            return cmp;
+        }
         var m;
         if ((m = /^=(.*)$/.exec(cmp))) {
             return makeComparator(compEQ, m[1]);
@@ -321,6 +369,13 @@
             return this.error(new CalcError("N/A"));
         }
         f.apply(this, args);
+    }
+
+    function numericPredicate(val) {
+        return typeof val == "number"
+            || typeof val == "boolean"
+            || val == null
+            || val === "";
     }
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

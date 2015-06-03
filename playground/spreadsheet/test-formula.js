@@ -518,6 +518,16 @@ fillElements({
         D5: "=countif(A:C, \">=3\")",
         D6: "=countif(A4:C10, \"foo*bar\")",
         D7: "=countifs(A1:C3, \">3\", G11:I13, \"<7\")",
+        D9: '=sumifs(A1:C3, D1:F3, "y*")',
+        D10: '=countifs(A1:C3, ">=0", D1:F3, "y*")',
+        D11: '=averageifs(A1:C3, D1:F3, "y*")',
+
+        D1: 'y',
+        D3: 'YES',
+        F1: 'Y',
+        F3: 'YYY',
+        E2: 'Yaaaaas',
+        E1: 'nope',
 
         G11: 1,
         G12: 2,

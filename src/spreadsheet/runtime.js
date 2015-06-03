@@ -175,7 +175,18 @@
                 row = m[row] || (m[row] = []);
                 row[cell.col - tl.col] = cell;
             });
-            return m;
+            return new Matrix(m);
+        }
+    });
+
+    var Matrix = Class.extend({
+        init: function Matrix(data) {
+            this.data = data;
+        },
+        get: function(row, col) {
+            var line = this.data[row];
+            var cell = line ? line[col] : null;
+            return cell || {};
         }
     });
 
