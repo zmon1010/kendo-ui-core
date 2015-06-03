@@ -19,6 +19,15 @@
     border: 0;
 }
 
+.km-nova .km-list .k-slider {
+    margin-top: auto;
+    top: auto;
+    padding: .5em .7em;
+    position: relative;
+    .box-sizing(content-box);
+    transform: translateY(50%);
+}
+
 .km-nova .k-slider-horizontal .k-draghandle
 {
     top: 2px;
@@ -140,6 +149,7 @@
     background: transparent;
     margin-top: 0;
     transform: translateY(-50%);
+    //text-align: right;
 }
 
 .km-nova .km-list .k-dropdown-wrap
@@ -186,8 +196,12 @@
     display: block;
     margin-top: -1.3em;
     padding-top: .92em;
-    padding-bottom: 1.3em; 
-    //background: green;
+    padding-bottom: 3.3em;
+    margin-bottom: -2em;
+}
+
+.km-nova .km-label-above textarea { 
+    top: 50%;
 }
 
 .km-nova .km-label-above,
@@ -265,14 +279,34 @@
     border: none;
     padding: 0;
     margin: -1.14em -1.61em;
-    min-height: 13.6rem;
+    //min-height: 13.6rem;
 }
 
 .km-nova .km-list fieldset textarea {
     width: 100%;
     margin-right: -1.2em;
-    min-height: 8.5rem;
-    background: purple;
+}
+
+.km-nova .km-list fieldset input[type=password],
+.km-nova .km-list fieldset input[type=search],
+.km-nova .km-list fieldset input[type=number],
+.km-nova .km-list fieldset input[type=tel],
+.km-nova .km-list fieldset input[type=url],
+.km-nova .km-list fieldset input[type=email],
+.km-nova .km-list fieldset input[type=month],
+.km-nova .km-list fieldset input[type=color],
+.km-nova .km-list fieldset input[type=week],
+.km-nova .km-list fieldset input[type=date],
+.km-nova .km-list fieldset input[type=time],
+.km-nova .km-list fieldset input[type=datetime],
+.km-nova .km-list fieldset input[type=datetime-local],
+.km-nova .km-list fieldset input[type=text]:not(.k-input),
+.km-nova .km-list fieldset select:not([multiple]),
+.km-nova .km-list fieldset .k-dropdown-wrap,
+.km-nova .km-list fieldset textarea {
+    width: 100%;
+    padding: 0 1.61em;
+    position: relative;
 }
 
 .km-nova .km-list fieldset legend {
@@ -298,9 +332,18 @@
     border: 1px solid purple;
 }
 
-.km-nova .km-list fieldset .km-inline-field:first-of-type  {
+/*.km-nova .km-list fieldset .km-inline-field:first-of-type  {
     margin-left: 1.61em;
     background: pink;
+}*/
+
+.km-nova .km-list fieldset .km-inline-field {
+    margin-top: 0;
+    margin-left: 1.61em;
+}
+
+.km-nova .km-inline-field.km-label-above {
+  margin-bottom: 0;
 }
 
 .km-nova .km-list .km-inline-field input[type=text]:not(.k-input),
