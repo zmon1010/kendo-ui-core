@@ -2636,8 +2636,11 @@ var __meta__ = {
 
                         })
                         .on("focusin" + NS, function() {
-                            clearTimeout(that.timer);
-                            that.timer = null;
+                            // fix focus issue in IE
+                            if (!$.contains(this,  activeElement())) {
+                                clearTimeout(that.timer);
+                                that.timer = null;
+                            }
                         })
                         .on("focusout" + NS, function() {
                             that.timer = setTimeout(handler, 1);
