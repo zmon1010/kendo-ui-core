@@ -1516,6 +1516,7 @@ var __meta__ = {
             var that = this,
                 element;
 
+            that._angularItems("cleanup");
             that._destroyColumnAttachments();
 
             Widget.fn.destroy.call(that);
@@ -7214,10 +7215,25 @@ var __meta__ = {
         },
 
        _angularItems: function(cmd) {
-
            kendo.ui.DataBoundWidget.fn._angularItems.call(this, cmd);
 
+           if (cmd === "cleanup") {
+               this._cleanupDetailItems();
+           }
+
            this._angularGroupItems(cmd);
+       },
+
+       _cleanupDetailItems: function() {
+           var that = this;
+
+           if (that._hasDetails()) {
+              that.angular("cleanup", function() {
+                   return { elements: that.tbody.children(".k-detail-row") };
+               });
+
+               that.tbody.find(".k-detail-cell").empty();
+           }
        },
 
        _angularGroupItems: function(cmd) {
