@@ -164,6 +164,18 @@
             } else {
                 callback(left / right);
             }
+        },
+
+        rangeToMatrix: function(range) {
+            var tl = range.topLeft;
+            var cells = this.ss.getRefCells(range);
+            var m = [];
+            cells.forEach(function(cell){
+                var row = cell.row - tl.row;
+                row = m[row] || (m[row] = []);
+                row[cell.col - tl.col] = cell;
+            });
+            return m;
         }
     });
 
@@ -439,53 +451,6 @@
         })
 
     };
-
-    {// XXX: just for testing, remove at some point
-
-        FUNCS.currency = function(callback, args) {
-            this.cellValues(args, function(query, base){
-                var self = this;
-                if (typeof query != "string" || typeof base != "string") {
-                    return self.error(new CalcError("VALUE"));
-                }
-                query = query.toUpperCase();
-                base = base.toUpperCase();
-                $.ajax({
-                    url: "http://api.fixer.io/latest",
-                    data: {
-                        base: base
-                    }
-                }).done(function(response) {
-                    var rates = response.rates;
-                    var val = rates[query];
-                    if (val == null) {
-                        if (query == base) {
-                            callback(1);
-                        } else {
-                            self.error(new CalcError("CURRENCY"));
-                        }
-                    } else {
-                        callback(val);
-                    }
-                }).fail(function() {
-                    console.error(arguments);
-                    self.error(new CalcError("NET"));
-                });
-            });
-        };
-
-        FUNCS.asum = function(callback, args) {
-            var self = this;
-            setTimeout(function(){
-                var sum = 0;
-                self.forNumbers(args, function(num){
-                    sum += num;
-                });
-                callback(sum);
-            }, 500);
-        };
-
-    }
 
     /* -----[ exports ]----- */
 

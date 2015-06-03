@@ -16,7 +16,7 @@
     var defineFunction = runtime.defineFunction;
     var CalcError = runtime.CalcError;
     var RangeRef = spreadsheet.RangeRef;
-    var CellRef = spreadsheet.CellRef;
+    var Ref = spreadsheet.Ref;
 
     /* -----[ Math functions ]----- */
 
@@ -118,7 +118,7 @@
                 nrows = range.height();
             }
             chunks.push({
-                matrix: rangeToMatrix(this, range),
+                matrix: this.rangeToMatrix(range),
                 pred: parseComparator(crit)
             });
         }
@@ -203,7 +203,7 @@
                     throw 1;
                 }
                 var ref = calc.parseFormula(this.sheet, this.row, this.col, thing);
-                if (ref.ast.type != "ref") {
+                if (!(ref.ast instanceof Ref)) {
                     throw 1;
                 }
                 ref = ref.ast;
@@ -322,18 +322,6 @@
             return this.error(new CalcError("N/A"));
         }
         f.apply(this, args);
-    }
-
-    function rangeToMatrix(ctx, range) {
-        var tl = range.topLeft;
-        var cells = ctx.ss.getRefCells(range);
-        var m = [];
-        cells.forEach(function(cell){
-            var row = cell.row - tl.row;
-            row = m[row] || (m[row] = []);
-            row[cell.col - tl.col] = cell;
-        });
-        return m;
     }
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
