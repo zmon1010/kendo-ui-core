@@ -108,7 +108,6 @@
             if (!(range instanceof RangeRef)) {
                 return this.error(new CalcError("REF"));
             }
-            range = range.absolute(this.row, this.col);
             if (i > 2) {
                 if (range.width() != ncols || range.height() != nrows) {
                     return this.error(new CalcError("REF"));
@@ -206,7 +205,7 @@
                 if (!(ref.ast instanceof Ref)) {
                     throw 1;
                 }
-                ref = ref.ast;
+                ref = ref.ast.absolute(this.row, this.col);
                 this.resolveCells([ ref ], function(){
                     callback(ref);
                 });

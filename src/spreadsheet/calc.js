@@ -577,7 +577,7 @@
                     + ")";
             }
             else if (type == "ref") {
-                return "formula.refs[" + node.index + "]";
+                return "formula.absrefs[" + node.index + "]";
             }
             else if (type == "bool") {
                 return "" + node.value;

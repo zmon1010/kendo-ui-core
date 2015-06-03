@@ -73,7 +73,7 @@
             for (var i = 0; i < a.length; ++i) {
                 var x = a[i];
                 if (x instanceof Ref) {
-                    if (!add(context.ss.getRefCells(x.absolute(context.row, context.col)))) {
+                    if (!add(context.ss.getRefCells(x))) {
                         context.error(new CalcError("CIRCULAR"));
                         return;
                     }
@@ -113,7 +113,7 @@
             for (var i = 0; i < a.length; ++i) {
                 var val = a[i];
                 if (val instanceof Ref) {
-                    val = this.ss.getData(val.absolute(this.row, this.col));
+                    val = this.ss.getData(val);
                 }
                 ret = ret.concat(val);
             }
@@ -144,7 +144,7 @@
 
         bool: function(val) {
             if (val instanceof Ref) {
-                val = this.ss.getData(val.absolute(this.row, this.col));
+                val = this.ss.getData(val);
             }
             if (typeof val == "string") {
                 return val.toLowerCase() == "true";
@@ -186,6 +186,7 @@
             this.refs = refs;
             this.handler = handler;
             this.print = printer;
+            this.absrefs = null;
         },
         clone: function() {
             return new Formula(this.refs, this.handler, this.print);
@@ -196,14 +197,20 @@
                     callback(this.value);
                 }
             } else {
+                if (!this.absrefs) {
+                    this.absrefs = this.refs.map(function(ref){
+                        return ref.absolute(row, col);
+                    }, this);
+                }
                 var ctx = new Context(callback, this, ss, sheet, row, col);
-                ctx.resolveCells(this.refs, this.handler);
+                ctx.resolveCells(this.absrefs, this.handler);
             }
         },
         reset: function() {
             delete this.value;
         },
         adjust: function(operation, start, delta, formulaRow, formulaCol) {
+            this.absrefs = null;
             this.refs = this.refs.map(function(ref){
                 if (ref instanceof CellRef) {
                     return deletesCell(ref) ? NULL : fixCell(ref);
@@ -425,8 +432,6 @@
         "binary ": function(callback, args) {
             var left = args[0], right = args[1];
             if (left instanceof Ref && right instanceof Ref) {
-                left = left.absolute(this.row, this.col);
-                right = right.absolute(this.row, this.col);
                 var x = left.intersect(right);
                 if (x === NULL) {
                     this.error(new CalcError("NULL"));
