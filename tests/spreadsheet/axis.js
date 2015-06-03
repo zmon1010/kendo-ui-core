@@ -1,5 +1,6 @@
 (function() {
     var Axis = kendo.spreadsheet.Axis;
+    var PaneAxis = kendo.spreadsheet.PaneAxis;
 
     var axis;
     module("Sheet Axis", {
@@ -42,5 +43,53 @@
         equal(visibleValues.at(8), 15);
         equal(visibleValues.at(12), 10);
         equal(visibleValues.at(22), 15);
+    });
+
+
+    module("PaneAxis", {
+    });
+
+    test("translate returns the same value if the axis is frozen", function() {
+       axis = new PaneAxis(new  Axis(10, 2), 0, 2);
+
+       equal(axis.translate(3, 4), 3);
+    });
+
+    test("translate adds the offset if the axis is not frozen", function() {
+       axis = new PaneAxis(new  Axis(10, 3), 0);
+
+       equal(axis.translate(3, 4), 7);
+    });
+
+    test("visible sets the offset of the result to zero if the axis is frozen", function() {
+       axis = new PaneAxis(new  Axis(10, 4), 0, 2);
+
+       equal(axis.visible(3, 44).offset, 0);
+    });
+
+    test("visible leaves the offset as it is when the axis is not frozen", function() {
+       axis = new PaneAxis(new  Axis(10, 5), 0);
+
+       ok(axis.visible(3, 44).offset !== 0);
+    });
+
+    test("range returns the start of the axis", function() {
+       axis = new PaneAxis(new  Axis(10, 6), 3);
+
+       equal(axis.range().start, 6 * 3);
+    });
+
+    test("range returns the end of the axis when frozen", function() {
+       axis = new PaneAxis(new  Axis(10, 7), 3, 7);
+
+       equal(axis.range().end, 7 * 7);
+    });
+
+    test("range uses the max parameter if not frozen and returns the difference", function() {
+       axis = new PaneAxis(new  Axis(10, 8), 3);
+
+       var max = 42;
+
+       equal(axis.range(max).end, max - 3*8);
     });
 })();

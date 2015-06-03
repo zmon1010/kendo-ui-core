@@ -90,6 +90,7 @@
            this._axis = axis;
            this._start = start;
            this._count = count;
+           this._frozen = count > 0;
         },
 
         range: function(max) {
@@ -97,7 +98,7 @@
 
             var end = max - start;
 
-            if (this._count) {
+            if (this._frozen) {
                 end = this._axis.sum(this._start, this._start + this._count - 1);
             }
 
@@ -110,7 +111,7 @@
         visible: function(start, end) {
             var result = this._axis.visible(start, end);
 
-            if (this._count) {
+            if (this._frozen) {
                 result.offset = 0;
             }
 
@@ -118,7 +119,7 @@
         },
 
         translate: function(value, offset) {
-            if (!this._count) {
+            if (!this._frozen) {
                 return value + offset;
             }
 
