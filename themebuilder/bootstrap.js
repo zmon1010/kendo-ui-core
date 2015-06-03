@@ -1,7 +1,7 @@
-/*jshint scripturl: true */
-// bootstrapper file for Kendo ThemeBuilder
+/*jshint scripturl: true */ // bootstrapper file for Kendo ThemeBuilder
 (function() {
-    var doc = document,
+    var settings = window.kendoThemeBuilderSettings,
+        doc = document,
         kendo = window.kendo,
         UNDEFINED = "undefined",
         applicationRoot = (function() {
@@ -12,14 +12,15 @@
         })(),
         FAST = "fast",
         // caution: variables below are generated during builds. update build/theme_builder.rb if you change them!
-        KENDO_LOCATION = "http://cdn.kendostatic.com/2014.3.1119/",
+        KENDO_LOCATION = "http://cdn.kendostatic.com/2015.1.429/",
         JQUERY_LOCATION = "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js",
         requiredJs = [ "scripts/less.js", "scripts/themebuilder.js", "scripts/constants.js", "scripts/type-default.js", "scripts/type-bootstrap.js", "scripts/type-flat.js", "scripts/type-fiori.js", "scripts/type-highcontrast.js", "scripts/type-material.js", "scripts/type-office365.js", "scripts/type-metro.js" ],
         requiredCss = ["styles/styles.css"],
         bootstrapCss = "styles/bootstrap.css",
         // </generated variables>
-        KENDO_COMMON_CSS_LOCATION = KENDO_LOCATION + "styles/kendo.common.min.css",
-        KENDO_BLACK_CSS_LOCATION = KENDO_LOCATION + "styles/kendo.black.min.css",
+        theme = settings && settings.theme || "black"
+        KENDO_COMMON_CSS_LOCATION = KENDO_LOCATION + "styles/kendo.common-material.min.css",
+        KENDO_THEME_CSS_LOCATION = KENDO_LOCATION + "styles/kendo." + theme + ".min.css",
         KENDO_ALL_LOCATION = KENDO_LOCATION + "js/kendo.all.min.js";
 
     (function(opt){
@@ -31,15 +32,14 @@
             opt = opt.KENDO;
             if (opt) {
                 KENDO_COMMON_CSS_LOCATION = opt.css_common;
-                KENDO_BLACK_CSS_LOCATION = opt.css_black;
+                KENDO_THEME_CSS_LOCATION = opt.css_black;
                 KENDO_ALL_LOCATION = opt.js;
             }
         }
     }(window.KENDO_THEMEBUILDER_OPTIONS));
 
-    function ThemeBuilderInterface() {
-        var that = this,
-            bootStyles = that.bootStyles;
+    function ThemeBuilderInterface(options) {
+        var bootStyles;
 
         bootStyles = doc.createElement("link");
         bootStyles.setAttribute("rel", "stylesheet");
@@ -48,18 +48,22 @@
         doc.getElementsByTagName("head")[0].appendChild(bootStyles);
 
         if (typeof jQuery == UNDEFINED || typeof kendo == UNDEFINED) {
-            that._initError();
+            this._initError();
             return;
         }
 
-        that.container = that._createWindow();
+        if (options && options.container) {
+            this.container = $(options.container);
+        } else {
+            this.container = this._createWindow();
+        }
 
-        that.container.fadeIn(FAST);
+        this.container.fadeIn(FAST);
 
-        that._createInterfaceFrame();
+        this._createInterfaceFrame();
 
-        if (that.iframe.themeBuilder) {
-            that.open();
+        if (this.iframe.themeBuilder) {
+            this.open();
         }
     }
 
@@ -78,17 +82,16 @@
         },
 
         _createWindow: function () {
-            var that = this,
-                dialog = jQuery("<div id='ktb-wrap'><div id='ktb-close' /></div>"),
+            var dialog = jQuery("<div id='ktb-wrap'><div id='ktb-close' /></div>"),
                 start;
 
             dialog
                 .css({ display: "none", height: 0 })
-                .on("click", "#ktb-close", jQuery.proxy(that.close, that))
+                .on("click", "#ktb-close", jQuery.proxy(this.close, this))
                 .appendTo(doc.body);
 
             if (kendo.ui && kendo.ui.Draggable) {
-                that.draggable = dialog.kendoDraggable({
+                this.draggable = dialog.kendoDraggable({
                     dragstart: function(e) {
                         var initialPosition = kendo.getOffset(dialog, "position");
 
@@ -136,7 +139,7 @@
             doc.write([
                 "<!DOCTYPE html><html><head><meta charset='utf-8' />",
                  stylesheet(KENDO_COMMON_CSS_LOCATION),
-                 stylesheet(KENDO_BLACK_CSS_LOCATION),
+                 stylesheet(KENDO_THEME_CSS_LOCATION),
                  map(requiredCss, function(styleSheetName) {
                      return stylesheet(applicationRoot + styleSheetName);
                  }).join(""),
@@ -175,6 +178,10 @@
         }
     };
 
-    window.kendoThemeBuilder = new ThemeBuilderInterface();
+    window.kendo.ui.ThemeBuilderInterface = ThemeBuilderInterface;
+
+    if (!settings || settings.autoRun !== false) {
+        window.kendoThemeBuilder = new ThemeBuilderInterface();
+    }
 })();
 

@@ -22,6 +22,10 @@ namespace Kendo.Controllers
 
             ViewBag.DeployRoot = Url.Content(ConfigurationManager.AppSettings["THEMEBUILDER_ROOT"]);
 
+            if (ViewBag.DeployRoot == "$THEMEBUILDER_ROOT") {
+                ViewBag.DeployRoot = "/kendo/themebuilder";
+            }
+
             ViewBag.scripts = Kendo.Models.ScriptGroups.All;
             ViewBag.styles = Kendo.Models.StyleGroups.All;
 

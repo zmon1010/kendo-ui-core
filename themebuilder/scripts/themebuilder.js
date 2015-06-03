@@ -677,29 +677,13 @@
                 $(".ktb-action-source").on(CLICK, proxy(this.showSource, this));
                 $(".ktb-action-save").on(CLICK, proxy(this.saveSource, this));
                 $(".ktb-action-show-import").on(CLICK, proxy(this.showImport, this));
-                $(".ktb-action-show[data-suite]").on(CLICK, proxy(this.showSuite, this));
                 $(".ktb-action-back").on(CLICK, proxy(this.hideOverlay, this));
-                $(".ktb-action-back-to-suites").on(CLICK, proxy(this.showSuiteChooser, this));
                 $(".ktb-action-import").on(CLICK, proxy(this.importTheme, this));
 
                 this._track();
             },
             registerFile: function(file) {
                 this.themes.registerFile(file);
-            },
-            showSuiteChooser: function() {
-                $("#suite-chooser").slideDown("fast", function() {
-                    $(".ktb-view[data-suite]").hide();
-                });
-            },
-            showSuite: function(e) {
-                e.preventDefault();
-
-                var suite = $(e.target).data("suite");
-
-                $(".ktb-view[data-suite=" + suite + "]").show();
-
-                $("#suite-chooser").slideUp();
             },
             showSource: function(e) {
                 e.preventDefault();
@@ -868,36 +852,7 @@
 
                 $("<div id='kendo-themebuilder'>" +
                     view({
-                        id: "download-overlay",
-                        overlay: true,
-                        toolbar: button({ action: "back", text: "Back" }) +
-                                 "<a href='http://docs.telerik.com/kendo-ui/getting-started/themebuilder' id='docs-link' target='_blank'>What should I do with this?</a>",
-                        content: "<textarea readonly></textarea>"
-                    }) +
-
-                    view({
-                        id: "save-overlay",
-                        overlay: true,
-                        toolbar: button({ action: "back", text: "Back" }),
-                        content: ("<p>Save the custom theme in your project.  Enter the file name.  It will be overwritten if it exists!</p>" +
-                                  "<input style='width: 100%' name='filename' /><br />" +
-                                  button({ action: "dosave", text: "Save!" }) + " <span class='feedback'></span><br />" +
-                                  "<textarea readonly style='height: 70%; margin-top: 10px'></textarea>")
-                    }) +
-
-                    view({
-                        id: "import-overlay",
-                        overlay: true,
-                        toolbar: button({ action: "back", text: "Back" }) + button({ action: "import", text: "Import" }),
-                        content: "<textarea></textarea>"
-                    }) +
-
-                    view({
-                        data: { suite: "web" },
-                        toolbar: button({ action: "back-to-suites", text: "Back" }) +
-                                 button({ action: options.saveButton ? "save" : "source", data: { format: "css" }, text: "Get CSS..." }) +
-                                 button({ action: options.saveButton ? "save" : "source", data: { format: "less" }, text: "Get LESS..." }) +
-                                 button({ action: "show-import", text: "Import..." }),
+                        id: "editing-interface",
                         content: "<ul class='stylable-elements'>" +
                                     map(webConstantsHierarchy || {}, function(section, title) {
                                         return propertyGroupTemplate({
@@ -908,15 +863,6 @@
                                             processors: processors
                                         });
                                     }).join("") +
-                                 "</ul>"
-                    }) +
-
-                    view({
-                        data: { suite: "dataviz" },
-                        toolbar: button({ action: "back-to-suites", text: "Back" }) +
-                                 button({ action: options.saveButton ? "save" : "source", data: { format: "string" }, text: "Get JSON..." }) +
-                                 button({ action: "show-import", text: "Import..." }),
-                        content: "<ul class='stylable-elements'>" +
                                     map(datavizConstantsHierarchy || {}, function(section, title) {
                                         return propertyGroupTemplate({
                                             title: title,
@@ -928,16 +874,6 @@
                                     }).join("") +
                                  "</ul>"
                     }) +
-
-                    view({
-                        id: "suite-chooser",
-                        content: "<p style='text-align: center'>Create a theme for Kendo UI...</p>" +
-                                 "<ul class='suite-list'>" +
-                                     "<li>" + button({ action: "show", data: { suite: "web" }, text: "Web" }) + "</li>" +
-                                     "<li>" + button({ action: "show", data: { suite: "dataviz" }, text: "DataViz" }) + "</li>" +
-                                 "</ul>"
-                    }) +
-
                 "</div>").appendTo(document.body);
             }
         });
