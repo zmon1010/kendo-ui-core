@@ -7194,6 +7194,8 @@ var __meta__ = {
                 var rowIndex = 0;
                 if (this._rowVirtualIndex) {
                     rowIndex = this.virtualScrollable.position(this._rowVirtualIndex);
+                } else {
+                    currentIndex = 0;
                 }
 
                 var row = $();
