@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Framework.WebEncoders;
 
 namespace Kendo.Mvc.Extensions
 {
@@ -115,7 +116,7 @@ namespace Kendo.Mvc.Extensions
 				instance[key] = value;
 			}
 			return instance;
-		}
+		}        
 
 		/// <summary>
 		/// Toes the attribute string.
@@ -126,12 +127,11 @@ namespace Kendo.Mvc.Extensions
 		{
 			var attributes = new StringBuilder();
 
-			//TODO: encode attributes
-			foreach (KeyValuePair<string, object> attribute in instance)
-			{
-				//		attributes.Append(" {0}=\"{1}\"".FormatWith(HttpUtility.HtmlAttributeEncode(attribute.Key), HttpUtility.HtmlAttributeEncode(attribute.Value.ToString())));
+            var encoder = HtmlEncoder.Default;
 
-				attributes.Append(" {0}=\"{1}\"".FormatWith(attribute.Key, attribute.Value.ToString()));
+            foreach (KeyValuePair<string, object> attribute in instance)
+			{
+				attributes.Append(" {0}=\"{1}\"".FormatWith(encoder.HtmlEncode(attribute.Key), encoder.HtmlEncode(attribute.Value.ToString())));
 			}
 
 			return attributes.ToString();

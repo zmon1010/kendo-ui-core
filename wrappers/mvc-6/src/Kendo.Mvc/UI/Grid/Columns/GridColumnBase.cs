@@ -1,17 +1,19 @@
 namespace Kendo.Mvc.UI
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Net;
-	using Infrastructure;
-	using Kendo.Mvc.Extensions;	
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using Infrastructure;
+    using Kendo.Mvc.Extensions;
+    using Microsoft.Framework.WebEncoders;
 
-	/// <summary>
-	/// The base class for all columns in Kendo Grid for ASP.NET MVC.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	public abstract class GridColumnBase<T> : JsonObject, IGridColumn where T : class
+
+    /// <summary>
+    /// The base class for all columns in Kendo Grid for ASP.NET MVC.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public abstract class GridColumnBase<T> : JsonObject, IGridColumn where T : class
     {
         public string Format
         {
@@ -70,47 +72,17 @@ namespace Kendo.Mvc.UI
 
             if (HtmlAttributes.Any())
             {
-                //var attributes = new Dictionary<string, object>();
-				//TODO: encode column attributes
-
-				//var hasAntiXss = HttpEncoder.Current != null && HttpEncoder.Current.GetType().ToString().Contains("AntiXssEncoder");
-
-				//            HtmlAttributes.Each(attr => {
-				//                var value = HttpUtility.HtmlAttributeEncode(attr.Value.ToString());
-				//                if (hasAntiXss)
-				//                {
-				//                    value = value.Replace("&#32;", " ");
-				//                }
-				//                attributes[WebUtility.HtmlAttributeEncode(attr.Key)] = value;
-				//            });
-				
-				json["attributes"] = HtmlAttributes;
+                json["attributes"] = EncodeAttributes(HtmlAttributes);
             }
 
-			if (HeaderHtmlAttributes.Any())
+            if (HeaderHtmlAttributes.Any())
 			{
-				// var attributes = new Dictionary<string, object>();
-
-				//TODO: encode column attributes
-				//FooterHtmlAttributes.Each(attr =>
-				//            {
-				//                attributes[HttpUtility.HtmlAttributeEncode(attr.Key)] = HttpUtility.HtmlAttributeEncode(attr.Value.ToString());
-				//            });
-
-				json["headerAttributes"] = HeaderHtmlAttributes;
+				json["headerAttributes"] = EncodeAttributes(HeaderHtmlAttributes);
 			}
 
 			if (FooterHtmlAttributes.Any())
             {
-               // var attributes = new Dictionary<string, object>();
-
-				//TODO: encode column attributes
-				//FooterHtmlAttributes.Each(attr =>
-    //            {
-    //                attributes[HttpUtility.HtmlAttributeEncode(attr.Key)] = HttpUtility.HtmlAttributeEncode(attr.Value.ToString());
-    //            });
-
-                json["footerAttributes"] = FooterHtmlAttributes;
+                json["footerAttributes"] = EncodeAttributes(FooterHtmlAttributes);
             }
 
             if (Hidden)
@@ -162,7 +134,28 @@ namespace Kendo.Mvc.UI
             {
                 json["lockable"] = Lockable;
             }
-        }       
+        }
+
+        private IDictionary<string, object> EncodeAttributes(IDictionary<string, object> htmlAttributes)
+        {
+            var attributes = new Dictionary<string, object>();            
+
+            var encoder = HtmlEncoder.Default;
+            //var hasAntiXss = HttpEncoder.Current != null && HttpEncoder.Current.GetType().ToString().Contains("AntiXssEncoder");
+
+            htmlAttributes.Each(attr =>
+            {
+                var value = encoder.HtmlEncode(attr.Value.ToString());
+                //if (hasAntiXss)
+                //{
+                //    value = value.Replace("&#32;", " ");
+                //}
+                attributes[encoder.HtmlEncode(attr.Key)] = value;
+            });
+
+            return attributes;            
+        }
+
 
         /// <summary>
         /// Gets or sets the title of the column.
