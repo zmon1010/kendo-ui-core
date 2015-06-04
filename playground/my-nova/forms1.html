@@ -95,13 +95,13 @@
                 <li>
                       <fieldset>
                         <legend><a href="#" class="km-legend-button">+ Phone</a></legend>
-                           <label class="km-inline-field km-label-above km-required">
+                           <label class="km-inline-field km-label-above km-required" style="width: 200px;">
                             Phone Number
                             <input type="text" value="+359 555 5555" />
-                        </label><label class="km-inline-field km-label-above">
+                        </label><label class="km-inline-field km-label-above" style="width: 200px;">
                             type
                             <textarea>Some content here</textarea>
-                        </label><label class="km-inline-field km-label-above">
+                        </label><label class="km-inline-field km-label-above" style="width: 200px;">
                             type
                             <select id="dropdown">
                                 <option value="First Option">Mobile</option>
@@ -296,9 +296,9 @@ fieldset label.km-inline-field {
     left: 1.61em;
 }
 
+
 .km-nova .km-inline-field {
     position: relative;
-    min-width:  300px;
     width: calc((100% - 3.22em)/2);
 }
 
@@ -328,6 +328,11 @@ fieldset label.km-inline-field {
 .km-nova .km-list fieldset .km-inline-field {
     margin-top: 0;
     margin-left: 1.61em;
+    background: transparent;
+}
+
+.km-nova .km-list fieldset .km-inline-field:first-of-type {
+    background: transparent;
 }
 
 
@@ -344,6 +349,79 @@ fieldset label.km-inline-field {
 
 .km-nova .km-label-above textarea { 
     top: 50%;
+}
+
+.km-nova .km-list .km-inline-field input[type=text]:not(.k-input),
+.km-nova .km-list .km-inline-field input[type=password],
+.km-nova .km-list .km-inline-field input[type=search],
+.km-nova .km-list .km-inline-field input[type=number],
+.km-nova .km-list .km-inline-field input[type=tel],
+.km-nova .km-list .km-inline-field input[type=url],
+.km-nova .km-list .km-inline-field input[type=email],
+.km-nova .km-list .km-inline-field input[type=file],
+.km-nova .km-list .km-inline-field input[type=month],
+.km-nova .km-list .km-inline-field input[type=color],
+.km-nova .km-list .km-inline-field input[type=week],
+.km-nova .km-list .km-inline-field input[type=date],
+.km-nova .km-list .km-inline-field input[type=time],
+.km-nova .km-list .km-inline-field input[type=datetime],
+.km-nova .km-list .km-inline-field input[type=datetime-local],
+.km-nova .km-list .km-inline-field select:not([multiple]),
+.km-nova .km-list .km-inline-field .k-dropdown,
+.km-nova .km-list .km-inline-field textarea {
+    
+    width: 100%;
+    left: 0;
+    padding-left: 0;
+    margin-left: 1em; 
+}
+
+
+
+
+
+.km-nova .km-list .km-inline-field:first-of-type input[type=text]:not(.k-input),
+.km-nova .km-list .km-inline-field:first-of-type input[type=password],
+.km-nova .km-list .km-inline-field:first-of-type input[type=search],
+.km-nova .km-list .km-inline-field:first-of-type input[type=number],
+.km-nova .km-list .km-inline-field:first-of-type input[type=tel],
+.km-nova .km-list .km-inline-field:first-of-type input[type=url],
+.km-nova .km-list .km-inline-field:first-of-type input[type=email],
+.km-nova .km-list .km-inline-field:first-of-type input[type=file],
+.km-nova .km-list .km-inline-field:first-of-type input[type=month],
+.km-nova .km-list .km-inline-field:first-of-type input[type=color],
+.km-nova .km-list .km-inline-field:first-of-type input[type=week],
+.km-nova .km-list .km-inline-field:first-of-type input[type=date],
+.km-nova .km-list .km-inline-field:first-of-type input[type=time],
+.km-nova .km-list .km-inline-field:first-of-type input[type=datetime],
+.km-nova .km-list .km-inline-field:first-of-type input[type=datetime-local],
+.km-nova .km-list .km-inline-field:first-of-type select:not([multiple]),
+.km-nova .km-list .km-inline-field:first-of-type .k-dropdown,
+.km-nova .km-list .km-inline-field:first-of-type textarea {
+    margin-left: 0;
+}
+
+
+
+
+
+
+.km-nova .km-list fieldset .km-inline-field:first-of-type {
+    padding-left: 0;
+      margin-left: 2.16em;
+
+}
+
+
+.km-nova .km-list fieldset .km-inline-field {
+    margin-top: 0;
+    margin-left: 0;
+    border: none;
+    padding-left: 1.61em;
+        border-right-width: 1px;
+    border-right-style: solid;
+    border-color: #dee7ec;
+
 }
 
     </style>

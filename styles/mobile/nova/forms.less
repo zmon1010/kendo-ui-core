@@ -329,21 +329,26 @@
 
 .km-nova .km-inline-field {
     display: inline-block;
-    border: 1px solid purple;
+    position: relative;
+    width: calc((100% - 3.22em)/2);
 }
-
-/*.km-nova .km-list fieldset .km-inline-field:first-of-type  {
-    margin-left: 1.61em;
-    background: pink;
-}*/
 
 .km-nova .km-list fieldset .km-inline-field {
     margin-top: 0;
-    margin-left: 1.61em;
+    margin-left: 0;
+    border: none;
+    padding-left: 1.61em;
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.km-nova .km-list fieldset .km-inline-field:first-of-type {
+    padding-left: 0;
+    margin-left: 2.16em;
 }
 
 .km-nova .km-inline-field.km-label-above {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .km-nova .km-list .km-inline-field input[type=text]:not(.k-input),
@@ -364,8 +369,32 @@
 .km-nova .km-list .km-inline-field select:not([multiple]),
 .km-nova .km-list .km-inline-field .k-dropdown,
 .km-nova .km-list .km-inline-field textarea {
-    position: relative;
+    position: absolute;
     width: 100%;
+    left: 0;
+    padding-left: 0;
+    margin-left: 1em; 
+}
+
+.km-nova .km-list .km-inline-field:first-of-type input[type=text]:not(.k-input),
+.km-nova .km-list .km-inline-field:first-of-type input[type=password],
+.km-nova .km-list .km-inline-field:first-of-type input[type=search],
+.km-nova .km-list .km-inline-field:first-of-type input[type=number],
+.km-nova .km-list .km-inline-field:first-of-type input[type=tel],
+.km-nova .km-list .km-inline-field:first-of-type input[type=url],
+.km-nova .km-list .km-inline-field:first-of-type input[type=email],
+.km-nova .km-list .km-inline-field:first-of-type input[type=file],
+.km-nova .km-list .km-inline-field:first-of-type input[type=month],
+.km-nova .km-list .km-inline-field:first-of-type input[type=color],
+.km-nova .km-list .km-inline-field:first-of-type input[type=week],
+.km-nova .km-list .km-inline-field:first-of-type input[type=date],
+.km-nova .km-list .km-inline-field:first-of-type input[type=time],
+.km-nova .km-list .km-inline-field:first-of-type input[type=datetime],
+.km-nova .km-list .km-inline-field:first-of-type input[type=datetime-local],
+.km-nova .km-list .km-inline-field:first-of-type select:not([multiple]),
+.km-nova .km-list .km-inline-field:first-of-type .k-dropdown,
+.km-nova .km-list .km-inline-field:first-of-type textarea {
+    margin-left: 0;
 }
 
 /* Checkboxes inside ListView - Old rendering */
