@@ -19,6 +19,16 @@
 
 @accentSecond: #00acc1;
 
+.km-nova h1,
+.km-nova h2,
+.km-nova h3,
+.km-nova h4,
+.km-nova h5,
+.km-nova h6,
+.km-nova p {
+    color: @normal-text-color;
+}
+
 .km-nova .km-content {
     color: @normal-text-color;
     background-color: @background;
@@ -211,7 +221,7 @@
 .km-nova .km-list > li
 {
     //background: @office365-list-background;
-    border-color: darken(@base, 8%); // Calculate to #dfe0e1;
+    border-color: hsv(hsvHue(@base) , hsvSaturation(@base), hsvValue(@base) - 13);
     color: @normal-text-color;
     /*border-top-color: @office365-list-border;
     border-image: -webkit-linear-gradient(left, transparent 1em, @office365-list-border 1em, @office365-list-border 100%) 1 stretch;
@@ -240,7 +250,7 @@
 }
 
 .km-nova .km-list fieldset .km-inline-field {
-    border-color: darken(@base, 13%); // Calculate to #dfe0e1;
+    border-color: hsv(hsvHue(@base) , hsvSaturation(@base), hsvValue(@base) - 13);
 }
 
 .km-nova label.km-required:after {
@@ -281,7 +291,7 @@
 .km-nova .km-list fieldset legend
 {
     background: @base;
-    border-color: darken(@base, 13%); // Calculate to #dfe0e1;
+    border-color: hsv(hsvHue(@base) , hsvSaturation(@base), hsvValue(@base) - 13);
     color: @normal-text-color;
 }
 
@@ -315,19 +325,19 @@
 
 /* Generic content */
 .km-nova .km-thumbnail {
-    border-color: darken(@base, 8%); // Calculate to #dfe0e1;
+    border-color: hsv(hsvHue(@base) , hsvSaturation(@base), hsvValue(@base) - 13);
 }
 
 .km-nova .km-listview-link:after
 {
-    color: darken(@base, 8%); // Calculate to #dfe0e1;
+    color: hsv(hsvHue(@base) , hsvSaturation(@base), hsvValue(@base) - 13);
     //-webkit-box-shadow: inset -.2rem .2rem 0 @ios7-lighter-background;
     //box-shadow: inset -.2rem .2rem 0 @ios7-lighter-background;
 }
 
 /* Slider */
 .km-nova .k-slider .k-slider-track {
-    background-color: darken(@base, 8%); // Calculate to #dfe0e1;
+    background-color: hsv(hsvHue(@base) , hsvSaturation(@base), hsvValue(@base) - 13);
 }
 
 .km-nova .k-slider-selection
@@ -354,11 +364,6 @@
 
 .km-nova span.km-switch-off {
     color: @base;
-}
-
-.km-nova .km-switch-wrapper
-{
-    //background-color: green;
 }
 
 .km-nova .km-switch-handle
@@ -445,7 +450,7 @@
 .km-nova .km-modalview .km-footer .km-button
 {
     color: darken(@base, 50%); // Calculate to #455a64;
-    border-color: darken(@base, 8%); // Calculate to #dfe0e1;
+    border-color: hsv(hsvHue(@base) , hsvSaturation(@base), hsvValue(@base) - 13);
 }
 
 .km-nova .km-modalview .km-footer .km-rightitem .km-button:last-child,
@@ -471,17 +476,11 @@
     border-image: none;
 }
 
-/*.km-nova .km-footer .km-tabstrip .km-button:hover, Mobile TabStrip does not have active/hover state */
-.km-nova .km-actionsheet > li > a:active
-{
-    //background: purple;
-}
-
 .km-nova .km-footer .km-tabstrip .km-button,
 .km-nova .km-actionsheet > li > a,
 .km-nova .km-shim li.km-actionsheet-title
 {
-    border-color: darken(@base, 8%); // Calculate to #dfe0e1;
+    border-color: hsv(hsvHue(@base) , hsvSaturation(@base), hsvValue(@base) - 13);
 }
 
 .km-nova .km-actionsheet > .km-actionsheet-cancel > a
@@ -526,22 +525,10 @@
     //box-shadow: @office365-shadow;
 }
 
-.km-nova .km-actionsheet-wrapper,
-.km-nova .km-popup .k-list-container
-{
-    //background: green;
-    border-top-color: red;
-}
-
 .km-nova .km-popup.km-pane,
 .km-tablet .km-nova .km-actionsheet-wrapper
 {
     background-color: orange;
-}
-
-.km-nova .km-popup-arrow:after
-{
-    //border-color: pink;
 }
 
 .km-nova .km-actionsheet-root .km-popup-arrow:after {
