@@ -857,13 +857,4 @@
     exports.parseReference = parseReference;
     exports.compile = makeFormula;
 
-
-    (function(){
-        var exp = "=ISERROR(FOO())";
-        var ast = exports.parse("sheet1", 0, 0, exp);
-        var x = makeFormula(ast);
-        console.log(x);
-        console.log(x.handler.toString());
-    }());
-
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
