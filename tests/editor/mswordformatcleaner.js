@@ -409,4 +409,8 @@ test("does not remove empty Word paragraphs", function() {
     equal(clean('<p class="MsoNormal"><o:p>&nbsp;</o:p></p>'), '<p>&nbsp;</p>');
 });
 
+test("converts font tags to spans", function() {
+    equal(clean('<font face="calibri">foo</font>'), '<span style="font-family:calibri">foo</span>');
+});
+
 }());

@@ -844,6 +844,7 @@ var MSWordFormatCleaner = Cleaner.extend({
             /(&nbsp;|<br[^>]*>)+\s*$/gi, '',
             /mso-[^;"]*;?/ig, '', /* office-related CSS attributes */
             /<(\/?)b(\s[^>]*)?>/ig, '<$1strong$2>',
+            /<(\/?)font(\s[^>]*)?>/ig, this.convertFontMatch,
             /<(\/?)i(\s[^>]*)?>/ig, '<$1em$2>',
             /<o:p>&nbsp;<\/o:p>/ig, '&nbsp;',
             /<\/?(meta|link|style|o:|v:|x:)[^>]*>((?:.|\n)*?<\/(meta|link|style|o:|v:|x:)[^>]*>)?/ig, '', /* external references and namespaced tags */
@@ -853,8 +854,24 @@ var MSWordFormatCleaner = Cleaner.extend({
         ];
     },
 
+    convertFontMatch: function(match, closing, args) {
+        var faceRe = /face=['"]([^'"]+)['"]/i;
+        var face = faceRe.exec(args);
+        var family = args && face && face[1];
+
+        if (closing) {
+            return '</span>';
+        } else if (family) {
+            return '<span style="font-family:' + family + '">';
+        } else {
+            return '<span>';
+        }
+    },
+
     applicable: function(html) {
-        return (/class="?Mso|style="[^"]*mso-/i).test(html) || (/urn:schemas-microsoft-com:office/).test(html);
+        return (/class="?Mso/i).test(html) ||
+               (/style="[^"]*mso-/i).test(html) ||
+               (/urn:schemas-microsoft-com:office/).test(html);
     },
 
     stripEmptyAnchors: function(html) {
