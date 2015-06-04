@@ -14,6 +14,10 @@
             this.top = top;
             this.height = height;
             this.bottom = top + height;
+        },
+
+        translate: function(left, top) {
+            return new Rectangle(left, top, this.width, this.height)
         }
     });
 
@@ -25,12 +29,12 @@
             this._rows = rows;
         },
 
-        width: function(start, length) {
-            return this._columns.sum(start, length);
+        width: function(start, end) {
+            return this._columns.sum(start, end);
         },
 
-        height: function(start, length) {
-            return this._rows.sum(start, length);
+        height: function(start, end) {
+            return this._rows.sum(start, end);
         },
 
         totalHeight: function() {
@@ -118,7 +122,7 @@
             var top = this._rows.translate(rectangle.top, top);
             var left = this._columns.translate(rectangle.left, left);
 
-            return new kendo.spreadsheet.Rectangle(left, top, rectangle.width, rectangle.height);
+            return rectangle.translate(left, top);
         },
 
         visible: function(rectangle) {
