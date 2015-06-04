@@ -4,6 +4,7 @@
 
 (function(kendo) {
     var CellRef = kendo.spreadsheet.CellRef;
+    var RangeRef = kendo.spreadsheet.RangeRef;
 
     var Rectangle = kendo.Class.extend({
         init: function(left, top, width, height) {
@@ -126,9 +127,13 @@
         },
 
         visible: function(rectangle) {
+            var rows = this._rows.visible(rectangle.top, rectangle.bottom);
+            var columns = this._columns.visible(rectangle.left, rectangle.right);
+
             return {
-                rows: this._rows.visible(rectangle.top, rectangle.bottom),
-                columns: this._columns.visible(rectangle.left, rectangle.right)
+                rows: rows,
+                columns: columns,
+                ref: new RangeRef(new CellRef(rows.start, columns.start), new CellRef(rows.end, columns.end))
             };
         }
     });

@@ -153,33 +153,12 @@
             var promises = [];
 
             for (var ci = columns.start; ci <= columns.end; ci ++) {
-                var startCellIndex = this._grid.index(rows.start, ci);
-                var endCellIndex = this._grid.index(rows.end, ci);
-
-                var values = sheet._values.iterator(startCellIndex, endCellIndex);
-                var formulas = sheet._formulas.iterator(startCellIndex, endCellIndex);
-                var backgrounds = sheet._backgrounds.iterator(startCellIndex, endCellIndex);
-
                 table.addColumn(columns.values.at(ci));
-
-                for (ri = rows.start; ri <= rows.end; ri ++) {
-                    var index = this._grid.index(ri, ci);
-                    var formula = formulas.at(index);
-
-                    var td = table.addCell(ri - rows.start, values.at(index), { backgroundColor: backgrounds.at(index) } );
-
-                    if (formula) {
-                        var promise = $.Deferred();
-
-                        formula.exec(this._context, sheet.name(), ri, ci, function(value) {
-                            this.children[0].nodeValue = value;
-                            promise.resolve();
-                        }.bind(td));
-
-                        promises.push(promise);
-                    }
-                }
             }
+
+            sheet.forEach(view.ref, function(cell) {
+                this.addCell(table, cell.row - view.ref.topLeft.row, cell);
+            }.bind(this));
 
             var mergedCells = this.renderMergedCells(promises, rectangle.left, rectangle.top);
 
@@ -193,25 +172,34 @@
             return kendo.dom.element("div", { style: style, className: "k-spreadsheet-pane" }, [table.toDomTree(columns.offset, rows.offset)].concat(mergedCells));
         },
 
+        addCell: function(table, row, cell) {
+            var formula = cell.formula;
+
+            var td = table.addCell(row, cell.value, { backgroundColor: cell.background } );
+
+            if (formula) {
+                formula.exec(this._context, this._sheet.name(), cell.row, cell.col, function(value) {
+                    this.children[0].nodeValue = value;
+                }.bind(td));
+            }
+        },
+
         renderMergedCells: function(promises, left, top) {
+
             var mergedCells = [];
             var sheet = this._sheet;
 
             for (var i = 0, len = this._sheet._mergedCells.length; i < len; i++) {
                 var ref = this._sheet._mergedCells[i];
                 var rectangle = this._grid.boundingRectangle(ref);
-                var cell = ref.topLeft;
-                var index = this._grid.cellRefIndex(cell);
-                var value = sheet._values.value(index, index);
-                var background = sheet._backgrounds.value(index, index);
-                // var formula = sheet._backgrounds.value(index, index);
 
-                var table = new HtmlTable(this.rowHeight, this.columnWidth);
-                table.addColumn(rectangle.width);
-                table.addRow(rectangle.height);
-                table.addCell(0, value, { backgroundColor: background } );
-
-                mergedCells.push(table.toDomTree(rectangle.left - left, rectangle.top - top, "k-spreadsheet-merged-cell"));
+                sheet.forEach(new kendo.spreadsheet.RangeRef(ref.topLeft, ref.topLeft), function(cell) {
+                    var table = new HtmlTable(this.rowHeight, this.columnWidth);
+                    table.addColumn(rectangle.width);
+                    table.addRow(rectangle.height);
+                    this.addCell(table, 0, cell);
+                    mergedCells.push(table.toDomTree(rectangle.left - left, rectangle.top - top, "k-spreadsheet-merged-cell"));
+                }.bind(this));
             }
 
             return mergedCells;

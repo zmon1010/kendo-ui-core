@@ -69,6 +69,29 @@
             }
 
             return new Range(new RangeRef(new CellRef(row, column), new CellRef(row + numRows - 1, column + numColumns - 1)), this);
+        },
+
+        forEach: function(ref, callback) {
+            for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col; ci ++) {
+                var startCellIndex = this._grid.index(ref.topLeft.row, ci);
+                var endCellIndex = this._grid.index(ref.bottomRight.row, ci);
+
+                var values = this._values.iterator(startCellIndex, endCellIndex);
+                var formulas = this._formulas.iterator(startCellIndex, endCellIndex);
+                var backgrounds = this._backgrounds.iterator(startCellIndex, endCellIndex);
+
+                for (var ri = ref.topLeft.row; ri <= ref.bottomRight.row; ri ++) {
+                    var index = this._grid.index(ri, ci);
+
+                    callback({
+                        row: ri,
+                        col: ci,
+                        value: values.at(index),
+                        formula: formulas.at(index),
+                        background: backgrounds.at(index),
+                    });
+                }
+            }
         }
     });
 
