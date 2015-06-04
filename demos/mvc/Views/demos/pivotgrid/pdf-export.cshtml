@@ -1,6 +1,8 @@
 <div id="example">
     <button id="export" class="k-button k-button-icontext"><span class="k-icon k-i-pdf"></span>Export to PDF</button>
     <div id="pivotgrid"></div>
+    
+    <div class="responsive-message"></div>
 
     <script>
         $(document).ready(function () {
@@ -51,6 +53,13 @@
         */
         .k-pivot {
             font-family: "DejaVu Sans", "Arial", sans-serif;
+        }
+
+        @@media screen and (max-width: 1023px) {
+            #pivotgrid,
+            #export {
+                display: none;
+            }
         }
     </style>
     <script>

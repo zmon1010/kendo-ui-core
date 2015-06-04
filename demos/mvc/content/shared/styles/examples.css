@@ -2836,6 +2836,10 @@ html.k-materialblack .demo-section.k-content {
     color: #000;
 }
 
+.responsive-message:before {
+    content: "This demo requires browser or device screen width to be equal or greater than 1024px.";
+}
+
 @media screen and (max-width: 1023px) {
   .responsive-message {
     display: block;

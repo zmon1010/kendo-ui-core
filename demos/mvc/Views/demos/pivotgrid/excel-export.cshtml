@@ -1,6 +1,8 @@
 <div id="example">
     <button id="export" class="k-button k-button-icontext"><span class="k-icon k-i-excel"></span>Export to Excel</button>
     <div id="pivotgrid"></div>
+    
+    <div class="responsive-message"></div>
 
     <script>
         $(document).ready(function () {
@@ -44,6 +46,13 @@
         #export
         {
             margin: 0 0 10px 1px;
+        }
+
+        @@media screen and (max-width: 1023px) {
+            #pivotgrid,
+            #export {
+                display: none;
+            }
         }
     </style>
 </div>

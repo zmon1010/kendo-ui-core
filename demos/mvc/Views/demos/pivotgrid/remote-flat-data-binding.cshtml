@@ -1,7 +1,9 @@
 <div id="example">
     <div id="configurator"></div>
     <div id="pivotgrid"></div>
-
+    
+    <div class="responsive-message"></div>
+    
     <script>
         $(document).ready(function () {
             var pivotgrid = $("#pivotgrid").kendoPivotGrid({
@@ -38,17 +40,22 @@
         });
     </script>
     <style>
-        #pivotgrid
-        {
+        #pivotgrid {
             display: inline-block;
             vertical-align: top;
             width: 70%;
         }
 
-        #configurator
-        {
+        #configurator {
             display: inline-block;
             vertical-align: top;
+        }
+
+        @@media screen and (max-width: 1023px) {
+            #pivotgrid,
+            #configurator {
+                display: none;
+            }
         }
     </style>
 </div>

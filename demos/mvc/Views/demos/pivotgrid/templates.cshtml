@@ -1,6 +1,8 @@
 
         <div id="example">
             <div id="pivotgrid"></div>
+            
+            <div class="responsive-message"></div>
 
             <script id="dataCellTemplate" type="text/x-kendo-tmpl">
                 # var columnMember = columnTuple ? columnTuple.members[0] : { children: [] }; #
@@ -53,5 +55,10 @@
                 });
             </script>
             <style>
+                @@media screen and (max-width: 1023px) {
+                    #pivotgrid {
+                        display: none;
+                    }
+                }
             </style>
         </div>
