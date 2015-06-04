@@ -256,10 +256,10 @@
             },
 
             infer: function(targetDocument) {
-                var constants = this.constants, constant,
+                var constants = this.constants, name, constant,
                     property, value, target,
                     cachedPrototype = $("<div style='border-style:solid;' />").appendTo(targetDocument.body),
-                    prototype;
+                    proto;
 
                 function getInferPrototype(target) {
                     target = $.trim(target);
@@ -298,18 +298,18 @@
                     }
                 }
 
-                for (constant in constants) {
-                    constant = constants[constant];
+                for (name in constants) {
+                    constant = constants[name];
 
                     if (constant.infer) {
                         // computed constant
                         constant.value = constant.infer();
                     } else if (!(constant.readonly && constant.value)) {
                         // editable constant with no pre-set value
-                        prototype = getInferPrototype(constant.target);
+                        proto = getInferPrototype(constant.target);
 
                         property = constant.property;
-                        target = prototype.add(prototype.find("*:last")).last();
+                        target = proto.add(proto.find("*:last")).last();
 
                         if (property == "border-color") {
                             value = target.css("border-top-color");
@@ -330,13 +330,15 @@
 
                         constant.value = value;
 
-                        if (prototype[0] != cachedPrototype[0]) {
-                            prototype.remove();
+                        if (proto[0] != cachedPrototype[0]) {
+                            proto.remove();
                         }
                     }
                 }
 
                 cachedPrototype.remove();
+
+                this.trigger("change");
             },
 
             _resolveFiles: function(less) {
@@ -369,13 +371,9 @@
             },
 
             _updateStyleSheet: function(cssText, targetDocument) {
-                var style = $("style[title='themebuilder']", targetDocument.documentElement)[0];
+                this.clear(targetDocument);
 
-                if (style) {
-                    style.parentNode.removeChild(style);
-                }
-
-                style = targetDocument.createElement("style");
+                var style = targetDocument.createElement("style");
                 style.setAttribute("title", "themebuilder");
 
                 $("head", targetDocument.documentElement)[0].appendChild(style);
@@ -403,6 +401,14 @@
                         callback(css);
                     }
                 });
+            },
+
+            clear: function(targetDocument) {
+                var style = $("style[title='themebuilder']", targetDocument.documentElement)[0];
+
+                if (style) {
+                    style.parentNode.removeChild(style);
+                }
             }
         }),
 
@@ -525,7 +531,9 @@
                 setTheme("[data-role=chart]", "kendoChart");
                 setTheme("[data-role=radialgauge]", "kendoRadialGauge");
                 setTheme("[data-role=lineargauge]", "kendoLinearGauge");
-            }
+            },
+
+            clear: $.noop
         }),
 
         ThemeCollection = kendo.data.ObservableArray.extend({
@@ -543,6 +551,7 @@
 
             infer: function(targetDocument) {
                 for (var i = 0; i < this.length; i++) {
+                    this[i].clear(targetDocument);
                     this[i].infer(targetDocument);
                 }
             },
@@ -590,7 +599,7 @@
 
                 this.themes = new ThemeCollection(themes);
 
-                this.themes.infer(this.targetDocument);
+                this.infer(this.targetDocument);
 
                 this.render(templateInfo.webConstantsHierarchy, templateInfo.datavizConstantsHierarchy);
 
@@ -672,7 +681,7 @@
                         change: changeHandler
                     });
 
-                $(".stylable-elements").kendoPanelBar("expand", ".k-item:first");
+                $(".stylable-elements").kendoPanelBar("expand", ".k-item");
 
                 $(".ktb-action-source").on(CLICK, proxy(this.showSource, this));
                 $(".ktb-action-save").on(CLICK, proxy(this.saveSource, this));
@@ -680,7 +689,26 @@
                 $(".ktb-action-back").on(CLICK, proxy(this.hideOverlay, this));
                 $(".ktb-action-import").on(CLICK, proxy(this.importTheme, this));
 
+                this.themes.bind("change", proxy(this._reload, this));
+
                 this._track();
+            },
+            _reload: function() {
+                var themes = this.themes;
+                var editors = [
+                    kendo.roleSelector("colorinput"),
+                    kendo.roleSelector("numerictextbox"),
+                    kendo.roleSelector("gradienteditor"),
+                    kendo.roleSelector("combobox")
+                ].join(",");
+
+                this.element.find(editors).each(function() {
+                    var instance = kendo.widgetInstance($(this));
+                    var name = instance.element.attr("id");
+                    var value = (themes[0].constants[name] || themes[1].constants[name]).value;
+
+                    instance.value(value);
+                });
             },
             registerFile: function(file) {
                 this.themes.registerFile(file);
@@ -810,6 +838,11 @@
                 // trigger the tracking
                 img.src = urchinUrl;
             },
+
+            infer: function(doc) {
+                this.themes.infer(doc);
+            },
+
             render: function(webConstantsHierarchy, datavizConstantsHierarchy) {
                 var that = this,
                     template = kendo.template,

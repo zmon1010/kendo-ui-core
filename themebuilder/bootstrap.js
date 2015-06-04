@@ -62,7 +62,7 @@
 
         this._createInterfaceFrame();
 
-        if (this.iframe.themeBuilder) {
+        if (this._instance()) {
             this.open();
         }
     }
@@ -79,6 +79,14 @@
 
         close: function() {
             jQuery(this.container).animate({ height: 0 }, FAST).fadeOut(FAST);
+        },
+
+        _instance: function() {
+            return this.iframe.themeBuilder;
+        },
+
+        reload: function() {
+            this._instance().infer(document);
         },
 
         _createWindow: function () {

@@ -53,6 +53,10 @@ body {
     background-image: none;
 }
 
+#kendo-themebuilder .k-icon {
+    opacity: 1;
+}
+
 .ktb-texture-preview {
     width: 19px;
     height: 19px;
