@@ -50,14 +50,14 @@
     </div>
 </div>
 
-<div data-role="drawer" id="left-drawer" style="width: 270px" data-title="Communities" data-views="['two-drawer-home', '@Url.Content("~/mobile/m/drawer/two-way-drawers.html")']">
+<div data-role="drawer" id="left-drawer" style="width: 300px" data-title="Communities" data-views="['two-drawer-home']">
     <header data-role="header">
         <div data-role="navbar">
             <span data-role="view-title"></span>
         </div>
     </header>
 
-    <ul data-role="listview">
+    <ul data-role="listview" class="km-listview-icons">
         <li data-icon="camera">Nature Photography</li>
         <li data-icon="camera">Wildlife Photography</li>
         <li data-icon="camera">Night Photography</li>
@@ -75,13 +75,13 @@
     </ul>
 </div>
 
-<div data-role="drawer" id="right-drawer" style="width: 80px" data-title="Share" data-position="right" data-views="['two-drawer-home', '@Url.Content("~/mobile/m/drawer/two-way-drawers.html")']">
-    <header data-role="header">
-        <div data-role="navbar">
-            <span data-role="view-title"></span>
-        </div>
-    </header>
-    <img src="../content/mobile/shared/share.png" width="100%"/>
+<div data-role="drawer" id="right-drawer" style="width: 100px" data-title="Share" data-position="right" data-views="['two-drawer-home']" data-stretch="true">
+    <div data-role="tabstrip" class="km-vertical-tabstrip">
+        <a href="#drawer/two-way-drawers" data-icon="contacts">
+        </a><a href="#drawer/two-way-drawers" data-icon="history">
+        </a><a href="#drawer/two-way-drawers" data-icon="favorites">
+        </a><a href="#drawer/two-way-drawers" data-icon="settings"></a>
+    </div>
 </div>
 
 <script>
