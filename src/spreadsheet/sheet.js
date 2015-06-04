@@ -71,6 +71,10 @@
             return new Range(new RangeRef(new CellRef(row, column), new CellRef(row + numRows - 1, column + numColumns - 1)), this);
         },
 
+        forEachMergedCell: function(callback) {
+            this._mergedCells.forEach(callback);
+        },
+
         forEach: function(ref, callback) {
             for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col; ci ++) {
                 var startCellIndex = this._grid.index(ref.topLeft.row, ci);

@@ -146,21 +146,19 @@
                 formulaRanges[i].value.reset();
             }
 
-            for (var ri = rows.start; ri <= rows.end; ri ++) {
-                table.addRow(rows.values.at(ri));
-            }
+            rows.values.forEach(function(height) {
+                table.addRow(height);
+            });
 
-            var promises = [];
-
-            for (var ci = columns.start; ci <= columns.end; ci ++) {
-                table.addColumn(columns.values.at(ci));
-            }
+            columns.values.forEach(function(width) {
+                table.addColumn(width);
+            });
 
             sheet.forEach(view.ref, function(cell) {
                 this.addCell(table, cell.row - view.ref.topLeft.row, cell);
             }.bind(this));
 
-            var mergedCells = this.renderMergedCells(promises, rectangle.left, rectangle.top);
+            var mergedCells = this.renderMergedCells(rectangle.left, rectangle.top);
 
             var style = {};
 
@@ -184,33 +182,25 @@
             }
         },
 
-        renderMergedCells: function(promises, left, top) {
-
+        renderMergedCells: function(left, top) {
             var mergedCells = [];
             var sheet = this._sheet;
 
-            for (var i = 0, len = this._sheet._mergedCells.length; i < len; i++) {
-                var ref = this._sheet._mergedCells[i];
-                var rectangle = this._grid.boundingRectangle(ref);
-
-                sheet.forEach(new kendo.spreadsheet.RangeRef(ref.topLeft, ref.topLeft), function(cell) {
+            sheet.forEachMergedCell(function(ref) {
+                sheet.forEach(ref.collapse(), function(cell) {
+                    var rectangle = this._grid.boundingRectangle(ref);
                     var table = new HtmlTable(this.rowHeight, this.columnWidth);
                     table.addColumn(rectangle.width);
                     table.addRow(rectangle.height);
                     this.addCell(table, 0, cell);
                     mergedCells.push(table.toDomTree(rectangle.left - left, rectangle.top - top, "k-spreadsheet-merged-cell"));
                 }.bind(this));
-            }
+            }.bind(this));
 
             return mergedCells;
         }
     });
 
-    //
-    // MergedCellView
-    // - range: RangeRef
-    // intersects(view: sheet.view)
-    //
     kendo.spreadsheet.View = View;
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

@@ -166,6 +166,10 @@
             }
             return ret;
         },
+        toRangeRef: function() {
+            return new RangeRef(this, this);
+        },
+
         relative: function(arow, acol, rel) {
             var row = rel & 2 ? this.row - arow : this.row;
             var col = rel & 1 ? this.col - acol : this.col;
@@ -319,6 +323,10 @@
                 throw new Error("Mixed relative/absolute references");
             }
             return this.bottomRight.col - this.topLeft.col + 1;
+        },
+
+        collapse: function() {
+            return this.topLeft.toRangeRef();
         }
     });
 

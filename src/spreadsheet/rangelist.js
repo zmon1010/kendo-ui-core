@@ -315,7 +315,7 @@
         },
 
         iterator: function(start, end) {
-            return new Iterator(this.intersecting(start, end));
+            return new Iterator(start, end, this.intersecting(start, end));
         }
     });
 
@@ -323,7 +323,9 @@
 
 
     var Iterator = kendo.Class.extend({
-        init: function(ranges) {
+        init: function(start, end, ranges) {
+            this.start = start;
+            this.end = end;
             this.index = 0;
             this.ranges = ranges;
         },
@@ -334,6 +336,14 @@
             }
 
             return this.ranges[this.index].value;
+        },
+
+        forEach: function(callback) {
+            for (var i = this.start; i <= this.end; i++) {
+                callback(this.at(i));
+            }
+
+            this.index = 0;
         }
     });
 

@@ -22,15 +22,15 @@
     test("returns the visual range", function() {
         var visible = axis.visible(20, 200);
         equal(visible.offset, -5);
-        equal(visible.start, 1);
-        equal(visible.end, 13);
+        equal(visible.values.start, 1);
+        equal(visible.values.end, 13);
     });
 
     test("returns the visual range (last page)", function() {
         var visible = axis.visible(14000, 15100);
         equal(visible.offset, 95);
-        equal(visible.start, 933);
-        equal(visible.end, 999);
+        equal(visible.values.start, 933);
+        equal(visible.values.end, 999);
     });
 
     test("returns updated visual range (last page)", function() {

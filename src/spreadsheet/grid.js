@@ -120,10 +120,7 @@
         },
 
         translate: function(rectangle, left, top) {
-            var top = this._rows.translate(rectangle.top, top);
-            var left = this._columns.translate(rectangle.left, left);
-
-            return rectangle.translate(left, top);
+            return rectangle.translate(this._columns.translate(rectangle.left, left), this._rows.translate(rectangle.top, top));
         },
 
         visible: function(rectangle) {
@@ -133,7 +130,7 @@
             return {
                 rows: rows,
                 columns: columns,
-                ref: new RangeRef(new CellRef(rows.start, columns.start), new CellRef(rows.end, columns.end))
+                ref: new RangeRef(new CellRef(rows.values.start, columns.values.start), new CellRef(rows.values.end, columns.values.end))
             };
         }
     });

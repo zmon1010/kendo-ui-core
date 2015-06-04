@@ -66,9 +66,7 @@
 
             return {
                 values: this.values.iterator(startIndex, endIndex),
-                offset: offset,
-                start: startIndex,
-                end: endIndex
+                offset: offset
             };
         },
 
