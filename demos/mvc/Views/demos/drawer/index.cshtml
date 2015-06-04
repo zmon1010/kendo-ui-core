@@ -87,18 +87,17 @@
     <a data-role="button" class="spam">Delete Spam</a>
 </div>
 
-<div data-role="drawer" id="my-drawer" style="width: 270px" data-views="['drawer-home', 'drawer-starred', 'drawer-deleted', 'drawer-spam', 'drawer-drafts', 'drawer-sent', '@Url.Content("~/mobile/m/drawer/index.html")']">
-    <ul data-role="listview" data-type="group">
-        <li>Mailbox
-            <ul>
-                <li data-icon="inbox"><a href="#drawer-home" data-transition="none">Inbox</a></li>
-                <li data-icon="star"><a href="#drawer-starred" data-transition="none">Starred Items</a></li>
-                <li data-icon="compose"><a href="#drawer-drafts" data-transition="none">Drafts</a></li>
-                <li data-icon="sent"><a href="#drawer-sent" data-transition="none">Sent Items</a></li>
-                <li data-icon="trash"><a href="#drawer-deleted" data-transition="none">Deleted Items</a></li>
-                <li data-icon="spam"><a href="#drawer-spam" data-transition="none">Spam</a></li>
-            </ul>
-        </li>
+<div data-role="drawer" id="my-drawer" style="width: 410px" data-views="['drawer-home', 'drawer-starred', 'drawer-deleted', 'drawer-spam', 'drawer-drafts', 'drawer-sent', '@Url.Content("~/mobile/m/drawer/index.html")']">
+    <ul data-role="listview" class="km-listview-icons">
+        <li data-icon="inbox"><a href="#drawer-home" data-transition="none">Inbox</a></li>
+        <li data-icon="star"><a href="#drawer-starred" data-transition="none">Starred Items</a></li>
+        <li data-icon="compose"><a href="#drawer-drafts" data-transition="none">Drafts</a></li>
+        <li data-icon="sent"><a href="#drawer-sent" data-transition="none">Sent Items</a></li>
+        <li data-icon="trash"><a href="#drawer-deleted" data-transition="none">Deleted Items</a></li>
+        <li data-icon="spam"><a href="#drawer-spam" data-transition="none">Spam</a></li>
+    </ul>
+
+    <ul data-role="listview" data-type="group" class="km-listview-icons">
         <li>Tasks
             <ul>
                 <li>To Do</li>
