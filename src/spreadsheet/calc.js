@@ -381,6 +381,7 @@
               case "postfix" : return cpsUnary(node, k);
               case "binary"  : return cpsBinary(node, k);
               case "call"    : return cpsCall(node, k);
+              case "lambda"  : return cpsLambda(node, k);
             }
             throw new Error("Cannot CPS " + node.type);
         }
@@ -483,6 +484,23 @@
                 return k(TRUE);
               case "false":
                 return k(FALSE);
+
+              case "isblank":
+              case "iserr":
+              case "iserror":
+              case "islogical":
+              case "isna":
+              case "isnontext":
+              case "isnumber":
+              case "isref":
+              case "istext":
+                // XXX: ugly special cases.  Currently in case of an error the runtime simply
+                // invokes the toplevel callback, which conveniently aborts any calculation in
+                // progress; however, this makes errors impossible to catch, so an expression like
+                // ISERROR(FOO()) will just display #NAME! instead of TRUE.  The cpsCatch below will
+                // wrap the expression in a lambda and the runtime will supply a nested context able
+                // to catch the errors.
+                return cpsCatch(node, k);
             }
             // actual function
             return (function loop(args, i){
@@ -499,6 +517,36 @@
                     });
                 }
             })([ makeContinuation(k) ], 0);
+        }
+
+        function cpsLambda(node, k) {
+            return k({
+                type: "lambda",
+                vars: [],
+                body: cps(node.body, function(body){
+                    return {
+                        type: "return",
+                        value: body
+                    };
+                })
+            });
+        }
+
+        function cpsCatch(node, k) {
+            return cps({
+                type: "call",
+                func: "-catch",
+                args: [
+                    {
+                        type: "str",
+                        value: node.func
+                    }, {
+                        type: "lambda",
+                        vars: [],
+                        body: node.args[0]
+                    }
+                ]
+            }, k);
         }
 
         function makeContinuation(k) {
@@ -808,5 +856,14 @@
     exports.parseFormula = parse;
     exports.parseReference = parseReference;
     exports.compile = makeFormula;
+
+
+    (function(){
+        var exp = "=ISERROR(FOO())";
+        var ast = exports.parse("sheet1", 0, 0, exp);
+        var x = makeFormula(ast);
+        console.log(x);
+        console.log(x.handler.toString());
+    }());
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

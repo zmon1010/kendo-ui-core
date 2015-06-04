@@ -16,6 +16,7 @@
     var defineFunction = runtime.defineFunction;
     var CalcError = runtime.CalcError;
     var RangeRef = spreadsheet.RangeRef;
+    var CellRef = spreadsheet.CellRef;
     var Ref = spreadsheet.Ref;
 
     /* -----[ Math functions ]----- */
@@ -37,19 +38,6 @@
             sum += num;
         });
         callback(sum);
-    });
-
-    defineFunction("sumif", function(callback, args){
-        assertArgs.call(this, args, 2, function(range, cmp){
-            cmp = parseComparator(cmp);
-            var sum = 0;
-            this.forNumbers(range, function(num){
-                if (cmp(num)) {
-                    sum += num;
-                }
-            });
-            callback(sum);
-        });
     });
 
     defineFunction("counta", function(callback, args){
@@ -82,19 +70,6 @@
             }
         });
         callback(count);
-    });
-
-    defineFunction("countif", function(callback, args){
-        assertArgs.call(this, args, 2, function(range, cmp){
-            cmp = parseComparator(cmp);
-            var count = 0;
-            this.cellValues([range]).forEach(function(val){
-                if (cmp(val)) {
-                    count++;
-                }
-            });
-            callback(count);
-        });
     });
 
     /* -----[ the "*IFS" functions ]----- */
@@ -185,6 +160,39 @@
         }
     });
 
+    defineFunction("countif", function(callback, args){
+        assertArgs.call(this, args, 2, function(range, cmp){
+            cmp = parseComparator(cmp);
+            var count = 0;
+            this.cellValues([range]).forEach(function(val){
+                if (cmp(val)) {
+                    count++;
+                }
+            });
+            callback(count);
+        });
+    });
+
+    (function(handle){
+        // sumif and averageif are particular cases of the more generic *IFS functions
+        handle("sumif", "sumifs");
+        handle("averageif", "averageifs");
+    })(function(fname1, fname2){
+        defineFunction(fname1, function(callback, args){
+            if (args.length < 2 || args.length > 3) {
+                return this.error(new CalcError("N/A"));
+            }
+            if (args.length == 2) {
+                args.unshift(args[0]);
+            } else {
+                args.unshift(args.pop());
+            }
+            this.func2(fname2, callback, args);
+        });
+    });
+
+    /* -----[  ]----- */
+
     defNumeric("fact", 1, function(n){
         for (var i = 2, fact = 1; i <= n; ++i) {
             fact *= i;
@@ -267,6 +275,41 @@
     defNumeric("true", 0, function(){ return true; });
     defNumeric("false", 0, function(){ return false; });
 
+    /* -----[ error catching ]----- */
+
+    defineFunction("-catch", function(callback, args){
+        var fname = args[0].toLowerCase();
+        var prevCallback = this.callback;
+        this.callback = function(ret) {
+            this.callback = prevCallback;
+            var val = this.cellValues([ ret ])[0];
+            switch (fname) {
+              case "isblank":
+                if (ret instanceof CellRef) {
+                    return callback(val == null || val === "");
+                }
+                return callback(false);
+              case "iserror":
+                return callback(val instanceof CalcError);
+              case "iserr":
+                return callback(val instanceof CalcError && val.code != "N/A");
+              case "islogical":
+                return callback(typeof val == "boolean");
+              case "isna":
+                return callback(val instanceof CalcError && val.code == "N/A");
+              case "isnontext":
+                return callback(typeof val != "string");
+              case "isref":
+                // apparently should return true only for cell and range
+                return callback(ret instanceof CellRef || ret instanceof RangeRef);
+              case "istext":
+                return callback(typeof val == "string");
+            }
+            this.error("CATCH");
+        };
+        args[1]();
+    });
+
     //// utils
 
     function defNumeric(name, nargs, func) {
@@ -313,6 +356,7 @@
     function compLTE(a, b) { return a <= b; }
     function compGT(a, b) { return a > b; }
     function compGTE(a, b) { return a >= b; }
+    function compNE(a, b) { return a != b; }
     function compEQ(a, b) {
         if (b instanceof RegExp) {
             return b.test(a);
@@ -329,6 +373,9 @@
         var m;
         if ((m = /^=(.*)$/.exec(cmp))) {
             return makeComparator(compEQ, m[1]);
+        }
+        if ((m = /^<>(.*)$/.exec(cmp))) {
+            return makeComparator(compNE, m[1]);
         }
         if ((m = /^<=(.*)$/.exec(cmp))) {
             return makeComparator(compLTE, m[1]);

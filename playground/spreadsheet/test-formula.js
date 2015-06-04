@@ -521,6 +521,9 @@ fillElements({
         D9: '=sumifs(A1:C3, D1:F3, "y*")',
         D10: '=countifs(A1:C3, ">=0", D1:F3, "y*")',
         D11: '=averageifs(A1:C3, D1:F3, "y*")',
+        D12: '=sumif(A1:C3, ">5", A1:C3)',
+        D13: '=sumif(A1:C3, ">5")',
+        D14: '=sumif(D1:F3, "y*", A1:C3)',
 
         D1: 'y',
         D3: 'YES',
@@ -528,6 +531,9 @@ fillElements({
         F3: 'YYY',
         E2: 'Yaaaaas',
         E1: 'nope',
+
+        E9: '=ISERROR(FOO())',
+        E10: '=ISERROR(C1+D1)',
 
         G11: 1,
         G12: 2,

@@ -48,10 +48,6 @@
         },
 
         resolve: function(val) {
-            val = this.cellValues([ val ])[0];
-            if (val == null) {
-                val = 0;
-            }
             this.formula.value = val;
             this.ss.onFormula(this.sheet, this.row, this.col, val);
             if (this.callback) {
@@ -139,7 +135,19 @@
 
         func: function(fname, callback) {
             var args = slice(arguments, 2);
-            return FUNCS[fname.toLowerCase()].call(this, callback, args);
+            fname = fname.toLowerCase();
+            if (Object.prototype.hasOwnProperty.call(FUNCS, fname)) {
+                return FUNCS[fname].call(this, callback, args);
+            }
+            this.error(new CalcError("NAME"));
+        },
+
+        func2: function(fname, callback, args) {
+            fname = fname.toLowerCase();
+            if (Object.prototype.hasOwnProperty.call(FUNCS, fname)) {
+                return FUNCS[fname].call(this, callback, args);
+            }
+            this.error(new CalcError("NAME"));
         },
 
         bool: function(val) {
