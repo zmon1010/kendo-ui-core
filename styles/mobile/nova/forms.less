@@ -19,13 +19,10 @@
     border: 0;
 }
 
-.km-nova .km-list .k-slider {
-    margin-top: auto;
-    top: auto;
-    padding: .5em .7em;
+.km-nova .km-list .km-full-width-slider {    
     position: relative;
-    .box-sizing(content-box);
     transform: translateY(50%);
+    margin-top: -4px;
 }
 
 .km-nova .k-slider-horizontal .k-draghandle
@@ -104,7 +101,7 @@
 
 .km-nova .k-slider-track
 {
-    margin: -.5em .5em 0 0;
+    //margin: -.5em .5em 0 0;
     .box-sizing(content-box);
     border-radius: .5em;
     border-width: 0;
@@ -160,8 +157,9 @@
 
 .km-nova .km-list .k-dropdown
 {
-    margin-top: -1.05em;
+    //margin-top: -1.05em;
     font-weight: normal;
+    transform: translateY(50%);
 }
 
 .km-nova .km-list input[type=color],
@@ -284,6 +282,10 @@
     padding: 0;
     margin: -1.14em -1.61em;
     //min-height: 13.6rem;
+}
+
+.km-nova .km-list textarea {
+    transform: translateY(0);    
 }
 
 .km-nova .km-list fieldset textarea {
@@ -415,6 +417,11 @@
     top: auto;
 }
 
+.km-nova .km-list input[type=radio],
+.km-nova .km-list input[type=checkbox] {
+    right: 0;
+}
+
 .km-nova input[type=radio]
 {
     height: 28px;
@@ -446,6 +453,10 @@
     border-radius: 50%;
 }
 
+/*.km-nova .km-list .km-check {
+    left: auto;
+}*/
+
 /* Checkboxes and RadioButtons */
 .km-nova input.km-checkbox,
 .km-nova input.km-radio {
@@ -461,7 +472,8 @@
    display: block;
    position: relative;
    vertical-align: middle;
-   //line-height: 0.875em;
+   padding: 0 .7em;
+   font-size: 1.2em;
 }
 
 .km-nova .km-checkbox-label:after{
@@ -469,8 +481,8 @@
   position: absolute;
   top: 0;
   right: 28px;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-width: 2px;
   border-style: solid;
   border-radius: 3px;
@@ -478,13 +490,13 @@
 
 .km-nova input.km-checkbox:checked + .km-checkbox-label:after {
   content: "\2713";
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   position: absolute;
   top: 0;
   right: 28px;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
 //Radio buttons
@@ -493,8 +505,8 @@
   position: absolute;
   top: 0;
   right: 28px;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-style: solid;
   border-radius: 50%;
   border-width: 2px;
@@ -505,8 +517,8 @@
   width: 16px;
   height: 16px;
   position: absolute;
-  top: 8px;
-  right: 36px;
+  top: 6px;
+  right: 34px;
   border-radius: 50%;
 }
 
