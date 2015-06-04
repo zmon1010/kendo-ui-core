@@ -54,13 +54,15 @@
     <script>
         function resizeContainers() {
             var headerHeight = $("#header").height(),
-                searchWrapper = $("#example-search-wrapper").height(),
+                searchWrapper = $("#example-search-wrapper").outerHeight(),
                 navbarWrapper = $("#example-nav-bar").height(),
                 htmlHeight = (kendo.support.mobileOS) ? parseFloat(window.innerHeight) : $('html').height();
                 sidebarHeight = htmlHeight - headerHeight,
-                navHeight = sidebarHeight - (searchWrapper + navbarWrapper);
+                borderSize = 2,
+                navHeight = sidebarHeight - (searchWrapper + navbarWrapper + borderSize);
+
             $("#example-sidebar").height(sidebarHeight);
-            $("#nav-wrapper").height(navHeight - 26);
+            $("#nav-wrapper").height(navHeight);
             $("#main").height(sidebarHeight);
         }
 
