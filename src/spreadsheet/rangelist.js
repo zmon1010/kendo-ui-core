@@ -196,7 +196,7 @@
 
     var RangeList = kendo.Class.extend({
         init: function(start, end, value) {
-            if (end == undefined) {
+            if (end === undefined) {
                 this.tree = start;
             } else {
                 this.tree = new RangeTree();
@@ -346,13 +346,14 @@
         intersecting: function(start, end) {
             var ranges = this.tree.intersecting(start, end);
             var result = [];
+            var range;
 
             if (!ranges.length) {
                 return [this.range];
             }
 
             for (var i = 0, len = ranges.length; i < len; i++) {
-                var range = ranges[i];
+                range = ranges[i];
                 if (range.start > start) {
                     result.push(new Range(start, range.start - 1, this.range.value));
                 }

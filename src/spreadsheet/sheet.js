@@ -88,7 +88,7 @@
                         col: ci,
                         value: values.at(index),
                         formula: formulas.at(index),
-                        background: backgrounds.at(index),
+                        background: backgrounds.at(index)
                     });
                 }
             }

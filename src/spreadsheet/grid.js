@@ -18,7 +18,7 @@
         },
 
         translate: function(left, top) {
-            return new Rectangle(left, top, this.width, this.height)
+            return new Rectangle(left, top, this.width, this.height);
         }
     });
 
