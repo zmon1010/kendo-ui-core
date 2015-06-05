@@ -138,6 +138,9 @@
                     }
                 });
             });
+        },
+        $: function(x) {
+            return this.getData(this.makeRef(x));
         }
     });
 
@@ -664,6 +667,81 @@
             equal(ss.getData(ss.makeRef("C6")), (3+5+9)/3);
             equal(ss.getData(ss.makeRef("C7")), (1+3+5+7+9)/5);
             equal(ss.getData(ss.makeRef("C8")), (4+5+6)/3);
+        });
+    });
+
+    // https://support.office.com/en-sg/article/IS-functions-490afee4-fd91-4839-89d4-1257a21b4e25
+    test("ISERROR, IS*", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: 'foo', B1: '1', C1: "'2", D1: '', E1: '=foo()', F1: '=a1+b1', G1: '=sumif()',
+            A3: '=iserror(A1)', B3: '=iserror(B1+A1)', C3: '=iserror(F1)', D3: '=iserror(G1)', E3: '=iserror(sumif())',
+            A4: '=iserr(A1)', B4: '=iserr(B1+A1)', C4: '=iserr(F1)', D4: '=iserr(G1)', E4: '=iserr(sumif())',
+            A5: '=isna(A1)', B5: '=isna(B1+A1)', C5: '=isna(F1)', D5: '=isna(G1)', E5: '=isna(sumif())',
+            A6: '=istext(A1)', B6: '=isnontext(A1)', C6: '=istext(B1)', D6: '=isnontext(B1)', E6: '=istext(D1)', F6: '=isnontext(D1)', G6: '=istext(H1)', H6: '=isnontext(H1)',
+            A7: '=isblank(A1)', B7: '=isblank(D1)', C7: '=isblank(H1)',
+            A8: '=isnumber(A1)', B8: '=isnumber(B1)', C8: '=isnumber(C1)', D8: '=isnumber(D1)', E8: '=isnumber(H1)',
+            A9: '=islogical(A1)', B9: '=islogical(B1)', C9: '=islogical(A9)', D9: '=islogical(H1)',
+            A10: 'A1', B10: '=isref(A10)', C10: '=isref("A10")', D10: '=isref(indirect(A10))', E10: '=isref(H1)', F10: '=isref(A1:C3)',
+        });
+        ss.recalculate(function(){
+            // ISERROR returns true if and only if the argument is an error
+            equal(ss.$("A3"), false);
+            equal(ss.$("B3"), true);
+            equal(ss.$("C3"), true);
+            equal(ss.$("D3"), true);
+            equal(ss.$("E3"), true);
+
+            // ISERR returns true if the argument is an error but not N/A
+            equal(ss.$("A4"), false);
+            equal(ss.$("B4"), true);
+            equal(ss.$("C4"), true);
+            equal(ss.$("D4"), false);
+            equal(ss.$("E4"), false);
+
+            // ISNA returns true if the argument is a N/A error
+            equal(ss.$("A5"), false);
+            equal(ss.$("B5"), false);
+            equal(ss.$("C5"), false);
+            equal(ss.$("D5"), true);
+            equal(ss.$("E5"), true);
+
+            // ISTEXT returns true if the argument is text, or a cell containing text
+            // ISNONTEXT returns true if the argument is not text (including blank cell)
+            // seems to me that a cell containing empty string should be treated as blank.
+            equal(ss.$("A6"), true);
+            equal(ss.$("B6"), false);
+            equal(ss.$("C6"), false);
+            equal(ss.$("D6"), true);
+            equal(ss.$("E6"), false);
+            equal(ss.$("F6"), true);
+            equal(ss.$("G6"), false);
+            equal(ss.$("H6"), true);
+
+            // ISBLANK returns true if the argument is an empty cell
+            equal(ss.$("A7"), false);
+            equal(ss.$("B7"), true);
+            equal(ss.$("C7"), true);
+
+            // ISNUMBER returns true if the argument is numeric
+            equal(ss.$("A8"), false);
+            equal(ss.$("B8"), true);
+            equal(ss.$("C8"), false);
+            equal(ss.$("D8"), false);
+            equal(ss.$("E8"), false);
+
+            // ISLOGICAL returns true if the argument is boolean
+            equal(ss.$("A9"), false);
+            equal(ss.$("B9"), false);
+            equal(ss.$("C9"), true);
+            equal(ss.$("D9"), false);
+
+            // ISREF returns true if the argument is a cell or range reference
+            equal(ss.$("B10"), true);
+            equal(ss.$("C10"), false);
+            equal(ss.$("D10"), true);
+            equal(ss.$("E10"), true);
+            equal(ss.$("F10"), true);
         });
     });
 
