@@ -95,8 +95,8 @@
 
     var PaneGrid = kendo.Class.extend({
         init: function(rows, columns, grid) {
-            this._rows = rows;
-            this._columns = columns;
+            this.rows = rows;
+            this.columns = columns;
             this._grid = grid;
         },
 
@@ -105,8 +105,8 @@
         },
 
         rectangle: function(width, height) {
-            var columns = this._columns.range(width);
-            var rows = this._rows.range(height);
+            var columns = this.columns.range(width);
+            var rows = this.rows.range(height);
 
             return new Rectangle(columns.start, rows.start, columns.end, rows.end);
         },
@@ -120,12 +120,12 @@
         },
 
         translate: function(rectangle, left, top) {
-            return rectangle.translate(this._columns.translate(rectangle.left, left), this._rows.translate(rectangle.top, top));
+            return rectangle.translate(this.columns.translate(rectangle.left, left), this.rows.translate(rectangle.top, top));
         },
 
         visible: function(rectangle) {
-            var rows = this._rows.visible(rectangle.top, rectangle.bottom);
-            var columns = this._columns.visible(rectangle.left, rectangle.right);
+            var rows = this.rows.visible(rectangle.top, rectangle.bottom);
+            var columns = this.columns.visible(rectangle.left, rectangle.right);
 
             return {
                 rows: rows,

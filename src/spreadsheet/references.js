@@ -327,6 +327,14 @@
 
         collapse: function() {
             return this.topLeft.toRangeRef();
+        },
+
+        leftColumn: function() {
+            return new RangeRef(this.topLeft, new CellRef(this.bottomRight.row, this.topLeft.col));
+        },
+
+        topRow: function() {
+            return new RangeRef(this.topLeft, new CellRef(this.topLeft.row, this.bottomRight.col));
         }
     });
 
