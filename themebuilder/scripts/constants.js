@@ -105,7 +105,19 @@
                     { text: "Office 365", value: "type-office365.less" }
                 ],
                 infer: function() {
-                    return "type-bootstrap.less";
+                    var values = this.values;
+                    var i, name, prop;
+
+                    for (i = 0; i < this.values.length; i++) {
+                        name = values[i].text.replace(/\s/g, "").toLowerCase();
+                        prop = cssPropertyFrom("ktb-theme-id-" + name, "opacity");
+
+                        if (prop === "0") {
+                            return "type-" + name + ".less";
+                        }
+                    }
+
+                    return "type-default.less";
                 }
             },
 

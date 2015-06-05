@@ -1,7 +1,11 @@
 require 'erb'
 
 THEME_BUILDER_BUILDFILE = 'build/theme_builder.rb'
-THEME_TYPES = FileList['styles/web/type-*.less']
+THEME_FILES = FileList[
+    'styles/web/type-*.less',
+    'styles/web/common/mixins.less',
+    'styles/web/themes/type.less'
+]
 THEME_BUILDER_FILES = [
     'themebuilder/scripts/less.js',
     'themebuilder/scripts/themebuilder.js',
@@ -20,12 +24,12 @@ def less2js(less)
         .gsub(/\r/, "")
 end
 
-THEME_TYPES.each do |type|
-    type_name = File.basename(type).sub('.less', '')
+THEME_FILES.each do |type|
+    name = type.sub('styles/web/', '')
+    type_name = name.gsub(/\//, '-').sub('.less', '')
     less_js = "themebuilder/scripts/#{type_name}.js"
 
     file less_js => [type, THEME_BUILDER_BUILDFILE, TYPE_TEMPLATE_FILE] do |t|
-        name = File.basename(type)
         less = less2js(File.read(type))
 
         File.write(t.name, TYPE_TEMPLATE.result(binding))

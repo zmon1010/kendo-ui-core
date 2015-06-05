@@ -14,7 +14,7 @@
         // caution: variables below are generated during builds. update build/theme_builder.rb if you change them!
         KENDO_LOCATION = "http://cdn.kendostatic.com/2015.1.429/",
         JQUERY_LOCATION = "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js",
-        requiredJs = [ "scripts/less.js", "scripts/themebuilder.js", "scripts/constants.js", "scripts/type-default.js", "scripts/type-bootstrap.js", "scripts/type-flat.js", "scripts/type-fiori.js", "scripts/type-highcontrast.js", "scripts/type-material.js", "scripts/type-office365.js", "scripts/type-metro.js" ],
+        requiredJs = [ "scripts/less.js", "scripts/themebuilder.js", "scripts/constants.js", "scripts/type-default.js", "scripts/type-bootstrap.js", "scripts/type-flat.js", "scripts/type-fiori.js", "scripts/type-highcontrast.js", "scripts/type-material.js", "scripts/type-office365.js", "scripts/type-metro.js", "scripts/common-mixins.js", "scripts/themes-type.js" ],
         requiredCss = ["styles/styles.css"],
         bootstrapCss = "styles/bootstrap.css",
         // </generated variables>
@@ -39,13 +39,7 @@
     }(window.KENDO_THEMEBUILDER_OPTIONS));
 
     function ThemeBuilderInterface(options) {
-        var bootStyles;
-
-        bootStyles = doc.createElement("link");
-        bootStyles.setAttribute("rel", "stylesheet");
-        bootStyles.setAttribute("href", applicationRoot + bootstrapCss);
-
-        doc.getElementsByTagName("head")[0].appendChild(bootStyles);
+        this._injectStyles();
 
         if (typeof jQuery == UNDEFINED || typeof kendo == UNDEFINED) {
             this._initError();
@@ -68,6 +62,16 @@
     }
 
     ThemeBuilderInterface.prototype = {
+        _injectStyles: function() {
+            var bootStyles;
+
+            bootStyles = doc.createElement("link");
+            bootStyles.setAttribute("rel", "stylesheet");
+            bootStyles.setAttribute("href", applicationRoot + bootstrapCss);
+
+            doc.getElementsByTagName("head")[0].appendChild(bootStyles);
+        },
+
         open: function() {
             if (typeof jQuery == UNDEFINED || typeof kendo == UNDEFINED) {
                 this._initError();
@@ -165,16 +169,15 @@
             this.iframe = wnd;
         },
 
-        // Shows error message on pages that we can not work with
-        _initError: function() {
-            var messageId = "ktb-message",
-                messageWrap;
+        _showMessage: function (message) {
+            var messageId = "ktb-message";
+            var messageWrap;
 
             if (!doc.getElementById(messageId)) {
                 messageWrap = doc.createElement("div");
                 messageWrap.id = messageId;
                 messageWrap.innerHTML =
-                    "<p>It seems there are no Kendo widgets on this page, so the Kendo themebuilder will be of no use. Please try running it elsewhere.</p>" +
+                    "<p>" + message + "</p>" +
                     "<p><button type='button' onclick='" +
                         "var msg = document.getElementById(\"" + messageId + "\");" +
                         "msg.parentNode.removeChild(msg);" +
@@ -183,13 +186,27 @@
 
                 doc.body.appendChild(messageWrap);
             }
+        },
+
+        // Shows error message on pages that we can not work with
+        _initError: function() {
+            this._showMessage(
+                "It seems there are no Kendo widgets on this page, so the Kendo themebuilder will be of no use.<br>" +
+                "Please try running it on a page with widgets."
+            );
         }
     };
 
     window.kendo.ui.ThemeBuilderInterface = ThemeBuilderInterface;
 
     if (!settings || settings.autoRun !== false) {
-        window.kendoThemeBuilder = new ThemeBuilderInterface();
+        var tb = window.kendoThemeBuilder = new ThemeBuilderInterface();
+
+        tb._injectStyles();
+        tb._showMessage(
+            "The Kendo UI ThemeBuilder is not available as a bookmarklet at this time.<br>" +
+            "Head to the <a href='http://demos.telerik.com/kendo-ui/themebuilder'>ThemeBuilder web app</a> to modify themes."
+        );
     }
 })();
 

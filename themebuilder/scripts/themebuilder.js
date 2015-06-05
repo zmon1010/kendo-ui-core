@@ -343,9 +343,14 @@
 
             _resolveFiles: function(less) {
                 var files = this.files;
-                return less.replace(/@import ["'](.*)["'];/g, function(_, filename) {
-                    return files[filename];
-                });
+
+                while (/@import/.test(less)) {
+                    less = less.replace(/@import ["'](.*)["'];/g, function(_, filename) {
+                        return files[filename];
+                    });
+                }
+
+                return less;
             },
 
             _generateTheme: function(callback) {

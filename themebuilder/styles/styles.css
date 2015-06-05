@@ -161,13 +161,6 @@ textarea {
     border-width: 0;
 }
 
-.k-gradient-editor .k-preview {
-    width: 15px;
-    display: inline-block;
-    vertical-align: middle;
-    border-radius: 0 3px 3px 0;
-}
-
 #docs-link {
     color: #19a3ee;
     float: right;
