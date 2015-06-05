@@ -209,10 +209,7 @@ namespace Kendo.Mvc.UI
 
                 builder.ItemInnerTag(item).AppendTo(itemTag);
 
-                if (item.Template.HasValue() || item.ContentUrl.HasValue())
-                {
-                    builder.ItemContentTag(item).AppendTo(parentTag);
-                }
+                builder.ItemContentTag(item).AppendTo(parentTag);
             }
         }
 
