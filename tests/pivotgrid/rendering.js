@@ -265,7 +265,7 @@
         equal(th.eq(1).text(), "dim 2");
     });
 
-    test("PivotGrid renders one expanded dimension", function() {
+    asyncTest("PivotGrid renders one expanded dimension", 8, function() {
         var tuples = [
             { members: [{ name: "dim 1", levelNum: "0", children: [] }] },
             { members: [{ name: "child 1", levelNum: "1",  parentName: "dim 1", children: [] }] },
@@ -279,26 +279,30 @@
 
         var headerTable = pivotgrid.wrapper.find(".k-grid-header").find("table");
 
-        var tr = headerTable.find("tr");
-        equal(tr.length, 2);
+        setTimeout(function() {
+            start();
 
-        var row_1 = tr.eq(0);
-        var cells_row1 = row_1.find("th");
+            var tr = headerTable.find("tr");
+            equal(tr.length, 2);
 
-        equal(cells_row1.length, 2);
-        equal(cells_row1.eq(0).attr("colspan"), 3);
-        equal(cells_row1.eq(1).attr("rowspan"), 2);
+            var row_1 = tr.eq(0);
+            var cells_row1 = row_1.find("th");
 
-        var row_2 = tr.eq(1);
-        var cells_row2 = row_2.find("th");
+            equal(cells_row1.length, 2);
+            equal(cells_row1.eq(0).attr("colspan"), 3);
+            equal(cells_row1.eq(1).attr("rowspan"), 2);
 
-        equal(cells_row2.length, 3);
-        equal(cells_row2.eq(0).text(), "child 1");
-        equal(cells_row2.eq(1).text(), "child 2");
-        equal(cells_row2.eq(2).text(), "child 3");
+            var row_2 = tr.eq(1);
+            var cells_row2 = row_2.find("th");
+
+            equal(cells_row2.length, 3);
+            equal(cells_row2.eq(0).text(), "child 1");
+            equal(cells_row2.eq(1).text(), "child 2");
+            equal(cells_row2.eq(2).text(), "child 3");
+        }, 50);
     });
 
-    test("PivotGrid renders one expanded dimension of two", function() {
+    asyncTest("PivotGrid renders one expanded dimension of two", 13, function() {
         var tuples = [
             { members: [{ name: "dim 1", levelNum: "0", children: [] }, { name: "dim 2", levelNum: "0", children: [] }] },
             { members: [{ name: "child 1", levelNum: "1",  parentName: "dim 1", children: [] }, { name: "dim 2", levelNum: "0", children: [] }] },
@@ -312,35 +316,38 @@
 
         var headerTable = pivotgrid.wrapper.find(".k-grid-header").find("table");
 
-        var tr = headerTable.find("tr");
-        equal(tr.length, 3);
+        setTimeout(function() {
+            start();
+            var tr = headerTable.find("tr");
+            equal(tr.length, 3);
 
-        var row_1 = tr.eq(0);
-        var cells_row1 = row_1.find("th");
+            var row_1 = tr.eq(0);
+            var cells_row1 = row_1.find("th");
 
-        equal(cells_row1.length, 2);
-        equal(cells_row1.eq(0).attr("colspan"), 3);
-        equal(cells_row1.eq(1).attr("rowspan"), 2);
+            equal(cells_row1.length, 2);
+            equal(cells_row1.eq(0).attr("colspan"), 3);
+            equal(cells_row1.eq(1).attr("rowspan"), 2);
 
-        var row_2 = tr.eq(1);
-        var cells_row2 = row_2.find("th");
+            var row_2 = tr.eq(1);
+            var cells_row2 = row_2.find("th");
 
-        equal(cells_row2.length, 3);
-        equal(cells_row2.eq(0).text(), "child 1");
-        equal(cells_row2.eq(1).text(), "child 2");
-        equal(cells_row2.eq(2).text(), "child 3");
+            equal(cells_row2.length, 3);
+            equal(cells_row2.eq(0).text(), "child 1");
+            equal(cells_row2.eq(1).text(), "child 2");
+            equal(cells_row2.eq(2).text(), "child 3");
 
-        var row_3 = tr.eq(2);
-        var cells_row3 = row_3.find("th");
+            var row_3 = tr.eq(2);
+            var cells_row3 = row_3.find("th");
 
-        equal(cells_row3.length, 4);
-        equal(cells_row3.eq(0).text(), "dim 2");
-        equal(cells_row3.eq(1).text(), "dim 2");
-        equal(cells_row3.eq(2).text(), "dim 2");
-        equal(cells_row3.eq(3).text(), "dim 2");
+            equal(cells_row3.length, 4);
+            equal(cells_row3.eq(0).text(), "dim 2");
+            equal(cells_row3.eq(1).text(), "dim 2");
+            equal(cells_row3.eq(2).text(), "dim 2");
+            equal(cells_row3.eq(3).text(), "dim 2");
+        });
     });
 
-    test("PivotGrid renders three level expanded dimension", function() {
+    asyncTest("PivotGrid renders three level expanded dimension", 18, function() {
         var tuples = [
             { members: [ { name: "level 0",  levelNum: "0", children: [] }] },
             { members: [ { name: "level 1_1", levelNum: "1",  parentName: "level 0", children: [] }] },
@@ -356,47 +363,50 @@
 
         var headerTable = pivotgrid.wrapper.find(".k-grid-header").find("table");
 
-        var tr = headerTable.find("tr");
-        equal(tr.length, 4);
+        setTimeout(function() {
+            start();
+            var tr = headerTable.find("tr");
+            equal(tr.length, 4);
 
-        var row_1 = tr.eq(0);
-        var cells_row1 = row_1.find("th");
+            var row_1 = tr.eq(0);
+            var cells_row1 = row_1.find("th");
 
-        equal(cells_row1.length, 2);
-        equal(cells_row1.eq(0).attr("colspan"), 5);
-        equal(cells_row1.eq(1).attr("rowspan"), 4);
+            equal(cells_row1.length, 2);
+            equal(cells_row1.eq(0).attr("colspan"), 5);
+            equal(cells_row1.eq(1).attr("rowspan"), 4);
 
-        var row_2 = tr.eq(1);
-        var cells_row2 = row_2.find("th");
+            var row_2 = tr.eq(1);
+            var cells_row2 = row_2.find("th");
 
-        equal(cells_row2.length, 4);
-        equal(cells_row2.eq(0).text(), "level 1_1");
-        equal(cells_row2.eq(0).attr("colspan"), 2);
+            equal(cells_row2.length, 4);
+            equal(cells_row2.eq(0).text(), "level 1_1");
+            equal(cells_row2.eq(0).attr("colspan"), 2);
 
-        equal(cells_row2.eq(1).text(), "level 1_1");
-        equal(cells_row2.eq(1).attr("rowspan"), 3);
+            equal(cells_row2.eq(1).text(), "level 1_1");
+            equal(cells_row2.eq(1).attr("rowspan"), 3);
 
-        equal(cells_row2.eq(2).text(), "level 1_2");
-        equal(cells_row2.eq(2).attr("rowspan"), 3);
+            equal(cells_row2.eq(2).text(), "level 1_2");
+            equal(cells_row2.eq(2).attr("rowspan"), 3);
 
-        equal(cells_row2.eq(3).text(), "level 1_3");
-        equal(cells_row2.eq(3).attr("rowspan"), 3);
+            equal(cells_row2.eq(3).text(), "level 1_3");
+            equal(cells_row2.eq(3).attr("rowspan"), 3);
 
-        var row_3 = tr.eq(2);
-        var cells_row3 = row_3.find("th");
+            var row_3 = tr.eq(2);
+            var cells_row3 = row_3.find("th");
 
-        equal(cells_row3.length, 2);
-        equal(cells_row3.eq(0).text(), "level 2");
-        equal(cells_row3.eq(1).text(), "level 2");
-        equal(cells_row3.eq(1).attr("rowspan"), 2);
+            equal(cells_row3.length, 2);
+            equal(cells_row3.eq(0).text(), "level 2");
+            equal(cells_row3.eq(1).text(), "level 2");
+            equal(cells_row3.eq(1).attr("rowspan"), 2);
 
-        var row_4 = tr.eq(3);
-        var cells_row4 = row_4.find("th");
+            var row_4 = tr.eq(3);
+            var cells_row4 = row_4.find("th");
 
-        equal(cells_row4.length, 1);
+            equal(cells_row4.length, 1);
+        });
     });
 
-    test("PivotGrid renders third level corretly if second parent has been expanded", function() {
+    asyncTest("PivotGrid renders third level corretly if second parent has been expanded", 18, function() {
         var tuples = [
             { members: [ { name: "level 0",  levelNum: "0", children: [] }] },
             { members: [ { name: "level 1_1", levelNum: "1",  parentName: "level 0", children: [] }] },
@@ -412,45 +422,49 @@
 
         var headerTable = pivotgrid.wrapper.find(".k-grid-header").find("table");
 
-        var tr = headerTable.find("tr");
-        equal(tr.length, 4);
+        setTimeout(function() {
+            start();
 
-        var row_1 = tr.eq(0);
-        var cells_row1 = row_1.find("th");
+            var tr = headerTable.find("tr");
+            equal(tr.length, 4);
 
-        equal(cells_row1.length, 2);
-        equal(cells_row1.eq(0).attr("colspan"), 5);
-        equal(cells_row1.eq(1).attr("rowspan"), 4);
+            var row_1 = tr.eq(0);
+            var cells_row1 = row_1.find("th");
 
-        var row_2 = tr.eq(1);
-        var cells_row2 = row_2.find("th");
+            equal(cells_row1.length, 2);
+            equal(cells_row1.eq(0).attr("colspan"), 5);
+            equal(cells_row1.eq(1).attr("rowspan"), 4);
 
-        equal(cells_row2.length, 4);
+            var row_2 = tr.eq(1);
+            var cells_row2 = row_2.find("th");
 
-        equal(cells_row2.eq(0).text(), "level 1_1");
-        equal(cells_row2.eq(0).attr("rowspan"), 3);
+            equal(cells_row2.length, 4);
 
-        equal(cells_row2.eq(1).text(), "level 1_2");
-        equal(cells_row2.eq(1).attr("colspan"), 2);
+            equal(cells_row2.eq(0).text(), "level 1_1");
+            equal(cells_row2.eq(0).attr("rowspan"), 3);
 
-        equal(cells_row2.eq(2).text(), "level 1_2");
-        equal(cells_row2.eq(2).attr("rowspan"), 3);
+            equal(cells_row2.eq(1).text(), "level 1_2");
+            equal(cells_row2.eq(1).attr("colspan"), 2);
 
-        equal(cells_row2.eq(3).text(), "level 1_3");
-        equal(cells_row2.eq(3).attr("rowspan"), 3);
+            equal(cells_row2.eq(2).text(), "level 1_2");
+            equal(cells_row2.eq(2).attr("rowspan"), 3);
 
-        var row_3 = tr.eq(2);
-        var cells_row3 = row_3.find("th");
+            equal(cells_row2.eq(3).text(), "level 1_3");
+            equal(cells_row2.eq(3).attr("rowspan"), 3);
 
-        equal(cells_row3.length, 2);
-        equal(cells_row3.eq(0).text(), "level 2");
-        equal(cells_row3.eq(1).text(), "level 2");
-        equal(cells_row3.eq(1).attr("rowspan"), 2);
+            var row_3 = tr.eq(2);
+            var cells_row3 = row_3.find("th");
 
-        var row_4 = tr.eq(3);
-        var cells_row4 = row_4.find("th");
+            equal(cells_row3.length, 2);
+            equal(cells_row3.eq(0).text(), "level 2");
+            equal(cells_row3.eq(1).text(), "level 2");
+            equal(cells_row3.eq(1).attr("rowspan"), 2);
 
-        equal(cells_row4.length, 1);
+            var row_4 = tr.eq(3);
+            var cells_row4 = row_4.find("th");
+
+            equal(cells_row4.length, 1);
+        });
     });
 
     test("PivotGrid renders second level with two expanded tuples corretly", function() {
@@ -591,7 +605,7 @@
         equal(th_level1.eq(3).attr("rowspan"), 3);
     });
 
-    test("PivotGrid normalize colspan value of all dimension rows", function() {
+    asyncTest("PivotGrid normalize colspan value of all dimension rows", 3, function() {
         var tuples = [
             { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1", levelNum: "0", children: [] }, { name: "dim 2", levelNum: "0", children: [] }] },
             { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1", levelNum: "0", children: [] }, { name: "level 1_1", parentName: "dim 2", levelNum: "1", children: [] }] },
@@ -605,18 +619,21 @@
 
         var headerTable = pivotgrid.wrapper.find(".k-grid-header").find("table");
 
-        var rows = headerTable.find("tr");
+        setTimeout(function() {
+            start();
+            var rows = headerTable.find("tr");
 
-        equal(rows.length, 4);
+            equal(rows.length, 4);
 
-        var tr_dim0 = rows.eq(0);
-        var tr_dim1 = rows.eq(1);
+            var tr_dim0 = rows.eq(0);
+            var tr_dim1 = rows.eq(1);
 
-        equal(tr_dim0.find("th").attr("colspan"), 4);
-        equal(tr_dim1.find("th").attr("colspan"), 4);
+            equal(tr_dim0.find("th").attr("colspan"), 4);
+            equal(tr_dim1.find("th").attr("colspan"), 4);
+        });
     });
 
-    test("PivotGrid does not set colspan to the parent dimension if child was not expanded", function() {
+    asyncTest("PivotGrid does not set colspan to the parent dimension if child was not expanded", 3, function() {
         var tuples = [
             { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1", levelNum: "0", children: [] } ] },
             { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] }, { name: "dim 1", levelNum: "0", children: [] } ] },
@@ -629,18 +646,21 @@
 
         var headerTable = pivotgrid.wrapper.find(".k-grid-header").find("table");
 
-        var rows = headerTable.find("tr");
+        setTimeout(function() {
+            start();
+            var rows = headerTable.find("tr");
 
-        equal(rows.length, 3);
+            equal(rows.length, 3);
 
-        var tr_dim0 = rows.eq(0);
-        var tr_dim1 = rows.eq(1);
+            var tr_dim0 = rows.eq(0);
+            var tr_dim1 = rows.eq(1);
 
-        equal(tr_dim0.find("th").last().attr("colspan"), 1);
-        ok(!tr_dim1.find("th").last().attr("colspan"));
+            equal(tr_dim0.find("th").last().attr("colspan"), 1);
+            ok(!tr_dim1.find("th").last().attr("colspan"));
+        });
     });
 
-    test("PivotGrid calculates colspan of two of three expanded dimensions", function() {
+    asyncTest("PivotGrid calculates colspan of two of three expanded dimensions", 2, function() {
         var tuples = [
             { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1", levelNum: "0", children: [] }, { name: "dim 2", levelNum: "0", children: [] }] },
             { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1_1", parentName: "dim 1", levelNum: "1", children: [] }, { name: "dim 2", levelNum: "0", children: [] }] },
@@ -661,11 +681,14 @@
         var tr_dim0 = rows.eq(0);
         var tr_dim1 = rows.eq(1);
 
-        equal(tr_dim0.find("th").last().attr("colspan"), 6);
-        equal(tr_dim1.find("th").last().attr("colspan"), 4);
+        setTimeout(function() {
+            start();
+            equal(tr_dim0.find("th").last().attr("colspan"), 6);
+            equal(tr_dim1.find("th").last().attr("colspan"), 4);
+        });
     });
 
-    test("PivotGrid expands All cell of second dimension under first dimension child correctly", function() {
+    asyncTest("PivotGrid expands All cell of second dimension under first dimension child correctly", 3, function() {
         var tuples = [
             { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1", levelNum: "0", children: [] }] },
             { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] }, { name: "dim 1", levelNum: "0", children: [] }] },
@@ -686,12 +709,15 @@
         var th_level1 = rows.eq(1).find("th");
         var th_level2 = rows.eq(2).find("th");
 
-        equal(th_level0.eq(0).attr("colspan"), 4);
-        equal(th_level1.eq(1).attr("colspan"), 3);
-        equal(th_level2.eq(1).attr("colspan"), 2);
+        setTimeout(function() {
+            start();
+            equal(th_level0.eq(0).attr("colspan"), 4);
+            equal(th_level1.eq(1).attr("colspan"), 3);
+            equal(th_level2.eq(1).attr("colspan"), 2);
+        });
     });
 
-    test("PivotGrid expands All cell of second dimension under first dimension child when child is expanded", function() {
+    asyncTest("PivotGrid expands All cell of second dimension under first dimension child when child is expanded", 3, function() {
         var tuples = [
             { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1", levelNum: "0", children: [] }] },
             { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] }, { name: "dim 1", levelNum: "0", children: [] }] },
@@ -714,12 +740,15 @@
         var th_level1 = rows.eq(1).find("th");
         var th_level3 = rows.eq(3).find("th");
 
-        equal(th_level0.eq(0).attr("colspan"), 6);
-        equal(th_level1.eq(2).attr("colspan"), 4);
-        equal(th_level3.eq(2).attr("colspan"), 3);
+        setTimeout(function() {
+            start();
+            equal(th_level0.eq(0).attr("colspan"), 6);
+            equal(th_level1.eq(2).attr("colspan"), 4);
+            equal(th_level3.eq(2).attr("colspan"), 3);
+        });
     });
 
-    test("PivotGrid expands child cells and all cells of both dimensions (complex expanded header)", function() {
+    asyncTest("PivotGrid expands child cells and all cells of both dimensions (complex expanded header)", 9, function() {
         var tuples = [
             { members: [ { name: "dim 0", levelNum: "0", children: [] }, { name: "dim 1", levelNum: "0", children: [] }] },
             { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", children: [] }, { name: "dim 1", levelNum: "0", children: [] }] },
@@ -745,18 +774,21 @@
         var th_level3 = rows.eq(3).find("th");
         var th_level4 = rows.eq(4).find("th");
 
-        //All section of dim 0
-        equal(th_level0.eq(0).attr("colspan"), 6);
-        equal(th_level1.eq(2).attr("colspan"), 4);
-        equal(th_level3.eq(2).attr("colspan"), 3);
+        setTimeout(function() {
+            start();
+            //All section of dim 0
+            equal(th_level0.eq(0).attr("colspan"), 6);
+            equal(th_level1.eq(2).attr("colspan"), 4);
+            equal(th_level3.eq(2).attr("colspan"), 3);
 
-        //All section of dim 1
-        equal(th_level0.eq(1).attr("colspan"), 3);
-        equal(th_level0.eq(1).attr("rowspan"), 3);
-        equal(th_level3.eq(4).attr("colspan"), 2);
-        equal(th_level3.eq(5).attr("rowspan"), 3);
-        equal(th_level4.eq(3).attr("rowspan"), 2);
-        equal(th_level4.eq(4).attr("rowspan"), 2);
+            //All section of dim 1
+            equal(th_level0.eq(1).attr("colspan"), 3);
+            equal(th_level0.eq(1).attr("rowspan"), 3);
+            equal(th_level3.eq(4).attr("colspan"), 2);
+            equal(th_level3.eq(5).attr("rowspan"), 3);
+            equal(th_level4.eq(3).attr("rowspan"), 2);
+            equal(th_level4.eq(4).attr("rowspan"), 2);
+        });
     });
 
     test("PivotGrid renders k-header style to TH cell", function() {
@@ -936,7 +968,7 @@
         equal(button.attr(kendo.attr("path")), kendo.stringify(["level 0"]));
     });
 
-    test("PivotGrid renders one dimension with two measures", function() {
+    asyncTest("PivotGrid renders one dimension with two measures", 4, function() {
         var tuples = [
             { members: [ { name: "level 0", levelNum: "0", children: [] }, { name: "measure 1", children: [] } ] },
             { members: [ { name: "level 0", levelNum: "0", children: [] }, { name: "measure 2", children: [] } ] }
@@ -953,14 +985,17 @@
         var rows = headerTable.find("tr");
         var th_1 = rows.eq(1).find("th");
 
-        equal(rows.eq(0).find("th").attr("colspan"), 2);
-        equal(th_1.eq(0).text(), "measure 1");
-        equal(th_1.eq(1).text(), "measure 2");
+        setTimeout(function() {
+            start();
+            equal(rows.eq(0).find("th").attr("colspan"), 2);
+            equal(th_1.eq(0).text(), "measure 1");
+            equal(th_1.eq(1).text(), "measure 2");
 
-        ok(th_1.eq(0).hasClass("k-header"));
+            ok(th_1.eq(0).hasClass("k-header"));
+        });
     });
 
-    test("PivotGrid renders child tuple with two measures", function() {
+    asyncTest("PivotGrid renders child tuple with two measures", 3, function() {
         var tuples = [
             { members: [ { name: "level 0", levelNum: "0", children: [] }, { name: "measure 1", children: [] } ] },
             { members: [ { name: "level 0", levelNum: "0", children: [] }, { name: "measure 2", children: [] } ] },
@@ -980,12 +1015,15 @@
         var th_0 = rows.eq(0).find("th");
         var th_1 = rows.eq(1).find("th");
 
-        equal(th_0.eq(0).attr("colspan"), 2);
-        equal(th_0.eq(1).attr("colspan"), 2);
-        equal(th_1.eq(0).attr("colspan"), 2);
+        setTimeout(function() {
+            start();
+            equal(th_0.eq(0).attr("colspan"), 2);
+            equal(th_0.eq(1).attr("colspan"), 2);
+            equal(th_1.eq(0).attr("colspan"), 2);
+        });
     });
 
-    test("PivotGrid renders two dimensions with three measures", function() {
+    asyncTest("PivotGrid renders two dimensions with three measures", 5, function() {
         var tuples = [
             { members: [ { name: "level 0", levelNum: "0", hasChildren: true, children: [] }, { name: "dim 1", levelNum: "0", children: [] }, { name: "measure 1", children: [] } ] },
             { members: [ { name: "level 0", levelNum: "0", hasChildren: true, children: [] }, { name: "dim 1", levelNum: "0", children: [] }, { name: "measure 2", children: [] } ] },
@@ -1003,12 +1041,15 @@
         var rows = headerTable.find("tr");
         var th_2 = rows.eq(2).find("th");
 
-        equal(rows.eq(0).find("th").attr("colspan"), 3);
-        equal(rows.eq(1).find("th").attr("colspan"), 3);
+        setTimeout(function() {
+            start();
+            equal(rows.eq(0).find("th").attr("colspan"), 3);
+            equal(rows.eq(1).find("th").attr("colspan"), 3);
 
-        equal(th_2.eq(0).text(), "measure 1");
-        equal(th_2.eq(1).text(), "measure 2");
-        equal(th_2.eq(2).text(), "measure 3");
+            equal(th_2.eq(0).text(), "measure 1");
+            equal(th_2.eq(1).text(), "measure 2");
+            equal(th_2.eq(2).text(), "measure 3");
+        });
     });
 
     test("PivotGrid renders measures as a single dimension", function() {

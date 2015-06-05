@@ -3664,15 +3664,6 @@ var __meta__ = {
                 this._setSectionsHeight();
                 this._setContentWidth();
                 this._setContentHeight();
-
-                columnTable.css("table-layout", AUTO);
-                contentTable.css("table-layout", AUTO);
-
-                clearTimeout(this._layoutTimeout);
-                this._layoutTimeout = setTimeout(function() {
-                    columnTable.css("table-layout", "fixed");
-                    contentTable.css("table-layout", "fixed");
-                });
             }
         },
 
@@ -3706,19 +3697,20 @@ var __meta__ = {
 
         _setContentWidth: function() {
             var contentTable = this.content.find("table");
-            var contentWidth = this.content.width();
+            var columnTable = this.columnsHeader.children("table");
 
             var rowLength = contentTable.children("colgroup").children().length;
 
             var calculatedWidth = rowLength * this.options.columnWidth;
-            var minWidth = Math.ceil((calculatedWidth / contentWidth) * 100);
+            var minWidth = Math.ceil((calculatedWidth / this.content.width()) * 100);
 
             if (minWidth < 100) {
                 minWidth = 100;
             }
 
-            contentTable.add(this.columnsHeader.children("table"))
-                        .css("width", minWidth + "%");
+            contentTable.add(columnTable).css("width", minWidth + "%");
+
+            this._resetColspan(columnTable);
         },
 
         _setContentHeight: function() {
@@ -3759,6 +3751,24 @@ var __meta__ = {
 
                 rowsHeader.height(innerHeight - scrollbar);
             }
+        },
+
+        _resetColspan: function(columnTable) {
+            var that = this;
+            var cell = columnTable.children("tbody").children(":first").children(":first");
+
+            if (that._colspan === undefined) {
+                that._colspan = cell.attr("colspan");
+            }
+
+            cell.attr("colspan", 1);
+
+            clearTimeout(that._layoutTimeout);
+
+            that._layoutTimeout = setTimeout(function() {
+                cell.attr("colspan", that._colspan);
+                that._colspan = undefined;
+            });
         },
 
         _axisMeasures: function(axis) {
