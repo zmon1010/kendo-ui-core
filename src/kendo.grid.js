@@ -1841,7 +1841,7 @@ var __meta__ = {
             if (!isRtl) {
                 left = th[0].offsetWidth;
 
-                var cells = leafDataCells(th.closest("thead"));
+                var cells = leafDataCells(th.closest("thead")).filter(":visible");
                 for (var idx = 0; idx < cells.length; idx++) {
                     if (cells[idx] == th[0]) {
                         break;
