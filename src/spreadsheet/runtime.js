@@ -176,27 +176,40 @@
             }
         },
 
-        rangeToMatrix: function(range) {
-            var tl = range.topLeft;
-            var cells = this.ss.getRefCells(range);
-            var m = [];
-            cells.forEach(function(cell){
-                var row = cell.row - tl.row;
-                row = m[row] || (m[row] = []);
-                row[cell.col - tl.col] = cell;
-            });
-            return new Matrix(m);
+        asMatrix: function(range) {
+            if (range instanceof RangeRef) {
+                var tl = range.topLeft;
+                var cells = this.ss.getRefCells(range);
+                var m = [];
+                cells.forEach(function(cell){
+                    var row = cell.row - tl.row;
+                    row = m[row] || (m[row] = []);
+                    row[cell.col - tl.col] = cell.value;
+                });
+                return new Matrix(this, range.height(), range.width(), m);
+            }
+            if (Array.isArray(range) && range.length > 0) {
+                if (Array.isArray(range[0])) {
+                    return new Matrix(this, range.length, range[0].length, range);
+                }
+                else {
+                    return new Matrix(this, 1, range.length, [ range ]);
+                }
+            }
         }
     });
 
     var Matrix = Class.extend({
-        init: function Matrix(data) {
+        init: function Matrix(context, height, width, data) {
+            this.context = context;
+            this.height = height;
+            this.width = width;
             this.data = data;
         },
         get: function(row, col) {
             var line = this.data[row];
-            var cell = line ? line[col] : null;
-            return cell || {};
+            var val = line ? line[col] : null;
+            return val instanceof Ref ? this.context.ss.getData(val) : val;
         }
     });
 

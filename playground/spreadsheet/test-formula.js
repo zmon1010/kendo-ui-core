@@ -178,6 +178,10 @@ Spreadsheet.prototype = {
     updateDisplay: function(sheet, row, col) {
         var cell = this._getCell(sheet, row, col);
         var input = _getInput("#" + sheet, row, col);
+        if (!cell) {
+            input.val("");
+            return;
+        }
         if (input[0] === document.activeElement) {
             return;
         }
@@ -529,6 +533,8 @@ fillElements({
         D17: '=countunique(A:C)',
         D18: '=countunique({ 1, 2, 3, A1, A2, A3, A1:A3 })',
         D19: '=countunique(1, 2, 3, A1, A2, A3, A1:A3)',
+        E8: '=sumif({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, ">3")',
+        F8: '=sumif({ A1, A2, A3, B1, B2, B3, C1, C2, C3 }, ">3")',
 
         D1: 'y',
         D3: 'YES',

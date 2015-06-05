@@ -84,32 +84,25 @@
     function forIFS(args, f) {
         var chunks = [], nrows, ncols, i = 0;
         while (i < args.length) {
-            var range = args[i++];
+            var matrix = this.asMatrix(args[i++]);
             var crit = args[i++];
-            if (!range || !crit) {
+            if (!matrix || !crit) {
                 return this.error(new CalcError("N/A"));
             }
-            if (!(range instanceof RangeRef)) {
-                return this.error(new CalcError("REF"));
-            }
             if (nrows == null) {
-                ncols = range.width();
-                nrows = range.height();
+                ncols = matrix.width;
+                nrows = matrix.height;
             } else {
-                if (range.width() != ncols || range.height() != nrows) {
+                if (matrix.width != ncols || matrix.height != nrows) {
                     return this.error(new CalcError("REF"));
                 }
             }
-            chunks.push({
-                matrix: this.rangeToMatrix(range),
-                pred: parseComparator(crit)
-            });
+            chunks.push({ matrix: matrix, pred: parseComparator(crit) });
         }
         ROW: for (var row = 0; row < nrows; ++row) {
             COL: for (var col = 0; col < ncols; ++col) {
                 for (i = 0; i < chunks.length; ++i) {
-                    var cell = chunks[i].matrix.get(row, col);
-                    var val = cell.value;
+                    var val = chunks[i].matrix.get(row, col);
                     if (!chunks[i].pred(val == null || val === "" ? 0 : val)) {
                         continue COL;
                     }
@@ -137,9 +130,9 @@
         var sum = 0;
         var error = forIFS.call(this, args, function(chunks, row, col){
             // range to sum up is the first argument, hence chunks[0]
-            var cell = chunks[0].matrix.get(row, col);
-            if (cell.value) {
-                sum += cell.value;
+            var val = chunks[0].matrix.get(row, col);
+            if (val) {
+                sum += val;
             }
         });
         callback(sum);
@@ -150,8 +143,7 @@
         args.splice(1, 0, numericPredicate);
         var sum = 0, count = 0;
         var error = forIFS.call(this, args, function(chunks, row, col){
-            var cell = chunks[0].matrix.get(row, col);
-            var val = cell.value;
+            var val = chunks[0].matrix.get(row, col);
             if (val == null || val === "") {
                 val = 0;
             }
