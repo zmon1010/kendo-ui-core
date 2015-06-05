@@ -165,10 +165,29 @@
                     exp: parseExpression(commas)
                 };
             }
+            else if (is("punc", "{")) {
+                input.next();
+                exp = parseArray();
+            }
             else {
                 input.croak("Parse error");
             }
             return maybeCall(exp);
+        }
+
+        function parseArray() {
+            var value = [];
+            while (!input.eof() && !is("punc", "}")) {
+                if (value.length) {
+                    skip("op", ",");
+                }
+                value.push(parseExpression(false));
+            }
+            skip("punc", "}");
+            return {
+                type: "array",
+                value: value
+            };
         }
 
         function maybeIntersect(exp, commas) {
@@ -354,7 +373,12 @@
                        }).join(" + ', ' + ")
                        : "''")
                     + " + ')'";
+              case "array":
+                return "'{ ' + " + node.value.map(function(el){
+                    return print(el, 0);
+                }).join(" + ', ' + ") + "+ ' }'";
             }
+            throw new Error("Cannot make printer for node " + node.type);
         }
         function withParens(op, prec, f) {
             var needParens = (OPERATORS[op] < prec || (!prec && op == ","));
@@ -382,6 +406,7 @@
               case "binary"  : return cpsBinary(node, k);
               case "call"    : return cpsCall(node, k);
               case "lambda"  : return cpsLambda(node, k);
+              case "array"   : return cpsArray(node, k);
             }
             throw new Error("Cannot CPS " + node.type);
         }
@@ -549,6 +574,23 @@
             }, k);
         }
 
+        function cpsArray(node, k) {
+            var a = [];
+            return (function loop(i){
+                if (i == node.value.length) {
+                    return k({
+                        type: "array",
+                        value: a
+                    });
+                } else {
+                    return cps(node.value[i], function(val){
+                        a[i] = val;
+                        return loop(i + 1);
+                    });
+                }
+            })(0);
+        }
+
         function makeContinuation(k) {
             var cont = gensym("R");
             return {
@@ -643,6 +685,9 @@
             }
             else if (type == "var") {
                 return node.name;
+            }
+            else if (type == "array") {
+                return "[ " + node.value.map(js).join(", ") + " ]";
             }
             else {
                 throw new Error("Cannot compile expression " + type);

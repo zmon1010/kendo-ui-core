@@ -527,6 +527,8 @@ fillElements({
         D15: '=counta(A:C)',
         D16: '=count(A:C)',
         D17: '=countunique(A:C)',
+        D18: '=countunique({ 1, 2, 3, A1, A2, A3, A1:A3 })',
+        D19: '=countunique(1, 2, 3, A1, A2, A3, A1:A3)',
 
         D1: 'y',
         D3: 'YES',

@@ -110,8 +110,10 @@
                 var val = a[i];
                 if (val instanceof Ref) {
                     val = this.ss.getData(val);
+                    ret = ret.concat(val);
+                } else {
+                    ret.push(val);
                 }
-                ret = ret.concat(val);
             }
             if (f) {
                 return f.apply(this, ret);
