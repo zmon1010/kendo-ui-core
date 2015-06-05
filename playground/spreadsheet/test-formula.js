@@ -126,13 +126,13 @@ Spreadsheet.prototype = {
     setInputData: function(sheet, row, col, data) {
         var self = this;
         self._deleteCell(sheet, row, col);
-        var cell = self._getCell(sheet, row, col, true);
-        if (!/\S/.test(data)) {
+        if (data === "") {
             return {
                 type: "str",
                 display: ""
             };
         }
+        var cell = self._getCell(sheet, row, col, true);
         cell.input = data;
         // try {
         var x = calc.parse(sheet, row, col, data), display = x.value;
@@ -524,6 +524,9 @@ fillElements({
         D12: '=sumif(A1:C3, ">5", A1:C3)',
         D13: '=sumif(A1:C3, ">5")',
         D14: '=sumif(D1:F3, "y*", A1:C3)',
+        D15: '=counta(A:C)',
+        D16: '=count(A:C)',
+        D17: '=countunique(A:C)',
 
         D1: 'y',
         D3: 'YES',

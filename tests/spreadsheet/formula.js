@@ -632,6 +632,22 @@
         });
     });
 
+    test("COUNT, COUNTA, COUNTUNIQUE", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: 1, B1: 2, C1: 1,
+            A2: "x", B2: "", C2: "'",
+            A4: "=count(A1:D2)",
+            A5: "=counta(A1:D2)",
+            A6: "=countunique(A1:D2)",
+        });
+        ss.recalculate(function(){
+            equal(ss.$("A4"), 3);
+            equal(ss.$("A5"), 6);
+            equal(ss.$("A6"), 4);
+        });
+    });
+
     test("SUMIFS, COUNTIFS, AVERAGEIFS", function(){
         var ss = new Spreadsheet();
         ss.fill({

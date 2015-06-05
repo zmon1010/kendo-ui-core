@@ -41,22 +41,25 @@
     });
 
     defineFunction("counta", function(callback, args){
+        callback(this.cellValues(args).length);
+    });
+
+    defineFunction("count", function(callback, args){
         var count = 0;
         this.cellValues(args).forEach(function(val){
-            if (val != null && val !== "") {
+            if (typeof val == "number" || val instanceof Date) {
                 count++;
             }
         });
         callback(count);
     });
 
-    defineFunction("count", function(callback, args){
-        var count = 0;
+    defineFunction("countunique", function(callback, args){
+        var count = 0, seen = [];
         this.cellValues(args).forEach(function(val){
-            if (val != null) {
-                if (typeof val == "number" || val instanceof Date || !isNaN(parseFloat(val))) {
-                    count++;
-                }
+            if (seen.indexOf(val) < 0) {
+                count++;
+                seen.push(val);
             }
         });
         callback(count);
@@ -65,7 +68,7 @@
     defineFunction("countblank", function(callback, args){
         var count = 0;
         this.cellValues(args).forEach(function(val){
-            if (val == null || val === "") {
+            if (val === "") {
                 count++;
             }
         });
