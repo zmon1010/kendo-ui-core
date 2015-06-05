@@ -627,4 +627,44 @@
         });
     });
 
+    test("SUMIFS, COUNTIFS, AVERAGEIFS", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: 1, B1: 2, C1: 3, D1: 'ya', E1: 'n', F1: 'y',
+            A2: 4, B2: 5, C2: 6, D2: 'no', E2: 'y', F2: 'n',
+            A3: 7, B3: 8, C3: 9, D3: 'ye', E3: 'n', F3: 'y',
+
+            A5: '=sumif(a1:c3, ">3")',
+            A6: '=sumif(d1:f3, "y", a1:c3)',
+            A7: '=sumif(d1:f3, "y*", a1:c3)',
+            A8: '=sumifs(a1:c3, a1:c3, ">3", a1:c3, "<7")',
+
+            B5: '=countif(a1:c3, ">3")',
+            B6: '=countif(d1:f3, "y")',
+            B7: '=countif(d1:f3, "y*")',
+            B8: '=countifs(a1:c3, ">3", a1:c3, "<7")',
+
+            C5: '=averageif(a1:c3, ">3")',
+            C6: '=averageif(d1:f3, "y", a1:c3)',
+            C7: '=averageif(d1:f3, "y*", a1:c3)',
+            C8: '=averageifs(a1:c3, a1:c3, ">3", a1:c3, "<7")',
+        });
+        ss.recalculate(function(){
+            equal(ss.getData(ss.makeRef("A5")), 4+5+6+7+8+9);
+            equal(ss.getData(ss.makeRef("A6")), 3+5+9);
+            equal(ss.getData(ss.makeRef("A7")), 1+3+5+7+9);
+            equal(ss.getData(ss.makeRef("A8")), 4+5+6);
+
+            equal(ss.getData(ss.makeRef("B5")), 6);
+            equal(ss.getData(ss.makeRef("B6")), 3);
+            equal(ss.getData(ss.makeRef("B7")), 5);
+            equal(ss.getData(ss.makeRef("B8")), 3);
+
+            equal(ss.getData(ss.makeRef("C5")), (4+5+6+7+8+9)/6);
+            equal(ss.getData(ss.makeRef("C6")), (3+5+9)/3);
+            equal(ss.getData(ss.makeRef("C7")), (1+3+5+7+9)/5);
+            equal(ss.getData(ss.makeRef("C8")), (4+5+6)/3);
+        });
+    });
+
 })();
