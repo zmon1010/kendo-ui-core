@@ -298,12 +298,14 @@
               case "isna":
                 return callback(val instanceof CalcError && val.code == "N/A");
               case "isnontext":
-                return callback(typeof val != "string");
+                return callback(typeof val != "string" || val === "");
               case "isref":
                 // apparently should return true only for cell and range
                 return callback(ret instanceof CellRef || ret instanceof RangeRef);
               case "istext":
-                return callback(typeof val == "string");
+                return callback(typeof val == "string" && val !== "");
+              case "isnumber":
+                return callback(typeof val == "number");
             }
             this.error("CATCH");
         };
