@@ -230,8 +230,22 @@
         this.divide(callback, sum, count);
     });
 
+    defineFunction("averagea", function(callback, args){
+        var sum = 0, count = 0;
+        this.cellValues(args).forEach(function(num){
+            if (typeof num != "string") {
+                sum += num;
+            }
+            ++count;
+        });
+        this.divide(callback, sum, count);
+    });
+
     // https://support.office.com/en-sg/article/AVEDEV-function-ec78fa01-4755-466c-9a2b-0c4f9eacaf6d
-    defineFunction("avgdev", function(callback, args){
+    defineFunction("avedev", function(callback, args){
+        if (args.length < 2) {
+            return this.error(new CalcError("NUM"));
+        }
         var sum = 0, numbers = [];
         this.forNumbers(args, function(num){
             sum += num;

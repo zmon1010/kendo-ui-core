@@ -493,15 +493,17 @@
         });
     });
 
-    test("average ignores non-numeric cells", function(){
+    test("AVERAGE and AVERAGEA", function(){
         var ss = new Spreadsheet();
         ss.fill({
             A1: 2, B1: "foo", C1: 3,
-            A2: "bar",
-            D1: "=average(A1:C3)"
+            A2: "bar", B2: "=true", C2: "=false",
+            D1: "=average(A1:C3)",
+            E1: "=averagea(A1:C3)",
         });
         ss.recalculate(function(){
-            equal(ss.getData(ss.makeRef("D1")), 2.5);
+            equal(ss.getData(ss.makeRef("D1")), (2+3)/2);
+            equal(ss.getData(ss.makeRef("E1")), (2+0+3+0+1+0)/6);
         });
     });
 
