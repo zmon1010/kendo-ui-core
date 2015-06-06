@@ -177,24 +177,44 @@
         },
 
         asMatrix: function(range) {
+            var self = this, width = 0;
             if (range instanceof RangeRef) {
                 var tl = range.topLeft;
-                var cells = this.ss.getRefCells(range);
+                var cells = self.ss.getRefCells(range);
                 var m = [];
                 cells.forEach(function(cell){
                     var row = cell.row - tl.row;
                     row = m[row] || (m[row] = []);
                     row[cell.col - tl.col] = cell.value;
                 });
-                return new Matrix(this, range.height(), range.width(), m);
+                return new Matrix(self, range.height(), range.width(), m);
             }
             if (Array.isArray(range) && range.length > 0) {
-                if (Array.isArray(range[0])) {
-                    return new Matrix(this, range.length, range[0].length, range);
+                range = resolveRefs(range, 0);
+                if (width > 0) {
+                    return new Matrix(self, range.length, width, range);
                 }
                 else {
-                    return new Matrix(this, 1, range.length, [ range ]);
+                    return new Matrix(self, 1, range.length, [ range ]);
                 }
+            }
+
+            function resolveRefs(a, level) {
+                if (level == 1) {
+                    width = Math.max(width, a.length);
+                }
+                return a.map(function(x){
+                    if (Array.isArray(x)) {
+                        return resolveRefs(x, level + 1);
+                    }
+                    if (x instanceof RangeRef || x instanceof UnionRef) {
+                        return resolveRefs(self.ss.getData(x), level + 1);
+                    }
+                    if (x instanceof Ref) {
+                        return self.ss.getData(x);
+                    }
+                    return x;
+                });
             }
         }
     });
