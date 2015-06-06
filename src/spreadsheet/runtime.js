@@ -355,60 +355,96 @@
 
     // spreadsheet functions --------
 
+    function arrayHandler1(func) {
+        return function doit(val) {
+            if (Array.isArray(val)) {
+                return val.map(doit);
+            }
+            return func(val);
+        };
+    }
+
+    function arrayHandler2(func) {
+        return function doit(left, right) {
+            if (Array.isArray(left) && Array.isArray(right)) {
+                return left.map(function(el, i){
+                    return doit(el, right[i]);
+                });
+            }
+            else if (Array.isArray(left)) {
+                return left.map(function(el){
+                    return doit(el, right);
+                });
+            }
+            else if (Array.isArray(right)) {
+                return right.map(function(el){
+                    return doit(left, el);
+                });
+            }
+            else {
+                return func(left, right);
+            }
+        };
+    }
+
     function binaryNumeric(func) {
+        var handler = arrayHandler2(function(left, right){
+            if (left == null) {
+                left = 0;
+            }
+            if (right == null) {
+                right = 0;
+            }
+            if (typeof left == "number" && typeof right == "number") {
+                return func(left, right);
+            }
+            else {
+                return new CalcError("VALUE");
+            }
+        });
         return function(callback, args) {
-            this.cellValues(args, function(left, right){
-                if (left == null) {
-                    left = 0;
-                }
-                if (right == null) {
-                    right = 0;
-                }
-                if (typeof left == "number" && typeof right == "number") {
-                    func.call(this, callback, left, right);
-                } else {
-                    this.error(new CalcError("VALUE"));
-                }
-            });
+            callback(this.cellValues(args, handler));
         };
     }
 
     function binaryCompare(func) {
+        var handler = arrayHandler2(function(left, right){
+            if (typeof left == "string" && typeof right != "string") {
+                right = right == null ? "" : right + "";
+            }
+            if (typeof left != "string" && typeof right == "string") {
+                left = left == null ? "" : left + "";
+            }
+            if (typeof left == "number" && right == null) {
+                right = 0;
+            }
+            if (typeof right == "number" && left == null) {
+                left = 0;
+            }
+            if (typeof right == typeof left) {
+                return func.call(this, left, right);
+            } else {
+                return new CalcError("VALUE");
+            }
+        });
         return function(callback, args) {
-            this.cellValues(args, function(left, right){
-                if (typeof left == "string" && typeof right != "string") {
-                    right = right == null ? "" : right + "";
-                }
-                if (typeof left != "string" && typeof right == "string") {
-                    left = left == null ? "" : left + "";
-                }
-                if (typeof left == "number" && right == null) {
-                    right = 0;
-                }
-                if (typeof right == "number" && left == null) {
-                    left = 0;
-                }
-                if (typeof right == typeof left) {
-                    callback(func.call(this, left, right));
-                } else {
-                    this.error(new CalcError("VALUE"));
-                }
-            });
+            callback(this.cellValues(args, handler));
         };
     }
 
     function unaryNumeric(func) {
+        var handler = arrayHandler1(function(exp){
+            if (exp == null) {
+                exp = 0;
+            }
+            if (typeof exp == "number") {
+                return func.call(this, exp);
+            } else {
+                return new CalcError("VALUE");
+            }
+        });
         return function(callback, args) {
-            this.cellValues(args, function(exp){
-                if (exp == null) {
-                    exp = 0;
-                }
-                if (typeof exp == "number") {
-                    callback(func.call(this, exp));
-                } else {
-                    this.error(new CalcError("VALUE"));
-                }
-            });
+            callback(this.cellValues(args, handler));
         };
     }
 
@@ -417,40 +453,54 @@
         /* -----[ binary ops ]----- */
 
         // arithmetic
-        "binary+": binaryNumeric(function(callback, left, right){
-            callback(left + right);
+        "binary+": binaryNumeric(function(left, right){
+            return left + right;
         }),
-        "binary-": binaryNumeric(function(callback, left, right){
-            callback(left - right);
+        "binary-": binaryNumeric(function(left, right){
+            return left - right;
         }),
-        "binary*": binaryNumeric(function(callback, left, right){
-            callback(left * right);
+        "binary*": binaryNumeric(function(left, right){
+            return left * right;
         }),
-        "binary/": binaryNumeric(Context.prototype.divide),
-        "binary^": binaryNumeric(function(callback, left, right){
-            callback(Math.pow(left, right));
+        "binary/": binaryNumeric(function(left, right){
+            if (right === 0) {
+                return new CalcError("DIV/0");
+            }
+            return left / right;
+        }),
+        "binary^": binaryNumeric(function(left, right){
+            return Math.pow(left, right);
         }),
 
         // text concat
-        "binary&": function(callback, args) {
-            this.cellValues(args, function(left, right){
+        "binary&": (function(){
+            var handler = arrayHandler2(function(left, right){
                 if (left == null) { left = ""; }
                 if (right == null) { right = ""; }
-                callback("" + left + right);
+                return "" + left + right;
             });
-        },
+            return function(callback, args) {
+                callback(this.cellValues(args, handler));
+            };
+        })(),
 
         // boolean
-        "binary=": function(callback, args) {
-            this.cellValues(args, function(left, right){
-                callback(left === right);
+        "binary=": (function(){
+            var handler = arrayHandler2(function(left, right){
+                return left === right;
             });
-        },
-        "binary<>": function(callback, args) {
-            this.cellValues(args, function(left, right){
-                callback(left !== right);
+            return function(callback, args) {
+                callback(this.cellValues(args, handler));
+            };
+        })(),
+        "binary<>": (function(){
+            var handler = arrayHandler2(function(left, right){
+                return left !== right;
             });
-        },
+            return function(callback, args) {
+                callback(this.cellValues(args, handler));
+            };
+        })(),
         "binary<": binaryCompare(function(left, right){
             return left < right;
         }),
