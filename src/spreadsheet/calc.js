@@ -660,10 +660,9 @@
                 return "context.resolve(" + js(node.value) + ")";
             }
             else if (type == "call") {
-                return "context.func(" + JSON.stringify(node.func)
-                    + node.args.map(function(arg){
-                        return ", " + js(arg);
-                    }).join("")
+                return "context.func(" + JSON.stringify(node.func) + ", "
+                    + js(node.args[0]) + ", " // the callback
+                    + jsArray(node.args.slice(1)) // the arguments
                     + ")";
             }
             else if (type == "ref") {
@@ -687,11 +686,15 @@
                 return node.name;
             }
             else if (type == "array") {
-                return "[ " + node.value.map(js).join(", ") + " ]";
+                return jsArray(node.value);
             }
             else {
                 throw new Error("Cannot compile expression " + type);
             }
+        }
+
+        function jsArray(a) {
+            return "[ " + a.map(js).join(", ") + " ]";
         }
     }
 

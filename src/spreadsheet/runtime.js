@@ -135,16 +135,7 @@
             }
         },
 
-        func: function(fname, callback) {
-            var args = slice(arguments, 2);
-            fname = fname.toLowerCase();
-            if (Object.prototype.hasOwnProperty.call(FUNCS, fname)) {
-                return FUNCS[fname].call(this, callback, args);
-            }
-            this.error(new CalcError("NAME"));
-        },
-
-        func2: function(fname, callback, args) {
+        func: function(fname, callback, args) {
             fname = fname.toLowerCase();
             if (Object.prototype.hasOwnProperty.call(FUNCS, fname)) {
                 return FUNCS[fname].call(this, callback, args);
@@ -339,19 +330,6 @@
             }
         }
     });
-
-    // utils ------------------------
-
-    function slice(a, i) {
-        if (i == null) {
-            i = 0;
-        }
-        var n = a.length, ret = new Array(n - i), j = 0;
-        while (i < n) {
-            ret[j++] = a[i++];
-        }
-        return ret;
-    }
 
     // spreadsheet functions --------
 

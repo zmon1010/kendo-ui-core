@@ -182,7 +182,7 @@
             } else {
                 args.unshift(args.pop());
             }
-            this.func2(fname2, callback, args);
+            this.func(fname2, callback, args);
         });
     });
 
