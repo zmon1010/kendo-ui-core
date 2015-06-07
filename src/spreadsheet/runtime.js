@@ -367,17 +367,13 @@
 
     function binaryNumeric(func) {
         var handler = arrayHandler2(function(left, right){
-            if (left == null) {
-                left = 0;
-            }
-            if (right == null) {
-                right = 0;
-            }
-            if (typeof left == "number" && typeof right == "number") {
-                return func(left, right);
+            left = +left;
+            right = +right;
+            if (isNaN(left) || isNaN(right)) {
+                return new CalcError("VALUE");
             }
             else {
-                return new CalcError("VALUE");
+                return func(left, right);
             }
         });
         return function(callback, args) {
@@ -412,13 +408,11 @@
 
     function unaryNumeric(func) {
         var handler = arrayHandler1(function(exp){
-            if (exp == null) {
-                exp = 0;
-            }
-            if (typeof exp == "number") {
-                return func.call(this, exp);
-            } else {
+            exp = +exp;
+            if (isNaN(exp)) {
                 return new CalcError("VALUE");
+            } else {
+                return func.call(this, exp);
             }
         });
         return function(callback, args) {
