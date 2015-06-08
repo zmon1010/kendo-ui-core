@@ -1,5 +1,5 @@
 ;(function($, kendo) {
-
+    /* global JSZip */
     var proxy = $.proxy,
         extend = $.extend,
         map = $.map,
@@ -228,6 +228,9 @@
                     } else {
                         return key + ": " + item.value + ";";
                     }
+                }).sort(function(a, b) {
+                    // sort imports to bottom
+                    return (/^@import/).test(a) ? 1 : a < b ? -1 : 0;
                 }).join("\n");
             },
 
@@ -410,6 +413,16 @@
                 });
             },
 
+            sources: function() {
+                var files = [ [ "kendo-theme.less", this.serialize() ] ];
+
+                this._generateTheme(function(less, css) {
+                    files.push([ "kendo-theme.css", css ]);
+                });
+
+                return files;
+            },
+
             clear: function(targetDocument) {
                 var style = $("style[title='themebuilder']", targetDocument.documentElement)[0];
 
@@ -478,8 +491,10 @@
 
             source: function(format, callback) {
                 var result = {},
-                    constant, constants = this.constants,
-                    value;
+                    constants = this.constants,
+                    constant, value;
+
+                callback = callback || $.noop;
 
                 for (constant in constants) {
                     value = constants[constant].value;
@@ -492,13 +507,21 @@
                 }
 
                 if (format == "string") {
-                    callback("// use as theme: 'newTheme'\n" +
-                           "kendo.dataviz.ui.registerTheme('newTheme', " +
-                           JSON.stringify(result, null, 4) +
-                           ");");
-                } else {
-                    callback(result);
+                    result =
+                        "// Kendo UI theme for data visualization widgets\n" +
+                        "// Use as theme: 'newTheme' in configuration options (or change the name)\n" +
+                        "kendo.dataviz.ui.registerTheme('newTheme', " +
+                            JSON.stringify(result, null, 4) +
+                        ");";
                 }
+
+                callback(result);
+
+                return result;
+            },
+
+            sources: function() {
+                return [ [ "kendo-theme.js", this.source("string") ] ];
             },
 
             applyTheme: function(targetDocument) {
@@ -585,6 +608,17 @@
                 for (var i = 0; i < this.length; i++) {
                     this[i].applyTheme(targetDocument);
                 }
+            },
+
+            toDataURL: function() {
+                var zip = new JSZip();
+                var addToZip = $.proxy(zip.file.apply, zip.file, zip);
+
+                for (var i = 0; i < this.length; i++) {
+                    $.map(this[i].sources(), addToZip);
+                }
+
+                return "data:application/zip;base64," + zip.generate({ compression: "DEFLATE" });
             }
         }),
 
@@ -758,6 +792,14 @@
 
             infer: function(doc) {
                 this.themes.infer(doc);
+            },
+
+            download: function() {
+                kendo.saveAs({
+                    dataURI: this.themes.toDataURL(),
+                    fileName: "kendo-theme.zip",
+                    proxyURL: "http://demos.telerik.com/kendo-ui/service/export"
+                });
             },
 
             render: function(webConstantsHierarchy, datavizConstantsHierarchy) {

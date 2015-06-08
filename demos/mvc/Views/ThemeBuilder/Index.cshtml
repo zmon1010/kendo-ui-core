@@ -78,6 +78,12 @@
             });
 
             window.themebuilder = themebuilder;
+
+            $("#download-theme").click(function(e) {
+                e.preventDefault();
+
+                window.themebuilder.download();
+            });
         });
     </script>
 </div>

@@ -19,6 +19,7 @@
         bootstrapCss = "styles/bootstrap.css",
         // </generated variables>
         theme = settings && settings.theme || "black",
+        JSZIP_LOCATION = KENDO_LOCATION + "js/jszip.min.js",
         KENDO_COMMON_CSS_LOCATION = KENDO_LOCATION + "styles/kendo.common-material.min.css",
         KENDO_THEME_CSS_LOCATION = KENDO_LOCATION + "styles/kendo." + theme + ".min.css",
         KENDO_ALL_LOCATION = KENDO_LOCATION + "js/kendo.all.min.js";
@@ -82,6 +83,10 @@
             this._instance().infer(document);
         },
 
+        download: function() {
+            this._instance().download();
+        },
+
         _createInterfaceFrame: function () {
             var iframe = jQuery('<iframe />', {
                     id: "ktb-interface",
@@ -110,6 +115,7 @@
                  }).join(""),
                  "</head><body>",
                  script(JQUERY_LOCATION),
+                 script(JSZIP_LOCATION),
                  script(KENDO_ALL_LOCATION),
                  map(requiredJs, function(scriptName) {
                      return script(applicationRoot + scriptName);
