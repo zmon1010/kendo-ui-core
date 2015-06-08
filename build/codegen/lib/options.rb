@@ -14,7 +14,13 @@ module CodeGen
                 all.concat(co.all_options)
             end
 
-            all.sort {|a, b| a.full_name <=> b.full_name }
+            all.sort do |a, b|
+                if a.respond_to? 'full_name'
+                    a.full_name <=> b.full_name
+                else
+                    a.name <=> b.name
+                end
+            end
         end
 
         def composite_option_class
