@@ -1,4 +1,4 @@
-<div data-role="view" id="toolbar-mobile">
+<div data-role="view" id="toolbar-mobile" data-use-native-scrolling="true">
     <header data-role="header">
         <div data-role="toolbar" data-items='[
                         {
@@ -30,32 +30,32 @@
                     ]'>
         </div>
     </header>
-    
+
     <div class="mail-content">
         <h2>RE: New "Your Links" menu</h2>
         <h3>From: John Doe</h3>
         <p>Excellent feature! Except that I instantly imagined that this would be how I keep track of all those demo pages that I wanted to re-visit or remember existed. Any chance you could include the bookmark feature on the demo pages?</p>
     </div>
-    
+
     <ul data-role="actionsheet" id="flags">
         <li class="km-actionsheet-title">Flag</li>
         <li><a href="#">Flag</a></li>
         <li><a href="#">Mark as Unread</a></li>
         <li><a href="#">Move to Junk</a></li>
     </ul>
-    
+
     <ul data-role="actionsheet" id="reply-options">
         <li class="km-actionsheet-title">Reply</li>
         <li><a href="#">Reply</a></li>
         <li><a href="#">Reply to All</a></li>
         <li><a href="#">Forward</a></li>
     </ul>
-    
+
     <ul data-role="actionsheet" id="delete-confirm">
         <li class="km-actionsheet-title">Delete</li>
         <li><a href="#">Delete</a></li>
     </ul>
-    
+
     <footer data-role="footer">
         <div data-role="tabstrip">
             <a data-role="button" data-icon="home" data-badge="18">Inbox</a>
@@ -84,13 +84,13 @@
     {
         font-size: 1em;
     }
-    
+
     .km-previous:after,
     .km-previous:before
     {
         content: "\e011";
     }
-    
+
     .km-next:after,
     .km-next:before
     {

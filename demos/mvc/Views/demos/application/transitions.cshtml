@@ -1,10 +1,10 @@
-<div data-role="view" data-title="Camera App" id="view-transitions" data-persist="true">
+<div data-role="view" data-title="Camera App" id="view-transitions" data-persist="true" data-use-native-scrolling="true">
     <img src="../content/mobile/shared/color-lens.png" class="camera-image" />
 
     <a href="#view-transitions-login" class="km-justified km-primary" data-role="button" class="transitions-button">Login/Sign-up</a>
 </div>
 
-<div data-role="view" data-title="Login/Sign-up" id="view-transitions-login" data-transition="overlay:up" data-persist="true">
+<div data-role="view" data-title="Login/Sign-up" id="view-transitions-login" data-transition="overlay:up" data-persist="true" data-use-native-scrolling="true">
     <ul data-role="listview" data-style="inset">
         <li><label for="username">Username: <input type="text" id="username" /></label></li>
         <li><label for="password">Password: <input type="password" id="password" /></label></li>
@@ -14,7 +14,7 @@
     <a href="#view-transitions" data-transition="overlay:up reverse" data-role="button" class="km-justified transitions-cancel">Cancel</a>
 </div>
 
-<div data-role="view" data-title="Welcome" id="view-transitions-welcome" data-persist="true">
+<div data-role="view" data-title="Welcome" id="view-transitions-welcome" data-persist="true" data-use-native-scrolling="true">
     <img src="../content/mobile/modalview/lens.png" class="camera-image" />
     <a data-role="button" class="km-justified" href="#view-transitions" data-transition="slide:right" class="transitions-button">Sign out</a>
 </div>

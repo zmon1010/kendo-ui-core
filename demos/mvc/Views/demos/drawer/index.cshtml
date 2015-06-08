@@ -1,4 +1,4 @@
-<div data-role="view" id="drawer-home" data-layout="drawer-layout" data-title="Inbox">
+<div data-role="view" id="drawer-home" data-layout="drawer-layout" data-title="Inbox" data-use-native-scrolling="true">
     <ul data-role="listview" class="inboxList">
         <li>
             <h3 class="time">07:56</h3><h3>John Doe</h3>
@@ -33,7 +33,7 @@
     </ul>
 </div>
 
-<div data-role="view" id="drawer-starred" data-layout="drawer-layout" data-title="Starred Items">
+<div data-role="view" id="drawer-starred" data-layout="drawer-layout" data-title="Starred Items" data-use-native-scrolling="true">
     <ul data-role="listview">
         <li data-icon="star">Monday meeting</li>
         <li data-icon="star">Regarding org chart changes</li>
@@ -43,7 +43,7 @@
     </ul>
 </div>
 
-<div data-role="view" id="drawer-drafts" data-layout="drawer-layout" data-title="Drafts">
+<div data-role="view" id="drawer-drafts" data-layout="drawer-layout" data-title="Drafts" data-use-native-scrolling="true">
     <ul data-role="listview">
         <li data-icon="compose">Re: Monday meeting</li>
         <li data-icon="compose">Untitled message 1</li>
@@ -56,7 +56,7 @@
     </ul>
 </div>
 
-<div data-role="view" id="drawer-sent" data-layout="drawer-layout" data-title="Sent Items">
+<div data-role="view" id="drawer-sent" data-layout="drawer-layout" data-title="Sent Items" data-use-native-scrolling="true">
     <ul data-role="listview">
         <li>Build enterprise apps</li>
         <li>Fw: Regarding Multiline textbox</li>
@@ -71,14 +71,14 @@
     </ul>
 </div>
 
-<div data-role="view" id="drawer-deleted" data-layout="drawer-layout" data-title="Deleted Items">
+<div data-role="view" id="drawer-deleted" data-layout="drawer-layout" data-title="Deleted Items" data-use-native-scrolling="true">
     <ul data-role="listview">
         <li data-icon="trash">Untitled message 4</li>
         <li data-icon="trash">Untitled message 5</li>
     </ul>
 </div>
 
-<div data-role="view" id="drawer-spam" data-layout="drawer-layout" data-title="Spam">
+<div data-role="view" id="drawer-spam" data-layout="drawer-layout" data-title="Spam" data-use-native-scrolling="true">
     <ul data-role="listview">
         <li>90% Discount!</li>
         <li>90% Discount!</li>
@@ -87,7 +87,7 @@
     <a data-role="button" class="spam">Delete Spam</a>
 </div>
 
-<div data-role="drawer" id="my-drawer" style="width: 410px" data-views="['drawer-home', 'drawer-starred', 'drawer-deleted', 'drawer-spam', 'drawer-drafts', 'drawer-sent', '@Url.Content("~/mobile/m/drawer/index.html")']">
+<div data-role="drawer" id="my-drawer" style="width: 410px" data-views="['drawer-home', 'drawer-starred', 'drawer-deleted', 'drawer-spam', 'drawer-drafts', 'drawer-sent', '@Url.Content("~/mobile/m/drawer/index.html")']" data-use-native-scrolling="true">
     <ul data-role="listview" class="km-listview-icons">
         <li data-icon="inbox"><a href="#drawer-home" data-transition="none">Inbox</a></li>
         <li data-icon="star"><a href="#drawer-starred" data-transition="none">Starred Items</a></li>
