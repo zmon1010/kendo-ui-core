@@ -47,6 +47,15 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
+    * If set to true the widget will auto-scroll the containing element when the mouse/finger is close to the top/bottom of it.
+    * @param boolean $value
+    * @return \Kendo\UI\TreeView
+    */
+    public function autoScroll($value) {
+        return $this->setProperty('autoScroll', $value);
+    }
+
+    /**
     * If true or an object, renders checkboxes beside each node.
     * @param boolean|\Kendo\UI\TreeViewCheckboxes|array $value
     * @return \Kendo\UI\TreeView
@@ -114,7 +123,6 @@ If an array, each level uses the field that is at the same index in the array, o
     /**
     * Indicates whether the child DataSources should be fetched lazily when parent groups get expanded.
 Setting this to false causes all child DataSources to be loaded at initialization time.
-Note: when initializing the widget from an array (rather than from a HierarchicalDataSource instance), this option defaults to false, rather than true.
     * @param boolean $value
     * @return \Kendo\UI\TreeView
     */

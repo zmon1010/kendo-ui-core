@@ -96,7 +96,7 @@ The supported filter values are startswith, endswith and contains.
 
     /**
     * Sets the fixedGroupTemplate option of the MultiSelect.
-    * The template used to render the fixed header group. By default the widget displays only the value of the group.
+    * The template used to render the fixed header group. By default the widget displays only the value of the current group.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\MultiSelect
     */
@@ -108,7 +108,7 @@ The supported filter values are startswith, endswith and contains.
 
     /**
     * Sets the fixedGroupTemplate option of the MultiSelect.
-    * The template used to render the fixed header group. By default the widget displays only the value of the group.
+    * The template used to render the fixed header group. By default the widget displays only the value of the current group.
     * @param string $value The template content.
     * @return \Kendo\UI\MultiSelect
     */

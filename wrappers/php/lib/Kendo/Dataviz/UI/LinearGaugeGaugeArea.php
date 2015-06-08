@@ -36,7 +36,7 @@ the horizontal one is 60px.
 
     /**
     * The margin of the gauge area.
-    * @param float| $value
+    * @param float|\Kendo\Dataviz\UI\LinearGaugeGaugeAreaMargin|array $value
     * @return \Kendo\Dataviz\UI\LinearGaugeGaugeArea
     */
     public function margin($value) {

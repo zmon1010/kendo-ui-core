@@ -559,7 +559,7 @@ That way all users would see the same dates and times no matter their configured
 
     /**
     * Sets the remove event of the Scheduler.
-    * Fired when the user clicks the "destroy" button.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the user performs "destroy" action.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Scheduler
     */

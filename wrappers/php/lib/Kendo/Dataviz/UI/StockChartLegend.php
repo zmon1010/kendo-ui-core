@@ -24,6 +24,15 @@ class StockChartLegend extends \Kendo\SerializableObject {
     }
 
     /**
+    * The chart legend item configuration.
+    * @param \Kendo\Dataviz\UI\StockChartLegendItem|array $value
+    * @return \Kendo\Dataviz\UI\StockChartLegend
+    */
+    public function item($value) {
+        return $this->setProperty('item', $value);
+    }
+
+    /**
     * Configures the legend labels.
     * @param \Kendo\Dataviz\UI\StockChartLegendLabels|array $value
     * @return \Kendo\Dataviz\UI\StockChartLegend

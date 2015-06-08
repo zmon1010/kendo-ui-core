@@ -54,7 +54,7 @@ Any valid CSS color string will work here, including hex and rgb.
 
     /**
     * The margin of the labels.
-    * @param float| $value
+    * @param float|\Kendo\Dataviz\UI\LinearGaugeScaleLabelsMargin|array $value
     * @return \Kendo\Dataviz\UI\LinearGaugeScaleLabels
     */
     public function margin($value) {
@@ -63,7 +63,7 @@ Any valid CSS color string will work here, including hex and rgb.
 
     /**
     * The padding of the labels.
-    * @param float| $value
+    * @param float|\Kendo\Dataviz\UI\LinearGaugeScaleLabelsPadding|array $value
     * @return \Kendo\Dataviz\UI\LinearGaugeScaleLabels
     */
     public function padding($value) {

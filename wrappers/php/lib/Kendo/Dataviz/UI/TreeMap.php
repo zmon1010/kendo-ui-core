@@ -86,7 +86,7 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
-    * The default colors for the treemap tiles. When all colors are used, new colors are pulled from the start again.
+    * The default colors for the treemap tiles. When all colors are used, new colors are pulled from the start again. Can be set to array of specific colors or array of color ranges.
     * @param array $value
     * @return \Kendo\Dataviz\UI\TreeMap
     */

@@ -27,6 +27,15 @@ class PagerMessages extends \Kendo\SerializableObject {
     }
 
     /**
+    * The text displayed for the item that represents the allPages option when allPages is enabled.
+    * @param string $value
+    * @return \Kendo\UI\PagerMessages
+    */
+    public function allPages($value) {
+        return $this->setProperty('allPages', $value);
+    }
+
+    /**
     * The label displayed before the pager input.
     * @param string $value
     * @return \Kendo\UI\PagerMessages

@@ -14,6 +14,15 @@ class GridMessages extends \Kendo\SerializableObject {
         return $this->setProperty('commands', $value);
     }
 
+    /**
+    * Defines the text of the "noRecords" option that is rendered when no records are available in current view. The "noRecords" options should be set to true.
+    * @param string $value
+    * @return \Kendo\UI\GridMessages
+    */
+    public function noRecords($value) {
+        return $this->setProperty('noRecords', $value);
+    }
+
 //<< Properties
 }
 

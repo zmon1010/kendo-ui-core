@@ -139,6 +139,15 @@ The grid uses same layout for both phone and tablet.
     }
 
     /**
+    * If set to true and current view contains no records, message similar to "No records available" will be displayed. By default this option is disabled.
+    * @param boolean|\Kendo\UI\GridNoRecords|array $value
+    * @return \Kendo\UI\Grid
+    */
+    public function noRecords($value) {
+        return $this->setProperty('noRecords', $value);
+    }
+
+    /**
     * If set to true the grid will display a pager. By default paging is disabled.Can be set to a JavaScript object which represents the pager configuration.
     * @param boolean|\Kendo\UI\GridPageable|array $value
     * @return \Kendo\UI\Grid
@@ -166,7 +175,8 @@ The grid uses same layout for both phone and tablet.
     }
 
     /**
-    * If set to true the user could resize the columns by dragging the edges of their header cells. By default resizing is disabled.
+    * If set to true, users can resize columns by dragging the edges (resize handles) of their header cells. As of Kendo UI Q1 2015, users can also auto-fit a column by double-clicking
+its resize handle. In this case the column will assume the smallest possible width, which allows the column content to fit without wrapping.By default, column resizing is disabled.
     * @param boolean $value
     * @return \Kendo\UI\Grid
     */
@@ -488,7 +498,7 @@ The grid uses same layout for both phone and tablet.
 
     /**
     * Sets the filterMenuInit event of the Grid.
-    * Fired when the grid filter menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * Fired when the grid filter menu is initialized, when it is opened for the first time.The event handler function context (available via the this keyword) will be set to the widget instance.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\Grid
     */

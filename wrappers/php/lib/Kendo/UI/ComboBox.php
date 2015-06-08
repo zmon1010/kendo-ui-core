@@ -108,7 +108,7 @@ The supported filter values are startswith, endswith and contains.
 
     /**
     * Sets the fixedGroupTemplate option of the ComboBox.
-    * The template used to render the fixed header group. By default the widget displays only the value of the group.
+    * The template used to render the fixed header group. By default the widget displays only the value of the current group.
     * @param string $value The id of the element which represents the kendo template.
     * @return \Kendo\UI\ComboBox
     */
@@ -120,7 +120,7 @@ The supported filter values are startswith, endswith and contains.
 
     /**
     * Sets the fixedGroupTemplate option of the ComboBox.
-    * The template used to render the fixed header group. By default the widget displays only the value of the group.
+    * The template used to render the fixed header group. By default the widget displays only the value of the current group.
     * @param string $value The template content.
     * @return \Kendo\UI\ComboBox
     */
@@ -365,7 +365,7 @@ The supported filter values are startswith, endswith and contains.
 
     /**
     * Sets the select event of the ComboBox.
-    * Fired when an item from the popup is selected by the user.
+    * Fired when an item from the popup is selected by the user either with mouse/tap or with keyboard navigation.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\ComboBox
     */

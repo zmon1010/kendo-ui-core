@@ -59,7 +59,7 @@ false for this, the widget will update only when ENTER is pressed.
 
     /**
     * Allows customization of "Apply" / "Cancel" labels.
-    * @param  $value
+    * @param \Kendo\UI\FlatColorPickerMessages|array $value
     * @return \Kendo\UI\FlatColorPicker
     */
     public function messages($value) {

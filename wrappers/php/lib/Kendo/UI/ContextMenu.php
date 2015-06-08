@@ -63,7 +63,7 @@ Refer to the example below for a list of the supported properties.
     }
 
     /**
-    * Specifies ContextMenu sub menu opening direction. Can be "top", "bottom", "left", "right".
+    * Specifies ContextMenu's sub menu opening direction. Can be "top", "bottom", "left", "right".
 The example below will initialize the sub menus to open to the left.
     * @param string $value
     * @return \Kendo\UI\ContextMenu

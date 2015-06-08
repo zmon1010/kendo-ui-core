@@ -180,7 +180,7 @@ A fade animation is highly recommended with any of the non-default tab position 
 
     /**
     * Sets the activate event of the TabStrip.
-    * Triggered after a tab is being made visible and its animation complete. Before Q2 2014 this event was invoked after tab show, but before the end of the animation.
+    * Triggered after a tab is being made visible and its animation complete. Before Q2 2014 this event was invoked after tab show, but before the end of the animation. This event is triggered only for tabs with associated content.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
     * @return \Kendo\UI\TabStrip
     */

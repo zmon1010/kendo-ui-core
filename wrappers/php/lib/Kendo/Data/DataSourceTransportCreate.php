@@ -26,7 +26,8 @@ Refer to the jQuery.ajax documentation for further info.
     }
 
     /**
-    * Additional parameters which are sent to the remote service.Refer to the jQuery.ajax documentation for further info.
+    * Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
+sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.
     * @param |\Kendo\JavaScriptFunction $value
     * @return \Kendo\Data\DataSourceTransportCreate
     */

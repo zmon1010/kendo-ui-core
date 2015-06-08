@@ -14,6 +14,15 @@ class TreeListFilterable extends \Kendo\SerializableObject {
         return $this->setProperty('extra', $value);
     }
 
+    /**
+    * The text messages displayed in the filter menu. Use it to customize or localize the filter menu messages.
+    * @param \Kendo\UI\TreeListFilterableMessages|array $value
+    * @return \Kendo\UI\TreeListFilterable
+    */
+    public function messages($value) {
+        return $this->setProperty('messages', $value);
+    }
+
 //<< Properties
 }
 

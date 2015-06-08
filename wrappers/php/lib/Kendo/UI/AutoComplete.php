@@ -68,6 +68,50 @@ all data items which begin with the current widget value are displayed in the su
     }
 
     /**
+    * Sets the fixedGroupTemplate option of the AutoComplete.
+    * The template used to render the fixed header group. By default the widget displays only the value of the current group.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\AutoComplete
+    */
+    public function fixedGroupTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('fixedGroupTemplate', $value);
+    }
+
+    /**
+    * Sets the fixedGroupTemplate option of the AutoComplete.
+    * The template used to render the fixed header group. By default the widget displays only the value of the current group.
+    * @param string $value The template content.
+    * @return \Kendo\UI\AutoComplete
+    */
+    public function fixedGroupTemplate($value) {
+        return $this->setProperty('fixedGroupTemplate', $value);
+    }
+
+    /**
+    * Sets the groupTemplate option of the AutoComplete.
+    * The template used to render the groups. By default the widget displays only the value of the group.
+    * @param string $value The id of the element which represents the kendo template.
+    * @return \Kendo\UI\AutoComplete
+    */
+    public function groupTemplateId($value) {
+        $value = new \Kendo\Template($value);
+
+        return $this->setProperty('groupTemplate', $value);
+    }
+
+    /**
+    * Sets the groupTemplate option of the AutoComplete.
+    * The template used to render the groups. By default the widget displays only the value of the group.
+    * @param string $value The template content.
+    * @return \Kendo\UI\AutoComplete
+    */
+    public function groupTemplate($value) {
+        return $this->setProperty('groupTemplate', $value);
+    }
+
+    /**
     * The height of the suggestion popup in pixels. The default value is 200 pixels.
     * @param float $value
     * @return \Kendo\UI\AutoComplete

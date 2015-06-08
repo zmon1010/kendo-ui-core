@@ -6,7 +6,7 @@ class DataSourceTransport extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * The configuration used when the data source saves newly created data items. Those are items added to the data source via the add or insert methods.If the value of transport.create is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.create is a string the data source uses this string as the URL of the remote service.
+    * The configuration used when the data source saves newly created data items. Those are items added to the data source via the add or insert methods.If the value of transport.create is a function, the data source invokes that function instead of jQuery.ajax. Check the jQuery documentation for more details on the provided argument.If the value of transport.create is a string the data source uses this string as the URL of the remote service.
     * @param string|\Kendo\JavaScriptFunction|\Kendo\Data\DataSourceTransportCreate|array $value
     * @return \Kendo\Data\DataSourceTransport
     */

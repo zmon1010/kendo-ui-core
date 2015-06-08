@@ -37,7 +37,7 @@ class Tooltip extends \Kendo\UI\Widget {
 //>> Properties
 
     /**
-    * Specifies if the tooltip will be hidden when mouse leaves the target element. If set to false a close button will be shown within tooltip. If set to false, showAfter is specified and the showOn is set to "mouseenter" the Tooltip will be displayed after the given timeout even if the element is no longer hovered.
+    * Specifies if the Tooltip will be hidden when mouse leaves the target element. If set to false a close button will be shown within Tooltip. If set to false, showAfter is specified and the showOn is set to "mouseenter" the Tooltip will be displayed after the given timeout even if the element is no longer hovered.
     * @param boolean $value
     * @return \Kendo\UI\Tooltip
     */
@@ -56,7 +56,7 @@ will disable all animations in the widget.
     }
 
     /**
-    * Specifies if the tooltip callout will be displayed.
+    * Specifies if the Tooltip callout will be displayed.
     * @param boolean $value
     * @return \Kendo\UI\Tooltip
     */
@@ -65,7 +65,7 @@ will disable all animations in the widget.
     }
 
     /**
-    * Specifies a selector for elements, within the container, for which the tooltip will be displayed.
+    * Specifies a selector for elements, within the container, for which the Tooltip will be displayed.
     * @param string $value
     * @return \Kendo\UI\Tooltip
     */
@@ -83,7 +83,7 @@ will disable all animations in the widget.
     }
 
     /**
-    * The height (in pixels) of the tooltip.
+    * The height (in pixels) of the Tooltip.
     * @param float $value
     * @return \Kendo\UI\Tooltip
     */
@@ -92,7 +92,7 @@ will disable all animations in the widget.
     }
 
     /**
-    * The width (in pixels) of the tooltip.
+    * The width (in pixels) of the Tooltip.
     * @param float $value
     * @return \Kendo\UI\Tooltip
     */
@@ -101,7 +101,7 @@ will disable all animations in the widget.
     }
 
     /**
-    * The position relative to the target element, at which the tooltip will be shown. Predefined values are "bottom", "top", "left", "right", "center".
+    * The position relative to the target element, at which the Tooltip will be shown. Predefined values are "bottom", "top", "left", "right", "center".
     * @param string $value
     * @return \Kendo\UI\Tooltip
     */
@@ -110,7 +110,7 @@ will disable all animations in the widget.
     }
 
     /**
-    * Specify the delay in milliseconds before the tooltip is shown. This option is ignored if showOn is set to "click" or "focus".
+    * Specify the delay in milliseconds before the Tooltip is shown. This option is ignored if showOn is set to "click" or "focus".
     * @param float $value
     * @return \Kendo\UI\Tooltip
     */
@@ -119,7 +119,7 @@ will disable all animations in the widget.
     }
 
     /**
-    * The event on which the tooltip will be shown. Predefined values are "mouseenter", "click" and "focus".
+    * The event on which the Tooltip will be shown. Predefined values are "mouseenter", "click" and "focus".
     * @param string $value
     * @return \Kendo\UI\Tooltip
     */

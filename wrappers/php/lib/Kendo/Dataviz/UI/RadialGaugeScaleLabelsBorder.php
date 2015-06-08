@@ -24,6 +24,15 @@ class RadialGaugeScaleLabelsBorder extends \Kendo\SerializableObject {
     }
 
     /**
+    * The opacity of the border. By default the border is opaque.
+    * @param float $value
+    * @return \Kendo\Dataviz\UI\RadialGaugeScaleLabelsBorder
+    */
+    public function opacity($value) {
+        return $this->setProperty('opacity', $value);
+    }
+
+    /**
     * The width of the border.
     * @param float $value
     * @return \Kendo\Dataviz\UI\RadialGaugeScaleLabelsBorder

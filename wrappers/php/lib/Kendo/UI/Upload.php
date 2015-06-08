@@ -39,12 +39,12 @@ Upload may be re-enabled via enable().
     }
 
     /**
-    * List of files to be initially rendered in the Upload widget files list.
-    * @param array $value
+    * Adds UploadFile to the Upload.
+    * @param \Kendo\UI\UploadFile|array,... $value one or more UploadFile to add.
     * @return \Kendo\UI\Upload
     */
-    public function files($value) {
-        return $this->setProperty('files', $value);
+    public function addFile($value) {
+        return $this->add('files', func_get_args());
     }
 
     /**

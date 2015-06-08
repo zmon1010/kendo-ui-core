@@ -16,7 +16,8 @@ class UploadAsync extends \Kendo\SerializableObject {
 
     /**
     * The selected files will be uploaded in separate requests, if this is supported by the browser.
-You can change this behavior by setting batch to true.
+You can change this behavior by setting batch to true.The batch mode applies to multiple files, which are selected at the same time.
+Files selected one after the other will be uploaded in separate requests.
     * @param boolean $value
     * @return \Kendo\UI\UploadAsync
     */

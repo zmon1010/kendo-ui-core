@@ -6,7 +6,7 @@ class TooltipAnimationClose extends \Kendo\SerializableObject {
 //>> Properties
 
     /**
-    * Effect to be used for closing of the tooltip.
+    * Effect to be used for closing of the Tooltip.
     * @param string $value
     * @return \Kendo\UI\TooltipAnimationClose
     */

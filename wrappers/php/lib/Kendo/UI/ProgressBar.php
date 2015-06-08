@@ -90,7 +90,7 @@ class ProgressBar extends \Kendo\UI\Widget {
     }
 
     /**
-    * The underlying value of the ProgressBar.
+    * The underlying value of the ProgressBar. It should be a number or false. Setting the value to false will set the state of the ProgressBar to indeterminate.
     * @param float $value
     * @return \Kendo\UI\ProgressBar
     */

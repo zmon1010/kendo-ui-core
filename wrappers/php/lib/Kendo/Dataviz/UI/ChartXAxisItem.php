@@ -147,7 +147,7 @@ If the xAxis.type is set to "log", the minorUnit value represents the number of 
 
     /**
     * The unique axis name. Used to associate a series with a x axis using the series.xAxis option.
-    * @param  $value
+    * @param string $value
     * @return \Kendo\Dataviz\UI\ChartXAxisItem
     */
     public function name($value) {
