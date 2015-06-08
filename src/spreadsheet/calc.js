@@ -176,16 +176,25 @@
         }
 
         function parseArray() {
-            var value = [];
+            var value = [], row = value, isMatrix = false, first = true;
             while (!input.eof() && !is("punc", "}")) {
-                if (value.length) {
+                if (first) {
+                    first = false;
+                } else if (is("punc", ";")) {
+                    if (!isMatrix) {
+                        isMatrix = true;
+                        value = [ value ];
+                    }
+                    value.push(row = []);
+                    input.next();
+                } else {
                     skip("op", ",");
                 }
-                value.push(parseExpression(false));
+                row.push(parseExpression(false));
             }
             skip("punc", "}");
             return {
-                type: "array",
+                type: isMatrix ? "matrix" : "array",
                 value: value
             };
         }
@@ -377,6 +386,12 @@
                 return "'{ ' + " + node.value.map(function(el){
                     return print(el, 0);
                 }).join(" + ', ' + ") + "+ ' }'";
+              case "matrix":
+                return "'{ ' + " + node.value.map(function(el){
+                    return el.map(function(el){
+                        return print(el, 0);
+                    }).join(" + ', ' + ");
+                }).join(" + '; ' + ") + "+ ' }'";
             }
             throw new Error("Cannot make printer for node " + node.type);
         }
@@ -406,7 +421,8 @@
               case "binary"  : return cpsBinary(node, k);
               case "call"    : return cpsCall(node, k);
               case "lambda"  : return cpsLambda(node, k);
-              case "array"   : return cpsArray(node, k);
+              case "array"   : return cpsArray(node.value, k, false);
+              case "matrix"  : return cpsArray(node.value, k, true);
             }
             throw new Error("Cannot CPS " + node.type);
         }
@@ -574,16 +590,16 @@
             }, k);
         }
 
-        function cpsArray(node, k) {
+        function cpsArray(elements, k, isMatrix) {
             var a = [];
             return (function loop(i){
-                if (i == node.value.length) {
+                if (i == elements.length) {
                     return k({
                         type: "array",
                         value: a
                     });
                 } else {
-                    return cps(node.value[i], function(val){
+                    return (isMatrix ? cpsArray : cps)(elements[i], function(val){
                         a[i] = val;
                         return loop(i + 1);
                     });
