@@ -13,8 +13,10 @@
 
 .km-nova .km-list .km-full-width-slider {    
     position: relative;
-    margin-top: 1.09em;
-    margin-bottom: 1.23em;
+    //margin-top: 1.09em;
+    //margin-bottom: 1.23em;
+    margin-top: 0;
+    padding: 1.55em 0;
     width: auto;
     display: block;
 }
@@ -142,6 +144,7 @@
     //transform: translateY(-50%);
     //text-align: right;
     transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
 }
 
 .km-nova .km-list .k-dropdown-wrap
@@ -154,6 +157,7 @@
     //margin-top: -1.05em;
     font-weight: normal;
     transform: translateY(50%);
+    -webkit-transform: translateY(50%);
 }
 
 .km-nova .km-list input[type=color],
@@ -224,11 +228,14 @@
     //position: relative;
     width: 100%;
     right: 0;
+    padding-left: 0;
     //margin-top: .3em;
     //top: 0;
     left: .89em;
     //top: 1.7em;
     transform: translateY(0);
+    -webkit-transform: translateY(0);
+
 }
 
 .km-nova label.km-required:after {
@@ -274,8 +281,7 @@
 .km-nova .km-list fieldset {
     border: none;
     padding: 0 1.61em;
-    margin: -1.14em -1.61em -1.14em;
-    //min-height: 13.6rem;
+    margin: -1.18em -1.61em;
 }
 
 .km-nova .km-list textarea,
@@ -296,6 +302,7 @@
 .km-nova .km-list fieldset select:not([multiple]),
 .km-nova .km-list fieldset .k-dropdown-wrap {
     transform: translateY(0);
+    -webkit-transform: translateY(0);
 }
 
 .km-nova .km-list fieldset > input[type=password],
@@ -321,6 +328,7 @@
     width: 100%;
     //margin-right: -1.2em;
     transform: translateY(0);
+    -webkit-transform: translateY(0);
     margin-right: 0;
     padding-left: 0;
 }
