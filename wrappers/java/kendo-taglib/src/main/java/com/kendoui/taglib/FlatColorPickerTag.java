@@ -46,6 +46,10 @@ public class FlatColorPickerTag extends WidgetTag /* interfaces *//* interfaces 
         return "flatColorPicker";
     }
 
+    public void setMessages(com.kendoui.taglib.flatcolorpicker.MessagesTag value) {
+        setProperty("messages", value);
+    }
+
     public void setChange(ChangeFunctionTag value) {
         setEvent("change", value.getBody());
     }
@@ -64,14 +68,6 @@ public class FlatColorPickerTag extends WidgetTag /* interfaces *//* interfaces 
 
     public void setButtons(boolean value) {
         setProperty("buttons", value);
-    }
-
-    public java.lang.Object getMessages() {
-        return (java.lang.Object)getProperty("messages");
-    }
-
-    public void setMessages(java.lang.Object value) {
-        setProperty("messages", value);
     }
 
     public boolean getOpacity() {

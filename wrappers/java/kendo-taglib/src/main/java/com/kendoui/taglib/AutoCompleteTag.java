@@ -122,6 +122,22 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("filter", value);
     }
 
+    public java.lang.String getFixedGroupTemplate() {
+        return (java.lang.String)getProperty("fixedGroupTemplate");
+    }
+
+    public void setFixedGroupTemplate(java.lang.String value) {
+        setProperty("fixedGroupTemplate", value);
+    }
+
+    public java.lang.String getGroupTemplate() {
+        return (java.lang.String)getProperty("groupTemplate");
+    }
+
+    public void setGroupTemplate(java.lang.String value) {
+        setProperty("groupTemplate", value);
+    }
+
     public java.lang.String getHeaderTemplate() {
         return (java.lang.String)getProperty("headerTemplate");
     }

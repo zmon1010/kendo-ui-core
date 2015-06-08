@@ -55,6 +55,14 @@ public class ScaleLabelsTag extends  BaseTag  /* interfaces *//* interfaces */ {
         setProperty("border", value);
     }
 
+    public void setMargin(com.kendoui.taglib.radialgauge.ScaleLabelsMarginTag value) {
+        setProperty("margin", value);
+    }
+
+    public void setPadding(com.kendoui.taglib.radialgauge.ScaleLabelsPaddingTag value) {
+        setProperty("padding", value);
+    }
+
     public void setTemplate(ScaleLabelsTemplateFunctionTag value) {
         setEvent("template", value.getBody());
     }
@@ -91,19 +99,19 @@ public class ScaleLabelsTag extends  BaseTag  /* interfaces *//* interfaces */ {
         setProperty("format", value);
     }
 
-    public java.lang.Object getMargin() {
-        return (java.lang.Object)getProperty("margin");
+    public float getMargin() {
+        return (float)getProperty("margin");
     }
 
-    public void setMargin(java.lang.Object value) {
+    public void setMargin(float value) {
         setProperty("margin", value);
     }
 
-    public java.lang.Object getPadding() {
-        return (java.lang.Object)getProperty("padding");
+    public float getPadding() {
+        return (float)getProperty("padding");
     }
 
-    public void setPadding(java.lang.Object value) {
+    public void setPadding(float value) {
         setProperty("padding", value);
     }
 

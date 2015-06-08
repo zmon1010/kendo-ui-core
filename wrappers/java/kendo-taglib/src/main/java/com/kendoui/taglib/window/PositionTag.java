@@ -53,19 +53,19 @@ public class PositionTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         return "window-position";
     }
 
-    public float getLeft() {
-        return (float)getProperty("left");
+    public java.lang.Object getLeft() {
+        return (java.lang.Object)getProperty("left");
     }
 
-    public void setLeft(float value) {
+    public void setLeft(java.lang.Object value) {
         setProperty("left", value);
     }
 
-    public float getTop() {
-        return (float)getProperty("top");
+    public java.lang.Object getTop() {
+        return (java.lang.Object)getProperty("top");
     }
 
-    public void setTop(float value) {
+    public void setTop(java.lang.Object value) {
         setProperty("top", value);
     }
 

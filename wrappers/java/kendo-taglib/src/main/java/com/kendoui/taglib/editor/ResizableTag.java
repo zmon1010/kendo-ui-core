@@ -53,6 +53,14 @@ public class ResizableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         return "editor-resizable";
     }
 
+    public boolean getContent() {
+        return (boolean)getProperty("content");
+    }
+
+    public void setContent(boolean value) {
+        setProperty("content", value);
+    }
+
     public float getMax() {
         return (float)getProperty("max");
     }
@@ -67,6 +75,14 @@ public class ResizableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 
     public void setMin(float value) {
         setProperty("min", value);
+    }
+
+    public boolean getToolbar() {
+        return (boolean)getProperty("toolbar");
+    }
+
+    public void setToolbar(boolean value) {
+        setProperty("toolbar", value);
     }
 
 //<< Attributes

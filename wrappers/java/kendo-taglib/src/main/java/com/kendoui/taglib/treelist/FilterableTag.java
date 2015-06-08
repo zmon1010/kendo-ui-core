@@ -53,6 +53,10 @@ public class FilterableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         return "treeList-filterable";
     }
 
+    public void setMessages(com.kendoui.taglib.treelist.FilterableMessagesTag value) {
+        setProperty("messages", value);
+    }
+
     public boolean getExtra() {
         return (boolean)getProperty("extra");
     }

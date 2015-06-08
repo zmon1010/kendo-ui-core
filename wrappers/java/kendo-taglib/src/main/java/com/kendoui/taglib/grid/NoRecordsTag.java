@@ -14,7 +14,7 @@ import com.kendoui.taglib.GridTag;
 import javax.servlet.jsp.JspException;
 
 @SuppressWarnings("serial")
-public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
+public class NoRecordsTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     
     @Override
     public int doEndTag() throws JspException {
@@ -24,7 +24,7 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         GridTag parent = (GridTag)findParentWithClass(GridTag.class);
 
 
-        parent.setMessages(this);
+        parent.setNoRecords(this);
 
 //<< doEndTag
 
@@ -50,19 +50,19 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 //>> Attributes
 
     public static String tagName() {
-        return "grid-messages";
+        return "grid-noRecords";
     }
 
-    public void setCommands(com.kendoui.taglib.grid.MessagesCommandsTag value) {
-        setProperty("commands", value);
+    public void setTemplate(NoRecordsTemplateFunctionTag value) {
+        setEvent("template", value.getBody());
     }
 
-    public java.lang.String getNoRecords() {
-        return (java.lang.String)getProperty("noRecords");
+    public java.lang.String getTemplate() {
+        return (java.lang.String)getProperty("template");
     }
 
-    public void setNoRecords(java.lang.String value) {
-        setProperty("noRecords", value);
+    public void setTemplate(java.lang.String value) {
+        setProperty("template", value);
     }
 
 //<< Attributes

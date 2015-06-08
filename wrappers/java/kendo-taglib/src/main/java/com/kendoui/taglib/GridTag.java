@@ -98,6 +98,10 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
         setProperty("messages", value);
     }
 
+    public void setNoRecords(com.kendoui.taglib.grid.NoRecordsTag value) {
+        setProperty("noRecords", value);
+    }
+
     public void setPageable(com.kendoui.taglib.grid.PageableTag value) {
         setProperty("pageable", value);
     }
@@ -302,6 +306,14 @@ public class GridTag extends WidgetTag /* interfaces */implements DataBoundWidge
 
     public void setNavigatable(boolean value) {
         setProperty("navigatable", value);
+    }
+
+    public boolean getNoRecords() {
+        return (boolean)getProperty("noRecords");
+    }
+
+    public void setNoRecords(boolean value) {
+        setProperty("noRecords", value);
     }
 
     public boolean getPageable() {

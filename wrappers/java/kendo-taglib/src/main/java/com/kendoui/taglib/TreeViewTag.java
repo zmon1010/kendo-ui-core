@@ -141,6 +141,14 @@ public class TreeViewTag extends WidgetWithItemsTag /* interfaces */implements D
         setProperty("autoBind", value);
     }
 
+    public boolean getAutoScroll() {
+        return (boolean)getProperty("autoScroll");
+    }
+
+    public void setAutoScroll(boolean value) {
+        setProperty("autoScroll", value);
+    }
+
     public boolean getCheckboxes() {
         return (boolean)getProperty("checkboxes");
     }

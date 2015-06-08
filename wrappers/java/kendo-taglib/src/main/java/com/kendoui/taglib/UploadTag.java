@@ -58,6 +58,12 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
         setProperty("async", value);
     }
 
+    public void setFiles(FilesTag value) {
+
+        setProperty("files", value.files());
+
+    }
+
     public void setLocalization(com.kendoui.taglib.upload.LocalizationTag value) {
         setProperty("localization", value);
     }
@@ -100,14 +106,6 @@ public class UploadTag extends WidgetTag /* interfaces *//* interfaces */ {
 
     public void setEnabled(boolean value) {
         setProperty("enabled", value);
-    }
-
-    public java.lang.Object getFiles() {
-        return (java.lang.Object)getProperty("files");
-    }
-
-    public void setFiles(java.lang.Object value) {
-        setProperty("files", value);
     }
 
     public boolean getMultiple() {

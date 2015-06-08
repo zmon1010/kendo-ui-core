@@ -67,6 +67,14 @@ public class ScaleLabelsBorderTag extends  BaseTag  /* interfaces */ /* interfac
         setProperty("dashType", value);
     }
 
+    public float getOpacity() {
+        return (float)getProperty("opacity");
+    }
+
+    public void setOpacity(float value) {
+        setProperty("opacity", value);
+    }
+
     public float getWidth() {
         return (float)getProperty("width");
     }

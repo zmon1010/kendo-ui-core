@@ -54,6 +54,10 @@ public class GaugeAreaTag extends BaseTag /* interfaces *//* interfaces */ {
         setProperty("border", value);
     }
 
+    public void setMargin(com.kendoui.taglib.radialgauge.GaugeAreaMarginTag value) {
+        setProperty("margin", value);
+    }
+
     public java.lang.Object getBackground() {
         return (java.lang.Object)getProperty("background");
     }
@@ -70,11 +74,11 @@ public class GaugeAreaTag extends BaseTag /* interfaces *//* interfaces */ {
         setProperty("height", value);
     }
 
-    public java.lang.Object getMargin() {
-        return (java.lang.Object)getProperty("margin");
+    public float getMargin() {
+        return (float)getProperty("margin");
     }
 
-    public void setMargin(java.lang.Object value) {
+    public void setMargin(float value) {
         setProperty("margin", value);
     }
 

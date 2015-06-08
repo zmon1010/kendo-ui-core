@@ -155,11 +155,11 @@ public class YAxisItemTag extends  BaseTag  /* interfaces *//* interfaces */ {
         setProperty("minorUnit", value);
     }
 
-    public java.lang.Object getName() {
-        return (java.lang.Object)getProperty("name");
+    public java.lang.String getName() {
+        return (java.lang.String)getProperty("name");
     }
 
-    public void setName(java.lang.Object value) {
+    public void setName(java.lang.String value) {
         setProperty("name", value);
     }
 

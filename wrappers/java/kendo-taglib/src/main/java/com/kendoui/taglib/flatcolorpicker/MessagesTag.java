@@ -1,12 +1,12 @@
 
-package com.kendoui.taglib.grid;
+package com.kendoui.taglib.flatcolorpicker;
 
 
 import com.kendoui.taglib.BaseTag;
 
 
 
-import com.kendoui.taglib.GridTag;
+import com.kendoui.taglib.FlatColorPickerTag;
 
 
 
@@ -21,7 +21,7 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 //>> doEndTag
 
 
-        GridTag parent = (GridTag)findParentWithClass(GridTag.class);
+        FlatColorPickerTag parent = (FlatColorPickerTag)findParentWithClass(FlatColorPickerTag.class);
 
 
         parent.setMessages(this);
@@ -50,19 +50,23 @@ public class MessagesTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 //>> Attributes
 
     public static String tagName() {
-        return "grid-messages";
+        return "flatColorPicker-messages";
     }
 
-    public void setCommands(com.kendoui.taglib.grid.MessagesCommandsTag value) {
-        setProperty("commands", value);
+    public java.lang.String getApply() {
+        return (java.lang.String)getProperty("apply");
     }
 
-    public java.lang.String getNoRecords() {
-        return (java.lang.String)getProperty("noRecords");
+    public void setApply(java.lang.String value) {
+        setProperty("apply", value);
     }
 
-    public void setNoRecords(java.lang.String value) {
-        setProperty("noRecords", value);
+    public java.lang.String getCancel() {
+        return (java.lang.String)getProperty("cancel");
+    }
+
+    public void setCancel(java.lang.String value) {
+        setProperty("cancel", value);
     }
 
 //<< Attributes

@@ -50,6 +50,14 @@ public class MessagesTag extends BaseTag /* interfaces *//* interfaces */ {
         return "pager-messages";
     }
 
+    public java.lang.String getAllPages() {
+        return (java.lang.String)getProperty("allPages");
+    }
+
+    public void setAllPages(java.lang.String value) {
+        setProperty("allPages", value);
+    }
+
     public java.lang.String getDisplay() {
         return (java.lang.String)getProperty("display");
     }
