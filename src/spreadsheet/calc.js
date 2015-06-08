@@ -176,15 +176,11 @@
         }
 
         function parseArray() {
-            var value = [], row = value, isMatrix = false, first = true;
+            var row = [], value = [ row ], first = true;
             while (!input.eof() && !is("punc", "}")) {
                 if (first) {
                     first = false;
                 } else if (is("punc", ";")) {
-                    if (!isMatrix) {
-                        isMatrix = true;
-                        value = [ value ];
-                    }
                     value.push(row = []);
                     input.next();
                 } else {
@@ -194,7 +190,7 @@
             }
             skip("punc", "}");
             return {
-                type: isMatrix ? "matrix" : "array",
+                type: "matrix",
                 value: value
             };
         }
@@ -382,10 +378,6 @@
                        }).join(" + ', ' + ")
                        : "''")
                     + " + ')'";
-              case "array":
-                return "'{ ' + " + node.value.map(function(el){
-                    return print(el, 0);
-                }).join(" + ', ' + ") + "+ ' }'";
               case "matrix":
                 return "'{ ' + " + node.value.map(function(el){
                     return el.map(function(el){
@@ -421,8 +413,7 @@
               case "binary"  : return cpsBinary(node, k);
               case "call"    : return cpsCall(node, k);
               case "lambda"  : return cpsLambda(node, k);
-              case "array"   : return cpsArray(node.value, k, false);
-              case "matrix"  : return cpsArray(node.value, k, true);
+              case "matrix"  : return cpsMatrix(node.value, k, true);
             }
             throw new Error("Cannot CPS " + node.type);
         }
@@ -590,16 +581,16 @@
             }, k);
         }
 
-        function cpsArray(elements, k, isMatrix) {
+        function cpsMatrix(elements, k, isMatrix) {
             var a = [];
             return (function loop(i){
                 if (i == elements.length) {
                     return k({
-                        type: "array",
+                        type: "matrix",
                         value: a
                     });
                 } else {
-                    return (isMatrix ? cpsArray : cps)(elements[i], function(val){
+                    return (isMatrix ? cpsMatrix : cps)(elements[i], function(val){
                         a[i] = val;
                         return loop(i + 1);
                     });
@@ -701,7 +692,7 @@
             else if (type == "var") {
                 return node.name;
             }
-            else if (type == "array") {
+            else if (type == "matrix") {
                 return jsArray(node.value);
             }
             else {

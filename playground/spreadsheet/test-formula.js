@@ -186,6 +186,9 @@ Spreadsheet.prototype = {
             return;
         }
         cell.display = cell.value;
+        if (Array.isArray(cell.value)) {
+            cell.display = JSON.stringify(cell.value);
+        }
         input.val(cell.display);
         input[0].className = "type-" + cell.type;
         if (cell.tooltip) {
@@ -193,6 +196,7 @@ Spreadsheet.prototype = {
         } else {
             input[0].removeAttribute("title");
         }
+        input[0].title = cell.display;
     },
 
     _deleteCell: function(sheetName, row, col) {
@@ -516,10 +520,15 @@ fillElements({
         C1: 7,
         C2: 8,
         C3: 9,
+        A5: 1, B5: 1, C5: 1,
+
+        D4: '={a1:c3}+5',
+        D5: '=sumif({ A1:C3, A5:C5 }, ">3")',
+        E5: '=sumif(A1:C3, ">3")',
         A4: "foo",
         B4: "foobar",
         C4: "foo bar",
-        D5: "=countif(A:C, \">=3\")",
+        F5: "=countif(A:C, \">=3\")",
         D6: "=countif(A4:C10, \"foo*bar\")",
         D7: "=countifs(A1:C3, \">3\", G11:I13, \"<7\")",
         D9: '=sumifs(A1:C3, D1:F3, "y*")',
@@ -566,13 +575,18 @@ fillElements({
         I12: 8,
         I13: 9,
 
+        A7: "a1",
+        A8: "a2",
+        B8: '=indirect(A7)+indirect(A8)',
+        B16: '={ A1:C1; 10, 10, 10; A2:B3, C2:C3 }*2',
+
         //E5: "=sum(A1:C3)",
         // E5: "=B2",
         // E6: "=B$2",
         // E7: "=(a1+a2)*a3",
         // E8: "=sum(A1:C3)",
-        E5: "=sum(B2:C3)",
-        E6: "=sum(I13:G11)"
+        // E5: "=sum(B2:C3)",
+        // E6: "=sum(I13:G11)"
         // E6: "=SUM((a1,a2,a3), (b1,b2,b3))",
     },
     sheet2: {

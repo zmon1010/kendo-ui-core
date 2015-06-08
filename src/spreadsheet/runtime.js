@@ -168,7 +168,10 @@
         },
 
         asMatrix: function(range) {
-            var self = this, width = 0;
+            if (range instanceof Matrix) {
+                return range;
+            }
+            var self = this;
             if (range instanceof RangeRef) {
                 var tl = range.topLeft;
                 var cells = self.ss.getRefCells(range);
@@ -181,31 +184,29 @@
                 return new Matrix(self, range.height(), range.width(), m);
             }
             if (Array.isArray(range) && range.length > 0) {
-                range = resolveRefs(range, 0);
-                if (width > 0) {
-                    return new Matrix(self, range.length, width, range);
-                }
-                else {
-                    return new Matrix(self, 1, range.length, [ range ]);
-                }
-            }
-
-            function resolveRefs(a, level) {
-                if (level == 1) {
-                    width = Math.max(width, a.length);
-                }
-                return a.map(function(x){
-                    if (Array.isArray(x)) {
-                        return resolveRefs(x, level + 1);
-                    }
-                    if (x instanceof RangeRef || x instanceof UnionRef) {
-                        return resolveRefs(self.ss.getData(x), level + 1);
-                    }
-                    if (x instanceof Ref) {
-                        return self.ss.getData(x);
-                    }
-                    return x;
+                var m = new Matrix(self), row = 0;
+                range.forEach(function(line){
+                    var col = 0;
+                    var h = 1;
+                    line.forEach(function(el){
+                        var isRange = el instanceof RangeRef;
+                        if (el instanceof Ref && !isRange) {
+                            el = self.ss.getData(el);
+                        }
+                        if (el instanceof RangeRef || Array.isArray(el)) {
+                            var tmp = self.asMatrix(el);
+                            tmp.each(function(el, r, c){
+                                m.set(row + r, col + c, el);
+                            });
+                            h = Math.max(h, tmp.height);
+                            col += tmp.width;
+                        } else {
+                            m.set(row, col++, el);
+                        }
+                    });
+                    row += h;
                 });
+                return m;
             }
         }
     });
@@ -213,14 +214,48 @@
     var Matrix = Class.extend({
         init: function Matrix(context, height, width, data) {
             this.context = context;
-            this.height = height;
-            this.width = width;
-            this.data = data;
+            this.height = height || 0;
+            this.width = width || 0;
+            this.data = data || [];
         },
         get: function(row, col) {
             var line = this.data[row];
             var val = line ? line[col] : null;
             return val instanceof Ref ? this.context.ss.getData(val) : val;
+        },
+        set: function(row, col, data) {
+            var line = this.data[row];
+            if (line == null) {
+                line = this.data[row] = [];
+            }
+            line[col] = data;
+            if (row >= this.height) {
+                this.height = row + 1;
+            }
+            if (col >= this.width) {
+                this.width = col + 1;
+            }
+        },
+        each: function(f, includeEmpty) {
+            for (var row = 0; row < this.height; ++row) {
+                for (var col = 0; col < this.width; ++col) {
+                    var val = this.get(row, col);
+                    if (includeEmpty || val != null) {
+                        f.call(this.context, val, row, col);
+                    }
+                }
+            }
+        },
+        map: function(f, includeEmpty) {
+            var m = new Matrix(this.context);
+            this.each(function(el, row, col){
+                // here `this` is actually the context
+                m.set(row, col, f.call(this, el, row, col));
+            }, includeEmpty);
+            return m;
+        },
+        toString: function() {
+            return JSON.stringify(this.data);
         }
     });
 
@@ -335,32 +370,32 @@
 
     function arrayHandler1(func) {
         return function doit(val) {
-            if (Array.isArray(val)) {
-                return val.map(doit);
-            }
-            return func(val);
+            var m = this.asMatrix(val);
+            return m ? m.map(doit) : this.cellValues([ val ], func);
         };
     }
 
     function arrayHandler2(func) {
         return function doit(left, right) {
-            if (Array.isArray(left) && Array.isArray(right)) {
-                return left.map(function(el, i){
-                    return doit(el, right[i]);
+            var mleft = this.asMatrix(left);
+            var mright = this.asMatrix(right);
+            if (mleft && mright) {
+                return mleft.map(function(el, row, col){
+                    return doit.call(this, el, mright.get(row, col));
                 });
             }
-            else if (Array.isArray(left)) {
-                return left.map(function(el){
-                    return doit(el, right);
+            else if (mleft) {
+                return mleft.map(function(el){
+                    return doit.call(this, el, right);
                 });
             }
-            else if (Array.isArray(right)) {
-                return right.map(function(el){
-                    return doit(left, el);
+            else if (mright) {
+                return mright.map(function(el){
+                    return doit.call(this, left, el);
                 });
             }
             else {
-                return func(left, right);
+                return this.cellValues([ left, right ], func);
             }
         };
     }
@@ -377,7 +412,7 @@
             }
         });
         return function(callback, args) {
-            callback(this.cellValues(args, handler));
+            callback(handler.call(this, args[0], args[1]));
         };
     }
 
@@ -402,7 +437,7 @@
             }
         });
         return function(callback, args) {
-            callback(this.cellValues(args, handler));
+            callback(handler.call(this, args[0], args[1]));
         };
     }
 
@@ -416,7 +451,7 @@
             }
         });
         return function(callback, args) {
-            callback(this.cellValues(args, handler));
+            callback(handler.call(this, args[0]));
         };
     }
 
@@ -452,7 +487,7 @@
                 return "" + left + right;
             });
             return function(callback, args) {
-                callback(this.cellValues(args, handler));
+                callback(handler.call(this, args[0], args[1]));
             };
         })(),
 
@@ -462,7 +497,7 @@
                 return left === right;
             });
             return function(callback, args) {
-                callback(this.cellValues(args, handler));
+                callback(handler.call(this, args[0], args[1]));
             };
         })(),
         "binary<>": (function(){
@@ -470,7 +505,7 @@
                 return left !== right;
             });
             return function(callback, args) {
-                callback(this.cellValues(args, handler));
+                callback(handler.call(this, args[0], args[1]));
             };
         })(),
         "binary<": binaryCompare(function(left, right){
@@ -537,6 +572,8 @@
 
     exports.CalcError = CalcError;
     exports.Formula = Formula;
+    exports.arrayHandler1 = arrayHandler1;
+    exports.arrayHandler2 = arrayHandler2;
 
     exports.defineFunction = function(name, func) {
         FUNCS[name.toLowerCase()] = func;
