@@ -5,72 +5,57 @@
         <script src="../content/web/globalization/cultures/kendo.culture.bg-BG.js"></script>
 
         <div id="example">
-            <div id="product-view" class=" demo-section k-header">
-                <div class="right">
-                    <label for="culture">Choose culture:</label>
-                    <input id="culture" value="en-US" />
-                </div>
-                <h2>Product promotion</h2>
-                <ul id="fieldlist">
+            <div class="demo-section k-header">
+                <ul class="fieldlist">
+                    <li class="culture">
+                        <label for="culture">Choose culture:</label>
+                        <input id="culture" value="en-US" style="width: 100%;"/>
+                    </li>
+                </ul>
+            </div>
+            
+            <div id="product-view" class="demo-section k-header">
+                <ul class="fieldlist">
                     <li>
-                    <label for="startDate">Discount start date:</label>
-                    <input id="startDate" />
-                    <input id="startTime" value="12:00 AM" />
+                        <label for="startDate">Discount start date:</label>
+                        <input id="startDate" />
+                        <input id="startTime" value="12:00 AM" />
                     </li>
                     <li>
-                    <label for="endDate">Discount end date:</label>
-                    <input id="endDate" />
-                    <input id="endTime" value="12:00 AM" />
+                        <label for="endDate">Discount end date:</label>
+                        <input id="endDate" />
+                        <input id="endTime" value="12:00 AM" />
                     </li>
                     <li>
-                    <label for="initial">Initial price:</label>
-                    <input id="initial" value="10" min="1"/>
+                        <label for="initial">Initial price:</label>
+                        <input id="initial" value="10" min="1"/>
                     </li>
                     <li>
-                    <label for="discount">Discount:</label>
-                    <input id="discount" value="0.05" min="0" max="0.5" step="0.01"/>
+                        <label for="discount">Discount:</label>
+                        <input id="discount" value="0.05" min="0" max="0.5" step="0.01"/>
                     </li>
                 </ul>
             </div>
 
             <style>
-                #example h2 {
-		    padding: 5px 0 15px;
-                    font-weight: normal;
-		    border-bottom: 1px solid rgba(128,128,128,.3);
+                .fieldlist {
+                    margin: 0 0 -1em;
+                    padding: 0;
                 }
-                #product-view {
-                    overflow: hidden;
-                    width: 600px;
-                    padding: 20px 20px 0 20px;
-					margin: 30px auto;
-                    background-position: 0 -255px;
+        
+                .fieldlist li {
+                    list-style: none;
+                    padding-bottom: 1em;
+                    line-height: 3em;
                 }
-
-                .right
-                {
-                    float:right;
+        
+                .fieldlist label {
+                    display: block;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    font-size: 12px;
+                    color: #444;
                 }
-
-                #fieldlist
-                {
-                    width: 100%;
-                    float:left;
-                    margin:0;
-                    padding: 10px 0 30px 0;
-                }
-
-                #fieldlist li
-                {
-                    list-style:none;
-                    padding:5px 0;
-                }
-				#fieldlist label {
-					display: inline-block;
-					width: 140px;
-					text-align: right;
-				}
-
             </style>
 
             <script>
