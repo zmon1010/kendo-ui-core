@@ -380,6 +380,21 @@
         equal(noRecords.text(), "No records available.");
     });
 
+    test("noRecords option is messages is used in default template", function() {
+        var grid = new Grid($(table).wrap('<div style="width:200px"></div>'), {
+                scrollable: true,
+                dataSource: [],
+                noRecords: true,
+                messages: {
+                    noRecords: "No data is available"
+                },
+                columns: [{field:"foo", width:300}]}),
+            noRecords = grid.table.parent().children('.k-grid-norecords');
+
+        equal(noRecords.length, 1);
+        equal(noRecords.text(), "No data is available");
+    });
+
     test("noRecords default template is not rendered when option is disabled", function() {
         var grid = new Grid($(table).wrap('<div style="width:200px"></div>'), {
                 scrollable: true,
