@@ -41,14 +41,6 @@
     border: 0;
 }
 
-#about {
-    background: transparent url("backgrounds/kendo.jpg") left -500px no-repeat;
-}
-
-#about .km-navbar {
-    background: rgba(28, 31, 35, 0.4);
-}
-
 #about .km-content,
 #about .km-listview li,
 #about .km-listview .km-state-active a {
