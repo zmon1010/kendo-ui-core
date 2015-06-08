@@ -67,14 +67,26 @@
 
     <script>
         $(document).ready(function() {
+            var lastTheme = window.kendoTheme;
             var themechooser = kendo.widgetInstance($(kendo.roleSelector("themechooser")));
             var themebuilder = new kendo.ui.ThemeBuilderInterface({
                 container: "#themebuilder"
             });
 
             themechooser.bind({
-                change: $.proxy(toggleNavigationPage, this, "#back-forward"),
-                transition: $.proxy(themebuilder.reload, themebuilder)
+                change: function(e) {
+                    toggleNavigationPage("#back-forward");
+
+                    if (e.item.value != lastTheme) {
+                        kendo.ui.progress(themebuilder.container, true);
+                        $(".k-loading-text", themebuilder.container).text("Loading theme...");
+                    }
+                },
+                transition: function() {
+                    themebuilder.reload();
+                    kendo.ui.progress(themebuilder.container, false);
+                    lastTheme = this.dataItem(this.select()).value;
+                }
             });
 
             window.themebuilder = themebuilder;
@@ -437,6 +449,22 @@
         #back-forward:before {
             top: 1.2em;
         }
+    }
+
+    #themebuilder .k-loading-image {
+        background-image: url(http://cdn.kendostatic.com/2015.1.429/styles/Bootstrap/loading-image.gif);
+    }
+
+    #themebuilder .k-loading-text {
+        text-indent: 5px;
+        width: 100%;
+        top: 50%;
+        color: #444;
+    }
+
+    #themebuilder .k-loading-color {
+        background-color: #f5f7f8;
+        opacity: 1;
     }
 </style>
 <script>
