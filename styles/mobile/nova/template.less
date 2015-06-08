@@ -372,12 +372,14 @@
 
 .km-nova .km-pages li {
     background: rgba(255, 255, 255, 0.5);
-    border-color: rgba(255, 255, 255, 0.5);
+    //border-color: rgba(255, 255, 255, 0.5);
+    border-color: hsv(hsvHue(@base) , hsvSaturation(@base), hsvValue(@base) - 13);
 }
 
 .km-nova .km-pages .km-current-page {
-    background: rgba(255, 255, 255, 1);
-    border-color: rgba(255, 255, 255, 1);
+    //background: rgba(255, 255, 255, 1);
+    //border-color: rgba(255, 255, 255, 1);
+    background: hsv(hsvHue(@base) , hsvSaturation(@base), hsvValue(@base) - 13);
 }
 
 /* Checkboxes and RadioButtons - old rendering */
