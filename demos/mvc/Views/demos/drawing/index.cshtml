@@ -1,5 +1,5 @@
 <div id="example">
-    <div class="box">
+    <div class="box wide">
         <div id="info" class="box-col"></div>
         <div class="box-col select-col">
             <h4>Surface type</h4>
@@ -13,6 +13,7 @@
     <div id="surface-container">
         <div id="surface" style="width: 800px; height: 300px;"></div>
     </div>
+    <div class="responsive-message"></div>
     <script>
     var dataviz = kendo.dataviz;
     var geom = kendo.geometry;
@@ -275,6 +276,12 @@
             width: 800px;
             height: 300px;
             padding: 20px;
+        }
+        @@media screen and (max-width: 1023px) {
+            #surface-container,
+            .box {
+                display: none;
+            }
         }
     </style>
 </div>

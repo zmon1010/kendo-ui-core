@@ -1,5 +1,5 @@
 <div id="example">
-    <div class="box">
+    <div class="box wide">
         <div id="info" class="box-col"></div>
         <div class="box-col select-col">
             <h4>Surface type</h4>
@@ -21,7 +21,7 @@
     var Path = draw.Path;
 
     var points = 15;
-    var distance = 40;
+    var distance = 20;
 
     function initSurface(type) {
         return draw.Surface.create($("#surface"), { type: type });
@@ -94,19 +94,11 @@
     });
     </script>
     <style>
-        #example .box,
-        .demo-section {
-            margin: 1em auto;
-            padding: 2em;
-        }
-
         #surface-container {
             text-align: center;
-
             margin: 0 auto;
             width: 100%;
             height: 600px;
-            padding: 20px;
         }
     </style>
 </div>
