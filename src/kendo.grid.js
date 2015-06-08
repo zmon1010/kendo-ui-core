@@ -116,6 +116,7 @@ var __meta__ = {
         DETAILCOLLAPSE = "detailCollapse",
         FOCUSED = "k-state-focused",
         SELECTED = "k-state-selected",
+        NORECORDSCLASS = "k-grid-norecords",
         COLUMNRESIZE = "columnResize",
         COLUMNREORDER = "columnReorder",
         COLUMNLOCK = "columnLock",
@@ -126,6 +127,7 @@ var __meta__ = {
         FUNCTION = "function",
         STRING = "string",
         DELETECONFIRM = "Are you sure you want to delete this record?",
+        NORECORDS = "No records available.",
         CONFIRMDELETE = "Delete",
         CANCELDELETE = "Cancel",
         formatRegExp = /(\}|\#)/ig,
@@ -1484,6 +1486,7 @@ var __meta__ = {
             groupable: false,
             rowTemplate: "",
             altRowTemplate: "",
+            noRecords: false,
             dataSource: {},
             height: null,
             resizable: false,
@@ -1508,7 +1511,8 @@ var __meta__ = {
                     canceledit: defaultCommands.canceledit.text,
                     excel: defaultCommands.excel.text,
                     pdf: defaultCommands.pdf.text
-                }
+                },
+                noRecords: NORECORDS
             }
         },
 
@@ -1633,8 +1637,8 @@ var __meta__ = {
             that.detailTemplate =
             that.footerTemplate =
             that.groupFooterTemplate =
-            that.lockedGroupFooterTemplate = null;
-
+            that.lockedGroupFooterTemplate =
+            that.noRecordsTemplate = null;
 
             that.scrollables =
             that.thead =
@@ -1707,7 +1711,6 @@ var __meta__ = {
 
             this.init(element, currentOptions, events);
             this._setEvents(currentOptions);
-
         },
 
         items: function() {
@@ -4899,6 +4902,22 @@ var __meta__ = {
             }
         },
 
+        _renderNoRecordsContent: function() {
+            var that = this;
+
+            if (that.options.noRecords && that.wrapper.is(":visible")) {
+                var noRecordsElement = that.table.parent().children('.' + NORECORDSCLASS);
+
+                if (noRecordsElement.length) {
+                    noRecordsElement.remove();
+                }
+
+                if (!that.dataSource || !that.dataSource.view().length) {
+                    $(that.noRecordsTemplate({})).appendTo(that.table.parent());
+                }
+            }
+        },
+
         _setContentWidth: function(scrollLeft) {
             var that = this,
                 hiddenDivClass = 'k-grid-content-expander',
@@ -4930,7 +4949,7 @@ var __meta__ = {
                 }
 
                 that._applyLockedContainersWidth();
-           }
+            }
         },
 
         _applyLockedContainersWidth: function() {
@@ -5832,6 +5851,45 @@ var __meta__ = {
                     that.lockedGroupFooterTemplate = that._footerTmpl(columnsLocked, aggregates, "groupFooterTemplate", "k-group-footer");
                 }
             }
+
+            if (that.options.noRecords) {
+                that.noRecordsTemplate = that._noRecordsTmpl();
+            }
+        },
+
+        _noRecordsTmpl: function () {
+            var wrapper = '<div class="{0}">{1}</div>';
+            var defaultTemplate = '<div class="k-grid-norecords-template">{0}</div>';
+            var state = { storage: {}, count: 0 };
+            var settings = $.extend({}, kendo.Template, this.options.templateSettings);
+            var paramName = settings.paramName;
+            var template;
+            var html = "";
+            var type;
+            var tmpl;
+
+            if (this.options.noRecords.template) {
+                template = this.options.noRecords.template;
+            } else {
+                template = kendo.format(defaultTemplate, this.options.messages.noRecords);
+            }
+
+            type = typeof template;
+            if (type === "function") {
+                state.storage["tmpl" + state.count] = template;
+                html += "#=this.tmpl" + state.count + "(" + paramName + ")#";
+                state.count ++;
+            } else if (type === "string") {
+                html += template;
+            }
+
+            tmpl = kendo.template(kendo.format(wrapper, NORECORDSCLASS, html), settings);
+
+            if (state.count > 0) {
+                tmpl = $.proxy(tmpl, state.storage);
+            }
+
+            return tmpl;
         },
 
         _footerTmpl: function(columns, aggregates, templateName, rowClass, skipGroupCells) {
@@ -7153,6 +7211,8 @@ var __meta__ = {
             that._renderLockedContent(data, colspan, groups);
 
             that._footer();
+
+            that._renderNoRecordsContent();
 
             that._setContentHeight();
 
