@@ -1,55 +1,88 @@
 <div id="formappearance" data-role="view" data-title="Appearance" data-use-native-scrolling="true" class="appearance">
-    <form action="./index.html">
+     <img src="http://i.imgur.com/4dKohsP.jpg" class="km-thumbnail" style="width: 10em; height: 10em; margin: 1em auto; display: block; float: none;">
+     <form action="./index.html">
         <ul data-role="listview" data-style="inset">
             <li>
-                <label>Type text
-                    <input type="text" value="Text" />
+                <label class="km-required km-label-above">First Name
+                    <input value="Eduardo" type="text" />
                 </label>
             </li>
             <li>
-                <label>
-                    Type password
-                    <input type="password" value="password" />
+                <label class="km-label-above">Last Name
+                    <input value="Batista" type="text" />
                 </label>
             </li>
             <li>
-                <label>
-                    Type search
-                    <input type="search" value="search" />
+                <label class="km-label-above">Company
+                    <input value="Telerik" type="text" />
                 </label>
             </li>
+             
+            <li>
+                <fieldset>
+                    <legend><a href="#" class="km-legend-button">+ Phone</a></legend>
+                        <label class="km-inline-field km-label-above km-required" style="width: 200px;">
+                        Phone Number
+                        <input type="text" value="+359 555 5555" />
+                        </label>
+                        <label class="km-inline-field km-label-above" style="width: 200px;">
+                            Type
+                            <select id="phone-type">
+                                <option value="First Option">Mobile</option>
+                                <option value="Second Option">Stationary</option>
+                                <option value="Third Option">iPhone</option>
+                            </select>
+                      </label>  
+                </fieldset>                   
+            </li>
+            <li>
+                <fieldset>
+                    <legend><a href="#" class="km-legend-button">+ Email</a></legend>
+                    <input type="text" value="barista@telerik.com" />
+                </fieldset>
+            </li>
+             <li>
+
+                    <label class="km-icon-label k-i-calendar km-required">
+                        <input value="Meeting" type="text" />
+                    </label>
+                </li>
+                <li>
+                    <label class="km-icon-label k-i-clock">
+                        <select id="dropdown">
+                            <option value="First Option">Meeting Room 1</option>
+                            <option value="Second Option">Meeting Room 2</option>
+                            <option value="Third Option">Meeting 3</option>
+                        </select>
+                    </label>
+                </li>
+                 
+             <li>
+                <label class="km-required">Title
+                    <input value="Meeting" type="text" />
+                </label>
+            </li>
+            <li>
+                <label>Location
+                    <select id="meeting_room">
+                            <option value="First Option">Meeting Room 1</option>
+                            <option value="Second Option">Meeting Room 2</option>
+                            <option value="Third Option">Meeting 3</option>
+                        </select>
+                </label>
+            </li>            
+            <li>
+                <fieldset>
+                    <legend>Volume</legend>
+                    <input data-role="slider" id="slider" max="100" style="width:100%" class="km-full-width-slider" />
+                </fieldset>
+            </li>
+            <li>
+                <fieldset>
+                    <legend>Notes</legend>
+                    <textarea style="height: 100px;"> Your notes here</textarea>
+                </fieldset>
+            </li>          
         </ul>
     </form>
 </div>
-
-<style>
-    .km-root .appearance .km-listview label
-    {
-      width: 100%;
-    }
-
-    .km-wp .appearance .km-listview label
-    {
-      color: #999;
-    }
-
-    .km-root .km-pane .km-view.appearance .km-listview input
-    {
-      position: relative;
-      width: 100%;
-      right: 0;
-      margin-top: 0;
-      top: 0;
-    }
-
-    .km-root .km-wp .km-view.appearance .km-listview input
-    {
-      margin-top: .2em;
-    }
-
-    .km-root .km-ios .km-view.appearance .km-listview input,
-    .km-root .km-ios7 .km-view.appearance .km-listview input
-    {
-      padding: .4em 0;
-    }
-</style>

@@ -2,14 +2,6 @@
 @import "base.less";
 
 /* Forms */
-
-
-/*.km-nova .k-slider-horizontal
-{
-    margin-top: 0;
-    height: .29rem;
-}*/
-
 .km-nova .k-slider .k-draghandle
 {
     width: .857em;
@@ -21,8 +13,10 @@
 
 .km-nova .km-list .km-full-width-slider {    
     position: relative;
-    transform: translateY(50%);
-    margin-top: -4px;
+    //transform: translateY(50%);
+    //margin: 1.09em 0.84em 1.23em 0.84em;
+    margin-top: 1.09em;
+    margin-bottom: 1.23em;
 }
 
 .km-nova .k-slider-horizontal .k-draghandle
@@ -280,18 +274,56 @@
 .km-nova .km-list fieldset {
     border: none;
     padding: 0;
-    margin: -1.14em -1.61em;
+    margin: -1.14em -3.22em -1.14em -1.61em;
+    padding-left: 1.61em;
     //min-height: 13.6rem;
 }
 
-.km-nova .km-list textarea {
-    transform: translateY(0);    
+.km-nova .km-list textarea,
+.km-nova .km-list fieldset input[type=password],
+.km-nova .km-list fieldset input[type=search],
+.km-nova .km-list fieldset input[type=number],
+.km-nova .km-list fieldset input[type=tel],
+.km-nova .km-list fieldset input[type=url],
+.km-nova .km-list fieldset input[type=email],
+.km-nova .km-list fieldset input[type=month],
+.km-nova .km-list fieldset input[type=color],
+.km-nova .km-list fieldset input[type=week],
+.km-nova .km-list fieldset input[type=date],
+.km-nova .km-list fieldset input[type=time],
+.km-nova .km-list fieldset input[type=datetime],
+.km-nova .km-list fieldset input[type=datetime-local],
+.km-nova .km-list fieldset input[type=text]:not(.k-input),
+.km-nova .km-list fieldset select:not([multiple]),
+.km-nova .km-list fieldset .k-dropdown-wrap {
+    transform: translateY(0);
+}
+
+.km-nova .km-list fieldset > input[type=password],
+.km-nova .km-list fieldset > input[type=search],
+.km-nova .km-list fieldset > input[type=number],
+.km-nova .km-list fieldset > input[type=tel],
+.km-nova .km-list fieldset > input[type=url],
+.km-nova .km-list fieldset > input[type=email],
+.km-nova .km-list fieldset > input[type=month],
+.km-nova .km-list fieldset > input[type=color],
+.km-nova .km-list fieldset > input[type=week],
+.km-nova .km-list fieldset > input[type=date],
+.km-nova .km-list fieldset > input[type=time],
+.km-nova .km-list fieldset > input[type=datetime],
+.km-nova .km-list fieldset > input[type=datetime-local],
+.km-nova .km-list fieldset > input[type=text]:not(.k-input),
+.km-nova .km-list fieldset > select:not([multiple]),
+.km-nova .km-list fieldset > .k-dropdown-wrap {
+    padding: 1.23em 0; 
 }
 
 .km-nova .km-list fieldset textarea {
     width: 100%;
-    margin-right: -1.2em;
+    //margin-right: -1.2em;
     transform: translateY(0);
+    margin-right: 0;
+    padding-left: 0;
 }
 
 .km-nova .km-list fieldset input[type=password],
@@ -312,7 +344,7 @@
 .km-nova .km-list fieldset .k-dropdown-wrap,
 .km-nova .km-list fieldset textarea {
     width: 100%;
-    padding: 0 1.61em;
+    //padding: 0;
     position: relative;
 }
 
@@ -320,7 +352,8 @@
     //font-size: 1.2em;
     position: -webkit-sticky;
     text-indent: 0;
-    margin-top: 0;
+    margin: 0 -1.61em;
+    margin-left: -1.61em;
     font-weight: normal;
     border-bottom-width: 1px;
     border-bottom-style: solid;
@@ -350,7 +383,7 @@
 
 .km-nova .km-list fieldset .km-inline-field:first-of-type {
     padding-left: 0;
-    margin-left: 2.16em;
+    //margin-left: 2.16em;
 }
 
 .km-nova .km-inline-field.km-label-above {
@@ -401,6 +434,7 @@
 .km-nova .km-list .km-inline-field:first-of-type .k-dropdown,
 .km-nova .km-list .km-inline-field:first-of-type textarea {
     margin-left: 0;
+    padding-left: 0;
 }
 
 /* Checkboxes inside ListView - Old rendering */
