@@ -65,15 +65,11 @@
     -webkit-transform: none;
 }
 
+#about .km-leftitem img {
+    margin-left: 1em;
+}
+
 #about .km-footer {
     font-size: .8em;
     background: transparent;
-}
-
-#about .km-leftitem {
-    left: 0;
-}
-
-#logo {
-    margin-left: 33px;
 }
