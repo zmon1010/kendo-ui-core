@@ -40,6 +40,14 @@ class MarkdownParser
                                  :description => section_description(index, configuration))
         end
 
+        constructor_params = constructor_params_section(root)
+        each_section(constructor_params) do |param, index|
+            param = component.add_constructor_param(
+                :name => section_name(param),
+                :type => option_type(param),
+                :description => section_description(index, constructor_params))
+        end
+
         fields = fields_section(root)
 
         each_section(fields) do |field, index|
@@ -173,6 +181,16 @@ class MarkdownParser
         start_index = child_index(element, 'Methods')
 
         end_index = child_index(element, 'Events')
+
+        element.children.slice(start_index..end_index)
+    end
+
+    def constructor_params_section(element)
+        start_index = child_index(element, 'Constructor Parameters')
+
+        end_index = child_index(element, 'Fields')
+        end_index = child_index(element, 'Class Methods') if end_index == element.children.size
+        end_index = child_index(element, 'Methods') if end_index == element.children.size
 
         element.children.slice(start_index..end_index)
     end

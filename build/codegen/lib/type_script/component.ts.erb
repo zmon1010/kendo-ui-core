@@ -12,7 +12,9 @@
 %end
 % else
     <%= type_script_kind %> <%= type_script_type %> <%= 'extends ' + type_script_base_class if type_script_base_class %> {
-% if widget?
+% if constructor_params.any?
+        <%= type_script_constructor %>
+% elsif widget?
         static fn: <%= type_script_type %>;
         static extend(proto: Object): <%= type_script_type %>;
 

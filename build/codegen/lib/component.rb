@@ -19,7 +19,7 @@ module CodeGen
     class Component
         include Options
 
-        attr_reader :full_name, :name, :options, :events, :methods, :class_methods, :fields
+        attr_reader :full_name, :name, :options, :events, :methods, :class_methods, :constructor_params, :fields
 
         def initialize(settings)
             @full_name = settings[:name]
@@ -27,6 +27,7 @@ module CodeGen
             @name = @full_name.split('.').last
             @options = []
             @events = []
+            @constructor_params = []
             @fields = []
             @methods = []
             @class_methods = []
@@ -83,6 +84,16 @@ module CodeGen
                     add_option(option)
                 end
             end
+        end
+
+        def add_constructor_param(settings)
+            settings[:owner] = self
+
+            param = field_class.new(settings)
+
+            @constructor_params.push(param)
+
+            param
         end
 
         def add_field(settings)

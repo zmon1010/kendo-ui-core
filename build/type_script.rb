@@ -56,7 +56,7 @@ module CodeGen::TypeScript
     }
 
     def self.type(type)
-        return type if type.start_with?('kendo')
+        return type.split('|')[0] if type.start_with?('kendo')
 
         result = TYPES[type]
 
@@ -433,6 +433,18 @@ module CodeGen::TypeScript
 
         def config_object?
             @name =~ /Options$/
+        end
+
+        def type_script_constructor
+            params = constructor_params.map do |param|
+                if param.name == 'options'
+                    "#{param.name}?: #{type_script_options_type}"
+                else
+                    "#{param.name}: #{param.type_script_type}"
+                end
+            end
+
+            "constructor(#{params.join(', ')});"
         end
 
         def type_script_kind
