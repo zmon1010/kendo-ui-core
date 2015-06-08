@@ -160,44 +160,44 @@
 
         test("correct slot for lower border value", function() {
             var slot = axis.getSlot(0.01);
-            close(slot.y1, 592.5, TOLERANCE);
-            close(slot.y2, 592.5, TOLERANCE);
+            close(slot.y1, 598.9, TOLERANCE);
+            close(slot.y2, 598.9, TOLERANCE);
         });
 
         test("correct slot for upper border value", function() {
             var slot = axis.getSlot(100);
-            close(slot.y1, 7.5, TOLERANCE);
-            close(slot.y2, 7.5, TOLERANCE);
+            close(slot.y1, 0, TOLERANCE);
+            close(slot.y2, 0, TOLERANCE);
         });
 
         test("correct slot for whole power value", function() {
             var slot = axis.getSlot(10);
-            close(slot.y1, 153.75, TOLERANCE);
-            close(slot.y2, 153.75, TOLERANCE);
+            close(slot.y1, 149.75, TOLERANCE);
+            close(slot.y2, 149.75, TOLERANCE);
         });
 
         test("correct slot for fraction power value", function() {
             var slot = axis.getSlot(5);
-            close(slot.y1, 197.77, TOLERANCE);
-            close(slot.y2, 197.77, TOLERANCE);
+            close(slot.y1, 194.82, TOLERANCE);
+            close(slot.y2, 194.82, TOLERANCE);
         });
 
         test("correct slot for range", function() {
             var slot = axis.getSlot(10, 5);
-            close(slot.y1, 153.75, TOLERANCE);
-            close(slot.y2, 197.77, TOLERANCE);
+            close(slot.y1, 149.75, TOLERANCE);
+            close(slot.y2, 194.829, TOLERANCE);
         });
 
         test("limits value if third parameter is true", function() {
             var slot = axis.getSlot(110, 110, true);
-            close(slot.y1, 7.5, TOLERANCE);
-            close(slot.y2, 7.5, TOLERANCE);
+            close(slot.y1, 0, TOLERANCE);
+            close(slot.y2, 0, TOLERANCE);
         });
 
         test("does not limit value if third parameter is false", function() {
             var slot = axis.getSlot(110, 110, false);
-            close(slot.y1, 1.45, TOLERANCE);
-            close(slot.y2, 1.45, TOLERANCE);
+            close(slot.y1, -6.198, TOLERANCE);
+            close(slot.y2, -6.198, TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -213,44 +213,44 @@
 
         test("correct slot for lower border value", function() {
             var slot = axis.getSlot(0.01);
-            close(slot.y1, 7.5, TOLERANCE);
-            close(slot.y2, 7.5, TOLERANCE);
+            close(slot.y1, 0, TOLERANCE);
+            close(slot.y2, 0, TOLERANCE);
         });
 
         test("correct slot for upper border value", function() {
             var slot = axis.getSlot(100);
-            close(slot.y1, 592.5, TOLERANCE);
-            close(slot.y2, 592.5, TOLERANCE);
+            close(slot.y1, 599, TOLERANCE);
+            close(slot.y2, 599, TOLERANCE);
         });
 
         test("correct slot for whole power value", function() {
             var slot = axis.getSlot(10);
-            close(slot.y1, 446.25, TOLERANCE);
-            close(slot.y2, 446.25, TOLERANCE);
+            close(slot.y1, 449.25, TOLERANCE);
+            close(slot.y2, 449.25, TOLERANCE);
         });
 
         test("correct slot for fraction power value", function() {
             var slot = axis.getSlot(5);
-            close(slot.y1, 402.224, TOLERANCE);
-            close(slot.y2, 402.224, TOLERANCE);
+            close(slot.y1, 404.17, TOLERANCE);
+            close(slot.y2, 404.17, TOLERANCE);
         });
 
         test("correct slot for range", function() {
             var slot = axis.getSlot(10, 5);
-            close(slot.y1, 402.224, TOLERANCE);
-            close(slot.y2, 446.25, TOLERANCE);
+            close(slot.y1, 404.17, TOLERANCE);
+            close(slot.y2, 449.25, TOLERANCE);
         });
 
         test("limits value if third parameter is true", function() {
             var slot = axis.getSlot(110, 110, true);
-            close(slot.y1, 592.5, TOLERANCE);
-            close(slot.y2, 592.5, TOLERANCE);
+            close(slot.y1, 599, TOLERANCE);
+            close(slot.y2, 599, TOLERANCE);
         });
 
         test("does not limit value if third parameter is false", function() {
             var slot = axis.getSlot(110, 110, false);
-            close(slot.y1, 598.55, TOLERANCE);
-            close(slot.y2, 598.55, TOLERANCE);
+            close(slot.y1, 605.198, TOLERANCE);
+            close(slot.y2, 605.198, TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -265,44 +265,44 @@
 
         test("correct slot for lower border value", function() {
             var slot = axis.getSlot(0.01);
-            close(slot.x1, 16, TOLERANCE);
-            close(slot.x2, 16, TOLERANCE);
+            close(slot.x1, 0, TOLERANCE);
+            close(slot.x2, 0, TOLERANCE);
         });
 
         test("correct slot for upper border value", function() {
             var slot = axis.getSlot(100);
-            close(slot.x1, 788, TOLERANCE);
-            close(slot.x2, 788, TOLERANCE);
+            close(slot.x1, 799, TOLERANCE);
+            close(slot.x2, 799, TOLERANCE);
         });
 
         test("correct slot for whole power value", function() {
             var slot = axis.getSlot(10);
-            close(slot.x1, 595, TOLERANCE);
-            close(slot.x2, 595, TOLERANCE);
+            close(slot.x1, 599.25, TOLERANCE);
+            close(slot.x2, 599.25, TOLERANCE);
         });
 
         test("correct slot for fraction power value", function() {
             var slot = axis.getSlot(5);
-            close(slot.x1, 536.9, TOLERANCE);
-            close(slot.x2, 536.9, TOLERANCE);
+            close(slot.x1, 539.11, TOLERANCE);
+            close(slot.x2, 539.11, TOLERANCE);
         });
 
         test("correct slot for range", function() {
             var slot = axis.getSlot(10, 5);
-            close(slot.x1, 536.9, TOLERANCE);
-            close(slot.x2, 595, TOLERANCE);
+            close(slot.x1, 539.119, TOLERANCE);
+            close(slot.x2, 599.25, TOLERANCE);
         });
 
         test("limits value if third parameter is true", function() {
             var slot = axis.getSlot(110, 110, true);
-            close(slot.x1, 788, TOLERANCE);
-            close(slot.x2, 788, TOLERANCE);
+            close(slot.x1, 799, TOLERANCE);
+            close(slot.x2, 799, TOLERANCE);
         });
 
         test("does not limit value if third parameter is false", function() {
             var slot = axis.getSlot(110, 110, false);
-            close(slot.x1, 796, TOLERANCE);
-            close(slot.x2, 796, TOLERANCE);
+            close(slot.x1, 807.26, TOLERANCE);
+            close(slot.x2, 807.26, TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -318,44 +318,44 @@
 
         test("correct slot for lower border value", function() {
             var slot = axis.getSlot(0.01);
-            close(slot.x1, 788, TOLERANCE);
-            close(slot.x2, 788, TOLERANCE);
+            close(slot.x1, 798.9, TOLERANCE);
+            close(slot.x2, 798.9, TOLERANCE);
         });
 
         test("correct slot for upper border value", function() {
             var slot = axis.getSlot(100);
-            close(slot.x1, 16, TOLERANCE);
-            close(slot.x2, 16, TOLERANCE);
+            close(slot.x1, 0, TOLERANCE);
+            close(slot.x2, 0, TOLERANCE);
         });
 
         test("correct slot for whole power value", function() {
             var slot = axis.getSlot(10);
-            close(slot.x1, 209, TOLERANCE);
-            close(slot.x2, 209, TOLERANCE);
+            close(slot.x1, 199.75, TOLERANCE);
+            close(slot.x2, 199.75, TOLERANCE);
         });
 
         test("correct slot for fraction power value", function() {
             var slot = axis.getSlot(5);
-            close(slot.x1, 267.09, TOLERANCE);
-            close(slot.x2, 267.09, TOLERANCE);
+            close(slot.x1, 259.88, TOLERANCE);
+            close(slot.x2, 259.88, TOLERANCE);
         });
 
         test("correct slot for range", function() {
             var slot = axis.getSlot(10, 5);
-            close(slot.x1, 209, TOLERANCE);
-            close(slot.x2, 267.09, TOLERANCE);
+            close(slot.x1, 199.75, TOLERANCE);
+            close(slot.x2, 259.88, TOLERANCE);
         });
 
         test("limits value if third parameter is true", function() {
             var slot = axis.getSlot(110, 110, true);
-            close(slot.x1, 16, TOLERANCE);
-            close(slot.x2, 16, TOLERANCE);
+            close(slot.x1, 0, TOLERANCE);
+            close(slot.x2, 0, TOLERANCE);
         });
 
         test("does not limit value if third parameter is false", function() {
             var slot = axis.getSlot(110, 110, false);
-            close(slot.x1, 8, TOLERANCE);
-            close(slot.x2, 8, TOLERANCE);
+            close(slot.x1, -8.26, TOLERANCE);
+            close(slot.x2, -8.26, TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -389,22 +389,22 @@
         });
 
         test("correct lower border value", function() {
-            var value = axis.getValue(Point(0, 592.5));
+            var value = axis.getValue(Point(0, 599));
             close(value, 0.01, TOLERANCE);
         });
 
         test("correct upper border value", function() {
-            var value = axis.getValue(Point(0, 7.5));
+            var value = axis.getValue(Point(0, 0));
             close(value, 100, TOLERANCE);
         });
 
         test("correct whole power value", function() {
-            var value = axis.getValue(Point(0, 153.75));
+            var value = axis.getValue(Point(0, 149.75));
             close(value, 10, TOLERANCE);
         });
 
         test("correct fraction power value", function() {
-            var value = axis.getValue(Point(0, 197.77));
+            var value = axis.getValue(Point(0, 194.82));
             close(value, 5, TOLERANCE);
         });
 
@@ -420,22 +420,22 @@
         });
 
         test("correct lower border value", function() {
-            var value = axis.getValue(Point(0, 7.5));
+            var value = axis.getValue(Point(0, 0));
             close(value, 0.01, TOLERANCE);
         });
 
         test("correct upper border value", function() {
-            var value = axis.getValue(Point(0, 592.5));
+            var value = axis.getValue(Point(0, 599));
             close(value, 100, TOLERANCE);
         });
 
         test("correct whole power value", function() {
-            var value = axis.getValue(Point(0, 446.25));
+            var value = axis.getValue(Point(0, 449.25));
             close(value, 10, TOLERANCE);
         });
 
         test("correct fraction power value", function() {
-            var value = axis.getValue(Point(0, 402.224));
+            var value = axis.getValue(Point(0, 404.17));
             close(value, 5, TOLERANCE);
         });
 
@@ -450,22 +450,22 @@
         });
 
         test("correct lower border value", function() {
-            var value = axis.getValue(Point(12, 0));
+            var value = axis.getValue(Point(8.87, 0));
             close(value, 0.01, TOLERANCE);
         });
 
         test("correct upper border value", function() {
-            var value = axis.getValue(Point(788, 0));
+            var value = axis.getValue(Point(799, 0));
             close(value, 100, TOLERANCE);
         });
 
         test("correct whole power value", function() {
-            var value = axis.getValue(Point(595.125, 0));
+            var value = axis.getValue(Point(599.25, 0));
             close(value, 10, TOLERANCE);
         });
 
         test("correct fraction power value", function() {
-            var value = axis.getValue(Point(536.6, 0));
+            var value = axis.getValue(Point(539.119, 0));
             close(value, 5, TOLERANCE);
         });
 
@@ -481,23 +481,23 @@
         });
 
         test("correct lower border value", function() {
-            var value = axis.getValue(Point(787.999, 0));
+            var value = axis.getValue(Point(798.999, 0));
             close(value, 0.01, TOLERANCE);
         });
 
         test("correct upper border value", function() {
-            var value = axis.getValue(Point(16, 0));
+            var value = axis.getValue(Point(0, 0));
             close(value, 100, TOLERANCE);
         });
 
         test("correct whole power value", function() {
             var value = axis.getValue(Point(206.375, 0));
-            close(value, 10.31, TOLERANCE);
+            close(value, 9.264, TOLERANCE);
         });
 
         test("correct fraction power value", function() {
             var value = axis.getValue(Point(264.89, 0));
-            close(value, 5.13, TOLERANCE);
+            close(value, 4.719, TOLERANCE);
         });
 
     })();
@@ -537,13 +537,13 @@
         test("delta -1 translates range up", function() {
             var range = axis.translateRange(-1);
             close(1.008, range.min, TRANSLATE_TOLERANCE);
-            close(100.79, range.max, TRANSLATE_TOLERANCE);
+            close(100.771, range.max, TRANSLATE_TOLERANCE);
         });
 
         test("delta 1 translates range down", function() {
             var range = axis.translateRange(1);
             close(0.992, range.min, TRANSLATE_TOLERANCE);
-            close(99.215, range.max, TRANSLATE_TOLERANCE);
+            close(99.234, range.max, TRANSLATE_TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -560,13 +560,13 @@
         test("delta -1 translates range down", function() {
             var range = axis.translateRange(-1);
             close(0.992, range.min, TRANSLATE_TOLERANCE);
-            close(99.215, range.max, TRANSLATE_TOLERANCE);
+            close(99.234, range.max, TRANSLATE_TOLERANCE);
         });
 
         test("delta 1 translates range up", function() {
             var range = axis.translateRange(1);
             close(1.008, range.min, TRANSLATE_TOLERANCE);
-            close(100.79, range.max, TRANSLATE_TOLERANCE);
+            close(100.771, range.max, TRANSLATE_TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -582,13 +582,13 @@
         test("delta -1 translates range down", function() {
             var range = axis.translateRange(-1);
             close(range.min, 0.994, TRANSLATE_TOLERANCE);
-            close(range.max, 99.415, TRANSLATE_TOLERANCE);
+            close(range.max, 99.425, TRANSLATE_TOLERANCE);
         });
 
         test("delta 1 translates range up", function() {
             var range = axis.translateRange(1);
             close(range.min, 1.005, TRANSLATE_TOLERANCE);
-            close(range.max, 100.589, TRANSLATE_TOLERANCE);
+            close(range.max, 100.578, TRANSLATE_TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -605,13 +605,13 @@
         test("delta -1 translates range up", function() {
             var range = axis.translateRange(-1);
             close(range.min, 1.005, TRANSLATE_TOLERANCE);
-            close(range.max, 100.589, TRANSLATE_TOLERANCE);
+            close(range.max, 100.578, TRANSLATE_TOLERANCE);
         });
 
         test("delta 1 translates range down", function() {
             var range = axis.translateRange(1);
             close(range.min, 0.994, TRANSLATE_TOLERANCE);
-            close(range.max, 99.415, TRANSLATE_TOLERANCE);
+            close(range.max, 99.425, TRANSLATE_TOLERANCE);
         });
 
     })();
@@ -628,7 +628,7 @@
 
         test("returns positions for all whole powers between min and max", function() {
             var positions = axis.getMajorTickPositions();
-            arrayClose(positions, [515.9, 261.7, 7.5], TOLERANCE);
+            arrayClose(positions, [520.6, 260.3, 0], TOLERANCE);
         });
 
         test("passes options to callback", 3, function() {
@@ -642,7 +642,7 @@
             axis.traverseMajorTicksPositions(function(position, tickOptions) {
                    positions.push(position);
                 }, defaultOptions);
-            arrayClose(positions, [515.9, 261.7, 7.5], TOLERANCE);
+            arrayClose(positions, [520.6, 260.3, 0], TOLERANCE);
         });
 
         test("skips first n positions based on the options", function() {
@@ -650,7 +650,7 @@
             axis.traverseMajorTicksPositions(function(position) {
                 positions.push(position);
             }, {skip: 2, step: 1});
-            arrayClose(positions, [7.5], TOLERANCE);
+            arrayClose(positions, [0], TOLERANCE);
         });
 
         test("applies step", function() {
@@ -658,7 +658,7 @@
             axis.traverseMajorTicksPositions(function(position) {
                 positions.push(position);
             }, {skip: 0, step: 2});
-            arrayClose(positions, [515.9, 7.5], TOLERANCE);
+            arrayClose(positions, [520.6, 0], TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -680,7 +680,7 @@
             axis.traverseMinorTicksPositions(function(position, tickOptions) {
                    positions.push(position);
                 }, defaultOptions);
-            arrayClose(positions, [592.5, 556.9, 526.8, 500.7, 477.7, 457.1, 321.8, 242.6, 186.4, 142.9, 107.3, 77.2, 51.1, 28.1], TOLERANCE);
+            arrayClose(positions, [598.9, 562.5, 531.7, 505, 481.4, 460.4, 321.8, 240.7, 183.2, 138.5, 102.1, 71.3, 44.6, 21], TOLERANCE);
         });
 
         test("skips first n positions for each interval based on the options", function() {
@@ -688,7 +688,7 @@
             axis.traverseMinorTicksPositions(function(position) {
                 positions.push(position);
             }, {skip: 5, step: 1});
-            arrayClose(positions, [556.9, 526.8, 500.7, 477.7, 107.3, 77.2, 51.1, 28.1], TOLERANCE);
+            arrayClose(positions, [562.5, 531.7, 505, 481.4, 102.1, 71.3, 44.6, 21], TOLERANCE);
         });
 
         test("applies step", function() {
@@ -697,7 +697,7 @@
                 positions.push(position);
             }, {skip: 0, step: 3});
 
-            arrayClose(positions, [526.8, 457.1, 186.4, 77.2], TOLERANCE);
+            arrayClose(positions, [531.7, 460.4, 183.2, 71.3], TOLERANCE);
         });
 
     })();
@@ -757,15 +757,15 @@
         test("renders minor ticks", function() {
             var lines = axis._lineGroup.children.slice(1);
             var expectedPaths = [
-                new draw.Path().moveTo(21, 592.5).lineTo(25, 592.5),
-                new draw.Path().moveTo(21, 416.397453).lineTo(25, 416.397453),
-                new draw.Path().moveTo(21, 313.384066).lineTo(25, 313.384066),
-                new draw.Path().moveTo(21, 240.294905).lineTo(25, 240.294905),
-                new draw.Path().moveTo(21, 183.602547).lineTo(25, 183.602547),
-                new draw.Path().moveTo(21, 137.281519).lineTo(25, 137.281519),
-                new draw.Path().moveTo(21, 98.117647).lineTo(25, 98.117647),
-                new draw.Path().moveTo(21, 64.192358).lineTo(25, 64.192358),
-                new draw.Path().moveTo(21, 34.268132).lineTo(25, 34.268132)
+                new draw.Path().moveTo(21, 599).lineTo(25, 599),
+                new draw.Path().moveTo(21, 419).lineTo(25, 419),
+                new draw.Path().moveTo(21, 313).lineTo(25, 313),
+                new draw.Path().moveTo(21, 238).lineTo(25, 238),
+                new draw.Path().moveTo(21, 180).lineTo(25, 180),
+                new draw.Path().moveTo(21, 133).lineTo(25, 133),
+                new draw.Path().moveTo(21, 93).lineTo(25, 93),
+                new draw.Path().moveTo(21, 58).lineTo(25, 58),
+                new draw.Path().moveTo(21, 27).lineTo(25, 27)
             ];
 
             comparePaths(lines, expectedPaths);
@@ -793,8 +793,8 @@
         test("renders major ticks", function() {
             var lines = axis._lineGroup.children.slice(1);
             var expectedPaths = [
-                new draw.Path().moveTo(21, 592.5).lineTo(25, 592.5),
-                new draw.Path().moveTo(21, 7.5).lineTo(25, 7.5)
+                new draw.Path().moveTo(21, 599).lineTo(25, 599),
+                new draw.Path().moveTo(21, 0).lineTo(25, 0)
             ];
             comparePaths(lines, expectedPaths);
         });
@@ -824,15 +824,15 @@
         test("renders minor grid lines", function() {
             var lines = axis._gridLines.children;
             var expectedPaths = [
-                new draw.Path().moveTo(0, 592.5).lineTo(0, 592.5),
-                new draw.Path().moveTo(0, 416.397453).lineTo(0, 416.397453),
-                new draw.Path().moveTo(0, 313.384066).lineTo(0, 313.384066),
-                new draw.Path().moveTo(0, 240.294905).lineTo(0, 240.294905),
-                new draw.Path().moveTo(0, 183.602547).lineTo(0, 183.602547),
-                new draw.Path().moveTo(0, 137.281519).lineTo(0, 137.281519),
-                new draw.Path().moveTo(0, 98.117647).lineTo(0, 98.117647),
-                new draw.Path().moveTo(0, 64.192358).lineTo(0, 64.192358),
-                new draw.Path().moveTo(0, 34.268132).lineTo(0, 34.268132)
+                new draw.Path().moveTo(0, 599).lineTo(0, 599),
+                new draw.Path().moveTo(0, 419).lineTo(0, 419),
+                new draw.Path().moveTo(0, 313).lineTo(0, 313),
+                new draw.Path().moveTo(0, 238).lineTo(0, 238),
+                new draw.Path().moveTo(0, 180).lineTo(0, 180),
+                new draw.Path().moveTo(0, 133).lineTo(0, 133),
+                new draw.Path().moveTo(0, 93).lineTo(0, 93),
+                new draw.Path().moveTo(0, 58).lineTo(0, 58),
+                new draw.Path().moveTo(0, 27).lineTo(0, 27)
             ];
 
             comparePaths(lines, expectedPaths);
@@ -864,8 +864,8 @@
         test("renders minor grid lines", function() {
             var lines = axis._gridLines.children;
             var expectedPaths = [
-                new draw.Path().moveTo(0, 592.5).lineTo(0, 592.5),
-                new draw.Path().moveTo(0, 7.5).lineTo(0, 7.5)
+                new draw.Path().moveTo(0, 599).lineTo(0, 599),
+                new draw.Path().moveTo(0, 0).lineTo(0, 0)
             ];
 
             comparePaths(lines, expectedPaths);
