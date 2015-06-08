@@ -259,8 +259,8 @@
 }
 
 .km-nova .km-group-title,
-.km-nova .km-list fieldset legend
-{
+.km-nova .km-list fieldset legend,
+.km-nova .km-shim li.km-actionsheet-title {
     background: @base;
     border-color: hsv(hsvHue(@base) , hsvSaturation(@base), hsvValue(@base) - 13);
     color: @normal-text-color;
@@ -430,11 +430,6 @@
 {
     color: @normal-text-color;
     background: @background;    
-}
-
-.km-nova .km-shim li.km-actionsheet-title {
-    color: darken(@base, 43%); // Calculate to #9ca3a6;
-    background: @background;
 }
 
 .km-nova .km-actionsheet > li:nth-last-child(2) > a
