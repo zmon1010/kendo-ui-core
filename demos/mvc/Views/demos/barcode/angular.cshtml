@@ -1,14 +1,12 @@
 <div id="example" ng-app="KendoDemos">
-    <div ng-controller="MyCtrl" class="demo-section k-content">
+    <div ng-controller="MyCtrl" class="demo-section k-header">
         <h4>Barcode</h4>
         <span kendo-barcode
               k-type="'code128'"
               ng-model="barcode"
               style="width: 250px; margin: 0 auto;"></span>
-    </div>
-    <div class="box wide">
-        <h4>Set value</h4>
-        <input ng-model="barcode" />
+        <h4 style="padding-top: 2em;">Set value</h4>
+        <input ng-model="barcode" class="k-textbox" style="width: 100%;" />
     </div>
 <script>
     angular.module("KendoDemos", [ "kendo.directives" ])
