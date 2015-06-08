@@ -104,5 +104,19 @@ namespace Kendo.Mvc.UI.Tests.Map.Serialization
         {
             layer.ToJson().ContainsKey("symbol").ShouldBeFalse();
         }
+
+
+        [Fact]
+        public void Serializes_data_source()
+        {
+            layer.DataSource = new DataSource();
+            layer.ToJson().ContainsKey("dataSource").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Does_not_serialize_default_data_source()
+        {
+            layer.ToJson().ContainsKey("dataSource").ShouldBeFalse();
+        }
     }
 }

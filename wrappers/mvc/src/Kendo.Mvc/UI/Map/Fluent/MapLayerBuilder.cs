@@ -4,7 +4,7 @@ namespace Kendo.Mvc.UI.Fluent
     using System.Collections;
     using System;
     using Kendo.Mvc.Extensions;
-using System.Web.Mvc;
+    using System.Web.Mvc;
 
     /// <summary>
     /// Defines the fluent API for configuring the MapLayer settings.
@@ -25,6 +25,7 @@ using System.Web.Mvc;
         /// <returns></returns>
         public MapLayerBuilder DataSource(Action<MapLayerDataSourceBuilder> configurator)
         {
+            container.DataSource = new DataSource();
             configurator(new MapLayerDataSourceBuilder(container.DataSource, container.ViewContext, container.UrlGenerator));
 
             return this;

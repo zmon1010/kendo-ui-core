@@ -11,7 +11,6 @@ namespace Kendo.Mvc.UI
     {
         public MapLayer(Map map)
         {
-            DataSource = new DataSource();
             ViewContext = map.ViewContext;
             UrlGenerator = map.UrlGenerator;
             //>> Initialization
@@ -93,11 +92,9 @@ namespace Kendo.Mvc.UI
 
         protected override void Serialize(IDictionary<string, object> json)
         {
-            var dataSource = DataSource.ToJson();
-
-            if (dataSource.Any())
+            if (DataSource != null)
             {
-                json["dataSource"] = dataSource;
+                json["dataSource"] = DataSource.ToJson();
             }
 
             if (Subdomains != null)
