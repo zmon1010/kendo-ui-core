@@ -41,24 +41,12 @@
     function ThemeBuilderInterface(options) {
         this._injectStyles();
 
-        if (typeof jQuery == UNDEFINED || typeof kendo == UNDEFINED) {
-            this._initError();
-            return;
-        }
-
         if (options && options.container) {
             this.container = $(options.container);
-        } else {
-            this.container = this._createWindow();
+            this._createInterfaceFrame();
         }
 
-        this.container.fadeIn(FAST);
-
-        this._createInterfaceFrame();
-
-        if (this._instance()) {
-            this.open();
-        }
+        this.open();
     }
 
     ThemeBuilderInterface.prototype = {
@@ -73,12 +61,13 @@
         },
 
         open: function() {
-            if (typeof jQuery == UNDEFINED || typeof kendo == UNDEFINED) {
-                this._initError();
-                return;
+            if (!this.container) {
+                this._injectStyles();
+                this._showMessage(
+                    "The Kendo UI ThemeBuilder bookmarklet is not available at this time.<br>" +
+                    "Head to the <a href='http://demos.telerik.com/kendo-ui/beta/themebuilder'>ThemeBuilder web app</a> to modify themes."
+                );
             }
-
-            jQuery(this.container).fadeIn(FAST).animate({ height: 480 }, FAST);
         },
 
         close: function() {
@@ -91,42 +80,6 @@
 
         reload: function() {
             this._instance().infer(document);
-        },
-
-        _createWindow: function () {
-            var dialog = jQuery("<div id='ktb-wrap'><div id='ktb-close' /></div>"),
-                start;
-
-            dialog
-                .css({ display: "none", height: 0 })
-                .on("click", "#ktb-close", jQuery.proxy(this.close, this))
-                .appendTo(doc.body);
-
-            if (kendo.ui && kendo.ui.Draggable) {
-                this.draggable = dialog.kendoDraggable({
-                    dragstart: function(e) {
-                        var initialPosition = kendo.getOffset(dialog, "position");
-
-                        start = {
-                            left: e.pageX - initialPosition.left,
-                            top: e.pageY - initialPosition.top
-                        };
-
-                        dialog.append("<div id='ktb-overlay'></div>");
-                    },
-                    drag: function(e) {
-                        dialog.css({
-                            left: e.pageX - start.left,
-                            top: e.pageY - start.top
-                        });
-                    },
-                    dragend: function() {
-                        dialog.find("#ktb-overlay").remove();
-                    }
-                });
-            }
-
-            return dialog;
         },
 
         _createInterfaceFrame: function () {
@@ -200,13 +153,7 @@
     window.kendo.ui.ThemeBuilderInterface = ThemeBuilderInterface;
 
     if (!settings || settings.autoRun !== false) {
-        var tb = window.kendoThemeBuilder = new ThemeBuilderInterface();
-
-        tb._injectStyles();
-        tb._showMessage(
-            "The Kendo UI ThemeBuilder is not available as a bookmarklet at this time.<br>" +
-            "Head to the <a href='http://demos.telerik.com/kendo-ui/themebuilder'>ThemeBuilder web app</a> to modify themes."
-        );
+        window.kendoThemeBuilder = new ThemeBuilderInterface();
     }
 })();
 
