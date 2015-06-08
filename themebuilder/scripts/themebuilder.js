@@ -1,5 +1,5 @@
 ;(function($, kendo) {
-
+    /* global JSZip */
     var proxy = $.proxy,
         extend = $.extend,
         map = $.map,
@@ -140,7 +140,7 @@
 
                 this.element.on("change", proxy(this._change, this));
 
-                this._change();
+                this.value(this.element.val());
             },
 
             events: [
@@ -215,15 +215,22 @@
         LessTheme = ObservableObject.extend({
             init: function(options) {
                 options = options || {};
-                this.template = options.template || "";
                 this.constants = options.constants || {};
+                this.files = {};
 
                 ObservableObject.fn.init.call(this);
             },
 
             serialize: function() {
                 return map(this.constants, function(item, key) {
-                    return key + ": " + item.value + ";";
+                    if (item.type == "file-import") {
+                        return '@import "' + item.value + '";';
+                    } else {
+                        return key + ": " + item.value + ";";
+                    }
+                }).sort(function(a, b) {
+                    // sort imports to bottom
+                    return (/^@import/).test(a) ? 1 : a < b ? -1 : 0;
                 }).join("\n");
             },
 
@@ -247,11 +254,15 @@
                 }
             },
 
+            registerFile: function(file) {
+                this.files[file.name] = file.content;
+            },
+
             infer: function(targetDocument) {
-                var constants = this.constants, constant,
+                var constants = this.constants, name, constant,
                     property, value, target,
                     cachedPrototype = $("<div style='border-style:solid;' />").appendTo(targetDocument.body),
-                    prototype;
+                    proto;
 
                 function getInferPrototype(target) {
                     target = $.trim(target);
@@ -290,18 +301,18 @@
                     }
                 }
 
-                for (constant in constants) {
-                    constant = constants[constant];
+                for (name in constants) {
+                    constant = constants[name];
 
                     if (constant.infer) {
                         // computed constant
                         constant.value = constant.infer();
                     } else if (!(constant.readonly && constant.value)) {
                         // editable constant with no pre-set value
-                        prototype = getInferPrototype(constant.target);
+                        proto = getInferPrototype(constant.target);
 
                         property = constant.property;
-                        target = prototype.add(prototype.find("*:last")).last();
+                        target = proto.add(proto.find("*:last")).last();
 
                         if (property == "border-color") {
                             value = target.css("border-top-color");
@@ -322,19 +333,37 @@
 
                         constant.value = value;
 
-                        if (prototype[0] != cachedPrototype[0]) {
-                            prototype.remove();
+                        if (proto[0] != cachedPrototype[0]) {
+                            proto.remove();
                         }
                     }
                 }
 
                 cachedPrototype.remove();
+
+                this.trigger("change");
+            },
+
+            _resolveFiles: function(less) {
+                var files = this.files;
+
+                function resolveFile(_, filename) {
+                    return files[filename];
+                }
+
+                while (/@import/.test(less)) {
+                    less = less.replace(/@import ["'](.*)["'];/g, resolveFile);
+                }
+
+                return less;
             },
 
             _generateTheme: function(callback) {
                 var constants = this.serialize();
+                var less = this._resolveFiles(constants);
+
                 (new window.less.Parser()).parse(
-                    constants + this.template,
+                    less,
                     function (err, tree) {
                         var console = window.console;
 
@@ -352,13 +381,9 @@
             },
 
             _updateStyleSheet: function(cssText, targetDocument) {
-                var style = $("style[title='themebuilder']", targetDocument.documentElement)[0];
+                this.clear(targetDocument);
 
-                if (style) {
-                    style.parentNode.removeChild(style);
-                }
-
-                style = targetDocument.createElement("style");
+                var style = targetDocument.createElement("style");
                 style.setAttribute("title", "themebuilder");
 
                 $("head", targetDocument.documentElement)[0].appendChild(style);
@@ -373,21 +398,37 @@
             applyTheme: function(targetDocument) {
                 var that = this;
 
-                this._generateTheme(function(constants, cssText) {
+                this._generateTheme(function(_, cssText) {
                     that._updateStyleSheet(cssText, targetDocument);
                 });
             },
 
             source: function(format, callback) {
-                this._generateTheme(proxy(function(constants, css) {
-                    constants += '\n@import "theme-template.less";';
-
+                this._generateTheme(function(less, css) {
                     if (format == "less") {
-                        callback(constants);
+                        callback(less);
                     } else {
                         callback(css);
                     }
-                }, this));
+                });
+            },
+
+            sources: function() {
+                var files = [ [ "kendo.custom.less", this.serialize() ] ];
+
+                this._generateTheme(function(less, css) {
+                    files.push([ "kendo.custom.css", css ]);
+                });
+
+                return files;
+            },
+
+            clear: function(targetDocument) {
+                var style = $("style[title='themebuilder']", targetDocument.documentElement)[0];
+
+                if (style) {
+                    style.parentNode.removeChild(style);
+                }
             }
         }),
 
@@ -450,8 +491,10 @@
 
             source: function(format, callback) {
                 var result = {},
-                    constant, constants = this.constants,
-                    value;
+                    constants = this.constants,
+                    constant, value;
+
+                callback = callback || $.noop;
 
                 for (constant in constants) {
                     value = constants[constant].value;
@@ -464,13 +507,21 @@
                 }
 
                 if (format == "string") {
-                    callback("// use as theme: 'newTheme'\n" +
-                           "kendo.dataviz.ui.registerTheme('newTheme', " +
-                           JSON.stringify(result, null, 4) +
-                           ");");
-                } else {
-                    callback(result);
+                    result =
+                        "// Kendo UI theme for data visualization widgets\n" +
+                        "// Use as theme: 'newTheme' in configuration options (or change the name)\n" +
+                        "kendo.dataviz.ui.registerTheme('newTheme', " +
+                            JSON.stringify(result, null, 4) +
+                        ");";
                 }
+
+                callback(result);
+
+                return result;
+            },
+
+            sources: function() {
+                return [ [ "kendo.custom.js", this.source("string") ] ];
             },
 
             applyTheme: function(targetDocument) {
@@ -510,7 +561,9 @@
                 setTheme("[data-role=chart]", "kendoChart");
                 setTheme("[data-role=radialgauge]", "kendoRadialGauge");
                 setTheme("[data-role=lineargauge]", "kendoLinearGauge");
-            }
+            },
+
+            clear: $.noop
         }),
 
         ThemeCollection = kendo.data.ObservableArray.extend({
@@ -528,6 +581,7 @@
 
             infer: function(targetDocument) {
                 for (var i = 0; i < this.length; i++) {
+                    this[i].clear(targetDocument);
                     this[i].infer(targetDocument);
                 }
             },
@@ -542,17 +596,35 @@
                 return [];
             },
 
+            registerFile: function(file) {
+                for (var i = 0; i < this.length; i++) {
+                    if (this[i] instanceof LessTheme) {
+                        this[i].registerFile(file);
+                    }
+                }
+            },
+
             apply: function(targetDocument) {
                 for (var i = 0; i < this.length; i++) {
                     this[i].applyTheme(targetDocument);
                 }
+            },
+
+            toDataURL: function() {
+                var zip = new JSZip();
+                var addToZip = $.proxy(zip.file.apply, zip.file, zip);
+
+                for (var i = 0; i < this.length; i++) {
+                    $.map(this[i].sources(), addToZip);
+                }
+
+                return "data:application/zip;base64," + zip.generate({ compression: "DEFLATE" });
             }
         }),
 
         ThemeBuilder = kendo.Observable.extend({
             init: function(templateInfo, targetDocument) {
-                var themes = [],
-                    themebuilder = this;
+                var themes = [];
 
                 templateInfo = this.templateInfo = templateInfo || {};
                 this.targetDocument = targetDocument || (window.parent || window).document;
@@ -567,11 +639,24 @@
 
                 this.themes = new ThemeCollection(themes);
 
-                this.themes.infer(this.targetDocument);
+                this.infer(this.targetDocument);
 
                 this.render(templateInfo.webConstantsHierarchy, templateInfo.datavizConstantsHierarchy);
 
                 this.element = $("#kendo-themebuilder");
+
+                this._editorContainer = $(".stylable-elements").kendoPanelBar();
+
+                this._editorContainer.kendoPanelBar("expand", ".k-item");
+
+                this._editors();
+
+                this.themes.bind("change", proxy(this._reload, this));
+
+                this._track();
+            },
+            _editors: function() {
+                var themebuilder = this;
 
                 function changeHandler() {
                     var value = this.value();
@@ -590,13 +675,31 @@
                     });
                 }
 
-                $(".stylable-elements")
-                    .kendoPanelBar()
+                function toValue(x) {
+                    return { text: x.text, value: x.value.replace(/"|'/g, "") };
+                }
+
+                function addSmallItemClass(e) {
+                    e.sender.popup.element.addClass('ktb-small-items');
+                }
+
+                this._editorContainer
                     .find(".ktb-colorinput").kendoColorInput({
+                        open: addSmallItemClass,
                         change: changeHandler
                     }).end()
                     .find(".ktb-gradient").kendoGradientEditor({
                         change: changeHandler
+                    }).end()
+                    .find(".ktb-dropdown").each(function() {
+                        var data = themebuilder.themes.valuesFor(this.id);
+
+                        $(this).kendoDropDownList({
+                            change: changeHandler,
+                            dataTextField: "text",
+                            dataValueField: "value",
+                            dataSource: new kendo.data.DataSource({ data: data })
+                        });
                     }).end()
                     .find(".ktb-combo")
                         .each(function() {
@@ -604,16 +707,13 @@
 
                             data.splice(0, 0, { text: "unchanged", value: this.value });
 
-                            data = map(data, function(x) {
-                                return { text: x.text, value: x.value.replace(/"|'/g, "") };
-                            });
-
                             $(this).kendoComboBox({
                                 autoBind: true,
                                 template: "<span class='ktb-texture-preview k-header' style='background-image:${ data.value };' />",
                                 change: changeHandler,
+                                open: addSmallItemClass,
                                 dataSource: new kendo.data.DataSource({
-                                    data: data
+                                    data: map(data, toValue)
                                 })
                             });
                         })
@@ -632,119 +732,26 @@
                         spin: changeHandler,
                         change: changeHandler
                     });
-
-                $(".ktb-action-source").on(CLICK, proxy(this.showSource, this));
-                $(".ktb-action-save").on(CLICK, proxy(this.saveSource, this));
-                $(".ktb-action-show-import").on(CLICK, proxy(this.showImport, this));
-                $(".ktb-action-show[data-suite]").on(CLICK, proxy(this.showSuite, this));
-                $(".ktb-action-back").on(CLICK, proxy(this.hideOverlay, this));
-                $(".ktb-action-back-to-suites").on(CLICK, proxy(this.showSuiteChooser, this));
-                $(".ktb-action-import").on(CLICK, proxy(this.importTheme, this));
-
-                this._track();
             },
-            showSuiteChooser: function() {
-                $("#suite-chooser").slideDown("fast", function() {
-                    $(".ktb-view[data-suite]").hide();
+            _reload: function() {
+                var themes = this.themes;
+                var editors = [
+                    kendo.roleSelector("colorinput"),
+                    kendo.roleSelector("numerictextbox"),
+                    kendo.roleSelector("gradienteditor"),
+                    kendo.roleSelector("combobox")
+                ].join(",");
+
+                this.element.find(editors).each(function() {
+                    var instance = kendo.widgetInstance($(this));
+                    var name = instance.element.attr("id");
+                    var value = (themes[0].constants[name] || themes[1].constants[name]).value;
+
+                    instance.value(value);
                 });
             },
-            showSuite: function(e) {
-                e.preventDefault();
-
-                var suite = $(e.target).data("suite");
-
-                $(".ktb-view[data-suite=" + suite + "]").show();
-
-                $("#suite-chooser").slideUp();
-            },
-            showSource: function(e) {
-                e.preventDefault();
-
-                var format = $(e.target).data("format"),
-                    web = format != "string",
-                    theme = this.themes[web ? 0 : 1];
-
-                theme.source(format, function(source) {
-                    $("#download-overlay").slideDown()
-                        .find("textarea").val(source);
-                });
-            },
-            saveSource: function(e) {
-                e.preventDefault();
-
-                var format = $(e.target).data("format"),
-                    web = format != "string",
-                    theme = this.themes[web ? 0 : 1];
-
-                theme.source(format, function(source){
-                    var filename = $("#save-overlay input[name=filename]");
-                    filename.val(
-                        format == "css" ? "kendo/css/kendo.custom.css"
-                            : format == "less" ? "kendo/css/kendo.custom.less"
-                            : format == "string" ? "kendo/kendo.dataviz-theme.js"
-                            : ""
-                    );
-                    $("#save-overlay").slideDown()
-                        .find("textarea").val(source).end()
-                        .find(".feedback").html("").end()
-                        .find(".ktb-action-dosave").off(CLICK).on(CLICK, function(){
-                            options.saveButton.handler(format, source, filename.val(), function(error, isNew){
-                                var feedback = $("#save-overlay .feedback");
-                                if (error) {
-                                    feedback.html("<b>ERROR: " + error + "</b>");
-                                } else {
-                                    feedback.html("<b>Theme was saved " + (isNew ? "(new file)" : "(overwritten)") + "</b>");
-                                }
-                            });
-                        });
-                });
-            },
-            showImport: function(e) {
-                e.preventDefault();
-
-                var suite = $(e.target).closest(".ktb-view").data("suite"),
-                    format = suite == "web" ? "LESS or CSS" : "JSON";
-
-                $("#import-overlay")
-                    .data("suite", suite)
-                    .slideDown()
-                    .find("textarea")
-                        .val("/*************************\n" +
-                             "  paste " + format + " here \n" +
-                             "*************************/")
-                        .select();
-            },
-            importTheme: function(e) {
-                e.preventDefault();
-
-                var view = $(e.target).closest(".ktb-view"),
-                    suite = view.data("suite"),
-                    themeContent = view.find("textarea").val(),
-                    theme = this.themes[suite == "web" ? 0 : 1],
-                    clientObjects = {
-                        "ktb-colorinput": "kendoColorInput",
-                        "ktb-numeric": "kendoNumericTextBox",
-                        "ktb-combo": "kendoComboBox"
-                    };
-
-                theme.deserialize(themeContent, this.targetDocument);
-
-                $("input.ktb-colorinput,input.ktb-numeric,input.ktb-combo").each(function() {
-                    var dataType = this.className.replace(/k-formatted-value|k-input|\s+/gi, ""),
-                        clientObject = $(this).data(clientObjects[dataType]),
-                        constant = theme.constants[this.id];
-
-                    if (clientObject && constant) {
-                        clientObject.value(constant.value);
-                    }
-                });
-
-                theme.applyTheme(this.targetDocument);
-            },
-            hideOverlay: function(e) {
-                e.preventDefault();
-
-                $(".ktb-overlay:visible").slideUp();
+            registerFile: function(file) {
+                this.themes.registerFile(file);
             },
             _propertyChange: function(e) {
                 this.themes.update(e.name, e.value);
@@ -782,6 +789,19 @@
                 // trigger the tracking
                 img.src = urchinUrl;
             },
+
+            infer: function(doc) {
+                this.themes.infer(doc);
+            },
+
+            download: function() {
+                kendo.saveAs({
+                    dataURI: this.themes.toDataURL(),
+                    fileName: "kendo.custom.zip",
+                    proxyURL: "http://demos.telerik.com/kendo-ui/service/export"
+                });
+            },
+
             render: function(webConstantsHierarchy, datavizConstantsHierarchy) {
                 var that = this,
                     template = kendo.template,
@@ -810,50 +830,15 @@
                         "<div #= d.id ? ' id=\"' + d.id + '\"' : '' #" +
                             " class='ktb-view#= d.overlay ? ' ktb-overlay' : '' #'" +
                             renderDataAttributes +
-                            ">#= d.toolbar ? d.toolbar : '' #" +
+                            ">" +
                             "<div class='ktb-content'>#= d.content #</div>" +
                         "</div>",
-                        templateOptions
-                    ),
-                    button = template(
-                        "<button class='k-button ktb-action #= d.action ? ('ktb-action-' + d.action) : '' #'" +
-                            renderDataAttributes +
-                        ">#= d.text #</button>",
                         templateOptions
                     );
 
                 $("<div id='kendo-themebuilder'>" +
                     view({
-                        id: "download-overlay",
-                        overlay: true,
-                        toolbar: button({ action: "back", text: "Back" }) +
-                                 "<a href='http://docs.telerik.com/kendo-ui/getting-started/themebuilder' id='docs-link' target='_blank'>What should I do with this?</a>",
-                        content: "<textarea readonly></textarea>"
-                    }) +
-
-                    view({
-                        id: "save-overlay",
-                        overlay: true,
-                        toolbar: button({ action: "back", text: "Back" }),
-                        content: ("<p>Save the custom theme in your project.  Enter the file name.  It will be overwritten if it exists!</p>" +
-                                  "<input style='width: 100%' name='filename' /><br />" +
-                                  button({ action: "dosave", text: "Save!" }) + " <span class='feedback'></span><br />" +
-                                  "<textarea readonly style='height: 70%; margin-top: 10px'></textarea>")
-                    }) +
-
-                    view({
-                        id: "import-overlay",
-                        overlay: true,
-                        toolbar: button({ action: "back", text: "Back" }) + button({ action: "import", text: "Import" }),
-                        content: "<textarea></textarea>"
-                    }) +
-
-                    view({
-                        data: { suite: "web" },
-                        toolbar: button({ action: "back-to-suites", text: "Back" }) +
-                                 button({ action: options.saveButton ? "save" : "source", data: { format: "css" }, text: "Get CSS..." }) +
-                                 button({ action: options.saveButton ? "save" : "source", data: { format: "less" }, text: "Get LESS..." }) +
-                                 button({ action: "show-import", text: "Import..." }),
+                        id: "editing-interface",
                         content: "<ul class='stylable-elements'>" +
                                     map(webConstantsHierarchy || {}, function(section, title) {
                                         return propertyGroupTemplate({
@@ -864,15 +849,6 @@
                                             processors: processors
                                         });
                                     }).join("") +
-                                 "</ul>"
-                    }) +
-
-                    view({
-                        data: { suite: "dataviz" },
-                        toolbar: button({ action: "back-to-suites", text: "Back" }) +
-                                 button({ action: options.saveButton ? "save" : "source", data: { format: "string" }, text: "Get JSON..." }) +
-                                 button({ action: "show-import", text: "Import..." }),
-                        content: "<ul class='stylable-elements'>" +
                                     map(datavizConstantsHierarchy || {}, function(section, title) {
                                         return propertyGroupTemplate({
                                             title: title,
@@ -884,16 +860,6 @@
                                     }).join("") +
                                  "</ul>"
                     }) +
-
-                    view({
-                        id: "suite-chooser",
-                        content: "<p style='text-align: center'>Create a theme for Kendo UI...</p>" +
-                                 "<ul class='suite-list'>" +
-                                     "<li>" + button({ action: "show", data: { suite: "web" }, text: "Web" }) + "</li>" +
-                                     "<li>" + button({ action: "show", data: { suite: "dataviz" }, text: "DataViz" }) + "</li>" +
-                                 "</ul>"
-                    }) +
-
                 "</div>").appendTo(document.body);
             }
         });

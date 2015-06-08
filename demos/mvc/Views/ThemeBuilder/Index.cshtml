@@ -1,8 +1,112 @@
 @{
-    Layout = "~/Views/Shared/ThemeBuilderLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.SuppressFooter = true;
 }
 
-<div class="content-wrap">
+<div id="example-sidebar" class="chrome">
+    <div id="example-nav-bar">
+        <a href="#" title="Customize selected theme" id="back-forward" class="forward-nav">Customize theme</a>
+    </div>
+
+    <div id="nav-wrapper">
+        <div id="nav" class="root">
+            <div class="choose-theme" data-rel="themechooser">
+                <ul class="tc-theme-list"
+                    data-role="themechooser"
+                    data-template="theme-item-template"
+                    data-bind="source: themes, value: selectedTheme"></ul>
+
+                <script id="theme-item-template" type="text/x-kendo-template">
+                    <li class="tc-item">
+                        # for (var i = 0; i < colors.length; i++) { #
+                            <span class="tc-color" style="background-color: #= colors[i] #"></span>
+                        # } #
+                        <span class="tc-name">#: name #</span>
+                    </li>
+                </script>
+            </div>
+
+            <div id="themebuilder"></div>
+        </div>
+    </div>
+
+    <script>
+        window.kendoTheme = "@ViewBag.Theme";
+        window.kendoCommonFile = "@ViewBag.CommonFile";
+
+        $("#example-sidebar").kendoResponsivePanel({
+            breakpoint: 1200,
+            orientation: "left",
+            toggleButton: "#sidebar-toggle"
+        });
+
+        function toggleNavigationPage(button) {
+            button = $(button);
+
+            if (button.hasClass("back-nav")) {
+                button.text("Customize theme");
+            } else {
+                button.text("Start over");
+            }
+
+            button.toggleClass("forward-nav").toggleClass("back-nav");
+            $("#nav").toggleClass("root");
+        }
+
+        $("#back-forward").on("click", function (e) {
+            e.preventDefault();
+
+            toggleNavigationPage(this);
+        });
+
+        window.kendoThemeBuilderSettings = { autoRun: false, theme: "material" };
+    </script>
+    <script src="@ViewBag.DeployRoot/bootstrap.js"></script>
+    <script src="@Url.Content("~/content/shared/js/theme-chooser.js")"></script>
+
+    <script>
+        $(document).ready(function() {
+            var lastTheme = window.kendoTheme;
+            var themechooser = kendo.widgetInstance($(kendo.roleSelector("themechooser")));
+            var themebuilder = new kendo.ui.ThemeBuilderInterface({
+                container: "#themebuilder"
+            });
+
+            themechooser.bind({
+                change: function(e) {
+                    toggleNavigationPage("#back-forward");
+
+                    if (e.item.value != lastTheme) {
+                        kendo.ui.progress(themebuilder.container, true);
+                        $(".k-loading-text", themebuilder.container).text("Loading theme...");
+                    }
+                },
+                transition: function() {
+                    themebuilder.reload();
+                    kendo.ui.progress(themebuilder.container, false);
+                    lastTheme = this.dataItem(this.select()).value;
+                }
+            });
+
+            window.themebuilder = themebuilder;
+
+            $("#download-theme").click(function(e) {
+                e.preventDefault();
+
+                window.themebuilder.download();
+            });
+        });
+    </script>
+</div>
+
+<div id="main">
+    <div class="chrome">
+        <a href="#" id="sidebar-toggle"><span></span></a>
+
+        <button id="download-theme" class="demos-button">Download theme</button>
+    </div>
+
     <div id="example" class="k-content">
     <div class="column">
         <h3>Button</h3>
@@ -11,7 +115,7 @@
 
         <h3>Menu</h3>
         <ul data-role="menu">
-            <li>First Item
+            <li>First
                 <ul>
                     <li>Sub Item 1</li>
                     <li>Sub Item 2
@@ -26,17 +130,8 @@
                     <li>Sub Item 4</li>
                 </ul>
             </li>
+            <li>Second</li>
             <li disabled="disabled">Disabled</li>
-            <li>Template
-                <ul>
-                    <li>
-                        <div class="k-content" style="padding: 10px;">
-                            This is a <br />simple template item.<br /><br />
-                            <button class="k-button">With a button</button>
-                        </div>
-                    </li>
-                </ul>
-            </li>
         </ul>
 
         <h3>Grid</h3>
@@ -54,11 +149,9 @@
             <ul>
                 <li class="k-state-active">First Tab</li>
                 <li>Second Tab</li>
-                <li>Third Tab</li>
             </ul>
             <div><p>TabStrip sample content, first tab</p></div>
             <div><p>TabStrip sample content, second tab</p></div>
-            <div><p>TabStrip sample content, third tab</p></div>
         </div>
 
         <h3>PanelBar</h3>
@@ -101,31 +194,31 @@
             <ul>
                <li>
                     <input type="checkbox" id="checkbox" class="k-checkbox">
-		            <label class="k-checkbox-label" for="checkbox">Checkbox</label>
+                    <label class="k-checkbox-label" for="checkbox">Checkbox</label>
                </li>
-    	       <li>
+               <li>
                     <input type="checkbox" id="checked-checkbox" class="k-checkbox" checked="checked">
-		            <label class="k-checkbox-label" for="checked-checkbox">Checked</label>
+                    <label class="k-checkbox-label" for="checked-checkbox">Checked</label>
                </li>
                <li>
                     <input type="checkbox" id="disabled-checkbox" class="k-checkbox" disabled>
-		            <label class="k-checkbox-label" for="disabled-checkbox">Disabled</label>
+                    <label class="k-checkbox-label" for="disabled-checkbox">Disabled</label>
                </li>
-           </ul>         
+           </ul>
             <ul>
                 <li>
                     <input type="radio" name="radio" id="radio" class="k-radio">
-		            <label class="k-radio-label" for="radio">Checkbox</label>
+                    <label class="k-radio-label" for="radio">Checkbox</label>
                </li>
                <li>
                    <input type="radio" name="radio" id="checked-radio" class="k-radio" checked="checked">
-		           <label class="k-radio-label" for="checked-radio">Checked</label>
+                   <label class="k-radio-label" for="checked-radio">Checked</label>
                </li>
-               <li>        
+               <li>
                   <input type="radio" name="radio" id="disabled-radio" class="k-radio" disabled>
-		          <label class="k-radio-label" for="disabled-radio">Disabled</label>
+                  <label class="k-radio-label" for="disabled-radio">Disabled</label>
                </li>
-           </ul>  
+           </ul>
         </div>
 
         <h3>Slider</h3>
@@ -151,12 +244,19 @@
         </ul>
 
         <h3>Window</h3>
-        <div data-role="window" data-title="Sample title" data-width="140" data-height="100">Sample content</div>
+        <div id="window-container"></div>
+        <div data-role="window"
+             data-append-to="#window-container"
+             data-title="Sample title"
+             data-draggable="false"
+             data-resizable="false"
+             data-width="100%"
+             data-height="100">
+             Sample content
+         </div>
     </div>
 
     <div class="column">
-        <h3 title="Kendo UI Tooltip" id="tooltip" style="width:10em">Tooltip</h3>
-
         <h3>Upload</h3>
         <input data-role="upload" type="file" />
 
@@ -197,60 +297,36 @@
         <div id="radial-gauge"></div>
     </div>
     </div>
-
-    <div id="instructions-box" class="box">
-        <h4>Instructions</h4>
-        <ol id="instructions-list">
-            <li class="themechooser">
-                <p>Select a theme to modify:</p>
-                <ul class="tc-theme-list"
-                    data-role="themechooser"
-                    data-template="theme-item-template"
-                    data-value="Silver"
-                    data-bind="source: themes, events: { change: updateTheme }"></ul>
-
-                <script id="theme-item-template" type="text/x-kendo-template">
-                    <li class="tc-item">
-                        # for (var i = 0; i < colors.length; i++) { #
-                            <span class="tc-color" style="background-color: #= colors[i] #"></span>
-                        # } #
-                        <span class="tc-name">#: name #</span>
-                    </li>
-                </script>
-            </li>
-            <li>Start the <a class="k-button" id="bookmarklet" href="#">Kendo UI ThemeBuilder</a></li>
-            <li>Use the ThemeBuilder as a <strong>bookmarklet</strong> on your own pages! (Drag the button to your bookmarks bar)</li>
-        </ol>
-    </div>
-
-    <script src="@Url.Content("~/content/shared/js/theme-chooser.js")"></script>
-
-    <script>
-        $("#bookmarklet").attr("href", ("javascript:(function(){" +
-                "var ktb=window.kendoThemeBuilder,s,d=document;" +
-                "if(typeof ktb!='undefined'){" +
-                    "ktb.open();" +
-                    "return" +
-                "}else{" +
-                    "s=d.createElement('script');" +
-                    "s.src='@ViewBag.DeployRoot/bootstrap.js?'+(+new Date());" +
-                    "d.getElementsByTagName('body')[0].appendChild(s);" +
-                "}" +
-            "})()").replace(/\s+/g, "%20"));
-    </script>
-
 </div>
 
 <style>
     .nav-buttons {
-        display: none;
+        visibility: hidden;
     }
 
-    .content-wrap {
-        width: 1200px;
-        margin: 0 auto;
-        overflow: hidden;
-        position: relative;
+    .chrome {
+        background-color: #f5f7f8;
+        outline: none;
+        color: #2d3e50;
+        line-height: 4em;
+        font-size: 1.1667em;
+    }
+
+    @@media screen and (max-width: 720px) {
+        .chrome {
+            line-height: 3em;
+        }
+    }
+
+    #main .chrome {
+        padding: 0 20px;
+        border-bottom: 1px solid #e2e4e7;
+        text-align: right;
+    }
+
+    #main .chrome .demos-button {
+        float: none;
+        display: inline-block;
     }
 
     h3 {
@@ -258,38 +334,45 @@
         margin: 20px 0 13px;
     }
 
-    #example {
-        margin-top: 400px;
+    .tc-name {
+        padding-left: .5em;
     }
 
-    #instructions-box {
-        margin: 0;
-        padding-bottom: 2em;
-        position: absolute;
-        top: 0;
-    }
-
-    #instructions-list li {
-        list-style-type: decimal;
-    }
-
-    .themechooser {
+    .choose-theme {
         text-align: left;
         border: 0;
         background: none;
+        width: 50%;
+        float: left;
     }
 
-    .themechooser ul {
+    #window-container .k-window {
+        position: relative;
+        top: 0 !important;
+        left: 0 !important;
+    }
+
+    #nav-wrapper {
+        overflow: hidden;
+    }
+
+    #themebuilder {
+        position: relative;
+        width: 50%;
+        float: left;
+    }
+
+    .choose-theme ul {
         border: 0;
         background: transparent;
         margin: 1em 0;
-        padding: .5em;
+        padding: .5em 0;
     }
 
-    .themechooser li {
-        display: inline-block;
-        padding: .4em .5%;
-        width: 17%;
+    .choose-theme li {
+        display: block;
+        padding: .5em 1em;
+        width: auto;
     }
 
     .column .k-chart,
@@ -317,6 +400,13 @@
         margin-bottom: 14px;
     }
 
+    @@media screen and (max-width: 980px) {
+        .column {
+            width: auto;
+            float: none;
+        }
+    }
+
     #scheduler {
         clear: both;
         margin: 0 2% 3em;
@@ -328,7 +418,53 @@
     }
 
     .sub-column li {
-        margin: 10px 0;     
+        margin: 10px 0;
+    }
+
+    #themebuilder {
+        height: 100% !important;
+    }
+
+    #ktb-interface {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    #back-forward {
+        padding-top: 1.44em;
+        padding-bottom: 1.44em;
+    }
+
+    #back-forward:before {
+        top: 1.5em;
+    }
+
+    @@media screen and (max-width: 720px) {
+        #back-forward {
+            padding-top: 1.16em;
+            padding-bottom: 1.16em
+        }
+
+        #back-forward:before {
+            top: 1.2em;
+        }
+    }
+
+    #themebuilder .k-loading-image {
+        background-image: url(http://cdn.kendostatic.com/2015.1.429/styles/Bootstrap/loading-image.gif);
+    }
+
+    #themebuilder .k-loading-text {
+        text-indent: 5px;
+        width: 100%;
+        top: 50%;
+        color: #444;
+    }
+
+    #themebuilder .k-loading-color {
+        background-color: #f5f7f8;
+        opacity: 1;
     }
 </style>
 <script>
@@ -373,10 +509,6 @@
                 }
             })
         });
-
-        $("#tooltip").kendoTooltip({
-            position: "top"
-        }).data("kendoTooltip").show();
 
         var serviceBaseUrl = "http://demos.telerik.com/kendo-ui/service";
         $("#scheduler").kendoScheduler({

@@ -1,4 +1,4 @@
-<div class="themechooser" data-role="details">
+<div class="themechooser" data-rel="themechooser" data-role="details">
         <span class="tc-activator"><span class="tc-current" data-bind="text: selectedTheme"></span> Theme</span>
     <div class="tc-theme-list">
         <div class="tc-column">
@@ -6,11 +6,7 @@
             <ul class="themes-grid"
                 data-role="themechooser"
                 data-template="theme-item-template"
-                data-bind="
-                    source: themes,
-                    value: selectedTheme,
-                    events: { change: updateTheme }
-                "></ul>
+                data-bind="source: themes, value: selectedTheme"></ul>
         </div>
     </div>
 </div>

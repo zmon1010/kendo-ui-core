@@ -1,7 +1,7 @@
-/*jshint scripturl: true */
-// bootstrapper file for Kendo ThemeBuilder
+/*jshint scripturl: true */ // bootstrapper file for Kendo ThemeBuilder
 (function() {
-    var doc = document,
+    var settings = window.kendoThemeBuilderSettings,
+        doc = document,
         kendo = window.kendo,
         UNDEFINED = "undefined",
         applicationRoot = (function() {
@@ -12,14 +12,16 @@
         })(),
         FAST = "fast",
         // caution: variables below are generated during builds. update build/theme_builder.rb if you change them!
-        KENDO_LOCATION = "http://cdn.kendostatic.com/2014.3.1119/",
+        KENDO_LOCATION = "http://cdn.kendostatic.com/2015.1.429/",
         JQUERY_LOCATION = "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js",
-        requiredJs = ["scripts/less.js", "scripts/themebuilder.js", "scripts/template.js"],
+        requiredJs = [ "scripts/less.js", "scripts/themebuilder.js", "scripts/constants.js", "scripts/less/type-default.js", "scripts/less/type-bootstrap.js", "scripts/less/type-flat.js", "scripts/less/type-fiori.js", "scripts/less/type-highcontrast.js", "scripts/less/type-material.js", "scripts/less/type-office365.js", "scripts/less/type-metro.js", "scripts/less/common-mixins.js", "scripts/less/themes-type.js" ],
         requiredCss = ["styles/styles.css"],
         bootstrapCss = "styles/bootstrap.css",
         // </generated variables>
-        KENDO_COMMON_CSS_LOCATION = KENDO_LOCATION + "styles/kendo.common.min.css",
-        KENDO_BLACK_CSS_LOCATION = KENDO_LOCATION + "styles/kendo.black.min.css",
+        theme = settings && settings.theme || "black",
+        JSZIP_LOCATION = KENDO_LOCATION + "js/jszip.min.js",
+        KENDO_COMMON_CSS_LOCATION = KENDO_LOCATION + "styles/kendo.common-material.min.css",
+        KENDO_THEME_CSS_LOCATION = KENDO_LOCATION + "styles/kendo." + theme + ".min.css",
         KENDO_ALL_LOCATION = KENDO_LOCATION + "js/kendo.all.min.js";
 
     (function(opt){
@@ -31,87 +33,58 @@
             opt = opt.KENDO;
             if (opt) {
                 KENDO_COMMON_CSS_LOCATION = opt.css_common;
-                KENDO_BLACK_CSS_LOCATION = opt.css_black;
+                KENDO_THEME_CSS_LOCATION = opt.css_black;
                 KENDO_ALL_LOCATION = opt.js;
             }
         }
     }(window.KENDO_THEMEBUILDER_OPTIONS));
 
-    function ThemeBuilderInterface() {
-        var that = this,
-            bootStyles = that.bootStyles;
+    function ThemeBuilderInterface(options) {
+        this._injectStyles();
 
-        bootStyles = doc.createElement("link");
-        bootStyles.setAttribute("rel", "stylesheet");
-        bootStyles.setAttribute("href", applicationRoot + bootstrapCss);
-
-        doc.getElementsByTagName("head")[0].appendChild(bootStyles);
-
-        if (typeof jQuery == UNDEFINED || typeof kendo == UNDEFINED) {
-            that._initError();
-            return;
+        if (options && options.container) {
+            this.container = $(options.container);
+            this._createInterfaceFrame();
         }
 
-        that.container = that._createWindow();
-
-        that.container.fadeIn(FAST);
-
-        that._createInterfaceFrame();
-
-        if (that.iframe.themeBuilder) {
-            that.open();
-        }
+        this.open();
     }
 
     ThemeBuilderInterface.prototype = {
-        open: function() {
-            if (typeof jQuery == UNDEFINED || typeof kendo == UNDEFINED) {
-                this._initError();
-                return;
-            }
+        _injectStyles: function() {
+            var bootStyles;
 
-            jQuery(this.container).fadeIn(FAST).animate({ height: 480 }, FAST);
+            bootStyles = doc.createElement("link");
+            bootStyles.setAttribute("rel", "stylesheet");
+            bootStyles.setAttribute("href", applicationRoot + bootstrapCss);
+
+            doc.getElementsByTagName("head")[0].appendChild(bootStyles);
+        },
+
+        open: function() {
+            if (!this.container) {
+                this._injectStyles();
+                this._showMessage(
+                    "The Kendo UI ThemeBuilder bookmarklet is not available at this time.<br>" +
+                    "Head to the <a href='http://demos.telerik.com/kendo-ui/beta/themebuilder'>ThemeBuilder web app</a> to modify themes."
+                );
+            }
         },
 
         close: function() {
             jQuery(this.container).animate({ height: 0 }, FAST).fadeOut(FAST);
         },
 
-        _createWindow: function () {
-            var that = this,
-                dialog = jQuery("<div id='ktb-wrap'><div id='ktb-close' /></div>"),
-                start;
+        _instance: function() {
+            return this.iframe.themeBuilder;
+        },
 
-            dialog
-                .css({ display: "none", height: 0 })
-                .on("click", "#ktb-close", jQuery.proxy(that.close, that))
-                .appendTo(doc.body);
+        reload: function() {
+            this._instance().infer(document);
+        },
 
-            if (kendo.ui && kendo.ui.Draggable) {
-                that.draggable = dialog.kendoDraggable({
-                    dragstart: function(e) {
-                        var initialPosition = kendo.getOffset(dialog, "position");
-
-                        start = {
-                            left: e.pageX - initialPosition.left,
-                            top: e.pageY - initialPosition.top
-                        };
-
-                        dialog.append("<div id='ktb-overlay'></div>");
-                    },
-                    drag: function(e) {
-                        dialog.css({
-                            left: e.pageX - start.left,
-                            top: e.pageY - start.top
-                        });
-                    },
-                    dragend: function() {
-                        dialog.find("#ktb-overlay").remove();
-                    }
-                });
-            }
-
-            return dialog;
+        download: function() {
+            this._instance().download();
         },
 
         _createInterfaceFrame: function () {
@@ -136,12 +109,13 @@
             doc.write([
                 "<!DOCTYPE html><html><head><meta charset='utf-8' />",
                  stylesheet(KENDO_COMMON_CSS_LOCATION),
-                 stylesheet(KENDO_BLACK_CSS_LOCATION),
+                 stylesheet(KENDO_THEME_CSS_LOCATION),
                  map(requiredCss, function(styleSheetName) {
                      return stylesheet(applicationRoot + styleSheetName);
                  }).join(""),
                  "</head><body>",
                  script(JQUERY_LOCATION),
+                 script(JSZIP_LOCATION),
                  script(KENDO_ALL_LOCATION),
                  map(requiredJs, function(scriptName) {
                      return script(applicationRoot + scriptName);
@@ -154,16 +128,15 @@
             this.iframe = wnd;
         },
 
-        // Shows error message on pages that we can not work with
-        _initError: function() {
-            var messageId = "ktb-message",
-                messageWrap;
+        _showMessage: function (message) {
+            var messageId = "ktb-message";
+            var messageWrap;
 
             if (!doc.getElementById(messageId)) {
                 messageWrap = doc.createElement("div");
                 messageWrap.id = messageId;
                 messageWrap.innerHTML =
-                    "<p>It seems there are no Kendo widgets on this page, so the Kendo themebuilder will be of no use. Please try running it elsewhere.</p>" +
+                    "<p>" + message + "</p>" +
                     "<p><button type='button' onclick='" +
                         "var msg = document.getElementById(\"" + messageId + "\");" +
                         "msg.parentNode.removeChild(msg);" +
@@ -172,9 +145,21 @@
 
                 doc.body.appendChild(messageWrap);
             }
+        },
+
+        // Shows error message on pages that we can not work with
+        _initError: function() {
+            this._showMessage(
+                "It seems there are no Kendo widgets on this page, so the Kendo themebuilder will be of no use.<br>" +
+                "Please try running it on a page with widgets."
+            );
         }
     };
 
-    window.kendoThemeBuilder = new ThemeBuilderInterface();
+    window.kendo.ui.ThemeBuilderInterface = ThemeBuilderInterface;
+
+    if (!settings || settings.autoRun !== false) {
+        window.kendoThemeBuilder = new ThemeBuilderInterface();
+    }
 })();
 

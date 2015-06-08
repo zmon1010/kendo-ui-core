@@ -10,35 +10,6 @@ body {
     font: normal 12px/1.5 Tahoma,sans-serif;
 }
 
-::-webkit-scrollbar {
-    width: 10px;
-    height: 6px;
-}
-
-::-webkit-scrollbar-button:start:decrement,
-::-webkit-scrollbar-button:end:increment {
-    height: 0;
-    display: block;
-    background-color: transparent;
-}
-
-::-webkit-scrollbar-track-piece {
-    background-color: #3b3b3b;
-    -webkit-border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb:vertical {
-    height: 50px;
-    background-color: #666;
-    -webkit-border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb:horizontal {
-    width: 50px;
-    background-color: #666;
-    -webkit-border-radius: 3px;
-}
-
 *::-moz-selection { background: #1179e5; color: #fff; }
 ::selection { background: #1179e5; color: #fff; }
 
@@ -53,9 +24,9 @@ body {
 #kendo-themebuilder label {
     display: inline-block;
     width: 50%;
-    padding-right: 4%;
-    text-align: right;
-    color: #afafaf;
+    padding-left: 4%;
+    text-align: left;
+    color: #444;
 }
 
 #stylable-elements,
@@ -65,18 +36,15 @@ body {
 
 #kendo-themebuilder .k-color-preview,
 #kendo-themebuilder .k-colorinput .k-i-arrow-s {
-    border: 0;
+    border: 1px solid rgba(0,0,0,.5);
     background-image: none;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
+    border-radius: 50%;
 }
 
 .k-color-preview,
 .ktb-texture-preview {
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
+    opacity: 1;
+    border-radius: 50%;
     float: left;
     margin: 1px 0 0 1px;
 }
@@ -85,16 +53,20 @@ body {
     background-image: none;
 }
 
+#kendo-themebuilder .k-icon {
+    opacity: 1;
+}
+
 .ktb-texture-preview {
     width: 19px;
     height: 19px;
 }
 
-.k-list {
+.ktb-small-items .k-list {
     text-align: center;
 }
 
-.k-popup .k-list .k-item {
+.ktb-small-items .k-list .k-item {
     width: 19px;
     height: 19px;
     overflow: hidden;
@@ -103,9 +75,9 @@ body {
     padding: 1px;
 }
 
-.k-popup .k-list .k-state-hover,
-.k-popup .k-list .k-state-focused,
-.k-popup .k-list .k-state-selected {
+.ktb-small-items .k-list .k-state-hover,
+.ktb-small-items .k-list .k-state-focused,
+.ktb-small-items .k-list .k-state-selected {
     padding: 0;
 }
 
@@ -113,6 +85,7 @@ body {
 #kendo-themebuilder .k-gradient-editor,
 #kendo-themebuilder .k-numerictextbox,
 #kendo-themebuilder .k-combobox,
+#kendo-themebuilder .k-dropdown,
 #kendo-themebuilder .k-shadowinput {
     width: 100px;
     margin-bottom: 5px;
@@ -131,10 +104,10 @@ textarea {
 .ktb-view {
     color: #fff;
     display: none;
-    background-color: #3d3d3d;
+    background-color: #e2e4e7;
 }
 
-#suite-chooser {
+#editing-interface {
     display: block;
 }
 
@@ -155,12 +128,10 @@ textarea {
 .ktb-content {
     overflow: scroll;
     overflow-x: hidden;
-    top: 30px;
+    top: 0;
     bottom: 0;
     width: 100%;
-    height: -webkit-calc(100% - 30px);
-    height: -moz-calc(100% - 30px);
-    height: calc(100% - 30px);
+    height: 100%;
 }
 
 .ktb-overlay {
@@ -175,7 +146,7 @@ textarea {
 
 .ktb-overlay textarea {
     color: #fff;
-    background-color: #3d3d3d;
+    background-color: #e2e4e7;
     border: 0;
     padding: 0;
     margin: 0;
@@ -188,13 +159,6 @@ textarea {
 .k-gradient-editor {
     display: inline-block;
     border-width: 0;
-}
-
-.k-gradient-editor .k-preview {
-    width: 15px;
-    display: inline-block;
-    vertical-align: middle;
-    border-radius: 0 3px 3px 0;
 }
 
 #docs-link {

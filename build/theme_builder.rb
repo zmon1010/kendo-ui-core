@@ -1,33 +1,52 @@
+require 'erb'
+
 THEME_BUILDER_BUILDFILE = 'build/theme_builder.rb'
+THEME_FILES = FileList[
+    'styles/web/type-*.less',
+    'styles/web/common/mixins.less',
+    'styles/web/themes/type.less'
+]
+THEME_BUILDER_FILES = [
+    'themebuilder/scripts/less.js',
+    'themebuilder/scripts/themebuilder.js',
+    'themebuilder/scripts/constants.js'
+]
+TYPE_TEMPLATE_FILE = File.join(File.dirname(__FILE__), 'theme_builder', 'type.js.erb')
+TYPE_TEMPLATE = ERB.new(File.read(TYPE_TEMPLATE_FILE), 0, '%<>')
 
 tree :to => 'themebuilder/styles/textures',
      :from => FileList['styles/web/textures/**/*'],
      :root => 'styles/web/textures/'
 
-file 'themebuilder/scripts/template.js' => [ 'styles/web/theme-template.less',
-'themebuilder/scripts/constants.js' ] do |t|
+def less2js(less)
+    less.gsub('"', '\\"')
+        .gsub(/\n/, "\\n")
+        .gsub(/\r/, "")
+end
 
-    less = File.read(t.prerequisites[0])
+directory "themebuilder/scripts/less/"
 
-    less = less.gsub('\\', '\\\\')
-               .gsub('"', '\\"')
-               .gsub("'", "\\\\\\\\'")
-               .gsub(/\n/, "\\n")
-               .gsub(/\r/, "")
+THEME_FILES.each do |type|
+    name = type.sub('styles/web/', '')
+    type_name = name.gsub(/\//, '-').sub('.less', '')
+    less_js = "themebuilder/scripts/less/#{type_name}.js"
 
-    less = "'#{less}'"
+    file less_js => [
+        "themebuilder/scripts/less/",
+        type,
+        THEME_BUILDER_BUILDFILE,
+        TYPE_TEMPLATE_FILE
+    ] do |t|
+        less = less2js(File.read(type))
 
-    template_info = File.read(t.prerequisites[1])
-
-    less = replace_variable(template_info, 'lessTemplate', less)
-
-    File.open(t.name, 'w') do |file|
-        file.write(less)
+        File.write(t.name, TYPE_TEMPLATE.result(binding))
     end
+
+    THEME_BUILDER_FILES.push less_js
 end
 
 def live_cdn_version
-    '2014.3.1119'
+    '2015.1.429'
 end
 
 class PatchedBoostrapScriptTask < Rake::FileTask
@@ -76,11 +95,7 @@ def replace_variable(source, name, value)
     source.gsub(/#{name}\s*=\s*.*(,|;)\s*$/, "#{name}=" + value + '\1')
 end
 
-file_merge 'themebuilder/scripts/themebuilder.all.js' => [
-    'themebuilder/scripts/less.js',
-    'themebuilder/scripts/themebuilder.js',
-    'themebuilder/scripts/template.js'
-]
+file_merge 'themebuilder/scripts/themebuilder.all.js' => THEME_BUILDER_FILES
 file 'themebuilder/scripts/themebuilder.all.js' => THEME_BUILDER_BUILDFILE
 file 'themebuilder/scripts/themebuilder.all.min.js' => 'themebuilder/scripts/themebuilder.all.js' do
     uglifyjs('themebuilder/scripts/themebuilder.all.js', 'themebuilder/scripts/themebuilder.all.min.js');
@@ -88,7 +103,6 @@ end
 
 CLEAN.include('themebuilder/scripts/themebuilder.all*js')
 CLEAN.include('themebuilder/scripts/themebuilder.all*css')
-CLEAN.include('themebuilder/scripts/template.js')
 
 file_merge 'themebuilder/styles/themebuilder.all.css' => [
     'themebuilder/styles/styles.css'
@@ -115,10 +129,8 @@ namespace :themebuilder do
 
     desc('Build the generated ThemeBuilder sources')
     task :sources => [
-        'themebuilder/scripts/less.js',
-        'themebuilder/scripts/template.js',
         'themebuilder/styles/textures'
-    ]
+    ].concat(THEME_BUILDER_FILES)
 
     desc('Build the ThemeBuilder for live deployment')
     task :production => [

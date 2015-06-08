@@ -75,7 +75,7 @@
         init: function(element, options) {
             kendo.ui.ListView.fn.init.call(this, element, options);
 
-            this.bind("change", this._changeCss);
+            this.bind("change", this._updateTheme);
         },
         options: {
             name: "ThemeChooser",
@@ -87,9 +87,28 @@
             var uid = $(element).closest("[data-uid]").attr("data-uid");
             return this.dataSource.getByUid(uid);
         },
-        _changeCss: function(e) {
+        _updateTheme: function(e) {
             // make the item available to event listeners
             e.item = this.dataItem(this.select());
+
+            // change theme
+            var themeName = e.item.value;
+            var commonFile = ThemeChooser.getCommonUrl();
+
+            if (/material/i.test(themeName) && !/material/i.test(commonFile)) {
+                commonFile = "common-material";
+            } else if (/bootstrap/i.test(themeName) && !/bootstrap/i.test(commonFile)) {
+                commonFile = "common-bootstrap";
+            } else if (/fiori/i.test(themeName) && !/fiori/i.test(commonFile)) {
+                commonFile = "common-fiori";
+            } else if (/office365/i.test(themeName) && !/office365/i.test(commonFile)) {
+                commonFile = "common-office365";
+            } else if (!/material|bootstrap|fiori/i.test(themeName)) {
+                commonFile = "common";
+            }
+
+            ThemeChooser.changeThemePair(themeName, commonFile, true)
+                .then(proxy(this.trigger, this, "transition"));
         },
         value: function(value) {
             if (!arguments.length) {
@@ -122,7 +141,7 @@
             { value: "moonlight", name: "Moonlight", colors: [ "#ee9f05", "#40444f", "#212a33" ]  },
             { value: "flat", name: "Flat", colors: [ "#363940", "#2eb3a6", "#fff" ]  },
             { value: "material", name: "Material", colors: [ "#3f51b5", "#283593", "#fff" ]  },
-            { value: "materialblack", name: "Material Black", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] },            
+            { value: "materialblack", name: "Material Black", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] },
             { value: "fiori", name: "Fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] },
             { value: "office365", name: "Office 365", colors: ["#0072c6", "#cde6f7", "#fff"] }
         ],
@@ -135,33 +154,14 @@
         ],
 
         selectedTheme: window.kendoTheme,
-        selectedSize: window.kendoCommonFile,
-
-        updateTheme: function(e) {
-            var themeName = e.item.value;
-            var commonFile = ThemeChooser.getCommonUrl();
-
-            if (/material/i.test(themeName) && !/material/i.test(commonFile)) {
-                commonFile = "common-material";
-            } else if (/bootstrap/i.test(themeName) && !/bootstrap/i.test(commonFile)) {
-                commonFile = "common-bootstrap";
-            } else if (/fiori/i.test(themeName) && !/fiori/i.test(commonFile)) {
-                commonFile = "common-fiori";
-            } else if (/office365/i.test(themeName) && !/office365/i.test(commonFile)) {
-                commonFile = "common-office365";
-            } else if (!/material|bootstrap|fiori/i.test(themeName)) {
-                commonFile = "common";
-            }
-
-            ThemeChooser.changeThemePair(themeName, commonFile, true);
-        }
+        selectedSize: window.kendoCommonFile
     });
 
     kendo.ui.plugin(ThemeChooser);
     window.ThemeChooserViewModel = ThemeChooserViewModel;
 
     $(document).ready(function() {
-        kendo.bind($(".themechooser"), ThemeChooserViewModel);
+        kendo.bind($("[data-rel=themechooser]"), ThemeChooserViewModel);
     });
 
     extend(ThemeChooser, {
@@ -379,6 +379,8 @@
         },
 
         changeThemePair: function(themeName, commonName, animate) {
+            var deferred = $.Deferred();
+
             ThemeChooser.animateCssChange({
                 prefetch: [
                     ThemeChooser.getCommonUrl(commonName),
@@ -389,8 +391,13 @@
                     window.kendoCommonFile = commonName;
                     ThemeChooser.replaceCommon(commonName);
                     ThemeChooser.replaceTheme(themeName);
+                },
+                complete: function() {
+                    deferred.resolve();
                 }
             });
+
+            return deferred.promise();
         }
     });
 

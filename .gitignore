@@ -33,6 +33,7 @@ styles/dataviz/*.min.css
 ./tags
 styles/*.css
 themebuilder/scripts/template.js
+themebuilder/scripts/less/*.js
 themebuilder/**/themebuilder.all*
 themebuilder/**/bootstrap.min.css
 themebuilder/styles/kendo.black.css

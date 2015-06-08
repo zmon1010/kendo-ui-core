@@ -1224,6 +1224,7 @@ pre.prettyprint
     display: none;
 }
 
+#main .demos-button,
 #codeStrip a.documentation-link,
 #codeStrip .try-kendo
 {
@@ -2073,6 +2074,7 @@ a.footer-links:hover,
     margin: 2.250em 3.750em 2.500em 3.750em;
 }
 
+#main .demos-button,
 #codeStrip .documentation-link,
 .try-kendo {
     background-color: #015991;
@@ -2101,6 +2103,7 @@ a.footer-links:hover,
     background-image: url('edit-icon.png');
 }
 
+#main .demos-button:hover,
 #codeStrip .documentation-link:hover,
 .try-kendo:hover {
     background-color: #013a5e;
