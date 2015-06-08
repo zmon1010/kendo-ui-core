@@ -1,5 +1,5 @@
 ﻿<div id="example">
-    <div class="box">
+    <div class="box wide">
         <div class="box-col">
             <h4>Select Page size</h4>
             <select id="paper" style="width: 100px;">
@@ -57,6 +57,8 @@
             </div>
         </div>
     </div>
+    
+    <div class="responsive-message"></div>
 
     <style>
         /*
@@ -212,6 +214,13 @@
         }
         .signature {
             padding-top: .5in;
+        }
+        
+        @@media screen and (max-width: 1023px) {
+            .page-container,
+            .box {
+                display: none;
+            }
         }
     </style>
 

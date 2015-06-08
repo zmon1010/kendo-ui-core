@@ -1,5 +1,6 @@
 <div id="example">
-    <div class="box">
+ 
+    <div class="box wide">
         <h4>Export page content</h4>
         <div class="box-col">
             <button class='export-pdf k-button'>Export as PDF</button>
@@ -12,7 +13,7 @@
         </div>
     </div>
 
-    <div class="demo-section k-header export-app">
+    <div class="demo-section k-header export-app wide">
         <div class="demo-section content-wrapper">
           <div class="demo-section charts-wrapper">
             <div id="users"></div>
@@ -38,6 +39,8 @@
           </ul>
         </div>
     </div>
+    
+    <div class="responsive-message"></div>
 </div>
 
 <style>
@@ -345,5 +348,12 @@ $(document).ready(function() {
     vertical-align: middle;
     line-height: 41px;
     padding-left: 10px;
+}
+
+@@media screen and (max-width: 1023px) {
+    .export-app,
+    .box {
+        display: none;
+    }
 }
 </style>
