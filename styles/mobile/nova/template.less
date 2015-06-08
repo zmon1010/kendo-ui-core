@@ -498,3 +498,15 @@
     background: @accent;
     border-color: @accent;
 }
+
+.km-nova .km-loading-left:before {
+  background: @normal-text-color;
+}
+
+.km-nova .km-loading-left:after {
+  background: hsv(hsvHue(@base) , hsvSaturation(@base), hsvValue(@base) - 13);
+}
+
+.km-nova span.km-loading-right {
+   background: @background;
+}

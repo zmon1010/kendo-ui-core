@@ -441,13 +441,31 @@
     right: 0;
 }
 
+@-webkit-keyframes animate_left {
+    0% {
+        -webkit-transform: translate3d(0, -10px, 0);
+    }
+    100% {
+        -webkit-transform: translate3d(0, 10px, 0);
+    }
+}
+
+@-ms-keyframes animate_left {
+    0% {
+        -ms-transform: translate3d(0, -10px, 0);
+    }
+    100% {
+        -ms-transform: translate3d(0, 10px, 0);
+    }
+}
+
 @keyframes animate_left {
-  0% {
-    transform: translate3d(0, -10px, 0);
-  }
-  100% {
-    transform: translate3d(0, 10px, 0);
-  }
+    0% {
+        transform: translate3d(0, -10px, 0);
+    }
+    100% {
+        transform: translate3d(0, 10px, 0);
+    }
 }
 
 .km-nova .km-loading-left:before,
@@ -458,39 +476,67 @@
   border-radius: 50%;
   height: 20px;
   z-index: 1;
-  display: block !important;
+  display: block;
   animation: animate_left 0.8s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite alternate;
 }
 
 .km-nova .km-loading-left:before {
-  background: #32364c;
+  //background: #32364c;
   right: 0;
   bottom: 0;
   animation-direction: alternate-reverse;
 }
 
 .km-nova .km-loading-left:after {
-  background: #cfd8dc;
+  //background: #cfd8dc;
   left: 0;
   top: 0;
 }
 
+@-webkit-keyframes animate_right {
+    0% {
+        -webkit-transform: scale(0.01, 0.01) rotateY(0);
+        -webkit-animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+    }
+    50% {
+        -webkit-transform: scale(1, 1) rotateY(0);
+        -webkit-animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+    }
+    100% {
+        -webkit-transform: scale(0.01, 0.01) rotateY(0);
+    } 
+}
+
+@-ms-keyframes animate_right {
+    0% {
+        -ms-transform: scale(0.01, 0.01) rotateY(0);
+        -ms-animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+     }
+    50% {
+        -ms-transform: scale(1, 1) rotateY(0);
+        -ms-animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+    }
+    100% {
+        -ms-transform: scale(0.01, 0.01) rotateY(0);
+    } 
+}
+
 @keyframes animate_right {
-  0% {
-    transform: scale(0.01, 0.01) rotateY(0);
-    animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
-  }
-  50% {
-    transform: scale(1, 1) rotateY(0);
-    animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
-  }
-  100% {
-    transform: scale(0.01, 0.01) rotateY(0);
-  } 
+    0% {
+        transform: scale(0.01, 0.01) rotateY(0);
+        animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+    }
+    50% {
+        transform: scale(1, 1) rotateY(0);
+        animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+    }
+    100% {
+        transform: scale(0.01, 0.01) rotateY(0);
+    } 
 }
   
 .km-nova .km-loading-right {
-  background: #fff;
+  //background: #fff;
   z-index: 2;
   border-radius: 50%;
   animation: animate_right 0.8s ease-in infinite;  
