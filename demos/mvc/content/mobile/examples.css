@@ -41,18 +41,6 @@
     border: 0;
 }
 
-#about .km-content,
-#about .km-listview li,
-#about .km-listview .km-state-active a {
-    background: none;
-    border: none;
-    box-shadow: none;
-}
-
-#about .km-listview {
-    margin-left: 23px;
-}
-
 #about .km-listview a,
 #about .km-listview .km-state-active a {
     color: white;
@@ -75,10 +63,6 @@
     top: auto;
     margin: 1.3em 0.8em;
     -webkit-transform: none;
-}
-
-#about .km-footer .km-listview {
-    margin-bottom: 23px;
 }
 
 #about .km-footer {
