@@ -123,28 +123,28 @@
                 }
             },
 
-            "@accent":              constant(COLOR, "a.k-link"),
-            "@base":                constant(BGCOLOR, ".k-button.k-state-active"),
-            "@background":          constant(BGCOLOR, ".k-widget"),
+            "@accent":              constant(COLOR, ".ktb-var-accent"),
+            "@base":                constant(COLOR, ".ktb-var-base"),
+            "@background":          constant(COLOR, ".ktb-var-background"),
 
             "@border-radius":       constant("border-radius", ".k-button"),
 
-            "@normal-background":   constant(BGCOLOR, ".k-widget"),
-            "@normal-gradient":     gradientConstant(".k-header"),
-            "@normal-text-color":   constant(COLOR, ".k-widget"),
+            "@normal-background":   constant(COLOR, ".ktb-var-normal-background"),
+            "@normal-gradient":     gradientConstant(".ktb-var-normal-gradient"),
+            "@normal-text-color":   constant(COLOR, ".ktb-var-normal-text-color"),
 
-            "@hover-background":    constant(BGCOLOR, ".k-state-hover"),
-            "@hover-gradient":      gradientConstant(".k-state-hover"),
-            "@hover-text-color":    constant(COLOR, ".k-state-hover"),
+            "@hover-background":    constant(BGCOLOR, ".ktb-var-hover-background"),
+            "@hover-gradient":      gradientConstant(".ktb-var-hover-gradient"),
+            "@hover-text-color":    constant(COLOR, ".ktb-var-hover-text-color"),
 
-            "@selected-background": constant(BGCOLOR, ".k-state-selected"),
-            "@selected-gradient":   gradientConstant(".k-state-selected"),
-            "@selected-text-color": constant(COLOR, ".k-state-selected"),
+            "@selected-background": constant(COLOR, ".ktb-var-selected-background"),
+            "@selected-gradient":   gradientConstant(".ktb-var-selected-gradient"),
+            "@selected-text-color": constant(COLOR, ".ktb-var-selected-text-color"),
 
-            "@error":               constant(BGCOLOR, ".k-widget.k-notification.k-notification-error"),
-            "@warning":             constant(BGCOLOR, ".k-widget.k-notification.k-notification-warning"),
-            "@success":             constant(BGCOLOR, ".k-widget.k-notification.k-notification-success"),
-            "@info":                constant(BGCOLOR, ".k-widget.k-notification.k-notification-info")
+            "@error":               constant(COLOR, ".ktb-var-error"),
+            "@warning":             constant(COLOR, ".ktb-var-warning"),
+            "@success":             constant(COLOR, ".ktb-var-success"),
+            "@info":                constant(COLOR, ".ktb-var-info")
         },
         datavizConstants = {
             "chart.title.color":                          constant(COLOR),
