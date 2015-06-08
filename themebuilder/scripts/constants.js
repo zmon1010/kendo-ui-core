@@ -39,8 +39,6 @@
 
             return toProtocolRelative(path.split("/").slice(0,-2).join("/") + "/");
         })(),
-        BGCOLOR = "background-color",
-        BORDERCOLOR = "border-color",
         COLOR = "color",
         cssPropertyFrom = function(cssClass, property) {
             var dummy = $("<div class='" + cssClass + "' />"), result;
@@ -133,7 +131,7 @@
             "@normal-gradient":     gradientConstant(".ktb-var-normal-gradient"),
             "@normal-text-color":   constant(COLOR, ".ktb-var-normal-text-color"),
 
-            "@hover-background":    constant(BGCOLOR, ".ktb-var-hover-background"),
+            "@hover-background":    constant(COLOR, ".ktb-var-hover-background"),
             "@hover-gradient":      gradientConstant(".ktb-var-hover-gradient"),
             "@hover-text-color":    constant(COLOR, ".ktb-var-hover-text-color"),
 

@@ -161,7 +161,7 @@
     window.ThemeChooserViewModel = ThemeChooserViewModel;
 
     $(document).ready(function() {
-        kendo.bind($("[data-role=themechooser]").parent(), ThemeChooserViewModel);
+        kendo.bind($("[data-rel=themechooser]"), ThemeChooserViewModel);
     });
 
     extend(ThemeChooser, {

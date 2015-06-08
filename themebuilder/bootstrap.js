@@ -18,7 +18,7 @@
         requiredCss = ["styles/styles.css"],
         bootstrapCss = "styles/bootstrap.css",
         // </generated variables>
-        theme = settings && settings.theme || "black"
+        theme = settings && settings.theme || "black",
         KENDO_COMMON_CSS_LOCATION = KENDO_LOCATION + "styles/kendo.common-material.min.css",
         KENDO_THEME_CSS_LOCATION = KENDO_LOCATION + "styles/kendo." + theme + ".min.css",
         KENDO_ALL_LOCATION = KENDO_LOCATION + "js/kendo.all.min.js";

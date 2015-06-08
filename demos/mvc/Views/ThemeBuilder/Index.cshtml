@@ -11,7 +11,7 @@
 
     <div id="nav-wrapper">
         <div id="nav" class="root">
-            <div class="choose-theme">
+            <div class="choose-theme" data-rel="themechooser">
                 <ul class="tc-theme-list"
                     data-role="themechooser"
                     data-template="theme-item-template"
@@ -86,9 +86,7 @@
     <div class="chrome">
         <a href="#" id="sidebar-toggle"><span></span></a>
 
-        <a href="#" class="k-button">Download theme</a>
-
-        <a id="bookmarklet" href="#">Use as a bookmarklet</a>
+        <button id="download-theme" class="demos-button">Download theme</button>
     </div>
 
     <div id="example" class="k-content">
@@ -281,21 +279,6 @@
         <div id="radial-gauge"></div>
     </div>
     </div>
-
-    <script>
-        $("#bookmarklet").attr("href", ("javascript:(function(){" +
-                "var ktb=window.kendoThemeBuilder,s,d=document;" +
-                "if(typeof ktb!='undefined'){" +
-                    "ktb.open();" +
-                    "return" +
-                "}else{" +
-                    "s=d.createElement('script');" +
-                    "s.src='@ViewBag.DeployRoot/bootstrap.js?'+(+new Date());" +
-                    "d.getElementsByTagName('body')[0].appendChild(s);" +
-                "}" +
-            "})()").replace(/\s+/g, "%20"));
-    </script>
-
 </div>
 
 <style>
@@ -321,6 +304,11 @@
         padding: 0 20px;
         border-bottom: 1px solid #e2e4e7;
         text-align: right;
+    }
+
+    #main .chrome .demos-button {
+        float: none;
+        display: inline-block;
     }
 
     h3 {

@@ -344,10 +344,12 @@
             _resolveFiles: function(less) {
                 var files = this.files;
 
+                function resolveFile(_, filename) {
+                    return files[filename];
+                }
+
                 while (/@import/.test(less)) {
-                    less = less.replace(/@import ["'](.*)["'];/g, function(_, filename) {
-                        return files[filename];
-                    });
+                    less = less.replace(/@import ["'](.*)["'];/g, resolveFile);
                 }
 
                 return less;
@@ -588,8 +590,7 @@
 
         ThemeBuilder = kendo.Observable.extend({
             init: function(templateInfo, targetDocument) {
-                var themes = [],
-                    themebuilder = this;
+                var themes = [];
 
                 templateInfo = this.templateInfo = templateInfo || {};
                 this.targetDocument = targetDocument || (window.parent || window).document;
@@ -609,6 +610,19 @@
                 this.render(templateInfo.webConstantsHierarchy, templateInfo.datavizConstantsHierarchy);
 
                 this.element = $("#kendo-themebuilder");
+
+                this._editorContainer = $(".stylable-elements").kendoPanelBar();
+
+                this._editorContainer.kendoPanelBar("expand", ".k-item");
+
+                this._editors();
+
+                this.themes.bind("change", proxy(this._reload, this));
+
+                this._track();
+            },
+            _editors: function() {
+                var themebuilder = this;
 
                 function changeHandler() {
                     var value = this.value();
@@ -635,8 +649,7 @@
                     e.sender.popup.element.addClass('ktb-small-items');
                 }
 
-                $(".stylable-elements")
-                    .kendoPanelBar()
+                this._editorContainer
                     .find(".ktb-colorinput").kendoColorInput({
                         open: addSmallItemClass,
                         change: changeHandler
@@ -685,18 +698,6 @@
                         spin: changeHandler,
                         change: changeHandler
                     });
-
-                $(".stylable-elements").kendoPanelBar("expand", ".k-item");
-
-                $(".ktb-action-source").on(CLICK, proxy(this.showSource, this));
-                $(".ktb-action-save").on(CLICK, proxy(this.saveSource, this));
-                $(".ktb-action-show-import").on(CLICK, proxy(this.showImport, this));
-                $(".ktb-action-back").on(CLICK, proxy(this.hideOverlay, this));
-                $(".ktb-action-import").on(CLICK, proxy(this.importTheme, this));
-
-                this.themes.bind("change", proxy(this._reload, this));
-
-                this._track();
             },
             _reload: function() {
                 var themes = this.themes;
@@ -717,95 +718,6 @@
             },
             registerFile: function(file) {
                 this.themes.registerFile(file);
-            },
-            showSource: function(e) {
-                e.preventDefault();
-
-                var format = $(e.target).data("format"),
-                    web = format != "string",
-                    theme = this.themes[web ? 0 : 1];
-
-                theme.source(format, function(source) {
-                    $("#download-overlay").slideDown()
-                        .find("textarea").val(source);
-                });
-            },
-            saveSource: function(e) {
-                e.preventDefault();
-
-                var format = $(e.target).data("format"),
-                    web = format != "string",
-                    theme = this.themes[web ? 0 : 1];
-
-                theme.source(format, function(source){
-                    var filename = $("#save-overlay input[name=filename]");
-                    filename.val(
-                        format == "css" ? "kendo/css/kendo.custom.css"
-                            : format == "less" ? "kendo/css/kendo.custom.less"
-                            : format == "string" ? "kendo/kendo.dataviz-theme.js"
-                            : ""
-                    );
-                    $("#save-overlay").slideDown()
-                        .find("textarea").val(source).end()
-                        .find(".feedback").html("").end()
-                        .find(".ktb-action-dosave").off(CLICK).on(CLICK, function(){
-                            options.saveButton.handler(format, source, filename.val(), function(error, isNew){
-                                var feedback = $("#save-overlay .feedback");
-                                if (error) {
-                                    feedback.html("<b>ERROR: " + error + "</b>");
-                                } else {
-                                    feedback.html("<b>Theme was saved " + (isNew ? "(new file)" : "(overwritten)") + "</b>");
-                                }
-                            });
-                        });
-                });
-            },
-            showImport: function(e) {
-                e.preventDefault();
-
-                var suite = $(e.target).closest(".ktb-view").data("suite"),
-                    format = suite == "web" ? "LESS or CSS" : "JSON";
-
-                $("#import-overlay")
-                    .data("suite", suite)
-                    .slideDown()
-                    .find("textarea")
-                        .val("/*************************\n" +
-                             "  paste " + format + " here \n" +
-                             "*************************/")
-                        .select();
-            },
-            importTheme: function(e) {
-                e.preventDefault();
-
-                var view = $(e.target).closest(".ktb-view"),
-                    suite = view.data("suite"),
-                    themeContent = view.find("textarea").val(),
-                    theme = this.themes[suite == "web" ? 0 : 1],
-                    clientObjects = {
-                        "ktb-colorinput": "kendoColorInput",
-                        "ktb-numeric": "kendoNumericTextBox",
-                        "ktb-combo": "kendoComboBox"
-                    };
-
-                theme.deserialize(themeContent, this.targetDocument);
-
-                $("input.ktb-colorinput,input.ktb-numeric,input.ktb-combo").each(function() {
-                    var dataType = this.className.replace(/k-formatted-value|k-input|\s+/gi, ""),
-                        clientObject = $(this).data(clientObjects[dataType]),
-                        constant = theme.constants[this.id];
-
-                    if (clientObject && constant) {
-                        clientObject.value(constant.value);
-                    }
-                });
-
-                theme.applyTheme(this.targetDocument);
-            },
-            hideOverlay: function(e) {
-                e.preventDefault();
-
-                $(".ktb-overlay:visible").slideUp();
             },
             _propertyChange: function(e) {
                 this.themes.update(e.name, e.value);
@@ -876,15 +788,9 @@
                         "<div #= d.id ? ' id=\"' + d.id + '\"' : '' #" +
                             " class='ktb-view#= d.overlay ? ' ktb-overlay' : '' #'" +
                             renderDataAttributes +
-                            ">#= d.toolbar ? d.toolbar : '' #" +
+                            ">" +
                             "<div class='ktb-content'>#= d.content #</div>" +
                         "</div>",
-                        templateOptions
-                    ),
-                    button = template(
-                        "<button class='k-button ktb-action #= d.action ? ('ktb-action-' + d.action) : '' #'" +
-                            renderDataAttributes +
-                        ">#= d.text #</button>",
                         templateOptions
                     );
 
