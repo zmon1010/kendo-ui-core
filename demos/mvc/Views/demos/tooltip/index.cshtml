@@ -1,5 +1,5 @@
         <div id="example">
-            <div class="demo-section k-header">
+            <div class="demo-section k-header wide">
                 <div id="agglomerations">
                     <a href="#" title="Canton - 26,300,000" id="canton"></a>
                     <a href="#" title="Jakarta - 25,800,000" id="jakarta"></a>
@@ -31,10 +31,14 @@
 
             <style>
 
-                .demo-section {
-                    width: 692px;
+                .demo-section.k-header,
+                html.k-material .demo-section.k-header {
+                    overflow: hidden;
+                    padding: 0;
+                    border: 0;
+                    box-shadow: none;
                 }
-
+                
                 #agglomerations {
                     position: relative;
                     width: 692px;
