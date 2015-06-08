@@ -107,17 +107,19 @@
                 infer: function() {
                     var values = this.values;
                     var i, name, prop;
+                    var result = "type-default.less";
 
                     for (i = 0; i < this.values.length; i++) {
                         name = values[i].text.replace(/\s/g, "").toLowerCase();
                         prop = cssPropertyFrom("ktb-theme-id-" + name, "opacity");
 
                         if (prop === "0") {
-                            return "type-" + name + ".less";
+                            result = "type-" + name + ".less";
+                            break;
                         }
                     }
 
-                    return "type-default.less";
+                    return result;
                 }
             },
 

@@ -24,12 +24,19 @@ def less2js(less)
         .gsub(/\r/, "")
 end
 
+directory "themebuilder/scripts/less/"
+
 THEME_FILES.each do |type|
     name = type.sub('styles/web/', '')
     type_name = name.gsub(/\//, '-').sub('.less', '')
-    less_js = "themebuilder/scripts/#{type_name}.js"
+    less_js = "themebuilder/scripts/less/#{type_name}.js"
 
-    file less_js => [type, THEME_BUILDER_BUILDFILE, TYPE_TEMPLATE_FILE] do |t|
+    file less_js => [
+        "themebuilder/scripts/less/",
+        type,
+        THEME_BUILDER_BUILDFILE,
+        TYPE_TEMPLATE_FILE
+    ] do |t|
         less = less2js(File.read(type))
 
         File.write(t.name, TYPE_TEMPLATE.result(binding))
@@ -39,7 +46,7 @@ THEME_FILES.each do |type|
 end
 
 def live_cdn_version
-    '2014.3.1119'
+    '2015.1.429'
 end
 
 class PatchedBoostrapScriptTask < Rake::FileTask
