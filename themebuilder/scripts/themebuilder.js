@@ -414,10 +414,10 @@
             },
 
             sources: function() {
-                var files = [ [ "kendo-theme.less", this.serialize() ] ];
+                var files = [ [ "kendo.custom.less", this.serialize() ] ];
 
                 this._generateTheme(function(less, css) {
-                    files.push([ "kendo-theme.css", css ]);
+                    files.push([ "kendo.custom.css", css ]);
                 });
 
                 return files;
@@ -521,7 +521,7 @@
             },
 
             sources: function() {
-                return [ [ "kendo-theme.js", this.source("string") ] ];
+                return [ [ "kendo.custom.js", this.source("string") ] ];
             },
 
             applyTheme: function(targetDocument) {
@@ -797,7 +797,7 @@
             download: function() {
                 kendo.saveAs({
                     dataURI: this.themes.toDataURL(),
-                    fileName: "kendo-theme.zip",
+                    fileName: "kendo.custom.zip",
                     proxyURL: "http://demos.telerik.com/kendo-ui/service/export"
                 });
             },

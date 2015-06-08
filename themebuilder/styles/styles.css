@@ -24,9 +24,9 @@ body {
 #kendo-themebuilder label {
     display: inline-block;
     width: 50%;
-    padding-right: 4%;
-    text-align: right;
-    color: #afafaf;
+    padding-left: 4%;
+    text-align: left;
+    color: #444;
 }
 
 #stylable-elements,

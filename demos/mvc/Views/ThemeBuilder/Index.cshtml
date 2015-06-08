@@ -418,6 +418,26 @@
         width: 100%;
         height: 100%;
     }
+
+    #back-forward {
+        padding-top: 1.44em;
+        padding-bottom: 1.44em;
+    }
+
+    #back-forward:before {
+        top: 1.5em;
+    }
+
+    @@media screen and (max-width: 720px) {
+        #back-forward {
+            padding-top: 1.16em;
+            padding-bottom: 1.16em
+        }
+
+        #back-forward:before {
+            top: 1.2em;
+        }
+    }
 </style>
 <script>
     $(document).ready(function() {
