@@ -415,7 +415,7 @@
 }
 
 /* Loader */
-.km-nova .km-loader {   
+.km-nova .km-loader {
     top: 0;
     left: 0;
     margin: 0;
@@ -431,40 +431,40 @@
 
 .km-nova .km-loading-left,
 .km-nova .km-loading-right {
-    width: 20px;
-    height: 20px;
+    width: 1.33em;
+    height: 1.33em;
     display: block;
     position: absolute;
     left: 50%;
-    top: 50%; 
+    top: 50%;
     bottom: 0;
     right: 0;
 }
 
 @-webkit-keyframes animate_left {
     0% {
-        -webkit-transform: translate3d(0, -10px, 0);
+        -webkit-transform: translate3d(0, -0.67em, 0);
     }
     100% {
-        -webkit-transform: translate3d(0, 10px, 0);
+        -webkit-transform: translate3d(0, 0.67em, 0);
     }
 }
 
 @-ms-keyframes animate_left {
     0% {
-        -ms-transform: translate3d(0, -10px, 0);
+        -ms-transform: translate3d(0, -0.67em, 0);
     }
     100% {
-        -ms-transform: translate3d(0, 10px, 0);
+        -ms-transform: translate3d(0, 0.67em, 0);
     }
 }
 
 @keyframes animate_left {
     0% {
-        transform: translate3d(0, -10px, 0);
+        transform: translate3d(0, -0.67em, 0);
     }
     100% {
-        transform: translate3d(0, 10px, 0);
+        transform: translate3d(0, 0.67em, 0);
     }
 }
 
@@ -472,12 +472,13 @@
 .km-nova .km-loading-left:after {
   position: absolute;
   content: "";
-  width: 20px;
+  width: 1.33em;
   border-radius: 50%;
-  height: 20px;
+  height: 1.33rem;
   z-index: 1;
   display: block;
   animation: animate_left 0.8s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite alternate;
+  -webkit-animation: animate_left 0.8s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite alternate;
 }
 
 .km-nova .km-loading-left:before {
@@ -485,6 +486,7 @@
   right: 0;
   bottom: 0;
   animation-direction: alternate-reverse;
+  -webkit-animation-direction: alternate-reverse;
 }
 
 .km-nova .km-loading-left:after {
@@ -504,7 +506,7 @@
     }
     100% {
         -webkit-transform: scale(0.01, 0.01) rotateY(0);
-    } 
+    }
 }
 
 @-ms-keyframes animate_right {
@@ -518,7 +520,7 @@
     }
     100% {
         -ms-transform: scale(0.01, 0.01) rotateY(0);
-    } 
+    }
 }
 
 @keyframes animate_right {
@@ -532,12 +534,13 @@
     }
     100% {
         transform: scale(0.01, 0.01) rotateY(0);
-    } 
+    }
 }
-  
+
 .km-nova .km-loading-right {
   //background: #fff;
   z-index: 2;
   border-radius: 50%;
-  animation: animate_right 0.8s ease-in infinite;  
+  animation: animate_right 0.8s ease-in infinite;
+  -webkit-animation: animate_right 0.8s ease-in infinite;
 }
