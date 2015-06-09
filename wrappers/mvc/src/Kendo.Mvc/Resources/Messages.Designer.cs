@@ -979,6 +979,15 @@ namespace Kendo.Mvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No records available..
+        /// </summary>
+        public static string Grid_NoRecords {
+            get {
+                return ResourceManager.GetString("Grid_NoRecords", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Export to PDF.
         /// </summary>
         public static string Grid_Pdf {

@@ -100,5 +100,39 @@ namespace Kendo.Mvc.UI.Fluent.Tests
             builder.ColumnResizeHandleWidth(newWidth);
             Assert.Equal(newWidth, grid.ColumnResizeHandleWidth);
         }
+
+        [Fact]
+        public void NoRecords_enable_corresponding_property()
+        {
+            builder.NoRecords();
+            Assert.Equal(true, grid.NoRecords.Enabled);
+        }
+
+        [Fact]
+        public void NoRecords_string_overload_sets_corresponding_property()
+        {
+            var message = "foo";
+            builder.NoRecords(message);
+
+            Assert.Equal(message, grid.NoRecords.NoRecordsMessage);
+        }
+
+        [Fact]
+        public void NoRecords_sets_template()
+        {
+            var template = "template";
+            builder.NoRecords(nr => nr.Template(template));
+
+            Assert.Equal(template, grid.NoRecords.Template);
+        }
+
+        [Fact]
+        public void NoRecords_sets_template_id()
+        {
+            var templateId = "templateId";
+            builder.NoRecords(nr => nr.TemplateId(templateId));
+
+            Assert.Equal(templateId, grid.NoRecords.TemplateId);
+        }
     }
 }

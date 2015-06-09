@@ -1712,5 +1712,39 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Sets the noRecords configuration of the grid.
+        /// </summary>
+        /// <param name="configurator">The lambda which configures the noRecords</param>
+        public GridBuilder<T> NoRecords(Action<GridNoRecordsSettingsBuilder> configurator)
+        {
+            configurator(new GridNoRecordsSettingsBuilder(Component.NoRecords));
+
+            return this;
+        }
+
+
+        /// <summary>
+        /// Enables grid noRecords.
+        /// </summary>
+        public GridBuilder<T> NoRecords()
+        {
+            Component.NoRecords.Enabled = true;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Enables grid noRecords and sets it's message.
+        /// </summary>
+        /// <param name="text">The message used for noRecords</param>
+        public GridBuilder<T> NoRecords(string text)
+        {
+            Component.NoRecords.Enabled = true;
+            Component.NoRecords.NoRecordsMessage = text;
+
+            return this;
+        }
     }
 }

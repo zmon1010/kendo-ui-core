@@ -57,6 +57,7 @@ namespace Kendo.Mvc.UI
             Navigatable = new GridNavigatableSettings(this);            
             Filterable = new GridFilterableSettings();
             ColumnMenu = new GridColumnMenuSettings();
+            NoRecords = new GridNoRecordsSettings();
 
             Editable = new GridEditableSettings<T>(this)
             { 
@@ -153,6 +154,12 @@ namespace Kendo.Mvc.UI
         {
             get;
             private set;
+        }
+
+        public GridNoRecordsSettings NoRecords
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -820,6 +827,27 @@ namespace Kendo.Mvc.UI
             if (ToolBar.Enabled)
             {
                 options["toolbar"] = ToolBar.ToJson();
+            }
+
+            if (NoRecords.Enabled)
+            {
+                var noRecords = NoRecords.ToJson();
+                if (noRecords.Any())
+                {
+                    options["noRecords"] = NoRecords.ToJson();
+                }
+                else
+                {
+                    options["noRecords"] = true;
+                }
+            }
+
+            if (NoRecords.IsNoRecordsMessageModified)
+            {
+                IDictionary<string, object> messages = new Dictionary<string, object>();
+                messages["noRecords"] = NoRecords.NoRecordsMessage;
+
+                options["messages"] = messages;
             }
 
             if (autoBind == false)
