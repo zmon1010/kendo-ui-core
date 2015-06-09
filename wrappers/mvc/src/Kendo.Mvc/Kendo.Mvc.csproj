@@ -406,6 +406,7 @@
     <Compile Include="UI\Calendar\Fluent\CalendarEventBuilder.cs" />
     <Compile Include="UI\Calendar\Fluent\CalendarSelectionSettingsBuilder.cs" />
     <Compile Include="UI\Chart\Axes\ChartAxisLabels.cs" />
+    <Compile Include="UI\Chart\Axes\ChartAxisLabelsRotation.cs" />
     <Compile Include="UI\Chart\Axes\ChartCategoryAxis.cs" />
     <Compile Include="UI\Chart\Axes\ChartAxisBase.cs" />
     <Compile Include="UI\Chart\Axes\ChartAxisNotes.cs" />
@@ -445,6 +446,7 @@
     <Compile Include="UI\Chart\ChartLineBase.cs" />
     <Compile Include="UI\Chart\ChartLegendLabels.cs" />
     <Compile Include="UI\Chart\Axes\ChartAxisNoteItem.cs" />
+    <Compile Include="UI\Chart\Enums\ChartAxisLabelRotationAlignment.cs" />
     <Compile Include="UI\Chart\Enums\ChartLegendAlign.cs" />
     <Compile Include="UI\Chart\Enums\ChartScatterLineStyle.cs" />
     <Compile Include="UI\Chart\Enums\ChartZoomDireciton.cs" />
@@ -460,12 +462,14 @@
     <Compile Include="UI\Chart\Enums\ChartStackType.cs" />
     <Compile Include="UI\Chart\Enums\ChartLegendOrientation.cs" />
     <Compile Include="UI\Chart\Fluent\ChartAreaLineBuilder.cs" />
+    <Compile Include="UI\Chart\Fluent\ChartAxisLabelsRotationBuilder.cs" />
     <Compile Include="UI\Chart\Fluent\ChartLegendItemBuilder.cs" />
     <Compile Include="UI\Chart\Fluent\ChartRangeBarLabelsBuilder.cs" />
     <Compile Include="UI\Chart\Fluent\ChartRangeBarSeriesBuilder.cs" />
     <Compile Include="UI\Chart\Fluent\ChartWaterfallSeriesBuilder.cs" />
     <Compile Include="UI\Chart\Fluent\ChartLineSeriesHighlightBuilder.cs" />
     <Compile Include="UI\Chart\Fluent\ChartPolarAxisBuilder.cs" />
+    <Compile Include="UI\Chart\Serialization\ChartLabelRotationSerializer.cs" />
     <Compile Include="UI\Chart\Serialization\ChartLegendItemSerializer.cs" />
     <Compile Include="UI\Chart\Serialization\ChartLogarithmicAxisSerializer.cs" />
     <Compile Include="UI\Chart\Serialization\ChartRangeBarLabelsSerializer.cs" />

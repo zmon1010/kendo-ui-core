@@ -33,6 +33,12 @@ namespace Kendo.Mvc.UI
                 result.Add("dateFormats", dateFormatsData);
             }
 
+            var rotationOptions = axisLabels.RotationOptions.CreateSerializer().Serialize();
+            if (rotationOptions.Keys.Count > 0)
+            {
+                result["rotation"] = rotationOptions;
+            }
+
             return result;
         }
     }

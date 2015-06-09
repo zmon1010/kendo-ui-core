@@ -1,6 +1,7 @@
-using System.Globalization;
 namespace Kendo.Mvc.UI
 {
+    using System.Globalization;
+
     public class ChartAxisLabels : ChartLabels
     {
         /// <summary>
@@ -9,6 +10,7 @@ namespace Kendo.Mvc.UI
         public ChartAxisLabels()
         {
             DateFormats = new ChartAxisLabelsDateFormats();
+            RotationOptions = new ChartAxisLabelsRotation();
         }
 
         /// <summary>
@@ -51,6 +53,15 @@ namespace Kendo.Mvc.UI
         /// Culture to use for formatting date labels.
         /// </summary>
         public CultureInfo Culture
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The rotation options for the labels.
+        /// </summary>
+        public ChartAxisLabelsRotation RotationOptions
         {
             get;
             set;

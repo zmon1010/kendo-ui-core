@@ -1,5 +1,7 @@
 namespace Kendo.Mvc.UI.Fluent
 {
+    using System;
+
     /// <summary>
     /// Defines the fluent interface for configuring the chart labels.
     /// </summary>
@@ -84,6 +86,20 @@ namespace Kendo.Mvc.UI.Fluent
         public ChartAxisLabelsBuilder Skip(int skip)
         {
             labels.Skip = skip;
+
+            return this;
+        }
+
+        public ChartAxisLabelsBuilder Rotation(string rotation)
+        {
+            labels.RotationOptions.Angle = rotation;
+
+            return this;
+        }
+
+        public ChartAxisLabelsBuilder Rotation(Action<ChartAxisLabelsRotationBuilder> configurator)
+        {
+            configurator(new ChartAxisLabelsRotationBuilder(labels.RotationOptions));
 
             return this;
         }
