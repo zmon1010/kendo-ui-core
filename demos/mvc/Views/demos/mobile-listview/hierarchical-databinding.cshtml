@@ -10,32 +10,15 @@
 </div>
 
 <style>
-    #hierarchical-listview .employee-image {
-        width: 4em;
-        height: 4.4em;
-        margin: 0;
-        border: 1px solid rgba(0,0,0,.2);
-        -webkit-border-radius: 4em;
-        border-radius: 4em;
-        display: inline-block;
-        -webkit-background-size: auto 100%;
-        background-size: auto 100%;
-        background-repeat: no-repeat;
-        background-position: center center;
-        -webkit-transform: translatez(0);
-        vertical-align: middle;
-    }
-
     #hierarchical-listview h2 {
-        display: inline-block;
-        margin: .5em;
-        font-size: 1.1em;
+        margin: .6em;
     }
 
     .km-android #hierarchical-listview .parent:after {
         display: inline-block;
         border-color: #ffffff;
     }
+
     .km-wp #hierarchical-listview .parent:after {
         display: inline-block;
         border-color: #cccccc;
@@ -44,11 +27,11 @@
 <script id="hierarchicalMobileListViewTemplate" type="text/x-kendo-template">
     # if (data.HasEmployees) { #
         <a href="\#hierarchical-view?parent=#: data.id #" class="parent">
-            <span class="employee-image" style="background-image: url('../content/web/Employees/#: id #.jpg')"></span>
+            <img class="km-thumbnail" src="../content/web/Employees/#: id #.jpg" />
             <h2> #: FullName # </h2>
         </a>
     # } else { #
-        <span class="employee-image" style="background-image: url('../content/web/Employees/#: id #.jpg')"></span>
+        <img class="km-thumbnail" src="../content/web/Employees/#: id #.jpg" />
         <h2> #: FullName # </h2>
     # } #
 </script>
