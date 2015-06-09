@@ -1123,9 +1123,14 @@ var __meta__ = {
         return result;
     }
 
-    function appendContent(tbody, table, html) {
+    function appendContent(tbody, table, html, empty) {
         var placeholder,
             tmp = tbody;
+
+        // necessary for AngularJS to cleanup its guts.
+        if (empty) {
+            tbody.empty();
+        }
 
         if (tbodySupportsInnerHtml) {
             tbody[0].innerHTML = html;
@@ -7349,7 +7354,7 @@ var __meta__ = {
                 html += that._rowsHtml(data, templates);
             }
 
-            that.tbody = appendContent(that.tbody, that.table, html);
+            that.tbody = appendContent(that.tbody, that.table, html, this.options.$angular);
        },
 
        _renderLockedContent: function(data, colspan, groups) {
@@ -7375,7 +7380,7 @@ var __meta__ = {
                    html = this._rowsHtml(data, templates);
                }
 
-               appendContent(table.children("tbody"), table, html);
+               appendContent(table.children("tbody"), table, html, this.options.$angular);
 
                this._syncLockedContentHeight();
            }
