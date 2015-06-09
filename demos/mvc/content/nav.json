@@ -2948,6 +2948,19 @@
         }
       },
       {
+        "text": "Tag mode",
+        "url": "multiselect/tag-mode",
+        "title": {
+            "kendo-ui": "Tag mode of Kendo UI MultiSelect component | Kendo UI Demo",
+            "aspnet-mvc": "Tag mode of ASP.NET MVC MultiSelect control | ASP.NET MVC Demo"
+        },
+        "meta": {
+            "kendo-ui": "In this demo you will find more about the Tag mode feature of Kendo UI MultiSelect widget.",
+            "aspnet-mvc": "In this demo you will find more about the Tag mode feature of ASP.NET MVC MultiSelect control."
+        },
+        "new": "true"
+      },
+      {
         "text": "RTL support",
         "url": "multiselect/right-to-left-support",
         "title": {
