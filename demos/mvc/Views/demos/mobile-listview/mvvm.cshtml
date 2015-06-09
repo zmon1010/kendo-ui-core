@@ -4,29 +4,33 @@
             <li>
                 Add new item
                 <ul>
-                    <li><label>Add item: <input type="text" placeholder="item name&hellip;" data-bind="value: newItemValue" /></label></li>
+                    <li><label class="km-label-above">Item name <input type="text" placeholder="e.g. Chair" data-bind="value: newItemValue" /></label></li>
+                    <li><i></i><button type="submit" class=" km-justified km-widget km-button km-primary">Add</button></li>
                 </ul>
-                <button type="submit" class="km-widget km-button" style="display: block; margin: 1em auto; font-size: 1.1em;">Add</button>
+                
             </li>
 
             <li>
-                Items:
+                Items
                 <ul data-role="listview" data-bind="source: source, events { click: onClick }"></ul>
             </li>
             <li>
-                Events:
+                Events
                 <ul data-role="listview">
                     <li><div class="console"></div></li>
                 </ul>
             </li>
+            <li>
+                <ul data-role="listview">
+                     <li>
+                          Kendo UI Mobile ListView supports the
+                          <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/source">source</a>,
+                          <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/events">events</a> and
+                          <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/visible">visible</a> bindings.
+                     </li>
+                </ul>
+            </li>
         </ul>
-
-        <p>
-            Kendo UI Mobile ListView supports the
-            <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/source">source</a>,
-            <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/events">events</a> and
-            <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/visible">visible</a> bindings.
-        </p>
     </form>
     <style>
         .km-ios .km-listview .km-button,
@@ -44,7 +48,7 @@
 
 <script>
     var mobileListViewModel = kendo.observable({
-        source: [ "foo", "bar" ],
+        source: [ "Table", "Sofa" ],
         newItemValue: "",
         add: function(e) {
             var val = this.get("newItemValue");
