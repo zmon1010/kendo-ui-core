@@ -9,7 +9,7 @@
     <ul id="pull-with-endless-listview"></ul>
 </div>
 
-<div data-role="modalview" id="modalview-add" style="width: 95%; height: 12em;" >
+<div data-role="modalview" id="modalview-add" style="width: 95%;" >
     <div data-role="header">
         <div data-role="navbar">
             <span>Add Product</span>
@@ -18,15 +18,15 @@
     </div>
 
     <ul data-role="listview" data-style="inset">
-        <li><label for="username">Product Name:</label> <input type="text" id="name" /></li>
+        <li><label for="username" class="km-label-above">Product Name <input type="text" id="name" /></label> </li>
+        <li><i></i> <a data-role="button" data-click="addNew" class="km-justified km-primary" type="button" data-align="right">Add New Product</a></li>
     </ul>
-    <a data-click="addNew" class="addNew" type="button" data-role="button">Add New Product</a>
 </div>
 
 <script type="text/x-kendo-tmpl" id="pull-with-endless-template">
     <div class="product-item">
         <h3>#:ProductName#</h3>
-        <p>#:kendo.toString(UnitPrice, "c")#</p>
+        <span class="km-badge">#:kendo.toString(UnitPrice, "c")#</span>
     </div>
 </script>
 
@@ -105,44 +105,11 @@
 </script>
 
 <style>
-    .product-item {
-        font-size: 1.2;
-    }
     .product-item h3 {
-        float: left;
         margin: 0;
-        height: 1.3em;
-        width: 170px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        font-weight: normal;
     }
-    .product-item p {
-        float: right;
-        margin: 0;
-        padding: 0;
-    }
-    .pullImage {
-        width: 64px;
-        height: 64px;
-        border-radius: 3px;
-        float: left;
-        margin-right: 10px;
-    }
-    .addNew {
-        display: block;
-        text-align: center;
-        margin: 0 3em;
-        padding: .5em;
-        font-size: 1.2em;
-    }
-    #pull-with-endless-listview li:not(.km-load-more)
-    {
-        padding: 2em;
-    }
-    .km-tablet #pull-with-endless-listview li:not(.km-load-more)
-    {
-        padding: 2em;
+    .product-item .km-badge {
+        top: 2.5em;
+        right: 3em;
     }
 </style>
