@@ -170,7 +170,7 @@
             pointer.repaint();
 
             var bbox = pointerElements.bbox();
-            arrayClose([bbox.origin.x, bbox.origin.y, bbox.width(), bbox.height()], [47, 289, 5.5, 1], TOLERANCE);
+            arrayClose([bbox.origin.x, bbox.origin.y, bbox.width(), bbox.height()], [47, 299, 5.5, 1], TOLERANCE);
         });
 
         module("Linear Pointer / Shapes / Horizontal", {
@@ -189,7 +189,7 @@
             pointer.repaint();
 
             var origin = pointerElements.bbox().origin;
-            arrayClose([origin.x, origin.y], [2.5, -2.5], TOLERANCE);
+            arrayClose([origin.x, origin.y], [-5, -2.5], TOLERANCE);
         });
 
         test("renders bar indicator shape", function() {
@@ -200,7 +200,7 @@
             var bbox = pointerElements.bbox();
             arrayClose(
                 [bbox.origin.x, bbox.origin.y, bbox.width(), bbox.height()],
-                [7, -7.5, 5.5, 1], TOLERANCE
+                [-0.5, -7.5, 5.5, 1], TOLERANCE
             );
         });
 

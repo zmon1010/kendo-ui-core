@@ -35,7 +35,7 @@
 
         arrayClose([ranges.origin.x , ranges.origin.y,
                     ranges.origin.x + ranges.width(), ranges.origin.y + ranges.height()],
-                   [35, 238.1, 40, 313.4], TOLERANCE);
+                   [35, 239.7, 40, 319.6], TOLERANCE);
     });
 
     test("render range from 10 to 15 and from 15 to 20", function() {
@@ -56,11 +56,11 @@
 
         arrayClose([first.origin.x , first.origin.y,
                     first.origin.x + first.width(), first.origin.y + first.height()],
-                    [35, 276, 40, 313.4], TOLERANCE);
+                    [35, 279.65, 40, 319.6], TOLERANCE);
 
         arrayClose([second.origin.x , second.origin.y,
                     second.origin.x + second.width(), second.origin.y + second.height()],
-                   [35, 238, 40, 276], TOLERANCE);
+                   [35, 239.7, 40, 279.65], TOLERANCE);
     });
 
     // ------------------------------------------------------------
