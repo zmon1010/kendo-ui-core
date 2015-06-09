@@ -57,6 +57,18 @@ all data items which begin with the current widget value are displayed in the su
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The template used to render the fixed header group. By default the widget displays only the value of the current group.</description>
+            <name>fixedGroupTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The template used to render the groups. By default the widget displays only the value of the group.</description>
+            <name>groupTemplate</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>Specifies a static HTML content, which will be rendered as a header of the popup element.</description>
             <name>headerTemplate</name>
             <rtexprvalue>true</rtexprvalue>
@@ -217,13 +229,16 @@ all data items which begin with the current widget value are displayed in the su
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Specifies the height of the virtual item. If not specified the framework will automatically calculate the itemHeight based on the theme used.</description>
+            <description>Specifies the height of the virtual item. All items in the virtualized list must have the same height.
+If the developer does not specify one, the framework will automatically set itemHeight based on the current theme and font size.</description>
             <name>itemHeight</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description></description>
+            <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
+The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
             <name>valueMapper</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -233,7 +248,9 @@ all data items which begin with the current widget value are displayed in the su
 
 
     <tag>
-        <description></description>
+        <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
+The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
         <name>autoComplete-virtual-valueMapper</name>
         <tag-class>com.kendoui.taglib.autocomplete.VirtualValueMapperFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -11464,7 +11481,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The template used to render the fixed header group. By default the widget displays only the value of the group.</description>
+            <description>The template used to render the fixed header group. By default the widget displays only the value of the current group.</description>
             <name>fixedGroupTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -11579,7 +11596,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when an item from the popup is selected by the user.</description>
+            <description>Fired when an item from the popup is selected by the user either with mouse/tap or with keyboard navigation.</description>
             <name>select</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -11653,13 +11670,16 @@ The supported filter values are startswith, endswith and contains.</description>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Specifies the height of the virtual item. If not specified the framework will automatically calculate the itemHeight based on the theme used.</description>
+            <description>Specifies the height of the virtual item. All items in the virtualized list must have the same height.
+If the developer does not specify one, the framework will automatically set itemHeight based on the current theme and font size.</description>
             <name>itemHeight</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Required!</description>
+            <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
+The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
             <name>valueMapper</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -11669,7 +11689,9 @@ The supported filter values are startswith, endswith and contains.</description>
 
 
     <tag>
-        <description>Required!</description>
+        <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
+The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
         <name>comboBox-virtual-valueMapper</name>
         <tag-class>com.kendoui.taglib.combobox.VirtualValueMapperFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -11706,7 +11728,7 @@ The supported filter values are startswith, endswith and contains.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when an item from the popup is selected by the user.</description>
+        <description>Fired when an item from the popup is selected by the user either with mouse/tap or with keyboard navigation.</description>
         <name>comboBox-select</name>
         <tag-class>com.kendoui.taglib.combobox.SelectFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -12343,7 +12365,7 @@ The transport option can also be used to implement custom data loading and savin
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>The configuration used when the data source saves newly created data items. Those are items added to the data source via the add or insert methods.If the value of transport.create is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.create is a string the data source uses this string as the URL of the remote service.</description>
+            <description>The configuration used when the data source saves newly created data items. Those are items added to the data source via the add or insert methods.If the value of transport.create is a function, the data source invokes that function instead of jQuery.ajax. Check the jQuery documentation for more details on the provided argument.If the value of transport.create is a string the data source uses this string as the URL of the remote service.</description>
             <name>create</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -12384,7 +12406,7 @@ callbacks which will handle push notifications (data pushed from the server).</d
     </tag>
 
     <tag>
-        <description>The configuration used when the data source saves newly created data items. Those are items added to the data source via the add or insert methods.If the value of transport.create is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.create is a string the data source uses this string as the URL of the remote service.</description>
+        <description>The configuration used when the data source saves newly created data items. Those are items added to the data source via the add or insert methods.If the value of transport.create is a function, the data source invokes that function instead of jQuery.ajax. Check the jQuery documentation for more details on the provided argument.If the value of transport.create is a string the data source uses this string as the URL of the remote service.</description>
         <name>dataSource-transport-create</name>
         <tag-class>com.kendoui.taglib.datasource.TransportCreateTag</tag-class>
         <body-content>JSP</body-content>
@@ -12404,7 +12426,8 @@ Refer to the jQuery.ajax documentation for further info.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Additional parameters which are sent to the remote service.Refer to the jQuery.ajax documentation for further info.</description>
+            <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
+sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
             <name>data</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -12432,7 +12455,8 @@ Refer to the jQuery.ajax documentation for further info.</description>
 
 
     <tag>
-        <description>Additional parameters which are sent to the remote service.Refer to the jQuery.ajax documentation for further info.</description>
+        <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
+sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
         <name>dataSource-transport-create-data</name>
         <tag-class>com.kendoui.taglib.datasource.TransportCreateDataFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -12464,7 +12488,8 @@ Refer to the jQuery.ajax documentation for further info.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Additional parameters which are sent to the remote service.Refer to the jQuery.ajax documentation for further info.</description>
+            <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
+sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
             <name>data</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -12492,7 +12517,8 @@ Refer to the jQuery.ajax documentation for further info.</description>
 
 
     <tag>
-        <description>Additional parameters which are sent to the remote service.Refer to the jQuery.ajax documentation for further info.</description>
+        <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
+sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
         <name>dataSource-transport-destroy-data</name>
         <tag-class>com.kendoui.taglib.datasource.TransportDestroyDataFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -12524,7 +12550,8 @@ Refer to the jQuery.ajax documentation for further info.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Additional parameters which are sent to the remote service.Refer to the jQuery.ajax documentation for further info.</description>
+            <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
+sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
             <name>data</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -12552,7 +12579,8 @@ Refer to the jQuery.ajax documentation for further info.</description>
 
 
     <tag>
-        <description>Additional parameters which are sent to the remote service.Refer to the jQuery.ajax documentation for further info.</description>
+        <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
+sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
         <name>dataSource-transport-read-data</name>
         <tag-class>com.kendoui.taglib.datasource.TransportReadDataFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -12584,7 +12612,8 @@ Refer to the jQuery.ajax documentation for further info.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Additional parameters which are sent to the remote service.Refer to the jQuery.ajax documentation for further info.</description>
+            <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
+sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
             <name>data</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -12612,7 +12641,8 @@ Refer to the jQuery.ajax documentation for further info.</description>
 
 
     <tag>
-        <description>Additional parameters which are sent to the remote service.Refer to the jQuery.ajax documentation for further info.</description>
+        <description>Additional parameters which are sent to the remote service. The parameter names must not match reserved words, which are used by the Kendo UI DataSource for
+sorting, filtering, paging and grouping.Refer to the jQuery.ajax documentation for further info.</description>
         <name>dataSource-transport-update-data</name>
         <tag-class>com.kendoui.taglib.datasource.TransportUpdateDataFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -17084,7 +17114,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The template used to render the fixed header group. By default the widget displays only the value of the group.</description>
+            <description>The template used to render the fixed header group. By default the widget displays only the value of the current group.</description>
             <name>fixedGroupTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17126,7 +17156,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Define the text of the default empty item. If the value is an object, then the widget will use it a valid data item.
+            <description>Define the text of the default empty item. If the value is an object, then the widget will use it as a valid data item.
  Note that the optionLabel will not be available if the widget is empty.</description>
             <name>optionLabel</name>
             <rtexprvalue>true</rtexprvalue>
@@ -17200,7 +17230,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when an item from the popup is selected by the user.</description>
+            <description>Fired when an item from the popup is selected by the user either with mouse/tap or with keyboard navigation.</description>
             <name>select</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -17274,13 +17304,16 @@ The supported filter values are startswith, endswith and contains.</description>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Specifies the height of the virtual item. If not specified the framework will automatically calculate the itemHeight based on the theme used.</description>
+            <description>Specifies the height of the virtual item. All items in the virtualized list must have the same height.
+If the developer does not specify one, the framework will automatically set itemHeight based on the current theme and font size.</description>
             <name>itemHeight</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Required!</description>
+            <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
+The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
             <name>valueMapper</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -17290,7 +17323,9 @@ The supported filter values are startswith, endswith and contains.</description>
 
 
     <tag>
-        <description>Required!</description>
+        <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
+The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
         <name>dropDownList-virtual-valueMapper</name>
         <tag-class>com.kendoui.taglib.dropdownlist.VirtualValueMapperFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -17327,7 +17362,7 @@ The supported filter values are startswith, endswith and contains.</description>
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when an item from the popup is selected by the user.</description>
+        <description>Fired when an item from the popup is selected by the user either with mouse/tap or with keyboard navigation.</description>
         <name>dropDownList-select</name>
         <tag-class>com.kendoui.taglib.dropdownlist.SelectFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -24374,7 +24409,7 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The template used to render the fixed header group. By default the widget displays only the value of the group.</description>
+            <description>The template used to render the fixed header group. By default the widget displays only the value of the current group.</description>
             <name>fixedGroupTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -24431,6 +24466,14 @@ A zero value means that a request will be made as soon as the user focuses the w
         <attribute>
             <description>The hint displayed by the widget when it is empty. Not set by default.</description>
             <name>placeholder</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The mode used to render the selected tags. The available modes are:
+- multiple - renders a tag for every selected value
+- single - renders only one tag that shows the number of the selected values</description>
+            <name>tagMode</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -24553,13 +24596,16 @@ A zero value means that a request will be made as soon as the user focuses the w
         <body-content>JSP</body-content>
 
         <attribute>
-            <description>Specifies the height of the virtual item. If not specified the framework will automatically calculate the itemHeight based on the theme used.</description>
+            <description>Specifies the height of the virtual item. All items in the virtualized list must have the same height.
+If the developer does not specify one, the framework will automatically set itemHeight based on the current theme and font size.</description>
             <name>itemHeight</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>Required!</description>
+            <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
+The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
             <name>valueMapper</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -24569,7 +24615,9 @@ A zero value means that a request will be made as soon as the user focuses the w
 
 
     <tag>
-        <description>Required!</description>
+        <description>The valueMapper function is mandatory for the functionality of the virtualized widget.
+The widget calls the valueMapper function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the valueMapper function. In turn, the valueMapper implementation should return the respective data item(s) index/indices.</description>
         <name>multiSelect-virtual-valueMapper</name>
         <tag-class>com.kendoui.taglib.multiselect.VirtualValueMapperFunctionTag</tag-class>
         <body-content>JSP</body-content>
