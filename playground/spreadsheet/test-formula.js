@@ -575,10 +575,21 @@ fillElements({
         I12: 8,
         I13: 9,
 
+        G1: '=if(A1:C3<5, "foo", "bar")',
+        G2: '=sum(IF(A1:B3>5, B1:C3, 0))',
+        G3: '=mod(A1:C3, 2)',
+        G4: '=sum(IF(NOT(MOD(A1:C3, 2)), A1:C3, 0))', // sum even numbers
+        G5: '=sum(IF(AND(MOD(A1:C3, 2), A1:C3>5), A1:C3, 0))', // sum odd numbers greater than 5
+
         A7: "a1",
         A8: "a2",
         B8: '=indirect(A7)+indirect(A8)',
-        B16: '={ A1:C1; 10, 10, 10; A2:B3, C2:C3 }*2',
+        B16: '={ A1:C1; 10, 10, 10; A2:B3, C2:C3 } * 2',
+
+        // XXX: Google Sheets doesn't parse this, should we err?
+        // looks legit to me, if there's anything sane in Excel.
+        B17: '={ A1:B3, C1:C3; -{ 1, 2, 3 }% } + A2',
+        F15: '={ { 1, 2; 3, 4 }; 5, 6 }',
 
         //E5: "=sum(A1:C3)",
         // E5: "=B2",

@@ -31,6 +31,9 @@
     defNumeric("exp", 1, Math.exp);
     defNumeric("log", 1, Math.log);
     defNumeric("power", 2, Math.pow);
+    defNumeric("mod", 2, function(left, right){
+        return left % right;
+    });
 
     defineFunction("sum", function(callback, args){
         var sum = 0;
@@ -284,61 +287,32 @@
     defNumeric("true", 0, function(){ return true; });
     defNumeric("false", 0, function(){ return false; });
 
-    /* -----[ error catching ]----- */
-
-    defineFunction("-catch", function(callback, args){
-        var fname = args[0].toLowerCase();
-        var prevCallback = this.callback;
-        this.callback = function(ret) {
-            this.callback = prevCallback;
-            var val = this.cellValues([ ret ])[0];
-            switch (fname) {
-              case "isblank":
-                if (ret instanceof CellRef) {
-                    return callback(val == null || val === "");
-                }
-                return callback(false);
-              case "iserror":
-                return callback(val instanceof CalcError);
-              case "iserr":
-                return callback(val instanceof CalcError && val.code != "N/A");
-              case "islogical":
-                return callback(typeof val == "boolean");
-              case "isna":
-                return callback(val instanceof CalcError && val.code == "N/A");
-              case "isnontext":
-                return callback(typeof val != "string" || val === "");
-              case "isref":
-                // apparently should return true only for cell and range
-                return callback(ret instanceof CellRef || ret instanceof RangeRef);
-              case "istext":
-                return callback(typeof val == "string" && val !== "");
-              case "isnumber":
-                return callback(typeof val == "number");
-            }
-            this.error("CATCH");
-        };
-        args[1]();
-    });
-
     //// utils
 
     function defNumeric(name, nargs, func) {
+        if (nargs == 1) {
+            func = runtime.arrayHandler1(func);
+        } else if (nargs == 2) {
+            func = runtime.arrayHandler2(func);
+        } else if (nargs > 2) {
+            throw new Error("Use defNumeric for functions of at most 2 arguments");
+        }
         return defineFunction(name, function(callback, args){
             if (args.length != nargs) {
                 return this.error(new CalcError("N/A"));
             }
-            args = this.cellValues(args);
-            for (var i = 0; i < args.length; ++i) {
-                var num = args[i];
-                if (num == null || num === "") {
-                    num = 0;
-                }
-                if (typeof num != "number") {
-                    return this.error(new CalcError("VALUE"));
-                }
-                args[i] = num;
-            }
+            // XXX: type checking
+            // args = this.cellValues(args);
+            // for (var i = 0; i < args.length; ++i) {
+            //     var num = args[i];
+            //     if (num == null || num === "") {
+            //         num = 0;
+            //     }
+            //     if (typeof num != "number") {
+            //         return this.error(new CalcError("VALUE"));
+            //     }
+            //     args[i] = num;
+            // }
             var ret = func.apply(this, args);
             if (!(ret instanceof CalcError)) {
                 callback(ret);

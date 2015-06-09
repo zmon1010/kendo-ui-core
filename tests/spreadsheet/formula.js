@@ -218,7 +218,7 @@
         hasProps(exp, {
             type: "exp",
             ast: {
-                type: "call",
+                type: "func",
                 func: "sum",
                 args: [
                     { type: "ref", ref: "cell", row: 1, col: 0 },
@@ -234,7 +234,7 @@
         hasProps(exp, {
             type: "exp",
             ast: {
-                type: "call",
+                type: "func",
                 func: "sum",
                 args: [
                     { type: "binary", op: ",",
@@ -254,7 +254,7 @@
         hasProps(exp, {
             type: "exp",
             ast: {
-                type: "call",
+                type: "func",
                 func: "sum",
                 args: [
                     // first arg is intersection of A2:A5 x A3:A4

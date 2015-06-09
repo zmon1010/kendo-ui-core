@@ -125,6 +125,9 @@
             if (a instanceof Ref) {
                 a = this.cellValues([ a ]);
             }
+            else if (a instanceof Matrix) {
+                a = a.data;
+            }
             if (Array.isArray(a)) {
                 for (var i = 0; i < a.length; ++i) {
                     this.forNumbers(a[i], f);
@@ -175,13 +178,15 @@
             if (range instanceof RangeRef) {
                 var tl = range.topLeft;
                 var cells = self.ss.getRefCells(range);
-                var m = [];
+                var m = new Matrix(self);
+                // XXX: infinite range?  tl.row / tl.col will be infinite, thus endless loop later
+                // (i.e. in Matrix.each).
                 cells.forEach(function(cell){
-                    var row = cell.row - tl.row;
-                    row = m[row] || (m[row] = []);
-                    row[cell.col - tl.col] = cell.value;
+                    m.set(cell.row - tl.row,
+                          cell.col - tl.col,
+                          cell.value);
                 });
-                return new Matrix(self, range.height(), range.width(), m);
+                return m;
             }
             if (Array.isArray(range) && range.length > 0) {
                 var m = new Matrix(self), row = 0;
@@ -193,13 +198,15 @@
                         if (el instanceof Ref && !isRange) {
                             el = self.ss.getData(el);
                         }
-                        if (el instanceof RangeRef || Array.isArray(el)) {
-                            var tmp = self.asMatrix(el);
-                            tmp.each(function(el, r, c){
+                        if (isRange || Array.isArray(el)) {
+                            el = self.asMatrix(el);
+                        }
+                        if (el instanceof Matrix) {
+                            el.each(function(el, r, c){
                                 m.set(row + r, col + c, el);
                             });
-                            h = Math.max(h, tmp.height);
-                            col += tmp.width;
+                            h = Math.max(h, el.height);
+                            col += el.width;
                         } else {
                             m.set(row, col++, el);
                         }
@@ -212,11 +219,11 @@
     });
 
     var Matrix = Class.extend({
-        init: function Matrix(context, height, width, data) {
+        init: function Matrix(context) {
             this.context = context;
-            this.height = height || 0;
-            this.width = width || 0;
-            this.data = data || [];
+            this.height = 0;
+            this.width = 0;
+            this.data = [];
         },
         get: function(row, col) {
             var line = this.data[row];
@@ -430,6 +437,11 @@
             if (typeof right == "number" && left == null) {
                 left = 0;
             }
+            if (typeof left == "string" && typeof right == "string") {
+                // string comparison is case insensitive
+                left = left.toLowerCase();
+                right = right.toLowerCase();
+            }
             if (typeof right == typeof left) {
                 return func.call(this, left, right);
             } else {
@@ -564,7 +576,84 @@
         }),
         "unary%": unaryNumeric(function(exp) {
             return exp/100;
-        })
+        }),
+
+        /* -----[ conditional ]----- */
+
+        "if": function(callback, args) {
+            var self = this;
+            var co = args[0], th = args[1], el = args[2];
+            var comatrix = self.asMatrix(co);
+            if (comatrix) {
+                // XXX: calling both branches in this case, since we'll typically need values from
+                // both.  We could optimize and call them only when first needed, but oh well.
+                th(function(th){
+                    el(function(el){
+                        var thmatrix = self.asMatrix(th);
+                        var elmatrix = self.asMatrix(el);
+                        callback(comatrix.map(function(val, row, col){
+                            if (self.bool(val)) {
+                                return thmatrix ? thmatrix.get(row, col) : th;
+                            } else {
+                                return elmatrix ? elmatrix.get(row, col) : el;
+                            }
+                        }));
+                    });
+                });
+            } else {
+                if (self.bool(co)) {
+                    th(callback);
+                } else {
+                    el(callback);
+                }
+            }
+        },
+
+        "not": (function(){
+            var handler = arrayHandler1(function(x){
+                return !this.bool(x);
+            });
+            return function(callback, args) {
+                callback(handler.call(this, args[0]));
+            };
+        })(),
+
+        /* -----[ error catching ]----- */
+
+        "-catch": function(callback, args){
+            var fname = args[0].toLowerCase();
+            var prevCallback = this.callback;
+            this.callback = function(ret) {
+                this.callback = prevCallback;
+                var val = this.cellValues([ ret ])[0];
+                switch (fname) {
+                  case "isblank":
+                    if (ret instanceof CellRef) {
+                        return callback(val == null || val === "");
+                    }
+                    return callback(false);
+                  case "iserror":
+                    return callback(val instanceof CalcError);
+                  case "iserr":
+                    return callback(val instanceof CalcError && val.code != "N/A");
+                  case "islogical":
+                    return callback(typeof val == "boolean");
+                  case "isna":
+                    return callback(val instanceof CalcError && val.code == "N/A");
+                  case "isnontext":
+                    return callback(typeof val != "string" || val === "");
+                  case "isref":
+                    // apparently should return true only for cell and range
+                    return callback(ret instanceof CellRef || ret instanceof RangeRef);
+                  case "istext":
+                    return callback(typeof val == "string" && val !== "");
+                  case "isnumber":
+                    return callback(typeof val == "number");
+                }
+                this.error("CATCH");
+            };
+            args[1]();
+        }
 
     };
 

@@ -232,7 +232,7 @@
                 }
                 skip("punc", ")");
                 exp = {
-                    type: "call",
+                    type: "func",
                     func: fname,
                     args: args
                 };
@@ -370,7 +370,7 @@
                         + " + " + JSON.stringify(node.op) + " + "
                         + print(node.right, OPERATORS[node.op]);
                 });
-              case "call":
+              case "func":
                 return JSON.stringify(node.func + "(") + " + "
                     + (node.args.length > 0
                        ? node.args.map(function(arg){
@@ -411,7 +411,8 @@
               case "prefix"  :
               case "postfix" : return cpsUnary(node, k);
               case "binary"  : return cpsBinary(node, k);
-              case "call"    : return cpsCall(node, k);
+              case "func"    : return cpsFunc(node, k);
+              case "try"     : return cpsTry(node, k);
               case "lambda"  : return cpsLambda(node, k);
               case "matrix"  : return cpsMatrix(node.value, k, true);
             }
@@ -424,7 +425,7 @@
 
         function cpsUnary(node, k) {
             return cps({
-                type: "call",
+                type: "func",
                 func: "unary" + node.op,
                 args: [ node.exp ]
             }, k);
@@ -432,7 +433,7 @@
 
         function cpsBinary(node, k) {
             return cps({
-                type: "call",
+                type: "func",
                 func: "binary" + node.op,
                 args: [ node.left, node.right ]
             }, k);
@@ -440,11 +441,41 @@
 
         function cpsIf(co, th, el, k) {
             return cps(co, function(co){
+                // compile THEN and ELSE into a lambda which takes a callback to invoke with the
+                // result of the branches, and the IF itself will become a call the internal "if"
+                // function.
+                var rest = makeContinuation(k);
+                var thenK = gensym("T");
+                var elseK = gensym("E");
                 return {
-                    type: "if",
-                    co: co,
-                    th: cps(th, k),
-                    el: cps(el || FALSE, k)
+                    type: "func",
+                    func: "if",
+                    args: [
+                        rest,
+                        co, // condition
+                        { // then
+                            type: "lambda",
+                            vars: [ thenK ],
+                            body: cps(th, function(th){
+                                return {
+                                    type: "call",
+                                    func: { type: "var", name: thenK },
+                                    args: [ th ]
+                                };
+                            })
+                        },
+                        { // else
+                            type: "lambda",
+                            vars: [ elseK ],
+                            body: cps(el, function(el){
+                                return {
+                                    type: "call",
+                                    func: { type: "var", name: elseK },
+                                    args: [ el ]
+                                };
+                            })
+                        }
+                    ]
                 };
             });
         }
@@ -454,14 +485,14 @@
                 return cpsAtom(TRUE, k);
             }
             return cps({
-                type: "call",
+                type: "func",
                 func: "IF",
                 args: [
                     // first item
                     args[0],
                     // if true, apply AND for the rest
                     {
-                        type: "call",
+                        type: "func",
                         func: "AND",
                         args: args.slice(1)
                     },
@@ -476,7 +507,7 @@
                 return cpsAtom(FALSE, k);
             }
             return cps({
-                type: "call",
+                type: "func",
                 func: "IF",
                 args: [
                     // first item
@@ -485,7 +516,7 @@
                     TRUE,
                     // otherwise apply OR for the rest
                     {
-                        type: "call",
+                        type: "func",
                         func: "OR",
                         args: args.slice(1)
                     }
@@ -493,21 +524,10 @@
             }, k);
         }
 
-        function cpsNot(exp, k) {
-            return cps(exp, function(exp){
-                return k({
-                    type: "not",
-                    exp: exp
-                });
-            });
-        }
-
-        function cpsCall(node, k) {
+        function cpsFunc(node, k) {
             switch (node.func.toLowerCase()) {
               case "if":
                 return cpsIf(node.args[0], node.args[1], node.args[2], k);
-              case "not":
-                return cpsNot(node.args[0], k);
               case "and":
                 return cpsAnd(node.args, k);
               case "or":
@@ -538,7 +558,7 @@
             return (function loop(args, i){
                 if (i == node.args.length) {
                     return {
-                        type : "call",
+                        type : "func",
                         func : node.func,
                         args : args
                     };
@@ -551,7 +571,7 @@
             })([ makeContinuation(k) ], 0);
         }
 
-        function cpsLambda(node, k) {
+        function cpsTry(node, k) {
             return k({
                 type: "lambda",
                 vars: [],
@@ -566,19 +586,31 @@
 
         function cpsCatch(node, k) {
             return cps({
-                type: "call",
+                type: "func",
                 func: "-catch",
                 args: [
                     {
                         type: "str",
                         value: node.func
                     }, {
-                        type: "lambda",
+                        type: "try",
                         vars: [],
                         body: node.args[0]
                     }
                 ]
             }, k);
+        }
+
+        function cpsLambda(node, k) {
+            var cont = gensym("K");
+            var body = cps(node.body, function(body){
+                return { type: "call",
+                         func: { type: "var", value: cont },
+                         args: [ body ] };
+            });
+            return k({ type: "lambda",
+                       vars: [ cont ].concat(node.vars),
+                       body: body });
         }
 
         function cpsMatrix(elements, k, isMatrix) {
@@ -666,11 +698,14 @@
             else if (type == "return") {
                 return "context.resolve(" + js(node.value) + ")";
             }
-            else if (type == "call") {
+            else if (type == "func") {
                 return "context.func(" + JSON.stringify(node.func) + ", "
                     + js(node.args[0]) + ", " // the callback
                     + jsArray(node.args.slice(1)) // the arguments
                     + ")";
+            }
+            else if (type == "call") {
+                return js(node.func) + "(" + node.args.map(js).join(", ") + ")";
             }
             else if (type == "ref") {
                 return "refs[" + node.index + "]";
@@ -681,13 +716,10 @@
             else if (type == "if") {
                 return "(context.bool(" + js(node.co) + ") ? " + js(node.th) + " : " + js(node.el) + ")";
             }
-            else if (type == "not") {
-                return "!context.bool(" + js(node.exp) + ")";
-            }
             else if (type == "lambda") {
-                return "function("
+                return "(function("
                     + node.vars.join(", ")
-                    + "){ return(" + js(node.body) + ") }";
+                    + "){ return(" + js(node.body) + ") })";
             }
             else if (type == "var") {
                 return node.name;
