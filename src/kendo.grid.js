@@ -1759,7 +1759,7 @@ var __meta__ = {
                 return { elements: that.thead.get() };
             });
 
-            that.thead.find("th").each(function(){
+            that.thead.add(that.lockedHeader).find("th").each(function(){
                 var th = $(this),
                     filterMenu = th.data("kendoFilterMenu"),
                     sortable = th.data("kendoColumnSorter"),

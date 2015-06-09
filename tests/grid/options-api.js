@@ -238,6 +238,20 @@
         equal(grid._events.columnHide.length, 0);
     });
 
+    test("detaches events used internally by columnMenu with locked columns", function() {
+        var grid = setup({
+            columns: ["foo", { field: "bar", locked: true }],
+            columnMenu: true
+        });
+        grid.thead.find(".k-header-column-menu").click();
+        grid.lockedHeader.find(".k-header-column-menu").click();
+
+        equal(grid._events.columnHide.length, 2);
+        grid.setOptions({ sortable: true });
+
+        equal(grid._events.columnHide.length, 0);
+    });
+
     test("preserves the structure when using div", function() {
         div.before("<div id='before' />");
         div.after("<div id='after' />");
@@ -322,6 +336,5 @@
 
         ok(grid.dataSource.transport.options.dataSource);
     });
-
 
 })();
