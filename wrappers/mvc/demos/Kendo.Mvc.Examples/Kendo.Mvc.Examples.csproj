@@ -194,6 +194,7 @@
     <Compile Include="Controllers\Collapsible\NestedController.cs" />
     <Compile Include="Controllers\ComboBox\GroupingController.cs" />
     <Compile Include="Controllers\ComboBox\VirtualizationController.cs" />
+    <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\Validator\IndexController.cs" />
     <Compile Include="Controllers\Diagram\ApiController.cs" />
     <Compile Include="Controllers\Diagram\ExportController.cs" />
@@ -940,6 +941,7 @@
     <Content Include="Areas\aspx\Views\map\export.aspx" />
     <Content Include="Areas\aspx\Views\menu\context_menu.aspx" />
     <Content Include="Areas\aspx\Views\mobile_listview\local_virtualization.aspx" />
+    <Content Include="Areas\aspx\Views\multiselect\tag_mode.aspx" />
     <Content Include="Areas\aspx\Views\pivotgrid\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\pivotgrid\excel_export.aspx" />
     <Content Include="Areas\aspx\Views\pivotgrid\kpi.aspx" />
@@ -3287,6 +3289,7 @@
     <Content Include="Areas\razor\Views\pdf_export\index.cshtml" />
     <Content Include="Areas\razor\Views\globalization\index.cshtml" />
     <Content Include="Areas\razor\Views\validator\index.cshtml" />
+    <Content Include="Areas\razor\Views\multiselect\tag_mode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />

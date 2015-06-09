@@ -342,6 +342,24 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The mode used to render the selected tags. The available modes are 'single' and 'multiple'
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().MultiSelect()
+        ///             .Name("MultiSelect")
+        ///             .TagMode(TagMode.Single)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public MultiSelectBuilder TagMode(TagMode mode)
+        {
+            Component.TagMode = mode;
+
+            return this;
+        }
+
+        /// <summary>
         /// Template to be used for rendering the tags of the selected items.
         /// </summary>
         /// <example>

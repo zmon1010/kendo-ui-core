@@ -65,6 +65,12 @@
             set;
         }
 
+        public TagMode TagMode
+        {
+            get;
+            set;
+        }
+
         public string TagTemplate
         {
             get;
@@ -108,6 +114,11 @@
             else if (!string.IsNullOrEmpty(ItemTemplate))
             {
                 options["itemTemplate"] = ItemTemplate;
+            }
+
+            if (TagMode == TagMode.Single)
+            {
+                options["tagMode"] = "single";
             }
 
             if (!string.IsNullOrEmpty(TagTemplateId))
