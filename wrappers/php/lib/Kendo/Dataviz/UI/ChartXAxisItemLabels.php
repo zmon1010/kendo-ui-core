@@ -96,8 +96,8 @@ class ChartXAxisItemLabels extends \Kendo\SerializableObject {
     }
 
     /**
-    * The rotation angle of the labels. By default the labels are not rotated.
-    * @param float $value
+    * The rotation angle of the labels. By default the labels are not rotated. Can be set to "auto" in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.
+    * @param float|string|\Kendo\Dataviz\UI\ChartXAxisItemLabelsRotation|array $value
     * @return \Kendo\Dataviz\UI\ChartXAxisItemLabels
     */
     public function rotation($value) {

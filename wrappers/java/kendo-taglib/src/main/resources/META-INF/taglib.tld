@@ -1209,10 +1209,10 @@ maxDateGroups.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>The rotation angle of the labels. By default the labels are not rotated.</description>
+            <description>The rotation angle of the labels. By default the labels are not rotated. Can be set to "auto" if the axis is horizontal in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.</description>
             <name>rotation</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>float</type>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The number of labels to skip. By default no labels are skipped.</description>
@@ -1276,7 +1276,9 @@ maxDateGroups.</description>
 
 
     <tag>
-        <description>The format used to display the labels when the categories are dates. Uses kendo.format. Contains one placeholder ("{0}") which represents the category value.</description>
+        <description>The format used to display labels for date category axis.
+The {0} placeholder represents the category value.The chart will choose the appropriate format for the current categoryAxis.baseUnit.
+Setting the categoryAxis.labels.format option will override the date formats.See also: kendo.format.</description>
         <name>chart-categoryAxisItem-labels-dateFormats</name>
         <tag-class>com.kendoui.taglib.chart.CategoryAxisItemLabelsDateFormatsTag</tag-class>
         <body-content>empty</body-content>
@@ -1378,6 +1380,28 @@ maxDateGroups.</description>
             <name>top</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The rotation angle of the labels. By default the labels are not rotated. Can be set to "auto" if the axis is horizontal in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.</description>
+        <name>chart-categoryAxisItem-labels-rotation</name>
+        <tag-class>com.kendoui.taglib.chart.CategoryAxisItemLabelsRotationTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The alignment of the rotated labels relative to the slot center. The supported values are "end" and "center". By default the closest end of the label will be aligned to the center. If set to "center", the center of the rotated label will be aligned instead.</description>
+            <name>align</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The rotation angle of the labels. By default the labels are not rotated. Can be set to "auto" if the axis is horizontal in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.</description>
+            <name>angle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
 
     </tag>
@@ -6971,7 +6995,7 @@ If the valueAxis.type is set to "log", the minorUnit value represents the number
             <description>The unique axis name. Used to associate a series with a value axis using the series.axis option.</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>If set to true the chart will prevent the automatic axis range from snapping to 0.
@@ -7210,10 +7234,10 @@ The axis will be rendered in the first (default) pane if not set.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>The rotation angle (in degrees) of the labels. By default the labels are not rotated.Angles increase clockwise and zero is to the left. Negative values are acceptable.</description>
+            <description>The rotation angle (in degrees) of the labels. By default the labels are not rotated. Angles increase clockwise and zero is to the left. Negative values are acceptable. Can be set to "auto" if the axis is horizontal in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.</description>
             <name>rotation</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>float</type>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The number of labels to skip. By default no labels are skipped.</description>
@@ -7340,6 +7364,28 @@ Every n-th label is rendered where n is the step</description>
             <name>top</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The rotation angle (in degrees) of the labels. By default the labels are not rotated. Angles increase clockwise and zero is to the left. Negative values are acceptable. Can be set to "auto" if the axis is horizontal in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.</description>
+        <name>chart-valueAxisItem-labels-rotation</name>
+        <tag-class>com.kendoui.taglib.chart.ValueAxisItemLabelsRotationTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The alignment of the rotated labels relative to the slot center. The supported values are "end" and "center". By default the closest end of the label will be aligned to the center. If set to "center", the center of the rotated label will be aligned instead.</description>
+            <name>align</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The rotation angle of the labels. By default the labels are not rotated. Can be set to "auto" if the axis is horizontal in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.</description>
+            <name>angle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
 
     </tag>
@@ -8288,7 +8334,7 @@ If the xAxis.type is set to "log", the minorUnit value represents the number of 
             <description>The unique axis name. Used to associate a series with a x axis using the series.xAxis option.</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>If set to true the chart will prevent the automatic axis range from snapping to 0.
@@ -8539,10 +8585,10 @@ The axis will be rendered in the first (default) pane if not set.</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>The rotation angle of the labels. By default the labels are not rotated.</description>
+            <description>The rotation angle of the labels. By default the labels are not rotated. Can be set to "auto" in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.</description>
             <name>rotation</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>float</type>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The number of labels to skip.</description>
@@ -8708,6 +8754,28 @@ The axis will be rendered in the first (default) pane if not set.</description>
             <name>top</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The rotation angle of the labels. By default the labels are not rotated. Can be set to "auto" in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.</description>
+        <name>chart-xAxisItem-labels-rotation</name>
+        <tag-class>com.kendoui.taglib.chart.XAxisItemLabelsRotationTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The alignment of the rotated labels relative to the slot center. The supported values are "end" and "center". By default the closest end of the label will be aligned to the center. If set to "center", the center of the rotated label will be aligned instead.</description>
+            <name>align</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The rotation angle of the labels. By default the labels are not rotated. Can be set to "auto" in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.</description>
+            <name>angle</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
 
     </tag>
@@ -9652,7 +9720,7 @@ If the yAxis.type is set to "log", the minorUnit value represents the number of 
             <description>The unique axis name. Used to associate a series with a y axis using the series.yAxis option.</description>
             <name>name</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>If set to true the chart will prevent the automatic axis range from snapping to 0.
@@ -10064,6 +10132,28 @@ The axis will be rendered in the first (default) pane if not set.</description>
         <attribute>
             <description>The top padding of the labels.</description>
             <name>top</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The rotation angle of the labels. By default the labels are not rotated.</description>
+        <name>chart-yAxisItem-labels-rotation</name>
+        <tag-class>com.kendoui.taglib.chart.YAxisItemLabelsRotationTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The alignment of the rotated labels relative to the slot center. The supported values are "end" and "center". By default the closest end of the label will be aligned to the center. If set to "center", the center of the rotated label will be aligned instead.</description>
+            <name>align</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The rotation angle of the labels. By default the labels are not rotated.</description>
+            <name>angle</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>

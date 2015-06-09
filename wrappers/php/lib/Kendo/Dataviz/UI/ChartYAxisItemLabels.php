@@ -97,7 +97,7 @@ class ChartYAxisItemLabels extends \Kendo\SerializableObject {
 
     /**
     * The rotation angle of the labels. By default the labels are not rotated.
-    * @param float $value
+    * @param float|\Kendo\Dataviz\UI\ChartYAxisItemLabelsRotation|array $value
     * @return \Kendo\Dataviz\UI\ChartYAxisItemLabels
     */
     public function rotation($value) {

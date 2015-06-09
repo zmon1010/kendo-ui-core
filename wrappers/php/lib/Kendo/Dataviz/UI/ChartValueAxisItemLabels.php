@@ -78,8 +78,8 @@ class ChartValueAxisItemLabels extends \Kendo\SerializableObject {
     }
 
     /**
-    * The rotation angle (in degrees) of the labels. By default the labels are not rotated.Angles increase clockwise and zero is to the left. Negative values are acceptable.
-    * @param float $value
+    * The rotation angle (in degrees) of the labels. By default the labels are not rotated. Angles increase clockwise and zero is to the left. Negative values are acceptable. Can be set to "auto" if the axis is horizontal in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.
+    * @param float|string|\Kendo\Dataviz\UI\ChartValueAxisItemLabelsRotation|array $value
     * @return \Kendo\Dataviz\UI\ChartValueAxisItemLabels
     */
     public function rotation($value) {

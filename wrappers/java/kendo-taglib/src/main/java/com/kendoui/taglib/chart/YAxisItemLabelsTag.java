@@ -68,6 +68,10 @@ public class YAxisItemLabelsTag extends  BaseTag  /* interfaces *//* interfaces 
         setProperty("padding", value);
     }
 
+    public void setRotation(com.kendoui.taglib.chart.YAxisItemLabelsRotationTag value) {
+        setProperty("rotation", value);
+    }
+
     public void setTemplate(YAxisItemLabelsTemplateFunctionTag value) {
         setEvent("template", value.getBody());
     }

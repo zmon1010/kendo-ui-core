@@ -68,6 +68,10 @@ public class XAxisItemLabelsTag extends  BaseTag  /* interfaces *//* interfaces 
         setProperty("padding", value);
     }
 
+    public void setRotation(com.kendoui.taglib.chart.XAxisItemLabelsRotationTag value) {
+        setProperty("rotation", value);
+    }
+
     public void setTemplate(XAxisItemLabelsTemplateFunctionTag value) {
         setEvent("template", value.getBody());
     }
@@ -140,11 +144,11 @@ public class XAxisItemLabelsTag extends  BaseTag  /* interfaces *//* interfaces 
         setProperty("padding", value);
     }
 
-    public float getRotation() {
-        return (float)getProperty("rotation");
+    public java.lang.Object getRotation() {
+        return (java.lang.Object)getProperty("rotation");
     }
 
-    public void setRotation(float value) {
+    public void setRotation(java.lang.Object value) {
         setProperty("rotation", value);
     }
 
