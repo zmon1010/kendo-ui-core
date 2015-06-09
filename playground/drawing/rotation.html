@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<link href="http://cdn.kendostatic.com/2015.1.408/styles/kendo.common-material.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/2015.1.408/styles/kendo.rtl.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/2015.1.408/styles/kendo.materialblack.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/2015.1.408/styles/kendo.materialblack.mobile.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/2015.1.408/styles/kendo.dataviz.min.css" rel="stylesheet" /><link href="http://cdn.kendostatic.com/2015.1.408/styles/kendo.dataviz.materialblack.min.css" rel="stylesheet" />
+
+    <script src="../require.js"></script>
+    <script>
+    require.config({
+        baseUrl: "../../src",
+        paths: {
+            cultures: "cultures"
+        }
+    });
+
+    require([ "jquery.min",
+              "kendo.dataviz.chart" ], function(){
+
+        redraw();
+    });
+
+    function redraw() {
+        var draw = kendo.drawing;
+        var geom = kendo.geometry;
+        var angle = -60;
+
+        var count = parseInt($("#count").val(), 10);
+                console.log(count);
+        var categories = [];
+        var categories2 = [];
+        for (var i = 0; i < count; i++) {
+            categories.push(new Date().toString());
+            categories2.push(new Date().toString().substr(0, 5));
+        }
+
+        $("#chart").kendoChart({
+            series: [{
+                type: "column",             
+                data: [1,2,3]
+            }],
+            valueAxis: [{
+              
+            labels: {
+                template: "fooooo"
+            }
+            }],
+            categoryAxis: [{
+                 axisCrossingValue: 100,
+                //majorTicks: {visible: false},              
+                justified: false,
+                categories: categories,
+                labels: {
+                    rotation: -30
+                    // rotation: {
+                        // angle: 30,
+                        // align: "center"
+                    // }
+                }
+            }]
+        });
+        
+
+        kendo.onResize(function() {
+            $("#chart").data("kendoChart").resize();
+        });
+    }
+    </script>
+    <style>
+        #surface {
+            width: 400px;
+            height: 500px;
+            float: left;
+        }
+    </style>
+  </head>
+  <body>
+  
+      <input type="text" id="count" value="5"/>
+      <button onclick="redraw()">redraw</button>
+      <div id="chart"></div>
+      <div id="chart2" ></div>
+      <div id="surface"></div>      
+  </body>
+</html>

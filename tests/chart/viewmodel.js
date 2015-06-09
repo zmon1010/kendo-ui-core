@@ -2090,6 +2090,177 @@
     })();
 
     (function() {
+        var label,
+            AxisLabel = dataviz.AxisLabel,
+            TEXT = "text",
+            targetBox = Box2D(10, 10, 100, 100),
+            rect;
+
+        function createLabel(options, text) {
+            label = new AxisLabel(null, text || TEXT, 0, null, options);
+        }
+
+        // ------------------------------------------------------------
+        module("AxisLabel / rotation / top anchor", {
+            setup: function() {
+                createLabel({
+                    rotation: 30,
+                    align: "center"
+                });
+                label.options.rotationOrigin = "top";
+                label.reflow(targetBox);
+            }
+        });
+
+        test("aligns text to the top border", function() {
+            equal(label.box.y1, 10);
+        });
+
+        test("aligns text closest end center to the target center", function() {
+            equal(label.box.x1, 51.25);
+
+            label.options.rotation = -30;
+            label.reflow(targetBox);
+
+            equal(label.box.x2, 58.75);
+        });
+
+        test("aligns text center to the target center if the text is parallel to the origin after the rotation", function() {
+            label.options.rotation = 180;
+            label.reflow(targetBox);
+
+            equal(label.box.center().x, targetBox.center().x);
+        });
+
+        test("aligns text center to the target center if alignRotation is set to center", function() {
+            label.options.alignRotation = "center";
+            label.reflow(targetBox);
+
+            equal(label.box.center().x, targetBox.center().x);
+        });
+
+        // ------------------------------------------------------------
+        module("AxisLabel / rotation / bottom anchor", {
+            setup: function() {
+                createLabel({
+                    rotation: 30,
+                    align: "center"
+                });
+                label.options.rotationOrigin = "bottom";
+                label.reflow(targetBox);
+            }
+        });
+
+        test("aligns text to the top border", function() {
+            equal(label.box.y1, 10);
+        });
+
+        test("aligns text closest end center to the target center", function() {
+            equal(label.box.x2, 58.75);
+
+            label.options.rotation = -30;
+            label.reflow(targetBox);
+
+            equal(label.box.x1, 51.25);
+        });
+
+        test("aligns text center to the target center if the text is parallel to the origin after the rotation", function() {
+            label.options.rotation = 180;
+            label.reflow(targetBox);
+
+            equal(label.box.center().x, targetBox.center().x);
+        });
+
+        test("aligns text center to the target center if alignRotation is set to center", function() {
+            label.options.alignRotation = "center";
+            label.reflow(targetBox);
+
+            equal(label.box.center().x, targetBox.center().x);
+        });
+
+        // ------------------------------------------------------------
+        module("AxisLabel / rotation / left anchor", {
+            setup: function() {
+                createLabel({
+                    rotation: 30,
+                    align: "center",
+                    vAlign: "center"
+                });
+                label.options.rotationOrigin = "left";
+                label.reflow(targetBox);
+            }
+        });
+
+        test("aligns text to the left border", function() {
+            equal(label.box.x1, 10);
+        });
+
+        test("aligns text closest end center to the target center", function() {
+            close(label.box.y1, 48.5, 0.1);
+
+            label.options.rotation = -30;
+            label.reflow(targetBox);
+
+            close(label.box.y2, 61.5, 0.1);
+        });
+
+        test("aligns text center to the target center if the text is parallel to the origin after the rotation", function() {
+            label.options.rotation = 90;
+            label.reflow(targetBox);
+
+            equal(label.box.center().y, targetBox.center().y);
+        });
+
+        test("aligns text center to the target center if alignRotation is set to center", function() {
+            label.options.alignRotation = "center";
+            label.reflow(targetBox);
+
+            equal(label.box.center().y, targetBox.center().y);
+        });
+
+        // ------------------------------------------------------------
+        module("AxisLabel / rotation / right anchor", {
+            setup: function() {
+                createLabel({
+                    rotation: 30,
+                    align: "center",
+                    vAlign: "center"
+                });
+                label.options.rotationOrigin = "right";
+                label.reflow(targetBox);
+            }
+        });
+
+        test("aligns text to the left border", function() {
+            equal(label.box.x1, 10);
+        });
+
+        test("aligns text closest end center to the target center", function() {
+            close(label.box.y2, 61.5, 0.1);
+
+            label.options.rotation = -30;
+            label.reflow(targetBox);
+
+            close(label.box.y1, 48.5, 0.1);
+        });
+
+        test("aligns text center to the target center if the text is parallel to the origin after the rotation", function() {
+            label.options.rotation = 90;
+            label.reflow(targetBox);
+
+            equal(label.box.center().y, targetBox.center().y);
+        });
+
+        test("aligns text center to the target center if alignRotation is set to center", function() {
+            label.options.alignRotation = "center";
+            label.reflow(targetBox);
+
+            equal(label.box.center().y, targetBox.center().y);
+        });
+
+    })();
+
+    (function() {
         var legend,
             MARKER_MARGIN = MARKER_SIZE = 7,
             MARGIN = 10;

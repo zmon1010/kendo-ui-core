@@ -8900,6 +8900,7 @@ var __meta__ = {
 
                 if (i !== 0 && yAnchor.pane === axis.pane) {
                     axis.alignTo(yAnchor);
+                    axis.reflow(axis.box);
                 }
             }
 
@@ -8943,6 +8944,7 @@ var __meta__ = {
 
                 if (i !== 0) {
                     axis.alignTo(xAnchor);
+                    axis.reflow(axis.box);
                 }
             }
         },
@@ -8965,18 +8967,21 @@ var __meta__ = {
                 }
             }
 
-            for (i = 0; i < axes.length; i++) {
-                currentAxis = axes[i];
+            if (overflowX !== 0) {
+                for (i = 0; i < axes.length; i++) {
+                    currentAxis = axes[i];
 
-                if (!currentAxis.options.vertical) {
-                    currentAxis.reflow(currentAxis.box.shrink(overflowX, 0));
+                    if (!currentAxis.options.vertical) {
+                        currentAxis.reflow(currentAxis.box.shrink(overflowX, 0));
+                    }
                 }
             }
         },
 
         shrinkAxisHeight: function(panes) {
             var i, currentPane, axes,
-                overflowY, j, currentAxis;
+                overflowY, j, currentAxis,
+                shrinked;
 
             for (i = 0; i < panes.length; i++) {
                 currentPane = panes[i];
@@ -8986,16 +8991,21 @@ var __meta__ = {
                     axisGroupBox(axes).height() - currentPane.contentBox.height()
                 );
 
-                for (j = 0; j < axes.length; j++) {
-                    currentAxis = axes[j];
+                if (overflowY !== 0) {
+                    for (j = 0; j < axes.length; j++) {
+                        currentAxis = axes[j];
 
-                    if (currentAxis.options.vertical) {
-                        currentAxis.reflow(
-                            currentAxis.box.shrink(0, overflowY)
-                        );
+                        if (currentAxis.options.vertical) {
+                            currentAxis.reflow(
+                                currentAxis.box.shrink(0, overflowY)
+                            );
+                        }
                     }
+                    shrinked = true;
                 }
             }
+
+            return shrinked;
         },
 
         fitAxes: function(panes) {
@@ -9050,10 +9060,46 @@ var __meta__ = {
             if (axes.x.length > 0 && axes.y.length > 0) {
                 plotArea.alignAxes(axes.x, axes.y);
                 plotArea.shrinkAxisWidth(panes);
+
+                plotArea.autoRotateAxisLabels(axes);
+
                 plotArea.alignAxes(axes.x, axes.y);
+                if (plotArea.shrinkAxisWidth(panes)) {
+                    plotArea.alignAxes(axes.x, axes.y);
+                }
+
                 plotArea.shrinkAxisHeight(panes);
                 plotArea.alignAxes(axes.x, axes.y);
+
+                if (plotArea.shrinkAxisHeight(panes)) {
+                    plotArea.alignAxes(axes.x, axes.y);
+                }
+
                 plotArea.fitAxes(panes);
+            }
+        },
+
+        autoRotateAxisLabels: function(groupedAxes) {
+            var axes = this.axes;
+            var panes = this.panes;
+            var axis, idx, rotated;
+
+            for (idx = 0; idx < axes.length; idx++) {
+                axis = axes[idx];
+                if (axis.autoRotateLabels()) {
+                    rotated = true;
+                }
+            }
+
+            if (rotated) {
+                for (idx = 0; idx < panes.length; idx++) {
+                    this.reflowPaneAxes(panes[idx]);
+                }
+
+                if (groupedAxes.x.length > 0 && groupedAxes.y.length > 0) {
+                    this.alignAxes(groupedAxes.x, groupedAxes.y);
+                    this.shrinkAxisWidth(panes);
+                }
             }
         },
 
@@ -12124,7 +12170,7 @@ var __meta__ = {
 
         if (length > 0) {
             for (i = 0; i < length; i++) {
-                axisBox = axes[i].box;
+                axisBox = axes[i].contentBox();
 
                 if (!box) {
                     box = axisBox.clone();

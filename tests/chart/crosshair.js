@@ -104,8 +104,8 @@
         var segments = line.segments;
         var start = segments[0].anchor();
         var end = segments[1].anchor();
-        deepEqual([start.x, start.y], [0,7.5]);
-        deepEqual([end.x, end.y], [199,7.5]);
+        deepEqual([start.x, start.y], [0,0]);
+        deepEqual([end.x, end.y], [199,0]);
     });
 
     module("Crosshair / destroy", {

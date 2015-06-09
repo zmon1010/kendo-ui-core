@@ -765,7 +765,7 @@
             });
 
             arrayClose(dateAxis.getMajorTickPositions(),
-                [13, 99, 328, 558, 788] , 1);
+                [0, 88.778, 325.519, 562.259, 799] , 1);
         });
 
         test("Major ticks are not affected when start/end time match base unit", function() {
@@ -778,7 +778,7 @@
             });
 
             arrayClose(dateAxis.getMajorTickPositions(),
-                [12, 207, 400, 593, 787], 1);
+                [0, 199.75, 400, 599.25, 799], 1);
         });
 
         test("First label is hidden if it does not match base unit", function() {
@@ -804,7 +804,7 @@
                 max: new Date("2013/02/16")
             });
 
-            equal(dateAxis.getMajorTickPositions()[1], 400);
+            equal(dateAxis.getMajorTickPositions()[1], 399.5);
         });
 
         // ------------------------------------------------------------
@@ -1420,19 +1420,19 @@
 
         test("Returns correct first partial slot", function() {
             sameBox(dateAxis.getSlot(0),
-                    new Box2D(12, 0, 12, 0),
+                    new Box2D(0, 0, 0, 0),
                     TOLERANCE);
         });
 
         test("Returns correct first full slot", function() {
             sameBox(dateAxis.getSlot(1),
-                    new Box2D(99, 0, 99, 0),
+                    new Box2D(88.778, 0, 88.778, 0),
                     TOLERANCE);
         });
 
         test("Returns correct last full slot", function() {
             sameBox(dateAxis.getSlot(3),
-                    new Box2D(558, 0, 558, 0),
+                    new Box2D(562.259, 0, 562.259, 0),
                     TOLERANCE);
         });
 
@@ -1746,8 +1746,8 @@
             createDateValueAxis(new Date("2012/02/01"), new Date("2012/02/10"));
             var limited = dateAxis.getSlot("2012/02/20", "2012/02/20", true),
                 unlimited = dateAxis.getSlot("2012/02/20", "2012/02/20", false);
-            close(limited.x1, 784, 1, 1, "value is limited");
-            close(unlimited.x1, 1222, 1, "value is not limited");
+            close(limited.x1, 799, 1, 1, "value is limited");
+            close(unlimited.x1, 1255.57, 1, "value is not limited");
         });
 
         test("slot method returns slot as rect", function() {
@@ -1766,7 +1766,7 @@
 
         test("first slot is at min axis value", function() {
             var slot = dateAxis.getSlot("2014/05/25");
-            close(slot.x1, 16, TOLERANCE);
+            close(slot.x1, 0, TOLERANCE);
         });
 
         test("mid slot position", function() {
@@ -1776,7 +1776,7 @@
 
         test("last slot is at max axis value", function() {
             var slot = dateAxis.getSlot("2014/06/22");
-            close(slot.x2, 784, TOLERANCE);
+            close(slot.x2, 799, TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -1791,17 +1791,17 @@
 
         test("first slot is at min axis value", function() {
             var slot = dateAxis.getSlot("2014/06/01");
-            close(slot.x1, 12, TOLERANCE);
+            close(slot.x1, 0, TOLERANCE);
         });
 
         test("mid slot position", function() {
             var slot = dateAxis.getSlot("2014/06/08");
-            close(slot.x1, 398, TOLERANCE);
+            close(slot.x1, 399.5, TOLERANCE);
         });
 
         test("last slot is at max axis value", function() {
             var slot = dateAxis.getSlot("2014/06/15");
-            close(slot.x2, 784, TOLERANCE);
+            close(slot.x2, 799, TOLERANCE);
         });
 
         // ------------------------------------------------------------

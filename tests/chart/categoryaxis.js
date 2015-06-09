@@ -63,6 +63,63 @@
         }
 
         // ------------------------------------------------------------
+        module("Category Axis / Configuration / Labels");
+
+        test("normalizes labels rotation options if object is passed", function() {
+            createCategoryAxis({
+                labels: {
+                    rotation: {
+                        angle: 30,
+                        align: "center"
+                    }
+                }
+            });
+
+            equal(categoryAxis.labels[0].options.rotation, 30);
+            equal(categoryAxis.labels[0].options.alignRotation, "center");
+        });
+
+        test("sets labels rotation to zero if auto is set as value", function() {
+            createCategoryAxis({
+                labels: {
+                    rotation: {
+                        angle: "auto"
+                    }
+                }
+            });
+
+            equal(categoryAxis.labels[0].options.rotation, 0);
+
+            createCategoryAxis({
+                labels: {
+                    rotation: "auto"
+                }
+            });
+
+            equal(categoryAxis.labels[0].options.rotation, 0);
+        });
+
+        test("sets autoRotateLabels option to true if auto is set as rotation value", function() {
+            createCategoryAxis({
+                labels: {
+                    rotation: {
+                        angle: "auto"
+                    }
+                }
+            });
+
+            equal(categoryAxis.options.autoRotateLabels, true);
+
+            createCategoryAxis({
+                labels: {
+                    rotation: "auto"
+                }
+            });
+
+            equal(categoryAxis.options.autoRotateLabels, true);
+        });
+
+        // ------------------------------------------------------------
         module("Category Axis / Horizontal / Rendering", {
             setup: function() {
                 createCategoryAxis();
@@ -183,7 +240,7 @@
 
         test("labels are distributed horizontally (justified)", function() {
             createCategoryAxis({ justified: true });
-            closeTextPosition("x", getAxisTexts(), [0, 776], TOLERANCE);
+            closeTextPosition("x", getAxisTexts(), [-12, 787], TOLERANCE);
         });
 
         test("labels are distributed horizontally in reverse", function() {
@@ -194,7 +251,7 @@
 
         test("labels are distributed horizontally in reverse (justified)", function() {
             createCategoryAxis({ justified: true, reverse: true });
-            closeTextPosition("x", getAxisTexts(), [776, 0], TOLERANCE);
+            closeTextPosition("x", getAxisTexts(), [787, -12], TOLERANCE);
         });
 
         test("labels are positioned below axis line", 2, function() {
@@ -209,7 +266,7 @@
         test("major ticks are distributed horizontally (justified)", function() {
             createCategoryAxis({ justified: true });
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [14.5, 786.5], TOLERANCE);
+                 [0.5, 799.5], TOLERANCE);
         });
 
         test("major ticks are distributed horizontally in reverse", function() {
@@ -221,7 +278,7 @@
         test("major ticks are distributed horizontally in reverse (justified)", function() {
             createCategoryAxis({ justified: true, reverse: true });
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [786.5, 14.5], TOLERANCE);
+                 [799.5, 0.5], TOLERANCE);
         });
 
         test("major ticks can be disabled", function() {
@@ -245,7 +302,7 @@
                 minorTicks: { visible: true }
             });
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [14.5, 272, 529, 788.5], TOLERANCE);
+                 [0.5, 266.5, 533.5, 799.5], TOLERANCE);
         });
 
         test("minor ticks are distributed horizontally in reverse", function() {
@@ -267,7 +324,7 @@
             });
 
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().x; }),
-                 [788.5, 529, 271, 14.5], TOLERANCE);
+                 [799.5, 533.5, 266.5, 0.5], TOLERANCE);
         });
 
         test("minor ticks can be disabled", function() {
@@ -441,7 +498,7 @@
             createCategoryAxis({ vertical: true, justified: true });
 
             arrayClose($.map(getAxisTexts(), function(text) { return text.rect().origin.y }),
-                 [0, 585], TOLERANCE);
+                 [-7.5, 591.5], TOLERANCE);
         });
 
         test("labels are positioned to the left of the axis line", function() {
@@ -458,7 +515,7 @@
             createCategoryAxis({ vertical: true, justified: true });
 
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().y; }),
-                 [9, 593.5], TOLERANCE);
+                 [0.5, 599.5], TOLERANCE);
         });
 
         test("minor ticks are distributed vertically", function() {
@@ -481,7 +538,7 @@
             });
 
             arrayClose($.map(getTicks(), function(line) { return line.segments[0].anchor().y; }),
-                [9, 203, 397, 593.5], TOLERANCE);
+                [0.5, 200, 399.5, 599.5], TOLERANCE);
         });
 
         test("line width 0 remove all ticks", function() {
@@ -1165,7 +1222,7 @@
         });
 
         test("renders box", function() {
-            sameRectPath(plotBands, [17, 0, 788, 286.5], TOLERANCE);
+            sameRectPath(plotBands, [17, 7.5, 788, 291.75], TOLERANCE);
         });
 
         // ------------------------------------------------------------
@@ -1826,6 +1883,17 @@
             equal(axis.box.height(), 70 + ACTUAL_TICK_SIZE + MARGIN);
         });
 
+        test("sets label rotation origin to top", function() {
+            axis.reflow(axisBox);
+            equal(axis.labels[0].options.rotationOrigin, "top");
+        });
+
+        test("sets label rotation origin to bottom if labels are mirrored", function() {
+            axis.options.labels.mirror = true;
+            axis.reflow(axisBox);
+            equal(axis.labels[0].options.rotationOrigin, "bottom");
+        });
+
         // ------------------------------------------------------------
         module("Category Axis / Vertical / reflow", {
             setup: function() {
@@ -1871,5 +1939,104 @@
             axis.reflow(axisBox);
             equal(axis.box.width(), 70 + ACTUAL_TICK_SIZE + MARGIN);
         });
+
+        test("sets label rotation origin to right", function() {
+            axis.reflow(axisBox);
+            equal(axis.labels[0].options.rotationOrigin, "right");
+        });
+
+        test("sets label rotation origin to bottom if labels are mirrored", function() {
+            axis.options.labels.mirror = true;
+            axis.reflow(axisBox);
+            equal(axis.labels[0].options.rotationOrigin, "left");
+        });
+
     })();
+
+    (function() {
+        var axisBox;
+        var axis;
+
+        function LabelMock(box) {
+            this.box = box;
+            this.options = {};
+            this.reflow = $.noop;
+        }
+
+        function setupAxis(options) {
+            axis = new CategoryAxis(kendo.deepExtend({
+                categories: ["foo", "bar"],
+                vertical: false,
+                labels: {
+                    rotation: "auto"
+                }
+            }, options));
+            axisBox = new Box2D(0, 0, 50, 50);
+            axis.labels = [new LabelMock(Box2D(0, 0, 20, 20)), new LabelMock(Box2D(0, 0, 30, 20))];
+        }
+
+        // ------------------------------------------------------------
+        module("Category Axis / autoRotateLabels", {
+            setup: function() {
+                setupAxis();
+            }
+        });
+
+        test("rotates labels with -45 degrees if there is a label with width bigger than the slot width", function() {
+            axis.reflow(axisBox);
+            axis.autoRotateLabels();
+
+            equal(axis.labels[0].options.rotation, -45);
+            equal(axis.labels[1].options.rotation, -45);
+        });
+
+        test("rotates labels with -90 degrees if there is a label with height bigger than the slot width", function() {
+            axis.labels[1].box.y2 = 30;
+            axis.reflow(axisBox);
+            axis.autoRotateLabels();
+
+            equal(axis.labels[0].options.rotation, -90);
+            equal(axis.labels[1].options.rotation, -90);
+        });
+
+        test("reflows rotated labels", 2, function() {
+            axis.reflow(axisBox);
+            axis.labels[0].reflow = axis.labels[1].reflow = function() {
+                ok(true);
+            };
+            axis.autoRotateLabels();
+        });
+
+        test("does not rotate labels if there isn't a label with width bigger than the slot width", function() {
+            axis.labels[1].box.x1 = 20;
+            axis.reflow(axisBox);
+            axis.autoRotateLabels();
+
+            ok(!axis.labels[0].options.rotation);
+            ok(!axis.labels[1].options.rotation);
+        });
+
+        test("does not rotate labels if the axis is vertical", function() {
+            axis.options.vertical = true;
+            axis.reflow(axisBox);
+            axis.autoRotateLabels();
+
+            ok(!axis.labels[0].options.rotation);
+            ok(!axis.labels[1].options.rotation);
+        });
+
+        test("does not rotate labels if auto rotation is not enabled", function() {
+            setupAxis({
+                labels: {
+                    rotation: 0
+                }
+            });
+            axis.reflow(axisBox);
+            axis.autoRotateLabels();
+
+            ok(!axis.labels[0].options.rotation);
+            ok(!axis.labels[1].options.rotation);
+        });
+    })();
+
 })();

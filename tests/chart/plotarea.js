@@ -3202,7 +3202,12 @@
                 }]
             });
 
-            equal(plotArea.valueAxis.box.y1, 100);
+            var axisBox = plotArea.valueAxis.box;
+            var paneBox = plotArea.panes[0].box;
+
+            ok(axisBox.height() < paneBox.height());
+            ok(paneBox.y1 <= axisBox.y1);
+            ok(axisBox.y2 <= paneBox.y2);
         });
 
         test("category axis is rendered in the first pane by default", function() {
@@ -3229,10 +3234,14 @@
                 }
             });
 
-            equal(plotArea.valueAxis.box.y1, 550);
+            var axisBox = plotArea.valueAxis.box;
+            var paneBox = plotArea.panes[1].box;
+
+            ok(axisBox.height() < paneBox.height());
+            ok(paneBox.y1 <= axisBox.y1);
         });
 
-        test("value axis height matches the associated pane", function() {
+        test("value axis is within the associated pane", function() {
             createPlotArea({
                 panes: [{
                     name: "a"
@@ -3247,8 +3256,8 @@
             var axisBox = plotArea.valueAxis.box;
             var paneBox = plotArea.panes[1].box;
 
-            equal(axisBox.y1, paneBox.y1);
-            equal(axisBox.y2, paneBox.y2);
+            ok(axisBox.height() < paneBox.height());
+            ok(paneBox.y1 <= axisBox.y1);
         });
 
         test("category axis remains in the first pane", function() {
@@ -3315,7 +3324,7 @@
                    plotArea.panes[1].box.x2);
         });
 
-        test("right aligned value axis height matches the associated pane", function() {
+        test("right aligned value axis is within the associated pane", function() {
             createPlotArea({
                 panes: [{
                     name: "a"
@@ -3332,9 +3341,8 @@
 
             var axisBox = plotArea.valueAxis.box;
             var paneBox = plotArea.panes[1].box;
-
-            equal(axisBox.y1, paneBox.y1);
-            equal(axisBox.y2, paneBox.y2);
+            ok(axisBox.height() < paneBox.height());
+            ok(paneBox.y1 <= axisBox.y1);
         });
 
         test("secondary value axis is positioned in the designated pane", function() {
@@ -3351,7 +3359,7 @@
                 }]
             });
 
-            equal(plotArea.namedValueAxes["secondary"].box.y1, 550);
+            equal(plotArea.namedValueAxes["secondary"].box.y1, 557.5);
         });
 
         test("secondary value axis is aligned to category axis", function() {
@@ -5205,6 +5213,62 @@
             equal(plotArea.pointsByCategoryIndex(1).length, 1);
         });
     })();
+
+    (function() {
+        var plotArea;
+
+        function createPlotArea() {
+            plotArea = new dataviz.CategoricalPlotArea([], {});
+        }
+
+        // ------------------------------------------------------------
+        module("PlotArea / axis labels rotation", {
+            setup: createPlotArea,
+            teardown: moduleTeardown
+        });
+
+        test("calls autoRotateAxisLabels on reflow", 2, function() {
+            plotArea.autoRotateAxisLabels = function(groupedAxis) {
+                ok(groupedAxis.x[0] === plotArea.axisX);
+                ok(groupedAxis.y[0] === plotArea.axisY);
+            };
+            plotArea.reflow(chartBox);
+        });
+
+        test("autoRotateAxisLabels rotates axis labels", function() {
+            plotArea.axisX.autoRotateLabels = plotArea.axisY.autoRotateLabels = function() {
+                ok(true);
+            };
+            plotArea.autoRotateAxisLabels();
+        });
+
+        test("autoRotateAxisLabels reflows, aligns and shrinks axes if any of the axes labels are rotated", 5, function() {
+            plotArea.axisX.autoRotateLabels = function() {
+                return true;
+            };
+
+            plotArea.axisX.reflow = plotArea.axisY.reflow = function() {
+                ok(true)
+            };
+
+            plotArea.alignAxes = function(x, y) {
+                equal(x, "foo");
+                equal(y, "bar");
+            };
+
+            plotArea.shrinkAxisWidth = function() {
+                ok(true);
+            };
+
+            plotArea.autoRotateAxisLabels({
+                x: "foo",
+                y: "bar"
+            });
+        });
+
+    })();
+
+
 
     (function() {
         var PlotAreaStub = dataviz.PlotAreaBase.extend({
