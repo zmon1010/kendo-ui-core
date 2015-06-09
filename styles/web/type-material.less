@@ -68,7 +68,7 @@
 @nested-alt-background-color: darken(@alt-background-color, 8%);
 @cell-border-color: #e7e7e7;
 @column-highlight-background-color: #e9e9e9;
-@active-filter-background-color: contrast(@accent);
+@active-filter-background-color: lighten(@base, 20%);
 @scheduler-background-color: @base;
 @current-time-color: #eed3d7;
 @event-background-color: contrast(@base, lighten(@selected-text-color, 25%), darken(@selected-text-color, 1%), 0.5);
@@ -183,9 +183,9 @@
 @checkbox-background-color: @base;
 @checkbox-hover-border-color: lighten(@normal-text-color, 23%);
 @checkbox-hover-box-shadow: none;
-@checkbox-checked-border-color-after: lighten(@normal-text-color, 7%);
+@checkbox-checked-border-color-after: @accent;
 @checkbox-checked-border-radius-after: 1px;
-@checkbox-checked-background-color-after: lighten(@normal-text-color, 7%);
+@checkbox-checked-background-color-after: @accent;
 @checkbox-checked-color-after: saturate(@base, 29%);
 @checkbox-active-border-color-before: transparent;
 @checkbox-active-border-color-after: lighten(@normal-text-color, 23%);
@@ -204,11 +204,11 @@
 @radio-border-width-before: 2px;
 @radio-hover-border-color: lighten(@normal-text-color, 23%);
 @radio-hover-box-shadow: none;
-@radio-checked-border-color-before: lighten(@normal-text-color, 7%);
-@radio-checked-background-color-after: lighten(@normal-text-color, 7%);
+@radio-checked-border-color-before: @accent;
+@radio-checked-background-color-after: @accent;
 @radio-active-border-color-before: lighten(@normal-text-color, 23%);
 @radio-active-box-shadow: 0 0 0 0.750em fadeout(@hover-background, 70%);
-@radio-checked-active-border-color-before: lighten(@normal-text-color, 7%);
+@radio-checked-active-border-color-before: @accent;
 @radio-checked-active-box-shadow: 0 0 0 0.750em fadeout(@accent, 70%);
 @radio-disabled-background-color-after: lighten(@base, 20%);
 @radio-disabled-color: contrast(@base, lighten(@base, 20%), darken(@base, 25%), 0.5);
