@@ -58,7 +58,7 @@ namespace Kendo.Models
 #if DEBUG
             "mobile/kendo.mobile.nova.less"
 #else
-            "mobile/kendo.mobile.nova.min.css"
+            "kendo.mobile.nova.min.css"
 #endif
         };
 
