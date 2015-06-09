@@ -105,7 +105,7 @@ curlHelper.execute(uploadRequest, function (result) {
         Name: args.name,
         Version: args.version,
         Content: uploadedFilesIds.packageId,
-        VersionTags: args.verified ? [ 'verified' ] : [],
+        VersionTags: args.verified == "true" ? [ 'verified' ] : [],
         ReleaseNotes: uploadedFilesIds.releaseNotesId,
         RequiredFeatures: args.requiredFeatures
     };
