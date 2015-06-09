@@ -219,7 +219,7 @@
                     return sumOf(predicate);
                 }));
             }
-            return callback(sumOf(self.cellValues(predicate)[0]));
+            return callback(sumOf(self.cellValues([ predicate ])[0]));
 
             function sumOf(pred) {
                 pred = parseComparator(pred);
