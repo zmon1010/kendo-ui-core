@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+  <script src="http://cdn.kendostatic.com/2014.3.1411/js/jquery.min.js"></script>
+    <script src="http://cdn.kendostatic.com/2014.3.1411/js/kendo.all.min.js"></script>
+<!-- <link href="mobile/kendo.mobile.all.less" rel="stylesheet/less" type="text/css" /> -->
+<link href="mobile/kendo.mobile.nova.less" rel="stylesheet/less" type="text/css" />
+<!-- <script src="src/less.js" type="text/javascript"></script>    -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.0/less.js" type="text/javascript"></script>    
+</head>
+<body>
+    <div data-role="view" data-title="Views" data-show="viewShow"> 
+        <header data-role="header">
+            <div data-role="navbar">
+                <a data-align="left" data-icon="arrow-w" data-role="backbutton" class="back-button"></a>
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>Sources
+                <ul>
+                    <li><a href="#mobileButtonView">TabStrip View</a></li>
+                </ul>
+            </li>
+        </ul>
+</div>
+
+    <!-- MobileButton and ButtonGroup View-->
+    <div data-role="view" id="mobileButtonView" data-title="MobileButton View" data-show="mobileSalesViewInit">      
+     <div data-role="footer">
+     <!-- TabStrip Icons only - default-->
+        <div data-role="tabstrip">
+            <a href="#tabstrip-profile" data-icon="contacts">
+            </a><a href="#tabstrip-sales" data-icon="history">
+            </a><a href="#tabstrip-rating" data-icon="favorites">
+            </a><a href="#tabstrip-settings" data-icon="settings"></a>
+        </div>
+        <div class="separator" style="background: #fff; height: 20px;"></div>
+           <!-- TabStrip Icons + text -->
+        <div data-role="tabstrip">
+            <a href="#tabstrip-profile" data-icon="contacts">Profile
+            </a><a href="#tabstrip-sales" data-icon="history">Sales
+            </a><a href="#tabstrip-rating" data-icon="favorites">Rating
+            </a><a href="#tabstrip-settings" data-icon="settings">Settings</a>
+        </div>
+       
+
+
+    </div>
+    <!-- Icons + Text-->
+     <!-- <div data-role="footer">
+        <div data-role="tabstrip">
+            <a href="#tabstrip-profile" data-icon="contacts">Profile
+            </a><a href="#tabstrip-sales" data-icon="history">Sales
+            </a><a href="#tabstrip-rating" data-icon="favorites">Rating
+            </a><a href="#tabstrip-settings" data-icon="settings">Settings</a>
+        </div>
+    </div>-->
+
+    </div>
+
+  
+<script>
+//var app = new kendo.mobile.Application(document.body);
+var app = new kendo.mobile.Application($(document.body), {
+    skin: 'nova'
+});
+function mobileSalesViewInit() {
+   // var listviews = this.element.find("ul.km-listview");
+
+    $("#small-select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+
+    $("#small-primary-select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+   
+    $("#medium-select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+   $("#medium-primary-select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+
+    $("#large-select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+    $("#large-primary-select-period").kendoMobileButtonGroup({
+        index: 0
+    });
+
+console.log(1)
+        localStorage.clear()
+    less.refresh()
+}
+
+
+function viewShow() {
+    console.log(2)
+    localStorage.clear()
+    less.refresh()
+
+}
+</script>
+
+<style>
+
+
+
+</style>
+
+</body>
+</html>

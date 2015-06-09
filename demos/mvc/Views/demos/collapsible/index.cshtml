@@ -1,4 +1,4 @@
-<div id="football-results" data-role="view">
+<div id="football-results" data-role="view" data-title="Premier League" data-use-native-scrolling="true">
     <div class="hero">PREMIER LEAGUE</div>
     <div data-role="collapsible">
         <h3 class="results-title">
@@ -51,7 +51,7 @@
             </tr>
         </table>
     </div>
-    <div data-role="collapsible" data-collapsed="false">
+    <div data-role="collapsible">
         <h3 class="results-title">
             <span class="team-one"><img src="../content/mobile/football/tottenham.png" alt="Tottenham" />Tottenham</span>
             <span class="result">3-2</span>
@@ -205,7 +205,7 @@
         padding-left: .5em;
         height: 110px;
         line-height: 110px;
-        font-size: 18px;
+        font-size: 0.611em;
         color: rgba(255,255,255,.85);
         text-align: center;
         text-transform: uppercase;
@@ -217,19 +217,19 @@
     .results-title {
         padding: 0;
         text-align: center;
-        font-size: 14px;
+        font-size: 0.476em;
     }
     .results-title .km-icon {
         font-size: 1em;
     }
     .results-title .result {
         display: inline-block;
-        width: 24px;
+        width: 2.815em;
     }
     .results-title .team-one,
     .results-title .team-two {
         display: inline-block;
-        width: 98px;
+        width: 5.9em;
         text-align: right;
         font-weight: normal
     }
@@ -238,8 +238,9 @@
     }
     .results-title .team-one img,
     .results-title .team-two img {
-        width: 16px;
-        vertical-align: middle;
+        position: relative;
+        top: 1.4em;
+        width: 0.8em;
         float: left;
     }
     .results-title .team-two img {
@@ -250,7 +251,7 @@
         text-align: center;
     }
     .match-details img {
-        width: 10px;
+        width: 0.8em;
     }
     .match-details td {
         width: 20%;

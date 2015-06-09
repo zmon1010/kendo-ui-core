@@ -1,6 +1,6 @@
 <div data-role="splitview">
     <div data-role="pane" data-layout="side-default" data-transition="slide">
-        <div data-role="view" data-title="Categories" id="side-root">
+        <div data-role="view" data-title="Categories" id="side-root" data-use-native-scrolling="true">
             <ul data-role="listview" data-style="inset" data-source="splitViewCategories" data-template="categoriesTemplate">
             </ul>
         </div>
@@ -9,7 +9,7 @@
             <a href="\#side-inbox?CategoryID=#: CategoryID#">#: CategoryName #</a>
         </script>
 
-        <div data-role="view" id="side-inbox" data-title="Products" data-show="filterProducts">
+        <div data-role="view" id="side-inbox" data-title="Products" data-show="filterProducts" data-use-native-scrolling="true">
             <ul data-role="listview" data-auto-bind="false" data-source="splitViewProducts" data-template="productsTemplate">
 
             </ul>
@@ -34,7 +34,7 @@
     </div>
 
     <div data-role="pane" data-layout="main-default" id="main-pane">
-        <div data-role="view" data-title="Orders">
+        <div data-role="view" data-title="Orders" data-use-native-scrolling="true">
             No product selected
         </div>
 
@@ -49,7 +49,7 @@
             </dl>
         </script>
 
-        <div data-role="view" data-title="Orders" id="orders" data-show="displayOrder">
+        <div data-role="view" data-title="Orders" id="orders" data-show="displayOrder" data-use-native-scrolling="true">
             <div id="product-details">
             </div>
         </div>

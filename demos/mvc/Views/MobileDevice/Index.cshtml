@@ -48,9 +48,9 @@
 </head>
 
 <body id="examples">
-    <div data-role="view" data-title="Kendo UI" id="index" data-layout="" data-show="nullCurrentExample" data-init="initSearch">
+    <div data-role="view" data-title="Kendo UI" id="index" data-layout="" data-show="nullCurrentExample" data-init="initSearch" data-use-native-scrolling="true">
         <header data-role="header">
-            <div data-role="navbar" id="normal">
+            <div data-role="navbar" id="normal" class="km-accent">
                 <a data-align="left" data-role="button" href="#about" data-rel="drawer" data-icon="drawer-icon"></a>
                 <span data-role="view-title"></span>
                 <a data-align="right" data-role="button" data-click="showSearch" data-click-on="down" data-icon="search"></a>
@@ -71,14 +71,14 @@
 
     <div data-id="examples" data-role="layout" data-show="showDemoLayout" data-hide="removeView">
         <header data-role="header">
-            <div data-role="navbar">
-                <a data-align="left" data-icon="arrow-w" data-role="backbutton"></a>
+            <div data-role="navbar" class="km-accent">
+                <a data-align="left" data-icon="arrow-w" href="#/" data-role="backbutton" data-transition="slide reverse"></a>
                 <span data-role="view-title"></span>
             </div>
         </header>
     </div>
 
-    <div data-role="drawer" id="about" style="background-image: url(@Url.Content("~/content/mobile/backgrounds/" + ViewBag.product + ".jpg"))">
+    <div data-role="drawer" id="about">
         <div data-role="header">
             <div data-role="navbar">
                 <img src="@Url.Content("~/content/mobile/logos/" + ViewBag.product + ".png")" data-align="left" style="width: 198px; height: 15px" id="logo">
@@ -100,12 +100,12 @@
         </div>
     </div>
 
-
     <script>
         window.app = new kendo.mobile.Application($(document.body), {
             layout: "examples",
             transition: "slide",
-            skin: "flat",
+            skin: "nova",
+            retina: true,
             icon: {
                 "" : '@Url.Content("~/content/mobile/AppIcon72x72.png")',
                 "72x72" : '@Url.Content("~/content/mobile/AppIcon72x72.png")',

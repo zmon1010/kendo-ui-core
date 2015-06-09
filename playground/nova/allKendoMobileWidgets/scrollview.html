@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+     <script src="http://cdn.kendostatic.com/2015.1.429/js/jquery.min.js"></script>
+    <script src="http://cdn.kendostatic.com/2015.1.429/js/kendo.all.min.js"></script>
+<!-- <link href="mobile/kendo.mobile.all.less" rel="stylesheet/less" type="text/css" /> -->
+<link href="mobile/kendo.mobile.nova.less" rel="stylesheet/less" type="text/css" />
+<!-- <script src="src/less.js" type="text/javascript"></script>    -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.0/less.js" type="text/javascript"></script>     
+</head>
+<body>
+   <div data-role="view" id="scrollview-home" data-title="Photo Gallery">
+    <div id="scrollview-container">
+        <!-- km-scrollview-light -->
+        <div data-role="scrollview" data-page="2" class="km-scrollview-overlay">
+            <div class="photo photo1" data-role="page">
+            </div><div class="photo photo2" data-role="page">
+            </div><div class="photo photo3" data-role="page">
+            </div><div class="photo photo4" data-role="page">
+            </div><div class="photo photo5" data-role="page">
+            </div><div class="photo photo6" data-role="page">
+            </div><div class="photo photo7" data-role="page">
+            </div><div class="photo photo8" data-role="page">
+            </div><div class="photo photo9" data-role="page">
+            </div><div class="photo photo10" data-role="page">
+            </div>
+        </div>
+    </div>
+<script>
+//var app = new kendo.mobile.Application(document.body);
+var app = new kendo.mobile.Application($(document.body), {
+    skin: 'nova'
+});
+
+
+</script>
+
+<style>
+  #scrollview-home .photo {
+        margin: 0;
+        height: 220px;
+        display: inline-block;
+        -webkit-background-size: auto 100%;
+        background-size: auto 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+
+    .photo1 {background-image: url("http://demos.telerik.com/kendo-ui/content/mobile/cities/220/sydney.jpg");}
+    .photo2 {background-image: url("http://demos.telerik.com/kendo-ui/content/mobile/cities/220/bonn.jpg");}
+    .photo3 {background-image: url("http://demos.telerik.com/kendo-ui/content/mobile/cities/220/boston.jpg");}
+    .photo4 {background-image: url("http://demos.telerik.com/kendo-ui/content/mobile/cities/220/cairo.jpg");}
+    .photo5 {background-image: url("http://demos.telerik.com/kendo-ui/content/mobile/cities/220/cancun.jpg");}
+    .photo6 {background-image: url("http://demos.telerik.com/kendo-ui/content/mobile/cities/220/cape-town.jpg");}
+    .photo7 {background-image: url("http://demos.telerik.com/kendo-ui/content/mobile/cities/220/liverpool.jpg");}
+    .photo8 {background-image: url("http://demos.telerik.com/kendo-ui/content/mobile/cities/220/london.jpg");}
+    .photo9 {background-image: url("http://demos.telerik.com/kendo-ui/content/mobile/cities/220/melbourne.jpg");}
+    .photo10 {background-image: url("http://demos.telerik.com/kendo-ui/content/mobile/cities/220/san-francisco.jpg");}
+
+   
+
+</style>
+
+</body>
+</html>

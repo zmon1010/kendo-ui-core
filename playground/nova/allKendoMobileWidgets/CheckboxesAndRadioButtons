@@ -1,0 +1,137 @@
+
+
+/* Checkboxes and RadioButtons */
+.km-nova input[type=checkbox],
+.km-nova input[type=radio] {
+    display: inline;
+    opacity: 0;
+    width: 0;
+    margin: 0;
+    //position: absolute;
+}
+
+.km-nova .km-checkbox-label,
+.km-nova .km-radio-label {
+   display: block;
+   position: relative;
+   vertical-align: middle;
+   //line-height: 0.875em;
+}
+
+.km-nova .km-checkbox-label:after{
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 28px;
+  width: 28px;
+  height: 28px;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 3px;
+}
+
+.km-nova input[type=checkbox]:checked + .km-checkbox-label:after {
+  content: "\2713";
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  top: 0;
+  right: 28px;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+//Radio buttons
+.km-nova .km-radio-label:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 28px;
+  width: 28px;
+  height: 28px;
+  border-style: solid;
+  border-radius: 50%;
+  border-width: 2px;
+}
+
+.km-nova input[type=radio]:checked + .km-radio-label:before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 8px;
+  right: 36px;
+  border-radius: 50%;
+}
+
+
+
+
+
+/* Checkboxes inside ListView - Old rendering */
+.km-nova .km-listview-label input[type=radio],
+.km-nova .km-listview-label input[type=checkbox]
+{
+    border-width: 2px;
+    border-style: solid;
+    height: 28px;
+    width: 28px;
+    border-radius: 3px;
+    opacity: 1;
+}
+
+.km-nova .km-listview-label input[type=radio]
+{
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+}
+
+
+.km-nova .km-listview-label input[type=radio]:checked:after,
+.km-nova .km-listview-label input[type=checkbox]:after
+{
+    content: "\a0";
+    display: block;
+    font-size: 1.5em;
+    text-align: center;
+    //.transform(scale(.9,1));
+    //.transform-origin(10% 50%);
+}
+
+.km-nova .km-listview-label input[type=radio]:checked:after
+{
+    margin-top: 4px;
+    margin-left: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+
+// Template.less
+/* Checkboxes and radio buttons */
+.km-nova input[type=checkbox]:checked + .km-checkbox-label:after {
+    color: @accent;
+    border-color: darken(@base, 8%);
+}
+
+.km-nova .km-checkbox-label:after,
+.km-nova .km-radio-label:after {
+    color: darken(@base, 8%);
+}
+
+.km-nova input[type=radio]:checked + .km-radio-label:before {
+    background: @accent;
+}
+
+/* Checkboxes and RadioButtons in ListView */
+.km-nova .km-listview-label input[type=radio],
+.km-nova .km-listview-label input[type=checkbox] {
+   color: @accent;
+   border-color: darken(@base, 8%);
+}
+
+.km-nova .km-listview-label input[type=radio]:checked:after {
+    background: @accent;
+}

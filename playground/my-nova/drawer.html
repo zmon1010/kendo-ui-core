@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drawer + ListView</title>
+    <meta charset="utf-8" />
+
+    <script src="../../src/jquery.js"></script>
+    <script src="../../src/angular.js"></script>
+    <script src="../../src/kendo.core.js"></script>
+    <script src="../../src/kendo.popup.js"></script>
+    <script src="../../src/kendo.fx.js"></script>
+    <script src="../../src/kendo.view.js"></script>
+    <script src="../../src/kendo.router.js"></script>
+    <script src="../../src/kendo.binder.js"></script>
+    <script src="../../src/kendo.angular.js"></script>
+    <script src="../../src/kendo.data.js"></script>
+    <script src="../../src/kendo.data.odata.js"></script>
+    <script src="../../src/kendo.binder.js"></script>
+    <script src="../../src/kendo.userevents.js"></script>
+    <script src="../../src/kendo.draganddrop.js"></script>
+    <script src="../../src/kendo.pager.js"></script>
+    <script src="../../src/kendo.slider.js"></script>
+    <script src="../../src/kendo.mobile.loader.js"></script>
+    <script src="../../src/kendo.mobile.view.js"></script>
+    <script src="../../src/kendo.mobile.pane.js"></script>
+    <script src="../../src/kendo.mobile.scroller.js"></script>
+    <script src="../../src/kendo.mobile.application.js"></script>
+    <script src="../../src/kendo.mobile.button.js"></script>
+    <script src="../../src/kendo.mobile.listview.js"></script>
+    <script src="../../src/kendo.mobile.listview.js"></script>
+    <script src="../../src/kendo.mobile.navbar.js"></script>
+    <script src="../../src/kendo.mobile.modalview.js"></script>
+    <script src="../../src/kendo.mobile.popover.js"></script>
+    <script src="../../src/kendo.mobile.scrollview.js"></script>
+    <script src="../../src/kendo.mobile.drawer.js"></script>
+    <script src="../../src/kendo.mobile.actionsheet.js"></script>
+    <script src="../../src/kendo.colorpicker.js"></script>
+    <link href="../../styles/mobile/kendo.mobile.nova.less" rel="stylesheet/less" type="text/css" />
+    <script src="../../demos/mvc/content/shared/js/less.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div data-role="view" data-title="drawer">
+        <div data-role="header">
+            <div data-role="navbar">
+                <a data-role="button" data-rel="drawer" href="#drawer" data-icon="settings" data-align="left"></a>
+                <span data-role="view-title"></span>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="drawer" id="drawer">
+
+        <div data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title">Bernardo Batista</span>
+            </div>
+        </div>
+
+        <ul data-role="listview">
+            <li><a data-icon="contacts" href="#contacts">Edit Profile</a></li>
+            <li><a data-icon="share" href="#notifications">Notifications</a></li>
+            <li><a class="km-state-active" data-icon="phone" href="#messages">Messages</a> <span class="km-badge">12</span></li>
+            <li><a data-icon="globe" href="#storage">Storage</a></li>
+            <li><a data-icon="globe" href="#storage">Photos</a></li>
+        </ul>
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+        new kendo.mobile.Application($(document.body), { skin: "nova" });
+    </script>
+</body>
+</html>

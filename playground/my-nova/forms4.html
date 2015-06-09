@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drawer + ListView</title>
+    <meta charset="utf-8" />
+ <script>    
+    less = {
+        env: "development",
+        logLevel: 1 
+    };              
+</script>
+    <script src="../../src/jquery.js"></script>
+    <script src="../../src/angular.js"></script>
+    <script src="../../src/kendo.core.js"></script>
+    <script src="../../src/kendo.popup.js"></script>
+    <script src="../../src/kendo.fx.js"></script>
+    <script src="../../src/kendo.view.js"></script>
+    <script src="../../src/kendo.router.js"></script>
+    <script src="../../src/kendo.binder.js"></script>
+    <script src="../../src/kendo.angular.js"></script>
+    <script src="../../src/kendo.data.js"></script>
+    <script src="../../src/kendo.data.odata.js"></script>
+    <script src="../../src/kendo.binder.js"></script>
+    <script src="../../src/kendo.userevents.js"></script>
+    <script src="../../src/kendo.draganddrop.js"></script>
+    <script src="../../src/kendo.pager.js"></script>
+    <script src="../../src/kendo.slider.js"></script>
+    <script src="../../src/kendo.mobile.loader.js"></script>
+    <script src="../../src/kendo.mobile.view.js"></script>
+    <script src="../../src/kendo.mobile.pane.js"></script>
+    <script src="../../src/kendo.mobile.scroller.js"></script>
+    <script src="../../src/kendo.mobile.application.js"></script>
+    <script src="../../src/kendo.mobile.button.js"></script>
+    <script src="../../src/kendo.mobile.listview.js"></script>
+    <script src="../../src/kendo.mobile.listview.js"></script>
+    <script src="../../src/kendo.mobile.navbar.js"></script>
+    <script src="../../src/kendo.mobile.modalview.js"></script>
+    <script src="../../src/kendo.mobile.popover.js"></script>
+    <script src="../../src/kendo.mobile.scrollview.js"></script>
+    <script src="../../src/kendo.mobile.drawer.js"></script>
+    <script src="../../src/kendo.mobile.actionsheet.js"></script>
+    <script src="../../src/kendo.mobile.tabstrip.js"></script>
+    <script src="../../src/kendo.colorpicker.js"></script>
+    <script src="../../src/kendo.mobile.switch.js"></script>
+    <link href="../../styles/mobile/kendo.mobile.nova.less" rel="stylesheet/less" type="text/css" />
+    <script src="../../demos/mvc/content/shared/js/less.js" type="text/javascript"></script>
+</head>
+<body>
+    <div data-role="view" data-title="NavBar Title">
+        <div data-role="header">
+            <div data-role="navbar">
+                <a data-role="backbutton" data-align="left"></a>
+                <span data-role="view-title"></span>
+                <span class="km-view-subtitle">Subtitle</span>
+                <a data-role="button" data-rel="drawer" href="#drawer" data-icon="drawer-icon" data-align="right"></a>
+            </div>
+        </div>
+
+
+        <form action="./index.html">
+            <ul data-role="listview" data-style="inset">
+                <li>
+
+                    <label class="km-icon-label k-i-heart km-required">
+                        <input value="Meeting" type="text" />
+                    </label>
+                </li>
+                <li>
+                    <label class="km-icon-label k-i-heart">
+                        <select id="dropdown">
+                            <option value="First Option">Meeting Room 1</option>
+                            <option value="Second Option">Meeting Room 2</option>
+                            <option value="Third Option">Meeting 3</option>
+                        </select>
+                    </label>
+                </li>
+
+                <li>
+                    <label class="km-icon-label k-i-heart">All day
+                        <input type="checkbox" checked data-role="switch">
+                    </label>
+                </li>
+
+                <li>
+                    <label class="km-inline-field"> From
+                        <input type="datetime-local">
+                    </label>
+                </li>
+                <li>
+                    <label class="km-inline-field">To
+                        <input type="datetime-local">
+                    </label>
+                </li>
+
+                <li>
+                    <label class="km-icon-label k-i-heart">
+                        <select id="dropdown">
+                                <option value="First Option">Never</option>
+                                <option value="Second Option">Meeting Room 2</option>
+                                <option value="Third Option">Meeting 3</option>
+                            </select>
+                    </label>
+                </li>
+
+                <li>
+                    <label class="km-icon-label k-i-heart">
+                        <select id="dropdown">
+                                <option value="First Option">None</option>
+                                <option value="Second Option">Meeting Room 2</option>
+                                <option value="Third Option">Meeting 3</option>
+                            </select>
+                    </label>
+                </li>
+            </ul>
+        </form>
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+        new kendo.mobile.Application($(document.body), { skin: "nova" });
+    </script>
+<style type="text/css">
+
+
+</style>
+
+</body>
+</html>
