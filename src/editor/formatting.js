@@ -176,7 +176,7 @@ var FormattingTool = DelayedExecutionTool.extend({
             i, context,
             ancestor = dom.commonAncestor.apply(null, nodes);
 
-        if (this._ancestor == ancestor) {
+        if (ancestor != dom.closestEditable(ancestor) && this._ancestor == ancestor) {
             return;
         } else {
             this._ancestor = ancestor;
