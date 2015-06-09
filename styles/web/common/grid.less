@@ -1022,6 +1022,12 @@ html .k-grid-edit-row .k-tooltip
             overflow: visible;
             height: auto;
         }
+
+        .km-pane-wrapper .k-pager-numbers,
+        .km-pane-wrapper .k-grid .k-pager-numbers
+        {
+            left: 5.8em;
+        }
         
         .km-pane-wrapper .k-pager-numbers .k-link,
         .km-pane-wrapper .k-pager-numbers .k-state-selected,
@@ -1034,8 +1040,15 @@ html .k-grid-edit-row .k-tooltip
         .k-rtl .k-pager-numbers,
         .k-rtl .k-grid .k-pager-numbers
         {
+            left: auto;
             right: 4.8em;
             width: 4.5em
+        }
+
+        .k-rtl .km-pane-wrapper .k-pager-numbers,
+        .k-rtl .km-pane-wrapper .k-grid .k-pager-numbers
+        {
+            right: 5.8em;
         }
         
         .k-pager-numbers .k-current-page,
