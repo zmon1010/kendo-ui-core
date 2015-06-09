@@ -601,7 +601,19 @@ fillElements({
         // E6: "=SUM((a1,a2,a3), (b1,b2,b3))",
     },
     sheet2: {
-        // A1: "=sum(sheet1!a1:c3)"
+        A1: 'Dept',  B1: 'Employees', C1: 'Criteria',
+        A2: 'A',     B2: 2,           C2: 'A',
+        A3: 'B',     B3: 4,           C3: 'B',
+        A4: 'C',     B4: 3,             
+        A5: 'A',     B5: 3,             
+        A6: 'B',     B6: 3,             
+        A7: 'C',     B7: 2,             
+        A8: 'A',     B8: 4,             
+        A9: 'C',     B9: 3,             
+
+        D1: '=SUM(IF((A2:A9="A")+(A2:A9="B"),B2:B9,0))',
+        D2: '=SUM(IF(A2:A9={"A","B"},B2:B9,0))',
+        D3: '=SUMIF(A2:A9,C2:C3,B2:B9)',
     }
     // sheet1: {
     //     A1: '=CURRENCY("USD", "EUR") + CURRENCY("USD", "EUR")'

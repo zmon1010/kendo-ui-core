@@ -171,21 +171,66 @@
         });
     });
 
+    // sumif and averageif are actually quite different, in that they may take a range reference as
+    // "criterion", in which case they return a matrix (the sum/average of numbers that match each
+    // cell in the criterion range).
     (function(handle){
-        // sumif and averageif are particular cases of the more generic *IFS functions
-        handle("sumif", "sumifs");
-        handle("averageif", "averageifs");
-    })(function(fname1, fname2){
-        defineFunction(fname1, function(callback, args){
+        handle("sumif", function(numbers){
+            var sum = 0;
+            for (var i = numbers.length; --i >= 0;) {
+                sum += numbers[i];
+            }
+            return sum;
+        });
+        handle("averageif", function(numbers){
+            var n = numbers.length, i = n;
+            if (!i) {
+                return new CalcError("DIV/0");
+            }
+            var sum = 0;
+            while (--i >= 0) {
+                sum += numbers[i];
+            }
+            return sum / n;
+        });
+    })(function(fname, handler){
+        defineFunction(fname, function(callback, args){
+            var self = this;
             if (args.length < 2 || args.length > 3) {
-                return this.error(new CalcError("N/A"));
+                return self.error(new CalcError("N/A"));
             }
-            if (args.length == 2) {
-                args.unshift(args[0]);
+
+            var numRange = args[0];
+            if (args.length == 3) {
+                numRange = args[2];
+            }
+            var critRange = args[0];
+            var numMatrix = self.asMatrix(numRange), critMatrix;
+            if (numRange === critRange) {
+                critMatrix = numMatrix;
             } else {
-                args.unshift(args.pop());
+                critMatrix = self.asMatrix(critRange);
             }
-            this.func(fname2, callback, args);
+
+            var predicate = args[1];
+            var predMatrix = self.asMatrix(predicate);
+            if (predMatrix) {
+                return callback(predMatrix.map(function(predicate){
+                    return sumOf(predicate);
+                }));
+            }
+            return callback(sumOf(self.cellValues(predicate)[0]));
+
+            function sumOf(pred) {
+                pred = parseComparator(pred);
+                var a = [];
+                critMatrix.each(function(n, row, col){
+                    if (pred(n)) {
+                        a.push(numMatrix.get(row, col));
+                    }
+                });
+                return handler(a);
+            }
         });
     });
 
