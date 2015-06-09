@@ -36,7 +36,8 @@ function parseCommandLineArgs() {
         version: args[3],
         packagePath: args[4],
         releaseNotesPath: args[5],
-        requiredFeatures: args.slice(6)
+        verified: args[6],
+        requiredFeatures: args.slice(7)
     };
 }
 
@@ -104,6 +105,7 @@ curlHelper.execute(uploadRequest, function (result) {
         Name: args.name,
         Version: args.version,
         Content: uploadedFilesIds.packageId,
+        Verified: args.verified,
         ReleaseNotes: uploadedFilesIds.releaseNotesId,
         RequiredFeatures: args.requiredFeatures
     };

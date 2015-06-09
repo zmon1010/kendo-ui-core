@@ -196,11 +196,24 @@ def bundle(options)
                     file.remove("changelog.html")
                 end
             end
-            sh  *["./build/appbuilder-upload.js", options[:product], VERSION, versioned_bundle_path, changelog_path, options[:appbuilder_features]].compact
-            end
+            sh  *["./build/appbuilder-upload.js", options[:product], VERSION, versioned_bundle_path, changelog_path, false, options[:appbuilder_features]].compact
+        end
 
         desc "Upload bundles in AppBuidler"
         task "appbuilder_builds:bundles:all" => "appbuilder_builds:bundles:#{name}"
+
+        desc "Upload #{name} in AppBuidler (verified)"
+        task "appbuilder_builds:bundles:verified:#{name}" => [versioned_bundle_path, changelog_path] do
+            if options[:skip_changelog_in_zip]
+                Zip::File.open(versioned_bundle_path, Zip::File::CREATE) do |file|
+                    file.remove("changelog.html")
+                end
+            end
+            sh  *["./build/appbuilder-upload.js", options[:product], VERSION, versioned_bundle_path, changelog_path, true, options[:appbuilder_features]].compact
+        end
+
+        desc "Upload bundles in AppBuidler"
+        task "appbuilder_builds:bundles:verified:all" => "appbuilder_builds:bundles:verified:#{name}"
     end
 
     if options[:release_build]
