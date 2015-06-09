@@ -10,7 +10,7 @@ import com.kendoui.spring.models.DropDownListItem;
 
 @Controller("multiselect-tagmode-controller")
 @RequestMapping(value="/multiselect/")
-public class IndexController {
+public class TagModeController {
 
     @RequestMapping(value = {"/tag-mode"}, method = RequestMethod.GET)
     public String index(Model model) {
