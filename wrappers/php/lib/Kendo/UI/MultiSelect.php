@@ -260,6 +260,17 @@ A zero value means that a request will be made as soon as the user focuses the w
     }
 
     /**
+    * The mode used to render the selected tags. The available modes are:
+- multiple - renders a tag for every selected value
+- single - renders only one tag that shows the number of the selected values
+    * @param string $value
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function tagMode($value) {
+        return $this->setProperty('tagMode', $value);
+    }
+
+    /**
     * Define the value of the widget
     * @param array $value
     * @return \Kendo\UI\MultiSelect
