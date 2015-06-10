@@ -679,7 +679,7 @@
     <value>Or</value>
   </data>
   <data name="Filter_StringDoesNotContain" xml:space="preserve">
-    <value>Does not contain</value>
+    <value>Indeholder ikke</value>
   </data>
   <data name="Upload_HeaderStatusUploaded" xml:space="preserve">
     <value>Done</value>
@@ -697,7 +697,7 @@
     <value>Lås</value>
   </data>
   <data name="Grid_Unlock" xml:space="preserve">
-    <value>Låse</value>
+    <value>Lås op</value>
   </data>
   <data name="Editor_ViewHtml" xml:space="preserve">
     <value>View HTML</value>
