@@ -167,7 +167,7 @@ var __meta__ = {
                 series: series,
                 dataItem: fields.dataItem,
                 index: fields.index
-            }, { defaults: series._defaults, excluded: ["data", "toggle"] });
+            }, { defaults: series._defaults, excluded: ["data", "toggle", "visual"] });
         },
 
         createSegment: function(value, fields) {
@@ -402,6 +402,15 @@ var __meta__ = {
 
         highlightVisual: function() {
             return this.visual.children[0];
+        },
+
+        highlightVisualArgs: function() {
+            var path = draw.Path.fromPoints(this.points).close();
+
+            return {
+                options: this.options,
+                path: path
+            };
         },
 
         highlightOverlay: function(view, opt) {

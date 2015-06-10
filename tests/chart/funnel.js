@@ -845,7 +845,7 @@
 
     (function() {
         var VALUE = 1,
-            Point = dataviz.Point2D,
+            Point = kendo.geometry.Point,
             draw = kendo.drawing,
             segment, box, root;
 
@@ -856,7 +856,7 @@
                     index: index || 0
                 }
             );
-            segment.points = [Point(0, 0), Point(100, 0), Point(100, 100), Point(0, 100)];
+            segment.points = [new Point(0, 0), new Point(100, 0), new Point(100, 100), new Point(0, 100)];
 
             box = new Box2D(0, 0, 100, 100);
             segment.reflow(box);
@@ -879,6 +879,12 @@
 
             ok(visual instanceof draw.Path);
             ok(visual === segment.visual.children[0]);
+        });
+
+        test("highlightVisualArgs returns an object with the options and the path", function() {
+            var result = segment.highlightVisualArgs();
+            deepEqual(result.options, segment.options);
+            sameLinePath(segment.visual.children[0], result.path);
         });
 
     })();
