@@ -842,4 +842,45 @@
         });
 
     })();
+
+    (function() {
+        var VALUE = 1,
+            Point = dataviz.Point2D,
+            draw = kendo.drawing,
+            segment, box, root;
+
+        function createFunnelSegment(options, index) {
+           segment = new dataviz.FunnelSegment(
+                VALUE,
+                options, {
+                    index: index || 0
+                }
+            );
+            segment.points = [Point(0, 0), Point(100, 0), Point(100, 100), Point(0, 100)];
+
+            box = new Box2D(0, 0, 100, 100);
+            segment.reflow(box);
+
+
+            root = new dataviz.RootElement();
+            root.box = box;
+            root.append(segment);
+            root.renderVisual();
+        }
+
+        module("Funnel Segment / Highlight", {
+            setup: function() {
+                createFunnelSegment();
+            }
+        });
+
+        test("highlightVisual returns segment visual path", function() {
+            var visual = segment.highlightVisual();
+
+            ok(visual instanceof draw.Path);
+            ok(visual === segment.visual.children[0]);
+        });
+
+    })();
+
 })();

@@ -167,7 +167,7 @@ var __meta__ = {
                 series: series,
                 dataItem: fields.dataItem,
                 index: fields.index
-            }, { defaults: series._defaults, excluded: ["data"] });
+            }, { defaults: series._defaults, excluded: ["data", "toggle"] });
         },
 
         createSegment: function(value, fields) {
@@ -400,6 +400,10 @@ var __meta__ = {
             return draw.Path.fromPoints(this.points, style);
         },
 
+        highlightVisual: function() {
+            return this.visual.children[0];
+        },
+
         highlightOverlay: function(view, opt) {
             var options = this.options,
                 hlOptions = options.highlight || {};
@@ -441,7 +445,8 @@ var __meta__ = {
     );
 
     deepExtend(dataviz, {
-        FunnelChart: FunnelChart
+        FunnelChart: FunnelChart,
+        FunnelSegment: FunnelSegment
     });
 
 })(window.kendo.jQuery);
