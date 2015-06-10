@@ -123,7 +123,7 @@ class ChangeLog
     end
 
     def api_for(repo_name)
-        Github.new :oauth_token => ENV['GITHUB_TOKEN'], :user => "telerik", :repo => repo_name
+        Github.new :oauth_token => '39bacd99458f1a463b938854c2da9af6c929ed6a', :user => "telerik", :repo => repo_name
     end
 
     def private_repo

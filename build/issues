@@ -14,7 +14,7 @@ first_day = Date.new(a_month_ago.year, a_month_ago.month, 1).to_time.utc
 last_day = Date.new(Time.now.utc.year, Time.now.utc.month, 1).to_time.utc
 
 REPOS = [ 'telerik/kendo', 'telerik/kendo-ui-core']
-CLIENT = Octokit::Client.new(access_token: ENV['GITHUB_TOKEN'])
+CLIENT = Octokit::Client.new(access_token: '39bacd99458f1a463b938854c2da9af6c929ed6a')
 
 class Report
     attr_accessor :kendo, :mvc, :php, :java
