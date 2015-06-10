@@ -5,6 +5,9 @@
         <div id="fuel"></div>
         <div id="water-temprature"></div>
     </div>
+    
+    <div class="responsive-message"></div>
+    
     <script>
         function createDashboard() {
             $("#rpm").kendoRadialGauge({
@@ -255,6 +258,12 @@
 
             margin: -7px 0 0 62px;
         }
+        
+        @@media screen and (max-width: 1023px) {
+           #gauge-container {
+               display: none;
+           }
+       }
     </style>
 </div>
 
