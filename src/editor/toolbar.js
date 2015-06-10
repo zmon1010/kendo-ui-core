@@ -118,9 +118,15 @@
                 .data("kendoWindow");
         },
 
+        _toggleOverflowStyles: function(element, show) {
+            element
+                .find("li").toggleClass("k-item k-state-default", show)
+                .find(".k-tool:not(.k-state-disabled),.k-overflow-button").toggleClass("k-overflow-button k-button", show);
+        },
+
         _initOverflowPopup: function(ui) {
             var that = this;
-            var popupTemplate = "<ul class='k-editor-overflow-popup'></ul>";
+            var popupTemplate = "<ul class='k-editor-overflow-popup k-overflow-container k-list-container'></ul>";
 
             that.overflowPopup = $(popupTemplate).appendTo("body").kendoPopup({
                 anchor: ui,
@@ -131,6 +137,8 @@
                     if (this.element.is(":empty")) {
                         e.preventDefault();
                     }
+
+                    that._toggleOverflowStyles(this.element, true);
                 },
                 activate: proxy(that.focusOverflowPopup, that)
             }).data("kendoPopup");
@@ -305,6 +313,8 @@
             var TABINDEX = "tabIndex";
             var element = this.overflowPopup.element;
             var tabIndex = this._editor.element.attr(TABINDEX);
+
+            element.closest(".k-animation-container").addClass("k-overflow-wrapper");
 
             element.attr(TABINDEX, tabIndex || 0).focus()
                 .find(focusable).first().focus();
@@ -712,6 +722,9 @@
 
             this._shrink(containerWidth);
             this._stretch(containerWidth);
+
+            this._toggleOverflowStyles(this.element, false);
+            this._toggleOverflowStyles(this.overflowPopup.element, true);
 
             this.element
                 .children("li.k-overflow-tools")
