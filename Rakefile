@@ -51,7 +51,7 @@ end
 
 ADMIN_RELEASE_UPLOAD_PASS = "Kend0Tf$UseR"
 SITE_DOWNLOAD_BUILDER_UPLOAD_PASS = "t3l3r1kc0m"
-NUGET_UPLOAD_PASS = "nug3t0rg"
+NUGET_UPLOAD_PASS = "9c8kxjNdLEoDyX"
 
 ROOT_MAP = {
     '.' => /(dist\/js|dist\/styles\/.+?)\//,
