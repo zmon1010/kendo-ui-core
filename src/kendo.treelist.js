@@ -439,12 +439,12 @@ var __meta__ = {
             this.get(id)._error = e;
         },
 
-        read: function(data) {
-            if (!data || !data.id) {
+        success: function(data, requestParams) {
+            if (!requestParams || !requestParams.id) {
                 this._data = this._observe([]);
             }
 
-            return DataSource.fn.read.call(this, data);
+            return DataSource.fn.success.call(this, data, requestParams);
         },
 
         load: function(model) {

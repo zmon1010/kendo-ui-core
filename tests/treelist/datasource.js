@@ -992,6 +992,21 @@
         ok(ds.data() instanceof kendo.data.ObservableArray);
     });
 
+    test("async read clears dataSource data", 1, function() {
+        var read = controlledRead();
+        var ds = new TreeListDataSource({ transport: { read: read } });
+
+        ds.read();
+
+        ds.read();
+
+        read.resolve([ { id: 1, parentId: null }, { id: 2, parentId: 1 } ]);
+
+        read.resolve([ { id: 1, parentId: null }, { id: 2, parentId: 1 } ]);
+
+        equal(ds.data().length, 2);
+    });
+
     test("add new item with equal id and parentId", function() {
         var ds = new TreeListDataSource({
             schema: {
