@@ -43,6 +43,30 @@
         callback(sum);
     });
 
+    defineFunction("min", function(callback, args){
+        var numbers = [];
+        this.forNumbers(args, function(num){
+            numbers.push(num);
+        });
+        if (numbers.length) {
+            callback(Math.min.apply(Math, numbers));
+        } else {
+            this.error(new CalcError("N/A"));
+        }
+    });
+
+    defineFunction("max", function(callback, args){
+        var numbers = [];
+        this.forNumbers(args, function(num){
+            numbers.push(num);
+        });
+        if (numbers.length) {
+            callback(Math.max.apply(Math, numbers));
+        } else {
+            this.error(new CalcError("N/A"));
+        }
+    });
+
     defineFunction("counta", function(callback, args){
         callback(this.cellValues(args).length);
     });
