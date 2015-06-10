@@ -196,7 +196,7 @@ def bundle(options)
                     file.remove("changelog.html")
                 end
             end
-            sh  *["./build/appbuilder-upload.js", options[:product], VERSION, versioned_bundle_path, changelog_path, false, options[:appbuilder_features]].compact
+            sh  *["./build/appbuilder-upload.js", options[:product], VERSION, versioned_bundle_path, changelog_path, "false", options[:appbuilder_features]].compact
         end
 
         desc "Upload bundles in AppBuidler"
@@ -209,7 +209,7 @@ def bundle(options)
                     file.remove("changelog.html")
                 end
             end
-            sh  *["./build/appbuilder-upload.js", options[:product], VERSION, versioned_bundle_path, changelog_path, true, options[:appbuilder_features]].compact
+            sh  *["./build/appbuilder-upload.js", options[:product], VERSION, versioned_bundle_path, changelog_path, "true", options[:appbuilder_features]].compact
         end
 
         desc "Upload bundles in AppBuidler"
