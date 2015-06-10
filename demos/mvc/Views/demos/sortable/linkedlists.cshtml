@@ -1,6 +1,6 @@
 
         <div id="example">
-            <div class="demo-section one-way">
+            <div class="demo-section one-way wide">
                 <div class="list-wrapper">
                     <ul id="sortable-listA">
                         <li class="list-item">Apples</li>
@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            <div class="demo-section two-way">
+            <div class="demo-section two-way wide">
                 <div class="list-wrapper">
                     <ul id="sortable-listC" style="min-height: 110px;">
                         <li class="list-item">Cherries</li>
@@ -31,6 +31,8 @@
                     </ul>
                 </div>
             </div>
+            
+            <div class="responsive-message"></div>
 
             <script>
                 function placeholder(element) {
@@ -139,6 +141,11 @@
                 #placeholder.list-item {
                     background-color: #ffffff;
                     color: #777;
+                }
+                @@media screen and (max-width: 1023px) {
+                    .demo-section {
+                        display: none;
+                    }
                 }
             </style>
         </div>

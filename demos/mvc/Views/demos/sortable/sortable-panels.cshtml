@@ -64,6 +64,8 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="responsive-message"></div>
 
             <script>
                 $(document).ready(function() {
@@ -136,6 +138,13 @@
                     width: 968px;
                     background-color: #f5f5f5;
                     border: 1px solid #e5e5e5;
+                }
+                
+                @@media screen and (max-width: 1023px) {
+                    .dash-head,
+                    .panel-wrap {
+                        display: none;
+                    }
                 }
 
                 #sidebar {

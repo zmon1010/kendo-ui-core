@@ -1,6 +1,6 @@
 
         <div id="example">
-            <div class="demo-section k-header">
+            <div class="demo-section k-header wide" style="min-width: 910px;">
                 <h4>Rearrange the photos</h4>
                 <div id="sortable-horizontal">
                     <img src="../content/web/sortable/1.jpg" /><img
@@ -10,6 +10,8 @@
                     src="../content/web/sortable/5.jpg" />
                 </div>
             </div>
+            
+            <div class="responsive-message"></div>
 
             <script>
                 $(document).ready(function() {
@@ -62,6 +64,11 @@
 
                 .tooltip {
                     opacity: .6;
+                }
+                @@media screen and (max-width: 1023px) {
+                    .demo-section {
+                        display: none;
+                    }
                 }
             </style>
         </div>
