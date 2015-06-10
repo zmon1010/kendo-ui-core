@@ -1,6 +1,6 @@
 <div id="example">
 
-    <div class="demo-section">
+    <div class="demo-section wide">
         <div class="product-display">
             <img class="product-image" src="../content/web/colorpicker/sofa-ffcc33.jpg" alt="" width="285" height="149">
 
@@ -24,6 +24,8 @@
             <button class="k-primary k-button">Add to cart</button>
         </div>
     </div>
+    
+    <div class="responsive-message"></div>
 
     <script>
         $("#color-chooser").kendoColorPalette({
@@ -103,6 +105,11 @@
             width: 60%;
             height: 32px;
             text-align: center;
+        }
+        @@media screen and (max-width: 1023px) {
+            .demo-section {
+                display: none;
+            }
         }
     </style>
 

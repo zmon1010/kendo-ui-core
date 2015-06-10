@@ -1,6 +1,6 @@
 <div id="example">
 
-    <div class="demo-section k-header">
+    <div class="demo-section k-header wide">
         <div id="bike">
             <div id="bike-tail" class="inline-block"></div><div id="bike-head" class="inline-block"></div>
         </div>
@@ -14,6 +14,8 @@
             <div id="head" class="picker"></div>
         </div>
     </div>
+    
+    <div class="responsive-message"></div>
 
     <style>
         .demo-section {
@@ -64,6 +66,11 @@
         .k-ie7 .inline-block {
             display: inline;
             zoom: 1;
+        }
+        @@media screen and (max-width: 1023px) {
+            .demo-section {
+                display: none;
+            }
         }
     </style>
 
