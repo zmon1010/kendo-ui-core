@@ -341,4 +341,21 @@
 
         equal(pivotgrid.rowsTarget.options.filterable, true);
     });
+
+    test("initialize using MVVM", function() {
+        $(div).attr("data-kendo-role", "pivotgrid");
+        $(div).attr("data-kendo-bind", "source: dataSource");
+
+        kendo.bind($(div), kendo.observable({
+            dataSource: new kendo.data.PivotDataSource({
+                schema: {
+                    axes: function() {
+                        return {};
+                    }
+                }
+            })
+        }));
+
+        ok($(div).data("kendoPivotGrid") instanceof kendo.ui.PivotGrid);
+    });
 })();

@@ -3786,6 +3786,10 @@ var __meta__ = {
             return result;
         },
 
+        items: function() {
+            return [];
+        },
+
         refresh: function() {
             var that = this;
             var dataSource = that.dataSource;
