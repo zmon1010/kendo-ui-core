@@ -533,11 +533,11 @@
             equal(highlight.options.stroke.opacity, 0.5);
         });
 
-        test("highlightVisual returns visual", function() {
+        test("highlightVisual returns segment visual", function() {
             var visual = segment.highlightVisual();
 
-            ok(visual instanceof draw.Group);
-            ok(visual === segment.visual);
+            ok(visual instanceof draw.Path);
+            ok(visual === segment.visual.children[0]);
         });
 
         test("highlightVisualArgs returns an object with the options, the visual and the sector options", function() {

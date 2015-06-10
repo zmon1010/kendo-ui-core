@@ -7392,7 +7392,7 @@ var __meta__ = {
         },
 
         highlightVisual: function() {
-            return this.visual;
+            return this.visual.children[0];
         },
 
         highlightVisualArgs: function() {
