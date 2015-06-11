@@ -1953,10 +1953,16 @@
 
             _initDefaults: function(userOptions) {
                 var options = this.options;
+                var editable = options.editable;
+                var shapeDefaults = options.shapeDefaults;
+                var connectionDefaults = options.connectionDefaults;
                 var userShapeDefaults = (userOptions || {}).shapeDefaults;
-                if (options.editable === false) {
-                    options.shapeDefaults.editable = false;
-                    options.connectionDefaults.editable = false;
+                if (editable === false) {
+                    shapeDefaults.editable = false;
+                    connectionDefaults.editable = false;
+                } else {
+                    copyDefaultOptions(editable, shapeDefaults.editable, ["drag", "remove", "connect"]);
+                    copyDefaultOptions(editable, connectionDefaults.editable, ["drag", "remove"]);
                 }
 
                 if (userShapeDefaults && userShapeDefaults.connectors) {
@@ -4813,6 +4819,16 @@
             }
 
             return new kendo.data.ObservableObject(model);
+        }
+
+        function copyDefaultOptions(mainOptions, elementOptions, fields) {
+            var field;
+            for (var idx = 0; idx < fields.length; idx++) {
+                field = fields[idx];
+                if (elementOptions && !defined(elementOptions[field])) {
+                    elementOptions[field] = mainOptions[field];
+                }
+            }
         }
 
         dataviz.ui.plugin(Diagram);
