@@ -220,14 +220,23 @@ var __meta__ = {
         },
 
         _slotByPosition: function(x, y, collections) {
+           var browser = kendo.support.browser;
+
            for (var collectionIndex = 0; collectionIndex < collections.length; collectionIndex++) {
                var collection = collections[collectionIndex];
 
                for (var slotIndex = 0; slotIndex < collection.count(); slotIndex++) {
                    var slot = collection.at(slotIndex);
+                   var width = slot.offsetWidth;
+                   var height = slot.clientHeight;
 
-                   if (x >= slot.offsetLeft && x < slot.offsetLeft + slot.offsetWidth &&
-                       y >= slot.offsetTop && y <= slot.offsetTop + slot.clientHeight) {
+                   if (browser.msie) {
+                       height = slot.clientHeight - 1; //border
+                       width = slot.clientWidth;
+                   }
+
+                   if (x >= slot.offsetLeft && x < slot.offsetLeft + width &&
+                       y >= slot.offsetTop && y <= slot.offsetTop + height) {
                        return slot;
                    }
                }

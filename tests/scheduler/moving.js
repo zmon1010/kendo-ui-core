@@ -801,8 +801,6 @@
 
         var offset = handle.offset();
 
-        offset.top += slots.first().outerWidth();
-
         dragdrop(scheduler, handle, offset, slots.eq(1));
 
         equal(scheduler.dataSource.at(0).start.getHours(), 10);
