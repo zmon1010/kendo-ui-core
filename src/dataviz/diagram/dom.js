@@ -2482,16 +2482,17 @@
 
             _triggerRemove: function(items){
                 var toRemove = [];
-                var item, args;
+                var item, args, editable;
 
                 for (var idx = 0; idx < items.length; idx++) {
                     item = items[idx];
+                    editable = item.options.editable;
                     if (item instanceof Shape) {
                         args = { shape: item };
                     } else {
                         args = { connection: item };
                     }
-                    if (!this.trigger("remove", args)) {
+                    if (editable && editable.remove !== false && !this.trigger("remove", args)) {
                         toRemove.push(item);
                     }
                 }
@@ -3363,12 +3364,17 @@
                 if (!this.singleToolBar && diagram.select().length === 1) {
                     var element = diagram.select()[0];
                     if (element && element.options.editable !== false) {
-                        var tools = element.options.editable.tools;
+                        var editable = element.options.editable;
+                        var tools = editable.tools;
                         if (this._isEditable && tools.length === 0) {
                             if (element instanceof Shape) {
-                                tools = ["edit", "rotateClockwise", "rotateAnticlockwise", "delete"];
+                                tools = ["edit", "rotateClockwise", "rotateAnticlockwise"];
                             } else if (element instanceof Connection) {
-                                tools = ["edit", "delete"];
+                                tools = ["edit"];
+                            }
+
+                            if (editable && editable.remove !== false) {
+                                tools.push("delete");
                             }
                         }
 

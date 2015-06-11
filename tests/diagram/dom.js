@@ -770,6 +770,50 @@
             diagram._createToolBar();
             ok(!diagram.singleToolBar);
         });
+
+        test("creates element toolbar with edit, rotateClockwise, rotateAnticlockwise and delete tools for shapes if no tools are set", function() {
+            diagram = setupEditableDiagram({});
+            var shape = diagram.shapes[0];
+            diagram.select(shape);
+            diagram._createToolBar();
+            var tools = diagram.singleToolBar.options.tools;
+            equal(tools.length, 4);
+            equal(tools[0], "edit");
+            equal(tools[1], "rotateClockwise");
+            equal(tools[2], "rotateAnticlockwise");
+            equal(tools[3], "delete");
+        });
+
+        test("does not include delete action if shape editable remove option is set to false", function() {
+            diagram = setupEditableDiagram({});
+            var shape = diagram.shapes[0];
+            shape.options.editable.remove = false;
+            diagram.select(shape);
+            diagram._createToolBar();
+
+            equal($.inArray("delete", diagram.singleToolBar.options.tools), -1);
+        });
+
+        test("creates element toolbar with edit and delete tools for connections if no tools are set", function() {
+            diagram = setupEditableDiagram({});
+            var connection = diagram.connections[0];
+            diagram.select(connection);
+            diagram._createToolBar();
+            var tools = diagram.singleToolBar.options.tools;
+            equal(tools.length, 2);
+            equal(tools[0], "edit");
+            equal(tools[1], "delete");
+        });
+
+        test("does not include delete action if connection editable remove option is set to false", function() {
+            diagram = setupEditableDiagram({});
+            var connection = diagram.connections[0];
+            connection.options.editable.remove = false;
+            diagram.select(connection);
+            diagram._createToolBar();
+
+            equal($.inArray("delete", diagram.singleToolBar.options.tools), -1);
+        });
     })();
 
     // ------------------------------------------------------------

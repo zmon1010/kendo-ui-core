@@ -718,6 +718,16 @@
                 });
             });
 
+            test("should not remove the selected items if remove is disabled", 0, function () {
+                triggerDel(function() {
+                    shape.options.editable.remove = false;
+
+                    d.remove = function(items) {
+                        ok(false);
+                    };
+                });
+            });
+
             test("should sync the changes", function () {
                 d._syncChanges = function() {
                     ok(true);
