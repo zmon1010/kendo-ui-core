@@ -739,6 +739,7 @@
 
     function TokenStream(input) {
         var tokens = [], index = 0;
+        var readWhile = input.readWhile;
         return {
             next  : next,
             peek  : peek,
@@ -764,13 +765,6 @@
         function isWhitespace(ch) {
             return " \t\n".indexOf(ch) >= 0;
         }
-        function readWhile(predicate) {
-            var str = "";
-            while (!input.eof() && predicate(input.peek(), str)) {
-                str += input.next();
-            }
-            return str;
-        }
         function readNumber() {
             // XXX: TODO: exponential notation
             var has_dot = false;
@@ -794,26 +788,9 @@
                 upper : id.toUpperCase()
             };
         }
-        function readEscaped(end) {
-            var escaped = false, str = "";
-            input.next();
-            while (!input.eof()) {
-                var ch = input.next();
-                if (escaped) {
-                    str += ch;
-                    escaped = false;
-                } else if (ch == "\\") {
-                    escaped = true;
-                } else if (ch == end) {
-                    break;
-                } else {
-                    str += ch;
-                }
-            }
-            return str;
-        }
         function readString() {
-            return { type: "str", value: readEscaped('"') };
+            input.next();
+            return { type: "str", value: input.readEscaped('"') };
         }
         function readOperator() {
             return {
@@ -880,10 +857,15 @@
     function InputStream(input) {
         var pos = 0, line = 1, col = 0;
         return {
-            next  : next,
-            peek  : peek,
-            eof   : eof,
-            croak : croak
+            next        : next,
+            peek        : peek,
+            eof         : eof,
+            croak       : croak,
+            readWhile   : readWhile,
+            readEscaped : readEscaped,
+            lookingAt   : lookingAt,
+            skip        : skip,
+            forward     : forward
         };
         function next() {
             var ch = input.charAt(pos++);
@@ -903,6 +885,55 @@
         }
         function croak(msg) {
             throw new Error(msg + " (pos " + col + ")");
+        }
+        function skip(ch) {
+            if (typeof ch == "string") {
+                if (input.substr(pos, ch.length) != ch) {
+                    croak("Expected " + ch);
+                }
+                forward(ch.length);
+            } else if (ch instanceof RegExp) {
+                var m = ch.exec(input.substr(pos));
+                if (m) {
+                    forward(m[0].length);
+                    return m;
+                }
+            } else {
+                // assuming RegExp match data
+                forward(ch[0].length);
+            }
+        }
+        function forward(n) {
+            while (n-- > 0) {
+                next();
+            }
+        }
+        function readEscaped(end) {
+            var escaped = false, str = "";
+            while (!eof()) {
+                var ch = next();
+                if (escaped) {
+                    str += ch;
+                    escaped = false;
+                } else if (ch == "\\") {
+                    escaped = true;
+                } else if (ch == end) {
+                    break;
+                } else {
+                    str += ch;
+                }
+            }
+            return str;
+        }
+        function readWhile(predicate) {
+            var str = "";
+            while (!eof() && predicate(peek(), str)) {
+                str += next();
+            }
+            return str;
+        }
+        function lookingAt(rx) {
+            return rx.exec(input.substr(pos));
         }
     }
 
@@ -943,5 +974,6 @@
     exports.parseFormula = parse;
     exports.parseReference = parseReference;
     exports.compile = makeFormula;
+    exports.InputStream = InputStream;
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

@@ -11,6 +11,7 @@
         "./spreadsheet/sorter",
         "./spreadsheet/runtime",
         "./spreadsheet/calc",
+        "./spreadsheet/numformat",
         "./spreadsheet/runtime.functions.js"
     ], f);
 })(function(){
