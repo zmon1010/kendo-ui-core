@@ -3,7 +3,7 @@ require 'winrm'
 class WinRemote
     def initialize(server)
         endpoint = "http://#{server}:5985/wsman"
-        @winrm = WinRM::WinRMWebService.new(endpoint, :plaintext, :user => "telerik.com\\KendoBuildUser", :pass => "Kend0Tf$UseR", :disable_sspi => true)
+        @winrm = WinRM::WinRMWebService.new(endpoint, :plaintext, :user => "telerik.com\\KendoBuildUser", :pass => "5x1DP2nV3!vB", :disable_sspi => true)
     end
 
     def exec(command)
