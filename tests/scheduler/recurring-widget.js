@@ -192,14 +192,28 @@
 
     test("Select until radio sets until value (no timezone)", function() {
         var editor = new RecurrenceEditor(div),
-            date = kendo.date.today();
-
+            date = kendo.date.today(),
+            normalizedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
 
         editor._initView("daily");
-
         editor._buttonUntil.click();
 
+        normalizedDate = kendo.timezone.apply(normalizedDate, 0);
+
+        equal(editor.value(), "FREQ=DAILY;UNTIL=" + kendo.toString(normalizedDate, "yyyyMMddTHHmmssZ"));
+    });
+
+    test("Select until radio and change datePicker value sets until value correctly vld old", function() {
+        var editor = new RecurrenceEditor(div),
+            date = kendo.date.today();
+
+        editor._initView("daily");
+        editor._buttonUntil.click();
+        editor._until.trigger("change");
+
+        date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
         date = kendo.timezone.apply(date, 0);
+
         equal(editor.value(), "FREQ=DAILY;UNTIL=" + kendo.toString(date, "yyyyMMddTHHmmssZ"));
     });
 
@@ -220,10 +234,11 @@
 
 
         editor._initView("daily");
-
         editor._buttonUntil.click();
 
-        equal(editor.value(), "FREQ=DAILY;UNTIL=" + kendo.toString(date, "yyyyMMddTHHmmssZ"));
+        var normalizedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
+
+        equal(editor.value(), "FREQ=DAILY;UNTIL=" + kendo.toString(normalizedDate, "yyyyMMddTHHmmssZ"));
     });
 
     module("kendo.ui.RecurrenceEditor Weekly view", {
@@ -303,10 +318,11 @@
             editor = new RecurrenceEditor(div, { start: date });
 
         editor._initView("weekly");
-
         editor._buttonUntil.click();
 
+        date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
         date = kendo.timezone.apply(date, 0);
+
         equal(editor.value(), "FREQ=WEEKLY;UNTIL=" + kendo.toString(date, "yyyyMMddTHHmmssZ") + ";BYDAY=FR");
     });
 
@@ -438,7 +454,9 @@
         editor._initView("monthly");
         editor._buttonUntil.click();
 
+        date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
         date = kendo.timezone.apply(date, 0);
+
         equal(editor.value(), "FREQ=MONTHLY;UNTIL=" + kendo.toString(date, "yyyyMMddTHHmmssZ") + ";BYMONTHDAY=14");
     });
 
@@ -727,7 +745,9 @@
         editor._initView("yearly");
         editor._buttonUntil.click();
 
+        date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
         date = kendo.timezone.apply(date, 0);
+
         equal(editor.value(), "FREQ=YEARLY;UNTIL=" + kendo.toString(date, "yyyyMMddTHHmmssZ") + ";BYMONTH=" + (date.getMonth() + 1) + ";BYMONTHDAY=14");
     });
 
