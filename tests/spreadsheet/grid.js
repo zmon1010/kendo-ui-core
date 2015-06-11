@@ -65,7 +65,7 @@
     });
 
     test("totalWidth returns the sum of column values", function() {
-        var grid = new Grid(null, new Axis(5, 13));
+        var grid = new Grid(null, new Axis(5, 13), 0, 0, 0, 0);
 
         equal(grid.totalWidth(), 5 * 13);
     });
@@ -77,7 +77,7 @@
     });
 
     test("totalHeight returns the sum of row values", function() {
-        var grid = new Grid(new Axis(5, 6));
+        var grid = new Grid(new Axis(5, 6), null, 0, 0, 0, 0);
 
         equal(grid.totalHeight(), 5 * 6);
     });

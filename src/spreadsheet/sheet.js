@@ -8,7 +8,7 @@
     var Range = kendo.spreadsheet.Range;
 
     var Sheet = kendo.Class.extend({
-        init: function(rowCount, columnCount, rowHeight, columnWidth) {
+        init: function(rowCount, columnCount, rowHeight, columnWidth, headerHeight, headerWidth) {
             var cellsCount = rowCount * columnCount - 1;
 
             this._values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
@@ -20,7 +20,7 @@
             this._frozenRows = 0;
             this._frozenColumns = 0;
 
-            this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount);
+            this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
         },
 
         name: function(value) {

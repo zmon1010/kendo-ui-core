@@ -88,6 +88,7 @@
            this._axis = axis;
            this._start = start;
            this._count = count;
+           this.hasHeader = start === 0;
            this.frozen = count > 0;
         },
 

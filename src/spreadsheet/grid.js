@@ -23,11 +23,13 @@
     });
 
     var Grid = kendo.Class.extend({
-        init: function(rows, columns, rowCount, columnCount) {
+        init: function(rows, columns, rowCount, columnCount, headerHeight, headerWidth) {
             this.rowCount = rowCount;
             this.columnCount = columnCount;
             this._columns = columns;
             this._rows = rows;
+            this._headerHeight = headerHeight;
+            this._headerWidth = headerWidth;
         },
 
         width: function(start, end) {
@@ -39,11 +41,11 @@
         },
 
         totalHeight: function() {
-            return this._rows.total;
+            return this._rows.total + this._headerHeight;
         },
 
         totalWidth: function() {
-            return this._columns.total;
+            return this._columns.total + this._headerWidth;
         },
 
         index: function(row, column) {
@@ -88,16 +90,55 @@
             return new PaneGrid(
                 new kendo.spreadsheet.PaneAxis(this._rows, options.row, options.rowCount),
                 new kendo.spreadsheet.PaneAxis(this._columns, options.column, options.columnCount),
+                this._headerHeight,
+                this._headerWidth,
                 this
             );
         }
     });
 
     var PaneGrid = kendo.Class.extend({
-        init: function(rows, columns, grid) {
+        init: function(rows, columns, headerHeight, headerWidth, grid) {
             this.rows = rows;
             this.columns = columns;
             this._grid = grid;
+            this.headerHeight = headerHeight;
+            this.headerWidth = headerWidth;
+
+            this.hasRowHeader = columns.hasHeader;
+            this.hasColumnHeader = rows.hasHeader;
+
+            this.columnOffset = this.hasRowHeader ? headerWidth : 0;
+            this.rowOffset = this.hasColumnHeader ? headerHeight : 0;
+        },
+
+        refresh: function(width, height) {
+            this._rectangle = this.rectangle(width, height);
+
+            if (!this.hasRowHeader) {
+                this._rectangle.left += this.headerWidth;
+                this._rectangle.right -= this.headerWidth;
+                this._rectangle.width -= this.headerWidth;
+            } else {
+                this._rectangle.right += this.headerWidth;
+                this._rectangle.width += this.headerWidth;
+            }
+
+            if (!this.hasColumnHeader) {
+                this._rectangle.top += this.headerHeight;
+                this._rectangle.bottom -= this.headerHeight;
+                this._rectangle.height -= this.headerHeight;
+            } else {
+                this._rectangle.bottom += this.headerHeight;
+                this._rectangle.height += this.headerHeight;
+            }
+
+            this.style = {
+                height: this._rectangle.height + "px",
+                top: this._rectangle.top  + "px",
+                width: this._rectangle.width + "px",
+                left: this._rectangle.left + "px"
+            };
         },
 
         index: function(row, column) {
@@ -119,8 +160,24 @@
             return this._grid.cellRefIndex(ref);
         },
 
-        translate: function(rectangle, left, top) {
-            return rectangle.translate(this.columns.translate(rectangle.left, left), this.rows.translate(rectangle.top, top));
+        translate: function(left, top) {
+            var rectangle = this._rectangle.translate(this.columns.translate(this._rectangle.left, left), this.rows.translate(this._rectangle.top, top));
+
+            if (!this.hasRowHeader) {
+                rectangle.left -= this.headerWidth;
+            }
+
+            rectangle.width -= this.headerWidth;
+            rectangle.right -= this.headerWidth;
+
+            if (!this.hasColumnHeader) {
+                rectangle.top -= this.headerHeight;
+            }
+
+            rectangle.height -= this.headerHeight;
+            rectangle.bottom -= this.headerHeight;
+
+            return rectangle;
         },
 
         visible: function(rectangle) {

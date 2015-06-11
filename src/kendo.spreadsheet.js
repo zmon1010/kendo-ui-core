@@ -42,7 +42,9 @@
                 this.options.rows,
                 this.options.columns,
                 this.options.rowHeight,
-                this.options.columnWidth
+                this.options.columnWidth,
+                this.options.headerHeight,
+                this.options.headerWidth
                 );
 
             this._sheet.name("sheet1");
@@ -69,7 +71,9 @@
             rows: 200,
             columns: 50,
             rowHeight: 20,
-            columnWidth: 64
+            columnWidth: 64,
+            headerHeight: 20,
+            headerWidth: 64
         }
     });
 
