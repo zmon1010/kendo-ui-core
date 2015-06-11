@@ -1084,7 +1084,7 @@ namespace :build do
     end
 
     def map_archive_root drive
-        sh "if not exist #{drive} ( net use #{drive} #{ARCHIVE_ROOT} /user:telerik.com\\KendoBuildUser Kend0Tf$UseR /YES )"
+        sh "if not exist #{drive} ( net use #{drive} #{ARCHIVE_ROOT} /user:telerik.com\\KendoBuildUser 5x1DP2nV3!vB /YES )"
     end
 
     { :production => "Production", :master => "Stable" }.each do |env, destination|
