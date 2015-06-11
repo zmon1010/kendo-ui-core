@@ -9,6 +9,9 @@ module("editor webkit format cleaner", {
 });
 
 function clean(html) {
+    if (!cleaner.applicable(html)) {
+        return html;
+    }
     var value = cleaner.clean(html);
     return value.replace(/(<\/?[^>]*>)/g, function (_, tag) {
         return tag.toLowerCase();

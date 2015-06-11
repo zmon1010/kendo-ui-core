@@ -510,6 +510,7 @@ var Clipboard = Class.extend({
         this.editor = editor;
         this.cleaners = [
             new ScriptCleaner(),
+            new TabCleaner(),
             new MSWordFormatCleaner(),
             new WebkitFormatCleaner()
         ];
@@ -823,6 +824,21 @@ var ScriptCleaner = Cleaner.extend({
 
     applicable: function(html) {
         return (/<script[^>]*>/i).test(html);
+    }
+});
+
+var TabCleaner = Cleaner.extend({
+    init: function() {
+        var replacement = ' ';
+        this.replacements = [
+            /<span\s+class="Apple-tab-span"[^>]*>\s*<\/span>/gi, replacement,
+            /\t/gi, replacement,
+            /&nbsp;&nbsp; &nbsp;/gi, replacement
+        ];
+    },
+
+    applicable: function(html) {
+        return (/&nbsp;&nbsp; &nbsp;|class="?Apple-tab-span/i).test(html);
     }
 });
 
@@ -1196,6 +1212,7 @@ extend(editorNS, {
     Keyboard: Keyboard,
     Clipboard: Clipboard,
     Cleaner: Cleaner,
+    TabCleaner: TabCleaner,
     MSWordFormatCleaner: MSWordFormatCleaner,
     WebkitFormatCleaner: WebkitFormatCleaner,
     PrintCommand: PrintCommand,
