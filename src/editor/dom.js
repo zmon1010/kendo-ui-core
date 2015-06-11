@@ -383,14 +383,10 @@ var Dom = {
             elementTop, elementHeight,
             scrollContainer = Dom.scrollContainer(node.ownerDocument);
 
-        if (Dom.name(element[0]) == "br") {
-            element = element.parent();
-        }
-
         elementTop = element.offset().top;
         elementHeight = element[0].offsetHeight;
 
-        if (Dom.is(element[0], "p")) {
+        if (!elementHeight) {
             elementHeight = parseInt(element.css("line-height"), 10) ||
                             Math.ceil(1.2 * parseInt(element.css("font-size"), 10)) ||
                             15;
