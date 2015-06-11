@@ -63,3 +63,43 @@
     font-size: .8em;
     background: transparent;
 }
+
+.navbar-hidden {
+    display: none;
+}
+
+#source-code-container {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: initial;
+    -webkit-user-select: initial;
+    padding: 1em;
+}
+
+.km-source-code:before,
+.km-source-code:after {
+    content: '\e014';
+}
+
+pre {
+    margin: 0;
+}
+
+.km-close:before,
+.km-close:after {
+    content: '\e038';
+}
+
+pre .nocode { background-color: transparent; color: #000; }
+pre .str,                    /* string */
+pre .atv { color: #2db245; } /* attribute value */
+pre .kwd { color: #ff3399; } /* keyword */
+pre .com { color: #9933cc; } /* comment */
+pre .typ { color: #000; } /* type */
+pre .lit { color: #0099ff; } /* literal */
+pre .pun { color: #333; }    /* punctuation */
+pre .pln { color: #3e526b; }    /* plaintext */
+pre .tag { color: #3e526b; } /* html/xml tag */
+pre .atn { color: #3e526b; } /* attribute name */
+pre .dec { color: #3e526b; } /* decimal */
+

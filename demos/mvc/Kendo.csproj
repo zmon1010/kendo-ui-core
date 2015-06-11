@@ -97,6 +97,7 @@
     <Compile Include="Controllers\ThemeBuilderController.cs" />
     <Compile Include="Controllers\DebugController.cs" />
     <Compile Include="Controllers\SourceController.cs" />
+    <Compile Include="Controllers\MobileSourceController.cs" />
     <Compile Include="Controllers\DemoController.cs" />
     <Compile Include="Extensions\UrlExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />

@@ -39,6 +39,12 @@ namespace Kendo
             );
 
             routes.MapRoute(
+                "MobileSourceView",
+                "source/mobile",
+                new { controller = "MobileSource", action = "Index" }
+            );
+
+            routes.MapRoute(
                 "Bootstrap",
                 "bootstrap",
                 new { controller = "Integration", action = "Bootstrap" }

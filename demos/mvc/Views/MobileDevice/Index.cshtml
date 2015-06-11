@@ -39,11 +39,48 @@
 
     <script src="@Url.Content("~/content/shared/js/example-datasources.js")"></script>
     <script src="@Url.Content("~/content/shared/js/mobile-examples.js")"></script>
+    <script src="@Url.Content("~/content/shared/js/kendo-dojo.js")"></script>
     <script src="@Url.Content("~/content/shared/js/console.js")"></script>
+    <script src="@Url.Content("~/content/shared/js/prettify.js")"></script>
     <style type="text/css" media="screen">
         .navbar-hidden {
             display: none;
         }
+
+        #source-code-container {
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            touch-action: initial;
+            -webkit-user-select: initial;
+            padding: 1em;
+        }
+
+        .km-source-code:before,
+        .km-source-code:after {
+            content: '\e014';
+        }
+
+        pre {
+            margin: 0;
+        }
+
+        .km-close:before,
+        .km-close:after {
+            content: '\e038';
+        }
+
+        pre .nocode { background-color: transparent; color: #000; }
+        pre .str,                    /* string */
+        pre .atv { color: #2db245; } /* attribute value */
+        pre .kwd { color: #ff3399; } /* keyword */
+        pre .com { color: #9933cc; } /* comment */
+        pre .typ { color: #000; } /* type */
+        pre .lit { color: #0099ff; } /* literal */
+        pre .pun { color: #333; }    /* punctuation */
+        pre .pln { color: #3e526b; }    /* plaintext */
+        pre .tag { color: #3e526b; } /* html/xml tag */
+        pre .atn { color: #3e526b; } /* attribute name */
+        pre .dec { color: #3e526b; } /* decimal */
     </style>
 </head>
 
@@ -74,11 +111,24 @@
             <div data-role="navbar" class="km-accent">
                 <a data-align="left" data-icon="arrow-w" href="#/" data-role="backbutton" data-transition="slide reverse"></a>
                 <span data-role="view-title"></span>
+                <a data-align="right" data-icon="source-code" data-click="goToSourceCode" data-role="button" title="Show this demo source code"></a>
             </div>
         </header>
     </div>
 
-    <div data-role="drawer" data-stretch="true" id="about">
+    <div id="source-code-view" data-transition="fade" data-title="source code" data-show="showSourceCode" data-role="view" data-persist="true" data-stretch="true">
+       <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+                <a data-align="right" data-click="openDojo" data-role="button">Edit</a>
+                <a data-align="right" href="#:back" data-role="button" data-icon="close"></a>
+            </div>
+        </header>
+
+        <div id="source-code-container"></div>
+    </div>
+
+    <div data-role="drawer" data-stretch="true" id="about" data-before-show="disableInSourceCode">
         <div data-role="header">
             <div data-role="navbar">
                 <img src="@Url.Content("~/content/mobile/logos/" + ViewBag.product + ".png")" data-align="left" style="width: 13.306em; height: 1.008em" id="logo">
@@ -101,6 +151,40 @@
     </div>
 
     <script>
+        var sourceCode;
+
+        dojo.configuration = {
+            url: "@Html.DojoRoot()",
+            cdnRoot: '@Html.CdnRoot()'
+        };
+
+        function openDojo(e) {
+            window.dojo.postSnippet(sourceCode, window.location.href.replace(window.location.hash, ""));
+            e.preventDefault();
+        }
+
+        function goToSourceCode() {
+            app.navigate("#source-code-view?view=" + app.view().id);
+        }
+
+        function showSourceCode(e) {
+            app.showLoading();
+            $("#source-code-container").empty();
+
+            $.get("../source/mobile?path=" + encodeURIComponent("~/Views/demos/" + e.view.params.view + ".cshtml")).then(function(response) {
+                $("#source-code-container").html(response);
+                sourceCode = $("#source-code-container").find(".prettyprint").text();
+                prettyPrint();
+                app.hideLoading();
+            });
+        }
+
+        function disableInSourceCode(e) {
+            if (app.view().id === "#source-code-view") {
+                e.preventDefault();
+            }
+        }
+
         window.app = new kendo.mobile.Application($(document.body), {
             layout: "examples",
             transition: "slide",
