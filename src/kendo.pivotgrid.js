@@ -3723,7 +3723,7 @@ var __meta__ = {
             var height = that.options.height;
 
             if (that.wrapper.is(":visible")) {
-                if (!innerHeight || !height || height === "100%") {
+                if (!innerHeight || !height) {
                     if (skipScrollbar) {
                         scrollbar = 0;
                     }

@@ -4360,33 +4360,10 @@
         ok(content.height() > initial);
     });
 
-    test("PivotGrid sets 'auto' heigth to the content when options.height is '100%'", function() {
-        var tuples = [
-            [
-                { members: [ { name: "dim 0", levelNum: "0", hasChildren: true, children: [] }] },
-                { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", hasChildren: true, children: [] }] }
-            ],
-            [
-                { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", hasChildren: true, children: [] }] },
-                { members: [ { name: "dim 0_4", parentName: "dim 0_1", levelNum: "2", children: [] }] },
-                { members: [ { name: "dim 0_5", parentName: "dim 0_1", levelNum: "2", children: [] }] },
-                { members: [ { name: "dim 0_6", parentName: "dim 0_1", levelNum: "2", children: [] }] },
-                { members: [ { name: "dim 0_7", parentName: "dim 0_1", levelNum: "2", children: [] }] }
-            ]
-        ];
+    test("PivotGrid sets calculates inner height based on parent when height is 100%", function() {
+        var height = 500;
 
-        var data = [
-            [
-                { value: 1 },
-                { value: 2 }
-            ], [
-                { value: 2 },
-                { value: 3 },
-                { value: 4 },
-                { value: 5 },
-                { value: 6 },
-            ]
-        ];
+        $(div).wrap('<div style="height: ' + height + 'px"></div>');
 
         var pivotgrid = createPivot({
             height: "100%",
@@ -4401,23 +4378,23 @@
                         options.success({
                             axes: {
                                 rows: {
-                                    tuples: tuples.shift()
+                                    tuples: [
+                                        { members: [ { name: "dim 0", levelNum: "0", hasChildren: true, children: [] }] },
+                                        { members: [ { name: "dim 0_1", parentName: "dim 0", levelNum: "1", hasChildren: true, children: [] }] }
+                                    ]
                                 }
                             },
-                            data: data.shift()
+                            data: [
+                                { value: 1 },
+                                { value: 2 }
+                            ]
                         });
                     }
                 }
             }
         });
 
-        var content = pivotgrid.wrapper.find(".k-grid-content");
-
-        var initial = content.height();
-
-        pivotgrid.dataSource.expandRow("dim 0_1");
-
-        ok(content.height() > initial);
+        equal(pivotgrid.wrapper.innerHeight(), 500);
     });
 
     test("PivotGrid sets min height if height value is lower than scrollbar width", function() {
