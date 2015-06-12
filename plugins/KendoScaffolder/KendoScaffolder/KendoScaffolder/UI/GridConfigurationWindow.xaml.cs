@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
+
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using KendoScaffolder.UI.Models;
 //using Microsoft.VisualStudio.PlatformUI;
 
 namespace KendoScaffolder.UI
@@ -23,6 +24,8 @@ namespace KendoScaffolder.UI
     {
         public GridConfigurationWindow(GridConfigurationViewModel viewModel)
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             InitializeComponent();
 
             GridEventsListBox.SelectionChanged += GridEventsListBoxSelectionChanged;
@@ -183,16 +186,16 @@ namespace KendoScaffolder.UI
         }
     }
 
-    public class EnumToBooleanConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return value.Equals(parameter);
-        }
+    //public class EnumToBooleanConverter : IValueConverter
+    //{
+    //    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    //    {
+    //        return value.Equals(parameter);
+    //    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return value.Equals(true) ? parameter : Binding.DoNothing;
-        }
-    }
+    //    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    //    {
+    //        return value.Equals(true) ? parameter : Binding.DoNothing;
+    //    }
+    //}
 }

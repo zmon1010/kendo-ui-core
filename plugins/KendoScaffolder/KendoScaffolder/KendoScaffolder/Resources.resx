@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChartDescription" xml:space="preserve">
+    <value>The Chart widget uses modern browser technologies to render high-quality data visualizations. All graphics are rendered on the client using SVG with a fallback to Canvas and VML.</value>
+  </data>
+  <data name="GridDescription" xml:space="preserve">
+    <value>The Grid is a powerful widget for displaying tabular data. It provides a lot of options that define how the data is presented and manipulated, including paging, sorting, filtering, grouping and editing. The Grid can be bound to local or remote data using the Kendo DataSource component.</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ScaffolderIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resources\scaffoldericon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SchedulerDescription" xml:space="preserve">
+    <value>The Kendo UI Scheduler widget displays a set of events (a.k.a. appointments or tasks). It can display the scheduler events in different views - a single day, a whole week or month and as a list of tasks which need to be accomplished.</value>
   </data>
 </root>

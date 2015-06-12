@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace KendoScaffolder.UI
+namespace KendoScaffolder.UI.Models
 {
     public enum GridFilterMode { Menu, Row }
     public enum GridSortMode { MultipleColumn, SingleColumn }
@@ -35,9 +35,9 @@ namespace KendoScaffolder.UI
         }
     }
 
-    public class GridConfigurationViewModel
+    public class GridConfigurationViewModel : WidgetConfigurationViewModel
     {
-        public CodeGenerationContext Context { get; private set; }
+        //public CodeGenerationContext Context { get; private set; }
 
         public ModelType SelectedModelType { get; set; }
         public ModelType SelectedViewModelType { get; set; }
@@ -47,8 +47,8 @@ namespace KendoScaffolder.UI
 
         public string SelectedDataSourceType { get; set; }
 
-        public string ControllerName { get; set; }
-        public string ViewName { get; set; }
+        //public string ControllerName { get; set; }
+        //public string ViewName { get; set; }
 
         public bool Editable { get; set; }
         public bool EditableCreate { get; set; }
@@ -81,9 +81,10 @@ namespace KendoScaffolder.UI
         public List<string> SelectedGridEvents { get; set; }
 
         public GridConfigurationViewModel(CodeGenerationContext context)
+            : base(context)
         {
-            Context = context;
-            ViewName = "Index";
+            //Context = context;
+            //ViewName = "Index";
             EditMode = "InLine";
             Scrollable = true;
             FilterMode = GridFilterMode.Menu;

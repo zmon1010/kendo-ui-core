@@ -1,4 +1,6 @@
-﻿namespace KendoScaffolder
+﻿using System.Collections.Generic;
+
+namespace KendoScaffolder
 {
     internal static class KendoConstants
     {

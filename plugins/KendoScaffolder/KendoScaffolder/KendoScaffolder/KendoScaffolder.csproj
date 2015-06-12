@@ -68,17 +68,30 @@
     <Compile Include="KendoConstants.cs" />
     <Compile Include="KendoScaffolderFactory.cs" />
     <Compile Include="KendoScaffolder.cs" />
+    <Compile Include="KendoWidgets.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\GridConfigurationViewModel.cs" />
+    <Compile Include="Scaffolders\ChartScaffolder.cs" />
+    <Compile Include="Scaffolders\GridScaffolder.cs" />
+    <Compile Include="Scaffolders\IKendoWidgetScaffolder.cs" />
+    <Compile Include="UI\ChartConfigurationWindow.xaml.cs">
+      <DependentUpon>ChartConfigurationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Models\Chart\ChartConfigurationViewModel.cs" />
+    <Compile Include="UI\Models\EnumToBooleanConverter.cs" />
+    <Compile Include="UI\Models\GridConfigurationViewModel.cs" />
     <Compile Include="UI\GridConfigurationWindow.xaml.cs">
       <DependentUpon>GridConfigurationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Models\WidgetConfigurationViewModel.cs" />
     <Compile Include="UI\ModelType.cs" />
+    <Compile Include="UI\WidgetSelectionWindow.xaml.cs">
+      <DependentUpon>WidgetSelectionWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Templates\KendoScaffolder\Grid\Controllers\AjaxBatchController.cs.t4">
@@ -113,7 +126,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\ChartConfigurationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\GridConfigurationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WidgetSelectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -128,6 +149,8 @@
   <ItemGroup>
     <Folder Include="CodeGenerators\" />
     <Folder Include="Content\" />
+    <Folder Include="Templates\KendoScaffolder\Chart\Controllers\" />
+    <Folder Include="Templates\KendoScaffolder\Chart\Views\" />
     <Folder Include="Templates\KendoScaffolder\Grid\Views\aspx\" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +161,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ScaffolderIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Images\scheduler-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
