@@ -90,6 +90,7 @@
             <div data-role="navbar" id="normal" class="km-accent">
                 <a data-align="left" data-role="button" href="#about" data-rel="drawer" data-icon="drawer-icon"></a>
                 <span data-role="view-title"></span>
+                <span class="km-view-subtitle">Mobile Demos and Sampple Applications</span>
                 <a data-align="right" data-role="button" data-click="showSearch" data-click-on="down" data-icon="search"></a>
             </div>
             <div data-role="navbar" id="search" class="navbar-hidden">
@@ -101,7 +102,8 @@
 
         <ul data-role="listview" data-source="navDataSource" data-template="nav-template">
             <script type="text/x-kendo-template" id="nav-template">
-                <a href="#: url #" style="#: data.new ? 'color: green' : '' #">#: text #</a>
+                <a href="#: url #">#: text # #= data.new ? '<span class="km-badge">new</span>' : '' #</a>
+                
             </script>
         </ul>
     </div>

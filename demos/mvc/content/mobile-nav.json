@@ -1,6 +1,7 @@
 [
       {
         "text": "Basic usage",
+        "new": "true",
         "url": "actionsheet/index",
         "title": {
             "kendo-ui": "Kendo UI Mobile ActionSheet Demo",
