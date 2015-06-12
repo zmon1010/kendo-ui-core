@@ -1,11 +1,6 @@
 <div data-role="view" data-title="Magazines"
      data-init="mobileListViewResponsiveImages" data-use-native-scrolling="true"
      id="index" class="all-magazines">
-    <header data-role="header">
-        <div data-role="navbar" class="header-text">
-            Magazines
-        </div>
-    </header>
 
     <ul id="magazines-list"></ul>
 </div>
@@ -18,13 +13,14 @@
     </div>
 </script>
 
-<div data-role="view" data-title="Magazine"
+<div data-role="view" data-title="Magazine Details"
      id="singleItem" class="all-magazines"
      data-show="onDetailViewShow">
     <header data-role="header">
-        <div data-role="navbar" class="header-text">
+        <div data-role="navbar" class="km-light">
             <a data-role="backbutton" data-align="left">Back</a>
-            Magazine Details
+            <span data-role="view-title"></span>
+            <a data-align="right" data-role="button" class="nav-button" data-icon="home" href="#/"></a>
         </div>
     </header>
 

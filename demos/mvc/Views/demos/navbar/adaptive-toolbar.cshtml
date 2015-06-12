@@ -25,6 +25,7 @@
                         { type: "button", showText: "overflow", id: "flag", text: "Flag", icon: "toprated", click: function(e){$("#flags").data("kendoMobileActionSheet").open(e.target)} },
                         { type: "button", showText: "overflow", id: "reply", text: "Reply", icon: "reply", click: function(e){$("#reply-options").data("kendoMobileActionSheet").open(e.target)} },
                         { type: "button", showText: "overflow", id: "disabledBtn", text: "Delete", icon: "delete", click: function(e){$("#delete-confirm").data("kendoMobileActionSheet").open(e.target)} },
+                        { type: "button", showText: "overflow", id: "viewSource", text: "View Source", icon: "source-code", click: goToSourceCode },
 
                         { type: "button", text: "Organize", overflow: "always", icon: "organize", enable: false }
                     ]'>

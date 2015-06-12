@@ -286,18 +286,6 @@
         }
       },
       {
-        "text": "Overview",
-        "url": "mobile-layout/index",
-        "title": {
-            "kendo-ui": "Kendo UI jQuery-based Mobile Layout Demo",
-            "aspnet-mvc": "ASP.NET MVC Mobile Layout Demo"
-        },
-        "meta": {
-            "kendo-ui": "This sample shows how Kendo UI Mobile Layout is used to share headers and footers between multiple views on different mobile devices.",
-            "aspnet-mvc": "This sample shows how ASP.NET MVC Mobile Layout is used to share headers and footers between multiple views on different mobile devices."
-        }
-      },
-      {
         "text": "Basic usage",
         "url": "mobile-listview/index",
         "title": {
