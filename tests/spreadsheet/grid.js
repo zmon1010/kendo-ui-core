@@ -22,7 +22,7 @@
         equal(ref.col, 2);
     });
 
-    test("igets index from ref", function() {
+    test("gets index from ref", function() {
         var grid = new Grid(null, null, 1000, 1000);
         equal(grid.cellRefIndex({row: 2, col: 2}), 2002)
     });
