@@ -7,13 +7,23 @@ HOST='172.17.49.82'
 PORT='33'
 USER='kendodocumentation'
 PASS='qGMQIUxq57'
-SOURCEFOLDER="$1"
+SOURCE_FOLDER="docs/_site/"
+DIST_FOLDER="dist/_site"
+
+# Generate docs
+(cd docs && bundle --without development --path ~/gems && bundle exec jekyll build)
+
+# Clean-up generated wrappers
+rm -rf docs/api/wrappers/*
+
+# Sync first to avoid transferring duplicates
+rsync -avc --delete $SOURCE_FOLDER $DIST_FOLDER
 
 lftp -e "
 open -p $PORT $HOST
 user $USER $PASS
-lcd $SOURCEFOLDER
-mirror --reverse --delete --scan-all-first --verbose . kendouidocsweb1
-mirror --reverse --delete --scan-all-first --verbose . kendouidocsweb2
+lcd $DIST_FOLDER
+mirror --reverse --delete --verbose . kendouidocsweb1
+mirror --reverse --delete --verbose . kendouidocsweb2
 bye
 "
