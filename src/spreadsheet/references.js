@@ -31,7 +31,7 @@
         }
         else {
             while (col > 0) {
-                aa = String.fromCharCode(64 + col % 26) + aa;
+                aa = String.fromCharCode(65 + col % 26) + aa;
                 col = Math.floor(col / 26);
             }
             if (rel != null && !(rel & 1)) {
