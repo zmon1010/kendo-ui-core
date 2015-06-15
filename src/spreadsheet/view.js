@@ -9,19 +9,21 @@
             this.columnWidth = columnWidth;
             this.cols = [];
             this.trs = [];
+            this._height = 0;
+            this._width = 0;
         },
 
         addColumn: function(width) {
+            this._width += width;
             this.cols.push(kendo.dom.element("col", { style: { width: width + "px" } }));
         },
 
         addRow: function(height) {
             var attr = null;
 
-            if (height != this.rowHeight) {
-                attr = { style: { height: height + "px" } };
-            }
+            attr = { style: { height: height + "px" } };
 
+            this._height += height;
             this.trs.push(kendo.dom.element("tr", attr));
         },
 
@@ -36,7 +38,7 @@
         },
 
         toDomTree: function(x, y, className) {
-            return kendo.dom.element("table", { style: { left: x + "px", top: y + "px" }, className: className },
+            return kendo.dom.element("table", { style: { left: x + "px", top: y + "px", height: this._height + "px", width: this._width + "px" }, className: className },
                 [
                     kendo.dom.element("colgroup", null, this.cols),
                     kendo.dom.element("tbody", null, this.trs)
@@ -65,7 +67,7 @@
             var frozenColumns = this._sheet.frozenColumns();
             var frozenRows = this._sheet.frozenRows();
 
-            // main pane
+            // main or bottom or right pane
             this.panes = [ this._pane(frozenRows, frozenColumns) ];
 
             // left pane
@@ -85,7 +87,7 @@
         },
 
         _pane: function(row, column, rowCount, columnCount) {
-            var pane = new Pane(this._sheet, this._sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }))
+            var pane = new Pane(this._sheet, this._sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
             pane.context(this._context);
             pane.refresh(this.wrapper[0].clientWidth, this.wrapper[0].clientHeight);
             return pane;
@@ -135,13 +137,11 @@
         },
 
         render: function(scrollLeft, scrollTop) {
-            return this.renderAt(this._grid.translate(scrollLeft, scrollTop));
-        },
-
-        renderAt: function(rectangle) {
             var sheet = this._sheet;
             var grid = this._grid;
-            var view = grid.visible(rectangle);
+
+            var view = grid.view(scrollLeft, scrollTop);
+
             var rows = view.rows;
             var columns = view.columns;
 
@@ -167,7 +167,7 @@
 
             var children = [];
 
-            children.push(table.toDomTree(columns.offset + grid.columnOffset, rows.offset + grid.rowOffset));
+            children.push(table.toDomTree(view.columnOffset, view.rowOffset));
 
             if (grid.hasRowHeader) {
                 var rowHeader = new HtmlTable(this.rowHeight, grid.headerWidth);
@@ -181,7 +181,7 @@
                     rowHeader.addCell(cell.row - view.ref.topLeft.row, cell.row + 1);
                 });
 
-                children.push(rowHeader.toDomTree(columns.offset, rows.offset + grid.rowOffset, "k-spreadsheet-row-header"));
+                children.push(rowHeader.toDomTree(0, view.rowOffset, "k-spreadsheet-row-header"));
             }
 
             if (grid.hasColumnHeader) {
@@ -197,10 +197,10 @@
                     columnHeader.addCell(0, kendo.spreadsheet.Ref.display(null, Infinity, cell.col));
                 });
 
-                children.push(columnHeader.toDomTree(columns.offset + grid.columnOffset, rows.offset, "k-spreadsheet-column-header"));
+                children.push(columnHeader.toDomTree(view.columnOffset, 0, "k-spreadsheet-column-header"));
             }
 
-            children = children.concat(this.renderMergedCells(rectangle.left - grid.columnOffset, rectangle.top - grid.rowOffset));
+            children = children.concat(this.renderMergedCells(view.mergedCellLeft, view.mergedCellTop));
 
             return kendo.dom.element("div", { style: grid.style, className: "k-spreadsheet-pane" }, children);
         },

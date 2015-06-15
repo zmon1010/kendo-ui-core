@@ -84,45 +84,85 @@
     });
 
     var PaneAxis = kendo.Class.extend({
-        init: function(axis, start, count) {
+        init: function(axis, start, count, headerSize) {
            this._axis = axis;
            this._start = start;
            this._count = count;
            this.hasHeader = start === 0;
+           this.headerSize = headerSize;
            this.frozen = count > 0;
         },
 
-        range: function(max) {
-            var start = this._axis.sum(0, this._start - 1);
+        viewSize: function(viewSize) {
+            this._viewSize = viewSize;
+        },
 
-            var end = max - start;
+        sum: function(start, end) {
+            return this._axis.sum(start, end - 1);
+        },
+
+        start: function() {
+            return this.sum(0, this._start);
+        },
+
+        size: function() {
+            return this.sum(this._start, this._start + this._count);
+        },
+
+        //XXX: rename this method
+        paneSegment: function() {
+            var offset = this.start();
+            var length;
+
+            if (!this.hasHeader) {
+                offset += this.headerSize;
+            }
 
             if (this.frozen) {
-                end = this._axis.sum(this._start, this._start + this._count - 1);
+                length = this.size();
+                if (this.hasHeader) {
+                    length += this.headerSize;
+                } else {
+                    length -= this.headerSize;
+                }
+            } else {
+                length = this._viewSize - offset;
             }
 
             return {
-                start: start,
-                end: end
+                offset: offset,
+                length: length
             };
         },
 
-        visible: function(start, end) {
-            var result = this._axis.visible(start, end);
+        visible: function(offset) {
+            var start = this.start();
+            var size;
+
+            if (this.frozen) {
+                size = this.size();
+                if (!this.hasHeader) {
+                    size -= this.headerSize;
+                }
+            } else {
+                size = this._viewSize - start - this.headerSize;
+                start += offset;
+            }
+
+            var result = this._axis.visible(start, start + size);
 
             if (this.frozen) {
                 result.offset = 0;
             }
 
-            return result;
-        },
+            result.start = start;
 
-        translate: function(value, offset) {
-            if (!this.frozen) {
-                return value + offset;
+            if (this.hasHeader) {
+                result.offset += this.headerSize;
+                result.start -= this.headerSize;
             }
 
-            return value;
+            return result;
         }
     });
 

@@ -103,4 +103,165 @@
         equal(rectangle.width, 3);
         equal(rectangle.height, 18);
     });
+
+    var grid, paneGrid;
+    module("Sheet Pane Grid", {
+        setup: function() {
+            grid = new Grid(new Axis(100, 30), new Axis(200, 10), 100, 200, 16, 24);
+        }
+    });
+
+    function testPaneDimension(name, config, results) {
+        test(name, function() {
+            paneGrid = grid.pane(config);
+            paneGrid.refresh(1200, 800);
+
+            results = results.split(" ");
+
+            equal(paneGrid.style.top, results[0] + "px");
+            equal(paneGrid.style.left, results[1] + "px");
+            equal(paneGrid.style.width, results[2] + "px");
+            equal(paneGrid.style.height, results[3] + "px");
+        });
+    }
+
+    testPaneDimension(
+        "calculates the correct style for the wrapper, single pane",
+        { row: 0, column: 0 },
+        "0 0 1200 800"
+    );
+
+    testPaneDimension(
+        "calculates the correct style for the wrapper, left pane",
+        { row: 0, column: 0, columnCount: 5 },
+        "0 0 74 800"
+    );
+
+
+    testPaneDimension("calculates the correct style for the wrapper, right pane",
+        { row: 0, column: 5 },
+        "0 74 1126 800"
+    );
+
+    testPaneDimension("calculates the correct style for the wrapper, top pane",
+        { row: 0, column: 0, rowCount: 5 },
+        "0 0 1200 166"
+    );
+
+    testPaneDimension("calculates the correct style for the wrapper, bottom pane",
+        { row: 5, column: 0 },
+        "166 0 1200 634"
+    );
+
+    testPaneDimension("calculates the correct style for the wrapper, fixed pane",
+        { row: 0, column: 0, rowCount: 5, columnCount: 5 },
+        "0 0 74 166"
+    );
+
+    testPaneDimension("calculates the correct style for the wrapper, topright pane",
+        { row: 0, column: 5, rowCount: 5 },
+        "0 74 1126 166"
+    );
+
+    testPaneDimension("calculates the correct style for the wrapper, bottomleft pane",
+        { row: 5, column: 0, columnCount: 5 },
+        "166 0 74 634"
+    );
+
+    testPaneDimension("calculates the correct style for the wrapper, bottomright pane",
+        { row: 5, column: 5 },
+        "166 74 1126 634"
+    );
+
+    module("Sheet Pane Grid View", {
+        setup: function() {
+            grid = new Grid(new Axis(50, 10), new Axis(50, 10), 50, 50, 15, 15);
+        }
+    });
+
+    function testPaneView(name, config, scrollLeft, scrollTop, topLeftRow, topLeftCol, bottomRightRow, bottomRightCol, rowOffset, columnOffset) {
+        test(name, function() {
+            paneGrid = grid.pane(config);
+            paneGrid.refresh(200, 200);
+
+            var view = paneGrid.view(scrollLeft, scrollTop);
+            var ref = view.ref;
+
+            equal(ref.topLeft.row, topLeftRow);
+            equal(ref.topLeft.col, topLeftCol);
+            equal(ref.bottomRight.row, bottomRightRow);
+            equal(ref.bottomRight.col, bottomRightCol);
+            equal(view.rowOffset, rowOffset);
+            equal(view.columnOffset, columnOffset);
+        });
+    }
+
+    testPaneView("s pane gives initial frame", { row: 0, column: 0 }, 0, 0,
+        0,
+        0,
+        18,
+        18,
+        15,
+        15
+    );
+
+    testPaneView("s pane gives final frame", { row: 0, column: 0 }, (50 * 10 + 15 - 200), (50 * 10 + 15 - 200),
+        31,
+        31,
+        49,
+        49,
+        10,
+        10
+    );
+
+
+    testPaneView("tl pane remains fixed", { row: 0, column: 0, rowCount: 5, columnCount: 5 }, 0, 0,
+        0,
+        0,
+        5,
+        5,
+        15,
+        15
+    );
+
+    testPaneView("tl pane remains fixed (scrolled)", { row: 0, column: 0, rowCount: 5, columnCount: 5 }, 100, 100,
+        0,
+        0,
+        5,
+        5,
+        15,
+        15
+    );
+
+    testPaneView("br pane calculates the offset", { row: 5, column: 5 }, 0, 0,
+        5,
+        5,
+        18,
+        18,
+        0,
+        0
+    );
+    testPaneView("br pane calculates the offset", { row: 5, column: 5 }, (50 * 10 + 15 - 200), (50 * 10 + 15 - 200),
+        36,
+        36,
+        49,
+        49,
+        -5,
+        -5
+    );
+
+    /*
+    test("returns correct view range ref", function() {
+        paneGrid = grid.pane({ row: 0, column: 0 });
+        paneGrid.refresh(1200, 800);
+
+        var view = paneGrid.view(0, 0);
+
+        equal(view.ref.topLeft.row, 0);
+        equal(view.ref.topLeft.col, 0);
+
+        equal(view.ref.bottomRight.row, 26);
+        equal(view.ref.bottomRight.col, 120);
+    });
+    */
 })();

@@ -15,10 +15,6 @@
             this.top = top;
             this.height = height;
             this.bottom = top + height;
-        },
-
-        translate: function(left, top) {
-            return new Rectangle(left, top, this.width, this.height);
         }
     });
 
@@ -88,68 +84,60 @@
 
         pane: function(options) {
             return new PaneGrid(
-                new kendo.spreadsheet.PaneAxis(this._rows, options.row, options.rowCount),
-                new kendo.spreadsheet.PaneAxis(this._columns, options.column, options.columnCount),
-                this._headerHeight,
-                this._headerWidth,
+                new kendo.spreadsheet.PaneAxis(this._rows, options.row, options.rowCount, this._headerHeight),
+                new kendo.spreadsheet.PaneAxis(this._columns, options.column, options.columnCount, this._headerWidth),
                 this
             );
         }
     });
 
     var PaneGrid = kendo.Class.extend({
-        init: function(rows, columns, headerHeight, headerWidth, grid) {
+        init: function(rows, columns, grid) {
             this.rows = rows;
             this.columns = columns;
             this._grid = grid;
-            this.headerHeight = headerHeight;
-            this.headerWidth = headerWidth;
 
+            this.headerHeight = rows.headerSize;
+            this.headerWidth = columns.headerSize;
             this.hasRowHeader = columns.hasHeader;
             this.hasColumnHeader = rows.hasHeader;
-
-            this.columnOffset = this.hasRowHeader ? headerWidth : 0;
-            this.rowOffset = this.hasColumnHeader ? headerHeight : 0;
         },
 
         refresh: function(width, height) {
-            this._rectangle = this.rectangle(width, height);
+            this.columns.viewSize(width);
+            this.rows.viewSize(height);
 
-            if (!this.hasRowHeader) {
-                this._rectangle.left += this.headerWidth;
-                this._rectangle.right -= this.headerWidth;
-                this._rectangle.width -= this.headerWidth;
-            } else {
-                this._rectangle.right += this.headerWidth;
-                this._rectangle.width += this.headerWidth;
-            }
-
-            if (!this.hasColumnHeader) {
-                this._rectangle.top += this.headerHeight;
-                this._rectangle.bottom -= this.headerHeight;
-                this._rectangle.height -= this.headerHeight;
-            } else {
-                this._rectangle.bottom += this.headerHeight;
-                this._rectangle.height += this.headerHeight;
-            }
+            var x = this.columns.paneSegment();
+            var y = this.rows.paneSegment();
 
             this.style = {
-                height: this._rectangle.height + "px",
-                top: this._rectangle.top  + "px",
-                width: this._rectangle.width + "px",
-                left: this._rectangle.left + "px"
+                top: y.offset  + "px",
+                left: x.offset + "px",
+                height: y.length + "px",
+                width: x.length + "px"
+            };
+        },
+
+        view: function(left, top) {
+            var rows = this.rows.visible(top);
+            var columns = this.columns.visible(left);
+
+            return {
+                rows: rows,
+                columns: columns,
+
+                rowOffset: rows.offset,
+                columnOffset: columns.offset,
+
+                mergedCellLeft: columns.start,
+                mergedCellTop: rows.start,
+
+                ref: new RangeRef(new CellRef(rows.values.start, columns.values.start), new CellRef(rows.values.end, columns.values.end))
             };
         },
 
         index: function(row, column) {
             return this._grid.index(row, column);
-        },
-
-        rectangle: function(width, height) {
-            var columns = this.columns.range(width);
-            var rows = this.rows.range(height);
-
-            return new Rectangle(columns.start, rows.start, columns.end, rows.end);
         },
 
         boundingRectangle: function(ref) {
@@ -158,37 +146,6 @@
 
         cellRefIndex: function(ref) {
             return this._grid.cellRefIndex(ref);
-        },
-
-        translate: function(left, top) {
-            var rectangle = this._rectangle.translate(this.columns.translate(this._rectangle.left, left), this.rows.translate(this._rectangle.top, top));
-
-            if (!this.hasRowHeader) {
-                rectangle.left -= this.headerWidth;
-            }
-
-            rectangle.width -= this.headerWidth;
-            rectangle.right -= this.headerWidth;
-
-            if (!this.hasColumnHeader) {
-                rectangle.top -= this.headerHeight;
-            }
-
-            rectangle.height -= this.headerHeight;
-            rectangle.bottom -= this.headerHeight;
-
-            return rectangle;
-        },
-
-        visible: function(rectangle) {
-            var rows = this.rows.visible(rectangle.top, rectangle.bottom);
-            var columns = this.columns.visible(rectangle.left, rectangle.right);
-
-            return {
-                rows: rows,
-                columns: columns,
-                ref: new RangeRef(new CellRef(rows.values.start, columns.values.start), new CellRef(rows.values.end, columns.values.end))
-            };
         }
     });
 
