@@ -616,6 +616,32 @@
         }
       },
       {
+        "text": "Typography",
+        "new": "true",
+        "url": "mobile-styling/index",
+        "title": {
+            "kendo-ui": "Kendo UI Mobile Typography styles",
+            "aspnet-mvc": "ASP.NET MVC Mobile Typography styles"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how use predefined Kendo UI Mobile generic content styles.",
+            "aspnet-mvc": "This demo shows how use predefined ASP.NET MVC Mobile generic content styles."
+        }
+      },
+      {
+        "text": "Icons",
+        "new": "true",
+        "url": "mobile-styling/icons",
+        "title": {
+            "kendo-ui": "Kendo UI Mobile Font Icons",
+            "aspnet-mvc": "ASP.NET MVC Mobile Font Icons"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how use the embedded Kendo UI Mobile font icons.",
+            "aspnet-mvc": "This demo shows how use the embedded ASP.NET MVC Mobile font icons."
+        }
+      },
+      {
         "text": "Basic usage",
         "url": "switch/mobile",
         "title": {

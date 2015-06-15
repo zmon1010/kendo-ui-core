@@ -23,6 +23,7 @@ var TITLES = {
     "scroller": "Scroller",
     "scrollview": "ScrollView",
     "splitview": "SplitView",
+    "mobile-styling": "Styling",
     "switch": "Switch",
     "touchevents": "Touch Events"
 };
