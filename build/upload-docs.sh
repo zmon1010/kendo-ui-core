@@ -8,7 +8,7 @@ PORT='33'
 USER='kendodocumentation'
 PASS='qGMQIUxq57'
 SOURCE_FOLDER="docs/_site/"
-DIST_FOLDER="dist/_site"
+DIST_FOLDER="docs/_site_sync"
 
 # Generate docs
 (cd docs && bundle --without development --path ~/gems && bundle exec jekyll build)
