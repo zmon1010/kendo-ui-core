@@ -2052,6 +2052,12 @@
             ok(connection._contentVisual);
         });
 
+        test("positions content visual", function() {
+            var position = connection._contentVisual.position();
+            equal(position.x, 55);
+            equal(position.y, 60);
+        });
+
         // ------------------------------------------------------------
         module("Connection / redraw", {
             setup: function() {
@@ -2073,6 +2079,17 @@
             equal(connection._contentVisual.content(), "bar");
         });
 
+        test("positions content visual", function() {
+            connection.redraw({
+                content: {
+                    text: "bar"
+                }
+            });
+            var position = connection._contentVisual.position();
+            equal(position.x, 55);
+            equal(position.y, 60);
+        });
+
         test("updates path", function() {
             connection.redraw({
                 points: [new Point(30, 40)]
@@ -2084,6 +2101,36 @@
             equal(points[1].y, 40);
             equal(points[2].x, 100);
             equal(points[2].y, 100);
+        });
+
+        // ------------------------------------------------------------
+        module("Connection / content", {
+            setup: function() {
+                setupConnection();
+            }
+        });
+
+        test("inits content visual", function() {
+            connection.content("foo");
+            equal(connection._contentVisual.content(), "foo");
+        });
+
+        test("positions content visual", function() {
+            connection.content("foo");
+            var position = connection._contentVisual.position();
+            equal(position.x, 55);
+            equal(position.y, 60);
+        });
+
+        test("updates content", function() {
+            setupConnection({
+                content: {
+                    text: "foo"
+                },
+            });
+
+            connection.content("bar");
+            equal(connection._contentVisual.content(), "bar");
         });
 
         // ------------------------------------------------------------

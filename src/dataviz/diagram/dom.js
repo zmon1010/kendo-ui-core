@@ -1277,7 +1277,22 @@
             },
 
             content: function(content) {
-                return this._content(content);
+                var result = this._content(content);
+                if (defined(content)) {
+                    this._alignContent();
+                }
+                return result;
+            },
+
+            _alignContent: function() {
+                if (this._contentVisual) {
+                    var boundsTopLeft = this._bounds.topLeft();
+                    var localSourcePoint = this.sourcePoint().minus(boundsTopLeft);
+                    var localSinkPoint = this.targetPoint().minus(boundsTopLeft);
+                    var middle = Point.fn.middleOf(localSourcePoint, localSinkPoint);
+
+                    this._contentVisual.position(new Point(middle.x + boundsTopLeft.x, middle.y + boundsTopLeft.y));
+                }
             },
 
             /**
@@ -1399,18 +1414,8 @@
 
             refresh: function () {
                 this._resolveConnectors();
-                var globalSourcePoint = this.sourcePoint(), globalSinkPoint = this.targetPoint(),
-                    boundsTopLeft, localSourcePoint, localSinkPoint, middle;
-
                 this._refreshPath();
-
-                boundsTopLeft = this._bounds.topLeft();
-                localSourcePoint = globalSourcePoint.minus(boundsTopLeft);
-                localSinkPoint = globalSinkPoint.minus(boundsTopLeft);
-                if (this._contentVisual) {
-                    middle = Point.fn.middleOf(localSourcePoint, localSinkPoint);
-                    this._contentVisual.position(new Point(middle.x + boundsTopLeft.x, middle.y + boundsTopLeft.y));
-                }
+                this._alignContent();
 
                 if (this.adorner) {
                     this.adorner.refresh();
@@ -1540,14 +1545,15 @@
 
                     var points = this.options.points;
 
-                    if ((options && options.content) || options.text) {
-                        this.content(options.content);
-                    }
-
                     if (defined(points) && points.length > 0) {
                         this.points(points);
                         this._refreshPath();
                     }
+
+                    if ((options && options.content) || options.text) {
+                        this.content(options.content);
+                    }
+
                     this.path.redraw({
                         fill: options.fill,
                         stroke: options.stroke,
