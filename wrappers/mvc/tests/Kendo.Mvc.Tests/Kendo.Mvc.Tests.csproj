@@ -173,6 +173,7 @@
     <Compile Include="UI\DataSource\WebApiDataSourceBuilderBaseTests.cs" />
     <Compile Include="UI\DataSource\WebApiDataSourceBuilderTests.cs" />
     <Compile Include="UI\DatePicker\DatePickerClientEventsBuilderTests.cs" />
+    <Compile Include="UI\Diagram\Serialization\DiagramTests.cs" />
     <Compile Include="UI\Fluent\PDFSettingsBuilderTests.cs" />
     <Compile Include="UI\Gantt\GanttAssignmentsTests.cs" />
     <Compile Include="UI\Gantt\GanttAssingment.cs" />

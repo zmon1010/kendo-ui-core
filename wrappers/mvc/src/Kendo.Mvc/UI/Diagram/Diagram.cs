@@ -246,7 +246,7 @@ namespace Kendo.Mvc.UI
                 
         //<< Serialization
 
-            if (Editable != null)
+            if (Editable != null && Editable.Enabled)
             {
                 var editable = Editable.ToJson();
                 if (editable.Any())
