@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./calc" ], f);
+    define([ "./calc", "../util/main" ], f);
 })(function(){
 
     "use strict";
@@ -295,27 +295,84 @@
                 + kendo.htmlEncode(str) + "</span>";
         },
         date: function(culture, value, part, length) {
-            // var culture = kendo.culture();
-            // switch (part) {
-            //   case "d":
-            //     switch (length) {
-            //       case 1:
-            //     }
-            //   case "m":
-            //   case "y":
-            // }
+            var d = unpackDate(value);
+            switch (part) {
+              case "d":
+                switch (length) {
+                  case 1: return d.date;
+                  case 2: return pad(d.date, 2, "0");
+                  case 3: return culture.calendars.standard.days.namesAbbr[d.day];
+                  case 4: return culture.calendars.standard.days.names[d.day];
+                }
+                break;
+              case "m":
+                switch (length) {
+                  case 1: return d.month + 1;
+                  case 2: return pad(d.month + 1, 2, "0");
+                  case 3: return culture.calendars.standard.months.namesAbbr[d.month];
+                  case 4: return culture.calendars.standard.months.names[d.month];
+                  case 5: return culture.calendars.standard.months.names[d.month].charAt(0);
+                }
+                break;
+              case "y":
+                switch (length) {
+                  case 2: return d.year % 100;
+                  case 4: return d.year;
+                }
+                break;
+            }
+            return "##";
         },
         time: function(culture, value, part, length) {
-
+            var t = unpackTime(value);
+            switch (part) {
+              case "h":
+                switch (length) {
+                  case 1: return t.hours;
+                  case 2: return pad(t.hours, 2, "0");
+                }
+                break;
+              case "m":
+                switch (length) {
+                  case 1: return t.minutes;
+                  case 2: return pad(t.minutes, 2, "0");
+                }
+                break;
+              case "s":
+                switch (length) {
+                  case 1: return t.seconds;
+                  case 2: return pad(t.seconds, 2, "0");
+                }
+                break;
+            }
+            return "##";
         },
         eltime: function(culture, value, part, length) {
-
+            switch (part) {
+              case "h":
+                value = value * 24;
+                break;
+              case "m":
+                value = value * 24 * 60;
+                break;
+              case "s":
+                value = value * 24 * 60 * 60;
+                break;
+            }
+            switch (length) {
+              case 1: return value;
+              case 2: return pad(value, 2, "0");
+            }
+            return "##";
         },
         fill: function(culture, value, part, length) {
-
+            // XXX: how to implement this?
         },
-        digit: function(culture, decimals, separeThousands, width, follow, padding) {
-
+        digit: function(culture, value, decimals, separeThousands, width, follow, padding) {
+            if (!decimals) {
+                value |= 0;
+            }
+            
         }
     };
 
@@ -327,18 +384,129 @@
         return val;
     }
 
+    /* -----[ date calculations ]----- */
+
+    var DAYS_IN_MONTH = [ 31, 28, 31,
+                          30, 31, 30,
+                          31, 31, 30,
+                          31, 30, 31 ];
+
+    function isLeapYear(yr) {
+        // if (yr == 1900) {
+        //     return true;        // Excel's Leap Year Bug™
+        // }
+        if (yr % 4) {
+            return false;
+        }
+        if (yr % 100) {
+            return true;
+        }
+        if (yr % 400) {
+            return false;
+        }
+        return true;
+    }
+
+    function daysInYear(yr) {
+        return isLeapYear(yr) ? 366 : 365;
+    }
+
+    function daysInMonth(yr, mo) {
+        return (isLeapYear(yr) && mo == 1) ? 29 : DAYS_IN_MONTH[mo];
+    }
+
+    function unpackDate(serial) {
+        // This uses the Google Spreadsheet approach: treat 1899-12-31
+        // as day 1, allowing to avoid implementing the "Leap Year
+        // Bug" yet still be Excel compatible for dates starting
+        // 1900-03-01.
+        return _unpackDate(serial - 1);
+    }
+
+    var MS_IN_MIN = 60 * 1000;
+    var MS_IN_HOUR = 60 * MS_IN_MIN;
+    var MS_IN_DAY = 24 * MS_IN_HOUR;
+
+    function unpackTime(serial) {
+        var frac = serial - (serial|0);
+        if (frac < 0) {
+            frac++;
+        }
+        var ms = Math.round(MS_IN_DAY * frac);
+        var hours = Math.floor(ms / MS_IN_HOUR);
+        ms -= hours * MS_IN_HOUR;
+        var minutes = Math.floor(ms / MS_IN_MIN);
+        ms -= minutes * MS_IN_MIN;
+        var seconds = Math.floor(ms / 1000);
+        ms -= seconds * 1000;
+        return {
+            hours: hours,
+            minutes: minutes,
+            seconds: seconds,
+            milliseconds: ms
+        };
+    }
+
+    function serialToDate(serial) {
+        var d = unpackDate(serial), t = unpackTime(serial);
+        return new Date(
+            Date.UTC(d.year, d.month, d.date,
+                     t.hours, t.minutes, t.seconds, t.milliseconds)
+        );
+    }
+
+    // Unpack date by assuming serial is number of days since
+    // 1900-01-01 (that being day 1).  Negative numbers are allowed
+    // and go backwards in time.
+    function _unpackDate(serial) {
+        serial |= 0;            // discard time part
+        var month, tmp;
+        var backwards = serial <= 0;
+        var year = 1900;
+        var day = serial % 7;   // 1900-01-01 was a Monday
+        if (backwards) {
+            serial = -serial;
+            year--;
+            day = (day + 7) % 7;
+        }
+
+        while (serial >= (tmp = daysInYear(year))) {
+            serial -= tmp;
+            year += backwards ? -1 : 1;
+        }
+
+        if (backwards) {
+            month = 11;
+            while (serial >= (tmp = daysInMonth(year, month))) {
+                serial -= tmp;
+                month--;
+            }
+            serial = tmp - serial;
+        } else {
+            month = 0;
+            while (serial > (tmp = daysInMonth(year, month))) {
+                serial -= tmp;
+                month++;
+            }
+        }
+
+        return {
+            year: year, month: month, date: serial, day: day
+        };
+    }
+
     ///
 
-    (function(){
-        var format = "[blue][>0]#,#,.00%%_) \"something\";[red][<=0](#,#.00%)";
-        var tree = parse(format);
-        console.log(JSON.stringify(tree, null, 2));
+    // false&&(function(){
+    //     var format = "[blue][>0]#,#,.00%%_) \"something\";[red][<=0](#,#.00%)";
+    //     var tree = parse(format);
+    //     console.log(JSON.stringify(tree, null, 2));
 
-        var code = compileFormatPart(tree[0]);
-        console.log(code);
+    //     var code = compileFormatPart(tree[0]);
+    //     console.log(code);
 
-        var code = compileFormatPart(tree[1]);
-        console.log(code);
-    })();
+    //     var code = compileFormatPart(tree[1]);
+    //     console.log(code);
+    // })();
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
