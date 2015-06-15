@@ -166,6 +166,8 @@
                         rotate: false
                     }
                 });
+
+
                 adorner = d._resizingAdorner;
                 visual = adorner.visual;
                 drawingContainer = visual.drawingContainer();
@@ -175,6 +177,84 @@
 
         test("does not create handles if resizing is disabled", function() {
             equal(adorner.map.length, 0);
+        });
+
+        test("does not move shapes if dragging is disabled", function() {
+            var shape = d.addShape({
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100,
+                editable: {
+                    drag: false
+                }
+            });
+            adorner.shapes = [shape];
+            adorner.start(new Point(100, 0));
+
+            adorner.move(new Point(), new Point(110, 0));
+            equal(shape.bounds().x, 0);
+            equal(shape.bounds().y, 0);
+        });
+
+        test("moves only draggable shapes", function() {
+            var shape1 = d.addShape({
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100,
+                editable: {
+                    drag: false
+                }
+            });
+            var shape2 = d.addShape({
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100,
+                editable: {
+                    drag: true
+                }
+            });
+            adorner.shapes = [shape1, shape2];
+            adorner.start(new Point(100, 0));
+
+            adorner.move(new Point(), new Point(110, 0));
+            equal(shape1.bounds().x, 0);
+            equal(shape1.bounds().y, 0);
+            equal(shape2.bounds().x, 10);
+            equal(shape2.bounds().y, 0);
+        });
+
+        test("updates bounds when not all shapes are draggable", function() {
+            var shape1 = d.addShape({
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100,
+                editable: {
+                    drag: false
+                }
+            });
+            var shape2 = d.addShape({
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100,
+                editable: {
+                    drag: true
+                }
+            });
+            adorner.shapes = [shape1, shape2];
+            adorner.start(new Point(100, 0));
+
+            adorner.move(new Point(), new Point(110, 0));
+            var bounds = adorner._innerBounds;
+
+            equal(bounds.x, 0);
+            equal(bounds.y, 0);
+            equal(bounds.width, 110);
+            equal(bounds.height, 100);
         });
 
         // ------------------------------------------------------------
@@ -464,6 +544,33 @@
         var ConnectionEditTool = diagram.ConnectionEditTool;
         var toolservice;
         var connectionEditTool;
+        var connection;
+
+        var ConnectionEditAdornerMock = function() {
+            this.calls = {
+                start: 0,
+                move: 0,
+                stop: 0
+            };
+            this.start = function() {
+                this.calls.start++;
+            };
+            this._hitTest = $.noop;
+            this.move = function() {
+                this.calls.move++;
+            };
+            this.stop = function() {
+                this.calls.stop++;
+            };
+        };
+
+        function setupConnection(options) {
+            connection = new diagram.Connection(new Point(), new Point(), options);
+            connection.diagram = {
+                select: $.noop
+            };
+            connection.adorner = new ConnectionEditAdornerMock();
+        }
 
         function setupTool(options) {
             setupDiagram(options);
@@ -521,6 +628,62 @@
             connectionEditTool.end(p, meta);
 
             ok(true);
+        });
+
+        test("does not start adorner if editable drag is disabled", function() {
+            setupTool({
+                selectable: true
+            });
+            var p = new Point();
+            setupConnection({
+                editable: {
+                    drag: false
+                }
+            });
+
+            toolservice.hoveredItem = connection;
+            connectionEditTool.tryActivate(p, getMeta());
+            connectionEditTool.start(p, getMeta());
+
+            equal(connection.adorner.calls.start, 0);
+        });
+
+        test("does not move adorner if editable drag is disabled", function() {
+            setupTool({
+                selectable: true
+            });
+            var p = new Point();
+            setupConnection({
+                editable: {
+                    drag: false
+                }
+            });
+
+            toolservice.hoveredItem = connection;
+            connectionEditTool.tryActivate(p, getMeta());
+            connectionEditTool.move(p, getMeta());
+
+            equal(connection.adorner.calls.move, 0);
+        });
+
+        test("does not stop adorner and add undo unit if editable drag is disabled", function() {
+            setupTool({
+                selectable: true
+            });
+            var p = new Point();
+            setupConnection({
+                editable: {
+                    drag: false
+                }
+            });
+
+            toolservice.startPoint = p;
+            toolservice.hoveredItem = connection;
+            connectionEditTool.tryActivate(p, getMeta());
+            connectionEditTool.end(p, getMeta());
+
+            equal(connection.adorner.calls.stop, 0);
+            equal(toolservice.diagram.undoRedoService.count(), 0);
         });
 
     })();
@@ -593,13 +756,27 @@
             connectionTool.start(new Point(), {});
         });
 
-        test("does not add connection and ends service if the default action  is prevented", function() {
+        test("does not add connection and ends service if the default action  is prevented", 2, function() {
             setupTool();
             var shape = d.addShape({});
             toolservice._hoveredConnector = new ConnectorVisual(shape.getConnector("auto"));
             d.bind("add", function(e) {
                 e.preventDefault();
             });
+            toolservice.end = function() {
+                ok(true);
+            };
+            connectionTool.start(new Point(), {});
+
+            equal(shape.connections().length, 0);
+        });
+
+        test("does not add connection and ends service if dragging is disabled", 2, function() {
+            setupTool();
+            var shape = d.addShape({});
+            toolservice._hoveredConnector = new ConnectorVisual(shape.getConnector("auto"));
+            d.options.connectionDefaults.editable.drag = false;
+
             toolservice.end = function() {
                 ok(true);
             };

@@ -795,13 +795,13 @@
                     connector = this.toolService._hoveredConnector,
                     connection = diagram._createConnection({}, connector._c, p);
 
-                if (diagram._addConnection(connection)) {
+                if (canDrag(connection) && diagram._addConnection(connection)) {
                     this.toolService._connectionManipulation(connection, connector._c.shape, true);
                     this.toolService._removeHover();
                     selectSingle(this.toolService.activeConnection, meta);
                 } else {
                     connection.source(null);
-                    this.toolService.end();
+                    this.toolService.end(p);
                 }
             },
             move: function (p) {
@@ -859,14 +859,14 @@
             start: function (p, meta) {
                 selectSingle(this._c, meta);
                 var adorner = this._c.adorner;
-                if (adorner) {
+                if (canDrag(this._c) && adorner) {
                     this.handle = adorner._hitTest(p);
                     adorner.start(p);
                 }
             },
             move: function (p) {
                 var adorner = this._c.adorner;
-                if (adorner) {
+                if (canDrag(this._c) && adorner) {
                     adorner.move(this.handle, p);
                     return true;
                 }
@@ -875,8 +875,10 @@
                 var adorner = this._c.adorner;
                 if (adorner) {
                     this.toolService.triggerClick({item: this._c, point: p, meta: meta});
-                    var unit = adorner.stop(p);
-                    this.toolService.diagram.undoRedoService.add(unit, false);
+                    if (canDrag(this._c)) {
+                        var unit = adorner.stop(p);
+                        this.toolService.diagram.undoRedoService.add(unit, false);
+                    }
                 }
             },
             getCursor: function () {
@@ -1966,6 +1968,9 @@
                         shape = this.shapes[i];
                         bounds = shape.bounds();
                         if (dragging) {
+                            if (!canDrag(shape)) {
+                                continue;
+                            }
                             newBounds = this._displaceBounds(bounds, dtl, dbr, dragging);
                         } else {
                             newBounds = bounds.clone();
@@ -1987,9 +1992,13 @@
                         }
                     }
 
-                    if (changed == i) {
-                        newBounds = this._displaceBounds(this._innerBounds, dtl, dbr, dragging);
-                        this.bounds(newBounds);
+                    if (changed) {
+                        if (changed == i) {
+                            newBounds = this._displaceBounds(this._innerBounds, dtl, dbr, dragging);
+                            this.bounds(newBounds);
+                        } else {
+                            this.refreshBounds();
+                        }
                         this.refresh();
                     }
 
@@ -2206,6 +2215,11 @@
                 return this._visualBounds.contains(tp);
             }
         });
+
+        function canDrag(element) {
+            var editable = element.options.editable;
+            return editable && editable.drag !== false;
+        }
 
         deepExtend(diagram, {
             CompositeUnit: CompositeUnit,
