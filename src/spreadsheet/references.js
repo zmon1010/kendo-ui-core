@@ -13,6 +13,11 @@
     var spreadsheet = kendo.spreadsheet;
     var Class = kendo.Class;
 
+    function columnName(colIndex) {
+        var letter = Math.floor(colIndex / 26) - 1;
+        return (letter >= 0 ? columnName(letter) : "") + String.fromCharCode(65 + (colIndex % 26));
+    }
+
     function displayRef(sheet, row, col, rel) {
         var aa = "";
 
@@ -29,10 +34,7 @@
             col = "";
         }
         else {
-            do {
-                aa = String.fromCharCode(65 + col % 26) + aa;
-                col = Math.floor(col / 26);
-            } while (col > 0);
+            aa = columnName(col);
             if (rel != null && !(rel & 1)) {
                 aa = "$" + aa;
             }
