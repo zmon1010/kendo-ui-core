@@ -600,6 +600,150 @@
             equal(shape.options.connectors.length, 1);
             equal(shape.options.connectors[0].name, "right");
         });
+
+        test("shapeDefaults editable drag is set", function() {
+            setupShapeDefaults({
+                editable: {
+                    drag: false
+                }
+            });
+            equal(diagram.options.shapeDefaults.editable.drag, false);
+        });
+
+        test("shapeDefaults editable drag is set from the diagram editable options if not set", function() {
+            createDiagram({
+                editable: {
+                    drag: false
+                }
+            });
+            equal(diagram.options.shapeDefaults.editable.drag, false);
+        });
+
+        test("shapeDefaults editable drag is not overridden by the diagram editable options", function() {
+            createDiagram({
+                editable: {
+                    drag: false
+                },
+                shapeDefaults: {
+                    editable: {
+                        drag: true
+                    }
+                }
+            });
+            equal(diagram.options.shapeDefaults.editable.drag, true);
+        });
+
+        test("shapeDefaults editable remove is set", function() {
+            setupShapeDefaults({
+                editable: {
+                    remove: false
+                }
+            });
+            equal(diagram.options.shapeDefaults.editable.remove, false);
+        });
+
+        test("shapeDefaults editable remove is set from the diagram editable options if not set", function() {
+            createDiagram({
+                editable: {
+                    remove: false
+                }
+            });
+            equal(diagram.options.shapeDefaults.editable.remove, false);
+        });
+
+        test("shapeDefaults editable remove is not overridden by the diagram editable options", function() {
+            createDiagram({
+                editable: {
+                    remove: false
+                },
+                shapeDefaults: {
+                    editable: {
+                        remove: true
+                    }
+                }
+            });
+
+            equal(diagram.options.shapeDefaults.editable.remove, true);
+        });
+
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
+
+        module("Diagram / connectionDefaults", {
+            teardown: teardown
+        });
+
+        test("connectionDefaults editable drag is set", function() {
+            createDiagram({
+                connectionDefaults: {
+                    editable: {
+                        drag: false
+                    }
+                }
+            });
+            equal(diagram.options.connectionDefaults.editable.drag, false);
+        });
+
+        test("connectionDefaults editable drag is set from the diagram editable options if not set", function() {
+            createDiagram({
+                editable: {
+                    drag: false
+                }
+            });
+            equal(diagram.options.connectionDefaults.editable.drag, false);
+        });
+
+        test("connectionDefaults editable drag is not overridden by the diagram editable options", function() {
+            createDiagram({
+                editable: {
+                    drag: false
+                },
+                connectionDefaults: {
+                    editable: {
+                        drag: true
+                    }
+                }
+            });
+            equal(diagram.options.connectionDefaults.editable.drag, true);
+        });
+
+        test("connectionDefaults editable remove is set", function() {
+            createDiagram({
+                connectionDefaults: {
+                    editable: {
+                        remove: false
+                    }
+                }
+            });
+            equal(diagram.options.connectionDefaults.editable.remove, false);
+        });
+
+        test("connectionDefaults editable remove is set from the diagram editable options if not set", function() {
+            createDiagram({
+                editable: {
+                    remove: false
+                }
+            });
+            equal(diagram.options.connectionDefaults.editable.remove, false);
+        });
+
+        test("connectionDefaults editable remove is not overridden by the diagram editable options", function() {
+            createDiagram({
+                editable: {
+                    remove: false
+                },
+                connectionDefaults: {
+                    editable: {
+                        remove: true
+                    }
+                }
+            });
+
+            equal(diagram.options.connectionDefaults.editable.remove, true);
+        });
+
     })();
 
     // ------------------------------------------------------------
@@ -625,6 +769,50 @@
             diagram.select(shape);
             diagram._createToolBar();
             ok(!diagram.singleToolBar);
+        });
+
+        test("creates element toolbar with edit, rotateClockwise, rotateAnticlockwise and delete tools for shapes if no tools are set", function() {
+            diagram = setupEditableDiagram({});
+            var shape = diagram.shapes[0];
+            diagram.select(shape);
+            diagram._createToolBar();
+            var tools = diagram.singleToolBar.options.tools;
+            equal(tools.length, 4);
+            equal(tools[0], "edit");
+            equal(tools[1], "rotateClockwise");
+            equal(tools[2], "rotateAnticlockwise");
+            equal(tools[3], "delete");
+        });
+
+        test("does not include delete action if shape editable remove option is set to false", function() {
+            diagram = setupEditableDiagram({});
+            var shape = diagram.shapes[0];
+            shape.options.editable.remove = false;
+            diagram.select(shape);
+            diagram._createToolBar();
+
+            equal($.inArray("delete", diagram.singleToolBar.options.tools), -1);
+        });
+
+        test("creates element toolbar with edit and delete tools for connections if no tools are set", function() {
+            diagram = setupEditableDiagram({});
+            var connection = diagram.connections[0];
+            diagram.select(connection);
+            diagram._createToolBar();
+            var tools = diagram.singleToolBar.options.tools;
+            equal(tools.length, 2);
+            equal(tools[0], "edit");
+            equal(tools[1], "delete");
+        });
+
+        test("does not include delete action if connection editable remove option is set to false", function() {
+            diagram = setupEditableDiagram({});
+            var connection = diagram.connections[0];
+            connection.options.editable.remove = false;
+            diagram.select(connection);
+            diagram._createToolBar();
+
+            equal($.inArray("delete", diagram.singleToolBar.options.tools), -1);
         });
     })();
 
