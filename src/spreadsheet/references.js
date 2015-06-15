@@ -17,7 +17,6 @@
         var aa = "";
 
         ++row;
-        ++col;
 
         if (!isFinite(row)) {
             row = "";
@@ -30,10 +29,10 @@
             col = "";
         }
         else {
-            while (col > 0) {
+            do {
                 aa = String.fromCharCode(65 + col % 26) + aa;
                 col = Math.floor(col / 26);
-            }
+            } while (col > 0);
             if (rel != null && !(rel & 1)) {
                 aa = "$" + aa;
             }
