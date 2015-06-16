@@ -493,6 +493,10 @@
                 .on("keydown" + NS, function (e) {
                     var range;
 
+                    if ((e.keyCode === keys.BACKSPACE || e.keyCode === keys.DELETE) && editor.body.getAttribute("contenteditable") !== "true") {
+                        return false;
+                    }
+
                     if (e.keyCode === keys.F10) {
                         // Handling with timeout to avoid the default IE menu
                         setTimeout(proxy(editor.toolbar.focus, editor.toolbar), 100);
