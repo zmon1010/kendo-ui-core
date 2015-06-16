@@ -906,6 +906,7 @@
                     }
                 }
             },
+
             toJSON: function() {
                 return {
                     shapeId: this.options.id
@@ -1319,7 +1320,11 @@
                                 deselected.push(this);
                             }
                         }
-                        this.refresh();
+
+                        if (this.adorner) {
+                            this.adorner.refresh();
+                        }
+
                         if (!diagram._internalSelection) {
                             diagram._selectionChanged(selected, deselected);
                         }

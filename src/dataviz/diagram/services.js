@@ -22,6 +22,7 @@
             Movable = kendo.ui.Movable,
             browser = kendo.support.browser,
             defined = kendo.util.defined,
+            inArray = $.inArray,
             proxy = $.proxy;
 
         // Constants ==============================================================
@@ -39,7 +40,7 @@
                 rowresize: "row-resize",
                 colresize: "col-resize"
             },
-            HITTESTDISTANCE = 10,
+            HIT_TEST_DISTANCE = 10,
             AUTO = "Auto",
             TOP = "Top",
             RIGHT = "Right",
@@ -1128,9 +1129,25 @@
                     }
                     hit = this._hitTestItems(selectedConnections, point);
                 }
-                // Shapes | Connectors
-                return hit || this._hitTestItems(d.shapes, point) || this._hitTestItems(d.connections, point);
+
+                return hit || this._hitTestElements(point);
             },
+
+            _hitTestElements: function(point) {
+                var diagram = this.diagram;
+                var shapeHit = this._hitTestItems(diagram.shapes, point);
+                var connectionHit = this._hitTestItems(diagram.connections, point);
+                var hit;
+
+                if ((!this.activeTool || this.activeTool.type != "ConnectionTool") && shapeHit && connectionHit && !hitTestShapeConnectors(shapeHit, point)) {
+                    var mainLayer = diagram.mainLayer;
+                    var shapeIdx = inArray(shapeHit.visual, mainLayer.children);
+                    var connectionIdx = inArray(connectionHit.visual, mainLayer.children);
+                    hit = shapeIdx > connectionIdx ? shapeHit : connectionHit;
+                }
+                return hit || shapeHit || connectionHit;
+            },
+
             _hitTestItems: function (array, point) {
                 var i, item, hit;
                 for (i = array.length - 1; i >= 0; i--) {
@@ -1174,11 +1191,11 @@
              * Hit testing for polyline paths.
              */
             hitTest: function (p) {
-                var rec = this.getBounds().inflate(10);
+                var rec = this.getBounds().inflate(HIT_TEST_DISTANCE);
                 if (!rec.contains(p)) {
                     return false;
                 }
-                return diagram.Geometry.distanceToPolyline(p, this.connection.allPoints()) < HITTESTDISTANCE;
+                return diagram.Geometry.distanceToPolyline(p, this.connection.allPoints()) < HIT_TEST_DISTANCE;
             },
 
             /**
@@ -2219,6 +2236,19 @@
         function canDrag(element) {
             var editable = element.options.editable;
             return editable && editable.drag !== false;
+        }
+
+        function hitTestShapeConnectors(shape, point) {
+            var connector, position, rect;
+            for (var idx = 0; idx < shape.connectors.length; idx++) {
+                connector = shape.connectors[idx];
+                position = connector.position();
+                rect = new Rect(position.x, position.y);
+                rect.inflate(HIT_TEST_DISTANCE, HIT_TEST_DISTANCE);
+                if (rect.contains(point)) {
+                    return connector;
+                }
+            }
         }
 
         deepExtend(diagram, {

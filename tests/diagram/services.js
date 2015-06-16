@@ -833,11 +833,13 @@
         }
 
         module("ToolService", {
+            setup: function() {
+               setupTool({});
+            },
             teardown: teardown
         });
 
         test("does not set hoveredItem if there is a hovered adorner on the same position", function() {
-            setupTool({});
             shape1 = d.addShape({ x: 10, y: 20, data: "Rectangle", dataItem: {}, width: 100, height: 100 });
             shape2 = d.addShape({ x: 30, y: 20, data: "Rectangle", dataItem: {}, width: 100, height: 100 });
 
@@ -848,6 +850,54 @@
             toolservice.start(point, {});
             ok(!toolservice.hoveredItem);
         });
+
+        // ------------------------------------------------------------
+        (function() {
+            var shape, connection;
+            module("ToolService / hit test", {
+                setup: function() {
+                    setupTool({});
+                    shape = d.addShape({
+                        x: 0,
+                        y: 0,
+                        width: 100,
+                        height: 100
+                    });
+                    connection = d.addConnection(new diagram.Connection(new Point(0, 50), new Point(100, 50)));
+                },
+                teardown: teardown
+            });
+
+            test("finds shape", function() {
+                ok(shape === toolservice._hitTest(new Point(50, 10)));
+            });
+
+            test("finds shape over a connection if the shape has bigger zIndex", function() {
+                d.toFront([shape]);
+                ok(shape === toolservice._hitTest(new Point(30, 50)));
+            });
+
+            test("finds shape over a connection if the position is over a connector", function() {
+                ok(shape === toolservice._hitTest(new Point(0, 50)));
+            });
+
+            test("finds shape over a connection if the current active tool is ConnectionTool", function() {
+                toolservice.activeTool = {
+                    type: "ConnectionTool"
+                };
+                ok(shape === toolservice._hitTest(new Point(30, 50)));
+            });
+
+            test("finds connection", function() {
+                connection = d.addConnection(new diagram.Connection(new Point(0, 200), new Point(100, 200)));
+                ok(connection === toolservice._hitTest(new Point(0, 200)));
+            });
+
+            test("finds connection over shape if the connection has bigger zIndex", function() {
+                ok(connection === toolservice._hitTest(new Point(30, 50)));
+            });
+
+        })();
 
         // ------------------------------------------------------------
         (function() {
