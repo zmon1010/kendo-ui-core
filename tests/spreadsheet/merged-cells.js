@@ -123,4 +123,22 @@
         equal(merged[1].toString(), "A1:D1");
     });
 
+    test("merge unsets the value of all cells but the topleft", function() {
+        sheet.range("A1:A1").value("foo");
+        sheet.range("B1:B1").value("bar");
+        sheet.range("A1:C1").merge();
+
+        equal(sheet.range("B1:B1").value(), null);
+        equal(sheet.range("B1:C1").value(), null);
+        equal(sheet.range("A1:A1").value(), "foo");
+        equal(sheet.range("A1:B1").value(), "foo");
+    });
+
+    test("merge uses the value of the top left cell during combination", function() {
+        sheet.range("A1:B1").value("foo").merge();
+        sheet.range("D1:E1").value("bar").merge();
+        sheet.range("B1:D1").merge();
+
+        equal(sheet.range("A1:E1").value(), "foo");
+    });
 })();

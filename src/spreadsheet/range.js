@@ -43,41 +43,45 @@
                 return ref.intersects(this._ref);
             }, this);
 
-            if (intersecting.length < 1) {
-                mergedCells.push(this._ref);
-            } else {
-                var topLeftRow = this._ref.topLeft.row;
-                var topLeftCol = this._ref.topLeft.col;
-                var bottomRightRow = this._ref.bottomRight.row;
-                var bottomRightCol = this._ref.bottomRight.col;
+            var topLeftRow = this._ref.topLeft.row;
+            var topLeftCol = this._ref.topLeft.col;
+            var bottomRightRow = this._ref.bottomRight.row;
+            var bottomRightCol = this._ref.bottomRight.col;
 
-                intersecting.forEach(function(ref) {
-                    if (ref.topLeft.row < topLeftRow) {
-                        topLeftRow = ref.topLeft.row;
-                    }
+            intersecting.forEach(function(ref) {
+                if (ref.topLeft.row < topLeftRow) {
+                    topLeftRow = ref.topLeft.row;
+                }
 
-                    if (ref.topLeft.col < topLeftCol) {
-                        topLeftCol = ref.topLeft.col;
-                    }
+                if (ref.topLeft.col < topLeftCol) {
+                    topLeftCol = ref.topLeft.col;
+                }
 
-                    if (ref.bottomRight.row > bottomRightRow) {
-                        bottomRightRow = ref.bottomRight.row;
-                    }
+                if (ref.bottomRight.row > bottomRightRow) {
+                    bottomRightRow = ref.bottomRight.row;
+                }
 
-                    if (ref.bottomRight.col > bottomRightCol) {
-                        bottomRightCol = ref.bottomRight.col;
-                    }
+                if (ref.bottomRight.col > bottomRightCol) {
+                    bottomRightCol = ref.bottomRight.col;
+                }
 
-                    mergedCells.splice(mergedCells.indexOf(ref), 1);
-                });
+                mergedCells.splice(mergedCells.indexOf(ref), 1);
+            });
 
-                var ref = new RangeRef(
-                    new CellRef(topLeftRow, topLeftCol),
-                    new CellRef(bottomRightRow, bottomRightCol)
-                );
+            this._ref = new RangeRef(
+                new CellRef(topLeftRow, topLeftCol),
+                new CellRef(bottomRightRow, bottomRightCol)
+            );
 
-                mergedCells.push(ref);
-            }
+            mergedCells.push(this._ref);
+
+            var value = this.value();
+
+            this.value(null);
+
+            var topLeft = new Range(this._ref.collapse(), this._sheet);
+
+            topLeft.value(value);
 
             return this;
         }
