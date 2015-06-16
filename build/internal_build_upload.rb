@@ -14,8 +14,8 @@ class TelerikInternalBuildBot
         @driver = Selenium::WebDriver.for :firefox, :profile => profile
         @driver.navigate.to ADMIN_URL
 
-        driver.find_element(:name, "userNameInput").send_keys ADMIN_RELEASE_UPLOAD_LOGIN
-        driver.find_element(:name, "passwordInput").send_keys ADMIN_RELEASE_UPLOAD_PASS
+        driver.find_element(:name, "UserName").send_keys ADMIN_RELEASE_UPLOAD_LOGIN
+        driver.find_element(:name, "Password").send_keys ADMIN_RELEASE_UPLOAD_PASS
         driver.find_element(:id, "submitButton").click
     end
     def go_to_internal_buids
