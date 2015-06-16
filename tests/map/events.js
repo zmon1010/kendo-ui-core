@@ -119,4 +119,54 @@
 
         map.setOptions({ foo: true });
     });
+
+    // ------------------------------------------------------------
+    (function() {
+        module("Map / Events / pan", {
+            setup: createMap,
+            teardown: destroyMap
+        });
+
+        function touchPan(x, y) {
+            var element = map.scrollElement;
+            x = kendo.util.valueOrDefault(x, 100);
+            y = kendo.util.valueOrDefault(y, 100);
+            press(element, 100, 100);
+            map.scroller.scrollTo(100 + x, 100 + y);
+            release(element, 100 + x, 100 + y);
+        }
+
+        test("panEnd is triggered for horizontal pan", function() {
+            map.bind("panEnd", function(e) {
+                ok(true);
+            });
+
+            touchPan(100, 0);
+        });
+
+        test("panEnd is triggered for vertical pan", function() {
+            map.bind("panEnd", function(e) {
+                ok(true);
+            });
+
+            touchPan(0, 100);
+        });
+
+        test("panEnd is triggered once", 1, function() {
+            map.bind("panEnd", function(e) {
+                ok(true);
+            });
+
+            touchPan(100, 100);
+        });
+
+        test("click is not triggered after panning", 0, function() {
+            map.bind("click", function(e) {
+                ok(false);
+            });
+
+            touchPan();
+            map.scrollElement.trigger($.Event("click", {}));
+        });
+    })();
 })();
