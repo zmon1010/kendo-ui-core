@@ -9,6 +9,11 @@ USER='kendodocumentation'
 PASS='qGMQIUxq57'
 DOCS_SITE="docs/_site"
 MIRROR_OPTIONS="--reverse --delete --ignore-time --loop --verbose"
+HELLO="
+open -p $PORT $HOST
+user $USER $PASS
+lcd $DOCS_SITE
+"
 
 # Generate docs
 (cd docs && bundle --without development --path ~/gems && bundle exec jekyll build)
@@ -17,16 +22,12 @@ MIRROR_OPTIONS="--reverse --delete --ignore-time --loop --verbose"
 rm -rf docs/api/wrappers/*
 
 lftp -e "
-open -p $PORT $HOST
-user $USER $PASS
-lcd $DOCS_SITE
+$HELLO
 mirror $MIRROR_OPTIONS . kendouidocsweb1
 bye
 " &
 lftp -e "
-open -p $PORT $HOST
-user $USER $PASS
-lcd $DOCS_SITE
+$HELLO
 mirror $MIRROR_OPTIONS . kendouidocsweb2
 bye
 " &
