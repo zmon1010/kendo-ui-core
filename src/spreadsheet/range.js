@@ -71,10 +71,14 @@
                     mergedCells.splice(mergedCells.indexOf(ref), 1);
                 });
 
-                mergedCells.push(new RangeRef(
+                var ref = new RangeRef(
                     new CellRef(topLeftRow, topLeftCol),
                     new CellRef(bottomRightRow, bottomRightCol)
-                ));
+                );
+
+                ref.setSheet(this._sheet.name());
+
+                mergedCells.push(ref);
             }
 
             return this;

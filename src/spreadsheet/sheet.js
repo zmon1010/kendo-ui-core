@@ -73,6 +73,7 @@
                     numColumns = 1;
                 }
                 ref = new RangeRef(new CellRef(row, column), new CellRef(row + numRows - 1, column + numColumns - 1));
+                ref.setSheet(this._name);
             }
 
             return new Range(ref, this);

@@ -7,6 +7,7 @@
     module("merged cells", {
         setup: function() {
             sheet = new Sheet(1000, 100, 10, 10, 10, 10);
+            sheet.name("sheet1");
         }
     });
 
@@ -15,10 +16,14 @@
     }
 
     function rangeRef(topLeftRow, topLeftCol, bottomRightRow, bottomRightCol) {
-        return new RangeRef(
+        var ref = new RangeRef(
             new CellRef(topLeftRow, topLeftCol),
             new CellRef(bottomRightRow, bottomRightCol)
         );
+
+        ref.setSheet("sheet1");
+
+        return ref;
     }
 
     test("pane renders merged cell", function() {
@@ -120,4 +125,11 @@
         equal(merged[0].toString(), "E1:F1");
         equal(merged[1].toString(), "A1:D1");
     });
+
+    test("merged cell has sheet name", function() {
+        sheet.range("A1:B1").merge();
+        var merged = sheet._mergedCells;
+        equal(merged[0].sheet, sheet.name());
+    });
+
 })();
