@@ -142,9 +142,8 @@
 
             var view = grid.view(scrollLeft, scrollTop);
 
-            view.ref.setSheet(this._sheet.name());
-
             var rows = view.rows;
+
             var columns = view.columns;
 
             var table = new HtmlTable(this.rowHeight, this.columnWidth);

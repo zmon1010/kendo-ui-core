@@ -76,8 +76,6 @@
                     new CellRef(bottomRightRow, bottomRightCol)
                 );
 
-                ref.setSheet(this._sheet.name());
-
                 mergedCells.push(ref);
             }
 

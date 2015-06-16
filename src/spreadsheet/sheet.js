@@ -64,6 +64,7 @@
 
             if (typeof row === "string") {
                ref = kendo.spreadsheet.calc.parse(this._name, 0, 0, "=" + row).refs[0];
+               ref.sheet = null;
             } else {
                 if (!numRows) {
                     numRows = 1;
@@ -73,7 +74,6 @@
                     numColumns = 1;
                 }
                 ref = new RangeRef(new CellRef(row, column), new CellRef(row + numRows - 1, column + numColumns - 1));
-                ref.setSheet(this._name);
             }
 
             return new Range(ref, this);
