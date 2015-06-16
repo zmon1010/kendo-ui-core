@@ -2322,7 +2322,9 @@ var __meta__ = {
                 headerTable,
                 isLocked,
                 visibleLocked = that.lockedHeader ? leafDataCells(that.lockedHeader.find(">table>thead")).filter(isCellVisible).length : 0,
-                col;
+                col,
+                notGroupOrHierarchyCol = "col:not(.k-group-col):not(.k-hierarchy-col)",
+                notGroupOrHierarchyVisibleCell = "td:visible:not(.k-group-cell):not(.k-hierarchy-cell)";
 
             //  retrieve the column object, depending on the method argument
             if (typeof column == "number") {
@@ -2378,11 +2380,11 @@ var __meta__ = {
 
             // get col elements
             if (options.scrollable) {
-                col = headerTable.find("col:not(.k-group-col):not(.k-hierarchy-col):eq(" + index + ")")
-                    .add(contentTable.children("colgroup").find("col:not(.k-group-col):not(.k-hierarchy-col):eq(" + index + ")"))
-                    .add(footerTable.find("colgroup").find("col:not(.k-group-col):not(.k-hierarchy-col):eq(" + index + ")"));
+                col = headerTable.find(notGroupOrHierarchyCol).eq(index)
+                    .add(contentTable.children("colgroup").find(notGroupOrHierarchyCol).eq(index))
+                    .add(footerTable.find("colgroup").find(notGroupOrHierarchyCol).eq(index));
             } else {
-                col = contentTable.children("colgroup").find("col:not(.k-group-col):not(.k-hierarchy-col):eq(" + index + ")");
+                col = contentTable.children("colgroup").find(notGroupOrHierarchyCol).eq(index);
             }
 
             var tables = headerTable.add(contentTable).add(footerTable);
@@ -2398,7 +2400,11 @@ var __meta__ = {
             tables.css("table-layout", "");
 
             var newTableWidth = Math.max(headerTable.width(), contentTable.width(), footerTable.width());
-            var newColumnWidth = Math.ceil(Math.max(th.outerWidth(), contentTable.find("tr").eq(0).children("td:visible").eq(index).outerWidth(), footerTable.find("tr").eq(0).children("td:visible").eq(index).outerWidth()));
+            var newColumnWidth = Math.ceil(Math.max(
+                th.outerWidth(),
+                contentTable.find("tr").eq(0).children(notGroupOrHierarchyVisibleCell).eq(index).outerWidth(),
+                footerTable.find("tr").eq(0).children(notGroupOrHierarchyVisibleCell).eq(index).outerWidth()
+            ));
 
             col.width(newColumnWidth);
             column.width = newColumnWidth;
