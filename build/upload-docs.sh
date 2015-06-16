@@ -8,7 +8,7 @@ PORT='33'
 USER='kendodocumentation'
 PASS='qGMQIUxq57'
 DOCS_SITE="docs/_site"
-MIRROR_OPTIONS="--reverse --delete --ignore-time --verbose"
+MIRROR_OPTIONS="--reverse --delete --ignore-time --loop --verbose"
 
 # Generate docs
 (cd docs && bundle --without development --path ~/gems && bundle exec jekyll build)
