@@ -11,7 +11,7 @@ DOCS_SITE="docs/_site"
 MIRROR_OPTIONS="--reverse --delete --ignore-time --verbose"
 
 # Generate docs
-# (cd docs && bundle --without development --path ~/gems && bundle exec jekyll build)
+(cd docs && bundle --without development --path ~/gems && bundle exec jekyll build)
 
 # Clean-up generated wrappers
 rm -rf docs/api/wrappers/*
