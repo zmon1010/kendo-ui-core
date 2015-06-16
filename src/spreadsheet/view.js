@@ -200,7 +200,7 @@
                 children.push(columnHeader.toDomTree(view.columnOffset, 0, "k-spreadsheet-column-header"));
             }
 
-            children = children.concat(this.renderMergedCells(view.mergedCellLeft, view.mergedCellTop));
+            children = children.concat(this.renderMergedCells(view.ref, view.mergedCellLeft, view.mergedCellTop));
 
             return kendo.dom.element("div", { style: grid.style, className: "k-spreadsheet-pane" }, children);
         },
@@ -217,19 +217,21 @@
             }
         },
 
-        renderMergedCells: function(left, top) {
+        renderMergedCells: function(visibleRangeRef, left, top) {
             var mergedCells = [];
             var sheet = this._sheet;
 
             sheet.forEachMergedCell(function(ref) {
-                sheet.forEach(ref.collapse(), function(cell) {
-                    var rectangle = this._grid.boundingRectangle(ref);
-                    var table = new HtmlTable(this.rowHeight, this.columnWidth);
-                    table.addColumn(rectangle.width);
-                    table.addRow(rectangle.height);
-                    this.addCell(table, 0, cell);
-                    mergedCells.push(table.toDomTree(rectangle.left - left, rectangle.top - top, "k-spreadsheet-merged-cell"));
-                }.bind(this));
+                if (visibleRangeRef.intersects(ref)) {
+                    sheet.forEach(ref.collapse(), function(cell) {
+                        var rectangle = this._grid.boundingRectangle(ref);
+                        var table = new HtmlTable(this.rowHeight, this.columnWidth);
+                        table.addColumn(rectangle.width);
+                        table.addRow(rectangle.height);
+                        this.addCell(table, 0, cell);
+                        mergedCells.push(table.toDomTree(rectangle.left - left, rectangle.top - top, "k-spreadsheet-merged-cell"));
+                    }.bind(this));
+                }
             }.bind(this));
 
             return mergedCells;
@@ -237,5 +239,6 @@
     });
 
     kendo.spreadsheet.View = View;
+    kendo.spreadsheet.Pane = Pane;
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

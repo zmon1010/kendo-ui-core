@@ -243,6 +243,7 @@
                 return NULL;
             }
         },
+
         intersect: function(ref) {
             if (ref === NULL) {
                 return ref;
@@ -257,6 +258,10 @@
                 return ref.intersect(this);
             }
             throw new Error("Unknown reference");
+        },
+
+        intersects: function(ref) {
+            return this.intersect(ref) !== NULL;
         },
 
         simplify: function() {
