@@ -10,7 +10,8 @@
 
         function changeLanguage() {
             kendo.ui.progress($("#editor"), true);
-            $.getScript("../content/shared/messages/kendo.messages." + this.value() + ".js", function() {
+            var baseUrl = '@Url.Script("/messages/kendo.messages.")';
+            $.getScript(baseUrl + this.value() + ".js", function() {
                 kendo.ui.progress($("#editor"), false);
                 createEditor();
             });
