@@ -60,15 +60,22 @@
         },
 
         range: function(row, column, numRows, numColumns) {
-            if (!numRows) {
-                numRows = 1;
+            var ref = null;
+
+            if (typeof row === "string") {
+               ref = kendo.spreadsheet.calc.parse(this._name, 0, 0, "=" + row).refs[0];
+            } else {
+                if (!numRows) {
+                    numRows = 1;
+                }
+
+                if (!numColumns) {
+                    numColumns = 1;
+                }
+                ref = new RangeRef(new CellRef(row, column), new CellRef(row + numRows - 1, column + numColumns - 1));
             }
 
-            if (!numColumns) {
-                numColumns = 1;
-            }
-
-            return new Range(new RangeRef(new CellRef(row, column), new CellRef(row + numRows - 1, column + numColumns - 1)), this);
+            return new Range(ref, this);
         },
 
         forEachMergedCell: function(callback) {

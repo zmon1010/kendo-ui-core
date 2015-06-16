@@ -29,7 +29,16 @@
         equal(sheet.columnWidth(0), defaults.columnWidth);
     });
 
-    test("range returns a Range object", function() {
+    test("range returns a Range object by row and col index", function() {
         ok(sheet.range(0, 0) instanceof kendo.spreadsheet.Range);
+    });
+
+    test("range returns a Range object by A1 reference", function() {
+        var range = sheet.range("A1:B1");
+        ok(range instanceof kendo.spreadsheet.Range);
+        equal(range._ref.topLeft.row, 0);
+        equal(range._ref.topLeft.col, 0);
+        equal(range._ref.bottomRight.col, 1);
+        equal(range._ref.bottomRight.row, 0);
     });
 })();
