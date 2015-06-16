@@ -1,18 +1,33 @@
 <div data-role="view" data-title="Badges" id="buttongroup-badges" data-use-native-scrolling="true">
-    
-    <ul data-role="buttongroup" data-index="0" style="margin: 3em auto;">
-        <li data-badge="23">One</li>
-        <li>Two</li>
-        <li data-badge="5">Three</li>
-        <li>Four</li>
-        <li>Five</li>
-    </ul>
-    
-    <ul data-role="buttongroup" data-index="0" class="km-primary" style="margin: 3em auto;">
-        <li data-badge="23">One</li>
-        <li>Two</li>
-        <li data-badge="5">Three</li>
-        <li>Four</li>
-        <li>Five</li>
+    <ul data-role="listview" data-type="group">
+        <li>
+            Default ButtonGroup
+            <ul>
+                <li>
+                    <ul data-role="buttongroup" data-index="0" style="margin: 3em auto;">
+                        <li data-badge="23">One</li>
+                        <li>Two</li>
+                        <li data-badge="5">Three</li>
+                        <li>Four</li>
+                        <li>Five</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        
+        <li>
+            Primary ButtonGroup - add class="km-primary"
+            <ul>
+                <li>
+                    <ul data-role="buttongroup" data-index="0" class="km-primary" style="margin: 3em auto;">
+                        <li data-badge="23">One</li>
+                        <li>Two</li>
+                        <li data-badge="5">Three</li>
+                        <li>Four</li>
+                        <li>Five</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
     </ul>
 </div>

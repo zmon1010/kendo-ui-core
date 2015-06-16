@@ -160,15 +160,27 @@
         }
       },
       {
-        "text": "Customizing appearance",
-        "url": "buttongroup/appearance",
+        "text": "Sizes",
+        "url": "buttongroup/sizes",
         "title": {
-            "kendo-ui": "Kendo UI Mobile Button Group Theming",
-            "aspnet-mvc": "ASP.NET MVC Mobile Button Group Theming"
+            "kendo-ui": "Kendo UI Mobile Button Group Sizing",
+            "aspnet-mvc": "ASP.NET MVC Mobile Button Group Sizing"
         },
         "meta": {
-            "kendo-ui": "This demo shows how you can customize the appearance of Kendo UI ButtonGroup mobile widget. You have full control over the style of the buttons group.",
-            "aspnet-mvc": "This demo shows how you can customize the appearance of ASP.NET MVC Mobile ButtonGroup. You have full control over the style of the buttons group."
+            "kendo-ui": "This demo shows how you can use predefined sizes of Kendo UI ButtonGroup mobile widget. You have full control over the style of the buttons group.",
+            "aspnet-mvc": "This demo shows how you can use predefined sizes of ASP.NET MVC Mobile ButtonGroup. You have full control over the style of the buttons group."
+        }
+      },
+      {
+        "text": "Icons",
+        "url": "buttongroup/icons",
+        "title": {
+            "kendo-ui": "Using icons with Kendo UI Mobile Button Group",
+            "aspnet-mvc": "Using icons with ASP.NET MVC Mobile Button Group"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how you can easily use icons with Kendo UI ButtonGroup mobile widget. You have full control over the style of the buttons group.",
+            "aspnet-mvc": "This demo shows how you can easily use icons with ASP.NET MVC Mobile ButtonGroup. You have full control over the style of the buttons group."
         }
       },
       {

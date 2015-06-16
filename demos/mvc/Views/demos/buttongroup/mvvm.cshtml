@@ -1,6 +1,19 @@
 <div data-model="viewModel" data-role="view" id="buttongroup-mvvm" data-title="ButtonGroup MVVM" data-use-native-scrolling="true">
     <ul data-role="listview" data-style="inset" data-type="group">
         <li>
+            Configuration
+            <ul>
+                <li>Visible <input type="checkbox" data-role="switch" data-bind="checked: isVisible"></li>
+                <li>
+                    <p>
+                        Kendo UI Mobile ButtonGroup supports the
+                        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/events">events</a> and
+                        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/visible">visible</a> bindings.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li>
             ButtonGroup
             <ul>
                 <li>
@@ -15,24 +28,10 @@
                       <li data-icon="fastforward"></li>
                   </ul>
                 </li>
-                <li>
-                    <div class="console"></div>
-                </li>
-            </ul>
-        </li>
-        <li>
-            Configuration
-            <ul>
-                <li>Visible <input type="checkbox" data-role="switch" data-bind="checked: isVisible"></li>
             </ul>
         </li>
     </ul>
-
-    <p>
-        Kendo UI Mobile ButtonGroup supports the
-        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/events">events</a> and
-        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/visible">visible</a> bindings.
-    </p>
+    <div class="console"></div>
 </div>
 
 <script>
@@ -46,13 +45,3 @@
         }
     });
 </script>
-
-<style>
-    .km-root .console {
-        background-color: transparent;
-        border: 0;
-        margin: 1.4em 1em;
-        overflow: hidden;
-        height: auto;
-    }
-</style>
