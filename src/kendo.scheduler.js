@@ -97,21 +97,33 @@ var __meta__ = {
                     '</a>' +
                 '</li>' +
             '</ul>' +
-            '<ul class="k-reset k-header k-scheduler-views">' +
-                '#for(var view in views){#' +
-                    '<li class="k-state-default k-view-#= view.toLowerCase() #" data-#=ns#name="#=view#"><a role="button" href="\\#" class="k-link">${views[view].title}</a></li>' +
-                '#}#'  +
-            '</ul>' +
+            '#if(viewsCount === 1){#' +
+                '<a role="button" data-#=ns#name="#=view#" href="\\#" class="k-link k-scheduler-refresh">' +
+                    '<span class="k-icon k-i-refresh"></span>' +
+                '</a>' +
+            '#}else{#' +
+                '<ul class="k-reset k-header k-scheduler-views">' +
+                    '#for(var view in views){#' +
+                        '<li class="k-state-default k-view-#= view.toLowerCase() #" data-#=ns#name="#=view#"><a role="button" href="\\#" class="k-link">${views[view].title}</a></li>' +
+                    '#}#'  +
+                '</ul>' +
+            '#}#' +
             '</div>'),
         MOBILETOOLBARTEMPLATE = kendo.template('<div class="k-floatwrap k-header k-scheduler-toolbar">' +
             '<ul class="k-reset k-header k-scheduler-navigation">' +
                '<li class="k-state-default k-nav-today"><a role="button" href="\\#" class="k-link">${messages.today}</a></li>' +
             '</ul>' +
-            '<ul class="k-reset k-header k-scheduler-views">' +
-                '#for(var view in views){#' +
-                    '<li class="k-state-default k-view-#= view.toLowerCase() #" data-#=ns#name="#=view#"><a role="button" href="\\#" class="k-link">${views[view].title}</a></li>' +
-                '#}#'  +
-            '</ul>' +
+            '#if(viewsCount === 1){#' +
+                '<a role="button" data-#=ns#name="#=view#" href="\\#" class="k-link k-scheduler-refresh">' +
+                    '<span class="k-icon k-i-refresh"></span>' +
+                '</a>' +
+            '#}else{#' +
+                '<ul class="k-reset k-header k-scheduler-views">' +
+                    '#for(var view in views){#' +
+                        '<li class="k-state-default k-view-#= view.toLowerCase() #" data-#=ns#name="#=view#"><a role="button" href="\\#" class="k-link">${views[view].title}</a></li>' +
+                    '#}#'  +
+                '</ul>' +
+            '#}#' +
             '</div>'+
             '<div class="k-floatwrap k-header k-scheduler-toolbar">' +
                 '<ul class="k-reset k-header k-scheduler-navigation">' +
@@ -3255,19 +3267,20 @@ var __meta__ = {
                 that._selectedView = that._renderView(name);
                 that._selectedViewName = name;
 
-                var viewButton = VIEWBUTTONTEMPLATE({views: that.views, view: name, ns: kendo.ns});
-                var firstButton = that.toolbar.find(".k-scheduler-views li:first-child");
+                if (that._viewsCount > 1) {
+                    var viewButton = VIEWBUTTONTEMPLATE({views: that.views, view: name, ns: kendo.ns});
+                    var firstButton = that.toolbar.find(".k-scheduler-views li:first-child");
 
-                if (firstButton.is(".k-current-view")) {
-                    firstButton.replaceWith(viewButton);
-                } else {
-                    that.toolbar.find(".k-scheduler-views").prepend(viewButton);
-                }
+                    if (firstButton.is(".k-current-view")) {
+                        firstButton.replaceWith(viewButton);
+                    } else {
+                        that.toolbar.find(".k-scheduler-views").prepend(viewButton);
+                    }
 
-                var viewButtons =  that.toolbar.find(".k-scheduler-views li")
-                    .removeClass("k-state-selected");
+                    var viewButtons =  that.toolbar.find(".k-scheduler-views li")
+                        .removeClass("k-state-selected");
 
-                if (that.options.views.length > 1) {
+
                     viewButtons.end().find(".k-view-" + name.replace(/\./g, "\\.").toLowerCase())
                         .addClass("k-state-selected");
                 }
@@ -3358,6 +3371,7 @@ var __meta__ = {
             var length;
 
             this.views = {};
+            this._viewsCount = 0;
 
             for (idx = 0, length = views.length; idx < length; idx++) {
                 var hasType = false;
@@ -3397,6 +3411,7 @@ var __meta__ = {
 
                 if (name) {
                     this.views[name] = view;
+                    this._viewsCount++;
 
                     if (!selected || view.selected) {
                         selected = name;
@@ -3565,7 +3580,8 @@ var __meta__ = {
                             return item == "pdf" || item.name == "pdf";
                         }).length > 0,
                     ns: kendo.ns,
-                    views: that.views
+                    views: that.views,
+                    viewsCount: that._viewsCount
                 }));
 
             that.wrapper.append(toolbar);
@@ -3604,7 +3620,7 @@ var __meta__ = {
                 }
             });
 
-            toolbar.on(CLICK + NS, ".k-scheduler-views li", function(e) {
+            toolbar.on(CLICK + NS, ".k-scheduler-views li, .k-scheduler-refresh", function(e) {
                 e.preventDefault();
 
                 var name = $(this).attr(kendo.attr("name"));

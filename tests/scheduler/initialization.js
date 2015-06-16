@@ -198,7 +198,7 @@
 
     test("view buttons are added to the toolbar", function() {
         var scheduler = new Scheduler(container, {
-            views: ["day"]
+            views: ["day", "week"]
         });
 
         ok(scheduler.toolbar.find(".k-view-day").length);
@@ -252,6 +252,9 @@
             views: [{
                 type: "day",
                 title: "My Custom Day View Title"
+            }, {
+                type: "week",
+                title: "Custom Week View Tile"
             }]
         });
 
@@ -912,11 +915,11 @@
     test("responsive view button is correctly rendered", function() {
 
         var scheduler = new Scheduler(container, {
-            views: ["day"]
+            views: ["day", "week"]
         });
 
-        ok(scheduler.toolbar.find(".k-current-view"));
-        ok(scheduler.toolbar.find(".k-view-day"));
+        ok(scheduler.toolbar.find(".k-current-view").length);
+        ok(scheduler.toolbar.find(".k-view-day").length);
     });
 
     test("responsive date format is correctly rendered", function() {
@@ -938,5 +941,28 @@
 
         equal(scheduler.toolbar.find(".k-sm-date-format").length, 1);
         equal(scheduler.toolbar.find(".k-lg-date-format").length, 1);
+    });
+
+    test("refresh view button is correctly rendered when only one view is available", function() {
+
+        var scheduler = new Scheduler(container, {
+            views: ["day"]
+        });
+
+        equal(scheduler.toolbar.find(".k-current-view").length, 0);
+        equal(scheduler.toolbar.find(".k-view-day").length, 0);
+        equal(scheduler.toolbar.find(".k-scheduler-refresh").length, 1);
+    });
+
+    test("mobile refresh view button is correctly rendered when only one view is available", function() {
+
+        var scheduler = new Scheduler(container, {
+            views: ["day"],
+            mobile: "phone"
+        });
+
+        equal(scheduler.toolbar.find(".k-current-view").length, 0);
+        equal(scheduler.toolbar.find(".k-view-day").length, 0);
+        equal(scheduler.toolbar.find(".k-scheduler-refresh").length, 1);
     });
 })();
