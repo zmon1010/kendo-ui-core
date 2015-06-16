@@ -23,7 +23,7 @@ lftp -e "
 open -p $PORT $HOST
 user $USER $PASS
 lcd $DIST_FOLDER
-mirror --reverse --delete --verbose . kendouidocsweb1
-mirror --reverse --delete --verbose . kendouidocsweb2
+mirror --reverse --delete --parallel=3 --verbose . kendouidocsweb1
+mirror --reverse --delete --parallel=3 --verbose . kendouidocsweb2
 bye
 "
