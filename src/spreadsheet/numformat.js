@@ -11,7 +11,6 @@
 
     var calc = kendo.spreadsheet.calc;
 
-    var LITERAL_CHARS = "$£+-/():!^&'~{}<>= ";
     var RX_COLORS = /^\[(black|green|white|blue|magenta|yellow|cyan|red)\]/i;
     var RX_CONDITION = /^\[(<=|>=|<>|<|>|=)([0-9.])\]/;
 
@@ -26,10 +25,8 @@
             sections.push(readSection());
         }
 
-        if (sections.length == 1 && !sections[0].cond) {
-            sections[1] = sections[2] = sections[0];
-        } else if (sections.length == 2 && !sections[0].cond && !sections[1].cond) {
-            sections[2] = sections[0];
+        if (sections.length == 3 && !sections[2].cond) {
+            sections[2].cond = "text";
         }
 
         return sections;
@@ -48,12 +45,6 @@
                 if (!isNaN(val)) {
                     return { op: m[1], value: val };
                 }
-            } else if (sections.length === 0) {
-                return { op: ">", value: 0 };
-            } else if (sections.length === 1) {
-                return { op: "<", value: 0 };
-            } else if (sections.length === 2) {
-                return { op: "=", value: 0 };
             }
         }
 
@@ -68,20 +59,19 @@
         function readNext() {
             var ch, m;
             // numbers
+            if ((m = input.skip(/^([#0?]+),([#0?])+/))) {
+                // thousands separator.  seems convenient to treat
+                // this as a single token.
+                return { type: "digit", sep: true, format: m[1] + m[2] };
+            }
+            if ((m = input.skip(/^[#0?]+/))) {
+                return { type: "digit", sep: false, format: m[0] };
+            }
             if ((m = input.skip(/^(e)([+-])/i))) {
                 return { type: "exp", ch: m[1], sign: m[2] };
             }
-            if ((m = input.skip(/^#*0[#0]*/))) {
-                return { type: "digit", pad: "0", width: m[0].length };
-            }
-            if ((m = input.skip(/^#+/))) {
-                return { type: "digit", pad: null, width: m[0].length };
-            }
-            if ((m = input.skip(/^\?+/))) {
-                return { type: "digit", pad: " ", width: m[0].length };
-            }
             // dates
-            if ((m = input.skip(/^(d{1,4}|m{1,5}|yy|yyyy)/i))) {
+            if ((m = input.skip(/^(d{1,4}|m{1,5}|yyyy|yy)/i))) {
                 // Disambiguate between month/minutes.  This means
                 // there is no way to display minutes before hours or
                 // seconds.  Dear whoever-invented-this format, you
@@ -129,9 +119,7 @@
                 return { type: "comma" };
             }
 
-            // XXX: should we allow only LITERAL_CHARS here and error
-            // out on invalid input?  The sloppiness of the "spec"
-            // makes me believe we should grok any junk we get.
+            // whatever we can't make sense of, output literally.
             return { type: "str", value: ch };
         }
 
@@ -170,23 +158,21 @@
 
     function compileFormatPart(format) {
         var input = TokenStream(format.body);
-        var separeThousands = false;
         var hasDecimals = false;
+        var hasDate = false;
+        var hasTime = false;
         var percentCount = 0;
         var scaleCount = 0;
         var code = "";
-        var intDigits = [], decDigits = [];
+        var separeThousands = false;
+        var intFormat = [], decFormat = [];
 
-        if (format.cond) {
+        if (format.cond == "text") {
+            code += "if (typeof value == 'string') { ";
+        } else if (format.cond) {
             code += "if (typeof value == 'number' && value "
                 + format.cond.op + " " + format.cond.value + ") { ";
-        } else {
-            code += "if (typeof value == 'string') { ";
         }
-
-        // will allow culture to be passed as an argument, but default
-        // to current kendo culture
-        code += "if (!culture) culture = kendo.culture(); ";
 
         if (format.color) {
             code += "output += "
@@ -194,13 +180,10 @@
                 + "; ";
         }
 
-        function checkComma(a, b, c){
+        function checkComma(a, b, c) {
             if (a.type == "digit" && b.type == "comma") {
-                if (c.type == "digit") {
-                    separeThousands = true;
-                } else {
-                    scaleCount++;
-                }
+                b.hidden = true;
+                scaleCount++;
             }
         }
 
@@ -215,17 +198,23 @@
             }
             else if (tok.type == "digit") {
                 if (hasDecimals) {
-                    decDigits.push(tok);
+                    decFormat.push(tok.format);
                     tok.decimal = true;
                 } else {
-                    intDigits.push(tok);
+                    intFormat.push(tok.format);
+                    if (tok.sep) {
+                        separeThousands = true;
+                    }
                     tok.decimal = false;
                 }
             }
+            else if (tok.type == "time") {
+                hasTime = true;
+            }
+            else if (tok.type == "date") {
+                hasDate = true;
+            }
         }
-
-        fixWidths(intDigits);
-        fixWidths(decDigits);
 
         if (percentCount > 0) {
             code += "value *= " + Math.pow(100, percentCount) + "; ";
@@ -233,15 +222,30 @@
         if (scaleCount > 0) {
             code += "value /= " + Math.pow(1000, scaleCount) + "; ";
         }
+        if (intFormat) {
+            code += "var intPart = runtime.formatInt(culture, value, " + JSON.stringify(intFormat) + ", " + separeThousands + "); ";
+        }
+        if (decFormat) {
+            code += "var decPart = runtime.formatDec(culture, value, " + JSON.stringify(decFormat) + "); ";
+        }
+        if (hasDate > 0) {
+            code += "var date = runtime.unpackDate(value); ";
+        }
+        if (hasTime > 0) {
+            code += "var time = runtime.unpackTime(value); ";
+        }
 
         input.restart();
         while (!input.eof()) {
             var tok = input.next();
             if (tok.type == "dec") {
-                code += "output += '.'; ";
+                code += "output += culture.numberFormat['.']; ";
+            }
+            else if (tok.type == "comma" && !tok.hidden) {
+                code += "output += ','; ";
             }
             else if (tok.type == "percent") {
-                code += "output += '%'; ";
+                code += "output += culture.numberFormat.percent.symbol; ";
             }
             else if (tok.type == "str") {
                 code += "output += " + JSON.stringify(tok.value) + "; ";
@@ -256,16 +260,18 @@
                 code += "output += runtime.fill(" + JSON.stringify(tok.value) + "); ";
             }
             else if (tok.type == "digit") {
-                code += "output += runtime.digits(culture, value, "
-                    + tok.decimal + ", "
-                    + separeThousands + ", "
-                    + tok.width + ", "
-                    + tok.follow + ", "
-                    + JSON.stringify(tok.pad)
-                    + "); ";
+                code += "output += " + (tok.decimal ? "decPart" : "intPart") + ".shift(); ";
             }
-            else if (tok.type == "date" || tok.type == "time" || tok.type == "eltime") {
-                code += "output += runtime." + tok.type + "(culture, value, "
+            else if (tok.type == "date") {
+                code += "output += runtime.date(culture, date, "
+                    + JSON.stringify(tok.part) + ", " + tok.format + "); ";
+            }
+            else if (tok.type == "time") {
+                code += "output += runtime.time(culture, time, "
+                    + JSON.stringify(tok.part) + ", " + tok.format + "); ";
+            }
+            else if (tok.type == "eltime") {
+                code += "output += runtime.eltime(culture, value, "
                     + JSON.stringify(tok.part) + ", " + tok.format + "); ";
             }
         }
@@ -274,33 +280,38 @@
             code += "output += " + JSON.stringify("</span>") + "; ";
         }
 
-        code += "return output; }";
+        code += "return output; ";
+
+        if (format.cond) {
+            code += "}";
+        }
 
         return code;
     }
 
-    function fixWidths(digits) {
-        digits.forEach(function(tok, i){
-            var follow = 0;
-            while (++i < digits.length) {
-                follow += digits[i].width;
-            }
-            tok.follow = follow;
-        });
+    function compile(format) {
+        var tree = parse(format);
+        var code = tree.map(compileFormatPart).join("\n");
+        code = "return function(value, culture){ "
+            + "'use strict'; "
+            + "if (!culture) culture = kendo.culture(); "
+            + "var output = ''; " + code + "};";
+        return new Function("runtime", code)(runtime);
     }
 
     var runtime = {
+        unpackDate: unpackDate,
+        unpackTime: unpackTime,
         space: function(str) {
             return "<span style='visibility: hidden'>"
                 + kendo.htmlEncode(str) + "</span>";
         },
-        date: function(culture, value, part, length) {
-            var d = unpackDate(value);
+        date: function(culture, d, part, length) {
             switch (part) {
               case "d":
                 switch (length) {
                   case 1: return d.date;
-                  case 2: return pad(d.date, 2, "0");
+                  case 2: return padLeft(d.date, 2, "0");
                   case 3: return culture.calendars.standard.days.namesAbbr[d.day];
                   case 4: return culture.calendars.standard.days.names[d.day];
                 }
@@ -308,7 +319,7 @@
               case "m":
                 switch (length) {
                   case 1: return d.month + 1;
-                  case 2: return pad(d.month + 1, 2, "0");
+                  case 2: return padLeft(d.month + 1, 2, "0");
                   case 3: return culture.calendars.standard.months.namesAbbr[d.month];
                   case 4: return culture.calendars.standard.months.names[d.month];
                   case 5: return culture.calendars.standard.months.names[d.month].charAt(0);
@@ -323,25 +334,24 @@
             }
             return "##";
         },
-        time: function(culture, value, part, length) {
-            var t = unpackTime(value);
+        time: function(culture, t, part, length) {
             switch (part) {
               case "h":
                 switch (length) {
                   case 1: return t.hours;
-                  case 2: return pad(t.hours, 2, "0");
+                  case 2: return padLeft(t.hours, 2, "0");
                 }
                 break;
               case "m":
                 switch (length) {
                   case 1: return t.minutes;
-                  case 2: return pad(t.minutes, 2, "0");
+                  case 2: return padLeft(t.minutes, 2, "0");
                 }
                 break;
               case "s":
                 switch (length) {
                   case 1: return t.seconds;
-                  case 2: return pad(t.seconds, 2, "0");
+                  case 2: return padLeft(t.seconds, 2, "0");
                 }
                 break;
             }
@@ -361,27 +371,104 @@
             }
             switch (length) {
               case 1: return value;
-              case 2: return pad(value, 2, "0");
+              case 2: return padLeft(value, 2, "0");
             }
             return "##";
         },
         fill: function(culture, value, part, length) {
             // XXX: how to implement this?
         },
-        digit: function(culture, value, decimals, separeThousands, width, follow, padding) {
-            if (!decimals) {
-                value |= 0;
+
+        /* -----[ <XXX>: horrible code for a horrible format spec ]----- */
+
+        formatInt: function(culture, value, parts, sep) {
+            value = Math.floor(Math.abs(value)).toString(10);
+            var iv = value.length - 1;
+            var result = [];
+            var len = 0;
+
+            function add(ch) {
+                str = ch + str;
+                len++;
+                if (sep && len % 3 === 0) {
+                    str = culture.numberFormat[","] + str;
+                }
             }
-            
+
+            for (var j = parts.length; --j >= 0;) {
+                var format = parts[j];
+                var str = "";
+                for (var k = format.length; --k >= 0;) {
+                    var chf = format.charAt(k);
+                    if (iv < 0) {
+                        if (chf == "0") {
+                            add("0");
+                        } else if (chf == "?") {
+                            add(" ");
+                        }
+                    } else {
+                        add(value.charAt(iv--));
+                    }
+                }
+                if (j === 0) {
+                    while (iv >= 0) {
+                        add(value.charAt(iv--));
+                    }
+                    if (str.charAt(0) == culture.numberFormat[","]) {
+                        str = str.substr(1);
+                    }
+                }
+                result.unshift(str);
+            }
+
+            return result;
+        },
+
+        formatDec: function(culture, value, format) {
+            value = kendo.util.round(value, format.length);
+            value = value.toString();
+            var pos = value.indexOf(".");
+            if (pos >= 0) {
+                value = value.substr(pos + 1);
+            } else {
+                value = "";
+            }
+            return [value];
         }
+
+        /* -----[ </XXX> End horrible code, hopefully ]----- */
     };
 
-    function pad(val, width, ch) {
+    function padLeft(val, width, ch) {
         val += "";
         while (val.length < width) {
             val = ch + val;
         }
         return val;
+    }
+
+    function padRight(val, width, ch) {
+        val += "";
+        while (val.length < width) {
+            val = val + ch;
+        }
+        return val;
+    }
+
+    function reverse(str) {
+        for (var out = "", i = str.length; --i >= 0;) {
+            out += str.charAt(i);
+        }
+        return out;
+    }
+
+    function addSeps(str, sep) {
+        var out = "";
+        while (str.length > 3) {
+            out = sep + str.substr(-3) + out;
+            str = str.substr(0, str.length - 3);
+        }
+        return str + out;
     }
 
     /* -----[ date calculations ]----- */
@@ -497,16 +584,13 @@
 
     ///
 
-    // false&&(function(){
-    //     var format = "[blue][>0]#,#,.00%%_) \"something\";[red][<=0](#,#.00%)";
-    //     var tree = parse(format);
-    //     console.log(JSON.stringify(tree, null, 2));
-
-    //     var code = compileFormatPart(tree[0]);
-    //     console.log(code);
-
-    //     var code = compileFormatPart(tree[1]);
-    //     console.log(code);
-    // })();
+    (function(){
+        //var format = "[blue][>0]#,#,.00%%_) \"something\";[red][<=0](#,#.00%)";
+        var format = "(000) 000###-####";
+        var f = compile(format);
+        console.log(f.toString());
+        //console.log(f(-123456789.55778));
+        console.log(f(123456));
+    })();
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
