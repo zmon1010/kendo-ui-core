@@ -3,6 +3,9 @@
 })(function(){
 
 (function(kendo) {
+    var RangeRef = kendo.spreadsheet.RangeRef;
+    var CellRef = kendo.spreadsheet.CellRef;
+
     var Range = kendo.Class.extend({
         init: function(rangeRef, sheet) {
             this._sheet = sheet;
@@ -34,7 +37,46 @@
             return this._property(this._sheet._formulas, value);
         },
         merge: function() {
-            this._sheet._mergedCells.push(this._ref);
+            var mergedCells = this._sheet._mergedCells;
+
+            var intersecting = mergedCells.filter(function(ref) {
+                return ref.intersects(this._ref);
+            }, this);
+
+            if (intersecting.length < 1) {
+                mergedCells.push(this._ref);
+            } else {
+                var topLeftRow = this._ref.topLeft.row;
+                var topLeftCol = this._ref.topLeft.col;
+                var bottomRightRow = this._ref.bottomRight.row;
+                var bottomRightCol = this._ref.bottomRight.col;
+
+                intersecting.forEach(function(ref) {
+                    if (ref.topLeft.row < topLeftRow) {
+                        topLeftRow = ref.topLeft.row;
+                    }
+
+                    if (ref.topLeft.col < topLeftCol) {
+                        topLeftCol = ref.topLeft.col;
+                    }
+
+                    if (ref.bottomRight.row > bottomRightRow) {
+                        bottomRightRow = ref.bottomRight.row;
+                    }
+
+                    if (ref.bottomRight.col > bottomRightCol) {
+                        bottomRightCol = ref.bottomRight.col;
+                    }
+
+                    mergedCells.splice(mergedCells.indexOf(ref), 1);
+                });
+
+                mergedCells.push(new RangeRef(
+                    new CellRef(topLeftRow, topLeftCol),
+                    new CellRef(bottomRightRow, bottomRightCol)
+                ));
+            }
+
             return this;
         }
     });

@@ -58,4 +58,66 @@
         equal(mergedCells.length, 0);
     });
 
+    test("ranges that overlap bottom right are combined", function() {
+        sheet.range("A1:B3").merge();
+        sheet.range("B2:C4").merge();
+
+        var merged = sheet._mergedCells;
+
+        equal(merged.length, 1);
+        equal(merged[0].print(0), "A1:C4");
+    });
+
+    test("ranges that overlap top left are combined", function() {
+        sheet.range("B2:C4").merge();
+        sheet.range("A1:B3").merge();
+
+        var merged = sheet._mergedCells;
+
+        equal(merged.length, 1);
+        equal(merged[0].toString(), "A1:C4");
+    });
+
+    test("ranges that overlap top right are combined", function() {
+        sheet.range("A4:C8").merge();
+        sheet.range("C1:D4").merge();
+
+        var merged = sheet._mergedCells;
+
+        equal(merged.length, 1);
+        equal(merged[0].toString(), "A1:D8");
+    });
+
+    test("ranges that overlap bottom left are combined", function() {
+        sheet.range("C1:D4").merge();
+        sheet.range("A4:C8").merge();
+
+        var merged = sheet._mergedCells;
+
+        equal(merged.length, 1);
+        equal(merged[0].toString(), "A1:D8");
+    });
+
+    test("combining multiple overlapping ranges", function() {
+        sheet.range("A1:B1").merge();
+        sheet.range("D1:E1").merge();
+        sheet.range("B1:D1").merge();
+
+        var merged = sheet._mergedCells;
+
+        equal(merged.length, 1);
+        equal(merged[0].toString(), "A1:E1");
+    });
+
+    test("combining overlapping ranges leaves non overlapping ranges", function() {
+        sheet.range("A1:B1").merge();
+        sheet.range("E1:F1").merge();
+        sheet.range("B1:D1").merge();
+
+        var merged = sheet._mergedCells;
+
+        equal(merged.length, 2);
+        equal(merged[0].toString(), "E1:F1");
+        equal(merged[1].toString(), "A1:D1");
+    });
 })();

@@ -69,6 +69,9 @@
         },
         relative: function(){
             return this;
+        },
+        toString: function() {
+            return this.print(0, 0);
         }
     });
 
@@ -309,6 +312,7 @@
             }
             return ret;
         },
+
 
         absolute: function(arow, acol) {
             return new RangeRef(
