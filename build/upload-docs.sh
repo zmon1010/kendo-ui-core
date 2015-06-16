@@ -17,7 +17,7 @@ DIST_FOLDER="docs/_site_sync"
 rm -rf docs/api/wrappers/*
 
 # Sync first to avoid transferring duplicates
-rsync -avc --delete $SOURCE_FOLDER $DIST_FOLDER
+rsync -av --delete $SOURCE_FOLDER $DIST_FOLDER
 
 lftp -e "
 open -p $PORT $HOST
