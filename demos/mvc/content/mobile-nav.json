@@ -73,15 +73,27 @@
         }
       },
       {
-        "text": "Customizing appearance",
-        "url": "mobile-button/appearance",
+        "text": "Sizes",
+        "url": "mobile-button/sizes",
         "title": {
-            "kendo-ui": "Customizing the appearance of Kendo UI mobile button",
-            "aspnet-mvc": "Customizing the appearance of ASP.NET MVC mobile button"
+            "kendo-ui": "Customizing the size of Kendo UI mobile button",
+            "aspnet-mvc": "Customizing the size of ASP.NET MVC mobile button"
         },
         "meta": {
-            "kendo-ui": "This demo shows how you can easily customize the appearance and styling of Kendo UI Mobile Button to deliver rich experience for end users of the mobile app.",
-            "aspnet-mvc": "This demo shows how you can easily customize the appearance and styling of ASP.NET MVC Mobile Button to deliver rich experience for end users of the mobile app."
+            "kendo-ui": "This demo shows how you can easily customize the size of Kendo UI Mobile Button to deliver rich experience for end users of the mobile app.",
+            "aspnet-mvc": "This demo shows how you can easily customize the size of ASP.NET MVC Mobile Button to deliver rich experience for end users of the mobile app."
+        }
+      },
+      {
+        "text": "Icons",
+        "url": "mobile-button/icons",
+        "title": {
+            "kendo-ui": "Using icons with Kendo UI mobile button",
+            "aspnet-mvc": "Uding icons with ASP.NET MVC mobile button"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how you can easily use icons with Kendo UI Mobile Button to deliver rich experience for end users of the mobile app.",
+            "aspnet-mvc": "This demo shows how you can easily use icons with ASP.NET MVC Mobile Button to deliver rich experience for end users of the mobile app."
         }
       },
       {

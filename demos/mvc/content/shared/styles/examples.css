@@ -894,6 +894,7 @@ pre.prettyprint
     height: 200px;
     border: 1px solid rgba(20,53,80,0.1);
     background-color: #ffffff;
+    text-indent: 0;
 }
 
 .demo-section .box-col .console
@@ -903,11 +904,11 @@ pre.prettyprint
 
 .console .count
 {
-    background-color: #91AFEF;
+    background-color: #26c6da;
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     border-radius: 15px;
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 10px;
     margin-left: 5px;
     padding: 2px 6px 2px 5px;
@@ -917,7 +918,10 @@ pre.prettyprint
 {
     background-position: 6px -95px;
     border-bottom: 1px solid #DDD;
-    padding: 5px 5px 4px 24px;
+    padding: 5px 10px;
+    height: 2em;
+    line-height: 2em;
+    vertical-align: middle;
 }
 
 .console .error

@@ -14,7 +14,7 @@
                 $("<div" + (isError ? " class='error'" : "") + "/>")
                     .css({
                         marginTop: -24,
-                        backgroundColor: isError ? "#ffbbbb" : "#bbddff"
+                        backgroundColor: isError ? "#ffbbbb" : "#b2ebf2"
                     })
                     .html(message)
                     .prependTo($(".console", container))

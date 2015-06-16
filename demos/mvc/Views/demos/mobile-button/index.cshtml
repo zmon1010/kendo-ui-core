@@ -1,50 +1,45 @@
-<div data-role="view" id="button-home" data-title="Sports Academy" data-persist="true" data-use-native-scrolling="true">
-    <div class="home head">&nbsp;</div>
-    <ul data-role="listview" data-style="inset">
+<div data-role="view" id="button-home" data-title="Button" data-persist="true" data-use-native-scrolling="true">
+<ul data-role="listview" data-type="group">
         <li>
-            <a class="km-primary" data-role="button">Home</a><a class="button" data-role="button" href="#facility">Facility</a>
-            <p class="sport-info">Our Sports Academy provides a venue for outdoor and indoor sports and activities for children and adults of all ages.</p>
+            Default Inline Buttons
+            <ul>
+                <li>
+                    <i></i> <a data-role="button" data-animated="true">Default Button</a>
+                </li>
+                <li>
+                    <i></i> <a data-role="button" data-animated="true" disabled >Disabled Button</a>
+                </li>
+            </ul>
+        </li>
+        
+        <li>
+            Justified Buttons - add class="km-justified"
+            <ul>
+                <li>
+                    <i></i> <a data-role="button" data-animated="true" class="km-justified" >Justified Button</a>
+                </li>
+                <li>
+                    <i></i> <a data-role="button" data-animated="true" disabled  class="km-justified" >Disabled Justified Button</a>
+                </li>
+            </ul>
+        </li>
+        
+        <li>
+            Primary Buttons - add class="km-primary"
+            <ul>
+                <li>
+                    <i></i> <a data-role="button" class="km-primary" >Primary Button</a>
+                </li>
+                <li>
+                    <i></i> <a data-role="button" disabled class="km-primary" >Disabled Primary Button</a>
+                </li>
+                <li>
+                    <i></i> <a data-role="button" class="km-primary km-justified" >Primary Justified Button</a>
+                </li>
+                <li>
+                    <i></i> <a data-role="button" data-animated="true" disabled  class="km-primary km-justified" >Disabled Primary Justified Button</a>
+                </li>
+            </ul>
         </li>
     </ul>
 </div>
-
-<div data-role="view" id="facility" data-title="Facility" data-persist="true" data-use-native-scrolling="true">
-    <div class="facility head">&nbsp;</div>
-
-    <ul data-role="listview" data-style="inset">
-        <li>
-            <a class="button" data-role="button" href="#button-home">Home</a><a class="km-primary" data-role="button">Facility</a>
-            <p class="sport-info">The facility has two indoor basketball fields, olympic size swimming pool, outdoor soccer field, baseball field, golf club and more.</p>
-        </li>
-    </ul>
-</div>
-
-
-<style>
-.home {
-    background: url(../content/mobile/shared/sports-home.jpg) no-repeat center center;
-}
-.facility {
-    background: url(../content/mobile/shared/sports-facility.jpg) no-repeat center center;
-}
-
-.sports {
-    background: url(../content/mobile/shared/sports.jpg) no-repeat center center;
-}
-
-#button-home .head,
-#facility .head {
-	display: block;
-	margin: 1em;
-	height: 120px;
-    -webkit-background-size: 100% auto;
-    background-size: 100% auto;
-}
-.sport-info {
- padding: 2em 0;
-}
-</style>
-
-<script>
-    $("#home-link").kendoMobileButton();
-</script>
