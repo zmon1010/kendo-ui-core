@@ -12,34 +12,19 @@
 %end
 % else
     <%= type_script_kind %> <%= type_script_type %> <%= 'extends ' + type_script_base_class if type_script_base_class %> {
+
 % if constructor_params.any?
-        <%= type_script_constructor %>
 % elsif widget?
         static fn: <%= type_script_type %>;
-        static extend(proto: Object): <%= type_script_type %>;
-
-        element: JQuery;
-        wrapper: JQuery;
-        constructor(element: Element, options?: <%= type_script_options_type %>);
-% elsif options.any?
-        constructor(options?: <%= type_script_options_type %>);
 % end
-%if type_script_options_type
+
+% if type_script_options_type
         options: <%= type_script_options_type %>;
-%end
+% end
+
 % if options.any? { |o| o.name == 'dataSource' }
 % unless name =~ /Menu|ContextMenu|PanelBar/
         dataSource: kendo.data.DataSource;
-% end
-% end
-% methods.each do |method|
-% method.type_script_declarations.each do |declaration|
-        <%= declaration %>
-% end
-% end
-% class_methods.each do |class_method|
-% class_method.type_script_declarations.each do |declaration|
-        static <%= declaration %>
 % end
 % end
 % fields.each do |field|
@@ -47,6 +32,32 @@
         <%= field.type_script_declaration %>
 % end
 % end
+
+% if constructor_params.any?
+        <%= type_script_constructor %>
+% elsif widget?
+        element: JQuery;
+        wrapper: JQuery;
+
+        static extend(proto: Object): <%= type_script_type %>;
+
+        constructor(element: Element, options?: <%= type_script_options_type %>);
+% elsif options.any?
+        constructor(options?: <%= type_script_options_type %>);
+% end
+
+% class_methods.each do |class_method|
+% class_method.type_script_declarations.each do |declaration|
+        static <%= declaration %>
+% end
+% end
+
+% methods.each do |method|
+% method.type_script_declarations.each do |declaration|
+        <%= declaration %>
+% end
+% end
+
     }
 % composite_options.each do |option|
 <%= option.type_script_interface %>
@@ -76,8 +87,8 @@
 %if type_script_event_type
     interface <%= type_script_event_type %> {
         sender: <%= type_script_type %>;
-        isDefaultPrevented(): boolean;
         preventDefault: Function;
+        isDefaultPrevented(): boolean;
     }
 %end
 

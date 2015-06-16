@@ -1,4 +1,4 @@
-// Type definitions for Kendo UI
+// type definitions for Kendo UI
 
 declare module kendo {
     function culture(): {
@@ -84,7 +84,7 @@ declare module kendo {
         };
     };
 
-    var cultures: {[culture:string] : {
+    var cultures: {[culture: string] : {
         name?: string;
         calendar?: {
             AM: string[];
@@ -180,7 +180,7 @@ declare module kendo {
     function observable(data: any): kendo.data.ObservableObject;
     function observableHierarchy(array: any[]): kendo.data.ObservableArray;
 
-    function render(template:(data: any) => string, data: any[]): string;
+    function render(template: (data: any) => string, data: any[]): string;
     function template(template: string, options?: TemplateOptions): (data: any) => string;
 
     function guid(): string;
@@ -215,7 +215,7 @@ declare module kendo {
         F2: number;
         F10: number;
         F12: number;
-    }
+    };
 
     var support: {
         touch: boolean;
@@ -243,7 +243,7 @@ declare module kendo {
             opera: boolean;
             version: string;
         };
-    }
+    };
 
     interface TemplateOptions {
         paramName?: string;
@@ -276,21 +276,21 @@ declare module kendo {
 
     interface ViewEvent {
         sender: View;
-        isDefaultPrevented(): boolean;
         preventDefault: Function;
+        isDefaultPrevented(): boolean;
     }
 
     class View extends Observable {
         constructor(element: Element, options?: ViewOptions);
         constructor(element: string, options?: ViewOptions);
-        init(element: Element, options?: ViewOptions): void;
-        init(element: string, options?: ViewOptions): void;
-        render(container?: any): JQuery;
-        destroy(): void;
         element: JQuery;
         content: any;
         tagName: string;
         model: Object;
+        init(element: Element, options?: ViewOptions): void;
+        init(element: string, options?: ViewOptions): void;
+        render(container?: any): JQuery;
+        destroy(): void;
     }
 
     class ViewContainer extends Observable {
@@ -298,15 +298,15 @@ declare module kendo {
     }
 
     class Layout extends View {
-        showIn(selector: string, view: View): void;
         containers: { [selector: string]: ViewContainer; };
+        showIn(selector: string, view: View): void;
     }
 
     class History extends Observable {
-        start(options: Object): void;
-        stop(): void;
         current: string;
         root: string;
+        start(options: Object): void;
+        stop(): void;
         change(callback: Function): void;
         navigate(location: string, silent?: boolean): void;
     }
@@ -321,9 +321,9 @@ declare module kendo {
 
     interface RouterEvent {
         sender: Router;
-        isDefaultPrevented(): boolean;
-        preventDefault: Function;
         url: string;
+        preventDefault: Function;
+        isDefaultPrevented(): boolean;
     }
 
     class Route extends Class {
@@ -334,12 +334,12 @@ declare module kendo {
 
     class Router extends Observable {
         constructor(options?: RouterOptions);
+        routes: Route[];
         init(options?: RouterOptions): void;
         start(): void;
         destroy(): void;
         route(route: string, callback: Function): void;
         navigate(location: string, silent?: boolean): void;
-        routes: Route[];
     }
 
 }
@@ -458,8 +458,8 @@ declare module kendo.data {
         source: any;
         parents: any[];
         path: string;
-        dependencies: { [path: string]: boolean; };
         observable: boolean;
+        dependencies: { [path: string]: boolean; };
         constructor(parents: any[], path: string);
         change(e: Object): void;
         start(source: kendo.Observable): void;
@@ -492,17 +492,16 @@ declare module kendo.data {
 
     class Binder extends Class {
         static fn: Binder;
-        static extend(prototype: Object): Binder;
-
         element: any;
         bindings: Bindings;
+        options: BinderOptions;
         constructor(element: any, bindings: Bindings, options?: BinderOptions);
+        static extend(prototype: Object): Binder;
         init(element: any, bindings: Bindings, options?: BinderOptions): void;
         bind(binding: Binding, attribute: string): void;
         destroy(): void;
         refresh(): void;
         refresh(attribute: string): void;
-        options: BinderOptions;
     }
 
     interface BinderOptions {
@@ -510,32 +509,35 @@ declare module kendo.data {
 
     class ObservableObject extends Observable{
         constructor(value?: any);
+        uid: string;
         init(value?: any): void;
         get(name: string): any;
         parent(): ObservableObject;
         set(name: string, value: any): void;
         toJSON(): Object;
-        uid: string;
     }
 
     class Model extends ObservableObject {
+        static idField: string;
+        static fields: DataSourceSchemaModelFields;
+
         idField: string;
         _defaultId: any;
         fields: DataSourceSchemaModelFields;
         defaults: {
             [field: string]: any;
         };
-        constructor(data?: any);
-        init(data?: any):void;
-        accept(data?: any): void;
-        dirty: boolean;
         id: any;
-        editable(field: string): boolean;
-        isNew(): boolean;
-        static idField: string;
-        static fields: DataSourceSchemaModelFields;
+        dirty: boolean;
+
         static define(options: DataSourceSchemaModelWithFieldsObject): typeof Model;
         static define(options: DataSourceSchemaModelWithFieldsArray): typeof Model;
+
+        constructor(data?: any);
+        init(data?: any): void;
+        accept(data?: any): void;
+        editable(field: string): boolean;
+        isNew(): boolean;
     }
 
     interface SchedulerEventData {
@@ -553,8 +555,10 @@ declare module kendo.data {
     }
 
     class SchedulerEvent extends Model {
+        static idField: string;
+        static fields: DataSourceSchemaModelFields;
+
         constructor(data?: SchedulerEventData);
-        init(data?: SchedulerEventData): void;
 
         description: string;
         end: Date;
@@ -567,10 +571,11 @@ declare module kendo.data {
         recurrenceRule: string;
         recurrenceException: string;
         title: string;
-        static idField: string;
-        static fields: DataSourceSchemaModelFields;
+
         static define(options: DataSourceSchemaModelWithFieldsObject): typeof SchedulerEvent;
         static define(options: DataSourceSchemaModelWithFieldsArray): typeof SchedulerEvent;
+
+        init(data?: SchedulerEventData): void;
         clone(options: any, updateUid: boolean): SchedulerEvent;
         duration(): number;
         expand(start: Date, end: Date, zone: any): SchedulerEvent[];
@@ -584,19 +589,19 @@ declare module kendo.data {
     }
 
     class TreeListModel extends Model {
-        constructor(data?: any);
-        init(data?: any): void;
+        static idField: string;
+        static fields: DataSourceSchemaModelFields;
 
         id: any;
         parentId: any;
 
-        loaded(value: boolean): void;
-        loaded(): boolean;
-
-        static idField: string;
-        static fields: DataSourceSchemaModelFields;
         static define(options: DataSourceSchemaModelWithFieldsObject): typeof TreeListModel;
         static define(options: DataSourceSchemaModelWithFieldsArray): typeof TreeListModel;
+
+        constructor(data?: any);
+        init(data?: any): void;
+        loaded(value: boolean): void;
+        loaded(): boolean;
     }
 
     class TreeListDataSource extends DataSource {
@@ -620,8 +625,8 @@ declare module kendo.data {
     }
 
     class GanttTask extends Model {
-        constructor(data?: any);
-        init(data?: any): void;
+        static idField: string;
+        static fields: DataSourceSchemaModelFields;
 
         id: any;
 		parentId: number;
@@ -632,24 +637,28 @@ declare module kendo.data {
 		percentComplete: number;
 		summary: boolean;
 		expanded: boolean;
-        static idField: string;
-        static fields: DataSourceSchemaModelFields;
+
         static define(options: DataSourceSchemaModelWithFieldsObject): typeof GanttTask;
         static define(options: DataSourceSchemaModelWithFieldsArray): typeof GanttTask;
+
+        constructor(data?: any);
+        init(data?: any): void;
     }
 
     class GanttDependency extends Model {
-        constructor(data?: any);
-        init(data?: any): void;
+        static idField: string;
+        static fields: DataSourceSchemaModelFields;
 
         id: any;
 		predecessorId: number;
 		successorId: number;
 		type: number;
-        static idField: string;
-        static fields: DataSourceSchemaModelFields;
+
         static define(options: DataSourceSchemaModelWithFieldsObject): typeof GanttDependency;
         static define(options: DataSourceSchemaModelWithFieldsArray): typeof GanttDependency;
+
+        constructor(data?: any);
+        init(data?: any): void;
     }
 
     class Node extends Model {
@@ -837,13 +846,14 @@ declare module kendo.data {
     }
 
     interface DataSourceTransport {
-        parameterMap?(data: DataSourceTransportParameterMapData, type: string): any;
         create?: DataSourceTransportCreate;
         destroy?: DataSourceTransportDestroy;
         push?: Function;
         read?: DataSourceTransportRead;
         signalr?: DataSourceTransportSignalr;
         update?: DataSourceTransportUpdate;
+
+        parameterMap?(data: DataSourceTransportParameterMapData, type: string): any;
     }
 
     interface DataSourceTransportSignalrClient {
@@ -951,10 +961,11 @@ declare module kendo.data {
     }
 
     class ObservableArray extends Observable {
-        constructor(array: any[]);
-        init(array: any[]): void;
+        length: number;
         [index: number]: any;
 
+        constructor(array: any[]);
+        init(array: any[]): void;
         empty(): void;
         every(callback: (item: Object, index: number, source: ObservableArray) => boolean): boolean;
         filter(callback: (item: Object, index: number, source: ObservableArray) => boolean): any[];
@@ -962,7 +973,6 @@ declare module kendo.data {
         forEach(callback: (item: Object, index: number, source: ObservableArray) => void ): void;
         indexOf(item: any): number;
         join(separator: string): string;
-        length: number;
         map(callback: (item: Object, index: number, source: ObservableArray) => any): any[];
         parent(): ObservableObject;
         pop(): ObservableObject;
@@ -987,10 +997,12 @@ declare module kendo.data {
     }
 
     class DataSource extends Observable{
+        options: DataSourceOptions;
+
+        static create(options?: DataSourceOptions): DataSource;
+
         constructor(options?: DataSourceOptions);
         init(options?: DataSourceOptions): void;
-        static create(options?: DataSourceOptions): DataSource;
-        options: DataSourceOptions;
         add(model: Object): kendo.data.Model;
         add(model: kendo.data.Model): kendo.data.Model;
         aggregate(val: any): void;
@@ -1222,7 +1234,7 @@ declare module kendo.data {
 }
 
 declare module kendo.data.transports {
-    var odata : DataSourceTransport;
+    var odata: DataSourceTransport;
 }
 
 declare module kendo.ui {
@@ -1230,6 +1242,11 @@ declare module kendo.ui {
 
     class Widget extends Observable {
         static fn: Widget;
+
+        element: JQuery;
+        options: Object;
+        events: string[];
+
         static extend(prototype: Object): Widget;
 
         constructor(element: Element, options?: Object);
@@ -1239,11 +1256,8 @@ declare module kendo.ui {
         init(element: JQuery, options?: Object): void;
         init(selector: String, options?: Object): void;
         destroy(): void;
-        element: JQuery;
         setOptions(options: Object): void;
         resize(force?: boolean): void;
-        options: Object;
-        events: string[];
     }
 
     function plugin(widget: typeof kendo.ui.Widget, register?: typeof kendo.ui, prefix?: String): void;
@@ -1365,17 +1379,18 @@ declare module kendo.mobile {
     function init(element: Element): void;
 
     class Application extends Observable {
+        options: ApplicationOptions;
+        router: kendo.Router;
+        pane: kendo.mobile.ui.Pane;
+
         constructor(element?: any, options?: ApplicationOptions);
         init(element?: any, options?: ApplicationOptions): void;
-        options: ApplicationOptions;
         hideLoading(): void;
         navigate(url: string, transition?: string): void;
         replace(url: string, transition?: string): void;
         scroller(): kendo.mobile.ui.Scroller;
         showLoading(): void;
         view(): kendo.mobile.ui.View;
-        router: kendo.Router;
-        pane: kendo.mobile.ui.Pane;
     }
 
     interface ApplicationOptions {
@@ -1487,7 +1502,7 @@ interface JQuery {
 % if component.full_name.include?('ui')
     kendo<%= component.plugin%>(): JQuery;
     kendo<%= component.plugin%>(options: <%= component.namespace %>.<%= component.type_script_options_type%>): JQuery;
-    data(key: "kendo<%= component.plugin %>") : <%= component.full_name %>;
+    data(key: "kendo<%= component.plugin %>"): <%= component.full_name %>;
 
 % end
 % end
