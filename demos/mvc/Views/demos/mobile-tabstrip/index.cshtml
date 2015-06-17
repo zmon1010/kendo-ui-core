@@ -1,8 +1,9 @@
 <div data-role="view" id="tabstrip-profile" data-title="Profile" data-layout="mobile-tabstrip">
+    <img src="../content/shared/images/eduardo.jpg" class="km-thumbnail" style="width: 10em; height: 10em; margin: 2em auto; display: block; float: none;">
     <ul data-role="listview" data-style="inset" data-type="group">
         <li>Profile
             <ul>
-                <li><h2>Carine <span>Callahan</span></h2><img src="../content/mobile/overview/carine.jpg" /></li>
+                <li>Eduardo Batista</li>
                 <li>Weekly average sales <span class="sales-up">$ 8,250</span></li>
                 <li>Monthly average sales <span class="sales-up">$ 32,000</span></li>
             </ul>
@@ -77,7 +78,7 @@
             <ul>
                 <li data-icon="toprated">1. Andrew Fuller</li>
                 <li data-icon="toprated">2. Janet Leverling</li>
-                <li data-icon="toprated" style="background-color: Green; color: #fff;">3. Carine Callahan</li>
+                <li data-icon="toprated" style="background-color: #26c6da; color: #fff;">3. Eduardo Batista</li>
                 <li data-icon="toprated">4. Margaret Johnson</li>
                 <li data-icon="toprated">5. Steve Collins</li>
                 <li data-icon="toprated">6. Maria Steward</li>
@@ -89,7 +90,7 @@
 <div data-role="view" id="tabstrip-settings" data-title="Settings" data-layout="mobile-tabstrip">
     <ul data-role="listview" data-style="inset" data-type="group">
         <li>
-            Carine Callahan
+            Eduardo Batista
             <ul>
                 <li>Notify when online <input type="checkbox" data-role="switch" checked></li>
                 <li>Administrator <input type="checkbox" data-role="switch"></li>
@@ -121,35 +122,14 @@
 </div>
 
 <style>
-    #tabstrip-profile h2 {
-        display: inline-block;
-        font-size: 1.1em;
-        margin: 1.5em 0 0 .7em;
-    }
-    #tabstrip-profile h2 span {
-        display: block;
-        clear: both;
-        font-size: 1.8em;
-        margin: .1em 0 0 0;
-    }
-    #tabstrip-profile img {
-        width: 5em;
-        height: 5em;
-        float: left;
-        margin: 1em;
-        border: 1px solid rgba(0,0,0,.2);
-        -webkit-border-radius: 4em;
-        border-radius: 4em;
-    }
-
     .sales-down,
     .sales-hold,
     .sales-up,
     .value {
         float: right;
     }
-    .sales-up { color: green; }
-    .sales-down { color: red; }
-    .sales-hold { color: blue; }
-    .value { color: #bbb; }
+    .sales-up { color: #4caf50; }
+    .sales-down { color: #ff4350; }
+    .sales-hold { color: #2196f3; }
+    .value { color: #c7cdd0; }
 </style>

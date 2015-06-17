@@ -1,19 +1,11 @@
 <div data-role="view" id="badges-profile" data-title="Profile" data-layout="mobile-tabstrip" data-show="addTimer" data-hide="removeTimer">
+    <img src="../content/shared/images/eduardo.jpg" class="km-thumbnail" style="width: 10em; height: 10em; margin: 2em auto; display: block; float: none;">
     <ul data-role="listview" data-style="inset" data-type="group">
         <li>Profile
             <ul>
-                <li><h2>Carine <span>Callahan</span></h2><img src="../content/mobile/overview/carine.jpg" /></li>
+                <li>Eduardo Batista</li>
                 <li>Weekly average sales <span class="sales-up">$ 8,250</span></li>
                 <li>Monthly average sales <span class="sales-up">$ 32,000</span></li>
-            </ul>
-        </li>
-        <li>
-            Languages
-            <ul>
-                <li>English <span class="value">Native</span></li>
-                <li>Hungarian <span class="value">Advanced</span></li>
-                <li>French <span class="value">Advanced</span></li>
-                <li>Chinese <span class="value">Beginner</span></li>
             </ul>
         </li>
         <li>
@@ -29,43 +21,35 @@
                 <li>Seafood</li>
             </ul>
         </li>
-        <li>
-            PC Skills
-            <ul>
-                <li>MS Word</li>
-                <li>MS Excel</li>
-                <li>MS Outlook</li>
-                <li>MS PowerPoint</li>
-                <li>MS Project</li>
-                <li>Windows (XP, Vista)</li>
-                <li>Internet</li>
-                <li>SAP - Sales and Marketing Module</li>
-                <li>MS Visual Studio</li>
-                <li>Adobe Acrobat</li>
-                <li>CorelDraw</li>
-            </ul>
-        </li>
     </ul>
 </div>
 
-<div data-role="view" id="badges-sales" data-title="Sales History" data-layout="mobile-tabstrip">
-    <ul data-role="listview" data-style="inset" data-type="group">
+<div data-role="view" id="badges-sales" data-title="Mail" data-layout="mobile-tabstrip">
+    <ul data-role="listview">
         <li>
-            Sales 2011
-            <ul>
-                <li>January <span class="sales-up">&uarr; $ 35,000</span></li>
-                <li>February <span class="sales-down">&darr; $ 25,000</span></li>
-                <li>March <span class="sales-down">&darr; $ 23,000</span></li>
-                <li>April <span class="sales-up">&uarr; $ 30,000</span></li>
-                <li>May <span class="sales-up">&uarr; $ 31,000</span></li>
-                <li>June <span class="sales-down">&darr; $ 29,000</span></li>
-                <li>July <span class="sales-up">&uarr; $ 35,000</span></li>
-                <li>August <span class="sales-up">&uarr; $ 37,000</span></li>
-                <li>September <span class="sales-hold">&rarr; $ 37,000</span></li>
-                <li>October <span class="sales-hold">&rarr; $ 37,000</span></li>
-                <li>November <span class="sales-up">&uarr; $ 38,000</span></li>
-                <li>December <span class="sales-up">&uarr; $ 40,000</span></li>
-            </ul>
+            <h6>John Doe 07:56</h6>
+            <h4>Monday meeting</h4>
+            <p>Hi Tom, Since Monday I'll be out of office, I'm rescheduling the meeting for Tuesday.</p>
+        </li>
+        <li>
+            <h6>Sarah Connor 08:22</h6>
+            <h4>Regarding org chart changes</h4>
+            <p>Tom, I checked the new org chart last night and I have some reservations about it...</p>
+        </li>
+        <li>
+            <h6>Jane Parker 10:14</h6>
+            <h4>Your Costume is ready</h4>
+            <p>Hi mr. Sawyer, I'm sorry for the delay, your Halloween costume is ready. The bears...</p>
+        </li>
+        <li>
+            <h6>Joe Harper 10:14</h6>
+            <h4>I'm sorry, Tom</h4>
+            <p>Hi Tom, my aunt comes for a visit this Saturday, so I can't come back to St. Pete...</p>
+        </li>
+        <li>
+            <h6>Becky Thatcher 10:14</h6>
+            <h4>Out tonight?</h4>
+            <p>Honey, wanna go out tonight to grab some chicken? My weekly vouchers for cooking...</p>
         </li>
     </ul>
 </div>
@@ -110,37 +94,3 @@
         clearInterval(timer);
     }
 </script>
-
-<style>
-    #badges-profile h2 {
-        display: inline-block;
-        font-size: 1.1em;
-        margin: 1.5em 0 0 .7em;
-    }
-    #badges-profile h2 span {
-        display: block;
-        clear: both;
-        font-size: 1.8em;
-        margin: .1em 0 0 0;
-    }
-    #badges-profile img {
-        width: 5em;
-        height: 5em;
-        float: left;
-        margin: 1em;
-        border: 1px solid rgba(0,0,0,.2);
-        -webkit-border-radius: 4em;
-        border-radius: 4em;
-    }
-
-    .sales-down,
-    .sales-hold,
-    .sales-up,
-    .value {
-        float: right;
-    }
-    .sales-up { color: green; }
-    .sales-down { color: red; }
-    .sales-hold { color: blue; }
-    .value { color: #bbb; }
-</style>
