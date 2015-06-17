@@ -15,7 +15,12 @@
 
         addColumn: function(width) {
             this._width += width;
-            this.cols.push(kendo.dom.element("col", { style: { width: width + "px" } }));
+
+            var col = kendo.dom.element("col", { style: { width: width + "px" } });
+
+            col.visible = width > 0;
+
+            this.cols.push(col);
         },
 
         addRow: function(height) {
@@ -24,7 +29,12 @@
             attr = { style: { height: height + "px" } };
 
             this._height += height;
-            this.trs.push(kendo.dom.element("tr", attr));
+
+            var tr = kendo.dom.element("tr", attr);
+
+            tr.visible = height > 0;
+
+            this.trs.push(tr);
         },
 
         addCell: function(rowIndex, text, style) {
@@ -38,6 +48,20 @@
         },
 
         toDomTree: function(x, y, className) {
+            this.trs = this.trs.filter(function(tr) {
+                return tr.visible;
+            });
+
+            this.cols = this.cols.filter(function(col, ci) {
+                if (!col.visible) {
+                    this.trs.forEach(function(tr) {
+                        tr.children.splice(ci, 1);
+                    });
+                }
+
+                return col.visible;
+            }, this);
+
             return kendo.dom.element("table", { style: { left: x + "px", top: y + "px", height: this._height + "px", width: this._width + "px" }, className: className },
                 [
                     kendo.dom.element("colgroup", null, this.cols),
