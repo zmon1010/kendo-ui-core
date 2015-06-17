@@ -8,7 +8,7 @@ PORT='33'
 USER='kendodocumentation'
 PASS='qGMQIUxq57'
 DOCS_SITE="docs/_site"
-MIRROR_OPTIONS="--reverse --delete --ignore-time --loop --verbose"
+MIRROR_OPTIONS="--reverse --delete --ignore-time --no-perms --loop --verbose"
 HELLO="
 open -p $PORT $HOST
 user $USER $PASS
