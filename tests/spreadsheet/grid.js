@@ -83,18 +83,9 @@
     });
 
     test("returns rectangle by range reference", function() {
-        var grid = new Grid(new Axis(5, 6), new Axis(4, 3));
+        var grid = new Grid(new Axis(5, 6), new Axis(4, 3), 1000, 1000);
 
-        var rectangle = grid.rectangle({
-            topLeft: {
-               row: 1,
-               col: 2
-            },
-            bottomRight: {
-               row: 3,
-               col: 2
-            }
-        });
+        var rectangle = grid.rectangle(new RangeRef(new CellRef(1, 2), new CellRef(3, 2)));
 
         equal(rectangle.top, 1 * 6);
         equal(rectangle.left, 2 * 3);

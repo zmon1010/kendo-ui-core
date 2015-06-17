@@ -19,6 +19,7 @@
             this._mergedCells = [];
             this._frozenRows = 0;
             this._frozenColumns = 0;
+            this._selection = kendo.spreadsheet.NULLREF;
 
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
         },
@@ -78,6 +79,10 @@
         _ref: function(row, column, numRows, numColumns) {
             var ref = null;
 
+            if (row instanceof kendo.spreadsheet.Ref) {
+                return row;
+            }
+
             if (typeof row === "string") {
                 var refs = kendo.spreadsheet.calc.parse(this._name, 0, 0, "=(" + row + ")").refs;
                 refs.forEach(function(ref) {
@@ -131,6 +136,14 @@
                     });
                 }
             }
+        },
+
+        select: function(ref) {
+            if (ref) {
+                this._selection = this._ref(ref);
+            }
+
+            return this._selection;
         }
     });
 

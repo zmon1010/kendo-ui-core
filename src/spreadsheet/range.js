@@ -102,6 +102,10 @@
             topLeft.background(background);
 
             return this;
+        },
+
+        select: function() {
+            this._sheet.select(this._ref);
         }
     });
 
