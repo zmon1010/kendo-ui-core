@@ -64,11 +64,13 @@
         },
 
         rectangle: function(ref) {
+            var topLeft = this.normalize(ref.topLeft);
+            var bottomRight = this.normalize(ref.bottomRight);
             return new Rectangle(
-                this.width(0, ref.topLeft.col - 1),
-                this.height(0, ref.topLeft.row - 1),
-                this.width(ref.topLeft.col, ref.bottomRight.col),
-                this.height(ref.topLeft.row, ref.bottomRight.row)
+                this.width(0, topLeft.col - 1),
+                this.height(0, topLeft.row - 1),
+                this.width(topLeft.col, bottomRight.col),
+                this.height(topLeft.row, bottomRight.row)
             );
         },
 
