@@ -1,23 +1,23 @@
-<div data-role="view" data-title="Tag Us!" id="popover" data-use-native-scrolling="true">
+<div data-role="view" data-title="Tag this photo" id="popover" data-use-native-scrolling="true">
     <div data-role="header">
         <div data-role="navbar">
             <a id="back-button" class="nav-button" data-align="left" data-role="backbutton">Back</a>
             <span data-role="view-title"></span>
+            <a data-align="right" data-rel="popover" href="#popover-people" data-role="button" data-icon="contacts"></a>
             <a data-align="right" data-icon="source-code" data-click="goToSourceCode" data-role="button" title="Show this demo source code"></a>
-            <a data-align="right" data-rel="popover" href="#popover-people" data-role="button">Select people</a>
         </div>
     </div>
 
-    <div data-role="content">
+    <div data-role="content" style="text-align: center;">
         <img src="../content/mobile/shared/faces.jpg" />
     </div>
 
-    <div data-role="popover" id="popover-people" data-popup='{"height": "16em", "width": "20em"}'>
+    <div data-role="popover" id="popover-people" data-popup='{"height": "20em", "width": "20em"}'>
         <div data-role="view" data-title="People">
             <div data-role="header">
-                <div data-role="navbar">
+                <div data-role="navbar" class="km-light">
                     <span data-role="view-title"></span>
-                    <a data-role="button" data-align="right" data-click="closeParentPopover">Close</a>
+                    <a data-role="button" data-align="right" data-click="closeParentPopover" data-icon="close"></a>
                 </div>
             </div>
             <ul data-role="listview">
@@ -43,31 +43,10 @@
 
     <div data-role="footer">
         <div data-role="navbar">
-            <a data-align="right" href="#popover-location" data-rel="popover" data-role="button">Select location</a>
+            <a data-align="right" href="#popover-location" data-rel="popover" data-role="button">Location</a>
         </div>
     </div>
 </div>
-
-<style>
-    .km-ios #popover .km-view-title,
-    .km-ios #popover-people .km-view-title
-    {
-        color: #fff;
-        text-shadow: 0 -1px rgba(0,0,0,.5);
-    }
-
-    .km-ios #popover .km-navbar,
-    .km-root > * > #popover > .km-content
-    {
-        background: -webkit-gradient(linear, 50% 0, 50% 100%, color-stop(0, rgba(255, 255, 255, 0.35)), color-stop(0.5, rgba(255, 255, 255, 0.1)), color-stop(0.5, rgba(255, 255, 255, 0)), color-stop(1, rgba(255, 255, 255, 0))) #000;
-    }
-
-    .km-ios #popover .km-navbar .km-button
-    {
-        background-color: #000;
-    }
-</style>
-
 <script>
     function closeParentPopover(e) {
 
