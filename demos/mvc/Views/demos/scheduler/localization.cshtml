@@ -17,8 +17,8 @@
 
 function changeLanguage() {
     kendo.ui.progress($("#scheduler"), true);
-    var baseUrl = '@Url.Script("/messages/kendo.messages.")';
-    $.getScript(baseUrl + this.value() + ".js", function() {
+    var baseUrl = '@Url.Script("messages/kendo.messages.", false)';
+    $.getScript(baseUrl + this.value() + ".min.js", function () {
         kendo.ui.progress($("#scheduler"), false);
         createScheduler();
     });
