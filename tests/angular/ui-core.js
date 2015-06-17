@@ -101,7 +101,7 @@
         equal($scope.number.value(), null);
     });
 
-	ngTest2("Mutliselect value updated when k-ng-model is changed when value is non-primitive", 3, function(dom, controller, bootstrap) {
+	ngTest2("MultiSelect value updated when k-ng-model is changed when value is non-primitive", 3, function(dom, controller, bootstrap) {
         controller(function($scope) {
             $scope.selectOptions = {
                         dataTextField: "ProductName",
@@ -134,7 +134,7 @@
     });
 
 
-    ngTest2("Mutliselect value updated when k-ng-model is changed when value is primitive", 3, function(dom, controller, bootstrap) {
+    ngTest2("MultiSelect value updated when k-ng-model is changed when value is primitive", 3, function(dom, controller, bootstrap) {
         controller(function($scope) {
         $scope.selectOptions = {
                     dataTextField: "ProductName",
@@ -166,7 +166,7 @@
         equal($scope.multiselect.value().length, $scope.selectedIds.length);
     });
 
-    ngTest2("Mutliselect value updated when k-ng-model is changed to empty array", 2, function(dom, controller, bootstrap){
+    ngTest2("MultiSelect value updated when k-ng-model is changed to empty array", 2, function(dom, controller, bootstrap){
         controller(function($scope) {
             $scope.selectOptions = {
                 dataTextField: "ProductName",
@@ -207,6 +207,52 @@
         })
 
         bootstrap();
+   });
+
+    ngTest2("MultiSelect  value updated when k-ng-model is changed after new items is selected", 2, function(dom, controller, bootstrap){
+        controller(function($scope) {
+            $scope.selectOptions = {
+                        dataTextField: "ProductName",
+                        dataValueField: "ProductID",
+                        dataSource: {
+                            data:  [
+                                {ProductID : 1, ProductName : "Product1"},
+                                {ProductID : 2, ProductName : "Product2"},
+                                {ProductID : 3, ProductName : "Product3"}
+                            ]
+                        }
+                    };
+
+            $scope.selectedIds = [{ProductID : 1, ProductName : "Product1"}];
+        });
+
+        $("<div>" +
+          "  <select kendo-multi-select='multiselect' k-options='selectOptions' k-ng-model='selectedIds' k-value-primitive='false'></select>" +
+          "</div>").appendTo(dom);
+
+        bootstrap(); var $scope = dom.scope();
+
+        $scope.multiselect.value([1,2]);
+        $scope.multiselect.trigger("change");
+
+        $scope.$apply(function() {
+            $scope.selectedIds.pop();
+        });
+
+        equal($scope.selectedIds.length, 1);
+        equal($scope.multiselect.value().length, 1);
+    });
+
+
+
+   ngTest2("k-ng-model is updated when primitive values are used", 1, function(dom, controller, bootstrap) {
+        $("<input kendo-drop-down-list='ddl' k-ng-model='foo' k-value-primitive='true' k-data-source='[\"one\", \"two\"]'/>").appendTo(dom);
+
+        bootstrap(); var $scope = dom.scope();
+
+        $scope.ddl.value("two");
+        $scope.ddl.trigger("change");
+        equal($scope.foo, "two");
    });
 
    asyncTest("triggers kendoRendered", 2, function() {
@@ -911,138 +957,7 @@ withAngularTests("Angular (UI Core)", function(runTest){
         });
     });
 
-
-	runTest("Mutliselect value updated when k-ng-model is changed when value is non-primitive", function(dom, $scope){
-        $scope.selectOptions = {
-                    dataTextField: "ProductName",
-                    dataValueField: "ProductID",
-                    dataSource: {
-                        data:  [
-                            {ProductID : 1, ProductName : "Product1"},
-                            {ProductID : 2, ProductName : "Product2"},
-                            {ProductID : 3, ProductName : "Product3"}
-                        ]
-                    }
-                };
-
-        $scope.selectedIds = [ {ProductID : 1, ProductName : "Product1"},  {ProductID : 2, ProductName : "Product2"}];
-
-        $("<div>" +
-          "  <select kendo-multi-select='multiselect' k-options='selectOptions' k-ng-model='selectedIds' k-value-primitive='false'></select>" +
-          "</div>").appendTo(dom);
-
-		expect(3);
-        $scope.whenRendered(function(){
-            $scope.$apply(function() {
-                $scope.selectedIds.pop();
-            });
-
-            equal($scope.selectedIds.length, 1);
-            equal($scope.multiselect.value().length, 1);
-            equal($scope.multiselect.value().length, $scope.selectedIds.length);
-            start();
-        });
-    });
-
-    runTest("Mutliselect value updated when k-ng-model is changed when value is primitive", function(dom, $scope){
-        $scope.selectOptions = {
-                    dataTextField: "ProductName",
-                    dataValueField: "ProductID",
-                    dataSource: {
-                        data:  [
-                            {ProductID : 1, ProductName : "Product1"},
-                            {ProductID : 2, ProductName : "Product2"},
-                            {ProductID : 3, ProductName : "Product3"}
-                        ]
-                    }
-                };
-
-        $scope.selectedIds = [ 1, 2 ];
-
-        $("<div>" +
-          "  <select kendo-multi-select='multiselect' k-options='selectOptions' k-ng-model='selectedIds' k-value-primitive='true'></select>" +
-          "</div>").appendTo(dom);
-
-		expect(3);
-        $scope.whenRendered(function(){
-            $scope.$apply(function() {
-                $scope.selectedIds.pop();
-            });
-
-            equal($scope.selectedIds.length, 1);
-            equal($scope.multiselect.value().length, 1);
-            equal($scope.multiselect.value().length, $scope.selectedIds.length);
-            start();
-        });
-    });
-
-    runTest("Mutliselect value updated when k-ng-model is changed to empty array", function(dom, $scope){
-        $scope.selectOptions = {
-                    dataTextField: "ProductName",
-                    dataValueField: "ProductID",
-                    dataSource: {
-                        data:  [
-                            {ProductID : 1, ProductName : "Product1"},
-                            {ProductID : 2, ProductName : "Product2"},
-                            {ProductID : 3, ProductName : "Product3"}
-                        ]
-                    }
-                };
-
-        $scope.selectedIds = [ 1, 2 ];
-
-        $("<div>" +
-          "  <select kendo-multi-select='multiselect' k-options='selectOptions' k-ng-model='selectedIds' k-value-primitive='true'></select>" +
-          "</div>").appendTo(dom);
-
-		expect(2);
-        $scope.whenRendered(function(){
-
-            $scope.$apply(function() {
-                $scope.selectedIds=[];
-            });
-
-            equal($scope.selectedIds.length, 0);
-            equal($scope.multiselect.value().length, 0);
-            start();
-        });
-    });
-
-    runTest("Mutliselect value updated when k-ng-model is changed after new items is selected", function(dom, $scope){
-        $scope.selectOptions = {
-                    dataTextField: "ProductName",
-                    dataValueField: "ProductID",
-                    dataSource: {
-                        data:  [
-                            {ProductID : 1, ProductName : "Product1"},
-                            {ProductID : 2, ProductName : "Product2"},
-                            {ProductID : 3, ProductName : "Product3"}
-                        ]
-                    }
-                };
-
-        $scope.selectedIds = [{ProductID : 1, ProductName : "Product1"}];
-
-        $("<div>" +
-          "  <select kendo-multi-select='multiselect' k-options='selectOptions' k-ng-model='selectedIds' k-value-primitive='false'></select>" +
-          "</div>").appendTo(dom);
-
-		expect(2);
-        $scope.whenRendered(function(){
-            $scope.multiselect.value([1,2]);
-            $scope.multiselect.trigger("change");
-
-            $scope.$apply(function() {
-                $scope.selectedIds.pop();
-            });
-
-            equal($scope.selectedIds.length, 1);
-            equal($scope.multiselect.value().length, 1);
-            start();
-        });
-    });
-
-     runTest("k-ng-model change updates form status", function(dom, $scope){
+    runTest("k-ng-model change updates form status", function(dom, $scope){
 
         $("<form name='myForm'>" +
           "  <input kendo-numeric-text-box='ktb' k-ng-model='value' />" +
@@ -1065,17 +980,6 @@ withAngularTests("Angular (UI Core)", function(runTest){
 			$("#kac").val("USA").trigger("change");
             var ngDirty = $("#kac").hasClass("ng-dirty");
             equal(ngDirty, true);
-            start();
-        });
-    });
-
-    runTest("k-ng-model is updated when primitive values are used", function(dom, $scope){
-        $("<input kendo-drop-down-list='ddl' k-ng-model='foo' k-value-primitive='true' k-data-source='[\"one\", \"two\"]'/>").appendTo(dom);
-		expect(1);
-        $scope.whenRendered(function(){
-            $scope.ddl.value("two");
-            $scope.ddl.trigger("change");
-            equal($scope.foo, "two");
             start();
         });
     });
