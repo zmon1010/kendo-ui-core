@@ -11,8 +11,12 @@ for (var i = 10, len = 50; i < len; i++) {
     }
 }
 
-sheet.columnWidth(1, 120);
-sheet.columnWidth(2, 120);
+//sheet.columnWidth(1, 120);
+//sheet.columnWidth(2, 120);
+sheet.hideColumn(1);
+sheet.hideColumn(5);
+sheet.hideRow(5);
+
 sheet.rowHeight(1, 40);
 sheet.rowHeight(50, 200);
 

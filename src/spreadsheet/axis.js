@@ -5,9 +5,27 @@
 (function(kendo) {
     var Axis = kendo.Class.extend({
         init: function(count, value) {
-            this.values = new kendo.spreadsheet.RangeList(0, count - 1, value, true);
+            this.values = new kendo.spreadsheet.RangeList(0, count - 1, value);
+            this._hidden = new kendo.spreadsheet.RangeList(0, count - 1, 0);
+
             this.scrollBarSize = kendo.support.scrollbar();
             this._refresh();
+        },
+
+        hide: function(index) {
+            var value = this.value(index, index);
+            this._hidden.value(index, index, value);
+            this.value(index, index, 0);
+        },
+
+        hidden: function(index) {
+            return this._hidden.value(index, index) !== 0;
+        },
+
+        unhide: function(index) {
+            var value = this._hidden.value(index, index);
+            this._hidden.value(index, index, 0);
+            this.value(index, index, value);
         },
 
         value: function(start, end, value) {
@@ -40,7 +58,7 @@
                 lastPage = true;
             }
 
-            var ranges = this.pixelValues.intersecting(start, end);
+            var ranges = this._pixelValues.intersecting(start, end);
 
             startSegment = ranges[0];
             endSegment = ranges[ranges.length - 1];
@@ -72,10 +90,13 @@
 
         _refresh: function() {
             var current = 0;
-            this.pixelValues = this.values.map(function(range) {
+            this._pixelValues = this.values.map(function(range) {
                 var start = current;
+
                 current += (range.end - range.start + 1) * range.value;
+
                 var end = current - 1;
+
                 return new kendo.spreadsheet.ValueRange(start, end, range);
             });
 

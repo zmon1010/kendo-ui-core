@@ -46,6 +46,58 @@
         equal(visibleValues.at(22), 15);
     });
 
+    test("hiding updates total", function() {
+        axis.hide(1);
+
+        equal(axis.total, 999 * 15);
+    });
+
+    test("hidden values are not summed", function() {
+        axis.hide(1);
+
+        equal(axis.sum(0, 2), 2 * 15);
+    });
+
+    test("hidden values are invisible (first value hidden)", function() {
+        axis.hide(0);
+
+        var visible = axis.visible(0, 30);
+
+        equal(visible.values.start, 1)
+        equal(visible.values.end, 3)
+    });
+
+    test("hidden values are invisible (second value hidden)", function() {
+        axis.hide(1);
+
+        var visible = axis.visible(0, 30);
+
+        equal(visible.values.start, 0)
+        equal(visible.values.end, 3)
+    });
+
+    test("hidden return true for hidden values", function() {
+        axis.hide(1);
+        equal(axis.hidden(1), true)
+    });
+
+    test("values are not hidden by default", function() {
+        equal(axis.hidden(1), false)
+    });
+
+    test("unhidden values update total", function() {
+        axis.hide(1);
+        axis.unhide(1);
+
+        equal(axis.total, 1000 * 15);
+    });
+
+    test("unhidden values are not hidden", function() {
+        axis.hide(1);
+        axis.unhide(1);
+
+        equal(axis.hidden(1), false);
+    });
 
     module("PaneAxis", {
     });

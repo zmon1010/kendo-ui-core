@@ -33,6 +33,22 @@
             return this;
         },
 
+        hideColumn: function(columnIndex) {
+            return this._columns.unhide(columnIndex);
+        },
+
+        unhideColumn: function(columnIndex) {
+            return this._columns.unhide(columnIndex);
+        },
+
+        hideRow: function(rowIndex) {
+            return this._rows.hide(rowIndex);
+        },
+
+        unhideRow: function(rowIndex) {
+            return this._rows.unhide(rowIndex);
+        },
+
         columnWidth: function(columnIndex, width) {
             return this._columns.value(columnIndex, columnIndex, width);
         },
