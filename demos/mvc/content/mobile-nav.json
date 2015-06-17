@@ -298,8 +298,8 @@
         }
       },
       {
-        "text": "Customizing appearance",
-        "url": "mobile-forms/appearance",
+        "text": "Form types",
+        "url": "mobile-forms/types",
         "title": {
             "kendo-ui": "Kendo UI Mobile Customizing Form Appearance Demo",
             "aspnet-mvc": "ASP.NET MVC Mobile Customizing Form Appearance Demo"

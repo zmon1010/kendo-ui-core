@@ -1,122 +1,88 @@
 <div id="forms" data-role="view" data-title="Form Elements" data-init="initForm" data-use-native-scrolling="true">
-    <form action="./index.html">
+    <img src="@Url.Content("~/content/shared/images/eduardo.jpg")" class="km-thumbnail" style="width: 10em; height: 10em; margin: 1em auto; display: block; float: none;"/>
+     <form action="./index.html">
         <ul data-role="listview" data-style="inset">
             <li>
-                <label>Select element
-                    <select>
-                        <option value="First Option">First Option</option>
-                        <option value="Second Option">Second Option</option>
-                        <option value="Third Option">Third Option</option>
-                        <option value="Fourth Option">Fourth Option</option>
-                    </select>
+                <label class="km-required km-label-above">First Name
+                    <input value="Eduardo" type="text" />
                 </label>
             </li>
             <li>
-                <label>DropDownList
-                    <select id="dropdown">
-                        <option value="First Option">First Option</option>
-                        <option value="Second Option">Second Option</option>
-                        <option value="Third Option">Third Option</option>
-                        <option value="Fourth Option">Fourth Option</option>
-                        <option value="First Option">Fifth Option</option>
-                        <option value="Sixth Option">Sixth Option</option>
-                    </select>
+                <label class="km-label-above">Last Name
+                    <input value="Batista" type="text" />
                 </label>
             </li>
             <li>
-                <label>Slider
-                    <input id="slider" type="range" max="100" />
+                <label class="km-label-above">Company
+                    <input value="Telerik" type="text" />
+                </label>
+            </li>
+             
+            <li>
+                <fieldset>
+                    <legend><a href="#" class="km-legend-button">+ Phone</a></legend>
+                        <label class="km-inline-field km-label-above km-required" style="width: 200px;">
+                        Phone Number
+                        <input type="text" value="+359 555 5555" />
+                        </label>
+                        <label class="km-inline-field km-label-above" style="width: 200px;">
+                            Type
+                            <select id="phone-type">
+                                <option value="First Option">Mobile</option>
+                                <option value="Second Option">Stationary</option>
+                                <option value="Third Option">iPhone</option>
+                            </select>
+                      </label>  
+                </fieldset>                   
+            </li>
+            <li>
+                <fieldset>
+                    <legend><a href="#" class="km-legend-button">+ Email</a></legend>
+                    <input type="text" value="barista@telerik.com" />
+                </fieldset>
+            </li>
+             <li>
+
+                    <label class="km-icon-label k-i-calendar km-required">
+                        <input value="Meeting" type="text" />
+                    </label>
+                </li>
+                <li>
+                    <label class="km-icon-label k-i-clock">
+                        <select id="dropdown">
+                            <option value="First Option">Meeting Room 1</option>
+                            <option value="Second Option">Meeting Room 2</option>
+                            <option value="Third Option">Meeting 3</option>
+                        </select>
+                    </label>
+                </li>
+                 
+             <li>
+                <label class="km-required">Title
+                    <input value="Meeting" type="text" />
                 </label>
             </li>
             <li>
-                <label>Type text
-                    <input type="text" value="Text" />
+                <label>Location
+                    <select id="meeting_room">
+                            <option value="First Option">Meeting Room 1</option>
+                            <option value="Second Option">Meeting Room 2</option>
+                            <option value="Third Option">Meeting 3</option>
+                        </select>
                 </label>
+            </li>            
+            <li>
+                <fieldset>
+                    <legend>Volume</legend>
+                    <input data-role="slider" id="slider" max="100" class="km-full-width-slider" />
+                </fieldset>
             </li>
             <li>
-                <label>
-                Type password
-                <input type="password" value="password" />
-                </label>
-            </li>
-            <li>
-                <label>
-                Type search
-                <input type="search" value="search" />
-                </label>
-            </li>
-            <li>
-                <label>
-                Type url
-                <input type="url" value="http://www.telerik.com" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Type email
-                    <input type="email" value="kendoui@telerik.com" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Type number
-                    <input type="number" value="20" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Type tel
-                    <input type="tel" value="+44 22 11 10" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Type date
-                    <input type="date" value="2012-03-22" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Type time
-                    <input type="time" value="22:30" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Type month
-                    <input type="month" value="2012-01" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Type datetime-local
-                    <input type="datetime-local" value="2012-03-22T20:15" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Textarea
-                    <textarea style="resize: none">Multiline
-Text</textarea>
-                </label>
-            </li>
+                <fieldset>
+                    <legend>Notes</legend>
+                    <textarea style="height: 100px;"> Your notes here</textarea>
+                </fieldset>
+            </li>          
         </ul>
     </form>
 </div>
-<script>
-    function initForm() {
-        var body = $(".km-pane");
-
-        if (kendo.ui.DropDownList) {
-            $("#dropdown").kendoDropDownList({
-                // The options are needed only for the desktop demo, remove them for mobile.
-                popup: { appendTo: body },
-                animation: { open: { effects: body.hasClass("km-android") ? "fadeIn" : body.hasClass("km-ios") || body.hasClass("km-wp") ? "slideIn:up" : "slideIn:down" } }
-            });
-        }
-
-        if (kendo.ui.Slider) {
-            $("#slider").kendoSlider({ tooltip: { enabled: false } });
-        }
-    }
-</script>
