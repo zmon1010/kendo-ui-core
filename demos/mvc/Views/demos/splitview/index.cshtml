@@ -6,7 +6,7 @@
         </div>
 
         <script id="categoriesTemplate" type="text/x-kendo-template">
-            <a href="\#side-inbox?CategoryID=#: CategoryID#">#: CategoryName #</a>
+            <a href="\#side-inbox?CategoryID=#: CategoryID#" data-icon="mostviewed">#: CategoryName #</a>
         </script>
 
         <div data-role="view" id="side-inbox" data-title="Products" data-show="filterProducts" data-use-native-scrolling="true">
@@ -17,6 +17,7 @@
 
         <script id="productsTemplate" type="text/x-kendo-template">
             <a href="\#orders?ProductID=#: ProductID #" data-target="main-pane">
+                <img src="../content/web/foods/#=ProductID#.jpg" alt="#=ProductName# image" class="km-thumbnail"/>
                 <span class="km-badge">$#: UnitPrice#</span>
                 <h4 class="product-name">#: ProductName #</h4>
                 <p>#: QuantityPerUnit #</p>
