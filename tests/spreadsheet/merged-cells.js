@@ -141,4 +141,24 @@
 
         equal(sheet.range("A1:E1").value(), "foo");
     });
+
+    test("merge unsets the background of all cells but the topleft", function() {
+        sheet.range("A1:A1").background("red");
+        sheet.range("B1:B1").background("blue");
+        sheet.range("A1:C1").merge();
+
+        equal(sheet.range("B1:B1").background(), null);
+        equal(sheet.range("B1:C1").background(), null);
+        equal(sheet.range("A1:A1").background(), "red");
+        equal(sheet.range("A1:B1").background(), "red");
+    });
+
+    test("merge uses the baclground of the top left cell during combination", function() {
+        sheet.range("A1:B1").background("red").merge();
+        sheet.range("D1:E1").background("blue").merge();
+        sheet.range("B1:D1").merge();
+
+        equal(sheet.range("A1:E1").background(), "red");
+    });
+
 })();

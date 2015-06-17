@@ -76,12 +76,15 @@
             mergedCells.push(this._ref);
 
             var value = this.value();
+            var background = this.background();
 
             this.value(null);
+            this.background(null);
 
             var topLeft = new Range(this._ref.collapse(), this._sheet);
 
             topLeft.value(value);
+            topLeft.background(background);
 
             return this;
         }
