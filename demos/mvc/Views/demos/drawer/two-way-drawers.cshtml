@@ -4,7 +4,7 @@
             <a data-role="backbutton" id="back-button" class="nav-button" data-align="left">Back</a>
             <span data-role="view-title"></span>
             <a data-align="right" data-icon="source-code" data-click="goToSourceCode" data-role="button" title="Show this demo source code"></a>
-            <a data-role="button" data-rel="drawer" href="#right-drawer" data-icon="share" data-align="right" ></a>
+            <a data-role="button" data-rel="drawer" href="#right-drawer" data-icon="hamburger" data-align="right" ></a>
         </div>
     </header>
     <a class="left-btn" data-role="button" data-rel="drawer" href="#left-drawer" data-icon="comments"></a>
@@ -13,45 +13,45 @@
             <li>
                 A
                 <ul>
-                    <li><h2>Ann Devon</h2><img src="../content/mobile/overview/ann.jpg" /></li>
-                    <li><h2>Annette Roulet</h2><img src="../content/mobile/overview/annette.jpg" /></li>
-                    <li><h2>Antonio Moreno</h2><img src="../content/mobile/overview/antonio.jpg" /></li>
+                    <li><img src="../content/mobile/overview/ann.jpg" class="km-thumbnail" /> Ann Devon</li>
+                    <li><img src="../content/mobile/overview/annette.jpg" class="km-thumbnail" /> Annette Roulet</li>
+                    <li><img src="../content/mobile/overview/antonio.jpg" class="km-thumbnail" /> Antonio Moreno</li>
                 </ul>
             </li>
             <li>
                 C
                 <ul>
-                    <li><h2>Carine Schmitt</h2><img src="../content/mobile/overview/carine.jpg" /></li>
-                    <li><h2>Catherine Dewey</h2><img src="../content/mobile/overview/catherine.jpg" /></li>
+                    <li><img src="../content/mobile/overview/carine.jpg" class="km-thumbnail" /> Carine Schmitt</li>
+                    <li><img src="../content/mobile/overview/catherine.jpg" class="km-thumbnail" /> Catherine Dewey</li>
                 </ul>
             </li>
             <li>
                D
                 <ul>
-                    <li><h2>Daniel Tonini</h2><img src="../content/mobile/overview/daniel.jpg" /></li>
-                    <li><h2>Diego Roel</h2><img src="../content/mobile/overview/diego.jpg" /></li>
+                    <li><img src="../content/mobile/overview/daniel.jpg" class="km-thumbnail" /> Daniel Tonini</li>
+                    <li><img src="../content/mobile/overview/diego.jpg" class="km-thumbnail" /> Diego Roel</li>
                 </ul>
             </li>
             <li>
                 E
                 <ul>
-                    <li><h2>Eduardo Saavedra</h2><img src="../content/mobile/overview/eduardo.jpg" /></li>
-                    <li><h2>Elizabeth Brown</h2><img src="../content/mobile/overview/elizabeth.jpg" /></li>
+                    <li><img src="../content/mobile/overview/eduardo.jpg" class="km-thumbnail" /> Eduardo Saavedra</li>
+                    <li><img src="../content/mobile/overview/elizabeth.jpg" class="km-thumbnail" /> Elizabeth Brown</li>
                 </ul>
             </li>
             <li>
                 F
                 <ul>
-                    <li><h2>Felipe Izquierdo</h2><img src="../content/mobile/overview/felipe.jpg" /></li>
-                    <li><h2>Fran Wilson</h2><img src="../content/mobile/overview/fran.jpg" /></li>
-                    <li><h2>Francisco Chang</h2><img src="../content/mobile/overview/francisco.jpg" /></li>
+                    <li><img src="../content/mobile/overview/felipe.jpg" class="km-thumbnail" /> Felipe Izquierdo</li>
+                    <li><img src="../content/mobile/overview/fran.jpg" class="km-thumbnail" /> Fran Wilson</li>
+                    <li><img src="../content/mobile/overview/francisco.jpg" class="km-thumbnail" /> Francisco Chang</li>
                 </ul>
             </li>
         </ul>
     </div>
 </div>
 
-<div data-role="drawer" id="left-drawer" style="width: 300px" data-title="Communities" data-views="['two-drawer-home']" data-use-native-scrolling="true">
+<div data-role="drawer" id="left-drawer" style="width: 20em;" data-title="Communities" data-views="['two-drawer-home']" data-use-native-scrolling="true">
     <header data-role="header">
         <div data-role="navbar">
             <span data-role="view-title"></span>
@@ -72,16 +72,15 @@
         <li data-icon="comments">Bodybuilding</li>
         <li data-icon="comments">JavaScript</li>
         <li data-icon="comments">C#</li>
-        <li data-icon="graph">DataViz</li>
     </ul>
 </div>
 
-<div data-role="drawer" id="right-drawer" style="width: 100px" data-title="Share" data-position="right" data-views="['two-drawer-home']" data-stretch="true">
+<div data-role="drawer" id="right-drawer" style="width: 7em" data-title="Share" data-position="right" data-views="['two-drawer-home']" data-stretch="true">
     <div data-role="tabstrip" class="km-vertical-tabstrip">
-        <a href="#drawer/two-way-drawers" data-icon="contacts">
-        </a><a href="#drawer/two-way-drawers" data-icon="history">
-        </a><a href="#drawer/two-way-drawers" data-icon="favorites">
-        </a><a href="#drawer/two-way-drawers" data-icon="settings"></a>
+        <a href="#drawer/two-way-drawers" data-icon="contacts">Contacts
+        </a><a href="#drawer/two-way-drawers" data-icon="history">History
+        </a><a href="#drawer/two-way-drawers" data-icon="favorites">Favorites
+        </a><a href="#drawer/two-way-drawers" data-icon="settings">Settings</a>
     </div>
 </div>
 
@@ -132,56 +131,8 @@
         color: #fff;
     }
 
-    .km-ios #left-drawer .km-group-title,
-    .km-ios7 #left-drawer .km-group-title,
-    .km-blackberry #left-drawer .km-group-title
-    {
-        background-color: #6e6e6e;
-        color: #fff;
-    }
-
-    #left-drawer .km-navbar, #right-drawer .km-navbar,
-    .km-tablet .km-ios #left-drawer .km-view-title,
-    .km-tablet .km-ios #right-drawer .km-view-title,
-    .km-ios7 #left-drawer .km-view-title,
-    .km-ios7 #right-drawer .km-view-title,
-    .km-tablet .km-ios7 #left-drawer .km-view-title,
-    .km-tablet .km-ios7 #right-drawer .km-view-title
-    {
-	background-color: #2e2e2e;
-        color: #fff;
-        text-shadow: 0 -1px rgba(0,0,0,.5);
-    }
-
-    .km-drawer-button:before, .km-drawer-button:after { content: "\E077"; }
-    .km-contacts:before, .km-contacts:after { content: "\E0E4"; }
     .km-camera:before, .km-camera:after { content: "\E0D0"; }
     .km-printer:before, .km-printer:after { content: "\E07E"; }
     .km-comments:before, .km-comments:after { content: "\E093"; }
-    .km-graph:before, .km-graph:after { content: "\E04B"; }
 
-
-    #two-drawer-home h2
-    {
-        display: inline-block;
-        font-size: 1em;
-        line-height: 3em;
-        margin: 0 0 0 1em;
-    }
-
-    #two-drawer-home img
-    {
-        float: left;
-        width: 3em;
-        height: 3em;
-        margin: 0;
-        border: 1px solid rgba(0,0,0,.2);
-        -webkit-border-radius: 4em;
-        border-radius: 4em;
-    }
-
-    .km-ios #two-drawer-home .km-listview
-    {
-        background-color: #eaf1f5;
-    }
 </style>
