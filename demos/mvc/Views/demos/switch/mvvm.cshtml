@@ -2,6 +2,23 @@
 <div data-model="viewModel" data-role="view" id="switch-mvvm" data-title="Switch MVVM">
     <ul data-role="listview" data-style="inset" data-type="group">
         <li>
+            Configuration
+            <ul>
+                <li>Check <input type="checkbox" data-role="switch" data-bind="checked: isChecked"></li>
+                <li>Enable <input type="checkbox" data-role="switch" data-bind="checked: isEnabled"></li>
+                <li>Visible <input type="checkbox" data-role="switch" data-bind="checked: isVisible"></li>
+                <li>
+                    <p>
+                        Kendo UI Mobile Switch supports the
+                        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/checked">checked</a>,
+                        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/enabled">enabled</a>,
+                        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/events">events</a> and
+                        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/visible">visible</a> bindings.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li>
             Switch
             <ul>
                 <li>
@@ -11,28 +28,10 @@
                                             checked: isChecked,
                                             events: { change: onChange }">
                 </li>
-                <li>
-                    <div class="console"></div>
-                </li>
-            </ul>
-        </li>
-        <li>
-            Configuration
-            <ul>
-                <li>Check <input type="checkbox" data-role="switch" data-bind="checked: isChecked"></li>
-                <li>Enable <input type="checkbox" data-role="switch" data-bind="checked: isEnabled"></li>
-                <li>Visible <input type="checkbox" data-role="switch" data-bind="checked: isVisible"></li>
             </ul>
         </li>
     </ul>
-
-    <p>
-        Kendo UI Mobile Switch supports the
-        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/checked">checked</a>,
-        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/enabled">enabled</a>,
-        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/events">events</a> and
-        <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/visible">visible</a> bindings.
-    </p>
+    <div class="console"></div>
 </div>
 
 <script>
