@@ -1,5 +1,7 @@
+// -*- fill-column: 100 -*-
+
 (function(f, define){
-    define([ "./calc", "../util/main" ], f);
+    define([ "./calc" ], f);
 })(function(){
 
     "use strict";
@@ -20,13 +22,69 @@
 
     function parse(input) {
         input = calc.InputStream(input);
-        var sections = [], haveTimePart = false;
+        var sections = [], haveTimePart = false, haveConditional = false;
+
         while (!input.eof()) {
-            sections.push(readSection());
+            var sec = readSection();
+            sections.push(sec);
+            if (sec.cond) {
+                haveConditional = true;
+            }
         }
 
-        if (sections.length == 3 && !sections[2].cond) {
-            sections[2].cond = "text";
+        // From https://support.office.com/en-us/article/Create-or-delete-a-custom-number-format-78f2a361-936b-4c03-8772-09fab54be7f4:
+        //
+        //    A number format can have up to four sections of code, separated by semicolons. These
+        //    code sections define the format for positive numbers, negative numbers, zero values,
+        //    and text, in that order.
+        //
+        //    You do not have to include all code sections in your custom number format. If you
+        //    specify only two code sections for your custom number format, the first section is
+        //    used for positive numbers and zeros, and the second section is used for negative
+        //    numbers. If you specify only one code section, it is used for all numbers. If you want
+        //    to skip a code section and include a code section that follows it, you must include
+        //    the ending semicolon for the section that you skip.
+        //
+        // However, if sections have conditionals, it is not clear if:
+        //
+        //    - still at most four are allowed
+        //    - is the last section still for text
+        //
+        // We will assume that if no sections have conditionals, then there must be at most 4, and
+        // they will be interpreted in the order above.  If the first section contains a
+        // conditional, then there can be any number of them; if the last one is not conditional
+        // then it will be interpreted as text format.
+
+        function addPlainText() {
+            sections.push({
+                cond: "text",
+                body: [ { type: "text" } ]
+            });
+        }
+
+        if (haveConditional) {
+            if (sections[sections.length - 1].cond == null) {
+                sections[sections.length - 1].cond = "text";
+            }
+        }
+        else if (sections.length == 1) {
+            sections[0].cond = "num";
+            addPlainText();
+        }
+        else if (sections.length == 2) {
+            sections[0].cond = { op: ">=", value: 0 };
+            sections[1].cond = { op: "<", value: 0 };
+            addPlainText();
+        }
+        else if (sections.length == 3) {
+            sections[0].cond = { op: ">", value: 0 };
+            sections[1].cond = { op: "<", value: 0 };
+            sections[2].cond = { op: "=", value: 0 };
+            addPlainText();
+        }
+        else if (sections.length >= 4) {
+            sections[3].cond = "text";
+            sections = sections.slice(0, 3);
         }
 
         return sections;
@@ -59,7 +117,7 @@
         function readNext() {
             var ch, m;
             // numbers
-            if ((m = input.skip(/^([#0?]+),([#0?])+/))) {
+            if ((m = input.skip(/^([#0?]+),([#0?]+)/))) {
                 // thousands separator.  seems convenient to treat
                 // this as a single token.
                 return { type: "digit", sep: true, format: m[1] + m[2] };
@@ -67,6 +125,7 @@
             if ((m = input.skip(/^[#0?]+/))) {
                 return { type: "digit", sep: false, format: m[0] };
             }
+            // XXX: handle this one!
             if ((m = input.skip(/^(e)([+-])/i))) {
                 return { type: "exp", ch: m[1], sign: m[2] };
             }
@@ -94,6 +153,10 @@
                 haveTimePart = true;
                 m = m[1].toLowerCase();
                 return { type: "eltime", part: m.charAt(0), format: m.length };
+            }
+            if ((m = input.skip(/^(am\/pm|a\/p)/i))) {
+                m = m[1].split("/");
+                return { type: "ampm", am: m[0], pm: m[1] };
             }
             switch ((ch = input.next())) { // JSHint sadness
               case ";":
@@ -161,15 +224,21 @@
         var hasDecimals = false;
         var hasDate = false;
         var hasTime = false;
+        var hasAmpm = false;
         var percentCount = 0;
         var scaleCount = 0;
         var code = "";
         var separeThousands = false;
+        var declen = 0;
         var intFormat = [], decFormat = [];
 
         if (format.cond == "text") {
             code += "if (typeof value == 'string') { ";
-        } else if (format.cond) {
+        }
+        else if (format.cond == "num") {
+            code += "if (typeof value == 'number') { ";
+        }
+        else if (format.cond) {
             code += "if (typeof value == 'number' && value "
                 + format.cond.op + " " + format.cond.value + ") { ";
         }
@@ -180,15 +249,17 @@
                 + "; ";
         }
 
-        function checkComma(a, b, c) {
-            if (a.type == "digit" && b.type == "comma") {
+        function checkComma(a, b) {
+            if ((a.type == "digit" && b.type == "comma") ||
+                (a.type == "comma" && a.hidden && b.type == "comma"))
+            {
                 b.hidden = true;
                 scaleCount++;
             }
         }
 
         while (!input.eof()) {
-            input.ahead(3, checkComma);
+            input.ahead(2, checkComma);
             var tok = input.next();
             if (tok.type == "dec") {
                 hasDecimals = true;
@@ -198,6 +269,7 @@
             }
             else if (tok.type == "digit") {
                 if (hasDecimals) {
+                    declen += tok.format.length;
                     decFormat.push(tok.format);
                     tok.decimal = true;
                 } else {
@@ -214,6 +286,9 @@
             else if (tok.type == "date") {
                 hasDate = true;
             }
+            else if (tok.type == "ampm") {
+                hasAmpm = hasTime = true;
+            }
         }
 
         if (percentCount > 0) {
@@ -222,16 +297,16 @@
         if (scaleCount > 0) {
             code += "value /= " + Math.pow(1000, scaleCount) + "; ";
         }
-        if (intFormat) {
-            code += "var intPart = runtime.formatInt(culture, value, " + JSON.stringify(intFormat) + ", " + separeThousands + "); ";
+        if (intFormat.length) {
+            code += "var intPart = runtime.formatInt(culture, value, " + JSON.stringify(intFormat) + ", " + declen + ", " + separeThousands + "); ";
         }
-        if (decFormat) {
-            code += "var decPart = runtime.formatDec(culture, value, " + JSON.stringify(decFormat) + "); ";
+        if (decFormat.length) {
+            code += "var decPart = runtime.formatDec(culture, value, " + JSON.stringify(decFormat) + ", " + declen + "); ";
         }
-        if (hasDate > 0) {
+        if (hasDate) {
             code += "var date = runtime.unpackDate(value); ";
         }
-        if (hasTime > 0) {
+        if (hasTime) {
             code += "var time = runtime.unpackTime(value); ";
         }
 
@@ -248,10 +323,10 @@
                 code += "output += culture.numberFormat.percent.symbol; ";
             }
             else if (tok.type == "str") {
-                code += "output += " + JSON.stringify(tok.value) + "; ";
+                code += "output += " + JSON.stringify(kendo.htmlEncode(tok.value)) + "; ";
             }
             else if (tok.type == "text") {
-                code += "output += JSON.stringify(value); ";
+                code += "output += kendo.htmlEncode(value); ";
             }
             else if (tok.type == "space") {
                 code += "output += runtime.space(" + JSON.stringify(tok.value) + "); ";
@@ -268,11 +343,16 @@
             }
             else if (tok.type == "time") {
                 code += "output += runtime.time(culture, time, "
-                    + JSON.stringify(tok.part) + ", " + tok.format + "); ";
+                    + JSON.stringify(tok.part) + ", " + tok.format + ", " + hasAmpm + "); ";
             }
             else if (tok.type == "eltime") {
                 code += "output += runtime.eltime(culture, value, "
                     + JSON.stringify(tok.part) + ", " + tok.format + "); ";
+            }
+            else if (tok.type == "ampm") {
+                // XXX: should use culture?  As per the "spec", Excel
+                // displays whatever the token was (AM/PM, a/p etc.)
+                code += "output += time.hours < 12 ? " + JSON.stringify(tok.am) + " : " + JSON.stringify(tok.pm) + "; ";
             }
         }
 
@@ -300,12 +380,16 @@
     }
 
     var runtime = {
+
         unpackDate: unpackDate,
+
         unpackTime: unpackTime,
+
         space: function(str) {
             return "<span style='visibility: hidden'>"
                 + kendo.htmlEncode(str) + "</span>";
         },
+
         date: function(culture, d, part, length) {
             switch (part) {
               case "d":
@@ -334,12 +418,14 @@
             }
             return "##";
         },
-        time: function(culture, t, part, length) {
+
+        time: function(culture, t, part, length, ampm) {
             switch (part) {
               case "h":
+                var h = ampm ? t.hours % 12 : t.hours;
                 switch (length) {
-                  case 1: return t.hours;
-                  case 2: return padLeft(t.hours, 2, "0");
+                  case 1: return h;
+                  case 2: return padLeft(h, 2, "0");
                 }
                 break;
               case "m":
@@ -357,6 +443,7 @@
             }
             return "##";
         },
+
         eltime: function(culture, value, part, length) {
             switch (part) {
               case "h":
@@ -369,35 +456,52 @@
                 value = value * 24 * 60 * 60;
                 break;
             }
+            value |= 0;
             switch (length) {
               case 1: return value;
               case 2: return padLeft(value, 2, "0");
             }
             return "##";
         },
-        fill: function(culture, value, part, length) {
+
+        fill: function(ch) {
             // XXX: how to implement this?
         },
 
-        /* -----[ <XXX>: horrible code for a horrible format spec ]----- */
+        // formatting integer part is slightly different than decimal
+        // part, so they're implemented in two functions.  For the
+        // integer part we need to walk the value and the format
+        // backwards (right-to-left).
 
-        formatInt: function(culture, value, parts, sep) {
-            value = Math.floor(Math.abs(value)).toString(10);
+        formatInt: function(culture, value, parts, declen, sep) {
+            // toFixed is perfect for rounding our value; if there is
+            // no format for decimals, for example, we want the number
+            // rounded up.
+            value = value.toFixed(declen).replace(/\..*$/, "");
+
+            if (value === "0" && declen > 0) {
+                // if the rounded number is zero and we have decimal
+                // format, consider it a non-significant digit (Excel
+                // won't display the leading zero for 0.2 in format
+                // #.#).
+                value = "";
+            }
+
             var iv = value.length - 1;
             var result = [];
-            var len = 0;
+            var len = 0, str;
 
             function add(ch) {
-                str = ch + str;
-                len++;
-                if (sep && len % 3 === 0) {
+                if (sep && len && len % 3 === 0 && ch != " ") {
                     str = culture.numberFormat[","] + str;
                 }
+                str = ch + str;
+                len++;
             }
 
             for (var j = parts.length; --j >= 0;) {
                 var format = parts[j];
-                var str = "";
+                str = "";
                 for (var k = format.length; --k >= 0;) {
                     var chf = format.charAt(k);
                     if (iv < 0) {
@@ -414,9 +518,6 @@
                     while (iv >= 0) {
                         add(value.charAt(iv--));
                     }
-                    if (str.charAt(0) == culture.numberFormat[","]) {
-                        str = str.substr(1);
-                    }
                 }
                 result.unshift(str);
             }
@@ -424,19 +525,39 @@
             return result;
         },
 
-        formatDec: function(culture, value, format) {
-            value = kendo.util.round(value, format.length);
-            value = value.toString();
+        // for decimal part we walk in normal direction and pad on the
+        // right if required (for '0' or '?' chars).
+
+        formatDec: function(culture, value, parts, declen) {
+            value = value.toFixed(declen);
             var pos = value.indexOf(".");
             if (pos >= 0) {
                 value = value.substr(pos + 1);
             } else {
                 value = "";
             }
-            return [value];
-        }
 
-        /* -----[ </XXX> End horrible code, hopefully ]----- */
+            var iv = 0;
+            var result = [];
+
+            for (var j = 0; j < parts.length; ++j) {
+                var format = parts[j];
+                var str = "";
+                for (var k = 0; k < format.length; ++k) {
+                    var chf = format.charAt(k);
+                    if (iv < value.length) {
+                        str += value.charAt(iv++);
+                    } else if (chf == "0") {
+                        str += "0";
+                    } else if (chf == "?") {
+                        str += " ";
+                    }
+                }
+                result.push(str);
+            }
+
+            return result;
+        }
     };
 
     function padLeft(val, width, ch) {
@@ -445,30 +566,6 @@
             val = ch + val;
         }
         return val;
-    }
-
-    function padRight(val, width, ch) {
-        val += "";
-        while (val.length < width) {
-            val = val + ch;
-        }
-        return val;
-    }
-
-    function reverse(str) {
-        for (var out = "", i = str.length; --i >= 0;) {
-            out += str.charAt(i);
-        }
-        return out;
-    }
-
-    function addSeps(str, sep) {
-        var out = "";
-        while (str.length > 3) {
-            out = sep + str.substr(-3) + out;
-            str = str.substr(0, str.length - 3);
-        }
-        return str + out;
     }
 
     /* -----[ date calculations ]----- */
@@ -586,11 +683,63 @@
 
     (function(){
         //var format = "[blue][>0]#,#,.00%%_) \"something\";[red][<=0](#,#.00%)";
-        var format = "(000) 000###-####";
+        var format = "(?,??????) ###-####";
         var f = compile(format);
         console.log(f.toString());
         //console.log(f(-123456789.55778));
-        console.log(f(123456));
+        console.log(f(123456789012));
+
+        var format = "?????? \"test\" .00??";
+        var f = compile(format);
+        console.log(f.toString());
+        console.log(f(123.45));
+        console.log(f(12345.123456));
+
+        var format = "000%";
+        var f = compile(format);
+        console.log(f.toString());
+        console.log(f(0.25));
+        console.log(f(1.2));
+        console.log(f(0.05));
+
+        var format = "??????.#####000";
+        var f = compile(format);
+        console.log(f.toString());
+        console.log(f(123.45));
+        console.log(f(12345.123456));
+
+        var format = "yyyy-mm-dd hh:mm:ss AM/PM";
+        var f = compile(format);
+        console.log(f.toString());
+        console.log(f(34567.2678));
+        console.log(f(41113.60625));
+
+        var format = "[h]:mm";
+        var f = compile(format);
+        console.log(f.toString());
+        console.log(f(1.158333333));
+
+        var format = "[h] \"hours and\" mm \"minutes\"";
+        var f = compile(format);
+        console.log(f.toString());
+        console.log(f(1.158333333));
+
+        var format = "0.0,,\\m";
+        var f = compile(format);
+        console.log(f.toString());
+        console.log(f(999000));
+        console.log(f(15500000));
+        console.log(f(-7200000));
+
+        var format = "#.#";
+        var f = compile(format);
+        console.log(f.toString());
+        console.log(f(0.2));
+
+        var format = "#,#.0,";
+        var f = compile(format);
+        console.log(f.toString());
+        console.log(f(12200000));
     })();
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
