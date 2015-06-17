@@ -100,26 +100,8 @@
     <body>
         <button>Sort first 100 rows</button>
 
-        <div id="spreadsheet">
-        </div>
+        <div id="spreadsheet"></div>
 
         <script type="text/javascript" src="spreadsheet.js"></script>
-
-        <script type="text/javascript" charset="utf-8">
-
-            var el = document.querySelector('#spreadsheet .k-spreadsheet-scroller');
-
-            function passThroughEvent(e) {
-                el.scrollTop += e.deltaY;
-                el.scrollLeft += e.deltaX;
-                /*
-                var clone = new WheelEvent(e.type, e);
-                el.dispatchEvent(clone);
-                */
-                e.preventDefault();
-            }
-
-            document.querySelector("#spreadsheet .k-spreadsheet-fixed-container").addEventListener("wheel", passThroughEvent);
-        </script>
     </body>
 </html>
