@@ -89,7 +89,7 @@
             rowHeight: 20,
             columnWidth: 64,
             headerHeight: 20,
-            headerWidth: 64
+            headerWidth: 32
         }
     });
 
