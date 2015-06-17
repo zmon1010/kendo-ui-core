@@ -793,6 +793,21 @@
         equal(firstItem.value, 0);
     });
 
+    test("filter model has null value when the option label is selected and the values contain zero", function() {
+        filterMenu = setup(dom, {dataSource: dataSource, values: [ { value: 0, text: "foo" },{ value: 42, text: "bar" }]});
+        var dropdownlist1 = filterMenu.form.find("select").eq(1).data("kendoDropDownList");
+        dropdownlist1.select(0);
+        dropdownlist1.trigger("change");
+
+        var dropdownlist2 = filterMenu.form.find("select").eq(4).data("kendoDropDownList");
+        dropdownlist2.select(0);
+        dropdownlist2.trigger("change");
+
+        equal(dropdownlist2.select(), 0);
+        equal(filterMenu.filterModel.filters[1].value, null);
+    });
+
+
     test("submitting the form sets DataSource filter if values are set ", function() {
         filterMenu = setup(dom, {dataSource: dataSource, values: [ { text: "foo", value: 0 }, { text:"bar", value: 1 } ]});
 
