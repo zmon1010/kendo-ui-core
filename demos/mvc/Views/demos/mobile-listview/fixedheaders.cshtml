@@ -3,10 +3,9 @@
 </div>
 
 <script type="text/x-kendo-template" id="listviewHeadersTemplate">
-    <img class="item-photo" src="${url}" />
-    <h3 class="item-title">${name}</h3>
-    <p class="item-info">${description}</p>
-    <a data-role="button" class="details-link">Order</a>
+    <img class="km-thumbnail" src="${url}" />
+    <h4>${name}</h4>
+    <p>${description}</p>
 </script>
 
 <script>
@@ -28,40 +27,3 @@
         });
     }
 </script>
-
-<style>
-.item-photo {
-    width: 4em;
-    height: 4em;
-    float: left;
-    margin: .5em 0;
-    border: 1px solid rgba(0,0,0,.2);
-    -webkit-border-radius: 4em;
-    border-radius: 4em;
-}
-
-#fixed-listview .item-title {
-	float: left;
-	font-size: 1em;
-	line-height: 1.4em;
-	margin: 1.3em 1em 0 .6em;
-	width: 50%;
-}
-#fixed-listview .item-info {
-	float: left;
-	font-size: .7em;
-	line-height: 1em;
-    margin: 0 0 0 .95em;
-    width: 45%;
-}
-
-.details-link {
-    margin-top: -1.2em;
-    position: absolute;
-    right: 0.6em;
-    top: 50%;
-}
-.km-listview .km-list {
-    margin: 0;
-}
-</style>

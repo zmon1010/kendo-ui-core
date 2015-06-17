@@ -2,10 +2,21 @@
     <form data-bind="events: { submit: add }">
         <ul data-role="listview" data-style="inset" data-type="group">
             <li>
+                Information
+                <ul data-role="listview">
+                     <li>
+                          Kendo UI Mobile ListView supports the
+                          <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/source">source</a>,
+                          <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/events">events</a> and
+                          <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/visible">visible</a> bindings.
+                     </li>
+                </ul>
+            </li>
+            <li>
                 Add new item
                 <ul>
                     <li><label class="km-label-above">Item name <input type="text" placeholder="e.g. Chair" data-bind="value: newItemValue" /></label></li>
-                    <li><i></i><button type="submit" class=" km-justified km-widget km-button km-primary">Add</button></li>
+                    <li><i></i><button type="submit" class="km-justified km-widget km-button km-primary km-small">Add</button></li>
                 </ul>
                 
             </li>
@@ -16,34 +27,10 @@
             </li>
             <li>
                 Events
-                <ul data-role="listview">
-                    <li><div class="console"></div></li>
-                </ul>
-            </li>
-            <li>
-                <ul data-role="listview">
-                     <li>
-                          Kendo UI Mobile ListView supports the
-                          <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/source">source</a>,
-                          <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/events">events</a> and
-                          <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/mvvm/bindings/visible">visible</a> bindings.
-                     </li>
-                </ul>
             </li>
         </ul>
+        <div class="console"></div>
     </form>
-    <style>
-        .km-ios .km-listview .km-button,
-        .km-ios7 .km-listview .km-button,
-        .km-blackberry .km-listview .km-button,
-        .km-android .km-listview .km-button {
-                width: 90%;
-            }
-        .km-flat .km-listview .km-button,
-        .km-wp .km-listview .km-button {
-                width: 100%;
-            }
-    </style>
 </div>
 
 <script>

@@ -8,8 +8,8 @@
 <script id="listview-template" type="text/x-kendo-template">
     <div data-bind="events: { click: onItemClick }">
         <img data-src="#= CoverURL #" width="30%" class="resimgs item-cover" />
-        <h3 class="magazine-name">#: Name #</h3>
-        <time class="magazine-time">#: Published() #</time>
+        <h4>#: Name #</h4>
+        <p>#: Published() #</p>
     </div>
 </script>
 
@@ -101,18 +101,5 @@
     .item-cover {
         float: left;
         margin-right: 2.5%;
-    }
-
-    .magazine-name {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-
-    .magazine-time {
-        color: #666;
-    }
-
-    .detailed-title {
-        padding: 20px;
     }
 </style>
