@@ -165,8 +165,8 @@
     display: none;
 }
 
-.km-nova .km-navbar .km-button.view-source-code {
-  background-color: #141c2a;
+.km-nova .km-navbar .km-button[data-click="goToSourceCode"] {
+  background-color: rgba(0,0,0,.3);
 }
 #source-code-container {
     overflow: auto;
