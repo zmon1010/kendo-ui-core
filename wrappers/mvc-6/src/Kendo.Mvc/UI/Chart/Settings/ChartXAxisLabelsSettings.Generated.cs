@@ -31,7 +31,7 @@ namespace Kendo.Mvc.UI
 
         public ChartXAxisLabelsPaddingSettings Padding { get; } = new ChartXAxisLabelsPaddingSettings();
 
-        public double? Rotation { get; set; }
+        public ChartXAxisLabelsRotationSettings Rotation { get; } = new ChartXAxisLabelsRotationSettings();
 
         public double? Skip { get; set; }
 
@@ -106,9 +106,10 @@ namespace Kendo.Mvc.UI
                 settings["padding"] = padding;
             }
 
-            if (Rotation.HasValue)
+            var rotation = Rotation.Serialize();
+            if (rotation.Any())
             {
-                settings["rotation"] = Rotation;
+                settings["rotation"] = rotation;
             }
 
             if (Skip.HasValue)

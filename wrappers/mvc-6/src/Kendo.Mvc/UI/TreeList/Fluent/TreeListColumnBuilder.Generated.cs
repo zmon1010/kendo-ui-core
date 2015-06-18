@@ -185,6 +185,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// The pixel screen width below which the column will be hidden. The setting takes precedence over the hidden setting,
+		/// so the two should not be used at the same time.
+        /// </summary>
+        /// <param name="value">The value for MinScreenWidth</param>
+        public TreeListColumnBuilder<T> MinScreenWidth(double value)
+        {
+            Container.MinScreenWidth = value;
+            return this;
+        }
+
+        /// <summary>
         /// If set to true the user can click the column header and sort the treelist by the column field when sorting is enabled. If set to false sorting will
 		/// be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.
         /// </summary>

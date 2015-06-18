@@ -25,6 +25,8 @@ namespace Kendo.Mvc.UI
 
         public bool? Navigatable { get; set; }
 
+        public GridNoRecordsSettings<T> NoRecords { get; } = new GridNoRecordsSettings<T>();
+
         public GridPdfSettings<T> Pdf { get; } = new GridPdfSettings<T>();
 
         public GridSortableSettings<T> Sortable { get; } = new GridSortableSettings<T>();
@@ -83,6 +85,16 @@ namespace Kendo.Mvc.UI
             if (Navigatable.HasValue)
             {
                 settings["navigatable"] = Navigatable;
+            }
+
+            var noRecords = NoRecords.Serialize();
+            if (noRecords.Any())
+            {
+                settings["noRecords"] = noRecords;
+            }
+            else if (NoRecords.Enabled == true)
+            {
+                settings["noRecords"] = true;
             }
 
             var pdf = Pdf.Serialize();

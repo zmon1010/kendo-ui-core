@@ -168,6 +168,39 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
+        /// If set to true and current view contains no records, message similar to "No records available" will be displayed. By default this option is disabled.
+        /// </summary>
+        /// <param name="configurator">The configurator for the norecords setting.</param>
+        public GridBuilder<T> NoRecords(Action<GridNoRecordsSettingsBuilder<T>> configurator)
+        {
+            Container.NoRecords.Enabled = true;
+
+            Container.NoRecords.Grid = Container;
+            configurator(new GridNoRecordsSettingsBuilder<T>(Container.NoRecords));
+
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true and current view contains no records, message similar to "No records available" will be displayed. By default this option is disabled.
+        /// </summary>
+        public GridBuilder<T> NoRecords()
+        {
+            Container.NoRecords.Enabled = true;
+            return this;
+        }
+
+        /// <summary>
+        /// If set to true and current view contains no records, message similar to "No records available" will be displayed. By default this option is disabled.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the norecords option.</param>
+        public GridBuilder<T> NoRecords(bool enabled)
+        {
+            Container.NoRecords.Enabled = enabled;
+            return this;
+        }
+
+        /// <summary>
         /// Configures the Kendo UI Grid PDF export settings.
         /// </summary>
         /// <param name="configurator">The configurator for the pdf setting.</param>

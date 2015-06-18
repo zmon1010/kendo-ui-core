@@ -20,6 +20,16 @@ namespace Kendo.Mvc.UI.Fluent
             private set;
         }
 
+        /// <summary>
+        /// The rotation angle of the labels. By default the labels are not rotated.
+        /// </summary>
+        /// <param name="value">The value for Rotation</param>
+        public ChartCategoryAxisLabelsSettingsBuilder Rotation(double value)
+        {
+            Container.Rotation.Angle = value;
+            return this;
+        }
+
         // Place custom settings here
     }
 }

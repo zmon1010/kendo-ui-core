@@ -344,7 +344,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the grid filter menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the grid filter menu is initialized, when it is opened for the first time.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the filterMenuInit event.</param>
         public GridEventBuilder FilterMenuInit(string handler)
@@ -355,7 +355,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Fired when the grid filter menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// Fired when the grid filter menu is initialized, when it is opened for the first time.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The handler code wrapped in a text tag.</param>
         public GridEventBuilder FilterMenuInit(Func<object, object> handler)

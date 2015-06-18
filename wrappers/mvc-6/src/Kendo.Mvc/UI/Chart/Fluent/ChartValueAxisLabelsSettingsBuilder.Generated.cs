@@ -100,12 +100,15 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// The rotation angle (in degrees) of the labels. By default the labels are not rotated.Angles increase clockwise and zero is to the left. Negative values are acceptable.
+        /// The rotation angle (in degrees) of the labels. By default the labels are not rotated. Angles increase clockwise and zero is to the left. Negative values are acceptable. Can be set to "auto" if the axis is horizontal in which case the labels will be rotated only if the slot size is not sufficient for the entire labels.
         /// </summary>
-        /// <param name="value">The value for Rotation</param>
-        public ChartValueAxisLabelsSettingsBuilder Rotation(double value)
+        /// <param name="configurator">The configurator for the rotation setting.</param>
+        public ChartValueAxisLabelsSettingsBuilder Rotation(Action<ChartValueAxisLabelsRotationSettingsBuilder> configurator)
         {
-            Container.Rotation = value;
+
+            Container.Rotation.Chart = Container.Chart;
+            configurator(new ChartValueAxisLabelsRotationSettingsBuilder(Container.Rotation));
+
             return this;
         }
 

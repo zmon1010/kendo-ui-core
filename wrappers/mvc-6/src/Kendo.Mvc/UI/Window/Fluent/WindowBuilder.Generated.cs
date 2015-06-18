@@ -30,7 +30,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Explicitly states whether content iframe should be created.
+        /// Explicitly states whether a content iframe should be created. For more information, please read Using iframes.
         /// </summary>
         /// <param name="value">The value for Iframe</param>
         public WindowBuilder Iframe(bool value)
