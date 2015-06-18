@@ -3144,10 +3144,15 @@ var __meta__ = {
 
         _deleteRecurringDialog: function(model) {
             var that = this;
-
             var currentModel = model;
+            var editable = that.options.editable;
+            var deleteOccurrence;
+            var deleteSeries;
+            var deleteOccurrenceConfirmation;
+            var deleteSeriesConfirmation;
+            var editRecurringMode = isPlainObject(editable) ? editable.editRecurringMode : "dialog";
 
-            var deleteOccurrence = function() {
+            deleteOccurrence = function() {
                 var occurrence = currentModel.recurrenceId ? currentModel : currentModel.toOccurrence();
                 var head = that.dataSource.get(occurrence.recurrenceId);
 
@@ -3155,7 +3160,7 @@ var __meta__ = {
                 that._removeEvent(occurrence);
             };
 
-            var deleteSeries = function() {
+            deleteSeries = function() {
                 if (currentModel.recurrenceId) {
                     currentModel = that.dataSource.get(currentModel.recurrenceId);
                 }
@@ -3163,8 +3168,26 @@ var __meta__ = {
                 that._removeEvent(currentModel);
             };
 
+            if (editRecurringMode != "dialog") {
+                deleteOccurrenceConfirmation = function() {
+                    that._confirmation(function(cancel) {
+                        if (!cancel) {
+                            deleteOccurrence();
+                        }
+                    }, currentModel);
+                };
+
+                deleteSeriesConfirmation = function() {
+                    that._confirmation(function(cancel) {
+                        if (!cancel) {
+                            deleteSeries();
+                        }
+                    }, currentModel);
+                };
+            }
+
             var recurrenceMessages = that.options.messages.recurrenceMessages;
-            that._showRecurringDialog(model, deleteOccurrence, deleteSeries, {
+            that._showRecurringDialog(model, deleteOccurrenceConfirmation || deleteOccurrence, deleteSeriesConfirmation || deleteSeries, {
                 title: recurrenceMessages.deleteWindowTitle,
                 text: recurrenceMessages.deleteRecurring ? recurrenceMessages.deleteRecurring : DELETERECURRING,
                 occurrenceText: recurrenceMessages.deleteWindowOccurrence,

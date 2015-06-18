@@ -273,8 +273,71 @@
         });
 
         scheduler.editEvent(scheduler.dataSource.view()[0].uid);
-     //   scheduler._editor.container.removeAttr("data-uid");
 
         scheduler.cancelEvent();
     })
+
+    test("Remove recurring event opens delete recurring dialog when editRecurringMode is set to series", 1, function() {
+        var scheduler = setup({
+            dataSource: {
+                data: [ { recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+            },
+            editable: {
+                editRecurringMode: "series"
+            }
+        });
+
+        scheduler.removeEvent(scheduler.wrapper.find(".k-event:first").data("uid"));
+
+        equal($(".k-popup-message").text(), "Are you sure you want to delete this event?");
+    });
+
+    test("Remove recurring event opens delete recurring dialog when editRecurringMode is set to occurrence", 1, function() {
+        var scheduler = setup({
+            dataSource: {
+                data: [ { recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+            },
+            editable: {
+                editRecurringMode: "occurrence"
+            }
+        });
+
+        scheduler.removeEvent(scheduler.wrapper.find(".k-event:first").data("uid"));
+
+        equal($(".k-popup-message").text(), "Are you sure you want to delete this event?");
+    });
+
+    test("Remove recurring event does not open delete recurring dialog when editRecurringMode is set to series", 2, function() {
+        var scheduler = setup({
+            dataSource: {
+                data: [ { recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+            },
+            editable: {
+                editRecurringMode: "series",
+                confirmation: false
+            }
+        });
+
+        scheduler.removeEvent(scheduler.wrapper.find(".k-event:first").data("uid"));
+
+        equal($(".k-popup-message").length, 0);
+        equal($(".k-event").length, 0);
+    });
+
+    test("Remove recurring event does not open delete recurring dialog when editRecurringMode is set to occurrence", 2, function() {
+        var scheduler = setup({
+            dataSource: {
+                data: [ { recurrenceRule: "FREQ=DAILY", start: new Date(), end: new Date(), isAllDay: true, title: "my event" } ]
+            },
+            editable: {
+                editRecurringMode: "occurrence",
+                confirmation: false
+            }
+        });
+
+        scheduler.removeEvent(scheduler.wrapper.find(".k-event:first").data("uid"));
+
+        equal($(".k-popup-message").length, 0);
+        equal($(".k-event").length, 0);
+    });
 })();
