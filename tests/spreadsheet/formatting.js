@@ -139,6 +139,10 @@
         equal(format(t1), "Sunday, 21 August 1994");
         equal(format(t2), "Monday, 23 July 2012");
 
+        var format = F.compile("dddd, d mmmm yyyy");
+        equal(format(t1, kendo.getCulture("de-DE")), "Sonntag, 21 August 1994");
+        equal(format(t2, kendo.getCulture("de-DE")), "Montag, 23 Juli 2012");
+
         var format = F.compile('h "hours", m "minutes and" s "seconds"');
         equal(format(t1), "6 hours, 25 minutes and 37 seconds");
         equal(format(t2), "14 hours, 33 minutes and 0 seconds");
@@ -152,7 +156,7 @@
         equal(format(1.158333333), "27 hours and 48 minutes");
     });
 
-    test('num+ and text sections', function(){
+    test("num+ and text sections", function(){
         var format = F.compile('[Red]+0.0;;;"Some text:" @');
         equal(format(10), "<span style='color: red'>+10.0</span>");
         equal(format(-20), "");
@@ -160,12 +164,22 @@
         equal(format("Blah"), "Some text: Blah");
     });
 
-    test('all sections', function(){
+    test("all sections", function(){
         var format = F.compile('[Green]_-0.0_);[Red](-0.0);[Blue]"zero";"Some text:" @');
         equal(format(10), "<span style='color: green'><span style='visibility: hidden'>-</span>10.0<span style='visibility: hidden'>)</span></span>");
         equal(format(-20), "<span style='color: red'>(-20.0)</span>");
         equal(format(0), "<span style='color: blue'>zero</span>");
         equal(format("Blah"), "Some text: Blah");
+    });
+
+    test("conditionals", function(){
+        var format = F.compile('[<10]"less than 10";[<20]"less than 20";[<30]"less than 30";[=30]"thirty";[>30]"more than thirty:" 0,0;"Some text:" @');
+        equal(format(1), "less than 10");
+        equal(format(11), "less than 20");
+        equal(format(21), "less than 30");
+        equal(format(30), "thirty");
+        equal(format(123456), "more than thirty: 123,456");
+        equal(format("foo"), "Some text: foo");
     });
 
 })();

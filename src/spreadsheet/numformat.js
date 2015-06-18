@@ -14,7 +14,7 @@
     var calc = kendo.spreadsheet.calc;
 
     var RX_COLORS = /^\[(black|green|white|blue|magenta|yellow|cyan|red)\]/i;
-    var RX_CONDITION = /^\[(<=|>=|<>|<|>|=)([0-9.])\]/;
+    var RX_CONDITION = /^\[(<=|>=|<>|<|>|=)([0-9.]+)\]/;
 
     /* The proper amount of suffering for whoever designed the Excel
        Custom Number Format would be to have him implement the
