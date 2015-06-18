@@ -84,7 +84,7 @@
             }
 
             if (typeof row === "string") {
-                var ref = kendo.spreadsheet.calc.parseReference(row);
+                ref = kendo.spreadsheet.calc.parseReference(row);
                 ref.sheet = null;
             } else {
                 if (!numRows) {
@@ -133,7 +133,10 @@
 
         select: function(ref) {
             if (ref) {
-                this._selection = this._ref(ref);
+                var mergedCells = this._mergedCells;
+                this._selection = this._ref(ref).map(function(ref) {
+                    return ref.toRangeRef().union(mergedCells);
+                });
             }
 
             return this._selection;
