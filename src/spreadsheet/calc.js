@@ -53,19 +53,28 @@
         return parseFloat(str) - 1;
     }
 
-    // "Sheet1!C2" -> { sheet: "Sheet1", row: 1, col: 2, rel: 3 } (spreadsheet.CellRef)
     function parseReference(name) {
         var m;
-        if ((m = /^((.+)!)?(\$)?([A-Z]+)(\$)?([0-9]+)$/i.exec(name))) {
-            var sheet  = m[1] && m[2];
-            var relcol = m[3] ? 0 : 1, col = getcol(m[4]);
-            var relrow = m[5] ? 0 : 2, row = getrow(m[6]);
-            return new spreadsheet.CellRef(row, col, relcol | relrow).setSheet(sheet, !!sheet);
+        if ((m = /^\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
+            return new spreadsheet.CellRef(getrow(m[2]), getcol(m[1]), 0);
         }
-        if ((m = /^((.*)!)?(.+)$/i.exec(name))) {
-            var sheet  = m[1] && m[2];
-            var name = m[3];
-            return new spreadsheet.NameRef(name).setSheet(sheet, !!sheet);
+        if ((m = /^\$?([A-Z]+)\$?([0-9]+):\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
+            return new spreadsheet.RangeRef(
+                new spreadsheet.CellRef(getrow(m[2]), getcol(m[1]), 0),
+                new spreadsheet.CellRef(getrow(m[4]), getcol(m[3]), 0)
+            );
+        }
+        if ((m = /^\$?([A-Z]+):\$?([A-Z]+)$/i.exec(name))) {
+            return new spreadsheet.RangeRef(
+                new spreadsheet.CellRef(-Infinity, getcol(m[1]), 0),
+                new spreadsheet.CellRef(+Infinity, getcol(m[2]), 0)
+            );
+        }
+        if ((m = /^\$?([0-9]+):\$?([0-9]+)$/i.exec(name))) {
+            return new spreadsheet.RangeRef(
+                new spreadsheet.CellRef(getrow(m[1]), -Infinity, 0),
+                new spreadsheet.CellRef(getrow(m[2]), +Infinity, 0)
+            );
         }
     }
 
@@ -117,25 +126,37 @@
             );
         }
 
+        function maybeRef(name) {
+            var m;
+            if ((m = /^((.+)!)?(\$)?([A-Z]+)(\$)?([0-9]+)$/i.exec(name))) {
+                var thesheet  = m[1] && m[2];
+                var relcol = m[3] ? 0 : 1, thecol = getcol(m[4]);
+                var relrow = m[5] ? 0 : 2, therow = getrow(m[6]);
+                if (relcol) {
+                    thecol -= col;
+                }
+                if (relrow) {
+                    therow -= row;
+                }
+                return new spreadsheet.CellRef(therow, thecol, relcol | relrow)
+                    .setSheet(thesheet || sheet, !!thesheet);
+            }
+            if ((m = /^((.*)!)?(.+)$/i.exec(name))) {
+                var thesheet  = m[1] && m[2];
+                var name = m[3];
+                return new spreadsheet.NameRef(name)
+                    .setSheet(thesheet || sheet, !!thesheet);
+            }
+        }
+
         function parseSymbol(tok, addRef) {
             if (tok.upper == "TRUE" || tok.upper == "FALSE") {
                 return tok.upper == "TRUE" ? TRUE : FALSE;
             }
-            var ref = parseReference(tok.value);
+            var ref = maybeRef(tok.value);
             if (ref) {
                 if (addRef) {
                     addReference(ref);
-                }
-                if (ref.sheet == null) {
-                    ref.sheet = sheet;
-                }
-                if (ref.ref == "cell") {
-                    if (ref.rel & 1) {
-                        ref.col -= col;
-                    }
-                    if (ref.rel & 2) {
-                        ref.row -= row;
-                    }
                 }
                 return ref;
             }

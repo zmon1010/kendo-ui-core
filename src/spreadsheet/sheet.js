@@ -79,8 +79,7 @@
             var ref = null;
 
             if (typeof row === "string") {
-               ref = kendo.spreadsheet.calc.parse(this._name, 0, 0, "=" + row).refs[0];
-               ref.sheet = null;
+               ref = kendo.spreadsheet.calc.parseReference(row);
             } else {
                 if (!numRows) {
                     numRows = 1;
