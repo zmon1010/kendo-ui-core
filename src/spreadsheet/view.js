@@ -237,7 +237,17 @@
         addCell: function(table, row, cell) {
             var formula = cell.formula;
 
-            var td = table.addCell(row, cell.value, { backgroundColor: cell.background } );
+            var style = {};
+
+            var styleMap = {
+                background: "backgroundColor"
+            };
+
+            Object.keys(cell.style).forEach(function(key) {
+               style[styleMap[key]] = cell.style[key];
+            });
+
+            var td = table.addCell(row, cell.value, style);
 
             if (formula) {
                 formula.exec(this._context, this._sheet.name(), cell.row, cell.col, function(value) {

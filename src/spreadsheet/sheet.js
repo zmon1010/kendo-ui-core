@@ -13,7 +13,7 @@
 
             this._values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
             this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
-            this._backgrounds = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
+            this._styles = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "{}");
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
             this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth);
             this._mergedCells = [];
@@ -115,7 +115,7 @@
 
                 var values = this._values.iterator(startCellIndex, endCellIndex);
                 var formulas = this._formulas.iterator(startCellIndex, endCellIndex);
-                var backgrounds = this._backgrounds.iterator(startCellIndex, endCellIndex);
+                var styles = this._styles.iterator(startCellIndex, endCellIndex);
 
                 for (var ri = ref.topLeft.row; ri <= ref.bottomRight.row; ri ++) {
                     var index = this._grid.index(ri, ci);
@@ -125,7 +125,7 @@
                         col: ci,
                         value: values.at(index),
                         formula: formulas.at(index),
-                        background: backgrounds.at(index)
+                        style: JSON.parse(styles.at(index))
                     });
                 }
             }

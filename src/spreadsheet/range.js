@@ -34,7 +34,23 @@
             return this._property(this._sheet._values, value);
         },
         background: function(value) {
-            return this._property(this._sheet._backgrounds, value);
+            var style = this._style();
+
+            if (value !== undefined) {
+                style.background = value;
+                this._style(style);
+
+                return this;
+            }
+
+            return style.background;
+        },
+        _style: function(value) {
+            if (value !== undefined) {
+                value = JSON.stringify(value);
+                return this._property(this._sheet._styles, value);
+            }
+            return JSON.parse(this._property(this._sheet._styles, value));
         },
 
         formula: function(value) {
