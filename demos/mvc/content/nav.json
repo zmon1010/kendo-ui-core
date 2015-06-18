@@ -3912,7 +3912,6 @@
   {
     "text": "Responsive Panel",
     "name": "responsive-panel",
-    "new": "true",
     "api": "web/responsivepanel",
     "documentation": {
        "kendo-ui": "getting-started/web/responsivepanel/overview",
