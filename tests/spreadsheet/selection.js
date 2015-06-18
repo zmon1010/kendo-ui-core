@@ -126,4 +126,42 @@
         equal(tableA1C3.attr.className, "k-spreadsheet-selection");
     });
 
+    test("selection sets the selected headers for range and cell", function() {
+        sheet.range("A1:B2,D3").select();
+
+        var selectedHeaders = sheet.selectedHeaders();
+
+        equal(Object.keys(selectedHeaders.cols).length, 3);
+        equal(selectedHeaders.cols[0], "active")
+        equal(selectedHeaders.cols[1], "active")
+        equal(selectedHeaders.cols[3], "active")
+
+        equal(Object.keys(selectedHeaders.rows).length, 3);
+        equal(selectedHeaders.rows[0], "active")
+        equal(selectedHeaders.rows[1], "active")
+        equal(selectedHeaders.rows[2], "active")
+    });
+
+    test("selection sets the selected headers for range and cell", function() {
+        sheet.range("A3:C7,10:10").select();
+
+        var selectedHeaders = sheet.selectedHeaders();
+
+        equal(Object.keys(selectedHeaders.cols).length, 3);
+        equal(selectedHeaders.cols[0], "active")
+        equal(selectedHeaders.cols[1], "active")
+        equal(selectedHeaders.cols[2], "active")
+        equal(selectedHeaders.allRows, false);
+
+        equal(Object.keys(selectedHeaders.rows).length, 6);
+        equal(selectedHeaders.rows[2], "active")
+        equal(selectedHeaders.rows[3], "active")
+        equal(selectedHeaders.rows[4], "active")
+        equal(selectedHeaders.rows[5], "active")
+        equal(selectedHeaders.rows[6], "active")
+
+        equal(selectedHeaders.rows[9], "selected")
+        equal(selectedHeaders.allCols, true);
+    });
+
 })();

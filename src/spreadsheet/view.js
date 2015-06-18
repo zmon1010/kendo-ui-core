@@ -39,12 +39,12 @@
             this.trs.push(tr);
         },
 
-        addCell: function(rowIndex, text, style) {
+        addCell: function(rowIndex, text, style, className) {
             if (text === null) {
                 text = "";
             }
 
-            var td = kendo.dom.element("td", { style: style }, [ kendo.dom.text(text) ]);
+            var td = kendo.dom.element("td", { style: style, className: className }, [ kendo.dom.text(text) ]);
             this.trs[rowIndex].children.push(td);
             return td;
         },
@@ -193,9 +193,11 @@
             }.bind(this));
 
             var children = [];
+            var selectedHeaders = sheet.selectedHeaders();
 
             children.push(table.toDomTree(view.columnOffset, view.rowOffset));
 
+            console.log(selectedHeaders);
             if (grid.hasRowHeader) {
                 var rowHeader = new HtmlTable(this.rowHeight, grid.headerWidth);
                 rowHeader.addColumn(grid.headerWidth);
@@ -205,7 +207,8 @@
                 });
 
                 sheet.forEach(view.ref.leftColumn(), function(cell) {
-                    rowHeader.addCell(cell.row - view.ref.topLeft.row, cell.row + 1);
+                    var className = selectedHeaders.rows[cell.row] || (selectedHeaders.allRows ? "active" : "");
+                    rowHeader.addCell(cell.row - view.ref.topLeft.row, cell.row + 1, {}, className);
                 });
 
                 children.push(rowHeader.toDomTree(0, view.rowOffset, "k-spreadsheet-row-header"));
@@ -221,7 +224,8 @@
                 columnHeader.addRow(grid.headerHeight);
 
                 sheet.forEach(view.ref.topRow(), function(cell) {
-                    columnHeader.addCell(0, kendo.spreadsheet.Ref.display(null, Infinity, cell.col));
+                    var className = selectedHeaders.cols[cell.col] || (selectedHeaders.allCols ? "active" : "");
+                    columnHeader.addCell(0, kendo.spreadsheet.Ref.display(null, Infinity, cell.col), {}, className);
                 });
 
                 children.push(columnHeader.toDomTree(view.columnOffset, 0, "k-spreadsheet-column-header"));

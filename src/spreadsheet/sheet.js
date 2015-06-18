@@ -139,6 +139,55 @@
             }
 
             return this._selection;
+        },
+
+        selectedHeaders: function() {
+            var selection = this.select();
+
+            var rows = {};
+            var cols = {};
+            var allCols = false;
+            var allRows = false;
+
+            selection.forEach(function(ref) {
+                var rowState = "active";
+                var colState = "active";
+                ref = ref.toRangeRef();
+
+                var bottomRight = ref.bottomRight;
+
+                var rowSelection = bottomRight.col === Infinity;
+                var colSelection = bottomRight.row === Infinity;
+
+                if (colSelection) { //column selection
+                    allRows = true;
+                    colState = "selected";
+                }
+
+                if (rowSelection) { //row selection
+                    allCols = true;
+                    rowState = "selected";
+                }
+
+                if (!colSelection) { //column selection
+                    for (var i = ref.topLeft.row; i <= bottomRight.row; i++) {
+                        rows[i] = rowState;
+                    }
+                }
+
+                if (!rowSelection) {
+                    for (var i = ref.topLeft.col; i <= bottomRight.col; i++) {
+                        cols[i] = colState;
+                    }
+                }
+            });
+
+            return {
+                rows: rows,
+                cols: cols,
+                allRows: allRows,
+                allCols: allCols
+            };
         }
     });
 
