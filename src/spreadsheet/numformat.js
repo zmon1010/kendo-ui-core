@@ -76,15 +76,15 @@
             sections[1].cond = { op: "<", value: 0 };
             addPlainText();
         }
-        else if (sections.length == 3) {
+        else if (sections.length >= 3) {
             sections[0].cond = { op: ">", value: 0 };
             sections[1].cond = { op: "<", value: 0 };
             sections[2].cond = { op: "=", value: 0 };
             addPlainText();
-        }
-        else if (sections.length >= 4) {
-            sections[3].cond = "text";
-            sections = sections.slice(0, 3);
+            if (sections.length > 3) {
+                sections[3].cond = "text";
+                sections = sections.slice(0, 4);
+            }
         }
 
         return sections;
@@ -239,8 +239,10 @@
             code += "if (typeof value == 'number') { ";
         }
         else if (format.cond) {
+            var op = format.cond.op == "=" ? "==" : format.cond.op;
             code += "if (typeof value == 'number' && value "
-                + format.cond.op + " " + format.cond.value + ") { ";
+                + op + " " + format.cond.value + ") { ";
+            code += "value = Math.abs(value); ";
         }
 
         if (format.color) {
@@ -479,12 +481,13 @@
             // rounded up.
             value = value.toFixed(declen).replace(/\..*$/, "");
 
-            if (value === "0" && declen > 0) {
+            if (declen > 0) {
                 // if the rounded number is zero and we have decimal
                 // format, consider it a non-significant digit (Excel
                 // won't display the leading zero for 0.2 in format
                 // #.#).
-                value = "";
+                if (value === "0") { value = ""; }
+                else if (value === "-0") { value = "-"; }
             }
 
             var iv = value.length - 1;
@@ -532,7 +535,7 @@
             value = value.toFixed(declen);
             var pos = value.indexOf(".");
             if (pos >= 0) {
-                value = value.substr(pos + 1);
+                value = value.substr(pos + 1).replace(/0+$/, "");
             } else {
                 value = "";
             }
@@ -679,67 +682,11 @@
         };
     }
 
-    ///
+    /* -----[ exports ]----- */
 
-    (function(){
-        //var format = "[blue][>0]#,#,.00%%_) \"something\";[red][<=0](#,#.00%)";
-        var format = "(?,??????) ###-####";
-        var f = compile(format);
-        console.log(f.toString());
-        //console.log(f(-123456789.55778));
-        console.log(f(123456789012));
-
-        var format = "?????? \"test\" .00??";
-        var f = compile(format);
-        console.log(f.toString());
-        console.log(f(123.45));
-        console.log(f(12345.123456));
-
-        var format = "000%";
-        var f = compile(format);
-        console.log(f.toString());
-        console.log(f(0.25));
-        console.log(f(1.2));
-        console.log(f(0.05));
-
-        var format = "??????.#####000";
-        var f = compile(format);
-        console.log(f.toString());
-        console.log(f(123.45));
-        console.log(f(12345.123456));
-
-        var format = "yyyy-mm-dd hh:mm:ss AM/PM";
-        var f = compile(format);
-        console.log(f.toString());
-        console.log(f(34567.2678));
-        console.log(f(41113.60625));
-
-        var format = "[h]:mm";
-        var f = compile(format);
-        console.log(f.toString());
-        console.log(f(1.158333333));
-
-        var format = "[h] \"hours and\" mm \"minutes\"";
-        var f = compile(format);
-        console.log(f.toString());
-        console.log(f(1.158333333));
-
-        var format = "0.0,,\\m";
-        var f = compile(format);
-        console.log(f.toString());
-        console.log(f(999000));
-        console.log(f(15500000));
-        console.log(f(-7200000));
-
-        var format = "#.#";
-        var f = compile(format);
-        console.log(f.toString());
-        console.log(f(0.2));
-
-        var format = "#,#.0,";
-        var f = compile(format);
-        console.log(f.toString());
-        console.log(f(12200000));
-    })();
+    kendo.spreadsheet.formatting = {
+        compile: compile,
+        runtime: runtime
+    };
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
