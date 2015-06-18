@@ -227,11 +227,11 @@ namespace :generate do
             components = markdown.map { |filename| CodeGen::MarkdownParser.read(filename, CodeGen::MVC6::Wrappers::Component) }
                 .sort { |a, b| a.name <=> b.name }
 
+            generator = CodeGen::MVC6::Wrappers::Generator.new('wrappers/mvc-6/src/Kendo.Mvc/UI')
             components.each do |component|
                 import_metadata(component)
                 import_metadata(component, "lib/mvc-6/config/")
 
-                generator = CodeGen::MVC6::Wrappers::Generator.new('wrappers/mvc-6/src/Kendo.Mvc/UI')
                 generator.component(component)
             end
 

@@ -2,9 +2,12 @@ module CodeGen::MVC6::Wrappers
 
     class Generator
         include Rake::DSL
+        include CodeGen::MVC6::Wrappers::ChartGenerator
 
         def initialize(path)
             @path = path
+
+            generate_chart
         end
 
         def component(component)

@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
 
 namespace Kendo.Mvc.UI.Fluent
 {
     /// <summary>
-    /// Defines the fluent API for configuring ChartTitleSettings
+    /// Defines the fluent API for configuring Chart series defaults settings
     /// </summary>
     public partial class ChartSeriesDefaultsSettingsBuilder
-        
     {
         public ChartSeriesDefaultsSettingsBuilder(ChartSeriesDefaultsSettings container)
         {
@@ -262,5 +260,7 @@ namespace Kendo.Mvc.UI.Fluent
         {
             return new ChartSeriesBuilder(Container.HorizontalWaterfall);
         }
+
     }
 }
+
