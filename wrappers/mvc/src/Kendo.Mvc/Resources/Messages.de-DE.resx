@@ -586,7 +586,7 @@
     <value>Jahr(e)</value>
   </data>
   <data name="Scheduler_Recurrence_EditRecurring" xml:space="preserve">
-    <value>Möchten Sie nur diesen Termin oder alle Wiederholungen löschen?</value>
+    <value>Möchten Sie nur diesen Termin oder alle Wiederholungen bearbeiten?</value>
   </data>
   <data name="Scheduler_Recurrence_EditWindowOccurrence" xml:space="preserve">
     <value>Aktuelles Ereignis bearbeiten</value>
