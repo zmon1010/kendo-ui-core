@@ -104,18 +104,12 @@
             var mergedCells = this._sheet._mergedCells;
 
             this._ref.forEach(function(ref) {
-                this._intersectingMergedRefs(ref).forEach(function(mergedRef) {
+                ref.intersecting(mergedCells).forEach(function(mergedRef) {
                     mergedCells.splice(mergedCells.indexOf(mergedRef), 1);
                 });
-            }.bind(this));
+            });
 
             return this;
-        },
-
-        _intersectingMergedRefs: function(ref) {
-            return this._sheet._mergedCells.filter(function(mergedRef) {
-                return mergedRef.intersects(ref);
-            });
         },
 
         select: function() {

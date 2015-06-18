@@ -358,17 +358,21 @@
             return this;
         },
 
-        union: function(refs, callback) {
-            var intersecting = refs.filter(function(ref) {
+        intersecting: function(refs) {
+            return refs.filter(function(ref) {
                 return ref.intersects(this);
             }, this);
+        },
+
+        union: function(refs, callback) {
+            refs = this.intersecting(refs);
 
             var topLeftRow = this.topLeft.row;
             var topLeftCol = this.topLeft.col;
             var bottomRightRow = this.bottomRight.row;
             var bottomRightCol = this.bottomRight.col;
 
-            intersecting.forEach(function(ref) {
+            refs.forEach(function(ref) {
                 if (ref.topLeft.row < topLeftRow) {
                     topLeftRow = ref.topLeft.row;
                 }
