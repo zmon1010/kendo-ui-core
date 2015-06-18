@@ -8418,6 +8418,22 @@
             "aspnet-mvc": "This sample demonstrates the public methods which are specific to ASP.NET MVC Map component."
         },
         "requiresServer": "true"
+      },
+      {
+        "text": "AngularJS",
+        "url": "map/angular",
+        "title": {
+            "kendo-ui": "AngularJS support in Kendo UI Map"
+        },
+        "meta": {
+            "kendo-ui": "AngularJS directives support in Kendo UI Map"
+        },
+        "packages": [
+          "!mvc",
+          "!jsp",
+          "!php"
+        ],
+        "requiresServer": "true"
       }
     ],
     "category": "Diagrams & Maps"
