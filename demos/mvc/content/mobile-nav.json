@@ -250,6 +250,18 @@
         ]
       },
       {
+        "text": "Application scenario",
+        "url": "collapsible/scenario",
+        "title": {
+            "kendo-ui": "Sample app using Kendo UI Mobile Collapsible",
+            "aspnet-mvc": "ASP.NET MVC Collapsible sample app "
+        },
+        "meta": {
+            "kendo-ui": "This demo shows sample application scenario with Kendo UI Mobile Collapsible.",
+            "aspnet-mvc": "In this example you will see sample application scenario of Telerik Collapsible helper for ASP.NET MVC."
+        }
+      },
+      {
         "text": "Basic usage",
         "url": "drawer/index",
         "title": {

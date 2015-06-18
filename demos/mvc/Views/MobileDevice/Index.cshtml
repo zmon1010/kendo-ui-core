@@ -100,11 +100,16 @@
             </div>
         </header>
 
-        <ul data-role="listview" data-source="navDataSource" data-template="nav-template">
+        <ul data-role="listview" data-source="navDataSource" data-template="nav-template" data-header-template="header-template" class="main-menu">
+            
+            <script type="text/x-kendo-template" id="header-template">
+                <span class="km-icon km-#: value #"></span> #: value #
+            </script>
+            
             <script type="text/x-kendo-template" id="nav-template">
                 <a href="#: url #">#: text # #= data.new ? '<span class="km-badge">new</span>' : '' #</a>
-                
             </script>
+            
         </ul>
     </div>
 
