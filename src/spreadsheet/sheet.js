@@ -85,7 +85,6 @@
 
             if (typeof row === "string") {
                 ref = kendo.spreadsheet.calc.parseReference(row);
-                ref.sheet = null;
             } else {
                 if (!numRows) {
                     numRows = 1;
