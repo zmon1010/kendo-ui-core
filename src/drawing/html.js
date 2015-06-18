@@ -761,8 +761,10 @@
         function addRule(styleSheet, names, bold, italic, url) {
             // We get full resolved absolute URLs in Chrome, but sadly
             // not in Firefox.
-            if (!(/^[^\/:]+:\/\//.test(url) || /^\//.test(url))) {
-                url = String(styleSheet.href).replace(/[^\/]*$/, "") + url;
+            if (!(/^data:/i.test(url))) {
+                if (!(/^[^\/:]+:\/\//.test(url) || /^\//.test(url))) {
+                    url = String(styleSheet.href).replace(/[^\/]*$/, "") + url;
+                }
             }
             names.forEach(function(name){
                 name = name.replace(/^(['"]?)(.*?)\1$/, "$2"); // it's quoted
