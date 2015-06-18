@@ -79,6 +79,7 @@
                 new spreadsheet.CellRef(getrow(m[2]), +Infinity, 0)
             );
         }
+        throw new Error("Cannot parse reference: " + name);
     }
 
     function parse(sheet, row, col, input) {
