@@ -193,4 +193,27 @@
         ok(range._ref.refs[1].print(1), "D1");
     });
 
+    test("unmerge removes ref from mergedcells", function() {
+        sheet.range("A1:B1").merge();
+        sheet.range("A1:B1").unmerge();
+
+        equal(sheet._mergedCells.length, 0);
+    });
+
+    test("unmerge removes all merged cells that intersect with the range", function() {
+        sheet.range("A1:B1").merge();
+        sheet.range("A2:B2").merge();
+        sheet.range("A1:B2").unmerge();
+
+        equal(sheet._mergedCells.length, 0);
+    });
+
+    test("unmerge sets the value of the topleft cell and resets the other", function() {
+        sheet.range("A1:B1").value("foo").merge();
+        sheet.range("A1:B1").unmerge();
+
+        equal(sheet.range("A1:A1").value(), "foo");
+        equal(sheet.range("B1:B1").value(), null);
+    });
+
 })();
