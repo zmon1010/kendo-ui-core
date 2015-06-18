@@ -75,11 +75,19 @@
             return this;
         },
 
-        range: function(row, column, numRows, numColumns) {
+        _ref: function(row, column, numRows, numColumns) {
             var ref = null;
 
             if (typeof row === "string") {
-               ref = kendo.spreadsheet.calc.parseReference(row);
+                var refs = kendo.spreadsheet.calc.parse(this._name, 0, 0, "=(" + row + ")").refs;
+                refs.forEach(function(ref) {
+                    ref.sheet = null;
+                });
+                if (refs.length === 1) {
+                    ref = refs[0];
+                } else {
+                    ref = new kendo.spreadsheet.UnionRef(refs);
+                }
             } else {
                 if (!numRows) {
                     numRows = 1;
@@ -91,7 +99,11 @@
                 ref = new RangeRef(new CellRef(row, column), new CellRef(row + numRows - 1, column + numColumns - 1));
             }
 
-            return new Range(ref, this);
+            return ref;
+        },
+
+        range: function(row, column, numRows, numColumns) {
+            return new Range(this._ref(row, column, numRows, numColumns), this);
         },
 
         forEachMergedCell: function(callback) {

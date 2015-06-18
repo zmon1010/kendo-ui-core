@@ -72,6 +72,9 @@
         },
         toString: function() {
             return this.print(0, 0);
+        },
+        forEach: function(callback) {
+            callback(this);
         }
     });
 
@@ -83,7 +86,8 @@
         init: function NullRef(){},
         print: function() {
             return "#NULL!";
-        }
+        },
+        forEach: $.noop
     }))();
 
     /* -----[ Name reference ]----- */
@@ -345,6 +349,10 @@
 
         topRow: function() {
             return new RangeRef(this.topLeft, new CellRef(this.topLeft.row, this.bottomRight.col));
+        },
+
+        toRangeRef: function() {
+            return this;
         }
     });
 
@@ -377,6 +385,12 @@
             return new UnionRef(this.refs.map(function(ref){
                 return ref.absolute(arow, acol);
             }));
+        },
+        forEach: function(callback) {
+            this.refs.forEach(callback);
+        },
+        toRangeRef: function() {
+            return this.refs[0].toRangeRef();
         }
     });
 

@@ -7,23 +7,26 @@
     var CellRef = kendo.spreadsheet.CellRef;
 
     var Range = kendo.Class.extend({
-        init: function(rangeRef, sheet) {
+        init: function(ref, sheet) {
             this._sheet = sheet;
-            this._ref = rangeRef;
+            this._ref = ref;
         },
         _property: function(list, value) {
-            var ref = this._ref;
             if (value !== undefined) {
-                for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col; ci++) {
-                    var start = this._sheet._grid.index(ref.topLeft.row, ci);
-                    var end = this._sheet._grid.index(ref.bottomRight.row, ci);
+                this._ref.forEach(function(ref) {
+                    ref = ref.toRangeRef();
 
-                    list.value(start, end, value);
-                }
+                    for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col; ci++) {
+                        var start = this._sheet._grid.index(ref.topLeft.row, ci);
+                        var end = this._sheet._grid.index(ref.bottomRight.row, ci);
+
+                        list.value(start, end, value);
+                    }
+                }.bind(this));
 
                 return this;
             } else {
-                var index = this._sheet._grid.cellRefIndex(ref.topLeft);
+                var index = this._sheet._grid.cellRefIndex(this._ref.toRangeRef().topLeft);
                 return list.value(index, index);
             }
         },
@@ -38,42 +41,54 @@
         },
         merge: function() {
             var mergedCells = this._sheet._mergedCells;
+            var refs = [];
 
-            var intersecting = mergedCells.filter(function(ref) {
-                return ref.intersects(this._ref);
-            }, this);
-
-            var topLeftRow = this._ref.topLeft.row;
-            var topLeftCol = this._ref.topLeft.col;
-            var bottomRightRow = this._ref.bottomRight.row;
-            var bottomRightCol = this._ref.bottomRight.col;
-
-            intersecting.forEach(function(ref) {
-                if (ref.topLeft.row < topLeftRow) {
-                    topLeftRow = ref.topLeft.row;
+            this._ref.forEach(function(ref) {
+                if (ref instanceof kendo.spreadsheet.CellRef) {
+                    refs.push(ref);
+                    return;
                 }
 
-                if (ref.topLeft.col < topLeftCol) {
-                    topLeftCol = ref.topLeft.col;
-                }
+                currentRef = ref.toRangeRef();
+                var intersecting = mergedCells.filter(function(ref) {
+                    return ref.intersects(currentRef);
+                }, this);
 
-                if (ref.bottomRight.row > bottomRightRow) {
-                    bottomRightRow = ref.bottomRight.row;
-                }
+                var topLeftRow = currentRef.topLeft.row;
+                var topLeftCol = currentRef.topLeft.col;
+                var bottomRightRow = currentRef.bottomRight.row;
+                var bottomRightCol = currentRef.bottomRight.col;
 
-                if (ref.bottomRight.col > bottomRightCol) {
-                    bottomRightCol = ref.bottomRight.col;
-                }
+                intersecting.forEach(function(ref) {
+                    if (ref.topLeft.row < topLeftRow) {
+                        topLeftRow = ref.topLeft.row;
+                    }
 
-                mergedCells.splice(mergedCells.indexOf(ref), 1);
-            });
+                    if (ref.topLeft.col < topLeftCol) {
+                        topLeftCol = ref.topLeft.col;
+                    }
 
-            this._ref = new RangeRef(
-                new CellRef(topLeftRow, topLeftCol),
-                new CellRef(bottomRightRow, bottomRightCol)
-            );
+                    if (ref.bottomRight.row > bottomRightRow) {
+                        bottomRightRow = ref.bottomRight.row;
+                    }
 
-            mergedCells.push(this._ref);
+                    if (ref.bottomRight.col > bottomRightCol) {
+                        bottomRightCol = ref.bottomRight.col;
+                    }
+
+                    mergedCells.splice(mergedCells.indexOf(ref), 1);
+                });
+
+                currentRef = new RangeRef(
+                    new CellRef(topLeftRow, topLeftCol),
+                    new CellRef(bottomRightRow, bottomRightCol)
+                );
+
+                refs.push(currentRef);
+                mergedCells.push(currentRef);
+            }.bind(this));
+
+            this._ref = refs.length === 1 ? refs[0] : new kendo.spreadsheet.UnionRef(refs);
 
             var value = this.value();
             var background = this.background();
@@ -81,7 +96,7 @@
             this.value(null);
             this.background(null);
 
-            var topLeft = new Range(this._ref.collapse(), this._sheet);
+            var topLeft = new Range(this._ref.toRangeRef().collapse(), this._sheet);
 
             topLeft.value(value);
             topLeft.background(background);

@@ -153,12 +153,44 @@
         equal(sheet.range("A1:B1").background(), "red");
     });
 
-    test("merge uses the baclground of the top left cell during combination", function() {
+    test("merge uses the background of the top left cell during combination", function() {
         sheet.range("A1:B1").background("red").merge();
         sheet.range("D1:E1").background("blue").merge();
         sheet.range("B1:D1").merge();
 
         equal(sheet.range("A1:E1").background(), "red");
+    });
+
+    test("ranges with UnionRefs merge each ref", function() {
+        sheet.range("A1:B1,A3:B3").merge();
+
+        var merged = sheet._mergedCells;
+
+        equal(merged.length, 2);
+        equal(merged[0].print(0), "A1:B1");
+        equal(merged[1].print(1), "A3:B3");
+    });
+
+    test("ranges with UnionRefs merge each ref", function() {
+        sheet.range("A1").merge();
+
+        var merged = sheet._mergedCells;
+
+        equal(merged.length, 0);
+    });
+
+    test("ranges with UnionRefs merge each ref", function() {
+        var range = sheet.range("A1:B1,D1");
+        range.merge();
+
+        var merged = sheet._mergedCells;
+
+        equal(merged.length, 1);
+        equal(merged[0].print(0), "A1:B1");
+
+        equal(range._ref.refs.length, 2);
+        ok(range._ref.refs[0].print(0), "A1:B1");
+        ok(range._ref.refs[1].print(1), "D1");
     });
 
 })();
