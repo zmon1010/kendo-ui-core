@@ -1230,7 +1230,8 @@
             views: ["week"],
             date: date,
             editable: {
-                editRecurringMode: "occurrence"
+                editRecurringMode: "occurrence",
+                confirmation: false
             },
             dataSource: {
                 data: [ new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" }) ]
@@ -1254,7 +1255,8 @@
             views: ["week"],
             date: date,
             editable: {
-                editRecurringMode: "series"
+                editRecurringMode: "series",
+                confirmation: false
             },
             dataSource: {
                 data: [ new SchedulerEvent({ id: 1, start: date, end: date, title: "my event", recurrenceRule: "FREQ=DAILY" }) ]
