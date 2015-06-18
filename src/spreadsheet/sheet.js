@@ -84,15 +84,8 @@
             }
 
             if (typeof row === "string") {
-                var refs = kendo.spreadsheet.calc.parse(this._name, 0, 0, "=(" + row + ")").refs;
-                refs.forEach(function(ref) {
-                    ref.sheet = null;
-                });
-                if (refs.length === 1) {
-                    ref = refs[0];
-                } else {
-                    ref = new kendo.spreadsheet.UnionRef(refs);
-                }
+                var ref = kendo.spreadsheet.calc.parseReference(row);
+                ref.sheet = null;
             } else {
                 if (!numRows) {
                     numRows = 1;
