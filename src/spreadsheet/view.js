@@ -237,11 +237,13 @@
         addCell: function(table, row, cell) {
             var formula = cell.formula;
 
-            var style = {};
-
             var styleMap = {
-                background: "backgroundColor"
+                background: "backgroundColor",
+                fontColor: "color",
+                fontFamily: "fontFamily"
             };
+
+            var style = {};
 
             Object.keys(cell.style).forEach(function(key) {
                style[styleMap[key]] = cell.style[key];

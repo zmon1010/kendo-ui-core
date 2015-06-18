@@ -46,4 +46,16 @@
         equal(range.background(), "foo");
     });
 
+    test("fontColor returns the fontColor of a range", function() {
+        range.fontColor("foo");
+
+        equal(range.fontColor(), "foo");
+    });
+
+    test("fontFamily returns the fontFamily of a range", function() {
+        range.fontFamily("foo");
+
+        equal(range.fontFamily(), "foo");
+    });
+
 })();

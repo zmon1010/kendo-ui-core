@@ -30,20 +30,31 @@
                 return list.value(index, index);
             }
         },
-        value: function(value) {
-            return this._property(this._sheet._values, value);
-        },
-        background: function(value) {
+        _styleProperty: function(name, value) {
             var style = this._style();
 
             if (value !== undefined) {
-                style.background = value;
+                style[name] = value;
+
                 this._style(style);
 
                 return this;
             }
 
-            return style.background;
+            return style[name];
+
+        },
+        value: function(value) {
+            return this._property(this._sheet._values, value);
+        },
+        fontColor: function(value) {
+            return this._styleProperty("fontColor", value);
+        },
+        fontFamily: function(value) {
+            return this._styleProperty("fontFamily", value);
+        },
+        background: function(value) {
+            return this._styleProperty("background", value);
         },
         _style: function(value) {
             if (value !== undefined) {

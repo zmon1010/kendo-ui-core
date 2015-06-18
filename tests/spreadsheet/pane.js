@@ -42,4 +42,37 @@
         equal(table.children[1].children.length, 2 + 1);
     });
 
+    test("adds background color style to the cell", function() {
+        var pane = createPane(0, 0, 3, 3);
+
+        var table = stub({}, "addCell");
+
+        pane.addCell(table, {}, { style: { background: "red" } });
+
+        equal(table.calls("addCell"), 1);
+        equal(table.args("addCell", 0)[2].backgroundColor, "red");
+    });
+
+    test("adds fontColor style to the cell", function() {
+        var pane = createPane(0, 0, 3, 3);
+
+        var table = stub({}, "addCell");
+
+        pane.addCell(table, {}, { style: { fontColor: "red" } });
+
+        equal(table.calls("addCell"), 1);
+        equal(table.args("addCell", 0)[2].color, "red");
+    });
+
+    test("adds font-family style to the cell", function() {
+        var pane = createPane(0, 0, 3, 3);
+
+        var table = stub({}, "addCell");
+
+        pane.addCell(table, {}, { style: { fontFamily: "foo" } });
+
+        equal(table.calls("addCell"), 1);
+        equal(table.args("addCell", 0)[2].fontFamily, "foo");
+    });
+
 })();
