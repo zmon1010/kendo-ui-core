@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <link rel="stylesheet" href="pdf-datauri-font.css" />
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.pdf.js",
+        "./console.time.js",
+        "./test-pdf-helpers.js"
+      ]);
+    </script>
+    <script src="./pako.min.js"></script>
+    <style>
+      .datafont {
+        padding: 1em;
+        font-family: "TestFont";
+        font-size: 30px;
+        border: 1px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="pdf('#test1')">PDF</button>
+    <div id="test1">
+      <div class="datafont">
+        Hello World!
+      </div>
+    </div>
+  </body>
+</html>
