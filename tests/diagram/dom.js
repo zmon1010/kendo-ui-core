@@ -63,15 +63,16 @@
 
     // ------------------------------------------------------------
     module("Diagram", {
-        setup: setup,
         teardown: teardown
     });
 
     test("Diagram should have default theme", function () {
+        createDiagram();
         equal(diagram.options.theme, "default");
     });
 
     test("inits elements", function () {
+        createDiagram();
         var element = diagram.element;
 
         equal(element.attr("tabindex"), 0);
@@ -84,10 +85,12 @@
     });
 
     test("creates canvas container with class k-layer", function () {
+        createDiagram();
         equal(diagram.element.find(".k-layer").length, 1);
     });
 
     test("sets initial element size to canvas", function () {
+        createDiagram();
         var width = diagram.element.width();
         var height = diagram.element.height();
         var size = diagram.canvas.size();
@@ -95,18 +98,55 @@
         equal(size.height, height);
     });
 
-    test("_resize sets canvas size ", function () {
-        diagram._resize({
-            width: 300,
-            height: 400
+    test("sets initial size to canvas when there is a toolbar", function () {
+        createDiagram({
+            editable: {
+                tools: ["undo"]
+            }
         });
+        var width = diagram.element.width();
+        var height = diagram.element.height() - diagram.toolBar.element.outerHeight();
         var size = diagram.canvas.size();
-        equal(size.width, 300);
-        equal(size.height, 400);
+        equal(size.width, width);
+        equal(size.height, height);
+    });
+
+    test("sets initial height to the scrollable element equal to the total height minus the toolbar height", function () {
+        createDiagram({
+            editable: {
+                tools: ["undo"]
+            }
+        });
+
+        equal(diagram.scrollable.height(), diagram.element.height() - diagram.toolBar.element.outerHeight());
+    });
+
+    test("_resize sets canvas size to the total height minus the toolbar height", function () {
+        createDiagram({
+            editable: {
+                tools: ["undo"]
+            }
+        });
+        diagram.element.height(300);
+        diagram._resize();
+        var size = diagram.canvas.size();
+        equal(size.width, diagram.element.width());
+        equal(size.height,  diagram.element.height() - diagram.toolBar.element.outerHeight());
+    });
+
+    test("_resize sets scrollable element height to the total height minus the toolbar height", function () {
+        createDiagram({
+            editable: {
+                tools: ["undo"]
+            }
+        });
+        diagram.element.height(300);
+        diagram._resize();
+        equal(diagram.scrollable.height(), diagram.element.height() - diagram.toolBar.element.outerHeight());
     });
 
     test("sets default width and height if element has 0 width or height", function () {
-        diagram.destroy();
+        QUnit.fixture.html('<div id="canvas" />');
         diagram = $("#canvas").hide().kendoDiagram().getKendoDiagram();
         var size = diagram.canvas.size();
         equal(size.width, 600);
@@ -1714,6 +1754,18 @@
         roughlyEqualPoint(result, new Point(point.x - doc.left, point.y - doc.top), "transformed point should be relative to the diagram view");
     });
 
+    test("transform document point to view point when there is a toolbar", function() {
+        diagram.options.editable.tools = ["undo"];
+        diagram._createGlobalToolBar();
+
+        var offset = diagram.element.offset();
+        var point = new Point(100, 100);
+        var toolbarHeight = diagram.toolBar.element.outerHeight();
+        var result = diagram.documentToView(point);
+
+        roughlyEqualPoint(result, new Point(point.x - offset.left, point.y - offset.top - toolbarHeight));
+    });
+
     test("transform view point to document point", function() {
         var doc = diagram.element.offset(),
             point = new Point(100, 100);
@@ -1721,6 +1773,18 @@
         var result = diagram.viewToDocument(point);
 
         roughlyEqualPoint(result, new Point(point.x + doc.left, point.y + doc.top), "transformed point should include the diagram container offset");
+    });
+
+    test("transform view point to document point when there is a toolbar", function() {
+        diagram.options.editable.tools = ["undo"];
+        diagram._createGlobalToolBar();
+
+        var offset = diagram.element.offset();
+        var point = new Point(100, 100);
+        var toolbarHeight = diagram.toolBar.element.outerHeight();
+        var result = diagram.viewToDocument(point);
+
+        roughlyEqualPoint(result, new Point(point.x + offset.left, point.y + offset.top + toolbarHeight));
     });
 
     test("transform view to layer point", function() {

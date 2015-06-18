@@ -1675,6 +1675,7 @@
                 Widget.fn.init.call(that, element, userOptions);
 
                 that._initTheme();
+
                 that._initElements();
                 that._extendLayoutOptions(that.options);
                 that._initDefaults(userOptions);
@@ -1700,6 +1701,7 @@
                 that._initialize();
                 that._fetchFreshData();
                 that._createGlobalToolBar();
+
                 that._resizingAdorner = new ResizingAdorner(that, { editable: that.options.editable });
                 that._connectorsAdorner = new ConnectorsAdorner(that);
 
@@ -1803,14 +1805,11 @@
                         });
 
                         this.toolBar.element.css({
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: this.element.width(),
                             textAlign: "left"
                         });
 
-                        this.element.append(this.toolBar.element);
+                        this.element.prepend(this.toolBar.element);
+                        this._resize();
                     }
                 }
             },
@@ -1957,7 +1956,6 @@
                     .css("position", "relative")
                     .attr("tabindex", 0)
                     .addClass("k-widget k-diagram");
-
 
                 this.scrollable = $("<div />").appendTo(this.element);
             },
@@ -2109,13 +2107,14 @@
                 });
             },
 
-            _resize: function(size) {
+            _resize: function() {
+                var viewport = this.viewport();
                 if (this.canvas) {
-                    this.canvas.size(size);
+                    this.canvas.size(viewport);
                 }
 
-                if (this.toolBar) {
-                    this.toolBar._toolBar.element.width(this.element.width());
+                if (this.scrollable && this.toolBar) {
+                    this.scrollable.height(viewport.height);
                 }
             },
 
@@ -2819,8 +2818,14 @@
 
             viewport: function () {
                 var element = this.element;
+                var width = element.width();
+                var height = element.height();
 
-                return new Rect(0, 0, element.width(), element.height());
+                if (this.toolBar) {
+                    height -= this.toolBar.element.outerHeight();
+                }
+
+                return new Rect(0, 0, width, height);
             },
             copy: function () {
                 if (this.options.copy.enabled) {
@@ -2934,13 +2939,22 @@
                 }
                 return rect;
             },
-            documentToView: function(point) {
+
+            _containerOffset: function() {
                 var containerOffset = this.element.offset();
+                if (this.toolBar) {
+                    containerOffset.top += this.toolBar.element.outerHeight();
+                }
+                return containerOffset;
+            },
+
+            documentToView: function(point) {
+                var containerOffset = this._containerOffset();
 
                 return new Point(point.x - containerOffset.left, point.y - containerOffset.top);
             },
             viewToDocument: function(point) {
-                var containerOffset = this.element.offset();
+                var containerOffset = this._containerOffset();
 
                 return new Point(point.x + containerOffset.left, point.y + containerOffset.top);
             },
