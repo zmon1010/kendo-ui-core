@@ -27,7 +27,7 @@
 <script type="text/x-kendo-tmpl" id="pull-with-endless-template">
     <div class="product-item">
         <h3>#:ProductName#</h3>
-        <span class="km-badge">#:kendo.toString(UnitPrice, "c")#</span>
+        <span class="km-badge km-listview-item-badge">#:kendo.toString(UnitPrice, "c")#</span>
     </div>
 </script>
 
@@ -108,9 +108,5 @@
 <style>
     .product-item h3 {
         margin: 0;
-    }
-    .product-item .km-badge {
-        top: 2.5em;
-        right: 3em;
     }
 </style>
