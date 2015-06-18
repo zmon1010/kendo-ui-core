@@ -53,6 +53,9 @@
         fontFamily: function(value) {
             return this._styleProperty("fontFamily", value);
         },
+        fontLine: function(value) {
+            return this._styleProperty("fontLine", value);
+        },
         background: function(value) {
             return this._styleProperty("background", value);
         },

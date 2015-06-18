@@ -75,4 +75,16 @@
         equal(table.args("addCell", 0)[2].fontFamily, "foo");
     });
 
+    test("adds text-decoration style to the cell", function() {
+        var pane = createPane(0, 0, 3, 3);
+
+        var table = stub({}, "addCell");
+
+        pane.addCell(table, {}, { style: { fontLine: "foo" } });
+
+        equal(table.calls("addCell"), 1);
+        equal(table.args("addCell", 0)[2].textDecoration, "foo");
+    });
+
+
 })();

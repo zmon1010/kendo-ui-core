@@ -58,4 +58,10 @@
         equal(range.fontFamily(), "foo");
     });
 
+    test("fontLine returns the fontLine of a range", function() {
+        range.fontLine("foo");
+
+        equal(range.fontLine(), "foo");
+    });
+
 })();

@@ -240,7 +240,8 @@
             var styleMap = {
                 background: "backgroundColor",
                 fontColor: "color",
-                fontFamily: "fontFamily"
+                fontFamily: "fontFamily",
+                fontLine: "textDecoration"
             };
 
             var style = {};
