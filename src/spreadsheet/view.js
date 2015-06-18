@@ -197,7 +197,6 @@
 
             children.push(table.toDomTree(view.columnOffset, view.rowOffset));
 
-            console.log(selectedHeaders);
             if (grid.hasRowHeader) {
                 var rowHeader = new HtmlTable(this.rowHeight, grid.headerWidth);
                 rowHeader.addColumn(grid.headerWidth);
