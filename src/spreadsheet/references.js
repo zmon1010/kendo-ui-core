@@ -75,6 +75,9 @@
         },
         forEach: function(callback) {
             callback(this);
+        },
+        map: function(callback) {
+            return callback(this);
         }
     });
 
@@ -353,6 +356,44 @@
 
         toRangeRef: function() {
             return this;
+        },
+
+        union: function(refs, callback) {
+            var intersecting = refs.filter(function(ref) {
+                return ref.intersects(this);
+            }, this);
+
+            var topLeftRow = this.topLeft.row;
+            var topLeftCol = this.topLeft.col;
+            var bottomRightRow = this.bottomRight.row;
+            var bottomRightCol = this.bottomRight.col;
+
+            intersecting.forEach(function(ref) {
+                if (ref.topLeft.row < topLeftRow) {
+                    topLeftRow = ref.topLeft.row;
+                }
+
+                if (ref.topLeft.col < topLeftCol) {
+                    topLeftCol = ref.topLeft.col;
+                }
+
+                if (ref.bottomRight.row > bottomRightRow) {
+                    bottomRightRow = ref.bottomRight.row;
+                }
+
+                if (ref.bottomRight.col > bottomRightCol) {
+                    bottomRightCol = ref.bottomRight.col;
+                }
+
+                if (callback) {
+                    callback(ref);
+                }
+            });
+
+            return new RangeRef(
+                new CellRef(topLeftRow, topLeftCol),
+                new CellRef(bottomRightRow, bottomRightCol)
+            );
         }
     });
 
@@ -391,6 +432,10 @@
         },
         toRangeRef: function() {
             return this.refs[0].toRangeRef();
+        },
+
+        map: function(callback) {
+            return new UnionRef(this.refs.map(callback));
         }
     });
 

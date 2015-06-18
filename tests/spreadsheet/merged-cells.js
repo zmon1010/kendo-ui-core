@@ -214,6 +214,22 @@
 
         equal(sheet.range("A1:A1").value(), "foo");
         equal(sheet.range("B1:B1").value(), null);
+
+    });
+
+    test("union ref merge clears all ranges", function() {
+        sheet.range("A1").value("foo1");
+        sheet.range("A2").value("foo2");
+        sheet.range("B1").value("bar1");
+        sheet.range("B2").value("bar2");
+
+        sheet.range("A1:A2,B1:B2").merge();
+
+        equal(sheet.range("A2").value(), null);
+        equal(sheet.range("B2").value(), null);
+
+        equal(sheet.range("A1").value(), "foo1");
+        equal(sheet.range("B1").value(), "bar1");
     });
 
 })();
