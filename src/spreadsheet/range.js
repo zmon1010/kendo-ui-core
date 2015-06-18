@@ -106,6 +106,7 @@
 
         select: function() {
             this._sheet.select(this._ref);
+            return this;
         }
     });
 
