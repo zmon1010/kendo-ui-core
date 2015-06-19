@@ -8,7 +8,7 @@
     {
         public TreeListModelDescriptor(Type modelType)
             : base(modelType)
-        { 
+        {
         }
 
         public string ParentId { get; set; }
@@ -20,6 +20,11 @@
             if (Id != null)
             {
                 json["id"] = Id.Name;
+            }
+
+            if (ParentId.HasValue())
+            {
+                json["parentId"] = ParentId;                
             }
 
             var fields = new Dictionary<string, object>();
@@ -36,12 +41,7 @@
 
                 var currentMember = prop.Member;
 
-                if (ParentId.HasValue() && currentMember == ParentId)
-                {
-                    fields["parentId"] = field;
-                    field["from"] = currentMember;
-                }
-                else if (currentMember == (Expanded as string))
+                if (currentMember == (Expanded as string))
                 {
                     fields["expanded"] = field;
                     field["from"] = currentMember;
