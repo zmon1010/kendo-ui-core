@@ -18,6 +18,59 @@
         ok(m.loaded());
     });
 
+    test("model parentIdField defaults to parentId", function() {
+        var m = new TreeListModel();
+
+        equal(m.parentIdField, "parentId");
+    });
+
+    test("model definiton parentIdField defaults to parentId", function() {
+        equal(TreeListModel.parentIdField, "parentId");
+    });
+
+    test("change model definition parentIdField", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "foo"
+        });
+
+        equal(MyModel.parentIdField, "foo");
+    });
+
+    test("default parentIdField on model define", function() {
+        var MyModel = TreeListModel.define({ /* empty defintion */ });
+
+        var m = new MyModel();
+
+        equal(m.parentIdField, "parentId");
+    });
+
+    test("model parentIdField is inferred from schema", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "foo"
+        });
+
+        var m = new MyModel();
+
+        equal(m.parentIdField, "foo");
+    });
+
+    test("parentId value is set from the parentId field", function() {
+        var m = new TreeListModel({ parentId: 1 });
+
+        equal(m.parentId, 1);
+    });
+
+    test("parentId value is set from parentId configuration", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "foo"
+        });
+
+        var m = new MyModel({ foo: 1 });
+
+        equal(m.parentId, 1);
+        equal(m.foo, 1);
+    });
+
     test("toJSON serializes id and parentId", function() {
         var m = new TreeListModel({ id: 12, parentId: 20 });
 
@@ -87,6 +140,60 @@
         ds.read();
 
         ok(ds.at(0) instanceof TreeListModel);
+    });
+
+    test("parentId is inferred from data", function() {
+        var ds = new TreeListDataSource({
+            data: [
+                { id: 1, parentId: null },
+                { id: 2, parentId: 1 }
+            ]
+        });
+
+        ds.read();
+
+        equal(ds.view().length, 2);
+    });
+
+    test("parentId defined in the schema", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    parentId: "foo",
+                    fields: {
+                        foo: { type: "number", nullable: true }
+                    }
+                }
+            },
+            data: [
+                { id: 1, foo: null },
+                { id: 2, foo: 1 }
+            ]
+        });
+
+        ds.read();
+
+        equal(ds.view().length, 2);
+    });
+
+    test("parentId defined in the model.fields", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    fields: {
+                        parentId: { field: "foo", type: "number", nullable: true }
+                    }
+                }
+            },
+            data: [
+                { id: 1, foo: null },
+                { id: 2, foo: 1 }
+            ]
+        });
+
+        ds.read();
+
+        equal(ds.view().length, 2);
     });
 
     test("load calls transport.read", function() {
