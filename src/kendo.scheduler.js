@@ -77,6 +77,8 @@ var __meta__ = {
         DELETECONFIRM = "Are you sure you want to delete this event?",
         DELETERECURRING = "Do you want to delete only this event occurrence or the whole series?",
         EDITRECURRING = "Do you want to edit only this event occurrence or the whole series?",
+        DELETERECURRINGCONFIRM = "Are you sure you want to delete this event occurrence?",
+        DELETESERIESCONFIRM = "Are you sure you want to delete the whole series?",
         COMMANDBUTTONTMPL = '<a class="k-button #=className#" #=attr# href="\\#">#=text#</a>',
         VIEWBUTTONTEMPLATE = kendo.template('<li class="k-current-view" data-#=ns#name="#=view#"><a role="button" href="\\#" class="k-link">${views[view].title}</a></li>'),
         TOOLBARTEMPLATE = kendo.template('<div class="k-floatwrap k-header k-scheduler-toolbar">' +
@@ -2790,8 +2792,19 @@ var __meta__ = {
 
             if (editable === true || editable.confirmation !== false) {
                 var messages = this.options.messages;
-
+                var title = messages.deleteWindowTitle;
                 var text = typeof editable.confirmation === STRING ? editable.confirmation : messages.editable.confirmation;
+
+                if (this._isEditorOpened() && model.isRecurring()) {
+                    var recurrenceMessages = this.options.messages.recurrenceMessages;
+                    title = recurrenceMessages.deleteWindowTitle;
+
+                    if (model.isException()) {
+                        text = recurrenceMessages.deleteRecurringConfirmation ? recurrenceMessages.deleteRecurringConfirmation : DELETERECURRINGCONFIRM;
+                    } else {
+                        text = recurrenceMessages.deleteSeriesConfirmation ? recurrenceMessages.deleteSeriesConfirmation : DELETESERIESCONFIRM;
+                    }
+                }
 
                 var buttons = [
                     { name: "destroy", text: messages.destroy, click: function() { callback(); } }
@@ -2806,7 +2819,7 @@ var __meta__ = {
                 this.showDialog({
                     model: model,
                     text: text,
-                    title: messages.deleteWindowTitle,
+                    title: title,
                     buttons: buttons
                 });
 
@@ -3168,7 +3181,7 @@ var __meta__ = {
                 that._removeEvent(currentModel);
             };
 
-            if (editRecurringMode != "dialog") {
+            if (editRecurringMode != "dialog" || that._isEditorOpened()) {
                 deleteOccurrenceConfirmation = function() {
                     that._confirmation(function(cancel) {
                         if (!cancel) {
@@ -3186,13 +3199,28 @@ var __meta__ = {
                 };
             }
 
-            var recurrenceMessages = that.options.messages.recurrenceMessages;
-            that._showRecurringDialog(model, deleteOccurrenceConfirmation || deleteOccurrence, deleteSeriesConfirmation || deleteSeries, {
-                title: recurrenceMessages.deleteWindowTitle,
-                text: recurrenceMessages.deleteRecurring ? recurrenceMessages.deleteRecurring : DELETERECURRING,
-                occurrenceText: recurrenceMessages.deleteWindowOccurrence,
-                seriesText: recurrenceMessages.deleteWindowSeries
-            });
+            var seriesCallback = deleteSeriesConfirmation || deleteSeries;
+            var occurrenceCallback = deleteOccurrenceConfirmation || deleteOccurrence;
+
+            if (that._isEditorOpened()) {
+                if (model.isException()) {
+                    occurrenceCallback();
+                } else {
+                    seriesCallback();
+                }
+            } else {
+                var recurrenceMessages = that.options.messages.recurrenceMessages;
+                that._showRecurringDialog(model, occurrenceCallback, seriesCallback, {
+                    title: recurrenceMessages.deleteWindowTitle,
+                    text: recurrenceMessages.deleteRecurring ? recurrenceMessages.deleteRecurring : DELETERECURRING,
+                    occurrenceText: recurrenceMessages.deleteWindowOccurrence,
+                    seriesText: recurrenceMessages.deleteWindowSeries
+                });
+            }
+        },
+
+        _isEditorOpened: function() {
+            return !!this._editor.container;
         },
 
         _unbindView: function(view) {

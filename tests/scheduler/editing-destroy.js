@@ -50,7 +50,6 @@
         equal(remove.args("remove")[0].uid, uid);
     });
 
-
     test("confirmation message is shown when editor template is set", function() {
         var scheduler = setup({
                 editable: {

@@ -742,6 +742,155 @@
         }
     });
 
+    test("pressing delete button inside edit form for existing exception shows delete confirmation", function() {
+        var startDate = new Date();
+        var exception = kendo.toString(kendo.timezone.apply(startDate, 0), "yyyyMMddTHHmmssZ") + ";";
+        var scheduler = setup({
+            views: ["week"],
+            dataSource: {
+                data: [
+                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: exception}),
+                    new SchedulerEvent({ id: 2, recurrenceId: 1, start: startDate, end: new Date(), title: "my event"})
+                ]
+            }
+        });
+
+        var eventUID = scheduler.dataSource.at(1).uid;
+        scheduler.editEvent(eventUID);
+
+        $(".k-window .k-button:first").click();
+        $(".k-window .k-scheduler-delete").click();
+
+        var windows = $(".k-window");
+        var confirmationWindow = $(windows[1]);
+
+        equal(windows.length, 2);
+        equal(confirmationWindow.find(".k-popup-message").text(), "Are you sure you want to delete this event occurrence?");
+    });
+
+    test("pressing delete button inside edit form for series shows delete confirmation", function() {
+        var startDate = new Date();
+        var scheduler = setup({
+            views: ["week"],
+            dataSource: {
+                data: [
+                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"})
+                ]
+            }
+        });
+
+        var eventUID = scheduler.dataSource.at(0).uid;
+        scheduler.editEvent(eventUID);
+
+        $(".k-window .k-button:last").click();
+        $(".k-window .k-scheduler-delete").click();
+
+        var windows = $(".k-window");
+        var confirmationWindow = $(windows[1]);
+
+        equal(windows.length, 2);
+        equal(confirmationWindow.find(".k-popup-message").text(), "Are you sure you want to delete the whole series?");
+    });
+
+    test("pressing delete button inside edit form for existing exception does not show delete confirmation", function() {
+        var startDate = new Date();
+        var exception = kendo.toString(kendo.timezone.apply(startDate, 0), "yyyyMMddTHHmmssZ") + ";";
+        var scheduler = setup({
+            views: ["week"],
+            editable: {
+                confirmation: false
+            },
+            dataSource: {
+                data: [
+                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY", recurrenceException: exception}),
+                    new SchedulerEvent({ id: 2, recurrenceId: 1, start: startDate, end: new Date(), title: "my event"})
+                ]
+            }
+        });
+
+        var eventUID = scheduler.dataSource.at(1).uid;
+        scheduler.editEvent(eventUID);
+
+        $(".k-window .k-button:first").click();
+        $(".k-window .k-scheduler-delete").click();
+
+        equal($(".k-window").length, 0);
+        equal(scheduler.dataSource.data().length, 1);
+    });
+
+    test("pressing delete button inside edit form for series does not show delete confirmation", function() {
+        var startDate = new Date();
+        var scheduler = setup({
+            views: ["week"],
+            editable: {
+                confirmation: false
+            },
+            dataSource: {
+                data: [
+                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event", recurrenceRule: "FREQ=DAILY"})
+                ]
+            }
+        });
+
+        var eventUID = scheduler.dataSource.at(0).uid;
+        scheduler.editEvent(eventUID);
+
+        $(".k-window .k-button:last").click();
+        $(".k-window .k-scheduler-delete").click();
+
+        equal($(".k-window").length, 0);
+        equal(scheduler.dataSource.data().length, 0);
+    });
+
+    test("pressing delete button inside edit form for regular event show delete confirmation", function() {
+        var startDate = new Date();
+        var scheduler = setup({
+            views: ["week"],
+            dataSource: {
+                data: [
+                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event"})
+                ]
+            }
+        });
+
+        var eventUID = scheduler.dataSource.at(0).uid;
+        scheduler.editEvent(eventUID);
+
+        $(".k-window .k-scheduler-delete").click();
+
+        var windows = $(".k-window");
+        var confirmationWindow = $(windows[1]);
+
+        equal(windows.length, 2);
+        equal(confirmationWindow.find(".k-popup-message").text(), "Are you sure you want to delete this event?");
+        equal(scheduler.dataSource.data().length, 1);
+    });
+
+    test("pressing delete button inside edit form for regular event does not show delete confirmation", function() {
+        var startDate = new Date();
+        var scheduler = setup({
+            views: ["week"],
+            editable: {
+                confirmation: false
+            },
+            dataSource: {
+                data: [
+                    new SchedulerEvent({ id: 1, start: startDate, end: new Date(), title: "my event"})
+                ]
+            }
+        });
+
+        var eventUID = scheduler.dataSource.at(0).uid;
+        scheduler.editEvent(eventUID);
+
+        $(".k-window .k-scheduler-delete").click();
+
+        var windows = $(".k-window");
+
+        equal(windows.length, 0);
+        equal(scheduler.dataSource.data().length, 0);
+    });
+
     test("show recurring dialog", function() {
         var scheduler = setup({
             views: ["week"],
