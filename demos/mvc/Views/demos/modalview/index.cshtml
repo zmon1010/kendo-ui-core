@@ -1,6 +1,8 @@
 <div data-role="view" id="modalview-camera" data-title="HTML5 Camera" data-use-native-scrolling="true">
-    <img src="../content/mobile/modalview/lens.png" class="camera-image" /><br />
-    <a data-role="button" data-rel="modalview" href="#modalview-login" id="modalview-open-button">Login</a>
+    <h1 class="app-logo">Camera<br /> Application</h1>
+    <div class="action-buttons">
+        <a data-role="button" class="km-justified km-primary km-large" data-rel="modalview" href="#modalview-login" id="modalview-open-button">Login</a>
+    </div>
 </div>
 
 <div data-role="modalview" id="modalview-login" style="width: 90%;">
@@ -23,84 +25,18 @@
     </div>
 </div>
 
-<style>
-    #modalview-login-button,
-    #modalview-reg-button,
-    #modalview-open-button {
-        display: inline-block;
+<style type="text/css" media="screen">
+    h1.app-logo {
+        margin: 3em 0;
+        font-size: 3em;
+        font-weight: 100;
+        text-transform: uppercase;
         text-align: center;
-        font-size: 1.1em;
+        line-height: .9em;
     }
-
-   .km-material #modalview-login-button,
-   .km-material #modalview-reg-button,
-   .km-material #modalview-open-button {
-        display: inline-block;
-        text-align: left;
-        margin: 0;
-        font-size: 0.875em;
+    .action-buttons {
+        margin: 1em;
     }
-
-    #modalview-open-button {
-        margin: 0 3em;
-        padding: .5em;
-    }
-    .km-flat #modalview-open-button {
-        color: #fff;
-    }
-
-    #modalview-camera {
-        text-align: center;
-    }
-
-    #modalview-camera img {
-        display: block;
-        margin: 30px auto;
-    }
-
-    #modalview-camera .km-content,
-    .km-ios #modalview-login .km-content {
-        background: url(../content/shared/images/patterns/pattern1.png) repeat 0 0;
-    }
-
-    #modalview-login label {
-        display: inline-block;
-        width: 100%;
-    }
-    .km-ios #modalview-camera .km-button,
-    .km-ios #modalview-login .km-button,
-    .km-ios #modalview-camera .km-navbar,
-    .km-ios #modalview-login .km-header,
-    .km-blackberry #modalview-camera .km-navbar,
-    .km-blackberry #modalview-login .km-navbar
-    {
-        background-color: #000;
-    }
-
-    .km-blackberry #modalview-camera .km-button
-    {
-        color: #fff;
-    }
-
-    .km-ios #modalview-camera .km-button:active,
-    .km-ios #modalview-camera .km-state-active,
-    .km-ios #modalview-login .km-button:active,
-    .km-ios #modalview-login .km-state-active {
-        background-color: #2e2e2e;
-    }
-
-    .km-ios #modalview-login #modalview-login-button,
-    .km-flat #modalview-login #modalview-login-button {
-        background-color: Green;
-        color: #fff;
-    }
-
-    .km-tablet .km-ios #modalview-camera .km-view-title,
-    .km-tablet .km-ios #modalview-login .km-view-title {
-        color: #fff;
-        text-shadow: 0 -1px rgba(0,0,0,.5);
-    }
-
 </style>
 <script>
     function closeModalViewLogin() {
