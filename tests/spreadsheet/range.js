@@ -156,4 +156,22 @@
             ok(true);
         }
     });
+
+    test("values sets the values of the cells in the range", function() {
+        sheet.range("A1:C3").values([
+            ["A1", "B1", "C1"],
+            ["A2", "B2", "C2"],
+            ["A3", "B3", "C3"]
+        ]);
+
+        equal(sheet.range("A1").value(), "A1");
+        equal(sheet.range("B1").value(), "B1");
+        equal(sheet.range("C1").value(), "C1");
+        equal(sheet.range("A2").value(), "A2");
+        equal(sheet.range("B2").value(), "B2");
+        equal(sheet.range("C2").value(), "C2");
+        equal(sheet.range("A3").value(), "A3");
+        equal(sheet.range("B3").value(), "B3");
+        equal(sheet.range("C3").value(), "C3");
+    });
 })();

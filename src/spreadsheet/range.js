@@ -146,12 +146,12 @@
             return this;
         },
 
-        values: function() {
+        values: function(values) {
             if (this._ref instanceof UnionRef) {
                 throw new Error("Unsupported for multiple ranges.");
             }
 
-            return this._sheet.values(this._ref.toRangeRef());
+            return this._sheet.values(this._ref.toRangeRef(), values);
         }
     });
 
