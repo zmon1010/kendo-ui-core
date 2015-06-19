@@ -105,6 +105,19 @@
         equal(json.parentId, 20);
     });
 
+    test("toJSON does not serializes parentId when mapped to other field", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "foo"
+        });
+
+        var m = new MyModel({ id: 12, foo: 20 });
+
+        var json = m.toJSON();
+        equal(json.id, 12);
+        equal(json.parentId, undefined, "parentId is serialized");
+        equal(json.foo, 20);
+    });
+
     test("toJSON does not serialize _loaded flag", function() {
         var m = new TreeListModel();
 

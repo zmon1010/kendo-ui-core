@@ -217,7 +217,7 @@ var __meta__ = {
         },
 
         shouldSerialize: function(field) {
-            return Model.fn.shouldSerialize.call(this, field) && field !== "_loaded" && field != "_error" && field != "_edit";
+            return Model.fn.shouldSerialize.call(this, field) && field !== "_loaded" && field != "_error" && field != "_edit" && !(this.parentIdField !== "parentId" && field === "parentId");
         }
     });
 
