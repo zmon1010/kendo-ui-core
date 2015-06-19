@@ -337,7 +337,7 @@
         if (args.length > 3) {
             a1 = args[3];
         }
-        // by some lucky conincidence, we get the corret `rel` value by just subtracting 1 from the
+        // by some lucky coincidence, we get the corret `rel` value by just subtracting 1 from the
         // abs argument
         var cell = new CellRef(row, col, abs - 1);
         if (sheet) {
@@ -346,7 +346,7 @@
         if (a1) {
             callback(cell.print(0, 0));
         } else {
-            callback(cell.print(null));
+            callback(cell.print());
         }
     });
 
@@ -364,6 +364,19 @@
             // XXX: NameRef if we add support
         })(args[0]);
         callback(count);
+    });
+
+    defineFunction("choose", function(callback, args){
+        if (args.length < 2) {
+            return this.error(new CalcError("N/A"));
+        }
+        callback(runtime.arrayHandler1(function(index){
+            if (index < 1 || index >= args.length) {
+                return new CalcError("N/A");
+            } else {
+                return args[index];
+            }
+        }).call(this, args[0]));
     });
 
     defineFunction("vlookup", function(callback, args){

@@ -587,6 +587,7 @@ fillElements({
         B16: '={ A1:C1; 10, 10, 10; A2:B3, C2:C3 } * 2',
 
         B7: '=vlookup(2, A1:C3, 3, false)',
+        B6: '=sum(a1:choose(2, b1, b2, b3))',
 
         // XXX: Google Sheets doesn't parse this, should we err?
         // looks legit to me, if there's anything sane in Excel.
