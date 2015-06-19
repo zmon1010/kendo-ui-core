@@ -242,13 +242,17 @@
 
                 if (!colSelection) { //column selection
                     for (var i = ref.topLeft.row; i <= bottomRight.row; i++) {
-                        rows[i] = rowState;
+                        if (rows[i] !== "selected") {
+                            rows[i] = rowState;
+                        }
                     }
                 }
 
                 if (!rowSelection) {
                     for (var i = ref.topLeft.col; i <= bottomRight.col; i++) {
-                        cols[i] = colState;
+                        if (cols[i] !== "selected") {
+                            cols[i] = colState;
+                        }
                     }
                 }
             });

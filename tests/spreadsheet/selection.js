@@ -142,7 +142,7 @@
         equal(selectedHeaders.rows[2], "active")
     });
 
-    test("selection sets the selected headers for range and cell", function() {
+    test("selection sets the selected headers for range and row", function() {
         sheet.range("A3:C7,10:10").select();
 
         var selectedHeaders = sheet.selectedHeaders();
@@ -162,6 +162,91 @@
 
         equal(selectedHeaders.rows[9], "selected")
         equal(selectedHeaders.allCols, true);
+    });
+
+    test("visually selects the selected headers for range and cell", function() {
+        var pane = createPane(0, 0, 100, 100);
+
+        sheet.range("A1:B2,D3").select();
+
+        var tables = pane.render(1000, 1000).children;
+
+        var rowHeaderCells = tables[1].children[1].children;
+        var colHeaderCells = tables[2].children[1].children[0].children;
+
+        equal(rowHeaderCells[0].children[0].attr.className, "active");
+        equal(rowHeaderCells[1].children[0].attr.className, "active");
+        equal(rowHeaderCells[2].children[0].attr.className, "active");
+
+        equal(colHeaderCells[0].attr.className, "active");
+        equal(colHeaderCells[1].attr.className, "active");
+        equal(colHeaderCells[3].attr.className, "active");
+    });
+
+    test("visually selects the selected headers for range and row", function() {
+        var pane = createPane(0, 0, 100, 100);
+
+        sheet.range("A3:C7,10:10").select();
+
+        var tables = pane.render(1000, 1000).children;
+
+        var rowHeaderCells = tables[1].children[1].children;
+        var colHeaderCells = tables[2].children[1].children[0].children;
+
+        equal(rowHeaderCells[2].children[0].attr.className, "active");
+        equal(rowHeaderCells[3].children[0].attr.className, "active");
+        equal(rowHeaderCells[4].children[0].attr.className, "active");
+        equal(rowHeaderCells[5].children[0].attr.className, "active");
+        equal(rowHeaderCells[6].children[0].attr.className, "active");
+
+        equal(rowHeaderCells[9].children[0].attr.className, "selected");
+
+        //row 10 is selected => all colHeaders should be active
+        for (var i = 0; i < colHeaderCells.length; i++) {
+            equal(colHeaderCells[i].attr.className, "active");
+        }
+    });
+
+    test("visually selects the selected headers for row and range", function() {
+        var pane = createPane(0, 0, 100, 100);
+
+        sheet.range("4:4,A3:C7").select();
+
+        var tables = pane.render(1000, 1000).children;
+
+        var rowHeaderCells = tables[1].children[1].children;
+        var colHeaderCells = tables[2].children[1].children[0].children;
+
+        equal(rowHeaderCells[2].children[0].attr.className, "active");
+        equal(rowHeaderCells[3].children[0].attr.className, "selected");
+        equal(rowHeaderCells[4].children[0].attr.className, "active");
+        equal(rowHeaderCells[5].children[0].attr.className, "active");
+        equal(rowHeaderCells[6].children[0].attr.className, "active");
+
+        //row 10 is selected => all colHeaders should be active
+        for (var i = 0; i < colHeaderCells.length; i++) {
+            equal(colHeaderCells[i].attr.className, "active");
+        }
+    });
+
+    test("visually selects the selected headers for range and col", function() {
+        var pane = createPane(0, 0, 100, 100);
+
+        sheet.range("A3:C7,C:C").select();
+
+        var tables = pane.render(1000, 1000).children;
+
+        var rowHeaderCells = tables[1].children[1].children;
+        var colHeaderCells = tables[2].children[1].children[0].children;
+
+        //col C is selected => all rowHeaders should be active
+        for (var i = 0; i < colHeaderCells.length; i++) {
+            equal(rowHeaderCells[i].children[0].attr.className, "active");
+        }
+
+        equal(colHeaderCells[0].attr.className, "active");
+        equal(colHeaderCells[1].attr.className, "active");
+        equal(colHeaderCells[2].attr.className, "selected");
     });
 
 })();
