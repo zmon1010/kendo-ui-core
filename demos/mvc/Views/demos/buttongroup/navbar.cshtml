@@ -43,22 +43,6 @@
 </script>
 
 <script id="nameTemplate" type="text/x-kendo-template">
-    <h2>#:firstName# #:lastName#</h2><img src="#:photo#" />
+    <img src="#:photo#" class="km-thumbnail" />
+    <h3>#:firstName# #:lastName#</h3>
 </script>
-
-<style>
-    #buttongroup-navbar h2 {
-        display: inline-block;
-        font-size: 1.1em;
-        margin: 1em 0 .5em 1em;
-    }
-    #buttongroup-navbar img {
-    	float: left;
-        width: 4em;
-        height: 4em;
-        margin: 0;
-        border: 1px solid rgba(0,0,0,.2);
-	-webkit-border-radius: 4em;
-	border-radius: 4em;
-    }
-</style>
