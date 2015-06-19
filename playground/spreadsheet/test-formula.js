@@ -586,6 +586,8 @@ fillElements({
         B8: '=indirect(A7)+indirect(A8)',
         B16: '={ A1:C1; 10, 10, 10; A2:B3, C2:C3 } * 2',
 
+        B7: '=vlookup(2, A1:C3, 3, false)',
+
         // XXX: Google Sheets doesn't parse this, should we err?
         // looks legit to me, if there's anything sane in Excel.
         B17: '={ A1:B3, C1:C3; -{ 1, 2, 3 }% } + A2',

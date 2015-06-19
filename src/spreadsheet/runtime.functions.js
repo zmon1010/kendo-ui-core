@@ -17,6 +17,7 @@
     var CalcError = runtime.CalcError;
     var RangeRef = spreadsheet.RangeRef;
     var CellRef = spreadsheet.CellRef;
+    var UnionRef = spreadsheet.UnionRef;
     var Ref = spreadsheet.Ref;
 
     /* -----[ Math functions ]----- */
@@ -324,6 +325,99 @@
             sum += Math.abs(num - avg);
         });
         this.divide(callback, sum, numbers.length);
+    });
+
+    /* -----[ lookup functions ]----- */
+
+    defineFunction("address", function(callback, args){
+        if (args.length < 2 || args.length > 5) {
+            return this.error(new CalcError("N/A"));
+        }
+        var row = args[0] - 1, col = args[1] - 1, abs = args[2] || 1, a1 = true, sheet = args[4];
+        if (args.length > 3) {
+            a1 = args[3];
+        }
+        // by some lucky conincidence, we get the corret `rel` value by just subtracting 1 from the
+        // abs argument
+        var cell = new CellRef(row, col, abs - 1);
+        if (sheet) {
+            cell.setSheet(sheet, true);
+        }
+        if (a1) {
+            callback(cell.print(0, 0));
+        } else {
+            callback(cell.print(null));
+        }
+    });
+
+    defineFunction("areas", function(callback, args){
+        if (args.length != 1 || !(args[0] instanceof Ref)) {
+            return this.error(new CalcError("N/A"));
+        }
+        var count = 0;
+        (function loop(x){
+            if (x instanceof CellRef || x instanceof RangeRef) {
+                count++;
+            } else if (x instanceof UnionRef) {
+                x.refs.forEach(loop);
+            }
+            // XXX: NameRef if we add support
+        })(args[0]);
+        callback(count);
+    });
+
+    defineFunction("vlookup", function(callback, args){
+        if (args.length < 3 || args.length > 4) {
+            return this.error(new CalcError("N/A"));
+        }
+        var value = args[0], range = args[1], col = args[2] - 1, approx = true;
+        if (args.length == 4) {
+            approx = args[3];
+        }
+        var m = this.asMatrix(range), resultRow = null;
+        m.eachRow(function(row){
+            var data = m.get(row, 0);
+            if (approx) {
+                if (data > value) {
+                    return true;
+                }
+                resultRow = row;
+            } else if (data === value) {
+                resultRow = row;
+                return true;
+            }
+        });
+        if (resultRow == null) {
+            return this.error(new CalcError("N/A"));
+        }
+        callback(m.get(resultRow, col));
+    });
+
+    defineFunction("hlookup", function(callback, args){
+        if (args.length < 3 || args.length > 4) {
+            return this.error(new CalcError("N/A"));
+        }
+        var value = args[0], range = args[1], row = args[2] - 1, approx = true;
+        if (args.length == 4) {
+            approx = args[3];
+        }
+        var m = this.asMatrix(range), resultCol = null;
+        m.eachCol(function(col){
+            var data = m.get(0, col);
+            if (approx) {
+                if (data > value) {
+                    return true;
+                }
+                resultCol = col;
+            } else if (data === value) {
+                resultCol = col;
+                return true;
+            }
+        });
+        if (resultCol == null) {
+            return this.error(new CalcError("N/A"));
+        }
+        callback(m.get(row, resultCol));
     });
 
     /* -----[ Other ]----- */

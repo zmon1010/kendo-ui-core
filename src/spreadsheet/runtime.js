@@ -248,7 +248,10 @@
                 for (var col = 0; col < this.width; ++col) {
                     var val = this.get(row, col);
                     if (includeEmpty || val != null) {
-                        f.call(this.context, val, row, col);
+                        var val = f.call(this.context, val, row, col);
+                        if (val !== undefined) {
+                            return val;
+                        }
                     }
                 }
             }
@@ -260,6 +263,22 @@
                 m.set(row, col, f.call(this, el, row, col));
             }, includeEmpty);
             return m;
+        },
+        eachRow: function(f) {
+            for (var row = 0; row < this.height; ++row) {
+                var val = f.call(this.context, row);
+                if (val !== undefined) {
+                    return val;
+                }
+            }
+        },
+        eachCol: function(f) {
+            for (var col = 0; col < this.width; ++col) {
+                var val = f.call(this.context, col);
+                if (val !== undefined) {
+                    return val;
+                }
+            }
         },
         toString: function() {
             return JSON.stringify(this.data);
