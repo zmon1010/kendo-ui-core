@@ -110,12 +110,22 @@
                 border: 2px inset #ccc;
                 opacity: 0.5;
             }
+
+            #clipboard {
+                box-sizing: border-box;
+                width: 800px;
+                height: 300px;
+            }
         </style>
     </head>
     <body>
         <button>Sort first 100 rows</button>
 
         <div id="spreadsheet"></div>
+
+        <div id="clipboard-container"><textarea id="clipboard"></textarea></div>
+
+        <button id="copy">select K11:M16</button>
 
         <script type="text/javascript" src="spreadsheet.js"></script>
     </body>

@@ -33,3 +33,18 @@ for (var i = 0, len = 50; i < len; i++) {
 }
 
 spreadsheet.refresh();
+
+$("#copy").on("click", function(e) {
+    var range = sheet.range("K11:M16");
+
+    range.select();
+
+    var text = range.values().map(function(row) {
+       return row.join("\t");
+    }).join("\r\n");
+
+    $("#clipboard").val(text).select();
+
+    spreadsheet.refresh();
+
+});

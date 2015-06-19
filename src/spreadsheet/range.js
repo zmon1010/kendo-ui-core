@@ -4,6 +4,7 @@
 
 (function(kendo) {
     var RangeRef = kendo.spreadsheet.RangeRef;
+    var UnionRef = kendo.spreadsheet.UnionRef;
     var CellRef = kendo.spreadsheet.CellRef;
 
     var Range = kendo.Class.extend({
@@ -117,7 +118,16 @@
 
         select: function() {
             this._sheet.select(this._ref);
+
             return this;
+        },
+
+        values: function() {
+            if (this._ref instanceof UnionRef) {
+                throw new Error("Unsupported for multiple ranges.");
+            }
+
+            return this._sheet.values(this._ref.toRangeRef());
         }
     });
 
