@@ -927,6 +927,15 @@
         equal(result.data.length, 1);
     });
 
+    test("process column tuples are equal to number of column settings plus distinct values if columns are expanded", function() {
+        var builder = new PivotCubeBuilder();
+
+        var data = [{ name: null } ];
+        var result = builder.process(data, { columns: [{ name: "name", expand: true }] });
+
+        equal(result.axes.columns.tuples.length, 2);
+    });
+
     module("PivotCubeBuilder built-in aggregators", { });
 
     test("PivotCube uses built-in sum aggregate", function() {

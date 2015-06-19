@@ -643,7 +643,7 @@ var __meta__ = {
                     name = getName(descriptor);
 
                     value = getters[name](dataItem);
-                    value = value !== undefined ? value.toString() : value;
+                    value = (value !== undefined && value !== null) ? value.toString() : value;
 
                     name = name + "&" + value;
 
