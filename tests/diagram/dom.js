@@ -6,8 +6,12 @@
         Geometry = dataviz.diagram.Geometry,
         diagram;
 
-    function createDiagram(options) {
+    function createDiagram(options, styles) {
         QUnit.fixture.html('<div id="canvas" />');
+        if (styles) {
+            $("#canvas").css(styles);
+        }
+
         diagram = $("#canvas").kendoDiagram(options).getKendoDiagram();
     }
 
@@ -90,7 +94,7 @@
     });
 
     test("sets initial element size to canvas", function () {
-        createDiagram();
+        createDiagram({}, { width: "1024px", height: "800px" });
         var width = diagram.element.width();
         var height = diagram.element.height();
         var size = diagram.canvas.size();
@@ -126,7 +130,11 @@
             editable: {
                 tools: ["undo"]
             }
+        }, {
+            width: "800px",
+            height: "300px"
         });
+
         diagram.element.height(300);
         diagram._resize();
         var size = diagram.canvas.size();
