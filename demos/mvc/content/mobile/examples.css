@@ -167,7 +167,15 @@
 
 .km-nova .km-navbar .km-button[data-click="goToSourceCode"] {
   background-color: rgba(0,0,0,.3);
+  padding: 0 .9em 0 .8em;
 }
+
+.km-nova .km-navbar .km-button[data-click="goToSourceCode"] span {
+  height: 1.2em;
+  font-size: 1.6em;
+  vertical-align: middle;
+}
+
 #source-code-container {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
