@@ -308,10 +308,18 @@
         // - A:A
         // - 2:2
         function maybeRange() {
-            return input.ahead(3, function(a, b, c){
+            return input.ahead(4, function(a, b, c, d){
                 if ((a.type == "sym" || a.type == "num") &&
                     (b.type == "op" && b.value == ":") &&
-                    (c.type == "sym" || c.type == "num"))
+                    (c.type == "sym" || c.type == "num") &&
+                    !(d.type == "punc" && d.value == "(" && !/\d$/.test(c.value)))
+                    // XXX: previous line is an ugly hack: we want to parse `A1:C3(D1, E1)` as the
+                    // intersection between a range and an union; but we want to parse `A1:choose(1,
+                    // B2)` as a range operator having A1 as top-left and the result of calling
+                    // choose() on the bottom-right.  Trouble is, CHOOSE is also a valid column
+                    // name, pretty much like AA.  This hack makes both work correctly, but it will
+                    // fail on something like `A:C (D1, E1)` (right side will be interpreted as
+                    // function call).  Will think of a better fix.
                 {
                     var topLeft = getref(a, true);
                     var bottomRight = getref(c, false);
@@ -319,6 +327,7 @@
                         if (bottomRight.hasSheet() && topLeft.sheet != bottomRight.sheet) {
                             input.croak("Invalid range");
                         } else {
+                            input.skip(3);
                             return addReference(
                                 new spreadsheet.RangeRef(topLeft, bottomRight)
                                     .setSheet(topLeft.sheet, topLeft.hasSheet())
@@ -767,7 +776,8 @@
             peek  : peek,
             eof   : eof,
             croak : input.croak,
-            ahead : ahead
+            ahead : ahead,
+            skip  : skip
         };
         function isDigit(ch) {
             return /[0-9]/i.test(ch);
@@ -866,10 +876,11 @@
             while (n-- > 0) {
                 a.push(next() || eof);
             }
-            if (!f || !(a = f.apply(a, a))) {
-                index = pos;
-            }
-            return a;
+            index = pos;
+            return f.apply(a, a);
+        }
+        function skip(n) {
+            index += n;
         }
         function eof() {
             return peek() == null;

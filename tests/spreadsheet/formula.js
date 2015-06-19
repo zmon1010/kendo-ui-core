@@ -306,6 +306,12 @@
         equal(f.print(0, 0), "areas(A1:C3 (B2,B3:B4))");
     });
 
+    test("range as cell:funcall", function(){
+        var exp = calc.parse("sheet1", 0, 0, "=sum(a1:choose(2, b1, b2, b3))");
+        var f = calc.compile(exp);
+        equal(f.print(0, 0), "sum(A1:choose(2, B1, B2, B3))");
+    });
+
     /* -----[ printer tests ]----- */
 
     test("print adjusts cell references", function(){
