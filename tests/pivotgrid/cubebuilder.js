@@ -936,6 +936,24 @@
         equal(result.axes.columns.tuples.length, 2);
     });
 
+    test("cube supports name field with space", function() {
+        var builder = new PivotCubeBuilder({
+            measures: [
+                { name: "Sum temp", caption: "Measure 1", field: "value",  aggregate: "Sum" }
+            ]
+        });
+
+        var data = [
+            { name: "name1", lastName: "lastName1", value: 1 },
+            { name: "name2", lastName: "lastName2", value: 2 },
+            { name: "name1", lastName: "lastName3", value: 1 }
+        ];
+
+        builder.process(data, { rows: [{ name: "name" }], columns: [], measuresAxis: "columns",  measures: [{ name: "Sum temp" }]});
+
+        ok(true); //no exceptions
+    });
+
     module("PivotCubeBuilder built-in aggregators", { });
 
     test("PivotCube uses built-in sum aggregate", function() {

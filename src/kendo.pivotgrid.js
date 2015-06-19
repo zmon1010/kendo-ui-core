@@ -719,6 +719,14 @@ var __meta__ = {
             return aggregators;
         },
 
+        _normalizeName: function(name) {
+            if (name.indexOf(" ") !== -1) {
+                name = '["' + name + '"]';
+            }
+
+            return name;
+        },
+
         _buildGetters: function(descriptors) {
             var result = {};
             var descriptor;
@@ -735,7 +743,7 @@ var __meta__ = {
                 if (parts.length > 1) {
                     result[parts[0]] = kendo.getter(parts[0], true);
                 } else {
-                    result[name] = kendo.getter(name, true);
+                    result[name] = kendo.getter(this._normalizeName(name), true);
                 }
             }
 
