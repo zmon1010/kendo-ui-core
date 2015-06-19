@@ -770,7 +770,7 @@
         ok(slot !== null && typeof slot == "object");
     });
 
-    test("first view is not selected when only one view is available", function() {
+    test("viewName method returns correctly the view name", function() {
         var scheduler = new Scheduler(container, {
             views: ["day"]
         });
