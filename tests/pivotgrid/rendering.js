@@ -2954,6 +2954,142 @@
         equal(cells_level2.eq(2).text(), "1");
     });
 
+    test("PivotGrid does not shuffle data when expand and collapse second level dimensions", function() {
+        var data = [
+            {"CompanyName": "Company1", "ContactTitle": "Owner", "Country": "Mexico", Price: 1 },
+            {"CompanyName": "Company2", "ContactTitle": "Owner", "Country": "Mexico", Price: 2 },
+            {"CompanyName": "Company1", "ContactTitle": "Sales", "Country": "Mexico", Price: 3 },
+            {"CompanyName": "Company2", "ContactTitle": "Sales", "Country": "Mexico", Price: 4 },
+            {"CompanyName": "Company1", "ContactTitle": "Owner", "Country": "Germany", Price: 5 },
+            {"CompanyName": "Company2", "ContactTitle": "Owner", "Country": "Germany", Price: 6 },
+            {"CompanyName": "Company1", "ContactTitle": "Sales", "Country": "Germany", Price: 7 },
+            {"CompanyName": "Company2", "ContactTitle": "Sales", "Country": "Germany", Price: 8 }
+        ];
+
+        var pivotgrid = createPivot({
+            dataSource: {
+                data: data,
+                schema: {
+                    cube: {
+                        dimensions: {
+                            ContactName: { caption: "All Contacts" },
+                            CompanyName: { caption: "All Companies" },
+                            Country: { caption: "All Countries" },
+                            ContactTitle: { caption: "All Titles" }
+                        },
+                        measures: {
+                            "Contacts Count": { field: "Price", aggregate: "sum" }
+                        }
+                    }
+                },
+                columns: [{ name: "Country", expand: true }, { name: "CompanyName" } ],
+                rows: [{ name: "ContactTitle", expand: true }],
+                measures: ["Contacts Count"]
+            }
+        });
+
+        //expand & collapse Mexico&CompanyName
+        pivotgrid.dataSource.expandColumn(["Country&Mexico","CompanyName"]);
+        pivotgrid._columnBuilder.metadata["[\"Country&Mexico\",\"CompanyName\"]"].expanded = false;
+        pivotgrid.refresh();
+
+        //expand Germany&CompanyName
+        pivotgrid.dataSource.expandColumn(["Country&Germany","CompanyName"]);
+
+        var contentTable = pivotgrid.wrapper.find(".k-grid-content").find("table");
+        var rows = contentTable.find("tr");
+
+        var row1_cells = rows.eq(0).children();
+        var row2_cells = rows.eq(1).children();
+        var row3_cells = rows.eq(2).children();
+
+        equal(row1_cells.eq(1).text(), "5");
+        equal(row1_cells.eq(2).text(), "6");
+        equal(row1_cells.eq(3).text(), "11");
+
+        equal(row2_cells.eq(1).text(), "7");
+        equal(row2_cells.eq(2).text(), "8");
+        equal(row2_cells.eq(3).text(), "15");
+
+        equal(row3_cells.eq(1).text(), "12");
+        equal(row3_cells.eq(2).text(), "14");
+        equal(row3_cells.eq(3).text(), "26");
+    });
+
+    test("PivotGrid does not shuffle data when expand and collapse third level dimensions of Ground Total member", function() {
+        var data = [
+            {"CompanyName": "Company1", "ContactTitle": "Owner", "Country": "Mexico", Customer: "Cust1", Price: 1 },
+            {"CompanyName": "Company2", "ContactTitle": "Owner", "Country": "Mexico", Customer: "Cust1", Price: 2 },
+            {"CompanyName": "Company1", "ContactTitle": "Sales", "Country": "Mexico", Customer: "Cust1", Price: 3 },
+            {"CompanyName": "Company2", "ContactTitle": "Sales", "Country": "Mexico", Customer: "Cust1", Price: 4 },
+            {"CompanyName": "Company1", "ContactTitle": "Owner", "Country": "Mexico", Customer: "Cust2", Price: 5 },
+            {"CompanyName": "Company2", "ContactTitle": "Owner", "Country": "Mexico", Customer: "Cust2", Price: 6 },
+            {"CompanyName": "Company1", "ContactTitle": "Sales", "Country": "Mexico", Customer: "Cust2", Price: 7 },
+            {"CompanyName": "Company2", "ContactTitle": "Sales", "Country": "Mexico", Customer: "Cust2", Price: 8 },
+            {"CompanyName": "Company1", "ContactTitle": "Owner", "Country": "Germany", Customer: "Cust1", Price: 9 },
+            {"CompanyName": "Company2", "ContactTitle": "Owner", "Country": "Germany", Customer: "Cust1", Price: 10 },
+            {"CompanyName": "Company1", "ContactTitle": "Sales", "Country": "Germany", Customer: "Cust1", Price: 11 },
+            {"CompanyName": "Company2", "ContactTitle": "Sales", "Country": "Germany", Customer: "Cust1", Price: 12 },
+            {"CompanyName": "Company1", "ContactTitle": "Owner", "Country": "Germany", Customer: "Cust2", Price: 13 },
+            {"CompanyName": "Company2", "ContactTitle": "Owner", "Country": "Germany", Customer: "Cust2", Price: 14 },
+            {"CompanyName": "Company1", "ContactTitle": "Sales", "Country": "Germany", Customer: "Cust2", Price: 15 },
+            {"CompanyName": "Company2", "ContactTitle": "Sales", "Country": "Germany", Customer: "Cust2", Price: 16 }
+        ];
+
+        var pivotgrid = createPivot({
+            dataSource: {
+                data: data,
+                schema: {
+                    cube: {
+                        dimensions: {
+                            ContactName: { caption: "All Contacts" },
+                            CompanyName: { caption: "All Companies" },
+                            Country: { caption: "All Countries" },
+                            ContactTitle: { caption: "All Titles" },
+                            Customer: { caption: "All Customers" }
+                        },
+                        measures: {
+                            "Contacts Count": { field: "Price", aggregate: "sum" }
+                        }
+                    }
+                },
+                columns: [{ name: "Country", expand: true }, { name: "CompanyName", expand: true }, { name: "Customer" } ],
+                rows: [{ name: "ContactTitle", expand: true }],
+                measures: ["Contacts Count"]
+            }
+        });
+
+        //expand & collapse Mexico&CompanyName
+        pivotgrid.dataSource.expandColumn(["Country","CompanyName&Company1","Customer"]);
+        pivotgrid._columnBuilder.metadata["[\"Country\",\"CompanyName&Company1\",\"Customer\"]"].expanded = false;
+        pivotgrid.refresh();
+
+        //expand Germany&CompanyName
+        pivotgrid.dataSource.expandColumn(["Country","CompanyName&Company2","Customer"]);
+
+        var contentTable = pivotgrid.wrapper.find(".k-grid-content").find("table");
+        var rows = contentTable.find("tr");
+
+        var row1_cells = rows.eq(0).children();
+        var row2_cells = rows.eq(1).children();
+        var row3_cells = rows.eq(2).children();
+
+        equal(row1_cells.eq(3).text(), "12");
+        equal(row1_cells.eq(4).text(), "20");
+        equal(row1_cells.eq(5).text(), "32");
+        equal(row1_cells.eq(6).text(), "60");
+
+        equal(row2_cells.eq(3).text(), "16");
+        equal(row2_cells.eq(4).text(), "24");
+        equal(row2_cells.eq(5).text(), "40");
+        equal(row2_cells.eq(6).text(), "76");
+
+        equal(row3_cells.eq(3).text(), "28");
+        equal(row3_cells.eq(4).text(), "44");
+        equal(row3_cells.eq(5).text(), "72");
+        equal(row3_cells.eq(6).text(), "136");
+    });
+
     test("PivotGrid renders one dimension with three measures", function() {
         var tuples = [
             { members: [ { name: "level 0", levelNum: "0", children: [] }, { name: "measure 1", children: [] } ] },

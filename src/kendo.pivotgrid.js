@@ -4072,6 +4072,7 @@ var __meta__ = {
 
                 if (!row.parentMember || row.parentMember !== parentMember) {
                     row.parentMember = parentMember;
+                    row.collapsed = 0;
                     row.colSpan = 0;
                 }
             }
@@ -4122,10 +4123,11 @@ var __meta__ = {
             var path;
 
             var idx = 0;
-            var collapsed = 0;
+            var metadata;
 
             var colSpan;
-            var metadata;
+            var collapsed = 0;
+            var memberCollapsed = 0;
 
             if (member.measure) {
                 this._measures(member.children, tuple);
@@ -4150,7 +4152,8 @@ var __meta__ = {
 
             if (member.hasChildren) {
                 if (metadata.expanded === false) {
-                    row.collapsed += metadata.maxChildren;
+                    collapsed = metadata.maxChildren;
+                    row.collapsed += collapsed;
 
                     metadata.children = 0;
                     childrenLength = 0;
@@ -4177,22 +4180,26 @@ var __meta__ = {
                 }
 
                 colSpan = childRow.colSpan;
+                collapsed = childRow.collapsed;
+
                 cell.attr.colSpan = colSpan;
 
                 metadata.children = colSpan;
                 metadata.members = 1;
 
                 row.colSpan += colSpan;
+                row.collapsed += collapsed;
                 row.rowSpan = childRow.rowSpan + 1;
-                row.collapsed += childRow.collapsed;
-
-                collapsed += childRow.collapsed;
 
                 if (nextMember) {
                     if (nextMember.measure) {
                         colSpan = this._measures(nextMember.children, tuple, " k-alt");
                     } else {
-                        colSpan = this._buildRows(tuple, memberIdx + 1).colSpan;
+                        childRow = this._buildRows(tuple, memberIdx + 1);
+                        colSpan = childRow.colSpan;
+
+                        row.collapsed += childRow.collapsed;
+                        memberCollapsed = childRow.collapsed;
                     }
 
                     allCell.attr.colSpan = colSpan;
@@ -4205,7 +4212,11 @@ var __meta__ = {
                 if (nextMember.measure) {
                     colSpan = this._measures(nextMember.children, tuple);
                 } else {
-                    colSpan = this._buildRows(tuple, memberIdx + 1).colSpan;
+                    childRow = this._buildRows(tuple, memberIdx + 1);
+                    colSpan = childRow.colSpan;
+
+                    row.collapsed += childRow.collapsed;
+                    memberCollapsed = childRow.collapsed;
                 }
 
                 metadata.members = colSpan;
@@ -4216,12 +4227,14 @@ var __meta__ = {
                 }
             }
 
-            if (metadata.maxChildren < (metadata.children + collapsed)) {
-                metadata.maxChildren = metadata.children + collapsed;
+            if (metadata.maxMembers < (metadata.members + memberCollapsed)) {
+                metadata.maxMembers = metadata.members + memberCollapsed;
             }
 
-            if (metadata.maxMembers < metadata.members) {
-                metadata.maxMembers = metadata.members;
+            children = metadata.children + collapsed;
+
+            if (metadata.maxChildren < children) {
+                metadata.maxChildren = children;
             }
 
             (allCell || cell).tupleAll = true;
