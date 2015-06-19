@@ -569,7 +569,8 @@ var __meta__ = {
             if (column.columns) {
                 column.columns = normalizeColumns(column.columns, encoded, hidden);
             }
-
+            var uid = kendo.guid();
+            column.headerAttributes = extend({id: uid}, column.headerAttributes);
             return extend({ encoded: encoded, hidden: hidden }, column);
         });
     }
@@ -3966,17 +3967,34 @@ var __meta__ = {
         },
 
         _updateCurrentAttr: function(current, next) {
+
+            var id = $(current).data("headerId");
             $(current)
                 .removeClass(FOCUSED)
-                .removeAttr("id")
+                .removeAttr("aria-describedby")
                 .closest("table")
                 .removeAttr("aria-activedescendant");
 
+            if(id){
+                id = id.replace(this._cellId, "");
+                $(current).attr("id", id);
+            }else{
+                $(current).removeAttr("id");
+            }
+
             next
+                .data("headerId", next.attr("id"))
                 .attr("id", this._cellId)
                 .addClass(FOCUSED)
                 .closest("table")
                 .attr("aria-activedescendant", this._cellId);
+
+            if(!next.closest("tr").hasClass("k-grouping-row") && !next.hasClass("k-header")){
+                var id = this.columns[this.cellIndex(next)].headerAttributes.id;
+                next.attr("aria-describedby", id + " " + this._cellId);
+            }else{
+                next.attr("aria-describedby", this._cellId);
+            }
 
             this._current = next;
         },
@@ -6695,7 +6713,7 @@ var __meta__ = {
 
             level = group.find(".k-group-cell").length;
             group.find(".k-icon").addClass("k-i-expand").removeClass("k-i-collapse");
-            group.find("td:first").attr("aria-expanded", false);
+            group.find("td[aria-expanded='true']:first").attr("aria-expanded", false);
             group = group.nextAll("tr");
 
             for (idx = 0, length = group.length; idx < length; idx ++ ) {
@@ -6742,7 +6760,7 @@ var __meta__ = {
 
             level = group.find(".k-group-cell").length;
             group.find(".k-icon").addClass("k-i-collapse").removeClass("k-i-expand");
-            group.find("td:first").attr("aria-expanded", true);
+            group.find("td[aria-expanded='false']:first").attr("aria-expanded", true);
             group = group.nextAll("tr");
 
             for (idx = 0, length = group.length; idx < length; idx ++ ) {
@@ -7697,7 +7715,7 @@ var __meta__ = {
    }
 
    function groupRowBuilder(colspan, level, text) {
-       return '<tr class="k-grouping-row">' + groupCells(level) +
+       return '<tr role="row" class="k-grouping-row">' + groupCells(level) +
            '<td colspan="' + colspan + '" aria-expanded="true">' +
            '<p class="k-reset">' +
            '<a class="k-icon k-i-collapse" href="#" tabindex="-1"></a>' + text +
@@ -7705,7 +7723,7 @@ var __meta__ = {
    }
 
    function groupRowLockedContentBuilder(colspan, level, text) {
-       return '<tr class="k-grouping-row">' +
+       return '<tr role="row" class="k-grouping-row">' +
            '<td colspan="' + colspan + '" aria-expanded="true">' +
            '<p class="k-reset">&nbsp;</p></td></tr>';
    }
