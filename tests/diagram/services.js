@@ -411,11 +411,13 @@
         var PointerTool = diagram.PointerTool;
         var toolservice;
         var pointertool;
+        var resizingAdorner;
         var shape;
         function setupTool(options) {
             setupDiagram(options);
             shape = d.addShape({ x: 10, y: 20, data: "Rectangle", dataItem: {} });
             toolservice = d.toolService;
+            resizingAdorner = d._resizingAdorner;
             for (var i = 0; i < toolservice.tools.length; i++) {
                 if (toolservice.tools[i] instanceof PointerTool) {
                     pointertool = toolservice.tools[i];
@@ -445,6 +447,175 @@
             pointertool.start(new Point(), {});
             ok(!shape.isSelected);
         });
+
+        // ------------------------------------------------------------
+        module("PointerTool / start", {
+            setup: function() {
+                setupTool({});
+            },
+            teardown: teardown
+        });
+
+        test("triggers dragStart event with the selected shapes", 2, function() {
+            d.bind("dragStart", function(e) {
+                equal(e.shapes.length, 1);
+                ok(e.shapes[0] === shape);
+            });
+            d.select(shape);
+
+            pointertool.start(new Point(20, 30));
+        });
+
+        test("dragStart event argument contains empty connections array", 2, function() {
+            d.bind("dragStart", function(e) {
+                ok(e.connections);
+                equal(e.connections.length, 0);
+            });
+            d.select(shape);
+
+            pointertool.start(new Point(20, 30));
+        });
+
+        test("does not trigger dragStart if resizing handle is hit", 0, function() {
+            d.bind("dragStart", function() {
+                ok(false);
+            });
+            d.select(shape);
+
+            var point = resizingAdorner._getHandleBounds(new Point(-1,-1)).offset(resizingAdorner._bounds.x, resizingAdorner._bounds.y).center();
+            pointertool.start(point);
+        });
+
+        test("preventing the default action on dragStart ends service", 1, function() {
+            d.bind("dragStart", function(e) {
+                e.preventDefault();
+            });
+            d.select(shape);
+            toolservice.end = function() {
+                ok(true);
+            }
+            pointertool.start(new Point(20, 30));
+        });
+
+        // ------------------------------------------------------------
+        module("PointerTool / move", {
+            setup: function() {
+                setupTool({});
+                d.select(shape);
+                pointertool.start(new Point(20, 30));
+
+            },
+            teardown: teardown
+        });
+
+        test("triggers drag event with moved shapes", 2, function() {
+            d.bind("drag", function(e) {
+                equal(e.shapes.length, 1);
+                equal(e.shapes[0].bounds().x, 20);
+            });
+
+            pointertool.move(new Point(30, 30));
+        });
+
+        test("drag event argument contains empty connections array", 2, function() {
+            d.bind("drag", function(e) {
+                ok(e.connections);
+                equal(e.connections.length, 0);
+            });
+
+            pointertool.move(new Point(30, 30));
+        });
+
+        test("drag event is not triggered if resizing", 0, function() {
+            d.bind("drag", function(e) {
+                ok(false);
+            });
+            pointertool.handle = new Point(-1, -1);
+            pointertool.move(new Point(30, 30));
+        });
+
+        // ------------------------------------------------------------
+        module("PointerTool / end", {
+            setup: function() {
+                setupTool({});
+                d.select(shape);
+                pointertool.start(new Point(20, 30));
+                pointertool.move(new Point(30, 30));
+            },
+            teardown: teardown
+        });
+
+        test("triggers dragEnd event with moved shapes", 2, function() {
+            d.bind("dragEnd", function(e) {
+                equal(e.shapes.length, 1);
+                equal(e.shapes[0].bounds().x, 20);
+            });
+
+            pointertool.end(new Point(30, 30));
+        });
+
+        test("dragEnd event argument contains empty connections array", 2, function() {
+            d.bind("dragEnd", function(e) {
+                ok(e.connections);
+                equal(e.connections.length, 0);
+            });
+
+            pointertool.end(new Point(30, 30));
+        });
+
+        test("does not trigger dragEnd if resizing", 0, function() {
+            d.bind("dragEnd", function(e) {
+                ok(false);
+            });
+            pointertool.handle = new Point(-1, -1);
+            pointertool.end(new Point(30, 30));
+        });
+
+        test("reverts changes if the default action is prevented on dragEnd", 1, function() {
+            d.bind("dragEnd", function(e) {
+                e.preventDefault();
+            });
+
+            pointertool.end(new Point(30, 30));
+            equal(shape.bounds().x, 10);
+        });
+
+        test("does not update shapes model if the default action is prevented on dragEnd", 0, function() {
+            d.bind("dragEnd", function(e) {
+                e.preventDefault();
+            });
+
+            shape.updateModel = function() {
+                ok(false)
+            };
+
+            pointertool.end(new Point(30, 30));
+        });
+
+        test("does not sync diagram if the default action is prevented on dragEnd", 0, function() {
+            d.bind("dragEnd", function(e) {
+                e.preventDefault();
+            });
+
+            d._syncShapeChanges = function() {
+                ok(false)
+            };
+
+            pointertool.end(new Point(30, 30));
+        });
+
+        test("refreshes resizing adorner if the default action is prevented on dragEnd", 2, function() {
+            d.bind("dragEnd", function(e) {
+                e.preventDefault();
+            });
+
+            resizingAdorner.refresh = resizingAdorner.refreshBounds = function() {
+                ok(true);
+            };
+
+            pointertool.end(new Point(30, 30));
+        });
+
     })();
 
     (function() {

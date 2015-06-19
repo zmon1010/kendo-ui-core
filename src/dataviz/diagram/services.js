@@ -49,6 +49,9 @@
             DEFAULTCONNECTORNAMES = [TOP, RIGHT, BOTTOM, LEFT, AUTO],
             DEFAULT_SNAP_SIZE = 10,
             DEFAULT_SNAP_ANGLE = 10,
+            DRAG_START = "dragStart",
+            DRAG = "drag",
+            DRAG_END = "dragEnd",
             ITEMROTATE = "itemRotate",
             ITEMBOUNDSCHANGE = "itemBoundsChange",
             MIN_SNAP_SIZE = 5,
@@ -717,26 +720,41 @@
                 }
 
                 if (this.adorner) {
-                    this.adorner.start(p);
+                    if (!this.adorner.isDragHandle(this.handle) || !diagram.trigger(DRAG_START, { shapes: this.adorner.shapes, connections: [] })) {
+                        this.adorner.start(p);
+                    } else {
+                        toolService.startPoint = p;
+                        toolService.end(p);
+                    }
                 }
             },
+
             move: function (p) {
-                var that = this;
                 if (this.adorner) {
-                    this.adorner.move(that.handle, p);
+                    this.adorner.move(this.handle, p);
+                    if (this.adorner.isDragHandle(this.handle)) {
+                        this.toolService.diagram.trigger(DRAG, { shapes: this.adorner.shapes, connections: [] });
+                    }
                 }
             },
+
             end: function (p, meta) {
                 var diagram = this.toolService.diagram,
                     service = this.toolService,
+                    adorner = this.adorner,
                     unit;
 
-                if (this.adorner) {
-                    unit = this.adorner.stop();
-                    if (unit) {
-                        diagram.undoRedoService.add(unit, false);
+                if (adorner) {
+                    if (!adorner.isDragHandle(this.handle) || !diagram.trigger(DRAG_END, { shapes: adorner.shapes, connections: [] })) {
+                        unit = adorner.stop();
+                        if (unit) {
+                            diagram.undoRedoService.add(unit, false);
+                        }
+                    } else {
+                        adorner.cancel();
                     }
                 }
+
                 if(service.hoveredItem) {
                     this.toolService.triggerClick({item: service.hoveredItem, point: p, meta: meta});
                 }
@@ -1956,7 +1974,7 @@
                         delta = p.minus(this._cp);
                     }
 
-                    if (handle.x === 0 && handle.y === 0) {
+                    if (this.isDragHandle(handle)) {
                         dbr = dtl = delta; // dragging
                         dragging = true;
                     } else {
@@ -2023,6 +2041,23 @@
                 }
 
                 this._cp = p;
+            },
+
+            isDragHandle: function(handle) {
+                return handle.x === 0 && handle.y === 0;
+            },
+
+            cancel: function() {
+                var shapes = this.shapes;
+                var states = this.shapeStates;
+                for (var idx = 0; idx < shapes.length; idx++) {
+                    shapes[idx].bounds(states[idx])
+                }
+                this.refreshBounds();
+                this.refresh();
+                this._manipulating = undefined;
+                this._internalChange = undefined;
+                this._rotating = undefined;
             },
 
             _truncatePositionToGuides: function (bounds) {
