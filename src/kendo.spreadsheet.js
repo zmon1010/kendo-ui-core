@@ -54,6 +54,14 @@
                 this.options.headerWidth
             );
 
+            this._autoRefresh = true;
+
+            this._sheet.bind("change", function(e) {
+                if (this._autoRefresh) {
+                    this.refresh();
+                }
+            }.bind(this));
+
             this._sheet.name("sheet1");
 
             this._context = new kendo.spreadsheet.FormulaContext({ "sheet1": this._sheet });
@@ -76,6 +84,22 @@
         refresh: function() {
             this._view.refresh();
             this._view.render();
+            this.trigger("render");
+            return this;
+        },
+
+        autoRefresh: function(value) {
+            if (value !== undefined) {
+                this._autoRefresh = value;
+
+                if (value === true) {
+                    this.refresh();
+                }
+
+                return this;
+            }
+
+            return this._autoRefresh;
         },
 
         activeSheet: function() {
@@ -90,7 +114,11 @@
             columnWidth: 64,
             headerHeight: 20,
             headerWidth: 32
-        }
+        },
+
+        events: [
+            "render"
+        ]
     });
 
     kendo.ui.plugin(Spreadsheet);

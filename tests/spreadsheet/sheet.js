@@ -41,4 +41,70 @@
         equal(range._ref.bottomRight.col, 1);
         equal(range._ref.bottomRight.row, 0);
     });
+
+    test("rowHeight triggers the change event", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       }).rowHeight(0, 0);
+    });
+
+    test("columnWidth triggers the change event", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       }).columnWidth(0, 0);
+    });
+
+    test("hideColumn triggers the change event", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       }).hideColumn(0);
+    });
+
+    test("hideRow triggers the change event", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       }).hideRow(0);
+    });
+
+    test("unhideColumn triggers the change event", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       }).unhideColumn(0);
+    });
+
+    test("unhideRow triggers the change event", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       }).unhideRow(0);
+    });
+
+    test("frozenRows triggers the change event", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       }).frozenRows(2);
+    });
+
+    test("frozenColumns triggers the change event", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       }).frozenColumns(2);
+    });
+
+    test("select triggers the change event", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       }).range("A1:A1").select();
+    });
+
+    test("triggerChange triggers the change event", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       }).triggerChange();
+    });
+
+    test("triggerChange doesn't trigger the change event if changes are suspended", 0, function() {
+       sheet.bind("change", function() {
+           ok(false);
+       }).suspendChanges(true).triggerChange();
+    });
 })();

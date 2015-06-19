@@ -7,8 +7,10 @@
     var CellRef = kendo.spreadsheet.CellRef;
     var Range = kendo.spreadsheet.Range;
 
-    var Sheet = kendo.Class.extend({
+    var Sheet = kendo.Observable.extend({
         init: function(rowCount, columnCount, rowHeight, columnWidth, headerHeight, headerWidth) {
+            kendo.Observable.prototype.init.call(this);
+
             var cellsCount = rowCount * columnCount - 1;
 
             this._values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
@@ -19,6 +21,7 @@
             this._mergedCells = [];
             this._frozenRows = 0;
             this._frozenColumns = 0;
+            this._suspendChanges = false;
             this._selection = kendo.spreadsheet.NULLREF;
 
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
@@ -34,46 +37,73 @@
             return this;
         },
 
+        _property: function(accessor, value) {
+            if (value === undefined) {
+                return accessor();
+            } else {
+                accessor(value);
+
+                return this.triggerChange();
+            }
+        },
+
+        _field: function(name, value) {
+            if (value === undefined) {
+                return this[name];
+            } else {
+                this[name] = value;
+
+                return this.triggerChange();
+            }
+        },
+
+        suspendChanges: function(value) {
+            if (value === undefined) {
+                return this._suspendChanges;
+            }
+
+            this._suspendChanges = value;
+
+            return this;
+        },
+
+        triggerChange: function() {
+            if (!this._suspendChanges) {
+                this.trigger("change");
+            }
+            return this;
+        },
+
         hideColumn: function(columnIndex) {
-            return this._columns.unhide(columnIndex);
+            return this._property(this._columns.hide.bind(this._columns), columnIndex);
         },
 
         unhideColumn: function(columnIndex) {
-            return this._columns.unhide(columnIndex);
+            return this._property(this._columns.unhide.bind(this._columns), columnIndex);
         },
 
         hideRow: function(rowIndex) {
-            return this._rows.hide(rowIndex);
+            return this._property(this._rows.hide.bind(this._rows), rowIndex);
         },
 
         unhideRow: function(rowIndex) {
-            return this._rows.unhide(rowIndex);
+            return this._property(this._rows.unhide.bind(this._rows), rowIndex);
         },
 
         columnWidth: function(columnIndex, width) {
-            return this._columns.value(columnIndex, columnIndex, width);
+            return this._property(this._columns.value.bind(this._columns, columnIndex, columnIndex), width);
         },
 
         rowHeight: function(rowIndex, height) {
-            return this._rows.value(rowIndex, rowIndex, height);
+            return this._property(this._rows.value.bind(this._rows, rowIndex, rowIndex), height);
         },
 
         frozenRows: function(value) {
-            if (!value) {
-                return this._frozenRows;
-            }
-
-            this._frozenRows = value;
-            return this;
+            return this._field("_frozenRows", value);
         },
 
         frozenColumns: function(value) {
-            if (!value) {
-                return this._frozenColumns;
-            }
-
-            this._frozenColumns = value;
-            return this;
+            return this._field("_frozenColumns", value);
         },
 
         _ref: function(row, column, numRows, numColumns) {
@@ -161,9 +191,12 @@
         select: function(ref) {
             if (ref) {
                 var mergedCells = this._mergedCells;
+
                 this._selection = this._ref(ref).map(function(ref) {
                     return ref.toRangeRef().union(mergedCells);
                 });
+
+                this.trigger("change");
             }
 
             return this._selection;

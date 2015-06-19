@@ -16,6 +16,31 @@
         equal(sheet._values.iterator(0,0).at(0), "foo");
     });
 
+    test("merge triggers the change event of the sheet", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       });
+
+       sheet.range("A1:A2").merge();
+    });
+
+    test("unmerge triggers the change event of the sheet", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       });
+
+       sheet.range("A1:A2").unmerge();
+    });
+
+    test("setting range property triggers the change event of the sheet", 2, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       });
+
+       sheet.range("A1").background("red");
+       sheet.range("A1").value("A1");
+    });
+
     test("value sets the value of a multiple row range", function() {
         range = sheet.range(0, 0, 2);
 
@@ -124,10 +149,9 @@
         equal(values[0][0], "A1");
     });
 
-    test("values throws error with union range", function() {
+    test("values throws error with union range", 1, function() {
         try {
             sheet.range("A1,A5").values();
-            ok(false);
         } catch(e) {
             ok(true);
         }

@@ -25,6 +25,8 @@
                     }
                 }.bind(this));
 
+                this._sheet.triggerChange();
+
                 return this;
             } else {
                 var index = this._sheet._grid.cellRefIndex(this._ref.toRangeRef().topLeft);
@@ -90,6 +92,9 @@
         merge: function() {
             var sheet = this._sheet;
             var mergedCells = sheet._mergedCells;
+            var suspended = sheet.suspendChanges();
+
+            sheet.suspendChanges(true);
 
             this._ref = this._ref.map(function(ref) {
                 if (ref instanceof kendo.spreadsheet.CellRef) {
@@ -116,6 +121,8 @@
                 return currentRef;
             });
 
+            sheet.suspendChanges(suspended).triggerChange();
+
             return this;
         },
 
@@ -127,6 +134,8 @@
                     mergedCells.splice(mergedCells.indexOf(mergedRef), 1);
                 });
             });
+
+            this._sheet.triggerChange();
 
             return this;
         },

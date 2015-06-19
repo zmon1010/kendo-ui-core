@@ -2,6 +2,9 @@
 $("#spreadsheet").kendoSpreadsheet();
 
 var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+
+spreadsheet.autoRefresh(false);
+
 var sheet = spreadsheet.activeSheet();
 var calc = kendo.spreadsheet.calc;
 
@@ -32,7 +35,7 @@ for (var i = 0, len = 50; i < len; i++) {
     sheet.range(i, 0).formula(kendo.spreadsheet.calc.compile(x));
 }
 
-spreadsheet.refresh();
+spreadsheet.autoRefresh(true);
 
 $("#copy").on("click", function(e) {
     var range = sheet.range("K11:M16");
@@ -44,7 +47,4 @@ $("#copy").on("click", function(e) {
     }).join("\r\n");
 
     $("#clipboard").val(text).select();
-
-    spreadsheet.refresh();
-
 });
