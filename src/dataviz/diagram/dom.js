@@ -68,6 +68,9 @@
             ITEMBOUNDSCHANGE = "itemBoundsChange",
             CHANGE = "change",
             CLICK = "click",
+            DRAG = "drag",
+            DRAG_END = "dragEnd",
+            DRAG_START = "dragStart",
             MOUSE_ENTER = "mouseEnter",
             MOUSE_LEAVE = "mouseLeave",
             ERROR = "error",
@@ -1786,7 +1789,10 @@
                 "edit",
                 "remove",
                 "add",
-                "dataBound"
+                "dataBound",
+                DRAG_START,
+                DRAG,
+                DRAG_END
             ],
 
             _createGlobalToolBar: function() {
