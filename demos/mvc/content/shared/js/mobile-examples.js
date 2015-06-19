@@ -56,7 +56,7 @@ navDataSource = new kendo.data.DataSource({
 
     schema: {
         model: {
-            id: "name"
+            id: "url"
         },
         parse: function(response) {
             for (var i = 0; i < response.length; i++) {
@@ -122,19 +122,61 @@ function showDemoLayout(e) {
         var url = e.view.id,
             element = e.view.element;
 
-        currentSection = navDataSource.get(url.split("/")[0]);
+        currentExample = navDataSource.get(url);
 
-        if (currentSection) {
-            detailNavDataSource.data(mobileExamples(currentSection));
-
-            currentExample = detailNavDataSource.get(url);
-            var navBar = element.find("[data-role=navbar]").data("kendoMobileNavBar");
-
-            if (navBar) {
-                navBar.title(currentExample.text);
-            }
-
-            element.find("[data-role=backbutton]").attr("href", "#section?name=" + currentSection.name);
+        if (currentExample) {
+            element.find("[data-icon=source-code]").show();
+        } else {
+            element.find("[data-icon=source-code]").hide();
         }
     });
 }
+
+var sourceCode;
+
+dojo.configuration = {
+    url: "@Html.DojoRoot()",
+    cdnRoot: '@Html.CdnRoot()'
+};
+
+function openDojo(e) {
+    window.dojo.postSnippet(sourceCode, window.location.href.replace(window.location.hash, ""));
+    e.preventDefault();
+}
+
+function goToSourceCode() {
+    app.navigate("#source-code-view?view=" + app.view().id);
+}
+
+function showSourceCode(e) {
+    app.showLoading();
+    $("#source-code-container").empty();
+
+    $.get("../source/mobile?path=" + encodeURIComponent("~/Views/demos/" + e.view.params.view + ".cshtml")).then(function(response) {
+        $("#source-code-container").html(response);
+        sourceCode = $("#source-code-container").find(".prettyprint").text();
+        prettyPrint();
+        app.hideLoading();
+    });
+}
+
+function disableInSourceCode(e) {
+    if (app.view().id === "#source-code-view") {
+        e.preventDefault();
+    }
+}
+
+window.app = new kendo.mobile.Application($(document.body), {
+    layout: "examples",
+    transition: "slide",
+    skin: "nova",
+    retina: true,
+    icon: {
+        "" : '@Url.Content("~/content/mobile/AppIcon72x72.png")',
+        "72x72" : '@Url.Content("~/content/mobile/AppIcon72x72.png")',
+        "76x76" : '@Url.Content("~/content/mobile/AppIcon76x76.png")',
+        "114x114" : '@Url.Content("~/content/mobile/AppIcon72x72@2x.png")',
+        "120x120" : '@Url.Content("~/content/mobile/AppIcon76x76@2x.png")',
+        "152x152" : '@Url.Content("~/content/mobile/AppIcon76x76@2x.png")'
+    }
+});

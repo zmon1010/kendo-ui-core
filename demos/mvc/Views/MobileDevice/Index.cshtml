@@ -28,6 +28,8 @@
         <script src="@Url.Script(scriptName)"></script>
     }
 
+    <script src="@Url.Content("~/content/shared/js/kendo-dojo.js")"></script>
+
     <script>
         document.title = "@ViewBag.Title";
         var NAV_JSON_URL = "@Url.Content("~/content/mobile-nav.json")";
@@ -37,11 +39,6 @@
         window.kendoCommonFile = "@ViewBag.CommonFile";
     </script>
 
-    <script src="@Url.Content("~/content/shared/js/example-datasources.js")"></script>
-    <script src="@Url.Content("~/content/shared/js/mobile-examples.js")"></script>
-    <script src="@Url.Content("~/content/shared/js/kendo-dojo.js")"></script>
-    <script src="@Url.Content("~/content/shared/js/console.js")"></script>
-    <script src="@Url.Content("~/content/shared/js/prettify.js")"></script>
     <style type="text/css" media="screen">
         .navbar-hidden {
             display: none;
@@ -157,55 +154,9 @@
         </div>
     </div>
 
-    <script>
-        var sourceCode;
-
-        dojo.configuration = {
-            url: "@Html.DojoRoot()",
-            cdnRoot: '@Html.CdnRoot()'
-        };
-
-        function openDojo(e) {
-            window.dojo.postSnippet(sourceCode, window.location.href.replace(window.location.hash, ""));
-            e.preventDefault();
-        }
-
-        function goToSourceCode() {
-            app.navigate("#source-code-view?view=" + app.view().id);
-        }
-
-        function showSourceCode(e) {
-            app.showLoading();
-            $("#source-code-container").empty();
-
-            $.get("../source/mobile?path=" + encodeURIComponent("~/Views/demos/" + e.view.params.view + ".cshtml")).then(function(response) {
-                $("#source-code-container").html(response);
-                sourceCode = $("#source-code-container").find(".prettyprint").text();
-                prettyPrint();
-                app.hideLoading();
-            });
-        }
-
-        function disableInSourceCode(e) {
-            if (app.view().id === "#source-code-view") {
-                e.preventDefault();
-            }
-        }
-
-        window.app = new kendo.mobile.Application($(document.body), {
-            layout: "examples",
-            transition: "slide",
-            skin: "nova",
-            retina: true,
-            icon: {
-                "" : '@Url.Content("~/content/mobile/AppIcon72x72.png")',
-                "72x72" : '@Url.Content("~/content/mobile/AppIcon72x72.png")',
-                "76x76" : '@Url.Content("~/content/mobile/AppIcon76x76.png")',
-                "114x114" : '@Url.Content("~/content/mobile/AppIcon72x72@2x.png")',
-                "120x120" : '@Url.Content("~/content/mobile/AppIcon76x76@2x.png")',
-                "152x152" : '@Url.Content("~/content/mobile/AppIcon76x76@2x.png")'
-            }
-        });
-    </script>
+    <script src="@Url.Content("~/content/shared/js/example-datasources.js")"></script>
+    <script src="@Url.Content("~/content/shared/js/mobile-examples.js")"></script>
+    <script src="@Url.Content("~/content/shared/js/console.js")"></script>
+    <script src="@Url.Content("~/content/shared/js/prettify.js")"></script>
 </body>
 </html>

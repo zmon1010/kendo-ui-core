@@ -62,6 +62,7 @@
         var parentID = e.view.params.parent,
             element = e.view.element,
             backButton = element.find('#employee-back'),
+            scButton = element.find('[data-icon="source-code"]');
             listView = element.find("#hierarchical-listview").data('kendoMobileListView'),
             navBar = element.find('#employee-navbar').data('kendoMobileNavBar');
 
@@ -79,8 +80,10 @@
                     }, 0);
                 }
             });
+            scButton.hide();
         } else {
             backButton.hide();
+            scButton.show();
             navBar.title('Employees');
             listView.setDataSource(employees);
         }

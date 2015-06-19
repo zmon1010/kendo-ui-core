@@ -1,12 +1,4 @@
 <div data-role="view" id="flat" data-init="mobileListViewDataBindInitFlat" data-title="ListView" data-layout="databinding" data-use-native-scrolling="true">
-    <ul id="flat-listview"></ul>
-</div>
-
-<div data-role="view" id="grouped" data-init="mobileListViewDataBindInitGrouped" data-transition="" data-title="ListView" data-layout="databinding" data-use-native-scrolling="true">
-     <ul id="grouped-listview"></ul>
-</div>
-
-<div data-role="layout" data-id="databinding">
     <header data-role="header">
         <div data-role="navbar">
             <a id="back-button" class="nav-button" data-align="left" href="#/" data-role="backbutton">Back</a>
@@ -15,6 +7,20 @@
         </div>
     </header>
 
+    <ul id="flat-listview"></ul>
+</div>
+
+<div data-role="view" id="grouped" data-init="mobileListViewDataBindInitGrouped" data-transition="" data-title="ListView" data-layout="databinding" data-use-native-scrolling="true">
+    <header data-role="header">
+        <div data-role="navbar">
+            <a id="back-button" class="nav-button" data-align="left" href="#/" data-role="backbutton">Back</a>
+            <span data-role="view-title"></span>
+        </div>
+    </header>
+     <ul id="grouped-listview"></ul>
+</div>
+
+<div data-role="layout" data-id="databinding">
     <div data-role="footer">
         <div data-role="tabstrip">
             <a href="#flat" data-icon="stop">Flat
