@@ -296,6 +296,16 @@
         });
     });
 
+    test("intersection and union precedence", function(){
+        var exp = calc.parse("sheet1", 0, 0, "=areas((A1:C3 B2, B3:B4))");
+        var f = calc.compile(exp);
+        equal(f.print(0, 0), "areas((A1:C3 B2,B3:B4))");
+
+        var exp = calc.parse("sheet1", 0, 0, "=areas(A1:C3 (B2, B3:B4))");
+        var f = calc.compile(exp);
+        equal(f.print(0, 0), "areas(A1:C3 (B2,B3:B4))");
+    });
+
     /* -----[ printer tests ]----- */
 
     test("print adjusts cell references", function(){

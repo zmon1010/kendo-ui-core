@@ -122,12 +122,9 @@
         }
 
         function parseExpression(commas) {
-            return maybeIntersect(
-                maybeCall(
-                    maybeBinary(parseAtom(commas), 0, commas)
-                ),
-                commas
-            );
+            return maybeCall(
+                maybeBinary(
+                    maybeIntersect(parseAtom(commas)), 0, commas));
         }
 
         function maybeRef(name) {
@@ -220,13 +217,13 @@
             };
         }
 
-        function maybeIntersect(exp, commas) {
+        function maybeIntersect(exp) {
             if (is("punc", "(") || is("sym") || is("num")) {
                 return {
                     type: "binary",
                     op: " ",
                     left: exp,
-                    right: parseExpression(commas)
+                    right: parseExpression(false)
                 };
             } else {
                 return exp;
