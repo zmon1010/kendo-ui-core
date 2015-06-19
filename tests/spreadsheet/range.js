@@ -64,6 +64,36 @@
         equal(range.fontLine(), "foo");
     });
 
+    test("fontLine returns the fontLine of a range", function() {
+        range.fontSize("12px");
+
+        equal(range.fontSize(), "12px");
+    });
+
+    test("fontStyle returns the fontStyle of a range", function() {
+        range.fontSize("italic");
+
+        equal(range.fontSize(), "italic");
+    });
+
+    test("fontWeight returns the fontWeight of a range", function() {
+        range.fontWeight("bold");
+
+        equal(range.fontWeight(), "bold");
+    });
+
+    test("horizontalAlignment returns the horizontalAlignment of a range", function() {
+        range.horizontalAlignment("foo");
+
+        equal(range.horizontalAlignment(), "foo");
+    });
+
+    test("verticalAlignment returns the horizontalAlignment of a range", function() {
+        range.verticalAlignment("foo");
+
+        equal(range.verticalAlignment(), "foo");
+    });
+
     test("values returns two dimensional array containing cell values", function() {
         sheet.range("A1").value("A1");
         sheet.range("B1").value("B1");

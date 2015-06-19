@@ -244,7 +244,12 @@
                 background: "backgroundColor",
                 fontColor: "color",
                 fontFamily: "fontFamily",
-                fontLine: "textDecoration"
+                fontLine: "textDecoration",
+                fontSize: "fontSize",
+                fontStyle: "fontStyle",
+                fontWeight: "fontWeight",
+                horizontalAlignment: "textAlign",
+                verticalAlignment: "verticalAlign"
             };
 
             var style = {};

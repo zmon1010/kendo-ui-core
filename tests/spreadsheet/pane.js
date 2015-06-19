@@ -86,5 +86,60 @@
         equal(table.args("addCell", 0)[2].textDecoration, "foo");
     });
 
+    test("adds font-size style to the cell", function() {
+        var pane = createPane(0, 0, 3, 3);
+
+        var table = stub({}, "addCell");
+
+        pane.addCell(table, {}, { style: { fontSize: 12 } });
+
+        equal(table.calls("addCell"), 1);
+        equal(table.args("addCell", 0)[2].fontSize, 12);
+    });
+
+    test("adds font-style style to the cell", function() {
+        var pane = createPane(0, 0, 3, 3);
+
+        var table = stub({}, "addCell");
+
+        pane.addCell(table, {}, { style: { fontStyle: "foo" } });
+
+        equal(table.calls("addCell"), 1);
+        equal(table.args("addCell", 0)[2].fontStyle, "foo");
+    });
+
+    test("adds font-weight style to the cell", function() {
+        var pane = createPane(0, 0, 3, 3);
+
+        var table = stub({}, "addCell");
+
+        pane.addCell(table, {}, { style: { fontWeight: "foo" } });
+
+        equal(table.calls("addCell"), 1);
+        equal(table.args("addCell", 0)[2].fontWeight, "foo");
+    });
+
+    test("adds text-align  style to the cell", function() {
+        var pane = createPane(0, 0, 3, 3);
+
+        var table = stub({}, "addCell");
+
+        pane.addCell(table, {}, { style: { horizontalAlignment: "foo" } });
+
+        equal(table.calls("addCell"), 1);
+        equal(table.args("addCell", 0)[2].textAlign, "foo");
+    });
+
+    test("adds vertical-align  style to the cell", function() {
+        var pane = createPane(0, 0, 3, 3);
+
+        var table = stub({}, "addCell");
+
+        pane.addCell(table, {}, { style: { verticalAlignment: "foo" } });
+
+        equal(table.calls("addCell"), 1);
+        equal(table.args("addCell", 0)[2].verticalAlign, "foo");
+    });
+
 
 })();

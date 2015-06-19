@@ -57,6 +57,21 @@
         fontLine: function(value) {
             return this._styleProperty("fontLine", value);
         },
+        fontSize: function(value) {
+            return this._styleProperty("fontSize", value);
+        },
+        fontStyle: function(value) {
+            return this._styleProperty("fontStyle", value);
+        },
+        fontWeight: function(value) {
+            return this._styleProperty("fontWeight", value);
+        },
+        horizontalAlignment: function(value) {
+            return this._styleProperty("horizontalAlignment", value);
+        },
+        verticalAlignment: function(value) {
+            return this._styleProperty("verticalAlignment", value);
+        },
         background: function(value) {
             return this._styleProperty("background", value);
         },
