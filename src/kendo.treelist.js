@@ -202,6 +202,12 @@ var __meta__ = {
             this.parentId = this.get(this.parentIdField);
         },
 
+        accept: function(data) {
+            Model.fn.accept.call(this, data);
+
+            this.parentId = this.get(this.parentIdField);
+        },
+
         loaded: function(value) {
             if (value !== undefined) {
                 this._loaded = value;

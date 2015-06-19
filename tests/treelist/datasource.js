@@ -71,6 +71,32 @@
         equal(m.foo, 1);
     });
 
+    test("accept updated the parentId field", function() {
+        var m = new TreeListModel({ parentId: 1 });
+
+        equal(m.parentId, 1);
+
+        m.accept({ parentId: 2 });
+
+        equal(m.parentId, 2);
+    });
+
+    test("accept updated the parentId field when predefined", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "foo"
+        });
+
+        var m = new MyModel({ foo: 1 });
+
+        equal(m.parentId, 1);
+        equal(m.foo, 1);
+
+        m.accept({ foo: 2 });
+
+        equal(m.parentId, 2);
+        equal(m.foo, 2);
+    });
+
     test("toJSON serializes id and parentId", function() {
         var m = new TreeListModel({ id: 12, parentId: 20 });
 
