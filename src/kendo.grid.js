@@ -2363,7 +2363,7 @@ var __meta__ = {
 
             var footerTable = footer.find("table").first();
 
-            if (that.lockedHeader && visibleLocked >= index && !isLocked) {
+            if (that.lockedHeader && !isLocked) {
                 index -= visibleLocked;
             }
 
