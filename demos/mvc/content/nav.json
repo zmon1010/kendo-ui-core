@@ -4738,6 +4738,19 @@
         }
       },
       {
+        "text": "Scrollable tabs",
+        "url": "tabstrip/scrollable-tabs",
+		"new": "true",
+        "title": {
+            "kendo-ui": "Kendo UI jQuery TabStrip scrollable tabs demo",
+            "aspnet-mvc": "ASP.NET MVC TabStrip scrollable tabs demo"
+        },
+        "meta": {
+            "kendo-ui": "This sample shows auto scrollable tabs in the Kendo UI TabStrip.",
+            "aspnet-mvc": "This sample shows auto scrollable tabs in the ASP.NET MVC TabStrip."
+        }
+      },
+      {
         "text": "Events",
         "url": "tabstrip/events",
         "title": {
