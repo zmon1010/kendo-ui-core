@@ -3968,16 +3968,16 @@ var __meta__ = {
 
         _updateCurrentAttr: function(current, next) {
 
-            var id = $(current).data("headerId");
+            var headerId = $(current).data("headerId");
             $(current)
                 .removeClass(FOCUSED)
                 .removeAttr("aria-describedby")
                 .closest("table")
                 .removeAttr("aria-activedescendant");
 
-            if(id){
-                id = id.replace(this._cellId, "");
-                $(current).attr("id", id);
+            if(headerId){
+                headerId = headerId.replace(this._cellId, "");
+                $(current).attr("id", headerId);
             }else{
                 $(current).removeAttr("id");
             }
@@ -3990,8 +3990,11 @@ var __meta__ = {
                 .attr("aria-activedescendant", this._cellId);
 
             if(!next.closest("tr").hasClass("k-grouping-row") && !next.hasClass("k-header")){
-                var id = this.columns[this.cellIndex(next)].headerAttributes.id;
-                next.attr("aria-describedby", id + " " + this._cellId);
+                var column = this.columns[this.cellIndex(next)];
+                if(column){
+                    headerId = column.headerAttributes.id;
+                }
+                next.attr("aria-describedby", headerId + " " + this._cellId);
             }else{
                 next.attr("aria-describedby", this._cellId);
             }
@@ -6622,7 +6625,7 @@ var __meta__ = {
                 schema = schema.toJSON();
 
                 for (field in schema) {
-                    that.columns.push({ field: field });
+                    that.columns.push({ field: field, headerAttributes: {id: kendo.guid()} });
                 }
 
                 that._thead();
