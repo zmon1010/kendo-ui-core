@@ -191,10 +191,20 @@
                 for (var ci = topLeftCol; ci <= bottomRightCol; ci ++) {
                     for (var ri = topLeftRow; ri <= bottomRightRow; ri ++) {
                         var index = this._grid.index(ri, ci);
-                        this._values.value(index, index, values[ri - topLeftRow][ci - topLeftCol]);
+
+                        var row = values[ri - topLeftRow];
+
+                        if (row) {
+                            var value = row[ci - topLeftCol];
+
+                            if (value !== undefined) {
+                                this._values.value(index, index, value);
+                            }
+                        }
                     }
                 }
-                return this;
+
+                return this.triggerChange();
             }
         },
 
@@ -210,6 +220,10 @@
             }
 
             return this._selection;
+        },
+
+        selection: function() {
+            return new Range(this._selection, this);
         },
 
         selectedHeaders: function() {

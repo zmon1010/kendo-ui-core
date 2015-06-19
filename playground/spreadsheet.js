@@ -41,10 +41,35 @@ $("#copy").on("click", function(e) {
     var range = sheet.range("K11:M16");
 
     range.select();
+});
 
-    var text = range.values().map(function(row) {
-       return row.join("\t");
+$("#clipboard").on("paste", function(e) {
+    setTimeout(function() {
+        var values = e.target.value.split("\n");
+
+        values = values.filter(function(value) { return value.length > 0; });
+
+        values = values.map(function(value) {
+            return value.split(/\s+/);
+        });
+
+        console.log(e.target.value, values);
+
+        spreadsheet.activeSheet().selection().values(values);
+    });
+});
+
+$(".k-spreadsheet-selection").on("mousedown", function(e) {
+    var text = spreadsheet.activeSheet().selection().values().map(function(row) {
+        return row.join("\t");
     }).join("\r\n");
 
-    $("#clipboard").val(text).select();
+    $("#clipboard-container").css({
+        left: e.clientX,
+        top: e.clientY
+    });
+
+    setTimeout(function() {
+        $("#clipboard").val(text).select().focus();
+    });
 });

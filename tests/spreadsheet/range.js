@@ -41,6 +41,14 @@
        sheet.range("A1").value("A1");
     });
 
+    test("setting values triggers the change event of the sheet", 1, function() {
+       sheet.bind("change", function() {
+           ok(true);
+       });
+
+       sheet.range("A1").values([["red"]]);
+    });
+
     test("value sets the value of a multiple row range", function() {
         range = sheet.range(0, 0, 2);
 
@@ -155,6 +163,18 @@
         } catch(e) {
             ok(true);
         }
+    });
+
+    test("set less values than range size", function() {
+        sheet.range("A1:C3").values([
+            ["A1", "B1"],
+            ["A2", "B2"]
+        ]);
+
+        equal(sheet.range("A1").value(), "A1");
+        equal(sheet.range("B1").value(), "B1");
+        equal(sheet.range("A2").value(), "A2");
+        equal(sheet.range("B2").value(), "B2");
     });
 
     test("values sets the values of the cells in the range", function() {

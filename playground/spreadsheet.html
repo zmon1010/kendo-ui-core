@@ -111,22 +111,31 @@
                 opacity: 0.5;
             }
 
+            #clipboard-container {
+                overflow: hidden;
+                position: absolute;
+                width: 3px;
+                height: 1px;
+                z-index: 10;
+                opacity: 0;
+            }
+
             #clipboard {
                 box-sizing: border-box;
-                width: 800px;
-                height: 300px;
+                padding: 0;
+                position: absolute;
+                margin: 0;
+                outline: none;
+                width: 1000px;
+                height: 1em;
             }
         </style>
     </head>
     <body>
         <button>Sort first 100 rows</button>
-
         <div id="spreadsheet"></div>
-
-        <div id="clipboard-container"><textarea id="clipboard"></textarea></div>
-
+        <div id="clipboard-container"><textarea tabindex="0" id="clipboard" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea></div>
         <button id="copy">select K11:M16</button>
-
         <script type="text/javascript" src="spreadsheet.js"></script>
     </body>
 </html>
