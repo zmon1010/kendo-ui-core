@@ -101,15 +101,15 @@
         </header>
 
         <ul data-role="listview" data-source="navDataSource" data-template="nav-template" data-header-template="header-template" class="main-menu">
-            
+
             <script type="text/x-kendo-template" id="header-template">
                 <span class="km-icon km-#: value #"></span> #: value #
             </script>
-            
+
             <script type="text/x-kendo-template" id="nav-template">
                 <a href="#: url #">#: text # #= data.new ? '<span class="km-badge">NEW</span>' : '' #</a>
             </script>
-            
+
         </ul>
     </div>
 
@@ -123,7 +123,7 @@
         </header>
     </div>
 
-    <div id="source-code-view" data-transition="fade" data-title="Source code" data-show="showSourceCode" data-role="view" data-persist="true" data-stretch="true">
+    <div id="source-code-view" data-transition="fade" data-title="Source code" data-show="showSourceCode" data-role="view" data-persist="true" data-stretch="true" data-use-native-scrolling="true">
        <header data-role="header">
             <div data-role="navbar">
                 <span data-role="view-title"></span>
