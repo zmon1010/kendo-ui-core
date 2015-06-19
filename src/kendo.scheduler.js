@@ -3353,6 +3353,10 @@ var __meta__ = {
             return that._selectedView;
         },
 
+        viewName: function() {
+            return this.view().name;
+        },
+
         _renderView: function(name) {
             var view = this._initializeView(name);
 

@@ -770,6 +770,14 @@
         ok(slot !== null && typeof slot == "object");
     });
 
+    test("first view is not selected when only one view is available", function() {
+        var scheduler = new Scheduler(container, {
+            views: ["day"]
+        });
+
+        equal(scheduler.viewName(), scheduler.view().name);
+    });
+
     test("resourcesBySlot function returns resources for passed index", function() {
         QUnit.fixture.append(container);
         var scheduler = new kendo.ui.Scheduler(container, {
