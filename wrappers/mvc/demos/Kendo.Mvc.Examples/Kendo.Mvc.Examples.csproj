@@ -195,6 +195,7 @@
     <Compile Include="Controllers\ComboBox\GroupingController.cs" />
     <Compile Include="Controllers\ComboBox\VirtualizationController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
+    <Compile Include="Controllers\TabStrip\Scrollable_TabsController.cs" />
     <Compile Include="Controllers\Validator\IndexController.cs" />
     <Compile Include="Controllers\Diagram\ApiController.cs" />
     <Compile Include="Controllers\Diagram\ExportController.cs" />
@@ -955,6 +956,7 @@
     <Content Include="Areas\aspx\Views\scheduler\timeline.aspx" />
     <Content Include="Areas\aspx\Views\styling\checkboxes.aspx" />
     <Content Include="Areas\aspx\Views\styling\radios.aspx" />
+    <Content Include="Areas\aspx\Views\tabstrip\scrollable_tabs.aspx" />
     <Content Include="Areas\aspx\Views\tabstrip\tab_position.aspx" />
     <Content Include="Areas\aspx\Views\toolbar\api.aspx" />
     <Content Include="Areas\aspx\Views\toolbar\events.aspx" />
@@ -3290,6 +3292,7 @@
     <Content Include="Areas\razor\Views\globalization\index.cshtml" />
     <Content Include="Areas\razor\Views\validator\index.cshtml" />
     <Content Include="Areas\razor\Views\multiselect\tag_mode.cshtml" />
+    <Content Include="Areas\razor\Views\tabstrip\scrollable_tabs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
