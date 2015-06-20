@@ -280,6 +280,20 @@
                 }
             }
         },
+        mapRow: function(f) {
+            var m = new Matrix(this.context);
+            this.eachRow(function(row){
+                m.set(row, 0, f.call(this.context, row));
+            });
+            return m;
+        },
+        mapCol: function(f) {
+            var m = new Matrix(this.context);
+            this.eachCol(function(col){
+                m.set(0, col, f.call(this.context, col));
+            });
+            return m;
+        },
         toString: function() {
             return JSON.stringify(this.data);
         }

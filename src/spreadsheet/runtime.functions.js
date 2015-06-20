@@ -379,31 +379,42 @@
         }).call(this, args[0]));
     });
 
-    defineFunction("vlookup", function(callback, args){
-        if (args.length < 3 || args.length > 4) {
+    defineFunction("column", function(callback, args){
+        var ref = args[0];
+        if (args.length > 1 || (args.length == 1 && !(ref instanceof CellRef || ref instanceof RangeRef))) {
             return this.error(new CalcError("N/A"));
         }
-        var value = args[0], range = args[1], col = args[2] - 1, approx = true;
-        if (args.length == 4) {
-            approx = args[3];
+        if (!ref) {
+            callback(this.col + 1);
         }
-        var m = this.asMatrix(range), resultRow = null;
-        m.eachRow(function(row){
-            var data = m.get(row, 0);
-            if (approx) {
-                if (data > value) {
-                    return true;
-                }
-                resultRow = row;
-            } else if (data === value) {
-                resultRow = row;
-                return true;
-            }
-        });
-        if (resultRow == null) {
+        else if (ref instanceof CellRef) {
+            callback(ref.col + 1);
+        }
+        else {
+            callback(this.asMatrix(ref).mapCol(function(col){
+                return col + ref.topLeft.col + 1;
+            }));
+        }
+    });
+
+    defineFunction("columns", function(callback, args){
+        var m;
+        if (args.length != 1 || !(m = this.asMatrix(args[0]))) {
             return this.error(new CalcError("N/A"));
         }
-        callback(m.get(resultRow, col));
+        callback(m.width);
+    });
+
+    defineFunction("formulatext", function(callback, args){
+        var m;
+        if (args.length != 1 || !((m = args[0]) instanceof Ref)) {
+            return this.error(new CalcError("N/A"));
+        }
+        var cell = this.ss.getRefCells(m)[0]; // XXX: overkill, but oh well.
+        if (!cell.formula) {
+            return this.error(new CalcError("N/A"));
+        }
+        callback(cell.formula.print(cell.row, cell.col));
     });
 
     defineFunction("hlookup", function(callback, args){
@@ -433,7 +444,34 @@
         callback(m.get(row, resultCol));
     });
 
-    /* -----[ Other ]----- */
+    defineFunction("index", function(callback, args){
+        var m = this.asMatrix(args[0]), row = args[1], col = args[2];
+        if (!m || arguments.length > 3 || (row == null && col == null)) {
+            return this.error(new CalcError("N/A"));
+        }
+        if (m.width > 1 && m.height > 1) {
+            if (row != null && col != null) {
+                return callback(m.get(row - 1, col - 1));
+            }
+            if (row == null) {
+                return callback(m.mapRow(function(row){
+                    return m.get(row, col - 1);
+                }));
+            }
+            if (col == null) {
+                return callback(m.mapCol(function(col){
+                    return m.get(row - 1, col);
+                }));
+            }
+        }
+        if (m.width == 1) {
+            return callback(m.get(row - 1, 0));
+        }
+        if (m.height == 1) {
+            return callback(m.get(0, col - 1));
+        }
+        this.error(new CalcError("REF"));
+    });
 
     // XXX: does more work than needed
     defineFunction("indirect", function(callback, args){
@@ -455,6 +493,75 @@
             }
         });
     });
+
+    // XXX: LOOKUP.  seems to be deprecated in favor of HLOOKUP/VLOOKUP
+
+    // XXX: double-check this one.
+    defineFunction("match", function(callback, args){
+        var val = args[0], m = this.asMatrix(args[1]), type = args[2];
+        if (!m || args.length > 3 || (m.width > 1 && m.height > 1)) {
+            return this.error(new CalcError("N/A"));
+        }
+        var index = 1, cmp;
+        if (type == null) {
+            type = 1;
+        }
+        if (type === 0) {
+            cmp = parseComparator(val);
+        } else if (type === -1) {
+            cmp = parseComparator("<=" + val);
+        } else if (type === 1) {
+            cmp = parseComparator(">=" + val);
+        } else {
+            return this.error(new CalcError("N/A"));
+        }
+        if (m.each(function(el, row, col){
+            if (cmp(el)) {
+                if (type !== 0 && val != el) {
+                    --index;
+                }
+                return true;
+            }
+            index++;
+        }) && index > 0) {
+            callback(index);
+        } else {
+            return this.error(new CalcError("N/A"));
+        }
+    });
+
+    defineFunction("offset", function(callback, args){
+        
+    });
+
+    defineFunction("vlookup", function(callback, args){
+        if (args.length < 3 || args.length > 4) {
+            return this.error(new CalcError("N/A"));
+        }
+        var value = args[0], range = args[1], col = args[2] - 1, approx = true;
+        if (args.length == 4) {
+            approx = args[3];
+        }
+        var m = this.asMatrix(range), resultRow = null;
+        m.eachRow(function(row){
+            var data = m.get(row, 0);
+            if (approx) {
+                if (data > value) {
+                    return true;
+                }
+                resultRow = row;
+            } else if (data === value) {
+                resultRow = row;
+                return true;
+            }
+        });
+        if (resultRow == null) {
+            return this.error(new CalcError("N/A"));
+        }
+        callback(m.get(resultRow, col));
+    });
+
+    /* -----[ Other ]----- */
 
     defineFunction("rand", function(callback) {
         callback(Math.random());
@@ -513,16 +620,23 @@
         };
     }
 
-    function compLT(a, b) { return a < b; }
-    function compLTE(a, b) { return a <= b; }
-    function compGT(a, b) { return a > b; }
-    function compGTE(a, b) { return a >= b; }
-    function compNE(a, b) { return a != b; }
+    function lc(a) {
+        if (typeof a == "string") {
+            return a.toLowerCase();
+        }
+        return a;
+    }
+
+    function compLT(a, b) { return lc(a) < lc(b); }
+    function compLTE(a, b) { return lc(a) <= lc(b); }
+    function compGT(a, b) { return lc(a) > lc(b); }
+    function compGTE(a, b) { return lc(a) >= lc(b); }
+    function compNE(a, b) { return lc(a) != lc(b); }
     function compEQ(a, b) {
         if (b instanceof RegExp) {
             return b.test(a);
         }
-        return a == b;
+        return lc(a) == lc(b);
     }
 
     var RXCACHE = {};

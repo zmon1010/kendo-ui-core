@@ -589,6 +589,19 @@ fillElements({
         B7: '=vlookup(2, A1:C3, 3, false)',
         B6: '=sum(a1:choose(2, b1, b2, b3))',
 
+        H1: 1, H2: 2, H3: 3, H4: 4, H5: 5, H6: 6,
+        H8: '=match(3, h1:h6)',
+        H9: '=match(3.5, h1:h6)',
+        H10: '=match(4.5, h1:h6)',
+
+        I1: 6, I2: 5, I3: 4, I4: 3, I5: 2, I6: 1,
+        I8: '=match(3, i1:i6, -1)',
+        I9: '=match(3.5, i1:i6, -1)',
+        I10: '=match(4.5, i1:i6, -1)',
+
+        J1: "foo", J2: "bar", J3: "baz", J4: "asd", J5: "qwe", J6: "zxc",
+        J8: '=match("baz", J1:J6, 0)',
+
         // XXX: Google Sheets doesn't parse this, should we err?
         // looks legit to me, if there's anything sane in Excel.
         B17: '={ A1:B3, C1:C3; -{ 1, 2, 3 }% } + A2',
