@@ -312,14 +312,16 @@
                 if ((a.type == "sym" || a.type == "num") &&
                     (b.type == "op" && b.value == ":") &&
                     (c.type == "sym" || c.type == "num") &&
-                    !(d.type == "punc" && d.value == "(" && !/\d$/.test(c.value)))
-                    // XXX: previous line is an ugly hack: we want to parse `A1:C3(D1, E1)` as the
-                    // intersection between a range and an union; but we want to parse `A1:choose(1,
-                    // B2)` as a range operator having A1 as top-left and the result of calling
-                    // choose() on the bottom-right.  Trouble is, CHOOSE is also a valid column
-                    // name, pretty much like AA.  This hack makes both work correctly, but it will
-                    // fail on something like `A:C (D1, E1)` (right side will be interpreted as
-                    // function call).  Will think of a better fix.
+                    !(d.type == "punc" && d.value == "(" && !c.space))
+                    // We need c.space here to resolve an ambiguity:
+                    //
+                    //   - A1:C3 (A2, A3) -- parse as intersection between range and union
+                    //
+                    //   - A1:CHOOSE(2, A1, A2, A3) -- parse as range operator where the
+                    //     bottom-right side is returned by the CHOOSE function
+                    //
+                    // note no space between CHOOSE and the paren in the second example.  I believe
+                    // this is the Right Way™.
                 {
                     var topLeft = getref(a, true);
                     var bottomRight = getref(c, false);
@@ -817,7 +819,8 @@
             return {
                 type  : "sym",
                 value : id,
-                upper : id.toUpperCase()
+                upper : id.toUpperCase(),
+                space : isWhitespace(input.peek())
             };
         }
         function readString() {

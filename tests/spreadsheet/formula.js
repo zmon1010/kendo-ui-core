@@ -312,6 +312,12 @@
         equal(f.print(0, 0), "sum(A1:choose(2, B1, B2, B3))");
     });
 
+    test("column range and union intersection", function(){
+        var exp = calc.parse("sheet1", 0, 0, "=aaa:ccc (a1, a2, a3)");
+        var f = calc.compile(exp);
+        equal(f.print(0, 0), "AAA:CCC (A1,A2,A3)");
+    });
+
     /* -----[ printer tests ]----- */
 
     test("print adjusts cell references", function(){
