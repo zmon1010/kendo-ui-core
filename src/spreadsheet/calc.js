@@ -245,6 +245,11 @@
                 input.next();
                 if (!is("punc", ")")) {
                     while (1) {
+                        if (is("op", ",")) {
+                            args.push({ type: "null" });
+                            input.next();
+                            continue;
+                        }
                         args.push(parseExpression(false));
                         if (input.eof() || is("punc", ")")) {
                             break;
@@ -417,6 +422,8 @@
                         return print(el, 0);
                     }).join(" + ', ' + ");
                 }).join(" + '; ' + ") + "+ ' }'";
+              case "null":
+                return "''";
             }
             throw new Error("Cannot make printer for node " + node.type);
         }
@@ -440,6 +447,7 @@
               case "ref"     :
               case "num"     :
               case "str"     :
+              case "null"    :
               case "bool"    : return cpsAtom(node, k);
               case "prefix"  :
               case "postfix" : return cpsUnary(node, k);
@@ -759,6 +767,9 @@
             }
             else if (type == "matrix") {
                 return jsArray(node.value);
+            }
+            else if (type == "null") {
+                return "null";
             }
             else {
                 throw new Error("Cannot compile expression " + type);

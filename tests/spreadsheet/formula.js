@@ -318,6 +318,12 @@
         equal(f.print(0, 0), "AAA:CCC (A1,A2,A3)");
     });
 
+    test("omit intermediate arguments in funcall", function(){
+        var exp = calc.parse("sheet1", 0, 0, "=sum(a1,,b1)");
+        var f = calc.compile(exp);
+        equal(f.print(0, 0), "sum(A1, , B1)");
+    });
+
     /* -----[ printer tests ]----- */
 
     test("print adjusts cell references", function(){
