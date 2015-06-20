@@ -525,6 +525,14 @@
              * Returns the number of undoable unit in the stack.
              * @returns {Number}
              */
+
+            pop: function() {
+                if (this.index > 0) {
+                    this.stack.pop();
+                    this.index--;
+                }
+            },
+
             count: function () {
                 return this.stack.length;
             },
@@ -814,7 +822,7 @@
                     connector = this.toolService._hoveredConnector,
                     connection = diagram._createConnection({}, connector._c, p);
 
-                if (canDrag(connection) && diagram._addConnection(connection)) {
+                if (canDrag(connection) && !diagram.trigger(DRAG_START, { shapes: [], connections: [connection]}) && diagram._addConnection(connection)) {
                     this.toolService._connectionManipulation(connection, connector._c.shape, true);
                     this.toolService._removeHover();
                     selectSingle(this.toolService.activeConnection, meta);
@@ -823,14 +831,22 @@
                     this.toolService.end(p);
                 }
             },
+
             move: function (p) {
-                this.toolService.activeConnection.target(p);
+                var toolService = this.toolService;
+                var connection = toolService.activeConnection;
+
+                connection.target(p);
+                toolService.diagram.trigger(DRAG, { shapes: [], connections: [connection] });
                 return true;
             },
+
             end: function (p) {
-                var connection = this.toolService.activeConnection,
-                    hoveredItem = this.toolService.hoveredItem,
-                    connector = this.toolService._hoveredConnector,
+                var toolService = this.toolService,
+                    d = toolService.diagram,
+                    connection = toolService.activeConnection,
+                    hoveredItem = toolService.hoveredItem,
+                    connector = toolService._hoveredConnector,
                     target;
 
                 if (!connection) {
@@ -846,10 +862,17 @@
                 }
 
                 connection.target(target);
-                connection.updateModel(true);
 
-                this.toolService._connectionManipulation();
+                if (!d.trigger(DRAG_END, { shapes: [], connections: [connection] })) {
+                    connection.updateModel();
+                    d._syncConnectionChanges();
+                } else {
+                    d.remove(connection, false);
+                    d.undoRedoService.pop();
+                }
+                toolService._connectionManipulation();
             },
+
             getCursor: function () {
                 return Cursors.arrow;
             }
@@ -875,31 +898,54 @@
 
                 return isActive;
             },
+
             start: function (p, meta) {
-                selectSingle(this._c, meta);
-                var adorner = this._c.adorner;
-                if (canDrag(this._c) && adorner) {
+                var connection = this._c;
+
+                selectSingle(connection, meta);
+
+                var adorner = connection.adorner;
+
+                if (canDrag(connection) && adorner && !this.toolService.diagram.trigger(DRAG_START, { shapes: [], connections: [connection] })) {
                     this.handle = adorner._hitTest(p);
                     adorner.start(p);
+                } else {
+                    this.toolService.startPoint = p;
+                    this.toolService.end(p);
                 }
             },
+
             move: function (p) {
                 var adorner = this._c.adorner;
                 if (canDrag(this._c) && adorner) {
                     adorner.move(this.handle, p);
+                    this.toolService.diagram.trigger(DRAG, { shapes: [], connections: [this._c] });
+
                     return true;
                 }
             },
+
             end: function (p, meta) {
-                var adorner = this._c.adorner;
+                var connection = this._c;
+                var adorner = connection.adorner;
+                var toolService = this.toolService;
+                var diagram = toolService.diagram;
+
                 if (adorner) {
-                    this.toolService.triggerClick({item: this._c, point: p, meta: meta});
-                    if (canDrag(this._c)) {
+                    toolService.triggerClick({item: connection, point: p, meta: meta});
+                    if (canDrag(connection)) {
                         var unit = adorner.stop(p);
-                        this.toolService.diagram.undoRedoService.add(unit, false);
+                        if (!diagram.trigger(DRAG_END, { shapes: [], connections: [connection] })) {
+                            diagram.undoRedoService.add(unit, false);
+                            connection.updateModel();
+                            diagram._syncConnectionChanges();
+                        } else {
+                            unit.undo();
+                        }
                     }
                 }
             },
+
             getCursor: function () {
                 return Cursors.move;
             }
@@ -1536,8 +1582,6 @@
                     this.connection.target(target);
                 }
 
-                this.connection.updateModel(true);
-
                 this.handle = undefined;
                 this._ts._connectionManipulation();
                 return new ConnectionEditUndoUnit(this.connection, this._initialSource, this._initialTarget);
@@ -2051,7 +2095,7 @@
                 var shapes = this.shapes;
                 var states = this.shapeStates;
                 for (var idx = 0; idx < shapes.length; idx++) {
-                    shapes[idx].bounds(states[idx])
+                    shapes[idx].bounds(states[idx]);
                 }
                 this.refreshBounds();
                 this.refresh();
