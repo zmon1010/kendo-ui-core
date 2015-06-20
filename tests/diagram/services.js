@@ -411,11 +411,13 @@
         var PointerTool = diagram.PointerTool;
         var toolservice;
         var pointertool;
+        var resizingAdorner;
         var shape;
         function setupTool(options) {
             setupDiagram(options);
             shape = d.addShape({ x: 10, y: 20, data: "Rectangle", dataItem: {} });
             toolservice = d.toolService;
+            resizingAdorner = d._resizingAdorner;
             for (var i = 0; i < toolservice.tools.length; i++) {
                 if (toolservice.tools[i] instanceof PointerTool) {
                     pointertool = toolservice.tools[i];
@@ -445,6 +447,175 @@
             pointertool.start(new Point(), {});
             ok(!shape.isSelected);
         });
+
+        // ------------------------------------------------------------
+        module("PointerTool / start", {
+            setup: function() {
+                setupTool({});
+            },
+            teardown: teardown
+        });
+
+        test("triggers dragStart event with the selected shapes", 2, function() {
+            d.bind("dragStart", function(e) {
+                equal(e.shapes.length, 1);
+                ok(e.shapes[0] === shape);
+            });
+            d.select(shape);
+
+            pointertool.start(new Point(20, 30));
+        });
+
+        test("dragStart event argument contains empty connections array", 2, function() {
+            d.bind("dragStart", function(e) {
+                ok(e.connections);
+                equal(e.connections.length, 0);
+            });
+            d.select(shape);
+
+            pointertool.start(new Point(20, 30));
+        });
+
+        test("does not trigger dragStart if resizing handle is hit", 0, function() {
+            d.bind("dragStart", function() {
+                ok(false);
+            });
+            d.select(shape);
+
+            var point = resizingAdorner._getHandleBounds(new Point(-1,-1)).offset(resizingAdorner._bounds.x, resizingAdorner._bounds.y).center();
+            pointertool.start(point);
+        });
+
+        test("preventing the default action on dragStart ends service", 1, function() {
+            d.bind("dragStart", function(e) {
+                e.preventDefault();
+            });
+            d.select(shape);
+            toolservice.end = function() {
+                ok(true);
+            }
+            pointertool.start(new Point(20, 30));
+        });
+
+        // ------------------------------------------------------------
+        module("PointerTool / move", {
+            setup: function() {
+                setupTool({});
+                d.select(shape);
+                pointertool.start(new Point(20, 30));
+
+            },
+            teardown: teardown
+        });
+
+        test("triggers drag event with moved shapes", 2, function() {
+            d.bind("drag", function(e) {
+                equal(e.shapes.length, 1);
+                equal(e.shapes[0].bounds().x, 20);
+            });
+
+            pointertool.move(new Point(30, 30));
+        });
+
+        test("drag event argument contains empty connections array", 2, function() {
+            d.bind("drag", function(e) {
+                ok(e.connections);
+                equal(e.connections.length, 0);
+            });
+
+            pointertool.move(new Point(30, 30));
+        });
+
+        test("drag event is not triggered if resizing", 0, function() {
+            d.bind("drag", function(e) {
+                ok(false);
+            });
+            pointertool.handle = new Point(-1, -1);
+            pointertool.move(new Point(30, 30));
+        });
+
+        // ------------------------------------------------------------
+        module("PointerTool / end", {
+            setup: function() {
+                setupTool({});
+                d.select(shape);
+                pointertool.start(new Point(20, 30));
+                pointertool.move(new Point(30, 30));
+            },
+            teardown: teardown
+        });
+
+        test("triggers dragEnd event with moved shapes", 2, function() {
+            d.bind("dragEnd", function(e) {
+                equal(e.shapes.length, 1);
+                equal(e.shapes[0].bounds().x, 20);
+            });
+
+            pointertool.end(new Point(30, 30));
+        });
+
+        test("dragEnd event argument contains empty connections array", 2, function() {
+            d.bind("dragEnd", function(e) {
+                ok(e.connections);
+                equal(e.connections.length, 0);
+            });
+
+            pointertool.end(new Point(30, 30));
+        });
+
+        test("does not trigger dragEnd if resizing", 0, function() {
+            d.bind("dragEnd", function(e) {
+                ok(false);
+            });
+            pointertool.handle = new Point(-1, -1);
+            pointertool.end(new Point(30, 30));
+        });
+
+        test("reverts changes if the default action is prevented on dragEnd", 1, function() {
+            d.bind("dragEnd", function(e) {
+                e.preventDefault();
+            });
+
+            pointertool.end(new Point(30, 30));
+            equal(shape.bounds().x, 10);
+        });
+
+        test("does not update shapes model if the default action is prevented on dragEnd", 0, function() {
+            d.bind("dragEnd", function(e) {
+                e.preventDefault();
+            });
+
+            shape.updateModel = function() {
+                ok(false)
+            };
+
+            pointertool.end(new Point(30, 30));
+        });
+
+        test("does not sync diagram if the default action is prevented on dragEnd", 0, function() {
+            d.bind("dragEnd", function(e) {
+                e.preventDefault();
+            });
+
+            d._syncShapeChanges = function() {
+                ok(false)
+            };
+
+            pointertool.end(new Point(30, 30));
+        });
+
+        test("refreshes resizing adorner if the default action is prevented on dragEnd", 2, function() {
+            d.bind("dragEnd", function(e) {
+                e.preventDefault();
+            });
+
+            resizingAdorner.refresh = resizingAdorner.refreshBounds = function() {
+                ok(true);
+            };
+
+            pointertool.end(new Point(30, 30));
+        });
+
     })();
 
     (function() {
@@ -540,6 +711,7 @@
         });
     })();
 
+    // ------------------------------------------------------------
     (function() {
         var ConnectionEditTool = diagram.ConnectionEditTool;
         var toolservice;
@@ -562,6 +734,7 @@
             this.stop = function() {
                 this.calls.stop++;
             };
+            this._getCursor = $.noop;
         };
 
         function setupConnection(options) {
@@ -686,13 +859,172 @@
             equal(toolservice.diagram.undoRedoService.count(), 0);
         });
 
+        // ------------------------------------------------------------
+        module("ConnectionEditTool / start", {
+            setup: function() {
+                setupTool({});
+                connection = new diagram.Connection(new Point(), new Point(10, 10), {
+                    editable: true
+                });
+                d.addConnection(connection);
+                connectionEditTool._c = connection;
+            },
+            teardown: teardown
+        });
+
+        test("triggers dragStart event with the connection passed in the event argument", 2, function() {
+            d.bind("dragStart", function(e) {;
+                equal(e.connections.length, 1);
+                ok(e.connections[0] === connection);
+            });
+
+            connectionEditTool.start(new Point(), {});
+        });
+
+        test("dragStart event argument contains empty shapes array", 1, function() {
+            d.bind("dragStart", function(e) {;
+                equal(e.shapes.length, 0);
+            });
+
+            connectionEditTool.start(new Point(), {});
+        });
+
+        test("ends service if the default action is prevented in the dragStart event", 1, function() {
+            d.bind("dragStart", function(e) {;
+                e.preventDefault();
+            });
+
+            toolservice.end = function() {
+                ok(true);
+            };
+            connectionEditTool.start(new Point(), {});
+        });
+
+        test("click event is trigged if the default action is prevented in the dragStart event", 1, function() {
+            toolservice.activeTool = connectionEditTool;
+            d.bind("dragStart", function(e) {;
+                e.preventDefault();
+            });
+            d.bind("click", function(e) {
+                ok(e.item === connection);
+            });
+
+            connectionEditTool.start(new Point(), {});
+        });
+
+        // ------------------------------------------------------------
+        module("ConnectionEditTool / move", {
+            setup: function() {
+                setupTool({});
+                connection = new diagram.Connection(new Point(), new Point(10, 10), {
+                    editable: true
+                });
+                d.addConnection(connection);
+                connectionEditTool._c = connection;
+                connectionEditTool.start(new Point(), {});
+            },
+            teardown: teardown
+        });
+
+        test("triggers drag event with the moved connection passed in the event argument", 4, function() {
+            d.bind("drag", function(e) {;
+                equal(e.connections.length, 1);
+                ok(e.connections[0] === connection);
+                var source = connection.source();
+                equal(source.x, 20);
+                equal(source.y, 20);
+            });
+
+            connectionEditTool.move(new Point(20, 20), {});
+        });
+
+        // ------------------------------------------------------------
+        module("ConnectionEditTool / end", {
+            setup: function() {
+                setupTool({});
+                connection = new diagram.Connection(new Point(), new Point(10, 10), {
+                    editable: true
+                });
+                d.addConnection(connection);
+                connectionEditTool._c = connection;
+                toolservice.startPoint = new Point();
+                connectionEditTool.start(new Point(), {});
+                connectionEditTool.move(new Point(20, 20));
+            },
+            teardown: teardown
+        });
+
+        test("triggers dragEnd event with the moved connection passed in the event argument", 4, function() {
+            d.bind("dragEnd", function(e) {;
+                equal(e.connections.length, 1);
+                ok(e.connections[0] === connection);
+                var source = connection.source();
+                equal(source.x, 20);
+                equal(source.y, 20);
+            });
+
+            connectionEditTool.end(new Point(20, 20), {});
+        });
+
+        test("dragEnd event argument contains empty shapes array", 1, function() {
+            d.bind("dragEnd", function(e) {;
+                equal(e.shapes.length, 0);
+            });
+
+            connectionEditTool.end(new Point(20, 20), {});
+        });
+
+        test("adds undo unit", 1, function() {
+            connectionEditTool.end(new Point(20, 20), {});
+            equal(d.undoRedoService.count(), 2);
+        });
+
+        test("updates connection model", 1, function() {
+            connection.updateModel = function() {
+                ok(true);
+            };
+            connectionEditTool.end(new Point(20, 20), {});
+        });
+
+        test("syncs connection changes", 1, function() {
+            d._syncConnectionChanges = function() {
+                ok(true);
+            };
+            connectionEditTool.end(new Point(20, 20), {});
+        });
+
+        test("does not persist changes if the default action is prevented in the dragEnd event", 1, function() {
+            d.bind("dragEnd", function(e) {;
+                e.preventDefault();
+            });
+            d._syncConnectionChanges = function() {
+                ok(false);
+            };
+            connectionEditTool.end(new Point(20, 20), {});
+
+            equal(d.undoRedoService.count(), 1);
+        });
+
+        test("reverts connection changes if the default action is prevented in the dragEnd event", function() {
+            d.bind("dragEnd", function(e) {;
+                e.preventDefault();
+            });
+
+            connectionEditTool.end(new Point(20, 20), {});
+            var source = connection.source();
+            equal(source.x, 0);
+            equal(source.y, 0);
+        });
+
     })();
 
+    // ------------------------------------------------------------
     (function() {
         var ConnectionTool = diagram.ConnectionTool;
         var ConnectorVisual = diagram.ConnectorVisual;
-        var toolservice;
         var connectionTool;
+        var toolservice;
+        var shape;
 
         function moveToShape(sourceConnector, targetShape) {
             toolservice._hoveredConnector = new ConnectorVisual(sourceConnector);
@@ -736,7 +1068,7 @@
 
          test("adds connection from the source connector to the current point", function() {
             setupTool();
-            var shape = d.addShape({});
+            shape = d.addShape({});
             var sourceConnector = shape.getConnector("auto");
             var point = new Point();
             toolservice._hoveredConnector = new ConnectorVisual(sourceConnector);
@@ -748,7 +1080,7 @@
 
         test("triggers add on start", 1, function() {
             setupTool();
-            var shape = d.addShape({});
+            shape = d.addShape({});
             toolservice._hoveredConnector = new ConnectorVisual(shape.getConnector("auto"));
             d.bind("add", function(e) {
                 ok(true);
@@ -758,7 +1090,7 @@
 
         test("does not add connection and ends service if the default action  is prevented", 2, function() {
             setupTool();
-            var shape = d.addShape({});
+            shape = d.addShape({});
             toolservice._hoveredConnector = new ConnectorVisual(shape.getConnector("auto"));
             d.bind("add", function(e) {
                 e.preventDefault();
@@ -773,7 +1105,7 @@
 
         test("does not add connection and ends service if dragging is disabled", 2, function() {
             setupTool();
-            var shape = d.addShape({});
+            shape = d.addShape({});
             toolservice._hoveredConnector = new ConnectorVisual(shape.getConnector("auto"));
             d.options.connectionDefaults.editable.drag = false;
 
@@ -783,6 +1115,160 @@
             connectionTool.start(new Point(), {});
 
             equal(shape.connections().length, 0);
+        });
+
+        // ------------------------------------------------------------
+        module("ConnectionTool / start", {
+            setup: function() {
+                setupTool();
+                shape = d.addShape({});
+                toolservice._hoveredConnector = new ConnectorVisual(shape.getConnector("auto"));
+            },
+            teardown: teardown
+        });
+
+        test("triggers dragStart with the new connection passed in the event argument", 2, function() {
+            d.bind("dragStart", function(e) {
+                equal(e.connections.length, 1);
+                ok(e.connections[0].source().shape === shape);
+            });
+            connectionTool.start(new Point(), {});
+        });
+
+        test("dragStart event argument contains an empty shapes array", 1, function() {
+            d.bind("dragStart", function(e) {
+                equal(e.shapes.length, 0);
+            });
+            connectionTool.start(new Point(), {});
+        });
+
+        test("connection is not added if the default action is prevented in the dragStart event", 1, function() {
+            d.bind("dragStart", function(e) {
+                e.preventDefault();
+            });
+            connectionTool.start(new Point(), {});
+            equal(d.connections.length, 0);
+        });
+
+        test("ends toolservice if the default action is prevented in the dragStart event", 1, function() {
+            d.bind("dragStart", function(e) {
+                e.preventDefault();
+            });
+            toolservice.end = function() {
+                ok(true);
+            };
+            connectionTool.start(new Point(), {});
+        });
+
+        // ------------------------------------------------------------
+        module("ConnectionTool / move", {
+            setup: function() {
+                setupTool();
+                shape = d.addShape({});
+                toolservice._hoveredConnector = new ConnectorVisual(shape.getConnector("auto"));
+                connectionTool.start(new Point(), {});
+            },
+            teardown: teardown
+        });
+
+        test("triggers drag with the moved connection passed in the event argument", 4, function() {
+            d.bind("drag", function(e) {
+                equal(e.connections.length, 1);
+                ok(e.connections[0].source().shape === shape);
+                var target = e.connections[0].target();
+                equal(target.x, 10);
+                equal(target.y, 10);
+            });
+
+            connectionTool.move(new Point(10, 10), {});
+        });
+
+        test("triggers drag with the moved connection passed in the event argument", 4, function() {
+            d.bind("drag", function(e) {
+                equal(e.connections.length, 1);
+                ok(e.connections[0].source().shape === shape);
+                var target = e.connections[0].target();
+                equal(target.x, 10);
+                equal(target.y, 10);
+            });
+
+            connectionTool.move(new Point(10, 10), {});
+        });
+
+        test("drag event argument contains empty shapes array", 1, function() {
+            d.bind("drag", function(e) {
+                equal(e.shapes.length, 0);
+            });
+
+            connectionTool.move(new Point(10, 10), {});
+        });
+
+        // ------------------------------------------------------------
+        module("ConnectionTool / end", {
+            setup: function() {
+                setupTool();
+                shape = d.addShape({});
+                toolservice._hoveredConnector = new ConnectorVisual(shape.getConnector("auto"));
+                connectionTool.start(new Point(), {});
+            },
+            teardown: teardown
+        });
+
+        test("triggers dragEnd with the moved connection passed in the event argument", 4, function() {
+            d.bind("dragEnd", function(e) {
+                equal(e.connections.length, 1);
+                ok(e.connections[0].source().shape === shape);
+                var target = e.connections[0].target();
+                equal(target.x, 10);
+                equal(target.y, 10);
+            });
+
+            connectionTool.end(new Point(10, 10), {});
+        });
+
+        test("dragEnd event argument contains empty shapes array", 1, function() {
+            d.bind("dragEnd", function(e) {
+                equal(e.shapes.length, 0);
+            });
+
+            connectionTool.end(new Point(10, 10), {});
+        });
+
+        test("connection is removed if the default action is prevented in the dragEnd", 1, function() {
+            d.bind("dragEnd", function(e) {
+                e.preventDefault();
+            });
+
+            connectionTool.end(new Point(10, 10), {});
+            equal(d.connections.length, 0);
+        });
+
+        test("add connection unit is removed if the default action is prevented in the dragEnd", 1, function() {
+            d.bind("dragEnd", function(e) {
+                e.preventDefault();
+            });
+
+            connectionTool.end(new Point(10, 10), {});
+            equal(d.undoRedoService.count(), 1);
+        });
+
+        test("syncs connection changes", 1, function() {
+            d._syncConnectionChanges = function() {
+                ok(true);
+            };
+
+            connectionTool.end(new Point(10, 10), {});
+        });
+
+        test("does not sync connection changes if the default action is prevented in the dragEnd event", 0, function() {
+            d._syncConnectionChanges = function() {
+                ok(false);
+            };
+            d.bind("dragEnd", function(e) {
+                e.preventDefault();
+            });
+
+            connectionTool.end(new Point(10, 10), {});
         });
 
     })();
@@ -1032,12 +1518,6 @@
     });
 
     // ------------------------------------------------------------
-    // module("Hitesting tests", {
-        // setup: setup,
-        // teardown: teardown
-    // });
-
-    // ------------------------------------------------------------
     QUnit.module("UndoRedo tests", {
         setup: setup,
         teardown: teardown
@@ -1103,6 +1583,23 @@
 
         ok(lastC.targetConnector !== undefined, "Target attached after undo");
         ok(lastC.targetConnector.options.name == "Auto", "Attached to Auto");
+    });
+
+    test("UndoRedoService pop removes last unit", function () {
+        var undoRedoService = new diagram.UndoRedoService();
+        undoRedoService.add({foo: "bar"}, false);
+        undoRedoService.add({}, false);
+        undoRedoService.pop();
+
+        equal(undoRedoService.count(), 1);
+        equal(undoRedoService.stack[0].foo, "bar");
+    });
+
+    test("UndoRedoService pop does nothing if there are no units", function () {
+        var undoRedoService = new diagram.UndoRedoService();
+        undoRedoService.pop();
+
+        equal(undoRedoService.count(), 0);
     });
 
      // ------------------------------------------------------------

@@ -68,6 +68,9 @@
             ITEMBOUNDSCHANGE = "itemBoundsChange",
             CHANGE = "change",
             CLICK = "click",
+            DRAG = "drag",
+            DRAG_END = "dragEnd",
+            DRAG_START = "dragStart",
             MOUSE_ENTER = "mouseEnter",
             MOUSE_LEAVE = "mouseLeave",
             ERROR = "error",
@@ -1081,6 +1084,9 @@
                     if (source !== undefined) {
                         this.from = source;
                     }
+
+                    this._removeFromSourceConnector();
+
                     if (source === null) { // detach
                         if (this.sourceConnector) {
                             this._sourcePoint = this._resolvedSourceConnector.position();
@@ -1178,6 +1184,8 @@
                     if (target !== undefined) {
                         this.to = target;
                     }
+
+                    this._removeFromTargetConnector();
 
                     if (target === null) { // detach
                         if (this.targetConnector) {
@@ -1664,6 +1672,18 @@
                 Utils.remove(this.targetConnector.connections, this);
                 this.targetConnector = undefined;
                 this._resolvedTargetConnector = undefined;
+            },
+
+            _removeFromSourceConnector: function() {
+                if (this.sourceConnector) {
+                    Utils.remove(this.sourceConnector.connections, this);
+                }
+            },
+
+            _removeFromTargetConnector: function() {
+                if (this.targetConnector) {
+                    Utils.remove(this.targetConnector.connections, this);
+                }
             }
         });
 
@@ -1786,7 +1806,10 @@
                 "edit",
                 "remove",
                 "add",
-                "dataBound"
+                "dataBound",
+                DRAG_START,
+                DRAG,
+                DRAG_END
             ],
 
             _createGlobalToolBar: function() {

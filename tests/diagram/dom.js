@@ -2256,7 +2256,7 @@
     (function() {
         var Shape = dataviz.diagram.Shape;
         var Connection = dataviz.diagram.Connection;
-        var connection, shape;
+        var connection, shape, cpnnector;
 
         // ------------------------------------------------------------
         module("Connection / source");
@@ -2271,6 +2271,27 @@
             ok(connection.source() === initialSource);
         });
 
+        test("does not add duplicate connection to connector connections", function() {
+            connection = new Connection();
+            shape = new Shape({
+                connectors: [{name: "top"}]
+            });
+            connector = shape.getConnector("top");
+            connection.source(connector);
+            connection.source(connector);
+            equal(connector.connections.length, 1);
+            ok(connector.connections[0] === connection);
+        });
+
+        test("does not add duplicate connection to auto connector connections", function() {
+            connection = new Connection();
+            shape = new Shape({});
+            connection.source(shape);
+            connection.source(shape);
+            connector = shape.getConnector("auto");
+            equal(connector.connections.length, 1);
+            ok(connector.connections[0] === connection);
+        });
     })();
 
     (function() {
@@ -2289,6 +2310,28 @@
             });
             connection.target(shape);
             ok(connection.target() === initialTarget);
+        });
+
+        test("does not add duplicate connection to connector connections", function() {
+            connection = new Connection();
+            shape = new Shape({
+                connectors: [{name: "top"}]
+            });
+            connector = shape.getConnector("top");
+            connection.target(connector);
+            connection.target(connector);
+            equal(connector.connections.length, 1);
+            ok(connector.connections[0] === connection);
+        });
+
+        test("does not add duplicate connection to auto connector connections", function() {
+            connection = new Connection();
+            shape = new Shape({});
+            connection.target(shape);
+            connection.target(shape);
+            connector = shape.getConnector("auto");
+            equal(connector.connections.length, 1);
+            ok(connector.connections[0] === connection);
         });
 
     })();
