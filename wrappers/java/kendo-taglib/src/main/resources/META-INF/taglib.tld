@@ -16279,7 +16279,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <description>Defines the fill options of the shape.</description>
         <name>diagram-shapeDefaults-fill</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsFillTag</tag-class>
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
 
         <attribute>
             <description>Defines the fill color of the shape.</description>
@@ -16295,6 +16295,90 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         </attribute>
 
     </tag>
+
+    <tag>
+        <description>Defines the gradient fill of the shape.</description>
+        <name>diagram-shapeDefaults-fill-gradient</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsFillGradientTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The center of the radial gradient.Coordinates are relative to the shape bounding box.
+For example [0, 0] is top left and [1, 1] is bottom right.</description>
+            <name>center</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The end point of the linear gradient.Coordinates are relative to the shape bounding box.
+For example [0, 0] is top left and [1, 1] is bottom right.</description>
+            <name>end</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The radius of the radial gradient relative to the shape bounding box.</description>
+            <name>radius</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The start point of the linear gradient.Coordinates are relative to the shape bounding box.
+For example [0, 0] is top left and [1, 1] is bottom right.</description>
+            <name>start</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The type of the gradient. Supported values are:Note that support for radial gradients in VML (IE8 and below) is limited.
+Not all configurations are guaranteed to work.</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>The array of gradient color stops.</description>
+        <name>diagram-shapeDefaults-fill-gradient-stops</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsFillGradientStopsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>The array of gradient color stops.</description>
+        <name>diagram-shapeDefaults-fill-gradient-stop</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeDefaultsFillGradientStopTag</tag-class>
+
+        <body-content>empty</body-content>
+        <attribute>
+            <description>The color in any of the following formats.| Format         | Description
+| ---            | --- | ---
+| red            | Basic or Extended CSS Color name
+| #ff0000        | Hex RGB value
+| rgb(255, 0, 0) | RGB valueSpecifying 'none', 'transparent' or '' (empty string) will clear the fill.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The stop offset from the start of the element.
+Ranges from 0 (start of gradient) to 1 (end of gradient).</description>
+            <name>offset</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The fill opacity.
+Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+    </tag>
+
+
 
 
     <tag>
@@ -16947,7 +17031,7 @@ See visual.</description>
         <description>Defines the fill options of the shape.</description>
         <name>diagram-shape-fill</name>
         <tag-class>com.kendoui.taglib.diagram.ShapeFillTag</tag-class>
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
 
         <attribute>
             <description>Defines the fill color of the shape.</description>
@@ -16963,6 +17047,90 @@ See visual.</description>
         </attribute>
 
     </tag>
+
+    <tag>
+        <description>Defines the gradient fill of the shape.</description>
+        <name>diagram-shape-fill-gradient</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeFillGradientTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The center of the radial gradient.Coordinates are relative to the shape bounding box.
+For example [0, 0] is top left and [1, 1] is bottom right.</description>
+            <name>center</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The end point of the linear gradient.Coordinates are relative to the shape bounding box.
+For example [0, 0] is top left and [1, 1] is bottom right.</description>
+            <name>end</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The radius of the radial gradient relative to the shape bounding box.</description>
+            <name>radius</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The start point of the linear gradient.Coordinates are relative to the shape bounding box.
+For example [0, 0] is top left and [1, 1] is bottom right.</description>
+            <name>start</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The type of the gradient. Supported values are:Note that support for radial gradients in VML (IE8 and below) is limited.
+Not all configurations are guaranteed to work.</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>The array of gradient color stops.</description>
+        <name>diagram-shape-fill-gradient-stops</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeFillGradientStopsTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>The array of gradient color stops.</description>
+        <name>diagram-shape-fill-gradient-stop</name>
+        <tag-class>com.kendoui.taglib.diagram.ShapeFillGradientStopTag</tag-class>
+
+        <body-content>empty</body-content>
+        <attribute>
+            <description>The color in any of the following formats.| Format         | Description
+| ---            | --- | ---
+| red            | Basic or Extended CSS Color name
+| #ff0000        | Hex RGB value
+| rgb(255, 0, 0) | RGB valueSpecifying 'none', 'transparent' or '' (empty string) will clear the fill.</description>
+            <name>color</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The stop offset from the start of the element.
+Ranges from 0 (start of gradient) to 1 (end of gradient).</description>
+            <name>offset</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The fill opacity.
+Ranges from 0 (completely transparent) to 1 (completely opaque).</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+    </tag>
+
+
 
 
     <tag>

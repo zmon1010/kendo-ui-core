@@ -43,6 +43,16 @@ namespace Kendo.Mvc.UI.Fluent
             return this;
         }
         
+        /// <summary>
+        /// Defines the gradient fill of the shape.
+        /// </summary>
+        /// <param name="configurator">The action that configures the gradient.</param>
+        public DiagramShapeDefaultsFillSettingsBuilder<TShapeModel,TConnectionModel> Gradient(Action<DiagramShapeDefaultsFillGradientSettingsBuilder<TShapeModel,TConnectionModel>> configurator)
+        {
+            configurator(new DiagramShapeDefaultsFillGradientSettingsBuilder<TShapeModel,TConnectionModel>(container.Gradient));
+            return this;
+        }
+        
         //<< Fields
     }
 }

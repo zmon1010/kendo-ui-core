@@ -6,28 +6,22 @@ namespace Kendo.Mvc.UI
     using System.Web.Routing;
     using Kendo.Mvc.Extensions;
 
-    public class DiagramShapeFillSettings : JsonObject
+    public class DiagramShapeDefaultsFillGradientSettingsStop : JsonObject
     {
-        public DiagramShapeFillSettings()
+        public DiagramShapeDefaultsFillGradientSettingsStop()
         {
             //>> Initialization
         
-            Gradient = new DiagramShapeFillGradientSettings();
-                
         //<< Initialization
         }
 
         //>> Fields
         
+        public double? Offset { get; set; }
+        
         public string Color { get; set; }
         
         public double? Opacity { get; set; }
-        
-        public DiagramShapeFillGradientSettings Gradient
-        {
-            get;
-            set;
-        }
         
         //<< Fields
 
@@ -35,6 +29,11 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
+            if (Offset.HasValue)
+            {
+                json["offset"] = Offset;
+            }
+                
             if (Color.HasValue())
             {
                 json["color"] = Color;
@@ -45,11 +44,6 @@ namespace Kendo.Mvc.UI
                 json["opacity"] = Opacity;
             }
                 
-            var gradient = Gradient.ToJson();
-            if (gradient.Any())
-            {
-                json["gradient"] = gradient;
-            }
         //<< Serialization
         }
     }

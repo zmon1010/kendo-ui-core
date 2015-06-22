@@ -1271,6 +1271,32 @@
             });
         });
 
+        function gradientTest(gradientType, expectedClass) {
+            return function() {
+                drawingElement.fill = drawingElement.fill.mock(function (gradient) {
+                    if (gradient.nodeType === gradientType) {
+                        ok(gradient instanceof expectedClass, "should be a " + gradientType + " gradient");
+                    }
+                });
+
+                rectangle.redraw({
+                    fill: {
+                        gradient: {
+                            type: "linear",
+                            stops: [
+                                [0, "Green", 0.5]
+                            ]
+                        }
+                    }
+                });
+
+                ok(drawingElement.fill.called);
+            };
+        }
+
+        test("linear gradient", gradientTest("linear", d.LinearGradient));
+        test("radial gradient", gradientTest("radial", d.RadialGradient));
+
         elementTests("Rectangle", Rectangle);
         visualBaseTests("Rectangle", Rectangle);
     })();
@@ -2349,5 +2375,4 @@
         });
 
     })();
-
 })();

@@ -23,6 +23,15 @@ class DiagramShapeDefaultsFill extends \Kendo\SerializableObject {
         return $this->setProperty('opacity', $value);
     }
 
+    /**
+    * Defines the gradient fill of the shape.
+    * @param \Kendo\Dataviz\UI\DiagramShapeDefaultsFillGradient|array $value
+    * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsFill
+    */
+    public function gradient($value) {
+        return $this->setProperty('gradient', $value);
+    }
+
 //<< Properties
 }
 

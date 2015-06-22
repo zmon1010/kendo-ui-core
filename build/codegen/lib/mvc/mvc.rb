@@ -29,6 +29,12 @@ module CodeGen::MVC::Wrappers
         'map.markers.location' => 'double[]',
         'treemap.colors' => 'string[]',
         'editor.stylesheets' => 'string[]',
+        'diagram.shapes.fill.gradient.center' => 'double[]',
+        'diagram.shapedefaults.fill.gradient.center' => 'double[]',
+        'diagram.shapes.fill.gradient.start' => 'double[]',
+        'diagram.shapedefaults.fill.gradient.start' => 'double[]',
+        'diagram.shapes.fill.gradient.end' => 'double[]',
+        'diagram.shapedefaults.fill.gradient.end' => 'double[]',
 
         # types: Function => ClientHandlerDescriptior, perhaps?
         'toolbar.items.click' => 'ClientHandlerDescriptor',
@@ -435,7 +441,7 @@ module CodeGen::MVC::Wrappers
                 return_type = FIELD_TYPES[full_name] || TYPES[type[0]]
             end
 
-            $stderr.puts("Unknown type for #{full_name}") if return_type.empty?
+            $stderr.puts("Unknown type for #{full_name}") if return_type.nil? || return_type.empty?
 
             return_type
         end
