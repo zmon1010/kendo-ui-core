@@ -230,6 +230,14 @@ public class DropDownListTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("optionLabelTemplate", value);
     }
 
+    public java.lang.Object getPopup() {
+        return (java.lang.Object)getProperty("popup");
+    }
+
+    public void setPopup(java.lang.Object value) {
+        setProperty("popup", value);
+    }
+
     public java.lang.String getTemplate() {
         return (java.lang.String)getProperty("template");
     }

@@ -105,6 +105,13 @@ all data items which begin with the current widget value are displayed in the su
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The options that will be used for the popup initialization. For more details about the available options
+refer to Popup documentation.</description>
+            <name>popup</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>The character used to separate multiple values. Empty by default.</description>
             <name>separator</name>
             <rtexprvalue>true</rtexprvalue>
@@ -11535,6 +11542,13 @@ The supported filter values are startswith, endswith and contains.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The options that will be used for the popup initialization. For more details about the available options
+refer to Popup documentation.</description>
+            <name>popup</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>If set to true the widget will automatically use the first suggestion as its value.</description>
             <name>suggest</name>
             <rtexprvalue>true</rtexprvalue>
@@ -17280,6 +17294,13 @@ The supported filter values are startswith, endswith and contains.</description>
             <name>optionLabelTemplate</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The options that will be used for the popup initialization. For more details about the available options
+refer to Popup documentation.</description>
+            <name>popup</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>The template used to render the items. By default the widget displays only the text of the data item (configured via dataTextField).</description>
@@ -24649,6 +24670,13 @@ A zero value means that a request will be made as soon as the user focuses the w
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The options that will be used for the popup initialization. For more details about the available options
+refer to Popup documentation.</description>
+            <name>popup</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description>The mode used to render the selected tags. The available modes are:
 - multiple - renders a tag for every selected value
 - single - renders only one tag that shows the number of the selected values</description>
@@ -26213,6 +26241,158 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <description>Fired when the user clicks the "Export to PDF" toolbar button.</description>
         <name>pivotGrid-pdfExport</name>
         <tag-class>com.kendoui.taglib.pivotgrid.PdfExportFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Popup</description>
+        <name>popup</name>
+        <tag-class>com.kendoui.taglib.PopupTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>The mandatory and unique name of the widget. Used as the &quot;id&quot; attribute of the widget HTML element.</description>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the element that will be used as an anchor. The widget will open next to that element.</description>
+            <name>anchor</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type></type>
+        </attribute>
+        <attribute>
+            <description>Which element the popup will be appended to.</description>
+            <name>appendTo</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type></type>
+        </attribute>
+        <attribute>
+            <description>Specifies how to position the popup element based on achor point. The value is
+space separated "y" plus "x" position.The available "y" positions are:
+- "bottom"
+- "center"
+- "top"The available "x" positions are:
+- "left"
+- "center"
+- "right"</description>
+            <name>origin</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Specifies which point of the popup element to attach to the anchor's origin point. The value is
+space separated "y" plus "x" position.The available "y" positions are:
+- "bottom"
+- "center"
+- "top"The available "x" positions are:
+- "left"
+- "center"
+- "right"</description>
+            <name>position</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Fires when the popup is opened</description>
+            <name>activate</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when the popup closes</description>
+            <name>close</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when the popup is closed</description>
+            <name>deactivate</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fires when the popup opens</description>
+            <name>open</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <dynamic-attributes>true</dynamic-attributes>
+    </tag>
+
+    <tag>
+        <description>Configures the opening and closing animations of the popup. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly.</description>
+        <name>popup-animation</name>
+        <tag-class>com.kendoui.taglib.popup.AnimationTag</tag-class>
+        <body-content>JSP</body-content>
+
+
+    </tag>
+
+    <tag>
+        <description>The animation played when the popup is closed.</description>
+        <name>popup-animation-close</name>
+        <tag-class>com.kendoui.taglib.popup.AnimationCloseTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The duration of the close animation in milliseconds.</description>
+            <name>duration</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The effect(s) to use when playing the close animation. Multiple effects should be separated with a space.Complete list of available animations</description>
+            <name>effects</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The animation played when the calendar popup is opened.</description>
+        <name>popup-animation-open</name>
+        <tag-class>com.kendoui.taglib.popup.AnimationOpenTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The duration of the open animation in milliseconds.</description>
+            <name>duration</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The effect(s) to use when playing the open animation. Multiple effects should be separated with a space.Complete list of available animations</description>
+            <name>effects</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+
+
+    <tag>
+        <description>Fires when the popup is opened</description>
+        <name>popup-activate</name>
+        <tag-class>com.kendoui.taglib.popup.ActivateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when the popup closes</description>
+        <name>popup-close</name>
+        <tag-class>com.kendoui.taglib.popup.CloseFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when the popup is closed</description>
+        <name>popup-deactivate</name>
+        <tag-class>com.kendoui.taglib.popup.DeactivateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fires when the popup opens</description>
+        <name>popup-open</name>
+        <tag-class>com.kendoui.taglib.popup.OpenFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

@@ -230,6 +230,14 @@ public class ComboBoxTag extends WidgetTag /* interfaces */implements DataBoundW
         setProperty("placeholder", value);
     }
 
+    public java.lang.Object getPopup() {
+        return (java.lang.Object)getProperty("popup");
+    }
+
+    public void setPopup(java.lang.Object value) {
+        setProperty("popup", value);
+    }
+
     public boolean getSuggest() {
         return (boolean)getProperty("suggest");
     }

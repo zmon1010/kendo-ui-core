@@ -225,6 +225,14 @@ public class MultiSelectTag extends WidgetTag /* interfaces */implements DataBou
         setProperty("placeholder", value);
     }
 
+    public java.lang.Object getPopup() {
+        return (java.lang.Object)getProperty("popup");
+    }
+
+    public void setPopup(java.lang.Object value) {
+        setProperty("popup", value);
+    }
+
     public java.lang.String getTagMode() {
         return (java.lang.String)getProperty("tagMode");
     }

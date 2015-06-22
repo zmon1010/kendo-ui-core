@@ -186,6 +186,14 @@ public class AutoCompleteTag extends WidgetTag /* interfaces */implements DataBo
         setProperty("placeholder", value);
     }
 
+    public java.lang.Object getPopup() {
+        return (java.lang.Object)getProperty("popup");
+    }
+
+    public void setPopup(java.lang.Object value) {
+        setProperty("popup", value);
+    }
+
     public java.lang.String getSeparator() {
         return (java.lang.String)getProperty("separator");
     }
