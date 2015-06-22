@@ -22,6 +22,10 @@ namespace Kendo.Mvc.UI
         
         public bool? Connect { get; set; }
         
+        public bool? Drag { get; set; }
+        
+        public bool? Remove { get; set; }
+        
         public List<DiagramShapeDefaultsEditableSettingsTool> Tools
         {
             get;
@@ -41,6 +45,16 @@ namespace Kendo.Mvc.UI
             if (Connect.HasValue)
             {
                 json["connect"] = Connect;
+            }
+                
+            if (Drag.HasValue)
+            {
+                json["drag"] = Drag;
+            }
+                
+            if (Remove.HasValue)
+            {
+                json["remove"] = Remove;
             }
                 
             var tools = Tools.ToJson();

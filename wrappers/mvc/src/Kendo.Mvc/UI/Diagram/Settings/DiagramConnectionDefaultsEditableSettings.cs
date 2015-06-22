@@ -23,6 +23,10 @@ namespace Kendo.Mvc.UI
 
         //>> Fields
         
+        public bool? Drag { get; set; }
+        
+        public bool? Remove { get; set; }
+        
         public List<DiagramConnectionDefaultsEditableSettingsTool> Tools
         {
             get;
@@ -35,6 +39,16 @@ namespace Kendo.Mvc.UI
         {
             //>> Serialization
         
+            if (Drag.HasValue)
+            {
+                json["drag"] = Drag;
+            }
+                
+            if (Remove.HasValue)
+            {
+                json["remove"] = Remove;
+            }
+                
             var tools = Tools.ToJson();
             if (tools.Any())
             {

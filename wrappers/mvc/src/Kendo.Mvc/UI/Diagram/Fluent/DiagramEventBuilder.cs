@@ -71,6 +71,39 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Fired when dragging shapes or connection.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the drag event.</param>
+        public DiagramEventBuilder Drag(string handler)
+        {
+            Handler("drag", handler);
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Fired after finishing dragging shapes or connection.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the dragEnd event.</param>
+        public DiagramEventBuilder DragEnd(string handler)
+        {
+            Handler("dragEnd", handler);
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Fired before starting dragging shapes or connection.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the dragStart event.</param>
+        public DiagramEventBuilder DragStart(string handler)
+        {
+            Handler("dragStart", handler);
+
+            return this;
+        }
+        
+        /// <summary>
         /// Fired when the user edits a shape or connection.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the edit event.</param>
@@ -137,7 +170,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
-        /// Fired when the user delete a shape or connection.
+        /// Fired when the user removes a shape or connection.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the remove event.</param>
         public DiagramEventBuilder Remove(string handler)

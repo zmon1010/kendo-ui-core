@@ -1,4 +1,18 @@
 :options:
+    - :name: connections.type
+      :type: String
+      :enum_type: DiagramConnectionType
+      :description: The connection type.
+      :values:
+          - cascading
+          - polyline
+    - :name: connectionDefaults.type
+      :type: String
+      :enum_type: DiagramConnectionType
+      :description: The connections type.
+      :values:
+          - cascading
+          - polyline
     - :name: layout.type
       :type: String
       :description: The layout type.

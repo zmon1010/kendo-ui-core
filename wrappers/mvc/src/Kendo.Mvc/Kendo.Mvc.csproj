@@ -772,6 +772,7 @@
     <Compile Include="UI\CheckBox\Fluent\CheckBoxBuilder.cs" />
     <Compile Include="UI\CheckBox\Html\CheckBoxHtmlBuilder.cs" />
     <Compile Include="UI\CheckBox\CheckBox.cs" />
+    <Compile Include="UI\Diagram\DiagramConnectionType.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramPdfMarginSettingsBuilder.cs" />
     <Compile Include="UI\Diagram\Fluent\DiagramPdfSettingsBuilder.cs" />
     <Compile Include="UI\Diagram\Settings\DiagramEditableResizeHandlesHoverStrokeSettings.cs" />
@@ -2555,5 +2556,11 @@
     <Compile Include="UI\ResponsivePanel\Fluent\ResponsivePanelBuilder.cs" />
     <Compile Include="UI\ResponsivePanel\Fluent\ResponsivePanelEventBuilder.cs" />
     <Compile Include="UI\ResponsivePanel\Html\ResponsivePanelHtmlBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Diagram\Settings\DiagramEditableDragSettings.cs" />
+    <Compile Include="UI\Diagram\Fluent\DiagramEditableDragSettingsBuilder.cs" />
+    <Compile Include="UI\Diagram\Settings\DiagramEditableDragSnapSettings.cs" />
+    <Compile Include="UI\Diagram\Fluent\DiagramEditableDragSnapSettingsBuilder.cs" />
   </ItemGroup>
 </Project>

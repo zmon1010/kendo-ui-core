@@ -135,6 +135,17 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new DiagramConnectionDefaultsStrokeSettingsBuilder<TShapeModel,TConnectionModel>(container.Stroke));
             return this;
         }
+
+        /// <summary>
+        /// The connections type.
+        /// </summary>
+        /// <param name="value">The value that configures the type.</param>
+        public DiagramConnectionDefaultsSettingsBuilder<TShapeModel, TConnectionModel> Type(DiagramConnectionType value)
+        {
+            container.Type = value;
+
+            return this;
+        }
         
         //<< Fields
     }

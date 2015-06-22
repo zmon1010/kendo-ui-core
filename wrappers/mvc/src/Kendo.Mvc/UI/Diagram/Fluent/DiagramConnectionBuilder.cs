@@ -154,6 +154,17 @@ namespace Kendo.Mvc.UI.Fluent
             configurator(new DiagramConnectionToSettingsBuilder<TShapeModel,TConnectionModel>(container.To));
             return this;
         }
+
+        /// <summary>
+        /// The connection type.
+        /// </summary>
+        /// <param name="value">The value that configures the type.</param>
+        public DiagramConnectionBuilder<TShapeModel, TConnectionModel> Type(DiagramConnectionType value)
+        {
+            container.Type = value;
+
+            return this;
+        }
         
         //<< Fields
     }

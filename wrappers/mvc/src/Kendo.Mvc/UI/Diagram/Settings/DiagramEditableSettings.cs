@@ -18,6 +18,8 @@ namespace Kendo.Mvc.UI
             Enabled = true;
             //>> Initialization
         
+            Drag = new DiagramEditableDragSettings();
+                
             Resize = new DiagramEditableResizeSettings();
                 
             Rotate = new DiagramEditableRotateSettings();
@@ -35,6 +37,14 @@ namespace Kendo.Mvc.UI
         public string ConnectionTemplate { get; set; }
 
         public string ConnectionTemplateId { get; set; }
+        
+        public DiagramEditableDragSettings Drag
+        {
+            get;
+            set;
+        }
+        
+        public bool? Remove { get; set; }
         
         public DiagramEditableResizeSettings Resize
         {
@@ -102,6 +112,19 @@ namespace Kendo.Mvc.UI
             else if (!string.IsNullOrEmpty(ConnectionTemplate))
             {
                 json["connectionTemplate"] = ConnectionTemplate;
+            }
+                
+            var drag = Drag.ToJson();
+            if (drag.Any())
+            {
+                json["drag"] = drag;
+            } else if (Drag.Enabled != true) {
+                json["drag"] = Drag.Enabled;
+            }
+
+            if (Remove.HasValue)
+            {
+                json["remove"] = Remove;
             }
                 
             if (!string.IsNullOrEmpty(ShapeTemplateId))

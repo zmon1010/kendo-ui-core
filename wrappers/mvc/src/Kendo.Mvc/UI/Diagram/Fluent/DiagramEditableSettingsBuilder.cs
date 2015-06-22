@@ -45,6 +45,41 @@ namespace Kendo.Mvc.UI.Fluent
         
 
         /// <summary>
+        /// Specifies if the shapes and connections can be dragged.
+        /// </summary>
+        /// <param name="enabled">Enables or disables the drag option.</param>
+        public DiagramEditableSettingsBuilder<TShapeModel,TConnectionModel> Drag(bool enabled)
+        {
+            container.Drag.Enabled = enabled;
+            return this;
+        }
+
+        
+        /// <summary>
+        /// Specifies if the shapes and connections can be dragged.
+        /// </summary>
+        /// <param name="configurator">The action that configures the drag.</param>
+        public DiagramEditableSettingsBuilder<TShapeModel,TConnectionModel> Drag(Action<DiagramEditableDragSettingsBuilder<TShapeModel,TConnectionModel>> configurator)
+        {
+            container.Drag.Enabled = true;
+            
+            configurator(new DiagramEditableDragSettingsBuilder<TShapeModel,TConnectionModel>(container.Drag));
+            return this;
+        }
+        
+        /// <summary>
+        /// Specifies if the shapes and connections can be removed.
+        /// </summary>
+        /// <param name="value">The value that configures the remove.</param>
+        public DiagramEditableSettingsBuilder<TShapeModel,TConnectionModel> Remove(bool value)
+        {
+            container.Remove = value;
+
+            return this;
+        }
+        
+
+        /// <summary>
         /// Defines the look-and-feel of the resizing handles.
         /// </summary>
         /// <param name="enabled">Enables or disables the resize option.</param>

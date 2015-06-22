@@ -97,6 +97,8 @@ namespace Kendo.Mvc.UI
             set;
         }
         
+        public DiagramConnectionType? Type { get; set; }
+        
         //<< Fields
 
         protected override void Serialize(IDictionary<string, object> json)
@@ -156,6 +158,11 @@ namespace Kendo.Mvc.UI
             {
                 json["to"] = to;
             }
+            if (Type.HasValue)
+            {
+                json["type"] = Type;
+            }
+                
         //<< Serialization
         }
     }
