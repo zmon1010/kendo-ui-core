@@ -705,10 +705,9 @@
     };
 
     function compileArgumentChecks(args) {
-        var forced, out = "var i = 0, v, m; try { ";
+        var forced, out = "var i = 0, v, m; ";
         out += args.map(comp).join("");
-        out += "if (i < args.length) throw new CalcError('N/A'); ";
-        out += "} catch(ex) { return this.error(ex); } ";
+        out += "if (i < args.length) return this.error(new CalcError('N/A')); ";
         return out;
 
         function comp(x) {
@@ -723,7 +722,7 @@
                 type = [ type ];
             }
             for (var i = 0; i < type.length; ++i) {
-                code += "var $" + name + " = v = args[i++]; if (v instanceof CalcError) throw v; "
+                code += "var $" + name + " = v = args[i++]; if (v instanceof CalcError) return this.error(v); "
                     + typeCheck(type[i]) + "xargs.push(v); ";
             }
             if (isMany) {
@@ -745,7 +744,7 @@
 
         function typeCheck(type) {
             forced = false;
-            return "if (!(" + cond(type) + ")) throw new CalcError('VALUE'); ";
+            return "if (!(" + cond(type) + ")) return this.error(new CalcError('VALUE')); ";
         }
 
         function cond(type) {

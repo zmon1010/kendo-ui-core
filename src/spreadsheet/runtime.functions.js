@@ -363,7 +363,7 @@
     defineFunction("choose", function(index){
         var args = arguments;
         return runtime.arrayHandler1(function(index){
-            if (index >= args.length) {
+            if (index < 1 || index >= args.length) {
                 return new CalcError("N/A");
             } else {
                 return args[index];
