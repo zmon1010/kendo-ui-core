@@ -109,6 +109,7 @@ module CodeGen::MVC::Wrappers
         'gantt.columns',
         'treelist.datasource',
         'treelist.editable.window',
+        'treelist.filterable.messages',
         'treeview.items',
         'treeview.autobind',
         'treeview.animation',

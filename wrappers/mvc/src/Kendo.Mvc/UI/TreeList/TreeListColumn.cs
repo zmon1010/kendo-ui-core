@@ -61,6 +61,8 @@ namespace Kendo.Mvc.UI
 
         public string HeaderTemplateId { get; set; }
         
+        public double? MinScreenWidth { get; set; }
+        
         public TreeListColumnSortableSettings Sortable
         {
             get;
@@ -163,6 +165,11 @@ namespace Kendo.Mvc.UI
             else if (!string.IsNullOrEmpty(HeaderTemplate))
             {
                 json["headerTemplate"] = HeaderTemplate;
+            }
+                
+            if (MinScreenWidth.HasValue)
+            {
+                json["minScreenWidth"] = MinScreenWidth;
             }
                 
             var sortable = Sortable.ToJson();
