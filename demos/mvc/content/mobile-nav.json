@@ -1,7 +1,6 @@
 [
       {
         "text": "Basic usage",
-        "new": "true",
         "url": "actionsheet/index",
         "title": {
             "kendo-ui": "Kendo UI Mobile ActionSheet Demo",
@@ -74,6 +73,7 @@
       },
       {
         "text": "Sizes",
+        "new": "true",
         "url": "mobile-button/sizes",
         "title": {
             "kendo-ui": "Customizing the size of Kendo UI mobile button",
@@ -86,6 +86,7 @@
       },
       {
         "text": "Icons",
+        "new": "true",
         "url": "mobile-button/icons",
         "title": {
             "kendo-ui": "Using icons with Kendo UI mobile button",
@@ -161,6 +162,7 @@
       },
       {
         "text": "Sizes",
+        "new": "true",
         "url": "buttongroup/sizes",
         "title": {
             "kendo-ui": "Kendo UI Mobile Button Group Sizing",
@@ -173,6 +175,7 @@
       },
       {
         "text": "Icons",
+        "new": "true",
         "url": "buttongroup/icons",
         "title": {
             "kendo-ui": "Using icons with Kendo UI Mobile Button Group",
@@ -275,6 +278,7 @@
       },
       {
         "text": "Two way drawers",
+        "new": "true",
         "url": "drawer/two-way-drawers",
         "title": {
             "kendo-ui": "Example of left and right drawers",
@@ -287,6 +291,7 @@
       },
       {
         "text": "Overview",
+        "new": "true",
         "url": "mobile-forms/index",
         "title": {
             "kendo-ui": "Kendo UI Mobile Forms Demo",
@@ -299,6 +304,7 @@
       },
       {
         "text": "Checks and Radios",
+        "new": "true",
         "url": "mobile-forms/checkboxes",
         "title": {
             "kendo-ui": "Checkboxes example for Kendo UI Mobile Application",
@@ -533,6 +539,7 @@
       },
       {
         "text": "Customizing appearance",
+        "new": "true",
         "url": "navbar/appearance",
         "title": {
             "kendo-ui": "Example of customizing Kendo UI Mobile NavBar appearance",
@@ -591,6 +598,7 @@
       },
       {
         "text": "Basic usage",
+        "new": "true",
         "url": "scrollview/mobile",
         "title": {
             "kendo-ui": "Kendo UI Mobile ScrollView Example",
@@ -730,6 +738,7 @@
       },
       {
         "text": "Badges",
+        "new": "true",
         "url": "mobile-tabstrip/badges",
         "title": {
             "kendo-ui": "Kendo UI Mobile TabStrip Badge Demo",
