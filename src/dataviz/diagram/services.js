@@ -2005,7 +2005,7 @@
                     }
                     this.refresh();
                 } else {
-                    if (this.diagram.options.snap) {
+                    if (this.shouldSnap()) {
                         var thr = this._truncateDistance(p.minus(this._lp));
                         // threshold
                         if (thr.x === 0 && thr.y === 0) {
@@ -2119,7 +2119,7 @@
             },
 
             _truncateAngle: function (a) {
-                var snap = this.diagram.options.snap;
+                var snap = this.snapOptions();
                 var snapAngle = Math.max(snap.angle || DEFAULT_SNAP_ANGLE, MIN_SNAP_ANGLE);
                 return snap ? Math.floor((a % 360) / snapAngle) * snapAngle : (a % 360);
             },
@@ -2128,10 +2128,23 @@
                 if (d instanceof diagram.Point) {
                     return new diagram.Point(this._truncateDistance(d.x), this._truncateDistance(d.y));
                 } else {
-                    var snap = this.diagram.options.snap;
+                    var snap = this.snapOptions() || {};
                     var snapSize = Math.max(snap.size || DEFAULT_SNAP_SIZE, MIN_SNAP_SIZE);
                     return snap ? Math.floor(d / snapSize) * snapSize : d;
                 }
+            },
+
+            snapOptions: function() {
+                var editable = this.diagram.options.editable;
+                var snap = ((editable || {}).drag || {}).snap || {};
+                return snap;
+            },
+
+            shouldSnap: function() {
+                var editable = this.diagram.options.editable;
+                var drag = (editable || {}).drag;
+                var snap = (drag || {}).snap;
+                return editable !== false && drag !== false && snap !== false;
             },
 
             _displaceBounds: function (bounds, dtl, dbr, dragging) {

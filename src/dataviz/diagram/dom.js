@@ -1771,7 +1771,14 @@
                     rotate: {},
                     resize: {},
                     text: true,
-                    tools: []
+                    tools: [],
+                    drag: {
+                        snap: {
+                            size: 10,
+                            angle: 10
+                        }
+                    },
+                    remove: true
                 },
                 pannable: {
                     key: "ctrl"
@@ -1784,10 +1791,6 @@
                     enabled: true,
                     offsetX: 20,
                     offsetY: 20
-                },
-                snap: {
-                    size: 10,
-                    angle: 10
                 },
                 shapeDefaults: diagram.shapeDefaults({ undoable: true }),
                 connectionDefaults: {

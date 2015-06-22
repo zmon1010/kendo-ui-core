@@ -257,6 +257,51 @@
             equal(bounds.height, 100);
         });
 
+        test("snap shape movement if snap is enabled", function() {
+            var shape = d.addShape({
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100
+            });
+            adorner.shapes = [shape];
+            adorner.start(new Point(0, 0));
+            adorner.move(new Point(), new Point(5, 0));
+            equal(shape.position().x, 0);
+            adorner.move(new Point(), new Point(10, 0));
+            equal(shape.position().x, 10);
+        });
+
+        test("no snap movement if snap is disabled", function() {
+            var shape = d.addShape({
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100
+            });
+            d.options.editable.drag.snap = false;
+            adorner.shapes = [shape];
+            adorner.start(new Point(0, 0));
+            adorner.move(new Point(), new Point(5, 0));
+            equal(shape.position().x, 5);
+        });
+
+        test("takes snap size option into account", function() {
+            var shape = d.addShape({
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100
+            });
+            d.options.editable.drag.snap = { size: 30 };
+            adorner.shapes = [shape];
+            adorner.start(new Point(0, 0));
+            adorner.move(new Point(), new Point(25, 0));
+            equal(shape.position().x, 0);
+            adorner.move(new Point(), new Point(30, 0));
+            equal(shape.position().x, 30);
+        });
+
         // ------------------------------------------------------------
         module("Resizing/Selection adorner", {
             setup: function() {
