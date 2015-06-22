@@ -460,36 +460,36 @@
             return ref.print(0, 0);
         }
         function intersect(r1, r2) {
-            return print(ref(r1).intersect(ref(r2)))
+            return print(ref(r1).intersect(ref(r2)));
         }
-        equal(intersect("B3:D6", "A1:E7"), "B3:D6");
-        equal(intersect("B3:D6", "B6:D10"), "B6:D6");
-        equal(intersect("A1:A3", "A3:A6"), "A3");
+        equal(intersect("B3:D6", "A1:E7"), "$B$3:$D$6");
+        equal(intersect("B3:D6", "B6:D10"), "$B$6:$D$6");
+        equal(intersect("A1:A3", "A3:A6"), "$A$3");
         equal(intersect("A1:A3", "A4:A5"), "#NULL!");
 
-        equal(intersect("B3:D6", "A1:B3"), "B3");
-        equal(intersect("B3:D6", "A1:C4"), "B3:C4");
+        equal(intersect("B3:D6", "A1:B3"), "$B$3");
+        equal(intersect("B3:D6", "A1:C4"), "$B$3:$C$4");
 
-        equal(intersect("B3:D6", "D1:D10"), "D3:D6");
+        equal(intersect("B3:D6", "D1:D10"), "$D$3:$D$6");
         equal(intersect("B3:D6", "E1:E10"), "#NULL!");
-        equal(intersect("B3:D6", "D1:D3"), "D3");
+        equal(intersect("B3:D6", "D1:D3"), "$D$3");
 
-        equal(intersect("B3:D6", "D5:E10"), "D5:D6");
-        equal(intersect("B3:D6", "D6:E10"), "D6");
+        equal(intersect("B3:D6", "D5:E10"), "$D$5:$D$6");
+        equal(intersect("B3:D6", "D6:E10"), "$D$6");
         equal(intersect("B3:D6", "D7:E10"), "#NULL!");
 
-        equal(intersect("B3:D6", "A5:D6"), "B5:D6");
-        equal(intersect("B3:D6", "A6:D6"), "B6:D6");
+        equal(intersect("B3:D6", "A5:D6"), "$B$5:$D$6");
+        equal(intersect("B3:D6", "A6:D6"), "$B$6:$D$6");
         equal(intersect("B3:D6", "A7:D8"), "#NULL!");
-        equal(intersect("B3:D6", "A6:B6"), "B6");
+        equal(intersect("B3:D6", "A6:B6"), "$B$6");
 
         equal(intersect("B3:D6", "1:2"), "#NULL!");
-        equal(intersect("B3:D6", "2:3"), "B3:D3");
-        equal(intersect("B3:D6", "3:4"), "B3:D4");
-        equal(intersect("B3:D6", "A:E"), "B3:D6");
-        equal(intersect("B3:D6", "A:C"), "B3:C6");
-        equal(intersect("B3:D6", "C:C"), "C3:C6");
-        equal(intersect("B3:D6", "C:E"), "C3:D6");
+        equal(intersect("B3:D6", "2:3"), "$B$3:$D$3");
+        equal(intersect("B3:D6", "3:4"), "$B$3:$D$4");
+        equal(intersect("B3:D6", "A:E"), "$B$3:$D$6");
+        equal(intersect("B3:D6", "A:C"), "$B$3:$C$6");
+        equal(intersect("B3:D6", "C:C"), "$C$3:$C$6");
+        equal(intersect("B3:D6", "C:E"), "$C$3:$D$6");
         equal(intersect("B3:D6", "E:F"), "#NULL!");
     });
 
