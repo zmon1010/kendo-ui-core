@@ -2,8 +2,6 @@
 (function() {
     var settings = window.kendoThemeBuilderSettings,
         doc = document,
-        kendo = window.kendo,
-        UNDEFINED = "undefined",
         applicationRoot = (function() {
             var scripts = document.getElementsByTagName("script"),
                 path = scripts[scripts.length-1].src.split('?')[0];
