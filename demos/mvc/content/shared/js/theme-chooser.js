@@ -41,8 +41,7 @@
                 duration: 300
             }
         },
-        skinRegex = /kendo\.[\w\-]+(\.min)?\.(less|css)/i,
-        dvSkinRegex = /kendo\.dataviz\.(?!min)\w+?(\.css|\.min.css)/gi;
+        skinRegex = /kendo\.[\w\-]+(\.min)?\.(less|css)/i;
 
     var Details = kendo.ui.Widget.extend({
         init: function(element, options) {
@@ -191,12 +190,6 @@
             });
         },
 
-        getCurrentDVThemeLink: function () {
-            return $("head link").filter(function () {
-                return dvSkinRegex.test(this.href);
-            });
-        },
-
         getCommonUrl: function (common) {
             var currentCommonUrl = ThemeChooser.getCurrentCommonLink().attr("href");
 
@@ -209,37 +202,12 @@
             return currentThemeUrl.replace(skinRegex, "kendo." + themeName + "$1.$2");
         },
 
-        getDVThemeUrl: function (themeName) {
-            var currentThemeUrl = ThemeChooser.getCurrentDVThemeLink().attr("href");
-            if (currentThemeUrl) {
-                return currentThemeUrl.replace(dvSkinRegex, "kendo.dataviz." + themeName + "$1");
-            }
-        },
-
         replaceCommon: function(commonName) {
             var newCommonUrl = ThemeChooser.getCommonUrl(commonName),
                 themeLink = ThemeChooser.getCurrentCommonLink();
 
             ThemeChooser.updateLink(themeLink, newCommonUrl);
             cookie("commonFile", commonName, Infinity, "/");
-        },
-
-        replaceWebTheme: function (themeName) {
-            var newThemeUrl = ThemeChooser.getThemeUrl(themeName),
-                oldThemeName = $(doc).data("kendoSkin"),
-                themeLink = ThemeChooser.getCurrentThemeLink();
-
-            ThemeChooser.updateLink(themeLink, newThemeUrl);
-            $(doc.documentElement).removeClass("k-" + oldThemeName).addClass("k-" + themeName);
-        },
-
-        replaceDVTheme: function (themeName) {
-            var newThemeUrl = ThemeChooser.getDVThemeUrl(themeName),
-                themeLink = ThemeChooser.getCurrentDVThemeLink();
-
-            if (newThemeUrl) {
-                ThemeChooser.updateLink(themeLink, newThemeUrl);
-            }
         },
 
         updateLink: function(link, url) {
@@ -276,8 +244,13 @@
         },
 
         replaceTheme: function(themeName) {
-            ThemeChooser.replaceWebTheme(themeName);
-            ThemeChooser.replaceDVTheme(themeName);
+            var newThemeUrl = ThemeChooser.getThemeUrl(themeName),
+                oldThemeName = $(doc).data("kendoSkin"),
+                themeLink = ThemeChooser.getCurrentThemeLink();
+
+            ThemeChooser.updateLink(themeLink, newThemeUrl);
+            $(doc.documentElement).removeClass("k-" + oldThemeName).addClass("k-" + themeName);
+
             ThemeChooser.publishTheme(themeName);
             cookie("theme", themeName, Infinity, "/");
         },

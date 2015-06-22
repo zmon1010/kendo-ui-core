@@ -12,16 +12,12 @@ namespace Kendo.Models
             "web/kendo.CURRENT_COMMON.less",
             "web/kendo.rtl.css",
             "web/kendo.CURRENT_THEME.less",
-            "web/kendo.CURRENT_THEME.mobile.less",
-            "dataviz/kendo.dataviz.less",
-            "dataviz/kendo.dataviz.CURRENT_THEME.less"
+            "web/kendo.CURRENT_THEME.mobile.less"
 #else
             "kendo.CURRENT_COMMON.min.css",
             "kendo.rtl.min.css",
             "kendo.CURRENT_THEME.min.css",
-            "kendo.CURRENT_THEME.mobile.min.css",
-            "kendo.dataviz.min.css",
-            "kendo.dataviz.CURRENT_THEME.min.css"
+            "kendo.CURRENT_THEME.mobile.min.css"
 #endif
         };
 
@@ -30,15 +26,11 @@ namespace Kendo.Models
 #if DEBUG
             "web/kendo.common.less",
             "web/kendo.rtl.css",
-            "web/kendo.metro.less",
-            "dataviz/kendo.dataviz.less",
-            "dataviz/kendo.dataviz.metro.less"
+            "web/kendo.metro.less"
 #else
             "kendo.common.min.css",
             "kendo.rtl.min.css",
-            "kendo.metro.min.css",
-            "kendo.dataviz.min.css",
-            "kendo.dataviz.metro.min.css"
+            "kendo.metro.min.css"
 #endif
         };
 
@@ -66,14 +58,10 @@ namespace Kendo.Models
         {
 #if DEBUG
             "web/kendo.common-bootstrap.less",
-            "web/kendo.bootstrap.less",
-            "dataviz/kendo.dataviz.less",
-            "dataviz/kendo.dataviz.bootstrap.less"
+            "web/kendo.bootstrap.less"
 #else
             "kendo.common-bootstrap.min.css",
-            "kendo.bootstrap.min.css",
-            "kendo.dataviz.min.css",
-            "kendo.dataviz.bootstrap.min.css"
+            "kendo.bootstrap.min.css"
 #endif
         };
 
