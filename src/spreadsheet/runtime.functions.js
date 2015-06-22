@@ -517,12 +517,6 @@
         if (topLeft.row < 0 || topLeft.col < 0) {
             return new CalcError("VALUE");
         }
-        if (height == null) {
-            height = ref.height();
-        }
-        if (width == null) {
-            width = ref.width();
-        }
         if (height > 1 || width > 1) {
             return new RangeRef(topLeft, new CellRef(topLeft.row + height - 1,
                                                      topLeft.col + width - 1))
@@ -533,8 +527,8 @@
         [ "ref", "area" ],
         [ "rows", "number" ],
         [ "cols", "number" ],
-        [ "height", [ "or", "number++", "null" ]],
-        [ "width", [ "or", "number++", "null" ]]
+        [ "height", [ "or", "number++", [ "null", "$ref.height()" ]]],
+        [ "width", [ "or", "number++", [ "null", "$ref.width()" ]]]
     ]);
 
     defineFunction("row", function(ref){

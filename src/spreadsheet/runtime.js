@@ -723,7 +723,7 @@
                 type = [ type ];
             }
             for (var i = 0; i < type.length; ++i) {
-                code += "v = args[i++]; if (v instanceof CalcError) throw v; "
+                code += "var $" + name + " = v = args[i++]; if (v instanceof CalcError) throw v; "
                     + typeCheck(type[i]) + "xargs.push(v); ";
             }
             if (isMany) {
@@ -753,13 +753,19 @@
                 if (type[0] == "or") {
                     return "(" + type.slice(1).map(cond).join(") || (") + ")";
                 }
+                if (type[0] == "and") {
+                    return "(" + type.slice(1).map(cond).join(") && (") + ")";
+                }
                 if (type[0] == "values") {
                     return "(" + type.slice(1).map(function(val){
-                        return force() + " === " + JSON.stringify(val);
+                        return force() + " === " + val;
                     }).join(") || (") + ")";
                 }
                 if (type[0] == "null") {
-                    return "(" + cond("null") + " ? (v = " + JSON.stringify(type[1]) + ", true) : false)";
+                    return "(" + cond("null") + " ? (v = " + type[1] + ", true) : false)";
+                }
+                if (type[0] == "between") {
+                    return "(" + force() + " >= " + type[1] + " && " + "v <= " + type[2] + ")";
                 }
                 throw new Error("Unknown array type condition: " + type[0]);
             }
@@ -796,6 +802,7 @@
             if (type == "any*") {
                 return "(i <= args.length)";
             }
+            throw new Error("Can't check for type: " + type);
         }
     }
 
@@ -822,7 +829,7 @@
                 ].join("");
                 var f = new Function("handler", "CalcError", code);
                 FUNCS[name] = f(func, CalcError);
-                //console.log(FUNCS[name].toString());
+                console.log(FUNCS[name].toString());
                 return this;
             },
             argsAsync: function(args) {
