@@ -37,7 +37,11 @@
             var style = this._style();
 
             if (value !== undefined) {
-                style[name] = value;
+                if (value === null) {
+                    delete style[name];
+                } else {
+                    style[name] = value;
+                }
 
                 this._style(style);
 

@@ -133,6 +133,13 @@
         equal(range.wrap(), true);
     });
 
+    test("setting style property to null removes it from the style object", function() {
+        range.background("red");
+        range.background(null);
+
+        ok(!("background" in range._style()));
+    });
+
     test("values returns two dimensional array containing cell values", function() {
         sheet.range("A1").value("A1");
         sheet.range("B1").value("B1");
