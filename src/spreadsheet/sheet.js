@@ -138,15 +138,18 @@
         },
 
         forEach: function(ref, callback) {
-            for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col; ci ++) {
-                var startCellIndex = this._grid.index(ref.topLeft.row, ci);
-                var endCellIndex = this._grid.index(ref.bottomRight.row, ci);
+            var topLeft = this._grid.normalize(ref.topLeft);
+            var bottomRight = this._grid.normalize(ref.bottomRight);
+
+            for (var ci = topLeft.col; ci <= bottomRight.col; ci ++) {
+                var startCellIndex = this._grid.index(topLeft.row, ci);
+                var endCellIndex = this._grid.index(bottomRight.row, ci);
 
                 var values = this._values.iterator(startCellIndex, endCellIndex);
                 var formulas = this._formulas.iterator(startCellIndex, endCellIndex);
                 var styles = this._styles.iterator(startCellIndex, endCellIndex);
 
-                for (var ri = ref.topLeft.row; ri <= ref.bottomRight.row; ri ++) {
+                for (var ri = topLeft.row; ri <= bottomRight.row; ri ++) {
                     var index = this._grid.index(ri, ci);
 
                     callback({
@@ -276,6 +279,61 @@
                 cols: cols,
                 allRows: allRows,
                 allCols: allCols
+            };
+        },
+
+        toJSON: function() {
+            var rows = {};
+
+            this.forEach(kendo.spreadsheet.SHEETREF, function(data) {
+                var value = data.value;
+                var style = data.style;
+
+                var hasValue = value !== null;
+                var hasStyle = Object.keys(style).length > 0;
+
+                if (!hasValue && !hasStyle) {
+                    return;
+                }
+
+                var row = rows[data.row];
+
+                if (row === undefined) {
+                    row = {
+                        index: data.row,
+                        cells: {}
+                    };
+
+                    rows[data.row] = row;
+                }
+
+                var cell = row.cells[data.col];
+
+                if (cell === undefined) {
+                    cell = { index: data.col };
+
+                    if (hasValue) {
+                        cell.value = value;
+                    }
+
+                    if (hasStyle) {
+                        cell.style = style;
+                    }
+
+                    row.cells[data.col] = cell;
+                }
+            });
+
+            return {
+                rows: Object.keys(rows).map(function(index) {
+                    var row = rows[index];
+
+                    row.cells = Object.keys(row.cells).map(function(index) {
+                       return row.cells[index];
+                    });
+
+                    return row;
+                })
             };
         }
     });

@@ -446,6 +446,7 @@
     /* -----[ exports ]----- */
 
     spreadsheet.NULLREF = NULL;
+    spreadsheet.SHEETREF = new RangeRef(new CellRef(0, 0), new CellRef(Infinity, Infinity));
     spreadsheet.Ref = Ref;
     spreadsheet.NameRef = NameRef;
     spreadsheet.CellRef = CellRef;
