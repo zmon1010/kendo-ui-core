@@ -243,16 +243,19 @@
         },
 
         updateLink: function(link, url) {
-            var newLink,
-                exampleElement = $("#example"),
-                less = window.less,
-                isLess = /\.less$/.test(link.attr("href"));
+            link = link.eq(0);
 
-            if (kendo.support.browser.msie && kendo.support.browser.version < 11) {
+            var newLink;
+            var exampleElement = $("#example");
+            var less = window.less;
+            var isLess = /\.less$/.test(link.attr("href"));
+            var browser = kendo.support.browser;
+
+            if (browser.msie && browser.version < 11) {
                 newLink = $(doc.createStyleSheet(url));
             } else {
-                newLink = link.eq(0).clone().attr("href", url);
-                link.eq(0).before(newLink);
+                newLink = link.clone().attr("href", url);
+                newLink.insertAfter(link);
             }
 
             link.remove();
