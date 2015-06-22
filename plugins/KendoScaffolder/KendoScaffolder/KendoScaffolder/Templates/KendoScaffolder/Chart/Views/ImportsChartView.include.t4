@@ -1,0 +1,22 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Data.Linq" #>
+<#@ assembly name="EnvDTE" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.Linq.Mapping" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="Microsoft.AspNet.Scaffolding.Core.Metadata" #>
+<#@ ScaffoldingAssembly Processor="ScaffoldingAssemblyLoader" #>
+<#@ parameter type="System.String" name="ChartTitle" #>
+<#@ parameter type="System.String" name="ControllerName" #>
+<#@ parameter type="System.String" name="ControllerRootName" #>
+<#@ parameter type="System.String" name="ViewDataTypeName" #>
+<#@ parameter type="System.String" name="LegendPosition" #>
+<#@ parameter type="System.String" name="SeriesType" #>
+<#@ parameter type="System.Boolean" name="LegendVisible" #>
+<#@ parameter type="System.Boolean" name="TooltipVisible" #>
+<#@ parameter type="System.String" name="CategoryAxis" #>
+<#@ parameter type="Microsoft.AspNet.Scaffolding.Core.Metadata.ModelMetadata" name="ModelMetadata" #>
+<#@ parameter type="System.Collections.Generic.List<System.String>" name="SeriesNames" #>
+<#@ parameter type="System.Collections.Generic.List<System.String>" name="SeriesColors" #>
+<#@ parameter type="System.Collections.Generic.List<System.Collections.Generic.List<System.String>>" name="SeriesConfigs" #>

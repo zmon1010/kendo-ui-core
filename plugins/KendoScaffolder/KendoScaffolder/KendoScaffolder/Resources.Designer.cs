@@ -61,12 +61,39 @@ namespace KendoScaffolder {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Chart widget uses modern browser technologies to render high-quality data visualizations. All graphics are rendered on the client using SVG with a fallback to Canvas and VML..
+        /// </summary>
+        internal static string ChartDescription {
+            get {
+                return ResourceManager.GetString("ChartDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Grid is a powerful widget for displaying tabular data. It provides a lot of options that define how the data is presented and manipulated, including paging, sorting, filtering, grouping and editing. The Grid can be bound to local or remote data using the Kendo DataSource component..
+        /// </summary>
+        internal static string GridDescription {
+            get {
+                return ResourceManager.GetString("GridDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon ScaffolderIcon {
             get {
                 object obj = ResourceManager.GetObject("ScaffolderIcon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Kendo UI Scheduler widget displays a set of events (a.k.a. appointments or tasks). It can display the scheduler events in different views - a single day, a whole week or month and as a list of tasks which need to be accomplished..
+        /// </summary>
+        internal static string SchedulerDescription {
+            get {
+                return ResourceManager.GetString("SchedulerDescription", resourceCulture);
             }
         }
     }

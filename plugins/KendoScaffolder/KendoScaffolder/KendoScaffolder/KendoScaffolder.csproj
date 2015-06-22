@@ -68,19 +68,61 @@
     <Compile Include="KendoConstants.cs" />
     <Compile Include="KendoScaffolderFactory.cs" />
     <Compile Include="KendoScaffolder.cs" />
+    <Compile Include="KendoWidgets.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\GridConfigurationViewModel.cs" />
+    <Compile Include="Scaffolders\ChartScaffolder.cs" />
+    <Compile Include="Scaffolders\GridScaffolder.cs" />
+    <Compile Include="Scaffolders\IKendoWidgetScaffolder.cs" />
+    <Compile Include="Scaffolders\KendoScaffolderUtils.cs" />
+    <Compile Include="UI\ChartConfigurationWindow.xaml.cs">
+      <DependentUpon>ChartConfigurationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Models\ChartConfigurations.cs" />
+    <Compile Include="UI\Models\ChartConfigurationViewModel.cs" />
+    <Compile Include="UI\Models\ChartSeriesTypes.cs" />
+    <Compile Include="UI\Models\Charts\AreaLikeChartConfiguration.cs" />
+    <Compile Include="UI\Models\Charts\BoxPlotChartConfiguration.cs" />
+    <Compile Include="UI\Models\Charts\BubbleChartConfiguration.cs" />
+    <Compile Include="UI\Models\Charts\BulletLikeChartConfiguration.cs" />
+    <Compile Include="UI\Models\Charts\CandlestickLikeChartConfiguration.cs" />
+    <Compile Include="UI\Models\Charts\IChartConfiguration.cs" />
+    <Compile Include="UI\Models\Charts\PieLikeChartConfiguration.cs" />
+    <Compile Include="UI\Models\Charts\RangeChartConfiguration.cs" />
+    <Compile Include="UI\Models\Charts\ScatterLikeChartConfiguration.cs" />
+    <Compile Include="UI\Models\Charts\WatterfallLikeChartConfiguration.cs" />
+    <Compile Include="UI\Models\DataSourceBoundWidgetViewModel.cs" />
+    <Compile Include="UI\Models\EnumToBooleanConverter.cs" />
+    <Compile Include="UI\Models\GridConfigurationViewModel.cs" />
     <Compile Include="UI\GridConfigurationWindow.xaml.cs">
       <DependentUpon>GridConfigurationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Models\WidgetConfigurationViewModel.cs" />
     <Compile Include="UI\ModelType.cs" />
+    <Compile Include="UI\WidgetSelectionWindow.xaml.cs">
+      <DependentUpon>WidgetSelectionWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Templates\KendoScaffolder\Chart\Controllers\ChartController.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolder\Chart\Controllers\ImportsChartController.include.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolder\Chart\Views\ChartLocalDataView.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolder\Chart\Views\ChartRemoteDataView.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolder\Chart\Views\ImportsChartView.include.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Templates\KendoScaffolder\Grid\Controllers\AjaxBatchController.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -113,7 +155,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\ChartConfigurationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\GridConfigurationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WidgetSelectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -138,6 +188,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ScaffolderIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\chart-icon.png" />
+    <Content Include="Resources\Images\scheduler-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
