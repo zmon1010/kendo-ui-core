@@ -18872,6 +18872,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <body-content>empty</body-content>
 
         <attribute>
+            <description>If enabled, the editor renders a resize handle to allow users to resize it.</description>
+            <name>content</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>The maximum height that the editor can be resized to.</description>
             <name>max</name>
             <rtexprvalue>true</rtexprvalue>
@@ -18882,6 +18888,12 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <name>min</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
+        </attribute>
+        <attribute>
+            <description>If resizable is set to true the widget will detect changes in the viewport width and will hide the overflowing controls in the tool overflow popup.</description>
+            <name>toolbar</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
 
     </tag>
@@ -19072,12 +19084,6 @@ false for this, the widget will update only when ENTER is pressed.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Allows customization of "Apply" / "Cancel" labels.</description>
-            <name>messages</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
-        </attribute>
-        <attribute>
             <description>Specifies whether we should display the opacity slider to allow
 selection of transparency.</description>
             <name>opacity</name>
@@ -19104,6 +19110,28 @@ current color and the input field.</description>
         </attribute>
         <dynamic-attributes>true</dynamic-attributes>
     </tag>
+
+    <tag>
+        <description>Allows customization of "Apply" / "Cancel" labels.</description>
+        <name>flatColorPicker-messages</name>
+        <tag-class>com.kendoui.taglib.flatcolorpicker.MessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Allows customization of "Apply" label.</description>
+            <name>apply</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Allows customization of "Cancel" label.</description>
+            <name>cancel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
 
 
     <tag>
@@ -20202,6 +20230,12 @@ The grid uses same layout for both phone and tablet.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>If set to true and current view contains no records, message similar to "No records available" will be displayed. By default this option is disabled.</description>
+            <name>noRecords</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>If set to true the grid will display a pager. By default paging is disabled.Can be set to a JavaScript object which represents the pager configuration.</description>
             <name>pageable</name>
             <rtexprvalue>true</rtexprvalue>
@@ -20327,7 +20361,7 @@ and the string value will be passed as an argument to a kendo.template() functio
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the grid filter menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the grid filter menu is initialized, when it is opened for the first time.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>filterMenuInit</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -20595,7 +20629,8 @@ is displayed in the column header cell.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>The width in pixels below which the column will become hidden.</description>
+            <description>The pixel screen width below which the column will be hidden. The setting takes precedence over the hidden setting,
+so the two should not be used at the same time.</description>
             <name>minScreenWidth</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -21343,6 +21378,12 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
         <tag-class>com.kendoui.taglib.grid.MessagesTag</tag-class>
         <body-content>JSP</body-content>
 
+        <attribute>
+            <description>Defines the text of the "noRecords" option that is rendered when no records are available in current view. The "noRecords" options should be set to true.</description>
+            <name>noRecords</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -21407,6 +21448,29 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
 
 
     <tag>
+        <description>If set to true and current view contains no records, message similar to "No records available" will be displayed. By default this option is disabled.</description>
+        <name>grid-noRecords</name>
+        <tag-class>com.kendoui.taglib.grid.NoRecordsTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The template which is rendered when current view contains no records.</description>
+            <name>template</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The template which is rendered when current view contains no records.</description>
+        <name>grid-noRecords-template</name>
+        <tag-class>com.kendoui.taglib.grid.NoRecordsTemplateFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
         <description>If set to true the grid will display a pager. By default paging is disabled.Can be set to a JavaScript object which represents the pager configuration.</description>
         <name>grid-pageable</name>
         <tag-class>com.kendoui.taglib.grid.PageableTag</tag-class>
@@ -21443,7 +21507,9 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
             <type>float</type>
         </attribute>
         <attribute>
-            <description>If set to true the pager will display a DropDownList which allows the user to pick a page size. By default the page size DropDownList is not displayed.Can be set to an array with the available page sizes.</description>
+            <description>If set to true the pager will display a drop-down which allows the user to pick a page size.
+By default the page size drop-down is not displayed.Can be set to an array of predefined page sizes to override the default list.
+A special all value is supported. It sets the page size to the total number of records.If a pageSize setting is provided for the data source then this value will be selected initially.</description>
             <name>pageSizes</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -21846,7 +21912,7 @@ This class can be used to obtain reference to the button after Grid initializati
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the grid filter menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the grid filter menu is initialized, when it is opened for the first time.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>grid-filterMenuInit</name>
         <tag-class>com.kendoui.taglib.grid.FilterMenuInitFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -21934,7 +22000,7 @@ the horizontal one is 60px.</description>
             <description>The margin of the gauge area.</description>
             <name>margin</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
+            <type>float</type>
         </attribute>
         <attribute>
             <description>The width of the gauge area.  By default the vertical gauge is 60px and
@@ -24982,7 +25048,9 @@ top takes precedence over bottom and left takes precedence over right.</descript
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>Displays a list with predefined page sizes. An array of values to be displayed can be provided. If pageSize option is provided for DataSource then this pageSize value will be automatically selected in created selectbox.</description>
+            <description>If set to true the pager will display a drop-down which allows the user to pick a page size.
+By default the page size drop-down is not displayed.Can be set to an array of predefined page sizes to override the default list.
+A special all value is supported. It sets the page size to the total number of records.If a pageSize setting is provided for the data source then this value will be selected initially.</description>
             <name>pageSizes</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -25019,6 +25087,12 @@ top takes precedence over bottom and left takes precedence over right.</descript
         <tag-class>com.kendoui.taglib.pager.MessagesTag</tag-class>
         <body-content>empty</body-content>
 
+        <attribute>
+            <description>The text displayed for the item that represents the allPages option when allPages is enabled.</description>
+            <name>allPages</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
         <attribute>
             <description>The pager info text. Uses kendo.format.Contains three placeholders:
 - {0} - the first data item index
@@ -26089,7 +26163,7 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The underlying value of the ProgressBar.</description>
+            <description>The underlying value of the ProgressBar. It should be a number or false. Setting the value to false will set the state of the ProgressBar to indeterminate.</description>
             <name>value</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
@@ -27097,7 +27171,7 @@ That way all users would see the same dates and times no matter their configured
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>Fired when the user clicks the "destroy" button.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <description>Fired when the user performs "destroy" action.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>remove</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -28375,7 +28449,7 @@ If the developer wants to control the day and month order then one needs to defi
         <body-content>JSP</body-content>
     </tag>
     <tag>
-        <description>Fired when the user clicks the "destroy" button.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <description>Fired when the user performs "destroy" action.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>scheduler-remove</name>
         <tag-class>com.kendoui.taglib.scheduler.RemoveFunctionTag</tag-class>
         <body-content>JSP</body-content>
@@ -28559,7 +28633,7 @@ tick labels.</description>
             <description>Selector which determines if items from the current Sortable widget can be accepted from another Sortable container(s). The connectWith option describes one way relationship, if the developer wants a two way connection then the connectWith option should be set on both widgets.</description>
             <name>connectWith</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>Selector that determines the container to which boundaries the hint movement will be constrained.</description>
@@ -40082,7 +40156,7 @@ A fade animation is highly recommended with any of the non-default tab position 
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Triggered after a tab is being made visible and its animation complete. Before Q2 2014 this event was invoked after tab show, but before the end of the animation.</description>
+            <description>Triggered after a tab is being made visible and its animation complete. Before Q2 2014 this event was invoked after tab show, but before the end of the animation. This event is triggered only for tabs with associated content.</description>
             <name>activate</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -41383,6 +41457,13 @@ is displayed in the column header cell.</description>
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>The pixel screen width below which the column will be hidden. The setting takes precedence over the hidden setting,
+so the two should not be used at the same time.</description>
+            <name>minScreenWidth</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>If set to true the user can click the column header and sort the treelist by the column field when sorting is enabled. If set to false sorting will
 be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.</description>
             <name>sortable</name>
@@ -41608,7 +41689,7 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
         <description>If set to true the user can filter the data source using the treelist filter menu. Filtering is disabled by default.Can be set to a JavaScript object which represents the filter menu configuration.</description>
         <name>treeList-filterable</name>
         <tag-class>com.kendoui.taglib.treelist.FilterableTag</tag-class>
-        <body-content>empty</body-content>
+        <body-content>JSP</body-content>
 
         <attribute>
             <description>If set to true the filter menu allows the user to input a second criteria.</description>
@@ -41857,6 +41938,76 @@ units are "mm", "cm", "in" and "pt" (default).</description>
 
     </tag>
 
+    <tag>
+        <description>The text messages displayed in the filter menu. Use it to customize or localize the filter menu messages.</description>
+        <name>treeList-filterable-messages</name>
+        <tag-class>com.kendoui.taglib.treelist.FilterableMessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The text of the option which represents the "and" logical operation.</description>
+            <name>and</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the cancel button in the filter menu header (available in mobile mode only).</description>
+            <name>cancel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the button which clears the filter.</description>
+            <name>clear</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the button which applies the filter.</description>
+            <name>filter</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the information message on the top of the filter menu.</description>
+            <name>info</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the radio button for false values. Displayed when filtering Boolean fields.</description>
+            <name>isFalse</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the radio button for true values. Displayed when filtering Boolean fields.</description>
+            <name>isTrue</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the operator item in filter menu (available in mobile mode only).</description>
+            <name>operator</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the option which represents the "or" logical operation.</description>
+            <name>or</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the DropDownList displayed in the filter menu for columns whose values option is set.</description>
+            <name>selectValue</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
 
 
     <tag>
@@ -42025,7 +42176,7 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>The default colors for the treemap tiles. When all colors are used, new colors are pulled from the start again.</description>
+            <description>The default colors for the treemap tiles. When all colors are used, new colors are pulled from the start again. Can be set to array of specific colors or array of color ranges.</description>
             <name>colors</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
@@ -42165,8 +42316,7 @@ If an array, each level uses the field that is at the same index in the array, o
         </attribute>
         <attribute>
             <description>Indicates whether the child DataSources should be fetched lazily when parent groups get expanded.
-Setting this to false causes all child DataSources to be loaded at initialization time.
-Note: when initializing the widget from an array (rather than from a HierarchicalDataSource instance), this option defaults to false, rather than true.</description>
+Setting this to false causes all child DataSources to be loaded at initialization time.</description>
             <name>loadOnDemand</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
@@ -42528,12 +42678,6 @@ Upload may be re-enabled via enable().</description>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description>List of files to be initially rendered in the Upload widget files list.</description>
-            <name>files</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
-        </attribute>
-        <attribute>
             <description>Enables (true) or disables (false) the ability to select multiple files.
 If false, users will be able to select only one file at a time. Note: This option does not
 limit the total number of uploaded files in an asynchronous configuration.</description>
@@ -42669,6 +42813,41 @@ This option will be ignored if the browser doesn't support File API.</descriptio
             <type>boolean</type>
         </attribute>
 
+    </tag>
+
+
+
+    <tag>
+        <description>List of files to be initially rendered in the Upload widget files list.</description>
+        <name>upload-files</name>
+        <tag-class>com.kendoui.taglib.upload.FilesTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+
+    <tag>
+        <description>List of files to be initially rendered in the Upload widget files list.</description>
+        <name>upload-file</name>
+        <tag-class>com.kendoui.taglib.upload.FileTag</tag-class>
+
+        <body-content>empty</body-content>
+        <attribute>
+            <description>The extension of the initial file.</description>
+            <name>extension</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The name of the initial file.</description>
+            <name>name</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The size of the initial file.</description>
+            <name>size</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
     </tag>
 
 
@@ -42858,7 +43037,7 @@ Note that this does not constrain the window dragging within the given element.<
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>Explicitly states whether content iframe should be created.</description>
+            <description>Explicitly states whether a content iframe should be created. For more information, please read Using iframes.</description>
             <name>iframe</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
