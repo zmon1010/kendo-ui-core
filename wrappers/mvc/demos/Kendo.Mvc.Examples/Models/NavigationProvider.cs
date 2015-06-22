@@ -23,6 +23,7 @@ namespace Kendo.Mvc.Examples.Models
                 { "mobile-forms", "Forms"},
                 { "mobile-layout", "Layout"},
                 { "mobile-listview", "ListView"},
+                { "mobile-styling", "Styling"},
                 { "mobile-tabstrip", "TabStrip"},
                 { "mobile-view", "View"},
                 { "modalview", "ModalView"},
