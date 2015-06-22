@@ -186,6 +186,12 @@
             var col = rel & 1 ? this.col - acol : this.col;
             return new CellRef(row, col, rel)
                 .setSheet(this.sheet, this.hasSheet());
+        },
+        height: function() {
+            return 1;
+        },
+        width: function() {
+            return 1;
         }
     });
 

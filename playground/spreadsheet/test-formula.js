@@ -588,6 +588,8 @@ fillElements({
 
         B7: '=vlookup(2, A1:C3, 3, false)',
         B6: '=sum(a1:choose(2, b1, b2, b3))',
+        B8: '=offset(B6, -2, -1)',
+        C6: '=choose(A1:B2, "one", "two", "three", "four", "five", "six")',
 
         H1: 1, H2: 2, H3: 3, H4: 4, H5: 5, H6: 6,
         H8: '=match(3, h1:h6)',
@@ -601,11 +603,18 @@ fillElements({
 
         J1: "foo", J2: "bar", J3: "baz", J4: "asd", J5: "qwe", J6: "zxc",
         J8: '=match("baz", J1:J6, 0)',
+        J9: '=hlookup(4, A1:C3, 3)',
+        J10: '=index(A1:C3, 2)',
 
         // XXX: Google Sheets doesn't parse this, should we err?
         // looks legit to me, if there's anything sane in Excel.
         B17: '={ A1:B3, C1:C3; -{ 1, 2, 3 }% } + A2',
         F15: '={ { 1, 2; 3, 4 }; 5, 6 }',
+
+        C9: '=address(1, 1)',
+        C10: '=column(B1:D3)',
+        C11: '=row(B3:D6)',
+        C12: '=transpose(A1:C2)',
 
         //E5: "=sum(A1:C3)",
         // E5: "=B2",
@@ -620,12 +629,12 @@ fillElements({
         A1: 'Dept',  B1: 'Employees', C1: 'Criteria',
         A2: 'A',     B2: 2,           C2: 'A',
         A3: 'B',     B3: 4,           C3: 'B',
-        A4: 'C',     B4: 3,             
-        A5: 'A',     B5: 3,             
-        A6: 'B',     B6: 3,             
-        A7: 'C',     B7: 2,             
-        A8: 'A',     B8: 4,             
-        A9: 'C',     B9: 3,             
+        A4: 'C',     B4: 3,
+        A5: 'A',     B5: 3,
+        A6: 'B',     B6: 3,
+        A7: 'C',     B7: 2,
+        A8: 'A',     B8: 4,
+        A9: 'C',     B9: 3,
 
         D1: '=SUM(IF((A2:A9="A")+(A2:A9="B"),B2:B9,0))',
         D2: '=SUM(IF(A2:A9={"A","B"},B2:B9,0))',

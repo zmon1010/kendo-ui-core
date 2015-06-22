@@ -75,7 +75,7 @@
     defineFunction("count", function(callback, args){
         var count = 0;
         this.cellValues(args).forEach(function(val){
-            if (typeof val == "number" || val instanceof Date) {
+            if (typeof val == "number") {
                 count++;
             }
         });
@@ -329,31 +329,23 @@
 
     /* -----[ lookup functions ]----- */
 
-    defineFunction("address", function(callback, args){
-        if (args.length < 2 || args.length > 5) {
-            return this.error(new CalcError("N/A"));
-        }
-        var row = args[0] - 1, col = args[1] - 1, abs = args[2] || 1, a1 = true, sheet = args[4];
-        if (args.length > 3) {
-            a1 = args[3];
-        }
+    defineFunction("address", function(row, col, abs, a1, sheet){
         // by some lucky coincidence, we get the corret `rel` value by just subtracting 1 from the
         // abs argument
-        var cell = new CellRef(row, col, abs - 1);
+        var cell = new CellRef(row - 1, col - 1, abs - 1);
         if (sheet) {
             cell.setSheet(sheet, true);
         }
-        if (a1) {
-            callback(cell.print(0, 0));
-        } else {
-            callback(cell.print());
-        }
-    });
+        return a1 ? cell.print(0, 0) : cell.print();
+    }).args([
+        [ "row", "number++" ],
+        [ "col", "number++" ],
+        [ "abs", [ "or", [ "null", 1 ], [ "values", 1, 2, 3, 4 ]]],
+        [ "a1", [ "or", [ "null", true ], "boolean" ]],
+        [ "sheet", [ "or", "null", "string" ]]
+    ]);
 
-    defineFunction("areas", function(callback, args){
-        if (args.length != 1 || !(args[0] instanceof Ref)) {
-            return this.error(new CalcError("N/A"));
-        }
+    defineFunction("areas", function(ref){
         var count = 0;
         (function loop(x){
             if (x instanceof CellRef || x instanceof RangeRef) {
@@ -362,70 +354,58 @@
                 x.refs.forEach(loop);
             }
             // XXX: NameRef if we add support
-        })(args[0]);
-        callback(count);
-    });
+        })(ref);
+        return count;
+    }).args([
+        [ "ref", "ref" ]
+    ]);
 
-    defineFunction("choose", function(callback, args){
-        if (args.length < 2) {
-            return this.error(new CalcError("N/A"));
-        }
-        callback(runtime.arrayHandler1(function(index){
-            if (index < 1 || index >= args.length) {
+    defineFunction("choose", function(index){
+        var args = arguments;
+        return runtime.arrayHandler1(function(index){
+            if (index >= args.length) {
                 return new CalcError("N/A");
             } else {
                 return args[index];
             }
-        }).call(this, args[0]));
-    });
+        }).call(this, index);
+    }).args([
+        [ "index", [ "or", "matrix", "number++" ]],
+        [ "values", [ "...", "any*" ]]
+    ]);
 
-    defineFunction("column", function(callback, args){
-        var ref = args[0];
-        if (args.length > 1 || (args.length == 1 && !(ref instanceof CellRef || ref instanceof RangeRef))) {
-            return this.error(new CalcError("N/A"));
-        }
+    defineFunction("column", function(ref){
         if (!ref) {
-            callback(this.col + 1);
+            return this.col + 1;
         }
-        else if (ref instanceof CellRef) {
-            callback(ref.col + 1);
+        if (ref instanceof CellRef) {
+            return ref.col + 1;
         }
-        else {
-            callback(this.asMatrix(ref).mapCol(function(col){
-                return col + ref.topLeft.col + 1;
-            }));
-        }
-    });
+        return this.asMatrix(ref).mapCol(function(col){
+            return col + ref.topLeft.col + 1;
+        });
+    }).args([
+        [ "ref", [ "or", "area", "null" ]]
+    ]);
 
-    defineFunction("columns", function(callback, args){
-        var m;
-        if (args.length != 1 || !(m = this.asMatrix(args[0]))) {
-            return this.error(new CalcError("N/A"));
-        }
-        callback(m.width);
-    });
+    defineFunction("columns", function(m){
+        return m.width;
+    }).args([
+        [ "ref", "matrix" ]
+    ]);
 
-    defineFunction("formulatext", function(callback, args){
-        var m;
-        if (args.length != 1 || !((m = args[0]) instanceof Ref)) {
-            return this.error(new CalcError("N/A"));
-        }
-        var cell = this.ss.getRefCells(m)[0]; // XXX: overkill, but oh well.
+    defineFunction("formulatext", function(ref){
+        var cell = this.ss.getRefCells(ref)[0]; // XXX: overkill, but oh well.
         if (!cell.formula) {
-            return this.error(new CalcError("N/A"));
+            return new CalcError("N/A");
         }
-        callback(cell.formula.print(cell.row, cell.col));
-    });
+        return cell.formula.print(cell.row, cell.col);
+    }).args([
+        [ "ref", "ref" ]
+    ]);
 
-    defineFunction("hlookup", function(callback, args){
-        if (args.length < 3 || args.length > 4) {
-            return this.error(new CalcError("N/A"));
-        }
-        var value = args[0], range = args[1], row = args[2] - 1, approx = true;
-        if (args.length == 4) {
-            approx = args[3];
-        }
-        var m = this.asMatrix(range), resultCol = null;
+    defineFunction("hlookup", function(value, m, row, approx){
+        var resultCol = null;
         m.eachCol(function(col){
             var data = m.get(0, col);
             if (approx) {
@@ -439,81 +419,75 @@
             }
         });
         if (resultCol == null) {
-            return this.error(new CalcError("N/A"));
+            return new CalcError("N/A");
         }
-        callback(m.get(row, resultCol));
-    });
+        return m.get(row - 1, resultCol);
+    }).args([
+        [ "value", "any" ],
+        [ "range", "matrix" ],
+        [ "row", "number++" ],
+        [ "approx", [ "or", "boolean", [ "null", true ]]]
+    ]);
 
-    defineFunction("index", function(callback, args){
-        var m = this.asMatrix(args[0]), row = args[1], col = args[2];
-        if (!m || arguments.length > 3 || (row == null && col == null)) {
-            return this.error(new CalcError("N/A"));
+    defineFunction("index", function(m, row, col){
+        if (row == null && col == null) {
+            return new CalcError("N/A");
         }
         if (m.width > 1 && m.height > 1) {
             if (row != null && col != null) {
-                return callback(m.get(row - 1, col - 1));
+                return m.get(row - 1, col - 1);
             }
             if (row == null) {
-                return callback(m.mapRow(function(row){
+                return m.mapRow(function(row){
                     return m.get(row, col - 1);
-                }));
+                });
             }
             if (col == null) {
-                return callback(m.mapCol(function(col){
+                return m.mapCol(function(col){
                     return m.get(row - 1, col);
-                }));
+                });
             }
         }
         if (m.width == 1) {
-            return callback(m.get(row - 1, 0));
+            return m.get(row - 1, 0);
         }
         if (m.height == 1) {
-            return callback(m.get(0, col - 1));
+            return m.get(0, col - 1);
         }
-        this.error(new CalcError("REF"));
-    });
+        return new CalcError("REF");
+    }).args([
+        [ "range", "matrix" ],
+        [ "row", [ "or", "number++", "null" ]],
+        [ "col", [ "or", "number++", "null" ]]
+    ]);
 
-    // XXX: does more work than needed
-    defineFunction("indirect", function(callback, args){
-        this.cellValues(args, function(thing){
-            try {
-                if (typeof thing != "string") {
-                    throw 1;
-                }
-                var ref = calc.parseFormula(this.sheet, this.row, this.col, thing);
-                if (!(ref.ast instanceof Ref)) {
-                    throw 1;
-                }
-                ref = ref.ast.absolute(this.row, this.col);
-                this.resolveCells([ ref ], function(){
-                    callback(ref);
-                });
-            } catch(ex) {
-                this.error(new CalcError("REF"));
-            }
+    // INDIRECT is defined in async-style so that it can resolve the target cell(s) before passing
+    // over the result.
+    defineFunction("indirect", function(callback, thing){
+        // XXX: does more work than needed
+        var ref = calc.parseFormula(this.sheet, this.row, this.col, thing);
+        if (!(ref.ast instanceof Ref)) {
+            return this.error(new CalcError("REF"));
+        }
+        ref = ref.ast.absolute(this.row, this.col);
+        this.resolveCells([ ref ], function(){
+            callback(ref);
         });
-    });
+    }).argsAsync([
+        [ "thing", "string" ]
+    ]);
 
     // XXX: LOOKUP.  seems to be deprecated in favor of HLOOKUP/VLOOKUP
 
     // XXX: double-check this one.
-    defineFunction("match", function(callback, args){
-        var val = args[0], m = this.asMatrix(args[1]), type = args[2];
-        if (!m || args.length > 3 || (m.width > 1 && m.height > 1)) {
-            return this.error(new CalcError("N/A"));
-        }
+    defineFunction("match", function(val, m, type){
         var index = 1, cmp;
-        if (type == null) {
-            type = 1;
-        }
         if (type === 0) {
             cmp = parseComparator(val);
         } else if (type === -1) {
             cmp = parseComparator("<=" + val);
         } else if (type === 1) {
             cmp = parseComparator(">=" + val);
-        } else {
-            return this.error(new CalcError("N/A"));
         }
         if (m.each(function(el, row, col){
             if (cmp(el)) {
@@ -524,25 +498,73 @@
             }
             index++;
         }) && index > 0) {
-            callback(index);
+            return index;
         } else {
-            return this.error(new CalcError("N/A"));
+            return new CalcError("N/A");
         }
-    });
+    }).args([
+        [ "value", "any" ],
+        [ "range", "matrix" ],
+        [ "type", [ "or",
+                    [ "values", -1, 0, 1 ],
+                    [ "null", 1 ]]]
+    ]);
 
-    defineFunction("offset", function(callback, args){
-        
-    });
+    defineFunction("offset", function(ref, rows, cols, height, width){
+        var topLeft = (ref instanceof CellRef ? ref : ref.topLeft).clone();
+        topLeft.row += rows;
+        topLeft.col += cols;
+        if (topLeft.row < 0 || topLeft.col < 0) {
+            return new CalcError("VALUE");
+        }
+        if (height == null) {
+            height = ref.height();
+        }
+        if (width == null) {
+            width = ref.width();
+        }
+        if (height > 1 || width > 1) {
+            return new RangeRef(topLeft, new CellRef(topLeft.row + height - 1,
+                                                     topLeft.col + width - 1))
+                .setSheet(ref.sheet, ref.hasSheet());
+        }
+        return topLeft;
+    }).args([
+        [ "ref", "area" ],
+        [ "rows", "number" ],
+        [ "cols", "number" ],
+        [ "height", [ "or", "number++", "null" ]],
+        [ "width", [ "or", "number++", "null" ]]
+    ]);
 
-    defineFunction("vlookup", function(callback, args){
-        if (args.length < 3 || args.length > 4) {
-            return this.error(new CalcError("N/A"));
+    defineFunction("row", function(ref){
+        if (!ref) {
+            return this.row + 1;
         }
-        var value = args[0], range = args[1], col = args[2] - 1, approx = true;
-        if (args.length == 4) {
-            approx = args[3];
+        if (ref instanceof CellRef) {
+            return ref.row + 1;
         }
-        var m = this.asMatrix(range), resultRow = null;
+        return this.asMatrix(ref).mapRow(function(row){
+            return row + ref.topLeft.row + 1;
+        });
+    }).args([
+        [ "ref", [ "or", "area", "null" ]]
+    ]);
+
+    defineFunction("rows", function(m){
+        return m.height;
+    }).args([
+        [ "ref", "matrix" ]
+    ]);
+
+    defineFunction("transpose", function(m){
+        return m.transpose();
+    }).args([
+        [ "range", "matrix" ]
+    ]);
+
+    defineFunction("vlookup", function(value, m, col, approx){
+        var resultRow = null;
         m.eachRow(function(row){
             var data = m.get(row, 0);
             if (approx) {
@@ -556,10 +578,15 @@
             }
         });
         if (resultRow == null) {
-            return this.error(new CalcError("N/A"));
+            return new CalcError("N/A");
         }
-        callback(m.get(resultRow, col));
-    });
+        return m.get(resultRow, col - 1);
+    }).args([
+        [ "value", "any" ],
+        [ "range", "matrix" ],
+        [ "col", "number++" ],
+        [ "approx", [ "or", "boolean", [ "null", true ]]]
+    ]);
 
     /* -----[ Other ]----- */
 

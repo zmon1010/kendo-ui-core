@@ -8,7 +8,7 @@
 
     // WARNING: removing the following jshint declaration and turning
     // == into === to make JSHint happy will break functionality.
-    /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true, validthis:true */
+    /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true, validthis:true, -W054 */
     /* global console */
 
     var calc = {};
@@ -119,6 +119,13 @@
                 return f.apply(this, ret);
             }
             return ret;
+        },
+
+        force: function(val) {
+            if (val instanceof Ref) {
+                return this.ss.getData(val);
+            }
+            return val;
         },
 
         forNumbers: function(a, f) {
@@ -296,6 +303,13 @@
         },
         toString: function() {
             return JSON.stringify(this.data);
+        },
+        transpose: function() {
+            var m = new Matrix(this.context);
+            this.each(function(el, row, col){
+                m.set(col, row, el);
+            });
+            return m;
         }
     });
 
@@ -690,6 +704,101 @@
 
     };
 
+    function compileArgumentChecks(args) {
+        var forced, out = "var i = 0, v, m; try { ";
+        out += args.map(comp).join("");
+        out += "if (i < args.length) throw new CalcError('N/A'); ";
+        out += "} catch(ex) { return this.error(ex); } ";
+        return out;
+
+        function comp(x) {
+            var name = x[0];
+            var type = x[1];
+            var isMany = Array.isArray(type) && /^\.\.\.?$/.test(type[0]) && type[0];
+            var code = "";
+            if (isMany) {
+                code += isMany == "..." ? "do { " : "while (i < args.length) { ";
+                type = type.slice(1);
+            } else {
+                type = [ type ];
+            }
+            for (var i = 0; i < type.length; ++i) {
+                code += "v = args[i++]; if (v instanceof CalcError) throw v; "
+                    + typeCheck(type[i]) + "xargs.push(v); ";
+            }
+            if (isMany) {
+                code += "} ";
+                if (isMany == "...") {
+                    code += "while (i < args.length); ";
+                }
+            }
+            return code;
+        }
+
+        function force() {
+            if (forced) {
+                return "v";
+            }
+            forced = true;
+            return "(v = this.force(v))";
+        }
+
+        function typeCheck(type) {
+            forced = false;
+            return "if (!(" + cond(type) + ")) throw new CalcError('VALUE'); ";
+        }
+
+        function cond(type) {
+            if (Array.isArray(type)) {
+                if (type[0] == "or") {
+                    return "(" + type.slice(1).map(cond).join(") || (") + ")";
+                }
+                if (type[0] == "values") {
+                    return "(" + type.slice(1).map(function(val){
+                        return force() + " === " + JSON.stringify(val);
+                    }).join(") || (") + ")";
+                }
+                if (type[0] == "null") {
+                    return "(" + cond("null") + " ? (v = " + JSON.stringify(type[1]) + ", true) : false)";
+                }
+                throw new Error("Unknown array type condition: " + type[0]);
+            }
+            if (type == "number") {
+                return "(typeof " + force() + " == 'number')";
+            }
+            if (type == "number+") {
+                return "(typeof " + force() + " == 'number' && v >= 0)";
+            }
+            if (type == "number++") {
+                return "(typeof " + force() + " == 'number' && v > 0)";
+            }
+            if (type == "string") {
+                return "(typeof " + force() + " == 'string')";
+            }
+            if (type == "boolean") {
+                return "(typeof " + force() + " == 'boolean')";
+            }
+            if (type == "matrix") {
+                return "((m = this.asMatrix(v)) ? (v = m) : false)";
+            }
+            if (type == "ref") {
+                return "(v instanceof kendo.spreadsheet.Ref)";
+            }
+            if (type == "area") {
+                return "(v instanceof kendo.spreadsheet.CellRef || v instanceof kendo.spreadsheet.RangeRef)";
+            }
+            if (type == "null") {
+                return "(" + force() + " == null)";
+            }
+            if (type == "any") {
+                return "(" + force() + ", i <= args.length)";
+            }
+            if (type == "any*") {
+                return "(i <= args.length)";
+            }
+        }
+    }
+
     /* -----[ exports ]----- */
 
     exports.CalcError = CalcError;
@@ -698,7 +807,39 @@
     exports.arrayHandler2 = arrayHandler2;
 
     exports.defineFunction = function(name, func) {
-        FUNCS[name.toLowerCase()] = func;
+        name = name.toLowerCase();
+        FUNCS[name] = func;
+        return {
+            args: function(args) {
+                var code = compileArgumentChecks(args);
+                code = [
+                    "return function " + name.replace(/\./g, "_") + "(callback, args) { ",
+                    "'use strict'; var xargs = []; ",
+                    code,
+                    "var v = handler.apply(this, xargs); ",
+                    "if (v instanceof CalcError) this.error(v); else callback(v); ",
+                    "};"
+                ].join("");
+                var f = new Function("handler", "CalcError", code);
+                FUNCS[name] = f(func, CalcError);
+                console.log(FUNCS[name].toString());
+                return this;
+            },
+            argsAsync: function(args) {
+                var code = compileArgumentChecks(args);
+                code = [
+                    "return function " + name.replace(/\./g, "_") + "(callback, args) { ",
+                    "'use strict'; var xargs = [ callback ]; ",
+                    code,
+                    "handler.apply(this, xargs); ",
+                    "};"
+                ].join("");
+                var f = new Function("handler", "CalcError", code);
+                FUNCS[name] = f(func, CalcError);
+                //console.log(FUNCS[name].toString());
+                return this;
+            }
+        };
     };
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
