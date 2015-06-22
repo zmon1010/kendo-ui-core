@@ -85,6 +85,10 @@ public class TabStripTag extends WidgetWithItemsTag /* interfaces */implements I
 
     }
 
+    public void setScrollable(com.kendoui.taglib.tabstrip.ScrollableTag value) {
+        setProperty("scrollable", value);
+    }
+
     public void setActivate(ActivateFunctionTag value) {
         setEvent("activate", value.getBody());
     }
@@ -183,6 +187,14 @@ public class TabStripTag extends WidgetWithItemsTag /* interfaces */implements I
 
     public void setNavigatable(boolean value) {
         setProperty("navigatable", value);
+    }
+
+    public boolean getScrollable() {
+        return (boolean)getProperty("scrollable");
+    }
+
+    public void setScrollable(boolean value) {
+        setProperty("scrollable", value);
     }
 
     public java.lang.String getTabPosition() {
