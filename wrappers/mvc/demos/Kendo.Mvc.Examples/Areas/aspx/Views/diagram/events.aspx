@@ -71,6 +71,9 @@
             .Add("onAdd")
             .Remove("onRemove")
             .Cancel("onCancel")
+            .DragStart("onDragStart")
+            .Drag("onDrag")
+            .DragEnd("onDragEnd")
         )
 %>
 <div class="box">
@@ -142,6 +145,18 @@
         kendoConsole.log("Mouse leave: " + elementText(e.item));
     }
 
+    function onDragStart(e) {
+        kendoConsole.log("Drag start " + draggedElementsTexts(e));
+    }
+
+    function onDrag(e) {
+        kendoConsole.log("Drag " + draggedElementsTexts(e));
+    }
+
+    function onDragEnd(e) {
+        kendoConsole.log("Drag end " + draggedElementsTexts(e));
+    }
+
     var diagram = kendo.dataviz.diagram;
     var Shape = diagram.Shape;
     var Connection = diagram.Connection;
@@ -160,6 +175,22 @@
             var targetElement = target.shape || target;
             text = elementText(sourceElement) + " - " + elementText(targetElement);
         }
+        return text;
+    }
+
+    function draggedElementsTexts(e) {
+        var text;
+        var elements;
+        if (e.shapes.length) {
+            text = "shapes: ";
+            elements = e.shapes;
+        } else {
+            text = "connections: ";
+            elements = e.connections;
+        }
+        text += $.map(elements, function (element) {
+            return elementText(element);
+        }).join(",");
         return text;
     }
 

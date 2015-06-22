@@ -83,6 +83,18 @@
 		kendoConsole.log("Mouse leave: " + elementText(e.item));
 	}
 	
+    function onDragStart(e) {
+        kendoConsole.log("Drag start " + draggedElementsTexts(e));
+    }
+
+    function onDrag(e) {
+        kendoConsole.log("Drag " + draggedElementsTexts(e));
+    }
+
+    function onDragEnd(e) {
+        kendoConsole.log("Drag end " + draggedElementsTexts(e));
+    }
+	
 	var diagram = kendo.dataviz.diagram;
 	var Shape = diagram.Shape;
 	var Connection = diagram.Connection;
@@ -103,6 +115,22 @@
 	    }
 	    return text;
 	}
+	
+    function draggedElementsTexts(e) {
+        var text;
+        var elements;
+        if (e.shapes.length) {
+            text = "shapes: ";
+            elements = e.shapes;
+        } else {
+            text = "connections: ";
+            elements = e.connections;
+        }
+        text += $.map(elements, function (element) {
+            return elementText(element);
+        }).join(",");
+        return text;
+    }
 	
 	function visualTemplate(options) {
 	    var dataviz = kendo.dataviz;
@@ -155,7 +183,10 @@
 	zoomEnd="onZoomEnd"
 	click="onClick"
 	mouseEnter="onMouseEnter"
-	mouseLeave="onMouseLeave">
+	mouseLeave="onMouseLeave"
+	dragStart="onDragStart"
+	drag="onDrag"
+	dragEnd="onDragEnd">
      <kendo:dataSource>
            <kendo:dataSource-transport>
                <kendo:dataSource-transport-create url="${createUrl}" dataType="json" type="POST" contentType="application/json" />
