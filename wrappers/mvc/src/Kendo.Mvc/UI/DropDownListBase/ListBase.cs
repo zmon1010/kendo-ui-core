@@ -14,6 +14,8 @@
 
             DataSource = new DataSource();
 
+            PopupSettings = new UI.PopupSettings();
+
             VirtualSettings = new UI.VirtualSettings();
 
             UrlGenerator = urlGenerator;
@@ -104,6 +106,12 @@
         }
 
         public int? MinLength
+        {
+            get;
+            set;
+        }
+
+        public PopupSettings PopupSettings
         {
             get;
             set;
@@ -208,6 +216,12 @@
             if (MinLength != null)
             {
                 options["minLength"] = MinLength;
+            }
+
+            var popupSettings = PopupSettings.SeriailzeOptions();
+
+            if (popupSettings.Count > 0) {
+                options["popup"] = popupSettings;
             }
 
             if (ValuePrimitive != null)

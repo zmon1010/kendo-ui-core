@@ -272,6 +272,15 @@ namespace Kendo.Mvc.UI.Fluent
             return this as TDropDownBuilder;
         }
 
+        /// <summary>
+        /// Configures the popup settings of the widget.
+        /// </summary>
+        public TDropDownBuilder Popup(Action<PopupSettingsBuilder> popupAction)
+        {
+            popupAction(new PopupSettingsBuilder(Component.PopupSettings));
+
+            return this as TDropDownBuilder;
+        }
 
         public TDropDownBuilder ValuePrimitive(bool valuePrimitive)
         {
