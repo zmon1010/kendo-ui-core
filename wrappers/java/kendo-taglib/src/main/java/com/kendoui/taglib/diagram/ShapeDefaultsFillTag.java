@@ -51,6 +51,10 @@ public class ShapeDefaultsFillTag extends  BaseTag  /* interfaces */ /* interfac
         return "diagram-shapeDefaults-fill";
     }
 
+    public void setGradient(com.kendoui.taglib.diagram.ShapeDefaultsFillGradientTag value) {
+        setProperty("gradient", value);
+    }
+
     public java.lang.String getColor() {
         return (java.lang.String)getProperty("color");
     }

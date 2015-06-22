@@ -12,17 +12,15 @@ import com.kendoui.taglib.BaseTag;
 import javax.servlet.jsp.JspException;
 
 @SuppressWarnings("serial")
-public class ShapeFillTag extends  BaseTag  /* interfaces */ /* interfaces */ {
+public class ShapeDefaultsFillGradientStopTag extends  BaseTag  /* interfaces */ /* interfaces */ {
     
     @Override
     public int doEndTag() throws JspException {
 //>> doEndTag
 
+        ShapeDefaultsFillGradientStopsTag parent = (ShapeDefaultsFillGradientStopsTag)findParentWithClass(ShapeDefaultsFillGradientStopsTag.class);
 
-        ShapeTag parent = (ShapeTag)findParentWithClass(ShapeTag.class);
-
-
-        parent.setFill(this);
+        parent.addStop(this);
 
 //<< doEndTag
 
@@ -48,11 +46,7 @@ public class ShapeFillTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 //>> Attributes
 
     public static String tagName() {
-        return "diagram-shape-fill";
-    }
-
-    public void setGradient(com.kendoui.taglib.diagram.ShapeFillGradientTag value) {
-        setProperty("gradient", value);
+        return "diagram-shapeDefaults-fill-gradient-stop";
     }
 
     public java.lang.String getColor() {
@@ -61,6 +55,14 @@ public class ShapeFillTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 
     public void setColor(java.lang.String value) {
         setProperty("color", value);
+    }
+
+    public float getOffset() {
+        return (float)getProperty("offset");
+    }
+
+    public void setOffset(float value) {
+        setProperty("offset", value);
     }
 
     public float getOpacity() {

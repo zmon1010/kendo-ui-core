@@ -12,6 +12,8 @@ namespace Kendo.Mvc.UI
         {
             //>> Initialization
         
+            Gradient = new DiagramShapeDefaultsFillGradientSettings();
+                
         //<< Initialization
         }
 
@@ -20,6 +22,12 @@ namespace Kendo.Mvc.UI
         public string Color { get; set; }
         
         public double? Opacity { get; set; }
+        
+        public DiagramShapeDefaultsFillGradientSettings Gradient
+        {
+            get;
+            set;
+        }
         
         //<< Fields
 
@@ -37,6 +45,11 @@ namespace Kendo.Mvc.UI
                 json["opacity"] = Opacity;
             }
                 
+            var gradient = Gradient.ToJson();
+            if (gradient.Any())
+            {
+                json["gradient"] = gradient;
+            }
         //<< Serialization
         }
     }
