@@ -427,7 +427,13 @@
             });
             var fill = options.fill;
 
-            this.drawingElement.fill(fill.color, fill.opacity);
+            if (fill.gradient) {
+                var gradient = fill.gradient;
+                var GradientClass = (gradient.type === "radial" ? d.RadialGradient : d.LinearGradient);
+                this.drawingElement.fill(new GradientClass(gradient));
+            } else {
+                this.drawingElement.fill(fill.color, fill.opacity);
+            }
         }
     });
 
@@ -458,10 +464,10 @@
             var options = this.options;
 
             this.drawingElement = new d.Text(defined(options.text) ? options.text : "", new g.Point(), {
-                fill: options.fill,
                 font: options.font
             });
 
+            this._fill();
             this._stroke();
         },
 
@@ -546,17 +552,17 @@
                 if (this._diffNumericOptions(options, [X, Y])) {
                     this._setPosition();
                 }
-                this._drawGradient();
             }
         },
 
         _initPath: function() {
             var options = this.options;
             var drawingElement = this.drawingElement = new d.Path({
-                fill: options.fill,
                 stroke: options.stroke,
                 closed: true
             });
+
+            this._fill();
             this._drawPath();
         },
 
@@ -572,18 +578,6 @@
                 createSegment(width, height),
                 createSegment(0, height)
             ]);
-            this._drawGradient();
-        },
-
-        _drawGradient: function() {
-            var fill = this.options.fill;
-            if(!fill || !fill.gradient) {
-                return;
-            }
-
-            var gradient = fill.gradient;
-            var GradientClass = (gradient.type === "radial" ? d.RadialGradient : d.LinearGradient);
-            this.drawingElement.fill(new GradientClass(gradient));
         }
     });
 
@@ -911,9 +905,10 @@
             var options = this.options;
 
             this.drawingElement = d.Path.parse(options.data || "", {
-                fill: options.fill,
                 stroke: options.stroke
             });
+
+            this._fill();
             this.container.append(this.drawingElement);
             this._createMarkers();
         },
@@ -969,9 +964,10 @@
         _initPath: function() {
             var options = this.options;
             var drawingElement = this.drawingElement = new d.Path({
-                fill: options.fill,
                 stroke: options.stroke
             });
+
+            this._fill();
             this._drawPath();
             this.container.append(drawingElement);
         },
@@ -1030,10 +1026,10 @@
         _initPath: function() {
             var options = this.options;
             this.drawingElement = new d.Path({
-                fill: options.fill,
                 stroke: options.stroke
             });
 
+            this._fill();
             this.container.append(this.drawingElement);
 
             if (options.points) {
@@ -1284,9 +1280,10 @@
             this._center = new g.Point(center.x, center.y);
             this._circle = new g.Circle(this._center, radius);
             this.drawingElement = new d.Circle(this._circle, {
-                fill: options.fill,
                 stroke: options.stroke
             });
+
+            this._fill();
         }
     });
     deepExtend(Circle.fn, AutoSizeableMixin);

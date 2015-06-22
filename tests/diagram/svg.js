@@ -220,6 +220,16 @@
             equal(visual.options.fill.color, redHex);
         });
 
+        test("inits fill gradient", function() {
+            visual = new type({
+                fill: {
+                    gradient: { type: "linear" }
+                }
+            });
+
+            ok(visual.drawingElement.options.fill instanceof d.LinearGradient);
+        });
+
         test("inits stroke color", function() {
             equal(visual.options.stroke.color, greenHex);
         });
@@ -329,6 +339,12 @@
                 ok(false);
             };
             visual.redraw();
+        });
+
+        test("redraws renders fill gradient", function() {
+            visual.redraw({ fill: { gradient: { type: "linear" } } });
+
+            ok(drawingElement.options.fill instanceof d.LinearGradient);
         });
 
         test("redraw sets stroke options", function() {
