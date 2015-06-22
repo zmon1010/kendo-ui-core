@@ -116,7 +116,7 @@
         init: function CellRef(row, col, rel) {
             this.row = row;
             this.col = col;
-            this.rel = rel;
+            this.rel = rel || 0;
         },
         clone: function() {
             return new CellRef(this.row, this.col, this.rel)

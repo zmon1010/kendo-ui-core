@@ -829,7 +829,7 @@
                 ].join("");
                 var f = new Function("handler", "CalcError", code);
                 FUNCS[name] = f(func, CalcError);
-                console.log(FUNCS[name].toString());
+                //console.log(FUNCS[name].toString());
                 return this;
             },
             argsAsync: function(args) {
