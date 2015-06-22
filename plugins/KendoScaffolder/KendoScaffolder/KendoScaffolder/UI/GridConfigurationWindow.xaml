@@ -7,7 +7,7 @@
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              xmlns:vsfx="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.12.0"
              x:Class="KendoScaffolder.UI.GridConfigurationWindow"
-             mc:Ignorable="d" Height="765" Width="800" ResizeMode="NoResize" Title="Add Kendo UI Grid">
+             mc:Ignorable="d" Height="765" Width="800" ResizeMode="NoResize" Title="Telerik ASP.NET MVC Grid">
     <Window.Resources>
         <src:EnumToBooleanConverter x:Key="EnumBooleanConverter" />
     </Window.Resources>

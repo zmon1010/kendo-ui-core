@@ -35,21 +35,10 @@ namespace KendoScaffolder.UI.Models
         }
     }
 
-    public class GridConfigurationViewModel : WidgetConfigurationViewModel
+    public class GridConfigurationViewModel : DataSourceBoundWidgetViewModel
     {
-        //public CodeGenerationContext Context { get; private set; }
-
-        public ModelType SelectedModelType { get; set; }
-        public ModelType SelectedViewModelType { get; set; }
-        public ModelType SelectedDbContextType { get; set; }
         public bool ServerOperation { get; set; }
-        public bool UseViewModel { get; set; }
-
         public string SelectedDataSourceType { get; set; }
-
-        //public string ControllerName { get; set; }
-        //public string ViewName { get; set; }
-
         public bool Editable { get; set; }
         public bool EditableCreate { get; set; }
         public bool EditableUpdate { get; set; }
@@ -83,8 +72,6 @@ namespace KendoScaffolder.UI.Models
         public GridConfigurationViewModel(CodeGenerationContext context)
             : base(context)
         {
-            //Context = context;
-            //ViewName = "Index";
             EditMode = "InLine";
             Scrollable = true;
             FilterMode = GridFilterMode.Menu;
@@ -95,42 +82,6 @@ namespace KendoScaffolder.UI.Models
             SelectedDataSourceType = "Ajax";
             SelectedGridEvents = new List<string>();
             ServerOperation = true;
-        }
-
-        /// <summary>
-        /// This gets all the Model types from the active project.
-        /// </summary>
-        public IEnumerable<ModelType> ModelTypes
-        {
-            get
-            {
-                ICodeTypeService codeTypeService = (ICodeTypeService)Context
-                    .ServiceProvider.GetService(typeof(ICodeTypeService));
-
-                return codeTypeService
-                    .GetAllCodeTypes(Context.ActiveProject)
-                    .Where(codeType => codeType.IsValidWebProjectEntityType())
-                    .OrderBy(codeType => codeType.Name)
-                    .Select(codeType => new ModelType(codeType));
-            }
-        }
-
-        /// <summary>
-        /// This gets all the Model types from the active project.
-        /// </summary>
-        public IEnumerable<ModelType> DbContextTypes
-        {
-            get
-            {
-                ICodeTypeService codeTypeService = (ICodeTypeService)Context
-                    .ServiceProvider.GetService(typeof(ICodeTypeService));
-
-                return codeTypeService
-                    .GetAllCodeTypes(Context.ActiveProject)
-                    .Where(codeType => codeType.IsValidDbContextType())
-                    .OrderBy(codeType => codeType.Name)
-                    .Select(codeType => new ModelType(codeType));
-            }
         }
 
         public IEnumerable<string> DataSourceTypes

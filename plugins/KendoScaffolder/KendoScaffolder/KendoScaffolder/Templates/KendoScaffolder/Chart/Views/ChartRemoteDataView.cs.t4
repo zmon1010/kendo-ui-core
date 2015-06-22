@@ -1,0 +1,37 @@
+﻿﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="ImportsChartView.include.t4" #>
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+#>
+@(Html.Kendo().Chart<<#= ViewDataTypeName #>>()
+      .Name("chart")
+      .Title("<#= ChartTitle #>")
+<#
+if(LegendVisible) {
+#>
+      .Legend(legend => legend.Position(ChartLegendPosition.<#= LegendPosition #>))
+<#
+}
+if(TooltipVisible) {
+#>
+      .Tooltip(tooltip => tooltip.Visible(true))
+<#
+}
+#>
+      .DataSource(ds => ds.Read(read => read.Action("<#= entitySetName #>_Read", "<#= ControllerRootName #>")))
+      .Series(series => {
+<# for (int i = 0; i < SeriesNames.Count; i++) { #>
+            series.<#= SeriesType #>(<# for (int j = 0; j < SeriesConfigs[i].Count; j++) { #><#= 
+                Convert.ToChar(j + 97) #> => <#= Convert.ToChar(j + 97) #>.<#= SeriesConfigs[i][j] #><# if(j < SeriesConfigs[i].Count - 1){ #>,<# } #>
+<#        } #>)<# if(SeriesNames[i] != string.Empty){ #>.Name("<#= SeriesNames[i] #>")<# } #><# if(SeriesColors[i] != string.Empty){ #>.Color("<#= SeriesColors[i] #>")<# } #>;
+<# } #>
+      })
+<#
+if(CategoryAxis != null && CategoryAxis != string.Empty) {
+#>
+      .CategoryAxis(axis => axis.Categories(model => model.<#= CategoryAxis #>))
+<#
+}
+#>
+)

@@ -20,7 +20,7 @@ namespace KendoScaffolder
             displayName: "Kendo UI Scaffolder",
             description: "Generates UI for ASP.NET MVC server-side wrapper widget declarations together with the related Controller action methods.",
             author: "Telerik",
-            version: new Version(2015, 1, 608), //Update version in source.extension.vsixmanifest too!
+            version: new Version(2015, 2, 624), //Update version in source.extension.vsixmanifest too!
             id: typeof(KendoScaffolder).Name,
             icon: ToImageSource(Resources.ScaffolderIcon),
             gestures: new[] { "Controller", "View", "Area" },

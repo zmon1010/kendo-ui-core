@@ -39,7 +39,7 @@
                     </ListViewItem>
                     <ListViewItem Name="WidgetsListViewChartItem">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="/KendoScaffolder;component/Resources/Images/grid-icon.png" Stretch="None" VerticalAlignment="Center"></Image>
+                            <Image Source="/KendoScaffolder;component/Resources/Images/chart-icon.png" Stretch="None" VerticalAlignment="Center"></Image>
                             <TextBlock Margin="10, 0, 0, 0">Kendo UI Chart</TextBlock>
                         </StackPanel>
                     </ListViewItem>
