@@ -14,7 +14,20 @@
             stroke: {
                 width: 0
             },
-            fill: dataItem.ColorScheme
+            fill: {
+                gradient: {
+                    type: "linear",
+                    stops: [{
+                        color: dataItem.colorScheme,
+                        offset: 0,
+                        opacity: 0.5
+                    }, {
+                        color: dataItem.colorScheme,
+                        offset: 1,
+                        opacity: 1
+                    }]
+                }
+            }
         }));
 
         g.append(new dataviz.diagram.TextBlock({
