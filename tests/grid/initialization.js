@@ -1495,6 +1495,25 @@
         equal(grid.thead.find("th").data("kendoFilterMenu").options.values.length, 1);
     });
 
+    test("column title is passed to the filterable if set", function() {
+        $(table).html("<thead><tr><th data-kendo-field='col1'>col1</th></tr></thead><tbody><tr><td>&nbsp;</td></tr></tbody>");
+        var grid = new Grid(table, {
+            filterable: true,
+            columns: [{ values: [{ text: "foo", value: 0 }], title: "column1"}],
+            dataSource: {
+                schema: {
+                    model: {
+                        fields: {
+                            col1: {}
+                        }
+                    }
+                }
+            },
+        });
+
+        equal(grid.thead.find("th").data("kendoFilterMenu").options.title, "column1");
+    });
+
     test("column filterable ui as function", 1, function() {
         $(table).html("<thead><tr><th data-kendo-field='col1'>col1</th></tr></thead><tbody><tr><td>&nbsp;</td></tr></tbody>");
         var grid = new Grid(table, {

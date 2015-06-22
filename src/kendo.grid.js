@@ -5504,6 +5504,7 @@ var __meta__ = {
                                 values: columns[idx].values,
                                 format: columns[idx].format,
                                 closeCallback: closeCallback,
+                                title: columns[idx].title || columns[idx].field,
                                 init: filterInit,
                                 pane: that.pane
                             }
