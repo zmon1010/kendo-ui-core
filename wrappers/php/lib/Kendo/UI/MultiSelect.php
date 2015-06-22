@@ -194,6 +194,16 @@ A zero value means that a request will be made as soon as the user focuses the w
     }
 
     /**
+    * The options that will be used for the popup initialization. For more details about the available options
+refer to Popup documentation.
+    * @param  $value
+    * @return \Kendo\UI\MultiSelect
+    */
+    public function popup($value) {
+        return $this->setProperty('popup', $value);
+    }
+
+    /**
     * Sets the headerTemplate option of the MultiSelect.
     * Specifies a static HTML content, which will be rendered as a header of the popup element.
     * @param string $value The id of the element which represents the kendo template.

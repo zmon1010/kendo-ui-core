@@ -205,6 +205,16 @@ The supported filter values are startswith, endswith and contains.
     }
 
     /**
+    * The options that will be used for the popup initialization. For more details about the available options
+refer to Popup documentation.
+    * @param  $value
+    * @return \Kendo\UI\ComboBox
+    */
+    public function popup($value) {
+        return $this->setProperty('popup', $value);
+    }
+
+    /**
     * If set to true the widget will automatically use the first suggestion as its value.
     * @param boolean $value
     * @return \Kendo\UI\ComboBox

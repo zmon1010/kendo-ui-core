@@ -157,6 +157,16 @@ all data items which begin with the current widget value are displayed in the su
     }
 
     /**
+    * The options that will be used for the popup initialization. For more details about the available options
+refer to Popup documentation.
+    * @param  $value
+    * @return \Kendo\UI\AutoComplete
+    */
+    public function popup($value) {
+        return $this->setProperty('popup', $value);
+    }
+
+    /**
     * The character used to separate multiple values. Empty by default.
     * @param string $value
     * @return \Kendo\UI\AutoComplete

@@ -186,6 +186,16 @@ The supported filter values are startswith, endswith and contains.
     }
 
     /**
+    * The options that will be used for the popup initialization. For more details about the available options
+refer to Popup documentation.
+    * @param  $value
+    * @return \Kendo\UI\DropDownList
+    */
+    public function popup($value) {
+        return $this->setProperty('popup', $value);
+    }
+
+    /**
     * Define the text of the default empty item. If the value is an object, then the widget will use it as a valid data item.
  Note that the optionLabel will not be available if the widget is empty.
     * @param string| $value
