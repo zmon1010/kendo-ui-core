@@ -565,6 +565,17 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
+        /// If set to true the widget will auto-scroll the containing element when the mouse/finger is close to the top/bottom of it.
+        /// </summary>
+        /// <param name="value">The value that configures the autoscroll.</param>
+        public TreeViewBuilder AutoScroll(bool value)
+        {
+            container.AutoScroll = value;
+
+            return this;
+        }
+        
+        /// <summary>
         /// Sets the field of the data item that provides the image URL of the TreeView nodes.
         /// </summary>
         /// <param name="value">The value that configures the dataimageurlfield.</param>

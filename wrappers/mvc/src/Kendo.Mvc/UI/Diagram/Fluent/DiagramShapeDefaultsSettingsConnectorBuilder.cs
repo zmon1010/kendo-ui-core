@@ -22,7 +22,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Fields
         
         /// <summary>
-        /// 
+        /// The connector name.
         /// </summary>
         /// <param name="value">The value that configures the name.</param>
         public DiagramShapeDefaultsSettingsConnectorBuilder<TShapeModel,TConnectionModel> Name(string value)

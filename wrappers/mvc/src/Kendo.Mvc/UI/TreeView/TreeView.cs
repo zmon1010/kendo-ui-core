@@ -48,6 +48,8 @@ namespace Kendo.Mvc.UI
 
 //>> Fields
         
+        public bool? AutoScroll { get; set; }
+        
         public string DataImageUrlField { get; set; }
         
         public string DataSpriteCssClassField { get; set; }
@@ -250,6 +252,11 @@ namespace Kendo.Mvc.UI
 
 //>> Serialization
         
+            if (AutoScroll.HasValue)
+            {
+                json["autoScroll"] = AutoScroll;
+            }
+                
             if (DataImageUrlField.HasValue())
             {
                 json["dataImageUrlField"] = DataImageUrlField;
