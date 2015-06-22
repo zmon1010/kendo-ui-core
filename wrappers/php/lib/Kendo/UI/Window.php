@@ -74,7 +74,7 @@ Note that this does not constrain the window dragging within the given element.
     }
 
     /**
-    * Explicitly states whether content iframe should be created.
+    * Explicitly states whether a content iframe should be created. For more information, please read Using iframes.
     * @param boolean $value
     * @return \Kendo\UI\Window
     */
