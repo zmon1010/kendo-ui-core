@@ -127,6 +127,12 @@
         equal(range.verticalAlignment(), "foo");
     });
 
+    test("wrap returns the wrap of a range", function() {
+        range.wrap(true);
+
+        equal(range.wrap(), true);
+    });
+
     test("values returns two dimensional array containing cell values", function() {
         sheet.range("A1").value("A1");
         sheet.range("B1").value("B1");

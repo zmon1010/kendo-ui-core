@@ -77,6 +77,9 @@
         background: function(value) {
             return this._styleProperty("background", value);
         },
+        wrap: function(value) {
+            return this._styleProperty("wrap", value);
+        },
         _style: function(value) {
             if (value !== undefined) {
                 value = JSON.stringify(value);

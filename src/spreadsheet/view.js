@@ -258,6 +258,10 @@
                style[styleMap[key]] = cell.style[key];
             });
 
+            if (cell.style.wrap === false) {
+                style.whiteSpace = "nowrap";
+            }
+
             var td = table.addCell(row, cell.value, style);
 
             if (formula) {

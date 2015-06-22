@@ -141,5 +141,15 @@
         equal(table.args("addCell", 0)[2].verticalAlign, "foo");
     });
 
+    test("adds white-space nowrap style to the cell if wrap is false", function() {
+        var pane = createPane(0, 0, 3, 3);
+
+        var table = stub({}, "addCell");
+
+        pane.addCell(table, {}, { style: { wrap: false } });
+
+        equal(table.calls("addCell"), 1);
+        equal(table.args("addCell", 0)[2].whiteSpace, "nowrap");
+    });
 
 })();
