@@ -213,19 +213,12 @@
         updateLink: function(link, url) {
             link = link.eq(0);
 
-            var newLink;
             var exampleElement = $("#example");
             var less = window.less;
             var isLess = /\.less$/.test(link.attr("href"));
             var browser = kendo.support.browser;
 
-            if (browser.msie && browser.version < 11) {
-                newLink = $(doc.createStyleSheet(url));
-            } else {
-                newLink = link.clone().attr("href", url);
-                newLink.insertAfter(link);
-            }
-
+            link.clone().attr("href", url).insertAfter(link);
             link.remove();
 
             if (isLess) {
