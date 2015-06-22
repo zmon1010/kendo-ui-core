@@ -13328,6 +13328,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>The connections type.</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -13346,12 +13352,6 @@ data source is fired. By default the widget will bind to the data source specifi
         <attribute>
             <description>The static text displayed on the connection.</description>
             <name>text</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>Specifies the connections type. The supported values are "polyline" and "cascading".</description>
-            <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
@@ -14031,7 +14031,7 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description>Specifies the connection type. The supported values are "polyline" and "cascading".</description>
+            <description>The connection type.</description>
             <name>type</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
@@ -22342,6 +22342,40 @@ horizontal gauge is 200px.</description>
     </tag>
 
 
+    <tag>
+        <description>The margin of the gauge area.</description>
+        <name>linearGauge-gaugeArea-margin</name>
+        <tag-class>com.kendoui.taglib.lineargauge.GaugeAreaMarginTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The bottom margin of the gauge area.</description>
+            <name>bottom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The left margin of the gauge area.</description>
+            <name>left</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The right margin of the gauge area.</description>
+            <name>right</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The top margin of the gauge area.</description>
+            <name>top</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
 
 
     <tag>
@@ -22590,13 +22624,13 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <description>The margin of the labels.</description>
             <name>margin</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
+            <type>float</type>
         </attribute>
         <attribute>
             <description>The padding of the labels.</description>
             <name>padding</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
+            <type>float</type>
         </attribute>
         <attribute>
             <description>The label template.
@@ -22635,6 +22669,74 @@ Template variables:</description>
         <attribute>
             <description>The width of the border.</description>
             <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The margin of the labels.</description>
+        <name>linearGauge-scale-labels-margin</name>
+        <tag-class>com.kendoui.taglib.lineargauge.ScaleLabelsMarginTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The bottom margin of the labels.</description>
+            <name>bottom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The left margin of the labels.</description>
+            <name>left</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The right margin of the labels.</description>
+            <name>right</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The top margin of the labels.</description>
+            <name>top</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The padding of the labels.</description>
+        <name>linearGauge-scale-labels-padding</name>
+        <tag-class>com.kendoui.taglib.lineargauge.ScaleLabelsPaddingTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The bottom padding of the labels.</description>
+            <name>bottom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The left padding of the labels.</description>
+            <name>left</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The right padding of the labels.</description>
+            <name>right</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The top padding of the labels.</description>
+            <name>top</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
@@ -26427,13 +26529,13 @@ units are "mm", "cm", "in" and "pt" (default).</description>
             <description>Specifies the element that will be used as an anchor. The widget will open next to that element.</description>
             <name>anchor</name>
             <rtexprvalue>true</rtexprvalue>
-            <type></type>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>Which element the popup will be appended to.</description>
             <name>appendTo</name>
             <rtexprvalue>true</rtexprvalue>
-            <type></type>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>Specifies how to position the popup element based on achor point. The value is
@@ -26813,7 +26915,7 @@ the horizontal one is 60px.</description>
             <description>The margin of the gauge area.</description>
             <name>margin</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
+            <type>float</type>
         </attribute>
         <attribute>
             <description>The width of the gauge area.  By default the vertical gauge is 60px
@@ -26844,8 +26946,48 @@ and horizontal gauge is 200px.</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The opacity of the border. By default the border is opaque.</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>The width of the border.</description>
             <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The margin of the gauge area.</description>
+        <name>radialGauge-gaugeArea-margin</name>
+        <tag-class>com.kendoui.taglib.radialgauge.GaugeAreaMarginTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The bottom margin of the gauge area.</description>
+            <name>bottom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The left margin of the gauge area.</description>
+            <name>left</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The right margin of the gauge area.</description>
+            <name>right</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The top margin of the gauge area.</description>
+            <name>top</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
@@ -27015,13 +27157,13 @@ Any valid CSS color string will work here, including hex and rgb.</description>
             <description>The margin of the labels.</description>
             <name>margin</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
+            <type>float</type>
         </attribute>
         <attribute>
             <description>The padding of the labels.</description>
             <name>padding</name>
             <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
+            <type>float</type>
         </attribute>
         <attribute>
             <description>The labels positions.</description>
@@ -27064,8 +27206,82 @@ Template variables:</description>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>The opacity of the border. By default the border is opaque.</description>
+            <name>opacity</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>The width of the border.</description>
             <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The margin of the labels.</description>
+        <name>radialGauge-scale-labels-margin</name>
+        <tag-class>com.kendoui.taglib.radialgauge.ScaleLabelsMarginTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The bottom margin of the labels.</description>
+            <name>bottom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The left margin of the labels.</description>
+            <name>left</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The right margin of the labels.</description>
+            <name>right</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The top margin of the labels.</description>
+            <name>top</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>The padding of the labels.</description>
+        <name>radialGauge-scale-labels-padding</name>
+        <tag-class>com.kendoui.taglib.radialgauge.ScaleLabelsPaddingTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The bottom padding of the labels.</description>
+            <name>bottom</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The left padding of the labels.</description>
+            <name>left</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The right padding of the labels.</description>
+            <name>right</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
+            <description>The top padding of the labels.</description>
+            <name>top</name>
             <rtexprvalue>true</rtexprvalue>
             <type>float</type>
         </attribute>
@@ -29083,6 +29299,12 @@ tick labels.</description>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the widget will auto-scroll the container when the mouse/finger is close to the top/bottom of it.</description>
+            <name>autoScroll</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
         <attribute>
             <description>Constrains the hint movement to either the horizontal (x) or vertical (y) axis. Can be set to either "x" or "y".</description>
@@ -35041,6 +35263,34 @@ Any valid CSS color string will work here, including hex and rgb.</description>
 
 
 
+    <tag>
+        <description>The chart legend item configuration.</description>
+        <name>stockChart-legend-item</name>
+        <tag-class>com.kendoui.taglib.stockchart.LegendItemTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>The cursor style of the legend item.</description>
+            <name>cursor</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>A function that can be used to create a custom visual for the legend items. The available argument fields are:</description>
+            <name>visual</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <description>A function that can be used to create a custom visual for the legend items. The available argument fields are:</description>
+        <name>stockChart-legend-item-visual</name>
+        <tag-class>com.kendoui.taglib.stockchart.LegendItemVisualFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <tag>
         <description>Configures the legend labels.</description>
         <name>stockChart-legend-labels</name>
@@ -42161,6 +42411,76 @@ attachment; filename="&lt;fileName.xslx&gt;".</description>
 
     </tag>
 
+    <tag>
+        <description>The text messages displayed in the filter menu. Use it to customize or localize the filter menu messages.</description>
+        <name>treeList-filterable-messages</name>
+        <tag-class>com.kendoui.taglib.treelist.FilterableMessagesTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>The text of the option which represents the "and" logical operation.</description>
+            <name>and</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the cancel button in the filter menu header (available in mobile mode only).</description>
+            <name>cancel</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the button which clears the filter.</description>
+            <name>clear</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the button which applies the filter.</description>
+            <name>filter</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the information message on the top of the filter menu.</description>
+            <name>info</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the radio button for false values. Displayed when filtering Boolean fields.</description>
+            <name>isFalse</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the radio button for true values. Displayed when filtering Boolean fields.</description>
+            <name>isTrue</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the operator item in filter menu (available in mobile mode only).</description>
+            <name>operator</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the option which represents the "or" logical operation.</description>
+            <name>or</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>The text of the DropDownList displayed in the filter menu for columns whose values option is set.</description>
+            <name>selectValue</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+
 
 
     <tag>
@@ -42398,76 +42718,6 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         </attribute>
 
     </tag>
-
-    <tag>
-        <description>The text messages displayed in the filter menu. Use it to customize or localize the filter menu messages.</description>
-        <name>treeList-filterable-messages</name>
-        <tag-class>com.kendoui.taglib.treelist.FilterableMessagesTag</tag-class>
-        <body-content>empty</body-content>
-
-        <attribute>
-            <description>The text of the option which represents the "and" logical operation.</description>
-            <name>and</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The text of the cancel button in the filter menu header (available in mobile mode only).</description>
-            <name>cancel</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The text of the button which clears the filter.</description>
-            <name>clear</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The text of the button which applies the filter.</description>
-            <name>filter</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The text of the information message on the top of the filter menu.</description>
-            <name>info</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The text of the radio button for false values. Displayed when filtering Boolean fields.</description>
-            <name>isFalse</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The text of the radio button for true values. Displayed when filtering Boolean fields.</description>
-            <name>isTrue</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The text of the operator item in filter menu (available in mobile mode only).</description>
-            <name>operator</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The text of the option which represents the "or" logical operation.</description>
-            <name>or</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>The text of the DropDownList displayed in the filter menu for columns whose values option is set.</description>
-            <name>selectValue</name>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-
-    </tag>
-
 
 
 
@@ -42728,6 +42978,12 @@ Setting this option to false will disable all animations.</description>
             <description>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
 data source is fired. By default the widget will bind to the data source specified in the configuration.</description>
             <name>autoBind</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true the widget will auto-scroll the containing element when the mouse/finger is close to the top/bottom of it.</description>
+            <name>autoScroll</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
