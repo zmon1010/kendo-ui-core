@@ -528,6 +528,9 @@
         module("Diagram / Connections / Data Binding", {
             setup: function() {
                 diagram = createDiagram({
+                    connectionDefaults: {
+                        type: "cascading"
+                    },
                     dataSource: {
                         data: [{
                             id: 1
@@ -541,7 +544,8 @@
                         data: [{
                             id: 1,
                             from: 1,
-                            to: 2
+                            to: 2,
+                            type: "polyline"
                         },{
                             id: 2,
                             from: 2,
@@ -568,6 +572,14 @@
             equal(count, 2);
         });
 
+        test("should set connection type from the dataItem", function() {
+            equal(diagram.connections[0].type(), "polyline");
+        });
+
+        test("should set connection type from the default options if the dataItem does not have a type field", function() {
+            equal(diagram.connections[1].type(), "cascading");
+        });
+
         test("remove should remove connection", function() {
             var item = diagram.connectionsDataSource.at(0);
             var uid = item.uid;
@@ -592,6 +604,12 @@
             item.set("foo", "bar");
             var connection = diagram._connectionsDataMap[item.uid];
             equal(connection.dataItem.foo, "bar");
+        });
+
+        test("changing the dataItem type field updates the connection type", function() {
+            var item = diagram.connectionsDataSource.at(0);
+            item.set("type", "cascading");
+            equal(diagram.connections[0].type(), "cascading");
         });
 
     })();
