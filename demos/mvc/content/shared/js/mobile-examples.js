@@ -170,7 +170,6 @@ window.app = new kendo.mobile.Application($(document.body), {
     layout: "examples",
     transition: "slide",
     skin: "nova",
-    retina: true,
     icon: {
         "" : '@Url.Content("~/content/mobile/AppIcon72x72.png")',
         "72x72" : '@Url.Content("~/content/mobile/AppIcon72x72.png")',
