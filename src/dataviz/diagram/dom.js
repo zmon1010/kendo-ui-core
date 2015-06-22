@@ -1008,6 +1008,11 @@
                             this.target(new Point(options.toX, options.toY));
                         }
 
+                        if (defined(options.type) && this.type() !== options.type) {
+                            this.points([]);
+                            this.type(options.type);
+                        }
+
                         this.dataItem = model;
 
                         this._template();
@@ -1042,6 +1047,10 @@
                                 model.set("to", this.options.to);
                                 model.set("toX", null);
                                 model.set("toY", null);
+                            }
+
+                            if (defined(this.options.type) && defined(model.type)) {
+                                model.set("type", this.options.type);
                             }
 
                             this.dataItem = model;
@@ -1784,7 +1793,8 @@
                 connectionDefaults: {
                     editable: {
                         tools: []
-                    }
+                    },
+                    type: CASCADING
                 },
                 shapes: [],
                 connections: []
@@ -2357,7 +2367,7 @@
                 }
 
                 connection.diagram = this;
-                connection.updateOptionsFromModel();
+                connection._setOptionsFromModel();
                 connection.refresh();
                 this.mainLayer.append(connection.visual);
                 this.connections.push(connection);
@@ -3346,7 +3356,6 @@
                     parentShape = this._addDataItemByUid(parent);
                     if (parentShape && !this.connected(parentShape, shape)) { // check if connected to not duplicate connections.
                         connection = this.connect(parentShape, shape);
-                        connection.type(CASCADING);
                     }
                 }
             },
@@ -3785,7 +3794,7 @@
                         var options = deepExtend({}, this.options.connectionDefaults);
                         options.dataItem = dataItem;
                         var connection = new Connection(from, to, options);
-                        connection.type(options.type || CASCADING);
+
                         this._connectionsDataMap[dataItem.uid] = connection;
                         this.addConnection(connection, undoable);
                     }

@@ -723,7 +723,7 @@
             teardown: teardown
         });
 
-        test("connectionDefaults editable drag is set", function() {
+        test("editable drag is set", function() {
             createDiagram({
                 connectionDefaults: {
                     editable: {
@@ -734,7 +734,7 @@
             equal(diagram.options.connectionDefaults.editable.drag, false);
         });
 
-        test("connectionDefaults editable drag is set from the diagram editable options if not set", function() {
+        test("editable drag is set from the diagram editable options if not set", function() {
             createDiagram({
                 editable: {
                     drag: false
@@ -743,7 +743,7 @@
             equal(diagram.options.connectionDefaults.editable.drag, false);
         });
 
-        test("connectionDefaults editable drag is not overridden by the diagram editable options", function() {
+        test("editable drag is not overridden by the diagram editable options", function() {
             createDiagram({
                 editable: {
                     drag: false
@@ -757,7 +757,7 @@
             equal(diagram.options.connectionDefaults.editable.drag, true);
         });
 
-        test("connectionDefaults editable remove is set", function() {
+        test("editable remove is set", function() {
             createDiagram({
                 connectionDefaults: {
                     editable: {
@@ -768,7 +768,7 @@
             equal(diagram.options.connectionDefaults.editable.remove, false);
         });
 
-        test("connectionDefaults editable remove is set from the diagram editable options if not set", function() {
+        test("editable remove is set from the diagram editable options if not set", function() {
             createDiagram({
                 editable: {
                     remove: false
@@ -777,7 +777,7 @@
             equal(diagram.options.connectionDefaults.editable.remove, false);
         });
 
-        test("connectionDefaults editable remove is not overridden by the diagram editable options", function() {
+        test("editable remove is not overridden by the diagram editable options", function() {
             createDiagram({
                 editable: {
                     remove: false
@@ -790,6 +790,17 @@
             });
 
             equal(diagram.options.connectionDefaults.editable.remove, true);
+        });
+
+        test("the connection type is set", function() {
+            createDiagram({
+                connectionDefaults: {
+                    type: "cascading"
+                }
+            });
+            var connection = diagram.connect(new Point(), new Point());
+            equal(diagram.options.connectionDefaults.type, "cascading");
+            equal(connection.type(), "cascading");
         });
 
     })();
@@ -2476,7 +2487,7 @@
     });
 
     test("Copy connection", function () {
-        var c1 = d.connect(d.shapes[0], d.shapes[1]);
+        var c1 = d.connect(d.shapes[0], d.shapes[1], { type: "polyline" });
 
         var copy = c1.clone();
 
