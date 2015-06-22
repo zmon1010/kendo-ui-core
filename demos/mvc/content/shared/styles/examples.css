@@ -1221,6 +1221,7 @@ pre.prettyprint
     position: relative;
     z-index:1;
     background: #f5f7f8; /* Old browsers */
+    overflow: visible;
 }
 
 #codeStrip .k-item .k-loading
