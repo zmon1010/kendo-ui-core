@@ -36,7 +36,12 @@
         _styleProperty: function(name, value) {
             var style = this._style();
 
+            if (style === null) {
+                style = {};
+            }
+
             if (value !== undefined) {
+
                 if (value === null) {
                     delete style[name];
                 } else {
@@ -87,8 +92,14 @@
         _style: function(value) {
             if (value !== undefined) {
                 value = JSON.stringify(value);
+
+                if (value === "{}") {
+                    value = null;
+                }
+
                 return this._property(this._sheet._styles, value);
             }
+
             return JSON.parse(this._property(this._sheet._styles, value));
         },
 

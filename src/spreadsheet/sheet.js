@@ -15,7 +15,7 @@
 
             this._values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
             this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
-            this._styles = new kendo.spreadsheet.SparseRangeList(0, cellsCount, "{}");
+            this._styles = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
             this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth);
             this._mergedCells = [];
@@ -283,57 +283,50 @@
         },
 
         toJSON: function() {
-            var rows = {};
+            var rows = [];
+            var positions = {};
 
             this.forEach(kendo.spreadsheet.SHEETREF, function(data) {
                 var value = data.value;
                 var style = data.style;
 
                 var hasValue = value !== null;
-                var hasStyle = Object.keys(style).length > 0;
+                var hasStyle = style !== null;
 
                 if (!hasValue && !hasStyle) {
                     return;
                 }
 
-                var row = rows[data.row];
+                var position = positions[data.row];
 
-                if (row === undefined) {
-                    row = {
+                if (position === undefined) {
+                    position = rows.length;
+
+                    rows.push({
                         index: data.row,
-                        cells: {}
-                    };
+                        cells: []
+                    });
 
-                    rows[data.row] = row;
+                    positions[data.row] = position;
                 }
 
-                var cell = row.cells[data.col];
+                var row = rows[position];
 
-                if (cell === undefined) {
-                    cell = { index: data.col };
+                var cell = { index: data.col };
 
-                    if (hasValue) {
-                        cell.value = value;
-                    }
-
-                    if (hasStyle) {
-                        cell.style = style;
-                    }
-
-                    row.cells[data.col] = cell;
+                if (hasValue) {
+                    cell.value = value;
                 }
+
+                if (hasStyle) {
+                    cell.style = style;
+                }
+
+                row.cells.push(cell);
             });
 
             return {
-                rows: Object.keys(rows).map(function(index) {
-                    var row = rows[index];
-
-                    row.cells = Object.keys(row.cells).map(function(index) {
-                       return row.cells[index];
-                    });
-
-                    return row;
-                })
+                rows: rows
             };
         }
     });

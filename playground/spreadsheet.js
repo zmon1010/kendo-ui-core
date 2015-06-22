@@ -37,6 +37,10 @@ for (var i = 0, len = 50; i < len; i++) {
 
 spreadsheet.autoRefresh(true);
 
+console.time("toJSON");
+sheet.toJSON();
+console.timeEnd("toJSON");
+
 $("#copy").on("click", function(e) {
     var range = sheet.range("K11:M16");
 

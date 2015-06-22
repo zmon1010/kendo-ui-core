@@ -254,12 +254,14 @@
 
             var style = {};
 
-            Object.keys(cell.style).forEach(function(key) {
-               style[styleMap[key]] = cell.style[key];
-            });
+            if (cell.style) {
+                Object.keys(cell.style).forEach(function(key) {
+                   style[styleMap[key]] = cell.style[key];
+                });
 
-            if (cell.style.wrap === false) {
-                style.whiteSpace = "nowrap";
+                if (cell.style.wrap === false) {
+                    style.whiteSpace = "nowrap";
+                }
             }
 
             var td = table.addCell(row, cell.value, style);

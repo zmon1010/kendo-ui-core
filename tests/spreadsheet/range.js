@@ -41,6 +41,10 @@
        sheet.range("A1").value("A1");
     });
 
+    test("removing the last style value sets the style to null", function() {
+       equal(sheet.range("A1").background("red").background(null)._style(), null);
+    });
+
     test("setting values triggers the change event of the sheet", 1, function() {
        sheet.bind("change", function() {
            ok(true);
@@ -135,6 +139,7 @@
 
     test("setting style property to null removes it from the style object", function() {
         range.background("red");
+        range.fontColor("red");
         range.background(null);
 
         ok(!("background" in range._style()));
