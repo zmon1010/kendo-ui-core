@@ -6238,6 +6238,7 @@
       {
         "text": "Source and template binding",
         "url": "mvvm/source",
+        "new": "true",
         "title": {
             "kendo-ui": "Source and template binding demo | Kendo UI MVVM"
         },
@@ -6253,6 +6254,17 @@
         },
         "meta": {
             "kendo-ui": "This demo shows how the View-model fields can be updated using strongly typed 'checked' and 'value' bindings"
+        }
+      },
+      {
+        "text": "CSS class binding",
+        "url": "mvvm/css",
+        "new": "true",
+        "title": {
+            "kendo-ui": "CSS class binding | Kendo UI MVVM"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows how CSS classes can be assigned based on a View-model field"
         }
       },
       {

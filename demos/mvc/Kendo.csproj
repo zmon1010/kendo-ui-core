@@ -1189,6 +1189,9 @@
     <Content Include="Views\Responsive\Rulers.cshtml" />
     <Content Include="Views\Responsive\QRCode.cshtml" />
     <Content Include="Views\demos\scheduler\signalr.cshtml" />
+    <Content Include="Views\demos\mvvm\class.cshtml">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\integration\diagram\js\" />

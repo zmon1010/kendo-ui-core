@@ -38,8 +38,7 @@
         <tr>
             <td data-bind="text: name">
             </td>
-            <td>
-                #: kendo.toString(get("price"), "C") #
+            <td data-bind="text: price" data-format="C">
             </td>
             <td data-bind="text: unitsInStock"></td>
             <td><button class="k-button" data-bind="click: deleteProduct">Delete</button></td>
@@ -153,7 +152,7 @@
     &lt;tr&gt;
         &lt;td data-bind=&quot;text: name&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;
+        &lt;td data-bind=&quot;text: price&quot; data-format=&quot;C&quot;&gt;
             #: kendo.toString(get(&quot;price&quot;), &quot;C&quot;) #
         &lt;/td&gt;
         &lt;td data-bind=&quot;text: unitsInStock&quot;&gt;&lt;/td&gt;
