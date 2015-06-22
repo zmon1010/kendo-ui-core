@@ -28,6 +28,24 @@ class DiagramEditable extends \Kendo\SerializableObject {
     }
 
     /**
+    * Specifies if the shapes and connections can be dragged.
+    * @param boolean|\Kendo\Dataviz\UI\DiagramEditableDrag|array $value
+    * @return \Kendo\Dataviz\UI\DiagramEditable
+    */
+    public function drag($value) {
+        return $this->setProperty('drag', $value);
+    }
+
+    /**
+    * Specifies if the shapes and connections can be removed.
+    * @param boolean $value
+    * @return \Kendo\Dataviz\UI\DiagramEditable
+    */
+    public function remove($value) {
+        return $this->setProperty('remove', $value);
+    }
+
+    /**
     * Defines the look-and-feel of the resizing handles.
     * @param boolean|\Kendo\Dataviz\UI\DiagramEditableResize|array $value
     * @return \Kendo\Dataviz\UI\DiagramEditable

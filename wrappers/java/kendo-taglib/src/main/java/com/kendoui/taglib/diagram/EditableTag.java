@@ -53,6 +53,10 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         return "diagram-editable";
     }
 
+    public void setDrag(com.kendoui.taglib.diagram.EditableDragTag value) {
+        setProperty("drag", value);
+    }
+
     public void setResize(com.kendoui.taglib.diagram.EditableResizeTag value) {
         setProperty("resize", value);
     }
@@ -81,6 +85,22 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
 
     public void setConnectionTemplate(java.lang.String value) {
         setProperty("connectionTemplate", value);
+    }
+
+    public boolean getDrag() {
+        return (boolean)getProperty("drag");
+    }
+
+    public void setDrag(boolean value) {
+        setProperty("drag", value);
+    }
+
+    public boolean getRemove() {
+        return (boolean)getProperty("remove");
+    }
+
+    public void setRemove(boolean value) {
+        setProperty("remove", value);
     }
 
     public boolean getResize() {

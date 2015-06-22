@@ -15,6 +15,24 @@ class DiagramShapeDefaultsEditable extends \Kendo\SerializableObject {
     }
 
     /**
+    * Specifies if the shapes can be dragged.
+    * @param boolean $value
+    * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsEditable
+    */
+    public function drag($value) {
+        return $this->setProperty('drag', $value);
+    }
+
+    /**
+    * Specifies if the shapes can be removed.
+    * @param boolean $value
+    * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsEditable
+    */
+    public function remove($value) {
+        return $this->setProperty('remove', $value);
+    }
+
+    /**
     * Adds DiagramShapeDefaultsEditableTool to the DiagramShapeDefaultsEditable.
     * @param \Kendo\Dataviz\UI\DiagramShapeDefaultsEditableTool|array,... $value one or more DiagramShapeDefaultsEditableTool to add.
     * @return \Kendo\Dataviz\UI\DiagramShapeDefaultsEditable

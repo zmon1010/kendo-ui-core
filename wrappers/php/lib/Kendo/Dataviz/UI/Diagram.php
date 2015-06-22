@@ -246,6 +246,48 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
+    * Sets the drag event of the Diagram.
+    * Fired when dragging shapes or connection.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\Diagram
+    */
+    public function drag($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('drag', $value);
+    }
+
+    /**
+    * Sets the dragEnd event of the Diagram.
+    * Fired after finishing dragging shapes or connection.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\Diagram
+    */
+    public function dragEnd($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('dragEnd', $value);
+    }
+
+    /**
+    * Sets the dragStart event of the Diagram.
+    * Fired before starting dragging shapes or connection.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\Dataviz\UI\Diagram
+    */
+    public function dragStart($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('dragStart', $value);
+    }
+
+    /**
     * Sets the edit event of the Diagram.
     * Fired when the user edits a shape or connection.
     * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.

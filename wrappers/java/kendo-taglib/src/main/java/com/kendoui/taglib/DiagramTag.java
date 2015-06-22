@@ -103,6 +103,18 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
         setEvent("dataBound", value.getBody());
     }
 
+    public void setDrag(DragFunctionTag value) {
+        setEvent("drag", value.getBody());
+    }
+
+    public void setDragEnd(DragEndFunctionTag value) {
+        setEvent("dragEnd", value.getBody());
+    }
+
+    public void setDragStart(DragStartFunctionTag value) {
+        setEvent("dragStart", value.getBody());
+    }
+
     public void setEdit(EditFunctionTag value) {
         setEvent("edit", value.getBody());
     }
@@ -289,6 +301,42 @@ public class DiagramTag extends WidgetTag /* interfaces */implements DataBoundWi
 
     public void setDataBound(String value) {
         setProperty("dataBound", new Function(value));
+    }
+
+    public String getDrag() {
+        Function property = ((Function)getProperty("drag"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDrag(String value) {
+        setProperty("drag", new Function(value));
+    }
+
+    public String getDragEnd() {
+        Function property = ((Function)getProperty("dragEnd"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDragEnd(String value) {
+        setProperty("dragEnd", new Function(value));
+    }
+
+    public String getDragStart() {
+        Function property = ((Function)getProperty("dragStart"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setDragStart(String value) {
+        setProperty("dragStart", new Function(value));
     }
 
     public String getEdit() {

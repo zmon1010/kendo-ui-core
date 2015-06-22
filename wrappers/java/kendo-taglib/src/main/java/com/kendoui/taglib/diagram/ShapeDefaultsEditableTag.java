@@ -65,6 +65,22 @@ public class ShapeDefaultsEditableTag extends  BaseTag  /* interfaces */ /* inte
         setProperty("connect", value);
     }
 
+    public boolean getDrag() {
+        return (boolean)getProperty("drag");
+    }
+
+    public void setDrag(boolean value) {
+        setProperty("drag", value);
+    }
+
+    public boolean getRemove() {
+        return (boolean)getProperty("remove");
+    }
+
+    public void setRemove(boolean value) {
+        setProperty("remove", value);
+    }
+
 //<< Attributes
 
 }

@@ -77,6 +77,15 @@ class DiagramConnectionDefaults extends \Kendo\SerializableObject {
         return $this->setProperty('stroke', $value);
     }
 
+    /**
+    * Specifies the connections type. The supported values are "polyline" and "cascading".
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\DiagramConnectionDefaults
+    */
+    public function type($value) {
+        return $this->setProperty('type', $value);
+    }
+
 //<< Properties
 }
 

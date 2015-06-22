@@ -13212,6 +13212,21 @@ data source is fired. By default the widget will bind to the data source specifi
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <description>Fired when dragging shapes or connection.</description>
+            <name>drag</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired after finishing dragging shapes or connection.</description>
+            <name>dragEnd</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired before starting dragging shapes or connection.</description>
+            <name>dragStart</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <description>Fired when the user edits a shape or connection.</description>
             <name>edit</name>
             <rtexprvalue>true</rtexprvalue>
@@ -13320,6 +13335,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>Specifies the connections type. The supported values are "polyline" and "cascading".</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
 
     </tag>
 
@@ -13336,6 +13357,18 @@ data source is fired. By default the widget will bind to the data source specifi
         <tag-class>com.kendoui.taglib.diagram.ConnectionDefaultsEditableTag</tag-class>
         <body-content>JSP</body-content>
 
+        <attribute>
+            <description>Specifies if the connections can be dragged.</description>
+            <name>drag</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the connections can be removed.</description>
+            <name>remove</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
 
     </tag>
 
@@ -13982,6 +14015,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <name>to</name>
             <rtexprvalue>true</rtexprvalue>
             <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Specifies the connection type. The supported values are "polyline" and "cascading".</description>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
         </attribute>
     </tag>
 
@@ -14708,6 +14747,18 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>Specifies if the shapes and connections can be dragged.</description>
+            <name>drag</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the shapes and connections can be removed.</description>
+            <name>remove</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
             <description>Defines the look-and-feel of the resizing handles.</description>
             <name>resize</name>
             <rtexprvalue>true</rtexprvalue>
@@ -14727,6 +14778,38 @@ data source is fired. By default the widget will bind to the data source specifi
         </attribute>
 
     </tag>
+
+    <tag>
+        <description>Specifies if the shapes and connections can be dragged.</description>
+        <name>diagram-editable-drag</name>
+        <tag-class>com.kendoui.taglib.diagram.EditableDragTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description>Specifies the shapes drag snap options.</description>
+            <name>snap</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>Specifies the shapes drag snap options.</description>
+        <name>diagram-editable-drag-snap</name>
+        <tag-class>com.kendoui.taglib.diagram.EditableDragSnapTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>Specifies the shapes drag snap size.</description>
+            <name>size</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+
+    </tag>
+
+
 
     <tag>
         <description>Defines the look-and-feel of the resizing handles.</description>
@@ -15805,6 +15888,18 @@ units are "mm", "cm", "in" and "pt" (default).</description>
         <attribute>
             <description>Specifies whether the connectors should appear on hover.</description>
             <name>connect</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the shapes can be dragged.</description>
+            <name>drag</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>Specifies if the shapes can be removed.</description>
+            <name>remove</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
@@ -16975,6 +17070,24 @@ See visual.</description>
         <description>Fired when the widget is bound to data from dataDource and connectionsDataSource.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>diagram-dataBound</name>
         <tag-class>com.kendoui.taglib.diagram.DataBoundFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when dragging shapes or connection.</description>
+        <name>diagram-drag</name>
+        <tag-class>com.kendoui.taglib.diagram.DragFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired after finishing dragging shapes or connection.</description>
+        <name>diagram-dragEnd</name>
+        <tag-class>com.kendoui.taglib.diagram.DragEndFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired before starting dragging shapes or connection.</description>
+        <name>diagram-dragStart</name>
+        <tag-class>com.kendoui.taglib.diagram.DragStartFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>

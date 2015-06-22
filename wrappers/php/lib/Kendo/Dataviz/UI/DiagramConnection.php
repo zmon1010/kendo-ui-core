@@ -95,6 +95,15 @@ class DiagramConnection extends \Kendo\SerializableObject {
         return $this->setProperty('to', $value);
     }
 
+    /**
+    * Specifies the connection type. The supported values are "polyline" and "cascading".
+    * @param string $value
+    * @return \Kendo\Dataviz\UI\DiagramConnection
+    */
+    public function type($value) {
+        return $this->setProperty('type', $value);
+    }
+
 //<< Properties
 }
 
