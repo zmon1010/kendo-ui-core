@@ -315,6 +315,56 @@ namespace Kendo.Mvc.UI.Fluent
 
             return this;
         }
+
+        /// <summary>
+        /// Sets the tab scrolling settings.
+        /// </summary>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().TabStrip()
+        ///             .Name("TabStrip")
+        ///             .Items(items =>
+        ///             {
+        ///                 items.Add().Text("First Item");
+        ///                 items.Add().Text("Second Item");
+        ///             })
+        ///             .Scrollable(s => s.Enabled(true).Distance(300))
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public TabStripBuilder Scrollable(Action<TabStripScrollableSettingsBuilder> scrollableSettingsAction)
+        {
+            scrollableSettingsAction(new TabStripScrollableSettingsBuilder(Component.Scrollable));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Disables tab scrolling.
+        /// </summary>
+        /// <param name="value">Boolean flag.</param>
+        /// <example>
+        /// <code lang="CS">
+        ///  &lt;%= Html.Kendo().TabStrip()
+        ///             .Name("TabStrip")
+        ///             .Items(items =>
+        ///             {
+        ///                 items.Add().Text("First Item");
+        ///                 items.Add().Text("Second Item");
+        ///             })
+        ///             .Scrollable(false)
+        /// %&gt;
+        /// </code>
+        /// </example>
+        public TabStripBuilder Scrollable(bool enabled)
+        {
+            if (!enabled)
+            {
+                Component.Scrollable.Enabled = false;
+            }
+
+            return this;
+        }
     }
 }
 

@@ -29,6 +29,7 @@ namespace Kendo.Mvc.UI
             Collapsible = false;
             SecurityTrimming = new SecurityTrimming();
             TabPosition = TabStripTabPosition.Top;
+            Scrollable = new TabStripScrollableSettings();
         }
 
         public PopupAnimation Animation
@@ -103,6 +104,12 @@ namespace Kendo.Mvc.UI
             set;
         }
 
+        public TabStripScrollableSettings Scrollable
+        {
+            get;
+            private set;
+        }
+
         public override void WriteInitializationScript(TextWriter writer)
         {
             var options = new Dictionary<string, object>(Events);
@@ -127,6 +134,21 @@ namespace Kendo.Mvc.UI
             if (TabPosition != TabStripTabPosition.Top)
             {
                 options["tabPosition"] = TabPosition.ToString().ToLower();
+            }
+
+            var scrollSettings = Scrollable.ToJson();
+
+            if (!(bool)scrollSettings["enabled"])
+            {
+                options["scrollable"] = false;
+            }
+            else
+            {
+                scrollSettings.Remove("enabled");
+                if (scrollSettings.Keys.Any())
+                {
+                    options.Add("scrollable", scrollSettings);
+                }
             }
 
             var urls = Items.Where(item => item.Visible && item.IsAccessible(this.Authorization, this.ViewContext)).Select(item =>
