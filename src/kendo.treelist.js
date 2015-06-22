@@ -2776,7 +2776,7 @@ var __meta__ = {
                     parent = this.dataItem(parent);
                 }
 
-                model.parentId = parent.id;
+                model[parent.parentIdField] = parent.id;
                 index = this.dataSource.indexOf(parent) + 1;
                 parent.set("expanded", true);
 
