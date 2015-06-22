@@ -57,8 +57,7 @@
         "meta": {
             "kendo-ui": "This demo of Kendo UI Autocomplete control shows how load large amount of data in the autocomplete widget",
             "aspnet-mvc": "This demo of Kendo UI Autocomplete control shows how load large amount of data in the autocomplete widget"
-        },
-        "new": "true"
+        }
       },
       {
         "text": "Grouping",
@@ -70,8 +69,7 @@
         "meta": {
             "kendo-ui": "This demo of Kendo UI Autocomplete control shows how load grouped data in the autocomplete widget",
             "aspnet-mvc": "This demo of Kendo UI Autocomplete control shows how load grouped data in the autocomplete widget"
-        },
-        "new": "true"
+        }
       },
       {
         "packages": [
@@ -695,8 +693,7 @@
         "meta": {
             "kendo-ui": "Check out this demo to see how the virtualization functionality works in Kendo UI ComboBox.",
             "aspnet-mvc": "Check out this demo to see how the virtualization functionality works in ASP.NET MVC ComboBox."
-        },
-        "new": "true"
+        }
       },
       {
         "text": "Grouping",
@@ -708,8 +705,7 @@
         "meta": {
             "kendo-ui": "Check out this demo to see how the grouping functionality works in Kendo UI ComboBox.",
             "aspnet-mvc": "Check out this demo to see how the grouping functionality works in ASP.NET MVC ComboBox."
-        },
-        "new": "true"
+        }
       },
       {
         "packages": [
@@ -1187,7 +1183,6 @@
       {
         "text": "Virtualization",
         "url": "dropdownlist/virtualization",
-        "new": "true",
         "title": {
             "kendo-ui": "Example of virtualization in Kendo UI DropDownList widget"
         },
@@ -1198,7 +1193,6 @@
       {
         "text": "Grouping",
         "url": "dropdownlist/grouping",
-        "new": "true",
         "title": {
             "kendo-ui": "Example of grouping in Kendo UI DropDownList widget"
         },
@@ -1501,7 +1495,6 @@
       },
       {
         "text": "PDF Export",
-        "new": "true",
         "url": "editor/pdf-export",
         "title": {
             "kendo-ui": "PDF export support in Kendo UI Editor",
@@ -1673,8 +1666,7 @@
           },
           "packages": [
               "!offline"
-          ],
-          "new": "true"
+          ]
       },
       {
         "text": "Working Offline",
@@ -1967,7 +1959,6 @@
         }
       },
       {
-        "new": "true",
         "text": "Filter Multi Checkboxes",
         "url": "grid/filter-multi-checkboxes",
         "title": {
@@ -1978,7 +1969,6 @@
         }
       },
       {
-        "new": "true",
         "text": "Copy to Excel",
         "url": "grid/copy-to-excel",
         "title": {
@@ -2454,7 +2444,6 @@
       {
           "text": "Export to Excel",
           "url": "pivotgrid/excel-export",
-          "new": "true",
           "title": {
               "kendo-ui": "Exporting to MS Excel"
           },
@@ -2468,7 +2457,6 @@
       {
           "text": "Export to PDF",
           "url": "pivotgrid/pdf-export",
-          "new": "true",
           "title": {
               "kendo-ui": "Exporting to PDF"
           },
@@ -2888,8 +2876,7 @@
         "meta": {
             "kendo-ui": "See how the auto-searchable dropdown list of Kendo UI MultiSelect is virtualized.",
             "aspnet-mvc": "See how the auto-searchable dropdown list of ASP.NET MVC MultiSelect is virtualized."
-        },
-        "new": "true"
+        }
       },
       {
         "text": "Grouping",
@@ -2901,8 +2888,7 @@
         "meta": {
             "kendo-ui": "See how the auto-searchable dropdown list of Kendo UI MultiSelect displays grouped data.",
             "aspnet-mvc": "See how the auto-searchable dropdown list of ASP.NET MVC MultiSelect displays grouped data."
-        },
-        "new": "true"
+        }
       },
       {
         "packages": [
@@ -3807,7 +3793,6 @@
       {
           "text": "Export to PDF",
           "url": "gantt/pdf-export",
-          "new": "true",
           "title": {
               "kendo-ui": "Exporting to PDF"
           },
@@ -3821,7 +3806,6 @@
       {
         "text": "Resources",
         "url": "gantt/resources",
-        "new": "true",
         "title": {
             "kendo-ui": "Resources in Kendo UI Gantt"
         },
@@ -5250,6 +5234,7 @@
       },
       {
         "text": "Drag & drop",
+        "new": "true",
         "url": "treelist/dragdrop",
         "title": {
             "kendo-ui": "Kendo UI TreeList widget | Kendo UI Web demo"
@@ -5281,7 +5266,6 @@
       {
         "text": "Column resizing",
         "url": "treelist/column-resizing",
-        "new": "true",
         "title": {
             "kendo-ui": "Columns resizing in Kendo UI TreeList control | Kendo UI Web demo",
             "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC TreeList"
@@ -5294,7 +5278,6 @@
       {
         "text": "Column reordering",
         "url": "treelist/column-reordering",
-        "new": "true",
         "title": {
             "kendo-ui": "Columns reordering in Kendo UI TreeList control | Kendo UI Web demo",
             "aspnet-mvc": "Column Reordering in Telerik ASP.NET MVC TreeList"
@@ -5307,7 +5290,6 @@
       {
         "text": "Column menu",
         "url": "treelist/column-menu",
-        "new": "true",
         "title": {
             "kendo-ui": "Column menu in Kendo UI TreeList",
             "aspnet-mvc": "Column menu functionality of Telerik ASP.NET MVC TreeList"
@@ -5320,7 +5302,6 @@
       {
         "text": "Frozen columns",
         "url": "treelist/frozen-columns",
-        "new": "true",
         "title": {
             "kendo-ui": "Static columns of Kendo UI TreeList control | Kendo UI Web demo",
             "aspnet-mvc": "Frozen columns demo in Telerik ASP.NET MVC Grid "
@@ -6093,7 +6074,6 @@
       {
         "text": "Document Export",
         "url": "pdf-export/index",
-        "new": "true",
         "packages": [
           "!jsp",
           "!php"
@@ -6107,7 +6087,6 @@
       }, {
         "text": "Page Layout",
         "url": "pdf-export/page-layout",
-        "new": "true",
         "packages": [
           "!mvc",
           "!jsp",
@@ -6269,7 +6248,6 @@
       {
         "text": "Strongly typed binding",
         "url": "mvvm/types",
-        "new": "true",
         "title": {
             "kendo-ui": "Strongly typed binding demo | Kendo UI MVVM"
         },
@@ -6481,7 +6459,6 @@
       },
       {
         "text": "Checkboxes",
-        "new": "true",
         "url": "styling/checkboxes",
         "title": {
             "kendo-ui": "jQuery icons styling example | Kendo UI Web demos"
@@ -6496,7 +6473,6 @@
       },
       {
         "text": "Radio buttons",
-        "new": "true",
         "url": "styling/radios",
         "title": {
             "kendo-ui": "jQuery icons styling example | Kendo UI Web demos"
@@ -6892,7 +6868,6 @@
       {
         "text": "Custom Visuals",
         "url": "bar-charts/visuals",
-		"new": "true",
         "title": {
             "kendo-ui": "Example of using custom visuals for the Kendo UI Bar Chart",
             "aspnet-mvc": "Example of using custom visuals for ASP.NET MVC Bar Chart"
@@ -7434,7 +7409,6 @@
       },
       {
         "text": "PDF Export",
-        "new": "true",
         "url": "chart-api/pdf-export",
         "title": {
             "kendo-ui": "Kendo UI Chart saveAsPDF API method"
@@ -7445,7 +7419,6 @@
       },
       {
         "text": "Advanced Export",
-        "new": "true",
         "url": "chart-api/export",
         "title": {
             "kendo-ui": "Kendo UI Charts Export API methods"
@@ -7754,7 +7727,6 @@
       {
         "text": "Multiple pointers",
         "url": "linear-gauge/multiple-pointers",
-        "new": "true",
         "title": {
             "kendo-ui": "Kendo UI Linear Gauge multiple pointers demo",
             "aspnet-mvc": "ASP.NET MVC Linear Gauge multiple pointers demo"
@@ -7767,7 +7739,6 @@
       {
         "text": "Export to PDF, Image, SVG",
         "url": "linear-gauge/export",
-        "new": "true",
         "title": {
             "kendo-ui": "Kendo UI Linear Gauge export demo",
             "aspnet-mvc": "ASP.NET MVC Linear Gauge export demo"
@@ -7862,7 +7833,6 @@
       {
         "text": "Multiple pointers",
         "url": "radial-gauge/multiple-pointers",
-        "new": "true",
         "title": {
             "kendo-ui": "Kendo UI Radial Gauge multiple pointers demo",
             "aspnet-mvc": "ASP.NET MVC Radial Gauge multiple pointers demo"
@@ -7875,7 +7845,6 @@
       {
         "text": "Export to PDF, Image, SVG",
         "url": "radial-gauge/export",
-        "new": "true",
         "title": {
             "kendo-ui": "Kendo UI Radial Gauge export demo",
             "aspnet-mvc": "ASP.NET MVC Radial Gauge export demo"
@@ -8082,7 +8051,6 @@
       {
         "text": "Custom Visuals",
         "url": "line-charts/visuals",
-		"new": "true",
         "title": {
             "kendo-ui": "Example of using custom visuals for the Kendo UI Line Chart",
             "aspnet-mvc": "Example of using custom visuals for ASP.NET MVC Line Chart"
@@ -8217,7 +8185,6 @@
       },
       {
         "text": "Editing",
-        "new": "true",
         "url": "diagram/editing",
         "title": {
             "kendo-ui": "Kendo UI Diagram Editing",
@@ -8230,7 +8197,6 @@
       },
       {
         "text": "PDF Export",
-        "new": "true",
         "url": "diagram/pdf-export",
         "title": {
             "kendo-ui": "Kendo UI Diagram saveAsPDF API method"
@@ -8241,7 +8207,6 @@
       },
       {
         "text": "Advanced Export",
-        "new": "true",
         "url": "diagram/export",
         "title": {
             "kendo-ui": "Kendo UI Diagram Export API methods"
@@ -8396,7 +8361,6 @@
       },
       {
         "text": "Export",
-        "new": "true",
         "url": "map/export",
         "title": {
             "kendo-ui": "Kendo UI Map Export API methods"
@@ -9319,7 +9283,6 @@
       },
       {
         "text": "PDF Export",
-        "new": "true",
         "url": "financial/pdf-export",
         "title": {
             "kendo-ui": "Kendo UI StockChart saveAsPDF API method"
