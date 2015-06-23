@@ -15,6 +15,7 @@
 
             this._values = new kendo.spreadsheet.SparseRangeList(0, this.cellCount, null);
             this._formulas = new kendo.spreadsheet.SparseRangeList(0, this.cellCount, null);
+            this._compiledFormulas = new kendo.spreadsheet.SparseRangeList(0, this.cellCount, null);
             this._styles = new kendo.spreadsheet.SparseRangeList(0, this.cellCount, null);
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
             this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth);
@@ -398,17 +399,26 @@
 
         recalc: function() {
             return this.batch(function() {
-                var iterator = this._formulas.iterator(0, this.cellCount);
+                var formulas = this._formulas.iterator(0, this.cellCount);
+                var compiledFormulas = this._compiledFormulas.iterator(0, this.cellCount);
 
                 for (var idx = 0; idx <= this.cellCount; idx++) {
-                    var formula = iterator.at(idx);
+                    var formula = formulas.at(idx);
 
                     if (formula !== null) {
                         var cell = this._grid.cellRef(idx);
 
-                        var x = kendo.spreadsheet.calc.parse(this._name, cell.row, cell.col, formula);
+                        var compiled = compiledFormulas.at(idx);
 
-                        var compiled = kendo.spreadsheet.calc.compile(x);
+                        if (compiled === null) {
+                            var x = kendo.spreadsheet.calc.parse(this._name, cell.row, cell.col, formula);
+
+                            compiled = kendo.spreadsheet.calc.compile(x);
+
+                            this._compiledFormulas.value(idx, idx, compiled);
+                        }
+
+                        compiled.reset();
 
                         compiled.exec(this._context, this._name, cell.row, cell.col, function(value) {
                             this._values.value(idx, idx, value);
