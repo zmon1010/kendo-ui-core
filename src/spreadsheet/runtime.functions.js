@@ -389,9 +389,9 @@
     ]);
 
     defineFunction("columns", function(m){
-        return m.width;
+        return m instanceof Ref ? m.width() : m.width;
     }).args([
-        [ "ref", "matrix" ]
+        [ "ref", [ "or", "area", "matrix" ] ]
     ]);
 
     defineFunction("formulatext", function(ref){
@@ -490,14 +490,14 @@
             cmp = parseComparator(">=" + val);
         }
         if (m.each(function(el, row, col){
-            if (cmp(el)) {
+            if (el != null && cmp(el)) {
                 if (type !== 0 && val != el) {
                     --index;
                 }
                 return true;
             }
             index++;
-        }) && index > 0) {
+        }, true) && index > 0) {
             return index;
         } else {
             return new CalcError("N/A");
@@ -546,9 +546,9 @@
     ]);
 
     defineFunction("rows", function(m){
-        return m.height;
+        return m instanceof Ref ? m.height() : m.height;
     }).args([
-        [ "ref", "matrix" ]
+        [ "ref", [ "or", "area", "matrix" ] ]
     ]);
 
     defineFunction("transpose", function(m){
