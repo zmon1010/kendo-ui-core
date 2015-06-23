@@ -46,6 +46,11 @@ $("#copy").on("click", function(e) {
     range.select();
 });
 
+$("#select-all").on("click", function(e) {
+    var range = sheet.range("#SHEET");
+    range.select();
+});
+
 $("#clipboard").on("paste", function(e) {
     setTimeout(function() {
         var values = e.target.value.split("\n");

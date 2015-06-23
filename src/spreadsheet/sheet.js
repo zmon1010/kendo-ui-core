@@ -119,7 +119,11 @@
             }
 
             if (typeof row === "string") {
-                ref = kendo.spreadsheet.calc.parseReference(row);
+                if (row.toLowerCase() === "#sheet") {
+                    ref = kendo.spreadsheet.SHEETREF;
+                } else {
+                    ref = kendo.spreadsheet.calc.parseReference(row);
+                }
             } else {
                 if (!numRows) {
                     numRows = 1;

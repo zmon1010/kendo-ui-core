@@ -178,6 +178,7 @@
 
             var children = [];
             var selectedHeaders = sheet.selectedHeaders();
+            var allSelected = selectedHeaders.allRows && selectedHeaders.allCols;
 
             children.push(table.toDomTree(view.columnOffset, view.rowOffset));
 
@@ -190,7 +191,7 @@
                 });
 
                 sheet.forEach(view.ref.leftColumn(), function(cell) {
-                    var className = selectedHeaders.rows[cell.row] || (selectedHeaders.allRows ? "active" : "");
+                    var className = selectedHeaders.rows[cell.row] || (allSelected ? "selected" : (selectedHeaders.allRows ? "active" : ""));
                     rowHeader.addCell(cell.row - view.ref.topLeft.row, cell.row + 1, {}, className);
                 });
 
@@ -207,7 +208,7 @@
                 columnHeader.addRow(grid.headerHeight);
 
                 sheet.forEach(view.ref.topRow(), function(cell) {
-                    var className = selectedHeaders.cols[cell.col] || (selectedHeaders.allCols ? "active" : "");
+                    var className = selectedHeaders.cols[cell.col] || (allSelected ? "selected" : (selectedHeaders.allCols ? "active" : ""));
                     columnHeader.addCell(0, kendo.spreadsheet.Ref.display(null, Infinity, cell.col), {}, className);
                 });
 
