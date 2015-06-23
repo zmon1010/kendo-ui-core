@@ -520,6 +520,10 @@ test("encodes CDATA sections as comments", function() {
     equal(Serializer.toEditableHtml('<![CDATA[ whatever ]]>'), '<!--[CDATA[ whatever ]]-->');
 });
 
+test("removes whitespace at start before nbsp", function() {
+    equal(Serializer.toEditableHtml(' &nbsp; foo'), '&nbsp; foo');
+});
+
 test("does not convert relative href/src URLs to absolute", function() {
     // valid for IE < 8
     verifyCycle('<a href="foo">a</a>');
