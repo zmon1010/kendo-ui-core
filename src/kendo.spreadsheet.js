@@ -62,12 +62,17 @@
                 }
             }.bind(this));
 
-            this._sheet.name("sheet1");
+            var context = {};
 
-            this._context = new kendo.spreadsheet.FormulaContext({ "sheet1": this._sheet });
+            this._sheet.name("Sheet1");
+
+            context[this._sheet.name()] = this._sheet;
+
+            this._context = new kendo.spreadsheet.FormulaContext(context);
+
+            this._sheet.context(this._context);
 
             this._view.sheet(this.activeSheet());
-            this._view.context(this._context);
 
             this.refresh();
         },

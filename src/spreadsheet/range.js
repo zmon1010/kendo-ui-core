@@ -12,7 +12,7 @@
             this._sheet = sheet;
             this._ref = ref;
         },
-        _property: function(list, value) {
+        _property: function(list, value, recalc) {
             if (value !== undefined) {
                 this._ref.forEach(function(ref) {
                     ref = ref.toRangeRef();
@@ -25,7 +25,11 @@
                     }
                 }.bind(this));
 
-                this._sheet.triggerChange();
+                if (recalc) {
+                    this._sheet.recalc();
+                } else {
+                    this._sheet.triggerChange();
+                }
 
                 return this;
             } else {
@@ -57,7 +61,7 @@
 
         },
         value: function(value) {
-            return this._property(this._sheet._values, value);
+            return this._property(this._sheet._values, value, true);
         },
         fontColor: function(value) {
             return this._styleProperty("fontColor", value);
@@ -104,42 +108,39 @@
         },
 
         formula: function(value) {
-            return this._property(this._sheet._formulas, value);
+            return this._property(this._sheet._formulas, value, true);
         },
 
         merge: function() {
             var sheet = this._sheet;
             var mergedCells = sheet._mergedCells;
-            var suspended = sheet.suspendChanges();
 
-            sheet.suspendChanges(true);
+            sheet.batch(function() {
+                this._ref = this._ref.map(function(ref) {
+                    if (ref instanceof kendo.spreadsheet.CellRef) {
+                        return ref;
+                    }
 
-            this._ref = this._ref.map(function(ref) {
-                if (ref instanceof kendo.spreadsheet.CellRef) {
-                    return ref;
-                }
+                    var currentRef = ref.toRangeRef().union(mergedCells, function(ref) {
+                        mergedCells.splice(mergedCells.indexOf(ref), 1);
+                    });
 
-                var currentRef = ref.toRangeRef().union(mergedCells, function(ref) {
-                    mergedCells.splice(mergedCells.indexOf(ref), 1);
+                    var range = new Range(currentRef, sheet);
+                    var value = range.value();
+                    var background = range.background();
+
+                    range.value(null);
+                    range.background(null);
+
+                    var topLeft = new Range(currentRef.collapse(), sheet);
+
+                    topLeft.value(value);
+                    topLeft.background(background);
+
+                    mergedCells.push(currentRef);
+                    return currentRef;
                 });
-
-                var range = new Range(currentRef, sheet);
-                var value = range.value();
-                var background = range.background();
-
-                range.value(null);
-                range.background(null);
-
-                var topLeft = new Range(currentRef.collapse(), sheet);
-
-                topLeft.value(value);
-                topLeft.background(background);
-
-                mergedCells.push(currentRef);
-                return currentRef;
-            });
-
-            sheet.suspendChanges(suspended).triggerChange();
+            }.bind(this));
 
             return this;
         },

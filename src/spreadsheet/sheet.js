@@ -11,11 +11,11 @@
         init: function(rowCount, columnCount, rowHeight, columnWidth, headerHeight, headerWidth) {
             kendo.Observable.prototype.init.call(this);
 
-            var cellsCount = rowCount * columnCount - 1;
+            this.cellCount = rowCount * columnCount - 1;
 
-            this._values = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
-            this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
-            this._styles = new kendo.spreadsheet.SparseRangeList(0, cellsCount, null);
+            this._values = new kendo.spreadsheet.SparseRangeList(0, this.cellCount, null);
+            this._formulas = new kendo.spreadsheet.SparseRangeList(0, this.cellCount, null);
+            this._styles = new kendo.spreadsheet.SparseRangeList(0, this.cellCount, null);
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
             this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth);
             this._mergedCells = [];
@@ -25,6 +25,10 @@
             this._selection = kendo.spreadsheet.NULLREF;
 
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
+        },
+
+        context: function(context) {
+            this._context = context;
         },
 
         name: function(value) {
@@ -341,57 +345,85 @@
         },
 
         fromJSON: function(json) {
-            var suspended = this.suspendChanges();
+            this.batch(function() {
+                if (json.frozenColumns !== undefined) {
+                    this.frozenColumns(json.frozenColumns);
+                }
 
-            this.suspendChanges(true);
+                if (json.frozenRows !== undefined) {
+                    this.frozenRows(json.frozenRows);
+                }
 
-            if (json.frozenColumns !== undefined) {
-                this.frozenColumns(json.frozenColumns);
-            }
+                if (json.columns !== undefined) {
+                    this._columns.fromJSON("width", json.columns);
+                }
 
-            if (json.frozenRows !== undefined) {
-                this.frozenRows(json.frozenRows);
-            }
+                if (json.rows !== undefined) {
+                    this._rows.fromJSON("height", json.rows);
 
-            if (json.columns !== undefined) {
-                this._columns.fromJSON("width", json.columns);
-            }
+                    for (var ri = 0; ri < json.rows.length; ri++) {
+                        var row = json.rows[ri];
+                        var rowIndex = row.index;
 
-            if (json.rows !== undefined) {
-                this._rows.fromJSON("height", json.rows);
+                        if (rowIndex === undefined) {
+                            rowIndex = ri;
+                        }
 
-                for (var ri = 0; ri < json.rows.length; ri++) {
-                    var row = json.rows[ri];
-                    var rowIndex = row.index;
+                        if (row.cells) {
+                            for (var ci = 0; ci < row.cells.length; ci++) {
+                                var cell = row.cells[ci];
+                                var columnIndex = cell.index;
 
-                    if (rowIndex === undefined) {
-                        rowIndex = ri;
-                    }
+                                if (columnIndex === undefined) {
+                                    columnIndex = ci;
+                                }
 
-                    if (row.cells) {
-                        for (var ci = 0; ci < row.cells.length; ci++) {
-                            var cell = row.cells[ci];
-                            var columnIndex = cell.index;
+                                if (cell.value !== null) {
+                                    this.range(rowIndex, columnIndex).value(cell.value);
+                                }
 
-                            if (columnIndex === undefined) {
-                                columnIndex = ci;
-                            }
+                                if (cell.style !== null) {
+                                    this.range(rowIndex, columnIndex)._style(cell.style);
+                                }
 
-                            if (cell.value !== null) {
-                                this.range(rowIndex, columnIndex).value(cell.value);
-                            }
-
-                            if (cell.style !== null) {
-                                this.range(rowIndex, columnIndex)._style(cell.style);
-                            }
-
-                            if (cell.formula !== null) {
-                                this.range(rowIndex, columnIndex).formula(cell.formula);
+                                if (cell.formula !== null) {
+                                    this.range(rowIndex, columnIndex).formula(cell.formula);
+                                }
                             }
                         }
                     }
                 }
-            }
+            }.bind(this));
+        },
+
+        recalc: function() {
+            return this.batch(function() {
+                var iterator = this._formulas.iterator(0, this.cellCount);
+
+                for (var idx = 0; idx <= this.cellCount; idx++) {
+                    var formula = iterator.at(idx);
+
+                    if (formula !== null) {
+                        var cell = this._grid.cellRef(idx);
+
+                        var x = kendo.spreadsheet.calc.parse(this._name, cell.row, cell.col, formula);
+
+                        var compiled = kendo.spreadsheet.calc.compile(x);
+
+                        compiled.exec(this._context, this._name, cell.row, cell.col, function(value) {
+                            this._values.value(idx, idx, value);
+                        }.bind(this));
+                    }
+                }
+            }.bind(this));
+        },
+
+        batch: function(callback) {
+            var suspended = this.suspendChanges();
+
+            this.suspendChanges(true);
+
+            callback();
 
             return this.suspendChanges(suspended).triggerChange();
         }

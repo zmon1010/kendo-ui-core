@@ -114,7 +114,6 @@
 
         _pane: function(row, column, rowCount, columnCount) {
             var pane = new Pane(this._sheet, this._sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
-            pane.context(this._context);
             pane.refresh(this.wrapper[0].clientWidth, this.wrapper[0].clientHeight);
             return pane;
         },
@@ -140,22 +139,13 @@
             var merged = [];
             merged = Array.prototype.concat.apply(merged, result);
             this.tree.render(merged);
-        },
-
-        context: function(context) {
-            this._context = context;
         }
     });
-
 
     var Pane = kendo.Class.extend({
         init: function(sheet, grid) {
             this._sheet = sheet;
             this._grid = grid;
-        },
-
-        context: function(context) {
-            this._context = context;
         },
 
         refresh: function(width, height) {
@@ -174,13 +164,6 @@
 
             var table = new HtmlTable(this.rowHeight, this.columnWidth);
 
-/*
-            var formulaRanges = this._sheet._formulas.values();
-
-            for (var i = 0, len = formulaRanges.length; i < len; i++) {
-                formulaRanges[i].value.reset();
-            }
-*/
             rows.values.forEach(function(height) {
                 table.addRow(height);
             });
@@ -239,8 +222,6 @@
         },
 
         addCell: function(table, row, cell) {
-            var formula = cell.formula;
-
             var styleMap = {
                 background: "backgroundColor",
                 fontColor: "color",
@@ -265,15 +246,7 @@
                 }
             }
 
-            var td = table.addCell(row, cell.value, style);
-
-/*
-            if (formula) {
-                formula.exec(this._context, this._sheet.name(), cell.row, cell.col, function(value) {
-                    this.children[0].nodeValue = value;
-                }.bind(td));
-            }
-*/
+            table.addCell(row, cell.value, style);
         },
 
         _addTable: function(ref, className, left, top, cell) {

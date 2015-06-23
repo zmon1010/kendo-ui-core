@@ -31,8 +31,7 @@ sheet.frozenColumns(3).frozenRows(6);
 sheet.range("A3:C7,10:10").select();
 
 for (var i = 0, len = 50; i < len; i++) {
-    var x = calc.parse("sheet1", i, 0, "=AVERAGE(L:L)");
-    sheet.range(i, 0).formula(kendo.spreadsheet.calc.compile(x));
+    sheet.range(i, 0).formula("=AVERAGE(L:L)");
 }
 
 spreadsheet.autoRefresh(true);

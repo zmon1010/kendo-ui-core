@@ -83,10 +83,10 @@
     });
 
     test("toJSON serializes cells with formulas", function() {
-        sheet.range("B2").formula("SUM(A1,A2)");
+        sheet.range("B2").formula("=SUM(A1,A2)");
         var json = sheet.toJSON();
 
-        equal(json.rows[0].cells[0].formula, "SUM(A1,A2)");
+        equal(json.rows[0].cells[0].formula, "=SUM(A1,A2)");
     });
 
     test("toJSON doesn't serialize empty style", function() {
@@ -250,14 +250,14 @@
                 {
                     cells: [
                         {
-                            formula: "SUM(A1)"
+                            formula: "=SUM(B1,B2)"
                         }
                     ]
                 }
             ]
         });
 
-        equal(sheet.range("A1").formula(), "SUM(A1)");
+        equal(sheet.range("A1").formula(), "=SUM(B1,B2)");
     });
 
     test("fromJSON triggers the change event once", 1, function() {
