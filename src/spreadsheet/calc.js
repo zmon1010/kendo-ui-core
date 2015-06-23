@@ -57,10 +57,10 @@
         if (name.indexOf(",") >= 0) {
             return new spreadsheet.UnionRef(name.split(/\s*,\s*/g).map(parseReference));
         }
-        var m;
-        if (m.toLowerCase() == "#sheet") {
+        if (name.toLowerCase() == "#sheet") {
             return spreadsheet.SHEETREF;
         }
+        var m;
         if ((m = /^\$?([A-Z]+)\$?([0-9]+)$/i.exec(name))) {
             return new spreadsheet.CellRef(getrow(m[2]), getcol(m[1]), 0);
         }
