@@ -459,4 +459,8 @@
     spreadsheet.RangeRef = RangeRef;
     spreadsheet.UnionRef = UnionRef;
 
+    spreadsheet.SHEETREF.print = function() {
+        return "#SHEET";
+    };
+
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
