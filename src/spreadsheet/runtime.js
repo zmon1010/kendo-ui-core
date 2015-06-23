@@ -255,7 +255,7 @@
                 for (var col = 0; col < this.width; ++col) {
                     var val = this.get(row, col);
                     if (includeEmpty || val != null) {
-                        var val = f.call(this.context, val, row, col);
+                        val = f.call(this.context, val, row, col);
                         if (val !== undefined) {
                             return val;
                         }

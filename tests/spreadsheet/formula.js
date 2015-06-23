@@ -1,6 +1,24 @@
 (function(){
 
-    module("Formula parser/printer/evaluator");
+    var ss;
+
+    module("Formula parser/printer/evaluator", {
+        setup: function() {
+            ss = new Spreadsheet();
+            ss.fill({
+                A1: 1, B1: 2, C1: 3,
+                A2: 4, B2: 5, C2: 6,
+                A3: 7, B3: 8, C3: 9,
+
+                e1: 1, e2: 2, e3: 3, e4: 4, e5: 5, e6: 6, e7: 7, e8: 8,
+                f2: 7, f3: 6, f4: 5, f5: 4, f6: 3, f7: 2, f8: 1,
+                g1: "aaa", g2: "bbb", g3: "ccc", g4: "ddd", g5: "eee", g6: "fff", g7: "ggg", g8: "hhh",
+                h1: "hhh", h2: "ggg", h3: "fff", h4: "eee", h5: "ddd", h6: "ccc", h7: "bbb", h8: "aaa",
+            });
+        },
+        teardown: function() {
+        }
+    });
 
     var spreadsheet = kendo.spreadsheet;
     var calc = spreadsheet.calc;
@@ -42,6 +60,11 @@
         getRefCells: function(ref) {
             if (ref instanceof spreadsheet.CellRef) {
                 var cell = this.get(ref.row, ref.col);
+                if (cell) {
+                    cell.sheet = "sheet1";
+                    cell.row = ref.row;
+                    cell.col = ref.col;
+                }
                 return cell ? [ cell ] : [];
             }
             if (ref instanceof spreadsheet.RangeRef) {
@@ -87,9 +110,7 @@
             if (ref instanceof spreadsheet.Ref) {
                 return ref;
             }
-            var x = calc.parse("sheet1", 0, 0, "=" + ref);
-            hasProps(x, { type: "exp", ast: { type: "ref" }});
-            return x.ast;
+            return calc.parseReference(ref);
         },
         set: function(row, col, val) {
             val = calc.parse("sheet1", row, col, val);
@@ -102,8 +123,8 @@
         },
         bounds: function() {
             return new spreadsheet.RangeRef(
-                new spreadsheet.CellRef(0, 0, 3),
-                new spreadsheet.CellRef(this.maxrow, this.maxcol, 3)
+                new spreadsheet.CellRef(0, 0, 0),
+                new spreadsheet.CellRef(this.maxrow, this.maxcol, 0)
             ).setSheet("sheet1");
         },
         get: function(row, col) {
@@ -141,6 +162,12 @@
         },
         $: function(x) {
             return this.getData(this.makeRef(x));
+        },
+        expectEqual: function(hash) {
+            var self = this;
+            Object.keys(hash).forEach(function(cell){
+                equal(self.$(cell), hash[cell]);
+            });
         }
     });
 
@@ -496,11 +523,7 @@
     /* -----[ expression evaluation ]----- */
 
     test("evaluate simple sum", function(){
-        var ss = new Spreadsheet();
         ss.fill({
-            A1: 1, B1: 2, C1: 3,
-            A2: 4, B2: 5, C2: 6,
-            A3: 7, B3: 8, C3: 9,
             D1: "=sum(A1:C3)"
         });
         ss.recalculate(function(){
@@ -509,11 +532,7 @@
     });
 
     test("evaluate average", function(){
-        var ss = new Spreadsheet();
         ss.fill({
-            A1: 1, B1: 2, C1: 3,
-            A2: 4, B2: 5, C2: 6,
-            A3: 7, B3: 8, C3: 9,
             D1: "=average(A1:C3)"
         });
         ss.recalculate(function(){
@@ -536,11 +555,7 @@
     });
 
     test("evaluate dependent formulas", function(){
-        var ss = new Spreadsheet();
         ss.fill({
-            A1: 1, B1: 2, C1: 3,
-            A2: 4, B2: 5, C2: 6,
-            A3: 7, B3: 8, C3: 9,
             D1: "=sum(A1:C3, D2)",
             D2: "=sum(A1:C3)"
         });
@@ -551,11 +566,7 @@
     });
 
     asyncTest("async formulas", function(){
-        var ss = new Spreadsheet();
         ss.fill({
-            A1: 1, B1: 2, C1: 3,
-            A2: 4, B2: 5, C2: 6,
-            A3: 7, B3: 8, C3: 9,
             D1: "=sum(A1:C3, D2)",
             D2: "=asum(100, A1:A3)",
             D3: "=asum(100, A1:A3, asum(200, B1:B3))",
@@ -565,7 +576,7 @@
         });
         var time = Date.now();
         ss.recalculate(function(){
-            console.log("recalculate async took " + (Date.now() - time) + " milliseconds");
+            //console.log("recalculate async took " + (Date.now() - time) + " milliseconds");
             start();
             equal(ss.getData(ss.makeRef("D1")), 57);
             equal(ss.getData(ss.makeRef("D2")), 12);
@@ -639,24 +650,6 @@
             equal(ss.getData(ss.makeRef("A6")), false);
             equal(ss.getData(ss.makeRef("A7")), 6);
             equal(ss.getData(ss.makeRef("A8")), "zero");
-        });
-    });
-
-    asyncTest("INDIRECT", function(){
-        var ss = new Spreadsheet();
-        ss.fill({
-            A1: 1,
-            A2: 2,
-            A3: 3,
-            B1: "a1",
-            C1: "a3",
-            A5: "=2 * indirect(\"A\" & ASUM(50, A1:A3))", // 2 * indirect('A6')
-            A6: "=asum(100, indirect(b1):indirect(c1))",
-        });
-        ss.recalculate(function(){
-            start();
-            equal(ss.getData(ss.makeRef("A5")), 12);
-            equal(ss.getData(ss.makeRef("A6")), 6);
         });
     });
 
@@ -788,6 +781,269 @@
             equal(ss.$("D10"), true);
             equal(ss.$("E10"), true);
             equal(ss.$("F10"), true);
+        });
+    });
+
+    /* -----[ lookup functions ]----- */
+
+    test("ADDRESS", function(){
+        ss.fill({
+            A4  : '=address(1,1)', // absolute
+            B4  : '=address(A1,B1,A2)', // take args from cell
+            A5  : '=address(1,1,1)', // absolute
+            A6  : '=address(1,1,2)', // absolute row, relative col
+            A7  : '=address(1,1,3)', // relative row, absolute col
+            A8  : '=address(1,1,4)', // relative
+            A9  : '=address(1,1,5)', // error
+            A10 : '=address(1,1,4,false)', // print in R[1]C[1] style
+            B10 : '=address(1,1,1,false)', // print in R[1]C[1] style, absolute
+            A11 : '=address(1,1,4,true)', // print in A1 style (default)
+            A12 : '=address(1,1,4,true,"Sheet2")', // add sheet information
+            A13 : '=address(1,1,,,"Sheet2")',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A4  : "$A$1", B4: "B1",
+                A5  : "$A$1",
+                A6  : "A$1",
+                A7  : "$A1",
+                A8  : "A1",
+                A9  : "#VALUE!",
+                A10 : "R[0]C[0]",
+                B10 : "R1C1",
+                A11 : "A1",
+                A12 : "Sheet2!A1",
+                A13 : "Sheet2!$A$1",
+            });
+        });
+    });
+
+    test("AREAS", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: '=areas(B2:D4)',
+            A2: '=areas((B2:D4,E5,F6:I9))',
+            A3: '=areas(B2:D4 B2)',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A1: 1, A2: 3, A3: 1
+            });
+        });
+    });
+
+    test("CHOOSE", function(){
+        ss.fill({
+            A4: '=choose(4, "a", "b", "c", "d", "e", "f")',
+            A5: '=choose(4, 1, 2)',
+            A6: '=choose(0)',
+            A7: '=choose(1, "x")',
+            A8: '=choose(B1:C2, "a", "b", "c", "d", "e", "f")'
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A4: "d",
+                A5: "#N/A!",
+                A6: "#VALUE!",
+                A7: "x",
+            });
+            // result of A8 should be a Matrix object
+            var m = ss.$("A8");
+            equal(m.get(0,0), "b");
+            equal(m.get(0,1), "c");
+            equal(m.get(1,0), "e");
+            equal(m.get(1,1), "f");
+        });
+    });
+
+    test("COLUMN", function(){
+        ss.fill({
+            c4: '=column()',
+            a4: '=column(d4)',
+            a5: '=column(a1:c3)'
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                c4: 3,
+                a4: 4,
+            });
+            equal(JSON.stringify(ss.$("a5").data), "[[1,2,3]]");
+        });
+    });
+
+    test("COLUMNS", function(){
+        ss.fill({
+            a4: '=columns(A1:C3)',
+            a5: '=columns(a1)',
+            a6: '=columns({ 1,2; 3,4,5 })'
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                a4: 3,
+                a5: 1,
+                a6: 3
+            });
+        });
+    });
+
+    test("formulatext", function(){
+        ss.fill({
+            a4: '=sum(a1:c3)',
+            b4: '=formulatext(a4)',
+            a5: '=areas((b2:d4, e5, f6:i9))',
+            b5: '=formulatext(a5)',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                a4: 45, a5: 3,
+                b4: 'sum(A1:C3)',
+                b5: 'areas((B2:D4,E5,F6:I9))'
+            });
+        });
+    });
+
+    test("hlookup", function(){
+        ss.fill({
+            a4: '=hlookup(2, a1:c3, 3)',
+            a5: '=hlookup(2.5, a1:c3, 3)',
+            a6: '=hlookup(2.5, a1:c3, 3, false)',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                a4: 8,
+                a5: 8,
+                a6: "#N/A!"
+            });
+        });
+    });
+
+    test("index", function(){
+        ss.fill({
+            a4: '=index(a1:c3, 2, 2)',
+            a5: '=index(a1:c3, 2)',
+            a6: '=index(a1:c3, , 2)'
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                a4: 5,
+            });
+            equal(JSON.stringify(ss.$("a5").data), "[[4,5,6]]");
+            equal(JSON.stringify(ss.$("a6").data), "[[2],[5],[8]]");
+        });
+    });
+
+    asyncTest("INDIRECT", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: 1,
+            A2: 2,
+            A3: 3,
+            B1: "a1",
+            C1: "a3",
+            A5: "=2 * indirect(\"A\" & ASUM(50, A1:A3))", // 2 * indirect('A6')
+            A6: "=asum(100, indirect(b1):indirect(c1))",
+        });
+        ss.recalculate(function(){
+            start();
+            equal(ss.getData(ss.makeRef("A5")), 12);
+            equal(ss.getData(ss.makeRef("A6")), 6);
+        });
+    });
+
+    test("MATCH", function(){
+        ss.fill({
+            a4  : '=match(3, e1:e8)',
+            a5  : '=match(3.5, e1:e8)',
+            a6  : '=match(3.5, e1:e8, 0)',
+            a7  : '=match(4, f1:f8, -1)',
+            a8  : '=match("d*", g1:g8, 0)',
+            a9  : '=match("dde", g1:g8)',
+            a10 : '=match("dde", h1:h8, -1)',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                a4  : 3,
+                a5  : 3,
+                a6  : "#N/A!",
+                a7  : 5,
+                a8  : 4,
+                a9  : 4,
+                a10 : 4
+            });
+        });
+    });
+
+    test("OFFSET", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            a1: '=offset(D5, 2, 3, 4, 5)',
+            a2: '=offset(d5:f7, -2, -3)',
+            a3: '=offset(d5:f7, -2, -4)',
+            a4: '=offset(D5, 1, -2)'
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                a1: '$G$7:$K$10',
+                a2: '$A$3:$C$5',
+                a3: '#VALUE!',
+                a4: '$B$6'
+            });
+        });
+    });
+
+    test("ROW", function(){
+        ss.fill({
+            c4: '=row()',
+            a4: '=row(d1)',
+            a5: '=row(a1:c3)'
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                c4: 4,
+                a4: 1,
+            });
+            equal(JSON.stringify(ss.$("a5").data), "[[1],[2],[3]]");
+        });
+    });
+
+    test("ROWS", function(){
+        ss.fill({
+            a4: '=rows(A1:C3)',
+            a5: '=rows(a1)',
+            a6: '=rows({ 1,2; 3,4,5 })'
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                a4: 3,
+                a5: 1,
+                a6: 2
+            });
+        });
+    });
+
+    test("TRANSPOSE", function(){
+        ss.fill({
+            a4: "=transpose(a1:c2)",
+            a5: "=transpose({1;2;3})"
+        });
+        ss.recalculate(function(){
+            equal(JSON.stringify(ss.$("a4").data), "[[1,4],[2,5],[3,6]]");
+            equal(JSON.stringify(ss.$("a5").data), "[[1,2,3]]");
+        });
+    });
+
+    test("vlookup", function(){
+        ss.fill({
+            a4: '=vlookup(4, a1:c3, 3)',
+            a5: '=vlookup(4.5, a1:c3, 3)',
+            a6: '=vlookup(4.5, a1:c3, 3, false)',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                a4: 6,
+                a5: 6,
+                a6: "#N/A!"
+            });
         });
     });
 
