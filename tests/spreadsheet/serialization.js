@@ -82,6 +82,13 @@
         ok(!json.rows[0].cells[0].hasOwnProperty("value"));
     });
 
+    test("toJSON serializes cells with formulas", function() {
+        sheet.range("B2").formula("SUM(A1,A2)");
+        var json = sheet.toJSON();
+
+        equal(json.rows[0].cells[0].formula, "SUM(A1,A2)");
+    });
+
     test("toJSON doesn't serialize empty style", function() {
         sheet.range("B2").value("foo");
         var json = sheet.toJSON();
@@ -235,6 +242,22 @@
         });
 
         equal(sheet.range("A1").background(), "red");
+    });
+
+    test("fromJSON loads cell formula", function() {
+        sheet.fromJSON({
+            rows: [
+                {
+                    cells: [
+                        {
+                            formula: "SUM(A1)"
+                        }
+                    ]
+                }
+            ]
+        });
+
+        equal(sheet.range("A1").formula(), "SUM(A1)");
     });
 
     test("fromJSON triggers the change event once", 1, function() {

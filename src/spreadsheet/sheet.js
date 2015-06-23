@@ -291,11 +291,13 @@
             this.forEach(kendo.spreadsheet.SHEETREF, function(data) {
                 var value = data.value;
                 var style = data.style;
+                var formula = data.formula;
 
                 var hasValue = value !== null;
                 var hasStyle = style !== null;
+                var hasFormula = formula !== null;
 
-                if (!hasValue && !hasStyle) {
+                if (!hasValue && !hasStyle && !hasFormula) {
                     return;
                 }
 
@@ -319,6 +321,10 @@
 
                 if (hasStyle) {
                     cell.style = style;
+                }
+
+                if (hasFormula) {
+                    cell.formula = formula;
                 }
 
                 if (row.cells === undefined) {
@@ -365,18 +371,22 @@
                     if (row.cells) {
                         for (var ci = 0; ci < row.cells.length; ci++) {
                             var cell = row.cells[ci];
-                            var cellIndex = cell.index;
+                            var columnIndex = cell.index;
 
-                            if (cellIndex === undefined) {
-                                cellIndex = ci;
+                            if (columnIndex === undefined) {
+                                columnIndex = ci;
                             }
 
                             if (cell.value !== null) {
-                                this.range(rowIndex, cellIndex).value(cell.value);
+                                this.range(rowIndex, columnIndex).value(cell.value);
                             }
 
                             if (cell.style !== null) {
-                                this.range(rowIndex, cellIndex)._style(cell.style);
+                                this.range(rowIndex, columnIndex)._style(cell.style);
+                            }
+
+                            if (cell.formula !== null) {
+                                this.range(rowIndex, columnIndex).formula(cell.formula);
                             }
                         }
                     }

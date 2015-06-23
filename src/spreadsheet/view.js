@@ -174,12 +174,13 @@
 
             var table = new HtmlTable(this.rowHeight, this.columnWidth);
 
+/*
             var formulaRanges = this._sheet._formulas.values();
 
             for (var i = 0, len = formulaRanges.length; i < len; i++) {
                 formulaRanges[i].value.reset();
             }
-
+*/
             rows.values.forEach(function(height) {
                 table.addRow(height);
             });
@@ -266,11 +267,13 @@
 
             var td = table.addCell(row, cell.value, style);
 
+/*
             if (formula) {
                 formula.exec(this._context, this._sheet.name(), cell.row, cell.col, function(value) {
                     this.children[0].nodeValue = value;
                 }.bind(td));
             }
+*/
         },
 
         _addTable: function(ref, className, left, top, cell) {
