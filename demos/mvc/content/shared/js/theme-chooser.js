@@ -211,15 +211,12 @@
         },
 
         updateLink: function(link, url) {
-            link = link.eq(0);
-
             var exampleElement = $("#example");
             var less = window.less;
             var isLess = /\.less$/.test(link.attr("href"));
             var browser = kendo.support.browser;
 
-            link.clone().attr("href", url).insertAfter(link);
-            link.remove();
+            link.eq(0).attr("href", url);
 
             if (isLess) {
                 $("head style[id^='less']").remove();
