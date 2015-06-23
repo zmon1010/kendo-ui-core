@@ -249,20 +249,6 @@
             table.addCell(row, cell.value, style);
         },
 
-        _addTable: function(ref, className, left, top, cell) {
-            var rectangle = this._grid.boundingRectangle(ref.toRangeRef());
-            var table = new HtmlTable(this.rowHeight, this.columnWidth);
-            table.addColumn(rectangle.width);
-            table.addRow(rectangle.height);
-            if (cell) {
-                this.addCell(table, 0, cell);
-            } else {
-                table.addCell(0, '');
-            }
-
-            return table.toDomTree(rectangle.left - left, rectangle.top - top, className);
-        },
-
         renderMergedCells: function(visibleRangeRef, left, top) {
             var mergedCells = [];
             var sheet = this._sheet;
@@ -270,7 +256,15 @@
             sheet.forEachMergedCell(function(ref) {
                 if (visibleRangeRef.intersects(ref)) {
                     sheet.forEach(ref.collapse(), function(cell) {
-                        mergedCells.push(this._addTable(ref, "k-spreadsheet-merged-cell", left, top, cell));
+
+                        var rectangle = this._grid.boundingRectangle(ref.toRangeRef());
+
+                        var table = new HtmlTable(this.rowHeight, this.columnWidth);
+                        table.addColumn(rectangle.width);
+                        table.addRow(rectangle.height);
+                        this.addCell(table, 0, cell);
+
+                        mergedCells.push(table.toDomTree(rectangle.left - left, rectangle.top - top,  "k-spreadsheet-merged-cell"));
                     }.bind(this));
                 }
             }.bind(this));
@@ -286,8 +280,9 @@
                 if (ref === kendo.spreadsheet.NULLREF) {
                     return;
                 }
+
                 if (visibleRangeRef.intersects(ref)) {
-                    selections.push(this._addTable(ref, "k-spreadsheet-selection", left, top));
+                    selections.push(this._grid.boundingRectangle(ref.toRangeRef()).offset(-left, -top).toDiv("k-spreadsheet-selection"));
                 }
             }.bind(this));
 

@@ -28,7 +28,7 @@ sheet.range(2, 2, 8, 6).background("teal").value("foo").merge();
 
 sheet.frozenColumns(3).frozenRows(6);
 
-sheet.range("A3:C7,10:10").select();
+sheet.range("K11:M16,12:12").select();
 
 for (var i = 0, len = 50; i < len; i++) {
     sheet.range(i, 0).formula("=AVERAGE(L:L)");

@@ -15,6 +15,22 @@
             this.top = top;
             this.height = height;
             this.bottom = top + height;
+        },
+
+        offset: function(left, top) {
+            return new Rectangle(this.left + left, this.top + top, this.width, this.height);
+        },
+
+        toDiv: function(className) {
+            return kendo.dom.element("div", {
+                className: className,
+                style: {
+                    width:  this.width + "px",
+                    height: this.height + "px",
+                    top:    this.top + "px",
+                    left:   this.left + "px"
+                }
+            });
         }
     });
 
