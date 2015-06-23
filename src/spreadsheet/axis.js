@@ -44,6 +44,19 @@
             return values;
         },
 
+        fromJSON: function(field, values) {
+            for (var idx = 0; idx < values.length; idx++) {
+                var value = values[idx][field];
+                var index = values[idx].index;
+
+                if (index === undefined) {
+                    index = idx;
+                }
+
+                this.value(index, index, value);
+            }
+        },
+
         hide: function(index) {
             var value = this.value(index, index);
             this._hidden.value(index, index, value);

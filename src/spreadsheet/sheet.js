@@ -332,6 +332,58 @@
                 rows: rows,
                 columns: columns
             };
+        },
+
+        fromJSON: function(json) {
+            var suspended = this.suspendChanges();
+
+            this.suspendChanges(true);
+
+            if (json.frozenColumns !== undefined) {
+                this.frozenColumns(json.frozenColumns);
+            }
+
+            if (json.frozenRows !== undefined) {
+                this.frozenRows(json.frozenRows);
+            }
+
+            if (json.columns !== undefined) {
+                this._columns.fromJSON("width", json.columns);
+            }
+
+            if (json.rows !== undefined) {
+                this._rows.fromJSON("height", json.rows);
+
+                for (var ri = 0; ri < json.rows.length; ri++) {
+                    var row = json.rows[ri];
+                    var rowIndex = row.index;
+
+                    if (rowIndex === undefined) {
+                        rowIndex = ri;
+                    }
+
+                    if (row.cells) {
+                        for (var ci = 0; ci < row.cells.length; ci++) {
+                            var cell = row.cells[ci];
+                            var cellIndex = cell.index;
+
+                            if (cellIndex === undefined) {
+                                cellIndex = ci;
+                            }
+
+                            if (cell.value !== null) {
+                                this.range(rowIndex, cellIndex).value(cell.value);
+                            }
+
+                            if (cell.style !== null) {
+                                this.range(rowIndex, cellIndex)._style(cell.style);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return this.suspendChanges(suspended).triggerChange();
         }
     });
 

@@ -128,4 +128,169 @@
         equal(json.sheets[0].rows.length, 0);
     });
 
+    test("fromJSON loads column widths", function() {
+        sheet.fromJSON({
+            columns: [
+                { index: 1, width: 33 }
+            ]
+        });
+
+        equal(sheet.columnWidth(1), 33);
+    });
+
+    test("fromJSON loads column widths with implicit index", function() {
+        sheet.fromJSON({
+            columns: [
+                { width: 33 }
+            ]
+        });
+
+        equal(sheet.columnWidth(0), 33);
+    });
+
+    test("fromJSON loads row heights", function() {
+        sheet.fromJSON({
+            rows: [
+                { index: 1, height: 33 }
+            ]
+        });
+
+        equal(sheet.rowHeight(1), 33);
+    });
+
+    test("fromJSON loads row heights with implicit index", function() {
+        sheet.fromJSON({
+            rows: [
+                { height: 33 }
+            ]
+        });
+
+        equal(sheet.rowHeight(0), 33);
+    });
+
+    test("fromJSON loads row cells", function() {
+        sheet.fromJSON({
+            rows: [
+                {
+                    index: 1,
+                    cells: [
+                        {
+                            index: 1,
+                            value: "B2"
+                        }
+                    ]
+                }
+            ]
+        });
+
+        equal(sheet.range("B2").value(), "B2");
+    });
+
+    test("fromJSON loads row cells with implicit row index", function() {
+        sheet.fromJSON({
+            rows: [
+                {
+                    cells: [
+                        {
+                            index: 1,
+                            value: "B1"
+                        }
+                    ]
+                }
+            ]
+        });
+
+        equal(sheet.range("B1").value(), "B1");
+    });
+
+    test("fromJSON loads row cells with implicit cell index", function() {
+        sheet.fromJSON({
+            rows: [
+                {
+                    cells: [
+                        {
+                            value: "A1"
+                        }
+                    ]
+                }
+            ]
+        });
+
+        equal(sheet.range("A1").value(), "A1");
+    });
+
+    test("fromJSON loads cell style", function() {
+        sheet.fromJSON({
+            rows: [
+                {
+                    cells: [
+                        {
+                            style: {
+                                background: "red"
+                            }
+                        }
+                    ]
+                }
+            ]
+        });
+
+        equal(sheet.range("A1").background(), "red");
+    });
+
+    test("fromJSON triggers the change event once", 1, function() {
+        sheet.bind("change", function() {
+            ok(true);
+        }).fromJSON({
+            rows: [
+                {
+                    cells: [
+                        {
+                            style: {
+                                background: "red",
+                                value: "foo"
+                            }
+                        },
+                        {
+                            style: {
+                                background: "red",
+                                value: "foo"
+                            }
+                        }
+                    ]
+                }
+            ]
+        });
+    });
+
+    test("fromJSON loads spreadsheet sheets", function() {
+        spreadsheet.fromJSON({
+            sheets: [
+                {
+                    rows: [
+                        {
+                            cells: [
+                                {
+                                    style: {
+                                        background: "red"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+
+        equal(sheet.range("A1").background(), "red");
+    });
+
+    test("fromJSON loads frozenColumns and frozenRows", function() {
+        sheet.fromJSON({
+            frozenColumns: 1,
+            frozenRows: 1
+        });
+
+        equal(sheet.frozenColumns(), 1);
+        equal(sheet.frozenRows(), 1);
+    });
 })();
