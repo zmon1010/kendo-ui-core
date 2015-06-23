@@ -70,8 +70,6 @@
 
             this._context = new kendo.spreadsheet.FormulaContext(context);
 
-            this._sheet.context(this._context);
-
             this._view.sheet(this.activeSheet());
 
             this.refresh();
@@ -87,6 +85,7 @@
         },
 
         refresh: function() {
+            this._sheet.recalc(this._context);
             this._view.refresh();
             this._view.render();
             this.trigger("render");
@@ -113,9 +112,10 @@
 
         toJSON: function() {
             return {
-                sheets: [
-                    this._sheet.toJSON()
-                ]
+                sheets: [this._sheet].map(function(sheet) {
+                    sheet.recalc(this._context);
+                    return sheet.toJSON();
+                }, this)
             };
         },
 

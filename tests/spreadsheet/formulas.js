@@ -1,14 +1,19 @@
 (function() {
     var sheet;
+    var spreadsheet;
+
     var defaults = kendo.ui.Spreadsheet.prototype.options;
 
-    module("Sheet formulas", {
+    module("Sheet serialization", {
         setup: function() {
-            sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,
-                defaults.rowHeight, defaults.columnWidth);
+            var element = $("<div>").appendTo(QUnit.fixture);
 
-            sheet.name("sheet1");
-            sheet.context(new kendo.spreadsheet.FormulaContext({ "sheet1": sheet }));
+            spreadsheet = new kendo.ui.Spreadsheet(element);
+
+            sheet = spreadsheet.activeSheet();
+        },
+        teardown: function() {
+            kendo.destroy(QUnit.fixture);
         }
     });
 

@@ -12,7 +12,7 @@
             this._sheet = sheet;
             this._ref = ref;
         },
-        _property: function(list, value, recalc) {
+        _property: function(list, value) {
             if (value !== undefined) {
                 this._ref.forEach(function(ref) {
                     ref = ref.toRangeRef();
@@ -25,11 +25,7 @@
                     }
                 }.bind(this));
 
-                if (recalc) {
-                    this._sheet.recalc();
-                } else {
-                    this._sheet.triggerChange();
-                }
+                this._sheet.triggerChange();
 
                 return this;
             } else {

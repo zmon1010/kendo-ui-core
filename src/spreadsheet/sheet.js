@@ -28,10 +28,6 @@
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
         },
 
-        context: function(context) {
-            this._context = context;
-        },
-
         name: function(value) {
             if (!value) {
                 return this._name;
@@ -407,43 +403,40 @@
             return this._compiledFormulas.value(index, index);
         },
 
-        recalc: function() {
-            return this.batch(function() {
-                var formulas = this._formulas.iterator(0, this.cellCount);
+        recalc: function(context) {
+            var formulas = this._formulas.iterator(0, this.cellCount);
 
-                for (var idx = 0; idx <= this.cellCount; idx++) {
-                    var formula = formulas.at(idx);
+            for (var idx = 0; idx <= this.cellCount; idx++) {
+                var formula = formulas.at(idx);
 
-                    if (formula !== null) {
-                        var cell = this._grid.cellRef(idx);
+                if (formula !== null) {
+                    var cell = this._grid.cellRef(idx);
 
-                        var compiled = this._compiledFormulas.value(idx, idx);
+                    var compiled = this._compiledFormulas.value(idx, idx);
 
-                        if (compiled === null) {
-                            var x = kendo.spreadsheet.calc.parse(this._name, cell.row, cell.col, formula);
+                    if (compiled === null) {
+                        var x = kendo.spreadsheet.calc.parse(this._name, cell.row, cell.col, formula);
 
-                            compiled = kendo.spreadsheet.calc.compile(x);
+                        compiled = kendo.spreadsheet.calc.compile(x);
 
-                            this._compiledFormulas.value(idx, idx, compiled);
-                        }
-
-                        compiled.reset();
+                        this._compiledFormulas.value(idx, idx, compiled);
                     }
+
+                    compiled.reset();
                 }
+            }
 
-                var compiledFormulas = this._compiledFormulas.iterator(0, this.cellCount);
+            var compiledFormulas = this._compiledFormulas.iterator(0, this.cellCount);
 
-                for (var idx = 0; idx <= this.cellCount; idx++) {
-                    var compiled = compiledFormulas.at(idx);
+            for (var idx = 0; idx <= this.cellCount; idx++) {
+                var compiled = compiledFormulas.at(idx);
 
-                    if (compiled !== null) {
-                        compiled.exec(this._context, this._name, cell.row, cell.col, function(value) {
-                            this._values.value(idx, idx, value);
-                        }.bind(this));
-                    }
+                if (compiled !== null) {
+                    compiled.exec(context, this._name, cell.row, cell.col, function(value) {
+                        this._values.value(idx, idx, value);
+                    }.bind(this));
                 }
-
-            }.bind(this));
+            }
         },
 
         batch: function(callback) {
