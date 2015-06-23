@@ -712,24 +712,19 @@
 
         function comp(x) {
             var name = x[0];
-            var type = x[1];
-            var isMany = Array.isArray(type) && /^\.\.\.?$/.test(type[0]) && type[0];
             var code = "";
-            if (isMany) {
-                code += isMany == "..." ? "do { " : "while (i < args.length) { ";
-                type = type.slice(1);
-            } else {
-                type = [ type ];
-            }
-            for (var i = 0; i < type.length; ++i) {
-                code += "var $" + name + " = v = args[i++]; if (v instanceof CalcError) return this.error(v); "
-                    + typeCheck(type[i]) + "xargs.push(v); ";
-            }
-            if (isMany) {
+            if (Array.isArray(name)) {
+                code += "while (i < args.length) { ";
+                code += x.map(comp).join("");
                 code += "} ";
-                if (isMany == "...") {
-                    code += "while (i < args.length); ";
-                }
+            } else if (name == "+") {
+                code += "do { ";
+                code += x.slice(1).map(comp).join("");
+                code += "} while (i < args.length); ";
+            } else {
+                var type = x[1];
+                code += "var $" + name + " = v = args[i++]; if (v instanceof CalcError) return this.error(v); "
+                    + typeCheck(type) + "xargs.push(v); ";
             }
             return code;
         }

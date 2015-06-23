@@ -370,8 +370,8 @@
             }
         }).call(this, index);
     }).args([
-        [ "index", [ "or", "matrix", "number++" ]],
-        [ "values", [ "...", "any*" ]]
+        [ "index", [ "or", "matrix", "number++" ] ],
+        [ "+", [ "value", "any*" ] ]
     ]);
 
     defineFunction("column", function(ref){
