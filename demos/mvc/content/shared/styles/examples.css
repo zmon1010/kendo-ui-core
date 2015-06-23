@@ -2411,16 +2411,14 @@ a.footer-links:hover,
 
 }
 
-#example-search-list li.k-state-hover {
+#example-search-list li.k-state-hover,
+#example-search-list li.k-state-focused {
     background: #cad0d6;
     border-radius: 0;
 }
 
-#example-search-list li.k-state-focused {
-    border-radius: 0;
-}
-
-#example-search-list li.k-state-hover a {
+#example-search-list li.k-state-hover a,
+#example-search-list li.k-state-focused a {
       color: #000;
       text-decoration: none;
 }

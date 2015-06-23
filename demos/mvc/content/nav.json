@@ -2200,18 +2200,6 @@
         ]
       },
       {
-        "text": "Adaptive Rendering",
-        "url": "grid/adaptive",
-        "title": {
-            "kendo-ui": "Adaptive Rendering of Kendo UI Grid"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
         "text": "AngularJS",
         "url": "grid/angular",
         "title": {
@@ -4187,18 +4175,6 @@
         },
         "meta": {
             "kendo-ui": "Events, source and visible MVVM binding support in Kendo UI Scheduler"
-        },
-        "packages": [
-          "!mvc",
-          "!jsp",
-          "!php"
-        ]
-      },
-      {
-        "text": "Adaptive Rendering",
-        "url": "scheduler/adaptive",
-        "title": {
-            "kendo-ui": "Adaptive Rendering of Kendo UI Scheduler"
         },
         "packages": [
           "!mvc",
