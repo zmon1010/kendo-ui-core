@@ -397,10 +397,15 @@
             }.bind(this));
         },
 
+        compiledFormula: function(ref) {
+            var index = this._grid.cellRefIndex(ref);
+
+            return this._compiledFormulas.value(index, index);
+        },
+
         recalc: function() {
             return this.batch(function() {
                 var formulas = this._formulas.iterator(0, this.cellCount);
-                var compiledFormulas = this._compiledFormulas.iterator(0, this.cellCount);
 
                 for (var idx = 0; idx <= this.cellCount; idx++) {
                     var formula = formulas.at(idx);
@@ -408,7 +413,7 @@
                     if (formula !== null) {
                         var cell = this._grid.cellRef(idx);
 
-                        var compiled = compiledFormulas.at(idx);
+                        var compiled = this._compiledFormulas.value(idx, idx);
 
                         if (compiled === null) {
                             var x = kendo.spreadsheet.calc.parse(this._name, cell.row, cell.col, formula);
@@ -419,12 +424,21 @@
                         }
 
                         compiled.reset();
+                    }
+                }
 
+                var compiledFormulas = this._compiledFormulas.iterator(0, this.cellCount);
+
+                for (var idx = 0; idx <= this.cellCount; idx++) {
+                    var compiled = compiledFormulas.at(idx);
+
+                    if (compiled !== null) {
                         compiled.exec(this._context, this._name, cell.row, cell.col, function(value) {
                             this._values.value(idx, idx, value);
                         }.bind(this));
                     }
                 }
+
             }.bind(this));
         },
 

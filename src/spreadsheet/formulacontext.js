@@ -17,7 +17,7 @@
         getRefCells: function(ref) {
             if (ref instanceof CellRef) {
                 var sheet = this.sheet(ref);
-                var formula = sheet.range(ref.row, ref.col).formula() || null;
+                var formula = sheet.compiledFormula(ref);
                 var value = sheet.range(ref.row, ref.col).value();
 
                 if (formula != null || value != null) {
@@ -41,7 +41,6 @@
                 var startCellIndex = sheet._grid.cellRefIndex(tl);
                 var endCellIndex = sheet._grid.cellRefIndex(br);
 
-                var formulas = sheet._formulas.iterator(startCellIndex, endCellIndex);
                 var values = sheet._values.iterator(startCellIndex, endCellIndex);
 
                 var states = [];
@@ -49,7 +48,7 @@
                 for (var col = tl.col; col <= br.col; ++col) {
                     for (var row = tl.row; row <= br.row; ++row) {
                         var index = sheet._grid.index(row, col);
-                        var formula = formulas.at(index) || null;
+                        var formula = sheet._compiledFormulas.value(index, index);
                         var value = values.at(index);
                         if (formula != null || value != null) {
                             states.push({ formula: formula, value: value, row: row, col: col, sheet: ref.sheet });
