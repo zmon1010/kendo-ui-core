@@ -33,7 +33,7 @@
         sheet.range("A1").value(1);
         sheet.range("A2").value(2);
         sheet.range("A3").formula("=(A1+A2)")
-        sheet.range("A4").formula("=(A3)")
+        sheet.range("A4").formula("=(A3+0)")
         sheet.range("A2").value(3);
 
         equal(sheet.range("A4").value(), 4);
