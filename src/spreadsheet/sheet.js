@@ -283,8 +283,10 @@
         },
 
         toJSON: function() {
-            var rows = [];
             var positions = {};
+
+            var rows = this._rows.toJSON("height", positions);
+            var columns = this._columns.toJSON("width", {});
 
             this.forEach(kendo.spreadsheet.SHEETREF, function(data) {
                 var value = data.value;
@@ -302,10 +304,7 @@
                 if (position === undefined) {
                     position = rows.length;
 
-                    rows.push({
-                        index: data.row,
-                        cells: []
-                    });
+                    rows.push({ index: data.row });
 
                     positions[data.row] = position;
                 }
@@ -322,11 +321,16 @@
                     cell.style = style;
                 }
 
+                if (row.cells === undefined) {
+                    row.cells = [];
+                }
+
                 row.cells.push(cell);
             });
 
             return {
-                rows: rows
+                rows: rows,
+                columns: columns
             };
         }
     });

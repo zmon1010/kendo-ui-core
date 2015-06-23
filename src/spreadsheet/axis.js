@@ -5,11 +5,43 @@
 (function(kendo) {
     var Axis = kendo.Class.extend({
         init: function(count, value) {
+            this._value = value;
+            this._count = count;
             this.values = new kendo.spreadsheet.RangeList(0, count - 1, value);
             this._hidden = new kendo.spreadsheet.RangeList(0, count - 1, 0);
 
             this.scrollBarSize = kendo.support.scrollbar();
             this._refresh();
+        },
+
+        toJSON: function(field, positions) {
+            var values = [];
+
+            var iterator = this.values.iterator(0, this._count - 1);
+
+            for (var idx = 0; idx < this._count; idx++) {
+                var value = iterator.at(idx);
+
+                if (value === this._value) {
+                    continue;
+                }
+
+                var position = positions[idx];
+
+                if (position === undefined) {
+                    position = values.length;
+
+                    var item = { index: idx };
+
+                    item[field] = value;
+
+                    values.push(item);
+
+                    positions[idx] = position;
+                }
+            }
+
+            return values;
         },
 
         hide: function(index) {

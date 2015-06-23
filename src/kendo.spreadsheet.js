@@ -106,6 +106,14 @@
             return this._sheet;
         },
 
+        toJSON: function() {
+            return {
+                sheets: [
+                    this._sheet.toJSON()
+                ]
+            };
+        },
+
         options: {
             name: "Spreadsheet",
             rows: 200,
