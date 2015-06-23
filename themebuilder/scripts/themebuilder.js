@@ -3,7 +3,6 @@
     var proxy = $.proxy,
         extend = $.extend,
         map = $.map,
-        CLICK = "click",
         CHANGE = "change",
         ui = kendo.ui,
         colorInput = "ktb-colorinput",
