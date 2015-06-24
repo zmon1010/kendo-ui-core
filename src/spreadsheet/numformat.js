@@ -1,7 +1,7 @@
 // -*- fill-column: 100 -*-
 
 (function(f, define){
-    define([ "./calc" ], f);
+    define([ "./calc", "../kendo.dom" ], f);
 })(function(){
 
     "use strict";
@@ -246,9 +246,7 @@
         }
 
         if (format.color) {
-            code += "output += "
-                + JSON.stringify("<span style='color: " + format.color + "'>")
-                + "; ";
+            code += "element.attr.style = { color: " + JSON.stringify(format.color) + "}; ";
         }
 
         function checkComma(a, b) {
@@ -325,13 +323,15 @@
                 code += "output += culture.numberFormat.percent.symbol; ";
             }
             else if (tok.type == "str") {
-                code += "output += " + JSON.stringify(kendo.htmlEncode(tok.value)) + "; ";
+                code += "output += " + JSON.stringify(tok.value) + "; ";
             }
             else if (tok.type == "text") {
-                code += "output += kendo.htmlEncode(value); ";
+                code += "output += value; ";
             }
             else if (tok.type == "space") {
-                code += "output += runtime.space(" + JSON.stringify(tok.value) + "); ";
+                code += "element.children.push(dom.text(output)); ";
+                code += "output = ''; ";
+                code += "element.children.push(dom.element('span', { style: { visibility: 'hidden' }}, [ dom.text(" + JSON.stringify(tok.value) + ") ])); ";
             }
             else if (tok.type == "fill") {
                 code += "output += runtime.fill(" + JSON.stringify(tok.value) + "); ";
@@ -358,11 +358,8 @@
             }
         }
 
-        if (format.color) {
-            code += "output += " + JSON.stringify("</span>") + "; ";
-        }
-
-        code += "return output; ";
+        code += "element.children.push(dom.text(output)); ";
+        code += "return element; ";
 
         if (format.cond) {
             code += "}";
@@ -382,8 +379,8 @@
         code = "return function(value, culture){ "
             + "'use strict'; "
             + "if (!culture) culture = kendo.culture(); "
-            + "var output = ''; " + code + "};";
-        return (CACHE[format] = new Function("runtime", code)(runtime));
+            + "var output = '', element = dom.element('span'); " + code + "};";
+        return (CACHE[format] = new Function("runtime", "dom", code)(runtime, kendo.dom));
     }
 
     var runtime = {
