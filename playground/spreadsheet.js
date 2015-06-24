@@ -26,6 +26,8 @@ sheet.rowHeight(50, 200);
 sheet.range(1, 0, 50).background("green");
 sheet.range(2, 2, 8, 6).background("teal").value("foo").merge();
 
+sheet.range("C1").value(10).format('[Red]+0.0;;;"Some text:" @');
+
 sheet.frozenColumns(3).frozenRows(6);
 
 sheet.range("K11:M16,12:12").select();

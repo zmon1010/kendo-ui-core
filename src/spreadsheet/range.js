@@ -57,7 +57,7 @@
 
         },
         value: function(value) {
-            return this._property(this._sheet._values, value, true);
+            return this._property(this._sheet._values, value);
         },
         fontColor: function(value) {
             return this._styleProperty("fontColor", value);
@@ -104,7 +104,11 @@
         },
 
         formula: function(value) {
-            return this._property(this._sheet._formulas, value, true);
+            return this._property(this._sheet._formulas, value);
+        },
+
+        format: function(value) {
+            return this._property(this._sheet._formats, value);
         },
 
         merge: function() {

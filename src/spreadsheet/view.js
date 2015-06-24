@@ -247,7 +247,12 @@
                 }
             }
 
-            table.addCell(row, cell.value, style);
+            var td = table.addCell(row, cell.value, style);
+
+            if (cell.format && cell.value !== null) {
+                var formatter = kendo.spreadsheet.formatting.compile(cell.format);
+                td.children[0] = formatter(cell.value);
+            }
         },
 
         renderMergedCells: function(visibleRangeRef, left, top) {

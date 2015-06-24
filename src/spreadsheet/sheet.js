@@ -15,6 +15,7 @@
 
             this._values = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._formats = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._compiledFormulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._styles = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
@@ -152,6 +153,7 @@
 
                 var values = this._values.iterator(startCellIndex, endCellIndex);
                 var formulas = this._formulas.iterator(startCellIndex, endCellIndex);
+                var formats = this._formats.iterator(startCellIndex, endCellIndex);
                 var styles = this._styles.iterator(startCellIndex, endCellIndex);
 
                 for (var ri = topLeft.row; ri <= bottomRight.row; ri ++) {
@@ -162,6 +164,7 @@
                         col: ci,
                         value: values.at(index),
                         formula: formulas.at(index),
+                        format: formats.at(index),
                         style: JSON.parse(styles.at(index))
                     });
                 }
@@ -297,12 +300,14 @@
                 var value = data.value;
                 var style = data.style;
                 var formula = data.formula;
+                var format = data.format;
 
                 var hasValue = value !== null;
                 var hasStyle = style !== null;
                 var hasFormula = formula !== null;
+                var hasFormat = format !== null;
 
-                if (!hasValue && !hasStyle && !hasFormula) {
+                if (!hasValue && !hasStyle && !hasFormula && !hasFormat) {
                     return;
                 }
 
@@ -330,6 +335,10 @@
 
                 if (hasFormula) {
                     cell.formula = formula;
+                }
+
+                if (hasFormat) {
+                    cell.format = format;
                 }
 
                 if (row.cells === undefined) {
@@ -389,6 +398,10 @@
 
                                 if (cell.formula !== null) {
                                     this.range(rowIndex, columnIndex).formula(cell.formula);
+                                }
+
+                                if (cell.format !== null) {
+                                    this.range(rowIndex, columnIndex).format(cell.format);
                                 }
                             }
                         }

@@ -30,6 +30,7 @@
         equal(json.rows.length, 2);
     });
 
+
     test("toJSON serializes the index of the row", function() {
         sheet.range("A2").value("bar");
 
@@ -46,6 +47,22 @@
         equal(json.rows.length, 1);
         equal(json.rows[0].index, 1);
         equal(json.rows[0].cells.length, 1);
+    });
+
+    test("toJSON serializes cells that have format", function() {
+        sheet.range("B2").format("#.#");
+        var json = sheet.toJSON();
+
+        equal(json.rows.length, 1);
+        equal(json.rows[0].index, 1);
+        equal(json.rows[0].cells.length, 1);
+    });
+
+    test("toJSON serializes cell format", function() {
+        sheet.range("B2").format("#.#");
+        var json = sheet.toJSON();
+
+        equal(json.rows[0].cells[0].format, "#.#");
     });
 
     test("toJSON serializes cell index", function() {
@@ -258,6 +275,22 @@
         });
 
         equal(sheet.range("A1").formula(), "=SUM(B1,B2)");
+    });
+
+    test("fromJSON loads cell formula", function() {
+        sheet.fromJSON({
+            rows: [
+                {
+                    cells: [
+                        {
+                            format: "#.#"
+                        }
+                    ]
+                }
+            ]
+        });
+
+        equal(sheet.range("A1").format(), "#.#");
     });
 
     test("fromJSON triggers the change event once", 1, function() {
