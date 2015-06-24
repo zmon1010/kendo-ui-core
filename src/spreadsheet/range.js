@@ -170,7 +170,9 @@
                 throw new Error("Unsupported for multiple ranges.");
             }
 
-            return this._sheet.values(this._ref.toRangeRef(), values);
+            this._sheet.values(this._ref.toRangeRef(), values);
+
+            return this;
         }
     });
 
