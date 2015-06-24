@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core", "./references" ], f);
+    define([ "../kendo.core", "./runtime", "./references" ], f);
 })(function(){
 
 (function(kendo) {
@@ -433,7 +433,15 @@
 
             compiledFormulas.forEach(function(value) {
                 value.formula.exec(context, this._name, value.cell.row, value.cell.col, function(result) {
-                    this._values.value(value.index, value.index, result);
+                    var index = value.index;
+                    if (result instanceof kendo.spreadsheet.calc.runtime.Matrix) {
+                        result.each(function(value, row, col) {
+                            var index = this._grid.index(row, col);
+                            this._values.value(index, index, value);
+                        }.bind(this));
+                    } else {
+                        this._values.value(value.index, value.index, result);
+                    }
                 }.bind(this));
             }, this);
         },
