@@ -72,6 +72,8 @@
 
             this._view.sheet(this.activeSheet());
 
+            this.fromJSON(this.options);
+
             this.refresh();
         },
 

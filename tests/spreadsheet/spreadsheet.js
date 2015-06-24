@@ -1,9 +1,10 @@
 (function() {
     var spreadsheet;
+    var element;
 
     module("Spreadsheet API", {
         setup: function() {
-            var element = $("<div>").appendTo(QUnit.fixture);
+            element = $("<div>").appendTo(QUnit.fixture);
 
             spreadsheet = new kendo.ui.Spreadsheet(element);
         },
@@ -39,4 +40,28 @@
             ok(true);
         }).autoRefresh(false).autoRefresh(true);
     });
+
+    test("loads sheets from options", function() {
+        kendo.destroy(QUnit.fixture);
+        spreadsheet = new kendo.ui.Spreadsheet(element, {
+            sheets: [
+                {
+                    rows: [
+                        {
+                            cells: [
+                                {
+                                    style: {
+                                        background: "red"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+
+        equal(spreadsheet.activeSheet().range("A1").background(), "red");
+    });
+
 })();
