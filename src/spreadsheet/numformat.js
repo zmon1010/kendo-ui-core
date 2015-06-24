@@ -371,14 +371,19 @@
         return code;
     }
 
+    var CACHE = {};
+
     function compile(format) {
+        if (Object.prototype.hasOwnProperty.call(CACHE, format)) {
+            return CACHE[format];
+        }
         var tree = parse(format);
         var code = tree.map(compileFormatPart).join("\n");
         code = "return function(value, culture){ "
             + "'use strict'; "
             + "if (!culture) culture = kendo.culture(); "
             + "var output = ''; " + code + "};";
-        return new Function("runtime", code)(runtime);
+        return (CACHE[format] = new Function("runtime", code)(runtime));
     }
 
     var runtime = {
