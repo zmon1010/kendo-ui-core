@@ -28,7 +28,7 @@
 
         sheet.range("A1:C2").select();
 
-        var selections = pane.renderSelection(rangeRef(0,0, 100, 100));
+        var selections = pane.renderSelection(rangeRef(0,0, 100, 100)).children;
         var table = selections[0];
 
         equal(selections.length, 1);
@@ -42,7 +42,7 @@
 
         sheet.range("A1:C2,C2:D3").select();
 
-        var selections = pane.renderSelection(rangeRef(0,0, 100, 100));
+        var selections = pane.renderSelection(rangeRef(0,0, 100, 100)).children;
 
         equal(selections.length, 2);
 
@@ -64,7 +64,7 @@
 
         sheet.range("B3:B3").select();
 
-        var selections = pane.renderSelection(rangeRef(0,0, 100, 100));
+        var selections = pane.renderSelection(rangeRef(0,0, 100, 100)).children;
 
         equal(selections.length, 1);
 
@@ -80,7 +80,7 @@
 
         sheet.range("C2:D3,B5:B5").select();
 
-        var selections = pane.renderSelection(rangeRef(0,0, 100, 100));
+        var selections = pane.renderSelection(rangeRef(0,0, 100, 100)).children;
 
         equal(selections.length, 2);
 
@@ -115,7 +115,7 @@
         sheet.range("B2:C3").merge().value("foo");
         sheet.range("A1:B2").select();
 
-        var selections = pane.renderSelection(rangeRef(0,0, 100, 100));
+        var selections = pane.renderSelection(rangeRef(0,0, 100, 100)).children;
 
         equal(selections.length, 1);
 

@@ -28,7 +28,7 @@
 
         sheet.range(0, 0, 2, 3).merge().value("foo");
 
-        var mergedCells = pane.renderMergedCells(rangeRef(0,0, 100, 100), 0, 0);
+        var mergedCells = pane.renderMergedCells(rangeRef(0,0, 100, 100), 0, 0).children;
         var table = mergedCells[0];
 
         equal(mergedCells.length, 1);
@@ -45,7 +45,7 @@
         sheet.range(0, 0, 2, 2).merge();
         sheet.range(2, 2, 2, 2).merge();
 
-        var mergedCells = pane.renderMergedCells(rangeRef(0,0, 100, 100), 0, 0);
+        var mergedCells = pane.renderMergedCells(rangeRef(0,0, 100, 100), 0, 0).children;
 
         equal(mergedCells.length, 2);
     });
@@ -55,7 +55,7 @@
 
         sheet.range(0, 0, 2, 2).merge();
 
-        var mergedCells = pane.renderMergedCells(rangeRef(0, 3, 100, 100), 0, 0);
+        var mergedCells = pane.renderMergedCells(rangeRef(0, 3, 100, 100), 0, 0).children;
 
         equal(mergedCells.length, 0);
     });
