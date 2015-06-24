@@ -7,6 +7,9 @@
         setup: function() {
             sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);
             range = sheet.range(0, 0);
+        },
+        teardown: function() {
+            sheet.unbind();
         }
     });
 
@@ -303,6 +306,17 @@
         equal(sheet.range("A3").value(), null);
     });
 
+    test("clearContent clears the formula", function() {
+        sheet.range("A1").value(1);
+
+        sheet.range("A2")
+            .formula("=SUM(A1:A1)")
+            .clearContent();
+
+        equal(sheet.range("A2").formula(), null);
+        equal(sheet.range("A2").value(), null);
+    });
+
     test("clearFormat clears only the range style", function() {
         sheet.range("A1:A3")
             .value("foo")
@@ -318,5 +332,15 @@
         equal(sheet.range("A3").value(), "foo");
     });
 
+    test("setting formula to null triggers change", 2, function() {
+        sheet.bind("change", function() {
+            ok(true);
+        });
+
+        sheet.range("A2")
+            .formula(null);
+
+        equal(sheet.range("A2").formula(), null);
+    });
 
 })();

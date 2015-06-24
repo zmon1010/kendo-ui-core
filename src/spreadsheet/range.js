@@ -103,12 +103,23 @@
             return JSON.parse(this._property(this._sheet._styles, value));
         },
 
-        formula: function(value) {
-            return this._property(this._sheet._formulas, value);
-        },
-
         format: function(value) {
             return this._property(this._sheet._formats, value);
+        },
+
+        formula: function(value) {
+            if (value === null) {
+
+                var sheet = this._sheet;
+                sheet.batch(function() {
+                    this._property(this._sheet._formulas, null, true);
+                    this.value(null);
+                }.bind(this));
+
+                return this;
+            }
+
+            return this._property(this._sheet._formulas, value, true);
         },
 
         merge: function() {
@@ -184,7 +195,7 @@
             var clearAll = !options || !Object.keys(options).length;
 
             if (clearAll || (options && options.contentsOnly === true)) {
-                this.value(null);
+                this.formula(null);
             }
 
             if (clearAll || (options && options.formatOnly === true)) {
