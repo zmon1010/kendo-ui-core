@@ -761,6 +761,9 @@
                 if (type[0] == "between") {
                     return "(" + force() + " >= " + type[1] + " && " + "v <= " + type[2] + ")";
                 }
+                if (type[0] == "assert") {
+                    return "(" + type[1] + ")";
+                }
                 throw new Error("Unknown array type condition: " + type[0]);
             }
             if (type == "number") {
