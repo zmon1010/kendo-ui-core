@@ -177,6 +177,29 @@
             }
 
             return this;
+        },
+
+        clear: function(options) {
+
+            var clearAll = !options || !Object.keys(options).length;
+
+            if (clearAll || (options && options.contentsOnly === true)) {
+                this.value(null);
+            }
+
+            if (clearAll || (options && options.formatOnly === true)) {
+                this._style(null);
+            }
+
+            return this;
+        },
+
+        clearContent: function() {
+            return this.clear({ contentsOnly: true });
+        },
+
+        clearFormat: function() {
+            return this.clear({ formatOnly: true });
         }
     });
 

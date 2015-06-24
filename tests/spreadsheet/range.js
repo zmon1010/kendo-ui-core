@@ -212,4 +212,111 @@
         equal(sheet.range("B3").value(), "B3");
         equal(sheet.range("C3").value(), "C3");
     });
+
+    test("clear set the range content and style to default", function() {
+        sheet.range("A1:A3")
+            .value("foo")
+            .background("red")
+            .clear();
+
+        equal(sheet.range("A1").background(), null);
+        equal(sheet.range("A2").background(), null);
+        equal(sheet.range("A3").background(), null);
+
+        equal(sheet.range("A1").value(), null);
+        equal(sheet.range("A2").value(), null);
+        equal(sheet.range("A3").value(), null);
+    });
+
+    test("clear clears the range content and style when options is empty object", function() {
+        sheet.range("A1:A3")
+            .value("foo")
+            .background("red")
+            .clear({});
+
+        equal(sheet.range("A1").background(), null);
+        equal(sheet.range("A2").background(), null);
+        equal(sheet.range("A3").background(), null);
+
+        equal(sheet.range("A1").value(), null);
+        equal(sheet.range("A2").value(), null);
+        equal(sheet.range("A3").value(), null);
+    });
+
+    test("clear clears only the range content when called with contentsOnly option", function() {
+        sheet.range("A1:A3")
+            .value("foo")
+            .background("red")
+            .clear({ contentsOnly: true });
+
+        equal(sheet.range("A1").background(), "red");
+        equal(sheet.range("A2").background(), "red");
+        equal(sheet.range("A3").background(), "red");
+
+        equal(sheet.range("A1").value(), null);
+        equal(sheet.range("A2").value(), null);
+        equal(sheet.range("A3").value(), null);
+    });
+
+    test("clear clears only the range style when called with formatOnly option", function() {
+        sheet.range("A1:A3")
+            .value("foo")
+            .background("red")
+            .clear({ formatOnly: true });
+
+        equal(sheet.range("A1").background(), null);
+        equal(sheet.range("A2").background(), null);
+        equal(sheet.range("A3").background(), null);
+
+        equal(sheet.range("A1").value(), "foo");
+        equal(sheet.range("A2").value(), "foo");
+        equal(sheet.range("A3").value(), "foo");
+    });
+
+    test("clear clears only the range content when called with contentsOnly=true formatOnly=false option", function() {
+        sheet.range("A1:A3")
+            .value("foo")
+            .background("red")
+            .clear({ contentsOnly: true, formatOnly: false });
+
+        equal(sheet.range("A1").background(), "red");
+        equal(sheet.range("A2").background(), "red");
+        equal(sheet.range("A3").background(), "red");
+
+        equal(sheet.range("A1").value(), null);
+        equal(sheet.range("A2").value(), null);
+        equal(sheet.range("A3").value(), null);
+    });
+
+    test("clearContent clears only the range content", function() {
+        sheet.range("A1:A3")
+            .value("foo")
+            .background("red")
+            .clearContent();
+
+        equal(sheet.range("A1").background(), "red");
+        equal(sheet.range("A2").background(), "red");
+        equal(sheet.range("A3").background(), "red");
+
+        equal(sheet.range("A1").value(), null);
+        equal(sheet.range("A2").value(), null);
+        equal(sheet.range("A3").value(), null);
+    });
+
+    test("clearFormat clears only the range style", function() {
+        sheet.range("A1:A3")
+            .value("foo")
+            .background("red")
+            .clearFormat();
+
+        equal(sheet.range("A1").background(), null);
+        equal(sheet.range("A2").background(), null);
+        equal(sheet.range("A3").background(), null);
+
+        equal(sheet.range("A1").value(), "foo");
+        equal(sheet.range("A2").value(), "foo");
+        equal(sheet.range("A3").value(), "foo");
+    });
+
+
 })();
