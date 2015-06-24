@@ -5,6 +5,7 @@
 (function(kendo) {
     var CellRef = kendo.spreadsheet.CellRef;
     var RangeRef = kendo.spreadsheet.RangeRef;
+    var UnionRef = kendo.spreadsheet.UnionRef;
 
     var Rectangle = kendo.Class.extend({
         init: function(left, top, width, height) {
@@ -72,10 +73,24 @@
             return this.index(ref.row, ref.col);
         },
 
-        normalize: function(cellRef) {
-            var clone = cellRef.clone();
-            clone.col = Math.max(0, Math.min(this.columnCount - 1, cellRef.col));
-            clone.row = Math.max(0, Math.min(this.rowCount - 1, cellRef.row));
+        normalize: function(ref) {
+            if (ref instanceof RangeRef) {
+                return new RangeRef(
+                    this.normalize(ref.topLeft),
+                    this.normalize(ref.bottomRight)
+                );
+            }
+
+            if (ref instanceof UnionRef) {
+                return ref.map(function(ref) {
+                    return this.normalize(ref);
+                }.bind(this));
+            }
+
+            var clone = ref.clone();
+            clone.col = Math.max(0, Math.min(this.columnCount - 1, ref.col));
+            clone.row = Math.max(0, Math.min(this.rowCount - 1, ref.row));
+
             return clone;
         },
 

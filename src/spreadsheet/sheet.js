@@ -231,7 +231,7 @@
         },
 
         selection: function() {
-            return new Range(this._selection, this);
+            return new Range(this._grid.normalize(this._selection), this);
         },
 
         selectedHeaders: function() {
