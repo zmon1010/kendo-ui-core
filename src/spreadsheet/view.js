@@ -120,6 +120,7 @@
 
         render: function() {
             var element = this.wrapper[0];
+            var grid = this._sheet._grid;
 
             var scrollTop = element.scrollTop;
             var scrollLeft = element.scrollLeft;
@@ -138,6 +139,10 @@
 
             var merged = [];
             merged = Array.prototype.concat.apply(merged, result);
+
+            var topCorner = kendo.dom.element("div", { style: { width: grid._headerWidth + "px", height: grid._headerHeight + "px" }, className: "k-spreadsheet-top-corner" });
+            merged.push(topCorner);
+
             this.tree.render(merged);
         }
     });
@@ -182,6 +187,10 @@
 
             children.push(table.toDomTree(view.columnOffset, view.rowOffset));
 
+            children = children.concat(this.renderMergedCells(view.ref, view.mergedCellLeft, view.mergedCellTop));
+
+            children = children.concat(this.renderSelection(view.ref, view.mergedCellLeft, view.mergedCellTop));
+
             if (grid.hasRowHeader) {
                 var rowHeader = new HtmlTable(this.rowHeight, grid.headerWidth);
                 rowHeader.addColumn(grid.headerWidth);
@@ -214,10 +223,6 @@
 
                 children.push(columnHeader.toDomTree(view.columnOffset, 0, "k-spreadsheet-column-header"));
             }
-
-            children = children.concat(this.renderMergedCells(view.ref, view.mergedCellLeft, view.mergedCellTop));
-
-            children = children.concat(this.renderSelection(view.ref, view.mergedCellLeft, view.mergedCellTop));
 
             return kendo.dom.element("div", { style: grid.style, className: "k-spreadsheet-pane" }, children);
         },

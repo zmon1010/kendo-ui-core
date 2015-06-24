@@ -171,8 +171,8 @@
 
         var tables = pane.render(1000, 1000).children;
 
-        var rowHeaderCells = tables[1].children[1].children;
-        var colHeaderCells = tables[2].children[1].children[0].children;
+        var rowHeaderCells = tables[3].children[1].children;
+        var colHeaderCells = tables[4].children[1].children[0].children;
 
         equal(rowHeaderCells[0].children[0].attr.className, "active");
         equal(rowHeaderCells[1].children[0].attr.className, "active");
@@ -190,8 +190,8 @@
 
         var tables = pane.render(1000, 1000).children;
 
-        var rowHeaderCells = tables[1].children[1].children;
-        var colHeaderCells = tables[2].children[1].children[0].children;
+        var rowHeaderCells = tables[3].children[1].children;
+        var colHeaderCells = tables[4].children[1].children[0].children;
 
         equal(rowHeaderCells[2].children[0].attr.className, "active");
         equal(rowHeaderCells[3].children[0].attr.className, "active");
@@ -214,8 +214,8 @@
 
         var tables = pane.render(1000, 1000).children;
 
-        var rowHeaderCells = tables[1].children[1].children;
-        var colHeaderCells = tables[2].children[1].children[0].children;
+        var rowHeaderCells = tables[3].children[1].children;
+        var colHeaderCells = tables[4].children[1].children[0].children;
 
         equal(rowHeaderCells[2].children[0].attr.className, "active");
         equal(rowHeaderCells[3].children[0].attr.className, "selected");
@@ -236,8 +236,8 @@
 
         var tables = pane.render(1000, 1000).children;
 
-        var rowHeaderCells = tables[1].children[1].children;
-        var colHeaderCells = tables[2].children[1].children[0].children;
+        var rowHeaderCells = tables[3].children[1].children;
+        var colHeaderCells = tables[4].children[1].children[0].children;
 
         //col C is selected => all rowHeaders should be active
         for (var i = 0; i < colHeaderCells.length; i++) {
