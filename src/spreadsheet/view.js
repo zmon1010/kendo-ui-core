@@ -187,9 +187,9 @@
 
             children.push(table.toDomTree(view.columnOffset, view.rowOffset));
 
-            children = children.concat(this.renderMergedCells(view.ref, view.mergedCellLeft, view.mergedCellTop));
+            children.push(this.renderMergedCells(view.ref, view.mergedCellLeft, view.mergedCellTop));
 
-            children = children.concat(this.renderSelection(view.ref, view.mergedCellLeft, view.mergedCellTop));
+            children.push(this.renderSelection(view.ref, view.mergedCellLeft, view.mergedCellTop));
 
             if (grid.hasRowHeader) {
                 var rowHeader = new HtmlTable(this.rowHeight, grid.headerWidth);
@@ -280,7 +280,7 @@
                 }
             }.bind(this));
 
-            return mergedCells;
+            return kendo.dom.element("div", { className: "k-merged-cells-wrapper" }, mergedCells);
         },
 
         renderSelection: function(visibleRangeRef, left, top) {
@@ -297,7 +297,7 @@
                 }
             }.bind(this));
 
-            return selections;
+            return kendo.dom.element("div", { className: "k-selection-wrapper" }, selections);
         }
     });
 
