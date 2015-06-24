@@ -806,6 +806,7 @@
     exports.Formula = Formula;
     exports.arrayHandler1 = arrayHandler1;
     exports.arrayHandler2 = arrayHandler2;
+    exports.Matrix = Matrix;
 
     exports.defineFunction = function(name, func) {
         name = name.toLowerCase();

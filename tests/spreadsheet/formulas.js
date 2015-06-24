@@ -43,4 +43,14 @@
 
         equal(sheet.range("A4").value(), 4);
     });
+
+    test("updates adjacent cells when receiving a matrix", function(){
+        sheet.range("A1").formula("={1,2;3,4}*2");
+        equal(sheet.range("A1").value(), 2);
+        equal(sheet.range("B1").value(), 4);
+        equal(sheet.range("A2").value(), 6);
+        equal(sheet.range("B2").value(), 8);
+
+        //console.log(JSON.stringify( sheet.range("A1").value().data ));
+    });
 })();
