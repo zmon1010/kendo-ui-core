@@ -63,9 +63,9 @@
         }
 
         if (haveConditional) {
-            if (sections[sections.length - 1].cond == null) {
-                sections[sections.length - 1].cond = "text";
-            }
+            // if (sections[sections.length - 1].cond == null) {
+            //     sections[sections.length - 1].cond = "text";
+            // }
         }
         else if (sections.length == 1) {
             sections[0].cond = "num";
@@ -379,7 +379,7 @@
         code = "return function(value, culture){ "
             + "'use strict'; "
             + "if (!culture) culture = kendo.culture(); "
-            + "var output = '', element = dom.element('span'); " + code + "};";
+            + "var output = '', element = dom.element('span'); " + code + " return element; };";
         return (CACHE[format] = new Function("runtime", "dom", code)(runtime, kendo.dom));
     }
 
@@ -470,6 +470,7 @@
 
         fill: function(ch) {
             // XXX: how to implement this?
+            return ch;
         },
 
         // formatting integer part is slightly different than decimal
