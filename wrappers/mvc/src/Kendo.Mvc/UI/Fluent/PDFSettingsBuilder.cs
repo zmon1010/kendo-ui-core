@@ -18,7 +18,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Exports all pages. Applicable only for the Grid.
+        /// Exports all pages. Applicable only for the Grid. Ajax binding or server binding with ServerOperation(false) is required.
         /// </summary>
         public PDFSettingsBuilder AllPages()
         {
