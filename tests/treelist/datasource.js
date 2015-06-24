@@ -1197,6 +1197,27 @@
         equal(ds.childNodes(ds.get(0)).length, 0, "child nodes for id=0");
     });
 
+    test("adding new root item when parentId is projected", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    parentId: "foo",
+                    fields: {
+                        foo: { defaultValue: "bar", type: "string" }
+                    }
+                }
+            },
+            data: []
+        });
+
+        ds.read();
+        ds.add({});
+
+        equal(ds.rootNodes().length, 1);
+        equal(ds.rootNodes()[0].parentId, "bar");
+        equal(ds.rootNodes()[0].foo, "bar");
+    });
+
     test("adding new child item", function() {
         var ds = new TreeListDataSource({
             schema: {
@@ -1217,6 +1238,52 @@
         equal(ds.rootNodes().length, 1);
         equal(ds.childNodes(ds.get(1)).length, 1);
         equal(ds.childNodes(ds.get(0)).length, 0);
+    });
+
+    test("adding new child item when parentId is projected", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    parentId: "parentKey",
+                    fields: {
+                        id: { type: "string" },
+                        parentKey: { defaultValue: "root", type: "string" }
+                    }
+                }
+            },
+            data: [
+                { id: "master", parentKey: "root" }
+            ]
+        });
+
+        ds.read();
+        var model = ds.add({ parentId: "master" });
+
+        equal(model.parentId, "master");
+        equal(model.parentKey, "master");
+    });
+
+    test("adding new child by setting orignal field when parentId is projected", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    parentId: "parentKey",
+                    fields: {
+                        id: { type: "string" },
+                        parentKey: { defaultValue: "root", type: "string" }
+                    }
+                }
+            },
+            data: [
+                { id: "master", parentKey: "root" }
+            ]
+        });
+
+        ds.read();
+        var model = ds.add({ parentKey: "master" });
+
+        equal(model.parentId, "master");
+        equal(model.parentKey, "master");
     });
 
     test("adding new child item applies default field values", function() {

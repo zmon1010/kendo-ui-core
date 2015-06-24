@@ -276,6 +276,9 @@ var __meta__ = {
             model = DataSource.fn._createNewModel.call(this, model);
 
             if (!fromModel) {
+                if (data.parentId) {
+                    data[model.parentIdField] = data.parentId
+                }
                 model.accept(data);
             }
 
