@@ -11,12 +11,12 @@
         init: function(rowCount, columnCount, rowHeight, columnWidth, headerHeight, headerWidth) {
             kendo.Observable.prototype.init.call(this);
 
-            this.cellCount = rowCount * columnCount - 1;
+            var cellCount = rowCount * columnCount - 1;
 
-            this._values = new kendo.spreadsheet.SparseRangeList(0, this.cellCount, null);
-            this._formulas = new kendo.spreadsheet.SparseRangeList(0, this.cellCount, null);
-            this._compiledFormulas = new kendo.spreadsheet.SparseRangeList(0, this.cellCount, null);
-            this._styles = new kendo.spreadsheet.SparseRangeList(0, this.cellCount, null);
+            this._values = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._compiledFormulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._styles = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
             this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth);
             this._mergedCells = [];
