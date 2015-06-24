@@ -23,6 +23,6 @@
     "recipe[php]",
     "recipe[tomcat]",
     "recipe[lftp]",
-    "recipe[heroku]",
+    "recipe[modulus]",
     "recipe[android-sdk]"
 ]}
