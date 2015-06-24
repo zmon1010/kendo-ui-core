@@ -343,4 +343,7 @@ The request for '{0}' has found the following matching controllers:{2}</value>
   <data name="AllowCopyRequiresSelectable" xml:space="preserve">
     <value>AllowCopy requires any Selectable mode to be enabled</value>
   </data>
+  <data name="ThereShouldBeAtLeastOnePagerButton" xml:space="preserve">
+    <value>There should be at least one button</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
 using System;
+using Kendo.Mvc.Resources;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -50,9 +51,14 @@ namespace Kendo.Mvc.UI.Fluent
         /// <summary>
         /// Sets the number of buttons displayed in the numeric pager. Default is 10.
         /// </summary>
-        /// <param name="pageSizes">The value</param>
+        /// <param name="value">The value</param>
         public PageableBuilder ButtonCount(int value)
         {
+            if (value <= 0)
+            {
+                throw new ArgumentOutOfRangeException("value", Exceptions.ThereShouldBeAtLeastOnePagerButton);
+            }
+
             pager.ButtonCount = value;
 
             return this;
