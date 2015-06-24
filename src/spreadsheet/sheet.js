@@ -404,39 +404,38 @@
         },
 
         recalc: function(context) {
-            var formulas = this._formulas.iterator(0, this.cellCount);
+            var formulas = this._formulas.values();
+            var compiledFormulas = [];
 
-            for (var idx = 0; idx <= this.cellCount; idx++) {
-                var formula = formulas.at(idx);
+            formulas.forEach(function(formula) {
+                for (var index = formula.start; index <= formula.end; index++) {
+                    var cell = this._grid.cellRef(index);
 
-                if (formula !== null) {
-                    var cell = this._grid.cellRef(idx);
-
-                    var compiled = this._compiledFormulas.value(idx, idx);
+                    var compiled = this._compiledFormulas.value(index, index);
 
                     if (compiled === null) {
-                        var x = kendo.spreadsheet.calc.parse(this._name, cell.row, cell.col, formula);
+                        var x = kendo.spreadsheet.calc.parse(this._name, cell.row, cell.col, formula.value);
 
                         compiled = kendo.spreadsheet.calc.compile(x);
 
-                        this._compiledFormulas.value(idx, idx, compiled);
+                        this._compiledFormulas.value(index, index, compiled);
                     }
 
                     compiled.reset();
+
+                    compiledFormulas.push({
+                        cell: cell,
+                        index: index,
+                        formula: compiled
+                    });
                 }
-            }
+            }, this);
 
-            var compiledFormulas = this._compiledFormulas.iterator(0, this.cellCount);
-
-            for (var idx = 0; idx <= this.cellCount; idx++) {
-                var compiled = compiledFormulas.at(idx);
-
-                if (compiled !== null) {
-                    compiled.exec(context, this._name, cell.row, cell.col, function(value) {
-                        this._values.value(idx, idx, value);
-                    }.bind(this));
-                }
-            }
+            compiledFormulas.forEach(function(value) {
+                value.formula.exec(context, this._name, value.cell.row, value.cell.col, function(result) {
+                    this._values.value(value.index, value.index, result);
+                }.bind(this));
+            }, this);
         },
 
         batch: function(callback) {
