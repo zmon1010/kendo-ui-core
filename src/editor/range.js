@@ -858,6 +858,21 @@ var Marker = Class.extend({
         }
     },
 
+    _normalizedIndex: function(node) {
+        var index = findNodeIndex(node);
+        var pointer = node;
+
+        while (pointer.previousSibling) {
+            if (pointer.nodeType == 3 && pointer.previousSibling.nodeType == 3) {
+                index--;
+            }
+
+            pointer = pointer.previousSibling;
+        }
+
+        return index;
+    },
+
     remove: function (range) {
         var that = this,
             start = that.start,
@@ -923,23 +938,12 @@ var Marker = Class.extend({
             }
         }
 
-        var startIndex = findNodeIndex(start), startParent = start.parentNode;
-        var endIndex = findNodeIndex(end), endParent = end.parentNode;
-
-        for (var startPointer = start; startPointer.previousSibling; startPointer = startPointer.previousSibling) {
-            if (startPointer.nodeType == 3 && startPointer.previousSibling.nodeType == 3) {
-                startIndex--;
-            }
-        }
-
-        for (var endPointer = end; endPointer.previousSibling; endPointer = endPointer.previousSibling) {
-            if (endPointer.nodeType == 3 && endPointer.previousSibling.nodeType == 3) {
-                endIndex--;
-            }
-        }
+        var startParent = start.parentNode;
+        var endParent = end.parentNode;
+        var startIndex = this._normalizedIndex(start);
+        var endIndex = this._normalizedIndex(end);
 
         normalize(startParent);
-
         if (start.nodeType == 3) {
             start = startParent.childNodes[startIndex];
         }
@@ -971,11 +975,11 @@ var Marker = Class.extend({
                 range.setEndAfter(end);
             }
         }
+
         if (that.caret) {
             that.removeCaret(range);
         }
     }
-
 });
 
 var boundary = /[\u0009-\u000d]|\u0020|\u00a0|\ufeff|\.|,|;|:|!|\(|\)|\?/;

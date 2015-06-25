@@ -327,9 +327,10 @@ var BackspaceHandler = Class.extend({
 
         marker.remove(range);
 
-        if (dom.name(range.startContainer) == "tr") {
-            var node = range.startContainer.childNodes[Math.max(0,range.startOffset-1)];
-            range.setStart(node, dom.getNodeLength(node));
+        var start = range.startContainer;
+        if (dom.name(start) == "tr") {
+            start = start.childNodes[Math.max(0, range.startOffset-1)];
+            range.setStart(start, dom.getNodeLength(start));
         }
 
         range.collapse(true);
