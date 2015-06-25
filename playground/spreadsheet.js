@@ -1,4 +1,3 @@
-
 $("#spreadsheet").kendoSpreadsheet();
 
 var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
@@ -6,19 +5,12 @@ var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
 spreadsheet.autoRefresh(false);
 
 var sheet = spreadsheet.activeSheet();
-var calc = kendo.spreadsheet.calc;
 
-for (var i = 10, len = 50; i < len; i++) {
-    for (var j = 10, len = 200; j < len; j++) {
-        sheet.range(i, j).value(i + ":" + j);
-    }
-}
+sheet.range("E11:AX200").formula("=RANDBETWEEN(1, 100)");
 
-//sheet.columnWidth(1, 120);
-//sheet.columnWidth(2, 120);
-sheet.hideColumn(1);
-sheet.hideColumn(5);
-sheet.hideRow(5);
+//sheet.hideColumn(1);
+//sheet.hideColumn(5);
+//sheet.hideRow(5);
 
 sheet.rowHeight(1, 40);
 sheet.rowHeight(50, 200);
@@ -62,10 +54,10 @@ $("#clipboard").on("paste", function(e) {
         console.log(e.target.value, values);
 
         spreadsheet.activeSheet().selection().values(values);
-    });
+    });;
 });
 
-$(".k-spreadsheet-selection").on("mousedown", function(e) {
+$("body").on("mousedown", ".k-spreadsheet-selection", function(e) {
     var text = spreadsheet.activeSheet().selection().values().map(function(row) {
         return row.join("\t");
     }).join("\r\n");

@@ -5,17 +5,18 @@
 (function(kendo) {
     var Sorter = kendo.Class.extend({
         init: function(grid, lists) {
-            this.grid = grid;
-            this.lists = lists;
+            this._grid = grid;
+            this._lists = lists;
         },
 
         indices: function(rangeRef, list) {
-            return list.sortedIndices(this.grid.cellRefIndex(rangeRef.topLeft), this.grid.cellRefIndex(rangeRef.bottomRight));
+            return list.sortedIndices(this._grid.cellRefIndex(rangeRef.topLeft),
+                this._grid.cellRefIndex(rangeRef.bottomRight));
         },
 
-        sortBy: function(area, list) {
-            var sortedIndices = this.indices(area, list);
-            var lists = this.lists;
+        sortBy: function(ref, list) {
+            var sortedIndices = this.indices(ref, list);
+            var lists = this._lists;
             var length = lists.length;
             var ends = [];
             var lastEnd = 0;
@@ -25,7 +26,7 @@
                 lastEnd = Math.max(lastEnd, ends[i]);
             }
 
-            this.grid.forEachColumn(area, lastEnd, function(start, end) {
+            this._grid.forEachColumn(ref, lastEnd, function(start, end) {
                 for (var i = 0; i < length; i++) {
                     if (start < ends[i]) {
                         lists[i].sort(start, end, sortedIndices);

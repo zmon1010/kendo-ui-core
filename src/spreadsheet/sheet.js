@@ -25,8 +25,8 @@
             this._frozenColumns = 0;
             this._suspendChanges = false;
             this._selection = kendo.spreadsheet.NULLREF;
-
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
+            this._sorter = new kendo.spreadsheet.Sorter(this._grid, [this._values]);
         },
 
         name: function(value) {
@@ -467,6 +467,12 @@
             callback();
 
             return this.suspendChanges(suspended).triggerChange();
+        },
+
+        sort: function(ref, columnIndex) {
+            this._sorter.sortBy(ref, this._values);
+
+            return this.triggerChange();
         }
     });
 

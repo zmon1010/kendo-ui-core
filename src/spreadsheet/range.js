@@ -211,6 +211,16 @@
 
         clearFormat: function() {
             return this.clear({ formatOnly: true });
+        },
+
+        sort: function(columnIndex) {
+            if (this._ref instanceof UnionRef) {
+                throw new Error("Unsupported for multiple ranges.");
+            }
+
+            this._sheet.sort(this._ref.toRangeRef(), columnIndex);
+
+            return this;
         }
     });
 
