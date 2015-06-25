@@ -1008,6 +1008,13 @@
                 };
             }
         }
+        var date = kendo.parseDate(input);
+        if (date) {
+            return {
+                type: "date",
+                value: runtime.dateToSerial(date)
+            };
+        }
         var num = parseFloat(input);
         if (!isNaN(num) && input.length > 0 && num == input) {
             return {
