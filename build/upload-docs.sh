@@ -13,9 +13,22 @@ open -p $PORT $HOST
 user $USER $PASS
 lcd $DOCS_SITE
 "
+MIRROR_OPTIONS="--ignore-time"
+# option handling
+while test $# -gt 0
+do
+    case "$1" in
+        --force) MIRROR_OPTIONS=""
+            ;;
+        --*) echo "unrecognized option $1"
+            ;;
+    esac
+    shift
+done
+
 MIRROR="
 put default.json
-mirror --reverse --delete --ignore-time --no-perms --verbose .
+mirror --reverse --delete $MIRROR_OPTIONS --no-perms --verbose .
 "
 
 # Generate docs
