@@ -1008,6 +1008,12 @@
                 };
             }
         }
+        if (input.toLowerCase() == "true") {
+            return { type: "bool", value: true };
+        }
+        if (input.toLowerCase() == "false") {
+            return { type: "bool", value: false };
+        }
         var date = kendo.parseDate(input);
         if (date) {
             return {

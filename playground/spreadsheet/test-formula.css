@@ -34,6 +34,10 @@ select {
 .sheet table tr td input.type-error {
   background: #faa;
 }
+.sheet table tr td input.type-bool,
+.sheet table tr td input.type-date {
+  text-align: center;
+}
 .sheet table tr.head td,
 .sheet table td.head {
   text-align: center;
