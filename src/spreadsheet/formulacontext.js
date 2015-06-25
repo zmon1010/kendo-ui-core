@@ -70,6 +70,9 @@
 
         getData: function(ref) {
             var data = this.getRefCells(ref).map(function(cell){
+                if (cell.formula && ("value" in cell.formula)) {
+                    return cell.formula.value;
+                }
                 return cell.value;
             });
             return ref instanceof CellRef ? data[0] : data;
