@@ -803,6 +803,158 @@
         }
     }
 
+    /* -----[ date calculations ]----- */
+
+    var DAYS_IN_MONTH = [ 31, 28, 31,
+                          30, 31, 30,
+                          31, 31, 30,
+                          31, 30, 31 ];
+
+    function isLeapYear(yr) {
+        // if (yr == 1900) {
+        //     return true;        // Excel's Leap Year Bug™
+        // }
+        if (yr % 4) {
+            return false;
+        }
+        if (yr % 100) {
+            return true;
+        }
+        if (yr % 400) {
+            return false;
+        }
+        return true;
+    }
+
+    function daysInYear(yr) {
+        return isLeapYear(yr) ? 366 : 365;
+    }
+
+    function daysInMonth(yr, mo) {
+        return (isLeapYear(yr) && mo == 1) ? 29 : DAYS_IN_MONTH[mo];
+    }
+
+    function unpackDate(serial) {
+        // This uses the Google Spreadsheet approach: treat 1899-12-31
+        // as day 1, allowing to avoid implementing the "Leap Year
+        // Bug" yet still be Excel compatible for dates starting
+        // 1900-03-01.
+        return _unpackDate(serial - 1);
+    }
+
+    function packDate(date, month, year) {
+        return _packDate(date, month, year) + 1;
+    }
+
+    var MS_IN_MIN = 60 * 1000;
+    var MS_IN_HOUR = 60 * MS_IN_MIN;
+    var MS_IN_DAY = 24 * MS_IN_HOUR;
+
+    function unpackTime(serial) {
+        var frac = serial - (serial|0);
+        if (frac < 0) {
+            frac++;
+        }
+        var ms = Math.round(MS_IN_DAY * frac);
+        var hours = Math.floor(ms / MS_IN_HOUR);
+        ms -= hours * MS_IN_HOUR;
+        var minutes = Math.floor(ms / MS_IN_MIN);
+        ms -= minutes * MS_IN_MIN;
+        var seconds = Math.floor(ms / 1000);
+        ms -= seconds * 1000;
+        return {
+            hours: hours,
+            minutes: minutes,
+            seconds: seconds,
+            milliseconds: ms
+        };
+    }
+
+    function serialToDate(serial) {
+        var d = unpackDate(serial), t = unpackTime(serial);
+        return new Date(
+            Date.UTC(d.year, d.month, d.date,
+                     t.hours, t.minutes, t.seconds, t.milliseconds)
+        );
+    }
+
+    // Unpack date by assuming serial is number of days since
+    // 1900-01-01 (that being day 1).  Negative numbers are allowed
+    // and go backwards in time.
+    function _unpackDate(serial) {
+        serial |= 0;            // discard time part
+        var month, tmp;
+        var backwards = serial <= 0;
+        var year = 1900;
+        var day = serial % 7;   // 1900-01-01 was a Monday
+        if (backwards) {
+            serial = -serial;
+            year--;
+            day = (day + 7) % 7;
+        }
+
+        while (serial >= (tmp = daysInYear(year))) {
+            serial -= tmp;
+            year += backwards ? -1 : 1;
+        }
+
+        if (backwards) {
+            month = 11;
+            while (serial >= (tmp = daysInMonth(year, month))) {
+                serial -= tmp;
+                month--;
+            }
+            serial = tmp - serial;
+        } else {
+            month = 0;
+            while (serial > (tmp = daysInMonth(year, month))) {
+                serial -= tmp;
+                month++;
+            }
+        }
+
+        return {
+            year: year, month: month, date: serial, day: day
+        };
+    }
+
+    function _packDate(year, month, date) {
+        var serial = 0;
+        if (year >= 1900) {
+            for (var i = 1900; i < year; ++i) {
+                serial += daysInYear(i);
+            }
+        } else {
+            for (var i = 1899; i >= year; --i) {
+                serial -= daysInYear(i);
+            }
+        }
+        for (var i = 0; i < month; ++i) {
+            serial += daysInMonth(year, i);
+        }
+        serial += date;
+        return serial;
+    }
+
+    function packTime(hours, minutes, seconds, ms) {
+        return (hours + minutes/60 + seconds/3600 + ms/3600000) / 24;
+    }
+
+    function dateToSerial(date) {
+        var time = packTime(date.getUTCHours(),
+                            date.getUTCMinutes(),
+                            date.getUTCSeconds(),
+                            date.getUTCMilliseconds());
+        date = packDate(date.getUTCFullYear(),
+                        date.getUTCMonth(),
+                        date.getUTCDate());
+        if (date < 0) {
+            return date - 1 + time;
+        } else {
+            return date + time;
+        }
+    }
+
     /* -----[ exports ]----- */
 
     exports.CalcError = CalcError;
@@ -810,6 +962,13 @@
     exports.arrayHandler1 = arrayHandler1;
     exports.arrayHandler2 = arrayHandler2;
     exports.Matrix = Matrix;
+
+    exports.packDate = packDate;
+    exports.unpackDate = unpackDate;
+    exports.packTime = packTime;
+    exports.unpackTime = unpackTime;
+    exports.serialToDate = serialToDate;
+    exports.dateToSerial = dateToSerial;
 
     exports.defineFunction = function(name, func) {
         name = name.toLowerCase();

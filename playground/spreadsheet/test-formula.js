@@ -171,6 +171,7 @@ Spreadsheet.prototype = {
         if (cell) {
             if (!cell.formula)
                 return cell.input;
+            window.formula = cell.formula;
             return "=" + cell.formula.print(row, col);
         }
     },
