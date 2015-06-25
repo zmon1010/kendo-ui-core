@@ -220,6 +220,20 @@
             equal(visual.options.fill.color, redHex);
         });
 
+        test("inits fill color if fill is null", function() {
+            visual = new type({
+                fill: null
+            });
+            equal(visual.options.fill.color, undefined);
+        });
+
+        test("inits fill color if fill is an empty string", function() {
+            visual = new type({
+                fill: ""
+            });
+            equal(visual.options.fill.color, undefined);
+        });
+
         test("inits fill gradient", function() {
             visual = new type({
                 fill: {

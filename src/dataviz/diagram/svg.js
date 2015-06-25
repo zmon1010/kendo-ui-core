@@ -423,7 +423,7 @@
         _fill: function(fillOptions) {
             var options = this.options;
             deepExtend(options, {
-                fill: fillOptions
+                fill: fillOptions || {}
             });
             var fill = options.fill;
 
