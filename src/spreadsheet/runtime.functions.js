@@ -588,6 +588,13 @@
         callback(Math.random());
     });
 
+    defineFunction("randbetween", function(min, max){
+        return min + Math.floor((max - min + 1) * Math.random());
+    }).args([
+        [ "min", "number" ],
+        [ "max", [ "and", "number", [ "assert", "$max > $min" ] ] ]
+    ]);
+
     defNumeric("true", 0, function(){ return true; });
     defNumeric("false", 0, function(){ return false; });
 
