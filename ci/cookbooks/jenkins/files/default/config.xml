@@ -112,6 +112,7 @@
         <string>nuget-upload</string>
         <string>production-CI-DownloadBuilder</string>
         <string>production-upload-appbuilder</string>
+        <string>production-upload-appbuilder-verified</string>
         <string>stable-upload-release</string>
         <string>sync-from-core-production</string>
       </jobNames>
@@ -182,6 +183,8 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>core-production-sync-status</string>
+        <string>wrappers-sync-master</string>
+        <string>wrappers-sync-production</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -239,6 +242,8 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>documentation-staging</string>
         <string>documentation-upload</string>
+        <string>documentation-upload-ftp</string>
+        <string>documentation-upload-ftp-force</string>
         <string>master-docs-upload-trigger</string>
         <string>production-docs-build-trigger</string>
       </jobNames>

@@ -50,7 +50,7 @@
   </builders>
   <publishers>
     <hudson.tasks.BuildTrigger>
-      <childProjects>production-upload-appbuilder</childProjects>
+      <childProjects>production-upload-appbuilder-verified</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
