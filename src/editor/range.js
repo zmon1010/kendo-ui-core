@@ -1109,6 +1109,34 @@ var RangeUtils = {
         return range.startOffset === 0 && range.startContainer == node;
     },
 
+    isEndOf: function(range, node) {
+        range = range.cloneRange();
+
+        range.collapse(false);
+
+        var start = range.startContainer;
+
+        if (dom.isDataNode(start) &&
+            range.startOffset == dom.getNodeLength(start)) {
+            range.setStart(start.parentNode, dom.findNodeIndex(start) + 1);
+            range.collapse(true);
+        }
+
+        range.setEnd(node, dom.getNodeLength(node));
+
+        var nodes = [];
+
+        function visit(node) {
+            if (!dom.insignificant(node)) {
+                nodes.push(node);
+            }
+        }
+
+        new RangeIterator(range).traverse(visit);
+
+        return !nodes.length;
+    },
+
     wrapSelectedElements: function(range) {
         var startEditable = dom.editableParent(range.startContainer);
         var endEditable = dom.editableParent(range.endContainer);

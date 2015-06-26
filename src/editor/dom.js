@@ -713,8 +713,14 @@ var Dom = {
     },
 
     closestEditable: function(node, types) {
-        var closest = Dom.parentOfType(node, types);
+        var closest;
         var editable = Dom.editableParent(node);
+
+        if (Dom.ofType(node, types)) {
+            closest = node;
+        } else {
+            closest = Dom.parentOfType(node, types);
+        }
 
         if (closest && editable && $.contains(closest, editable)) {
             closest = editable;
@@ -763,8 +769,12 @@ var Dom = {
         }
     },
 
-    ensureTrailingBreak: function(node) {
+    removeTrailingBreak: function(node) {
         $(node).find("br[type=_moz],.k-br").remove();
+    },
+
+    ensureTrailingBreak: function(node) {
+        Dom.removeTrailingBreak(node);
 
         var lastChild = node.lastChild;
         var name = lastChild && Dom.name(lastChild);

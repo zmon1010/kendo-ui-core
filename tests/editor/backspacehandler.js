@@ -188,6 +188,40 @@
         equal(editor.value(), "<p><a></a>ar</p>");
     });
 
+    test("joins paragraphs upon delete", function() {
+        var range = createRangeFromText(editor, '<p>foo||</p><p>bar</p>');
+        editor.selectRange(range);
+
+        handleDelete();
+
+        editor.getRange().insertNode(editor.document.createElement("a"));
+
+        equal(editor.value(), "<p>foo<a></a>bar</p>");
+    });
+
+    test("does not attempt to join at end of content", function() {
+        var range = createRangeFromText(editor, '<p>foo||</p>');
+        editor.selectRange(range);
+
+        handleDelete();
+
+        editor.getRange().insertNode(editor.document.createElement("a"));
+
+        equal(editor.value(), "<p>foo<a></a></p>");
+    });
+
+    test("removes k-br while joining", function() {
+        var range = createRangeFromText(editor, '<p>foo||</p><p>bar</p>');
+        editor.selectRange(range);
+
+        handleDelete();
+
+        var p = editor.body.firstChild;
+
+        equal($(".k-br", p).length, 1);
+        ok(p.lastChild.className == "k-br");
+    });
+
     //test("does not remove table cells", function() {
         //editor.value("<table><tr><td>foo</td><td>bar</td></tr></table>");
 

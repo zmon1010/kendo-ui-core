@@ -392,4 +392,48 @@ test("getRange returns body when editor is empty", function() {
     equal(range.endOffset, 0);
 });
 
+var utils = kendo.ui.editor.RangeUtils;
+
+test("isEndOf at end of element", function() {
+    editor.value("<p>foo</p>");
+
+    var range = editor.getRange();
+    var p = editor.body.firstChild;
+    var foo = p.firstChild;
+    range.setEnd(foo, 3);
+    range.collapse(false);
+    ok(utils.isEndOf(range, p));
+});
+
+test("isEndOf at middle of text", function() {
+    editor.value("<p>foo</p>");
+
+    var range = editor.getRange();
+    var p = editor.body.firstChild;
+    var foo = p.firstChild;
+    range.setEnd(foo, 2);
+    range.collapse(false);
+    ok(!utils.isEndOf(range, p));
+});
+
+test("isEndOf between elements", function() {
+    editor.value("<p><span>foo</span><span>bar</span></p>");
+
+    var range = editor.getRange();
+    var p = editor.body.firstChild;
+    range.setEnd(p, 1);
+    range.collapse(false);
+    ok(!utils.isEndOf(range, p));
+});
+
+test("isEndOf after elements", function() {
+    editor.value("<p><span>foo</span></p>");
+
+    var range = editor.getRange();
+    var p = editor.body.firstChild;
+    range.setEnd(p, 1);
+    range.collapse(false);
+    ok(utils.isEndOf(range, p));
+});
+
 }());

@@ -239,7 +239,41 @@ var BackspaceHandler = Class.extend({
     init: function(editor) {
         this.editor = editor;
     },
-    _handleCaret: function(range) {
+    _handleDelete: function(range) {
+        var node = range.endContainer;
+        var block = dom.closestEditableOfType(node, dom.blockElements);
+
+        if (block && editorNS.RangeUtils.isEndOf(range, block)) {
+            // join with next sibling
+            var caret = dom.create(this.editor.document, "a");
+            block.appendChild(caret);
+
+            var next = dom.next(block);
+
+            if (!next || dom.name(next) != "p") {
+                dom.remove(caret);
+                return false;
+            }
+
+            dom.removeTrailingBreak(block);
+
+            while (next.firstChild) {
+                block.appendChild(next.firstChild);
+            }
+
+            dom.remove(next);
+
+            range.setStartAfter(caret);
+            range.collapse(true);
+            this.editor.selectRange(range);
+            dom.remove(caret);
+
+            return true;
+        }
+
+        return false;
+    },
+    _handleBackspace: function(range) {
         var node = range.startContainer;
         var i = range.startOffset;
         var li = dom.closestEditableOfType(node, ['li']);
@@ -364,11 +398,15 @@ var BackspaceHandler = Class.extend({
         var range = this.editor.getRange();
         var keyCode = e.keyCode;
         var keys = kendo.keys;
+        var backspace = keyCode === keys.BACKSPACE;
+        var del = keyCode == keys.DELETE;
 
-        if (keyCode === keys.BACKSPACE) {
-            method = range.collapsed ? "_handleCaret" : "_handleSelection";
-        } else if (keyCode == keys.DELETE) {
-            method = range.collapsed ? "" : "_handleSelection";
+        if ((backspace || del) && !range.collapsed) {
+            method = "_handleSelection";
+        } else if (backspace) {
+            method = "_handleBackspace";
+        } else if (del) {
+            method = "_handleDelete";
         }
 
         if (!method) {

@@ -303,4 +303,11 @@ test("stripBom works on null", function() {
     equal(Dom.stripBom(null), "");
 });
 
+test("closestEditable works for same node", function() {
+    var div = $("<div contentEditable />").appendTo(QUnit.fixture);
+    var p = $("<p>").appendTo(div);
+
+    equal(Dom.closestEditable(p[0], ["p"]), p[0]);
+});
+
 }());
