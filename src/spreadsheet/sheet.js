@@ -445,18 +445,20 @@
             }, this);
 
             compiledFormulas.forEach(function(value) {
-                value.formula.exec(context, this._name, value.cell.row, value.cell.col, function(result) {
-                    var index = value.index;
-                    if (result instanceof kendo.spreadsheet.calc.runtime.Matrix) {
-                        result.each(function(value, row, col) {
-                            var index = this._grid.index(row, col);
-                            this._values.value(index, index, value);
-                        }.bind(this));
-                    } else {
-                        this._values.value(value.index, value.index, result);
-                    }
-                }.bind(this));
+                value.formula.exec(context, this._name, value.cell.row, value.cell.col);
             }, this);
+        },
+
+        value: function(row, col, value) {
+            if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
+                value.each(function(value, row, col) {
+                    var index = this._grid.index(row, col);
+                    this._values.value(index, index, value);
+                }.bind(this));
+            } else {
+                var index = this._grid.index(row, col);
+                this._values.value(index, index, value);
+            }
         },
 
         batch: function(callback) {

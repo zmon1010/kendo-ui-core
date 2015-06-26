@@ -78,7 +78,8 @@
             return ref instanceof CellRef ? data[0] : data;
         },
 
-        onFormula: function() {
+        onFormula: function(sheet, row, col, value) {
+            this.sheets[sheet].value(row, col, value);
         },
 
         sheet: function(cellRef) {
