@@ -295,18 +295,25 @@ var BackspaceHandler = Class.extend({
         var ancestor = range.commonAncestorContainer;
         var table = dom.closest(ancestor, "table");
         var emptyParagraphContent = editorNS.emptyElementContent;
-        var result = false;
 
         if (/t(able|body)/i.test(dom.name(ancestor))) {
             range.selectNode(table);
         }
+
+        var marker = new Marker();
+        marker.add(range, false);
+
+        range.setStartAfter(marker.start);
+        range.setEndBefore(marker.end);
+
+        var start = range.startContainer;
+        var end = range.endContainer;
 
         range.deleteContents();
 
         if (table && $(table).text() === "") {
             range.selectNode(table);
             range.deleteContents();
-            result = true;
         }
 
         ancestor = range.commonAncestorContainer;
@@ -314,13 +321,43 @@ var BackspaceHandler = Class.extend({
         if (dom.name(ancestor) === "p" && ancestor.innerHTML === "") {
             ancestor.innerHTML = emptyParagraphContent;
             range.setStart(ancestor, 0);
-            range.collapse(true);
-            this.editor.selectRange(range);
-
-            result = true;
         }
 
-        return result;
+        this._join(start, end);
+
+        dom.insertAfter(this.editor.document.createTextNode("\ufeff"), marker.start);
+        marker.remove(range);
+
+        start = range.startContainer;
+        if (dom.name(start) == "tr") {
+            start = start.childNodes[Math.max(0, range.startOffset-1)];
+            range.setStart(start, dom.getNodeLength(start));
+        }
+
+        range.collapse(true);
+
+        this.editor.selectRange(range);
+
+        return true;
+    },
+    _root: function(node) {
+        while (node && node.parentNode && dom.name(node.parentNode) != "body") {
+            node = node.parentNode;
+        }
+
+        return node;
+    },
+    _join: function(start, end) {
+        start = this._root(start);
+        end = this._root(end);
+
+        if (start != end && dom.is(end, "p")) {
+            while (end.firstChild) {
+                start.appendChild(end.firstChild);
+            }
+
+            dom.remove(end);
+        }
     },
     keydown: function(e) {
         var method, startRestorePoint;

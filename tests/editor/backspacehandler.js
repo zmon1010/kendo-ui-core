@@ -44,15 +44,6 @@
         equal(editor.value(), '');
     });
 
-    test("removes table content from whole cell selection", function() {
-        var range = createRangeFromText(editor, '<table><tr><td>|foo</td><td>bar|</td></tr></table>');
-        editor.selectRange(range);
-
-        handleBackspace();
-
-        equal(editor.value(), '');
-    });
-
     test("removes all bom characters before caret without preventing default action", function() {
         var range = createRangeFromText(editor, 'foo\ufeff\ufeff||bar');
         editor.selectRange(range);
@@ -124,15 +115,77 @@
         equal(editor.value(), '<h3>foo<a></a>bar</h3>');
     });
 
-    test("does not prevent default action if selection is not changed", function() {
-        editor.value('<p>foo</p><p>bar</p>');
-        var range = editor.createRange();
-        range.selectNodeContents(editor.body);
+    test("prevents default action if handling range selection", function() {
+        var range = createRangeFromText(editor, '<p>foo |bar |baz</p>');
         editor.selectRange(range);
 
         handleBackspace();
 
-        ok(!defaultPrevented);
+        equal(editor.value(), "<p>foo baz</p>");
+    });
+
+    test("fully removes selected content", function() {
+        var range = createRangeFromText(editor, '<p>fo|o</p><p>b|ar</p>');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), "<p>foar</p>");
+    });
+
+    test("positions cursor at location of removed content", function() {
+        var range = createRangeFromText(editor, '<p>fo|o</p><p>b|ar</p>');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        editor.getRange().insertNode(editor.document.createElement("a"));
+
+        equal(editor.value(), "<p>fo<a></a>ar</p>");
+    });
+
+    test("does not join table cells", function() {
+        var range = createRangeFromText(editor, '<table><tbody><tr><td>fo|o</td><td>b|ar</td></tbody></table>');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        editor.getRange().insertNode(editor.document.createElement("a"));
+
+        equal(editor.value(), "<table><tbody><tr><td>fo<a></a></td><td>ar</td></tr></tbody></table>");
+    });
+
+    test("joins header and paragraph", function() {
+        var range = createRangeFromText(editor, '<h1>fo|o</h1><p>b|ar</p>');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        editor.getRange().insertNode(editor.document.createElement("a"));
+
+        equal(editor.value(), "<h1>fo<a></a>ar</h1>");
+    });
+
+    test("positions cursor when deleting data", function() {
+        var range = createRangeFromText(editor, '<p>fo|ob|ar</p>');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        editor.getRange().insertNode(editor.document.createElement("a"));
+
+        equal(editor.value(), "<p>fo<a></a>ar</p>");
+    });
+
+    test("positions cursor when deleting data at start", function() {
+        var range = createRangeFromText(editor, '<p>|foob|ar</p>');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        editor.getRange().insertNode(editor.document.createElement("a"));
+
+        equal(editor.value(), "<p><a></a>ar</p>");
     });
 
     //test("does not remove table cells", function() {
