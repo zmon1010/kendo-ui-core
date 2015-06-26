@@ -14,7 +14,7 @@ namespace Kendo.Mvc.UI.Html
 
             foreach (var pageSize in section.PageSizes)
             {
-                new HtmlElement("option").Text(pageSize.ToString(CultureInfo.InvariantCulture)).AppendTo(select);
+                new HtmlElement("option").Text(pageSize.ToString()).AppendTo(select);
             }
 
             new LiteralNode(section.Messages.ItemsPerPage).AppendTo(span);

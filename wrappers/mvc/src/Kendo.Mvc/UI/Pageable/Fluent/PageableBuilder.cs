@@ -1,5 +1,6 @@
 using System;
 using Kendo.Mvc.Resources;
+using System.Collections;
 
 namespace Kendo.Mvc.UI.Fluent
 {
@@ -23,7 +24,7 @@ namespace Kendo.Mvc.UI.Fluent
         /// Sets the page sizes of the grid.
         /// </summary>
         /// <param name="pageSizes">The values shown in the pageSize dropdown</param>
-        public PageableBuilder PageSizes(int[] pageSizes)
+        public PageableBuilder PageSizes(IEnumerable pageSizes)
         {
             pager.PageSizes = pageSizes;
 

@@ -30,6 +30,24 @@ namespace Kendo.Mvc.UI.Fluent.Tests
 
             Assert.True(grid.Pageable.Enabled);
         }
+
+        [Fact]
+        public void Can_set_all_pages_to_pageable()
+        {
+            var pageSizes = new object[] { "all", 5, 10, 15 };
+            builder.Pageable(p => p.PageSizes(pageSizes));
+
+            grid.Pageable.PageSizes.ShouldEqual(pageSizes);
+        }
+
+        [Fact]
+        public void Can_set_pages_sizes_to_pageable()
+        {
+            var pageSizes = new int[] { 5, 10, 15 };
+            builder.Pageable(p => p.PageSizes(pageSizes));
+
+            grid.Pageable.PageSizes.ShouldEqual(pageSizes);
+        }
       
         [Fact]
         public void BindTo_sets_the_data_source()

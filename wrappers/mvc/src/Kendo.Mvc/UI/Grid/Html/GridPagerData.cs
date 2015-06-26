@@ -1,6 +1,7 @@
 namespace Kendo.Mvc.UI.Html
 {
     using System;
+    using System.Collections;
 
     public class GridPagerData
     {
@@ -28,7 +29,7 @@ namespace Kendo.Mvc.UI.Html
 
         public bool PreviousNext { get; set; }
 
-        public int[] PageSizes { get; set; }
+        public IEnumerable PageSizes { get; set; }
 
         public bool IsInClientTemplate { get; set; }
 

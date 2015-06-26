@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,7 +32,7 @@ namespace Kendo.Mvc.UI
 
         public bool Refresh { get; set; }
 
-        public int[] PageSizes { get; set; }
+        public IEnumerable PageSizes { get; set; }
 
         public int? ButtonCount { get; set; }
 
@@ -67,7 +68,7 @@ namespace Kendo.Mvc.UI
                 json["refresh"] = Refresh;
             }
 
-            if (PageSizes != null && PageSizes.Length > 0)
+            if (PageSizes != null && PageSizes.GetEnumerator().MoveNext())
             {
                 json["pageSizes"] = PageSizes;
             }
