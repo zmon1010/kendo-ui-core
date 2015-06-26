@@ -2,6 +2,8 @@
     define([ ], f);
 })(function() {
 
+    /* jshint eqnull:true */
+
     var spreadsheet = kendo.spreadsheet;
     var Class = kendo.Class;
     var Ref = kendo.spreadsheet.Ref;
@@ -15,10 +17,10 @@
         },
 
         getRefCells: function(ref) {
+            var sheet = this.sheets[ref.sheet], formula, value;
             if (ref instanceof CellRef) {
-                var sheet = this.sheet(ref);
-                var formula = sheet.compiledFormula(ref);
-                var value = sheet.range(ref.row, ref.col).value();
+                formula = sheet.compiledFormula(ref);
+                value = sheet.range(ref.row, ref.col).value();
 
                 if (formula != null || value != null) {
                     return [{
@@ -33,8 +35,6 @@
                 }
             }
             if (ref instanceof RangeRef) {
-                var sheet = this.sheet(ref);
-
                 var tl = sheet._grid.normalize(ref.topLeft);
                 var br = sheet._grid.normalize(ref.bottomRight);
 
@@ -48,8 +48,8 @@
                 for (var col = tl.col; col <= br.col; ++col) {
                     for (var row = tl.row; row <= br.row; ++row) {
                         var index = sheet._grid.index(row, col);
-                        var formula = sheet._compiledFormulas.value(index, index);
-                        var value = values.at(index);
+                        formula = sheet._compiledFormulas.value(index, index);
+                        value = values.at(index);
                         if (formula != null || value != null) {
                             states.push({ formula: formula, value: value, row: row, col: col, sheet: ref.sheet });
                         }
@@ -70,9 +70,6 @@
 
         getData: function(ref) {
             var data = this.getRefCells(ref).map(function(cell){
-                if (cell.formula && ("value" in cell.formula)) {
-                    return cell.formula.value;
-                }
                 return cell.value;
             });
             return ref instanceof CellRef ? data[0] : data;
@@ -80,14 +77,6 @@
 
         onFormula: function(sheet, row, col, value) {
             this.sheets[sheet].value(row, col, value);
-        },
-
-        sheet: function(cellRef) {
-            return this.sheets[cellRef.sheet];
-        },
-
-        state: function(formula, value, ref) {
-            return ;
         }
 
     });
