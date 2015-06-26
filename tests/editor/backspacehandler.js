@@ -44,15 +44,6 @@
         equal(editor.value(), '');
     });
 
-    test("removes table content from whole cell selection", function() {
-        var range = createRangeFromText(editor, '<table><tr><td>|foo</td><td>bar|</td></tr></table>');
-        editor.selectRange(range);
-
-        handleBackspace();
-
-        equal(editor.value(), '');
-    });
-
     test("removes all bom characters before caret without preventing default action", function() {
         var range = createRangeFromText(editor, 'foo\ufeff\ufeff||bar');
         editor.selectRange(range);

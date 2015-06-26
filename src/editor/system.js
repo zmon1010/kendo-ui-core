@@ -325,9 +325,10 @@ var BackspaceHandler = Class.extend({
 
         this._join(start, end);
 
+        dom.insertAfter(this.editor.document.createTextNode("\ufeff"), marker.start);
         marker.remove(range);
 
-        var start = range.startContainer;
+        start = range.startContainer;
         if (dom.name(start) == "tr") {
             start = start.childNodes[Math.max(0, range.startOffset-1)];
             range.setStart(start, dom.getNodeLength(start));
