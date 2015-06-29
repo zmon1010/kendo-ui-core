@@ -239,8 +239,12 @@
 
         activeCell: function(ref) {
             if (ref) {
-                // TODO: should we check if ref is a cell ref?
-                this._activeCell = ref;
+                var mergedCells = this._mergedCells;
+
+                this._activeCell = ref.map(function(ref) {
+                    return ref.toRangeRef().union(mergedCells);
+                });
+
                 this.trigger("change");
             }
 

@@ -292,18 +292,7 @@
             var view = this._currentView;
 
             sheet.forEachMergedCell(function(ref) {
-                if (view.ref.intersects(ref)) {
-                    sheet.forEach(ref.collapse(), function(cell) {
-                        var rectangle = this._rectangle(ref);
-
-                        var table = new HtmlTable(this.rowHeight, this.columnWidth);
-                        table.addColumn(rectangle.width);
-                        table.addRow(rectangle.height);
-                        this.addCell(table, 0, cell);
-
-                        mergedCells.push(table.toDomTree(rectangle.left, rectangle.top,  "k-spreadsheet-merged-cell"));
-                    }.bind(this));
-                }
+                this._addTable(mergedCells, ref, "k-spreadsheet-merged-cell");
             }.bind(this));
 
             return kendo.dom.element("div", { className: "k-merged-cells-wrapper" }, mergedCells);
@@ -312,6 +301,7 @@
         renderSelection: function() {
             var selections = [];
             var sheet = this._sheet;
+            var view = this._currentView;
 
             sheet.select().forEach(function(ref) {
                 if (ref === kendo.spreadsheet.NULLREF) {
@@ -321,7 +311,7 @@
                 this._addDiv(selections, ref, "k-spreadsheet-selection");
             }.bind(this));
 
-            this._addDiv(selections, sheet.activeCell(), "k-spreadsheet-active-cell");
+            this._addTable(selections, sheet.activeCell().toRangeRef(),  "k-spreadsheet-active-cell");
 
             return kendo.dom.element("div", { className: "k-selection-wrapper" }, selections);
         },
@@ -331,6 +321,24 @@
 
             if (view.ref.intersects(ref)) {
                 collection.push(this._rectangle(ref).toDiv(className));
+            }
+        },
+
+        _addTable: function(collection, ref, className) {
+            var sheet = this._sheet;
+            var view = this._currentView;
+
+            if (view.ref.intersects(ref)) {
+                sheet.forEach(ref.collapse(), function(cell) {
+                    var rectangle = this._rectangle(ref);
+
+                    var table = new HtmlTable(this.rowHeight, this.columnWidth);
+                    table.addColumn(rectangle.width);
+                    table.addRow(rectangle.height);
+                    this.addCell(table, 0, cell);
+
+                    collection.push(table.toDomTree(rectangle.left, rectangle.top, className));
+                }.bind(this));
             }
         },
 

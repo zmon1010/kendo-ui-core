@@ -41,6 +41,10 @@ $("#select-all").on("click", function(e) {
     range.select();
 });
 
+$("#activate-merged-cell").on("click", function(e) {
+    sheet.range("C3").select();
+});
+
 $("#clipboard").on("paste", function(e) {
     setTimeout(function() {
         var values = e.target.value.split("\n");
