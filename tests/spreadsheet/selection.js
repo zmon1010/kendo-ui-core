@@ -4,6 +4,9 @@
     var RangeRef = kendo.spreadsheet.RangeRef;
     var CellRef = kendo.spreadsheet.CellRef;
 
+    var ACTIVE = "k-state-active";
+    var SELECTED = "k-state-selected";
+
     module("selection", {
         setup: function() {
             sheet = new Sheet(1000, 100, 10, 10, 10, 10);
@@ -174,13 +177,13 @@
         var rowHeaderCells = tables[3].children[1].children;
         var colHeaderCells = tables[4].children[1].children[0].children;
 
-        equal(rowHeaderCells[0].children[0].attr.className, "active");
-        equal(rowHeaderCells[1].children[0].attr.className, "active");
-        equal(rowHeaderCells[2].children[0].attr.className, "active");
+        equal(rowHeaderCells[0].children[0].attr.className, ACTIVE);
+        equal(rowHeaderCells[1].children[0].attr.className, ACTIVE);
+        equal(rowHeaderCells[2].children[0].attr.className, ACTIVE);
 
-        equal(colHeaderCells[0].attr.className, "active");
-        equal(colHeaderCells[1].attr.className, "active");
-        equal(colHeaderCells[3].attr.className, "active");
+        equal(colHeaderCells[0].attr.className, ACTIVE);
+        equal(colHeaderCells[1].attr.className, ACTIVE);
+        equal(colHeaderCells[3].attr.className, ACTIVE);
     });
 
     test("visually selects the selected headers for range and row", function() {
@@ -193,17 +196,17 @@
         var rowHeaderCells = tables[3].children[1].children;
         var colHeaderCells = tables[4].children[1].children[0].children;
 
-        equal(rowHeaderCells[2].children[0].attr.className, "active");
-        equal(rowHeaderCells[3].children[0].attr.className, "active");
-        equal(rowHeaderCells[4].children[0].attr.className, "active");
-        equal(rowHeaderCells[5].children[0].attr.className, "active");
-        equal(rowHeaderCells[6].children[0].attr.className, "active");
+        equal(rowHeaderCells[2].children[0].attr.className, ACTIVE);
+        equal(rowHeaderCells[3].children[0].attr.className, ACTIVE);
+        equal(rowHeaderCells[4].children[0].attr.className, ACTIVE);
+        equal(rowHeaderCells[5].children[0].attr.className, ACTIVE);
+        equal(rowHeaderCells[6].children[0].attr.className, ACTIVE);
 
-        equal(rowHeaderCells[9].children[0].attr.className, "selected");
+        equal(rowHeaderCells[9].children[0].attr.className, SELECTED);
 
         //row 10 is selected => all colHeaders should be active
         for (var i = 0; i < colHeaderCells.length; i++) {
-            equal(colHeaderCells[i].attr.className, "active");
+            equal(colHeaderCells[i].attr.className, ACTIVE);
         }
     });
 
@@ -217,15 +220,15 @@
         var rowHeaderCells = tables[3].children[1].children;
         var colHeaderCells = tables[4].children[1].children[0].children;
 
-        equal(rowHeaderCells[2].children[0].attr.className, "active");
-        equal(rowHeaderCells[3].children[0].attr.className, "selected");
-        equal(rowHeaderCells[4].children[0].attr.className, "active");
-        equal(rowHeaderCells[5].children[0].attr.className, "active");
-        equal(rowHeaderCells[6].children[0].attr.className, "active");
+        equal(rowHeaderCells[2].children[0].attr.className, ACTIVE);
+        equal(rowHeaderCells[3].children[0].attr.className, SELECTED);
+        equal(rowHeaderCells[4].children[0].attr.className, ACTIVE);
+        equal(rowHeaderCells[5].children[0].attr.className, ACTIVE);
+        equal(rowHeaderCells[6].children[0].attr.className, ACTIVE);
 
         //row 10 is selected => all colHeaders should be active
         for (var i = 0; i < colHeaderCells.length; i++) {
-            equal(colHeaderCells[i].attr.className, "active");
+            equal(colHeaderCells[i].attr.className, ACTIVE);
         }
     });
 
@@ -241,12 +244,12 @@
 
         //col C is selected => all rowHeaders should be active
         for (var i = 0; i < colHeaderCells.length; i++) {
-            equal(rowHeaderCells[i].children[0].attr.className, "active");
+            equal(rowHeaderCells[i].children[0].attr.className, ACTIVE);
         }
 
-        equal(colHeaderCells[0].attr.className, "active");
-        equal(colHeaderCells[1].attr.className, "active");
-        equal(colHeaderCells[2].attr.className, "selected");
+        equal(colHeaderCells[0].attr.className, ACTIVE);
+        equal(colHeaderCells[1].attr.className, ACTIVE);
+        equal(colHeaderCells[2].attr.className, SELECTED);
     });
 
 })();

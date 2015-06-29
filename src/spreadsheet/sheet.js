@@ -230,8 +230,6 @@
                 });
 
                 this.activeCell(ref.first());
-
-                this.trigger("change");
             }
 
             return this._selection;

@@ -1,6 +1,8 @@
 (function() {
     var sheet;
     var defaults = kendo.ui.Spreadsheet.prototype.options;
+    var success = $.proxy(ok, null, true);
+    var failure = $.proxy(ok, null, false);
 
     module("Sheet API", {
         setup: function() {
@@ -43,68 +45,46 @@
     });
 
     test("rowHeight triggers the change event", 1, function() {
-       sheet.bind("change", function() {
-           ok(true);
-       }).rowHeight(0, 0);
+       sheet.bind("change", success).rowHeight(0, 0);
     });
 
     test("columnWidth triggers the change event", 1, function() {
-       sheet.bind("change", function() {
-           ok(true);
-       }).columnWidth(0, 0);
+       sheet.bind("change", success).columnWidth(0, 0);
     });
 
     test("hideColumn triggers the change event", 1, function() {
-       sheet.bind("change", function() {
-           ok(true);
-       }).hideColumn(0);
+       sheet.bind("change", success).hideColumn(0);
     });
 
     test("hideRow triggers the change event", 1, function() {
-       sheet.bind("change", function() {
-           ok(true);
-       }).hideRow(0);
+       sheet.bind("change", success).hideRow(0);
     });
 
     test("unhideColumn triggers the change event", 1, function() {
-       sheet.bind("change", function() {
-           ok(true);
-       }).unhideColumn(0);
+       sheet.bind("change", success).unhideColumn(0);
     });
 
     test("unhideRow triggers the change event", 1, function() {
-       sheet.bind("change", function() {
-           ok(true);
-       }).unhideRow(0);
+       sheet.bind("change", success).unhideRow(0);
     });
 
     test("frozenRows triggers the change event", 1, function() {
-       sheet.bind("change", function() {
-           ok(true);
-       }).frozenRows(2);
+       sheet.bind("change", success).frozenRows(2);
     });
 
     test("frozenColumns triggers the change event", 1, function() {
-       sheet.bind("change", function() {
-           ok(true);
-       }).frozenColumns(2);
+       sheet.bind("change", success).frozenColumns(2);
     });
 
     test("select triggers the change event", 1, function() {
-       sheet.bind("change", function() {
-           ok(true);
-       }).range("A1:A1").select();
+       sheet.bind("change", success).range("A1:A1").select();
     });
 
     test("triggerChange triggers the change event", 1, function() {
-       sheet.bind("change", function() {
-           ok(true);
-       }).triggerChange();
+       sheet.bind("change", success).triggerChange();
     });
 
     test("triggerChange doesn't trigger the change event if changes are suspended", 0, function() {
-       sheet.bind("change", function() {
-           ok(false);
-       }).suspendChanges(true).triggerChange();
+       sheet.bind("change", failure).suspendChanges(true).triggerChange();
     });
 })();
