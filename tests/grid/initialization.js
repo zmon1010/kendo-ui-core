@@ -380,6 +380,17 @@
         equal(noRecords.text(), "No records available.");
     });
 
+    test("noRecords is rendered after the table when scrolling is disabled", function() {
+        var grid = new Grid($(table).wrap('<div style="width:200px"></div>'), {
+                scrollable: false,
+                dataSource: [],
+                noRecords: true,
+                pageable: true,
+            });
+
+        ok(grid.table.next().hasClass("k-grid-norecords"));
+    });
+
     test("noRecords option is messages is used in default template", function() {
         var grid = new Grid($(table).wrap('<div style="width:200px"></div>'), {
                 scrollable: true,

@@ -4945,7 +4945,7 @@ var __meta__ = {
                 }
 
                 if (!that.dataSource || !that.dataSource.view().length) {
-                    $(that.noRecordsTemplate({})).appendTo(that.table.parent());
+                    $(that.noRecordsTemplate({})).insertAfter(that.table);
                 }
             }
         },
