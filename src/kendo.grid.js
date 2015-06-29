@@ -6621,12 +6621,15 @@ var __meta__ = {
         _autoColumns: function(schema) {
             if (schema && schema.toJSON) {
                 var that = this,
-                    field;
+                    field,
+                    encoded;
 
                 schema = schema.toJSON();
 
+                encoded = !(that.table.find("tbody tr").length > 0 && (!that.dataSource || !that.dataSource.transport));
+
                 for (field in schema) {
-                    that.columns.push({ field: field, headerAttributes: {id: kendo.guid()} });
+                    that.columns.push({ field: field, encoded: encoded, headerAttributes: {id: kendo.guid()} });
                 }
 
                 that._thead();
