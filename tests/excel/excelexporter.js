@@ -353,6 +353,16 @@ test("locked multi-column headers set the freezePane", function() {
     });
 });
 
+test("locked multi-column with hidden child column set the freezePane", function() {
+    testWorkbook({
+        columns: [
+            { title: "master2", locked: true, columns: [{ field: "bar" }, { field: "baz", hidden: true }] },
+            { title: "master", columns: [{ field: "foo" }] }
+        ], dataSource: [{ foo: "bar", bar: "baz", baz: "moo" }] }, function(book) {
+        equal(book.sheets[0].freezePane.colSplit, 1);
+    });
+});
+
 test("creates group rows", function() {
     dataSource = new DataSource({
        data: [

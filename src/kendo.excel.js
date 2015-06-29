@@ -387,9 +387,9 @@ kendo.ExcelExporter = kendo.Class.extend({
     _freezePane: function() {
         var columns = this._visibleColumns(this.options.columns || []);
 
-        var colSplit = this._trimColumns(this._leafColumns($.grep(columns, function(column) {
+        var colSplit = this._visibleColumns(this._trimColumns(this._leafColumns($.grep(columns, function(column) {
             return column.locked;
-        }))).length;
+        })))).length;
 
         return {
             rowSplit: this._headerDepth(columns),
