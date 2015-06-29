@@ -617,6 +617,13 @@ fillElements({
         C11: '=row(B3:D6)',
         C12: '=transpose(A1:C2)',
 
+        A20: '100',
+        B20: '=sum(a1:c3)',
+        c20: '100',
+        A19: '=sum(indirect(b19):indirect(c19))',
+        B19: 'a20', c19: 'c20',
+        
+
         //E5: "=sum(A1:C3)",
         // E5: "=B2",
         // E6: "=B$2",

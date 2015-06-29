@@ -705,14 +705,14 @@
     };
 
     function compileArgumentChecks(args) {
-        var forced, out = "var i = 0, v, m; ";
+        var forced, out = "var i = 0, v, m, err = 'VALUE'; ";
         out += args.map(comp).join("");
         out += "if (i < args.length) return this.error(new CalcError('N/A')); ";
         return out;
 
         function comp(x) {
             var name = x[0];
-            var code = "";
+            var code = "{ ";
             if (Array.isArray(name)) {
                 code += "while (i < args.length) { ";
                 code += x.map(comp).join("");
@@ -726,6 +726,7 @@
                 code += "var $" + name + " = v = args[i++]; if (v instanceof CalcError) return this.error(v); "
                     + typeCheck(type) + "xargs.push(v); ";
             }
+            code += " } ";
             return code;
         }
 
@@ -739,7 +740,7 @@
 
         function typeCheck(type) {
             forced = false;
-            return "if (!(" + cond(type) + ")) return this.error(new CalcError('VALUE')); ";
+            return "if (!(" + cond(type) + ")) return this.error(new CalcError(err)); ";
         }
 
         function cond(type) {
@@ -767,13 +768,17 @@
                 throw new Error("Unknown array type condition: " + type[0]);
             }
             if (type == "number") {
-                return "(typeof " + force() + " == 'number')";
+                return "(typeof " + force() + " == 'number' || typeof v == 'boolean')";
+            }
+            if (type == "divisor") {
+                return "((typeof " + force() + " == 'number' || typeof v == 'boolean') && "
+                    + "(v === 0 ? ((err = 'DIV/0'), false) : true))";
             }
             if (type == "number+") {
-                return "(typeof " + force() + " == 'number' && v >= 0)";
+                return "((typeof " + force() + " == 'number' || typeof v == 'boolean') && v >= 0)";
             }
             if (type == "number++") {
-                return "(typeof " + force() + " == 'number' && v > 0)";
+                return "((typeof " + force() + " == 'number' || typeof v == 'boolean') && v > 0)";
             }
             if (type == "string") {
                 return "(typeof " + force() + " == 'string')";
@@ -800,6 +805,47 @@
                 return "(i <= args.length)";
             }
             throw new Error("Can't check for type: " + type);
+        }
+    }
+
+    function defineFunction(name, func) {
+        name = name.toLowerCase();
+        FUNCS[name] = func;
+        return {
+            args: function(args) {
+                var code = compileArgumentChecks(args);
+                code = [
+                    "return function " + fname(name) + "(callback, args) { ",
+                    "'use strict'; var xargs = []; ",
+                    code,
+                    "var v = handler.apply(this, xargs); ",
+                    "if (v instanceof CalcError) this.error(v); else callback(v); ",
+                    "};"
+                ].join("");
+                var f = new Function("handler", "CalcError", code);
+                FUNCS[name] = f(func, CalcError);
+                //console.log(FUNCS[name].toString());
+                return this;
+            },
+            argsAsync: function(args) {
+                var code = compileArgumentChecks(args);
+                code = [
+                    "return function " + fname(name) + "(callback, args) { ",
+                    "'use strict'; var xargs = [ callback ]; ",
+                    code,
+                    "handler.apply(this, xargs); ",
+                    "};"
+                ].join("");
+                var f = new Function("handler", "CalcError", code);
+                FUNCS[name] = f(func, CalcError);
+                //console.log(FUNCS[name].toString());
+                return this;
+            }
+        };
+        function fname(name) {
+            return name.replace(/[^a-z0-9_]/g, function(s){
+                return "$" + s.charCodeAt(0) + "$";
+            });
         }
     }
 
@@ -970,40 +1016,6 @@
     exports.serialToDate = serialToDate;
     exports.dateToSerial = dateToSerial;
 
-    exports.defineFunction = function(name, func) {
-        name = name.toLowerCase();
-        FUNCS[name] = func;
-        return {
-            args: function(args) {
-                var code = compileArgumentChecks(args);
-                code = [
-                    "return function " + name.replace(/\./g, "_") + "(callback, args) { ",
-                    "'use strict'; var xargs = []; ",
-                    code,
-                    "var v = handler.apply(this, xargs); ",
-                    "if (v instanceof CalcError) this.error(v); else callback(v); ",
-                    "};"
-                ].join("");
-                var f = new Function("handler", "CalcError", code);
-                FUNCS[name] = f(func, CalcError);
-                //console.log(FUNCS[name].toString());
-                return this;
-            },
-            argsAsync: function(args) {
-                var code = compileArgumentChecks(args);
-                code = [
-                    "return function " + name.replace(/\./g, "_") + "(callback, args) { ",
-                    "'use strict'; var xargs = [ callback ]; ",
-                    code,
-                    "handler.apply(this, xargs); ",
-                    "};"
-                ].join("");
-                var f = new Function("handler", "CalcError", code);
-                FUNCS[name] = f(func, CalcError);
-                //console.log(FUNCS[name].toString());
-                return this;
-            }
-        };
-    };
+    exports.defineFunction = defineFunction;
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
