@@ -267,7 +267,6 @@
                 var i;
                 var rowState = "active";
                 var colState = "active";
-                var i;
                 ref = ref.toRangeRef();
 
                 var bottomRight = ref.bottomRight;
