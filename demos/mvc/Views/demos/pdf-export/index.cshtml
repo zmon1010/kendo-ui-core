@@ -14,29 +14,13 @@
     </div>
 
     <div class="demo-section k-header export-app wide">
-        <div class="demo-section content-wrapper">
-          <div class="demo-section charts-wrapper">
+        <div class="demo-section content-wrapper wide">
+          <div class="demo-section charts-wrapper wide">
             <div id="users"></div>
             <div id="applications"></div>
             <div id="referrals"></div>
           </div>
           <div id="grid"></div>
-        </div>
-
-        <div class="menu-wrapper">
-          <ul id="menu">
-            <li>Dashboard</li>
-            <li>Job Opennings
-                    <ul>
-                <li>USA</li>
-                <li>Australia</li>
-                <li>Germany</li>
-              </ul>
-            </li>
-            <li>Applicants</li>
-            <li>Interview Calendar</li>
-            <li>Events Calendar</li>
-          </ul>
         </div>
     </div>
     
@@ -236,8 +220,6 @@ $(document).ready(function() {
       }
     });
 
-    $("#menu").kendoPanelBar();
-
     $("#grid").kendoGrid({
       dataSource: {
         type: "odata",
@@ -293,24 +275,15 @@ $(document).ready(function() {
     height: 750px;
     padding: 0;
 }
+
 .export-app .demo-section {
     margin: 0 auto;
     border: 0;
 }
 
-.menu-wrapper,
 .content-wrapper {
     display: table-cell;
     vertical-align: top;
-}
-
-.menu-wrapper {
-    width: 15%;
-}
-
-#menu {
-    height: 100%;
-    border-width: 0 0 0 1px;
 }
 
 .charts-wrapper {
