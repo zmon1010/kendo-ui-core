@@ -380,7 +380,8 @@
             + "'use strict'; "
             + "if (!culture) culture = kendo.culture(); "
             + "var output = '', element = dom.element('span'); " + code + " return element; };";
-        return (CACHE[format] = new Function("runtime", "dom", code)(runtime, kendo.dom));
+        CACHE[format] = new Function("runtime", "dom", code)(runtime, kendo.dom);
+        return CACHE[format];
     }
 
     var runtime = {

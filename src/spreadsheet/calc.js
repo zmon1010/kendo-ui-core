@@ -697,7 +697,8 @@
             if (Object.prototype.hasOwnProperty.call(cache, code)) {
                 return cache[code];
             }
-            return (cache[code] = new Function("'use strict';return(" + code + ")")());
+            cache[code] = new Function("'use strict';return(" + code + ")")();
+            return cache[code];
         };
     })({});
 
@@ -796,10 +797,10 @@
             skip  : skip
         };
         function isDigit(ch) {
-            return /[0-9]/i.test(ch);
+            return (/[0-9]/i.test(ch));
         }
         function isIdStart(ch) {
-            return /[a-z$_]/i.test(ch);
+            return (/[a-z$_]/i.test(ch));
         }
         function isId(ch) {
             return isIdStart(ch) || isDigit(ch) || ch == "!" || ch == ".";

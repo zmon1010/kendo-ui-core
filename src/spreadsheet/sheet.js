@@ -176,6 +176,7 @@
             var topLeftCol = ref.topLeft.col;
             var bottomRightRow = ref.bottomRight.row;
             var bottomRightCol = ref.bottomRight.col;
+            var ci, ri, index;
 
             if (values === undefined) {
                 values = new Array(ref.height());
@@ -184,14 +185,14 @@
                     values[vi] = new Array(ref.width());
                 }
 
-                for (var ci = topLeftCol; ci <= bottomRightCol; ci ++) {
+                for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
                     var startCellIndex = this._grid.index(topLeftRow, ci);
                     var endCellIndex = this._grid.index(bottomRightRow, ci);
 
                     var iterator = this._values.iterator(startCellIndex, endCellIndex);
 
-                    for (var ri = topLeftRow; ri <= bottomRightRow; ri ++) {
-                        var index = this._grid.index(ri, ci);
+                    for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
+                        index = this._grid.index(ri, ci);
 
                         values[ri - topLeftRow][ci - topLeftCol] = iterator.at(index);
                     }
@@ -199,9 +200,9 @@
 
                 return values;
             } else {
-                for (var ci = topLeftCol; ci <= bottomRightCol; ci ++) {
-                    for (var ri = topLeftRow; ri <= bottomRightRow; ri ++) {
-                        var index = this._grid.index(ri, ci);
+                for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
+                    for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
+                        index = this._grid.index(ri, ci);
 
                         var row = values[ri - topLeftRow];
 
@@ -246,6 +247,7 @@
             var allRows = false;
 
             selection.forEach(function(ref) {
+                var i;
                 var rowState = "active";
                 var colState = "active";
                 ref = ref.toRangeRef();
@@ -266,7 +268,7 @@
                 }
 
                 if (!colSelection) { //column selection
-                    for (var i = ref.topLeft.row; i <= bottomRight.row; i++) {
+                    for (i = ref.topLeft.row; i <= bottomRight.row; i++) {
                         if (rows[i] !== "selected") {
                             rows[i] = rowState;
                         }
@@ -274,7 +276,7 @@
                 }
 
                 if (!rowSelection) {
-                    for (var i = ref.topLeft.col; i <= bottomRight.col; i++) {
+                    for (i = ref.topLeft.col; i <= bottomRight.col; i++) {
                         if (cols[i] !== "selected") {
                             cols[i] = colState;
                         }
