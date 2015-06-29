@@ -1,36 +1,6 @@
 .loading {
     color: gray;
 }
-
-.item {
-    font-size: 11px;
-    display: table;
-    width: 100%;
-    font-weight: normal;
-    padding: 5px;
-}
-
-.item h3 {
-    font-weight: normal;
-    color: #181818;
-}
-
-.item-thumb, .item-summary, .item-comments {
-    display: table-cell;
-    vertical-align: top;
-    padding-bottom: .5em;
-}
-
-.item-summary a
-{
-    color: #10c4b2;
-}
-
-.item-thumb {
-    width: 50px;
-    padding-left: 1em;
-}
-
 .item-comments {
     width: 50px;
     text-align: center;
@@ -38,29 +8,17 @@
     vertical-align: middle;
 }
 
-.thumb, .loading-thumb {
-    width: 50px;
-    height: 50px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 100% 100%;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-top: 1em;
-    display: inline-block;
-}
-
-.loading-thumb {
-    background-color: #ccc;
-    background-size: 70% 70%;
-}
-
-#aww li:not(.km-load-more) {
-    padding: 0;
-}
-
 #about .km-content {
     background: transparent;
+}
+
+.km-listview h5 {
+  margin-top: 0;
+  margin-bottom: .2em;
+}
+
+.km-listview p {
+  font-size: 12px;
 }
 
 .touchTarget {
@@ -127,6 +85,7 @@
     width: 100%;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    color: #fff;
 }
 
 .title-bar span {
@@ -147,7 +106,6 @@
     float: left;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border: 1px solid #000;
     overflow: hidden;
 }
 
@@ -159,17 +117,6 @@
     background-size: cover;
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
-}
-
-#drawer .km-content,
-#detail .km-content,
-#canvas .km-content,
-#canvas-detail .km-content {
-    background: #363940;
-}
-
-#drawer .km-group-title {
-    color: #f4f4f4;
 }
 
 .faded,
@@ -215,11 +162,6 @@
     color: #10c4b2;
     text-transform: none;
     padding-bottom: 2em;
-}
-
-.detailed-img .km-button {
-    color: #fff;
-    background-color: #10c4b2;
 }
 
 .detail-image {
@@ -355,11 +297,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: -webkit-gradient(lienar, 0 0, 0 100%, from(#10c4b2), to(#000));
-    background: -webkit-linear-gradient(top, #10c4b2, #000);
-    background: -moz-linear-gradient(top, #10c4b2, #000);
-    background: -ms-linear-gradient(top, #10c4b2, #000);
-    background: linear-gradient(to bottom, #10c4b2, #000);
+    background: #fff;
 }
 
 .splash:before
@@ -399,3 +337,10 @@
     font-size: 1.2em;
 }
 
+
+.km-nova .km-light.km-navbar,
+.km-nova .km-light.k-toolbar,
+.km-nova .km-light.km-tabstrip {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}

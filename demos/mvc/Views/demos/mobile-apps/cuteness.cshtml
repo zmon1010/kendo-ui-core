@@ -37,26 +37,15 @@
         <!-- End Google Tag Manager -->
         <div class="splash"></div>
 
-        <div id="drawer" data-role="drawer" data-views="['list', 'account', 'settings', 'notifications', 'feedback']">
-            <ul data-role="listview" data-style="inset" data-type="group" data-click="showAbout">
+        <div id="drawer" data-role="drawer" data-stretch="true" data-views="['list', 'account', 'settings', 'notifications', 'feedback']">
+            <ul data-role="listview" data-click="showAbout">
                 <li>
-                    Narwhal Bacon
-                    <ul>
-                        <li><a href="#list">Home</a></li>
-                        <li><a href="#account">My account</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <ul>
-                        <li><a href="#settings">Settings</a></li>
-                        <li><a href="#notifications">Notifications</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <ul>
-                        <li><a href="#feedback">Feedback</a></li>
-                        <li><a>About</a></li>
-                    </ul>
+                    <li><a href="#list" data-role="listview-link">Home</a></li>
+                    <li><a href="#account" data-role="listview-link">My account</a></li>
+                    <li><a href="#settings" data-role="listview-link">Settings</a></li>
+                    <li><a href="#notifications" data-role="listview-link">Notifications</a></li>
+                    <li><a href="#feedback" data-role="listview-link">Feedback</a></li>
+                    <li><a data-role="listview-link">About</a></li>
                 </li>
             </ul>
         </div>
@@ -64,8 +53,8 @@
 
         <div data-role="layout" data-id="default">
             <header data-role="header">
-                <div data-role="navbar">
-                    <a data-role="button" data-rel="drawer" href="#drawer" data-icon="drawer-button" data-align="left"></a>
+                <div data-role="navbar" class="km-light">
+                    <a data-role="button" data-rel="drawer" href="#drawer" data-icon="hamburger" data-align="left"></a>
                     <span data-role="view-title"></span>
                 </div>
             </header>
@@ -73,8 +62,8 @@
 
         <div data-role="view" data-title="Cuteness." id="list" data-show="showApp" data-layout="default">
             <header data-role="header">
-                <div data-role="navbar">
-                    <a data-role="button" data-rel="drawer" href="#drawer" data-icon="drawer-button" data-align="left"></a>
+                <div data-role="navbar" class="km-light">
+                    <a data-role="button" data-rel="drawer" href="#drawer" data-icon="hamburger" data-align="left"></a>
                     <span data-role="view-title"></span>
                     <a href="#canvas" data-role="button" data-icon="canvas" data-transition="slide" data-align="right"></a>
                 </div>
@@ -126,13 +115,14 @@
         <div data-role="view" data-title="Feedback" id="feedback" data-layout="default">
             <ul data-role="listview" data-style="inset">
                 <li>
-                    <textarea placeholder="I need help with cat browsing">
-
-                    </textarea>
+                    <fieldset>
+                        <legend>Your comments</legend>
+                        <textarea placeholder="I need help with cat browsing" style="height: 100px;"></textarea>
+                    </fieldset>
                 </li>
             </ul>
 
-            <a data-role="button">Submit</a>
+            <a data-role="button" class="km-primary">Submit</a>
         </div>
 
         <div data-role="view" data-title="Notifications" id="notifications" data-layout="default">
@@ -155,7 +145,7 @@
             </ul>
         </div>
 
-        <div data-role="view" data-title="Settings" id="settings" data-layout="default">
+        <div data-role="view" data-title="Settings" data-role="listview-link" id="settings" data-layout="default">
             <ul data-role="listview" data-type="group" data-style="inset">
                 <li>
                     Behavior
@@ -196,7 +186,7 @@
 
         <div data-role="view" id="detail" data-transition="slide" data-after-show="renderDetail" data-title="" data-hide="resetDetail" data-stretch="true">
             <header data-role="header">
-                <div data-role="navbar">
+                <div data-role="navbar" class="km-light">
                     <a data-role="backbutton" data-align="left">Back</a>
                     <span data-role="view-title">&nbsp;</span>
                 </div>
@@ -208,8 +198,8 @@
 
         <div data-role="view" id="canvas" data-stretch="true" data-title="Canvas View" data-init="canvasInit" data-show="canvasShow">
             <header data-role="header">
-                <div data-role="navbar">
-                    <a data-role="backbutton" href="#list" data-transition="slide:left reverse" data-icon="list-icon" data-align="left"></a>
+                <div data-role="navbar" class="km-light">
+                    <a data-role="backbutton" href="#list" data-transition="slide:left reverse" data-align="left"></a>
                     <span data-role="view-title">&nbsp;</span>
                 </div>
             </header>
@@ -218,7 +208,7 @@
 
         <div id="canvas-detail" data-role="view" data-transition="overlay:up" data-stretch="true" data-init="canvasDetailInit" data-show="canvasDetailShow">
             <header data-role="header">
-                <div data-role="navbar">
+                <div data-role="navbar" class="km-light">
                     <a data-role="button" data-click="goToCanvas" data-align="left">Canvas</a>
                     <span data-role="view-title">&nbsp;</span>
                 </div>
@@ -231,15 +221,10 @@
 
 
         <script type="text/x-kendo-template" id="item-template">
-            <div class="item">
-                <div class="item-thumb">
-                    <img class='loading-thumb' src='#: data.thumbnail != "default" ? data.thumbnail : "images/foxie_thumb.png" #' />
-                </div>
-                <div class="item-summary">
-                   <h3>#: data.title #</h3>
-                   <p> #: data.subreddit # | #: data.ups - data.downs # | #: kendo.toString(new Date(data.created_utc * 1000), 'HH:mm') # | <a data-rel="external" href="http://reddit.com/#: data.permalink #" target="_blank">#= data.num_comments # comments on Reddit</a></p>
-                </div>
-            </div>
+            <img class='km-thumbnail' src='#: data.thumbnail != "default" ? data.thumbnail : "images/foxie_thumb.png" #' />
+            <p> #: data.subreddit # | #: data.ups - data.downs # | #: kendo.toString(new Date(data.created_utc * 1000), 'HH:mm') #</p>
+            <h5>#: data.title #</h5>
+            <p style="text-align: right;"><a data-rel="external" href="http://reddit.com/#: data.permalink #" target="_blank">#= data.num_comments # comments on Reddit</a></p>
         </script>
 
         <script type="text/x-kendo-template" id="canvas-template">

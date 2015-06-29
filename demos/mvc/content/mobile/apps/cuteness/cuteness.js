@@ -276,7 +276,7 @@ function createImage(data) {
 function createTile(data) {
     var url = data.url,
         imageTemplate = kendo.template('<div class="item-img" style="background-image: url(#= data #);"></div>'),
-        nonImageTemplate = kendo.template('<div class="content"><p>Unable to load image<span>#= data #</span></p><a data-role="button" data-rel="external" href="#= data #" target="_blank">Open URL</a></div>');
+        nonImageTemplate = kendo.template('<div class="content"><p>Unable to load image<span>#= data #</span></p><a data-role="button" data-rel="external" href="#= data #" target="_blank" class="km-primary">Open URL</a></div>');
 
     if(url.match(imgExtensionRegex)) {
         return imageTemplate(url);
@@ -294,7 +294,7 @@ function createTile(data) {
 }
 
 var app = new kendo.mobile.Application(document.body, {
-    skin: "flat",
+    skin: "nova",
     init: function() {
         setTimeout(function() {
             kendo.fx(".splash").fadeOut().duration(700).play();
