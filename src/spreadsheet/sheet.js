@@ -301,7 +301,8 @@
                 rows: rows,
                 cols: cols,
                 allRows: allRows,
-                allCols: allCols
+                allCols: allCols,
+                all: allRows && allCols
             };
         },
 

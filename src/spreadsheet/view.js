@@ -163,48 +163,30 @@
 
             var view = grid.view(scrollLeft, scrollTop);
             this._currentView = view;
-
-            var rows = view.rows;
-
-            var columns = view.columns;
-
-            var table = new HtmlTable(this.rowHeight, this.columnWidth);
-
-            rows.values.forEach(function(height) {
-                table.addRow(height);
-            });
-
-            columns.values.forEach(function(width) {
-                table.addColumn(width);
-            });
-
-            sheet.forEach(view.ref, function(cell) {
-                this.addCell(table, cell.row - view.ref.topLeft.row, cell);
-            }.bind(this));
+            this._selectedHeaders = sheet.selectedHeaders();
 
             var children = [];
 
-            children.push(table.toDomTree(view.columnOffset, view.rowOffset));
+            children.push(this.renderData());
 
             children.push(this.renderMergedCells());
 
             children.push(this.renderSelection());
 
             var selectedHeaders = sheet.selectedHeaders();
-            var allSelected = selectedHeaders.allRows && selectedHeaders.allCols;
 
             if (grid.hasRowHeader) {
                 var rowHeader = new HtmlTable(this.rowHeight, grid.headerWidth);
                 rowHeader.addColumn(grid.headerWidth);
 
-                rows.values.forEach(function(height) {
+                view.rows.values.forEach(function(height) {
                     rowHeader.addRow(height);
                 });
 
                 sheet.forEach(view.ref.leftColumn(), function(cell) {
-                    var className = selectedHeaders.rows[cell.row] || (allSelected ? "selected" : (selectedHeaders.allRows ? "active" : ""));
-                    rowHeader.addCell(cell.row - view.ref.topLeft.row, cell.row + 1, {}, className);
-                });
+                    var text = cell.row + 1;
+                    rowHeader.addCell(cell.row - view.ref.topLeft.row, text, {}, this.headerClassName(cell.row, "row"));
+                }.bind(this));
 
                 children.push(rowHeader.toDomTree(0, view.rowOffset, "k-spreadsheet-row-header"));
             }
@@ -212,21 +194,63 @@
             if (grid.hasColumnHeader) {
                 var columnHeader = new HtmlTable(grid.headerHeight, this.columnWidth);
 
-                columns.values.forEach(function(width) {
+                view.columns.values.forEach(function(width) {
                     columnHeader.addColumn(width);
                 });
 
                 columnHeader.addRow(grid.headerHeight);
 
                 sheet.forEach(view.ref.topRow(), function(cell) {
-                    var className = selectedHeaders.cols[cell.col] || (allSelected ? "selected" : (selectedHeaders.allCols ? "active" : ""));
-                    columnHeader.addCell(0, kendo.spreadsheet.Ref.display(null, Infinity, cell.col), {}, className);
-                });
+                    var text = kendo.spreadsheet.Ref.display(null, Infinity, cell.col);
+                    columnHeader.addCell(0, text, {}, this.headerClassName(cell.col, "col"));
+                }.bind(this));
 
                 children.push(columnHeader.toDomTree(view.columnOffset, 0, "k-spreadsheet-column-header"));
             }
 
             return kendo.dom.element("div", { style: grid.style, className: "k-spreadsheet-pane" }, children);
+        },
+
+        headerClassName: function(index, type) {
+            var selectedHeaders = this._selectedHeaders;
+
+            var itemSelection;
+            var allHeaders;
+
+            if (type === "row") {
+                itemSelection = selectedHeaders.rows[index];
+                allHeaders = selectedHeaders.allRows;
+            } else {
+                itemSelection = selectedHeaders.cols[index];
+                allHeaders = selectedHeaders.allCols;
+            }
+
+            var className = itemSelection || (selectedHeaders.all ? "selected" : (allHeaders ? "active" : null));
+
+            if (className) {
+                className = "k-state-" + className;
+            }
+
+            return className;
+        },
+
+        renderData: function() {
+            var table = new HtmlTable(this.rowHeight, this.columnWidth);
+            var view = this._currentView;
+
+            view.rows.values.forEach(function(height) {
+                table.addRow(height);
+            });
+
+            view.columns.values.forEach(function(width) {
+                table.addColumn(width);
+            });
+
+            this._sheet.forEach(view.ref, function(cell) {
+                this.addCell(table, cell.row - view.ref.topLeft.row, cell);
+            }.bind(this));
+
+            return table.toDomTree(view.columnOffset, view.rowOffset);
         },
 
         addCell: function(table, row, cell) {
