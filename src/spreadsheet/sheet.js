@@ -25,6 +25,7 @@
             this._frozenColumns = 0;
             this._suspendChanges = false;
             this._selection = kendo.spreadsheet.NULLREF;
+            this._activeCell = kendo.spreadsheet.FIRSTREF;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
             this._sorter = new kendo.spreadsheet.Sorter(this._grid, [this._values]);
         },
@@ -228,10 +229,22 @@
                     return ref.toRangeRef().union(mergedCells);
                 });
 
+                this.activeCell(ref.first());
+
                 this.trigger("change");
             }
 
             return this._selection;
+        },
+
+        activeCell: function(ref) {
+            if (ref) {
+                // TODO: should we check if ref is a cell ref?
+                this._activeCell = ref;
+                this.trigger("change");
+            }
+
+            return this._activeCell;
         },
 
         selection: function() {

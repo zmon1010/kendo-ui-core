@@ -78,6 +78,9 @@
         },
         map: function(callback) {
             return callback(this);
+        },
+        first: function() {
+            return this;
         }
     });
 
@@ -387,6 +390,9 @@
                 new CellRef(topLeftRow, topLeftCol),
                 new CellRef(bottomRightRow, bottomRightCol)
             );
+        },
+        first: function() {
+            return this.topLeft;
         }
     });
 
@@ -428,6 +434,9 @@
         },
         map: function(callback) {
             return new UnionRef(this.refs.map(callback));
+        },
+        first: function() {
+            return this.refs[0].first();
         }
     });
 
@@ -435,6 +444,7 @@
 
     spreadsheet.NULLREF = NULL;
     spreadsheet.SHEETREF = new RangeRef(new CellRef(0, 0), new CellRef(Infinity, Infinity));
+    spreadsheet.FIRSTREF = new CellRef(0, 0);
     spreadsheet.Ref = Ref;
     spreadsheet.NameRef = NameRef;
     spreadsheet.CellRef = CellRef;

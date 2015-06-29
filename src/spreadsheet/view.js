@@ -162,6 +162,7 @@
             var grid = this._grid;
 
             var view = grid.view(scrollLeft, scrollTop);
+            this._currentView = view;
 
             var rows = view.rows;
 
@@ -182,14 +183,15 @@
             }.bind(this));
 
             var children = [];
-            var selectedHeaders = sheet.selectedHeaders();
-            var allSelected = selectedHeaders.allRows && selectedHeaders.allCols;
 
             children.push(table.toDomTree(view.columnOffset, view.rowOffset));
 
-            children.push(this.renderMergedCells(view.ref, view.mergedCellLeft, view.mergedCellTop));
+            children.push(this.renderMergedCells());
 
-            children.push(this.renderSelection(view.ref, view.mergedCellLeft, view.mergedCellTop));
+            children.push(this.renderSelection());
+
+            var selectedHeaders = sheet.selectedHeaders();
+            var allSelected = selectedHeaders.allRows && selectedHeaders.allCols;
 
             if (grid.hasRowHeader) {
                 var rowHeader = new HtmlTable(this.rowHeight, grid.headerWidth);
@@ -260,22 +262,22 @@
             }
         },
 
-        renderMergedCells: function(visibleRangeRef, left, top) {
+        renderMergedCells: function() {
             var mergedCells = [];
             var sheet = this._sheet;
+            var view = this._currentView;
 
             sheet.forEachMergedCell(function(ref) {
-                if (visibleRangeRef.intersects(ref)) {
+                if (view.ref.intersects(ref)) {
                     sheet.forEach(ref.collapse(), function(cell) {
-
-                        var rectangle = this._grid.boundingRectangle(ref.toRangeRef());
+                        var rectangle = this._rectangle(ref);
 
                         var table = new HtmlTable(this.rowHeight, this.columnWidth);
                         table.addColumn(rectangle.width);
                         table.addRow(rectangle.height);
                         this.addCell(table, 0, cell);
 
-                        mergedCells.push(table.toDomTree(rectangle.left - left, rectangle.top - top,  "k-spreadsheet-merged-cell"));
+                        mergedCells.push(table.toDomTree(rectangle.left, rectangle.top,  "k-spreadsheet-merged-cell"));
                     }.bind(this));
                 }
             }.bind(this));
@@ -283,7 +285,7 @@
             return kendo.dom.element("div", { className: "k-merged-cells-wrapper" }, mergedCells);
         },
 
-        renderSelection: function(visibleRangeRef, left, top) {
+        renderSelection: function() {
             var selections = [];
             var sheet = this._sheet;
 
@@ -292,12 +294,24 @@
                     return;
                 }
 
-                if (visibleRangeRef.intersects(ref)) {
-                    selections.push(this._grid.boundingRectangle(ref.toRangeRef()).offset(-left, -top).toDiv("k-spreadsheet-selection"));
-                }
+                this._addDiv(selections, ref, "k-spreadsheet-selection");
             }.bind(this));
 
+            this._addDiv(selections, sheet.activeCell(), "k-spreadsheet-active-cell");
+
             return kendo.dom.element("div", { className: "k-selection-wrapper" }, selections);
+        },
+
+        _addDiv: function(collection, ref, className) {
+            var view = this._currentView;
+
+            if (view.ref.intersects(ref)) {
+                collection.push(this._rectangle(ref).toDiv(className));
+            }
+        },
+
+        _rectangle: function(ref) {
+            return this._grid.boundingRectangle(ref.toRangeRef()).offset(-this._currentView.mergedCellLeft, -this._currentView.mergedCellTop);
         }
     });
 
