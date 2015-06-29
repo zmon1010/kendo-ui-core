@@ -39,7 +39,7 @@ var Serializer = {
             })
             .replace(/(<\/?img[^>]*>)[\r\n\v\f\t ]+/ig, "$1")
             .replace(/^<(table|blockquote)/i, br + '<$1')
-            .replace(/^(\s*)(&nbsp;)/i, '$2')
+            .replace(/^[\s]*(&nbsp;|\u00a0)/i, '$1')
             .replace(/<\/(table|blockquote)>$/i, '</$1>' + br);
     },
 

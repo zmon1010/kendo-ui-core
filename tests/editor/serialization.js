@@ -522,6 +522,7 @@ test("encodes CDATA sections as comments", function() {
 
 test("removes whitespace at start before nbsp", function() {
     equal(Serializer.toEditableHtml(' &nbsp; foo'), '&nbsp; foo');
+    equal(Serializer.toEditableHtml(' \u00a0 foo'), '\u00a0 foo');
 });
 
 test("does not convert relative href/src URLs to absolute", function() {
