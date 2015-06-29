@@ -180,7 +180,6 @@
         toRangeRef: function() {
             return new RangeRef(this, this);
         },
-
         relative: function(arow, acol, rel) {
             var row = rel & 2 ? this.row - arow : this.row;
             var col = rel & 1 ? this.col - acol : this.col;
@@ -229,7 +228,6 @@
             }
             return false;
         },
-
         _intersectRange: function(ref) {
             if (this.sheet != ref.sheet) {
                 return NULL;
@@ -259,7 +257,6 @@
                 return NULL;
             }
         },
-
         intersect: function(ref) {
             if (ref === NULL) {
                 return ref;
@@ -275,11 +272,9 @@
             }
             throw new Error("Unknown reference");
         },
-
         intersects: function(ref) {
             return this.intersect(ref) !== NULL;
         },
-
         simplify: function() {
             if (this.topLeft.row == this.bottomRight.row &&
                 this.topLeft.col == this.bottomRight.col)
@@ -292,7 +287,6 @@
             }
             return this;
         },
-
         normalize: function() {
             var a = this.topLeft, b = this.bottomRight;
             var r1 = a.row, c1 = a.col, r2 = b.row, c2 = b.col;
@@ -315,7 +309,6 @@
             }
             return this;
         },
-
         print: function(trow, tcol) {
             var ret = this.topLeft.print(trow, tcol)
                 + ":"
@@ -325,51 +318,41 @@
             }
             return ret;
         },
-
-
         absolute: function(arow, acol) {
             return new RangeRef(
                 this.topLeft.absolute(arow, acol),
                 this.bottomRight.absolute(arow, acol)
             ).setSheet(this.sheet, this.hasSheet());
         },
-
         height: function() {
             if (this.topLeft.rel != this.bottomRight.rel) {
                 throw new Error("Mixed relative/absolute references");
             }
             return this.bottomRight.row - this.topLeft.row + 1;
         },
-
         width: function() {
             if (this.topLeft.rel != this.bottomRight.rel) {
                 throw new Error("Mixed relative/absolute references");
             }
             return this.bottomRight.col - this.topLeft.col + 1;
         },
-
         collapse: function() {
             return this.topLeft.toRangeRef();
         },
-
         leftColumn: function() {
             return new RangeRef(this.topLeft, new CellRef(this.bottomRight.row, this.topLeft.col));
         },
-
         topRow: function() {
             return new RangeRef(this.topLeft, new CellRef(this.topLeft.row, this.bottomRight.col));
         },
-
         toRangeRef: function() {
             return this;
         },
-
         intersecting: function(refs) {
             return refs.filter(function(ref) {
                 return ref.intersects(this);
             }, this);
         },
-
         union: function(refs, callback) {
             refs = this.intersecting(refs);
 
@@ -443,7 +426,6 @@
         toRangeRef: function() {
             return this.refs[0].toRangeRef();
         },
-
         map: function(callback) {
             return new UnionRef(this.refs.map(callback));
         }
