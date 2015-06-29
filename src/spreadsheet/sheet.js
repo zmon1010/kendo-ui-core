@@ -489,7 +489,7 @@
             return this.suspendChanges(suspended).triggerChange();
         },
 
-        sort: function(ref, columnIndex) {
+        _sort: function(ref) {
             this._sorter.sortBy(ref, this._values);
 
             return this.triggerChange();

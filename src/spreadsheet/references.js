@@ -351,6 +351,12 @@
         toRangeRef: function() {
             return this;
         },
+        toColumn: function(col) {
+            return new RangeRef(
+               new CellRef(this.topLeft.row, this.topLeft.col + col),
+               new CellRef(this.bottomRight.row, this.topLeft.col + col)
+            );
+        },
         intersecting: function(refs) {
             return refs.filter(function(ref) {
                 return ref.intersects(this);

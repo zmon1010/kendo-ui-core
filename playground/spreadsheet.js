@@ -18,7 +18,7 @@ sheet.rowHeight(50, 200);
 sheet.range(1, 0, 50).background("green");
 sheet.range(2, 2, 8, 6).background("teal").value("foo").merge();
 
-sheet.range("I1:I3").values([[9], [10], [11]]).format('[<10]"<10"* 0;[>10]">10"* 0;"=10"* 0');
+sheet.range("I1:I4").values([[10], [9], [10], [11]]).format('[<10]"<10"* 0;[>10]">10"* 0;"=10"* 0');
 
 sheet.frozenColumns(3).frozenRows(6);
 
@@ -74,4 +74,8 @@ $("body").on("mousedown", ".k-spreadsheet-selection", function(e) {
     setTimeout(function() {
         $("#clipboard").val(text).select().focus();
     });
+});
+
+$("#sort").on("click", function() {
+    sheet.range("I1:I4").sort();
 });

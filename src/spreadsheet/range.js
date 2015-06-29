@@ -213,12 +213,22 @@
             return this.clear({ formatOnly: true });
         },
 
-        sort: function(columnIndex) {
+        sort: function(column) {
             if (this._ref instanceof UnionRef) {
                 throw new Error("Unsupported for multiple ranges.");
             }
 
-            this._sheet.sort(this._ref.toRangeRef(), columnIndex);
+            var ref = this._ref.toRangeRef();
+
+            if (typeof column === "object") {
+                column = column.column;
+            }
+
+            if (typeof column === "number") {
+                ref = ref.toColumn(column);
+            }
+
+            this._sheet._sort(ref);
 
             return this;
         }
