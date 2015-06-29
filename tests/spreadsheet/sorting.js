@@ -45,7 +45,7 @@
         equal(values[2], 3);
     });
 
-    test("sort by sort spec object", function() {
+    test("sort by spec object", function() {
         sheet.range("A1:B3")
              .values([
               [ 0, 3 ] ,
@@ -58,6 +58,21 @@
         equal(values[0], 1);
         equal(values[1], 2);
         equal(values[2], 3);
+    });
+
+    test("descending sort", function() {
+        sheet.range("A1:B3")
+             .values([
+              [ 0, 1 ] ,
+              [ 0, 2 ],
+              [ 0, 1 ]
+            ])
+        .sort({ column: 1, ascending: false });
+
+        var values = sheet.range("B1:B3").values();
+        equal(values[0], 2);
+        equal(values[1], 1);
+        equal(values[2], 1);
 
     })
 })();

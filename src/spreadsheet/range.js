@@ -219,8 +219,10 @@
             }
 
             var ref = this._ref.toRangeRef();
+            var ascending = true;
 
             if (typeof column === "object") {
+                ascending = column.ascending !== false;
                 column = column.column;
             }
 
@@ -228,7 +230,7 @@
                 ref = ref.toColumn(column);
             }
 
-            this._sheet._sort(ref);
+            this._sheet._sort(ref, ascending);
 
             return this;
         }

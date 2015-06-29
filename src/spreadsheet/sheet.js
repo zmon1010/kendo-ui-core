@@ -489,8 +489,8 @@
             return this.suspendChanges(suspended).triggerChange();
         },
 
-        _sort: function(ref) {
-            this._sorter.sortBy(ref, this._values);
+        _sort: function(ref, ascending) {
+            this._sorter.sortBy(ref, this._values, ascending);
 
             return this.triggerChange();
         }

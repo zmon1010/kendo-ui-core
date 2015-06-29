@@ -9,13 +9,19 @@
             this._lists = lists;
         },
 
-        indices: function(rangeRef, list) {
+        indices: function(rangeRef, list, ascending) {
+            var comparer = Sorter.ascendingComparer;
+
+            if (ascending === false) {
+                comparer = Sorter.descendingComparer;
+            }
+
             return list.sortedIndices(this._grid.cellRefIndex(rangeRef.topLeft),
-                this._grid.cellRefIndex(rangeRef.bottomRight));
+                this._grid.cellRefIndex(rangeRef.bottomRight), comparer);
         },
 
-        sortBy: function(ref, list) {
-            var sortedIndices = this.indices(ref, list);
+        sortBy: function(ref, list, ascending) {
+            var sortedIndices = this.indices(ref, list, ascending);
             var lists = this._lists;
             var length = lists.length;
             var ends = [];
@@ -35,6 +41,14 @@
             });
         }
     });
+
+    Sorter.ascendingComparer = function(a, b) {
+        return a.value - b.value;
+    };
+
+    Sorter.descendingComparer = function(a, b) {
+        return Sorter.ascendingComparer(b, a);
+    }
 
     kendo.spreadsheet.Sorter = Sorter;
 })(kendo);

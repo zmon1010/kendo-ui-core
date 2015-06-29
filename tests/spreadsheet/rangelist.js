@@ -118,7 +118,7 @@
         list.value(12, 12, 1);
         list.value(13, 13, 3);
 
-        var indices = list.sortedIndices(11, 13);
+        var indices = list.sortedIndices(11, 13, kendo.spreadsheet.Sorter.ascendingComparer);
         equal(indices.length, 3);
         equal(indices[0].index, 1);
         equal(indices[1].index, 0);

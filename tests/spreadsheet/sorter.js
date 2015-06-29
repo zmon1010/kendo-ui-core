@@ -52,4 +52,13 @@
         equal(colors.value(2), "blue");
     });
 
+    test("sorts in descending order", function() {
+        sorter.sortBy(area, values, false);
+
+        equal(values.value(0), 3);
+        equal(values.value(1), 2);
+        equal(values.value(2), 1);
+
+        equal(values.value(4), 10);
+    });
 })();

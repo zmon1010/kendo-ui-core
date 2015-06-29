@@ -295,7 +295,7 @@
             return result;
         },
 
-        sortedIndices: function(start, end) {
+        sortedIndices: function(start, end, valueComparer) {
             var result = this.expandedValues(start, end);
             result.sort(valueComparer);
             return result;
@@ -303,7 +303,6 @@
 
         sort: function(start, end, indices) {
             if (this.intersecting(start, end).length === 1) {
-                // console.log("skipping");
                 return;
             }
 
@@ -318,9 +317,6 @@
             return new Iterator(start, end, this.intersecting(start, end));
         }
     });
-
-    function valueComparer(a, b) { return a.value - b.value; }
-
 
     var Iterator = kendo.Class.extend({
         init: function(start, end, ranges) {

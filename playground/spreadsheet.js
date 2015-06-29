@@ -76,6 +76,8 @@ $("body").on("mousedown", ".k-spreadsheet-selection", function(e) {
     });
 });
 
+var ascending = true;
 $("#sort").on("click", function() {
-    sheet.range("I1:I4").sort();
+    sheet.range("I1:I4").sort({ column: 0, ascending: ascending });
+    ascending = !ascending;
 });
