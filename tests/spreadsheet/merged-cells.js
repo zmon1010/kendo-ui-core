@@ -10,6 +10,8 @@
         }
     });
 
+    var DUMMY_VIEW = { ref: rangeRef(0, 0, 100, 100), top: 0, left: 0 };
+
     function createPane(row, column, rowCount, columnCount) {
         return new Pane(sheet, sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
     }
@@ -28,7 +30,8 @@
 
         sheet.range(0, 0, 2, 3).merge().value("foo");
 
-        var mergedCells = pane.renderMergedCells(rangeRef(0,0, 100, 100), 0, 0).children;
+        pane._currentView = DUMMY_VIEW;
+        var mergedCells = pane.renderMergedCells().children;
         var table = mergedCells[0];
 
         equal(mergedCells.length, 1);
@@ -45,7 +48,8 @@
         sheet.range(0, 0, 2, 2).merge();
         sheet.range(2, 2, 2, 2).merge();
 
-        var mergedCells = pane.renderMergedCells(rangeRef(0,0, 100, 100), 0, 0).children;
+        pane._currentView = DUMMY_VIEW;
+        var mergedCells = pane.renderMergedCells().children;
 
         equal(mergedCells.length, 2);
     });
@@ -54,6 +58,8 @@
         var pane = createPane(0, 0);
 
         sheet.range(0, 0, 2, 2).merge();
+
+        pane._currentView = { ref: rangeRef(0, 3, 100, 100) , top: 0, left: 0 };
 
         var mergedCells = pane.renderMergedCells(rangeRef(0, 3, 100, 100), 0, 0).children;
 

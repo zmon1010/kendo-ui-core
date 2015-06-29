@@ -229,7 +229,7 @@
                     return ref.toRangeRef().union(mergedCells);
                 });
 
-                this.activeCell(ref.first());
+                this.activeCell(this._selection.first());
             }
 
             return this._selection;
