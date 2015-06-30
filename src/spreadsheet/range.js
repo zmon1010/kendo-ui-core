@@ -12,7 +12,7 @@
             this._sheet = sheet;
             this._ref = ref;
         },
-        _property: function(list, value) {
+        _property: function(list, value, recalc) {
             if (value !== undefined) {
                 this._ref.forEach(function(ref) {
                     ref = ref.toRangeRef();
@@ -25,7 +25,7 @@
                     }
                 }.bind(this));
 
-                this._sheet.triggerChange();
+                this._sheet.triggerChange(recalc);
 
                 return this;
             } else {
@@ -57,7 +57,7 @@
 
         },
         value: function(value) {
-            return this._property(this._sheet._values, value);
+            return this._property(this._sheet._values, value, true);
         },
         fontColor: function(value) {
             return this._styleProperty("fontColor", value);
@@ -112,9 +112,9 @@
 
                 var sheet = this._sheet;
                 sheet.batch(function() {
-                    this._property(this._sheet._formulas, null, true);
+                    this._property(this._sheet._formulas, null);
                     this.value(null);
-                }.bind(this));
+                }.bind(this), true);
 
                 return this;
             }

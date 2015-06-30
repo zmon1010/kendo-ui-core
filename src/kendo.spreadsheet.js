@@ -58,7 +58,7 @@
 
             this._sheet.bind("change", function(e) {
                 if (this._autoRefresh) {
-                    this.refresh();
+                    this.refresh(e);
                 }
             }.bind(this));
 
@@ -73,8 +73,6 @@
             this._view.sheet(this.activeSheet());
 
             this.fromJSON(this.options);
-
-            this.refresh();
         },
 
         _passWheelEvent: function(e) {
@@ -86,8 +84,10 @@
             e.preventDefault();
         },
 
-        refresh: function() {
-            this._sheet.recalc(this._context);
+        refresh: function(e) {
+            if (!e || e.recalc === true) {
+                this._sheet.recalc(this._context);
+            }
             this._view.refresh();
             this._view.render();
             this.trigger("render");

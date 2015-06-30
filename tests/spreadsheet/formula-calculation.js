@@ -50,7 +50,13 @@
         equal(sheet.range("B1").value(), 4);
         equal(sheet.range("A2").value(), 6);
         equal(sheet.range("B2").value(), 8);
+    });
 
-        //console.log(JSON.stringify( sheet.range("A1").value().data ));
+    test("sorting recalculates the formulas", function() {
+        sheet.range("A1").value(1);
+        sheet.range("A2").value(2);
+        sheet.range("B1").formula("=(A1+0)");
+        sheet.range("A1:A2").sort({ column: 0, ascending: false});
+        equal(sheet.range("B1").value(), 2);
     });
 })();

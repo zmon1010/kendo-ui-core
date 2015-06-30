@@ -70,9 +70,9 @@
             return this;
         },
 
-        triggerChange: function() {
+        triggerChange: function(recalc) {
             if (!this._suspendChanges) {
-                this.trigger("change");
+                this.trigger("change", { recalc: recalc });
             }
             return this;
         },
@@ -479,20 +479,20 @@
             }
         },
 
-        batch: function(callback) {
+        batch: function(callback, recalc) {
             var suspended = this.suspendChanges();
 
             this.suspendChanges(true);
 
             callback();
 
-            return this.suspendChanges(suspended).triggerChange();
+            return this.suspendChanges(suspended).triggerChange(recalc);
         },
 
         _sort: function(ref, ascending) {
             this._sorter.sortBy(ref, this._values, ascending);
 
-            return this.triggerChange();
+            return this.triggerChange(true);
         }
     });
 
