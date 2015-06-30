@@ -3551,23 +3551,10 @@
 
                 if (that.options.autoBind) {
                     if (that._isEditable) {
-                        that._preventRefresh = true;
-                        that._preventConnectionsRefresh = true;
-
-                        var promises = $.map([
-                            that.dataSource,
-                            that.connectionsDataSource
-                        ],
-                        function(dataSource) {
-                            return dataSource.fetch();
-                        });
-
-                        $.when.apply(null, promises)
-                            .done(function() {
-                                that._preventRefresh = false;
-                                that._preventConnectionsRefresh = false;
-                                that.refresh();
-                            });
+                        this._loadingShapes = true;
+                        this._loadingConnections = true;
+                        that.dataSource.fetch();
+                        that.connectionsDataSource.fetch();
                     } else {
                         that.dataSource.fetch();
                     }
@@ -3583,14 +3570,17 @@
                     if (this.dataSource && this._shapesRefreshHandler) {
                         this.dataSource
                             .unbind("change", this._shapesRefreshHandler)
+                            .unbind("requestStart", this._shapesRequestStartHandler)
                             .unbind("error", this._shapesErrorHandler);
                     } else {
                         this._shapesRefreshHandler = proxy(this._refreshShapes, this);
+                        this._shapesRequestStartHandler = proxy(this._shapesRequestStart, this);
                         this._shapesErrorHandler = proxy(this._error, this);
                     }
 
                     this.dataSource = kendo.data.DataSource.create(ds)
                         .bind("change", this._shapesRefreshHandler)
+                        .bind("requestStart", this._shapesRequestStartHandler)
                         .bind("error", this._shapesErrorHandler);
                 } else {
                     this._treeDataSource();
@@ -3606,16 +3596,39 @@
                     if (this.connectionsDataSource && this._connectionsRefreshHandler) {
                         this.connectionsDataSource
                             .unbind("change", this._connectionsRefreshHandler)
+                            .unbind("requestStart", this._connectionsRequestStartHandler)
                             .unbind("error", this._connectionsErrorHandler);
                     } else {
                         this._connectionsRefreshHandler = proxy(this._refreshConnections, this);
-                        this._connectionsErrorHandler = proxy(this._error, this);
+                        this._connectionsRequestStartHandler = proxy(this._connectionsRequestStart, this);
+                        this._connectionsErrorHandler = proxy(this._connectionsError, this);
                     }
 
                     this.connectionsDataSource = kendo.data.DataSource.create(ds)
                         .bind("change", this._connectionsRefreshHandler)
+                        .bind("requestStart", this._connectionsRequestStartHandler)
                         .bind("error", this._connectionsErrorHandler);
                 }
+            },
+
+            _shapesRequestStart: function(e) {
+                if (e.type == "read") {
+                    this._loadingShapes = true;
+                }
+            },
+
+            _connectionsRequestStart: function(e) {
+                if (e.type == "read") {
+                    this._loadingConnections = true;
+                }
+            },
+
+            _error: function () {
+                this._loadingShapes = false;
+            },
+
+            _connectionsError: function() {
+                this._loadingConnections = false;
             },
 
             _refreshShapes: function(e) {
@@ -3649,11 +3662,14 @@
             },
 
             refresh: function() {
-                if (this._preventRefresh) {
-                    return;
+                this._loadingShapes = false;
+                if (!this._loadingConnections) {
+                    this.trigger("dataBound");
+                    this._rebindShapesAndConnections();
                 }
+            },
 
-                this.trigger("dataBound");
+            _rebindShapesAndConnections: function() {
                 this.clear();
                 this._addShapes(this.dataSource.view());
                 if (this.connectionsDataSource) {
@@ -3666,16 +3682,10 @@
             },
 
             refreshConnections: function() {
-                if (this._preventConnectionsRefresh) {
-                    return;
-                }
-
-                this.trigger("dataBound");
-
-                this._addConnections(this.connectionsDataSource.view(), false);
-
-                if (this.options.layout) {
-                    this.layout(this.options.layout);
+                this._loadingConnections = false;
+                if (!this._loadingShapes) {
+                    this.trigger("dataBound");
+                    this._rebindShapesAndConnections();
                 }
             },
 
@@ -3846,8 +3856,7 @@
 
                 that.dataSource.unbind(CHANGE, that._refreshHandler).unbind(ERROR, that._errorHandler);
             },
-            _error: function () {
-            },
+
             _adorn: function (adorner, isActive) {
                 if (isActive !== undefined && adorner) {
                     if (isActive) {

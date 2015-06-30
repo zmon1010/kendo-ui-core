@@ -183,6 +183,87 @@
         ok(diagram.shapes[1].options.dataItem.foo);
     });
 
+    (function() {
+        var shapesData = [{id: 1}, {id: 2}];
+        var connectionsData = [{id: 1, from: 1, to: 2}];
+
+        function setupAsyncDiagram(options) {
+            diagram = createDiagram(kendo.deepExtend({
+                dataSource: {
+                    transport: {
+                        read: function(options) {
+                            setTimeout(function() {
+                                options.success(shapesData);
+                            }, 10);
+                        }
+                    }
+                },
+
+                connectionsDataSource: {
+                    transport: {
+                        read: function(options) {
+                            setTimeout(function() {
+                                options.success(connectionsData);
+                            }, 20);
+                        }
+                    }
+                }
+            }, options));
+        }
+
+        // ------------------------------------------------------------
+        module("Diagram / Data Binding / Flat", {
+            setup: function() {
+
+            },
+            teardown: destroyDiagram
+        });
+
+        test("rebinds once initially with local data", 1, function() {
+            diagram = createDiagram({
+                dataSource: shapesData,
+                connectionsDataSource: connectionsData,
+                dataBound: function() {
+                    ok(true);
+                }
+            });
+        });
+
+        asyncTest("rebinds once initially with remote data", 1, function() {
+            setupAsyncDiagram();
+
+            diagram.bind("dataBound", function() {
+                ok(true);
+                start();
+            });
+        });
+
+        asyncTest("rebinds once if the shapes and connections dataSources are read with remote data", 1, function() {
+            setupAsyncDiagram({
+                autoBind: false
+            });
+            diagram.dataSource.read();
+            diagram.connectionsDataSource.read();
+            diagram.bind("dataBound", function() {
+                ok(true);
+                start();
+            });
+        });
+
+        test("clears previous shapes and connections when the data is read", function() {
+            diagram = createDiagram({
+                dataSource: setupDataSource("shape", {}, [{id: 1}]),
+                connectionsDataSource: setupDataSource("connection", {}, [{id: 1}]),
+            });
+
+            diagram.dataSource.read();
+            diagram.connectionsDataSource.read();
+            equal(diagram.shapes.length, 1);
+            equal(diagram.connections.length, 1);
+        });
+
+    })();
+
     // ------------------------------------------------------------
     var dataMap;
     var dataSource;
