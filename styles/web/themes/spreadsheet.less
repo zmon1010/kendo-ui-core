@@ -1,0 +1,25 @@
+.k-spreadsheet-top-corner,
+.k-spreadsheet-row-header td,
+.k-spreadsheet-column-header td {
+    background-color: @base;
+    background-image: none;
+}
+
+.k-spreadsheet-pane {
+    border-color: darken(@base, 20%);
+}
+
+.k-spreadsheet-pane td {
+    border-color: darken(@base, 10%);
+}
+
+.k-spreadsheet-pane .k-state-selected {
+    border-color: darken(@selected-background, 5%);
+    background-color: @selected-background;
+}
+
+.k-spreadsheet-selection,
+.k-spreadsheet-active-cell {
+    background-color: fadeout(@selected-background, 70%);
+    border-color: @selected-background;
+}

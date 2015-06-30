@@ -6,6 +6,8 @@
     border-width: 1px;
     border-style: solid;
 
+    cursor: default;
+
     table {
         table-layout: fixed;
         border-collapse: collapse;
@@ -40,8 +42,7 @@
     }
 
     .k-spreadsheet-selection {
-        background-color: rgba(0, 0, 0, 0.5);
-        border-width: 2px;
+        border-width: 1px;
         border-style: inset;
         opacity: 0.5;
         position: absolute;
@@ -54,6 +55,10 @@
         position: absolute;
         box-sizing: border-box;
         background: #fff;
+
+        & td {
+            padding: 0;
+        }
     }
 }
 

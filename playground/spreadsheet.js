@@ -15,8 +15,8 @@ sheet.range("E11:AX200").formula("=RANDBETWEEN(1, 100)");
 sheet.rowHeight(1, 40);
 sheet.rowHeight(50, 200);
 
-sheet.range(1, 0, 50).background("green");
-sheet.range(2, 2, 8, 6).background("teal").value("foo").merge();
+sheet.range(1, 0, 50).background("#afa");
+sheet.range(2, 2, 8, 6).background("#aff").value("foo").merge();
 
 sheet.range("I1:I4").values([[10], [9], [10], [11]]).format('[<10]"<10"* 0;[>10]">10"* 0;"=10"* 0');
 
