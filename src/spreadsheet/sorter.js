@@ -43,12 +43,24 @@
     });
 
     Sorter.ascendingComparer = function(a, b) {
+        if (a === null && b === null) {
+            return 0;
+        }
+
         if (a === null) {
             return 1;
         }
 
         if (b === null) {
             return -1;
+        }
+
+        if (a instanceof Date) {
+            a = a.getTime();
+        }
+
+        if (b instanceof Date) {
+            b = b.getTime();
         }
 
         var typeA = typeof a;
@@ -72,9 +84,36 @@
                     return -1;
             }
         }
+
+        if (typeA === "boolean") {
+            switch (typeB) {
+                case "number":
+                    return 1;
+                case "string":
+                    return 1;
+                case "boolean":
+                    return a - b;
+                default:
+                    return -1;
+            }
+        }
+
+        if (a instanceof kendo.spreadsheet.calc.runtime.CalcError) {
+            if (b instanceof kendo.spreadsheet.calc.runtime.CalcError) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+
+        throw new Error("Cannot compare " + a + " and " + b);
     };
 
     Sorter.descendingComparer = function(a, b) {
+        if (a === null && b === null) {
+            return 0;
+        }
+
         if (a === null) {
             return 1;
         }
