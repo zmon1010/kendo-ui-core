@@ -222,6 +222,15 @@
         ok(p.lastChild.className == "k-br");
     });
 
+    test("fully removes paragraphs", function() {
+        var range = createRangeFromText(editor, '<p></p><p></p><p>||</p>');
+        editor.selectRange(range);
+
+        handleBackspace();
+
+        equal(editor.value(), '<p></p><p></p>');
+    });
+
     //test("does not remove table cells", function() {
         //editor.value("<table><tr><td>foo</td><td>bar</td></tr></table>");
 

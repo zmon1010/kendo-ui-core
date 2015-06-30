@@ -239,34 +239,35 @@ var BackspaceHandler = Class.extend({
     init: function(editor) {
         this.editor = editor;
     },
+    _addCaret: function(container) {
+        var caret = dom.create(this.editor.document, "a");
+        container.appendChild(caret);
+        return caret;
+    },
+    _restoreCaret: function(caret) {
+        var range = this.editor.createRange();
+        range.setStartAfter(caret);
+        range.collapse(true);
+        this.editor.selectRange(range);
+        dom.remove(caret);
+    },
     _handleDelete: function(range) {
         var node = range.endContainer;
         var block = dom.closestEditableOfType(node, dom.blockElements);
 
         if (block && editorNS.RangeUtils.isEndOf(range, block)) {
             // join with next sibling
-            var caret = dom.create(this.editor.document, "a");
-            block.appendChild(caret);
+            var caret = this._addCaret(block);
 
             var next = dom.next(block);
-
             if (!next || dom.name(next) != "p") {
                 dom.remove(caret);
                 return false;
             }
 
-            dom.removeTrailingBreak(block);
+            this._merge(block, next);
 
-            while (next.firstChild) {
-                block.appendChild(next.firstChild);
-            }
-
-            dom.remove(next);
-
-            range.setStartAfter(caret);
-            range.collapse(true);
-            this.editor.selectRange(range);
-            dom.remove(caret);
+            this._restoreCaret(caret);
 
             return true;
         }
@@ -277,7 +278,7 @@ var BackspaceHandler = Class.extend({
         var node = range.startContainer;
         var i = range.startOffset;
         var li = dom.closestEditableOfType(node, ['li']);
-        var header = dom.closestEditableOfType(node, 'h1,h2,h3,h4,h5,h6'.split(','));
+        var block = dom.closestEditableOfType(node, 'p,h1,h2,h3,h4,h5,h6'.split(','));
 
         if (dom.isDataNode(node)) {
             while (i >= 0 && node.nodeValue[i-1] == "\ufeff") {
@@ -291,22 +292,13 @@ var BackspaceHandler = Class.extend({
             this.editor.selectRange(range);
         }
 
-        // unwrap header
-        if (header && header.previousSibling && editorNS.RangeUtils.isStartOf(range, header)) {
-            var prev = header.previousSibling;
-            var caret = dom.create(this.editor.document, "a");
+        // unwrap block
+        if (block && block.previousSibling && editorNS.RangeUtils.isStartOf(range, block)) {
+            var prev = block.previousSibling;
+            var caret = this._addCaret(prev);
+            this._merge(prev, block);
 
-            prev.appendChild(caret);
-            while (header.firstChild) {
-                prev.appendChild(header.firstChild);
-            }
-
-            dom.remove(header);
-
-            range.setStartAfter(caret);
-            range.collapse(true);
-            this.editor.selectRange(range);
-            dom.remove(caret);
+            this._restoreCaret(caret);
 
             return true;
         }
@@ -386,12 +378,17 @@ var BackspaceHandler = Class.extend({
         end = this._root(end);
 
         if (start != end && dom.is(end, "p")) {
-            while (end.firstChild) {
-                start.appendChild(end.firstChild);
-            }
-
-            dom.remove(end);
+            this._merge(start, end);
         }
+    },
+    _merge: function(dest, src) {
+        dom.removeTrailingBreak(dest);
+
+        while (src.firstChild) {
+            dest.appendChild(src.firstChild);
+        }
+
+        dom.remove(src);
     },
     keydown: function(e) {
         var method, startRestorePoint;
