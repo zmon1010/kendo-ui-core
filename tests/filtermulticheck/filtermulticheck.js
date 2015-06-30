@@ -324,4 +324,27 @@
         equal(chkbxs.eq(0).val(), "second string");
         equal(chkbxs.eq(0).closest("label").text(), "second string");
     });
+
+    test("checkboxes are updated when using local operations and parent ds is changed", function() {
+        var ds = new kendo.data.DataSource({
+            serverPaging: false,
+            data: [{
+                foo: "some string"
+            }, {
+                foo: "other string"
+            }, {
+                foo: ""
+            }]
+        });
+        ds.read();
+
+        widget = setup({
+            dataSource: ds,
+            field: "foo"
+        });
+        var emptyCheckbox = widget.container.find("[value='']");
+        emptyCheckbox.prop("checked", "checked");
+        $("[type='submit']").click();
+        equal(widget.dataSource.view().length, 1);
+    });
 })();
