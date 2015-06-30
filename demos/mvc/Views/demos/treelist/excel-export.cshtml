@@ -23,10 +23,11 @@
                         },
                         schema: {
                             model: {
-                                id: "EmployeeID",
+                                id: "EmployeeId",
+                                parentId: "ReportsTo",
                                 fields: {
-                                    parentId: { field: "ReportsTo",  nullable: true },
-                                    EmployeeID: { field: "EmployeeId", type: "number" }
+                                    ReportsTo: { nullable: true },
+                                    EmployeeId: {  type: "number" }
                                 },
                                 expanded: true
                             }

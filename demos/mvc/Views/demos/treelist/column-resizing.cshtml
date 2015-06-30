@@ -16,9 +16,10 @@
                                 model: {
                                     id: "EmployeeId",
                                     expanded: true,
+                                    parentId: "ReportsTo",
                                     fields: {
                                         EmployeeId: { type: "number", nullable: false },
-                                        parentId: { field: "ReportsTo", nullable: true }
+                                        ReportsTo: { nullable: true, type: "number" }
                                     }
                                 }
                             }
