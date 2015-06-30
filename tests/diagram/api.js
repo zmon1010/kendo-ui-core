@@ -166,6 +166,12 @@
         deepEqual(clip.size.toArray(), [800, 600]);
     });
 
+    test("Does not transform clip box", function() {
+        diagram.pan(new Point(100, 100));
+        var visual = diagram.exportDOMVisual();
+        ok(!visual.transform());
+    });
+
     exportTests("Diagram", createDiagram);
     saveAsPDFTests("Diagram", createDiagram);
 })();

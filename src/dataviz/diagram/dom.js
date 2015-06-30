@@ -3906,23 +3906,21 @@
 
             exportDOMVisual: function() {
                 var viewBox = this.canvas._viewBox;
-                var scrollOffset = geom.transform().translate(
-                    -viewBox.x, -viewBox.y
-                );
+                var scrollOffset = geom.transform()
+                                       .translate(-viewBox.x, -viewBox.y);
 
-                var viewRect = new geom.Rect(
-                    [0, 0], [viewBox.width, viewBox.height]
-                );
+                var viewRect = new geom.Rect([0, 0], [viewBox.width, viewBox.height]);
                 var clipPath = draw.Path.fromRect(viewRect);
-
-                var wrap = new draw.Group({
-                    transform: scrollOffset,
-                    clip: clipPath
-                });
-
+                var wrap = new draw.Group({ transform: scrollOffset });
+                var clipWrap = new draw.Group({ clip: clipPath });
                 var root = this.canvas.drawingElement.children[0];
+
+                clipWrap.append(wrap);
+
+                // Don't reparent the root
                 wrap.children.push(root);
-                return wrap;
+
+                return clipWrap;
             },
 
             exportVisual: function() {
