@@ -1,8 +1,10 @@
 .k-spreadsheet {
-    border: 1px solid black;
     width: 800px;
     height: 600px;
+
     position: relative;
+    border-width: 1px;
+    border-style: solid;
 
     table {
         table-layout: fixed;
@@ -11,10 +13,10 @@
         position: absolute;
 
         td {
-            border: 1px solid black;
+            border-width: 1px;
+            border-style: solid;
             box-sizing: border-box;
             overflow: hidden;
-            font-size: 11px;
             height: 20px;
         }
 
@@ -39,17 +41,19 @@
 
     .k-spreadsheet-selection {
         background-color: rgba(0, 0, 0, 0.5);
-        border: 2px inset #ccc;
+        border-width: 2px;
+        border-style: inset;
         opacity: 0.5;
         position: absolute;
         box-sizing: border-box;
     }
 
     .k-spreadsheet-active-cell {
-        border: 2px inset black;
+        border-width: 2px;
+        border-style: inset;
         position: absolute;
         box-sizing: border-box;
-        background: white;
+        background: #fff;
     }
 }
 
@@ -57,7 +61,6 @@
     position: absolute;
     top: 1px;
     left: 1px;
-    background-color: #f00;
     z-index: 10000;
 }
 
@@ -84,15 +87,14 @@
 
 .k-spreadsheet-pane {
     position: absolute;
-    border: 1px solid blue;
+    border-width: 1px;
+    border-style: solid;
     overflow: hidden;
     box-sizing: border-box;
 }
 
-.k-spreadsheet-column-header ,
+.k-spreadsheet-column-header,
 .k-spreadsheet-row-header {
-    background: grey;
-    border-color: black;
     text-align: center;
 }
 

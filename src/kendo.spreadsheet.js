@@ -30,7 +30,7 @@
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
 
-            this.element.addClass("k-spreadsheet");
+            this.element.addClass("k-widget k-spreadsheet");
 
             this._fixedContainer = $("<div class=k-spreadsheet-fixed-container>").appendTo(this.element);
 
