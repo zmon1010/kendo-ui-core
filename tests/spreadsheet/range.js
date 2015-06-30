@@ -332,6 +332,31 @@
         equal(sheet.range("A3").value(), "foo");
     });
 
+    test("clearFormat unmerge cells", function() {
+        sheet.range("A1:A3")
+            .merge()
+            .clearFormat();
+
+        equal(sheet._mergedCells.length, 0);
+    });
+
+    test("clearFormat clears format", function() {
+        sheet.range("A1:A3")
+            .format("foo")
+            .clearFormat();
+
+        equal(sheet.range("A1:A3").format(), null);
+    });
+
+    test("clearFormat triggers only one change", 1, function() {
+        sheet.bind("change", function() {
+            ok(true);
+        });
+
+        sheet.range("A1:A3")
+            .clearFormat();
+    });
+
     test("setting formula to null triggers change", 2, function() {
         sheet.bind("change", function() {
             ok(true);

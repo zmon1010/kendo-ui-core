@@ -194,13 +194,22 @@
 
             var clearAll = !options || !Object.keys(options).length;
 
-            if (clearAll || (options && options.contentsOnly === true)) {
-                this.formula(null);
-            }
+            var sheet = this._sheet;
 
-            if (clearAll || (options && options.formatOnly === true)) {
-                this._style(null);
-            }
+            sheet.batch(function() {
+
+                if (clearAll || (options && options.contentsOnly === true)) {
+                    this.formula(null);
+                }
+
+                if (clearAll || (options && options.formatOnly === true)) {
+
+                    this._style(null);
+                    this.format(null);
+                    this.unmerge();
+                }
+
+            }.bind(this));
 
             return this;
         },
