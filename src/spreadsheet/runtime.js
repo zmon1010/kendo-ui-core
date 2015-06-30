@@ -66,14 +66,25 @@
         resolveCells: function(a, f) {
             var context = this, formulas = [];
 
-            for (var i = 0; i < a.length; ++i) {
-                var x = a[i];
-                if (x instanceof Ref) {
-                    if (!add(context.ss.getRefCells(x))) {
-                        context.error(new CalcError("CIRCULAR"));
-                        return;
+            if ((function loop(a){
+                for (var i = 0; i < a.length; ++i) {
+                    var x = a[i];
+                    if (x instanceof Ref) {
+                        if (!add(context.ss.getRefCells(x))) {
+                            context.error(new CalcError("CIRCULAR"));
+                            return true;
+                        }
+                    }
+                    if (Array.isArray(x)) {
+                        // make sure we resolve cells in literal matrices
+                        if (loop(x)) {
+                            return true;
+                        }
                     }
                 }
+            })(a)) {
+                // some circular dep was detected, stop here.
+                return;
             }
 
             if (!formulas.length) {
@@ -704,29 +715,44 @@
 
     };
 
-    function compileArgumentChecks(args) {
-        var forced, out = "var i = 0, v, m, err = 'VALUE'; ";
-        out += args.map(comp).join("");
-        out += "if (i < args.length) return this.error(new CalcError('N/A')); ";
+    function compileArgumentChecks(args, prelude, postlude) {
+        var resolve = "var toResolve = [], i = 0; ";
+        var out, forced, main = "var i = 0, v, m, err = 'VALUE'; ", haveForced = false;
+        main += args.map(comp).join("");
+        main += "if (i < args.length) return this.error(new CalcError('N/A')); ";
+
+        if (haveForced) {
+            out = resolve
+                + "this.resolveCells(toResolve, function(){ "
+                + prelude + main + postlude
+                + "}); ";
+        } else {
+            out = prelude + main + postlude;
+        }
+
         return out;
 
         function comp(x) {
             var name = x[0];
             var code = "{ ";
             if (Array.isArray(name)) {
+                resolve += "while (i < args.length) { ";
                 code += "while (i < args.length) { ";
                 code += x.map(comp).join("");
                 code += "} ";
+                resolve += "} ";
             } else if (name == "+") {
+                resolve += "while (i < args.length) { ";
                 code += "do { ";
                 code += x.slice(1).map(comp).join("");
                 code += "} while (i < args.length); ";
+                resolve += "} ";
             } else {
                 var type = x[1];
                 code += "var $" + name + " = v = args[i++]; if (v instanceof CalcError) return this.error(v); "
                     + typeCheck(type) + "xargs.push(v); ";
             }
-            code += " } ";
+            code += "} ";
             return code;
         }
 
@@ -734,13 +760,19 @@
             if (forced) {
                 return "v";
             }
+            haveForced = true;
             forced = true;
+            resolve += "toResolve.push(args[i++]); ";
             return "(v = this.force(v))";
         }
 
         function typeCheck(type) {
             forced = false;
-            return "if (!(" + cond(type) + ")) return this.error(new CalcError(err)); ";
+            var ret = "if (!(" + cond(type) + ")) return this.error(new CalcError(err)); ";
+            if (!forced) {
+                resolve += "i++; ";
+            }
+            return ret;
         }
 
         function cond(type) {
@@ -787,6 +819,7 @@
                 return "(typeof " + force() + " == 'boolean')";
             }
             if (type == "matrix") {
+                force();
                 return "((m = this.asMatrix(v)) ? (v = m) : false)";
             }
             if (type == "ref") {
@@ -794,6 +827,9 @@
             }
             if (type == "area") {
                 return "(v instanceof kendo.spreadsheet.CellRef || v instanceof kendo.spreadsheet.RangeRef)";
+            }
+            if (type == "cell") {
+                return "(v instanceof kendo.spreadsheet.CellRef)";
             }
             if (type == "null") {
                 return "(" + force() + " == null)";
@@ -812,36 +848,39 @@
         name = name.toLowerCase();
         FUNCS[name] = func;
         return {
-            args: function(args) {
-                var code = compileArgumentChecks(args);
-                code = [
-                    "return function " + fname(name) + "(callback, args) { ",
-                    "'use strict'; var xargs = []; ",
-                    code,
-                    "var v = handler.apply(this, xargs); ",
-                    "if (v instanceof CalcError) this.error(v); else callback(v); ",
-                    "};"
-                ].join("");
-                var f = new Function("handler", "CalcError", code);
-                FUNCS[name] = f(func, CalcError);
-                //console.log(FUNCS[name].toString());
+            args: function(args, log) {
+                var code = compileArgumentChecks(
+                    args,
+                    "var xargs = []; ",
+                    ("var v = handler.apply(this, xargs); " +
+                     "if (v instanceof CalcError) this.error(v); else callback(v); ")
+                );
+                defun(name, code, log);
                 return this;
             },
-            argsAsync: function(args) {
-                var code = compileArgumentChecks(args);
-                code = [
-                    "return function " + fname(name) + "(callback, args) { ",
-                    "'use strict'; var xargs = [ callback ]; ",
-                    code,
-                    "handler.apply(this, xargs); ",
-                    "};"
-                ].join("");
-                var f = new Function("handler", "CalcError", code);
-                FUNCS[name] = f(func, CalcError);
-                //console.log(FUNCS[name].toString());
+            argsAsync: function(args, log) {
+                var code = compileArgumentChecks(
+                    args,
+                    "var xargs = [ callback ]; ",
+                    "handler.apply(this, xargs); "
+                );
+                defun(name, code, log);
                 return this;
             }
         };
+        function defun(name, code, log) {
+            code = [
+                "return function " + fname(name) + "(callback, args) { ",
+                "'use strict'; ", code, "};"
+            ].join("");
+            var f = new Function("handler", "CalcError", code);
+            FUNCS[name] = f(func, CalcError);
+
+            // XXX: debug
+            if (log) {
+                console.log(FUNCS[name].toString());
+            }
+        }
         function fname(name) {
             return name.replace(/[^a-z0-9_]/g, function(s){
                 return "$" + s.charCodeAt(0) + "$";
