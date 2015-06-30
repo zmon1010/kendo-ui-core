@@ -297,7 +297,13 @@
 
         sortedIndices: function(start, end, valueComparer) {
             var result = this.expandedValues(start, end);
-            result.sort(valueComparer);
+            result.sort(function(a, b) {
+                if (a.value === b.value) {
+                    return a.index - b.index;
+                }
+
+                return valueComparer(a.value, b.value);
+            });
             return result;
         },
 

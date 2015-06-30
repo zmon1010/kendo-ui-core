@@ -61,4 +61,76 @@
 
         equal(values.value(4), 10);
     });
+
+    test("empty values remain at the end after sorting", function() {
+        values = new SparseRangeList(0, 100, 0);
+        values.value(0, 0, 3);
+        values.value(1, 1, null);
+        values.value(2, 2, 2);
+        sorter = new Sorter(grid, [ values ]);
+
+        sorter.sortBy(area, values, true);
+
+        equal(values.value(0), 2);
+        equal(values.value(1), 3);
+        equal(values.value(2), null);
+    });
+
+    test("empty values remain at the end after descending sorting", function() {
+        values = new SparseRangeList(0, 100, 0);
+        values.value(0, 0, 2);
+        values.value(1, 1, null);
+        values.value(2, 2, 3);
+        sorter = new Sorter(grid, [ values ]);
+
+        sorter.sortBy(area, values, false);
+
+        equal(values.value(0), 3);
+        equal(values.value(1), 2);
+        equal(values.value(2), null);
+    });
+
+    test("alphanumeric sorting", function() {
+        // https://support.microsoft.com/en-us/kb/322067
+        values = new SparseRangeList(0, 100, 0);
+        values.value(0, 0, "a1");
+        values.value(1, 1, "a2");
+        values.value(2, 2, "a3");
+        values.value(3, 3, 1);
+        values.value(4, 4, "1a");
+        values.value(5, 5, 2);
+        values.value(6, 6, "2a");
+        values.value(7, 7, 3);
+        values.value(8, 8, "3a");
+
+        grid = new Grid(null, null, 100, 2);
+        sorter = new Sorter(grid, [ values ]);
+
+        area = new RangeRef(new CellRef(0, 0), new CellRef(8, 0));
+        sorter.sortBy(area, values, true);
+        equal(values.value(0), 1);
+        equal(values.value(1), 2);
+        equal(values.value(2), 3);
+        equal(values.value(3), "1a");
+        equal(values.value(4), "2a");
+        equal(values.value(5), "3a");
+        equal(values.value(6), "a1");
+        equal(values.value(7), "a2");
+        equal(values.value(8), "a3");
+    });
+
+    test("sorting is stable", function() {
+        values = new SparseRangeList(0, 100, 0);
+        values.value(5, 5, 1);
+
+        grid = new Grid(null, null, 11, 2);
+        sorter = new Sorter(grid, [ values ]);
+
+        area = new RangeRef(new CellRef(0, 0), new CellRef(11, 0));
+
+        var indices = sorter.indices(area, values, true);
+
+        equal(indices[0].index, 0);
+        equal(indices[indices.length - 1].index, 5);
+    });
 })();

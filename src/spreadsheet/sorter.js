@@ -43,10 +43,46 @@
     });
 
     Sorter.ascendingComparer = function(a, b) {
-        return a.value - b.value;
+        if (a === null) {
+            return 1;
+        }
+
+        if (b === null) {
+            return -1;
+        }
+
+        var typeA = typeof a;
+        var typeB = typeof b;
+
+        if (typeA === "number") {
+            if (typeB === "number") {
+                return a - b;
+            } else {
+               return -1;
+            }
+        }
+
+        if (typeA === "string") {
+            switch (typeB) {
+                case "number":
+                    return 1;
+                case "string":
+                    return a.localeCompare(b);
+                default:
+                    return -1;
+            }
+        }
     };
 
     Sorter.descendingComparer = function(a, b) {
+        if (a === null) {
+            return 1;
+        }
+
+        if (b === null) {
+            return -1;
+        }
+
         return Sorter.ascendingComparer(b, a);
     }
 
