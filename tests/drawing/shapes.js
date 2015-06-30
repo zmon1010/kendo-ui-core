@@ -2069,6 +2069,119 @@
 
     // ------------------------------------------------------------
     (function() {
+        var Rect = d.Rect,
+            rectGeometry,
+            rect;
+
+        module("Rect", {
+            setup: function() {
+                rectGeometry = new g.Rect([0, 0], [10, 10]);
+                rect = new Rect(rectGeometry);
+            }
+        });
+
+        test("sets initial geometry", function() {
+            deepEqual(rect.geometry(), rectGeometry);
+        });
+
+        test("sets initial options", function() {
+            var rect = new Rect(rectGeometry, { foo: true });
+
+            ok(rect.options.foo);
+        });
+
+        test("sets default stroke", function() {
+            equal(rect.options.stroke.color, "#000");
+        });
+
+        test("default stroke can be overriden", function() {
+            rect = new Rect(rectGeometry, { stroke: { color: "foo" } });
+            equal(rect.options.stroke.color, "foo");
+        });
+
+        test("changing the origin triggers geometryChange", function() {
+            rect.addObserver({
+                geometryChange: function() {
+                    ok(true);
+                }
+            });
+
+            rect.geometry().origin.setX(5);
+        });
+
+        test("changing the size triggers geometryChange", function() {
+            rect.addObserver({
+                geometryChange: function() {
+                    ok(true);
+                }
+            });
+
+            rect.geometry().size.setWidth(5);
+        });
+
+        test("changing the geometry triggers geometryChange", function() {
+            rect.addObserver({
+                geometryChange: function() {
+                    ok(true);
+                }
+            });
+
+            rect.geometry(new g.Rect());
+        });
+
+        test("geometry sets new geometry observer", function() {
+            var geometry = new g.Rect();
+            rect.geometry(geometry);
+            equal(geometry.observers()[0], rect);
+        });
+
+        test("geometry clears previous geometry observer", function() {
+            var geometry = new g.Rect();
+            rect.geometry(geometry);
+            rect.geometry(new g.Rect());
+            equal(geometry.observers().length, 0);
+        });
+
+        test("geometry setter is chainable", function() {
+            equal(rect.geometry(new g.Rect()), rect);
+        });
+
+        test("boundingBox returns geometry bounding rect with half stroke width added", function() {
+            var boundingBox,
+                geometry = new g.Rect(new g.Rect());
+
+            geometry.bbox = function() {
+                return new g.Rect([50, 50], [100, 100]);
+            };
+            rect = new Rect(geometry, {stroke: {width: 5}});
+            boundingBox = rect.bbox();
+            compareBoundingBox(boundingBox, [47.5, 47.5, 152.5, 152.5]);
+        });
+
+        test("boundingBox passes matrix to geometry boundingBox method", function() {
+            var geometry = new g.Rect(),
+                rectMatrix;
+
+            geometry.bbox = function(matrix) {
+                ok(rectMatrix === matrix);
+                return new g.Rect();
+            };
+            rect = new Rect(geometry, {stroke: {width: 5}, transform: g.transform(Matrix.unit())});
+            rectMatrix = rect.options.transform.matrix();
+            rect.bbox();
+        });
+
+        test("rawBBox returns geometry bounding box with no transformation applied", function() {
+            rect.transform(g.transform().scale(2,2));
+
+            compareBoundingBox(rect.rawBBox(), [0, 0, 10, 10]);
+        });
+
+        shapeBaseTests(Circle, "Circle");
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
         var GradientStop = d.GradientStop;
         var stop;
 
