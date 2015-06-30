@@ -1672,15 +1672,18 @@ var __meta__ = {
             },
             name: "workWeek",
             nextDate: function() {
-                return kendo.date.dayOfWeek(kendo.date.nextDay(this.endDate()), this.options.workWeekStart, 1);
+                return kendo.date.dayOfWeek(kendo.date.nextDay(this.startDate()), this.calendarInfo().firstDay, 1);
             },
             previousDate: function() {
-                return kendo.date.previousDay(this.startDate());
+                var weekStart = kendo.date.dayOfWeek(this.startDate(), this.calendarInfo().firstDay, -1);
+                return kendo.date.previousDay(weekStart);
             },
             calculateDateRange: function() {
                 var selectedDate = this.options.date,
-                    start = kendo.date.dayOfWeek(selectedDate, this.options.workWeekStart, -1),
-                    end = kendo.date.dayOfWeek(start, this.options.workWeekEnd, 1),
+                    dayOfWeek = kendo.date.dayOfWeek,
+                    weekStart = dayOfWeek(selectedDate, this.calendarInfo().firstDay, -1),
+                    start = dayOfWeek(weekStart, this.options.workWeekStart, 1),
+                    end = dayOfWeek(start, this.options.workWeekEnd, 1),
                     dates = [];
 
                 while (start <= end) {

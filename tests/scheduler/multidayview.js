@@ -2266,6 +2266,7 @@
     });
 
     test("previous button is working correctly in workWeek view", function() {
+
         var scheduler = container.kendoScheduler({
             views: ["workWeek"],
             workWeekStart: 2,
@@ -2281,7 +2282,7 @@
         var offset = row.find("td:first").offset();
         var startSlot = view._slotByPosition(offset.left, offset.top);
 
-        equal(startSlot.startDate().getDate(), 4);
+        equal(startSlot.startDate().getDate(), 11);
     });
 
     test("next button is working correctly in workWeek view", function() {
@@ -2300,10 +2301,11 @@
         var offset = row.find("td:first").offset();
         var startSlot = view._slotByPosition(offset.left, offset.top);
 
-        equal(startSlot.startDate().getDate(), 18);
+        equal(startSlot.startDate().getDate(), 25);
     });
 
     test("previous button is working correctly in workWeek view with workWeekStart greater then workWeekEnd", function() {
+
         var scheduler = container.kendoScheduler({
             views: ["workWeek"],
             workWeekStart: 5,
@@ -2319,7 +2321,7 @@
         var offset = row.find("td:first").offset();
         var startSlot = view._slotByPosition(offset.left, offset.top);
 
-        equal(startSlot.startDate().getDate(), 7);
+        equal(startSlot.startDate().getDate(), 14);
     });
 
     test("next button is working correctly in workWeek view with workWeekStart greater then workWeekEnd", function() {
@@ -2338,7 +2340,31 @@
         var offset = row.find("td:first").offset();
         var startSlot = view._slotByPosition(offset.left, offset.top);
 
-        equal(startSlot.startDate().getDate(), 21);
+        equal(startSlot.startDate().getDate(), 28);
+    });
+
+    test("workWeek view supports weeks starting before sunday", function() {
+        var culture = kendo.culture();
+        var oldCalendarWeekStart = culture.calendar.firstDay;
+        culture.calendar.firstDay = 6; //which is 26/7
+
+        var scheduler = container.kendoScheduler({
+            views: ["workWeek"],
+            workWeekStart: 1,
+            workWeekEnd: 5,
+            date: new Date("2014/7/26"),
+            dataSource: []
+        }).data("kendoScheduler");
+
+        var view = scheduler.view();
+        var row = view.content.find("tr:first");
+        var offset = row.find("td:first").offset();
+        var startSlot = view._slotByPosition(offset.left, offset.top);
+        var startSlotDate = startSlot.startDate().getDate();
+
+        culture.calendar.firstDay = oldCalendarWeekStart;
+
+        equal(startSlotDate, 28);
     });
 
     test("clicking the cell link trigger navigate event", 2, function() {
