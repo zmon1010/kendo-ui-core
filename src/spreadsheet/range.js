@@ -77,6 +77,15 @@
         fontWeight: function(value) {
             return this._styleProperty("fontWeight", value);
         },
+        borderLeftColor: function(value) {
+            this._ref.relative(0, -1).forEach(function(ref) {
+                new Range(ref, this._sheet).borderRightColor(value);
+            }.bind(this));
+            return this._styleProperty("borderLeftColor", value);
+        },
+        borderRightColor: function(value) {
+            return this._styleProperty("borderRightColor", value);
+        },
         horizontalAlignment: function(value) {
             return this._styleProperty("horizontalAlignment", value);
         },

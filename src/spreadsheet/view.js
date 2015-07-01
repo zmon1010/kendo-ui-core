@@ -225,7 +225,7 @@
                 allHeaders = selectedHeaders.allCols;
             }
 
-            var className = itemSelection || (selectedHeaders.all ? "selected" : (allHeaders ? "active" : null));
+            var className = itemSelection || (selectedHeaders.all ? "selected" : (allHeaders ? "active" : "default"));
 
             if (className) {
                 className = "k-state-" + className;
@@ -250,12 +250,14 @@
                 this.addCell(table, cell.row - view.ref.topLeft.row, cell);
             }.bind(this));
 
-            return table.toDomTree(view.columnOffset, view.rowOffset);
+            return table.toDomTree(view.columnOffset, view.rowOffset, "k-spreadsheet-data");
         },
 
         addCell: function(table, row, cell) {
             var styleMap = {
                 background: "backgroundColor",
+                borderRightColor: "borderRightColor",
+                borderLeftColor: "borderLeftColor",
                 fontColor: "color",
                 fontFamily: "fontFamily",
                 fontLine: "textDecoration",

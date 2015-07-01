@@ -397,6 +397,17 @@
                 new CellRef(bottomRightRow, bottomRightCol)
             );
         },
+        relative: function(arow, acol) {
+            var topLeftRow = this.topLeft.row;
+            var topLeftCol = this.topLeft.col;
+            var bottomRightRow = this.bottomRight.row;
+            var bottomRightCol = this.bottomRight.col;
+
+            return new RangeRef(
+                new CellRef(Math.max(topLeftRow + arow, 0), Math.max(topLeftCol + acol, 0)),
+                new CellRef(Math.max(bottomRightRow + arow, 0), Math.max(bottomRightCol + acol, 0))
+            );
+        },
         first: function() {
             return this.topLeft;
         }

@@ -20,6 +20,8 @@ sheet.range(2, 2, 8, 6).background("#aff").value("foo").merge();
 
 sheet.range("I1:I4").values([[10], [9], [10], [11]]).format('[<10]"<10"* 0;[>10]">10"* 0;"=10"* 0');
 
+sheet.range("E15:E20").borderRightColor("#f00").borderLeftColor("#0f0");
+
 sheet.frozenColumns(3).frozenRows(6);
 
 sheet.range("K11:M16,12:12").select();

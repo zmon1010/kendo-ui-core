@@ -134,6 +134,24 @@
         equal(range.verticalAlignment(), "foo");
     });
 
+    test("borderLeftColor returns borderLeftColor of a range", function() {
+        range.borderLeftColor("#f00");
+
+        equal(range.borderLeftColor(), "#f00");
+    });
+
+    test("borderRightColor returns borderRightColor of a range", function() {
+        range.borderRightColor("#f00");
+
+        equal(range.borderRightColor(), "#f00");
+    });
+
+    test("borderRightColor is set by borderLeftColor of sibling cell", function() {
+        sheet.range(0, 1).borderLeftColor("#f00");
+
+        equal(sheet.range(0, 0).borderRightColor(), "#f00");
+    });
+
     test("wrap returns the wrap of a range", function() {
         range.wrap(true);
 
