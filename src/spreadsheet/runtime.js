@@ -715,25 +715,25 @@
 
     };
 
-    function compileArgumentChecks(args, prelude, postlude) {
+    function compileArgumentChecks(args, postlude) {
         var resolve = "var toResolve = [], i = 0; ";
-        var out, forced, main = "var i = 0, v, m, err = 'VALUE'; ", haveForced = false;
+        var name, out, forced, main = "var xargs = [], i = 0, m, err = 'VALUE'; ", haveForced = false;
         main += args.map(comp).join("");
         main += "if (i < args.length) return this.error(new CalcError('N/A')); ";
 
         if (haveForced) {
             out = resolve
                 + "this.resolveCells(toResolve, function(){ "
-                + prelude + main + postlude
+                + main + postlude
                 + "}); ";
         } else {
-            out = prelude + main + postlude;
+            out = main + postlude;
         }
 
         return out;
 
         function comp(x) {
-            var name = x[0];
+            name = x[0];
             var code = "{ ";
             if (Array.isArray(name)) {
                 resolve += "while (i < args.length) { ";
@@ -749,8 +749,8 @@
                 resolve += "} ";
             } else {
                 var type = x[1];
-                code += "var $" + name + " = v = args[i++]; if (v instanceof CalcError) return this.error(v); "
-                    + typeCheck(type) + "xargs.push(v); ";
+                code += "var $" + name + " = args[i++]; if ($"+name+" instanceof CalcError) return this.error($"+name+"); "
+                    + typeCheck(type) + "xargs.push($"+name+"); ";
             }
             code += "} ";
             return code;
@@ -758,12 +758,12 @@
 
         function force() {
             if (forced) {
-                return "v";
+                return "$"+name+"";
             }
             haveForced = true;
             forced = true;
             resolve += "toResolve.push(args[i++]); ";
-            return "(v = this.force(v))";
+            return "($"+name+" = this.force($"+name+"))";
         }
 
         function typeCheck(type) {
@@ -789,10 +789,10 @@
                     }).join(") || (") + ")";
                 }
                 if (type[0] == "null") {
-                    return "(" + cond("null") + " ? (v = " + type[1] + ", true) : false)";
+                    return "(" + cond("null") + " ? ($"+name+" = " + type[1] + ", true) : false)";
                 }
                 if (type[0] == "between") {
-                    return "(" + force() + " >= " + type[1] + " && " + "v <= " + type[2] + ")";
+                    return "(" + force() + " >= " + type[1] + " && " + "$"+name+" <= " + type[2] + ")";
                 }
                 if (type[0] == "assert") {
                     return "(" + type[1] + ")";
@@ -800,17 +800,17 @@
                 throw new Error("Unknown array type condition: " + type[0]);
             }
             if (type == "number") {
-                return "(typeof " + force() + " == 'number' || typeof v == 'boolean')";
+                return "(typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean')";
             }
             if (type == "divisor") {
-                return "((typeof " + force() + " == 'number' || typeof v == 'boolean') && "
-                    + "(v === 0 ? ((err = 'DIV/0'), false) : true))";
+                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && "
+                    + "($"+name+" === 0 ? ((err = 'DIV/0'), false) : true))";
             }
             if (type == "number+") {
-                return "((typeof " + force() + " == 'number' || typeof v == 'boolean') && v >= 0)";
+                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && $"+name+" >= 0)";
             }
             if (type == "number++") {
-                return "((typeof " + force() + " == 'number' || typeof v == 'boolean') && v > 0)";
+                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && $"+name+" > 0)";
             }
             if (type == "string") {
                 return "(typeof " + force() + " == 'string')";
@@ -820,16 +820,16 @@
             }
             if (type == "matrix") {
                 force();
-                return "((m = this.asMatrix(v)) ? (v = m) : false)";
+                return "((m = this.asMatrix($"+name+")) ? ($"+name+" = m) : false)";
             }
             if (type == "ref") {
-                return "(v instanceof kendo.spreadsheet.Ref)";
+                return "($"+name+" instanceof kendo.spreadsheet.Ref)";
             }
             if (type == "area") {
-                return "(v instanceof kendo.spreadsheet.CellRef || v instanceof kendo.spreadsheet.RangeRef)";
+                return "($"+name+" instanceof kendo.spreadsheet.CellRef || $"+name+" instanceof kendo.spreadsheet.RangeRef)";
             }
             if (type == "cell") {
-                return "(v instanceof kendo.spreadsheet.CellRef)";
+                return "($"+name+" instanceof kendo.spreadsheet.CellRef)";
             }
             if (type == "null") {
                 return "(" + force() + " == null)";
@@ -851,7 +851,6 @@
             args: function(args, log) {
                 var code = compileArgumentChecks(
                     args,
-                    "var xargs = []; ",
                     ("var v = handler.apply(this, xargs); " +
                      "if (v instanceof CalcError) this.error(v); else callback(v); ")
                 );
@@ -861,8 +860,8 @@
             argsAsync: function(args, log) {
                 var code = compileArgumentChecks(
                     args,
-                    "var xargs = [ callback ]; ",
-                    "handler.apply(this, xargs); "
+                    ("xargs.unshift(callback); " +
+                     "handler.apply(this, xargs); ")
                 );
                 defun(name, code, log);
                 return this;
