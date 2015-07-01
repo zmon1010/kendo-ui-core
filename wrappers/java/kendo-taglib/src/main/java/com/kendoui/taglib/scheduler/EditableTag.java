@@ -11,6 +11,8 @@ import com.kendoui.taglib.SchedulerTag;
 
 
 
+import com.kendoui.taglib.json.Function;
+
 import javax.servlet.jsp.JspException;
 
 @SuppressWarnings("serial")
@@ -27,6 +29,10 @@ public class EditableTag extends  BaseTag  /* interfaces */ /* interfaces */ {
         parent.setEditable(this);
 
 //<< doEndTag
+
+        if (isSet("template")) {
+            setProperty("template", new Function("kendo.template($(\"#" + getTemplate() + "\").html())"));
+        }
 
         return super.doEndTag();
     }
