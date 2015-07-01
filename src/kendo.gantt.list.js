@@ -580,6 +580,7 @@ var __meta__ = {
             var validation = field.validation;
             var DATATYPE = kendo.attr("type");
             var BINDING = kendo.attr("bind");
+            var FORMAT = kendo.attr("format");
             var attr = {
                 "name": column.field,
                 "required": field.validation ?
@@ -598,13 +599,18 @@ var __meta__ = {
             cell.data("modelCopy", modelCopy);
 
             if ((field.type === "date" || $.type(field) === "date") &&
-                /H|m|s|F|g|u/.test(column.format)) {
+                (!column.format || /H|m|s|F|g|u/.test(column.format))) {
                 if (column.field === "start") {
                     delete field.validation.dateCompare;
                 }
 
                 attr[BINDING] = "value:" + column.field;
                 attr[DATATYPE] = "date";
+
+                if (column.format) {
+                    attr[FORMAT] = kendo._extractFormat(column.format);
+                }
+
                 editor = function(container, options) {
                     $('<input type="text"/>').attr(attr)
                         .appendTo(container).kendoDateTimePicker({ format: options.format });

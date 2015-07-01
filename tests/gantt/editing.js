@@ -386,6 +386,21 @@
         equal(input.attr("required"), "required");
     });
 
+    test("custom date time editor has format binding attribute when format set", function() {
+        setup({
+            column: { field: "start", format: "{0:MM/dd/yyyy HH:mm}" },
+            data: [{ start: new Date() }]
+        });
+        var targetCell = ganttList.content.find("td").eq(0);
+        var input;
+
+        doubleTap(targetCell);
+
+        input = targetCell.find("input");
+
+        equal(input.attr("data-format"), "MM/dd/yyyy HH:mm");
+    });
+
     test("edit custom date field with no type creates DateTimePicker", function() {
         setup({
             column: { field: "customField" },
