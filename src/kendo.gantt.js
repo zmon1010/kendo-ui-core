@@ -287,6 +287,7 @@ var __meta__ = {
             var that = this;
             var ganttStyles = Gantt.styles;
             var itemSelector = "li" + DOT + ganttStyles.item;
+            var appendButtonSelector = DOT + ganttStyles.toolbar.appendButton;
             var actions = this.options.messages.actions;
             var navigatable = this.options.navigatable;
 
@@ -312,7 +313,7 @@ var __meta__ = {
 
             this.popup = new kendo.ui.Popup(this.list,
                 extend({
-                    anchor: this.element,
+                    anchor: this.element.find(appendButtonSelector),
                     open: function(e) {
                         that._adjustListWidth();
                     },
@@ -321,7 +322,7 @@ var __meta__ = {
             );
 
             this.element
-                .on(CLICK + NS, DOT + ganttStyles.toolbar.appendButton, function(e) {
+                .on(CLICK + NS, appendButtonSelector, function(e) {
                     var target = $(this);
                     var action = target.attr(kendo.attr("action"));
 
@@ -407,8 +408,9 @@ var __meta__ = {
 
         _adjustListWidth: function() {
             var list = this.list;
+            var ganttStyles = Gantt.styles;
             var width = list[0].style.width;
-            var wrapper = this.element;
+            var wrapper = this.element.find(DOT + ganttStyles.toolbar.appendButton);
             var computedStyle;
             var computedWidth;
 

@@ -439,6 +439,13 @@
         equal(dropDown.options.direction, "down");
     });
 
+    test("popup's anchor element is append button", function() {
+        var gantt = setup();
+        var popup = gantt.headerDropDown.popup;
+
+        ok(popup.options.anchor.hasClass("k-gantt-create"));
+    });
+
     test("footer's drop down direction is down", function() {
         var gantt = setup();
         var dropDown = gantt.footerDropDown;
