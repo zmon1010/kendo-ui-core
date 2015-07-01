@@ -956,10 +956,8 @@
 
     function serialToDate(serial) {
         var d = unpackDate(serial), t = unpackTime(serial);
-        return new Date(
-            Date.UTC(d.year, d.month, d.date,
-                     t.hours, t.minutes, t.seconds, t.milliseconds)
-        );
+        return new Date(d.year, d.month, d.date,
+                        t.hours, t.minutes, t.seconds, t.milliseconds);
     }
 
     // Unpack date by assuming serial is number of days since
@@ -1025,13 +1023,13 @@
     }
 
     function dateToSerial(date) {
-        var time = packTime(date.getUTCHours(),
-                            date.getUTCMinutes(),
-                            date.getUTCSeconds(),
-                            date.getUTCMilliseconds());
-        date = packDate(date.getUTCFullYear(),
-                        date.getUTCMonth(),
-                        date.getUTCDate());
+        var time = packTime(date.getHours(),
+                            date.getMinutes(),
+                            date.getSeconds(),
+                            date.getMilliseconds());
+        date = packDate(date.getFullYear(),
+                        date.getMonth(),
+                        date.getDate());
         if (date < 0) {
             return date - 1 + time;
         } else {
