@@ -12,14 +12,22 @@
             this._sheet = sheet;
             this._ref = ref;
         },
+
+        _normalize: function(ref) {
+            return this._sheet._grid.normalize(ref);
+        },
+
         _property: function(list, value, recalc) {
             if (value !== undefined) {
                 this._ref.forEach(function(ref) {
                     ref = ref.toRangeRef();
 
-                    for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col; ci++) {
-                        var start = this._sheet._grid.index(ref.topLeft.row, ci);
-                        var end = this._sheet._grid.index(ref.bottomRight.row, ci);
+                    var topLeft = this._normalize(ref.topLeft);
+                    var bottomRight = this._normalize(ref.bottomRight);
+
+                    for (var ci = topLeft.col; ci <= bottomRight.col; ci++) {
+                        var start = this._sheet._grid.index(topLeft.row, ci);
+                        var end = this._sheet._grid.index(bottomRight.row, ci);
 
                         list.value(start, end, value);
                     }
@@ -29,7 +37,7 @@
 
                 return this;
             } else {
-                var index = this._sheet._grid.cellRefIndex(this._ref.toRangeRef().topLeft);
+                var index = this._sheet._grid.cellRefIndex(this._normalize(this._ref.toRangeRef().topLeft));
                 return list.value(index, index);
             }
         },

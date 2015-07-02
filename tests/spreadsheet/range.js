@@ -386,4 +386,12 @@
         equal(sheet.range("A2").formula(), null);
     });
 
+    test("background set background to entire row", function() {
+        sheet.range("1:1")
+            .background("red");
+
+        equal(sheet.range("1:1").background(), "red");
+    });
+
+
 })();
