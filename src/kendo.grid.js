@@ -5892,7 +5892,8 @@ var __meta__ = {
 
         _noRecordsTmpl: function () {
             var wrapper = '<div class="{0}">{1}</div>';
-            var defaultTemplate = '<div class="k-grid-norecords-template">{0}</div>';
+            var defaultTemplate = '<div class="k-grid-norecords-template"{1}>{0}</div>';
+            var scrollableNoGridHeightStyles = (this.options.scrollable && !this.wrapper[0].style.height) ? ' style="margin:0 auto;position:static;"' : '';
             var state = { storage: {}, count: 0 };
             var settings = $.extend({}, kendo.Template, this.options.templateSettings);
             var paramName = settings.paramName;
@@ -5904,7 +5905,7 @@ var __meta__ = {
             if (this.options.noRecords.template) {
                 template = this.options.noRecords.template;
             } else {
-                template = kendo.format(defaultTemplate, this.options.messages.noRecords);
+                template = kendo.format(defaultTemplate, this.options.messages.noRecords, scrollableNoGridHeightStyles);
             }
 
             type = typeof template;

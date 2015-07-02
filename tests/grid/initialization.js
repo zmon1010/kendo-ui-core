@@ -501,6 +501,19 @@
         equal(noRecords.text(), "false");
     });
 
+    test("noRecords template position is set to static and margins to 0 auto if a scrollable Grid has no height", 2, function () {
+        var grid = new Grid($(table).wrap('<div></div>'), {
+            dataSource: [],
+            noRecords: true,
+            columns: [{ field: "foo" }]
+        });
+
+        var noRecords = grid.table.parent().find(".k-grid-norecords-template")[0];
+
+        ok(noRecords.style.position, "static");
+        ok(noRecords.style.margin, "0 auto");
+    });
+
     test("expander div is removed if records exist", function() {
         var grid = new Grid($(table).wrap('<div style="width:200px"></div>'), { scrollable: true, dataSource: [], columns: [{field:"foo", width:300}]}),
             dataSource = new kendo.data.DataSource({
