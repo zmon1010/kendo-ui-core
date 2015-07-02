@@ -280,6 +280,18 @@
                 }
             }
 
+            if (!style.textAlign) {
+                switch (cell.type) {
+                   case "number":
+                   case "date":
+                       style.textAlign = "right";
+                   break;
+                   case "boolean":
+                       style.textAlign = "center";
+                   break;
+                }
+            }
+
             var td = table.addCell(row, cell.value, style);
 
             if (cell.format && cell.value !== null) {

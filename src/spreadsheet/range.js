@@ -60,23 +60,12 @@
             var type = null;
 
             if (value !== undefined) {
-                if (value instanceof Date) {
-                    value = kendo.spreadsheet.calc.runtime.dateToSerial(value);
-                    type = "date";
-                } else if (value !== null) {
-                    type = typeof value;
-
-                    if (type === "string" && parse !== false) {
-                        var ref = this._ref.toRangeRef().topLeft;
-                        var parseResult = kendo.spreadsheet.calc.parse(this._sheet.name(), ref.row, ref.col, value);
-                        value = parseResult.value;
-                        type = parseResult.type;
-                    }
-                }
+                var ref = this._ref.toRangeRef().topLeft;
+                var result = this._sheet._parse(ref.row, ref.col, value, parse);
 
                 this._sheet.batch(function() {
-                    this._property(this._sheet._types, type);
-                    this._property(this._sheet._values, value);
+                    this._property(this._sheet._types, result.type);
+                    this._property(this._sheet._values, result.value);
                 }.bind(this), true);
 
                 return this;
@@ -90,6 +79,9 @@
 
                 return value;
             }
+        },
+        type: function() {
+            return this._property(this._sheet._types);
         },
         fontColor: function(value) {
             return this._styleProperty("fontColor", value);

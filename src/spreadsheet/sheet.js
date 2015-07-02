@@ -154,6 +154,7 @@
                 var endCellIndex = this._grid.index(bottomRight.row, ci);
 
                 var values = this._values.iterator(startCellIndex, endCellIndex);
+                var types = this._types.iterator(startCellIndex, endCellIndex);
                 var formulas = this._formulas.iterator(startCellIndex, endCellIndex);
                 var formats = this._formats.iterator(startCellIndex, endCellIndex);
                 var styles = this._styles.iterator(startCellIndex, endCellIndex);
@@ -165,6 +166,7 @@
                         row: ri,
                         col: ci,
                         value: values.at(index),
+                        type: types.at(index),
                         formula: formulas.at(index),
                         format: formats.at(index),
                         style: JSON.parse(styles.at(index))
@@ -471,13 +473,41 @@
         value: function(row, col, value) {
             if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
                 value.each(function(value, row, col) {
-                    var index = this._grid.index(row, col);
-                    this._values.value(index, index, value);
+                    this._setValue(row, col, value);
                 }.bind(this));
             } else {
-                var index = this._grid.index(row, col);
-                this._values.value(index, index, value);
+                this._setValue(row, col, value);
             }
+        },
+
+        _setValue: function(row, col, value) {
+            var result = this._parse(row, col, value, false);
+            var index = this._grid.index(row, col);
+            this._values.value(index, index, result.value);
+            this._types.value(index, index, result.type);
+        },
+
+        _parse: function(row, col, value, parseStrings) {
+            var type = null;
+
+            if (value !== null) {
+                if (value instanceof Date) {
+                    value = kendo.spreadsheet.calc.runtime.dateToSerial(value);
+                    type = "date";
+                } else {
+                    type = typeof value;
+                    if (type === "string" && parseStrings !== false) {
+                        var parseResult = kendo.spreadsheet.calc.parse(this._name, row, col, value);
+                        value = parseResult.value;
+                        type = parseResult.type;
+                    }
+                }
+            }
+
+            return {
+                type: type,
+                value: value
+            };
         },
 
         batch: function(callback, recalc) {

@@ -42,6 +42,7 @@
         sheet.range("A2").value(3);
 
         equal(sheet.range("A4").value(), 4);
+        equal(sheet.range("A4").type(), "number");
     });
 
     test("updates adjacent cells when receiving a matrix", function(){
