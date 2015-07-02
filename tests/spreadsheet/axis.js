@@ -99,6 +99,12 @@
         equal(axis.hidden(1), false);
     });
 
+    test("visible values cannot be unhidden", function() {
+        axis.unhide(1);
+
+        equal(axis.total, 1000 * 15);
+    });
+
     module("PaneAxis", {
     });
 

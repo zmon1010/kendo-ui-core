@@ -68,9 +68,11 @@
         },
 
         unhide: function(index) {
-            var value = this._hidden.value(index, index);
-            this._hidden.value(index, index, 0);
-            this.value(index, index, value);
+            if (this.hidden(index)) {
+                var value = this._hidden.value(index, index);
+                this._hidden.value(index, index, 0);
+                this.value(index, index, value);
+            }
         },
 
         value: function(start, end, value) {
