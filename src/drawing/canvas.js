@@ -546,6 +546,16 @@
         }
     });
 
+    var RectNode = PathNode.extend({
+        renderPoints: function(ctx) {
+            var geometry = this.srcElement.geometry();
+            var origin = geometry.origin;
+            var size = geometry.size;
+
+            ctx.rect(origin.x, origin.y, size.width, size.height);
+        }
+    });
+
     function exportImage(group, options) {
         var defaults = {
             width: "800px", height: "600px",
@@ -592,7 +602,8 @@
         MultiPath: MultiPathNode,
         Circle: CircleNode,
         Arc: ArcNode,
-        Image: ImageNode
+        Image: ImageNode,
+        Rect: RectNode
     };
 
     // Helpers ================================================================
@@ -627,6 +638,7 @@
             MultiPathNode: MultiPathNode,
             Node: Node,
             PathNode: PathNode,
+            RectNode: RectNode,
             RootNode: RootNode,
             Surface: Surface,
             TextNode: TextNode
