@@ -198,7 +198,7 @@ pre {
     content: '\e038';
 }
 
-.km-phone [data-click="openDojo"] {
+.k-mobile.km-phone [data-click="openDojo"] {
     display: none;
 }
 
