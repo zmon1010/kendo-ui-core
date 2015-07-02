@@ -142,7 +142,7 @@ namespace Kendo.Mvc.UI.Fluent
         }
 
         /// <summary>
-        /// Sets the date format when the base date unit is <see cref="ChartAxisBaseUnit.Months"/>
+        /// Sets the date format when the base date unit is <see cref="ChartAxisBaseUnit.Weeks"/>
         /// </summary>
         /// <param name="format">The date format.</param>
         /// <example>
@@ -153,7 +153,7 @@ namespace Kendo.Mvc.UI.Fluent
         ///               .Date()
         ///               .Labels(labels => labels
         ///                   .DateFormats(formats => formats
-        ///                       .Months("dddd")
+        ///                       .Weeks("dddd")
         ///                   )
         ///               )
         ///            );
