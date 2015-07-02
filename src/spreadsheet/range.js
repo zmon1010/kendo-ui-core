@@ -57,7 +57,39 @@
 
         },
         value: function(value) {
-            return this._property(this._sheet._values, value, true);
+            var type = null;
+
+            if (value !== undefined) {
+                if (value instanceof Date) {
+                    value = kendo.spreadsheet.calc.runtime.dateToSerial(value);
+                    type = "date";
+                } else if (value !== null) {
+                    type = typeof value;
+
+                    if (type === "string") {
+                        var ref = this._ref.toRangeRef().topLeft;
+                        var parseResult = kendo.spreadsheet.calc.parse(this._sheet.name(), ref.row, ref.col, value);
+                        value = parseResult.value;
+                        type = parseResult.type;
+                    }
+                }
+
+                this._sheet.batch(function() {
+                    this._property(this._sheet._types, type);
+                    this._property(this._sheet._values, value);
+                }.bind(this), true);
+
+                return this;
+            } else {
+                var type = this._property(this._sheet._types);
+                value = this._property(this._sheet._values);
+
+                if (type === "date") {
+                    value = kendo.spreadsheet.calc.runtime.serialToDate(value);
+                }
+
+                return value;
+            }
         },
         fontColor: function(value) {
             return this._styleProperty("fontColor", value);

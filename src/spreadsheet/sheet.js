@@ -14,6 +14,7 @@
             var cellCount = rowCount * columnCount - 1;
 
             this._values = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._types = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._formats = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._compiledFormulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
