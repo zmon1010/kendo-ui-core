@@ -1258,7 +1258,7 @@
                 var elementBoundingBox = element.clippedBBox(transformation);
                 if (elementBoundingBox) {
                     if (boundingBox) {
-                        boundingBox = Rect.union(boundingBox, elementBoundingBox);
+                        boundingBox = g.Rect.union(boundingBox, elementBoundingBox);
                     } else {
                         boundingBox = elementBoundingBox;
                     }
