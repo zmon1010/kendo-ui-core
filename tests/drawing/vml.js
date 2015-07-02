@@ -2244,4 +2244,115 @@
         });
     })();
 
+    // ------------------------------------------------------------
+    (function() {
+        var Rect = d.Rect,
+            rect,
+            node;
+
+        module("RectDataNode", {
+            setup: function() {
+                rect = new Rect(new g.Rect([10, 20], [30, 40]));
+                node = new vml.RectDataNode(rect);
+            }
+        });
+
+        test("renders path", function() {
+            equal(node.element.v, "m 1000,2000 l 4000,2000 4000,6000 1000,6000 x e");
+        });
+
+        test("geometryChange sets path", function() {
+            node.attr = function(name, value) {
+                if (name === "v") {
+                    equal(value, "m 1000,2000 l 11000,2000 11000,6000 1000,6000 x e");
+                }
+            };
+
+            rect.geometry().size.setWidth(100);
+            node.geometryChange();
+        });
+
+    })();
+
+    //------------------------------------------------------------
+    (function() {
+        var Rect = d.Rect,
+            RectNode = vml.RectNode,
+            rect,
+            geometry,
+            rectNode;
+
+        shapeTests("RectNode", function(shapeOptions) {
+            var geometry = new g.Rect([10, 20], [30, 40]);
+            var rect = new Rect(geometry, shapeOptions);
+            return new RectNode(rect);
+        });
+        baseClipTests("RectNode", RectNode, Rect);
+
+        nodeLoadTests("RectNode", RectNode, function (options) {
+                var geometry = new g.Rect([10, 20], [30, 40]);
+                return new Rect(geometry, options);
+            }
+        );
+
+        module("RectNode", {
+            setup: function() {
+                geometry = new g.Rect([10, 20], [30, 40]);
+                rect = new Rect(geometry);
+                rectNode = new RectNode(rect);
+            }
+        });
+
+        test("initializes a TransformNode", function() {
+            ok(rectNode.transform instanceof TransformNode);
+        });
+
+        test("creates data node", function() {
+            ok(rectNode.pathData instanceof vml.RectDataNode);
+        });
+
+        test("renders coordsize", function() {
+            ok(rectNode.element.coordsize, "10000 10000");
+        });
+
+        test("renders width", function() {
+            ok(rectNode.element.style.width, "100px");
+        });
+
+        test("renders height", function() {
+            ok(rectNode.element.style.height, "100px");
+        });
+
+        test("geometryChange is forwarded to pathData", function() {
+            rectNode.pathData.geometryChange = function() {
+                ok(true);
+            };
+            geometry.size.setWidth(100);
+        });
+
+        test("refreshOpacity is forwarded to fill node", function() {
+            rectNode.fill.refreshOpacity = expect(0.5);
+            rectNode.refreshOpacity(0.5);
+        });
+
+        test("refreshOpacity is forwarded to stroke node", function() {
+            rectNode.stroke.refreshOpacity = expect(0.5);
+            rectNode.refreshOpacity(0.5);
+        });
+
+        test("refreshOpacity multiplies with own opacity for fill", function() {
+            rectNode.fill.refreshOpacity = expect(0.25);
+
+            rect.opacity(0.5);
+            rectNode.refreshOpacity(0.5);
+        });
+
+        test("refreshOpacity multiplies with own opacity for stroke", function() {
+            rectNode.stroke.refreshOpacity = expect(0.25);
+
+            rect.opacity(0.5);
+            rectNode.refreshOpacity(0.5);
+        });
+    })();
+
 })();
