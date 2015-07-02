@@ -124,6 +124,7 @@ Spreadsheet.prototype = {
     },
 
     setInputData: function(sheet, row, col, data) {
+        data += "";
         var self = this;
         self._deleteCell(sheet, row, col);
         if (data === "") {

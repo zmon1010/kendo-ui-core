@@ -991,19 +991,6 @@
     //// exports
 
     exports.parse = function(sheet, row, col, input) {
-        if (typeof input == "number") {
-            return {
-                type: "num",
-                value: input
-            };
-        }
-        if (typeof input == "boolean") {
-            return {
-                type: "bool",
-                value: input
-            };
-        }
-        input += "";
         if (/^'/.test(input)) {
             return {
                 type: "str",
