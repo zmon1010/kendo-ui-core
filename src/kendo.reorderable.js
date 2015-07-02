@@ -40,6 +40,7 @@ var __meta__ = {
 
             that.draggable = draggable = options.draggable || new kendo.ui.Draggable(element, {
                 group: group,
+                autoScroll: true,
                 filter: options.filter,
                 hint: options.hint
             });

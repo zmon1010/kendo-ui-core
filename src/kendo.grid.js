@@ -2138,6 +2138,7 @@ var __meta__ = {
 
                 that._draggableInstance = that.wrapper.kendoDraggable({
                     group: kendo.guid(),
+                    autoScroll: true,
                     filter: that.content ? ".k-grid-header:first " + HEADERCELLS : "table:first>.k-grid-header " + HEADERCELLS,
                     drag: function() {
                         that._hideResizeHandle();
@@ -4868,7 +4869,7 @@ var __meta__ = {
                 table.width(that.table[0].style.width);
 
                 table.append(that.thead);
-                header.empty().append($('<div class="k-grid-header-wrap" />').append(table));
+                header.empty().append($('<div class="k-grid-header-wrap k-auto-scrollable" />').append(table));
 
 
                 that.content = that.table.parent();
@@ -4887,7 +4888,7 @@ var __meta__ = {
                     });
                 }
 
-                that.scrollables = header.children(".k-grid-header-wrap");
+                that.scrollables = header.children(".k-grid-header-wrap").add(that.content);
 
                 // the footer may exists if rendered from the server
                 var footer = that.wrapper.find(".k-grid-footer");
@@ -4904,8 +4905,8 @@ var __meta__ = {
                         }
                     });
                 } else {
-                    that.content.unbind("scroll" + NS).bind("scroll" + NS, function () {
-                        that.scrollables.scrollLeft(this.scrollLeft);
+                    that.scrollables.unbind("scroll" + NS).bind("scroll" + NS, function (e) {
+                        that.scrollables.not(e.currentTarget).scrollLeft(this.scrollLeft);
                         if (that.lockedContent) {
                             that.lockedContent[0].scrollTop = this.scrollTop;
                         }
