@@ -287,6 +287,23 @@
         equal(instance.content.find("tr:last>td").text(), "1");
     });
 
+    test("render empty cell if column value is null and there is format set", function() {
+        createTreeList({
+            columns: [
+                { field: "parentId", format: "{0: n}" }
+            ],
+            dataSource: {
+                data: [
+                    { id: 1,  parentId: null },
+                    { id: 2, parentId: 1 }
+                ]
+            }
+        });
+
+        equal(instance.content.find("tr:first>td").text(), "");
+        equal(instance.content.find("tr:last>td").text(), "1");
+    });
+
     test("format column value", function() {
         createTreeList({
             columns: [

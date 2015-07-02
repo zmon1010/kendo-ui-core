@@ -2104,7 +2104,7 @@ var __meta__ = {
                 value = column.template(model);
             } else if (column.field) {
                 value = model.get(column.field);
-                if (column.format) {
+                if (value !== null && column.format) {
                     value = kendo.format(column.format, value);
                 }
             }
