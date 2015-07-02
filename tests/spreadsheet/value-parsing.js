@@ -26,7 +26,7 @@
         var date = new Date("1/1/1900");
         range.value(date);
         equal(range.value().toUTCString(), date.toUTCString());
-    })
+    });
 
     test("stores number type", function() {
         range.value(1);
@@ -65,6 +65,13 @@
 
         equal(sheet._values.value(0, 0), 1.2);
         equal(sheet._types.value(0, 0), "number");
+    });
+
+    test("prevent parsing", function() {
+        range.value("1.2", false);
+
+        equal(sheet._values.value(0, 0), "1.2");
+        equal(sheet._types.value(0, 0), "string");
     });
 
     test("parses date strings as numbers", function() {

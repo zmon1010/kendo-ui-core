@@ -408,7 +408,7 @@
                                 }
 
                                 if (cell.value !== null) {
-                                    this.range(rowIndex, columnIndex).value(cell.value);
+                                    this.range(rowIndex, columnIndex).value(cell.value, false);
                                 }
 
                                 if (cell.style !== null) {

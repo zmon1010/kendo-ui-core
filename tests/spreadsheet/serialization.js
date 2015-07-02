@@ -30,7 +30,6 @@
         equal(json.rows.length, 2);
     });
 
-
     test("toJSON serializes the index of the row", function() {
         sheet.range("A2").value("bar");
 
@@ -208,6 +207,24 @@
         });
 
         equal(sheet.range("B2").value(), "B2");
+    });
+
+    test("fromJSON doesn't parse cell values", function() {
+        sheet.fromJSON({
+            rows: [
+                {
+                    index: 1,
+                    cells: [
+                        {
+                            index: 1,
+                            value: "TRUE"
+                        }
+                    ]
+                }
+            ]
+        });
+
+        equal(sheet.range("B2").value(), "TRUE");
     });
 
     test("fromJSON loads row cells with implicit row index", function() {

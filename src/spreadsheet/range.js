@@ -56,7 +56,7 @@
             return style[name];
 
         },
-        value: function(value) {
+        value: function(value, parse) {
             var type = null;
 
             if (value !== undefined) {
@@ -66,7 +66,7 @@
                 } else if (value !== null) {
                     type = typeof value;
 
-                    if (type === "string") {
+                    if (type === "string" && parse !== false) {
                         var ref = this._ref.toRangeRef().topLeft;
                         var parseResult = kendo.spreadsheet.calc.parse(this._sheet.name(), ref.row, ref.col, value);
                         value = parseResult.value;
