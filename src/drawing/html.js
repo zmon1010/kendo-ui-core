@@ -864,7 +864,10 @@
                     add(bg.url);
                 }
             });
-            slice.call(element.children).forEach(dive);
+
+            if (element.children) {
+                slice.call(element.children).forEach(dive);
+            }
         })(element);
         var count = urls.length;
         function next() {
