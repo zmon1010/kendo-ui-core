@@ -295,15 +295,32 @@
             return result;
         },
 
-        sortedIndices: function(start, end, valueComparer) {
+        sortedIndices: function(start, end, valueComparer, indices) {
             var result = this.expandedValues(start, end);
-            result.sort(function(a, b) {
+
+            var comparer = function(a, b) {
                 if (a.value === b.value) {
                     return a.index - b.index;
                 }
 
                 return valueComparer(a.value, b.value);
-            });
+            };
+
+            if (indices) {
+                comparer = function(a, b) {
+                    var x = indices[a.index];
+                    var y = indices[b.index];
+
+                    if (x.value === y.value) {
+                        return valueComparer(a.value, b.value);
+                    }
+
+                    return a.index - b.index;
+                };
+            }
+
+            result.sort(comparer);
+
             return result;
         },
 

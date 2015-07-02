@@ -9,7 +9,7 @@
             this._lists = lists;
         },
 
-        indices: function(rangeRef, list, ascending) {
+        indices: function(rangeRef, list, ascending, indices) {
             var comparer = Sorter.ascendingComparer;
 
             if (ascending === false) {
@@ -17,11 +17,11 @@
             }
 
             return list.sortedIndices(this._grid.cellRefIndex(rangeRef.topLeft),
-                this._grid.cellRefIndex(rangeRef.bottomRight), comparer);
+                this._grid.cellRefIndex(rangeRef.bottomRight), comparer, indices);
         },
 
-        sortBy: function(ref, list, ascending) {
-            var sortedIndices = this.indices(ref, list, ascending);
+        sortBy: function(ref, list, ascending, indices) {
+            var sortedIndices = this.indices(ref, list, ascending, indices);
             var lists = this._lists;
             var length = lists.length;
             var ends = [];
@@ -39,6 +39,8 @@
                     }
                 }
             });
+
+            return sortedIndices;
         }
     });
 

@@ -60,6 +60,21 @@
         equal(values[2], 3);
     });
 
+    test("multiple column sort", function() {
+        sheet.range("A1:B3").values(
+            [
+                [1, 1],
+                [0, 2],
+                [1, 0]
+            ]
+        ).sort([{ column: 0 }, { column: 1 }]);
+
+        var values = sheet.range("A1:B3").values();
+        equal(values[0][1], 2);
+        equal(values[1][1], 0);
+        equal(values[2][1], 1);
+    });
+
     test("descending sort", function() {
         sheet.range("A1:B3")
              .values([
@@ -73,6 +88,5 @@
         equal(values[0], 2);
         equal(values[1], 1);
         equal(values[2], 1);
-
-    })
+    });
 })();

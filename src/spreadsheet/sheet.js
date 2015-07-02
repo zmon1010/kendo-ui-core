@@ -489,10 +489,8 @@
             return this.suspendChanges(suspended).triggerChange(recalc);
         },
 
-        _sort: function(ref, ascending) {
-            this._sorter.sortBy(ref, this._values, ascending);
-
-            return this.triggerChange(true);
+        _sort: function(ref, ascending, indices) {
+            return this._sorter.sortBy(ref, this._values, ascending, indices);
         }
     });
 

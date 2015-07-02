@@ -231,24 +231,31 @@
             return this.clear({ formatOnly: true });
         },
 
-        sort: function(column) {
+        sort: function(spec) {
             if (this._ref instanceof UnionRef) {
                 throw new Error("Unsupported for multiple ranges.");
             }
 
             var ref = this._ref.toRangeRef();
-            var ascending = true;
+            var columns = spec instanceof Array ? spec : [spec];
+            var sortedIndices = null;
 
-            if (typeof column === "object") {
-                ascending = column.ascending !== false;
-                column = column.column;
-            }
+            columns.forEach(function(column) {
+                var ascending = true;
 
-            if (typeof column === "number") {
-                ref = ref.toColumn(column);
-            }
+                if (typeof column === "object") {
+                    ascending = column.ascending !== false;
+                    column = column.column;
+                }
 
-            this._sheet._sort(ref, ascending);
+                if (typeof column === "number") {
+                    ref = ref.toColumn(column);
+                }
+
+                sortedIndices = this._sheet._sort(ref, ascending, sortedIndices);
+            }, this);
+
+            this._sheet.triggerChange(true);
 
             return this;
         }
