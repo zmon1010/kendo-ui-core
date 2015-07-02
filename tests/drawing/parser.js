@@ -8,7 +8,8 @@
         path,
         segment,
         point,
-        TOLERANCE = 0.1;
+        TOLERANCE = 0.1,
+        EXPONENT_TOLERANCE = 0.0000000000000001;
 
     module("Parser", {});
 
@@ -20,6 +21,37 @@
 
     test("returns MultiPath", function() {
         ok(parser.parse("") instanceof d.MultiPath);
+    });
+
+    test("parses floating point numbers", function() {
+        multiPath = parser.parse("M1.123 0.456");
+        point = multiPath.paths[0].segments[0].anchor();
+        equal(point.x, 1.123);
+        equal(point.y, 0.456);
+    });
+
+    test("parses exponential numbers", function() {
+        multiPath = parser.parse("M100 -5.96046447753906E-08 L 1.2333333333333332e+21 10");
+        point = multiPath.paths[0].segments[0].anchor();
+        var linePoint = multiPath.paths[0].segments[1].anchor();
+        equal(point.x, 100);
+        close(point.y, -0.000000059604644775, EXPONENT_TOLERANCE);
+        equal(linePoint.x, 1233333333333333333333);
+        equal(linePoint.y, 10);
+    });
+
+    test("parses numbers starting with decimal separator", function() {
+        multiPath = parser.parse("M1 .1");
+        point = multiPath.paths[0].segments[0].anchor();
+        equal(point.x, 1);
+        equal(point.y, .1);
+    });
+
+    test("parses numbers starting with zero", function() {
+        multiPath = parser.parse("M01 0002");
+        point = multiPath.paths[0].segments[0].anchor();
+        equal(point.x, 1);
+        equal(point.y, 2);
     });
 
     // ------------------------------------------------------------
