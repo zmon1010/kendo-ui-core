@@ -113,6 +113,7 @@
             return calc.parseReference(ref);
         },
         set: function(row, col, val) {
+            val += "";
             val = calc.parse("sheet1", row, col, val);
             if (val.type == "exp") {
                 val = { formula: calc.compile(val), exp: val };
