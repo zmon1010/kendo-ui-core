@@ -993,7 +993,7 @@
     exports.parse = function(sheet, row, col, input) {
         if (/^'/.test(input)) {
             return {
-                type: "str",
+                type: "string",
                 value: input.substr(1)
             };
         }
@@ -1003,16 +1003,16 @@
                 return parse(sheet, row, col, input);
             } else {
                 return {
-                    type: "str",
+                    type: "string",
                     value: "=" + input
                 };
             }
         }
         if (input.toLowerCase() == "true") {
-            return { type: "bool", value: true };
+            return { type: "boolean", value: true };
         }
         if (input.toLowerCase() == "false") {
-            return { type: "bool", value: false };
+            return { type: "boolean", value: false };
         }
         var date = kendo.parseDate(input);
         if (date) {
@@ -1024,12 +1024,12 @@
         var num = parseFloat(input);
         if (!isNaN(num) && input.length > 0 && num == input) {
             return {
-                type: "num",
+                type: "number",
                 value: num
             };
         }
         return {
-            type: "str",
+            type: "string",
             value: input
         };
     };

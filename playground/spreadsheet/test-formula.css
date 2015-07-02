@@ -28,13 +28,13 @@ select {
 .sheet table tr td input:focus {
   background: #fea;
 }
-.sheet table tr td input.type-num {
+.sheet table tr td input.type-number {
   text-align: right;
 }
 .sheet table tr td input.type-error {
   background: #faa;
 }
-.sheet table tr td input.type-bool,
+.sheet table tr td input.type-boolean,
 .sheet table tr td input.type-date {
   text-align: center;
 }
