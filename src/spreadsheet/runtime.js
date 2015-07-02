@@ -433,208 +433,7 @@
 
     // spreadsheet functions --------
 
-    function arrayHandler1(func) {
-        return function doit(val) {
-            var m = this.asMatrix(val);
-            return m ? m.map(doit) : this.cellValues([ val ], func);
-        };
-    }
-
-    function arrayHandler2(func) {
-        return function doit(left, right) {
-            var mleft = this.asMatrix(left);
-            var mright = this.asMatrix(right);
-            if (mleft && mright) {
-                return mleft.map(function(el, row, col){
-                    return doit.call(this, el, mright.get(row, col));
-                });
-            }
-            else if (mleft) {
-                return mleft.map(function(el){
-                    return doit.call(this, el, right);
-                });
-            }
-            else if (mright) {
-                return mright.map(function(el){
-                    return doit.call(this, left, el);
-                });
-            }
-            else {
-                return this.cellValues([ left, right ], func);
-            }
-        };
-    }
-
-    function binaryNumeric(func) {
-        var handler = arrayHandler2(function(left, right){
-            left = +left;
-            right = +right;
-            if (isNaN(left) || isNaN(right)) {
-                return new CalcError("VALUE");
-            }
-            else {
-                return func(left, right);
-            }
-        });
-        return function(callback, args) {
-            callback(handler.call(this, args[0], args[1]));
-        };
-    }
-
-    function binaryCompare(func) {
-        var handler = arrayHandler2(function(left, right){
-            if (typeof left == "string" && typeof right != "string") {
-                right = right == null ? "" : right + "";
-            }
-            if (typeof left != "string" && typeof right == "string") {
-                left = left == null ? "" : left + "";
-            }
-            if (typeof left == "number" && right == null) {
-                right = 0;
-            }
-            if (typeof right == "number" && left == null) {
-                left = 0;
-            }
-            if (typeof left == "string" && typeof right == "string") {
-                // string comparison is case insensitive
-                left = left.toLowerCase();
-                right = right.toLowerCase();
-            }
-            if (typeof right == typeof left) {
-                return func.call(this, left, right);
-            } else {
-                return new CalcError("VALUE");
-            }
-        });
-        return function(callback, args) {
-            callback(handler.call(this, args[0], args[1]));
-        };
-    }
-
-    function unaryNumeric(func) {
-        var handler = arrayHandler1(function(exp){
-            exp = +exp;
-            if (isNaN(exp)) {
-                return new CalcError("VALUE");
-            } else {
-                return func.call(this, exp);
-            }
-        });
-        return function(callback, args) {
-            callback(handler.call(this, args[0]));
-        };
-    }
-
     var FUNCS = {
-
-        /* -----[ binary ops ]----- */
-
-        // arithmetic
-        "binary+": binaryNumeric(function(left, right){
-            return left + right;
-        }),
-        "binary-": binaryNumeric(function(left, right){
-            return left - right;
-        }),
-        "binary*": binaryNumeric(function(left, right){
-            return left * right;
-        }),
-        "binary/": binaryNumeric(function(left, right){
-            if (right === 0) {
-                return new CalcError("DIV/0");
-            }
-            return left / right;
-        }),
-        "binary^": binaryNumeric(function(left, right){
-            return Math.pow(left, right);
-        }),
-
-        // text concat
-        "binary&": (function(){
-            var handler = arrayHandler2(function(left, right){
-                if (left == null) { left = ""; }
-                if (right == null) { right = ""; }
-                return "" + left + right;
-            });
-            return function(callback, args) {
-                callback(handler.call(this, args[0], args[1]));
-            };
-        })(),
-
-        // boolean
-        "binary=": (function(){
-            var handler = arrayHandler2(function(left, right){
-                return left === right;
-            });
-            return function(callback, args) {
-                callback(handler.call(this, args[0], args[1]));
-            };
-        })(),
-        "binary<>": (function(){
-            var handler = arrayHandler2(function(left, right){
-                return left !== right;
-            });
-            return function(callback, args) {
-                callback(handler.call(this, args[0], args[1]));
-            };
-        })(),
-        "binary<": binaryCompare(function(left, right){
-            return left < right;
-        }),
-        "binary<=": binaryCompare(function(left, right){
-            return left <= right;
-        }),
-        "binary>": binaryCompare(function(left, right){
-            return left > right;
-        }),
-        "binary>=": binaryCompare(function(left, right){
-            return left >= right;
-        }),
-
-        // range
-        "binary:": function(callback, args) {
-            var left = args[0], right = args[1];
-            if (left instanceof CellRef && right instanceof CellRef) {
-                callback(new RangeRef(left, right).setSheet(left.sheet || this.formula.sheet, left.hasSheet()));
-            } else {
-                this.error(new CalcError("REF"));
-            }
-        },
-        // union
-        "binary,": function(callback, args) {
-            var left = args[0], right = args[1];
-            if (left instanceof Ref && right instanceof Ref) {
-                callback(new UnionRef([ left, right ]));
-            } else {
-                this.error(new CalcError("REF"));
-            }
-        },
-        // intersect
-        "binary ": function(callback, args) {
-            var left = args[0], right = args[1];
-            if (left instanceof Ref && right instanceof Ref) {
-                var x = left.intersect(right);
-                if (x === NULL) {
-                    this.error(new CalcError("NULL"));
-                } else {
-                    callback(x);
-                }
-            } else {
-                this.error(new CalcError("REF"));
-            }
-        },
-
-        /* -----[ unary ops ]----- */
-
-        "unary+": unaryNumeric(function(exp) {
-            return exp;
-        }),
-        "unary-": unaryNumeric(function(exp) {
-            return -exp;
-        }),
-        "unary%": unaryNumeric(function(exp) {
-            return exp/100;
-        }),
 
         /* -----[ conditional ]----- */
 
@@ -666,15 +465,6 @@
                 }
             }
         },
-
-        "not": (function(){
-            var handler = arrayHandler1(function(x){
-                return !this.bool(x);
-            });
-            return function(callback, args) {
-                callback(handler.call(this, args[0]));
-            };
-        })(),
 
         /* -----[ error catching ]----- */
 
@@ -715,41 +505,54 @@
 
     };
 
-    function compileArgumentChecks(args, postlude) {
-        var resolve = "var toResolve = [], i = 0; ";
-        var name, out, forced, main = "var xargs = [], i = 0, m, err = 'VALUE'; ", haveForced = false;
+    // Lasciate ogni speranza, voi ch'entrate.
+    //
+    // XXX: document this function.
+    function compileArgumentChecks(args) {
+        var arrayArgs = "function arrayArgs(args) { var xargs = [], width = 0, height = 0, arrays = [], i = 0; ";
+        var resolve = "function resolve(args, callback) { var toResolve = [], i = 0; ";
+        var name, out, forced, main = "'use strict'; function check(args) { var xargs = [], i = 0, m, err = 'VALUE'; ", haveForced = false;
+        var canBeArrayArg = false, hasArrayArgs = false;
         main += args.map(comp).join("");
-        main += "if (i < args.length) return this.error(new CalcError('N/A')); ";
+        main += "if (i < args.length) return new CalcError('N/A'); ";
+        main += "return xargs; } ";
+        arrayArgs += "return { args: xargs, width: width, height: height, arrays: arrays }; } ";
 
+        var f;
         if (haveForced) {
-            out = resolve
-                + "this.resolveCells(toResolve, function(){ "
-                + main + postlude
-                + "}); ";
+            resolve += "this.resolveCells(toResolve, callback); } ";
+            f = new Function("CalcError", main + resolve + arrayArgs + " return { resolve: resolve, check: check, arrayArgs: arrayArgs };");
         } else {
-            out = main + postlude;
+            f = new Function("CalcError", main + " return { check: check };");
         }
-
-        return out;
+        f = f(CalcError);
+        if (!hasArrayArgs) {
+            delete f.arrayArgs;
+        }
+        return f;
 
         function comp(x) {
             name = x[0];
             var code = "{ ";
             if (Array.isArray(name)) {
+                arrayArgs += "while (i < args.length) { ";
                 resolve += "while (i < args.length) { ";
                 code += "while (i < args.length) { ";
                 code += x.map(comp).join("");
                 code += "} ";
                 resolve += "} ";
+                arrayArgs += "} ";
             } else if (name == "+") {
+                arrayArgs += "while (i < args.length) { ";
                 resolve += "while (i < args.length) { ";
                 code += "do { ";
                 code += x.slice(1).map(comp).join("");
                 code += "} while (i < args.length); ";
                 resolve += "} ";
+                arrayArgs += "} ";
             } else {
                 var type = x[1];
-                code += "var $" + name + " = args[i++]; if ($"+name+" instanceof CalcError) return this.error($"+name+"); "
+                code += "var $" + name + " = args[i++]; if ($"+name+" instanceof CalcError) return $"+name+"; "
                     + typeCheck(type) + "xargs.push($"+name+"); ";
             }
             code += "} ";
@@ -767,10 +570,23 @@
         }
 
         function typeCheck(type) {
+            canBeArrayArg = false;
             forced = false;
-            var ret = "if (!(" + cond(type) + ")) return this.error(new CalcError(err)); ";
+            var ret = "if (!(" + cond(type) + ")) return new CalcError(err); ";
             if (!forced) {
                 resolve += "i++; ";
+            }
+            if (canBeArrayArg) {
+                arrayArgs += "var $" + name + " = this.asMatrix(args[i]); "
+                    + "if ($" + name + ") { "
+                    + "xargs.push($" + name + "); "
+                    + "width = Math.max(width, $" + name + ".width); "
+                    + "height = Math.max(height, $" + name + ".height); "
+                    + "arrays.push(true) } else { "
+                    + "xargs.push(args[i]); "
+                    + "arrays.push(false); } i++; ";
+            } else {
+                arrayArgs += "xargs.push(args[i++]); arrays.push(false); ";
             }
             return ret;
         }
@@ -799,12 +615,16 @@
                 }
                 throw new Error("Unknown array type condition: " + type[0]);
             }
+            if (/^\*/.test(type)) {
+                canBeArrayArg = hasArrayArgs = true;
+                type = type.substr(1);
+            }
             if (type == "number") {
                 return "(typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean')";
             }
             if (type == "divisor") {
                 return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && "
-                    + "($"+name+" === 0 ? ((err = 'DIV/0'), false) : true))";
+                    + "($"+name+" == 0 ? ((err = 'DIV/0'), false) : true))";
             }
             if (type == "number+") {
                 return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && $"+name+" >= 0)";
@@ -834,14 +654,121 @@
             if (type == "null") {
                 return "(" + force() + " == null)";
             }
-            if (type == "any") {
+            if (type == "anyvalue") {
                 return "(" + force() + ", i <= args.length)";
             }
-            if (type == "any*") {
+            if (type == "anything") {
                 return "(i <= args.length)";
             }
             throw new Error("Can't check for type: " + type);
         }
+    }
+
+    function makeSyncFunction(handler, resolve, check, arrayArgs) {
+        return function(callback, args) {
+            function doit() {
+                if (arrayArgs) {
+                    var x = arrayArgs.call(this, args);
+                    args = x.args;
+                    if (x.width > 0 && x.height > 0) {
+                        var result = new Matrix(this);
+                        for (var row = 0; row < x.height; ++row) {
+                            for (var col = 0; col < x.width; ++col) {
+                                var xargs = [];
+                                for (var i = 0; i < args.length; ++i) {
+                                    if (x.arrays[i]) {
+                                        xargs[i] = args[i].get(row, col);
+                                    } else {
+                                        xargs[i] = args[i];
+                                    }
+                                }
+                                xargs = check.call(this, xargs);
+                                if (xargs instanceof CalcError) {
+                                    result.set(row, col, xargs);
+                                } else {
+                                    result.set(row, col, handler.apply(this, xargs));
+                                }
+                            }
+                        }
+                        return callback(result);
+                    }
+                }
+                var xargs = check.call(this, args);
+                if (xargs instanceof CalcError) {
+                    callback(xargs);
+                } else {
+                    callback(handler.apply(this, xargs));
+                }
+            }
+            if (resolve) {
+                resolve.call(this, args, doit);
+            } else {
+                doit.call(this);
+            }
+        };
+    }
+
+    // XXX: the duplication here sucks.  the only difference vs the above function is that this one
+    // will insert the callback as first argument when calling the handler, and thus supports async
+    // handlers.
+    function makeAsyncFunction(handler, resolve, check, arrayArgs) {
+        return function(callback, args) {
+            function doit() {
+                if (arrayArgs) {
+                    var x = arrayArgs.call(this, args);
+                    args = x.args;
+                    if (x.width > 0 && x.height > 0) {
+                        var result = new Matrix(this);
+                        var count = x.width * x.height;
+                        var makeCallback = function(row, col) {
+                            return function(value) {
+                                result.set(row, col, value);
+                                --count;
+                                if (count === 0) {
+                                    return callback(result);
+                                }
+                            };
+                        };
+                        for (var row = 0; row < x.height && count > 0; ++row) {
+                            for (var col = 0; col < x.width && count > 0; ++col) {
+                                var xargs = [];
+                                for (var i = 0; i < args.length; ++i) {
+                                    if (x.arrays[i]) {
+                                        xargs[i] = args[i].get(row, col);
+                                    } else {
+                                        xargs[i] = args[i];
+                                    }
+                                }
+                                xargs = check.call(this, xargs);
+                                if (xargs instanceof CalcError) {
+                                    result.set(row, col, xargs);
+                                    --count;
+                                    if (count === 0) {
+                                        return callback(result);
+                                    }
+                                } else {
+                                    xargs.unshift(makeCallback(row, col));
+                                    handler.apply(this, xargs);
+                                }
+                            }
+                        }
+                        return;
+                    }
+                }
+                var x = check.call(this, args);
+                if (x instanceof CalcError) {
+                    callback(x);
+                } else {
+                    x.unshift(callback);
+                    handler.apply(this, x);
+                }
+            }
+            if (resolve) {
+                resolve.call(this, args, doit);
+            } else {
+                doit.call(this);
+            }
+        };
     }
 
     function defineFunction(name, func) {
@@ -849,37 +776,28 @@
         FUNCS[name] = func;
         return {
             args: function(args, log) {
-                var code = compileArgumentChecks(
-                    args,
-                    ("var v = handler.apply(this, xargs); " +
-                     "if (v instanceof CalcError) this.error(v); else callback(v); ")
-                );
-                defun(name, code, log);
+                var code = compileArgumentChecks(args);
+                // XXX: DEBUG
+                if (log) {
+                    if (code.arrayArgs) {console.log(code.arrayArgs.toString());}
+                    if (code.resolve) {console.log(code.resolve.toString());}
+                    if (code.check) {console.log(code.check.toString());}
+                }
+                FUNCS[name] = makeSyncFunction(func, code.resolve, code.check, code.arrayArgs);
                 return this;
             },
             argsAsync: function(args, log) {
-                var code = compileArgumentChecks(
-                    args,
-                    ("xargs.unshift(callback); " +
-                     "handler.apply(this, xargs); ")
-                );
-                defun(name, code, log);
+                var code = compileArgumentChecks(args);
+                // XXX: DEBUG
+                if (log) {
+                    if (code.arrayArgs) {console.log(code.arrayArgs.toString());}
+                    if (code.resolve) {console.log(code.resolve.toString());}
+                    if (code.check) {console.log(code.check.toString());}
+                }
+                FUNCS[name] = makeAsyncFunction(func, code.resolve, code.check, code.arrayArgs);
                 return this;
             }
         };
-        function defun(name, code, log) {
-            code = [
-                "return function " + fname(name) + "(callback, args) { ",
-                "'use strict'; ", code, "};"
-            ].join("");
-            var f = new Function("handler", "CalcError", code);
-            FUNCS[name] = f(func, CalcError);
-
-            // XXX: debug
-            if (log) {
-                console.log(FUNCS[name].toString());
-            }
-        }
         function fname(name) {
             return name.replace(/[^a-z0-9_]/g, function(s){
                 return "$" + s.charCodeAt(0) + "$";
@@ -1041,8 +959,6 @@
 
     exports.CalcError = CalcError;
     exports.Formula = Formula;
-    exports.arrayHandler1 = arrayHandler1;
-    exports.arrayHandler2 = arrayHandler2;
     exports.Matrix = Matrix;
 
     exports.packDate = packDate;
@@ -1053,5 +969,153 @@
     exports.dateToSerial = dateToSerial;
 
     exports.defineFunction = defineFunction;
+
+    /* -----[ Excel operators ]----- */
+
+    var ARGS_NUMERIC = [
+        [ "a", "*number" ],
+        [ "b", "*number" ]
+    ];
+
+    var ARGS_ANYVALUE = [
+        [ "a", "*anyvalue" ],
+        [ "b", "*anyvalue" ]
+    ];
+
+    defineFunction("binary+", function(a, b){
+        return a + b;
+    }).args(ARGS_NUMERIC);
+
+    defineFunction("binary-", function(a, b){
+        return a - b;
+    }).args(ARGS_NUMERIC);
+
+    defineFunction("binary*", function(a, b){
+        return a * b;
+    }).args(ARGS_NUMERIC);
+
+    defineFunction("binary/", function(a, b){
+        return a / b;
+    }).args([
+        [ "a", "*number" ],
+        [ "b", "*divisor" ]
+    ]);
+
+    defineFunction("binary^", function(a, b){
+        return Math.pow(a, b);
+    }).args(ARGS_NUMERIC);
+
+    defineFunction("binary&", function(a, b){
+        if (a == null) { a = ""; }
+        if (b == null) { b = ""; }
+        return "" + a + b;
+    }).args([
+        [ "a", [ "or", "*number", "*string", "*boolean", "*null" ] ],
+        [ "b", [ "or", "*number", "*string", "*boolean", "*null" ] ]
+    ]);
+
+    defineFunction("binary=", function(a, b){
+        return a === b;
+    }).args(ARGS_ANYVALUE);
+
+    defineFunction("binary<>", function(a, b){
+        return a !== b;
+    }).args(ARGS_ANYVALUE);
+
+    defineFunction("binary<", binaryCompare(function(a, b){
+        return a < b;
+    })).args(ARGS_ANYVALUE);
+
+    defineFunction("binary<=", binaryCompare(function(a, b){
+        return a <= b;
+    })).args(ARGS_ANYVALUE);
+
+    defineFunction("binary>", binaryCompare(function(a, b){
+        return a > b;
+    })).args(ARGS_ANYVALUE);
+
+    defineFunction("binary>=", binaryCompare(function(a, b){
+        return a >= b;
+    })).args(ARGS_ANYVALUE);
+
+    defineFunction("unary+", function(a){
+        return a;
+    }).args([
+        [ "a", "*number" ]
+    ]);
+
+    defineFunction("unary-", function(a){
+        return -a;
+    }).args([
+        [ "a", "*number" ]
+    ]);
+
+    defineFunction("unary%", function(a){
+        return a / 100;
+    }).args([
+        [ "a", "*number" ]
+    ]);
+
+    // range operator
+    defineFunction("binary:", function(a, b){
+        return new RangeRef(a, b)
+            .setSheet(a.sheet || this.formula.sheet, a.hasSheet());
+    }).args([
+        [ "a", "cell" ],
+        [ "b", "cell" ]
+    ]);
+
+    // union operator
+    defineFunction("binary,", function(a, b){
+        return new UnionRef([ a, b ]);
+    }).args([
+        [ "a", "ref" ],
+        [ "b", "ref" ]
+    ]);
+
+    // intersection operator
+    defineFunction("binary ", function(a, b){
+        return a.intersect(b);
+    }).args([
+        [ "a", "ref" ],
+        [ "b", "ref" ]
+    ]);
+
+    /* -----[ conditionals ]----- */
+
+    defineFunction("not", function(a){
+        return !this.bool(a);
+    }).args([
+        [ "a", "*anyvalue" ]
+    ]);
+
+    /// utils
+
+    function binaryCompare(func) {
+        return function(left, right){
+            if (typeof left == "string" && typeof right != "string") {
+                right = right == null ? "" : right + "";
+            }
+            if (typeof left != "string" && typeof right == "string") {
+                left = left == null ? "" : left + "";
+            }
+            if (typeof left == "number" && right == null) {
+                right = 0;
+            }
+            if (typeof right == "number" && left == null) {
+                left = 0;
+            }
+            if (typeof left == "string" && typeof right == "string") {
+                // string comparison is case insensitive
+                left = left.toLowerCase();
+                right = right.toLowerCase();
+            }
+            if (typeof right == typeof left) {
+                return func(left, right);
+            } else {
+                return new CalcError("VALUE");
+            }
+        };
+    }
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

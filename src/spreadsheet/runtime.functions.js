@@ -22,19 +22,25 @@
 
     /* -----[ Math functions ]----- */
 
-    defNumeric("abs", 1, Math.abs);
-    defNumeric("cos", 1, Math.cos);
-    defNumeric("sin", 1, Math.sin);
-    defNumeric("acos", 1, Math.acos);
-    defNumeric("asin", 1, Math.asin);
-    defNumeric("tan", 1, Math.tan);
-    defNumeric("atan", 1, Math.atan);
-    defNumeric("exp", 1, Math.exp);
-    defNumeric("log", 1, Math.log);
-    defNumeric("power", 2, Math.pow);
-    defNumeric("mod", 2, function(left, right){
-        return left % right;
+    [ "abs", "cos", "sin", "acos", "asin", "tan", "atan", "exp", "log" ].forEach(function(name){
+        defineFunction(name, Math[name]).args([
+            [ "n", "*number" ]
+        ]);
     });
+
+    defineFunction("power", function(a, b){
+        return Math.pow(a, b);
+    }).args([
+        [ "a", "*number" ],
+        [ "b", "*number" ]
+    ]);
+
+    defineFunction("mod", function(a, b){
+        return a % b;
+    }).args([
+        [ "a", "*number" ],
+        [ "b", "*divisor" ]
+    ]);
 
     defineFunction("sum", function(callback, args){
         var sum = 0;
@@ -261,22 +267,26 @@
 
     /* -----[  ]----- */
 
-    defNumeric("fact", 1, function(n){
+    defineFunction("fact", function(n){
         for (var i = 2, fact = 1; i <= n; ++i) {
             fact *= i;
         }
         return fact;
-    });
+    }).args([
+        [ "n", "*number" ]
+    ]);
 
-    defNumeric("factdouble", 1, function(n){
+    defineFunction("factdouble", function(n){
         n = n|0;
         for (var i = 2 + (n&1), fact = 1; i <= n; i += 2) {
             fact *= i;
         }
         return fact;
-    });
+    }).args([
+        [ "n", "*number" ]
+    ]);
 
-    defNumeric("combin", 2, function(n, k){
+    defineFunction("combin", function(n, k){
         if (n < 0 || k < 0 || k > n) {
             return this.error(new CalcError("NUM"));
         }
@@ -285,7 +295,10 @@
             p2 *= f2;
         }
         return p1/p2;
-    });
+    }).args([
+        [ "n", "*number" ],
+        [ "k", "*number" ]
+    ]);
 
     /* -----[ Statistical functions ]----- */
 
@@ -361,17 +374,14 @@
     ]);
 
     defineFunction("choose", function(index){
-        var args = arguments;
-        return runtime.arrayHandler1(function(index){
-            if (index < 1 || index >= args.length) {
-                return new CalcError("N/A");
-            } else {
-                return args[index];
-            }
-        }).call(this, index);
+        if (index >= arguments.length) {
+            return new CalcError("N/A");
+        } else {
+            return arguments[index];
+        }
     }).args([
-        [ "index", [ "or", "matrix", "number++" ] ],
-        [ "+", [ "value", "any*" ] ]
+        [ "index", "*number++" ],
+        [ "+", [ "value", "anything" ] ]
     ]);
 
     defineFunction("column", function(ref){
@@ -423,7 +433,7 @@
         }
         return m.get(row - 1, resultCol);
     }).args([
-        [ "value", "any" ],
+        [ "value", "anyvalue" ],
         [ "range", "matrix" ],
         [ "row", "number++" ],
         [ "approx", [ "or", "boolean", [ "null", true ]]]
@@ -464,15 +474,18 @@
     // INDIRECT is defined in async-style so that it can resolve the target cell(s) before passing
     // over the result.
     defineFunction("indirect", function(callback, thing){
-        // XXX: does more work than needed
-        var ref = calc.parseFormula(this.sheet, this.row, this.col, thing);
-        if (!(ref.ast instanceof Ref)) {
-            return this.error(new CalcError("REF"));
+        var ref;
+        try {
+            // XXX: does more work than needed.  we could go for parseReference, but that one
+            // doesn't (yet?) support "SheetName!" prefix.
+            ref = calc.parseFormula(this.sheet, this.row, this.col, thing);
+            if (!(ref.ast instanceof Ref)) {
+                throw 1;
+            }
+        } catch(ex) {
+            return new CalcError("REF");
         }
-        ref = ref.ast.absolute(this.row, this.col);
-        this.resolveCells([ ref ], function(){
-            callback(ref);
-        });
+        callback.call(this, ref.ast.absolute(this.row, this.col));
     }).argsAsync([
         [ "thing", "string" ]
     ]);
@@ -503,7 +516,7 @@
             return new CalcError("N/A");
         }
     }).args([
-        [ "value", "any" ],
+        [ "value", "anyvalue" ],
         [ "range", "matrix" ],
         [ "type", [ "or",
                     [ "values", -1, 0, 1 ],
@@ -525,10 +538,10 @@
         return topLeft;
     }).args([
         [ "ref", "area" ],
-        [ "rows", "number" ],
-        [ "cols", "number" ],
-        [ "height", [ "or", "number++", [ "null", "$ref.height()" ]]],
-        [ "width", [ "or", "number++", [ "null", "$ref.width()" ]]]
+        [ "rows", "*number" ],
+        [ "cols", "*number" ],
+        [ "height", [ "or", "*number++", [ "null", "$ref.height()" ]]],
+        [ "width", [ "or", "*number++", [ "null", "$ref.width()" ]]]
     ]);
 
     defineFunction("row", function(ref){
@@ -576,7 +589,7 @@
         }
         return m.get(resultRow, col - 1);
     }).args([
-        [ "value", "any" ],
+        [ "value", "anyvalue" ],
         [ "range", "matrix" ],
         [ "col", "number++" ],
         [ "approx", [ "or", "boolean", [ "null", true ]]]
@@ -595,41 +608,15 @@
         [ "max", [ "and", "number", [ "assert", "$max > $min" ] ] ]
     ]);
 
-    defNumeric("true", 0, function(){ return true; });
-    defNumeric("false", 0, function(){ return false; });
+    defineFunction("true", function(){
+        return true;
+    }).args([]);
+
+    defineFunction("false", function(){
+        return true;
+    }).args([]);
 
     //// utils
-
-    function defNumeric(name, nargs, func) {
-        if (nargs == 1) {
-            func = runtime.arrayHandler1(func);
-        } else if (nargs == 2) {
-            func = runtime.arrayHandler2(func);
-        } else if (nargs > 2) {
-            throw new Error("Use defNumeric for functions of at most 2 arguments");
-        }
-        return defineFunction(name, function(callback, args){
-            if (args.length != nargs) {
-                return this.error(new CalcError("N/A"));
-            }
-            // XXX: type checking
-            // args = this.cellValues(args);
-            // for (var i = 0; i < args.length; ++i) {
-            //     var num = args[i];
-            //     if (num == null || num === "") {
-            //         num = 0;
-            //     }
-            //     if (typeof num != "number") {
-            //         return this.error(new CalcError("VALUE"));
-            //     }
-            //     args[i] = num;
-            // }
-            var ret = func.apply(this, args);
-            if (!(ret instanceof CalcError)) {
-                callback(ret);
-            }
-        });
-    }
 
     function makeComparator(cmp, x) {
         if (typeof x == "string") {

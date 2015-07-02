@@ -623,6 +623,8 @@ fillElements({
         c20: '100',
         A19: '=sum(indirect(b19):indirect(c19))',
         B19: 'a20', c19: 'c20',
+
+        E13: '=offset(A1, { 1, 2 }, { 3, 4 })',
         
 
         //E5: "=sum(A1:C3)",
