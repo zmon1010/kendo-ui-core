@@ -134,11 +134,6 @@ function showDemoLayout(e) {
 
 var sourceCode;
 
-dojo.configuration = {
-    url: "@Html.DojoRoot()",
-    cdnRoot: '@Html.CdnRoot()'
-};
-
 function openDojo(e) {
     window.dojo.postSnippet(sourceCode, window.location.href.replace(window.location.hash, ""));
     e.preventDefault();

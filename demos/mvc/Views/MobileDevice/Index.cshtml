@@ -31,6 +31,11 @@
     <script src="@Url.Content("~/content/shared/js/kendo-dojo.js")"></script>
 
     <script>
+        dojo.configuration = {
+            url: "@Html.DojoRoot()",
+            cdnRoot: '@Html.CdnRoot()'
+        };
+
         document.title = "@ViewBag.Title";
         var NAV_JSON_URL = "@Url.Content("~/content/mobile-nav.json")";
         var navProduct = "@ViewBag.NavProduct";
