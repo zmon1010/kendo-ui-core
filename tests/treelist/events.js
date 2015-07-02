@@ -213,10 +213,10 @@
             columnResize: handler
         });
 
-        var th = instance.wrapper.find("th:first")[0];
+        var th = instance.wrapper.find("th:first");
         instance._positionResizeHandle({
-            currentTarget: th,
-            clientX: th.offsetWidth-2
+            currentTarget: th[0],
+            clientX: th.offset().left + th.outerWidth() - 2
         });
 
         var handle = instance.wrapper.find(".k-resize-handle");

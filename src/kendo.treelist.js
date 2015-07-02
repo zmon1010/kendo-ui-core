@@ -2153,12 +2153,13 @@ var __meta__ = {
 
         _positionResizeHandle: function(e) {
             var th = $(e.currentTarget);
-            var indicatorWidth = 3;
             var resizeHandle = this.resizeHandle;
             var position = th.position();
             var left = position.left;
             var cellWidth = th.outerWidth();
-            var container = th.closest(".k-grid-header-wrap,.k-grid-header-locked,.k-treelist");
+            var container = th.closest("div");
+            var clientX = e.clientX + $(window).scrollLeft();
+            var indicatorWidth = this.options.columnResizeHandleWidth || 3;
 
             left += container.scrollLeft();
 
@@ -2168,23 +2169,21 @@ var __meta__ = {
                 );
             }
 
-            container.append(resizeHandle);
+            var cellOffset = th.offset().left + cellWidth;
+            var show = clientX > cellOffset - indicatorWidth && clientX < cellOffset + indicatorWidth;
 
-            if (e.clientX > left + cellWidth/2) {
-                // closer to right th border, align indicator with border
-                left += cellWidth;
-            } else {
-                // closer to left th border, resize previous column
-                th = th.prev();
+            if(!show) {
+                resizeHandle.hide();
+                return;
             }
 
-            var show = !!th.length && left > indicatorWidth;
+            container.append(resizeHandle);
 
             resizeHandle
-                .toggle(show)
+                .show()
                 .css({
                     top: position.top,
-                    left: left - indicatorWidth - 1,
+                    left: left + cellWidth - indicatorWidth - 1,
                     height: th.outerHeight(),
                     width: indicatorWidth * 3
                 })
