@@ -1046,6 +1046,35 @@
         }
     });
 
+    var RectNode = PathNode.extend({
+        geometryChange: function() {
+            var geometry = this.srcElement.geometry();
+            this.attr("x", geometry.origin.x);
+            this.attr("y", geometry.origin.y);
+            this.attr("width", geometry.size.width);
+            this.attr("height", geometry.size.height);
+            this.invalidate();
+        },
+
+        size: function() {
+            return this.srcElement.geometry().size;
+        },
+
+        origin: function() {
+            return this.srcElement.geometry().origin;
+        },
+
+        template: renderTemplate(
+            "<rect #= d.renderStyle() # #= d.renderOpacity() # " +
+            "x='#= d.origin().x #' y='#= d.origin().y #' " +
+            "width='#= d.size().width #' height='#= d.size().height #'" +
+            "#= d.renderStroke() # " +
+            "#= d.renderFill() # " +
+            "#= d.renderDefinitions() # " +
+            "#= d.renderTransform() # />"
+        )
+    });
+
     var nodeMap = {
         Group: GroupNode,
         Text: TextNode,
@@ -1053,7 +1082,8 @@
         MultiPath: MultiPathNode,
         Circle: CircleNode,
         Arc: ArcNode,
-        Image: ImageNode
+        Image: ImageNode,
+        Rect: RectNode
     };
 
     // Helpers ================================================================
@@ -1203,6 +1233,7 @@
             Node: Node,
             PathNode: PathNode,
             RadialGradientNode: RadialGradientNode,
+            RectNode: RectNode,
             RootNode: RootNode,
             Surface: Surface,
             TextNode: TextNode,

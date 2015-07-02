@@ -1269,6 +1269,81 @@
 
     // ------------------------------------------------------------
     (function() {
+        var Rect = d.Rect,
+            RectNode = svg.RectNode,
+            rect,
+            rectNode;
+
+        nodeTests(Rect, RectNode, "RectNode");
+
+        module("RectNode", {
+            setup: function() {
+                var geometry = new g.Rect([10, 20], [30, 40]);
+                rect = new Rect(geometry);
+                rectNode = new RectNode(rect);
+            }
+        });
+
+        test("renders x", function() {
+            ok(rectNode.render().indexOf("x='10'") !== -1);
+        });
+
+        test("renders y", function() {
+            ok(rectNode.render().indexOf("y='20'") !== -1);
+        });
+
+        test("renders width", function() {
+            ok(rectNode.render().indexOf("width='30'") !== -1);
+        });
+
+        test("renders height", function() {
+            ok(rectNode.render().indexOf("height='40'") !== -1);
+        });
+
+        test("geometryChange sets x", function() {
+            rectNode.attr = function(name, value) {
+                if (name === "x") {
+                    equal(value, 5);
+                }
+            };
+
+            rect.geometry().origin.setX(5);
+        });
+
+        test("geometryChange sets y", function() {
+            rectNode.attr = function(name, value) {
+                if (name === "y") {
+                    equal(value, 5);
+                }
+            };
+
+            rect.geometry().origin.setY(5);
+        });
+
+        test("geometryChange sets width", function() {
+            rectNode.attr = function(name, value) {
+                if (name === "width") {
+                    equal(value, 5);
+                }
+            };
+
+            rect.geometry().size.setWidth(5);
+        });
+
+        test("geometryChange sets height", function() {
+            rectNode.attr = function(name, value) {
+                if (name === "height") {
+                    equal(value, 5);
+                }
+            };
+
+            rect.geometry().size.setHeight(5);
+        });
+
+    })();
+
+    // ------------------------------------------------------------
+    (function() {
         var group;
 
         module("exportSVG", {
