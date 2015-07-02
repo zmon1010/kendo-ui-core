@@ -57,14 +57,6 @@
             return -1;
         }
 
-        if (a instanceof Date) {
-            a = a.getTime();
-        }
-
-        if (b instanceof Date) {
-            b = b.getTime();
-        }
-
         var typeA = typeof a;
         var typeB = typeof b;
 

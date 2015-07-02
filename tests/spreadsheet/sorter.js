@@ -155,10 +155,6 @@
         equal(Sorter.ascendingComparer("2", 1), 1);
     });
 
-    test("strings are after dates", function() {
-        equal(Sorter.ascendingComparer("2", new Date()), 1);
-    });
-
     test("strings are before booleans", function() {
         equal(Sorter.ascendingComparer("2", true), -1);
         equal(Sorter.ascendingComparer("2", false), -1);
@@ -175,11 +171,6 @@
     test("booleans are after numbers", function() {
         equal(Sorter.ascendingComparer(true, 2), 1);
         equal(Sorter.ascendingComparer(false, 2), 1);
-    });
-
-    test("booleans are after dates", function() {
-        equal(Sorter.ascendingComparer(true, new Date()), 1);
-        equal(Sorter.ascendingComparer(false, new Date()), 1);
     });
 
     test("booleans are after strings", function() {
@@ -212,10 +203,6 @@
         equal(Sorter.ascendingComparer(null, 2), 1);
     });
 
-    test("null is after dates", function() {
-        equal(Sorter.ascendingComparer(null, new Date()), 1);
-    });
-
     test("null is after strings", function() {
         equal(Sorter.ascendingComparer(null, "2"), 1);
     });
@@ -238,10 +225,6 @@
         equal(Sorter.ascendingComparer(new kendo.spreadsheet.calc.runtime.CalcError("NAME"), 2), 1);
     });
 
-    test("errors are after dates", function() {
-        equal(Sorter.ascendingComparer(new kendo.spreadsheet.calc.runtime.CalcError("NAME"), new Date()), 1);
-    });
-
     test("errors are after strings", function() {
         equal(Sorter.ascendingComparer(new kendo.spreadsheet.calc.runtime.CalcError("NAME"), "2"), 1);
     });
@@ -256,22 +239,5 @@
 
     test("errors are equal", function() {
         equal(Sorter.ascendingComparer(new kendo.spreadsheet.calc.runtime.CalcError("NAME"), new kendo.spreadsheet.calc.runtime.CalcError("DIV/0")), 0);
-    });
-
-    test("dates are before strings", function() {
-        equal(Sorter.ascendingComparer(new Date(), "2"), -1);
-    });
-
-    test("dates are before null", function() {
-        equal(Sorter.ascendingComparer(new Date(), null), -1);
-    });
-
-    test("dates are before boolean", function() {
-        equal(Sorter.ascendingComparer(new Date(), true), -1);
-    });
-
-    test("dates are compared as numbers", function() {
-        ok(Sorter.ascendingComparer(1, new Date()) < 0);
-        ok(Sorter.ascendingComparer(new Date(), 2) > 0);
     });
 })();
