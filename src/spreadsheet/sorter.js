@@ -117,7 +117,7 @@
         }
 
         return Sorter.ascendingComparer(b, a);
-    }
+    };
 
     kendo.spreadsheet.Sorter = Sorter;
 })(kendo);

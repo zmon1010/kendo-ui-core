@@ -78,7 +78,7 @@
 
                 return this;
             } else {
-                var type = this._property(this._sheet._types);
+                type = this._property(this._sheet._types);
                 value = this._property(this._sheet._values);
 
                 if (type === "date") {
@@ -110,13 +110,20 @@
             return this._styleProperty("fontWeight", value);
         },
         borderLeftColor: function(value) {
-            this._ref.relative(0, -1).forEach(function(ref) {
-                new Range(ref, this._sheet).borderRightColor(value);
-            }.bind(this));
-            return this._styleProperty("borderLeftColor", value);
+            var ref = this._ref.resize({ left: -1, right: -1 });
+            var result = new Range(ref, this._sheet).borderRightColor(value);
+            return value === undefined ? result : this;
+        },
+        borderTopColor: function(value) {
+            var ref = this._ref.resize({ top: -1, bottom: -1 });
+            var result = new Range(ref, this._sheet).borderBottomColor(value);
+            return value === undefined ? result : this;
         },
         borderRightColor: function(value) {
             return this._styleProperty("borderRightColor", value);
+        },
+        borderBottomColor: function(value) {
+            return this._styleProperty("borderBottomColor", value);
         },
         horizontalAlignment: function(value) {
             return this._styleProperty("horizontalAlignment", value);

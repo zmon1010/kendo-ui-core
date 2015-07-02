@@ -256,8 +256,8 @@
         addCell: function(table, row, cell) {
             var styleMap = {
                 background: "backgroundColor",
+                borderBottomColor: "borderBottomColor",
                 borderRightColor: "borderRightColor",
-                borderLeftColor: "borderLeftColor",
                 fontColor: "color",
                 fontFamily: "fontFamily",
                 fontLine: "textDecoration",

@@ -134,22 +134,58 @@
         equal(range.verticalAlignment(), "foo");
     });
 
-    test("borderLeftColor returns borderLeftColor of a range", function() {
+    test("borderLeftColor symmetry", function() {
         range.borderLeftColor("#f00");
 
         equal(range.borderLeftColor(), "#f00");
     });
 
-    test("borderRightColor returns borderRightColor of a range", function() {
+    test("borderRightColor symmetry", function() {
         range.borderRightColor("#f00");
 
         equal(range.borderRightColor(), "#f00");
     });
 
-    test("borderRightColor is set by borderLeftColor of sibling cell", function() {
+    test("borderLeftColor triggers one change", 1, function() {
+        sheet.bind("change", ok.bind(this, true));
+
+        sheet.range(0, 2).borderLeftColor("#f00");
+    });
+
+    test("borderBottomColor gets borderTopColor of cell below", function() {
+        sheet.range(1, 0).borderTopColor("#f00");
+
+        equal(sheet.range(0, 0).borderBottomColor(), "#f00");
+    });
+
+    test("borderTopColor gets borderBottomColor of cell above", function() {
+        sheet.range(0, 0).borderBottomColor("#f00");
+
+        equal(sheet.range(1, 0).borderTopColor(), "#f00");
+    });
+
+    test("borderRightColor gets borderLeftColor of cell on the right", function() {
         sheet.range(0, 1).borderLeftColor("#f00");
 
         equal(sheet.range(0, 0).borderRightColor(), "#f00");
+    });
+
+    test("borderLeftColor gets borderRightColor of cell on the left", function() {
+        sheet.range(0, 0).borderRightColor("#f00");
+
+        equal(sheet.range(0, 1).borderLeftColor(), "#f00");
+    });
+
+    test("borderTopColor symmetry", function() {
+        range.borderTopColor("#f00");
+
+        equal(range.borderTopColor(), "#f00");
+    });
+
+    test("borderBottomColor symmetry", function() {
+        range.borderBottomColor("#f00");
+
+        equal(range.borderBottomColor(), "#f00");
     });
 
     test("wrap returns the wrap of a range", function() {

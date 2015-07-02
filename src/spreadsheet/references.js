@@ -397,16 +397,21 @@
                 new CellRef(bottomRightRow, bottomRightCol)
             );
         },
-        relative: function(arow, acol) {
-            var topLeftRow = this.topLeft.row;
-            var topLeftCol = this.topLeft.col;
-            var bottomRightRow = this.bottomRight.row;
-            var bottomRightCol = this.bottomRight.col;
+        resize: function(options) {
+            var limit = Math.max.bind(Math, 0);
+            function num(value) { return value || 0; }
 
-            return new RangeRef(
-                new CellRef(Math.max(topLeftRow + arow, 0), Math.max(topLeftCol + acol, 0)),
-                new CellRef(Math.max(bottomRightRow + arow, 0), Math.max(bottomRightCol + acol, 0))
-            );
+            var top = this.topLeft.row + num(options.top);
+            var left = this.topLeft.col + num(options.left);
+            var bottom = this.bottomRight.row + num(options.bottom);
+            var right = this.bottomRight.col + num(options.right);
+
+            if (top <= bottom && left <= right) {
+                return new RangeRef(new CellRef(limit(top), limit(left)),
+                                    new CellRef(limit(bottom), limit(right)));
+            } else {
+                return NULL;
+            }
         },
         first: function() {
             return this.topLeft;
