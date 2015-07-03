@@ -23,6 +23,7 @@ var __meta__ = {
     var extend = $.extend;
     var map = $.map;
     var isFunction = $.isFunction;
+    var oldIE = browser.msie && browser.version < 9;
     var keys = kendo.keys;
     var titleFromField = {
         "title": "Title",
@@ -55,6 +56,7 @@ var __meta__ = {
         iconHidden: "k-i-none",
         iconPlaceHolder: "k-icon k-i-none",
         input: "k-input",
+        link: "k-link",
         dropPositions: "k-insert-top k-insert-bottom k-add k-insert-middle",
         dropTop: "k-insert-top",
         dropBottom: "k-insert-bottom",
@@ -136,6 +138,8 @@ var __meta__ = {
             }
 
             this.content.off(NS);
+            this.header.find(DOT + GanttList.link).off(NS);
+
             this.header = null;
             this.content = null;
             this.levels = null;
@@ -400,11 +404,18 @@ var __meta__ = {
         },
 
         _sortable: function() {
+            var that = this;
             var resourcesField = this.options.resourcesField;
             var columns = this.columns;
             var column;
             var sortableInstance;
             var cells = this.header.find("th");
+            var handler = function(e) {
+                if (that.editable && that.editable.trigger("validate")) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                }
+            };
             var cell;
 
             for (var idx = 0, length = cells.length; idx < length; idx++) {
@@ -420,7 +431,9 @@ var __meta__ = {
                     }
 
                     cell.attr("data-" + kendo.ns + "field", column.field)
-                        .kendoColumnSorter({ dataSource: this.dataSource });
+                        .kendoColumnSorter({ dataSource: this.dataSource })
+                        .find(DOT + GanttList.link)
+                        .on("click" + NS, handler);
                 }
             }
             cells = null;
@@ -434,6 +447,10 @@ var __meta__ = {
                 this.content
                    .on(CLICK + NS, "tr", function(e) {
                        var element = $(this);
+
+                       if (that.editable) {
+                           that.editable.trigger("validate");
+                       }
 
                        if (!e.ctrlKey) {
                            that.select(element);
@@ -484,8 +501,14 @@ var __meta__ = {
             var listStyles = GanttList.styles;
             var iconSelector = "span." + listStyles.icon + ":not(" + listStyles.iconHidden +")";
             var finishEdit = function() {
-                if (that.editable && that.editable.end()) {
-                    that._closeCell();
+                var editable = that.editable;
+
+                if (editable) {
+                    if (editable.end()) {
+                        that._closeCell();
+                    } else {
+                        editable.trigger("validate");
+                    }
                 }
             };
             var mousedown = function(e) {
@@ -521,7 +544,7 @@ var __meta__ = {
                 .on("focusout" + NS, function() {
                     that.timer = setTimeout(finishEdit, 1);
                 })
-                .on("keydown" + NS, function(e) {
+                .on("keyup" + NS, function(e) {
                     var key = e.keyCode;
                     var cell;
                     var model;
@@ -587,6 +610,7 @@ var __meta__ = {
                     field.validation.required === true : false
             };
             var editor;
+            var that = this;
 
             if (column.field === resourcesField) {
                 column.editor(cell, modelCopy);
@@ -642,6 +666,16 @@ var __meta__ = {
             if (this.trigger("edit", { model: model, cell: cell })) {
                 this._closeCell(true);
             }
+
+            this.editable.bind("validate", function(e) {
+                var focusable = this.element.find(":kendoFocusable:first").focus();
+
+                if (oldIE) {
+                    focusable.focus();
+                }
+
+                e.preventDefault();
+            });
         },
 
         _closeCell: function(cancelUpdate) {
@@ -660,6 +694,7 @@ var __meta__ = {
                 .removeClass(listStyles.editCell)
                 .append(this._editableContent);
 
+            this.editable.unbind();
             this.editable.destroy();
             this.editable = null;
 
@@ -766,8 +801,9 @@ var __meta__ = {
                     cursorOffset: { top: -20, left: 0 },
                     container: this.content,
                     "dragstart": function(e) {
-                        if (that.editable) {
+                        if (that.editable && that.editable.trigger("validate")) {
                             e.preventDefault();
+                            return;
                         }
                         draggedTask = that._modelFromElement(e.currentTarget);
                         this.hint.children(DOT + listStyles.dragClueText)

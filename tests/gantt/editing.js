@@ -4,6 +4,7 @@
     var GanttDataSource = kendo.data.GanttDataSource;
     var gantt;
     var ganttList;
+    var ganttTimeline;
     var element;
     var columns;
     var extend = $.extend;
@@ -223,7 +224,7 @@
 
     test("ESC keydown closes edited cell", function() {
         var targetCell = ganttList.content.find("td").eq(0);
-        var event = new $.Event('keydown');
+        var event = new $.Event('keyup');
 
         event.keyCode = kendo.keys.ESC;
 
@@ -236,7 +237,7 @@
 
     test("ESC keydown closes edited cell with cancelUpdate parameter", function() {
         var targetCell = ganttList.content.find("td").eq(0);
-        var event = new $.Event('keydown');
+        var event = new $.Event('keyup');
 
         event.keyCode = kendo.keys.ESC;
 
@@ -247,7 +248,7 @@
 
     test("ESC keydown trigger cancel event", function() {
         var targetCell = ganttList.content.find("td").eq(0);
-        var event = new $.Event('keydown');
+        var event = new $.Event('keyup');
 
         event.keyCode = kendo.keys.ESC;
         ganttList.bind("cancel", function() {
@@ -260,7 +261,7 @@
 
     test("ESC keydown does not close edit cell when 'cancel' prevented", function() {
         var targetCell = ganttList.content.find("td").eq(0);
-        var event = new $.Event('keydown');
+        var event = new $.Event('keyup');
 
         event.keyCode = kendo.keys.ESC;
 
@@ -277,7 +278,7 @@
 
     test("Enter keydown closes edited cell", function() {
         var targetCell = ganttList.content.find("td").eq(0);
-        var event = new $.Event('keydown');
+        var event = new $.Event('keyup');
 
         event.keyCode = kendo.keys.ENTER;
 
@@ -290,7 +291,7 @@
 
     test("cancel event has correct parameters", function() {
         var targetCell = ganttList.content.find("td").eq(0);
-        var event = new $.Event('keydown');
+        var event = new $.Event('keyup');
 
         event.keyCode = kendo.keys.ESC;
         ganttList.bind("cancel", function(e) {
@@ -618,6 +619,7 @@
             });
 
             ganttList = gantt.list;
+            ganttTimeline = gantt.timeline;
         },
         teardown: function() {
             gantt.destroy();
@@ -670,6 +672,203 @@
 
         ok(ganttList.editable.end());
 
+    });
+
+    test("prevents navigate when validation fails", function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+        var e = new $.Event();
+
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+
+        ganttTimeline.trigger("navigate", e);
+
+        ok(e.isDefaultPrevented());
+    });
+
+    test("prevents resizeStart when validation fails", function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+        var e = new $.Event();
+
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+
+        ganttTimeline.trigger("resizeStart", e);
+
+        ok(e.isDefaultPrevented());
+    });
+
+    test("does not fire gantt's resizeStart when validation fails", function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+        var e = new $.Event();
+        var eventFired = false;
+
+        gantt.bind("resizeStart", function(e) { eventFired = true; });
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+
+        ganttTimeline.trigger("resizeStart", e);
+
+        ok(!eventFired);
+    });
+
+    test("prevents moveStart when validation fails", function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+        var e = new $.Event();
+
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+
+        ganttTimeline.trigger("moveStart", e);
+
+        ok(e.isDefaultPrevented());
+    });
+
+    test("does not fire gantt's moveStart when validation fails", function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+        var e = new $.Event();
+        var eventFired = false;
+
+        gantt.bind("moveStart", function(e) { eventFired = true; });
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+
+        ganttTimeline.trigger("moveStart", e);
+
+        ok(e.isDefaultPrevented());
+
+        ok(!eventFired);
+    });
+
+    test("prevents percentResizeStart when validation fails", function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+        var e = new $.Event();
+
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+
+        ganttTimeline.trigger("percentResizeStart", e);
+
+        ok(e.isDefaultPrevented());
+    });
+
+    test("prevents dependencyDragStart when validation fails", function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+        var e = new $.Event();
+
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+
+        ganttTimeline.trigger("dependencyDragStart", e);
+
+        ok(e.isDefaultPrevented());
+    });
+
+    test("does not call editTask when validation fails", function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+
+        stub(gantt, "editTask");
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+
+        ganttTimeline.trigger("editTask", {});
+
+        ok(!gantt.calls("editTask"));
+    });
+
+    test("does not call removeTask when validation fails", function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+
+        stub(gantt, "removeTask");
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+
+        ganttTimeline.trigger("removeTask", {});
+
+        ok(!gantt.calls("removeTask"));
+    });
+
+    test("does not call removeDependency when validation fails", function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+
+        stub(gantt, "removeDependency");
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+
+        ganttTimeline.trigger("removeDependency", {});
+
+        ok(!gantt.calls("removeDependency"));
+    });
+
+    test("triggers editable validate event upon timeline select", 1, function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+        var e = new $.Event();
+
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+        ganttList.editable.bind("validate", function() {
+            ok(true);
+        });
+
+        ganttTimeline.trigger("select", e);
+    });
+
+    test("triggers editable validate event upon list content click", 1, function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+        var e = new $.Event();
+
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+        ganttList.editable.bind("validate", function() {
+            ok(true);
+        });
+
+        ganttList.content.find("tr:first").trigger("click");
+    });
+
+    asyncTest("return focus to editable cell upon blur when validation fails", function() {
+        expect(1);
+
+        var focusable;
+        var targetCell = ganttList.content.find("td").eq(0);
+        var picker;
+
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+
+        ganttList.content.trigger("focusout");
+
+        setTimeout(function() {
+            focusable = ganttList.editable.element.find(":kendoFocusable:first");
+
+            equal(document.activeElement, focusable[0]);
+            start();
+        }, 3);
     });
 
     module("Gantt non-editable", {

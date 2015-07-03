@@ -2225,6 +2225,11 @@ var __meta__ = {
 
             this._percentDraggable
                 .bind("dragstart", function(e) {
+                    if (that.trigger("percentResizeStart")) {
+                        e.preventDefault();
+                        return;
+                    }
+
                     taskElement = e.currentTarget.siblings(DOT + styles.task);
 
                     task = that._taskByUid(taskElement.attr("data-uid"));
@@ -2328,6 +2333,11 @@ var __meta__ = {
 
             this._dependencyDraggable
                 .bind("dragstart", function(e) {
+                    if (that.trigger("dependencyDragStart")) {
+                        e.preventDefault();
+                        return;
+                    }
+
                     originalHandle = e.currentTarget
                         .css("display", "block")
                         .addClass(styles.hovered);
@@ -2335,7 +2345,7 @@ var __meta__ = {
                     originalHandle.parent().addClass(styles.origin);
 
                     var elementOffset = originalHandle.offset();
-					var tablesOffset = $(DOT + styles.tasksWrapper).offset();
+                    var tablesOffset = $(DOT + styles.tasksWrapper).offset();
 
                     startX = Math.round(elementOffset.left - tablesOffset.left + (originalHandle.outerHeight() / 2));
                     startY = Math.round(elementOffset.top - tablesOffset.top + (originalHandle.outerWidth() / 2));
@@ -2351,7 +2361,7 @@ var __meta__ = {
                     that.view()._removeDependencyDragHint();
 
                     var target = $(kendo.elementUnderCursor(e));
-					var tablesOffset = $(DOT + styles.tasksWrapper).offset();
+                    var tablesOffset = $(DOT + styles.tasksWrapper).offset();
                     var currentX = e.x.location - tablesOffset.left;
                     var currentY = e.y.location - tablesOffset.top;
 

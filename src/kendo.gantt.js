@@ -1772,6 +1772,11 @@ var __meta__ = {
                 var parent = dataSource.taskParent(selected);
                 var firstSlot = timeline.view()._timeSlots()[0];
                 var target = type === "add" ? selected : parent;
+                var editable = that.list.editable;
+
+                if (editable && editable.trigger("validate")) {
+                    return;
+                }
 
                 task.set("title", "New task");
 
@@ -1903,6 +1908,13 @@ var __meta__ = {
 
             this.timeline
                 .bind("navigate", function(e) {
+                    var treelist = that.list;
+
+                    if (treelist && treelist.editable && treelist.editable.trigger("validate")) {
+                        e.preventDefault();
+                        return;
+                    }
+
                     that.toolbar
                         .find(DOT + ganttStyles.toolbar.views +" > li")
                         .removeClass(ganttStyles.selected)
@@ -1913,6 +1925,13 @@ var __meta__ = {
                     that.refresh();
                 })
                 .bind("moveStart", function(e) {
+                    var editable = that.list.editable;
+
+                    if (editable && editable.trigger("validate")) {
+                        e.preventDefault();
+                        return;
+                    }
+
                     if (that.trigger("moveStart", { task: e.task })) {
                         e.preventDefault();
                     }
@@ -1939,6 +1958,13 @@ var __meta__ = {
                     }
                 })
                 .bind("resizeStart", function(e) {
+                    var editable = that.list.editable;
+
+                    if (editable && editable.trigger("validate")) {
+                        e.preventDefault();
+                        return;
+                    }
+
                     if (that.trigger("resizeStart", { task: e.task })) {
                         e.preventDefault();
                     }
@@ -1962,8 +1988,22 @@ var __meta__ = {
                         that._updateTask(that.dataSource.getByUid(task.uid), updateInfo);
                     }
                 })
+                .bind("percentResizeStart", function(e) {
+                    var editable = that.list.editable;
+
+                    if (editable && editable.trigger("validate")) {
+                        e.preventDefault();
+                    }
+                })
                 .bind("percentResizeEnd", function(e) {
                     that._updateTask(that.dataSource.getByUid(e.task.uid), { percentComplete: e.percentComplete });
+                })
+                .bind("dependencyDragStart", function(e) {
+                    var editable = that.list.editable;
+
+                    if (editable && editable.trigger("validate")) {
+                        e.preventDefault();
+                    }
                 })
                 .bind("dependencyDragEnd", function(e) {
                     var dependency = that.dependencies._createNewModel({
@@ -1975,18 +2015,42 @@ var __meta__ = {
                     that._createDependency(dependency);
                 })
                 .bind("select", function(e) {
+                    var editable = that.list.editable;
+
+                    if (editable) {
+                        editable.trigger("validate");
+                    }
+
                     that.select("[data-uid='" + e.uid + "']");
                 })
                 .bind("editTask", function(e) {
+                    var editable = that.list.editable;
+
+                    if (editable && editable.trigger("validate")) {
+                        return;
+                    }
+
                     that.editTask(e.uid);
                 })
                 .bind("clear", function(e) {
                     that.clearSelection();
                 })
                 .bind("removeTask", function(e) {
+                    var editable = that.list.editable;
+
+                    if (editable && editable.trigger("validate")) {
+                        return;
+                    }
+
                     that.removeTask(that.dataSource.getByUid(e.uid));
                 })
                 .bind("removeDependency", function(e) {
+                    var editable = that.list.editable;
+
+                    if (editable && editable.trigger("validate")) {
+                        return;
+                    }
+
                     that.removeDependency(that.dependencies.getByUid(e.uid));
                 });
         },
