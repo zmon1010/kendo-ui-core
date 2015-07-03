@@ -14,6 +14,7 @@ var __meta__ = {
 
     var kendo = window.kendo;
     var browser = kendo.support.browser;
+    var mobileOS = kendo.support.mobileOS;
     var Observable = kendo.Observable;
     var Widget = kendo.ui.Widget;
     var DataSource = kendo.data.DataSource;
@@ -2791,21 +2792,27 @@ var __meta__ = {
             var ganttStyles = Gantt.styles;
             var contentSelector = DOT + ganttStyles.gridContent;
             var headerSelector = DOT + ganttStyles.gridHeaderWrap;
-            var timelineWrapper = this.timeline.element;
-            var treeListWrapper = this.list.element;
+            var timelineHeader = this.timeline.element.find(headerSelector);
+            var timelineContent = this.timeline.element.find(contentSelector);
+            var treeListHeader = this.list.element.find(headerSelector);
+            var treeListContent = this.list.element.find(contentSelector);
 
-            timelineWrapper.find(contentSelector).on("scroll", function(e) {
-                timelineWrapper.find(headerSelector).scrollLeft(this.scrollLeft);
-                treeListWrapper.find(contentSelector).scrollTop(this.scrollTop);
+            if (mobileOS) {
+                treeListContent.css("overflow-y", "auto");
+            }
+
+            timelineContent.on("scroll", function(e) {
+                timelineHeader.scrollLeft(this.scrollLeft);
+                treeListContent.scrollTop(this.scrollTop);
             });
 
-            treeListWrapper.find(contentSelector)
+            treeListContent
                 .on("scroll", function(e) {
-                    treeListWrapper.find(headerSelector).scrollLeft(this.scrollLeft);
+                    treeListHeader.scrollLeft(this.scrollLeft);
+                    timelineContent.scrollTop(this.scrollTop);
                 })
                 .on("DOMMouseScroll" + NS + " mousewheel" + NS, function(e) {
-                    var content = timelineWrapper.find(contentSelector);
-                    var scrollTop = content.scrollTop();
+                    var scrollTop = timelineContent.scrollTop();
                     var delta = kendo.wheelDeltaY(e);
 
                     if (delta) {
@@ -2813,7 +2820,7 @@ var __meta__ = {
                         //In Firefox DOMMouseScroll event cannot be canceled
                         $(e.currentTarget).one("wheel" + NS, false);
 
-                        content.scrollTop(scrollTop + (-delta));
+                        timelineContent.scrollTop(scrollTop + (-delta));
                     }
                 });
         },
