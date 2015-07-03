@@ -115,7 +115,7 @@
 }
 
 #demos-search-container:before {
-    font: 1em/.9em "Kendo UI" normal;
+    font: normal 1em/.9em "Kendo UI";
     content: "\e21e";
     position: absolute;
     margin-top: .6em;
@@ -124,7 +124,7 @@
 
 #examples .km-drawer-icon:before,
 #examples .km-drawer-icon:after {
-    font: 1em/1em "KendoMobileDemos" normal;
+    font: normal 1em/1em "KendoMobileDemos";
     content: "\e602";
 }
 
@@ -142,7 +142,7 @@
 }
 
 #about #external-resources a:after {
-    font: .5em/.5em "KendoMobileDemos" normal;
+    font: normal .5em/.5em "KendoMobileDemos";
     content: "\e605";
     display: inline;
     position: absolute;
