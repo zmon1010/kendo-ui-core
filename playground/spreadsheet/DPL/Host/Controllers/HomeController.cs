@@ -21,6 +21,7 @@ namespace Host.Controllers
             return View();
         }
 
+        //[OutputCache(Duration = 60, VaryByParam = "none")]
         public ActionResult Import()
         {
             string fileName = Server.MapPath("~/App_Data/Sample.xlsx");

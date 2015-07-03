@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -117,14 +118,21 @@ namespace Host
                     if (formulaCellValue != null)
                     {
                         cellValue = formulaCellValue.GetResultValueAsCellValue();
-                    }
+                    }                    
 
-                    var value = formatting.GetFormatResult(cellValue).VisibleInfosText;
-                    if (!string.IsNullOrEmpty(value))
-                    {
+                    if (cellValue.ValueType != CellValueType.Empty) {
+                        object value = cellValue.RawValue;
+                        switch (cellValue.ValueType)
+                        {
+                            case CellValueType.Number:
+                                value = double.Parse(cellValue.RawValue);
+                                break;
+                        }
+
                         yield return new DTO.Cell
                         {
                             Index = columnIndex,
+                            Format = formatting.FormatString,
                             Value = value
                         };
                     }

@@ -11,8 +11,11 @@ namespace Host.DTO
         [JsonProperty(PropertyName = "index")]
         public int Index { get; set; }
 
+        [JsonProperty(PropertyName = "format")]
+        public object Format { get; set; }
+
         [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        public object Value { get; set; }
     }
 
     public class Row

@@ -21,21 +21,16 @@
 <body>
     <div id="spreadsheet"></div>
     <script>
-        var spreadsheet = $("#spreadsheet").kendoSpreadsheet({}).data("kendoSpreadsheet");
+        var spreadsheet = $("#spreadsheet").kendoSpreadsheet({
+            rows: 1000,
+            columns: 300
+        }).data("kendoSpreadsheet");
+
         var sheet = spreadsheet.activeSheet();
         var calc = kendo.spreadsheet.calc;
 
         $.ajax("@Url.Action("Import", "Home")").done(function (dtoWorkbook) {
-            var dtoSheet = dtoWorkbook.sheets[0];
-            dtoSheet.rows.forEach(function(dtoRow) {
-                dtoRow.cells.forEach(function(dtoCell) {
-                    var range = sheet.range(dtoRow.index, dtoCell.index);
-                    range.value(dtoCell.value);
-                });
-                
-            });
-
-            spreadsheet.refresh();
+            spreadsheet.fromJSON(dtoWorkbook);
         });
     </script>
 </body>
