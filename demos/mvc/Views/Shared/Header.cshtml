@@ -10,6 +10,44 @@
 }
 
 <div id="header">
+
+@*    <div id="webinar-banner">
+        The new Kendo UI Release is out.
+        <a href="http://www.telerik.com/campaigns/kendo-ui/july-2015-release" data-gtm-event="yellow-strip, KendoUIQ22015Release, kendo-demos-page">Sign up for the Release Webinar</a>
+        to see the new bits in action.
+        <span class="close"></span>
+    </div>
+
+    <script>
+
+        (function ($) {
+            var banner = $("#webinar-banner");
+            var uniqueLocalStorageBannerKey = "KendoUIQ22015ReleaseWebinarBannerDisabled";
+            var showWebinarBanner = true;
+
+            if (location.href.indexOf("aspnet-mvc") < 0) {
+                try {
+                    showWebinarBanner = "1" !== localStorage.getItem(uniqueLocalStorageBannerKey);
+                } catch (e) {
+                }
+                if (showWebinarBanner) {
+                    banner.show().find(".close").click(function () {
+                        try {
+                            localStorage.setItem(uniqueLocalStorageBannerKey, 1);
+                            banner.animate({ marginTop: "-40px", height: 0 }, function () {
+                                banner.hide();
+                                $(window).resize();
+                            });
+                            return true;
+                        } catch (e) {
+                        }
+                    });
+                }
+            }
+        })($);
+
+    </script>*@
+
     <div id="logo-bar">
         <a href="@Url.Content("~")">
             <img alt="@(ProductNames[ViewBag.Product]) logo" class="@Url.Content(ViewBag.Product) logo" src="@Url.Content("~/content/shared/images/logos/" + ViewBag.Product + ".png")"/>

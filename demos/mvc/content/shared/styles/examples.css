@@ -2852,6 +2852,30 @@ html.k-materialblack .demo-section.k-content {
   }
 }
 
+/* webinar temp banner */
+
+#webinar-banner {
+    display: none;
+    position: relative;
+    z-index: 9000;
+    padding: 20px 70px;
+    color: #000;
+    background-color: #ffda3f;
+    font: 20px/1 FaktSlabPro-Blond, Arial, Helvetica, sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+#webinar-banner .close {
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    width: 23px;
+    height: 23px;
+    margin: -12px 0 0 0;
+    background: url("yellow-bar-close.png") center center no-repeat;
+    cursor: pointer;
+}
 
 /* Responsive Styles */
 
@@ -2976,7 +3000,10 @@ html.k-materialblack .demo-section.k-content {
   .application {
     width: 25%;
   }
-  
+
+  #webinar-banner {
+   font-size: 1.4em;
+  }
   
 /* Single Demo Page */
 
