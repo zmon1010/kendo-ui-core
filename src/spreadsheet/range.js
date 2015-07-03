@@ -246,7 +246,7 @@
     });
 
     function toExcelFormat(format) {
-        return format.replace(/M/g, "m");
+        return format.replace(/M/g, "m").replace(/'/g, '"').replace(/tt/, "am/pm");
     }
 
     kendo.spreadsheet.Range = Range;
