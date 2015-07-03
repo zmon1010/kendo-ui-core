@@ -71,7 +71,7 @@
             return this;
         },
         toString: function() {
-            return this.print(0, 0);
+            return this.relative(0, 0, 3).print(0, 0);
         },
         forEach: function(callback) {
             callback(this);
