@@ -984,10 +984,10 @@
         });
         ss.recalculate(function(){
             ss.expectEqual({
-                a1: '$G$7:$K$10',
-                a2: '$A$3:$C$5',
+                a1: 'G7:K10',
+                a2: 'A3:C5',
                 a3: '#VALUE!',
-                a4: '$B$6'
+                a4: 'B6'
             });
         });
     });

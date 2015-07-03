@@ -327,6 +327,12 @@
                 this.bottomRight.absolute(arow, acol)
             ).setSheet(this.sheet, this.hasSheet());
         },
+        relative: function(arow, acol, rel) {
+            return new RangeRef(
+                this.topLeft.relative(arow, acol, rel),
+                this.bottomRight.relative(arow, acol, rel)
+            ).setSheet(this.sheet, this.hasSheet());
+        },
         height: function() {
             if (this.topLeft.rel != this.bottomRight.rel) {
                 throw new Error("Mixed relative/absolute references");
