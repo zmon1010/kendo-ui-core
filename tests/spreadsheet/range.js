@@ -134,80 +134,80 @@
         equal(range.verticalAlignment(), "foo");
     });
 
-    test("borderLeftColor symmetry", function() {
-        range.borderLeftColor("#f00");
+    test("borderLeft symmetry", function() {
+        range.borderLeft({ color: "#f00" });
 
-        equal(range.borderLeftColor(), "#f00");
+        equal(range.borderLeft().color, "#f00");
     });
 
-    test("borderRightColor symmetry", function() {
-        range.borderRightColor("#f00");
+    test("borderRight symmetry", function() {
+        range.borderRight({ color: "#f00" });
 
-        equal(range.borderRightColor(), "#f00");
+        equal(range.borderRight().color, "#f00");
     });
 
-    test("borderTopColor symmetry", function() {
-        range.borderTopColor("#f00");
+    test("borderTop symmetry", function() {
+        range.borderTop({ color: "#f00" });
 
-        equal(range.borderTopColor(), "#f00");
+        equal(range.borderTop().color, "#f00");
     });
 
-    test("borderBottomColor symmetry", function() {
-        range.borderBottomColor("#f00");
+    test("borderBottom symmetry", function() {
+        range.borderBottom({ color: "#f00" });
 
-        equal(range.borderBottomColor(), "#f00");
+        equal(range.borderBottom().color, "#f00");
     });
 
-    test("borderTopColor triggers one change", 1, function() {
+    test("borderTop triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true));
 
-        sheet.range(2, 2).borderTopColor("#f00");
+        sheet.range(2, 2).borderTop({ color: "#f00" });
     });
 
-    test("borderLeftColor triggers one change", 1, function() {
+    test("borderLeft triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true));
 
-        sheet.range(2, 2).borderLeftColor("#f00");
+        sheet.range(2, 2).borderLeft({ color: "#f00" });
     });
 
-    test("borderLeftColor returns correct range", function() {
+    test("borderLeft returns correct range", function() {
         var range = sheet.range(2, 2);
 
-        equal(range.borderLeftColor("#f00"), range);
+        equal(range.borderLeft({ color: "#f00" }), range);
     });
 
-    test("borderTopColor returns correct range", function() {
+    test("borderTop returns correct range", function() {
         var range = sheet.range(2, 2);
 
-        equal(range.borderTopColor("#f00"), range);
+        equal(range.borderTop({ color: "#f00" }), range);
     });
 
-    test("borderBottomColor gets borderTopColor of cell below", function() {
-        sheet.range(1, 0).borderTopColor("#f00");
+    test("borderBottom gets borderTop of cell below", function() {
+        sheet.range(1, 0).borderTop({ color: "#f00" });
 
-        equal(sheet.range(0, 0).borderBottomColor(), "#f00");
+        equal(sheet.range(0, 0).borderBottom().color, "#f00");
     });
 
-    test("borderTopColor gets borderBottomColor of cell above", function() {
-        sheet.range(0, 0).borderBottomColor("#f00");
+    test("borderTop gets borderBottom of cell above", function() {
+        sheet.range(0, 0).borderBottom({ color: "#f00" });
 
-        equal(sheet.range(1, 0).borderTopColor(), "#f00");
+        equal(sheet.range(1, 0).borderTop().color, "#f00");
     });
 
-    test("borderRightColor gets borderLeftColor of cell on the right", function() {
-        sheet.range(0, 1).borderLeftColor("#f00");
+    test("borderRight gets borderLeft of cell on the right", function() {
+        sheet.range(0, 1).borderLeft({ color: "#f00" });
 
-        equal(sheet.range(0, 0).borderRightColor(), "#f00");
+        equal(sheet.range(0, 0).borderRight().color, "#f00");
     });
 
-    test("borderLeftColor gets borderRightColor of cell on the left", function() {
-        sheet.range(0, 0).borderRightColor("#f00");
+    test("borderLeft gets borderRight of cell on the left", function() {
+        sheet.range(0, 0).borderRight({ color: "#f00" });
 
-        equal(sheet.range(0, 1).borderLeftColor(), "#f00");
+        equal(sheet.range(0, 1).borderLeft().color, "#f00");
     });
 
-    test("borderTopColor persists background style", function() {
-        var range = sheet.range("A2:A3").background("#afa").borderTopColor("#f00");
+    test("borderTop persists background style", function() {
+        var range = sheet.range("A2:A3").background("#afa").borderTop({ color: "#f00" });
 
         equal(sheet.range("A2").background(), "#afa");
     });

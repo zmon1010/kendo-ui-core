@@ -9,8 +9,7 @@
 
     var styles = [
         "fontColor", "fontFamily", "fontLine", "fontSize", "fontStyle", "fontWeight",
-        "borderRightColor", "borderBottomColor", "horizontalAlignment", "verticalAlignment",
-        "background", "wrap"
+        "horizontalAlignment", "verticalAlignment", "background", "wrap"
     ];
 
     var Range = kendo.Class.extend({
@@ -77,15 +76,35 @@
         type: function() {
             return this._property(this._sheet._types);
         },
-        borderLeftColor: function(value) {
+        borderLeft: function(value) {
             var ref = this._ref.resize({ left: -1, right: -1 });
-            var result = new Range(ref, this._sheet).borderRightColor(value);
+            var result = new Range(ref, this._sheet).borderRight(value);
             return value === undefined ? result : this;
         },
-        borderTopColor: function(value) {
+        borderTop: function(value) {
             var ref = this._ref.resize({ top: -1, bottom: -1 });
-            var result = new Range(ref, this._sheet).borderBottomColor(value);
+            var result = new Range(ref, this._sheet).borderBottom(value);
             return value === undefined ? result : this;
+        },
+        borderBottom: function(value) {
+            return this._jsonProperty("borderBottom", value);
+        },
+        borderRight: function(value) {
+            return this._jsonProperty("borderRight", value);
+        },
+
+        _jsonProperty: function(property, value) {
+            if (value !== undefined) {
+                value = JSON.stringify(value);
+            }
+
+            var result = this._property(this._sheet["_" + property], value);
+
+            if (value === undefined) {
+                result = JSON.parse(result);
+            }
+
+            return result;
         },
 
         format: function(value) {

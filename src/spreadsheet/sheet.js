@@ -30,8 +30,8 @@
             this._sorter = new kendo.spreadsheet.Sorter(this._grid, [this._values]);
 
             this._background = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._borderBottomColor = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._borderRightColor = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._borderBottom = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._borderRight = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._fontColor = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._fontFamily = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._fontLine = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
@@ -172,8 +172,8 @@
 
 
                 var background = this._background.iterator(startCellIndex, endCellIndex);
-                var borderBottomColor = this._borderBottomColor.iterator(startCellIndex, endCellIndex);
-                var borderRightColor = this._borderRightColor.iterator(startCellIndex, endCellIndex);
+                var borderBottom = this._borderBottom.iterator(startCellIndex, endCellIndex);
+                var borderRight = this._borderRight.iterator(startCellIndex, endCellIndex);
                 var fontColor = this._fontColor.iterator(startCellIndex, endCellIndex);
                 var fontFamily = this._fontFamily.iterator(startCellIndex, endCellIndex);
                 var fontLine = this._fontLine.iterator(startCellIndex, endCellIndex);
@@ -196,8 +196,8 @@
                         format: formats.at(index),
                         style: {
                             background: background.at(index),
-                            borderBottomColor: borderBottomColor.at(index),
-                            borderRightColor: borderRightColor.at(index),
+                            borderBottom: borderBottom.at(index),
+                            borderRight: borderRight.at(index),
                             fontColor: fontColor.at(index),
                             fontFamily: fontFamily.at(index),
                             fontLine: fontLine.at(index),
@@ -360,8 +360,8 @@
                 var formula = data.formula;
                 var format = data.format;
                 var background = data.style.background;
-                var borderBottomColor = data.style.borderBottomColor;
-                var borderRightColor = data.style.borderRightColor;
+                var borderBottom = data.style.borderBottom;
+                var borderRight = data.style.borderRight;
                 var fontColor = data.style.fontColor;
                 var fontFamily = data.style.fontFamily;
                 var fontLine = data.style.fontLine;
@@ -373,8 +373,8 @@
                 var wrap = data.style.wrap;
 
                 var hasBackground = background !== null;
-                var hasBorderBottomColor = borderBottomColor !== null;
-                var hasBorderRightColor = borderRightColor !== null;
+                var hasBorderBottom = borderBottom !== null;
+                var hasBorderRight = borderRight !== null;
                 var hasFontColor = fontColor !== null;
                 var hasFontFamily = fontFamily !== null;
                 var hasFontLine = fontLine !== null;
@@ -389,7 +389,7 @@
                 var hasFormat = format !== null;
 
                 if (!hasValue && !hasFormula && !hasFormat &&
-                    !hasBackground && !hasBorderBottomColor && !hasBorderRightColor &&
+                    !hasBackground && !hasBorderBottom && !hasBorderRight &&
                     !hasFontColor && !hasFontFamily && !hasFontLine && !hasFontSize &&
                     !hasFontStyle && !hasFontWeight && !hasHorizontalAlignment &&
                     !hasVerticalAlignment && !hasWrap) {
@@ -418,12 +418,12 @@
                     cell.background = background;
                 }
 
-                if (hasBorderBottomColor) {
-                    cell.borderBottomColor = borderBottomColor;
+                if (hasBorderBottom) {
+                    cell.borderBottom = borderBottom;
                 }
 
-                if (hasBorderRightColor) {
-                    cell.borderRightColor = borderRightColor;
+                if (hasBorderRight) {
+                    cell.borderRight = borderRight;
                 }
 
                 if (hasFontColor) {
@@ -524,51 +524,51 @@
                                     this.range(rowIndex, columnIndex).value(cell.value, false);
                                 }
 
-                                if (cell.background !== null) {
+                                if (cell.background) {
                                     this.range(rowIndex, columnIndex).background(cell.background);
                                 }
 
-                                if (cell.borderBottomColor !== null) {
-                                    this.range(rowIndex, columnIndex).borderBottomColor(cell.borderBottomColor);
+                                if (cell.borderBottom) {
+                                    this.range(rowIndex, columnIndex).borderBottom(cell.borderBottom);
                                 }
 
-                                if (cell.borderRightColor !== null) {
-                                    this.range(rowIndex, columnIndex).borderRightColor(cell.borderRightColor);
+                                if (cell.borderRight) {
+                                    this.range(rowIndex, columnIndex).borderRight(cell.borderRight);
                                 }
 
-                                if (cell.fontColor !== null) {
+                                if (cell.fontColor) {
                                     this.range(rowIndex, columnIndex).fontColor(cell.fontColor);
                                 }
 
-                                if (cell.fontFamily !== null) {
+                                if (cell.fontFamily) {
                                     this.range(rowIndex, columnIndex).fontFamily(cell.fontFamily);
                                 }
 
-                                if (cell.fontLine !== null) {
+                                if (cell.fontLine) {
                                     this.range(rowIndex, columnIndex).fontLine(cell.fontLine);
                                 }
 
-                                if (cell.fontSize !== null) {
+                                if (cell.fontSize) {
                                     this.range(rowIndex, columnIndex).fontSize(cell.fontSize);
                                 }
 
-                                if (cell.fontStyle !== null) {
+                                if (cell.fontStyle) {
                                     this.range(rowIndex, columnIndex).fontStyle(cell.fontStyle);
                                 }
 
-                                if (cell.fontWeight !== null) {
+                                if (cell.fontWeight) {
                                     this.range(rowIndex, columnIndex).fontWeight(cell.fontWeight);
                                 }
 
-                                if (cell.horizontalAlignment !== null) {
+                                if (cell.horizontalAlignment) {
                                     this.range(rowIndex, columnIndex).horizontalAlignment(cell.horizontalAlignment);
                                 }
 
-                                if (cell.verticalAlignment !== null) {
+                                if (cell.verticalAlignment) {
                                     this.range(rowIndex, columnIndex).verticalAlignment(cell.verticalAlignment);
                                 }
 
-                                if (cell.wrap !== null) {
+                                if (cell.wrap) {
                                     this.range(rowIndex, columnIndex).wrap(cell.wrap);
                                 }
 

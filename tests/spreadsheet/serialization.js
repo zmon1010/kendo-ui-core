@@ -255,66 +255,30 @@
         equal(sheet.range("B1").value(), "B1");
     });
 
+    function singleCell(cell) {
+        return { rows: [ { cells: [ cell ] } ] };
+    }
+
     test("fromJSON loads row cells with implicit cell index", function() {
-        sheet.fromJSON({
-            rows: [
-                {
-                    cells: [
-                        {
-                            value: "A1"
-                        }
-                    ]
-                }
-            ]
-        });
+        sheet.fromJSON(singleCell({ value: "A1" }));
 
         equal(sheet.range("A1").value(), "A1");
     });
 
     test("fromJSON loads cell style", function() {
-        sheet.fromJSON({
-            rows: [
-                {
-                    cells: [
-                        {
-                            background: "red"
-                        }
-                    ]
-                }
-            ]
-        });
+        sheet.fromJSON(singleCell({ background: "red" }));
 
         equal(sheet.range("A1").background(), "red");
     });
 
     test("fromJSON loads cell formula", function() {
-        sheet.fromJSON({
-            rows: [
-                {
-                    cells: [
-                        {
-                            formula: "=SUM(B1,B2)"
-                        }
-                    ]
-                }
-            ]
-        });
+        sheet.fromJSON(singleCell({ formula: "=SUM(B1,B2)" }));
 
         equal(sheet.range("A1").formula(), "=SUM(B1,B2)");
     });
 
     test("fromJSON loads cell formula", function() {
-        sheet.fromJSON({
-            rows: [
-                {
-                    cells: [
-                        {
-                            format: "#.#"
-                        }
-                    ]
-                }
-            ]
-        });
+        sheet.fromJSON(singleCell({ format: "#.#" }));
 
         equal(sheet.range("A1").format(), "#.#");
     });
@@ -343,17 +307,7 @@
     test("fromJSON loads spreadsheet sheets", function() {
         spreadsheet.fromJSON({
             sheets: [
-                {
-                    rows: [
-                        {
-                            cells: [
-                                {
-                                    background: "red"
-                                }
-                            ]
-                        }
-                    ]
-                }
+                singleCell({ background: "red" })
             ]
         });
 

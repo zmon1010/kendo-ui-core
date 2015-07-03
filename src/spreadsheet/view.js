@@ -253,11 +253,18 @@
             return table.toDomTree(view.columnOffset, view.rowOffset, "k-spreadsheet-data");
         },
 
+        _border: function(value) {
+            var json = JSON.parse(value);
+            return [
+                "solid",
+                json.size || "1px",
+                json.color || "#000"
+            ].join(" ");
+        },
+
         addCell: function(table, row, cell) {
             var styleMap = {
                 background: "backgroundColor",
-                borderBottomColor: "borderBottomColor",
-                borderRightColor: "borderRightColor",
                 fontColor: "color",
                 fontFamily: "fontFamily",
                 fontLine: "textDecoration",
@@ -269,14 +276,23 @@
             };
 
             var style = {};
+            var cellStyle = cell.style;
 
-            if (cell.style) {
-                Object.keys(cell.style).forEach(function(key) {
-                   style[styleMap[key]] = cell.style[key];
+            if (cellStyle) {
+                Object.keys(cellStyle).forEach(function(key) {
+                   style[styleMap[key]] = cellStyle[key];
                 });
 
-                if (cell.style.wrap === false) {
+                if (cellStyle.wrap === false) {
                     style.whiteSpace = "nowrap";
+                }
+
+                if (cellStyle.borderRight) {
+                    style.borderRight = this._border(cellStyle.borderRight);
+                }
+
+                if (cellStyle.borderBottom) {
+                    style.borderBottom = this._border(cellStyle.borderBottom);
                 }
             }
 
