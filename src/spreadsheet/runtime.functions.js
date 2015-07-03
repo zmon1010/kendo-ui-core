@@ -389,7 +389,7 @@
     defineFunction("columns", function(m){
         return m instanceof Ref ? m.width() : m.width;
     }).args([
-        [ "ref", [ "or", "area", "matrix" ] ]
+        [ "ref", [ "or", "area", "#matrix" ] ]
     ]);
 
     defineFunction("formulatext", function(ref){
@@ -546,7 +546,7 @@
     defineFunction("rows", function(m){
         return m instanceof Ref ? m.height() : m.height;
     }).args([
-        [ "ref", [ "or", "area", "matrix" ] ]
+        [ "ref", [ "or", "area", "#matrix" ] ]
     ]);
 
     defineFunction("transpose", function(m){

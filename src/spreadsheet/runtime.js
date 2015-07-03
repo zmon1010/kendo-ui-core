@@ -648,6 +648,9 @@
                 force();
                 return "((m = this.asMatrix($"+name+")) ? ($"+name+" = m) : false)";
             }
+            if (type == "#matrix") {
+                return "((m = this.asMatrix($"+name+")) ? ($"+name+" = m) : false)";
+            }
             if (type == "ref") {
                 return "($"+name+" instanceof kendo.spreadsheet.Ref)";
             }
