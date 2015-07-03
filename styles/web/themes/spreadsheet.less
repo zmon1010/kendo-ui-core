@@ -7,15 +7,32 @@
 
 .k-spreadsheet-pane {
     border-color: darken(@base, 20%);
+
+    & td {
+        border-color: darken(@base, 10%);
+    }
 }
 
-.k-spreadsheet-pane td {
-    border-color: darken(@base, 10%);
+.k-selection-full {
+    .k-spreadsheet-pane & {
+        border-color: lighten(@selected-background, 30%);
+        background-color: lighten(@selected-background, 30%);
+    }
+
+    @border-style: 2px solid @selected-background;
+
+    .k-spreadsheet-column-header & {
+        border-bottom: @border-style;
+    }
+
+    .k-spreadsheet-row-header & {
+        border-right: @border-style;
+    }
 }
 
-.k-spreadsheet-pane .k-state-selected {
-    border-color: darken(@selected-background, 5%);
-    background-color: @selected-background;
+.k-spreadsheet-pane .k-selection-partial {
+    background-color: lighten(@selected-background, 40%);
+    border-color: lighten(@selected-background, 40%);
 }
 
 .k-spreadsheet-selection,

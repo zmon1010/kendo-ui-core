@@ -304,8 +304,8 @@
 
             selection.forEach(function(ref) {
                 var i;
-                var rowState = "active";
-                var colState = "active";
+                var rowState = "partial";
+                var colState = "partial";
                 ref = ref.toRangeRef();
 
                 var bottomRight = ref.bottomRight;
@@ -315,17 +315,17 @@
 
                 if (colSelection) { //column selection
                     allRows = true;
-                    colState = "selected";
+                    colState = "full";
                 }
 
                 if (rowSelection) { //row selection
                     allCols = true;
-                    rowState = "selected";
+                    rowState = "full";
                 }
 
                 if (!colSelection) { //column selection
                     for (i = ref.topLeft.row; i <= bottomRight.row; i++) {
-                        if (rows[i] !== "selected") {
+                        if (rows[i] !== "full") {
                             rows[i] = rowState;
                         }
                     }
@@ -333,7 +333,7 @@
 
                 if (!rowSelection) {
                     for (i = ref.topLeft.col; i <= bottomRight.col; i++) {
-                        if (cols[i] !== "selected") {
+                        if (cols[i] !== "full") {
                             cols[i] = colState;
                         }
                     }

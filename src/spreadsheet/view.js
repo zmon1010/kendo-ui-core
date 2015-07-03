@@ -225,10 +225,10 @@
                 allHeaders = selectedHeaders.allCols;
             }
 
-            var className = itemSelection || (selectedHeaders.all ? "selected" : (allHeaders ? "active" : "default"));
+            var className = itemSelection || (selectedHeaders.all ? "full" : (allHeaders ? "partial" : "none"));
 
             if (className) {
-                className = "k-state-" + className;
+                className = "k-selection-" + className;
             }
 
             return className;
@@ -350,7 +350,11 @@
             var view = this._currentView;
 
             if (view.ref.intersects(ref)) {
-                collection.push(this._rectangle(ref).toDiv(className));
+                var div = this._rectangle(ref).toDiv(className);
+                var style = div.attr.style;
+                style.height = (parseInt(style.height, 10) + 1) + "px";
+                style.width = (parseInt(style.width, 10) + 1) + "px";
+                collection.push(div);
             }
         },
 
