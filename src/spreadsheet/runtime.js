@@ -122,6 +122,10 @@
                 if (val instanceof Ref) {
                     val = this.ss.getData(val);
                     ret = ret.concat(val);
+                } else if (Array.isArray(val)) {
+                    ret = ret.concat(this.cellValues(val));
+                } else if (val instanceof Matrix) {
+                    ret = ret.concat(this.cellValues(val.data));
                 } else {
                     ret.push(val);
                 }
@@ -137,23 +141,6 @@
                 return this.ss.getData(val);
             }
             return val;
-        },
-
-        forNumbers: function(a, f) {
-            if (a instanceof Ref) {
-                a = this.cellValues([ a ]);
-            }
-            else if (a instanceof Matrix) {
-                a = a.data;
-            }
-            if (Array.isArray(a)) {
-                for (var i = 0; i < a.length; ++i) {
-                    this.forNumbers(a[i], f);
-                }
-            }
-            if (typeof a == "number") {
-                f(a);
-            }
         },
 
         func: function(fname, callback, args) {
@@ -180,14 +167,6 @@
             return val != null;
         },
 
-        divide: function(callback, left, right) {
-            if (right === 0) {
-                this.error(new CalcError("DIV/0"));
-            } else {
-                callback(left / right);
-            }
-        },
-
         asMatrix: function(range) {
             if (range instanceof Matrix) {
                 return range;
@@ -195,13 +174,24 @@
             var self = this;
             if (range instanceof RangeRef) {
                 var tl = range.topLeft;
+                var top = tl.row, left = tl.col;
                 var cells = self.ss.getRefCells(range);
                 var m = new Matrix(self);
-                // XXX: infinite range?  tl.row / tl.col will be infinite, thus endless loop later
-                // (i.e. in Matrix.each).
+                if (isFinite(range.width())) {
+                    m.width = range.width();
+                }
+                if (isFinite(range.height())) {
+                    m.height = range.height();
+                }
+                if (!isFinite(top)) {
+                    top = 0;
+                }
+                if (!isFinite(left)) {
+                    left = 0;
+                }
                 cells.forEach(function(cell){
-                    m.set(cell.row - tl.row,
-                          cell.col - tl.col,
+                    m.set(cell.row - top,
+                          cell.col - left,
                           cell.value);
                 });
                 return m;
@@ -348,7 +338,7 @@
                     }, this);
                 }
                 var ctx = new Context(callback, this, ss, sheet, row, col);
-                ctx.resolveCells(this.absrefs, this.handler);
+                this.handler.call(ctx);
             }
         },
         reset: function() {
@@ -440,30 +430,34 @@
         "if": function(callback, args) {
             var self = this;
             var co = args[0], th = args[1], el = args[2];
-            var comatrix = self.asMatrix(co);
-            if (comatrix) {
-                // XXX: calling both branches in this case, since we'll typically need values from
-                // both.  We could optimize and call them only when first needed, but oh well.
-                th(function(th){
-                    el(function(el){
-                        var thmatrix = self.asMatrix(th);
-                        var elmatrix = self.asMatrix(el);
-                        callback(comatrix.map(function(val, row, col){
-                            if (self.bool(val)) {
-                                return thmatrix ? thmatrix.get(row, col) : th;
-                            } else {
-                                return elmatrix ? elmatrix.get(row, col) : el;
-                            }
-                        }));
+            // XXX: I don't like this resolveCells here.  We should try to declare IF with
+            // defineFunction.
+            this.resolveCells([ co ], function(){
+                var comatrix = self.asMatrix(co);
+                if (comatrix) {
+                    // XXX: calling both branches in this case, since we'll typically need values from
+                    // both.  We could optimize and call them only when first needed, but oh well.
+                    th(function(th){
+                        el(function(el){
+                            var thmatrix = self.asMatrix(th);
+                            var elmatrix = self.asMatrix(el);
+                            callback(comatrix.map(function(val, row, col){
+                                if (self.bool(val)) {
+                                    return thmatrix ? thmatrix.get(row, col) : th;
+                                } else {
+                                    return elmatrix ? elmatrix.get(row, col) : el;
+                                }
+                            }));
+                        });
                     });
-                });
-            } else {
-                if (self.bool(co)) {
-                    th(callback);
                 } else {
-                    el(callback);
+                    if (self.bool(co)) {
+                        th(callback);
+                    } else {
+                        el(callback);
+                    }
                 }
-            }
+            });
         },
 
         /* -----[ error catching ]----- */
@@ -552,8 +546,17 @@
                 arrayArgs += "} ";
             } else {
                 var type = x[1];
-                code += "var $" + name + " = args[i++]; if ($"+name+" instanceof CalcError) return $"+name+"; "
-                    + typeCheck(type) + "xargs.push($"+name+"); ";
+                if (Array.isArray(type) && type[0] == "collect") {
+                    force();
+                    code += "var $" + name + " = this.cellValues(args.slice(i)).filter(function($"+name+"){ "
+                        + "return " + cond(type[1]) + "; }, this); "
+                        + "i = args.length; "
+                        + "xargs.push($"+name+")";
+                    resolve += "toResolve.push(args.slice(i)); ";
+                } else {
+                    code += "var $" + name + " = args[i++]; if ($"+name+" instanceof CalcError) return $"+name+"; "
+                        + typeCheck(type) + "xargs.push($"+name+"); ";
+                }
             }
             code += "} ";
             return code;
@@ -613,6 +616,9 @@
                 if (type[0] == "assert") {
                     return "(" + type[1] + ")";
                 }
+                if (type[0] == "not") {
+                    return "!(" + cond(type[1]) + ")";
+                }
                 throw new Error("Unknown array type condition: " + type[0]);
             }
             if (/^\*/.test(type)) {
@@ -655,10 +661,13 @@
                 return "(" + force() + " == null)";
             }
             if (type == "anyvalue") {
-                return "(" + force() + ", i <= args.length)";
+                return "(" + force() + " != null && i <= args.length)";
             }
             if (type == "anything") {
                 return "(i <= args.length)";
+            }
+            if (type == "blank") {
+                return "(" + force() + " == null || $"+name+" === '')";
             }
             throw new Error("Can't check for type: " + type);
         }

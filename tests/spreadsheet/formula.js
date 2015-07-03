@@ -9,6 +9,7 @@
                 A1: 1, B1: 2, C1: 3,
                 A2: 4, B2: 5, C2: 6,
                 A3: 7, B3: 8, C3: 9,
+                A4: '=""', B4: '=" "',
 
                 e1: 1, e2: 2, e3: 3, e4: 4, e5: 5, e6: 6, e7: 7, e8: 8,
                 f2: 7, f3: 6, f4: 5, f5: 4, f6: 3, f7: 2, f8: 1,
@@ -173,16 +174,19 @@
     });
 
     // test async function
-    runtime.defineFunction("asum", function(callback, args) {
-        var self = this, timeout = args.shift();
+    runtime.defineFunction("asum", function(callback, timeout, numbers) {
+        var self = this;
         setTimeout(function(){
             var sum = 0;
-            self.forNumbers(args, function(num){
+            numbers.forEach(function(num){
                 sum += num;
             });
             callback(sum);
         }, timeout);
-    });
+    }).argsAsync([
+        [ "timeout", "number" ],
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
 
     // these two will be used to test conditional evaluation
     runtime.defineFunction("foo", function(callback, args){
@@ -555,14 +559,25 @@
         });
     });
 
-    test("evaluate dependent formulas", function(){
+    test("AVEDEV", function(){
         ss.fill({
-            D1: "=sum(A1:C3, D2)",
-            D2: "=sum(A1:C3)"
+            A5: '=avedev(A1:C4)',
         });
         ss.recalculate(function(){
-            equal(ss.getData(ss.makeRef("D1")), 90);
-            equal(ss.getData(ss.makeRef("D2")), 45);
+            equal(ss.$("A5").toFixed(6), "2.222222");
+        });
+    });
+
+    test("evaluate dependent formulas", function(){
+        ss.fill({
+            D1: '=sum(indirect("D2"):indirect("$D$3"))',
+            D2: "=sum(A1:C3, D3)",
+            D3: "=sum(A1:C3)"
+        });
+        ss.recalculate(function(){
+            equal(ss.$("D1"), 135);
+            equal(ss.$("D2"), 90);
+            equal(ss.$("D3"), 45);
         });
     });
 
@@ -670,6 +685,15 @@
         });
     });
 
+    test("COUNTBLANK", function(){
+        ss.fill({
+            A5: '=countblank(A1:C4)',
+        });
+        ss.recalculate(function(){
+            equal(ss.$("A5"), 2);
+        });
+    });
+
     test("SUMIFS, COUNTIFS, AVERAGEIFS", function(){
         var ss = new Spreadsheet();
         ss.fill({
@@ -716,8 +740,8 @@
         ss.fill({
             A1: 'foo', B1: '1', C1: "'2", D1: '', E1: '=foo()', F1: '=a1+b1', G1: '=sumif()',
             A3: '=iserror(A1)', B3: '=iserror(B1+A1)', C3: '=iserror(F1)', D3: '=iserror(G1)', E3: '=iserror(sumif())',
-            A4: '=iserr(A1)', B4: '=iserr(B1+A1)', C4: '=iserr(F1)', D4: '=iserr(G1)', E4: '=iserr(sumif())',
-            A5: '=isna(A1)', B5: '=isna(B1+A1)', C5: '=isna(F1)', D5: '=isna(G1)', E5: '=isna(sumif())',
+            A4: '=iserr(A1)', B4: '=iserr(B1+A1)', C4: '=iserr(F1)', D4: '=isna(G1)', E4: '=isna(sumif())',
+            A5: '=isna(A1)', B5: '=isna(B1+A1)', C5: '=isna(F1)', D5: '=iserr(G1)', E5: '=iserr(sumif())',
             A6: '=istext(A1)', B6: '=isnontext(A1)', C6: '=istext(B1)', D6: '=isnontext(B1)', E6: '=istext(D1)', F6: '=isnontext(D1)', G6: '=istext(H1)', H6: '=isnontext(H1)',
             A7: '=isblank(A1)', B7: '=isblank(D1)', C7: '=isblank(H1)',
             A8: '=isnumber(A1)', B8: '=isnumber(B1)', C8: '=isnumber(C1)', D8: '=isnumber(D1)', E8: '=isnumber(H1)',
@@ -887,7 +911,7 @@
         });
     });
 
-    test("formulatext", function(){
+    test("FORMULATEXT", function(){
         ss.fill({
             a4: '=sum(a1:c3)',
             b4: '=formulatext(a4)',
@@ -903,7 +927,7 @@
         });
     });
 
-    test("hlookup", function(){
+    test("HLOOKUP", function(){
         ss.fill({
             a4: '=hlookup(2, a1:c3, 3)',
             a5: '=hlookup(2.5, a1:c3, 3)',
@@ -918,7 +942,7 @@
         });
     });
 
-    test("index", function(){
+    test("INDEX", function(){
         ss.fill({
             a4: '=index(a1:c3, 2, 2)',
             a5: '=index(a1:c3, 2)',
@@ -1033,7 +1057,7 @@
         });
     });
 
-    test("vlookup", function(){
+    test("VLOOKUP", function(){
         ss.fill({
             a4: '=vlookup(4, a1:c3, 3)',
             a5: '=vlookup(4.5, a1:c3, 3)',

@@ -511,6 +511,15 @@ function fillElements(data) {
 
 makeElements(".sheet");
 
+// fillElements({
+//     sheet1: {
+//         D1: '=countblank(A1:C3)',
+//     },
+//     sheet2: {
+        
+//     }
+// });
+
 fillElements({
     sheet1: {
         A1: 1,
@@ -624,7 +633,13 @@ fillElements({
         A19: '=sum(indirect(b19):indirect(c19))',
         B19: 'a20', c19: 'c20',
 
+        A11: '=avedev({ B1:B3, 7, 5, 4, 3 })',
+
         E13: '=offset(A1, { 1, 2 }, { 3, 4 })',
+
+        A10: '=sum(choose(A9, A1:B2, B1:C2))',
+        A9: '1',
+        E17: '=countblank(F15:G18)',
         
 
         //E5: "=sum(A1:C3)",

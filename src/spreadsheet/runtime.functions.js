@@ -18,6 +18,7 @@
     var RangeRef = spreadsheet.RangeRef;
     var CellRef = spreadsheet.CellRef;
     var UnionRef = spreadsheet.UnionRef;
+    var Matrix = runtime.Matrix;
     var Ref = spreadsheet.Ref;
 
     /* -----[ Math functions ]----- */
@@ -42,72 +43,81 @@
         [ "b", "*divisor" ]
     ]);
 
-    defineFunction("sum", function(callback, args){
-        var sum = 0;
-        this.forNumbers(args, function(num){
-            sum += num;
-        });
-        callback(sum);
-    });
+    defineFunction("sum", function(numbers){
+        return numbers.reduce(function(sum, num){
+            return sum + num;
+        }, 0);
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
 
-    defineFunction("min", function(callback, args){
-        var numbers = [];
-        this.forNumbers(args, function(num){
-            numbers.push(num);
-        });
+    defineFunction("min", function(numbers){
         if (numbers.length) {
-            callback(Math.min.apply(Math, numbers));
+            return Math.min.apply(Math, numbers);
         } else {
-            this.error(new CalcError("N/A"));
+            return new CalcError("N/A");
         }
-    });
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
 
-    defineFunction("max", function(callback, args){
-        var numbers = [];
-        this.forNumbers(args, function(num){
-            numbers.push(num);
-        });
+    defineFunction("max", function(numbers){
         if (numbers.length) {
-            callback(Math.max.apply(Math, numbers));
+            return Math.max.apply(Math, numbers);
         } else {
-            this.error(new CalcError("N/A"));
+            return new CalcError("N/A");
         }
-    });
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
 
-    defineFunction("counta", function(callback, args){
-        callback(this.cellValues(args).length);
-    });
+    defineFunction("counta", function(values){
+        return values.length;
+    }).args([
+        [ "values", [ "collect", "anyvalue" ] ]
+    ]);
 
-    defineFunction("count", function(callback, args){
-        var count = 0;
-        this.cellValues(args).forEach(function(val){
-            if (typeof val == "number") {
-                count++;
-            }
-        });
-        callback(count);
-    });
+    defineFunction("count", function(numbers){
+        return numbers.length;
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
 
-    defineFunction("countunique", function(callback, args){
+    defineFunction("countunique", function(values){
         var count = 0, seen = [];
-        this.cellValues(args).forEach(function(val){
+        values.forEach(function(val){
             if (seen.indexOf(val) < 0) {
                 count++;
                 seen.push(val);
             }
         });
-        callback(count);
-    });
+        return count;
+    }).args([
+        [ "values", [ "collect", "anyvalue" ] ]
+    ]);
 
-    defineFunction("countblank", function(callback, args){
+    defineFunction("countblank", function(){
         var count = 0;
-        this.cellValues(args).forEach(function(val){
-            if (val === "") {
+        function add(val) {
+            if (val == null || val === "") {
                 count++;
             }
-        });
-        callback(count);
-    });
+        }
+        function loop(args){
+            for (var i = 0; i < args.length; ++i) {
+                var x = args[i];
+                if (x instanceof Matrix) {
+                    x.each(add, true);
+                } else {
+                    add(x);
+                }
+            }
+        }
+        loop(arguments);
+        return count;
+    }).args([
+        [ "+", [ "args", [ "or", "matrix", "anyvalue" ] ] ]
+    ]);
 
     /* -----[ the "*IFS" functions ]----- */
 
@@ -116,154 +126,129 @@
     // `chunks` (parsed args containing matrix and predicate) and
     // row,col of matching cells.
     function forIFS(args, f) {
-        var chunks = [], nrows, ncols, i = 0;
+        var chunks = [], i = 0, matrix = args[0];
         while (i < args.length) {
-            var matrix = this.asMatrix(args[i++]);
-            var crit = args[i++];
-            if (!matrix || !crit) {
-                return this.error(new CalcError("N/A"));
-            }
-            if (nrows == null) {
-                ncols = matrix.width;
-                nrows = matrix.height;
-            } else {
-                if (matrix.width != ncols || matrix.height != nrows) {
-                    return this.error(new CalcError("REF"));
-                }
-            }
-            chunks.push({ matrix: matrix, pred: parseComparator(crit) });
+            chunks.push({
+                matrix: args[i++],
+                pred: parseComparator(args[i++])
+            });
         }
-        ROW: for (var row = 0; row < nrows; ++row) {
-            COL: for (var col = 0; col < ncols; ++col) {
+        ROW: for (var row = 0; row < matrix.height; ++row) {
+            COL: for (var col = 0; col < matrix.width; ++col) {
                 for (i = 0; i < chunks.length; ++i) {
                     var val = chunks[i].matrix.get(row, col);
                     if (!chunks[i].pred(val == null || val === "" ? 0 : val)) {
                         continue COL;
                     }
                 }
-                f(chunks, row, col);
+                f(row, col);
             }
         }
     }
 
-    defineFunction("countifs", function(callback, args){
-        var count = 0;
-        var error = forIFS.call(this, args, function(){
-            count++;
-        });
-        if (!error) {
-            callback(count);
-        }
-    });
+    var ARGS_COUNTIFS = [
+        [ "m1", "matrix" ],
+        [ "c1", "anyvalue" ],
+        [ [ "m2", [ "and", "matrix",
+                    [ "assert", "$m1.width == $m2.width" ],
+                    [ "assert", "$m1.height == $m2.height" ] ] ],
+          [ "c2", "anyvalue" ] ]
+    ];
 
-    defineFunction("sumifs", function(callback, args){
+    defineFunction("countifs", function(){
+        var count = 0;
+        forIFS(arguments, function(){ count++; });
+        return count;
+    }).args(ARGS_COUNTIFS);
+
+    var ARGS_SUMIFS = [
+        [ "range", "matrix" ]
+    ].concat(ARGS_COUNTIFS);
+
+    defineFunction("sumifs", function(m){
         // hack: insert a predicate that filters out non-numeric
         // values; should also accept blank cells.  it's safe to
         // modify args.
+        var args = Array.prototype.slice.call(arguments);
         args.splice(1, 0, numericPredicate);
         var sum = 0;
-        var error = forIFS.call(this, args, function(chunks, row, col){
-            // range to sum up is the first argument, hence chunks[0]
-            var val = chunks[0].matrix.get(row, col);
+        forIFS(args, function(row, col){
+            var val = m.get(row, col);
             if (val) {
                 sum += val;
             }
         });
-        callback(sum);
-    });
+        return sum;
+    }).args(ARGS_SUMIFS);
 
     // similar to sumifs, but compute average of matching cells
-    defineFunction("averageifs", function(callback, args){
+    defineFunction("averageifs", function(m){
+        var args = Array.prototype.slice.call(arguments);
         args.splice(1, 0, numericPredicate);
         var sum = 0, count = 0;
-        var error = forIFS.call(this, args, function(chunks, row, col){
-            var val = chunks[0].matrix.get(row, col);
+        forIFS(args, function(row, col){
+            var val = m.get(row, col);
             if (val == null || val === "") {
                 val = 0;
             }
             sum += val;
             count++;
         });
-        if (!error) {
-            this.divide(callback, sum, count);
-        }
-    });
+        return count ? sum / count : new CalcError("DIV/0");
+    }).args(ARGS_SUMIFS);
 
-    defineFunction("countif", function(callback, args){
-        assertArgs.call(this, args, 2, function(range, cmp){
-            cmp = parseComparator(cmp);
-            var count = 0;
-            this.cellValues([range]).forEach(function(val){
-                if (cmp(val)) {
+    defineFunction("countif", function(matrix, criteria){
+        criteria = parseComparator(criteria);
+        var count = 0;
+        matrix.each(function(val){
+            if (criteria(val)) {
+                count++;
+            }
+        });
+        return count;
+    }).args([
+        [ "range", "matrix" ],
+        [ "criteria", "*anyvalue" ]
+    ]);
+
+    var ARGS_SUMIF = [
+        [ "range", "matrix" ],
+        [ "criteria", "*anyvalue" ],
+        [ "sumRange", [ "or",
+                        [ "and", "matrix",
+                          [ "assert", "$sumRange.width == $range.width" ],
+                          [ "assert", "$sumRange.height == $range.height" ] ],
+                        [ "null", "$range" ] ] ]
+    ];
+
+    defineFunction("sumif", function(range, criteria, sumRange){
+        var sum = 0;
+        criteria = parseComparator(criteria);
+        range.each(function(val, row, col){
+            if (criteria(val)) {
+                var v = sumRange.get(row, col);
+                if (numericPredicate(v)) {
+                    sum += v || 0;
+                }
+            }
+        });
+        return sum;
+    }).args(ARGS_SUMIF);
+
+    defineFunction("averageif", function(range, criteria, sumRange){
+        var sum = 0, count = 0;
+        criteria = parseComparator(criteria);
+        range.each(function(val, row, col){
+            if (criteria(val)) {
+                var v = sumRange.get(row, col);
+                if (numericPredicate(v)) {
+                    sum += v || 0;
                     count++;
                 }
-            });
-            callback(count);
-        });
-    });
-
-    // sumif and averageif are actually quite different, in that they may take a range reference as
-    // "criterion", in which case they return a matrix (the sum/average of numbers that match each
-    // cell in the criterion range).
-    (function(handle){
-        handle("sumif", function(numbers){
-            var sum = 0;
-            for (var i = numbers.length; --i >= 0;) {
-                sum += numbers[i];
-            }
-            return sum;
-        });
-        handle("averageif", function(numbers){
-            var n = numbers.length, i = n;
-            if (!i) {
-                return new CalcError("DIV/0");
-            }
-            var sum = 0;
-            while (--i >= 0) {
-                sum += numbers[i];
-            }
-            return sum / n;
-        });
-    })(function(fname, handler){
-        defineFunction(fname, function(callback, args){
-            var self = this;
-            if (args.length < 2 || args.length > 3) {
-                return self.error(new CalcError("N/A"));
-            }
-
-            var numRange = args[0];
-            if (args.length == 3) {
-                numRange = args[2];
-            }
-            var critRange = args[0];
-            var numMatrix = self.asMatrix(numRange), critMatrix;
-            if (numRange === critRange) {
-                critMatrix = numMatrix;
-            } else {
-                critMatrix = self.asMatrix(critRange);
-            }
-
-            var predicate = args[1];
-            var predMatrix = self.asMatrix(predicate);
-            if (predMatrix) {
-                return callback(predMatrix.map(function(predicate){
-                    return sumOf(predicate);
-                }));
-            }
-            return callback(sumOf(self.cellValues([ predicate ])[0]));
-
-            function sumOf(pred) {
-                pred = parseComparator(pred);
-                var a = [];
-                critMatrix.each(function(n, row, col){
-                    if (pred(n)) {
-                        a.push(numMatrix.get(row, col));
-                    }
-                });
-                return handler(a);
             }
         });
-    });
+        return count ? sum / count : new CalcError("DIV/0");
+    }).args(ARGS_SUMIF);
 
     /* -----[  ]----- */
 
@@ -273,7 +258,7 @@
         }
         return fact;
     }).args([
-        [ "n", "*number" ]
+        [ "n", "*number+" ]
     ]);
 
     defineFunction("factdouble", function(n){
@@ -283,62 +268,65 @@
         }
         return fact;
     }).args([
-        [ "n", "*number" ]
+        [ "n", "*number+" ]
     ]);
 
     defineFunction("combin", function(n, k){
-        if (n < 0 || k < 0 || k > n) {
-            return this.error(new CalcError("NUM"));
-        }
         for (var f1 = k + 1, f2 = 1, p1 = 1, p2 = 1; f2 <= n - k; ++f1, ++f2) {
             p1 *= f1;
             p2 *= f2;
         }
         return p1/p2;
     }).args([
-        [ "n", "*number" ],
-        [ "k", "*number" ]
+        [ "n", "*number++" ],
+        [ "k", [ "and", "*number++",
+                 [ "assert", "$k <= $n" ] ] ]
     ]);
 
     /* -----[ Statistical functions ]----- */
 
-    defineFunction("average", function(callback, args){
-        var sum = 0, count = 0;
-        this.forNumbers(args, function(num){
-            sum += num;
-            ++count;
-        });
-        this.divide(callback, sum, count);
-    });
+    defineFunction("average", function(numbers){
+        if (!numbers.length) {
+            return new CalcError("DIV/0");
+        }
+        var sum = numbers.reduce(function(sum, num){
+            return sum + num;
+        }, 0);
+        return sum / numbers.length;
+    }).args([
+        // most numeric functions must treat booleans as numbers (1 for TRUE
+        // and 0 for FALSE), but AVERAGE shouldn't.
+        [ "numbers", [ "collect", [ "and", "number",
+                                    [ "not", "boolean" ] ] ] ]
+    ]);
 
-    defineFunction("averagea", function(callback, args){
+    defineFunction("averagea", function(values){
         var sum = 0, count = 0;
-        this.cellValues(args).forEach(function(num){
+        values.forEach(function(num){
             if (typeof num != "string") {
                 sum += num;
             }
             ++count;
         });
-        this.divide(callback, sum, count);
-    });
+        return count ? sum / count : new CalcError("DIV/0");
+    }).args([
+        [ "values", [ "collect", "anyvalue" ] ]
+    ]);
 
     // https://support.office.com/en-sg/article/AVEDEV-function-ec78fa01-4755-466c-9a2b-0c4f9eacaf6d
-    defineFunction("avedev", function(callback, args){
-        if (args.length < 2) {
-            return this.error(new CalcError("NUM"));
+    defineFunction("avedev", function(numbers){
+        if (numbers.length < 2) {
+            return new CalcError("NUM");
         }
-        var sum = 0, numbers = [];
-        this.forNumbers(args, function(num){
-            sum += num;
-            numbers.push(num);
-        });
-        var avg = sum / numbers.length;
-        sum = 0;
-        numbers.forEach(function(num){
-            sum += Math.abs(num - avg);
-        });
-        this.divide(callback, sum, numbers.length);
-    });
+        var avg = numbers.reduce(function(sum, num){
+            return sum + num;
+        }, 0) / numbers.length;
+        return numbers.reduce(function(sum, num){
+            return sum + Math.abs(num - avg);
+        }, 0) / numbers.length;
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
 
     /* -----[ lookup functions ]----- */
 
@@ -471,22 +459,19 @@
         [ "col", [ "or", "number++", "null" ]]
     ]);
 
-    // INDIRECT is defined in async-style so that it can resolve the target cell(s) before passing
-    // over the result.
-    defineFunction("indirect", function(callback, thing){
-        var ref;
+    defineFunction("indirect", function(thing){
         try {
             // XXX: does more work than needed.  we could go for parseReference, but that one
             // doesn't (yet?) support "SheetName!" prefix.
-            ref = calc.parseFormula(this.sheet, this.row, this.col, thing);
-            if (!(ref.ast instanceof Ref)) {
+            var exp = calc.parseFormula(this.sheet, this.row, this.col, thing);
+            if (!(exp.ast instanceof Ref)) {
                 throw 1;
             }
+            return exp.ast.absolute(this.row, this.col);
         } catch(ex) {
             return new CalcError("REF");
         }
-        callback.call(this, ref.ast.absolute(this.row, this.col));
-    }).argsAsync([
+    }).args([
         [ "thing", "string" ]
     ]);
 
@@ -597,15 +582,15 @@
 
     /* -----[ Other ]----- */
 
-    defineFunction("rand", function(callback) {
-        callback(Math.random());
-    });
+    defineFunction("rand", function() {
+        return Math.random();
+    }).args([]);
 
     defineFunction("randbetween", function(min, max){
         return min + Math.floor((max - min + 1) * Math.random());
     }).args([
         [ "min", "number" ],
-        [ "max", [ "and", "number", [ "assert", "$max > $min" ] ] ]
+        [ "max", [ "and", "number", [ "assert", "$max >= $min" ] ] ]
     ]);
 
     defineFunction("true", function(){
@@ -699,13 +684,6 @@
             return makeComparator(compEQ, rx);
         }
         return makeComparator(compEQ, cmp);
-    }
-
-    function assertArgs(args, n, f) {
-        if (args.length != n) {
-            return this.error(new CalcError("N/A"));
-        }
-        f.apply(this, args);
     }
 
     function numericPredicate(val) {
