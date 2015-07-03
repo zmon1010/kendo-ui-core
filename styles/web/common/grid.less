@@ -957,9 +957,15 @@ html .k-grid-edit-row .k-tooltip
 
 /* Remove all sizes and scrolling */
 .k-pdf-export-shadow .k-grid,
-.k-pdf-export-shadow .k-grid-content {
+.k-pdf-export-shadow .k-grid-content,
+.k-pdf-export-shadow .k-grid-content-locked {
     height: auto !important;
     overflow: visible;
+}
+
+.k-pdf-export-shadow .k-grid-header-locked + .k-grid-header-wrap,
+.k-pdf-export-shadow .k-grid-content-locked + .k-grid-content {
+    width: auto !important;
 }
 
 /* Remove empty space reserved above the scrollbar */
