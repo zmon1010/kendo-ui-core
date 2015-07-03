@@ -194,6 +194,9 @@
         },
         width: function() {
             return 1;
+        },
+        toString: function() {
+            return displayRef(null, this.row, this.col, 3);
         }
     });
 
@@ -421,6 +424,9 @@
         },
         first: function() {
             return this.topLeft;
+        },
+        toString: function() {
+            return this.topLeft + ":" + this.bottomRight;
         }
     });
 
