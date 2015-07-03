@@ -57,7 +57,7 @@
                     fields["x"] = field;
                     field["from"] = currentMember;
                 }
-                else if (Height.HasValue() && currentMember == Y)
+                else if (Y.HasValue() && currentMember == Y)
                 {
                     fields["y"] = field;
                     field["from"] = currentMember;
