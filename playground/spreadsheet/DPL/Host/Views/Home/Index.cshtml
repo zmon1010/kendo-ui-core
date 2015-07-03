@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+    <link rel="stylesheet" href="/kendo/dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="/kendo/dist/styles/web/kendo.silver.css" />
+    <script src="/kendo/playground/loader.js"></script>
+    <script>
+        requireSync([
+          "/kendo/src/jquery.js",
+          "/kendo/src/kendo.dom.js",
+          "/kendo/src/kendo.spreadsheet.js",
+        ]);
+    </script>
+    <style>
+        body {
+            font: 14px/1.5 Arial,sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="spreadsheet"></div>
+    <script>
+        var spreadsheet = $("#spreadsheet").kendoSpreadsheet({}).data("kendoSpreadsheet");
+        var sheet = spreadsheet.activeSheet();
+        var calc = kendo.spreadsheet.calc;
+
+        $.ajax("@Url.Action("Import", "Home")").done(function (dtoWorkbook) {
+            var dtoSheet = dtoWorkbook.sheets[0];
+            dtoSheet.rows.forEach(function(dtoRow) {
+                dtoRow.cells.forEach(function(dtoCell) {
+                    var range = sheet.range(dtoRow.index, dtoCell.index);
+                    range.value(dtoCell.value);
+                });
+                
+            });
+
+            spreadsheet.refresh();
+        });
+    </script>
+</body>
+</html>
