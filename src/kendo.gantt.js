@@ -1640,7 +1640,12 @@ var __meta__ = {
                 .on(CLICK + NS, viewsSelector, function(e) {
                     e.preventDefault();
 
+                    var list = that.list;
                     var name = $(this).attr(kendo.attr("name"));
+
+                    if (list.editable && list.editable.trigger("validate")) {
+                        return;
+                    }
 
                     if (!that.trigger("navigate", { view: name })) {
                         that.view(name);
@@ -1909,11 +1914,6 @@ var __meta__ = {
             this.timeline
                 .bind("navigate", function(e) {
                     var treelist = that.list;
-
-                    if (treelist && treelist.editable && treelist.editable.trigger("validate")) {
-                        e.preventDefault();
-                        return;
-                    }
 
                     that.toolbar
                         .find(DOT + ganttStyles.toolbar.views +" > li")

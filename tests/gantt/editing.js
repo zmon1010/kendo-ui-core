@@ -674,18 +674,35 @@
 
     });
 
-    test("prevents navigate when validation fails", function() {
+    test("prevents navigation when validation fails", function() {
         var targetCell = ganttList.content.find("td").eq(0);
         var picker;
-        var e = new $.Event();
 
+        stub(gantt, "view");
         doubleTap(targetCell);
         picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
         picker.value("");
 
-        ganttTimeline.trigger("navigate", e);
+        gantt.toolbar.find("li:last").click();
 
-        ok(e.isDefaultPrevented());
+        ok(!gantt.calls("view"));
+    });
+
+    test("does not fire gantt's navigate when validation fails", function() {
+        var targetCell = ganttList.content.find("td").eq(0);
+        var eventFired = false;
+        var picker;
+
+        gantt.bind("navigate", function(e) {
+            eventFired = true;
+        });
+        doubleTap(targetCell);
+        picker = kendo.widgetInstance(ganttList._editableContainer.find("input[name=start]"));
+        picker.value("");
+
+        gantt.toolbar.find("li:last").click();
+
+        ok(!eventFired);
     });
 
     test("prevents resizeStart when validation fails", function() {
