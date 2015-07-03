@@ -73,7 +73,7 @@
         var merged = sheet._mergedCells;
 
         equal(merged.length, 1);
-        equal(merged[0].toString(), "$A$1:$C$4");
+        equal(merged[0].toString(), "A1:C4");
     });
 
     test("ranges that overlap top left are combined", function() {
@@ -83,7 +83,7 @@
         var merged = sheet._mergedCells;
 
         equal(merged.length, 1);
-        equal(merged[0].toString(), "$A$1:$C$4");
+        equal(merged[0].toString(), "A1:C4");
     });
 
     test("ranges that overlap top right are combined", function() {
@@ -93,7 +93,7 @@
         var merged = sheet._mergedCells;
 
         equal(merged.length, 1);
-        equal(merged[0].toString(), "$A$1:$D$8");
+        equal(merged[0].toString(), "A1:D8");
     });
 
     test("ranges that overlap bottom left are combined", function() {
@@ -103,7 +103,7 @@
         var merged = sheet._mergedCells;
 
         equal(merged.length, 1);
-        equal(merged[0].toString(), "$A$1:$D$8");
+        equal(merged[0].toString(), "A1:D8");
     });
 
     test("combining multiple overlapping ranges", function() {
@@ -114,7 +114,7 @@
         var merged = sheet._mergedCells;
 
         equal(merged.length, 1);
-        equal(merged[0].toString(), "$A$1:$E$1");
+        equal(merged[0].toString(), "A1:E1");
     });
 
     test("combining overlapping ranges leaves non overlapping ranges", function() {
@@ -125,8 +125,8 @@
         var merged = sheet._mergedCells;
 
         equal(merged.length, 2);
-        equal(merged[0].toString(), "$E$1:$F$1");
-        equal(merged[1].toString(), "$A$1:$D$1");
+        equal(merged[0].toString(), "E1:F1");
+        equal(merged[1].toString(), "A1:D1");
     });
 
     test("merge unsets the value of all cells but the topleft", function() {
@@ -173,8 +173,8 @@
         var merged = sheet._mergedCells;
 
         equal(merged.length, 2);
-        equal(merged[0].toString(), "$A$1:$B$1");
-        equal(merged[1].toString(), "$A$3:$B$3");
+        equal(merged[0].toString(), "A1:B1");
+        equal(merged[1].toString(), "A3:B3");
     });
 
     test("ranges with UnionRefs merge each ref", function() {
@@ -192,11 +192,11 @@
         var merged = sheet._mergedCells;
 
         equal(merged.length, 1);
-        equal(merged[0].toString(), "$A$1:$B$1");
+        equal(merged[0].toString(), "A1:B1");
 
         equal(range._ref.refs.length, 2);
-        ok(range._ref.refs[0].toString(), "$A$1:$B$1");
-        ok(range._ref.refs[1].toString(), "$D$1");
+        ok(range._ref.refs[0].toString(), "A1:B1");
+        ok(range._ref.refs[1].toString(), "D1");
     });
 
     test("unmerge removes ref from mergedcells", function() {

@@ -48,6 +48,17 @@
         equal(json.rows[0].cells.length, 1);
     });
 
+    test("toJSON serializes merged cells", function() {
+        sheet.range("A1:A2").merge();
+        sheet.range("B1:D3").merge();
+
+        var json = sheet.toJSON();
+
+        equal(json.mergedCells.length, 2);
+        equal(json.mergedCells[0], "A1:A2");
+        equal(json.mergedCells[1], "B1:D3");
+    });
+
     test("toJSON serializes cells that have format", function() {
         sheet.range("B2").format("#.#");
         var json = sheet.toJSON();
@@ -365,5 +376,17 @@
 
         equal(sheet.frozenColumns(), 1);
         equal(sheet.frozenRows(), 1);
+    });
+
+    test("fromJSON loads merged cells", function() {
+        sheet.fromJSON({
+            mergedCells: [
+                "A1:B1", "A3:A5"
+            ]
+        });
+
+        equal(sheet._mergedCells.length, 2);
+        equal(sheet._mergedCells[0].toString(), "A1:B1");
+        equal(sheet._mergedCells[1].toString(), "A3:A5");
     });
 })();

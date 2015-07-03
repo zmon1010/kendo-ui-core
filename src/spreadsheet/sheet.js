@@ -371,7 +371,10 @@
 
             return {
                 rows: rows,
-                columns: columns
+                columns: columns,
+                mergedCells: this._mergedCells.map(function(ref) {
+                    return ref.toString();
+                })
             };
         },
 
@@ -427,6 +430,12 @@
                             }
                         }
                     }
+                }
+
+                if (json.mergedCells) {
+                    json.mergedCells.forEach(function(ref) {
+                       this.range(ref).merge();
+                    }, this);
                 }
             }.bind(this));
         },
