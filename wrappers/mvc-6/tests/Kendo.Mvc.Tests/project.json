@@ -1,14 +1,14 @@
 {
-	"version": "1.0.0-*",
-	"compilationOptions": {
-		"warningsAsErrors": true
-	},
-	"dependencies": {
-		"Kendo.Mvc": "1.0.0-*",
-		"Moq":  "4.2.1312.1622",
-        "xunit.runner.aspnet": "2.0.0-aspnet-*"
-	},
-	"commands": {
-		"test": "xunit.runner.aspnet"
-	}
+    "version": "1.0.0-*",
+    "compilationOptions": {
+        "warningsAsErrors": true
+    },
+    "dependencies": {
+        "Kendo.Mvc": "1.0.0-*",
+        "Moq": "4.2.1312.1622",
+        "xunit.runner.aspnet": "2.0.0-aspnet-beta4"
+    },
+    "commands": {
+        "test": "xunit.runner.aspnet"
+    }
 }
