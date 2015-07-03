@@ -233,26 +233,7 @@
                 throw new Error("Unsupported for multiple ranges.");
             }
 
-            var ref = this._ref.toRangeRef();
-            var columns = spec instanceof Array ? spec : [spec];
-            var sortedIndices = null;
-
-            columns.forEach(function(column) {
-                var ascending = true;
-
-                if (typeof column === "object") {
-                    ascending = column.ascending !== false;
-                    column = column.column;
-                }
-
-                if (typeof column === "number") {
-                    ref = ref.toColumn(column);
-                }
-
-                sortedIndices = this._sheet._sort(ref, ascending, sortedIndices);
-            }, this);
-
-            this._sheet.triggerChange(true);
+            this._sheet._sortBy(this._ref.toRangeRef(), spec instanceof Array ? spec : [spec]);
 
             return this;
         }

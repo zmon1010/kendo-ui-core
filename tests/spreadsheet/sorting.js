@@ -52,7 +52,7 @@
               [ 0, 2 ],
               [ 0, 1 ]
             ])
-        .sort({ column: 1 });
+        .sort({ index: 1 });
 
         var values = sheet.range("B1:B3").values();
         equal(values[0], 1);
@@ -67,7 +67,7 @@
                 [0, 2],
                 [1, 0]
             ]
-        ).sort([{ column: 0 }, { column: 1 }]);
+        ).sort([{ index: 0 }, { index: 1 }]);
 
         var values = sheet.range("A1:B3").values();
         equal(values[0][1], 2);
@@ -82,11 +82,26 @@
               [ 0, 2 ],
               [ 0, 1 ]
             ])
-        .sort({ column: 1, ascending: false });
+        .sort({ index: 1, ascending: false });
 
         var values = sheet.range("B1:B3").values();
         equal(values[0], 2);
         equal(values[1], 1);
         equal(values[2], 1);
+    });
+
+    test("sorting sets the sort state of the sheet", function() {
+        sheet.range("A1:B3").values(
+            [
+                [1, 1],
+                [0, 2],
+                [1, 0]
+            ]
+        ).sort([{ index: 0 }, { index: 1 }]);
+
+        var sort = sheet._sort;
+        equal(sort.ref.toString(), "A1:B3");
+        equal(sort.columns.length, 2);
+        equal(sort.columns[1].index, 1);
     });
 })();

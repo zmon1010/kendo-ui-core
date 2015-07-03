@@ -477,13 +477,27 @@
                 row.cells.push(cell);
             });
 
-            return {
+            var json = {
                 rows: rows,
                 columns: columns,
                 mergedCells: this._mergedCells.map(function(ref) {
                     return ref.toString();
                 })
             };
+
+            if (this._sort) {
+               json.sort = {
+                   ref: this._sort.ref.toString(),
+                   columns: this._sort.columns.map(function(column) {
+                      return {
+                          index: column.index,
+                          ascending: column.ascending === undefined ? true : column.ascending
+                      };
+                   })
+               };
+            }
+
+            return json;
         },
 
         fromJSON: function(json) {
@@ -589,6 +603,13 @@
                        this.range(ref).merge();
                     }, this);
                 }
+
+                if (json.sort) {
+                    this._sort = {
+                        ref: this._ref(json.sort.ref),
+                        columns: json.sort.columns.slice(0)
+                    };
+                }
             }.bind(this));
         },
 
@@ -681,8 +702,30 @@
             return this.suspendChanges(suspended).triggerChange(recalc);
         },
 
-        _sort: function(ref, ascending, indices) {
-            return this._sorter.sortBy(ref, this._values, ascending, indices);
+        _sortBy: function(ref, columns) {
+            var indices = null;
+
+            this._sort = {
+                ref: ref,
+                columns: columns
+            };
+
+            columns.forEach(function(column) {
+                var ascending = true;
+
+                if (typeof column === "object") {
+                    ascending = column.ascending !== false;
+                    column = column.index;
+                }
+
+                if (typeof column === "number") {
+                    ref = ref.toColumn(column);
+                }
+
+                indices = this._sorter.sortBy(ref, this._values, ascending, indices)
+            }, this);
+
+            this.triggerChange(true);
         }
     });
 

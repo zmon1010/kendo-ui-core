@@ -59,6 +59,18 @@
         equal(json.mergedCells[1], "B1:D3");
     });
 
+    test("toJSON serializes sort state", function() {
+        sheet.range("A1:B2").sort([{ index: 0, ascending: false }, { index: 1 }]);
+
+        var json = sheet.toJSON();
+
+        equal(json.sort.ref, "A1:B2");
+        equal(json.sort.columns.length, 2);
+        equal(json.sort.columns[0].index, 0);
+        equal(json.sort.columns[0].ascending, false);
+        equal(json.sort.columns[1].ascending, true);
+    });
+
     test("toJSON serializes cells that have format", function() {
         sheet.range("B2").format("#.#");
         var json = sheet.toJSON();
@@ -334,5 +346,22 @@
         equal(sheet._mergedCells.length, 2);
         equal(sheet._mergedCells[0].toString(), "A1:B1");
         equal(sheet._mergedCells[1].toString(), "A3:A5");
+    });
+
+    test("fromJSON loads sort state", function() {
+        sheet.fromJSON({
+            sort: {
+                ref: "A1:B1",
+                columns: [
+                    { index: 1, ascending: false },
+                    { index: 0, ascending: true }
+                ]
+            }
+        });
+
+        equal(sheet._sort.ref.toString(), "A1:B1");
+        equal(sheet._sort.columns.length, 2);
+        equal(sheet._sort.columns[1].index, 0);
+        equal(sheet._sort.columns[1].ascending, true);
     });
 })();
