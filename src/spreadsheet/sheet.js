@@ -18,7 +18,6 @@
             this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._formats = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._compiledFormulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._styles = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
             this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth);
             this._mergedCells = [];
@@ -29,6 +28,19 @@
             this._activeCell = kendo.spreadsheet.FIRSTREF;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
             this._sorter = new kendo.spreadsheet.Sorter(this._grid, [this._values]);
+
+            this._background = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._borderBottomColor = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._borderRightColor = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._fontColor = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._fontFamily = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._fontLine = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._fontSize = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._fontStyle = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._fontWeight = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._horizontalAlignment = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._verticalAlignment = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._wrap = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
         },
 
         name: function(value) {
@@ -157,7 +169,20 @@
                 var types = this._types.iterator(startCellIndex, endCellIndex);
                 var formulas = this._formulas.iterator(startCellIndex, endCellIndex);
                 var formats = this._formats.iterator(startCellIndex, endCellIndex);
-                var styles = this._styles.iterator(startCellIndex, endCellIndex);
+
+
+                var background = this._background.iterator(startCellIndex, endCellIndex);
+                var borderBottomColor = this._borderBottomColor.iterator(startCellIndex, endCellIndex);
+                var borderRightColor = this._borderRightColor.iterator(startCellIndex, endCellIndex);
+                var fontColor = this._fontColor.iterator(startCellIndex, endCellIndex);
+                var fontFamily = this._fontFamily.iterator(startCellIndex, endCellIndex);
+                var fontLine = this._fontLine.iterator(startCellIndex, endCellIndex);
+                var fontSize = this._fontSize.iterator(startCellIndex, endCellIndex);
+                var fontStyle = this._fontStyle.iterator(startCellIndex, endCellIndex);
+                var fontWeight = this._fontWeight.iterator(startCellIndex, endCellIndex);
+                var horizontalAlignment = this._horizontalAlignment.iterator(startCellIndex, endCellIndex);
+                var verticalAlignment = this._verticalAlignment.iterator(startCellIndex, endCellIndex);
+                var wrap = this._wrap.iterator(startCellIndex, endCellIndex);
 
                 for (var ri = topLeft.row; ri <= bottomRight.row; ri ++) {
                     var index = this._grid.index(ri, ci);
@@ -169,7 +194,20 @@
                         type: types.at(index),
                         formula: formulas.at(index),
                         format: formats.at(index),
-                        style: JSON.parse(styles.at(index))
+                        style: {
+                            background: background.at(index),
+                            borderBottomColor: borderBottomColor.at(index),
+                            borderRightColor: borderRightColor.at(index),
+                            fontColor: fontColor.at(index),
+                            fontFamily: fontFamily.at(index),
+                            fontLine: fontLine.at(index),
+                            fontSize: fontSize.at(index),
+                            fontStyle: fontStyle.at(index),
+                            fontWeight: fontWeight.at(index),
+                            horizontalAlignment: horizontalAlignment.at(index),
+                            verticalAlignment: verticalAlignment.at(index),
+                            wrap: wrap.at(index)
+                        }
                     });
                 }
             }
@@ -319,16 +357,42 @@
 
             this.forEach(kendo.spreadsheet.SHEETREF, function(data) {
                 var value = data.value;
-                var style = data.style;
                 var formula = data.formula;
                 var format = data.format;
+                var background = data.style.background;
+                var borderBottomColor = data.style.borderBottomColor;
+                var borderRightColor = data.style.borderRightColor;
+                var fontColor = data.style.fontColor;
+                var fontFamily = data.style.fontFamily;
+                var fontLine = data.style.fontLine;
+                var fontSize = data.style.fontSize;
+                var fontStyle = data.style.fontStyle;
+                var fontWeight = data.style.fontWeight;
+                var horizontalAlignment = data.style.horizontalAlignment;
+                var verticalAlignment = data.style.verticalAlignment;
+                var wrap = data.style.wrap;
 
+                var hasBackground = background !== null;
+                var hasBorderBottomColor = borderBottomColor !== null;
+                var hasBorderRightColor = borderRightColor !== null;
+                var hasFontColor = fontColor !== null;
+                var hasFontFamily = fontFamily !== null;
+                var hasFontLine = fontLine !== null;
+                var hasFontSize = fontSize !== null;
+                var hasFontStyle = fontStyle !== null;
+                var hasFontWeight = fontWeight !== null;
+                var hasHorizontalAlignment = horizontalAlignment !== null;
+                var hasVerticalAlignment = verticalAlignment !== null;
+                var hasWrap = wrap !== null;
                 var hasValue = value !== null;
-                var hasStyle = style !== null;
                 var hasFormula = formula !== null;
                 var hasFormat = format !== null;
 
-                if (!hasValue && !hasStyle && !hasFormula && !hasFormat) {
+                if (!hasValue && !hasFormula && !hasFormat &&
+                    !hasBackground && !hasBorderBottomColor && !hasBorderRightColor &&
+                    !hasFontColor && !hasFontFamily && !hasFontLine && !hasFontSize &&
+                    !hasFontStyle && !hasFontWeight && !hasHorizontalAlignment &&
+                    !hasVerticalAlignment && !hasWrap) {
                     return;
                 }
 
@@ -350,8 +414,52 @@
                     cell.value = value;
                 }
 
-                if (hasStyle) {
-                    cell.style = style;
+                if (hasBackground) {
+                    cell.background = background;
+                }
+
+                if (hasBorderBottomColor) {
+                    cell.borderBottomColor = borderBottomColor;
+                }
+
+                if (hasBorderRightColor) {
+                    cell.borderRightColor = borderRightColor;
+                }
+
+                if (hasFontColor) {
+                    cell.fontColor = fontColor;
+                }
+
+                if (hasFontFamily) {
+                    cell.fontFamily = fontFamily;
+                }
+
+                if (hasFontLine) {
+                    cell.fontLine = fontLine;
+                }
+
+                if (hasFontSize) {
+                    cell.fontSize = fontSize;
+                }
+
+                if (hasFontStyle) {
+                    cell.fontStyle = fontStyle;
+                }
+
+                if (hasFontWeight) {
+                    cell.fontWeight = fontWeight;
+                }
+
+                if (hasHorizontalAlignment) {
+                    cell.horizontalAlignment = horizontalAlignment;
+                }
+
+                if (hasVerticalAlignment) {
+                    cell.verticalAlignment = verticalAlignment;
+                }
+
+                if (hasWrap) {
+                    cell.wrap = wrap;
                 }
 
                 if (hasFormula) {
@@ -416,8 +524,52 @@
                                     this.range(rowIndex, columnIndex).value(cell.value, false);
                                 }
 
-                                if (cell.style !== null) {
-                                    this.range(rowIndex, columnIndex)._style(cell.style);
+                                if (cell.background !== null) {
+                                    this.range(rowIndex, columnIndex).background(cell.background);
+                                }
+
+                                if (cell.borderBottomColor !== null) {
+                                    this.range(rowIndex, columnIndex).borderBottomColor(cell.borderBottomColor);
+                                }
+
+                                if (cell.borderRightColor !== null) {
+                                    this.range(rowIndex, columnIndex).borderRightColor(cell.borderRightColor);
+                                }
+
+                                if (cell.fontColor !== null) {
+                                    this.range(rowIndex, columnIndex).fontColor(cell.fontColor);
+                                }
+
+                                if (cell.fontFamily !== null) {
+                                    this.range(rowIndex, columnIndex).fontFamily(cell.fontFamily);
+                                }
+
+                                if (cell.fontLine !== null) {
+                                    this.range(rowIndex, columnIndex).fontLine(cell.fontLine);
+                                }
+
+                                if (cell.fontSize !== null) {
+                                    this.range(rowIndex, columnIndex).fontSize(cell.fontSize);
+                                }
+
+                                if (cell.fontStyle !== null) {
+                                    this.range(rowIndex, columnIndex).fontStyle(cell.fontStyle);
+                                }
+
+                                if (cell.fontWeight !== null) {
+                                    this.range(rowIndex, columnIndex).fontWeight(cell.fontWeight);
+                                }
+
+                                if (cell.horizontalAlignment !== null) {
+                                    this.range(rowIndex, columnIndex).horizontalAlignment(cell.horizontalAlignment);
+                                }
+
+                                if (cell.verticalAlignment !== null) {
+                                    this.range(rowIndex, columnIndex).verticalAlignment(cell.verticalAlignment);
+                                }
+
+                                if (cell.wrap !== null) {
+                                    this.range(rowIndex, columnIndex).wrap(cell.wrap);
                                 }
 
                                 if (cell.formula !== null) {

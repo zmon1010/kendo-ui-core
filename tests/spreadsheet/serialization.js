@@ -99,7 +99,7 @@
 
         equal(json.rows.length, 1);
         equal(json.rows[0].index, 1);
-        equal(json.rows[0].cells[0].style.background, "red");
+        equal(json.rows[0].cells[0].background, "red");
     });
 
     test("toJSON doesn't serialize null value", function() {
@@ -277,9 +277,7 @@
                 {
                     cells: [
                         {
-                            style: {
-                                background: "red"
-                            }
+                            background: "red"
                         }
                     ]
                 }
@@ -329,16 +327,12 @@
                 {
                     cells: [
                         {
-                            style: {
-                                background: "red",
-                                value: "foo"
-                            }
+                            background: "red",
+                            value: "foo"
                         },
                         {
-                            style: {
-                                background: "red",
-                                value: "foo"
-                            }
+                            background: "red",
+                            value: "foo"
                         }
                     ]
                 }
@@ -354,9 +348,7 @@
                         {
                             cells: [
                                 {
-                                    style: {
-                                        background: "red"
-                                    }
+                                    background: "red"
                                 }
                             ]
                         }

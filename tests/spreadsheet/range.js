@@ -45,7 +45,7 @@
     });
 
     test("removing the last style value sets the style to null", function() {
-       equal(sheet.range("A1").background("red").background(null)._style(), null);
+       equal(sheet.range("A1").background("red").background(null).background(), null);
     });
 
     test("setting values triggers the change event of the sheet", 1, function() {
@@ -146,10 +146,40 @@
         equal(range.borderRightColor(), "#f00");
     });
 
+    test("borderTopColor symmetry", function() {
+        range.borderTopColor("#f00");
+
+        equal(range.borderTopColor(), "#f00");
+    });
+
+    test("borderBottomColor symmetry", function() {
+        range.borderBottomColor("#f00");
+
+        equal(range.borderBottomColor(), "#f00");
+    });
+
+    test("borderTopColor triggers one change", 1, function() {
+        sheet.bind("change", ok.bind(this, true));
+
+        sheet.range(2, 2).borderTopColor("#f00");
+    });
+
     test("borderLeftColor triggers one change", 1, function() {
         sheet.bind("change", ok.bind(this, true));
 
-        sheet.range(0, 2).borderLeftColor("#f00");
+        sheet.range(2, 2).borderLeftColor("#f00");
+    });
+
+    test("borderLeftColor returns correct range", function() {
+        var range = sheet.range(2, 2);
+
+        equal(range.borderLeftColor("#f00"), range);
+    });
+
+    test("borderTopColor returns correct range", function() {
+        var range = sheet.range(2, 2);
+
+        equal(range.borderTopColor("#f00"), range);
     });
 
     test("borderBottomColor gets borderTopColor of cell below", function() {
@@ -176,16 +206,10 @@
         equal(sheet.range(0, 1).borderLeftColor(), "#f00");
     });
 
-    test("borderTopColor symmetry", function() {
-        range.borderTopColor("#f00");
+    test("borderTopColor persists background style", function() {
+        var range = sheet.range("A2:A3").background("#afa").borderTopColor("#f00");
 
-        equal(range.borderTopColor(), "#f00");
-    });
-
-    test("borderBottomColor symmetry", function() {
-        range.borderBottomColor("#f00");
-
-        equal(range.borderBottomColor(), "#f00");
+        equal(sheet.range("A2").background(), "#afa");
     });
 
     test("wrap returns the wrap of a range", function() {
@@ -199,7 +223,8 @@
         range.fontColor("red");
         range.background(null);
 
-        ok(!("background" in range._style()));
+        equal(range.background(), null);
+        equal(range.fontColor(), "red");
     });
 
     test("values returns two dimensional array containing cell values", function() {

@@ -50,9 +50,7 @@
                         {
                             cells: [
                                 {
-                                    style: {
-                                        background: "red"
-                                    }
+                                    background: "red"
                                 }
                             ]
                         }

@@ -7,6 +7,12 @@
     var UnionRef = kendo.spreadsheet.UnionRef;
     var CellRef = kendo.spreadsheet.CellRef;
 
+    var styles = [
+        "fontColor", "fontFamily", "fontLine", "fontSize", "fontStyle", "fontWeight",
+        "borderRightColor", "borderBottomColor", "horizontalAlignment", "verticalAlignment",
+        "background", "wrap"
+    ];
+
     var Range = kendo.Class.extend({
         init: function(ref, sheet) {
             this._sheet = sheet;
@@ -41,29 +47,6 @@
                 return list.value(index, index);
             }
         },
-        _styleProperty: function(name, value) {
-            var style = this._style();
-
-            if (style === null) {
-                style = {};
-            }
-
-            if (value !== undefined) {
-
-                if (value === null) {
-                    delete style[name];
-                } else {
-                    style[name] = value;
-                }
-
-                this._style(style);
-
-                return this;
-            }
-
-            return style[name];
-
-        },
         value: function(value, parse) {
             var type = null;
 
@@ -91,24 +74,6 @@
         type: function() {
             return this._property(this._sheet._types);
         },
-        fontColor: function(value) {
-            return this._styleProperty("fontColor", value);
-        },
-        fontFamily: function(value) {
-            return this._styleProperty("fontFamily", value);
-        },
-        fontLine: function(value) {
-            return this._styleProperty("fontLine", value);
-        },
-        fontSize: function(value) {
-            return this._styleProperty("fontSize", value);
-        },
-        fontStyle: function(value) {
-            return this._styleProperty("fontStyle", value);
-        },
-        fontWeight: function(value) {
-            return this._styleProperty("fontWeight", value);
-        },
         borderLeftColor: function(value) {
             var ref = this._ref.resize({ left: -1, right: -1 });
             var result = new Range(ref, this._sheet).borderRightColor(value);
@@ -118,37 +83,6 @@
             var ref = this._ref.resize({ top: -1, bottom: -1 });
             var result = new Range(ref, this._sheet).borderBottomColor(value);
             return value === undefined ? result : this;
-        },
-        borderRightColor: function(value) {
-            return this._styleProperty("borderRightColor", value);
-        },
-        borderBottomColor: function(value) {
-            return this._styleProperty("borderBottomColor", value);
-        },
-        horizontalAlignment: function(value) {
-            return this._styleProperty("horizontalAlignment", value);
-        },
-        verticalAlignment: function(value) {
-            return this._styleProperty("verticalAlignment", value);
-        },
-        background: function(value) {
-            return this._styleProperty("background", value);
-        },
-        wrap: function(value) {
-            return this._styleProperty("wrap", value);
-        },
-        _style: function(value) {
-            if (value !== undefined) {
-                value = JSON.stringify(value);
-
-                if (value === "{}") {
-                    value = null;
-                }
-
-                return this._property(this._sheet._styles, value);
-            }
-
-            return JSON.parse(this._property(this._sheet._styles, value));
         },
 
         format: function(value) {
@@ -252,7 +186,9 @@
 
                 if (clearAll || (options && options.formatOnly === true)) {
 
-                    this._style(null);
+                    styles.forEach(function(x) {
+                        this[x](null);
+                    }.bind(this));
                     this.format(null);
                     this.unmerge();
                 }
@@ -298,6 +234,13 @@
 
             return this;
         }
+    });
+
+
+    styles.forEach(function(x) {
+        Range.prototype[x] = function(value) {
+            return this._property(this._sheet["_" + x], value);
+        };
     });
 
     kendo.spreadsheet.Range = Range;
