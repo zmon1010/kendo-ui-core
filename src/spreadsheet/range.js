@@ -57,6 +57,9 @@
                 this._sheet.batch(function() {
                     this._property(this._sheet._types, result.type);
                     this._property(this._sheet._values, result.value);
+                    if (result.type === "date") {
+                        this._property(this._sheet._formats, toExcelFormat(kendo.culture().calendar.patterns.d));
+                    }
                 }.bind(this), true);
 
                 return this;
@@ -236,12 +239,15 @@
         }
     });
 
-
     styles.forEach(function(x) {
         Range.prototype[x] = function(value) {
             return this._property(this._sheet["_" + x], value);
         };
     });
+
+    function toExcelFormat(format) {
+        return format.replace(/M/g, "m");
+    }
 
     kendo.spreadsheet.Range = Range;
 })(kendo);

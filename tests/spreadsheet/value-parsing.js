@@ -22,6 +22,14 @@
         equal(sheet._types.value(0, 0), "date");
     });
 
+    test("sets default format for dates", function() {
+        var date = new Date("1/1/1900");
+
+        range.value(date);
+
+        equal(sheet._formats.value(0, 0), kendo.culture().calendar.patterns.d.replace(/M/, "m"));
+    });
+
     test("returns date objects", function() {
         var date = new Date("1/1/1900");
         range.value(date);
