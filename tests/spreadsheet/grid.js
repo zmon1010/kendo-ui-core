@@ -209,8 +209,8 @@
     testPaneView("tl pane remains fixed", { row: 0, column: 0, rowCount: 5, columnCount: 5 }, 0, 0,
         0,
         0,
-        5,
-        5,
+        4,
+        4,
         15,
         15
     );
@@ -218,8 +218,8 @@
     testPaneView("tl pane remains fixed (scrolled)", { row: 0, column: 0, rowCount: 5, columnCount: 5 }, 100, 100,
         0,
         0,
-        5,
-        5,
+        4,
+        4,
         15,
         15
     );

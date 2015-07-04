@@ -217,7 +217,7 @@
                 start += offset;
             }
 
-            var result = this._axis.visible(start, start + size);
+            var result = this._axis.visible(start, start + size - 1);
 
             if (this.frozen) {
                 result.offset = 0;

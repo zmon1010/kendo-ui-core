@@ -23,11 +23,11 @@
 
         var table = pane.render(0, 0).children[0];
 
-        equal(table.children[0].children.length, 2 + 1);
+        equal(table.children[0].children.length, 2);
 
         var tr = table.children[1].children[0];
 
-        equal(tr.children.length, 2 + 1);
+        equal(tr.children.length, 2);
         equal(tr.children[1].children[0].nodeValue, "foo");
     });
 
@@ -39,7 +39,7 @@
 
         var table = pane.render(0, 0).children[0];
 
-        equal(table.children[1].children.length, 2 + 1);
+        equal(table.children[1].children.length, 2);
     });
 
     test("adds background color style to the cell", function() {
