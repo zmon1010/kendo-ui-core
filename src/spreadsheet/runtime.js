@@ -932,6 +932,8 @@
 
     function _packDate(year, month, date) {
         var serial = 0;
+        year += Math.floor(month / 12);
+        month %= 12;
         if (year >= 1900) {
             for (var i = 1900; i < year; ++i) {
                 serial += daysInYear(i);
