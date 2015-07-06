@@ -19,7 +19,10 @@ var __meta__ = { // jshint ignore:line
         remove: function() {
             this.node.parentNode.removeChild(this.node);
         },
-        attr: {}
+        attr: {},
+        text: function() {
+            return "";
+        }
     };
 
     function NullNode() {
@@ -183,6 +186,14 @@ var __meta__ = { // jshint ignore:line
         }
     };
 
+    Element.prototype.text = function() {
+        var str = "";
+        for (var i = 0; i < this.children.length; ++i) {
+            str += this.children[i].text();
+        }
+        return str;
+    };
+
     function TextNode(nodeValue) {
         this.nodeValue = nodeValue;
     }
@@ -209,6 +220,10 @@ var __meta__ = { // jshint ignore:line
         }
 
         this.node = node;
+    };
+
+    TextNode.prototype.text = function() {
+        return this.nodeValue;
     };
 
     function HtmlNode(html) {
