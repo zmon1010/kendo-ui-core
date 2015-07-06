@@ -2401,12 +2401,12 @@ var __meta__ = {
             tables.addClass("k-autofitting");
             tables.css("table-layout", "");
 
-            var newTableWidth = Math.max(headerTable.width(), contentTable.width(), footerTable.width());
+            // +1 is required by IE, regardless of the border widths, otherwise unexpected wrapping may occur with hyphenated text
             var newColumnWidth = Math.ceil(Math.max(
                 th.outerWidth(),
                 contentTable.find("tr").eq(0).children(notGroupOrHierarchyVisibleCell).eq(index).outerWidth(),
                 footerTable.find("tr").eq(0).children(notGroupOrHierarchyVisibleCell).eq(index).outerWidth()
-            ));
+            )) + 1;
 
             col.width(newColumnWidth);
             column.width = newColumnWidth;
