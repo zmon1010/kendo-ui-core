@@ -72,21 +72,6 @@
         }
     });
 
-    var RefTranslator = {
-        down: function(ref) {
-            return new CellRef(ref.bottomRight.row + 1, ref.topLeft.col);
-        },
-        up: function(ref) {
-            return new CellRef(ref.topLeft.row - 1, ref.topLeft.col);
-        },
-        left: function(ref) {
-            return new CellRef(ref.topLeft.row, ref.topLeft.col - 1);
-        },
-        right: function(ref) {
-            return new CellRef(ref.topLeft.row, ref.bottomRight.col + 1);
-        }
-    };
-
     var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container tabindex=0></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div>';
 
     var View = kendo.Class.extend({
@@ -122,20 +107,21 @@
             $(this.container).on("keydown", function(e) {
                 var sheet = this._sheet;
                 var activeCell = sheet.activeCell();
+                var cell = sheet.originalActiveCell();
                 var nextCell;
 
                 switch (e.keyCode) {
                     case kendo.keys.LEFT:
-                        nextCell = RefTranslator.left(activeCell);
+                        nextCell = new CellRef(cell.row, activeCell.topLeft.col - 1);
                         break;
                     case kendo.keys.UP:
-                        nextCell = RefTranslator.up(activeCell);
+                        nextCell = new CellRef(activeCell.topLeft.row - 1, cell.col);
                         break;
                     case kendo.keys.RIGHT:
-                        nextCell = RefTranslator.right(activeCell);
+                        nextCell = new CellRef(cell.row, activeCell.bottomRight.col + 1);
                         break;
                     case kendo.keys.DOWN:
-                        nextCell = RefTranslator.down(activeCell);
+                        nextCell = new CellRef(activeCell.bottomRight.row + 1, cell.col);
                         break;
                 }
 

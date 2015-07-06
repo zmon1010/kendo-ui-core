@@ -25,7 +25,8 @@
             this._frozenColumns = 0;
             this._suspendChanges = false;
             this._selection = kendo.spreadsheet.NULLREF;
-            this._activeCell = kendo.spreadsheet.FIRSTREF;
+            this._activeCell = kendo.spreadsheet.FIRSTREF.toRangeRef();
+            this._originalActiveCell = kendo.spreadsheet.FIRSTREF;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
             this._sorter = new kendo.spreadsheet.Sorter(this._grid, [this._values]);
 
@@ -280,14 +281,17 @@
             if (ref) {
                 var mergedCells = this._mergedCells;
 
-                this._activeCell = ref.map(function(ref) {
-                    return ref.toRangeRef().union(mergedCells);
-                });
+                this._originalActiveCell = ref;
+                this._activeCell = ref.toRangeRef().union(mergedCells);
 
                 this.trigger("change");
             }
 
             return this._activeCell;
+        },
+
+        originalActiveCell: function() {
+            return this._originalActiveCell;
         },
 
         selection: function() {
