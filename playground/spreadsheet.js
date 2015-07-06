@@ -43,6 +43,10 @@ $("#copy").on("click", function(e) {
     range.select();
 });
 
+$("#select-first").on("click", function(e) {
+    sheet.range("A1:A1").select();
+});
+
 $("#select-all").on("click", function(e) {
     var range = sheet.range("#SHEET");
     range.select();
@@ -69,18 +73,22 @@ $("#clipboard").on("paste", function(e) {
 });
 
 $("body").on("mousedown", ".k-spreadsheet-selection", function(e) {
-    var text = spreadsheet.activeSheet().selection().values().map(function(row) {
-        return row.join("\t");
-    }).join("\r\n");
+    try {
+        var text = spreadsheet.activeSheet().selection().values().map(function(row) {
+            return row.join("\t");
+        }).join("\r\n");
 
-    $("#clipboard-container").css({
-        left: e.clientX,
-        top: e.clientY
-    });
+        $("#clipboard-container").css({
+            left: e.clientX,
+            top: e.clientY
+        });
 
-    setTimeout(function() {
-        $("#clipboard").val(text).select().focus();
-    });
+        setTimeout(function() {
+            $("#clipboard").val(text).select().focus();
+        });
+    } catch(e) {
+        console.error(e);
+    }
 });
 
 var ascending = true;
