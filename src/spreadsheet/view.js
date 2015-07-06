@@ -265,6 +265,21 @@
             return this._grid.view(scrollLeft, scrollTop).ref.intersects(ref);
         },
 
+        _className: function() {
+            var grid = this._grid;
+            var classes = ["k-spreadsheet-pane"];
+
+            if (grid.hasRowHeader) {
+                classes.push("k-spreadsheet-pane-left");
+            }
+
+            if (grid.hasColumnHeader) {
+                classes.push("k-spreadsheet-pane-top");
+            }
+
+            return classes.join(" ");
+        },
+
         render: function(scrollLeft, scrollTop) {
             var sheet = this._sheet;
             var grid = this._grid;
@@ -316,7 +331,7 @@
                 children.push(columnHeader.toDomTree(view.columnOffset, 0, "k-spreadsheet-column-header"));
             }
 
-            return kendo.dom.element("div", { style: grid.style, className: "k-spreadsheet-pane" }, children);
+            return kendo.dom.element("div", { style: grid.style, className: this._className() }, children);
         },
 
         headerClassName: function(index, type) {
