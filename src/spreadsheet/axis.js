@@ -231,6 +231,20 @@
             }
 
             return result;
+        },
+
+        contains: function(start, end) {
+            if (this.frozen) {
+                if (start > this._start + this._count) {
+                    return false;
+                }
+                if (end < this._start) {
+                    return false;
+                }
+                return true;
+            } else {
+                return end >= this._start;
+            }
         }
     });
 

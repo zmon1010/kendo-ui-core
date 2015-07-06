@@ -143,6 +143,9 @@
             var x = this.columns.paneSegment();
             var y = this.rows.paneSegment();
 
+            this.left = x.offset;
+            this.top = y.offset;
+
             this.style = {
                 top: y.offset  + "px",
                 left: x.offset + "px",
@@ -169,6 +172,10 @@
             };
         },
 
+        contains: function(ref) {
+            return this.rows.contains(ref.topLeft.row, ref.bottomRight.row) && this.columns.contains(ref.topLeft.col, ref.bottomRight.col);
+        },
+
         index: function(row, column) {
             return this._grid.index(row, column);
         },
@@ -179,6 +186,17 @@
 
         cellRefIndex: function(ref) {
             return this._grid.cellRefIndex(ref);
+        },
+
+        scrollBoundaries: function(cell) {
+            var position = this.boundingRectangle(cell);
+
+            return {
+                top: position.top - this.top + (this.hasColumnHeader ? 0 : this.headerHeight),
+                left: position.left - this.left + (this.hasRowHeader ? 0 : this.headerWidth),
+                right: position.right - this.columns._viewSize + this.headerWidth,
+                bottom: position.bottom - this.rows._viewSize + this.headerHeight
+            };
         }
     });
 

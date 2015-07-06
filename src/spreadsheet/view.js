@@ -72,23 +72,83 @@
         }
     });
 
+    var RefTranslator = {
+        down: function(ref) {
+            return new CellRef(ref.bottomRight.row + 1, ref.topLeft.col);
+        },
+        up: function(ref) {
+            return new CellRef(ref.topLeft.row - 1, ref.topLeft.col);
+        },
+        left: function(ref) {
+            return new CellRef(ref.topLeft.row, ref.topLeft.col - 1);
+        },
+        right: function(ref) {
+            return new CellRef(ref.topLeft.row, ref.bottomRight.col + 1);
+        }
+    };
+
+    var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container tabindex=0></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div>';
+
     var View = kendo.Class.extend({
-        init: function(element, fixedContainer) {
-            this.wrapper = $(element);
-            this.fixedContainer = fixedContainer;
+        init: function(element) {
+            element.append(VIEW_CONTENTS);
+            this.container = element.children()[0];
+            this.scroller = element.children()[1];
+            this.viewSize = $(this.scroller.firstChild);
+
+            this.tree = new kendo.dom.Tree(this.container);
+
+            var scrollbar = kendo.support.scrollbar();
+
+            $(this.container).css({
+                width: element[0].clientWidth - scrollbar,
+                height: element[0].clientHeight - scrollbar
+            }).on("wheel", this._passWheelEvent.bind(this));
+
+            $(this.scroller).on("scroll", this.render.bind(this));
+
+            this.handleKbd();
         },
 
         sheet: function(sheet) {
             this._sheet = sheet;
-            this.element = $("<div class=k-spreadsheet-view />").appendTo(this.wrapper);
-            this.tree = new kendo.dom.Tree(this.fixedContainer[0]);
+        },
 
-            this.wrapper.on("scroll", this.render.bind(this));
+        handleKbd: function() {
+            $(this.container).on("click", function() {
+                this.focus();
+            });
+
+            $(this.container).on("keydown", function(e) {
+                var sheet = this._sheet;
+                var activeCell = sheet.activeCell();
+                var nextCell;
+
+                switch (e.keyCode) {
+                    case kendo.keys.LEFT:
+                        nextCell = RefTranslator.left(activeCell);
+                        break;
+                    case kendo.keys.UP:
+                        nextCell = RefTranslator.up(activeCell);
+                        break;
+                    case kendo.keys.RIGHT:
+                        nextCell = RefTranslator.right(activeCell);
+                        break;
+                    case kendo.keys.DOWN:
+                        nextCell = RefTranslator.down(activeCell);
+                        break;
+                }
+
+                if (nextCell) {
+                    sheet.activeCell(sheet._grid.normalize(nextCell));
+                }
+
+            }.bind(this));
         },
 
         refresh: function() {
-            this.element[0].style.height = this._sheet._grid.totalHeight() + "px";
-            this.element[0].style.width = this._sheet._grid.totalWidth() + "px";
+            this.viewSize[0].style.height = this._sheet._grid.totalHeight() + "px";
+            this.viewSize[0].style.width = this._sheet._grid.totalWidth() + "px";
 
             var frozenColumns = this._sheet.frozenColumns();
             var frozenRows = this._sheet.frozenRows();
@@ -110,20 +170,49 @@
             if (frozenRows > 0 && frozenColumns > 0) {
                 this.panes.push(this._pane(0, 0, frozenRows, frozenColumns));
             }
+
+            this.scrollIntoView();
         },
 
-        _pane: function(row, column, rowCount, columnCount) {
-            var pane = new Pane(this._sheet, this._sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
-            pane.refresh(this.wrapper[0].clientWidth, this.wrapper[0].clientHeight);
-            return pane;
+        scrollIntoView: function() {
+            var activeCell = this._sheet.activeCell().toRangeRef();
+            var theGrid;
+
+            this.panes.forEach(function(pane) {
+                var grid = pane._grid;
+                if (!theGrid && grid.contains(activeCell)) {
+                    theGrid = grid;
+                }
+            });
+
+            var boundaries = theGrid.scrollBoundaries(activeCell);
+
+            var scroller = this.scroller;
+            var scrollTop = theGrid.rows.frozen ? 0 : scroller.scrollTop;
+            var scrollLeft = theGrid.columns.frozen ? 0 : scroller.scrollLeft;
+
+            if (boundaries.top < scrollTop) {
+                scroller.scrollTop = boundaries.top;
+            }
+
+            if (boundaries.bottom > scrollTop) {
+                scroller.scrollTop = boundaries.bottom;
+            }
+
+            if (boundaries.left < scrollLeft) {
+                scroller.scrollLeft = boundaries.left;
+            }
+
+            if (boundaries.right > scrollLeft) {
+                scroller.scrollLeft = boundaries.right;
+            }
         },
 
         render: function() {
-            var element = this.wrapper[0];
             var grid = this._sheet._grid;
 
-            var scrollTop = element.scrollTop;
-            var scrollLeft = element.scrollLeft;
+            var scrollTop = this.scroller.scrollTop;
+            var scrollLeft = this.scroller.scrollLeft;
 
             if (scrollTop < 0) {
                 scrollTop = 0;
@@ -144,6 +233,21 @@
             merged.push(topCorner);
 
             this.tree.render(merged);
+        },
+
+        _pane: function(row, column, rowCount, columnCount) {
+            var pane = new Pane(this._sheet, this._sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
+            pane.refresh(this.scroller.clientWidth, this.scroller.clientHeight);
+            return pane;
+        },
+
+        _passWheelEvent: function(e) {
+            var element = this.scroller;
+
+            element.scrollTop += e.originalEvent.deltaY;
+            element.scrollLeft += e.originalEvent.deltaX;
+
+            e.preventDefault();
         }
     });
 
@@ -155,6 +259,10 @@
 
         refresh: function(width, height) {
             this._grid.refresh(width, height);
+        },
+
+        isVisible: function(scrollLeft, scrollTop, ref) {
+            return this._grid.view(scrollLeft, scrollTop).ref.intersects(ref);
         },
 
         render: function(scrollLeft, scrollTop) {

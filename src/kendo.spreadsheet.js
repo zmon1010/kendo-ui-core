@@ -32,18 +32,7 @@
 
             this.element.addClass("k-widget k-spreadsheet");
 
-            this._fixedContainer = $("<div class=k-spreadsheet-fixed-container>").appendTo(this.element);
-
-            var scrollbar = kendo.support.scrollbar();
-
-            this._fixedContainer.css({
-                width: element.clientWidth - scrollbar,
-                height: element.clientHeight - scrollbar
-            }).on("wheel", this._passWheelEvent.bind(this));
-
-            this._scroller = $("<div class=k-spreadsheet-scroller>").appendTo(this.element);
-
-            this._view = new kendo.spreadsheet.View(this._scroller, this._fixedContainer);
+            this._view = new kendo.spreadsheet.View(this.element);
 
             this._sheet = new kendo.spreadsheet.Sheet(
                 this.options.rows,
@@ -73,15 +62,6 @@
             this._view.sheet(this.activeSheet());
 
             this.fromJSON(this.options);
-        },
-
-        _passWheelEvent: function(e) {
-            var element = this._scroller[0];
-
-            element.scrollTop += e.originalEvent.deltaY;
-            element.scrollLeft += e.originalEvent.deltaX;
-
-            e.preventDefault();
         },
 
         refresh: function(e) {

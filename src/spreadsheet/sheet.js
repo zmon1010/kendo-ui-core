@@ -722,7 +722,7 @@
                     ref = ref.toColumn(column);
                 }
 
-                indices = this._sorter.sortBy(ref, this._values, ascending, indices)
+                indices = this._sorter.sortBy(ref, this._values, ascending, indices);
             }, this);
 
             this.triggerChange(true);
