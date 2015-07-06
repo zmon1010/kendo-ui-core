@@ -1031,7 +1031,6 @@ html .k-grid-edit-row .k-tooltip
         
         .k-pager-wrap .k-pager-nav,
         .k-pager-input {
-            float:none;
             display: inline-block;
             vertical-align: top;
         }
@@ -1045,12 +1044,17 @@ html .k-grid-edit-row .k-tooltip
             display: inline-flex;
             -webkit-flex-direction: column-reverse;
             flex-direction: column-reverse;
-            -webkit-transform: translatey(-100%);
-            -moz-transform: translatey(-100%);
-            transform: translatey(-100%);
             overflow: visible;
             height: auto;
         }
+
+        .k-pager-numbers.k-state-expanded,
+        .k-grid .k-pager-numbers.k-state-expanded {
+            -webkit-transform: translatey(-100%);
+            -moz-transform: translatey(-100%);
+            transform: translatey(-100%);
+        }
+
 
         .km-pane-wrapper .k-pager-numbers,
         .km-pane-wrapper .k-grid .k-pager-numbers
@@ -1084,6 +1088,10 @@ html .k-grid-edit-row .k-tooltip
         .k-grid .k-pager-numbers .k-current-page {
             display: block;
             border-left: 0;
+        }
+
+        .k-pager-numbers.k-state-expanded .k-current-page,
+        .k-grid .k-pager-number.k-state-expandeds .k-current-page {
             -webkit-transform: translatey(100%);
             -moz-transform: translatey(100%);
             transform: translatey(100%);
