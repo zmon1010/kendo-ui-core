@@ -743,7 +743,7 @@
         });
 
         test("insert is chainable", function() {
-            equal(group.insert(new Element()), group);
+            equal(group.insert(0, new Element()), group);
         });
     })();
 
