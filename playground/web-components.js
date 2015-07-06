@@ -91,25 +91,23 @@ function registerElement(name, widget) {
 
     var prototype = Object.create(HTMLElement.prototype);
 
-    var hasValue = options.hasOwnProperty("value");
-
-    if (hasValue) {
-        Object.defineProperty(prototype, "value", {
-            get: function() {
-                return this.widget.value();
-            },
-            set: function(value) {
-                this.widget.value(value);
-            }
-        });
-    }
-
     prototype.createdCallback = function() {
         var element = document.createElement(TAGNAMES[name] || "div");
 
         this.appendChild(element);
 
         this.widget = new widget(element, parseOptions(this, options));
+
+        var obj = this.widget;
+        do {
+            Object.keys(obj).forEach(function(key) {
+                if(typeof(obj[key]) === "function"){
+                    this[key] = obj[key].bind(this.widget);
+                }else{
+                    this[key] = obj[key];
+                }
+            }.bind(this));
+        } while (obj = Object.getPrototypeOf(obj));
 
         widget.prototype.events.forEach(function(eventName) {
             this.widget.bind(eventName, eventHandler.bind(this, eventName));
