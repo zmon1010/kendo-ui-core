@@ -309,13 +309,18 @@
             return this;
         },
 
-        insertAt: function(element, index) {
+        insert: function(index, element) {
             this.children.splice(index, 0, element);
             element.parent = this;
 
             this.childrenChange("add", [element], index);
 
             return this;
+        },
+
+        // Deprecated for the unconventional parameter order
+        insertAt: function(element, index) {
+            return this.insert(index, element);
         },
 
         remove: function(element) {

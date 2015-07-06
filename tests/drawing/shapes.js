@@ -674,6 +674,77 @@
         test("insertAt is chainable", function() {
             equal(group.insertAt(new Element()), group);
         });
+
+        // ------------------------------------------------------------
+        module("Group / insert", {
+            setup: function() {
+                group = new Group();
+                group.append(new Element(), new Element());
+            }
+        });
+
+        test("insert adds child at beginning", function() {
+            var child = new Element();
+            group.insert(0, child);
+
+            deepEqual(group.children[0], child);
+        });
+
+        test("insert doesn't alter existing elements", function() {
+            var child = new Element();
+            group.insert(0, child);
+
+            equal(group.children.length, 3);
+        });
+
+        test("insert adds child at middle", function() {
+            var child = new Element();
+            group.insert(1, child);
+
+            deepEqual(group.children[1], child);
+        });
+
+        test("insert adds child at end", function() {
+            var child = new Element();
+            group.insert(2, child);
+
+            deepEqual(group.children[2], child);
+        });
+
+        test("insert sets child parent", function() {
+            var child = new Element();
+            group.insert(0, child);
+
+            ok(child.parent === group);
+        });
+
+        test("insert removes children from old parent", function() {
+            var child = new Element();
+            group.append(child);
+
+            var group2 = new Group();
+            group2.insert(0, child);
+
+            equal(group.children.length, 3);
+        });
+
+        test("insert triggers childrenChange", function() {
+            var child = new Element();
+
+            group.addObserver({
+                childrenChange: function(e) {
+                    equal(e.action, "add");
+                    equal(e.items[0], child);
+                    equal(e.index, 1);
+                }
+            });
+
+            group.insert(1, child);
+        });
+
+        test("insert is chainable", function() {
+            equal(group.insert(new Element()), group);
+        });
     })();
 
     // ------------------------------------------------------------
@@ -2517,7 +2588,7 @@
                 visible: false
             });
 
-            layout.insertAt(hiddenPath, 1);
+            layout.insert(1, hiddenPath);
             layout.reflow();
             equal(path1.bbox().origin.x, 100);
             equal(path2.bbox().origin.x, 310);
@@ -2526,7 +2597,7 @@
         test("skips items without bbox", function() {
             var emptyGroup = new d.Group();
 
-            layout.insertAt(emptyGroup, 1);
+            layout.insert(1, emptyGroup);
             layout.reflow();
             equal(path1.bbox().origin.x, 100);
             equal(path2.bbox().origin.x, 310);
@@ -2627,7 +2698,7 @@
                 visible: false
             });
 
-            layout.insertAt(hiddenPath, 1);
+            layout.insert(1, hiddenPath);
             layout.reflow();
             equal(path1.bbox().origin.x, 100);
             equal(path2.bbox().origin.x, 310);
@@ -2636,7 +2707,7 @@
         test("skips items without bbox", function() {
             var emptyGroup = new d.Group();
 
-            layout.insertAt(emptyGroup, 1);
+            layout.insert(1, emptyGroup);
             layout.reflow();
             equal(path1.bbox().origin.x, 100);
             equal(path2.bbox().origin.x, 310);
@@ -2737,7 +2808,7 @@
                 visible: false
             });
 
-            layout.insertAt(hiddenPath, 1);
+            layout.insert(1, hiddenPath);
             layout.reflow();
             equal(path1.bbox().origin.y, 100);
             equal(path2.bbox().origin.y, 310);
@@ -2746,7 +2817,7 @@
         test("skips items without bbox", function() {
             var emptyGroup = new d.Group();
 
-            layout.insertAt(emptyGroup, 1);
+            layout.insert(1, emptyGroup);
             layout.reflow();
             equal(path1.bbox().origin.y, 100);
             equal(path2.bbox().origin.y, 310);
@@ -2849,7 +2920,7 @@
                 visible: false
             });
 
-            layout.insertAt(hiddenPath, 1);
+            layout.insert(1, hiddenPath);
             layout.reflow();
             equal(path1.bbox().origin.y, 100);
             equal(path2.bbox().origin.y, 310);
@@ -2858,7 +2929,7 @@
         test("skips items without bbox", function() {
             var emptyGroup = new d.Group();
 
-            layout.insertAt(emptyGroup, 1);
+            layout.insert(1, emptyGroup);
             layout.reflow();
             equal(path1.bbox().origin.y, 100);
             equal(path2.bbox().origin.y, 310);
