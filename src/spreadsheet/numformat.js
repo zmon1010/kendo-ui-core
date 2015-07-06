@@ -576,6 +576,11 @@
 
     /* -----[ exports ]----- */
 
-    kendo.spreadsheet.formatting = { compile : compile };
+    kendo.spreadsheet.formatting = {
+        compile : compile,
+        format  : function(value, format, culture) {
+            return compile(format)(value, culture);
+        }
+    };
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

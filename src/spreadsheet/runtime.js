@@ -628,6 +628,9 @@
             if (type == "number") {
                 return "(typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean')";
             }
+            if (type == "integer") {
+                return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') ? ($"+name+" |= 0, true) : false)";
+            }
             if (type == "divisor") {
                 return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && "
                     + "($"+name+" == 0 ? ((err = 'DIV/0'), false) : true))";
@@ -635,8 +638,14 @@
             if (type == "number+") {
                 return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && $"+name+" >= 0)";
             }
+            if (type == "integer+") {
+                return "(((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && $"+name+" >= 0) ? ($"+name+" |= 0, true) : false)";
+            }
             if (type == "number++") {
                 return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && $"+name+" > 0)";
+            }
+            if (type == "integer++") {
+                return "(((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && $"+name+" > 0) ? ($"+name+" |= 0, true) : false)";
             }
             if (type == "string") {
                 return "(typeof " + force() + " == 'string')";
