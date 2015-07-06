@@ -546,12 +546,17 @@
                 arrayArgs += "} ";
             } else {
                 var type = x[1];
-                if (Array.isArray(type) && type[0] == "collect") {
+                if (Array.isArray(type) && /^#?collect/.test(type[0])) {
                     force();
-                    code += "var $" + name + " = this.cellValues(args.slice(i)).filter(function($"+name+"){ "
-                        + "return " + cond(type[1]) + "; }, this); "
+                    code += "try {"
+                        + "var $" + name + " = this.cellValues(args.slice(i)).filter(function($"+name+"){ ";
+                    if (type[0] == "collect") {
+                        code += "if ($"+name+" instanceof CalcError) throw $"+name+"; ";
+                    }
+                    code += "return " + cond(type[1]) + "; }, this); "
                         + "i = args.length; "
-                        + "xargs.push($"+name+")";
+                        + "xargs.push($"+name+")"
+                        + "} catch(ex) { if (ex instanceof CalcError) return ex; throw ex; } ";
                     resolve += "toResolve.push(args.slice(i)); ";
                 } else {
                     code += "var $" + name + " = args[i++]; if ($"+name+" instanceof CalcError) return $"+name+"; "

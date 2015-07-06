@@ -568,6 +568,31 @@
         });
     });
 
+    test("STDEV-SP, VAR-SP", function(){
+        ss.fill({
+            F1: 1345,
+            F2: 1301,
+            F3: 1368,
+            F4: 1322,
+            F5: 1310,
+            F6: 1370,
+            F7: 1318,
+            F8: 1350,
+            F9: 1303,
+            F10: 1299,
+            F11: '=stdev.s(F1:F10)',
+            F12: '=stdev.p(F1:F10)',
+            F13: '=var.s(F1:F10)',
+            F14: '=var.p(F1:F10)',
+        });
+        ss.recalculate(function(){
+            equal(ss.$("F11").toFixed(6), "27.463916");
+            equal(ss.$("F12").toFixed(6), "26.054558");
+            equal(ss.$("F13").toFixed(2), "754.27");
+            equal(ss.$("F14").toFixed(2), "678.84");
+        });
+    });
+
     test("evaluate dependent formulas", function(){
         ss.fill({
             D1: '=sum(indirect("D2"):indirect("$D$3"))',

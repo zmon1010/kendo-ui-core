@@ -51,6 +51,14 @@
         [ "numbers", [ "collect", "number" ] ]
     ]);
 
+    defineFunction("product", function(numbers){
+        return numbers.reduce(function(prod, num){
+            return prod * num;
+        }, 1);
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
+
     defineFunction("min", function(numbers){
         if (numbers.length) {
             return Math.min.apply(Math, numbers);
@@ -74,13 +82,13 @@
     defineFunction("counta", function(values){
         return values.length;
     }).args([
-        [ "values", [ "collect", "anyvalue" ] ]
+        [ "values", [ "#collect", "anyvalue" ] ]
     ]);
 
     defineFunction("count", function(numbers){
         return numbers.length;
     }).args([
-        [ "numbers", [ "collect", "number" ] ]
+        [ "numbers", [ "#collect", "number" ] ]
     ]);
 
     defineFunction("countunique", function(values){
@@ -93,7 +101,7 @@
         });
         return count;
     }).args([
-        [ "values", [ "collect", "anyvalue" ] ]
+        [ "values", [ "#collect", "anyvalue" ] ]
     ]);
 
     defineFunction("countblank", function(){
@@ -249,6 +257,84 @@
         });
         return count ? sum / count : new CalcError("DIV/0");
     }).args(ARGS_SUMIF);
+
+    (function(def){
+        def("large", function(numbers, nth){
+            return numbers.sort(descending)[nth];
+        });
+        def("small", function(numbers, nth){
+            return numbers.sort(ascending)[nth];
+        });
+    })(function(name, handler){
+        defineFunction(name, function(matrix, nth){
+            var numbers = [];
+            var error = matrix.each(function(val){
+                if (val instanceof CalcError) {
+                    return val;
+                }
+                if (typeof val == "number") {
+                    numbers.push(val);
+                }
+            });
+            if (error) {
+                return error;
+            }
+            if (nth > numbers.length) {
+                return new CalcError("NUM");
+            }
+            return handler(numbers, nth - 1);
+        }).args([
+            [ "array", "matrix" ],
+            [ "nth", "*number++" ]
+        ]);
+    });
+
+    function _var_sp(numbers, divisor) {
+        var n = numbers.length;
+        if (n < 2) {
+            return new CalcError("NUM");
+        }
+        var avg = numbers.reduce(function(sum, num){
+            return sum + num;
+        }, 0) / n;
+        return numbers.reduce(function(sum, num){
+            return sum + Math.pow(num - avg, 2);
+        }, 0) / divisor;
+    }
+
+    function _stdev_sp(numbers, divisor) {
+        var v = _var_sp(numbers, divisor);
+        if (v instanceof CalcError) {
+            return v;
+        }
+        return Math.sqrt(v);
+    }
+
+    // https://support.office.com/en-sg/article/STDEV-S-function-7d69cf97-0c1f-4acf-be27-f3e83904cc23
+    defineFunction("stdev.s", function(numbers){
+        return _stdev_sp(numbers, numbers.length - 1);
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
+
+    // https://support.office.com/en-sg/article/STDEV-P-function-6e917c05-31a0-496f-ade7-4f4e7462f285
+    defineFunction("stdev.p", function(numbers){
+        return _stdev_sp(numbers, numbers.length);
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
+
+    defineFunction("var.s", function(numbers){
+        return _var_sp(numbers, numbers.length - 1);
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
+
+    defineFunction("var.p", function(numbers){
+        return _var_sp(numbers, numbers.length);
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
 
     /* -----[  ]----- */
 
@@ -909,6 +995,14 @@
             || typeof val == "boolean"
             || val == null
             || val === "";
+    }
+
+    function ascending(a, b) {
+        return a === b ? 0 : a < b ? -1 : 1;
+    }
+
+    function descending(a, b) {
+        return a === b ? 0 : a < b ? 1 : -1;
     }
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

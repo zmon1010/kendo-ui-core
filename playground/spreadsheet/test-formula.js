@@ -667,6 +667,19 @@ fillElements({
         D1: '=SUM(IF((A2:A9="A")+(A2:A9="B"),B2:B9,0))',
         D2: '=SUM(IF(A2:A9={"A","B"},B2:B9,0))',
         D3: '=SUMIF(A2:A9,C2:C3,B2:B9)',
+
+        F1: 1345,
+        F2: 1301,
+        F3: 1368,
+        F4: 1322,
+        F5: 1310,
+        F6: 1370,
+        F7: 1318,
+        F8: 1350,
+        F9: 1303,
+        F10: 1299,
+        F11: '=stdev.s(F1:F10)',
+        
     }
     // sheet1: {
     //     A1: '=CURRENCY("USD", "EUR") + CURRENCY("USD", "EUR")'
