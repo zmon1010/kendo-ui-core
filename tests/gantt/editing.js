@@ -337,7 +337,10 @@
             schema: {
                 model: extend({
                     id: "id",
-                    }, options.fields)
+                    fields: {
+                        start: { from: "start", type: "date" }
+                    }
+                }, options.fields)
             }
         });
 
@@ -605,7 +608,14 @@
                 }],
                 schema: {
                     model:{
-                        id: "id"
+                        id: "id",
+                        fields: {
+                            id: { from: "ID", type: "number" },
+                            parentId: { from: "parentId", type: "number" },
+                            start: { from: "start", type: "date" },
+                            end: { from: "end", type: "date" },
+                            title: { from: "title", type: "string" }
+                        }
                     }
                 }
             });

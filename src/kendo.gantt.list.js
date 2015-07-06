@@ -624,9 +624,6 @@ var __meta__ = {
 
             if ((field.type === "date" || $.type(field) === "date") &&
                 (!column.format || /H|m|s|F|g|u/.test(column.format))) {
-                if (column.field === "start") {
-                    delete field.validation.dateCompare;
-                }
 
                 attr[BINDING] = "value:" + column.field;
                 attr[DATATYPE] = "date";

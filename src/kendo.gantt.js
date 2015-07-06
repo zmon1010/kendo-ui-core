@@ -547,13 +547,7 @@ var __meta__ = {
             parentId: { type: "number", defaultValue: null, validation: { required: true } },
             orderId: { type: "number", validation: { required: true } },
             title: { type: "string", defaultValue: "" },
-            start: {
-                type: "date", validation: {
-                    required: true,
-                    dateCompare: dateCompareValidator,
-                    message: "Start date should be before or equal to the end date"
-                }
-            },
+            start: { type: "date", validation: { required: true } },
             end: {
                 type: "date", validation: {
                     required: true,
