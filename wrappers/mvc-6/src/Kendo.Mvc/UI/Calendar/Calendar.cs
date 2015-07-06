@@ -11,18 +11,10 @@ namespace Kendo.Mvc.UI
     /// <summary>
     /// Kendo UI Calendar component
     /// </summary>
-    public partial class Calendar : WidgetBase
-        
+    public partial class Calendar : WidgetBase       
     {
         public Calendar(ViewContext viewContext) : base(viewContext)
-        {            
-        }
-
-        [Activate]
-        public IUrlGenerator UrlGenerator
         {
-            get;
-            private set;
         }
 
         public string FooterId

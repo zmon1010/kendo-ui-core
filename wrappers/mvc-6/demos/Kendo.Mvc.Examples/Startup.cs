@@ -1,35 +1,35 @@
-﻿using System;
-using Kendo.Mvc.Examples.Models;
+﻿using Kendo.Mvc.Examples.Models;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Diagnostics.Entity;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Routing;
-using Microsoft.Data.Entity;
-using Microsoft.Framework.ConfigurationModel;
+using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
-using Microsoft.Framework.Logging.Console;
+using Microsoft.Framework.Runtime;
+using System;
+using System.IO;
 
 namespace Kendo.Mvc.Examples
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
-        {
-            // Setup configuration sources.
-            Configuration = new Configuration()
-                .AddJsonFile("config.json")				
-                .AddEnvironmentVariables();
-        }
-
-        public IConfiguration Configuration { get; set; }
+        public IConfigurationBuilder Configuration { get; set; }
 
         // This method gets called by the runtime.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Fully-qualify configuration path to avoid issues in functional tests. Just "config.json" would be fine
+            // but Configuration uses CallContextServiceLocator.Locator.ServiceProvider to get IApplicationEnvironment.
+            // Functional tests update that service but not in the static provider.
+            var applicationEnvironment = services.BuildServiceProvider().GetRequiredService<IApplicationEnvironment>();
+            var configurationPath = Path.Combine(applicationEnvironment.ApplicationBasePath, "config.json");
+
+            // Setup configuration sources.
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile(configurationPath)
+                .AddEnvironmentVariables();
+
             // Add EF services to the services container.
             services.AddEntityFramework()
                 .AddSqlServer()

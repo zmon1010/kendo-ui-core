@@ -3,8 +3,8 @@
     using Kendo.Mvc.UI;
     using System;
     using System.Linq;
-    using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.Data.Entity;
 
     public class SchedulerMeetingService : ISchedulerEventService<MeetingViewModel>
     {

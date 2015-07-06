@@ -1,13 +1,13 @@
 ﻿using System;
 using System.IO;
 using Kendo.Mvc.Rendering;
-using Microsoft.AspNet.Http.Core;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
 using Moq;
 using Microsoft.AspNet.Mvc.ViewComponents;
+using Microsoft.AspNet.Http.Internal;
 
 namespace Kendo.Mvc.Tests
 {
@@ -64,7 +64,15 @@ namespace Kendo.Mvc.Tests
 
 			var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
 			var viewData = new ViewDataDictionary(provider, new ModelStateDictionary());
-            var viewContext = new ViewContext(actionContext, Mock.Of<IView>(), viewData, Mock.Of<ITempDataDictionary>(), new Mock<TextWriter>() { CallBase = true }.Object);
+            var options = new HtmlHelperOptions();
+            var viewContext = new ViewContext(
+                actionContext,
+                Mock.Of<IView>(),
+                viewData,
+                Mock.Of<ITempDataDictionary>(),
+                new Mock<TextWriter>() { CallBase = true }.Object,
+                options
+            );
 
             return viewContext;
 		}

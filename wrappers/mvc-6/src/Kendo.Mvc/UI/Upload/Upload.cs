@@ -15,13 +15,6 @@ namespace Kendo.Mvc.UI
     public partial class Upload : WidgetBase
         
     {
-		[Activate]
-		public IUrlGenerator UrlGenerator
-		{
-			get;
-			private set;
-		}
-
 		public bool? Enabled { get; set; }
 
 		public UploadMessagesSettings Messages { get; } = new UploadMessagesSettings();

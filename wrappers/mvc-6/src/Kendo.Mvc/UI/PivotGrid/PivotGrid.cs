@@ -17,20 +17,6 @@ namespace Kendo.Mvc.UI
             DataSource.ModelType(typeof(T));
         }
 
-        [Activate]
-        public IModelMetadataProvider ModelMetadataProvider
-        {
-            get;
-            set;
-        }
-
-        [Activate]
-        public IUrlGenerator UrlGenerator
-        {
-            get;
-            set;
-        }
-
         public PivotGridMessages Messages
         {
             get;            

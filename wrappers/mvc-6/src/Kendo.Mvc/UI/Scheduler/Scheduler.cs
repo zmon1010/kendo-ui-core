@@ -17,7 +17,6 @@ namespace Kendo.Mvc.UI
         {
             ToolbarCommands = new List<SchedulerToolbarCommand>();
 
-
             Editable = new SchedulerEditableSettings<T>()
             {
                 PopUp = new Window(viewContext)
@@ -39,20 +38,6 @@ namespace Kendo.Mvc.UI
             DataSource.Type = DataSourceType.Ajax;
 
             DataSource.Schema.Model = new SchedulerModelDescriptor(typeof(T), ModelMetadataProvider);
-        }
-
-        [Activate]
-        public IModelMetadataProvider ModelMetadataProvider
-        {
-            get;
-            set;
-        }
-
-        [Activate]
-        public IUrlGenerator UrlGenerator
-        {
-            get;
-            set;
         }
 
         public SchedulerEditableSettings<T> Editable

@@ -34,7 +34,7 @@ namespace Kendo.Mvc.Examples.Models
         public virtual DbSet<UrbanArea> UrbanAreas { get; set; }
         public virtual DbSet<Weather> Weather { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(EntityOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Sample.mdf;Integrated Security=True;");
         }
@@ -106,7 +106,7 @@ namespace Kendo.Mvc.Examples.Models
                     .ForSqlServer().UseIdentity();
                 
                 entity.Property(e => e.Units)
-                    .ForRelational().ColumnType("decimal(5, 2)");
+                    .ColumnType("decimal(5, 2)");
             });
             
             modelBuilder.Entity<GanttResource>(entity =>
@@ -125,7 +125,7 @@ namespace Kendo.Mvc.Examples.Models
                     .ForSqlServer().UseIdentity();
                 
                 entity.Property(e => e.PercentComplete)
-                    .ForRelational().ColumnType("decimal(5, 2)");
+                    .ColumnType("decimal(5, 2)");
             });
             
             modelBuilder.Entity<Intraday>(entity =>
@@ -134,16 +134,16 @@ namespace Kendo.Mvc.Examples.Models
                     .ForSqlServer().UseIdentity();
                 
                 entity.Property(e => e.Close)
-                    .ForRelational().ColumnType("decimal(9, 3)");
+                    .ColumnType("decimal(9, 3)");
                 
                 entity.Property(e => e.High)
-                    .ForRelational().ColumnType("decimal(9, 3)");
+                    .ColumnType("decimal(9, 3)");
                 
                 entity.Property(e => e.Low)
-                    .ForRelational().ColumnType("decimal(9, 3)");
+                    .ColumnType("decimal(9, 3)");
                 
                 entity.Property(e => e.Open)
-                    .ForRelational().ColumnType("decimal(9, 3)");
+                    .ColumnType("decimal(9, 3)");
             });
             
             modelBuilder.Entity<MeetingAttendee>(entity =>
@@ -166,19 +166,19 @@ namespace Kendo.Mvc.Examples.Models
             {
                 entity.Key(e => new { e.OrderID, e.ProductID });
                 
-                entity.ForRelational().Table("Order Details");
+                entity.Table("Order Details");
                 
                 entity.Property(e => e.Discount)
-                    .ForRelational().DefaultValue(0D);
+                    .DefaultValue(0D);
                 
                 entity.Property(e => e.Quantity)
-                    .ForRelational().DefaultValue(1);
+                    .DefaultValue(1);
                 
                 entity.Property(e => e.UnitPrice)
-                    .ForRelational().ColumnType("decimal(5, 2)");
+                    .ColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.UnitPrice)
-                    .ForRelational().DefaultValue(0m);
+                    .DefaultValue(0m);
             });
             
             modelBuilder.Entity<Order>(entity =>
@@ -190,10 +190,10 @@ namespace Kendo.Mvc.Examples.Models
                     .ForSqlServer().UseIdentity();
                 
                 entity.Property(e => e.Freight)
-                    .ForRelational().ColumnType("decimal(6, 2)");
+                    .ColumnType("decimal(6, 2)");
                 
                 entity.Property(e => e.Freight)
-                    .ForRelational().DefaultValue(0m);
+                    .DefaultValue(0m);
             });
             
             modelBuilder.Entity<OrgChartConnection>(entity =>
@@ -222,22 +222,22 @@ namespace Kendo.Mvc.Examples.Models
                     .ForSqlServer().UseIdentity();
                 
                 entity.Property(e => e.Discontinued)
-                    .ForRelational().DefaultValue(false);
+                    .DefaultValue(false);
                 
                 entity.Property(e => e.ReorderLevel)
-                    .ForRelational().DefaultValue(0);
+                    .DefaultValue(0);
                 
                 entity.Property(e => e.UnitPrice)
-                    .ForRelational().ColumnType("decimal(5, 2)");
+                    .ColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.UnitPrice)
-                    .ForRelational().DefaultValue(0m);
+                    .DefaultValue(0m);
                 
                 entity.Property(e => e.UnitsInStock)
-                    .ForRelational().DefaultValue(0);
+                    .DefaultValue(0);
                 
                 entity.Property(e => e.UnitsOnOrder)
-                    .ForRelational().DefaultValue(0);
+                    .DefaultValue(0);
             });
             
             modelBuilder.Entity<Region>(entity =>
@@ -259,16 +259,16 @@ namespace Kendo.Mvc.Examples.Models
                     .ForSqlServer().UseIdentity();
                 
                 entity.Property(e => e.Close)
-                    .ForRelational().ColumnType("decimal(9, 3)");
+                    .ColumnType("decimal(9, 3)");
                 
                 entity.Property(e => e.High)
-                    .ForRelational().ColumnType("decimal(9, 3)");
+                    .ColumnType("decimal(9, 3)");
                 
                 entity.Property(e => e.Low)
-                    .ForRelational().ColumnType("decimal(9, 3)");
+                    .ColumnType("decimal(9, 3)");
                 
                 entity.Property(e => e.Open)
-                    .ForRelational().ColumnType("decimal(9, 3)");
+                    .ColumnType("decimal(9, 3)");
             });
             
             modelBuilder.Entity<Supplier>(entity =>
@@ -305,10 +305,10 @@ namespace Kendo.Mvc.Examples.Models
                     .ForSqlServer().UseIdentity();
                 
                 entity.Property(e => e.Latitude)
-                    .ForRelational().ColumnType("decimal(9, 6)");
+                    .ColumnType("decimal(9, 6)");
                 
                 entity.Property(e => e.Longitude)
-                    .ForRelational().ColumnType("decimal(9, 6)");
+                    .ColumnType("decimal(9, 6)");
             });
             
             modelBuilder.Entity<Weather>(entity =>
@@ -317,22 +317,22 @@ namespace Kendo.Mvc.Examples.Models
                     .ForSqlServer().UseIdentity();
                 
                 entity.Property(e => e.Gust)
-                    .ForRelational().ColumnType("decimal(5, 2)");
+                    .ColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.Rain)
-                    .ForRelational().ColumnType("decimal(5, 2)");
+                    .ColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.Snow)
-                    .ForRelational().ColumnType("decimal(5, 2)");
+                    .ColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.TMax)
-                    .ForRelational().ColumnType("decimal(5, 2)");
+                    .ColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.TMin)
-                    .ForRelational().ColumnType("decimal(5, 2)");
+                    .ColumnType("decimal(5, 2)");
                 
                 entity.Property(e => e.Wind)
-                    .ForRelational().ColumnType("decimal(5, 2)");
+                    .ColumnType("decimal(5, 2)");
             });
             
             modelBuilder.Entity<CustomerCustomerDemo>(entity =>

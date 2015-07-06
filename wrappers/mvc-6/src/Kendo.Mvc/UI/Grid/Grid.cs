@@ -20,7 +20,9 @@ namespace Kendo.Mvc.UI
     {
         public Grid(ViewContext viewContext) : base(viewContext)
         {
-			Editable = new GridEditableSettings<T>(this)
+            ActionBindingContext = GetService<IScopedInstance<ActionBindingContext>>();
+
+            Editable = new GridEditableSettings<T>(this)
 			{
 				PopUp = new Window(viewContext)
 				{
@@ -40,24 +42,9 @@ namespace Kendo.Mvc.UI
 			};
 
 			DataSource.ModelType(typeof(T));
-		}
+        }
 
-		[Activate]
-		public IModelMetadataProvider ModelMetadataProvider
-		{
-			get;
-			set;
-		}
-
-		[Activate]
 		public IScopedInstance<ActionBindingContext> ActionBindingContext
-		{
-			get;
-			set;
-		}
-
-		[Activate]
-		public IUrlGenerator UrlGenerator
 		{
 			get;
 			set;

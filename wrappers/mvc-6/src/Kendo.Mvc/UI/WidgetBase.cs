@@ -2,6 +2,7 @@
 using Kendo.Mvc.Infrastructure;
 using Kendo.Mvc.Rendering;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewComponents;
 using Microsoft.AspNet.Routing;
@@ -85,8 +86,13 @@ namespace Kendo.Mvc.UI
             set;
         }
 
-        [Activate]
         public IHtmlHelper HtmlHelper { get; set; }
+
+        public IModelMetadataProvider ModelMetadataProvider
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets or sets the name.
@@ -124,8 +130,13 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
-        [Activate]
         protected IKendoHtmlGenerator Generator { get; set; }
+
+        public IUrlGenerator UrlGenerator
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Renders the component.
@@ -228,11 +239,17 @@ namespace Kendo.Mvc.UI
 
         private void Activate()
         {            
-            var activator = ViewContext.GetService<IViewComponentActivator>();
-
-            activator.Activate(this, ViewContext);
+            Generator = GetService<IKendoHtmlGenerator>();
+            HtmlHelper = GetService<IHtmlHelper>();
+            ModelMetadataProvider = GetService<IModelMetadataProvider>();
+            UrlGenerator = GetService<IUrlGenerator>();
 
             ((ICanHasViewContext)HtmlHelper).Contextualize(ViewContext);
+        }
+
+        protected TService GetService<TService>()
+        {
+            return ViewContext.GetService<TService>();
         }
 
         private void AppendScriptToContext(string script)

@@ -20,7 +20,9 @@ namespace Kendo.Mvc.UI
     {
         public TreeList(ViewContext viewContext) : base(viewContext)
         {
-			DataSource = new DataSource(ModelMetadataProvider)
+            ActionBindingContext = GetService<IScopedInstance<ActionBindingContext>>();
+
+            DataSource = new DataSource(ModelMetadataProvider)
 			{
 				Type = DataSourceType.Ajax,
 				ServerAggregates = true,
@@ -32,22 +34,7 @@ namespace Kendo.Mvc.UI
 			DataSource.Schema.Model = new TreeListModelDescriptor(typeof(T), ModelMetadataProvider);
 		}
 
-		[Activate]
-		public IModelMetadataProvider ModelMetadataProvider
-		{
-			get;
-			set;
-		}
-
-		[Activate]
 		public IScopedInstance<ActionBindingContext> ActionBindingContext
-		{
-			get;
-			set;
-		}
-
-		[Activate]
-		public IUrlGenerator UrlGenerator
 		{
 			get;
 			set;

@@ -26,7 +26,15 @@ namespace Kendo.Mvc.Extensions
 			var actionContext = new ActionContext(viewContext.HttpContext, new RouteData(), new ActionDescriptor());
 			var viewDataDictionary = new ViewDataDictionary<T>(metadataProvider, new ModelStateDictionary());
             var tempDataDictionary = new TempDataDictionary(viewContext.GetService<IHttpContextAccessor>(), viewContext.GetService<ITempDataProvider>());
-			return new ViewContext(actionContext, viewContext.GetService<IView>(), viewDataDictionary, tempDataDictionary, new StringWriter());			
+            var options = new HtmlHelperOptions
+            {
+                ClientValidationEnabled = viewContext.ClientValidationEnabled,
+                Html5DateRenderingMode = viewContext.Html5DateRenderingMode,
+                ValidationSummaryMessageElement = viewContext.ValidationSummaryMessageElement,
+                ValidationMessageElement = viewContext.ValidationMessageElement
+            };
+
+            return new ViewContext(actionContext, viewContext.GetService<IView>(), viewDataDictionary, tempDataDictionary, new StringWriter(), options);
 		}
 
 		public static HtmlHelper<T> CreateHtmlHelper<T>(this ViewContext viewContext)

@@ -33,8 +33,6 @@ namespace Kendo.Mvc.UI
 
         public bool? HighlightPath { get; set; }
 
-        public IUrlGenerator UrlGenerator { get; private set; }
-
         public INavigationItemAuthorization Authorization { get; private set; }
 
         public SecurityTrimming SecurityTrimming { get; set; }

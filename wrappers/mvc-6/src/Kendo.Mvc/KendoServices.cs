@@ -1,5 +1,4 @@
 ﻿using Kendo.Mvc.Rendering;
-using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
 using System.Collections.Generic;
 

@@ -12,6 +12,8 @@ namespace Kendo.Mvc.Infrastructure.Implementation
     using Microsoft.CodeAnalysis.Emit;
     using Microsoft.Framework.Runtime;
     using Microsoft.Framework.Runtime.Infrastructure;
+    using Microsoft.Framework.Runtime.Roslyn;
+    using Microsoft.Framework.Runtime.Compilation;
 
     internal class ClassFactory
     {
@@ -113,13 +115,47 @@ namespace Kendo.Mvc.Infrastructure.Implementation
             return CSharpCompilation.Create(assemblyName,
                         options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary),
                         syntaxTrees: new[] { syntaxTree },
-                        references: new MetadataReference[] {
+                        references: GetReferences()
+            );
+        }
+
+        private IEnumerable<MetadataReference> GetReferences()
+        {
+            var references = new List<MetadataReference>();
+
 #if DNXCORE50
-                            MetadataReference.CreateFromAssembly(typeof(object).GetTypeInfo().Assembly)
+            var serviceProvider = CallContextServiceLocator.Locator.ServiceProvider;
+            var libraryManager = (ILibraryManager) serviceProvider.GetService(typeof(ILibraryManager));
+            var libraryExport = libraryManager.GetLibraryExport("System");
+            if (libraryExport != null)
+            {
+                foreach (var metadataReference in libraryExport.MetadataReferences)
+                {
+                    var roslynReference = metadataReference as IRoslynMetadataReference;
+                    if (roslynReference != null)
+                    {
+                        references.Add(roslynReference.MetadataReference);
+                        break;
+                    }
+
+                    var fileMetadataReference = metadataReference as IMetadataFileReference;
+                    if (fileMetadataReference != null)
+                    {
+                        var metadata = AssemblyMetadata.CreateFromStream(File.OpenRead(fileMetadataReference.Path));
+                        references.Add(metadata.GetReference());
+                        break;
+                    }
+                }
+            }
 #else
-                            MetadataReference.CreateFromAssembly(typeof(object).Assembly)
+            references.Add(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
 #endif
-                        });
+            if (references.Count == 0)
+            {
+                throw new InvalidOperationException("Unable to create MetadataReference");
+            }
+
+            return references;
         }
 
         private PropertyDeclarationSyntax DeclareDynamicProperty(DynamicProperty property)
