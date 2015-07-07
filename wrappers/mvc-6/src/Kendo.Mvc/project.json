@@ -5,6 +5,7 @@
     "authors": ["Telerik"],
     "owners": ["Telerik"],
     "licenseUrl": "http://www.telerik.com/purchase/license-agreement/aspnet-mvc",
+    "requireLicenseAcceptance":  true,
     "projectUrl": "http://www.telerik.com/aspnet-mvc",
     "tags": ["aspnet", "mvc", "aspnext", "vnext", "VS2015", "Kendo", "Kendo UI", "JavaScript", "UI"],
     "dependencies": {
