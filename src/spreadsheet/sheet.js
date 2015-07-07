@@ -723,33 +723,10 @@
         },
 
         _setValue: function(row, col, value) {
-            var result = this._parse(row, col, value, false);
+            var result = Sheet.parse(value, false);
             var index = this._grid.index(row, col);
             this._values.value(index, index, result.value);
             this._types.value(index, index, result.type);
-        },
-
-        _parse: function(row, col, value, parseStrings) {
-            var type = null;
-
-            if (value !== null) {
-                if (value instanceof Date) {
-                    value = kendo.spreadsheet.calc.runtime.dateToSerial(value);
-                    type = "date";
-                } else {
-                    type = typeof value;
-                    if (type === "string" && parseStrings !== false) {
-                        var parseResult = kendo.spreadsheet.calc.parse(this._name, row, col, value);
-                        value = parseResult.value;
-                        type = parseResult.type;
-                    }
-                }
-            }
-
-            return {
-                type: type,
-                value: value
-            };
         },
 
         batch: function(callback, recalc) {
@@ -775,7 +752,7 @@
 
                 if (typeof column === "object") {
                     ascending = column.ascending !== false;
-                    column = column.index;
+                    column = column.column;
                 }
 
                 if (typeof column === "number") {
@@ -788,6 +765,29 @@
             this.triggerChange(true);
         }
     });
+
+    Sheet.parse = function(value, parseStrings) {
+        var type = null;
+
+        if (value !== null) {
+            if (value instanceof Date) {
+                value = kendo.spreadsheet.calc.runtime.dateToSerial(value);
+                type = "date";
+            } else {
+                type = typeof value;
+                if (type === "string" && parseStrings !== false) {
+                    var parseResult = kendo.spreadsheet.calc.parse(null, 0, 0, value);
+                    value = parseResult.value;
+                    type = parseResult.type;
+                }
+            }
+        }
+
+        return {
+            type: type,
+            value: value
+        };
+    }
 
     kendo.spreadsheet.Sheet = Sheet;
 })(kendo);
