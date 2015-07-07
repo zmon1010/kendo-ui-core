@@ -593,6 +593,17 @@
         });
     });
 
+    test("MEDIAN", function(){
+        ss.fill({
+            A5: '=median(A1:C4)',
+            A6: '=median(2, 3, 4, 5)',
+        });
+        ss.recalculate(function(){
+            equal(ss.$("A5"), 5);
+            equal(ss.$("A6"), 3.5);
+        });
+    });
+
     test("evaluate dependent formulas", function(){
         ss.fill({
             D1: '=sum(indirect("D2"):indirect("$D$3"))',

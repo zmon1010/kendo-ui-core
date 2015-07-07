@@ -336,6 +336,20 @@
         [ "numbers", [ "collect", "number" ] ]
     ]);
 
+    defineFunction("median", function(numbers){
+        var n = numbers.length;
+        if (n < 1) {
+            return new CalcError("N/A");
+        }
+        numbers.sort();
+        if (n % 2) {
+            return numbers[n >> 1];
+        }
+        return (numbers[n >> 1] + numbers[n >> 1 + 1]) / 2;
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
+
     /* -----[  ]----- */
 
     defineFunction("fact", function(n){
