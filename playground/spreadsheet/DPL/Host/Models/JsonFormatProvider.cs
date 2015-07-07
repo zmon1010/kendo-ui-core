@@ -5,10 +5,12 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
+using Telerik.Windows.Documents.Spreadsheet.Core;
 using Telerik.Windows.Documents.Spreadsheet.Core.DataStructures;
 using Telerik.Windows.Documents.Spreadsheet.FormatProviders;
 using Telerik.Windows.Documents.Spreadsheet.FormatProviders.Contexts;
 using Telerik.Windows.Documents.Spreadsheet.Model;
+using Telerik.Windows.Documents.Spreadsheet.PropertySystem;
 
 namespace Host
 {
@@ -51,6 +53,64 @@ namespace Host
             get
             {
                 return true;
+            }
+        }
+
+        public Workbook Import(DTO.Workbook dtoWorkbook)
+        {
+            var workbook = new Workbook();
+            workbook.History.IsEnabled = false;
+
+            using (new UpdateScope(workbook.SuspendLayoutUpdate, workbook.ResumeLayoutUpdate))
+            {
+                foreach (var dtoSheet in dtoWorkbook.Sheets)
+                {
+                    var sheet = workbook.Worksheets.Add();
+                    workbook.ActiveWorksheet = sheet;
+
+                    foreach (var dtoRow in dtoSheet.Rows)
+                    {
+                        foreach (var dtoCell in dtoRow.Cells)
+                        {
+                            var stringValue = dtoCell.Value.ToString();
+                            var selection = sheet.Cells[dtoRow.Index, dtoCell.Index];
+
+                            double numericValue;
+                            if (double.TryParse(stringValue, out numericValue))
+                            {
+                                selection.SetValue(numericValue);
+                            }
+                            else
+                            {
+                                selection.SetValueAsText(stringValue);
+                            }
+
+                            if (!string.IsNullOrEmpty(dtoCell.Format))
+                            {
+                                selection.SetFormat(new CellValueFormat(dtoCell.Format));
+                            }
+                        }
+                    }
+                }
+            }
+
+            workbook.History.IsEnabled = true;
+            return workbook;
+        }
+
+        static long ConvertCellIndexToLong(int rowIndex, int columnIndex)
+        {
+            return (long)columnIndex * SpreadsheetDefaultValues.RowCount + rowIndex;
+        }
+
+        protected override Workbook ImportOverride(Stream input)
+        {
+            var serializer = new JsonSerializer();
+            using (var reader = new StreamReader(input, System.Text.Encoding.UTF8, true, 4096, true))
+            using (var jsonReader= new JsonTextReader(reader))
+            {
+                var dtoWorkbook = serializer.Deserialize<DTO.Workbook>(jsonReader);
+                return Import(dtoWorkbook);
             }
         }
 

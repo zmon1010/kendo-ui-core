@@ -10,6 +10,7 @@
           "/kendo/src/jquery.js",
           "/kendo/src/kendo.dom.js",
           "/kendo/src/kendo.spreadsheet.js",
+          "/kendo/src/kendo.upload.js"
         ]);
     </script>
     <style>
@@ -18,8 +19,16 @@
         }
     </style>
 </head>
-<body>
+<body>    
     <div id="spreadsheet"></div>
+
+    <form action="@Url.Action("Save", "Home")" method="POST">
+        <input type="hidden" id="data" name="data" />
+        <input type="submit" id="save" value="Save as XLSX" />
+    </form>
+
+    <input type="file" name="file" id="upload" />
+
     <script>
         var spreadsheet = $("#spreadsheet").kendoSpreadsheet({
             rows: 1000,
@@ -29,8 +38,24 @@
         var sheet = spreadsheet.activeSheet();
         var calc = kendo.spreadsheet.calc;
 
-        $.ajax("@Url.Action("Import", "Home")").done(function (dtoWorkbook) {
+        $.ajax("@Url.Action("Load", "Home", new { file = "Sample.xlsx" })").done(function (dtoWorkbook) {
             spreadsheet.fromJSON(dtoWorkbook);
+        });
+
+        $("#save").click(function() {
+            $("#data").val(JSON.stringify(spreadsheet.toJSON()));
+        });
+
+        $("#upload").kendoUpload({
+            async: {
+                saveUrl: "@Url.Action("Upload", "Home")"
+            },
+            localization: {
+                "select": "Upload XLSX"
+            },
+            success: function(e) {
+                spreadsheet.fromJSON(e.response);
+            }
         });
     </script>
 </body>

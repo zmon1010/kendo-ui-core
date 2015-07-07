@@ -22,35 +22,72 @@ namespace Host.Controllers
         }
 
         //[OutputCache(Duration = 60, VaryByParam = "none")]
-        public ActionResult Import()
+        public ActionResult Load(string file)
         {
-            string fileName = Server.MapPath("~/App_Data/Sample.xlsx");
+            string fileName = Path.Combine(Server.MapPath("~/App_Data"), file);
             if (!IOFile.Exists(fileName))
             {
                 throw new FileNotFoundException(String.Format("File {0} was not found!", fileName));
             }
 
             Workbook workbook;
-            var formatProvider = new XlsxFormatProvider();
-
+            var xlsxProvider = new XlsxFormatProvider();
             using (FileStream input = new FileStream(fileName, FileMode.Open))
             {
-                workbook = formatProvider.Import(input);
+                workbook = xlsxProvider.Import(input);
             }
 
             string json;
 
-            var jsonFormatProvider = new JsonFormatProvider();
+            var jsonProvider = new JsonFormatProvider();
             using (var stream = new MemoryStream())
             using (var reader = new StreamReader(stream))
             {
-                jsonFormatProvider.Export(workbook, stream);
+                jsonProvider.Export(workbook, stream);
 
                 stream.Seek(0, SeekOrigin.Begin);
                 json = reader.ReadToEnd();                    
             }
 
             return Content(json, "application/json");
+        }
+
+        [HttpPost]
+        public ActionResult Save(string data)
+        {
+            var dtoWorkbook = JsonConvert.DeserializeObject<DTO.Workbook>(data);
+            var jsonProvider = new JsonFormatProvider();
+            var workbook = jsonProvider.Import(dtoWorkbook);
+
+            var xlsxProvider = new XlsxFormatProvider();
+            var xlsxFile = xlsxProvider.Export(workbook);
+            return File(xlsxFile, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase file)
+        {
+            Workbook workbook;
+            var xlsxProvider = new XlsxFormatProvider();
+            using (var input = file.InputStream)
+            {
+                workbook = xlsxProvider.Import(input);
+            }
+
+            string json;
+
+            var jsonProvider = new JsonFormatProvider();
+            using (var stream = new MemoryStream())
+            using (var reader = new StreamReader(stream))
+            {
+                jsonProvider.Export(workbook, stream);
+
+                stream.Seek(0, SeekOrigin.Begin);
+                json = reader.ReadToEnd();
+            }
+
+            return Content(json, "application/json");
+
         }
 	}
 }

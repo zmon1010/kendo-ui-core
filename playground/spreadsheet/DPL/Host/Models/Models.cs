@@ -12,7 +12,7 @@ namespace Host.DTO
         public int Index { get; set; }
 
         [JsonProperty(PropertyName = "format")]
-        public object Format { get; set; }
+        public string Format { get; set; }
 
         [JsonProperty(PropertyName = "value")]
         public object Value { get; set; }
