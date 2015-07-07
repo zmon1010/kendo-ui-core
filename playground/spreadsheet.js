@@ -10,7 +10,7 @@ sheet.range("E11:AX200").formula("=RANDBETWEEN(1, 100)");
 
 //sheet.hideColumn(1);
 //sheet.hideColumn(5);
-//sheet.hideRow(5);
+sheet.hideRow(12);
 
 sheet.rowHeight(1, 40);
 sheet.rowHeight(50, 200);

@@ -106,27 +106,30 @@
 
             $(this.container).on("keydown", function(e) {
                 var sheet = this._sheet;
+                var grid = this._sheet._grid;
                 var activeCell = sheet.activeCell();
                 var cell = sheet.originalActiveCell();
                 var nextCell;
 
                 switch (e.keyCode) {
                     case kendo.keys.LEFT:
-                        nextCell = new CellRef(cell.row, activeCell.topLeft.col - 1);
+                        nextCell = new CellRef(cell.row, grid._columns.prevVisible(activeCell.topLeft.col));
                         break;
                     case kendo.keys.UP:
-                        nextCell = new CellRef(activeCell.topLeft.row - 1, cell.col);
+                        nextCell = new CellRef(grid._rows.prevVisible(activeCell.topLeft.row), cell.col);
                         break;
                     case kendo.keys.RIGHT:
-                        nextCell = new CellRef(cell.row, activeCell.bottomRight.col + 1);
+                        nextCell = new CellRef(cell.row, grid._columns.nextVisible(activeCell.bottomRight.col));
                         break;
                     case kendo.keys.DOWN:
-                        nextCell = new CellRef(activeCell.bottomRight.row + 1, cell.col);
+                        nextCell = new CellRef(grid._rows.nextVisible(activeCell.bottomRight.row), cell.col);
                         break;
                 }
 
+                e.preventDefault();
+
                 if (nextCell) {
-                    sheet.activeCell(sheet._grid.normalize(nextCell));
+                    sheet.activeCell(nextCell);
                 }
 
             }.bind(this));

@@ -105,6 +105,34 @@
         equal(axis.total, 1000 * 15);
     });
 
+    test("Next visible boundary check", function() {
+        equal(axis.nextVisible(999), 999);
+    });
+
+    test("Next visible gives the next visible index", function() {
+        axis.hide(1);
+        equal(axis.nextVisible(0), 2);
+    });
+
+    test("Next visible boundary check (hidden last)", function() {
+        axis.hide(999);
+        equal(axis.nextVisible(998), 998);
+    });
+
+    test("Prev visible boundary check", function() {
+        equal(axis.prevVisible(0), 0);
+    });
+
+    test("Prev visible gives the prev visible index", function() {
+        axis.hide(1);
+        equal(axis.prevVisible(2), 0);
+    });
+
+    test("Prev visible boundary check (hidden last)", function() {
+        axis.hide(0);
+        equal(axis.prevVisible(1), 1);
+    });
+
     module("PaneAxis", {
     });
 

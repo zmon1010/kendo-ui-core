@@ -67,6 +67,44 @@
             return this._hidden.value(index, index) !== 0;
         },
 
+        nextVisible: function(index) {
+            var end = this._count - 1;
+
+            if (index === end) {
+                return index;
+            }
+
+            index += 1;
+            var range = this._hidden.intersecting(index, index)[0];
+            if (range.value !== 0) { // hidden
+                if (range.end === end) { // reached the last visible
+                    return index - 1;
+                } else {
+                    return range.end + 1;
+                }
+            } else {
+                return index;
+            }
+        },
+
+        prevVisible: function(index) {
+            if (index === 0) {
+                return 0;
+            }
+
+            index -= 1;
+            var range = this._hidden.intersecting(index, index)[0];
+            if (range.value !== 0) { // hidden
+                if (range.start === 0) { // reached the last visible
+                    return index + 1;
+                } else {
+                    return range.start - 1;
+                }
+            } else {
+                return index;
+            }
+        },
+
         unhide: function(index) {
             if (this.hidden(index)) {
                 var value = this._hidden.value(index, index);
