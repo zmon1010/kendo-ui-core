@@ -33,12 +33,12 @@
             {
                 items.Add().Text("Orders").Content(obj => 
                      Html.Kendo().Grid<Kendo.Mvc.Examples.Models.OrderViewModel>()
-                        .Name("grid_#=EmployeeID#")
+                        .Name("grid_#=EmployeeID#") // template expression, to be evaluated in the master context
                         .Columns(columns =>
                         {
                             columns.Bound(o => o.OrderID).Title("ID").Width(56);
                             columns.Bound(o => o.ShipCountry).Width(110);
-                            columns.Bound(o => o.ShipAddress);
+                            columns.Bound(o => o.ShipAddress).ClientTemplate("\\#= ShipAddress \\#"); // escaped template expression, to be evaluated in the child/detail context
                             columns.Bound(o => o.ShipName).Width(190);
                         })
                         .DataSource(dataSource => dataSource
