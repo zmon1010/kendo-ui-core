@@ -87,4 +87,27 @@
     test("triggerChange doesn't trigger the change event if changes are suspended", 0, function() {
        sheet.bind("change", failure).suspendChanges(true).triggerChange();
     });
+
+    test("deleteRow triggers the change event", 1, function() {
+       sheet.bind("change", success).deleteRow(0);
+    });
+
+    test("deleteRow move the bottom row values to the deleted one", function() {
+        sheet.range("2:2").value("foo");
+
+        sheet.deleteRow(0);
+
+        equal(sheet.range("1:1").value(), "foo");
+        equal(sheet.range("2:2").value(), null);
+    });
+
+    test("deleteRow move the bottom row background to the deleted one", function() {
+        sheet.range("2:2").background("foo");
+
+        sheet.deleteRow(0);
+
+        equal(sheet.range("1:1").background(), "foo");
+        equal(sheet.range("2:2").background(), null);
+    });
+
 })();

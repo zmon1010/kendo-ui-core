@@ -138,4 +138,89 @@
         equal(values[2].value, 2);
         equal(values[3].value, 3);
     });
+
+    test("swap copies the source value to the target", 1, function() {
+        var list = new RangeList(0, 100, 0);
+
+        list.value(11, 11, 2);
+        list.value(12, 12, 1);
+
+        list.swap(12, 12, 11);
+
+        equal(list.value(11, 11), 1);
+    });
+
+    test("swap copies the multiple source values to the target position", 2, function() {
+        var list = new RangeList(0, 100, 0);
+
+        list.value(11, 11, 2);
+        list.value(12, 12, 1);
+        list.value(13, 13, 3);
+
+        list.swap(12, 13, 11);
+
+        equal(list.value(11, 11), 1);
+        equal(list.value(12, 12), 3);
+    });
+
+    test("swap works in both directions", 1, function() {
+        var list = new RangeList(0, 100, 0);
+
+        list.value(11, 11, 2);
+        list.value(12, 12, 1);
+
+        list.swap(11, 11, 12);
+
+        equal(list.value(12, 12), 2);
+    });
+
+    test("swap copies the multiple source values to the target position - both directions", 4, function() {
+        var list = new RangeList(0, 100, 0);
+
+        list.value(11, 11, 2);
+        list.value(12, 12, 1);
+        list.value(13, 13, 3);
+        list.value(14, 14, 4);
+
+        list.swap(11, 12, 13);
+
+        equal(list.value(11, 11), 2);
+        equal(list.value(12, 12), 1);
+        equal(list.value(13, 13), 2);
+        equal(list.value(14, 14), 1);
+    });
+
+    test("swap does not change values if target is same as source", 4, function() {
+        var list = new RangeList(0, 100, 0);
+
+        list.value(11, 11, 2);
+        list.value(12, 12, 1);
+        list.value(13, 13, 3);
+        list.value(14, 14, 4);
+
+        list.swap(11, 12, 11);
+
+        equal(list.value(11, 11), 2);
+        equal(list.value(12, 12), 1);
+        equal(list.value(13, 13), 3);
+        equal(list.value(14, 14), 4);
+    });
+
+    test("swap copies the multiple source values to the overlapping target position", 4, function() {
+        var list = new RangeList(0, 100, 0);
+
+        list.value(11, 11, 2);
+        list.value(12, 12, 1);
+        list.value(13, 13, 3);
+        list.value(14, 14, 4);
+
+        list.swap(11, 12, 12);
+
+        equal(list.value(11, 11), 2);
+        equal(list.value(12, 12), 2);
+        equal(list.value(13, 13), 1);
+        equal(list.value(14, 14), 4);
+    });
+
+
 })();

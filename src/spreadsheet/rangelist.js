@@ -336,6 +336,14 @@
             }
         },
 
+        swap: function(sourceStart, sourceEnd, targetStart) {
+            var values = this.expandedValues(sourceStart, sourceEnd);
+
+            for (var i = 0, len = values.length; i < len; i++) {
+                this.value(i + targetStart, i + targetStart, values[i].value);
+            }
+        },
+
         iterator: function(start, end) {
             return new Iterator(start, end, this.intersecting(start, end));
         }
