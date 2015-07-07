@@ -779,6 +779,12 @@
         },
         _filterBy: function(ref, columns) {
             this.batch(function() {
+                for (var ri = ref.topLeft.row; ri <= ref.bottomRight.row; ri++) {
+                    if (this._rows.hidden(ri)) {
+                        this._rows.unhide(ri);
+                    }
+                }
+
                 columns.forEach(function(column) {
                     var columnRef = ref.toColumn(column.column);
 
@@ -801,6 +807,20 @@
                     columns: columns
                 };
             }.bind(this));
+        },
+        clearFilter: function(spec) {
+            this._clearFilter(spec instanceof Array ? spec : [spec]);
+        },
+        _clearFilter: function(indices) {
+            if (this._filter) {
+                this.batch(function() {
+                    var columns = this._filter.columns.filter(function(column) {
+                        return indices.indexOf(column.column) < 0;
+                    });
+
+                    this._filterBy(this._filter.ref, columns);
+                }.bind(this));
+            }
         }
     });
 

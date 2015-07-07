@@ -103,11 +103,17 @@ $("#sort").on("click", function() {
     ascending = !ascending;
 });
 
+var filtered = false;
 $("#filter").on("click", function() {
-    sheet.range("A1:B3").filter({
-        column: 0,
-        filter: new kendo.spreadsheet.ValueFilter({
-            values: [3]
-        })
-    });
+    if (filtered) {
+        sheet.clearFilter(0);
+    } else {
+        sheet.range("A1:B3").filter({
+            column: 0,
+            filter: new kendo.spreadsheet.ValueFilter({
+                values: [3]
+            })
+        });
+    }
+    filtered = !filtered;
 });

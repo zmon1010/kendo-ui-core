@@ -74,4 +74,20 @@
         equal(sheet.rowHeight(0), 20);
     });
 
+    test("clearing a filter shows the hidden rows", function() {
+        sheet.range("A1:B2").values([
+            [1, 2],
+            [2, 3]
+        ]).filter({
+            column: 0,
+            filter: new kendo.spreadsheet.ValueFilter( {
+                values: [2]
+            })
+        });
+
+        sheet.clearFilter(0);
+
+        equal(sheet.rowHeight(0), 20);
+    });
+
 })();

@@ -244,6 +244,9 @@
             this._sheet._filterBy(this._ref.toRangeRef(), spec instanceof Array ? spec : [spec]);
 
             return this;
+        },
+        clearFilter: function(spec) {
+            this._sheet._clearFilter(spec instanceof Array ? spec : [spec]);
         }
     });
 
