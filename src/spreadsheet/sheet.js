@@ -778,27 +778,29 @@
             this.triggerChange(true);
         },
         _filterBy: function(ref, columns) {
-            columns.forEach(function(column) {
-                var columnRef = ref.toColumn(column.column);
+            this.batch(function() {
+                columns.forEach(function(column) {
+                    var columnRef = ref.toColumn(column.column);
 
-                var values = this._values.iterator(this._grid.cellRefIndex(columnRef.topLeft),
-                    this._grid.cellRefIndex(columnRef.bottomRight));
+                    var values = this._values.iterator(this._grid.cellRefIndex(columnRef.topLeft),
+                        this._grid.cellRefIndex(columnRef.bottomRight));
 
-                values.forEach(function(value, index) {
-                    var row = this._grid.cellRef(index).row;
+                    values.forEach(function(value, index) {
+                        var row = this._grid.cellRef(index).row;
 
-                    if (column.filter.matches(value) === false) {
-                        this.hideRow(row);
-                    } else {
-                        this.unhideRow(row);
-                    }
-                }.bind(this));
-            }, this);
+                        if (column.filter.matches(value) === false) {
+                            this.hideRow(row);
+                        } else {
+                            this.unhideRow(row);
+                        }
+                    }.bind(this));
+                }, this);
 
-            this._filter = {
-                ref: ref,
-                columns: columns
-            };
+                this._filter = {
+                    ref: ref,
+                    columns: columns
+                };
+            }.bind(this));
         }
     });
 

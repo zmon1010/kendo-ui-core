@@ -15,6 +15,12 @@ sheet.range("E11:AX200").formula("=RANDBETWEEN(1, 100)");
 sheet.rowHeight(1, 40);
 sheet.rowHeight(50, 200);
 
+sheet.range("A1:B3").values([
+    [1, 2],
+    [3, 4],
+    [5, 6]
+]);
+
 sheet.range(1, 0, 50).background("#afa");
 sheet.range(2, 2, 8, 6).background("#aff").value("foo").merge();
 
@@ -31,7 +37,7 @@ sheet.frozenColumns(3).frozenRows(6);
 
 sheet.range("K11:M16,12:12").select();
 
-for (var i = 0, len = 50; i < len; i++) {
+for (var i = 3, len = 50; i < len; i++) {
     sheet.range(i, 0).formula("=AVERAGE(L:L)");
 }
 
@@ -95,4 +101,13 @@ var ascending = true;
 $("#sort").on("click", function() {
     sheet.range("I1:I4").sort({ column: 0, ascending: ascending });
     ascending = !ascending;
+});
+
+$("#filter").on("click", function() {
+    sheet.range("A1:B3").filter({
+        column: 0,
+        filter: new kendo.spreadsheet.ValueFilter({
+            values: [3]
+        })
+    });
 });

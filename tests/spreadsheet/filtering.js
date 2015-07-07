@@ -22,6 +22,25 @@
         equal(sheet.rowHeight(1), 0);
     });
 
+    test("filter triggers the sheet change event", 1, function() {
+        var range = sheet.range("A1:B2").values([
+                [1, 2],
+                [2, 3],
+                [2, 4]
+        ]);
+
+        sheet.bind("change", function() {
+            ok(true);
+        });
+
+        range.filter({
+            column: 0,
+            filter: new kendo.spreadsheet.ValueFilter( {
+                values: [2]
+            })
+        });
+    });
+
     test("filter hides rows that don't match the values of the second column", function() {
         sheet.range("A1:B2").values([
             [1, 2],
