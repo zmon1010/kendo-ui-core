@@ -350,6 +350,27 @@
         [ "numbers", [ "collect", "number" ] ]
     ]);
 
+    defineFunction("mode.sngl", function(numbers){
+        numbers.sort();
+        var prev = null, count = 0, max = 1, mode = null;
+        for (var i = 0; i < numbers.length; ++i) {
+            var n = numbers[i];
+            if (n != prev) {
+                count = 1;
+                prev = n;
+            } else {
+                count++;
+            }
+            if (count > max) {
+                max = count;
+                mode = n;
+            }
+        }
+        return mode == null ? new CalcError("N/A") : mode;
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
+
     /* -----[  ]----- */
 
     defineFunction("fact", function(n){

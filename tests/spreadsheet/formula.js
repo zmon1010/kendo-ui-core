@@ -604,6 +604,20 @@
         });
     });
 
+    test("MODE.SNGL", function(){
+        ss.fill({
+            D1: '2', D2: '2', D3: '9',
+            A4: '=mode.sngl(A1:D3)',
+            A5: '=mode.sngl(A1:C3)',
+            A6: '=mode.sngl()',
+        });
+        ss.recalculate(function(){
+            equal(ss.$("A4"), 2);
+            equal(ss.$("A5"), "#N/A!");
+            equal(ss.$("A6"), "#N/A!");
+        });
+    });
+
     test("evaluate dependent formulas", function(){
         ss.fill({
             D1: '=sum(indirect("D2"):indirect("$D$3"))',
