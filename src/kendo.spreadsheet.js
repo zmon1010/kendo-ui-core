@@ -8,6 +8,7 @@
         "./spreadsheet/view",
         "./spreadsheet/grid",
         "./spreadsheet/axis",
+        "./spreadsheet/filter",
         "./spreadsheet/sorter",
         "./spreadsheet/runtime",
         "./spreadsheet/calc",

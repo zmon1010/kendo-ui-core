@@ -50,8 +50,7 @@
             var type = null;
 
             if (value !== undefined) {
-                var ref = this._ref.toRangeRef().topLeft;
-                var result = this._sheet._parse(ref.row, ref.col, value, parse);
+                var result = kendo.spreadsheet.Sheet.parse(value, parse);
 
                 this._sheet.batch(function() {
                     this._property(this._sheet._types, result.type);
