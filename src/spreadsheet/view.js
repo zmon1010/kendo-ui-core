@@ -459,10 +459,7 @@
             var view = this._currentView;
 
             if (view.ref.intersects(ref)) {
-                var div = this._rectangle(ref).toDiv(className);
-                var style = div.attr.style;
-                style.height = (parseInt(style.height, 10) + 1) + "px";
-                style.width = (parseInt(style.width, 10) + 1) + "px";
+                var div = this._rectangle(ref).resize(1, 1).toDiv(className);
                 collection.push(div);
             }
         },

@@ -22,6 +22,10 @@
             return new Rectangle(this.left + left, this.top + top, this.width, this.height);
         },
 
+        resize: function(width, height) {
+            return new Rectangle(this.left, this.top, this.width + 1, this.height + 1);
+        },
+
         toDiv: function(className) {
             return kendo.dom.element("div", {
                 className: className,
