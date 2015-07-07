@@ -433,21 +433,33 @@ namespace Kendo.Mvc.UI
             return Button<GridDestroyActionCommand>(dataItem/*, buttonType*/, htmlAttributes, imageHtmlAttributes, text);
         }
 
+        /// <summary>
+        /// Insert Destroy button with custom HtmlAttributes and text
+        /// </summary>
         public object DestroyButton(T dataItem, string text, object htmlAttributes)
         {
             return DestroyButton(dataItem, text, htmlAttributes, null);
         }
 
+        /// <summary>
+        /// Insert Destroy button with custom HtmlAttributes
+        /// </summary>
         public object DestroyButton(T dataItem, object htmlAttributes)
         {
             return DestroyButton(dataItem, null, htmlAttributes);
         }        
 
+        /// <summary>
+        /// Insert Destroy button with custom text
+        /// </summary>
         public object DestroyButton(T dataItem, string text)
         {
             return DestroyButton(dataItem, text, null);
         }
 
+        /// <summary>
+        /// Insert Destroy button
+        /// </summary>
         public object DestroyButton(T dataItem)
         {
             return DestroyButton(dataItem, (string)null);
@@ -465,21 +477,33 @@ namespace Kendo.Mvc.UI
             return Button<GridToolBarCreateCommand<T>>(null/*, buttonType*/, htmlAttributes, imageHtmlAttributes, text);
         }
 
+        /// <summary>
+        /// Insert Create button with custom HtmlAttributes and text
+        /// </summary>
         public object CreateButton(string text, object htmlAttributes)
         {
             return CreateButton(htmlAttributes, null, text);
         }
 
+        /// <summary>
+        /// Insert Create button with custom HtmlAttributes
+        /// </summary>
         public object CreateButton(/*GridButtonType buttonType,*/ object htmlAttributes)
         {
             return CreateButton(null, htmlAttributes);
         }
 
+        /// <summary>
+        /// Insert Create button with custom text
+        /// </summary>
         public object CreateButton(string text)
         {
             return CreateButton(text, null);
         }           
 
+        /// <summary>
+        /// Insert Create button
+        /// </summary>
         public object CreateButton()
         {
             return CreateButton((string)null);
@@ -491,21 +515,33 @@ namespace Kendo.Mvc.UI
             return SaveButton(null/*, buttonType*/, htmlAttributes/*, imageHtmlAttributes*/, saveText, cancelText);
         }
 
+        /// <summary>
+        /// Insert Save button with custom HtmlAttributes and texts
+        /// </summary>
         public object SaveButton(string saveText, string cancelText, object htmlAttributes)
         {
             return SaveButton(htmlAttributes, null, saveText, cancelText);
         }        
 
+        /// <summary>
+        /// Insert Save button with custom save and cancel text
+        /// </summary>
         public object SaveButton(string saveText, string cancelText)
         {
             return SaveButton(saveText, cancelText, null);
         }
 
+        /// <summary>
+        /// Insert Save button with custom HtmlAttributes
+        /// </summary>
         public object SaveButton(object htmlAttributes)
         {
             return SaveButton(null, null, htmlAttributes);
         }
 
+        /// <summary>
+        /// Insert Save button
+        /// </summary>
         public object SaveButton()
         {
             return SaveButton(null);
