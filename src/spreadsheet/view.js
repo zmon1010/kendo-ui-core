@@ -237,6 +237,28 @@
         }
     });
 
+    function orientedClass(defaultClass, left, top, right, bottom) {
+        var classes = [defaultClass];
+
+        if (top) {
+            classes.push("k-top");
+        }
+
+        if (right) {
+            classes.push("k-right");
+        }
+
+        if (bottom) {
+            classes.push("k-bottom");
+        }
+
+        if (left) {
+            classes.push("k-left");
+        }
+
+        return classes.join(" ");
+    }
+
     var Pane = kendo.Class.extend({
         init: function(sheet, grid) {
             this._sheet = sheet;
@@ -249,21 +271,6 @@
 
         isVisible: function(scrollLeft, scrollTop, ref) {
             return this._grid.view(scrollLeft, scrollTop).ref.intersects(ref);
-        },
-
-        _className: function() {
-            var grid = this._grid;
-            var classes = ["k-spreadsheet-pane"];
-
-            if (grid.hasRowHeader) {
-                classes.push("k-spreadsheet-pane-left");
-            }
-
-            if (grid.hasColumnHeader) {
-                classes.push("k-spreadsheet-pane-top");
-            }
-
-            return classes.join(" ");
         },
 
         render: function(scrollLeft, scrollTop) {
@@ -317,7 +324,10 @@
                 children.push(columnHeader.toDomTree(view.columnOffset, 0, "k-spreadsheet-column-header"));
             }
 
-            return kendo.dom.element("div", { style: grid.style, className: this._className() }, children);
+            return kendo.dom.element("div", {
+                style: grid.style,
+                className: orientedClass("k-spreadsheet-pane", grid.hasRowHeader, grid.hasColumnHeader)
+            }, children);
         },
 
         headerClassName: function(index, type) {
@@ -439,8 +449,17 @@
 
         renderSelection: function() {
             var selections = [];
+            var grid = this._grid;
             var sheet = this._sheet;
             var view = this._currentView;
+            var activeCell = sheet.activeCell().toRangeRef();
+            var className = orientedClass(
+                "k-spreadsheet-active-cell",
+                !activeCell.move(0, -1).intersects(view.ref),
+                !activeCell.move(-1, 0).intersects(view.ref),
+                !activeCell.move(0, 1).intersects(view.ref),
+                !activeCell.move(1, 0).intersects(view.ref)
+            );
 
             sheet.select().forEach(function(ref) {
                 if (ref === kendo.spreadsheet.NULLREF) {
@@ -450,7 +469,7 @@
                 this._addDiv(selections, ref, "k-spreadsheet-selection");
             }.bind(this));
 
-            this._addTable(selections, sheet.activeCell().toRangeRef(),  "k-spreadsheet-active-cell");
+            this._addTable(selections, activeCell, className);
 
             return kendo.dom.element("div", { className: "k-selection-wrapper" }, selections);
         },

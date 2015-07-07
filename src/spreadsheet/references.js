@@ -422,6 +422,14 @@
                 return NULL;
             }
         },
+        move: function(rows, cols) {
+            return new RangeRef(
+                new CellRef(this.topLeft.row + rows,
+                            this.topLeft.col + cols),
+                new CellRef(this.bottomRight.row + rows,
+                            this.bottomRight.col + cols)
+            );
+        },
         first: function() {
             return this.topLeft;
         },

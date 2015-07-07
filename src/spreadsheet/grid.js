@@ -23,7 +23,7 @@
         },
 
         resize: function(width, height) {
-            return new Rectangle(this.left, this.top, this.width + 1, this.height + 1);
+            return new Rectangle(this.left, this.top, this.width + width, this.height + height);
         },
 
         toDiv: function(className) {
@@ -172,12 +172,16 @@
                 mergedCellLeft: columns.start,
                 mergedCellTop: rows.start,
 
-                ref: new RangeRef(new CellRef(rows.values.start, columns.values.start), new CellRef(rows.values.end, columns.values.end))
+                ref: new RangeRef(
+                    new CellRef(rows.values.start, columns.values.start),
+                    new CellRef(rows.values.end, columns.values.end)
+                )
             };
         },
 
         contains: function(ref) {
-            return this.rows.contains(ref.topLeft.row, ref.bottomRight.row) && this.columns.contains(ref.topLeft.col, ref.bottomRight.col);
+            return this.rows.contains(ref.topLeft.row, ref.bottomRight.row) &&
+                this.columns.contains(ref.topLeft.col, ref.bottomRight.col);
         },
 
         index: function(row, column) {
