@@ -45,7 +45,7 @@
 
         timeline._render(tasks);
 
-        ok(timeline.view(), "range");
+        ok(timeline.view().calls("range"));
     });
 
     test("_render(tasks) calls view range() method with tasks range", 2, function() {
@@ -209,20 +209,26 @@
         equal(timeline.wrapper.find(".k-gantt-tasks colgroup col").length, 1);
     });
 
+    var setupTooltip = function() {
+        timeline = new Timeline(element);
+        timeline.view("week");
+        tasks = [new GanttTask({
+            start: new Date("2014/04/15"),
+            end: new Date("2014/04/16")
+        }), new GanttTask({
+            start: new Date("2014/04/16"),
+            end: new Date("2014/04/17")
+        })];
+    };
 
     module("Task Tooltip", {
         setup: function() {
             element = $("<div />");
-            timeline = new Timeline(element);
-            timeline.view("week");
-            tasks = [new GanttTask({
-                start: new Date("2014/04/15"),
-                end: new Date("2014/04/16")
-            })];
         },
         teardown: function() {
             if (timeline) {
                 timeline.destroy();
+                timeline.view()._removeTaskTooltip();
             }
 
             kendo.destroy(element);
@@ -230,6 +236,7 @@
     });
 
     test("_createTaskTooltip renders tooltip", function() {
+        setupTooltip();
         timeline._render(tasks);
 
         var task = timeline._tasks[0];
@@ -241,6 +248,7 @@
     });
 
     test("_createTaskTooltip renders tooltip with template if set", function() {
+        setupTooltip();
         timeline._render(tasks);
 
         var task = timeline._tasks[0];
@@ -256,6 +264,7 @@
     });
 
     test("_removeTaskTooltip removes tooltip", function() {
+        setupTooltip();
         timeline._render(tasks);
 
         var task = timeline._tasks[0];
@@ -268,6 +277,144 @@
         equal(timeline.wrapper.find(".k-tooltip .k-task-details").length, 0);
     });
 
+    test("on mobile device created on tap", function() {
+        var taskElement;
+        var mobileOS = kendo.support.mobileOS;
+        kendo.support.mobileOS = true;
+
+        setupTooltip();
+
+        timeline.touch.options.doubleTapTimeout = 0;
+        timeline._render(tasks);
+
+        taskElement = timeline.wrapper.find(".k-task");
+
+        stub(timeline.view(), "_createTaskTooltip");
+
+        tap(taskElement);
+
+        equal(timeline.view().calls("_createTaskTooltip"), 1);
+
+        kendo.support.mobileOS = mobileOS;
+    });
+
+    test("on mobile device clear tooltip upon delete button click", function() {
+        var deleteElement;
+        var mobileOS = kendo.support.mobileOS;
+        kendo.support.mobileOS = true;
+
+        setupTooltip();
+
+        timeline._render(tasks);
+
+        deleteElement = timeline.wrapper.find(".k-task-delete");
+
+        stub(timeline.view(), "_removeTaskTooltip");
+
+        deleteElement.trigger("click");
+
+        ok(timeline.view().calls("_removeTaskTooltip"));
+
+        kendo.support.mobileOS = mobileOS;
+    });
+
+    asyncTest("on mobile device clear tooltip on second tap", function() {
+        var taskElement;
+        var mobileOS = kendo.support.mobileOS;
+        kendo.support.mobileOS = true;
+
+        setupTooltip();
+
+        timeline.touch.options.doubleTapTimeout = 0;
+        timeline._render(tasks);
+
+        taskElement = timeline.wrapper.find(".k-task");
+
+        stub(timeline.view(), "_removeTaskTooltip");
+
+        tap(taskElement);
+
+        equal(timeline.view().calls("_removeTaskTooltip"), 0);
+
+        setTimeout(function() {
+            start();
+            tap(taskElement);
+            equal(timeline.view().calls("_removeTaskTooltip"), 1);
+        }, 1);
+
+        kendo.support.mobileOS = mobileOS;
+    });
+
+    test("on mobile device clear tooltip on doubletap", function() {
+        var taskElement;
+        var mobileOS = kendo.support.mobileOS;
+        kendo.support.mobileOS = true;
+
+        setupTooltip();
+
+        timeline.touch.options.doubleTapTimeout = 0;
+        timeline._render(tasks);
+
+        taskElement = timeline.wrapper.find(".k-task");
+
+        stub(timeline.view(), "_removeTaskTooltip");
+
+        tap(taskElement);
+        tap(taskElement);
+
+        equal(timeline.view().calls("_removeTaskTooltip"), 1);
+
+        kendo.support.mobileOS = mobileOS;
+    });
+
+    test("on mobile device clear tooltip on mouseleave on task element", function() {
+        var taskElement;
+        var event = new $.Event();
+        var mobileOS = kendo.support.mobileOS;
+        kendo.support.mobileOS = true;
+
+        setupTooltip();
+        timeline._render(tasks);
+
+        taskElement = timeline.wrapper.find(".k-task:first");
+
+        event.type = "mouseleave";
+        event.relatedTarget = document.body;
+
+        stub(timeline.view(), "_removeTaskTooltip");
+
+        taskElement.trigger(event);
+
+        equal(timeline.view().calls("_removeTaskTooltip"), 1);
+
+        kendo.support.mobileOS = mobileOS;
+    });
+
+    test("on mobile device does clear tooltip on mouseleave task element when new element is task", function() {
+        var taskElement;
+        var relatedTargetElement;
+        var event = new $.Event();
+        var mobileOS = kendo.support.mobileOS;
+        kendo.support.mobileOS = true;
+
+        setupTooltip();
+
+        timeline._render(tasks);
+
+        taskElement = timeline.wrapper.find(".k-task:eq(0)");
+        relatedTargetElement = timeline.wrapper.find(".k-task:eq(1)");
+
+        event.type = "mouseleave";
+        event.relatedTarget = relatedTargetElement[0];
+
+        stub(timeline.view(), "_removeTaskTooltip");
+
+        taskElement.trigger(event);
+
+        equal(timeline.view().calls("_removeTaskTooltip"), 0);
+
+        kendo.support.mobileOS = mobileOS;
+    });
 
     module("Single Task Rendering", {
         setup: function() {

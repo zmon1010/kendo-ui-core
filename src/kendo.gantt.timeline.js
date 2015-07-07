@@ -2522,7 +2522,7 @@ var __meta__ = {
                         }
                     });
 
-                if (!mobileOS) {
+                if (!kendo.support.mobileOS) {
                     this.wrapper
                         .on(DBLCLICK + NS, DOT + styles.task, function(e) {
                             that.trigger("editTask", { uid: $(this).attr("data-uid") });
@@ -2555,28 +2555,59 @@ var __meta__ = {
                 return;
             }
 
-            this.wrapper
-                    .on(MOUSEENTER + NS, DOT + styles.task, function(e) {
-                        var element = this;
-                        var task = that._taskByUid($(this).attr("data-uid"));
+            if (!kendo.support.mobileOS) {
+                this.wrapper
+                        .on(MOUSEENTER + NS, DOT + styles.task, function(e) {
+                            var element = this;
+                            var task = that._taskByUid($(this).attr("data-uid"));
 
-                        if (that.dragInProgress) {
-                            return;
-                        }
+                            if (that.dragInProgress) {
+                                return;
+                            }
 
-                        that._tooltipTimeout = setTimeout(function() {
-                            that.view()._createTaskTooltip(task, element, currentMousePosition);
-                        }, 800);
+                            that._tooltipTimeout = setTimeout(function() {
+                                that.view()._createTaskTooltip(task, element, currentMousePosition);
+                            }, 800);
 
-                        $(this).on(MOUSEMOVE, mouseMoveHandler);
+                            $(this).on(MOUSEMOVE, mouseMoveHandler);
+                        })
+                        .on(MOUSELEAVE + NS, DOT + styles.task, function(e) {
+                            clearTimeout(that._tooltipTimeout);
+
+                            that.view()._removeTaskTooltip();
+
+                            $(this).off(MOUSEMOVE, mouseMoveHandler);
+                        });
+            } else {
+                this.wrapper
+                    .on(CLICK + NS, DOT + styles.taskDelete, function(e) {
+                        e.stopPropagation();
+                        that.view()._removeTaskTooltip();
                     })
                     .on(MOUSELEAVE + NS, DOT + styles.task, function(e) {
-                        clearTimeout(that._tooltipTimeout);
+                        var parents = $(e.relatedTarget).parents(DOT + styles.taskWrap, DOT + styles.task);
 
-                        that.view()._removeTaskTooltip();
-
-                        $(this).off(MOUSEMOVE, mouseMoveHandler);
+                        if (parents.length === 0) {
+                            that.view()._removeTaskTooltip();
+                        }
                     });
+
+                this.touch
+                    .bind("tap", function(e) {
+                        var element = e.touch.target;
+                        var task = that._taskByUid($(element).attr("data-uid"));
+                        var currentPosition = e.touch.x.client;
+
+                        if (that.view()._taskTooltip) {
+                            that.view()._removeTaskTooltip();
+                        }
+
+                        that.view()._createTaskTooltip(task, element, currentPosition);
+                    })
+                    .bind("doubletap", function(e) {
+                        that.view()._removeTaskTooltip();
+                    });
+            }
         }
 
     });
