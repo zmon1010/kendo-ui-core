@@ -60,7 +60,7 @@
     });
 
     test("toJSON serializes sort state", function() {
-        sheet.range("A1:B2").sort([{ index: 0, ascending: false }, { index: 1 }]);
+        sheet.range("A1:B2").sort([{ column: 0, ascending: false }, { column: 1 }]);
 
         var json = sheet.toJSON();
 
@@ -69,6 +69,19 @@
         equal(json.sort.columns[0].index, 0);
         equal(json.sort.columns[0].ascending, false);
         equal(json.sort.columns[1].ascending, true);
+    });
+
+    test("toJSON serializes filter state", function() {
+        sheet.range("A1:B2").filter([{ column: 0, filter: new kendo.spreadsheet.ValueFilter({ values:[0,1] }) } ]);
+
+        var json = sheet.toJSON();
+
+        equal(json.filter.ref, "A1:B2");
+        equal(json.filter.columns.length, 1);
+        equal(json.filter.columns[0].index, 0);
+        equal(json.filter.columns[0].filter.type, "value");
+        equal(json.filter.columns[0].filter.values[0], 0);
+        equal(json.filter.columns[0].filter.values[1], 1);
     });
 
     test("toJSON serializes cells that have format", function() {

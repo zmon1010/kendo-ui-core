@@ -26,7 +26,7 @@
             }
         },
 
-        filter: function(value) {
+        matches: function(value) {
             if (value === null) {
                 return this.blanks;
             }
@@ -43,6 +43,12 @@
             }
 
             return this.values.indexOf(value) >= 0;
+        },
+        toJSON: function() {
+            return {
+                type: "value",
+                values: this.values.slice(0)
+            };
         }
     });
 

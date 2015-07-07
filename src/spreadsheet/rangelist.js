@@ -367,7 +367,7 @@
 
         forEach: function(callback) {
             for (var i = this.start; i <= this.end; i++) {
-                callback(this.at(i));
+                callback(this.at(i), i);
             }
 
             this.index = 0;

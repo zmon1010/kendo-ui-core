@@ -548,11 +548,23 @@
             if (this._sort) {
                json.sort = {
                    ref: this._sort.ref.toString(),
-                   columns: this._sort.columns.map(function(column) {
-                      return {
-                          index: column.index,
-                          ascending: column.ascending === undefined ? true : column.ascending
-                      };
+                   columns: this._sort.columns.map(function(column, index) {
+                       return {
+                           index: column.column !== undefined? column.column : index,
+                           ascending: column.ascending !== undefined ? column.ascending : true
+                       };
+                   })
+               };
+            }
+
+            if (this._filter) {
+               json.filter = {
+                   ref: this._filter.ref.toString(),
+                   columns: this._filter.columns.map(function(column, index) {
+                        return {
+                            index: column.column !== undefined? column.column : index,
+                            filter: column.filter.toJSON()
+                        };
                    })
                };
             }
@@ -742,13 +754,9 @@
         _sortBy: function(ref, columns) {
             var indices = null;
 
-            this._sort = {
-                ref: ref,
-                columns: columns
-            };
-
             columns.forEach(function(column) {
                 var ascending = true;
+                var columnRef = ref;
 
                 if (typeof column === "object") {
                     ascending = column.ascending !== false;
@@ -756,13 +764,41 @@
                 }
 
                 if (typeof column === "number") {
-                    ref = ref.toColumn(column);
+                    columnRef = ref.toColumn(column);
                 }
 
-                indices = this._sorter.sortBy(ref, this._values, ascending, indices);
+                indices = this._sorter.sortBy(columnRef, this._values, ascending, indices);
             }, this);
 
+            this._sort = {
+                ref: ref,
+                columns: columns
+            };
+
             this.triggerChange(true);
+        },
+        _filterBy: function(ref, columns) {
+            columns.forEach(function(column) {
+                var columnRef = ref.toColumn(column.column);
+
+                var values = this._values.iterator(this._grid.cellRefIndex(columnRef.topLeft),
+                    this._grid.cellRefIndex(columnRef.bottomRight));
+
+                values.forEach(function(value, index) {
+                    var row = this._grid.cellRef(index).row;
+
+                    if (column.filter.matches(value) === false) {
+                        this.hideRow(row);
+                    } else {
+                        this.unhideRow(row);
+                    }
+                }.bind(this));
+            }, this);
+
+            this._filter = {
+                ref: ref,
+                columns: columns
+            };
         }
     });
 

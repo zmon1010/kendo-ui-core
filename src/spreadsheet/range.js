@@ -235,6 +235,15 @@
             this._sheet._sortBy(this._ref.toRangeRef(), spec instanceof Array ? spec : [spec]);
 
             return this;
+        },
+        filter: function(spec) {
+            if (this._ref instanceof UnionRef) {
+                throw new Error("Unsupported for multiple ranges.");
+            }
+
+            this._sheet._filterBy(this._ref.toRangeRef(), spec instanceof Array ? spec : [spec]);
+
+            return this;
         }
     });
 
