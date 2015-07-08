@@ -2,6 +2,7 @@
     define([
         "./kendo.toolbar",
         "./spreadsheet/chrome",
+        "./spreadsheet/eventlistener",
         "./spreadsheet/rangelist",
         "./spreadsheet/references",
         "./spreadsheet/range",

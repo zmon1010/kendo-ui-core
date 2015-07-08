@@ -99,40 +99,55 @@
             this._sheet = sheet;
         },
 
+        moveActiveCell: function(direction) {
+            var sheet = this._sheet;
+            var activeCell = sheet.activeCell();
+            var topLeft = activeCell.topLeft;
+            var bottomRight = activeCell.bottomRight;
+
+            var cell = sheet.originalActiveCell();
+            var rows = sheet._grid._rows;
+            var columns = sheet._grid._columns;
+
+            var row = cell.row;
+            var column = cell.col;
+
+            switch (direction) {
+                case "left":
+                    column = columns.prevVisible(topLeft.col);
+                    break;
+                case "up":
+                    row = rows.prevVisible(topLeft.row);
+                    break;
+                case "right":
+                    column = columns.nextVisible(bottomRight.col);
+                    break;
+                case "down":
+                    row = rows.nextVisible(bottomRight.row);
+                    break;
+            }
+
+            sheet.activeCell(new CellRef(row, column));
+        },
+
         handleKbd: function() {
-            $(this.container).on("click", function() {
-                this.focus();
+            var container = $(this.container);
+            var that = this;
+
+            var listener = this.listener = new kendo.spreadsheet.EventListener(container);
+
+            listener.on("click", function() {
+                container.focus();
             });
 
-            $(this.container).on("keydown", function(e) {
-                var sheet = this._sheet;
-                var grid = this._sheet._grid;
-                var activeCell = sheet.activeCell();
-                var cell = sheet.originalActiveCell();
-                var nextCell;
+            listener.on(["up", "down", "left", "right"], function(event, action) {
+                that.moveActiveCell(action);
+                event.preventDefault();
+            });
 
-                switch (e.keyCode) {
-                    case kendo.keys.LEFT:
-                        nextCell = new CellRef(cell.row, grid._columns.prevVisible(activeCell.topLeft.col));
-                        break;
-                    case kendo.keys.UP:
-                        nextCell = new CellRef(grid._rows.prevVisible(activeCell.topLeft.row), cell.col);
-                        break;
-                    case kendo.keys.RIGHT:
-                        nextCell = new CellRef(cell.row, grid._columns.nextVisible(activeCell.bottomRight.col));
-                        break;
-                    case kendo.keys.DOWN:
-                        nextCell = new CellRef(grid._rows.nextVisible(activeCell.bottomRight.row), cell.col);
-                        break;
-                }
-
-                e.preventDefault();
-
-                if (nextCell) {
-                    sheet.activeCell(nextCell);
-                }
-
-            }.bind(this));
+            listener.on("mousedown", function(event, action) {
+                // console.log(event);
+            });
         },
 
         refresh: function() {
