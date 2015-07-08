@@ -619,6 +619,10 @@ fillElements({
         J9: '=hlookup(4, A1:C3, 3)',
         J10: '=index(A1:C3, 2)',
 
+        E11: '=percentile({ 1, 2, 3, 4 }, 75%)',
+        E12: '=percentile.inc(A1:C3, 0.5)',
+        F11: '=percentile.inc({ 15, 20, 35, 40, 50 }, 40%)',
+
         // XXX: Google Sheets doesn't parse this, should we err?
         // looks legit to me, if there's anything sane in Excel.
         B17: '={ A1:B3, C1:C3; -{ 1, 2, 3 }% } + A2',

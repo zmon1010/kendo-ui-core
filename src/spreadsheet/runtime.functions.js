@@ -434,6 +434,26 @@
         [ "values", [ "collect", "anyvalue" ] ]
     ]);
 
+    defineFunction("percentile.inc", function(numbers, p){
+        // algorithm from https://en.wikipedia.org/wiki/Percentile#Microsoft_Excel_method
+        numbers.sort();
+        var n = numbers.length;
+        var rank = p * (n - 1);
+        var k = rank | 0, d = rank - k;
+        if (k === 0) {
+            return numbers[0];
+        }
+        if (k == n - 1) {
+            return numbers[n - 1];
+        }
+        return numbers[k] + d * (numbers[k + 1] - numbers[k]);
+    }).args([
+        [ "numbers", [ "collect", "number", 1 ] ],
+        [ "p", [ "and", "number", [ "between", 0, 1 ] ] ]
+    ]);
+
+    runtime.defineAlias("percentile", "percentile.inc");
+
     // https://support.office.com/en-sg/article/AVEDEV-function-ec78fa01-4755-466c-9a2b-0c4f9eacaf6d
     defineFunction("avedev", function(numbers){
         if (numbers.length < 2) {

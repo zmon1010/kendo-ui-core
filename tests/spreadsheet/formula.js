@@ -618,6 +618,21 @@
         });
     });
 
+    test("PERCENTILE", function(){
+        ss.fill({
+            A4: '=percentile(A1:C3, 75%)',
+            A5: '=percentile.inc({ 1, 2, 3, 4 }, 75%)',
+            A6: '=percentile.inc({ 15, 20, 35, 40, 50 }, 40%)',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A4: 7,
+                A5: 3.25,
+                A6: 29,
+            });
+        });
+    });
+
     test("evaluate dependent formulas", function(){
         ss.fill({
             D1: '=sum(indirect("D2"):indirect("$D$3"))',

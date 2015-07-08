@@ -547,15 +547,24 @@
             } else {
                 var type = x[1];
                 if (Array.isArray(type) && /^#?collect/.test(type[0])) {
+                    var n = type[2];
                     force();
                     code += "try {"
-                        + "var $" + name + " = this.cellValues(args.slice(i)).filter(function($"+name+"){ ";
+                        + "var $" + name + " = this.cellValues(args.slice(i";
+                    if (n) {
+                        code += ", i + " + n;
+                    }
+                    code += ")).filter(function($"+name+"){ ";
                     if (type[0] == "collect") {
                         code += "if ($"+name+" instanceof CalcError) throw $"+name+"; ";
                     }
-                    code += "return " + cond(type[1]) + "; }, this); "
-                        + "i = args.length; "
-                        + "xargs.push($"+name+")"
+                    code += "return " + cond(type[1]) + "; }, this); ";
+                    if (n) {
+                        code += "i += " + n + "; ";
+                    } else {
+                        code += "i = args.length; ";
+                    }
+                    code += "xargs.push($"+name+")"
                         + "} catch(ex) { if (ex instanceof CalcError) return ex; throw ex; } ";
                     resolve += "toResolve.push(args.slice(i)); ";
                 } else {
@@ -997,6 +1006,9 @@
     exports.dateToSerial = dateToSerial;
 
     exports.defineFunction = defineFunction;
+    exports.defineAlias = function(alias, name) {
+        FUNCS[alias] = FUNCS[name];
+    };
 
     /* -----[ Excel operators ]----- */
 
