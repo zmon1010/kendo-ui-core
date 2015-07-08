@@ -2404,7 +2404,7 @@ var __meta__ = {
             // +1 is required by IE, regardless of the border widths, otherwise unexpected wrapping may occur with hyphenated text
             var newColumnWidth = Math.ceil(Math.max(
                 th.outerWidth(),
-                contentTable.find("tr").eq(0).children(notGroupOrHierarchyVisibleCell).eq(index).outerWidth(),
+                contentTable.find("tr:not(.k-grouping-row)").eq(0).children(notGroupOrHierarchyVisibleCell).eq(index).outerWidth(),
                 footerTable.find("tr").eq(0).children(notGroupOrHierarchyVisibleCell).eq(index).outerWidth()
             )) + 1;
 
