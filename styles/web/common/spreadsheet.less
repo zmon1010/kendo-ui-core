@@ -61,6 +61,48 @@
         }
     }
 
+    @formula-bar-height: 26px;
+    @formula-input-height: @formula-bar-height / 1.5;
+
+    .k-spreadsheet-formula-bar {
+        border-width: 1px;
+        border-style: solid;
+        padding-left: 31px; // XXX: Move to code
+        position: relative;
+
+        &:before {
+            content: "";
+            display: block;
+            height: @formula-input-height;
+            top: (@formula-bar-height - @formula-input-height) / 2;
+            border-width: 0 1px 0 0;
+            border-style: solid;
+            position: absolute;
+        }
+
+        &:after {
+            content: "";
+            display: block;
+            border-width: 0 0 1px;
+            border-style: solid;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+    }
+
+    .k-spreadsheet-formula-input {
+        outline: none;
+        border-width: 0;
+        height: @formula-bar-height;
+        line-height: @formula-input-height;
+        font-size: 12px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: .5em;
+    }
+
     > .k-toolbar {
         border-width: 0 0 1px;
         padding-left: .3em;

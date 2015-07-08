@@ -1,3 +1,6 @@
+@pane-border-color: darken(@base, 20%);
+@cell-border-color: darken(@base, 10%);
+
 .k-spreadsheet-top-corner,
 .k-spreadsheet-row-header td,
 .k-spreadsheet-column-header td {
@@ -6,10 +9,10 @@
 }
 
 .k-spreadsheet-pane {
-    border-color: darken(@base, 20%);
+    border-color: @pane-border-color;
 
     & td {
-        border-color: darken(@base, 10%);
+        border-color: @cell-border-color;
     }
 }
 
@@ -60,6 +63,26 @@
 
     &.k-right.k-bottom td {
         box-shadow: inset 1px 1px 0 1px @selected-background, inset -2px -2px 0 1px @selected-background;
+    }
+}
+
+.k-spreadsheet {
+    > .k-spreadsheet-formula-bar  {
+        background-color: @background;
+        border-color: @base @base @cell-border-color;
+
+        &:before {
+            border-color: @cell-border-color;
+        }
+
+        &:after {
+            border-color: @base;
+        }
+    }
+
+    .k-spreadsheet-formula-input {
+        background-color: @background;
+        color: @normal-text-color;
     }
 }
 

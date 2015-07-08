@@ -1,6 +1,7 @@
 (function(f, define){
     define([
         "./kendo.toolbar",
+        "./spreadsheet/chrome",
         "./spreadsheet/rangelist",
         "./spreadsheet/references",
         "./spreadsheet/range",
@@ -34,7 +35,7 @@
 
             this.element.addClass("k-widget k-spreadsheet");
 
-            this._toolbar();
+            this._chrome();
 
             this._view = new kendo.spreadsheet.View(this._viewElement());
 
@@ -49,11 +50,7 @@
 
             this._autoRefresh = true;
 
-            this._sheet.bind("change", function(e) {
-                if (this._autoRefresh) {
-                    this.refresh(e);
-                }
-            }.bind(this));
+            this._sheet.bind("change", this._sheetChange.bind(this));
 
             var context = {};
 
@@ -82,8 +79,28 @@
 
         _resize: function() {
             var toolbarHeight = this.toolbar ? this.toolbar.element.outerHeight() : 0;
+            var formulaBarHeight = this._formulaBar.element.outerHeight();
 
-            this._viewElement().height(this.element.height() - toolbarHeight);
+            this._viewElement().height(this.element.height() - toolbarHeight - formulaBarHeight);
+        },
+
+        _valueForRef: function(ref) {
+            return new kendo.spreadsheet.Range(ref, this._sheet).value();
+        },
+
+        _sheetChange: function(e) {
+            if (this._autoRefresh) {
+                this.refresh(e);
+            }
+
+            this._formulaBar.value(this._valueForRef(e.sender.activeCell()));
+        },
+
+        _chrome: function() {
+            var formulaBar = $("<div />").prependTo(this.element);
+            this._formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar);
+
+            this._toolbar();
         },
 
         _toolbar: function() {
@@ -94,6 +111,11 @@
                     togglable: true,
                     showText: "overflow"
                 };
+            }
+
+            if (this.toolbar) {
+                this.toolbar.destroy();
+                this.element.children(".k-toolbar").remove();
             }
 
             if (this.options.toolbar) {
@@ -156,7 +178,7 @@
 
         options: {
             name: "Spreadsheet",
-            toolbar: false,
+            toolbar: true,
             rows: 200,
             columns: 50,
             rowHeight: 20,
