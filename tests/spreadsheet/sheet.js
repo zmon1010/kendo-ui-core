@@ -110,4 +110,25 @@
         equal(sheet.range("2:2").background(), null);
     });
 
+    test("insertRow move the data bottom row", function() {
+        sheet.range("1:1").value("foo");
+
+        sheet.insertRow(0);
+
+        equal(sheet.range("1:1").value(), null);
+        equal(sheet.range("2:2").value(), "foo");
+    });
+
+    test("insertRow at the last position", function() {
+        sheet.range(defaults.rows + ":" + defaults.rows).value("foo");
+
+        sheet.insertRow(defaults.rows - 1);
+
+        equal(sheet.range(defaults.rows + ":" + defaults.rows).value(), null);
+    });
+
+    test("insertRow triggers the change event", 1, function() {
+       sheet.bind("change", success).insertRow(0);
+    });
+
 })();

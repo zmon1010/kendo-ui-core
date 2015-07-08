@@ -99,6 +99,65 @@
             return this._property(this._columns.unhide.bind(this._columns), columnIndex);
         },
 
+        _copyCells: function(ref, fromNextRow) {
+            var grid = this._grid;
+
+            var rowCount = grid.rowCount;
+
+            var topLeft = grid.normalize(ref.topLeft);
+            var bottomRight = grid.normalize(ref.bottomRight);
+
+            var start = topLeft.row;
+
+            for (var ci = topLeft.col; ci <= bottomRight.col; ci++) {
+
+                var cellRef = new CellRef(start + (fromNextRow ? 1 : -1), ci);
+
+                var nextRef = new RangeRef(cellRef, cellRef);
+
+                var nextIndex = nextRef.topLeft.col * rowCount + nextRef.topLeft.row;
+
+                var sourceIndex = ci * rowCount + start;
+
+                this._background.swap(nextIndex, nextIndex, sourceIndex);
+                this._values.swap(nextIndex, nextIndex, sourceIndex);
+                this._borderBottom.swap(nextIndex, nextIndex, sourceIndex);
+                this._borderRight.swap(nextIndex, nextIndex, sourceIndex);
+                this._fontColor.swap(nextIndex, nextIndex, sourceIndex);
+                this._fontFamily.swap(nextIndex, nextIndex, sourceIndex);
+                this._fontLine.swap(nextIndex, nextIndex, sourceIndex);
+                this._fontSize.swap(nextIndex, nextIndex, sourceIndex);
+                this._fontStyle.swap(nextIndex, nextIndex, sourceIndex);
+                this._fontWeight.swap(nextIndex, nextIndex, sourceIndex);
+                this._horizontalAlignment.swap(nextIndex, nextIndex, sourceIndex);
+                this._verticalAlignment.swap(nextIndex, nextIndex, sourceIndex);
+                this._wrap.swap(nextIndex, nextIndex, sourceIndex);
+                this._types.swap(nextIndex, nextIndex, sourceIndex);
+                this._formulas.swap(nextIndex, nextIndex, sourceIndex);
+                this._formats.swap(nextIndex, nextIndex, sourceIndex);
+                this._compiledFormulas.swap(nextIndex, nextIndex, sourceIndex);
+            }
+        },
+
+        insertRow: function(rowIndex) {
+
+            this.batch(function() {
+                for (var ri = this._grid.rowCount - 1; ri >= rowIndex; ri--) {
+                    var ref = new RangeRef(new CellRef(ri, 0), new CellRef(ri, Infinity));
+
+                    new Range(ref, this).clear();
+
+                    if (ri == rowIndex) {
+                        break;
+                    }
+
+                    this._copyCells(ref, false);
+                }
+            }.bind(this));
+
+            return this;
+        },
+
         deleteRow: function(rowIndex) {
 
             this.batch(function() {
@@ -114,41 +173,7 @@
                         break;
                     }
 
-                    var topLeft = grid.normalize(ref.topLeft);
-                    var bottomRight = grid.normalize(ref.bottomRight);
-
-                    var start = topLeft.row;
-                    var end = bottomRight.row;
-
-                    for (var ci = topLeft.col; ci <= bottomRight.col; ci++) {
-
-                        var cellRef = new CellRef(start+1, ci);
-
-                        var nextRef = new RangeRef(cellRef, cellRef);
-
-                        var nextIndex = nextRef.topLeft.col * rowCount + nextRef.topLeft.row;
-
-                        var sourceIndex = ci * rowCount + start;
-
-                        this._background.swap(nextIndex, nextIndex, sourceIndex);
-                        this._values.swap(nextIndex, nextIndex, sourceIndex);
-                        this._borderBottom.swap(nextIndex, nextIndex, sourceIndex);
-                        this._borderRight.swap(nextIndex, nextIndex, sourceIndex);
-                        this._fontColor.swap(nextIndex, nextIndex, sourceIndex);
-                        this._fontFamily.swap(nextIndex, nextIndex, sourceIndex);
-                        this._fontLine.swap(nextIndex, nextIndex, sourceIndex);
-                        this._fontSize.swap(nextIndex, nextIndex, sourceIndex);
-                        this._fontStyle.swap(nextIndex, nextIndex, sourceIndex);
-                        this._fontWeight.swap(nextIndex, nextIndex, sourceIndex);
-                        this._horizontalAlignment.swap(nextIndex, nextIndex, sourceIndex);
-                        this._verticalAlignment.swap(nextIndex, nextIndex, sourceIndex);
-                        this._wrap.swap(nextIndex, nextIndex, sourceIndex);
-                        this._types.swap(nextIndex, nextIndex, sourceIndex);
-                        this._formulas.swap(nextIndex, nextIndex, sourceIndex);
-                        this._formats.swap(nextIndex, nextIndex, sourceIndex);
-                        this._compiledFormulas.swap(nextIndex, nextIndex, sourceIndex);
-                    }
-
+                    this._copyCells(ref, true);
                 }
             }.bind(this));
 
