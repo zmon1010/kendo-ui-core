@@ -49,6 +49,20 @@ module CodeGen::TypeScript
         }
     }
 
+    UPLOAD_EVENT_OVERRIDES = {
+        'files' => 'UploadFile[]'
+    }
+
+    DECLARATION_OVERRIDES = {
+        'UploadCancelEvent' => UPLOAD_EVENT_OVERRIDES,
+        'UploadErrorEvent' => UPLOAD_EVENT_OVERRIDES,
+        'UploadProgressEvent' => UPLOAD_EVENT_OVERRIDES,
+        'UploadRemoveEvent' => UPLOAD_EVENT_OVERRIDES,
+        'UploadSelectEvent' => UPLOAD_EVENT_OVERRIDES,
+        'UploadSuccessEvent' => UPLOAD_EVENT_OVERRIDES,
+        'UploadUploadEvent' => UPLOAD_EVENT_OVERRIDES
+    }
+
     RESULT_OVERRIDES = {
         'Grid' => {
             'getOptions' => 'GridOptions'
@@ -85,6 +99,12 @@ module CodeGen::TypeScript
 
         def type_script_type
             raise "#{name} doesn't have a type specified" unless @type
+
+            ownerType = @owner.type_script_type
+            overrides = DECLARATION_OVERRIDES.fetch(ownerType, {});
+            if overrides.has_key?(name)
+                return overrides[name]
+            end
 
             return 'any' if @type.size > 1
 
