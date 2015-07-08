@@ -92,8 +92,8 @@
 
         equal(firstMember.caption, "name1");
         equal(firstMember.name, "name&name1");
-        equal(firstMember.hierarchy, "name");
-        equal(firstMember.levelName, "name&name1");
+        equal(firstMember.hierarchy, "namename&name1");
+        equal(firstMember.levelName, "namename&name1");
         equal(firstMember.levelNum, "1");
         equal(firstMember.hasChildren, false);
     });
@@ -403,9 +403,9 @@
         equal(result.data[6].ordinal, 6, "ordinal 6");
         equal(result.data[6].value, 1, "ordinal 6");
         equal(result.data[7].ordinal, 7, "ordinal 7");
-        equal(result.data[7].value, 2, "ordinal 7");
+        equal(result.data[7].value, 1, "ordinal 7");
         equal(result.data[8].ordinal, 8, "ordinal 8");
-        equal(result.data[8].value, 1, "ordinal 8");
+        equal(result.data[8].value, 2, "ordinal 8");
         equal(result.data[9].ordinal, 9, "ordinal 9");
         equal(result.data[9].value, "", "ordinal 9");
         equal(result.data[10].ordinal, 10, "ordinal 10");
@@ -413,11 +413,215 @@
         equal(result.data[11].ordinal, 11, "ordinal 11");
         equal(result.data[11].value, "", "ordinal 11");
         equal(result.data[12].ordinal, 12, "ordinal 12");
-        equal(result.data[12].value, "", "ordinal 12");
+        equal(result.data[12].value, 1, "ordinal 12");
         equal(result.data[13].ordinal, 13, "ordinal 13");
-        equal(result.data[13].value, 1, "ordinal 13");
+        equal(result.data[13].value, "", "ordinal 13");
         equal(result.data[14].ordinal, 14, "ordinal 14");
         equal(result.data[14].value, 1, "ordinal 14");
+    });
+
+    test("process data generates correct column tuples when expand rows (two level column dimensions)", function() {
+        var builder = new PivotCubeBuilder({
+           dimensions: {
+               FirstName: { caption: "All First Names" },
+               LastName: { caption: "All Last Names" },
+               Age: { caption: "Age" }
+           },
+           measures: {
+               "Count": { caption: "Measure 1", field: "Age",  aggregate: function(data, state) { state.accumulator = state.accumulator || 0; return state.accumulator + 1; } }
+           }
+        });
+        var data = [{ FirstName: "Name1", LastName: "LastName1", Age: 42 }, { FirstName: "Name2", LastName: "LastName1", Age: 42  }, { FirstName: "Name2", LastName: "LastName2", Age: 52  } ];
+
+        var result = builder.process(data, {
+            columns: [{ name: ["FirstName"], expand: true },{ name: ["FirstName&Name1","LastName"], expand: true },{ name: ["LastName"], expand: true }],
+            rows: [{ name: "Age", expand: true }],
+            measures: [{ name: "Count" }]
+        });
+
+        var columns = result.axes.columns.tuples;
+
+        equal(columns.length, 6);
+
+        equal(columns[0].members[0].name, "FirstName");
+        equal(columns[0].members[0].levelName, "FirstName");
+        equal(columns[0].members[0].hierarchy, "FirstName");
+        equal(columns[0].members[1].name, "LastName");
+        equal(columns[0].members[1].levelName, "LastName");
+        equal(columns[0].members[1].hierarchy, "LastName");
+
+        equal(columns[1].members[0].name, "FirstName&Name1");
+        equal(columns[1].members[0].parentName, "FirstName");
+        equal(columns[1].members[0].levelName, "FirstNameFirstName&Name1");
+        equal(columns[1].members[0].hierarchy, "FirstNameFirstName&Name1");
+        equal(columns[1].members[1].name, "LastName");
+        equal(columns[1].members[1].levelName, "LastName");
+        equal(columns[1].members[1].hierarchy, "LastName");
+
+        equal(columns[2].members[0].name, "FirstName&Name2");
+        equal(columns[2].members[0].parentName, "FirstName");
+        equal(columns[2].members[0].levelName, "FirstNameFirstName&Name2");
+        equal(columns[2].members[0].hierarchy, "FirstNameFirstName&Name2");
+        equal(columns[2].members[1].name, "LastName");
+        equal(columns[2].members[1].levelName, "LastName");
+        equal(columns[2].members[1].hierarchy, "LastName");
+
+        equal(columns[3].members[0].name, "FirstName");
+        equal(columns[3].members[0].levelName, "FirstName");
+        equal(columns[3].members[0].hierarchy, "FirstName");
+        equal(columns[3].members[1].name, "LastName&LastName1");
+        equal(columns[3].members[1].parentName, "LastName");
+        equal(columns[3].members[1].levelName, "LastNameLastName&LastName1");
+        equal(columns[3].members[1].hierarchy, "LastNameLastName&LastName1");
+
+        equal(columns[4].members[0].name, "FirstName");
+        equal(columns[4].members[0].levelName, "FirstName");
+        equal(columns[4].members[0].hierarchy, "FirstName");
+        equal(columns[4].members[1].name, "LastName&LastName2");
+        equal(columns[4].members[1].parentName, "LastName");
+        equal(columns[4].members[1].levelName, "LastNameLastName&LastName2");
+        equal(columns[4].members[1].hierarchy, "LastNameLastName&LastName2");
+
+        equal(columns[5].members[0].name, "FirstName&Name1");
+        equal(columns[5].members[0].parentName, "FirstName");
+        equal(columns[5].members[0].levelName, "FirstName&Name1");
+        equal(columns[5].members[0].hierarchy, "FirstName&Name1");
+        equal(columns[5].members[1].name, "LastName&LastName1");
+        equal(columns[5].members[1].parentName, "LastName");
+        equal(columns[5].members[1].levelName, "LastNameLastName&LastName1");
+        equal(columns[5].members[1].hierarchy, "LastNameLastName&LastName1");
+    });
+
+    test("process data generates correct row tuples when expand columns (two level row dimensions)", function() {
+        var builder = new PivotCubeBuilder({
+           dimensions: {
+               FirstName: { caption: "All First Names" },
+               LastName: { caption: "All Last Names" },
+               Age: { caption: "Age" }
+           },
+           measures: {
+               "Count": { caption: "Measure 1", field: "Age",  aggregate: function(data, state) { state.accumulator = state.accumulator || 0; return state.accumulator + 1; } }
+           }
+        });
+        var data = [{ FirstName: "Name1", LastName: "LastName1", Age: 42 }, { FirstName: "Name2", LastName: "LastName1", Age: 42  }, { FirstName: "Name2", LastName: "LastName2", Age: 52  } ];
+
+        var result = builder.process(data, {
+            columns: [{ name: "Age", expand: true }],
+            rows: [{ name: ["FirstName"], expand: true },{ name: ["FirstName&Name1","LastName"], expand: true },{ name: ["LastName"], expand: true }],
+            measures: [{ name: "Count" }]
+        });
+
+        var rows = result.axes.rows.tuples;
+
+        equal(rows.length, 6);
+
+        equal(rows[0].members[0].name, "FirstName");
+        equal(rows[0].members[0].levelName, "FirstName");
+        equal(rows[0].members[0].hierarchy, "FirstName");
+        equal(rows[0].members[1].name, "LastName");
+        equal(rows[0].members[1].levelName, "LastName");
+        equal(rows[0].members[1].hierarchy, "LastName");
+
+        equal(rows[1].members[0].name, "FirstName&Name1");
+        equal(rows[1].members[0].parentName, "FirstName");
+        equal(rows[1].members[0].levelName, "FirstNameFirstName&Name1");
+        equal(rows[1].members[0].hierarchy, "FirstNameFirstName&Name1");
+        equal(rows[1].members[1].name, "LastName");
+        equal(rows[1].members[1].levelName, "LastName");
+        equal(rows[1].members[1].hierarchy, "LastName");
+
+        equal(rows[2].members[0].name, "FirstName&Name2");
+        equal(rows[2].members[0].parentName, "FirstName");
+        equal(rows[2].members[0].levelName, "FirstNameFirstName&Name2");
+        equal(rows[2].members[0].hierarchy, "FirstNameFirstName&Name2");
+        equal(rows[2].members[1].name, "LastName");
+        equal(rows[2].members[1].levelName, "LastName");
+        equal(rows[2].members[1].hierarchy, "LastName");
+
+        equal(rows[3].members[0].name, "FirstName");
+        equal(rows[3].members[0].levelName, "FirstName");
+        equal(rows[3].members[0].hierarchy, "FirstName");
+        equal(rows[3].members[1].name, "LastName&LastName1");
+        equal(rows[3].members[1].parentName, "LastName");
+        equal(rows[3].members[1].levelName, "LastNameLastName&LastName1");
+        equal(rows[3].members[1].hierarchy, "LastNameLastName&LastName1");
+
+        equal(rows[4].members[0].name, "FirstName");
+        equal(rows[4].members[0].levelName, "FirstName");
+        equal(rows[4].members[0].hierarchy, "FirstName");
+        equal(rows[4].members[1].name, "LastName&LastName2");
+        equal(rows[4].members[1].parentName, "LastName");
+        equal(rows[4].members[1].levelName, "LastNameLastName&LastName2");
+        equal(rows[4].members[1].hierarchy, "LastNameLastName&LastName2");
+
+        equal(rows[5].members[0].name, "FirstName&Name1");
+        equal(rows[5].members[0].parentName, "FirstName");
+        equal(rows[5].members[0].levelName, "FirstName&Name1");
+        equal(rows[5].members[0].hierarchy, "FirstName&Name1");
+        equal(rows[5].members[1].name, "LastName&LastName1");
+        equal(rows[5].members[1].parentName, "LastName");
+        equal(rows[5].members[1].levelName, "LastNameLastName&LastName1");
+        equal(rows[5].members[1].hierarchy, "LastNameLastName&LastName1");
+    });
+
+    test("process data expands rows honoring all expanded levels of the columns", function() {
+        var builder = new PivotCubeBuilder({
+           dimensions: {
+               FirstName: { caption: "All First Names" },
+               LastName: { caption: "All Last Names" },
+               Age: { caption: "Age" }
+           },
+           measures: {
+               "Count": { caption: "Measure 1", field: "Age",  aggregate: function(data, state) { state.accumulator = state.accumulator || 0; return state.accumulator + 1; } }
+           }
+        });
+        var data = [{ FirstName: "Name1", LastName: "LastName1", Age: 42 }, { FirstName: "Name2", LastName: "LastName1", Age: 42  }, { FirstName: "Name2", LastName: "LastName2", Age: 52  } ];
+
+        var result = builder.process(data, {
+            columns: [{ name: ["FirstName"], expand: true },{ name: ["FirstName&Name1","LastName"], expand: true },{ name: ["LastName"], expand: true }],
+            rows: [{ name: "Age", expand: true }],
+            measures: [{ name: "Count" }]
+        });
+
+        equal(result.data.length, 18);
+        equal(result.data[0].ordinal, 0, "ordinal 0");
+        equal(result.data[0].value, 3, "ordinal 0");
+        equal(result.data[1].ordinal, 1, "ordinal 1");
+        equal(result.data[1].value, 1, "ordinal 1");
+        equal(result.data[2].ordinal, 2, "ordinal 2");
+        equal(result.data[2].value, 2, "ordinal 2");
+        equal(result.data[3].ordinal, 3, "ordinal 3");
+        equal(result.data[3].value, 2, "ordinal 3");
+        equal(result.data[4].ordinal, 4, "ordinal 4");
+        equal(result.data[4].value, 1, "ordinal 4");
+        equal(result.data[5].ordinal, 5, "ordinal 5");
+        equal(result.data[5].value, 1, "ordinal 5");
+
+        equal(result.data[6].ordinal, 6, "ordinal 6");
+        equal(result.data[6].value, 2, "ordinal 6");
+        equal(result.data[7].ordinal, 7, "ordinal 7");
+        equal(result.data[7].value, 1, "ordinal 7");
+        equal(result.data[8].ordinal, 8, "ordinal 8");
+        equal(result.data[8].value, 1, "ordinal 8");
+        equal(result.data[9].ordinal, 9, "ordinal 9");
+        equal(result.data[9].value, 2, "ordinal 9");
+        equal(result.data[10].ordinal, 10, "ordinal 10");
+        equal(result.data[10].value, "", "ordinal 10");
+        equal(result.data[11].ordinal, 11, "ordinal 11");
+        equal(result.data[11].value, 1, "ordinal 11");
+
+        equal(result.data[12].ordinal, 12, "ordinal 12");
+        equal(result.data[12].value, 1, "ordinal 12");
+        equal(result.data[13].ordinal, 13, "ordinal 13");
+        equal(result.data[13].value, "", "ordinal 13");
+        equal(result.data[14].ordinal, 14, "ordinal 14");
+        equal(result.data[14].value, 1, "ordinal 14");
+        equal(result.data[15].ordinal, 15, "ordinal 15");
+        equal(result.data[15].value, "", "ordinal 15");
+        equal(result.data[16].ordinal, 16, "ordinal 16");
+        equal(result.data[16].value, 1, "ordinal 16");
+        equal(result.data[17].ordinal, 17, "ordinal 17");
+        equal(result.data[17].value, "", "ordinal 17");
     });
 
     test("dimension as array", function() {
