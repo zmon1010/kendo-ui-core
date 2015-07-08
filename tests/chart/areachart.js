@@ -320,6 +320,68 @@
         });
 
         // ------------------------------------------------------------
+        (function() {
+            var segments;
+            module("Area Chart / Stack / Missing values / gap", {
+                setup: function() {
+                    setupAreaChart(plotArea, {
+                        series: [{
+                            data: [null, 1, 1, null, null, 1, 1, 1],
+                            missingValues: "gap"
+                        }, {
+                            data: [1, 1, 1, null, 1, 1, 1, null],
+                            missingValues: "gap"
+                        }, {
+                            data: [1, 1, 1, 1, 1, 1, 1, 1],
+                            missingValues: "gap"
+                        }],
+                        isStacked: true
+                    });
+                    segments = areaChart._segments;
+                },
+                teardown: function() {
+                    destroyChart();
+                }
+            });
+
+            test("uses previous series point for the stack points", function() {
+                ok(segments[4].stackPoints[10] === segments[2].linePoints[0]);
+            });
+
+            test("uses fake line point for the stack points if the previous series point is missing", function() {
+                equal(segments[2].stackPoints[3].value, 0);
+                equal(segments[2].stackPoints[3].categoryIx, 0);
+            });
+
+            test("fake gap stack points are reflowed", function() {
+                ok(segments[2].stackPoints[3].box);
+            });
+
+            test("uses a fake line point and the previous series point for the stack points if previous series previous category point is missing", function() {
+                equal(segments[2].stackPoints[2].value, 0);
+                equal(segments[2].stackPoints[2].categoryIx, 1);
+                ok(segments[2].stackPoints[1] === segments[0].linePoints[0]);
+            });
+
+            test("uses the previous series point and the point from the first series with next category point if previous series next category point is missing", function() {
+                equal(segments[2].stackPoints[2].value, 0);
+                equal(segments[2].stackPoints[2].categoryIx, 1);
+                ok(segments[2].stackPoints[1] === segments[0].linePoints[0]);
+            });
+
+            test("does not use a fake line point if previous series next category point is missing but the point is the last in the segment", function() {
+                ok(segments[2].stackPoints[0] === segments[0].linePoints[1]);
+                equal(segments[2].stackPoints.length, 4);
+            });
+
+            test("uses a fake line point and the previous series point for the stack points if multiple previous series category next points are missing", function() {
+                equal(segments[4].stackPoints[7].value, 0);
+                equal(segments[4].stackPoints[7].categoryIx, 2);
+                ok(segments[4].stackPoints[8] === segments[2].linePoints[2]);
+            });
+        })();
+
+        // ------------------------------------------------------------
         module("Area Chart / Stack 100% / Missing values", {
             teardown: destroyChart
         });

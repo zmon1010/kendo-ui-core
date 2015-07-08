@@ -5762,7 +5762,13 @@ var __meta__ = {
                 style = (currentSeries.line || {}).style;
 
             if (isStacked && seriesIx > 0 && prevSegment) {
-                stackPoints = prevSegment.linePoints;
+                var missingValues = this.seriesMissingValues(currentSeries);
+                if (missingValues != "gap") {
+                    stackPoints = prevSegment.linePoints;
+                } else {
+                    stackPoints = this._gapStackPoints(linePoints, seriesIx, style);
+                }
+
                 if (style !== STEP) {
                     stackPoints = stackPoints.slice(0).reverse();
                 }
@@ -5779,6 +5785,82 @@ var __meta__ = {
             }
 
             return new pointType(linePoints, stackPoints, currentSeries, seriesIx);
+        },
+
+        reflow: function(targetBox) {
+            LineChart.fn.reflow.call(this, targetBox);
+            var stackPoints = this._stackPoints;
+            if (stackPoints) {
+                var stackPoint, pointSlot, point;
+                for (var idx = 0; idx < stackPoints.length; idx++) {
+                    stackPoint = stackPoints[idx];
+                    pointSlot = this.categoryAxis.getSlot(stackPoint.categoryIx);
+                    stackPoint.reflow(pointSlot);
+                }
+            }
+        },
+
+        _gapStackPoints: function(linePoints, seriesIx, style) {
+            var seriesPoints = this.seriesPoints;
+            var startIdx = linePoints[0].categoryIx;
+            var endIdx = startIdx + linePoints.length;
+            var stackPoints = [];
+            var currentSeriesIx;
+            var point, gapStackPoint;
+
+            this._stackPoints = this._stackPoints || [];
+            for (var idx = startIdx; idx < endIdx; idx++) {
+               currentSeriesIx = seriesIx;
+               do {
+                    currentSeriesIx--;
+                    point = seriesPoints[currentSeriesIx][idx];
+               } while(currentSeriesIx > 0 && !point);
+
+               if (point) {
+                    if (style !== STEP && idx > startIdx && !seriesPoints[currentSeriesIx][idx - 1]) {
+                        stackPoints.push(this._previousSegmentPoint(idx, idx - 1, currentSeriesIx));
+                    }
+
+                    stackPoints.push(point);
+
+                    if (style !== STEP && idx + 1 < endIdx && !seriesPoints[currentSeriesIx][idx + 1]) {
+                        stackPoints.push(this._previousSegmentPoint(idx, idx + 1, currentSeriesIx));
+                    }
+                } else {
+                    gapStackPoint = this._createGapStackPoint(idx);
+                    this._stackPoints.push(gapStackPoint);
+                    stackPoints.push(gapStackPoint);
+                }
+            }
+
+            return stackPoints;
+        },
+
+        _previousSegmentPoint: function(categoryIx, segmentIx, seriesIdx) {
+            var seriesPoints = this.seriesPoints;
+            var point;
+
+            while(seriesIdx > 0 && !point) {
+                seriesIdx--;
+                point = seriesPoints[seriesIdx][segmentIx];
+            }
+
+            if (!point) {
+                point = this._createGapStackPoint(categoryIx);
+                this._stackPoints.push(point);
+            } else {
+               point =  seriesPoints[seriesIdx][categoryIx];
+            }
+
+            return point;
+        },
+
+        _createGapStackPoint: function(categoryIx) {
+            var options = this.pointOptions({}, 0);
+            var point = new LinePoint(0, options);
+            point.categoryIx = categoryIx;
+            point.series = {};
+            return point;
         },
 
         seriesMissingValues: function(series) {

@@ -100,7 +100,8 @@
     };
     function createAreaSegment(options) {
         var segment = AreaChart.fn.createSegment.apply({
-            options: options
+            options: options,
+            seriesMissingValues: $.noop
         }, Array.prototype.slice.call(arguments, 1));
         segment.parent = {
             plotArea: {
@@ -165,7 +166,6 @@
     });
 
     test("cubic curve includes previous curve points when the area chart is stacked", function() {
-
         var segment = createAreaSegment(areaOptions, linePoints, {data: seriesData, line: {style: SMOOTH}}, 0);
         var stackedLinePoints = [new Point(1, 2), new Point(3, 4), new Point(5, 6)];
         var stackedSegment = createAreaSegment({
