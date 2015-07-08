@@ -119,23 +119,23 @@
 
                 var sourceIndex = ci * rowCount + start;
 
-                this._background.swap(nextIndex, nextIndex, sourceIndex);
-                this._values.swap(nextIndex, nextIndex, sourceIndex);
-                this._borderBottom.swap(nextIndex, nextIndex, sourceIndex);
-                this._borderRight.swap(nextIndex, nextIndex, sourceIndex);
-                this._fontColor.swap(nextIndex, nextIndex, sourceIndex);
-                this._fontFamily.swap(nextIndex, nextIndex, sourceIndex);
-                this._fontLine.swap(nextIndex, nextIndex, sourceIndex);
-                this._fontSize.swap(nextIndex, nextIndex, sourceIndex);
-                this._fontStyle.swap(nextIndex, nextIndex, sourceIndex);
-                this._fontWeight.swap(nextIndex, nextIndex, sourceIndex);
-                this._horizontalAlignment.swap(nextIndex, nextIndex, sourceIndex);
-                this._verticalAlignment.swap(nextIndex, nextIndex, sourceIndex);
-                this._wrap.swap(nextIndex, nextIndex, sourceIndex);
-                this._types.swap(nextIndex, nextIndex, sourceIndex);
-                this._formulas.swap(nextIndex, nextIndex, sourceIndex);
-                this._formats.swap(nextIndex, nextIndex, sourceIndex);
-                this._compiledFormulas.swap(nextIndex, nextIndex, sourceIndex);
+                this._background.copy(nextIndex, nextIndex, sourceIndex);
+                this._values.copy(nextIndex, nextIndex, sourceIndex);
+                this._borderBottom.copy(nextIndex, nextIndex, sourceIndex);
+                this._borderRight.copy(nextIndex, nextIndex, sourceIndex);
+                this._fontColor.copy(nextIndex, nextIndex, sourceIndex);
+                this._fontFamily.copy(nextIndex, nextIndex, sourceIndex);
+                this._fontLine.copy(nextIndex, nextIndex, sourceIndex);
+                this._fontSize.copy(nextIndex, nextIndex, sourceIndex);
+                this._fontStyle.copy(nextIndex, nextIndex, sourceIndex);
+                this._fontWeight.copy(nextIndex, nextIndex, sourceIndex);
+                this._horizontalAlignment.copy(nextIndex, nextIndex, sourceIndex);
+                this._verticalAlignment.copy(nextIndex, nextIndex, sourceIndex);
+                this._wrap.copy(nextIndex, nextIndex, sourceIndex);
+                this._types.copy(nextIndex, nextIndex, sourceIndex);
+                this._formulas.copy(nextIndex, nextIndex, sourceIndex);
+                this._formats.copy(nextIndex, nextIndex, sourceIndex);
+                this._compiledFormulas.copy(nextIndex, nextIndex, sourceIndex);
             }
         },
 

@@ -336,7 +336,7 @@
             }
         },
 
-        swap: function(sourceStart, sourceEnd, targetStart) {
+        copy: function(sourceStart, sourceEnd, targetStart) {
             var values = this.expandedValues(sourceStart, sourceEnd);
 
             for (var i = 0, len = values.length; i < len; i++) {
