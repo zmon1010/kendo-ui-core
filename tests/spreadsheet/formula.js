@@ -623,12 +623,14 @@
             A4: '=percentile(A1:C3, 75%)',
             A5: '=percentile.inc({ 1, 2, 3, 4 }, 75%)',
             A6: '=percentile.inc({ 15, 20, 35, 40, 50 }, 40%)',
+            A7: '=percentile.exc({ 1, 2, 3, 10, 20, 30 }, 25%)',
         });
         ss.recalculate(function(){
             ss.expectEqual({
                 A4: 7,
                 A5: 3.25,
                 A6: 29,
+                A7: 1.75,
             });
         });
     });

@@ -622,6 +622,7 @@ fillElements({
         E11: '=percentile({ 1, 2, 3, 4 }, 75%)',
         E12: '=percentile.inc(A1:C3, 0.5)',
         F11: '=percentile.inc({ 15, 20, 35, 40, 50 }, 40%)',
+        F12: '=percentile.exc({ 1, 2, 3, 10, 20, 30 }, 25%)',
 
         // XXX: Google Sheets doesn't parse this, should we err?
         // looks legit to me, if there's anything sane in Excel.

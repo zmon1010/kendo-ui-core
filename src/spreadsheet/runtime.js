@@ -624,8 +624,11 @@
                 if (type[0] == "null") {
                     return "(" + cond("null") + " ? ($"+name+" = " + type[1] + ", true) : false)";
                 }
-                if (type[0] == "between") {
+                if (type[0] == "between" || type[0] == "[between]") {
                     return "(" + force() + " >= " + type[1] + " && " + "$"+name+" <= " + type[2] + ")";
+                }
+                if (type[0] == "(between)") {
+                    return "(" + force() + " > " + type[1] + " && " + "$"+name+" < " + type[2] + ")";
                 }
                 if (type[0] == "assert") {
                     return "(" + type[1] + ")";

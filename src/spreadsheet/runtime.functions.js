@@ -341,7 +341,7 @@
         if (n < 1) {
             return new CalcError("N/A");
         }
-        numbers.sort();
+        numbers.sort(ascending);
         if (n % 2) {
             return numbers[n >> 1];
         }
@@ -351,7 +351,7 @@
     ]);
 
     defineFunction("mode.sngl", function(numbers){
-        numbers.sort();
+        numbers.sort(ascending);
         var prev = null, count = 0, max = 1, mode = null;
         for (var i = 0; i < numbers.length; ++i) {
             var n = numbers[i];
@@ -436,7 +436,7 @@
 
     defineFunction("percentile.inc", function(numbers, p){
         // algorithm from https://en.wikipedia.org/wiki/Percentile#Microsoft_Excel_method
-        numbers.sort();
+        numbers.sort(ascending);
         var n = numbers.length;
         var rank = p * (n - 1);
         var k = rank | 0, d = rank - k;
@@ -449,7 +449,26 @@
         return numbers[k] + d * (numbers[k + 1] - numbers[k]);
     }).args([
         [ "numbers", [ "collect", "number", 1 ] ],
-        [ "p", [ "and", "number", [ "between", 0, 1 ] ] ]
+        [ "p", [ "and", "number", [ "[between]", 0, 1 ] ] ]
+    ]);
+
+    defineFunction("percentile.exc", function(numbers, p){
+        // https://en.wikipedia.org/wiki/Percentile#NIST_method
+        numbers.sort(ascending);
+        var n = numbers.length;
+        var rank = p * (n + 1);
+        var k = rank | 0, d = rank - k;
+        if (k === 0) {
+            return numbers[0];
+        }
+        if (k >= n) {
+            return numbers[n - 1];
+        }
+        --k;
+        return numbers[k] + d * (numbers[k + 1] - numbers[k]);
+    }).args([
+        [ "numbers", [ "collect", "number", 1 ] ],
+        [ "p", [ "and", "number", [ "(between)", 0, 1 ] ] ]
     ]);
 
     runtime.defineAlias("percentile", "percentile.inc");
