@@ -277,7 +277,7 @@ var __meta__ = {
 
             if (!fromModel) {
                 if (data.parentId) {
-                    data[model.parentIdField] = data.parentId
+                    data[model.parentIdField] = data.parentId;
                 }
                 model.accept(data);
             }
