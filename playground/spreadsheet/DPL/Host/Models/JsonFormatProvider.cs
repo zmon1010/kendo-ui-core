@@ -89,6 +89,11 @@ namespace Host
                             {
                                 selection.SetFormat(new CellValueFormat(dtoCell.Format));
                             }
+
+                            if (!string.IsNullOrEmpty(dtoCell.Formula))
+                            {
+                                selection.SetValueAsFormula(dtoCell.Formula);
+                            }
                         }
                     }
                 }
@@ -173,11 +178,13 @@ namespace Host
                     CellSelection selection = worksheet.Cells[rowIndex, columnIndex];
                     ICellValue cellValue = selection.GetValue().Value;
                     CellValueFormat formatting = selection.GetFormat().Value;
+                    string formula = null;
 
                     FormulaCellValue formulaCellValue = cellValue as FormulaCellValue;
                     if (formulaCellValue != null)
                     {
                         cellValue = formulaCellValue.GetResultValueAsCellValue();
+                        formula = formulaCellValue.RawValue;
                     }                    
 
                     if (cellValue.ValueType != CellValueType.Empty) {
@@ -193,6 +200,7 @@ namespace Host
                         {
                             Index = columnIndex,
                             Format = formatting.FormatString,
+                            Formula = formula,
                             Value = value
                         };
                     }

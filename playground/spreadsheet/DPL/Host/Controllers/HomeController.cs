@@ -61,7 +61,7 @@ namespace Host.Controllers
 
             var xlsxProvider = new XlsxFormatProvider();
             var xlsxFile = xlsxProvider.Export(workbook);
-            return File(xlsxFile, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            return File(xlsxFile, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Sheet.xlsx");
         }
 
         [HttpPost]

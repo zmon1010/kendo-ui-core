@@ -11,10 +11,13 @@ namespace Host.DTO
         [JsonProperty(PropertyName = "index")]
         public int Index { get; set; }
 
-        [JsonProperty(PropertyName = "format")]
+        [JsonProperty(PropertyName = "format", NullValueHandling = NullValueHandling.Ignore)]
         public string Format { get; set; }
 
-        [JsonProperty(PropertyName = "value")]
+        [JsonProperty(PropertyName = "formula", NullValueHandling = NullValueHandling.Ignore)]
+        public string Formula { get; set; }
+
+        [JsonProperty(PropertyName = "value", NullValueHandling = NullValueHandling.Ignore)]
         public object Value { get; set; }
     }
 
