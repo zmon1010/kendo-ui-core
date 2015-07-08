@@ -1,5 +1,6 @@
 (function(f, define){
     define([
+        "./kendo.toolbar",
         "./spreadsheet/rangelist",
         "./spreadsheet/references",
         "./spreadsheet/range",
@@ -33,7 +34,9 @@
 
             this.element.addClass("k-widget k-spreadsheet");
 
-            this._view = new kendo.spreadsheet.View(this.element);
+            this._toolbar();
+
+            this._view = new kendo.spreadsheet.View(this._viewElement());
 
             this._sheet = new kendo.spreadsheet.Sheet(
                 this.options.rows,
@@ -60,9 +63,52 @@
 
             this._context = new kendo.spreadsheet.FormulaContext(context);
 
+            this._resize();
+
             this._view.sheet(this.activeSheet());
 
             this.fromJSON(this.options);
+        },
+
+        _viewElement: function() {
+            var view = this.element.children(".k-spreadsheet-view");
+
+            if (!view.length) {
+                view = $("<div class='k-spreadsheet-view' />").appendTo(this.element);
+            }
+
+            return view;
+        },
+
+        _resize: function() {
+            var toolbarHeight = this.toolbar ? this.toolbar.element.outerHeight() : 0;
+
+            this._viewElement().height(this.element.height() - toolbarHeight);
+        },
+
+        _toolbar: function() {
+            function toolIcon(name) {
+                return {
+                    spriteCssClass: "k-tool-icon k-" + name.toLowerCase(),
+                    text: name,
+                    togglable: true,
+                    showText: "overflow"
+                };
+            }
+
+            if (this.options.toolbar) {
+                this.toolbar = $("<div />")
+                    .prependTo(this.element)
+                    .kendoToolBar({
+                        items: [
+                            { type: "buttonGroup", buttons: [
+                                toolIcon("bold"),
+                                toolIcon("italic"),
+                                toolIcon("underline")
+                            ] }
+                        ]
+                    }).data("kendoToolBar");
+            }
         },
 
         refresh: function(e) {
@@ -110,6 +156,7 @@
 
         options: {
             name: "Spreadsheet",
+            toolbar: false,
             rows: 200,
             columns: 50,
             rowHeight: 20,

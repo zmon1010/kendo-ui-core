@@ -845,7 +845,7 @@
             type: type,
             value: value
         };
-    }
+    };
 
     kendo.spreadsheet.Sheet = Sheet;
 })(kendo);

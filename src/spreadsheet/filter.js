@@ -33,12 +33,12 @@
 
             if (value instanceof Date) {
                 return this.dates.some(function(date) {
-                    return date.year === value.getFullYear()
-                       && (date.month === undefined || date.month === value.getMonth())
-                       && (date.day === undefined || date.day === value.getDate())
-                       && (date.hours === undefined || date.hours === value.getHours())
-                       && (date.minutes === undefined || date.minutes === value.getMinutes())
-                       && (date.seconds === undefined || date.seconds === value.getSeconds());
+                    return date.year === value.getFullYear() &&
+                        (date.month === undefined || date.month === value.getMonth()) &&
+                        (date.day === undefined || date.day === value.getDate()) &&
+                        (date.hours === undefined || date.hours === value.getHours()) &&
+                        (date.minutes === undefined || date.minutes === value.getMinutes()) &&
+                        (date.seconds === undefined || date.seconds === value.getSeconds());
                 });
             }
 

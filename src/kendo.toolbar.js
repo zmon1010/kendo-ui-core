@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "./kendo.core" ], f);
+    define([ "./kendo.core", "./kendo.userevents", "./kendo.popup" ], f);
 })(function(){
 
 var __meta__ = { // jshint ignore:line
