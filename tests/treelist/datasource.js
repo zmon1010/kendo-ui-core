@@ -18,12 +18,104 @@
         ok(m.loaded());
     });
 
+    test("model parentIdField defaults to parentId", function() {
+        var m = new TreeListModel();
+
+        equal(m.parentIdField, "parentId");
+    });
+
+    test("model definiton parentIdField defaults to parentId", function() {
+        equal(TreeListModel.parentIdField, "parentId");
+    });
+
+    test("change model definition parentIdField", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "foo"
+        });
+
+        equal(MyModel.parentIdField, "foo");
+    });
+
+    test("default parentIdField on model define", function() {
+        var MyModel = TreeListModel.define({ /* empty defintion */ });
+
+        var m = new MyModel();
+
+        equal(m.parentIdField, "parentId");
+    });
+
+    test("model parentIdField is inferred from schema", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "foo"
+        });
+
+        var m = new MyModel();
+
+        equal(m.parentIdField, "foo");
+    });
+
+    test("parentId value is set from the parentId field", function() {
+        var m = new TreeListModel({ parentId: 1 });
+
+        equal(m.parentId, 1);
+    });
+
+    test("parentId value is set from parentId configuration", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "foo"
+        });
+
+        var m = new MyModel({ foo: 1 });
+
+        equal(m.parentId, 1);
+        equal(m.foo, 1);
+    });
+
+    test("accept updated the parentId field", function() {
+        var m = new TreeListModel({ parentId: 1 });
+
+        equal(m.parentId, 1);
+
+        m.accept({ parentId: 2 });
+
+        equal(m.parentId, 2);
+    });
+
+    test("accept updated the parentId field when predefined", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "foo"
+        });
+
+        var m = new MyModel({ foo: 1 });
+
+        equal(m.parentId, 1);
+        equal(m.foo, 1);
+
+        m.accept({ foo: 2 });
+
+        equal(m.parentId, 2);
+        equal(m.foo, 2);
+    });
+
     test("toJSON serializes id and parentId", function() {
         var m = new TreeListModel({ id: 12, parentId: 20 });
 
         var json = m.toJSON();
         equal(json.id, 12);
         equal(json.parentId, 20);
+    });
+
+    test("toJSON does not serializes parentId when mapped to other field", function() {
+        var MyModel = TreeListModel.define({
+            parentId: "foo"
+        });
+
+        var m = new MyModel({ id: 12, foo: 20 });
+
+        var json = m.toJSON();
+        equal(json.id, 12);
+        equal(json.parentId, undefined, "parentId is serialized");
+        equal(json.foo, 20);
     });
 
     test("toJSON does not serialize _loaded flag", function() {
@@ -87,6 +179,60 @@
         ds.read();
 
         ok(ds.at(0) instanceof TreeListModel);
+    });
+
+    test("parentId is inferred from data", function() {
+        var ds = new TreeListDataSource({
+            data: [
+                { id: 1, parentId: null },
+                { id: 2, parentId: 1 }
+            ]
+        });
+
+        ds.read();
+
+        equal(ds.view().length, 2);
+    });
+
+    test("parentId defined in the schema", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    parentId: "foo",
+                    fields: {
+                        foo: { type: "number", nullable: true }
+                    }
+                }
+            },
+            data: [
+                { id: 1, foo: null },
+                { id: 2, foo: 1 }
+            ]
+        });
+
+        ds.read();
+
+        equal(ds.view().length, 2);
+    });
+
+    test("parentId defined in the model.fields", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    fields: {
+                        parentId: { field: "foo", type: "number", nullable: true }
+                    }
+                }
+            },
+            data: [
+                { id: 1, foo: null },
+                { id: 2, foo: 1 }
+            ]
+        });
+
+        ds.read();
+
+        equal(ds.view().length, 2);
     });
 
     test("load calls transport.read", function() {
@@ -1051,6 +1197,27 @@
         equal(ds.childNodes(ds.get(0)).length, 0, "child nodes for id=0");
     });
 
+    test("adding new root item when parentId is projected", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    parentId: "foo",
+                    fields: {
+                        foo: { defaultValue: "bar", type: "string" }
+                    }
+                }
+            },
+            data: []
+        });
+
+        ds.read();
+        ds.add({});
+
+        equal(ds.rootNodes().length, 1);
+        equal(ds.rootNodes()[0].parentId, "bar");
+        equal(ds.rootNodes()[0].foo, "bar");
+    });
+
     test("adding new child item", function() {
         var ds = new TreeListDataSource({
             schema: {
@@ -1071,6 +1238,52 @@
         equal(ds.rootNodes().length, 1);
         equal(ds.childNodes(ds.get(1)).length, 1);
         equal(ds.childNodes(ds.get(0)).length, 0);
+    });
+
+    test("adding new child item when parentId is projected", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    parentId: "parentKey",
+                    fields: {
+                        id: { type: "string" },
+                        parentKey: { defaultValue: "root", type: "string" }
+                    }
+                }
+            },
+            data: [
+                { id: "master", parentKey: "root" }
+            ]
+        });
+
+        ds.read();
+        var model = ds.add({ parentId: "master" });
+
+        equal(model.parentId, "master");
+        equal(model.parentKey, "master");
+    });
+
+    test("adding new child by setting orignal field when parentId is projected", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    parentId: "parentKey",
+                    fields: {
+                        id: { type: "string" },
+                        parentKey: { defaultValue: "root", type: "string" }
+                    }
+                }
+            },
+            data: [
+                { id: "master", parentKey: "root" }
+            ]
+        });
+
+        ds.read();
+        var model = ds.add({ parentKey: "master" });
+
+        equal(model.parentId, "master");
+        equal(model.parentKey, "master");
     });
 
     test("adding new child item applies default field values", function() {

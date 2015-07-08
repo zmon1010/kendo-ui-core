@@ -549,6 +549,35 @@
         ok(row.data("kendoEditable"));
     });
 
+    test("add child item with projected parentId", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    parentId: "reportsTo",
+                    fields: {
+                        reportsTo: { defaultValue: 0, type: "number" }
+                    }
+                }
+            },
+            data: [
+                { id: 1, reportsTo: 0 }
+            ]
+        });
+
+        createTreeList({
+            dataSource: ds
+        });
+
+        instance.addRow(instance.content.find("tr:first"));
+
+        var row = instance.content.find("tr").eq(1);
+        var model = instance.dataItem(row);
+        ok(model.isNew());
+        equal(model.parentId, 1);
+        equal(model.reportsTo, 1);
+        ok(row.data("kendoEditable"));
+    });
+
     test("addRow with model as argument add child item", function() {
         createTreeList();
 
@@ -582,6 +611,32 @@
 
         var model = instance.dataItem(instance.content.find("tr:first"));
         equal(model.parentId, 0);
+    });
+
+    test("addRow creates new model with default value for parentId when parentId is projected", function() {
+        var ds = new TreeListDataSource({
+            schema: {
+                model: {
+                    parentId: "reportsTo",
+                    fields: {
+                        reportsTo: { defaultValue: 100, type: "number" }
+                    }
+                }
+            },
+            data: [
+                { id: 1, reportsTo: 0 }
+            ]
+        });
+
+        createTreeList({
+            dataSource: ds
+        });
+
+        instance.addRow();
+
+        var model = instance.dataItem(instance.content.find("tr:first"));
+        equal(model.parentId, 100);
+        equal(model.reportsTo, 100);
     });
 
     test("addRow creates new model with parentId set", function() {

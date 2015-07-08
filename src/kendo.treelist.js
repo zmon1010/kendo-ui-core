@@ -95,6 +95,7 @@ var __meta__ = {
     var COLUMNMENUINIT = "columnMenuInit";
     var COLUMNLOCK = "columnLock";
     var COLUMNUNLOCK = "columnUnlock";
+    var PARENTIDFIELD = "parentId";
 
     var classNames = {
         wrapper: "k-treelist k-grid k-widget",
@@ -182,6 +183,8 @@ var __meta__ = {
     var TreeListModel = Model.define({
         id: "id",
 
+        parentId: PARENTIDFIELD,
+
         fields: {
             id: { type: "number" },
             parentId: { type: "number", nullable: true }
@@ -191,6 +194,18 @@ var __meta__ = {
             Model.fn.init.call(this, value);
 
             this._loaded = false;
+
+            if (!this.parentIdField) {
+                this.parentIdField = PARENTIDFIELD;
+            }
+
+            this.parentId = this.get(this.parentIdField);
+        },
+
+        accept: function(data) {
+            Model.fn.accept.call(this, data);
+
+            this.parentId = this.get(this.parentIdField);
         },
 
         loaded: function(value) {
@@ -202,9 +217,31 @@ var __meta__ = {
         },
 
         shouldSerialize: function(field) {
-            return Model.fn.shouldSerialize.call(this, field) && field !== "_loaded" && field != "_error" && field != "_edit";
+            return Model.fn.shouldSerialize.call(this, field) && field !== "_loaded" && field != "_error" && field != "_edit" && !(this.parentIdField !== "parentId" && field === "parentId");
         }
     });
+
+    TreeListModel.parentIdField = PARENTIDFIELD;
+
+    TreeListModel.define = function(base, options) {
+        if (options === undefined) {
+            options = base;
+            base = TreeListModel;
+        }
+
+        var parentId = options.parentId || PARENTIDFIELD;
+
+        delete options.parentId;
+        options.parentIdField = parentId;
+
+        var model = Model.define(base, options);
+
+        if (parentId) {
+            model.parentIdField = parentId;
+        }
+
+        return model;
+    };
 
     function is(field) {
         return function(object) {
@@ -239,6 +276,9 @@ var __meta__ = {
             model = DataSource.fn._createNewModel.call(this, model);
 
             if (!fromModel) {
+                if (data.parentId) {
+                    data[model.parentIdField] = data.parentId
+                }
                 model.accept(data);
             }
 
@@ -501,7 +541,7 @@ var __meta__ = {
         },
 
         _defaultParentId: function() {
-            return this.reader.model.fn.defaults.parentId;
+            return this.reader.model.fn.defaults[this.reader.model.parentIdField];
         },
 
         childNodes: function(model) {
@@ -2739,7 +2779,7 @@ var __meta__ = {
                     parent = this.dataItem(parent);
                 }
 
-                model.parentId = parent.id;
+                model[parent.parentIdField] = parent.id;
                 index = this.dataSource.indexOf(parent) + 1;
                 parent.set("expanded", true);
 

@@ -16,9 +16,10 @@
                     schema: {
                         model: {
                             id: "EmployeeID",
+                            parentId: "ReportsTo",
                             fields: {
-                                parentId: { field: "ReportsTo",  nullable: true },
-                                EmployeeID: { field: "EmployeeID", type: "number" }
+                                EmployeeId: { type: "number", editable: false, nullable: false },
+                                ReportsTo: { nullable: true, type: "number" }
                             }
                         }
                     }

@@ -95,9 +95,10 @@
                         schema: {
                             model: {
                                 id: "EmployeeId",
+                                parentId: "ReportsTo",
                                 fields: {
                                     EmployeeId: { type: "number", editable: false, nullable: false },
-                                    parentId: { field: "ReportsTo", nullable: true },
+                                    ReportsTo: { nullable: true, type: "number" },
                                     FirstName: { validation: { required: true } },
                                     LastName: { validation: { required: true } },
                                     HireDate: { type: "date" },
