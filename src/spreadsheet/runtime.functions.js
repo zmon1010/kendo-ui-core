@@ -434,26 +434,9 @@
         [ "values", [ "collect", "anyvalue" ] ]
     ]);
 
-    function _percentile_inc(numbers, p){
-        // algorithm from https://en.wikipedia.org/wiki/Percentile#Microsoft_Excel_method
+    function _percentile(numbers, rank) {
         numbers.sort(ascending);
         var n = numbers.length;
-        var rank = p * (n - 1);
-        var k = rank | 0, d = rank - k;
-        if (k === 0) {
-            return numbers[0];
-        }
-        if (k == n - 1) {
-            return numbers[n - 1];
-        }
-        return numbers[k] + d * (numbers[k + 1] - numbers[k]);
-    }
-
-    function _percentile_exc(numbers, p){
-        // https://en.wikipedia.org/wiki/Percentile#NIST_method
-        numbers.sort(ascending);
-        var n = numbers.length;
-        var rank = p * (n + 1);
         var k = rank | 0, d = rank - k;
         if (k === 0) {
             return numbers[0];
@@ -463,6 +446,18 @@
         }
         --k;
         return numbers[k] + d * (numbers[k + 1] - numbers[k]);
+    }
+
+    function _percentile_inc(numbers, p){
+        // algorithm from https://en.wikipedia.org/wiki/Percentile#Microsoft_Excel_method
+        var rank = p * (numbers.length - 1) + 1;
+        return _percentile(numbers, rank);
+    }
+
+    function _percentile_exc(numbers, p){
+        // https://en.wikipedia.org/wiki/Percentile#NIST_method
+        var rank = p * (numbers.length + 1);
+        return _percentile(numbers, rank);
     }
 
     defineFunction("percentile.inc", _percentile_inc).args([
