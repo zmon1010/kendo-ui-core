@@ -22,6 +22,8 @@ namespace KendoScaffolder.UI
 
         public KendoWidget SelectedWidget { get; set; }
 
+        public ViewType SelectedViewType { get; set; }
+
         public WidgetSelectionWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -42,12 +44,21 @@ namespace KendoScaffolder.UI
             {
                 case "WidgetsListViewGridItem":
                     SelectedWidget = KendoWidget.Grid;
+                    SelectedViewType = ViewType.MVC;
+                    WidgetName.Text = "Kendo UI Grid";
+                    WidgetDescription.Text = rm.GetString("GridDescription");
+                    return;
+
+                case "WidgetsListViewWebGridItem":
+                    SelectedWidget = KendoWidget.Grid;
+                    SelectedViewType = ViewType.Web;
                     WidgetName.Text = "Kendo UI Grid";
                     WidgetDescription.Text = rm.GetString("GridDescription");
                     return;
 
                 case "WidgetsListViewChartItem":
                     SelectedWidget = KendoWidget.Chart;
+                    SelectedViewType = ViewType.MVC;
                     WidgetName.Text = "Kendo UI Chart";
                     WidgetDescription.Text = rm.GetString("ChartDescription");
                     return;

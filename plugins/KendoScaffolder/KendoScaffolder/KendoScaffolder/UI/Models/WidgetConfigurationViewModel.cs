@@ -13,6 +13,7 @@ namespace KendoScaffolder.UI.Models
         
         public string ControllerName { get; set; }
         public string ViewName { get; set; }
+        public ViewType ViewType { get; set; }
 
         public WidgetConfigurationViewModel(CodeGenerationContext context)
         {

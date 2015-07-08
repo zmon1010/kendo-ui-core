@@ -51,10 +51,12 @@ namespace KendoScaffolder
                 {
                     case KendoWidget.Chart:
                         viewModel = new ChartConfigurationViewModel(Context);
+                        viewModel.ViewType = widgetSelection.SelectedViewType;
                         widgetConfigurationWindow = new ChartConfigurationWindow((ChartConfigurationViewModel)viewModel);
                         break;
                     case KendoWidget.Grid:
                         viewModel = new GridConfigurationViewModel(Context);
+                        viewModel.ViewType = widgetSelection.SelectedViewType;
                         widgetConfigurationWindow = new GridConfigurationWindow((GridConfigurationViewModel)viewModel);
                         break;
                 }

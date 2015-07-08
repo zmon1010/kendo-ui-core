@@ -12,4 +12,10 @@ namespace KendoScaffolder
         Grid
         //Scheduler
     }
+
+    public enum ViewType
+    {
+        MVC,
+        Web
+    }
 }
