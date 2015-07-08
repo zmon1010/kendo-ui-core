@@ -72,6 +72,27 @@
                 return value;
             }
         },
+        editValue: function() {
+            var value = this._property(this._sheet._values);
+            var type = this._property(this._sheet._types);
+            var formula = this._property(this._sheet._formulas);
+            var parsed;
+
+            if (formula) {
+                value = formula;
+            } else if (type === "date") {
+                value = kendo.spreadsheet.calc.runtime.serialToDate(value);
+                value = kendo.toString(value, kendo.culture().calendar.patterns.d);
+            } else if (type === "string") {
+                parsed = kendo.spreadsheet.Sheet.parse(value, true);
+
+                if (parsed.type == "number") {
+                    value = "'" + value;
+                }
+            }
+
+            return value;
+        },
         type: function() {
             return this._property(this._sheet._types);
         },

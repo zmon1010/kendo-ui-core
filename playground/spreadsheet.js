@@ -15,6 +15,9 @@ sheet.hideRow(12);
 sheet.rowHeight(1, 40);
 sheet.rowHeight(50, 200);
 
+sheet.range("K10").value("'123");
+sheet.range("J10").value(new Date(2015,1,1));
+
 sheet.range("A1:B3").values([
     [1, 2],
     [3, 4],

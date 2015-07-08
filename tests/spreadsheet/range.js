@@ -454,5 +454,35 @@
         equal(sheet.range("1:1").background(), "red");
     });
 
+    test("editValue returns numeric value", function() {
+        sheet.range("A1").value(123);
+
+        equal(sheet.range("A1").editValue(), "123");
+    });
+
+    test("editValue returns numeric string value", function() {
+        sheet.range("A1").value("foo");
+
+        equal(sheet.range("A1").editValue(), "foo");
+    });
+
+    test("editValue returns numeric string value", function() {
+        sheet.range("A1").value("'123");
+
+        equal(sheet.range("A1").editValue(), "'123");
+    });
+
+    test("editValue returns formatted date", function() {
+        sheet.range("A1").value(new Date(2015, 0, 1));
+
+        equal(sheet.range("A1").editValue(), "1/1/2015");
+    });
+
+    test("editValue returns formula", function() {
+        var formula = "=SUM(A1:A1)";
+        sheet.range("A1").formula(formula);
+
+        equal(sheet.range("A1").editValue(), formula);
+    });
 
 })();
