@@ -624,6 +624,28 @@
         equal(result.data[17].value, "", "ordinal 17");
     });
 
+    test("process data expands rows when field type is boolean", function() {
+        var builder = new PivotCubeBuilder({
+           dimensions: {
+               Discontinued: { caption: "Discontinued" },
+               CategoryName: { caption: "CategoryName" },
+               UnitsInStock: { caption: "UnitsInStock" }
+           },
+           measures: {
+               "Count": { caption: "Measure 1", field: "Age",  aggregate: function(data, state) { state.accumulator = state.accumulator || 0; return state.accumulator + 1; } }
+           }
+        });
+        var data = [{ Discontinued: false, CategoryName: "Category1", UnitsInStock: 1 }, { Discontinued: false, CategoryName: "Category2", UnitsInStock: 2 } ];
+
+        var result = builder.process(data, {
+            columns: [{ name: "UnitsInStock", expand: false }],
+            rows: [{ name: ["Discontinued&false"], expand: false }, { name: ["CategoryName"], expand: true }],
+            measures: [{ name: "Count" }]
+        });
+
+        equal(result.data.length, 3);
+    });
+
     test("dimension as array", function() {
         var builder = new PivotCubeBuilder({
            dimensions: [

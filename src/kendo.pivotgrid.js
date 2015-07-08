@@ -713,6 +713,7 @@ var __meta__ = {
 
             var names = descriptor.names;
             var idx = descriptor.expandedIdx;
+            var value;
 
             while (idx > 0) {
                 parts = names[--idx].split("&");
@@ -720,7 +721,10 @@ var __meta__ = {
                     parentField = parts[0];
                     expectedValue = parts[1];
 
-                    if (getters[parentField](dataItem) != expectedValue) {
+                    value = getters[parentField](dataItem);
+                    value = (value !== undefined && value !== null) ? value.toString() : value;
+
+                    if (value != expectedValue) {
                         return false;
                     }
                 }
