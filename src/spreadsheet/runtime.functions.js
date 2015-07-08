@@ -434,7 +434,7 @@
         [ "values", [ "collect", "anyvalue" ] ]
     ]);
 
-    defineFunction("percentile.inc", function(numbers, p){
+    function _percentile_inc(numbers, p){
         // algorithm from https://en.wikipedia.org/wiki/Percentile#Microsoft_Excel_method
         numbers.sort(ascending);
         var n = numbers.length;
@@ -447,12 +447,9 @@
             return numbers[n - 1];
         }
         return numbers[k] + d * (numbers[k + 1] - numbers[k]);
-    }).args([
-        [ "numbers", [ "collect", "number", 1 ] ],
-        [ "p", [ "and", "number", [ "[between]", 0, 1 ] ] ]
-    ]);
+    }
 
-    defineFunction("percentile.exc", function(numbers, p){
+    function _percentile_exc(numbers, p){
         // https://en.wikipedia.org/wiki/Percentile#NIST_method
         numbers.sort(ascending);
         var n = numbers.length;
@@ -466,11 +463,33 @@
         }
         --k;
         return numbers[k] + d * (numbers[k + 1] - numbers[k]);
-    }).args([
+    }
+
+    defineFunction("percentile.inc", _percentile_inc).args([
+        [ "numbers", [ "collect", "number", 1 ] ],
+        [ "p", [ "and", "number", [ "[between]", 0, 1 ] ] ]
+    ]);
+
+    defineFunction("percentile.exc", _percentile_exc).args([
         [ "numbers", [ "collect", "number", 1 ] ],
         [ "p", [ "and", "number", [ "(between)", 0, 1 ] ] ]
     ]);
 
+    defineFunction("quartile.inc", function(numbers, quarter){
+        return _percentile_inc(numbers, quarter / 4);
+    }).args([
+        [ "numbers", [ "collect", "number", 1 ] ],
+        [ "quarter", [ "values", 0, 1, 2, 3, 4 ] ]
+    ]);
+
+    defineFunction("quartile.exc", function(numbers, quarter){
+        return _percentile_exc(numbers, quarter / 4);
+    }).args([
+        [ "numbers", [ "collect", "number", 1 ] ],
+        [ "quarter", [ "values", 0, 1, 2, 3, 4 ] ]
+    ]);
+
+    runtime.defineAlias("quartile", "quartile.inc");
     runtime.defineAlias("percentile", "percentile.inc");
 
     // https://support.office.com/en-sg/article/AVEDEV-function-ec78fa01-4755-466c-9a2b-0c4f9eacaf6d

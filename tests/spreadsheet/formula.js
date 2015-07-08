@@ -624,6 +624,11 @@
             A5: '=percentile.inc({ 1, 2, 3, 4 }, 75%)',
             A6: '=percentile.inc({ 15, 20, 35, 40, 50 }, 40%)',
             A7: '=percentile.exc({ 1, 2, 3, 10, 20, 30 }, 25%)',
+
+            B4: '=quartile(A1:C3, 3)',
+            B5: '=quartile.inc({ 1, 2, 3, 4 }, 3)',
+            B6: '=quartile.inc({ 15, 20, 35, 40, 50 }, 2)',
+            B7: '=quartile.exc({ 1, 2, 3, 10, 20, 30 }, 1)',
         });
         ss.recalculate(function(){
             ss.expectEqual({
@@ -631,6 +636,11 @@
                 A5: 3.25,
                 A6: 29,
                 A7: 1.75,
+
+                B4: ss.$("A4"),
+                B5: ss.$("A5"),
+                B6: 35,
+                B7: ss.$("A7"),
             });
         });
     });
