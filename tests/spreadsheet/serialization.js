@@ -206,6 +206,16 @@
         equal(json.columns[0].index, 1);
     });
 
+    test("toJSON serializes frozenColumns and frozenRows", function() {
+        sheet.frozenColumns(1);
+        sheet.frozenRows(1);
+
+        var json = sheet.toJSON();
+        equal(json.frozenColumns, 1);
+        equal(json.frozenRows, 1);
+    });
+
+
     test("toJSON serializes the sheets of the spreadsheet", function() {
         var json = spreadsheet.toJSON();
 

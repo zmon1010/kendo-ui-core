@@ -648,6 +648,8 @@
             var json = {
                 rows: rows,
                 columns: columns,
+                frozenRows: this.frozenRows(),
+                frozenColumns: this.frozenColumns(),
                 mergedCells: this._mergedCells.map(function(ref) {
                     return ref.toString();
                 })
