@@ -498,4 +498,10 @@
         equal(sheet.range("A1").value(), "foo");
     });
 
+    test("editValue removes formula when value is set", function() {
+        sheet.range("A1").formula("=SUM(A1:A1)").editValue("foo");
+
+        equal(sheet.range("A1").formula(), null);
+    });
+
 })();

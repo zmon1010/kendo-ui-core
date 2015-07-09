@@ -81,6 +81,7 @@
                 if (formula(value)) {
                     this.formula(value);
                 } else {
+                    this.formula(null);
                     this.value(value);
                 }
 
