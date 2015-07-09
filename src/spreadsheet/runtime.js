@@ -1,7 +1,7 @@
 // -*- fill-column: 100 -*-
 
 (function(f, define){
-    define([ "./references.js" ], f);
+    define([ "./references" ], f);
 })(function(){
 
     "use strict";

@@ -648,6 +648,9 @@ fillElements({
         A9: '1',
         E17: '=countblank(F15:G18)',
 
+        F18: '=roman(2014)',
+        F19: '=arabic(F18)',
+
         H7: '=aggregate(1, 0, H1:H6)',
         H14: '=aggregate(1, 0, H1:H7)',
 

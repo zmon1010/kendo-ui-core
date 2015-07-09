@@ -1,7 +1,7 @@
 // -*- fill-column: 100 -*-
 
 (function(f, define){
-    define([ "./runtime.js" ], f);
+    define([ "./runtime", "../util/main" ], f);
 })(function(){
 
     "use strict";
@@ -23,7 +23,7 @@
 
     /* -----[ Math functions ]----- */
 
-    [ "abs", "cos", "sin", "acos", "asin", "tan", "atan", "exp", "log" ].forEach(function(name){
+    [ "abs", "cos", "sin", "acos", "asin", "tan", "atan", "exp", "log", "sqrt" ].forEach(function(name){
         defineFunction(name, Math[name]).args([
             [ "n", "*number" ]
         ]);
@@ -41,6 +41,26 @@
     }).args([
         [ "a", "*number" ],
         [ "b", "*divisor" ]
+    ]);
+
+    defineFunction("quotient", function(a, b){
+        return Math.floor(a / b);
+    }).args([
+        [ "a", "*number" ],
+        [ "b", "*divisor" ]
+    ]);
+
+    defineFunction("ceiling", function(num, s){
+        return s * Math.ceil(num / s);
+    }).args([
+        [ "number", "*number" ],
+        [ "significance", "*number" ]
+    ]);
+
+    defineFunction("sign", function(num){
+        return num < 0 ? -1 : num > 0 ? 1 : 0;
+    }).args([
+        [ "number", "*number" ]
     ]);
 
     defineFunction("sum", function(numbers){
@@ -857,6 +877,51 @@
     defineFunction("false", function(){
         return true;
     }).args([]);
+
+    defineFunction("roman", function(num){
+        return kendo.util.arabicToRoman(num).toUpperCase();
+    }).args([
+        [ "number", "*integer" ]
+    ]);
+
+    defineFunction("arabic", function(rom){
+        var num = kendo.util.romanToArabic(rom);
+        return num == null ? new CalcError("VALUE") : num;
+    }).args([
+        [ "roman", "*string" ]
+    ]);
+
+    defineFunction("base", function(number, radix, minLen){
+        var str = number.toString(radix).toUpperCase();
+        while (str.length < minLen) {
+            str = "0" + str;
+        }
+        return str;
+    }).args([
+        [ "number", "*integer" ],
+        [ "radix", [ "and", "*integer", [ "[between]", 2, 36 ] ] ],
+        [ "minLen", [ "or", "*integer+", [ "null", 0 ] ] ]
+    ]);
+
+    defineFunction("decimal", function(text, radix){
+        text = text.toUpperCase();
+        var val = 0;
+        for (var i = 0; i < text.length; ++i) {
+            var d = text.charCodeAt(i);
+            if (d >= 48 && d <= 57) {
+                d -= 48;
+            } else if (d >= 65 && d < (55 + radix)) {
+                d -= 55;
+            } else {
+                return new CalcError("VALUE");
+            }
+            val = val * radix + d;
+        }
+        return val;
+    }).args([
+        [ "text", "*string" ],
+        [ "radix", [ "and", "*integer", [ "[between]", 2, 36 ] ] ]
+    ]);
 
     /* -----[ String functions ]----- */
 
