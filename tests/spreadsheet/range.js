@@ -485,4 +485,17 @@
         equal(sheet.range("A1").editValue(), formula);
     });
 
+    test("editValue sets formula", function() {
+        var formula = "=SUM(A1:A1)";
+        sheet.range("A1").editValue(formula);
+
+        equal(sheet.range("A1").formula(), formula);
+    });
+
+    test("editValue sets value", function() {
+        sheet.range("A1").editValue("foo");
+
+        equal(sheet.range("A1").value(), "foo");
+    });
+
 })();

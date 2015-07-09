@@ -1,5 +1,5 @@
 (function(f, define){
-    define([], f);
+    define([ "../kendo.core" ], f);
 })(function(){
 
 (function(kendo) {
@@ -12,6 +12,16 @@
             element.addClass("k-spreadsheet-formula-bar");
 
             this._valueInput = $("<input class='k-spreadsheet-formula-input'>").appendTo(element);
+
+            this._valueInput.on("change", $.proxy(this._onChange, this));
+        },
+        events: [
+            "change"
+        ],
+        _onChange: function(e) {
+            this.trigger("change", {
+                value: this._valueInput.val()
+            });
         },
         value: function(value) {
             this._valueInput.val(value);

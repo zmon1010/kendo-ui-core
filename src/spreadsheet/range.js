@@ -72,26 +72,39 @@
                 return value;
             }
         },
-        editValue: function() {
-            var value = this._property(this._sheet._values);
-            var type = this._property(this._sheet._types);
-            var formula = this._property(this._sheet._formulas);
-            var parsed;
+        editValue: function(value) {
+            var formula, type, parsed;
 
-            if (formula) {
-                value = formula;
-            } else if (type === "date") {
-                value = kendo.spreadsheet.calc.runtime.serialToDate(value);
-                value = kendo.toString(value, kendo.culture().calendar.patterns.d);
-            } else if (type === "string") {
-                parsed = kendo.spreadsheet.Sheet.parse(value, true);
+            if (value !== undefined) {
+                formula = RegExp.prototype.test.bind(/^=/);
 
-                if (parsed.type == "number") {
-                    value = "'" + value;
+                if (formula(value)) {
+                    this.formula(value);
+                } else {
+                    this.value(value);
                 }
-            }
 
-            return value;
+                return this;
+            } else {
+                value = this._property(this._sheet._values);
+                type = this._property(this._sheet._types);
+                formula = this._property(this._sheet._formulas);
+
+                if (formula) {
+                    value = formula;
+                } else if (type === "date") {
+                    value = kendo.spreadsheet.calc.runtime.serialToDate(value);
+                    value = kendo.toString(value, kendo.culture().calendar.patterns.d);
+                } else if (type === "string") {
+                    parsed = kendo.spreadsheet.Sheet.parse(value, true);
+
+                    if (parsed.type == "number") {
+                        value = "'" + value;
+                    }
+                }
+
+                return value;
+            }
         },
         type: function() {
             return this._property(this._sheet._types);

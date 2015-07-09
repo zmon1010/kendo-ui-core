@@ -2,7 +2,7 @@
     define([
         "./kendo.toolbar",
         "./util/undoredostack",
-        "./spreadsheet/chrome",
+        "./spreadsheet/formulabar",
         "./spreadsheet/eventlistener",
         "./spreadsheet/rangelist",
         "./spreadsheet/references",
@@ -100,7 +100,13 @@
 
         _chrome: function() {
             var formulaBar = $("<div />").prependTo(this.element);
-            this._formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar);
+            this._formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar, {
+                change: function(e) {
+                    var sheet = this._sheet;
+                    var range = new kendo.spreadsheet.Range(sheet.activeCell(), sheet);
+                    range.editValue(e.value);
+                }.bind(this)
+            });
 
             this._toolbar();
         },
