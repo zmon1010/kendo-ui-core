@@ -791,19 +791,8 @@
             var indices = null;
 
             columns.forEach(function(column) {
-                var ascending = true;
-                var columnRef = ref;
 
-                if (typeof column === "object") {
-                    ascending = column.ascending !== false;
-                    column = column.index;
-                }
-
-                if (typeof column === "number") {
-                    columnRef = ref.toColumn(column);
-                }
-
-                indices = this._sorter.sortBy(columnRef, this._values, ascending, indices);
+                indices = this._sorter.sortBy(ref.toColumn(column.index), this._values, column.ascending, indices);
             }, this);
 
             this._sort = {

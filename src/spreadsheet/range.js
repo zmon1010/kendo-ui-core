@@ -229,7 +229,6 @@
         },
 
         clear: function(options) {
-
             var clearAll = !options || !Object.keys(options).length;
 
             var sheet = this._sheet;
@@ -267,13 +266,21 @@
                 throw new Error("Unsupported for multiple ranges.");
             }
 
+            if (spec === undefined) {
+                spec = { column: 0 };
+            }
+
             spec = spec instanceof Array ? spec : [spec];
 
             this._sheet._sortBy(this._ref.toRangeRef(), spec.map(function(spec, index) {
-               return {
-                   index: spec.column === undefined ? index : spec.column,
-                   ascending: spec.ascending === undefined ? true : spec.ascending
-               };
+                if (typeof spec === "number") {
+                    spec = { column: spec };
+                }
+
+                return {
+                    index: spec.column === undefined ? index : spec.column,
+                    ascending: spec.ascending === undefined ? true : spec.ascending
+                };
             }));
 
             return this;
