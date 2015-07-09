@@ -11,6 +11,7 @@ using Telerik.Windows.Documents.Spreadsheet.FormatProviders;
 using Telerik.Windows.Documents.Spreadsheet.FormatProviders.Contexts;
 using Telerik.Windows.Documents.Spreadsheet.Model;
 using Telerik.Windows.Documents.Spreadsheet.PropertySystem;
+using Telerik.Windows.Documents.Spreadsheet.Utilities;
 
 namespace Host
 {
@@ -96,6 +97,11 @@ namespace Host
                             }
                         }
                     }
+
+                    foreach (var mergedRange in dtoSheet.MergedCells)
+                    {
+                        sheet.Cells.GetCellSelection(mergedRange).Merge();
+                    }
                 }
             }
 
@@ -159,6 +165,13 @@ namespace Host
 
                     dtoSheet.Rows.Add(dtoRow);
                 }
+            }
+
+            foreach (var mergedRange in worksheet.Cells.GetMergedCellRanges())
+            {
+                dtoSheet.MergedCells.Add(
+                    NameConverter.ConvertCellRangeToName(mergedRange.FromIndex, mergedRange.ToIndex)
+                );
             }
 
             var serializer = new JsonSerializer();

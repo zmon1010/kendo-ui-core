@@ -47,6 +47,7 @@ namespace Host.DTO
         {
             Columns = new List<Column>();
             Rows = new List<Row>();
+            MergedCells = new List<string>();
         }
 
         [JsonProperty(PropertyName = "columns")]
@@ -54,6 +55,9 @@ namespace Host.DTO
 
         [JsonProperty(PropertyName = "rows")]
         public IList<Row> Rows { get; set; }
+
+        [JsonProperty(PropertyName = "mergedCells")]
+        public IList<string> MergedCells { get; set; }
     }
 
     public class Workbook
