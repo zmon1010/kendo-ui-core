@@ -136,13 +136,28 @@ var __meta__ = {
             return filter;
         },
 
+        _convert: function(value) {
+            var schema = this.dataSource.options.schema;
+            var field = ((schema.model || {}).fields || {})[this.currentMember];
+
+            if (field) {
+                if (field.type === "number") {
+                    value = parseFloat(value);
+                } else if (field.type === "boolean") {
+                    value = Boolean($.parseJSON(value));
+                }
+            }
+
+            return value;
+        },
+
         _filter: function(e) {
             var that = this;
-            var value = that._filterValue.val();
+            var value = that._convert(that._filterValue.val());
 
             e.preventDefault();
 
-            if (!value) {
+            if (value === "") {
                 that.menu.close();
                 return;
             }

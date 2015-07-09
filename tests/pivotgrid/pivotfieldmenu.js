@@ -740,6 +740,72 @@
         equal(expression.value, "chai");
     });
 
+    test("filter converts expression value to number value", function() {
+        var fieldmenu = createMenu({
+            dataSource: {
+              schema: {
+                model: {
+                  fields: {
+                    FirstName: { type: "number" }
+                  }
+                }
+              }
+            }
+        });
+
+        fieldmenu.currentMember = "FirstName"; //set current field member
+
+        var dataSource = fieldmenu.dataSource;
+        var filterItem = fieldmenu.menu.element.find(".k-filter-item");
+
+        filterItem.find("select").data("kendoDropDownList").value("eq");
+        filterItem.find("input").val("2");
+
+        stub(dataSource, "filter");
+
+        filterItem.find(".k-button-filter").click();
+
+        var expression = dataSource.args("filter")[0].filters[0];
+
+        equal(expression.field, fieldmenu.currentMember);
+        equal(expression.operator, "eq");
+        equal(expression.value, 2);
+        equal(typeof expression.value, "number");
+    });
+
+    test("filter converts expression value to bool value", function() {
+        var fieldmenu = createMenu({
+            dataSource: {
+              schema: {
+                model: {
+                  fields: {
+                    FirstName: { type: "boolean" }
+                  }
+                }
+              }
+            }
+        });
+
+        fieldmenu.currentMember = "FirstName"; //set current field member
+
+        var dataSource = fieldmenu.dataSource;
+        var filterItem = fieldmenu.menu.element.find(".k-filter-item");
+
+        filterItem.find("select").data("kendoDropDownList").value("eq");
+        filterItem.find("input").val("false");
+
+        stub(dataSource, "filter");
+
+        filterItem.find(".k-button-filter").click();
+
+        var expression = dataSource.args("filter")[0].filters[0];
+
+        equal(expression.field, fieldmenu.currentMember);
+        equal(expression.operator, "eq");
+        equal(expression.value, false);
+        equal(typeof expression.value, "boolean");
+    });
+
     test("do not filter data source if no value", function() {
         var fieldmenu = createMenu();
         var dataSource = fieldmenu.dataSource;
