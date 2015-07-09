@@ -135,7 +135,7 @@
        sheet.bind("change", success).deleteColumn(0);
     });
 
-    test("deleteColumn move the bottom row values to the deleted one", function() {
+    test("deleteColumn moves the next column values to the deleted one", function() {
         sheet.range("B:B").value("foo");
 
         sheet.deleteColumn(0);
@@ -143,5 +143,21 @@
         equal(sheet.range("A:A").value(), "foo");
         equal(sheet.range("B:B").value(), null);
     });
+
+    test("insertColumn triggers the change event", 1, function() {
+       sheet.bind("change", success).insertColumn(0);
+    });
+
+    test("insertColumn clears the column and move the data to the right", function() {
+        sheet.range("A:A").value(1);
+        sheet.range("B:B").value(2);
+
+        sheet.insertColumn(0);
+
+        equal(sheet.range("A:A").value(), null);
+        equal(sheet.range("B:B").value(), 1);
+        equal(sheet.range("C:C").value(), 2);
+    });
+
 
 })();
