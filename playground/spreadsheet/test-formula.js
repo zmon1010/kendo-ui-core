@@ -647,7 +647,9 @@ fillElements({
         A10: '=sum(choose(A9, A1:B2, B1:C2))',
         A9: '1',
         E17: '=countblank(F15:G18)',
-        
+
+        H7: '=aggregate(1, 0, H1:H6)',
+        H14: '=aggregate(1, 0, H1:H7)',
 
         //E5: "=sum(A1:C3)",
         // E5: "=B2",

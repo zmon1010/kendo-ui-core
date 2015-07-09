@@ -567,6 +567,8 @@
                     code += "xargs.push($"+name+")"
                         + "} catch(ex) { if (ex instanceof CalcError) return ex; throw ex; } ";
                     resolve += "toResolve.push(args.slice(i)); ";
+                } else if (type == "rest") {
+                    code += "xargs.push(args.slice(i)); i = args.length; ";
                 } else {
                     code += "var $" + name + " = args[i++]; if ($"+name+" instanceof CalcError) return $"+name+"; "
                         + typeCheck(type) + "xargs.push($"+name+"); ";

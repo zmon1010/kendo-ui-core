@@ -16,7 +16,7 @@
             this.sheets = sheets;
         },
 
-        getRefCells: function(ref) {
+        getRefCells: function(ref, hiddenInfo) {
             var sheet = this.sheets[ref.sheet], formula, value;
             if (ref instanceof CellRef) {
                 formula = sheet.compiledFormula(ref);
@@ -28,7 +28,8 @@
                         value: value,
                         row: ref.row,
                         col: ref.col,
-                        sheet: ref.sheet
+                        sheet: ref.sheet,
+                        hidden: hiddenInfo ? (sheet.columnWidth(ref.col) === 0 || sheet.rowHeight(ref.row) === 0) : false
                     }];
                 } else {
                     return [];
@@ -51,7 +52,14 @@
                         formula = sheet._compiledFormulas.value(index, index);
                         value = values.at(index);
                         if (formula != null || value != null) {
-                            states.push({ formula: formula, value: value, row: row, col: col, sheet: ref.sheet });
+                            states.push({
+                                formula: formula,
+                                value: value,
+                                row: row,
+                                col: col,
+                                sheet: ref.sheet,
+                                hidden: hiddenInfo ? (sheet.columnWidth(col) === 0 || sheet.rowHeight(row) === 0) : false
+                            });
                         }
                     }
                 }
@@ -61,7 +69,7 @@
             if (ref instanceof UnionRef) {
                 var a = [];
                 for (var i = 0; i < ref.refs.length; ++i) {
-                    a = a.concat(this.getRefCells(ref.refs[i]));
+                    a = a.concat(this.getRefCells(ref.refs[i], hiddenInfo));
                 }
                 return a;
             }

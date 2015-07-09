@@ -487,6 +487,89 @@
     runtime.defineAlias("quartile", "quartile.inc");
     runtime.defineAlias("percentile", "percentile.inc");
 
+    // AGGREGATE function
+    //
+    // https://support.office.com/en-SG/article/aggregate-function-c8caed56-07df-4aeb-9741-23693ffbe525
+    //
+    // we can only partially type-check this function.  also, we need to use the async version in
+    // order to resolve references and delegate values to the function to aggregate.
+    defineFunction("aggregate", function(callback, funcId, options, args){
+        // options is a bit field.  that makes sense; it's the documentation which doesn't.
+        var self = this;
+        var opt_ignore_hidden_rows = 1;
+        var opt_ignore_errors = 2;
+        var opt_use_aggregates = 4;
+        var fname = [
+            "AVERAGE", "COUNT", "COUNTA", "MAX", "MIN", "PRODUCT",
+            "STDEV.S", "STDEV.P", "SUM", "VAR.S", "VAR.P", "MEDIAN",
+            "MODE.SNGL", "LARGE", "SMALL", "PERCENTILE.INC",
+            "QUARTILE.INC", "PERCENTILE.EXC", "QUARTILE.EXC"
+        ][funcId - 1];
+        var values = [];
+        function fetchValues(args) {
+            if (args instanceof Ref) {
+                self.ss.getRefCells(args, true).forEach(function(cell){
+                    var value = cell.value;
+                    if ((options & opt_ignore_hidden_rows) && cell.hidden) {
+                        return;
+                    }
+                    if (cell.formula) {
+                        // XXX: formula.print is fast, but still, can't we do any better here?
+                        //      perhaps access the input string directly somehow?
+                        var str = cell.formula.print(cell.row, cell.col);
+                        if (/^\s*(?:aggregate|subtotal)\s*\(/i.test(str)) {
+                            if (!(options & opt_use_aggregates)) {
+                                return;
+                            }
+                        }
+                        if ("value" in cell.formula) {
+                            value = cell.formula.value;
+                        }
+                    }
+                    if ((options & opt_ignore_errors) && value instanceof CalcError) {
+                        return;
+                    }
+                    if (typeof value == "number" || value instanceof CalcError) {
+                        values.push(value);
+                    }
+                });
+            } else if (Array.isArray(args)) {
+                for (var i = 0; i < args.length; ++i) {
+                    fetchValues(args[i]);
+                }
+            } else if (args instanceof Matrix) {
+                args.each(fetchValues);
+            } else if (typeof args == "number") {
+                values.push(args);
+            } else if (args instanceof CalcError && !(options & opt_ignore_errors)) {
+                values.push(args);
+            }
+        }
+        self.resolveCells(args, function(){
+            if (funcId > 12) {
+                // "array form"
+                fetchValues(args[0]);
+                var k = args[1];
+                if (k instanceof CellRef) {
+                    k = self.ss.getData(k);
+                }
+                if (typeof k != "number") {
+                    return callback(new CalcError("VALUE"));
+                }
+            } else {
+                fetchValues(args);
+            }
+            self.func(fname, callback, values);
+        });
+    }).argsAsync([
+        [ "funcId", [ "values", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                      11, 12, 13, 14, 15, 16, 17, 18, 19 ] ],
+        [ "options", [ "or",
+                       [ "null", 0 ],
+                       [ "values", 0, 1, 2, 3, 4, 5, 6, 7  ] ] ],
+        [ "args", "rest" ]
+    ], true);
+
     // https://support.office.com/en-sg/article/AVEDEV-function-ec78fa01-4755-466c-9a2b-0c4f9eacaf6d
     defineFunction("avedev", function(numbers){
         if (numbers.length < 2) {

@@ -645,6 +645,26 @@
         });
     });
 
+    test("AGGREGATE", function(){
+        ss.fill({
+            D1: "=1/0",
+            A4: '=aggregate(9, 0, A1:D3)',
+            A5: '=aggregate(9, 3, A1:D3)',
+            A6: '=aggregate(9, 3, A1:D5)',
+            A7: '=aggregate(9, 4, A1:D5)',
+            A8: '=aggregate(9, 6, A1:D5)',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A4: "#DIV/0!",
+                A5: 45,
+                A6: 45,
+                A7: "#DIV/0!",
+                A8: 90,
+            });
+        });
+    });
+
     test("evaluate dependent formulas", function(){
         ss.fill({
             D1: '=sum(indirect("D2"):indirect("$D$3"))',
