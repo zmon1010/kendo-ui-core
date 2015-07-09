@@ -4817,20 +4817,14 @@
             getSectors: function(rect) {
                 var rootSize = this.ROOT_SIZE;
                 var bottomRight = rect.bottomRight();
-                var x = Math.floor(rect.x / rootSize);
-                var y = Math.floor(rect.y / rootSize);
-                var bottomX = Math.floor(bottomRight.x / rootSize);
-                var bottomY = Math.floor(bottomRight.y / rootSize);
-                var sectors = [
-                    [x],
-                    [y]
-                ];
-
-                if (x !== bottomX) {
-                    sectors[0].push(bottomX);
+                var bottomX = math.floor(bottomRight.x / rootSize);
+                var bottomY = math.floor(bottomRight.y / rootSize);
+                var sectors = [[],[]];
+                for (var x = math.floor(rect.x / rootSize); x <= bottomX; x++) {
+                    sectors[0].push(x);
                 }
-                if (y !== bottomY) {
-                    sectors[1].push(bottomY);
+                for (var y = math.floor(rect.y / rootSize); y <= bottomY; y++) {
+                    sectors[1].push(y);
                 }
                 return sectors;
             },

@@ -3197,10 +3197,16 @@
             equal(tree.hitTestRect(new Rect(80, 0, 50, 50), [shape]), false);
         });
 
-        test("hitTestRect detects hits for rects that span across multiple sectors", function() {
+        test("hitTestRect detects hits for rects that span across two sectors", function() {
             shape = new ShapeMock();
             tree.insert(shape);
             equal(tree.hitTestRect(new Rect(-50, 0, 100, 50)), true);
+        });
+
+        test("hitTestRect detects hits for rects that span across more than two sectors", function() {
+            shape = new ShapeMock();
+            tree.insert(shape);
+            equal(tree.hitTestRect(new Rect(-1050, 0, 3000, 50)), true);
         });
 
     })();
