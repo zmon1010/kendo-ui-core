@@ -5003,6 +5003,19 @@
         }
       },
       {
+        "text": "Keyboard navigation",
+        "url": "toolbar/keyboard-navigation",
+        "new": "true",
+        "title": {
+            "kendo-ui": "Kendo UI ToolBar control | Keyboard support demo",
+            "aspnet-mvc": "ASP.NET MVC ToolBar control | Keyboard support demo"
+        },
+        "meta": {
+            "kendo-ui": "Look at the source code and play with the demo to find out more about the keyboard support feature in Kendo UI ToolBar.",
+            "aspnet-mvc": "Look at the source code and play with the demo to find out more about the keyboard support feature in ASP.NET MVC ToolBar."
+        }
+      },
+      {
         "text": "AngularJS",
         "url": "toolbar/angular",
         "title": {
