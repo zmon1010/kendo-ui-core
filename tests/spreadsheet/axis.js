@@ -114,6 +114,21 @@
         equal(axis.nextVisible(0), 2);
     });
 
+    test("first/last are 0,_count - 1 by default", function() {
+        equal(axis.firstVisible(), 0);
+        equal(axis.lastVisible(), 999);
+    });
+
+    test("first visible gives the first visible index", function() {
+        axis.hide(0);
+        equal(axis.firstVisible(), 1);
+    });
+
+    test("last visible gives the last visible index", function() {
+        axis.hide(999);
+        equal(axis.lastVisible(), 998);
+    });
+
     test("Next visible boundary check (hidden last)", function() {
         axis.hide(999);
         equal(axis.nextVisible(998), 998);
@@ -133,6 +148,10 @@
         equal(axis.prevVisible(1), 1);
     });
 
+
+    test("nextPage returns the correct cell on the next page", function() {
+        equal(axis.nextPage(10, 700), 56);
+    });
 
     module("PaneAxis", {
     });

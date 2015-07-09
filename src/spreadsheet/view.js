@@ -78,6 +78,29 @@
         return value >= min && value <= max;
     }
 
+    var ACTIONS = {
+       "up": "up",
+       "down": "down",
+       "left": "left",
+       "right": "right",
+       "home": "first-col",
+       "ctrl+left": "first-col",
+       "end": "last-col",
+       "ctrl+right": "last-col",
+       "ctrl+up": "first-row",
+       "ctrl+down": "last-row",
+       "ctrl+home": "first",
+       "ctrl+end": "last",
+       "pageup": "prev-page",
+       "pagedown": "next-page"
+    };
+
+    var ACTION_KEYS = [];
+
+    for (var key in ACTIONS) {
+        ACTION_KEYS.push(key);
+    }
+
     var View = kendo.Class.extend({
         init: function(element) {
             element.append(VIEW_CONTENTS);
@@ -105,6 +128,7 @@
 
         moveActiveCell: function(direction) {
             var sheet = this._sheet;
+            var scroller = this.scroller;
             var activeCell = sheet.activeCell();
             var topLeft = activeCell.topLeft;
             var bottomRight = activeCell.bottomRight;
@@ -129,6 +153,34 @@
                 case "down":
                     row = rows.nextVisible(bottomRight.row);
                     break;
+                case "first-col":
+                    column = columns.firstVisible();
+                    break;
+                case "last-col":
+                    column = columns.lastVisible();
+                    break;
+                case "first-row":
+                    row = rows.firstVisible();
+                    break;
+                case "last-row":
+                    row = rows.lastVisible();
+                    break;
+                case "last":
+                    row = rows.lastVisible();
+                    column = columns.lastVisible();
+                    break;
+                case "first":
+                    row = rows.firstVisible();
+                    column = columns.firstVisible();
+                    break;
+                case "next-page":
+                    row = rows.nextPage(bottomRight.row, scroller.clientHeight);
+                    scroller.scrollTop += scroller.clientHeight;
+                    break;
+                case "prev-page":
+                    row = rows.prevPage(bottomRight.row, scroller.clientHeight);
+                    scroller.scrollTop -= scroller.clientHeight;
+                    break;
             }
 
             sheet.activeCell(new CellRef(row, column));
@@ -144,8 +196,8 @@
                 container.focus();
             });
 
-            listener.on(["up", "down", "left", "right"], function(event, action) {
-                that.moveActiveCell(action);
+            listener.on(ACTION_KEYS, function(event, action) {
+                that.moveActiveCell(ACTIONS[action]);
                 event.preventDefault();
             });
 

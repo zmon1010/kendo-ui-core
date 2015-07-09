@@ -151,6 +151,24 @@
             var tree = new RangeTree();
             map(tree, this.root, callback);
             return tree;
+        },
+
+        first: function() {
+            var first = this.root;
+            while(first.left != NilNode) {
+                first = first.left;
+            }
+
+            return first;
+        },
+
+        last: function() {
+            var last = this.root;
+            while(last.right != NilNode) {
+                last = last.right;
+            }
+
+            return last;
         }
     });
 
@@ -214,6 +232,14 @@
 
         intersecting: function(start, end) {
             return this.tree.intersecting(start, end);
+        },
+
+        first: function(start, end) {
+            return this.tree.first().value;
+        },
+
+        last: function(start, end) {
+            return this.tree.last().value;
         },
 
         insert: function(start, end, value) {

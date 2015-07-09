@@ -87,6 +87,32 @@
             }
         },
 
+        nextPage: function(index, pageSize) {
+            return this.index(this.sum(0, index - 1) + pageSize);
+        },
+
+        prevPage: function(index, pageSize) {
+            return this.index(this.sum(0, index) - pageSize);
+        },
+
+        firstVisible: function() {
+            var firstHidden = this._hidden.first();
+            if (firstHidden.value === 0) {
+                return 0;
+            } else {
+                return firstHidden.end + 1;
+            }
+        },
+
+        lastVisible: function() {
+            var lastHidden = this._hidden.last();
+            if (lastHidden.value === 0) {
+                return this._count - 1;
+            } else {
+                return lastHidden.start - 1;
+            }
+        },
+
         prevVisible: function(index) {
             if (index === 0) {
                 return 0;
@@ -178,7 +204,7 @@
             var iterator = this.values.iterator(0, this._count - 1);
             var current = iterator.at(0);
 
-            while (current < value) {
+            while (current < value && index < this._count - 1) {
                 current += iterator.at(++index);
             }
 
