@@ -180,6 +180,58 @@
             return this;
         },
 
+        deleteColumn: function(columnIndex) {
+
+            this.batch(function() {
+                var grid = this._grid;
+                var columnCount = grid.columnCount;
+                var rowCount = grid.rowCount;
+
+                for (var ci = columnIndex; ci < columnCount; ci++) {
+                    var ref = new RangeRef(new CellRef(0, ci), new CellRef(Infinity, ci));
+
+                    new Range(ref, this).clear();
+
+                    if (ci == columnCount - 1) {
+                        break;
+                    }
+
+                    var topLeft = grid.normalize(ref.topLeft);
+                    var bottomRight = grid.normalize(ref.bottomRight);
+
+
+                        var cellRefTop = new CellRef(topLeft.row, topLeft.col + 1);
+                        var cellRefBottom = new CellRef(bottomRight.row, bottomRight.col + 1);
+
+                        var nextRef = new RangeRef(cellRefTop, cellRefBottom);
+
+                        var nextIndex = nextRef.topLeft.col * rowCount + nextRef.topLeft.row;
+                        var nextBottomIndex = nextRef.bottomRight.col * rowCount + nextRef.bottomRight.row;
+
+                        var targetIndex = topLeft.col * rowCount + topLeft.row;
+
+                        this._background.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._values.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._borderBottom.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._borderRight.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._fontColor.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._fontFamily.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._fontLine.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._fontSize.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._fontStyle.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._fontWeight.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._horizontalAlignment.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._verticalAlignment.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._wrap.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._types.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._formulas.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._formats.copy(nextIndex, nextBottomIndex, targetIndex);
+                        this._compiledFormulas.copy(nextIndex, nextBottomIndex, targetIndex);
+                }
+            }.bind(this));
+
+            return this;
+        },
         hideRow: function(rowIndex) {
             return this._property(this._rows.hide.bind(this._rows), rowIndex);
         },

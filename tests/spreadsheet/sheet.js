@@ -131,4 +131,17 @@
        sheet.bind("change", success).insertRow(0);
     });
 
+    test("deleteColumn triggers the change event", 1, function() {
+       sheet.bind("change", success).deleteColumn(0);
+    });
+
+    test("deleteColumn move the bottom row values to the deleted one", function() {
+        sheet.range("B:B").value("foo");
+
+        sheet.deleteColumn(0);
+
+        equal(sheet.range("A:A").value(), "foo");
+        equal(sheet.range("B:B").value(), null);
+    });
+
 })();
