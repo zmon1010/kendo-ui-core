@@ -1281,4 +1281,71 @@
         equal(result.data[0].value, 1);
         equal(result.data[0].ordinal, 0);
     });
+
+    module("PivotCubeBuilder filters the data", { });
+
+    test("PivotCube filters data by single filter", function() {
+        var builder = new PivotCubeBuilder({
+            measures: [
+                { name: "Sum", caption: "Measure 1", field: "value",  aggregate: "Sum" }
+            ]
+        });
+
+        var data = [
+            { name: "name1", lastName: "lastName1", value: 1 },
+            { name: "name2", lastName: "lastName2", value: 2 },
+            { name: "name1", lastName: "lastName3", value: 1 }
+        ];
+
+        var options = {
+            columns: [{ name: "name", expand: true }],
+            rows: [{ name: "lastName" }],
+            measuresAxis: "columns",
+            measures: [{ name: "Sum" }],
+            filter: {
+                filters: [
+                    { field: "name", operator: "eq", value: "name1" }
+                ]
+            }
+        };
+
+        var result = builder.process(data, options);
+
+        equal(result.axes.columns.tuples.length, 2);
+        equal(result.data.length, 2);
+        equal(result.data[0].value, 2);
+    });
+
+    test("PivotCube filters data by multiple filters", function() {
+        var builder = new PivotCubeBuilder({
+            measures: [
+                { name: "Sum", caption: "Measure 1", field: "value",  aggregate: "Sum" }
+            ]
+        });
+
+        var data = [
+            { name: "name1", lastName: "lastName1", value: 1 },
+            { name: "name2", lastName: "lastName2", value: 2 },
+            { name: "name1", lastName: "lastName3", value: 1 }
+        ];
+
+        var options = {
+            columns: [{ name: "name", expand: true }],
+            rows: [{ name: "lastName" }],
+            measuresAxis: "columns",
+            measures: [{ name: "Sum" }],
+            filter: {
+                filters: [
+                    { field: "name", operator: "eq", value: "name1" },
+                    { field: "lastName", operator: "eq", value: "lastName3" }
+                ]
+            }
+        };
+
+        var result = builder.process(data, options);
+
+        equal(result.axes.columns.tuples.length, 2);
+        equal(result.data.length, 2);
+        equal(result.data[0].value, 1);
+    });
 })();

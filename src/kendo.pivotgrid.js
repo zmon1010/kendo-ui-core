@@ -890,9 +890,21 @@ var __meta__ = {
             };
         },
 
+        _filter: function(data, filter) {
+            if (!filter) {
+                return data;
+            }
+
+            var result = new kendo.data.Query(data).filter(filter);
+
+            return result.data;
+        },
+
         process: function(data, options) {
             data = data || [];
             options = options || {};
+
+            data = this._filter(data, options.filter);
 
             var measures = options.measures || [];
 
