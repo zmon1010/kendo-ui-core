@@ -2,9 +2,9 @@
 
 var undoRedoStack;
 
-module("editor undo redo stack", {
+module("UndoRedoStack", {
     setup: function() {
-        undoRedoStack = new kendo.ui.editor.UndoRedoStack();
+        undoRedoStack = new kendo.util.UndoRedoStack();
     }
 });
 

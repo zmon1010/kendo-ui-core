@@ -1,6 +1,7 @@
 (function(f, define){
     define([
         "./kendo.toolbar",
+        "./util/undoredostack",
         "./spreadsheet/chrome",
         "./spreadsheet/eventlistener",
         "./spreadsheet/rangelist",

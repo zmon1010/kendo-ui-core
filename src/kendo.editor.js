@@ -2,6 +2,7 @@
     define([
         "./kendo.combobox", "./kendo.dropdownlist", "./kendo.resizable", "./kendo.window", "./kendo.colorpicker", "./kendo.imagebrowser",
 
+        "./util/undoredostack",
         "./editor/main",
         "./editor/dom",
         "./editor/serializer",
