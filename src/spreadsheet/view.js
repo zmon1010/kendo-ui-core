@@ -153,7 +153,7 @@
                 var offset = container.offset();
                 var object = this.objectAt(event.pageX - offset.left, event.pageY - offset.top);
                 if (object.type === "cell") {
-                    that._sheet.activeCell(object.ref.toRangeRef());
+                    that._sheet.activeCell(object.ref);
                 }
             }.bind(this));
         },
