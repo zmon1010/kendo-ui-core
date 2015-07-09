@@ -575,8 +575,8 @@
                    ref: this._sort.ref.toString(),
                    columns: this._sort.columns.map(function(column, index) {
                        return {
-                           index: column.column !== undefined? column.column : index,
-                           ascending: column.ascending !== undefined ? column.ascending : true
+                           index: column.index,
+                           ascending: column.ascending
                        };
                    })
                };
@@ -586,10 +586,9 @@
                json.filter = {
                    ref: this._filter.ref.toString(),
                    columns: this._filter.columns.map(function(column, index) {
-                        return {
-                            index: column.column !== undefined? column.column : index,
-                            filter: column.filter.toJSON()
-                        };
+                        var filter = column.filter.toJSON();
+                        filter.index = column.index;
+                        return filter;
                    })
                };
             }
@@ -707,6 +706,18 @@
                         columns: json.sort.columns.slice(0)
                     };
                 }
+
+                if (json.filter) {
+                    this._filter = {
+                        ref: this._ref(json.filter.ref),
+                        columns: json.filter.columns.map(function(column) {
+                            return {
+                                index: column.index,
+                                filter: kendo.spreadsheet.Filter.create(column)
+                            };
+                        })
+                    };
+                }
             }.bind(this));
         },
 
@@ -785,7 +796,7 @@
 
                 if (typeof column === "object") {
                     ascending = column.ascending !== false;
-                    column = column.column;
+                    column = column.index;
                 }
 
                 if (typeof column === "number") {
@@ -811,7 +822,7 @@
                 }
 
                 columns.forEach(function(column) {
-                    var columnRef = ref.toColumn(column.column);
+                    var columnRef = ref.toColumn(column.index);
 
                     var values = this._values.iterator(this._grid.cellRefIndex(columnRef.topLeft),
                         this._grid.cellRefIndex(columnRef.bottomRight));
@@ -840,7 +851,7 @@
             if (this._filter) {
                 this.batch(function() {
                     var columns = this._filter.columns.filter(function(column) {
-                        return indices.indexOf(column.column) < 0;
+                        return indices.indexOf(column.index) < 0;
                     });
 
                     this._filterBy(this._filter.ref, columns);

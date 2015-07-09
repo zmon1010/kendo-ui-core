@@ -267,7 +267,14 @@
                 throw new Error("Unsupported for multiple ranges.");
             }
 
-            this._sheet._sortBy(this._ref.toRangeRef(), spec instanceof Array ? spec : [spec]);
+            spec = spec instanceof Array ? spec : [spec];
+
+            this._sheet._sortBy(this._ref.toRangeRef(), spec.map(function(spec, index) {
+               return {
+                   index: spec.column === undefined ? index : spec.column,
+                   ascending: spec.ascending === undefined ? true : spec.ascending
+               };
+            }));
 
             return this;
         },
@@ -276,7 +283,14 @@
                 throw new Error("Unsupported for multiple ranges.");
             }
 
-            this._sheet._filterBy(this._ref.toRangeRef(), spec instanceof Array ? spec : [spec]);
+            spec = spec instanceof Array ? spec : [spec];
+
+            this._sheet._filterBy(this._ref.toRangeRef(), spec.map(function(spec, index) {
+               return {
+                   index: spec.column === undefined ? index : spec.column,
+                   filter: spec.filter
+               };
+            }));
 
             return this;
         },

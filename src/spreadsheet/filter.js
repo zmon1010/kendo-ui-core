@@ -1,11 +1,33 @@
 (function(f, define){
-    define([ "../kendo.core" ], f);
+    define([ "../kendo.core", "../kendo.data" ], f);
 })(function(){
 (function(kendo) {
-    var Filter = kendo.Class.extend({
+    var Filter = kendo.spreadsheet.Filter = kendo.Class.extend({
+        matches: function() {
+            throw new Error("The 'matches' method is not implemented.");
+        },
+        toJSON: function() {
+            throw new Error("The 'toJSON' method is not implemented.");
+        }
     });
 
-    var ValueFilter = Filter.extend({
+    Filter.create = function(options) {
+        var type = options.type;
+
+        if (!type) {
+            throw new Error("Filter type not specified.")
+        }
+
+        var constructor = kendo.spreadsheet[type.charAt(0).toUpperCase() + type.substring(1) + "Filter"];
+
+        if (!constructor) {
+            throw new Error("Filter type not recognized.")
+        }
+
+        return new constructor(options);
+    };
+
+    kendo.spreadsheet.ValueFilter = Filter.extend({
         values: [],
 
         dates: [],
@@ -52,7 +74,40 @@
         }
     });
 
-    kendo.spreadsheet.Filter = Filter;
-    kendo.spreadsheet.ValueFilter = ValueFilter;
+    kendo.spreadsheet.CustomFilter = Filter.extend({
+        logic: "and",
+        init: function(options) {
+            if (options.logic !== undefined) {
+                this.logic = options.logic;
+            }
+
+            if (options.criteria === undefined) {
+                throw new Error("Must specify criteria.")
+            }
+
+            this.criteria = options.criteria;
+
+            var expression = kendo.data.Query.filterExpr({
+                logic: this.logic,
+                filters: this.criteria
+            }).expression;
+
+            this._matches = new Function("d", "return " + expression);
+        },
+        matches: function(value) {
+            if (value === null) {
+                return false;
+            }
+
+            return this._matches(value);
+        },
+        toJSON: function() {
+            return {
+                type: "custom",
+                logic: this.logic,
+                criteria: this.criteria
+            };
+        }
+    });
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

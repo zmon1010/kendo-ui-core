@@ -79,9 +79,35 @@
         equal(json.filter.ref, "A1:B2");
         equal(json.filter.columns.length, 1);
         equal(json.filter.columns[0].index, 0);
-        equal(json.filter.columns[0].filter.type, "value");
-        equal(json.filter.columns[0].filter.values[0], 0);
-        equal(json.filter.columns[0].filter.values[1], 1);
+        equal(json.filter.columns[0].type, "value");
+        equal(json.filter.columns[0].values[0], 0);
+        equal(json.filter.columns[0].values[1], 1);
+    });
+
+    test("toJSON serializes custom filter state", function() {
+        sheet.range("A1:B2").filter([
+            {
+                column: 0,
+                filter: new kendo.spreadsheet.CustomFilter({
+                    criteria:[
+                        { operator: "eq", value: "foo" },
+                        { operator: "gte", value: 3 }
+                    ]
+                })
+            }
+        ]);
+
+        var json = sheet.toJSON();
+
+        equal(json.filter.ref, "A1:B2");
+        equal(json.filter.columns.length, 1);
+        equal(json.filter.columns[0].index, 0);
+        equal(json.filter.columns[0].type, "custom");
+        equal(json.filter.columns[0].logic, "and");
+        equal(json.filter.columns[0].criteria[0].operator, "eq");
+        equal(json.filter.columns[0].criteria[0].value, "foo");
+        equal(json.filter.columns[0].criteria[1].operator, "gte");
+        equal(json.filter.columns[0].criteria[1].value, 3);
     });
 
     test("toJSON serializes cells that have format", function() {
@@ -376,5 +402,21 @@
         equal(sheet._sort.columns.length, 2);
         equal(sheet._sort.columns[1].index, 0);
         equal(sheet._sort.columns[1].ascending, true);
+    });
+
+    test("fromJSON loads filter state", function() {
+        sheet.fromJSON({
+            filter: {
+                ref: "A1:B1",
+                columns: [
+                    { index: 1, type: "custom", criteria: [ { operator: "eq", value: "foo" } ] },
+                    { index: 0, type: "value", values: [1, 2] }
+                ]
+            }
+        });
+
+        equal(sheet._filter.ref.toString(), "A1:B1");
+        equal(sheet._filter.columns[0].index, 1);
+        ok(sheet._filter.columns[0].filter instanceof kendo.spreadsheet.CustomFilter);
     });
 })();
