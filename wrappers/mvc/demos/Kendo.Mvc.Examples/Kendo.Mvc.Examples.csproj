@@ -196,6 +196,7 @@
     <Compile Include="Controllers\ComboBox\VirtualizationController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\TabStrip\Scrollable_TabsController.cs" />
+    <Compile Include="Controllers\ToolBar\Keyboard_NavigationController.cs" />
     <Compile Include="Controllers\Validator\IndexController.cs" />
     <Compile Include="Controllers\Diagram\ApiController.cs" />
     <Compile Include="Controllers\Diagram\ExportController.cs" />
@@ -961,6 +962,7 @@
     <Content Include="Areas\aspx\Views\toolbar\api.aspx" />
     <Content Include="Areas\aspx\Views\toolbar\events.aspx" />
     <Content Include="Areas\aspx\Views\toolbar\integration.aspx" />
+    <Content Include="Areas\aspx\Views\toolbar\keyboard_navigation.aspx" />
     <Content Include="Areas\aspx\Views\toolbar\resizing.aspx" />
     <Content Include="Areas\aspx\Views\toolbar\right_to_left_support.aspx" />
     <Content Include="Areas\aspx\Views\treelist\api.aspx" />
@@ -3293,6 +3295,7 @@
     <Content Include="Areas\razor\Views\validator\index.cshtml" />
     <Content Include="Areas\razor\Views\multiselect\tag_mode.cshtml" />
     <Content Include="Areas\razor\Views\tabstrip\scrollable_tabs.cshtml" />
+    <Content Include="Areas\razor\Views\toolbar\keyboard_navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />
