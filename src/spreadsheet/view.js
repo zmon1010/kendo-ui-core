@@ -72,7 +72,7 @@
         }
     });
 
-    var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container tabindex=0></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div>';
+    var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div><textarea tabindex="0" class="k-spreadsheet-clipboard" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>';
 
     function within(value, min, max) {
         return value >= min && value <= max;
@@ -106,6 +106,7 @@
             element.append(VIEW_CONTENTS);
             this.container = element.children()[0];
             this.scroller = element.children()[1];
+            this.clipboard = element.find(".k-spreadsheet-clipboard");
             this.viewSize = $(this.scroller.firstChild);
 
             this.tree = new kendo.dom.Tree(this.container);
@@ -183,20 +184,18 @@
                     break;
             }
 
-            sheet.activeCell(new CellRef(row, column));
+            sheet.select(new CellRef(row, column));
         },
 
         handleKbd: function() {
             var container = $(this.container);
+            var clipboard = this.clipboard;
             var that = this;
 
             var listener = this.listener = new kendo.spreadsheet.EventListener(container);
+            var keyListener = this.keyListener = new kendo.spreadsheet.EventListener(this.clipboard);
 
-            listener.on("click", function() {
-                container.focus();
-            });
-
-            listener.on(ACTION_KEYS, function(event, action) {
+            keyListener.on(ACTION_KEYS, function(event, action) {
                 that.moveActiveCell(ACTIONS[action]);
                 event.preventDefault();
             });
@@ -205,8 +204,17 @@
                 var offset = container.offset();
                 var object = this.objectAt(event.pageX - offset.left, event.pageY - offset.top);
                 if (object.type === "cell") {
-                    that._sheet.activeCell(object.ref);
+                    that._sheet.select(object.ref);
                 }
+
+                clipboard.css({
+                    left: event.pageX - offset.left - 4,
+                    top: event.pageY - offset.top - 4
+                });
+
+                setTimeout(function() {
+                    clipboard.select().focus();
+                }, 100);
             }.bind(this));
         },
 
@@ -263,6 +271,12 @@
             if (frozenRows > 0 && frozenColumns > 0) {
                 this.panes.push(this._pane(0, 0, frozenRows, frozenColumns));
             }
+
+            var text = this._sheet.selection().values().map(function(row) {
+                return row.join("\t");
+            }).join("\r\n");
+
+            this.clipboard.val(text).select().focus();
 
             this.scrollIntoView();
         },

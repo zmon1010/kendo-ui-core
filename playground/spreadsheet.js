@@ -38,7 +38,7 @@ sheet.range("E15:E20")
 
 sheet.frozenColumns(3).frozenRows(6);
 
-sheet.range("K11:M16,12:12").select();
+sheet.range("K11:M16").select();
 
 for (var i = 3, len = 50; i < len; i++) {
     sheet.range(i, 0).formula("=AVERAGE(L:L)");
@@ -87,25 +87,6 @@ $("#clipboard").on("paste", function(e) {
 
         spreadsheet.activeSheet().selection().values(values);
     });;
-});
-
-$("body").on("mousedown", ".k-spreadsheet-selection", function(e) {
-    try {
-        var text = spreadsheet.activeSheet().selection().values().map(function(row) {
-            return row.join("\t");
-        }).join("\r\n");
-
-        $("#clipboard-container").css({
-            left: e.clientX,
-            top: e.clientY
-        });
-
-        setTimeout(function() {
-            $("#clipboard").val(text).select().focus();
-        });
-    } catch(e) {
-        console.error(e);
-    }
 });
 
 var ascending = true;

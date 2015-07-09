@@ -21,23 +21,18 @@
                 font: 12px/1.5 Arial,sans-serif;
             }
 
-            #clipboard-container {
-                overflow: hidden;
-                position: absolute;
-                width: 3px;
-                height: 1px;
-                z-index: 10;
-                opacity: 0;
-            }
-
-            #clipboard {
+            .k-spreadsheet-clipboard {
                 box-sizing: border-box;
                 padding: 0;
                 position: absolute;
+                top: 0;
+                left: 0;
                 margin: 0;
                 outline: none;
-                width: 1000px;
-                height: 1em;
+                width: 2em;
+                height: 2em;
+                opacity: 0;
+                z-index: 3;
             }
         </style>
     </head>
@@ -45,7 +40,7 @@
         <button class="k-button" id="sort">Sort I1:I4</button>
         <button class="k-button" id="filter">Filter A1:B3 (values: [3])</button>
         <div id="spreadsheet"></div>
-        <div id="clipboard-container"><textarea tabindex="0" id="clipboard" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea></div>
+        <!-- <div id="clipboard-container"><textarea tabindex="0" id="clipboard" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea></div> -->
         <button class="k-button" id="copy">select K11:M16</button>
         <button class="k-button" id="select-all">select all</button>
         <button class="k-button" id="select-first">select A1</button>
