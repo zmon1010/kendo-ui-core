@@ -99,103 +99,17 @@
             return this._property(this._columns.unhide.bind(this._columns), columnIndex);
         },
 
-        _copyRow: function(ref, fromNextRow) {
-            var grid = this._grid;
-
-            var rowCount = grid.rowCount;
-
-            var topLeft = grid.normalize(ref.topLeft);
-            var bottomRight = grid.normalize(ref.bottomRight);
-
-            var start = topLeft.row;
-
-            for (var ci = topLeft.col; ci <= bottomRight.col; ci++) {
-
-                var cellRef = new CellRef(start + (fromNextRow ? 1 : -1), ci);
-
-                var nextRef = new RangeRef(cellRef, cellRef);
-
-                var nextIndex = nextRef.topLeft.col * rowCount + nextRef.topLeft.row;
-
-                var sourceIndex = ci * rowCount + start;
-
-                this._background.copy(nextIndex, nextIndex, sourceIndex);
-                this._values.copy(nextIndex, nextIndex, sourceIndex);
-                this._borderBottom.copy(nextIndex, nextIndex, sourceIndex);
-                this._borderRight.copy(nextIndex, nextIndex, sourceIndex);
-                this._fontColor.copy(nextIndex, nextIndex, sourceIndex);
-                this._fontFamily.copy(nextIndex, nextIndex, sourceIndex);
-                this._fontLine.copy(nextIndex, nextIndex, sourceIndex);
-                this._fontSize.copy(nextIndex, nextIndex, sourceIndex);
-                this._fontStyle.copy(nextIndex, nextIndex, sourceIndex);
-                this._fontWeight.copy(nextIndex, nextIndex, sourceIndex);
-                this._horizontalAlignment.copy(nextIndex, nextIndex, sourceIndex);
-                this._verticalAlignment.copy(nextIndex, nextIndex, sourceIndex);
-                this._wrap.copy(nextIndex, nextIndex, sourceIndex);
-                this._types.copy(nextIndex, nextIndex, sourceIndex);
-                this._formulas.copy(nextIndex, nextIndex, sourceIndex);
-                this._formats.copy(nextIndex, nextIndex, sourceIndex);
-                this._compiledFormulas.copy(nextIndex, nextIndex, sourceIndex);
-            }
-        },
-
-        insertRow: function(rowIndex) {
-
-            this.batch(function() {
-                for (var ri = this._grid.rowCount - 1; ri >= rowIndex; ri--) {
-                    var ref = new RangeRef(new CellRef(ri, 0), new CellRef(ri, Infinity));
-
-                    new Range(ref, this).clear();
-
-                    if (ri == rowIndex) {
-                        break;
-                    }
-
-                    this._copyRow(ref, false);
-                }
-            }.bind(this));
-
-            return this;
-        },
-
-        deleteRow: function(rowIndex) {
-
-            this.batch(function() {
-                var grid = this._grid;
-                var rowCount = grid.rowCount;
-
-                for (var ri = rowIndex; ri < rowCount; ri++) {
-                    var ref = new RangeRef(new CellRef(ri, 0), new CellRef(ri, Infinity));
-
-                    new Range(ref, this).clear();
-
-                    if (ri == rowCount - 1) {
-                        break;
-                    }
-
-                    this._copyRow(ref, true);
-                }
-            }.bind(this));
-
-            return this;
-        },
-
-        _copyColumn: function(ref, fromNextColumn) {
+        _copyRange: function(sourceRangeRef, targetRef) {
             var grid = this._grid;
             var rowCount = grid.rowCount;
 
-            var topLeft = grid.normalize(ref.topLeft);
-            var bottomRight = grid.normalize(ref.bottomRight);
+            var nextRefTopLeft = grid.normalize(sourceRangeRef.topLeft);
+            var nextRefBottomRight = grid.normalize(sourceRangeRef.bottomRight);
 
-            var cellRefTop = new CellRef(topLeft.row, topLeft.col + (fromNextColumn ? 1 : -1));
-            var cellRefBottom = new CellRef(bottomRight.row, bottomRight.col + (fromNextColumn ? 1 : -1));
+            var nextIndex = nextRefTopLeft.col * rowCount + nextRefTopLeft.row;
+            var nextBottomIndex = nextRefBottomRight.col * rowCount + nextRefBottomRight.row;
 
-            var nextRef = new RangeRef(cellRefTop, cellRefBottom);
-
-            var nextIndex = nextRef.topLeft.col * rowCount + nextRef.topLeft.row;
-            var nextBottomIndex = nextRef.bottomRight.col * rowCount + nextRef.bottomRight.row;
-
-            var targetIndex = topLeft.col * rowCount + topLeft.row;
+            var targetIndex = targetRef.col * rowCount + targetRef.row;
 
             this._background.copy(nextIndex, nextBottomIndex, targetIndex);
             this._values.copy(nextIndex, nextBottomIndex, targetIndex);
@@ -216,6 +130,72 @@
             this._compiledFormulas.copy(nextIndex, nextBottomIndex, targetIndex);
         },
 
+        insertRow: function(rowIndex) {
+
+            this.batch(function() {
+
+                var grid = this._grid;
+                var columnCount = grid.columnCount;
+                var rowCount = grid.rowCount;
+
+                for (var ci = 0; ci < columnCount; ci++) {
+                    var ref = new RangeRef(new CellRef(rowIndex, ci), new CellRef(rowIndex, ci));
+
+                    var topLeft = grid.normalize(ref.topLeft);
+                    var bottomRight = grid.normalize(ref.bottomRight);
+
+                    var nextRef = new RangeRef(
+                        new CellRef(topLeft.row, topLeft.col),
+                        new CellRef(rowCount - 2, bottomRight.col)
+                    );
+
+                    this._copyRange(nextRef, new CellRef(topLeft.row + 1, topLeft.col));
+
+                    new Range(ref, this).clear();
+                }
+            }.bind(this));
+
+            return this;
+        },
+
+        deleteRow: function(rowIndex) {
+
+            this.batch(function() {
+
+                var grid = this._grid;
+                var columnCount = grid.columnCount;
+                var rowCount = grid.rowCount;
+
+                for (var ci = 0; ci < columnCount; ci++) {
+                    var ref = new RangeRef(new CellRef(rowIndex, ci), new CellRef(rowIndex, ci));
+
+                    new Range(ref, this).clear();
+
+                    var topLeft = grid.normalize(ref.topLeft);
+                    var bottomRight = grid.normalize(ref.bottomRight);
+
+                    var nextRef = new RangeRef(
+                        new CellRef(topLeft.row + 1, topLeft.col),
+                        new CellRef(Infinity, bottomRight.col)
+                    );
+
+                    this._copyRange(nextRef, topLeft);
+
+                    var nextRefBottomRight = grid.normalize(nextRef.bottomRight);
+
+                    new Range(new RangeRef(nextRefBottomRight, nextRefBottomRight), this).clear();
+                }
+
+            }.bind(this));
+
+            return this;
+        },
+
+        _copyColumn: function(ref, fromNextColumn) {
+            var grid = this._grid;
+            var rowCount = grid.rowCount;
+        },
+
         insertColumn: function(columnIndex) {
 
             this.batch(function() {
@@ -232,7 +212,15 @@
                         break;
                     }
 
-                    this._copyColumn(ref);
+                    var topLeft = grid.normalize(ref.topLeft);
+                    var bottomRight = grid.normalize(ref.bottomRight);
+
+                    var nextRef = new RangeRef(
+                        new CellRef(topLeft.row, topLeft.col - 1),
+                        new CellRef(bottomRight.row, bottomRight.col - 1)
+                    );
+
+                    this._copyRange(nextRef, topLeft);
                 }
             }.bind(this));
 
@@ -255,8 +243,15 @@
                         break;
                     }
 
-                    this._copyColumn(ref, true);
+                    var topLeft = grid.normalize(ref.topLeft);
+                    var bottomRight = grid.normalize(ref.bottomRight);
 
+                    var nextRef = new RangeRef(
+                        new CellRef(topLeft.row, topLeft.col + 1),
+                        new CellRef(bottomRight.row, bottomRight.col + 1)
+                    );
+
+                    this._copyRange(nextRef, topLeft);
                 }
             }.bind(this));
 
