@@ -18,6 +18,7 @@ var __meta__ = { // jshint ignore:line
     Node.prototype = {
         remove: function() {
             this.node.parentNode.removeChild(this.node);
+            this.attr = {};
         },
         attr: {},
         text: function() {
