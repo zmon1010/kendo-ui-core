@@ -46,6 +46,14 @@ for (var i = 3, len = 50; i < len; i++) {
 
 spreadsheet.autoRefresh(true);
 
+$("#undo").click(function() {
+    spreadsheet.undoRedoStack.undo();
+});
+
+$("#redo").click(function() {
+    spreadsheet.undoRedoStack.redo();
+});
+
 $("#copy").on("click", function(e) {
     var range = sheet.range("K11:M16");
 

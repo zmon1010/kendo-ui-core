@@ -2,6 +2,7 @@
     define([
         "./kendo.toolbar",
         "./util/undoredostack",
+        "./spreadsheet/commands",
         "./spreadsheet/formulabar",
         "./spreadsheet/eventlistener",
         "./spreadsheet/rangelist",
@@ -36,6 +37,8 @@
             Widget.fn.init.call(this, element, options);
 
             this.element.addClass("k-widget k-spreadsheet");
+
+            this.undoRedoStack = new kendo.util.UndoRedoStack();
 
             this._chrome();
 
@@ -81,7 +84,7 @@
 
         _resize: function() {
             var toolbarHeight = this.toolbar ? this.toolbar.element.outerHeight() : 0;
-            var formulaBarHeight = this._formulaBar.element.outerHeight();
+            var formulaBarHeight = this.formulaBar.element.outerHeight();
 
             this._viewElement().height(this.element.height() - toolbarHeight - formulaBarHeight);
         },
@@ -95,16 +98,21 @@
                 this.refresh(e);
             }
 
-            this._formulaBar.value(this._editValueForRef(e.sender.activeCell()));
+            this.formulaBar.value(this._editValueForRef(e.sender.activeCell()));
         },
 
         _chrome: function() {
             var formulaBar = $("<div />").prependTo(this.element);
-            this._formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar, {
+            this.formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar, {
                 change: function(e) {
                     var sheet = this._sheet;
-                    var range = new kendo.spreadsheet.Range(sheet.activeCell(), sheet);
-                    range.editValue(e.value);
+                    var command = new kendo.spreadsheet.EditCommand({
+                        ref: sheet.activeCell(),
+                        sheet: sheet,
+                        value: e.value
+                    });
+                    command.exec();
+                    this.undoRedoStack.push(command);
                 }.bind(this)
             });
 
