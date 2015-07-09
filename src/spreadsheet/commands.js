@@ -18,16 +18,16 @@
 
     var EditCommand = kendo.spreadsheet.EditCommand = Command.extend({
         init: function(options) {
-            Command.prototype.init.call(this, options);
+            Command.fn.init.call(this, options);
             this._value = options.value;
         },
         exec: function() {
             var range = this.range();
             this._state = range._editableValue();
-            range._editableValue(this._value);
+            range._editableValue(this._value).select();
         },
         undo: function() {
-            this.range()._editableValue(this._state);
+            this.range()._editableValue(this._state).select();
         }
     });
 })(kendo);
