@@ -568,7 +568,7 @@
                        [ "null", 0 ],
                        [ "values", 0, 1, 2, 3, 4, 5, 6, 7  ] ] ],
         [ "args", "rest" ]
-    ], true);
+    ]);
 
     // https://support.office.com/en-sg/article/AVEDEV-function-ec78fa01-4755-466c-9a2b-0c4f9eacaf6d
     defineFunction("avedev", function(numbers){
