@@ -33,5 +33,4 @@
 
         ok(spreadsheet.toolbar instanceof kendo.ui.ToolBar);
     });
-
 })();

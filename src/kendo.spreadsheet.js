@@ -120,11 +120,28 @@
         },
 
         _toolbar: function() {
-            function toolIcon(name) {
+            var toggle = function(value) {
+                    return function(e) {
+                        var sheet = this._sheet;
+                        var command = new kendo.spreadsheet.FormatCommand({
+                            ref: sheet.activeCell(),
+                            sheet: sheet,
+                            property: e.id,
+                            value: e.checked ? value : null
+                        });
+                        command.exec();
+                        this.undoRedoStack.push(command);
+                    }.bind(this);
+                }.bind(this);
+
+            function toggleable(options) {
+                var className = options.text.toLowerCase();
                 return {
-                    spriteCssClass: "k-tool-icon k-" + name.toLowerCase(),
-                    text: name,
+                    spriteCssClass: "k-tool-icon k-" + className,
+                    id: options.property,
+                    text: options.text,
                     togglable: true,
+                    toggle: toggle(options.value),
                     showText: "overflow"
                 };
             }
@@ -140,9 +157,9 @@
                     .kendoToolBar({
                         items: [
                             { type: "buttonGroup", buttons: [
-                                toolIcon("bold"),
-                                toolIcon("italic"),
-                                toolIcon("underline")
+                                toggleable({ text: "Bold", property: "fontWeight", value: "bold" }),
+                                toggleable({ text: "Italic", property: "fontStyle", value: "italic" }),
+                                toggleable({ text: "Underline", property: "fontLine", value: "underline" })
                             ] }
                         ]
                     }).data("kendoToolBar");
