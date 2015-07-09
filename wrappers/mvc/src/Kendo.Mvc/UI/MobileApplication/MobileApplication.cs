@@ -120,6 +120,11 @@ namespace Kendo.Mvc.UI
                 container = "\"" + Selector + "\"";
             }
 
+            if (Initial.HasValue())
+            {
+                options.Add("initial", Initial);
+            }
+
             if (PushState)
             {
                 options.Add("pushState", PushState);
