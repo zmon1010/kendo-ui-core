@@ -133,6 +133,7 @@
         equal(axis.prevVisible(1), 1);
     });
 
+
     module("PaneAxis", {
     });
 
@@ -146,5 +147,15 @@
        axis = new PaneAxis(new  Axis(10, 5), 0, 10);
 
        ok(axis.visible(3, 44).offset !== 0);
+    });
+
+    test("index returns the index based on offset and value", function() {
+       axis = new PaneAxis(new  Axis(10, 5), 0, 0, 30);
+       equal(axis.index(38, 0), 1);
+    });
+
+    test("frozen paneaxis ignores scrolling", function() {
+       axis = new PaneAxis(new  Axis(10, 5), 0, 10, 30);
+       equal(axis.index(38, 100), 1);
     });
 })();

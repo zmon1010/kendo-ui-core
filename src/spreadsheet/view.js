@@ -74,6 +74,10 @@
 
     var VIEW_CONTENTS = '<div class=k-spreadsheet-fixed-container tabindex=0></div><div class=k-spreadsheet-scroller><div class=k-spreadsheet-view-size></div></div>';
 
+    function within(value, min, max) {
+        return value >= min && value <= max;
+    }
+
     var View = kendo.Class.extend({
         init: function(element) {
             element.append(VIEW_CONTENTS);
@@ -146,8 +150,41 @@
             });
 
             listener.on("mousedown", function(event, action) {
-                // console.log(event);
-            });
+                var offset = container.offset();
+                var object = this.objectAt(event.pageX - offset.left, event.pageY - offset.top);
+                if (object.type === "cell") {
+                    that._sheet.activeCell(object.ref.toRangeRef());
+                }
+            }.bind(this));
+        },
+
+        objectAt: function(x, y) {
+            var grid = this._sheet._grid;
+
+            if (x < grid._headerWidth && y < grid._headerHeight) {
+                return { type: "topcorner" };
+            }
+
+            var pane = this.paneAt(x, y);
+            var row = pane._grid.rows.index(y, this.scroller.scrollTop);
+            var column = pane._grid.columns.index(x, this.scroller.scrollLeft);
+
+            if (x < grid._headerWidth) {
+                return { type: "rowheader", row: row };
+            }
+
+            if (y < grid._headerHeight) {
+                return { type: "columnheader", column: column };
+            }
+
+            return { type: "cell", ref: new CellRef(row, column) };
+        },
+
+        paneAt: function(x, y) {
+            return this.panes.filter(function paneLocationWithin(pane) {
+                var grid = pane._grid;
+                return within(y, grid.top, grid.bottom) && within(x, grid.left, grid.right);
+            })[0];
         },
 
         refresh: function() {

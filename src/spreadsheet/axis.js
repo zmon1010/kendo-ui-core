@@ -173,6 +173,18 @@
             };
         },
 
+        index: function(value) {
+            var index = 0;
+            var iterator = this.values.iterator(0, this._count - 1);
+            var current = iterator.at(0);
+
+            while (current < value) {
+                current += iterator.at(++index);
+            }
+
+            return index;
+        },
+
         _refresh: function() {
             var current = 0;
             this._pixelValues = this.values.map(function(range) {
@@ -213,6 +225,10 @@
 
         size: function() {
             return this.sum(this._start, this._start + this._count);
+        },
+
+        index: function(value, offset) {
+            return this._axis.index(value + (this.frozen ? 0 : offset) - this.headerSize);
         },
 
         //XXX: rename this method

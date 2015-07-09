@@ -149,6 +149,8 @@
 
             this.left = x.offset;
             this.top = y.offset;
+            this.right = x.offset + x.length;
+            this.bottom = y.offset + y.length;
 
             this.style = {
                 top: y.offset  + "px",
