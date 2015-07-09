@@ -454,54 +454,64 @@
         equal(sheet.range("1:1").background(), "red");
     });
 
-    test("editValue returns numeric value", function() {
+    test("editableValue returns numeric value", function() {
         sheet.range("A1").value(123);
 
-        equal(sheet.range("A1").editValue(), "123");
+        equal(sheet.range("A1")._editableValue(), "123");
     });
 
-    test("editValue returns numeric string value", function() {
+    test("editableValue returns numeric string value", function() {
         sheet.range("A1").value("foo");
 
-        equal(sheet.range("A1").editValue(), "foo");
+        equal(sheet.range("A1")._editableValue(), "foo");
     });
 
-    test("editValue returns numeric string value", function() {
+    test("editableValue returns numeric string value", function() {
         sheet.range("A1").value("'123");
 
-        equal(sheet.range("A1").editValue(), "'123");
+        equal(sheet.range("A1")._editableValue(), "'123");
     });
 
-    test("editValue returns formatted date", function() {
+    test("editableValue returns formatted date", function() {
         sheet.range("A1").value(new Date(2015, 0, 1));
 
-        equal(sheet.range("A1").editValue(), "1/1/2015");
+        equal(sheet.range("A1")._editableValue(), "1/1/2015");
     });
 
-    test("editValue returns formula", function() {
+    test("editableValue returns formula", function() {
         var formula = "=SUM(A1:A1)";
         sheet.range("A1").formula(formula);
 
-        equal(sheet.range("A1").editValue(), formula);
+        equal(sheet.range("A1")._editableValue(), formula);
     });
 
-    test("editValue sets formula", function() {
+    test("editableValue sets formula", function() {
         var formula = "=SUM(A1:A1)";
-        sheet.range("A1").editValue(formula);
+        sheet.range("A1")._editableValue(formula);
 
         equal(sheet.range("A1").formula(), formula);
     });
 
-    test("editValue sets value", function() {
-        sheet.range("A1").editValue("foo");
+    test("editableValue sets value", function() {
+        sheet.range("A1")._editableValue("foo");
 
         equal(sheet.range("A1").value(), "foo");
     });
 
-    test("editValue removes formula when value is set", function() {
-        sheet.range("A1").formula("=SUM(A1:A1)").editValue("foo");
+    test("editableValue removes formula when value is set", function() {
+        sheet.range("A1").formula("=SUM(A1:A1)")._editableValue("foo");
 
         equal(sheet.range("A1").formula(), null);
+    });
+
+    test("editableValue triggers one change event", function() {
+        var handler = spy();
+
+        sheet.bind("change", handler);
+
+        sheet.range("A1")._editableValue("bar");
+
+        equal(handler.calls, 1);
     });
 
 })();

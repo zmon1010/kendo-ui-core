@@ -89,8 +89,8 @@
             this._viewElement().height(this.element.height() - toolbarHeight - formulaBarHeight);
         },
 
-        _editValueForRef: function(ref) {
-            return new kendo.spreadsheet.Range(ref, this._sheet).editValue();
+        _editableValueForRef: function(ref) {
+            return new kendo.spreadsheet.Range(ref, this._sheet)._editableValue();
         },
 
         _sheetChange: function(e) {
@@ -98,7 +98,7 @@
                 this.refresh(e);
             }
 
-            this.formulaBar.value(this._editValueForRef(e.sender.activeCell()));
+            this.formulaBar.value(this._editableValueForRef(e.sender.activeCell()));
         },
 
         _chrome: function() {

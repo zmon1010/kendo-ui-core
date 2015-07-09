@@ -3,33 +3,32 @@
 })(function(){
 
 (function(kendo) {
-    var Command = kendo.Class.extend({
+    var Command = kendo.spreadsheet.Command = kendo.Class.extend({
         init: function(options) {
-            this.options = options;
+            this._sheet = options.sheet;
+            this._ref = options.ref;
         },
         range: function() {
-            var options = this.options;
-            return new kendo.spreadsheet.Range(options.ref, options.sheet);
-        }
-    });
-
-    var EditCommand = Command.extend({
-        exec: function() {
-            var range = this.range();
-            this._state = range.editValue();
-            range.editValue(this.options.value);
-        },
-        undo: function() {
-            this.range().editValue(this._state);
+            return this._sheet.range(this._ref);
         },
         redo: function() {
             this.exec();
         }
     });
 
-    kendo.deepExtend(kendo.spreadsheet, {
-        Command: Command,
-        EditCommand: EditCommand
+    var EditCommand = kendo.spreadsheet.EditCommand = Command.extend({
+        init: function(options) {
+            Command.prototype.init.call(this, options);
+            this._value = options.value;
+        },
+        exec: function() {
+            var range = this.range();
+            this._state = range._editableValue();
+            range._editableValue(this._value);
+        },
+        undo: function() {
+            this.range()._editableValue(this._state);
+        }
     });
 })(kendo);
 

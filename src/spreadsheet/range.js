@@ -72,17 +72,17 @@
                 return value;
             }
         },
-        editValue: function(value) {
+        _editableValue: function(value) {
             var formula, type, parsed;
 
             if (value !== undefined) {
-                formula = RegExp.prototype.test.bind(/^=/);
-
-                if (formula(value)) {
+                if ((/^=/).test(value)) {
                     this.formula(value);
                 } else {
-                    this.formula(null);
-                    this.value(value);
+                    this._sheet.batch(function() {
+                        this.formula(null);
+                        this.value(value);
+                    }.bind(this), true);
                 }
 
                 return this;
