@@ -58,6 +58,12 @@ namespace Host.DTO
 
         [JsonProperty(PropertyName = "mergedCells")]
         public IList<string> MergedCells { get; set; }
+
+        [JsonProperty(PropertyName = "frozenRows")]
+        public int FrozenRows { get; set; }
+
+        [JsonProperty(PropertyName = "frozenColumns")]
+        public int FrozenColumns { get; set; }
     }
 
     public class Workbook

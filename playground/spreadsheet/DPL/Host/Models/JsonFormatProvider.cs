@@ -102,6 +102,11 @@ namespace Host
                     {
                         sheet.Cells.GetCellSelection(mergedRange).Merge();
                     }
+
+                    if (dtoSheet.FrozenColumns > 0 || dtoSheet.FrozenRows > 0)
+                    {
+                        sheet.ViewState.FreezePanes(dtoSheet.FrozenRows, dtoSheet.FrozenColumns);
+                    }
                 }
             }
 
@@ -172,6 +177,13 @@ namespace Host
                 dtoSheet.MergedCells.Add(
                     NameConverter.ConvertCellRangeToName(mergedRange.FromIndex, mergedRange.ToIndex)
                 );
+            }
+
+            var pane = worksheet.ViewState.Pane;
+            if (pane.State == PaneState.Frozen)
+            {
+                dtoSheet.FrozenRows = pane.TopLeftCellIndex.RowIndex;
+                dtoSheet.FrozenColumns = pane.TopLeftCellIndex.ColumnIndex;
             }
 
             var serializer = new JsonSerializer();
