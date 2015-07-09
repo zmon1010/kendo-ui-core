@@ -85,17 +85,101 @@
 .k-ie7 .k-task-summary,
 .k-ie7 .k-task-actions:first-child > .k-link,
 .k-ie7 .k-task-wrap:hover .k-task-delete,
-.k-ie7 .k-task-wrap-active .k-task-delete
+.k-ie7 .k-task-wrap-active .k-task-delete,
+
+.k-ie7 .k-navigator,
+.k-ie7 .k-zoom-control
 
 { display: inline; zoom: 1; }
 
+/* IE7 zooms */
+
 .k-ie7 .k-treeview .k-item,
 .k-ie7 .k-treeview .k-group
+{ zoom: 1; }
+
+/* IE7 textboxes */
+
+.k-ie7 .k-edit-field > .k-textbox { text-indent: 0; }
+
+/* IE7 icons */
+
+.k-ie7 .k-icon, .k-ie7 .k-sprite { text-indent: 0; }
+
+/* IE7 disabled state */
+
+.k-ie7 .k-state-disabled { filter: alpha(opacity=70); }
+
+/* IE7 Button */
+
+.k-ie7 .k-button { line-height: normal; overflow: visible; margin-right: 4px; }
+.k-ie7 a.k-button { line-height: 1.6; padding-left: 7px; padding-right: 7px;/*+1*/ }
+.k-ie7 .k-button-expand { margin-left: 0; margin-right: 0; }
+.k-ie7 a.k-button-icon { padding-left: 5px; padding-right: 5px;/*+1*/ }
+
+/*IE7 Editor*/
+
+.k-ie7 .k-editor-toolbar li
 {
-    zoom: 1;
+    display: inline; /* required. Floats and the inline-block hack break it */
 }
 
-.k-ie7 .k-edit-field > .k-textbox
+/*IE7 Gantt*/
+
+.k-ie7 .k-task-milestone
 {
-    text-indent: 0;
+    margin-left: 1px;/*+1*/
 }
+
+/* IE7 Slider */
+
+.k-ie7 .k-slider a.k-button { height: 22px; line-height: 22px; padding: 0; }
+
+/* IE7 Map */
+
+.k-ie7 .k-navigator > button
+{
+    border-width: 0;
+    display: block;
+}
+
+.k-ie7 .k-navigator > button > span
+{
+    vertical-align: top;
+    display: block;
+}
+
+.k-ie7 div.k-navigator .k-navigator-n,
+.k-ie7 div.k-navigator .k-navigator-s
+{ margin-left: -8px;/*+1*/ }
+
+.k-ie7 div.k-navigator .k-navigator-w,
+.k-ie7 div.k-navigator .k-navigator-e
+{ margin-top: -8px;/*+1*/ }
+
+.k-ie7 .k-zoom-control .k-button
+{ margin: 0;/*-14*/ }
+
+/*IE7 TreeMap */
+
+.k-ie7 .k-treemap .k-treemap-tile
+{
+    border-width: 0;
+    padding: 0;
+}
+
+.k-ie7 .k-treemap .k-leaf > div
+{
+    padding: 7px;
+}
+
+.k-ie7 .k-treemap .k-leaf.k-state-hover
+{
+    border-width: 1px;
+}
+
+.k-ie7 .k-treemap .k-leaf.k-state-hover > div
+{
+    padding: 6px;
+}
+
