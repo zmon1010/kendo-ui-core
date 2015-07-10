@@ -110,6 +110,54 @@
         equal(sheet.range("2:2").background(), null);
     });
 
+    test("deleteRow deleting frozen row makes frozen row pane smaller", function() {
+        sheet.frozenRows(3);
+
+        sheet.deleteRow(0);
+
+        equal(sheet.frozenRows(), 2);
+    });
+
+    test("deleteRow deleting last frozen row does makes frozen row pane smaller", function() {
+        sheet.frozenRows(3);
+
+        sheet.deleteRow(2);
+
+        equal(sheet.frozenRows(), 2);
+    });
+
+    test("deleteRow deleting first non-frozen row does not make frozen row pane smaller", function() {
+        sheet.frozenRows(3);
+
+        sheet.deleteRow(3);
+
+        equal(sheet.frozenRows(), 3);
+    });
+
+    test("deleteRow deleting non-frozen row does not make frozen row pane smaller", function() {
+        sheet.frozenRows(3);
+
+        sheet.deleteRow(4);
+
+        equal(sheet.frozenRows(), 3);
+    });
+
+    test("insertRow frozen row expands frozen rows pane", function() {
+        sheet.frozenRows(3);
+
+        sheet.insertRow(0);
+
+        equal(sheet.frozenRows(), 4);
+    });
+
+    test("insertRow non-frozen row does not expand frozen rows pane", function() {
+        sheet.frozenRows(3);
+
+        sheet.insertRow(3);
+
+        equal(sheet.frozenRows(), 3);
+    });
+
     test("insertRow move the data bottom row", function() {
         sheet.range("1:1").value("foo");
 

@@ -145,6 +145,12 @@
                 var columnCount = grid.columnCount;
                 var rowCount = grid.rowCount;
 
+                var frozenRows = this.frozenRows();
+
+                if (rowIndex < frozenRows) {
+                    this.frozenRows(frozenRows + 1);
+                }
+
                 for (var ci = 0; ci < columnCount; ci++) {
                     var ref = new RangeRef(new CellRef(rowIndex, ci), new CellRef(rowIndex, ci));
 
@@ -168,10 +174,14 @@
         deleteRow: function(rowIndex) {
 
             this.batch(function() {
-
                 var grid = this._grid;
                 var columnCount = grid.columnCount;
                 var rowCount = grid.rowCount;
+
+                var frozenRows = this.frozenRows();
+                if (rowIndex < frozenRows) {
+                    this.frozenRows(frozenRows - 1);
+                }
 
                 for (var ci = 0; ci < columnCount; ci++) {
                     var ref = new RangeRef(new CellRef(rowIndex, ci), new CellRef(rowIndex, ci));
