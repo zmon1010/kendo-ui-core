@@ -24,31 +24,27 @@
             this._originalActiveCell = kendo.spreadsheet.FIRSTREF;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
 
-            this._values = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._types = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._formats = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._properties = new kendo.spreadsheet.PropertyBag(cellCount);
 
-            this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._compiledFormulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._properties.register({ name: "value", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "type", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "format", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "formula", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "compiledFormula", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "background", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "borderBottom", count: cellCount, value: null, sortable:false });
+            this._properties.register({ name: "borderRight", count: cellCount, value: null, sortable:false });
+            this._properties.register({ name: "fontColor", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "fontFamily", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "fontLine", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "fontSize", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "fontStyle", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "fontWeight", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "horizontalAlignment", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "verticalAlignment", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "wrap", count: cellCount, value: null, sortable:true });
 
-            this._background = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._borderBottom = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._borderRight = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._fontColor = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._fontFamily = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._fontLine = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._fontSize = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._fontStyle = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._fontWeight = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._horizontalAlignment = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._verticalAlignment = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._wrap = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-
-            this._sorter = new kendo.spreadsheet.Sorter(this._grid, [this._values, this._types,
-                this._formats, this._formulas, this._compiledFormulas, this._background,
-                this._fontColor, this._fontFamily, this._fontLine, this._fontSize, this._fontStyle,
-                this._fontWeight, this._horizontalAlignment, this._verticalAlignment, this._wrap
-            ]);
+            this._sorter = new kendo.spreadsheet.Sorter(this._grid, this._properties.sortable());
         },
 
         name: function(value) {
@@ -118,23 +114,7 @@
 
             var targetIndex = targetRef.col * rowCount + targetRef.row;
 
-            this._background.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._values.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._borderBottom.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._borderRight.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._fontColor.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._fontFamily.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._fontLine.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._fontSize.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._fontStyle.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._fontWeight.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._horizontalAlignment.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._verticalAlignment.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._wrap.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._types.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._formulas.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._formats.copy(nextIndex, nextBottomIndex, targetIndex);
-            this._compiledFormulas.copy(nextIndex, nextBottomIndex, targetIndex);
+            this._properties.copy(nextIndex, nextBottomIndex, targetIndex);
         },
 
         insertRow: function(rowIndex) {
@@ -351,54 +331,14 @@
             var bottomRight = this._grid.normalize(ref.bottomRight);
 
             for (var ci = topLeft.col; ci <= bottomRight.col; ci ++) {
-                var startCellIndex = this._grid.index(topLeft.row, ci);
+                var ri = topLeft.row;
+
+                var startCellIndex = this._grid.index(ri, ci);
                 var endCellIndex = this._grid.index(bottomRight.row, ci);
 
-                var values = this._values.iterator(startCellIndex, endCellIndex);
-                var types = this._types.iterator(startCellIndex, endCellIndex);
-                var formulas = this._formulas.iterator(startCellIndex, endCellIndex);
-                var formats = this._formats.iterator(startCellIndex, endCellIndex);
-
-
-                var background = this._background.iterator(startCellIndex, endCellIndex);
-                var borderBottom = this._borderBottom.iterator(startCellIndex, endCellIndex);
-                var borderRight = this._borderRight.iterator(startCellIndex, endCellIndex);
-                var fontColor = this._fontColor.iterator(startCellIndex, endCellIndex);
-                var fontFamily = this._fontFamily.iterator(startCellIndex, endCellIndex);
-                var fontLine = this._fontLine.iterator(startCellIndex, endCellIndex);
-                var fontSize = this._fontSize.iterator(startCellIndex, endCellIndex);
-                var fontStyle = this._fontStyle.iterator(startCellIndex, endCellIndex);
-                var fontWeight = this._fontWeight.iterator(startCellIndex, endCellIndex);
-                var horizontalAlignment = this._horizontalAlignment.iterator(startCellIndex, endCellIndex);
-                var verticalAlignment = this._verticalAlignment.iterator(startCellIndex, endCellIndex);
-                var wrap = this._wrap.iterator(startCellIndex, endCellIndex);
-
-                for (var ri = topLeft.row; ri <= bottomRight.row; ri ++) {
-                    var index = this._grid.index(ri, ci);
-
-                    callback({
-                        row: ri,
-                        col: ci,
-                        value: values.at(index),
-                        type: types.at(index),
-                        formula: formulas.at(index),
-                        format: formats.at(index),
-                        style: {
-                            background: background.at(index),
-                            borderBottom: borderBottom.at(index),
-                            borderRight: borderRight.at(index),
-                            fontColor: fontColor.at(index),
-                            fontFamily: fontFamily.at(index),
-                            fontLine: fontLine.at(index),
-                            fontSize: fontSize.at(index),
-                            fontStyle: fontStyle.at(index),
-                            fontWeight: fontWeight.at(index),
-                            horizontalAlignment: horizontalAlignment.at(index),
-                            verticalAlignment: verticalAlignment.at(index),
-                            wrap: wrap.at(index)
-                        }
-                    });
-                }
+                this._properties.forEach(startCellIndex, endCellIndex, function(value) {
+                    callback(ri++, ci, value);
+                });
             }
         },
 
@@ -538,120 +478,24 @@
             var rows = this._rows.toJSON("height", positions);
             var columns = this._columns.toJSON("width", {});
 
-            this.forEach(kendo.spreadsheet.SHEETREF, function(data) {
-                var value = data.value;
-                var formula = data.formula;
-                var format = data.format;
-                var background = data.style.background;
-                var borderBottom = data.style.borderBottom;
-                var borderRight = data.style.borderRight;
-                var fontColor = data.style.fontColor;
-                var fontFamily = data.style.fontFamily;
-                var fontLine = data.style.fontLine;
-                var fontSize = data.style.fontSize;
-                var fontStyle = data.style.fontStyle;
-                var fontWeight = data.style.fontWeight;
-                var horizontalAlignment = data.style.horizontalAlignment;
-                var verticalAlignment = data.style.verticalAlignment;
-                var wrap = data.style.wrap;
-
-                var hasBackground = background !== null;
-                var hasBorderBottom = borderBottom !== null;
-                var hasBorderRight = borderRight !== null;
-                var hasFontColor = fontColor !== null;
-                var hasFontFamily = fontFamily !== null;
-                var hasFontLine = fontLine !== null;
-                var hasFontSize = fontSize !== null;
-                var hasFontStyle = fontStyle !== null;
-                var hasFontWeight = fontWeight !== null;
-                var hasHorizontalAlignment = horizontalAlignment !== null;
-                var hasVerticalAlignment = verticalAlignment !== null;
-                var hasWrap = wrap !== null;
-                var hasValue = value !== null;
-                var hasFormula = formula !== null;
-                var hasFormat = format !== null;
-
-                if (!hasValue && !hasFormula && !hasFormat &&
-                    !hasBackground && !hasBorderBottom && !hasBorderRight &&
-                    !hasFontColor && !hasFontFamily && !hasFontLine && !hasFontSize &&
-                    !hasFontStyle && !hasFontWeight && !hasHorizontalAlignment &&
-                    !hasVerticalAlignment && !hasWrap) {
+            this.forEach(kendo.spreadsheet.SHEETREF, function(row, col, cell) {
+                if (Object.keys(cell).length === 0) {
                     return;
                 }
 
-                var position = positions[data.row];
+                var position = positions[row];
 
                 if (position === undefined) {
                     position = rows.length;
 
-                    rows.push({ index: data.row });
+                    rows.push({ index: row });
 
-                    positions[data.row] = position;
+                    positions[row] = position;
                 }
 
                 var row = rows[position];
 
-                var cell = { index: data.col };
-
-                if (hasValue) {
-                    cell.value = value;
-                }
-
-                if (hasBackground) {
-                    cell.background = background;
-                }
-
-                if (hasBorderBottom) {
-                    cell.borderBottom = borderBottom;
-                }
-
-                if (hasBorderRight) {
-                    cell.borderRight = borderRight;
-                }
-
-                if (hasFontColor) {
-                    cell.fontColor = fontColor;
-                }
-
-                if (hasFontFamily) {
-                    cell.fontFamily = fontFamily;
-                }
-
-                if (hasFontLine) {
-                    cell.fontLine = fontLine;
-                }
-
-                if (hasFontSize) {
-                    cell.fontSize = fontSize;
-                }
-
-                if (hasFontStyle) {
-                    cell.fontStyle = fontStyle;
-                }
-
-                if (hasFontWeight) {
-                    cell.fontWeight = fontWeight;
-                }
-
-                if (hasHorizontalAlignment) {
-                    cell.horizontalAlignment = horizontalAlignment;
-                }
-
-                if (hasVerticalAlignment) {
-                    cell.verticalAlignment = verticalAlignment;
-                }
-
-                if (hasWrap) {
-                    cell.wrap = wrap;
-                }
-
-                if (hasFormula) {
-                    cell.formula = formula;
-                }
-
-                if (hasFormat) {
-                    cell.format = format;
-                }
+                cell.index = col;
 
                 if (row.cells === undefined) {
                     row.cells = [];
@@ -822,27 +666,25 @@
         },
 
         compiledFormula: function(ref) {
-            var index = this._grid.cellRefIndex(ref);
-
-            return this._compiledFormulas.value(index, index);
+            return this._properties.get("compiledFormula", this._grid.cellRefIndex(ref));
         },
 
         recalc: function(context) {
-            var formulas = this._formulas.values();
+            var formulas = this._properties.get("formula").values();
             var compiledFormulas = [];
 
             formulas.forEach(function(formula) {
                 for (var index = formula.start; index <= formula.end; index++) {
                     var cell = this._grid.cellRef(index);
 
-                    var compiled = this._compiledFormulas.value(index, index);
+                    var compiled = this._properties.get("compiledFormula", index);
 
                     if (compiled === null) {
                         var x = kendo.spreadsheet.calc.parse(this._name, cell.row, cell.col, formula.value);
 
                         compiled = kendo.spreadsheet.calc.compile(x);
 
-                        this._compiledFormulas.value(index, index, compiled);
+                        this._properties.set("compiledFormula", index, compiled);
                     }
 
                     compiled.reset();
@@ -875,18 +717,18 @@
             var index = this._grid.index(row, col);
 
             if (result.type === "date") {
-                this._formats.value(index, index, toExcelFormat(kendo.culture().calendar.patterns.d));
+                this._properties.set("format", index, toExcelFormat(kendo.culture().calendar.patterns.d));
             }
 
-            this._values.value(index, index, result.value);
-            this._types.value(index, index, result.type);
+            this._properties.set("value", index, result.value);
+            this._properties.set("type", index, result.type);
         },
         _getValue: function(row, col) {
             var index = this._grid.index(row, col);
 
-            var type = this._types.value(index, index);
+            var type = this._properties.get("type", index);
 
-            var value = this._values.value(index, index);
+            var value = this._properties.get("value", index);
 
             if (type === "date") {
                 value = kendo.spreadsheet.calc.runtime.serialToDate(value);
@@ -909,7 +751,7 @@
             var indices = null;
 
             columns.forEach(function(column) {
-                indices = this._sorter.sortBy(ref, column.index, this._values, column.ascending, indices);
+                indices = this._sorter.sortBy(ref, column.index, this._properties.get("value"), column.ascending, indices);
             }, this);
 
             this._sort = {
@@ -930,7 +772,7 @@
                 columns.forEach(function(column) {
                     var columnRef = ref.toColumn(column.index);
 
-                    var values = this._values.iterator(this._grid.cellRefIndex(columnRef.topLeft),
+                    var values = this._properties.iterator("value", this._grid.cellRefIndex(columnRef.topLeft),
                         this._grid.cellRefIndex(columnRef.bottomRight));
 
                     values.forEach(function(value, index) {

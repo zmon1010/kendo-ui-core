@@ -47,7 +47,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { style: { background: "red" } });
+        pane.addCell(table, {}, { background: "red" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].backgroundColor, "red");
@@ -58,7 +58,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { style: { fontColor: "red" } });
+        pane.addCell(table, {}, { fontColor: "red" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].color, "red");
@@ -69,7 +69,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { style: { fontFamily: "foo" } });
+        pane.addCell(table, {}, { fontFamily: "foo" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].fontFamily, "foo");
@@ -80,7 +80,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { style: { fontLine: "foo" } });
+        pane.addCell(table, {}, { fontLine: "foo" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].textDecoration, "foo");
@@ -91,7 +91,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { style: { fontSize: 12 } });
+        pane.addCell(table, {}, { fontSize: 12 });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].fontSize, 12);
@@ -102,7 +102,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { style: { fontStyle: "foo" } });
+        pane.addCell(table, {}, { fontStyle: "foo" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].fontStyle, "foo");
@@ -113,7 +113,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { style: { fontWeight: "foo" } });
+        pane.addCell(table, {}, { fontWeight: "foo" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].fontWeight, "foo");
@@ -124,7 +124,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { style: { horizontalAlignment: "foo" } });
+        pane.addCell(table, {}, { horizontalAlignment: "foo" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].textAlign, "foo");
@@ -135,7 +135,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { style: { verticalAlignment: "foo" } });
+        pane.addCell(table, {}, { verticalAlignment: "foo" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].verticalAlign, "foo");
@@ -146,7 +146,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { style: { wrap: false } });
+        pane.addCell(table, {}, { wrap: false });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].whiteSpace, "nowrap");

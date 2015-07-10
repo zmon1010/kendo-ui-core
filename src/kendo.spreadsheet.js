@@ -6,6 +6,7 @@
         "./spreadsheet/formulabar",
         "./spreadsheet/eventlistener",
         "./spreadsheet/rangelist",
+        "./spreadsheet/propertybag",
         "./spreadsheet/references",
         "./spreadsheet/range",
         "./spreadsheet/sheet",

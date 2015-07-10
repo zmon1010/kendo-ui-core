@@ -22,7 +22,7 @@
             return this._sheet._grid.normalize(ref);
         },
 
-        _property: function(list, value, recalc) {
+        _property: function(name, value, recalc) {
             if (value !== undefined) {
                 this._ref.forEach(function(ref) {
                     ref = ref.toRangeRef();
@@ -34,7 +34,7 @@
                         var start = this._sheet._grid.index(topLeft.row, ci);
                         var end = this._sheet._grid.index(bottomRight.row, ci);
 
-                        list.value(start, end, value);
+                        this._sheet._properties.set(name, start, end, value);
                     }
                 }.bind(this));
 
@@ -43,7 +43,7 @@
                 return this;
             } else {
                 var index = this._sheet._grid.cellRefIndex(this._normalize(this._ref.toRangeRef().topLeft));
-                return list.value(index, index);
+                return this._sheet._properties.get(name, index);
             }
         },
         value: function(value, parseStrings) {
@@ -87,9 +87,9 @@
 
                 return this;
             } else {
-                value = this._property(this._sheet._values);
-                type = this._property(this._sheet._types);
-                formula = this._property(this._sheet._formulas);
+                value = this._property("value");
+                type = this._property("type");
+                formula = this._property("formula");
 
                 if (formula) {
                     value = formula;
@@ -108,7 +108,7 @@
             }
         },
         type: function() {
-            return this._property(this._sheet._types);
+            return this._property("type");
         },
         borderLeft: function(value) {
             var ref = this._ref.resize({ left: -1, right: -1 });
@@ -132,7 +132,7 @@
                 value = JSON.stringify(value);
             }
 
-            var result = this._property(this._sheet["_" + property], value);
+            var result = this._property(property, value);
 
             if (value === undefined) {
                 result = JSON.parse(result);
@@ -142,7 +142,7 @@
         },
 
         format: function(value) {
-            return this._property(this._sheet._formats, value);
+            return this._property("format", value);
         },
 
         formula: function(value) {
@@ -150,14 +150,14 @@
 
                 var sheet = this._sheet;
                 sheet.batch(function() {
-                    this._property(this._sheet._formulas, null);
+                    this._property("formula", null);
                     this.value(null);
                 }.bind(this), true);
 
                 return this;
             }
 
-            return this._property(this._sheet._formulas, value, true);
+            return this._property("formula", value, true);
         },
 
         merge: function() {
@@ -316,7 +316,7 @@
 
     styles.forEach(function(x) {
         Range.prototype[x] = function(value) {
-            return this._property(this._sheet["_" + x], value);
+            return this._property(x, value);
         };
     });
 

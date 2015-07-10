@@ -42,14 +42,14 @@
                 var startCellIndex = sheet._grid.cellRefIndex(tl);
                 var endCellIndex = sheet._grid.cellRefIndex(br);
 
-                var values = sheet._values.iterator(startCellIndex, endCellIndex);
+                var values = sheet._properties.iterator("value", startCellIndex, endCellIndex);
 
                 var states = [];
 
                 for (var col = tl.col; col <= br.col; ++col) {
                     for (var row = tl.row; row <= br.row; ++row) {
                         var index = sheet._grid.index(row, col);
-                        formula = sheet._compiledFormulas.value(index, index);
+                        formula = sheet._properties.get("compiledFormula", index);
                         value = values.at(index);
                         if (formula != null || value != null) {
                             states.push({

@@ -40,7 +40,7 @@
         },
 
         addCell: function(rowIndex, text, style, className) {
-            if (text === null) {
+            if (!text) {
                 text = "";
             }
 
@@ -420,9 +420,9 @@
                     rowHeader.addRow(height);
                 });
 
-                sheet.forEach(view.ref.leftColumn(), function(cell) {
-                    var text = cell.row + 1;
-                    rowHeader.addCell(cell.row - view.ref.topLeft.row, text, {}, this.headerClassName(cell.row, "row"));
+                sheet.forEach(view.ref.leftColumn(), function(row, col, cell) {
+                    var text = row + 1;
+                    rowHeader.addCell(row - view.ref.topLeft.row, text, {}, this.headerClassName(row, "row"));
                 }.bind(this));
 
                 children.push(rowHeader.toDomTree(0, view.rowOffset, "k-spreadsheet-row-header"));
@@ -437,9 +437,9 @@
 
                 columnHeader.addRow(grid.headerHeight);
 
-                sheet.forEach(view.ref.topRow(), function(cell) {
-                    var text = kendo.spreadsheet.Ref.display(null, Infinity, cell.col);
-                    columnHeader.addCell(0, text, {}, this.headerClassName(cell.col, "col"));
+                sheet.forEach(view.ref.topRow(), function(row, col, cell) {
+                    var text = kendo.spreadsheet.Ref.display(null, Infinity, col);
+                    columnHeader.addCell(0, text, {}, this.headerClassName(col, "col"));
                 }.bind(this));
 
                 children.push(columnHeader.toDomTree(view.columnOffset, 0, "k-spreadsheet-column-header"));
@@ -486,8 +486,8 @@
                 table.addColumn(width);
             });
 
-            this._sheet.forEach(view.ref, function(cell) {
-                this.addCell(table, cell.row - view.ref.topLeft.row, cell);
+            this._sheet.forEach(view.ref, function(row, col, cell) {
+                this.addCell(table, row - view.ref.topLeft.row, cell);
             }.bind(this));
 
             return table.toDomTree(view.columnOffset, view.rowOffset, "k-spreadsheet-data");
@@ -503,37 +503,54 @@
         },
 
         addCell: function(table, row, cell) {
-            var styleMap = {
-                background: "backgroundColor",
-                fontColor: "color",
-                fontFamily: "fontFamily",
-                fontLine: "textDecoration",
-                fontSize: "fontSize",
-                fontStyle: "fontStyle",
-                fontWeight: "fontWeight",
-                horizontalAlignment: "textAlign",
-                verticalAlignment: "verticalAlign"
-            };
-
             var style = {};
-            var cellStyle = cell.style;
 
-            if (cellStyle) {
-                Object.keys(cellStyle).forEach(function(key) {
-                   style[styleMap[key]] = cellStyle[key];
-                });
+            if (cell.background) {
+                style.backgroundColor = cell.background;
+            }
 
-                if (cellStyle.wrap === false) {
-                    style.whiteSpace = "nowrap";
-                }
+            if (cell.fontColor) {
+                style.color = cell.fontColor;
+            }
 
-                if (cellStyle.borderRight) {
-                    style.borderRight = this._border(cellStyle.borderRight);
-                }
+            if (cell.fontFamily) {
+                style.fontFamily = cell.fontFamily;
+            }
 
-                if (cellStyle.borderBottom) {
-                    style.borderBottom = this._border(cellStyle.borderBottom);
-                }
+            if (cell.fontLine) {
+                style.textDecoration = cell.fontLine;
+            }
+
+            if (cell.fontStyle) {
+                style.fontStyle = cell.fontStyle;
+            }
+
+            if (cell.horizontalAlignment) {
+                style.textAlign = cell.horizontalAlignment;
+            }
+
+            if (cell.verticalAlignment) {
+                style.verticalAlign = cell.verticalAlignment;
+            }
+
+            if (cell.fontWeight) {
+                style.fontWeight = cell.fontWeight;
+            }
+
+            if (cell.fontSize) {
+                style.fontSize = cell.fontSize;
+            }
+
+            if (cell.wrap === false) {
+                style.whiteSpace = "nowrap";
+            }
+
+            if (cell.borderRight) {
+                style.borderRight = this._border(cell.borderRight);
+            }
+
+            if (cell.borderBottom) {
+                style.borderBottom = this._border(cell.borderBottom);
             }
 
             if (!style.textAlign) {
@@ -609,7 +626,7 @@
             var view = this._currentView;
 
             if (view.ref.intersects(ref)) {
-                sheet.forEach(ref.collapse(), function(cell) {
+                sheet.forEach(ref.collapse(), function(row, col, cell) {
                     var rectangle = this._rectangle(ref);
 
                     var table = new HtmlTable(this.rowHeight, this.columnWidth);

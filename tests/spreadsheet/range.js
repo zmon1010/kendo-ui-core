@@ -16,7 +16,7 @@
     test("value sets the value of the range", function() {
         range.value("foo");
 
-        equal(sheet._values.iterator(0,0).at(0), "foo");
+        equal(sheet._properties.get("value", 0), "foo");
     });
 
     test("merge triggers the change event of the sheet", 1, function() {
@@ -61,8 +61,8 @@
 
         range.value("foo");
 
-        equal(sheet._values.iterator(0, 3).at(1), "foo");
-        equal(sheet._values.iterator(0, 3).at(2), null);
+        equal(sheet._properties.iterator("value", 0, 3).at(1), "foo");
+        equal(sheet._properties.iterator("value", 0, 3).at(2), null);
     });
 
     test("value sets the value of a multiple row and column range", function() {
@@ -70,8 +70,8 @@
 
         range.value("foo");
 
-        equal(sheet._values.iterator(0, 3).at(3), "foo");
-        equal(sheet._values.iterator(0, 3).at(2), null);
+        equal(sheet._properties.iterator("value", 0, 3).at(3), "foo");
+        equal(sheet._properties.iterator("value", 0, 3).at(2), null);
     });
 
     test("value returns the value of the range", function() {
