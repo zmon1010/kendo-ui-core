@@ -101,6 +101,14 @@ var __meta__ = {
         });
     }
 
+    function normalizeName(name) {
+        if (name.indexOf(" ") !== -1) {
+            name = '["' + name + '"]';
+        }
+
+        return name;
+    }
+
     function parentName(tuple, level) {
         var member = tuple.members[level];
         var parentNameValue = buildPath(tuple, level - 1);
@@ -847,14 +855,6 @@ var __meta__ = {
             return aggregators;
         },
 
-        _normalizeName: function(name) {
-            if (name.indexOf(" ") !== -1) {
-                name = '["' + name + '"]';
-            }
-
-            return name;
-        },
-
         _buildGetters: function(names) {
             var result = {};
             var parts;
@@ -867,7 +867,7 @@ var __meta__ = {
                 if (parts.length > 1) {
                     result[parts[0]] = kendo.getter(parts[0], true);
                 } else {
-                    result[name] = kendo.getter(this._normalizeName(name), true);
+                    result[name] = kendo.getter(normalizeName(name), true);
                 }
             }
 
@@ -1192,7 +1192,52 @@ var __meta__ = {
                     }
 
                     return result;
-                }
+                },
+                members: $.proxy(function(response, restrictions) {
+                    var name = restrictions.levelUniqueName || restrictions.memberUniqueName;
+                    var data = this.options.data || this._rawData || [];
+                    var result = [];
+                    var getter;
+                    var value;
+                    var idx = 0;
+
+                    if (name) {
+                        name = name.split(".")[0];
+                    }
+
+                    if (!restrictions.treeOp) {
+                        result.push({
+                            caption: cube.dimensions[name].caption || name,
+                            childrenCardinality: "1",
+                            dimensionUniqueName: name,
+                            hierarchyUniqueName: name,
+                            levelUniqueName: name,
+                            name: name,
+                            uniqueName: name
+                        });
+
+                        return result;
+                    }
+
+                    getter = kendo.getter(normalizeName(name), true);
+
+                    for (; idx < data.length; idx++) {
+                        value = getter(data[idx]);
+                        if (value || value === 0) {
+                            result.push({
+                                caption: value,
+                                childrenCardinality: "0",
+                                dimensionUniqueName: name,
+                                hierarchyUniqueName: name,
+                                levelUniqueName: name,
+                                name: value,
+                                uniqueName: value
+                            });
+                        }
+                    }
+
+                    return result;
+                }, this)
             };
         },
 
@@ -1521,6 +1566,10 @@ var __meta__ = {
         _readData: function(data) {
             var axes = this.reader.axes(data);
             var newData = this.reader.data(data);
+
+            if (this.cubeBuilder) {
+                this._rawData = newData;
+            }
 
             return this._processResult(newData, axes);
         },
@@ -2023,6 +2072,11 @@ var __meta__ = {
 
         schemaMembers: function(restrictions) {
             var that = this;
+            var success = (function(restrictions) {
+                return function(response) {
+                    return that.reader.members(response, restrictions);
+                }
+            }(restrictions));
 
             return that.discover({
                 data: {
@@ -2032,9 +2086,7 @@ var __meta__ = {
                        cubeName: that.transport.cube()
                    }, restrictions)
                 }
-            }, function(response) {
-                return that.reader.members(response);
-            });
+            }, success);
         },
 
         _params: function(data) {
