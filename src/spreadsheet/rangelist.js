@@ -363,10 +363,29 @@
         },
 
         copy: function(sourceStart, sourceEnd, targetStart) {
-            var values = this.expandedValues(sourceStart, sourceEnd);
+            var values = this.intersecting(sourceStart, sourceEnd);
+
+            var start = targetStart;
+            var end;
 
             for (var i = 0, len = values.length; i < len; i++) {
-                this.value(i + targetStart, i + targetStart, values[i].value);
+                var rangeStart = values[i].start;
+
+                if (rangeStart < sourceStart) {
+                    rangeStart = sourceStart;
+                }
+
+                var rangeEnd = values[i].end;
+
+                if (rangeEnd > sourceEnd) {
+                    rangeEnd = sourceEnd;
+                }
+
+                end = start + (rangeEnd - rangeStart);
+
+                this.value(start, end, values[i].value);
+
+                start = ++end;
             }
         },
 

@@ -222,5 +222,60 @@
         equal(list.value(14, 14), 4);
     });
 
+    test("copy copies range with same values does not override the next values of the range when target is before the source", 5, function() {
+        var list = new RangeList(0, 100, 0);
 
+        list.value(1, 1, 1);
+        list.value(2, 2, 2);
+        list.value(3, 3, 3);
+        list.value(4, 4, 4);
+
+        list.copy(5, 7, 1);
+
+        equal(list.value(1, 1), 0);
+        equal(list.value(2, 2), 0);
+        equal(list.value(3, 3), 0);
+        equal(list.value(4, 4), 4);
+        equal(list.value(5, 5), 0);
+    });
+
+    test("copy copies range with same values does not override the next values of the range", 5, function() {
+        var list = new RangeList(0, 100, 0);
+
+        list.value(5, 5, 1);
+        list.value(6, 6, 2);
+        list.value(7, 7, 3);
+        list.value(8, 8, 4);
+        list.value(9, 9, 5);
+
+        list.copy(1, 4, 5);
+
+        equal(list.value(5, 5), 0);
+        equal(list.value(6, 6), 0);
+        equal(list.value(7, 7), 0);
+        equal(list.value(8, 8), 0);
+        equal(list.value(9, 9), 5);
+    });
+
+    test("copy copies the multiple source values with spaces to the target position", 10, function() {
+        var list = new RangeList(0, 100, 0);
+
+        list.value(11, 11, 1);
+        list.value(14, 14, 2);
+        list.value(15, 15, 2);
+
+        list.copy(11, 15, 16);
+
+        equal(list.value(11, 11), 1);
+        equal(list.value(12, 12), 0);
+        equal(list.value(13, 13), 0);
+        equal(list.value(14, 14), 2);
+        equal(list.value(15, 15), 2);
+
+        equal(list.value(16, 16), 1);
+        equal(list.value(17, 17), 0);
+        equal(list.value(18, 18), 0);
+        equal(list.value(19, 19), 2);
+        equal(list.value(20, 20), 2);
+    });
 })();
