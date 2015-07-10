@@ -196,6 +196,38 @@
        sheet.bind("change", success).insertColumn(0);
     });
 
+    test("deleteColumn frozen column collapse frozen columns pane", function() {
+        sheet.frozenColumns(3);
+
+        sheet.deleteColumn(0);
+
+        equal(sheet.frozenColumns(), 2);
+    });
+
+    test("deleteColumn non-frozen column does not collapse frozen columns pane", function() {
+        sheet.frozenColumns(3);
+
+        sheet.deleteColumn(3);
+
+        equal(sheet.frozenColumns(), 3);
+    });
+
+    test("insertColumn frozen column expands frozen columns pane", function() {
+        sheet.frozenColumns(3);
+
+        sheet.insertColumn(0);
+
+        equal(sheet.frozenColumns(), 4);
+    });
+
+    test("insertColumn non-frozen column does not expand frozen columns pane", function() {
+        sheet.frozenColumns(3);
+
+        sheet.insertColumn(3);
+
+        equal(sheet.frozenColumns(), 3);
+    });
+
     test("insertColumn clears the column and move the data to the right", function() {
         sheet.range("A:A").value(1);
         sheet.range("B:B").value(2);

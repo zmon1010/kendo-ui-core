@@ -220,6 +220,12 @@
                 var columnCount = grid.columnCount;
                 var rowCount = grid.rowCount;
 
+                var frozenColumns = this.frozenColumns();
+
+                if (columnIndex < frozenColumns) {
+                    this.frozenColumns(frozenColumns + 1);
+                }
+
                 for (var ci = columnCount; ci >= columnIndex; ci--) {
                     var ref = new RangeRef(new CellRef(0, ci), new CellRef(Infinity, ci));
 
@@ -250,6 +256,12 @@
                 var grid = this._grid;
                 var columnCount = grid.columnCount;
                 var rowCount = grid.rowCount;
+
+                var frozenColumns = this.frozenColumns();
+
+                if (columnIndex < frozenColumns) {
+                    this.frozenColumns(frozenColumns - 1);
+                }
 
                 for (var ci = columnIndex; ci < columnCount; ci++) {
                     var ref = new RangeRef(new CellRef(0, ci), new CellRef(Infinity, ci));
