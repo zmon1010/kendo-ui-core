@@ -681,6 +681,9 @@ fillElements({
         D2: '=SUM(IF(A2:A9={"A","B"},B2:B9,0))',
         D3: '=SUMIF(A2:A9,C2:C3,B2:B9)',
 
+        A11: -5.82,
+        D11: '=ceiling.math(A11, B11, C11)',
+
         F1: 1345,
         F2: 1301,
         F3: 1368,

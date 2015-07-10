@@ -51,10 +51,97 @@
     ]);
 
     defineFunction("ceiling", function(num, s){
-        return s * Math.ceil(num / s);
+        return s ? s * Math.ceil(num / s) : 0;
     }).args([
         [ "number", "*number" ],
-        [ "significance", "*number" ]
+        [ "significance", [ "and", "*number",
+                            [ "assert", "$significance >= 0 || $number < 0" ] ] ]
+    ]);
+
+    defineFunction("ceiling.precise", function(num, s){
+        s = Math.abs(s);
+        return s ? s * Math.ceil(num / s) : 0;
+    }).args([
+        [ "number", "*number" ],
+        [ "significance", [ "or", "*number", [ "null", 1 ] ] ]
+    ]);
+
+    runtime.defineAlias("iso.ceiling", "ceiling.precise");
+
+    // XXX: how do we know if this function is correct?
+    //
+    // https://support.office.com/en-gb/article/CEILING-MATH-function-80f95d2f-b499-4eee-9f16-f795a8e306c8
+    //
+    // “There are many combinations of Significance and Mode values that affect rounding of negative
+    // numbers in different ways.” — right, thanks for the info. :-\
+    defineFunction("ceiling.math", function(num, s, mode){
+        if (!s || !num) {
+            return 0;
+        }
+        if (num < 0 && ((!mode && s < 0) || (mode && s > 0))) {
+            s = -s;
+        }
+        return s ? s * Math.ceil(num / s) : 0;
+    }).args([
+        [ "number", "*number" ],
+        [ "significance", [ "or", "*number", [ "null", "$number < 0 ? -1 : 1" ] ] ],
+        [ "mode", [ "or", "*number", [ "null", 0 ] ] ]
+    ]);
+
+    defineFunction("floor", function(num, s){
+        return s ? s * Math.floor(num / s) : 0;
+    }).args([
+        [ "number", "*number" ],
+        [ "significance", [ "and", "*number",
+                            [ "assert", "$significance >= 0 || $number < 0" ] ] ]
+    ]);
+
+    defineFunction("floor.precise", function(num, s){
+        s = Math.abs(s);
+        return s ? s * Math.floor(num / s) : 0;
+    }).args([
+        [ "number", "*number" ],
+        [ "significance", [ "or", "*number", [ "null", 1 ] ] ]
+    ]);
+
+    // XXX: check this
+    defineFunction("floor.math", function(num, s, mode){
+        if (!s || !num) {
+            return 0;
+        }
+        if (num < 0 && ((!mode && s < 0) || (mode && s > 0))) {
+            s = -s;
+        }
+        return s ? s * Math.floor(num / s) : 0;
+    }).args([
+        [ "number", "*number" ],
+        [ "significance", [ "or", "*number", [ "null", "$number < 0 ? -1 : 1" ] ] ],
+        [ "mode", [ "or", "*number", [ "null", 0 ] ] ]
+    ]);
+
+    defineFunction("int", Math.floor).args([
+        [ "number", "*number" ]
+    ]);
+
+    defineFunction("mround", function(num, mult){
+        return mult ? mult * Math.round(num / mult) : 0;
+    }).args([
+        [ "number", "*number" ],
+        [ "multiple", "*number" ]
+    ]);
+
+    defineFunction("even", function(num){
+        var n = num < 0 ? Math.floor(num) : Math.ceil(num);
+        return n % 2 ? n + (n < 0 ? -1 : 1) : n;
+    }).args([
+        [ "number", "*number" ]
+    ]);
+
+    defineFunction("odd", function(num){
+        var n = num < 0 ? Math.floor(num) : Math.ceil(num);
+        return n % 2 ? n : n + (n < 0 ? -1 : 1);
+    }).args([
+        [ "number", "*number" ]
     ]);
 
     defineFunction("sign", function(num){
