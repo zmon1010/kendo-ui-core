@@ -2273,4 +2273,140 @@
             equal(data[0].type, undefined);
         });
     });
+
+    test("schemaMembers returns a list of root members when client cube is used", 8, function() {
+        var data = [
+            { FirstName: "Name1", LastName: "Last1" },
+            { FirstName: "Name2", LastName: "Last2" },
+            { FirstName: "Name3", LastName: "Last3" }
+        ];
+
+        var dataSource = new PivotDataSource({
+            columns: ["FirstName"],
+            rows: ["LastName"],
+            transport: {
+                read: function(options) {
+                    options.success(data);
+                }
+            },
+            schema: {
+                cube: {
+                    dimensions: {
+                        FirstName: { caption: "All First Names" },
+                        LastName: { caption: "All Last Names" }
+                    }
+                }
+            }
+        });
+
+        var restrictions = { levelUniqueName: "FirstName.[(ALL)]" };
+
+        dataSource.schemaMembers(restrictions).done(function(data) {
+            equal(data.length, 1);
+            equal(data[0].caption, "All First Names");
+            equal(data[0].dimensionUniqueName, 'FirstName');
+            equal(data[0].hierarchyUniqueName, 'FirstName');
+            equal(data[0].levelUniqueName, 'FirstName');
+            equal(data[0].name, 'FirstName');
+            equal(data[0].uniqueName, 'FirstName');
+
+            ok(data[0].childrenCardinality > 0);
+        });
+    });
+
+    test("schemaMembers returns a list of child members when client cube is used", 22, function() {
+        var data = [
+            { FirstName: "Name1", LastName: "Last1" },
+            { FirstName: "Name2", LastName: "Last2" },
+            { FirstName: "Name3", LastName: "Last3" },
+            { FirstName: "", LastName: "Last4" }
+        ];
+
+        var dataSource = new PivotDataSource({
+            columns: ["FirstName"],
+            rows: ["LastName"],
+            transport: {
+                read: function(options) {
+                    options.success(data);
+                }
+            },
+            schema: {
+                cube: {
+                    dimensions: {
+                        FirstName: { caption: "All First Names" },
+                        LastName: { caption: "All Last Names" }
+                    }
+                }
+            }
+        });
+
+        var restrictions = {
+            memberUniqueName: "FirstName",
+            treeOp: 1
+        };
+
+        dataSource.read();
+
+        dataSource.schemaMembers(restrictions).done(function(data) {
+            equal(data.length, 3);
+
+            for (var idx = 0; idx < data.length; idx++) {
+                equal(data[idx].caption, "Name" + (idx + 1));
+                equal(data[idx].childrenCardinality, 0);
+                equal(data[idx].dimensionUniqueName, 'FirstName');
+                equal(data[idx].hierarchyUniqueName, 'FirstName');
+                equal(data[idx].levelUniqueName, 'FirstName');
+                equal(data[idx].name, "Name" + (idx + 1));
+                equal(data[idx].uniqueName, "Name" + (idx + 1));
+            }
+        });
+    });
+
+    test("schemaMembers returns distint values when client cube is used", 15, function() {
+        var data = [
+            { FirstName: "Name1", LastName: "Last1" },
+            { FirstName: "Name2", LastName: "Last2" },
+            { FirstName: "Name1", LastName: "Last3" },
+            { FirstName: "", LastName: "Last4" }
+        ];
+
+        var dataSource = new PivotDataSource({
+            columns: ["FirstName"],
+            rows: ["LastName"],
+            transport: {
+                read: function(options) {
+                    options.success(data);
+                }
+            },
+            schema: {
+                cube: {
+                    dimensions: {
+                        FirstName: { caption: "All First Names" },
+                        LastName: { caption: "All Last Names" }
+                    }
+                }
+            }
+        });
+
+        var restrictions = {
+            memberUniqueName: "FirstName",
+            treeOp: 1
+        };
+
+        dataSource.read();
+
+        dataSource.schemaMembers(restrictions).done(function(data) {
+            equal(data.length, 2);
+
+            for (var idx = 0; idx < data.length; idx++) {
+                equal(data[idx].caption, "Name" + (idx + 1));
+                equal(data[idx].childrenCardinality, 0);
+                equal(data[idx].dimensionUniqueName, 'FirstName');
+                equal(data[idx].hierarchyUniqueName, 'FirstName');
+                equal(data[idx].levelUniqueName, 'FirstName');
+                equal(data[idx].name, "Name" + (idx + 1));
+                equal(data[idx].uniqueName, "Name" + (idx + 1));
+            }
+        });
+    });
 })();
