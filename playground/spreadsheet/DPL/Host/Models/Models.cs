@@ -2,25 +2,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace Host.DTO
 {
+    [DataContract]
     public class Cell
     {
-        [JsonProperty(PropertyName = "index")]
+        [DataMember(Name = "index")]
         public int Index { get; set; }
 
-        [JsonProperty(PropertyName = "format", NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "format", EmitDefaultValue = false)]
         public string Format { get; set; }
 
-        [JsonProperty(PropertyName = "formula", NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "formula", EmitDefaultValue = false)]
         public string Formula { get; set; }
 
-        [JsonProperty(PropertyName = "value", NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "value", EmitDefaultValue = false)]
         public object Value { get; set; }
     }
 
+    [DataContract]
     public class Row
     {
         public Row()
@@ -28,19 +31,21 @@ namespace Host.DTO
             Cells = new List<Cell>();
         }
 
-        [JsonProperty(PropertyName = "index")]
+        [DataMember(Name = "index")]
         public int Index { get; set; }
 
-        [JsonProperty(PropertyName = "cells")]
+        [DataMember(Name = "cells")]
         public IList<Cell> Cells { get; set; }
     }
 
+    [DataContract]
     public class Column
     {
-        [JsonProperty(PropertyName = "index")]
+        [DataMember(Name = "index")]
         public int Index { get; set; }
     }
 
+    [DataContract]
     public class Sheet
     {
         public Sheet()
@@ -50,22 +55,23 @@ namespace Host.DTO
             MergedCells = new List<string>();
         }
 
-        [JsonProperty(PropertyName = "columns")]
+        [DataMember(Name = "columns")]
         public IList<Column> Columns { get; set; }
 
-        [JsonProperty(PropertyName = "rows")]
+        [DataMember(Name = "rows")]
         public IList<Row> Rows { get; set; }
 
-        [JsonProperty(PropertyName = "mergedCells")]
+        [DataMember(Name = "mergedCells", EmitDefaultValue = false)]
         public IList<string> MergedCells { get; set; }
 
-        [JsonProperty(PropertyName = "frozenRows")]
+        [DataMember(Name = "frozenRows", EmitDefaultValue = false)]
         public int FrozenRows { get; set; }
 
-        [JsonProperty(PropertyName = "frozenColumns")]
+        [DataMember(Name = "frozenColumns", EmitDefaultValue = false)]
         public int FrozenColumns { get; set; }
     }
 
+    [DataContract]
     public class Workbook
     {
         public Workbook()
@@ -73,7 +79,7 @@ namespace Host.DTO
             Sheets = new List<Sheet>();
         }
 
-        [JsonProperty(PropertyName = "sheets")]
+        [DataMember(Name = "sheets")]
         public IList<Sheet> Sheets { get; set; }
     }
 }
