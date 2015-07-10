@@ -16,22 +16,7 @@
         }
     });
 
-    var EditCommand = kendo.spreadsheet.EditCommand = Command.extend({
-        init: function(options) {
-            Command.fn.init.call(this, options);
-            this._value = options.value;
-        },
-        exec: function() {
-            var range = this.range();
-            this._state = range._editableValue();
-            range._editableValue(this._value).select();
-        },
-        undo: function() {
-            this.range()._editableValue(this._state).select();
-        }
-    });
-
-    var FormatCommand = kendo.spreadsheet.FormatCommand = Command.extend({
+    var PropertyChangeCommand = kendo.spreadsheet.PropertyChangeCommand = Command.extend({
         init: function(options) {
             Command.fn.init.call(this, options);
             this._property = options.property;
@@ -44,6 +29,13 @@
         },
         undo: function() {
             this.range()[this._property](this._state).select();
+        }
+    });
+
+    var EditCommand = kendo.spreadsheet.EditCommand = PropertyChangeCommand.extend({
+        init: function(options) {
+            options.property = "_editableValue";
+            PropertyChangeCommand.fn.init.call(this, options);
         }
     });
 

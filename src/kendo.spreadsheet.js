@@ -101,18 +101,23 @@
             this.formulaBar.value(this._editableValueForRef(e.sender.activeCell()));
         },
 
+        _execCommand: function(commandType, options) {
+            var sheet = this._sheet;
+            var command = new commandType($.extend({
+                ref: sheet.activeCell(),
+                sheet: sheet
+            }, options));
+            command.exec();
+            this.undoRedoStack.push(command);
+        },
+
         _chrome: function() {
             var formulaBar = $("<div />").prependTo(this.element);
             this.formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar, {
                 change: function(e) {
-                    var sheet = this._sheet;
-                    var command = new kendo.spreadsheet.EditCommand({
-                        ref: sheet.activeCell(),
-                        sheet: sheet,
+                    this._execCommand(kendo.spreadsheet.EditCommand, {
                         value: e.value
                     });
-                    command.exec();
-                    this.undoRedoStack.push(command);
                 }.bind(this)
             });
 
@@ -122,15 +127,10 @@
         _toolbar: function() {
             var toggle = function(value) {
                     return function(e) {
-                        var sheet = this._sheet;
-                        var command = new kendo.spreadsheet.FormatCommand({
-                            ref: sheet.activeCell(),
-                            sheet: sheet,
+                        this._execCommand(kendo.spreadsheet.PropertyChangeCommand, {
                             property: e.id,
                             value: e.checked ? value : null
                         });
-                        command.exec();
-                        this.undoRedoStack.push(command);
                     }.bind(this);
                 }.bind(this);
 
