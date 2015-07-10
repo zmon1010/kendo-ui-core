@@ -13,11 +13,6 @@
 
             var cellCount = rowCount * columnCount - 1;
 
-            this._values = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._types = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._formats = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
-            this._compiledFormulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._rows = new kendo.spreadsheet.Axis(rowCount, rowHeight);
             this._columns = new kendo.spreadsheet.Axis(columnCount, columnWidth);
             this._mergedCells = [];
@@ -28,7 +23,13 @@
             this._activeCell = kendo.spreadsheet.FIRSTREF.toRangeRef();
             this._originalActiveCell = kendo.spreadsheet.FIRSTREF;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
-            this._sorter = new kendo.spreadsheet.Sorter(this._grid, [this._values]);
+
+            this._values = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._types = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._formats = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+
+            this._formulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+            this._compiledFormulas = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
 
             this._background = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._borderBottom = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
@@ -42,6 +43,12 @@
             this._horizontalAlignment = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._verticalAlignment = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
             this._wrap = new kendo.spreadsheet.SparseRangeList(0, cellCount, null);
+
+            this._sorter = new kendo.spreadsheet.Sorter(this._grid, [this._values, this._types,
+                this._formats, this._formulas, this._compiledFormulas, this._background,
+                this._fontColor, this._fontFamily, this._fontLine, this._fontSize, this._fontStyle,
+                this._fontWeight, this._horizontalAlignment, this._verticalAlignment, this._wrap
+            ]);
         },
 
         name: function(value) {
@@ -880,7 +887,6 @@
             var indices = null;
 
             columns.forEach(function(column) {
-
                 indices = this._sorter.sortBy(ref.toColumn(column.index), this._values, column.ascending, indices);
             }, this);
 

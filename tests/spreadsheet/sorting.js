@@ -75,6 +75,49 @@
         equal(values[2][1], 1);
     });
 
+    test("sorts properties", function() {
+        sheet.range("A1").value("foo");
+        sheet.range("A2").value(2)
+                         .fontColor("green")
+                         .fontFamily("Arial")
+                         .fontLine("underline")
+                         .fontSize("1px")
+                         .fontStyle("italic")
+                         .fontWeight("bold")
+                         .format("#")
+                         .background("green")
+                         .horizontalAlignment("right")
+                         .verticalAlignment("top")
+                         .wrap(false)
+                         .borderBottom({size: "3px", color: "green"})
+                         .borderRight({size: "3px", color: "green"})
+
+        sheet.range("A1:A2").sort();
+
+        equal(sheet.range("A1").fontColor(), "green");
+        equal(sheet.range("A1").fontFamily(), "Arial");
+        equal(sheet.range("A1").fontLine(), "underline");
+        equal(sheet.range("A1").fontSize(), "1px");
+        equal(sheet.range("A1").fontStyle(), "italic");
+        equal(sheet.range("A1").fontWeight(), "bold");
+        equal(sheet.range("A1").background(), "green");
+        equal(sheet.range("A1").wrap(), false);
+        equal(sheet.range("A1").horizontalAlignment(), "right");
+        equal(sheet.range("A1").verticalAlignment(), "top");
+        equal(sheet.range("A1").type(), "number");
+        equal(sheet.range("A1").format(), "#");
+        equal(sheet.range("A1").borderBottom(), null);
+        equal(sheet.range("A1").borderRight(), null);
+
+
+        sheet.range("A1").value("foo");
+        sheet.range("A2").value(2).formula("=1");
+
+        sheet.range("A1:A2").sort();
+
+        equal(sheet.range("A1").formula(), "=1");
+    });
+
     test("descending sort", function() {
         sheet.range("A1:B3")
              .values([
