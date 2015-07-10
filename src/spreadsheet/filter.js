@@ -2,6 +2,7 @@
     define([ "../kendo.core", "../kendo.data" ], f);
 })(function(){
 (function(kendo) {
+    /*jshint evil: true */
     var Filter = kendo.spreadsheet.Filter = kendo.Class.extend({
         matches: function() {
             throw new Error("The 'matches' method is not implemented.");
@@ -15,13 +16,13 @@
         var type = options.type;
 
         if (!type) {
-            throw new Error("Filter type not specified.")
+            throw new Error("Filter type not specified.");
         }
 
         var constructor = kendo.spreadsheet[type.charAt(0).toUpperCase() + type.substring(1) + "Filter"];
 
         if (!constructor) {
-            throw new Error("Filter type not recognized.")
+            throw new Error("Filter type not recognized.");
         }
 
         return new constructor(options);
@@ -82,7 +83,7 @@
             }
 
             if (options.criteria === undefined) {
-                throw new Error("Must specify criteria.")
+                throw new Error("Must specify criteria.");
             }
 
             this.criteria = options.criteria;

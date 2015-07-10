@@ -400,7 +400,7 @@
                         var row = values[ri - topLeftRow];
 
                         if (row) {
-                            value = row[ci - topLeftCol];
+                            var value = row[ci - topLeftCol];
 
                             if (value !== undefined) {
                                 this._setValue(ri, ci, value);

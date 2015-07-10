@@ -91,10 +91,6 @@
                 }.bind(this));
             }
 
-            if (typeof ref.clone !== "function") {
-                console.log(ref);
-            }
-
             var clone = ref.clone();
             clone.col = Math.max(0, Math.min(this.columnCount - 1, ref.col));
             clone.row = Math.max(0, Math.min(this.rowCount - 1, ref.row));
