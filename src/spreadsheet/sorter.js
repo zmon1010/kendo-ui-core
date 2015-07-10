@@ -20,25 +20,19 @@
                 this._grid.cellRefIndex(rangeRef.bottomRight), comparer, indices);
         },
 
-        sortBy: function(ref, list, ascending, indices) {
-            var sortedIndices = this.indices(ref, list, ascending, indices);
-            var lists = this._lists;
-            var length = lists.length;
-            var ends = [];
-            var lastEnd = 0;
+        sortBy: function(ref, column, list, ascending, indices) {
+            var sortedIndices = this.indices(ref.toColumn(column), list, ascending, indices);
 
-            for (var i = 0; i < length; i++) {
-                ends[i] = lists[i].lastRangeStart();
-                lastEnd = Math.max(lastEnd, ends[i]);
-            }
+            for (var ci = ref.topLeft.col; ci <= ref.bottomRight.col; ci++) {
+                var start = this._grid.index(ref.topLeft.row, ci);
+                var end = this._grid.index(ref.bottomRight.row, ci);
 
-            this._grid.forEachColumn(ref, lastEnd, function(start, end) {
-                for (var i = 0; i < length; i++) {
-                    if (start < ends[i]) {
-                        lists[i].sort(start, end, sortedIndices);
+                for (var li = 0; li < this._lists.length; li++) {
+                    if (start < this._lists[li].lastRangeStart()) {
+                        this._lists[li].sort(start, end, sortedIndices);
                     }
                 }
-            });
+            }
 
             return sortedIndices;
         }

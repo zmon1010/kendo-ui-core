@@ -6,6 +6,7 @@
     var Sorter = kendo.spreadsheet.Sorter;
 
     var grid, area, sorter, values;
+
     module("rangelist sorter", {
         setup: function() {
             grid = new Grid(null, null, 4, 2);
@@ -37,15 +38,11 @@
     });
 
     test("sorts based on a given column", function() {
-        sorter.sortBy(area, values);
+        sorter.sortBy(area, 0, values);
 
         equal(values.value(0), 1);
         equal(values.value(1), 2);
         equal(values.value(2), 3);
-
-        equal(values.value(4), 9);
-        equal(values.value(5), 8);
-        equal(values.value(6), 10);
 
         equal(colors.value(0), "default");
         equal(colors.value(1), "red");
@@ -53,13 +50,12 @@
     });
 
     test("sorts in descending order", function() {
-        sorter.sortBy(area, values, false);
+        sorter.sortBy(area, 0, values, false);
 
         equal(values.value(0), 3);
         equal(values.value(1), 2);
         equal(values.value(2), 1);
 
-        equal(values.value(4), 10);
     });
 
     test("empty values remain at the end after sorting", function() {
@@ -69,7 +65,7 @@
         values.value(2, 2, 2);
         sorter = new Sorter(grid, [ values ]);
 
-        sorter.sortBy(area, values, true);
+        sorter.sortBy(area, 0, values, true);
 
         equal(values.value(0), 2);
         equal(values.value(1), 3);
@@ -83,7 +79,7 @@
         values.value(2, 2, 3);
         sorter = new Sorter(grid, [ values ]);
 
-        sorter.sortBy(area, values, false);
+        sorter.sortBy(area, 0, values, false);
 
         equal(values.value(0), 3);
         equal(values.value(1), 2);
@@ -107,7 +103,7 @@
         sorter = new Sorter(grid, [ values ]);
 
         area = new RangeRef(new CellRef(0, 0), new CellRef(8, 0));
-        sorter.sortBy(area, values, true);
+        sorter.sortBy(area, 0, values, true);
         equal(values.value(0), 1);
         equal(values.value(1), 2);
         equal(values.value(2), 3);
@@ -117,6 +113,20 @@
         equal(values.value(6), "a1");
         equal(values.value(7), "a2");
         equal(values.value(8), "a3");
+    });
+
+    test("sorting affects only the target column", function() {
+        values.value(0, 0, 2);
+        values.value(1, 1, 1);
+
+        values.value(4, 4, 2);
+        values.value(5, 5, 1);
+
+        area = new RangeRef(new CellRef(0, 0), new CellRef(3, 0));
+        sorter.sortBy(area, 0, values, true);
+
+        equal(values.value(4), 2);
+        equal(values.value(5), 1);
     });
 
     test("sorting is stable", function() {

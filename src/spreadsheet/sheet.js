@@ -887,7 +887,7 @@
             var indices = null;
 
             columns.forEach(function(column) {
-                indices = this._sorter.sortBy(ref.toColumn(column.index), this._values, column.ascending, indices);
+                indices = this._sorter.sortBy(ref, column.index, this._values, column.ascending, indices);
             }, this);
 
             this._sort = {

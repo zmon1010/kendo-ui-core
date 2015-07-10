@@ -109,16 +109,6 @@
             );
         },
 
-        forEachColumn: function(sample, max, callback) {
-            var start = sample.topLeft.row;
-            var end = sample.bottomRight.row;
-            var lastColumn = this.cellRef(max).col;
-
-            for (var ci = 0; ci <= lastColumn; ci++) {
-                callback(ci * this.rowCount + start, ci * this.rowCount + end);
-            }
-        },
-
         pane: function(options) {
             return new PaneGrid(
                 new kendo.spreadsheet.PaneAxis(this._rows, options.row, options.rowCount, this._headerHeight),
