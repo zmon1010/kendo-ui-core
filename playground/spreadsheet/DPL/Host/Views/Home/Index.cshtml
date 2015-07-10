@@ -22,10 +22,12 @@
 <body>    
     <div id="spreadsheet"></div>
 
-    <form action="@Url.Action("Save", "Home")" method="POST">
+    <form action="@Url.Action("Download", "Home")" method="POST">
         <input type="hidden" id="data" name="data" />
-        <input type="submit" id="save" value="Save as XLSX" />
+        <input type="submit" id="download" value="Download as XLSX" />
     </form>
+    
+    <input type="submit" id="save" value="Save" />
 
     <input type="file" name="file" id="upload" />
 
@@ -42,8 +44,22 @@
             spreadsheet.fromJSON(dtoWorkbook);
         });
 
-        $("#save").click(function() {
+        $("#download").click(function() {
             $("#data").val(JSON.stringify(spreadsheet.toJSON()));
+        });       
+
+        $("#save").click(function() {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Save", "Home")",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    workbook: spreadsheet.toJSON()
+                }),
+                success: function() {
+                    alert("Saved");
+                }
+            });
         });
 
         $("#upload").kendoUpload({

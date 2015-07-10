@@ -53,7 +53,7 @@ namespace Host.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save(string data)
+        public ActionResult Download(string data)
         {
             var dtoWorkbook = JsonConvert.DeserializeObject<DTO.Workbook>(data);
             var jsonProvider = new JsonFormatProvider();
@@ -62,6 +62,20 @@ namespace Host.Controllers
             var xlsxProvider = new XlsxFormatProvider();
             var xlsxFile = xlsxProvider.Export(workbook);
             return File(xlsxFile, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Sheet.xlsx");
+        }
+
+        [HttpPost]
+        public ActionResult Save(DTO.Workbook workbook)
+        {
+            var jsonProvider = new JsonFormatProvider();
+            var document = jsonProvider.Import(workbook);
+
+            var xlsxProvider = new XlsxFormatProvider();
+            var xlsxFile = xlsxProvider.Export(document);
+
+            // ...
+
+            return new EmptyResult();
         }
 
         [HttpPost]
