@@ -899,7 +899,7 @@ var __meta__ = {
             var idx = 0;
             var filters = filter.filters;
 
-            for (var idx = 0; idx < filters.length; idx++) {
+            for (; idx < filters.length; idx++) {
                 expr = filters[idx];
 
                 if (expr.operator === "in") {
@@ -2110,7 +2110,7 @@ var __meta__ = {
             var success = (function(restrictions) {
                 return function(response) {
                     return that.reader.members(response, restrictions);
-                }
+                };
             }(restrictions));
 
             return that.discover({
