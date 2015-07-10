@@ -604,17 +604,37 @@
         });
     });
 
-    test("MODE.SNGL", function(){
+    test("MODE", function(){
         ss.fill({
-            D1: '2', D2: '2', D3: '9',
+            D1: 2, D2: 2, D3: 9,
+            E1: 9, E2: 3, E3: 3,
             A4: '=mode.sngl(A1:D3)',
             A5: '=mode.sngl(A1:C3)',
             A6: '=mode.sngl()',
+            A7: '=mode.mult(A1:E3)',
         });
         ss.recalculate(function(){
-            equal(ss.$("A4"), 2);
-            equal(ss.$("A5"), "#N/A!");
-            equal(ss.$("A6"), "#N/A!");
+            ss.expectEqual({
+                A4: 2,
+                A5: "#N/A!",
+                A6: "#N/A!",
+                A7: '[[2],[9],[3]]',
+            });
+        });
+    });
+
+    test("GCD, LCM", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: 12, A2: 36, A3: 24,
+            B1: '=gcd(a1:a3)',
+            B2: '=lcm(a1:a3)',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                B1: 12,
+                B2: 72,
+            });
         });
     });
 

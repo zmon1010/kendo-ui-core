@@ -651,6 +651,9 @@ fillElements({
         F18: '=roman(2014)',
         F19: '=arabic(F18)',
 
+        F16: '=mode.mult({ 1, 3, 2, 2, 3, 3, 2, 1 })',
+        F17: '=mode.mult({ 1, 2, 3 })',
+
         H7: '=aggregate(1, 0, H1:H6)',
         H14: '=aggregate(1, 0, H1:H7)',
 

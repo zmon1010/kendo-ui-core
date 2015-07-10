@@ -63,6 +63,39 @@
         [ "number", "*number" ]
     ]);
 
+    function _gcd(a, b) {
+        while (b) {
+            var r = a % b;
+            a = b;
+            b = r;
+        }
+        return a;
+    }
+
+    function _lcm(a, b) {
+        return Math.abs(a * b) / _gcd(a, b);
+    }
+
+    defineFunction("gcd", function(args){
+        var a = args[0];
+        for (var i = 1; i < args.length; ++i) {
+            a = _gcd(a, args[i]);
+        }
+        return a;
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
+
+    defineFunction("lcm", function(args){
+        var a = args[0];
+        for (var i = 1; i < args.length; ++i) {
+            a = _lcm(a, args[i]);
+        }
+        return a;
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
+
     defineFunction("sum", function(numbers){
         return numbers.reduce(function(sum, num){
             return sum + num;
@@ -387,6 +420,27 @@
             }
         }
         return mode == null ? new CalcError("N/A") : mode;
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
+
+    defineFunction("mode.mult", function(numbers){
+        var seen = Object.create(null), max = 2, res = [];
+        numbers.forEach(function(num){
+            var s = seen[num] || 0;
+            seen[num] = ++s;
+            if (s == max) {
+                res.push(num);
+            } else if (s > max) {
+                max = s;
+                res = [ num ];
+            }
+        });
+        var m = new Matrix();
+        res.forEach(function(num, i){
+            m.set(i, 0, num);
+        });
+        return m;
     }).args([
         [ "numbers", [ "collect", "number" ] ]
     ]);
