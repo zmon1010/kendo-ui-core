@@ -46,30 +46,30 @@
                 return list.value(index, index);
             }
         },
-        value: function(value, parse) {
+        value: function(value, parseStrings) {
             var type = null;
 
             if (value !== undefined) {
-                var result = kendo.spreadsheet.Sheet.parse(value, parse);
-
                 this._sheet.batch(function() {
-                    this._property(this._sheet._types, result.type);
-                    this._property(this._sheet._values, result.value);
-                    if (result.type === "date") {
-                        this._property(this._sheet._formats, toExcelFormat(kendo.culture().calendar.patterns.d));
-                    }
+                    this._ref.forEach(function(ref) {
+                        ref = ref.toRangeRef();
+                        var topLeft = this._normalize(ref.topLeft);
+
+                        var bottomRight = this._normalize(ref.bottomRight);
+
+                        for (var ci = topLeft.col; ci <= bottomRight.col; ci++) {
+                            for (var ri = topLeft.row; ri <= bottomRight.row; ri++) {
+                               this._sheet._setValue(ri, ci, value, parseStrings);
+                            }
+                        }
+                    }.bind(this));
                 }.bind(this), true);
 
                 return this;
             } else {
-                type = this._property(this._sheet._types);
-                value = this._property(this._sheet._values);
+                var topLeft = this._normalize(this._ref.toRangeRef().topLeft);
 
-                if (type === "date") {
-                    value = kendo.spreadsheet.calc.runtime.serialToDate(value);
-                }
-
-                return value;
+                return this._sheet._getValue(topLeft.row, topLeft.col);
             }
         },
         _editableValue: function(value) {
@@ -217,6 +217,14 @@
         values: function(values) {
             if (this._ref instanceof UnionRef) {
                 throw new Error("Unsupported for multiple ranges.");
+            }
+
+            if (this._ref === kendo.spreadsheet.NULLREF) {
+                if (values !== undefined) {
+                    throw new Error("Unsupported for NULLREF.");
+                } else {
+                    return [];
+                }
             }
 
             var result = this._sheet.values(this._ref.toRangeRef(), values);

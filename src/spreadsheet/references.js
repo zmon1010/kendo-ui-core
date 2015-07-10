@@ -93,6 +93,9 @@
         print: function() {
             return "#NULL!";
         },
+        clone: function() {
+            return this;
+        },
         forEach: $.noop
     }))();
 

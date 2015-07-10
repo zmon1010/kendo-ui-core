@@ -378,7 +378,7 @@
             var topLeftCol = ref.topLeft.col;
             var bottomRightRow = ref.bottomRight.row;
             var bottomRightCol = ref.bottomRight.col;
-            var ci, ri, index;
+            var ci, ri;
 
             if (values === undefined) {
                 values = new Array(ref.height());
@@ -388,15 +388,8 @@
                 }
 
                 for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
-                    var startCellIndex = this._grid.index(topLeftRow, ci);
-                    var endCellIndex = this._grid.index(bottomRightRow, ci);
-
-                    var iterator = this._values.iterator(startCellIndex, endCellIndex);
-
                     for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
-                        index = this._grid.index(ri, ci);
-
-                        values[ri - topLeftRow][ci - topLeftCol] = iterator.at(index);
+                        values[ri - topLeftRow][ci - topLeftCol] = this._getValue(ri, ci);
                     }
                 }
 
@@ -404,15 +397,13 @@
             } else {
                 for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
                     for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
-                        index = this._grid.index(ri, ci);
-
                         var row = values[ri - topLeftRow];
 
                         if (row) {
-                            var value = row[ci - topLeftCol];
+                            value = row[ci - topLeftCol];
 
                             if (value !== undefined) {
-                                this._values.value(index, index, value);
+                                this._setValue(ri, ci, value);
                             }
                         }
                     }
@@ -843,18 +834,36 @@
         value: function(row, col, value) {
             if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
                 value.each(function(value, row, col) {
-                    this._setValue(row, col, value);
+                    this._setValue(row, col, value, false);
                 }.bind(this));
             } else {
-                this._setValue(row, col, value);
+                this._setValue(row, col, value, false);
             }
         },
 
-        _setValue: function(row, col, value) {
-            var result = Sheet.parse(value, false);
+        _setValue: function(row, col, value, parseStrings) {
+            var result = Sheet.parse(value, parseStrings);
             var index = this._grid.index(row, col);
+
+            if (result.type === "date") {
+                this._formats.value(index, index, toExcelFormat(kendo.culture().calendar.patterns.d));
+            }
+
             this._values.value(index, index, result.value);
             this._types.value(index, index, result.type);
+        },
+        _getValue: function(row, col) {
+            var index = this._grid.index(row, col);
+
+            var type = this._types.value(index, index);
+
+            var value = this._values.value(index, index);
+
+            if (type === "date") {
+                value = kendo.spreadsheet.calc.runtime.serialToDate(value);
+            }
+
+            return value;
         },
 
         batch: function(callback, recalc) {
@@ -951,6 +960,10 @@
             value: value
         };
     };
+
+    function toExcelFormat(format) {
+        return format.replace(/M/g, "m").replace(/'/g, '"').replace(/tt/, "am/pm");
+    }
 
     kendo.spreadsheet.Sheet = Sheet;
 })(kendo);

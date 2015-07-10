@@ -30,10 +30,29 @@
         equal(sheet._formats.value(0, 0), kendo.culture().calendar.patterns.d.replace(/M/, "m"));
     });
 
+    test("sets type of multiple values", function() {
+        sheet.range("A1:B2").values([
+            [1, "foo"],
+            [new Date(), "TRUE"]
+        ]);
+
+        equal(sheet._types.value(0, 0), "number");
+        equal(sheet._types.value(1, 1), "date");
+        equal(sheet._formats.value(1, 1), kendo.culture().calendar.patterns.d.replace(/M/, "m"));
+        equal(sheet._types.value(3, 3), "string");
+        equal(sheet._types.value(4, 4), "boolean");
+    });
+
     test("returns date objects", function() {
         var date = new Date("1/1/1900");
         range.value(date);
         equal(range.value().toUTCString(), date.toUTCString());
+    });
+
+    test("values returns date objects", function() {
+        var date = new Date("1/1/1900");
+        range.value(date);
+        equal(range.values()[0][0].toUTCString(), date.toUTCString());
     });
 
     test("stores number type", function() {
