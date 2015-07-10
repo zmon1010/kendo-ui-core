@@ -9,8 +9,8 @@ namespace KendoScaffolder
     public enum KendoWidget
     {
         Chart,
-        Grid
-        //Scheduler
+        Grid,
+        Scheduler
     }
 
     public enum ViewType

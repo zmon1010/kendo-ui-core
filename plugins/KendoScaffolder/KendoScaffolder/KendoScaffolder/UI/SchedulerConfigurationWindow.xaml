@@ -1,0 +1,414 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:src="clr-namespace:KendoScaffolder.UI.Models"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:KendoScaffolder.UI"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:vsfx="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.12.0"
+             x:Class="KendoScaffolder.UI.SchedulerConfigurationWindow"
+             mc:Ignorable="d" Height="765" Width="800" ResizeMode="NoResize" Title="Telerik ASP.NET MVC Scheduler"
+            Validation.Error="Window_Error">
+    <Window.Resources>
+        <src:EnumToBooleanConverter x:Key="EnumBooleanConverter" />
+    </Window.Resources>
+    <Grid Background="#F0F0F0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="62" />
+            <RowDefinition Height="630"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DockPanel Height="62" Background="#fff">
+            <Image Source="/KendoScaffolder;component/Resources/Images/scheduler-icon.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20, 0, 10, 0" />
+            <TextBlock Text="Telerik ASP.NET MVC Scheduler" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" />
+            <Image Source="/KendoScaffolder;component/Resources/Images/telerik-logo.png" Stretch="None" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20, 0" />
+        </DockPanel>
+        <TabControl Grid.Row="1" Background="#F0F0F0" BorderBrush="#E0E0E0" SelectedIndex="0" TabStripPlacement="Left" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Padding="4">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Grid Name="Panel">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        ContentSource="Header"
+                                        Margin="20, 0, 0, 0"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Panel" Property="Background" Value="#0072C6" />
+                                        <Setter TargetName="Panel" Property="TextElement.Foreground" Value="#fff" />
+                                        <Setter TargetName="Panel" Property="TextElement.FontWeight" Value="Bold" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Panel" Property="Background" Value="#F0F0F0" />
+                                        <Setter TargetName="Panel" Property="TextElement.FontWeight" Value="Bold" />
+                                    </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsSelected" Value="False"/>
+                                            <Condition Property="IsMouseOver" Value="True"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter TargetName="Panel" Property="Background" Value="#EAEAEA" />
+                                    </MultiTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Height="36" Width="220" Header="Model Options">
+                <Grid Margin="20, 20, 0, 0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="Controller Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                    <TextBox Grid.Row="1" Name="ControllerName" Loaded="ControllerName_Loaded" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ControllerName}" />
+
+                    <Label Grid.Row="2" Content="View Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                    <TextBox Grid.Row="3" Name="ViewName" Loaded="ViewName_Loaded" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ViewName}" />
+
+                    <Label Grid.Row="4" Content="Data Context Class:" VerticalAlignment="Bottom" />
+                    <ComboBox Grid.Row="5" Grid.Column="1" Width="311" Height="23" Name="DataContextClass" HorizontalAlignment="Left"  VerticalAlignment="Top"
+                    		ItemsSource="{Binding DbContextTypes}" SelectionChanged="RequiredField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedDbContextType">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxRequiredValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="6" Content="Model Class:" HorizontalAlignment="Left"  VerticalAlignment="Bottom"/>
+                    <ComboBox Grid.Row="7" Name="ModelType" Width="311" Height="23" HorizontalAlignment="Left"  VerticalAlignment="Top"  
+                              ItemsSource="{Binding ModelTypes}" SelectionChanged="ModelType_SelectionChanged" DisplayMemberPath="DisplayName" >
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedModelType">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxRequiredValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="8" Name="ModelMappingsLabel" Content="Define model mappings" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed" />
+
+                    <Label Grid.Row="9" Name="EventTitleFieldLabel" Content="Event Title (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="9" Name="EventTitleField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                             ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedEventTitleField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="10" Name="EventStartFieldLabel" Content="Event Start (DateTime):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="10" Name="EventStartField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                              ItemsSource="{Binding ModelDateTimeFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedEventStartField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="11" Name="EventEndFieldLabel" Content="Event End (DateTime):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="11" Name="EventEndField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                              ItemsSource="{Binding ModelDateTimeFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedEventEndField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="12" Name="EventDescriptionFieldLabel" Content="Event Description (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="12" Name="EventDescriptionField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                              ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedEventDescriptionField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="13" Name="EventIsAllDayFieldLabel" Content="Event IsAllDay (bool):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="13" Name="EventIsAllDayField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                              ItemsSource="{Binding ModelBoolFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedEventIsAllDayField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="14" Name="EventStartTimezoneFieldLabel" Content="Event StartTimezone (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="14" Name="EventStartTimezoneField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                              ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedEventStartTimezoneField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="15" Name="EventEndTimezoneFieldLabel" Content="Event EndTimezone (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="15" Name="EventEndTimezoneField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                              ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedEventEndTimezoneField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="16" Name="EventRecurrenceRuleFieldLabel" Content="Event RecurrenceRule (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="16" Name="EventRecurrenceRuleField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                              ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceRuleField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="17" Name="EventRecurrenceExceptionFieldLabel" Content="Event RecurrenceException (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="17" Name="EventRecurrenceExceptionField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                              ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceExceptionField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+                </Grid>
+            </TabItem>
+            <TabItem Height="36" Width="220" Header="Resources">
+                <Grid Margin="20, 20, 0, 0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="1" Content="Use resources:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <CheckBox Grid.Row="1" Click="UseResources_Click" Name="UseResources" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="90, 0, 0, 0" IsChecked="{Binding UseResources}" />
+
+                    <Label Grid.Row="2" Name="ModelResourceFieldLabel" Content="Resource (ID) field:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden" />
+                    <ComboBox Grid.Row="2" Name="ModelResourceField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0"
+                              ItemsSource="{Binding ModelFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName" Visibility="Hidden">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedModelResourceField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxEventResourceFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="3" Name="ResourceModelTypeLabel" Content="Resource Model Class:" HorizontalAlignment="Left"  VerticalAlignment="Bottom"  Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="4" Name="ResourceModelType" Width="311" Height="23" HorizontalAlignment="Left"  VerticalAlignment="Top" Visibility="Collapsed"  
+                              ItemsSource="{Binding ModelTypes}" SelectionChanged="ResourceModelType_SelectionChanged" DisplayMemberPath="DisplayName" >
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedResourceModelType">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxResourceModelTypeValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="5" Name="ResourceDataValueFieldLabel" Content="Resource value field (string, int, Guid):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="5" Name="ResourceDataValueField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                              ItemsSource="{Binding ResourceModelFields}" SelectionChanged="ResourceField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedResourceDataValueField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxRequiredResourceFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="6" Name="ResourceDataTextFieldLabel" Content="Resource text field (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="6" Name="ResourceDataTextField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                              ItemsSource="{Binding ResourceModelStringFields}" SelectionChanged="ResourceField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedResourceDataTextField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxResourceFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="7" Name="ResourceDataColorFieldLabel" Content="Resource color field (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="7" Name="ResourceDataColorField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                              ItemsSource="{Binding ResourceModelStringFields}" SelectionChanged="ResourceField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedResourceDataColorField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxResourceFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+                </Grid>
+            </TabItem>
+            <TabItem Height="36" Width="220" Header="Scheduler Options">
+                <Grid Margin="20, 20, 0, 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="335"/>
+                        
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="DataSource Type:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="179"/>
+                    <WrapPanel Grid.Row="1" VerticalAlignment="Center">
+                        <ComboBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"
+                  ItemsSource="{Binding DataSourceTypes}" SelectedItem="{Binding SelectedDataSourceType, Mode=TwoWay}"/>
+                    </WrapPanel>
+
+                    <Label Grid.Row="2" Margin="0, 10, 0, 0" Name="CrudOperationsLabel" Content="Edit operations:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <WrapPanel Grid.Row="3"  Margin="0, 5, 0, 0" Name="CrudOperationsWrapPanel">
+                        <CheckBox Name="EditableCreate" Content="Create" Margin="15, 0, 0, 0" IsChecked="{Binding EditableCreate, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <CheckBox Name="EditableUpdate" Content="Update" Margin="15, 0, 0, 0" IsChecked="{Binding EditableUpdate, Mode=TwoWay}" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+                        <CheckBox Name="EditableDestroy" Content="Destroy" Margin="15, 0, 0, 0"  IsChecked="{Binding EditableDestroy, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <CheckBox Name="EditableResize" Content="Resize" Margin="15, 0, 0, 0"  IsChecked="{Binding EditableResize, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <CheckBox Name="EditableMove" Content="Move" Margin="15, 0, 0, 0"  IsChecked="{Binding EditableMove, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </WrapPanel>
+
+                    <Label Grid.Row="4" Margin="0, 0, 0, 0" Content="Other options:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox Grid.Row="5" Content="PdfExport"  Margin="15, 0, 0, 0" IsChecked="{Binding PdfExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox Grid.Row="6" Content="Selectable" Margin="15, 0, 0, 0" IsChecked="{Binding Selectable, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <CheckBox Grid.Row="7" Content="Footer" Margin="15, 0, 0, 0" IsChecked="{Binding Footer, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+
+                    <Label Grid.Row="8" Margin="0, 10, 0, 0" Content="Scheduler Views:" VerticalAlignment="Center" />
+                    <WrapPanel Grid.Row="9"  Margin="15, 5, 0, 0">
+                        <ListBox Name="SchedulerViewsListBox" SelectionMode="Multiple" ItemsSource="{Binding SchedulerViewTypes}">
+                            <ListBox.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                            </ListBox.Resources>
+                            <ListBox.Template>
+                                <ControlTemplate>
+                                    <ItemsPresenter />
+                                </ControlTemplate>
+                            </ListBox.Template>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="35" Width="140">
+                                        <CheckBox  Content="{Binding Text}" Loaded="SchedulerViewTypesCheckbox_Loaded" IsChecked="{Binding Checked , Mode=TwoWay}" Click="SchedulerViewTypesCheckbox_Clicked" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Width="450" Height="500"></WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </WrapPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Height="36" Width="220" Header="Events">
+                <Grid Margin="20, 20, 0, 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="335"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="Scheduler Events:" VerticalAlignment="Center" />
+                    <WrapPanel Grid.Row="1">
+                        <ListBox Name="SchedulerEventsListBox" SelectionMode="Multiple" ItemsSource="{Binding SchedulerEvents}">
+                            <ListBox.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                            </ListBox.Resources>
+                            <ListBox.Template>
+                                <ControlTemplate>
+                                    <ItemsPresenter />
+                                </ControlTemplate>
+                            </ListBox.Template>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="35" Width="140">
+                                        <CheckBox  Content="{Binding Text}" IsChecked="{Binding Checked , Mode=TwoWay}" Click="SchedulerEventsCheckbox_Clicked" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Width="450" Height="500"></WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </WrapPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0, 0, 20, 0">
+            <Button Content="Add" Name="AddButton" IsDefault="True" IsEnabled="False" VerticalAlignment="Center" Width="75" Click="AddButton_Click" />
+            <Button Content="Cancel" IsCancel="True" VerticalAlignment="Center" Width="75" Margin="15, 0, 0, 0"/>
+        </WrapPanel>
+    </Grid>
+</Window>

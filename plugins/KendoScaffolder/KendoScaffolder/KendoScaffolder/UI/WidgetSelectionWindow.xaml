@@ -49,6 +49,12 @@
                             <TextBlock Margin="10, 0, 0, 0">UI for MVC Chart</TextBlock>
                         </StackPanel>
                     </ListViewItem>
+                    <ListViewItem Name="WidgetsListViewSchedulerItem">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/KendoScaffolder;component/Resources/Images/scheduler-icon.png" Stretch="None" VerticalAlignment="Center"></Image>
+                            <TextBlock Margin="10, 0, 0, 0">Kendo UI Scheduler</TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
                 </ListView>
             </StackPanel>
             <StackPanel Width="340">

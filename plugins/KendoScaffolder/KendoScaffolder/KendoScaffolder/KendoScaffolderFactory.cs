@@ -21,7 +21,7 @@ namespace KendoScaffolder
             description: "Generates UI for ASP.NET MVC server-side wrapper widget declarations together with the related Controller action methods.",
             author: "Telerik",
             version: new Version(2015, 2, 624), //Update version in source.extension.vsixmanifest too!
-            id: typeof(KendoScaffolder).Name,
+            id: typeof(KendoScaffolderClass).Name,
             icon: ToImageSource(Resources.ScaffolderIcon),
             gestures: new[] { "Controller", "View", "Area" },
             categories: new[] { Categories.Common, Categories.MvcController, Categories.MvcView, Categories.Other });
@@ -38,7 +38,7 @@ namespace KendoScaffolder
         /// <returns>Instance of CodeGenerator.</returns>
         public override ICodeGenerator CreateInstance(CodeGenerationContext context)
         {
-            return new KendoScaffolder(context, Information);
+            return new KendoScaffolderClass(context, Information);
         }
 
         /// <summary>

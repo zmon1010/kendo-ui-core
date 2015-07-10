@@ -15,7 +15,7 @@ using KendoScaffolder.Scaffolders;
 
 namespace KendoScaffolder
 {
-    public class KendoScaffolder : CodeGenerator
+    public class KendoScaffolderClass : CodeGenerator
     {
         private WidgetConfigurationViewModel viewModel;
         private KendoWidget selectedWidget;
@@ -26,7 +26,7 @@ namespace KendoScaffolder
         /// </summary>
         /// <param name="context">Context of the current code generation operation based on how scaffolder was invoked(such as selected project/folder) </param>
         /// <param name="information">Code generation information that is defined in the factory class.</param>
-        public KendoScaffolder(CodeGenerationContext context, CodeGeneratorInformation information)
+        public KendoScaffolderClass(CodeGenerationContext context, CodeGeneratorInformation information)
             : base(context, information)
         {
             selectedWidget = KendoWidget.Grid;
@@ -58,6 +58,10 @@ namespace KendoScaffolder
                         viewModel = new GridConfigurationViewModel(Context);
                         viewModel.ViewType = widgetSelection.SelectedViewType;
                         widgetConfigurationWindow = new GridConfigurationWindow((GridConfigurationViewModel)viewModel);
+                        break;
+                    case KendoWidget.Scheduler:
+                        viewModel = new SchedulerConfigurationViewModel(Context);
+                        widgetConfigurationWindow = new SchedulerConfigurationWindow((SchedulerConfigurationViewModel)viewModel);
                         break;
                 }
 
@@ -111,6 +115,8 @@ namespace KendoScaffolder
                     return new ChartScaffolder((ChartConfigurationViewModel)viewModel, Context);
                 case KendoWidget.Grid:
                     return new GridScaffolder((GridConfigurationViewModel)viewModel, Context);
+                case KendoWidget.Scheduler:
+                    return new SchedulerScaffolder((SchedulerConfigurationViewModel)viewModel, Context);
             }
 
             return null;

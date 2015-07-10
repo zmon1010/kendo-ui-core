@@ -24,6 +24,10 @@ namespace KendoScaffolder.UI
                             : String.Format(CultureInfo.InvariantCulture, "{0} ({1})", codeType.Name, codeType.Namespace.FullName);
         }
 
+        public ModelType()
+        {
+        }
+
         public CodeType CodeType { get; set; }
 
         public string DisplayName { get; set; }

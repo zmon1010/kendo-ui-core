@@ -1,0 +1,80 @@
+﻿﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="..\ImportsSchedulerView.include.t4" #>
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+    var batchEditMode = "InCell";
+#>
+@(Html.Kendo().Scheduler<<#= ViewDataTypeName #>>()
+      .Name("scheduler")
+    if(Selectable){
+#>
+      .Selectable(selectable => {
+            selectable.Mode(SchedulerSelectionMode.<#= SelectionMode #>);
+            selectable.Type(SchedulerSelectionType.<#= SelectionType #>);
+      })
+<#
+    }
+    if(SchedulerEvents.Count > 0){
+#>
+      .Events(events => {
+<#
+       foreach (string ev in SchedulerEvents)
+       {
+#>
+            events.<#= ev #>("on<#= ev #>");
+<#
+       }
+#>
+      })
+<#
+    }
+#>
+      .DataSource(dataSource => dataSource
+          .Ajax()
+<#
+if(Editable) {
+#>
+          .Model(model => model.Id(p => p.<#= PrimaryKeyName #>))
+<#
+}
+#>
+          .Read(read => read.Action("<#= entitySetName #>_Read", "<#= ControllerRootName #>"))
+<#
+if(Editable) {
+    if(EditableCreate) {
+#>
+          .Create(create => create.Action("<#= entitySetName #>_Create", "<#= ControllerRootName #>"))
+<#
+    }
+    if(EditableUpdate) {
+#>
+          .Update(update => update.Action("<#= entitySetName #>_Update", "<#= ControllerRootName #>"))
+<#
+    }
+    if(EditableDestroy) {
+#>
+          .Destroy(destroy => destroy.Action("<#= entitySetName #>_Destroy", "<#= ControllerRootName #>"))
+<#
+    }
+}
+#>
+      )
+)
+<# if(SchedulerEvents.Count > 0){ #>
+
+<script>
+
+<#
+    foreach (string ev in SchedulerEvents)
+    {
+#>
+    function on<#= ev #>(e){
+        //Implement the event handler for <#= ev #>
+    }
+
+<#
+    }
+#>
+</script>     
+<# } #>

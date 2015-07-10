@@ -81,6 +81,7 @@
     <Compile Include="Scaffolders\GridScaffolder.cs" />
     <Compile Include="Scaffolders\IKendoWidgetScaffolder.cs" />
     <Compile Include="Scaffolders\KendoScaffolderUtils.cs" />
+    <Compile Include="Scaffolders\SchedulerScaffolder.cs" />
     <Compile Include="UI\ChartConfigurationWindow.xaml.cs">
       <DependentUpon>ChartConfigurationWindow.xaml</DependentUpon>
     </Compile>
@@ -103,8 +104,21 @@
     <Compile Include="UI\GridConfigurationWindow.xaml.cs">
       <DependentUpon>GridConfigurationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Models\SchedulerConfigurationViewModel.cs" />
+    <Compile Include="UI\Models\Scheduler\SchedulerDataSourceTypes.cs" />
+    <Compile Include="UI\Models\Scheduler\SchedulerEvents.cs" />
+    <Compile Include="UI\Models\Scheduler\SchedulerViewTypes.cs" />
     <Compile Include="UI\Models\WidgetConfigurationViewModel.cs" />
     <Compile Include="UI\ModelType.cs" />
+    <Compile Include="UI\SchedulerConfigurationWindow.xaml.cs">
+      <DependentUpon>SchedulerConfigurationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Validation\ComboBoxEventFieldValidationRule.cs" />
+    <Compile Include="UI\Validation\ComboBoxRequiredValidationRule.cs" />
+    <Compile Include="UI\Validation\ComboBoxEventResourceFieldValidationRule.cs" />
+    <Compile Include="UI\Validation\ComboBoxRequiredResourceFieldValidationRule.cs" />
+    <Compile Include="UI\Validation\ComboBoxResourceFieldValidationRule.cs" />
+    <Compile Include="UI\Validation\ComboBoxResourceModelTypeValidationRule.cs" />
     <Compile Include="UI\WidgetSelectionWindow.xaml.cs">
       <DependentUpon>WidgetSelectionWindow.xaml</DependentUpon>
     </Compile>
@@ -152,6 +166,24 @@
     <None Include="Templates\KendoScaffolder\Grid\Views\razor\WebApiView.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Templates\KendoScaffolder\Scheduler\Controllers\AjaxController.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolder\Scheduler\Controllers\ImportsSchedulerController.include.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolder\Scheduler\Controllers\WebApiController.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolder\Scheduler\Views\ImportsSchedulerView.include.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolder\Scheduler\Views\razor\AjaxView.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolder\Scheduler\Views\razor\WebApiView.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -162,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\GridConfigurationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\SchedulerConfigurationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -181,6 +217,7 @@
     <Folder Include="CodeGenerators\" />
     <Folder Include="Content\" />
     <Folder Include="Templates\KendoScaffolder\Grid\Views\aspx\" />
+    <Folder Include="Templates\KendoScaffolder\Scheduler\Views\aspx\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\grid-icon-white.png" />

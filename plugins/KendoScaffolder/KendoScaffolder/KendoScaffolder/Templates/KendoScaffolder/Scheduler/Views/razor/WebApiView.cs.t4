@@ -1,0 +1,87 @@
+﻿﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="..\ImportsSchedulerView.include.t4" #>
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+    var batchEditMode = "InCell";
+#>
+@* Important! Register the following route if it's not existing in the RouteTable
+config.Routes.MapHttpRoute(
+    name: "DefaultApi",
+    routeTemplate: "api/{controller}/{id}",
+    defaults: new { id = RouteParameter.Optional }
+);
+*@
+
+@(Html.Kendo().Scheduler<<#= ViewDataTypeName #>>()
+      .Name("scheduler")
+    if(Selectable){
+#>
+      .Selectable(<#=Selectable #>)
+<#
+    }
+    if(PdfExport) {
+#>
+    
+<#
+    }
+    if(SchedulerEvents.Count > 0) {
+#>
+      .Events(events => {
+<#
+      foreach (string ev in SchedulerEvents)
+      {
+#>
+          events.<#= ev #>("on<#= ev #>");
+<#
+      }
+#>
+      })
+<#
+    }
+#>
+      .DataSource(dataSource => dataSource
+          .WebApi()
+<#
+
+#>
+          .Model(model => model.Id(p => p.<#= PrimaryKeyName #>))
+          .Read(read => read.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))
+<#
+if(Editable) {
+    if(EditableCreate) {
+#>
+          .Create(create => create.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))  
+<#
+    }
+    if(EditableUpdate) {
+#>
+          .Update(update => update.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
+<#
+    }
+    if(EditableDestroy) {
+#>
+          .Destroy(destroy => destroy.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
+<#
+    }
+}
+#>
+      )
+)
+
+<# if(SchedulerEvents.Count > 0){ #>
+<script>
+
+<#
+    foreach (string ev in SchedulerEvents)
+    {
+#>
+    function on<#= ev #>(e){
+        //Implement the event handler for <#= ev #>
+    }
+
+<#
+    }
+#>
+</script>     
+<# } #>
