@@ -1200,6 +1200,7 @@ var __meta__ = {
                     var getter;
                     var value;
                     var idx = 0;
+                    var distinct = {};
 
                     if (name) {
                         name = name.split(".")[0];
@@ -1223,7 +1224,9 @@ var __meta__ = {
 
                     for (; idx < data.length; idx++) {
                         value = getter(data[idx]);
-                        if (value || value === 0) {
+                        if ((value || value === 0) && !distinct[value]) {
+                            distinct[value] = true;
+
                             result.push({
                                 caption: value,
                                 childrenCardinality: "0",
