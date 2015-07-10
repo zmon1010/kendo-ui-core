@@ -1348,4 +1348,71 @@
         equal(result.data.length, 2);
         equal(result.data[0].value, 1);
     });
+
+    test("PivotCube filters data by 'in' operator", function() {
+        var builder = new PivotCubeBuilder({
+            measures: [
+                { name: "Sum", caption: "Measure 1", field: "value",  aggregate: "Sum" }
+            ]
+        });
+
+        var data = [
+            { name: "name1", lastName: "lastName1", value: 1 },
+            { name: "name2", lastName: "lastName2", value: 2 },
+            { name: "name1", lastName: "lastName3", value: 1 },
+            { name: "name4", lastName: "lastName4", value: 3 }
+        ];
+
+        var options = {
+            columns: [{ name: "name", expand: true }],
+            rows: [{ name: "lastName" }],
+            measuresAxis: "columns",
+            measures: [{ name: "Sum" }],
+            filter: {
+                filters: [
+                    { field: "name", operator: "in", value: "name2,name4" }
+                ]
+            }
+        };
+
+        var result = builder.process(data, options);
+
+        equal(result.axes.columns.tuples.length, 3);
+        equal(result.data.length, 3);
+        equal(result.data[0].value, 5);
+    });
+
+    test("PivotCube filters data by 'eq' and 'in' operators", function() {
+        var builder = new PivotCubeBuilder({
+            measures: [
+                { name: "Sum", caption: "Measure 1", field: "value",  aggregate: "Sum" }
+            ]
+        });
+
+        var data = [
+            { name: "name1", lastName: "lastName1", value: 1 },
+            { name: "name2", lastName: "lastName2", value: 2 },
+            { name: "name1", lastName: "lastName3", value: 1 },
+            { name: "name4", lastName: "lastName4", value: 3 }
+        ];
+
+        var options = {
+            columns: [{ name: "name", expand: true }],
+            rows: [{ name: "lastName" }],
+            measuresAxis: "columns",
+            measures: [{ name: "Sum" }],
+            filter: {
+                filters: [
+                    { field: "name", operator: "in", value: "name2,name4" },
+                    { field: "name", operator: "eq", value: "name2" }
+                ]
+            }
+        };
+
+        var result = builder.process(data, options);
+
+        equal(result.axes.columns.tuples.length, 2);
+        equal(result.data.length, 2);
+        equal(result.data[0].value, 2);
+    });
 })();

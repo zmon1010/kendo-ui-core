@@ -895,9 +895,41 @@ var __meta__ = {
                 return data;
             }
 
-            var result = new kendo.data.Query(data).filter(filter);
+            var expr;
+            var idx = 0;
+            var filters = filter.filters;
 
-            return result.data;
+            for (var idx = 0; idx < filters.length; idx++) {
+                expr = filters[idx];
+
+                if (expr.operator === "in") {
+                    filters[idx] = this._normalizeFilter(expr);
+                }
+            }
+
+            return new kendo.data.Query(data).filter(filter).data;
+        },
+
+        _normalizeFilter: function(filter) {
+            var value = filter.value.split(",");
+            var result = [];
+
+            if (!value.length) {
+                return value;
+            }
+
+            for (var idx = 0; idx < value.length; idx++) {
+                result.push({
+                    field: filter.field,
+                    operator: "eq",
+                    value: value[idx]
+                });
+            }
+
+            return {
+                logic: "or",
+                filters: result
+            };
         },
 
         process: function(data, options) {
