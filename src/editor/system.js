@@ -656,13 +656,20 @@ var Clipboard = Class.extend({
         this._contentModification($.noop, $.noop);
     },
 
-    _fileToDataURL: function(clipboardItem, complete) {
-        var blob = clipboardItem.getAsFile();
+    _fileToDataURL: function(blob) {
+        var deferred = $.Deferred();
+
         var reader = new FileReader();
 
-        reader.onload = complete || $.noop;
+        if (!(blob instanceof window.File)) {
+            blob = blob.getAsFile();
+        }
+
+        reader.onload = $.proxy(deferred.resolve, deferred);
 
         reader.readAsDataURL(blob);
+
+        return deferred.promise();
     },
 
     _triggerPaste: function(html, options) {
@@ -673,7 +680,6 @@ var Clipboard = Class.extend({
         this.editor.trigger("paste", args);
 
         this.paste(args.html, options || {});
-
     },
 
     _handleImagePaste: function(e) {
@@ -681,35 +687,40 @@ var Clipboard = Class.extend({
             return;
         }
 
-        var that = this;
-        var clipboardData = e.clipboardData || e.originalEvent.clipboardData;
+        var clipboardData = e.clipboardData || e.originalEvent.clipboardData || window.clipboardData;
         var items = clipboardData && (clipboardData.items || clipboardData.files);
+        var images = items && $.grep(items, function(item) {
+            return (/^image\//i).test(item.type);
+        });
 
-        if (!items || !items.length) {
+        if (!images.length) {
             return;
         }
 
-        if (!/^image\//i.test(items[0].type)) {
-            return;
-        }
-
-        var modificationInfo = that._startModification();
+        var modificationInfo = this._startModification();
 
         if (!modificationInfo) {
             return;
         }
 
-        this._fileToDataURL(items[0], function(e) {
-            that._triggerPaste('<img src="' + e.target.result + '" />');
+        $.when.apply($, $.map(images, this._fileToDataURL))
+            .done($.proxy(function() {
+                var results = Array.prototype.slice.call(arguments);
+                var html = $.map(results, function(e) {
+                    return '<img src="' + e.target.result + '" />';
+                }).join("");
 
-            that._endModification(modificationInfo);
-        });
+                this._triggerPaste(html);
+
+                this._endModification(modificationInfo);
+            }, this));
 
         return true;
     },
 
     onpaste: function(e) {
         if (this._handleImagePaste(e)) {
+            e.preventDefault();
             return;
         }
 

@@ -173,15 +173,34 @@ test("paste places selection after table", function() {
 
 if ('FileReader' in window) {
 
-    function imageEvent() {
-        return { clipboardData: { items: [ { type: "image/png" } ] } };
+    function imageEvent(times) {
+        function file() {
+            return { type: "image/png" };
+        }
+
+        var files = [];
+
+        for (var i = 0; i < (times || 1); i++) {
+            files.push(file());
+        }
+
+        return {
+            preventDefault: $.noop,
+            clipboardData: {
+                files: files
+            }
+        };
     }
 
     editor_module("editor pasting images", {
        setup: function() {
+           var counter = 1;
            editor = $("#editor-fixture").data("kendoEditor");
-           editor.clipboard._fileToDataURL = function(item, complete) {
-               complete({ target: { result: "READ_FILE" } });
+           editor.clipboard._fileToDataURL = function(item) {
+               var deferred = $.Deferred();
+               deferred.resolve({ target: { result: "READ_FILE_" + (counter++) } });
+
+               return deferred.promise();
            };
        },
        teardown: function() {
@@ -197,7 +216,18 @@ if ('FileReader' in window) {
         editor.clipboard.onpaste(imageEvent());
 
         equal(handler.calls, 1);
-        equal(handler.lastArgs[0].html, '<img src="READ_FILE" />');
+        equal(handler.lastArgs[0].html, '<img src="READ_FILE_1" />');
+    });
+
+    test("pasting multiple images", function() {
+        var handler = spy();
+
+        editor.one("paste", handler);
+
+        editor.clipboard.onpaste(imageEvent(2));
+
+        equal(handler.calls, 1);
+        equal(handler.lastArgs[0].html, '<img src="READ_FILE_1" /><img src="READ_FILE_2" />');
     });
 }
 
