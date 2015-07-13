@@ -20,6 +20,13 @@ namespace KendoScaffolder.Scaffolders
         public CodeType DbContext { get; set; }
         public ModelMetadata EfMetadata { get; set; }
         public CodeGenerationContext Context { get; set; }
+        public bool UseWidgetViewModel
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         public Dictionary<string, object> CommonParameters { get; set; }
         public Dictionary<string, object> ControllerParameters { get; set; }
@@ -32,7 +39,6 @@ namespace KendoScaffolder.Scaffolders
             ViewModel = viewModel;
             Context = context;
             ModelType = viewModel.SelectedModelType.CodeType;
-
             //create custom view model:
             //ViewModelType = viewModel.UseViewModel ? viewModel.SelectedViewModelType.CodeType : null;
 
@@ -64,9 +70,17 @@ namespace KendoScaffolder.Scaffolders
             string controllerRootName = controllerName.Replace("Controller", "");
             string modelTypeVariable = KendoScaffolderUtils.GetTypeVariable(ModelType.Name);
             PropertyMetadata primaryKey = EfMetadata.PrimaryKeys.FirstOrDefault();
+            string widgetViewModelName = string.Format("{0}ViewModel", ModelType.Name);
             //string pluralizedName = efMetadata.EntitySetName;
             //string modelNameSpace = modelType.Namespace != null ? modelType.Namespace.FullName : String.Empty;
             //string relativePath = string.Empty;
+            List<string> selectedModelTypeFields = ViewModel.SchedulerEventFields.ToList();
+            selectedModelTypeFields.Add(primaryKey.PropertyName);
+
+            if (ViewModel.SelectedModelResourceField != null)
+            {
+                selectedModelTypeFields.Add(ViewModel.SelectedModelResourceField.DisplayName);
+            }
 
             var commonParameters = new Dictionary<string, object>()
             {
@@ -79,7 +93,9 @@ namespace KendoScaffolder.Scaffolders
                 {"PrimaryKeyName", primaryKey.PropertyName},
                 {"PrimaryKeyType", primaryKey.ShortTypeName},
                 {"ViewName", viewName},
-                {"ViewPrefix", ""}
+                {"ViewPrefix", ""},
+                {"WidgetViewModelName", widgetViewModelName},
+                {"SelectedModelTypeFields", selectedModelTypeFields}
             };
 
             return commonParameters;
@@ -198,6 +214,28 @@ namespace KendoScaffolder.Scaffolders
         {
             string dataSourceType = ViewModel.SelectedDataSourceType;
             return dataSourceType + "View";
+        }
+
+        public string GetWidgetViewModelPath()
+        {
+            return Path.Combine("Models", CommonParameters["WidgetViewModelName"].ToString());
+        }
+
+        public string GetWidgetViewModelTemplate()
+        {
+            return "SchedulerViewModel";
+        }
+
+        public Dictionary<string, object> GetWidgetViewModelParameters()
+        {
+            var widgetViewModelParameters = new Dictionary<string, object>(CommonParameters);
+
+            widgetViewModelParameters.Add("ModelTypeName", ModelType.Name);
+            widgetViewModelParameters.Add("ModelTypeChildren", ModelType.Children);
+            widgetViewModelParameters.Add("Namespace", KendoScaffolderUtils.GetDefaultNamespace(Context));
+            widgetViewModelParameters.Add("RequiredNamespaces", new HashSet<string>() { ModelType.Namespace.FullName });
+
+            return widgetViewModelParameters;
         }
     }
 }

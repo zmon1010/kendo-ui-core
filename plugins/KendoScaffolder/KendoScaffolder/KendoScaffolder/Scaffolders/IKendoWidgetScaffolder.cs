@@ -22,5 +22,12 @@ namespace KendoScaffolder.Scaffolders
 
         string GetViewTemplate();
 
+        bool UseWidgetViewModel { get; }
+
+        string GetWidgetViewModelPath();
+
+        string GetWidgetViewModelTemplate();
+
+        Dictionary<string, object> GetWidgetViewModelParameters();
     }
 }

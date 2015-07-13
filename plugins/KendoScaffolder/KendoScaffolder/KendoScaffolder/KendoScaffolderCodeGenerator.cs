@@ -15,7 +15,7 @@ using KendoScaffolder.Scaffolders;
 
 namespace KendoScaffolder
 {
-    public class KendoScaffolderClass : CodeGenerator
+    public class KendoScaffolderCodeGenerator : CodeGenerator
     {
         private WidgetConfigurationViewModel viewModel;
         private KendoWidget selectedWidget;
@@ -26,7 +26,7 @@ namespace KendoScaffolder
         /// </summary>
         /// <param name="context">Context of the current code generation operation based on how scaffolder was invoked(such as selected project/folder) </param>
         /// <param name="information">Code generation information that is defined in the factory class.</param>
-        public KendoScaffolderClass(CodeGenerationContext context, CodeGeneratorInformation information)
+        public KendoScaffolderCodeGenerator(CodeGenerationContext context, CodeGeneratorInformation information)
             : base(context, information)
         {
             selectedWidget = KendoWidget.Grid;
@@ -100,6 +100,15 @@ namespace KendoScaffolder
                 var viewParams = scaffolder.GetViewParameters();
 
                 this.AddFileFromTemplate(Context.ActiveProject, viewPath, viewTemplate, viewParams, skipIfExists: false);
+
+                if (scaffolder.UseWidgetViewModel == true)
+                {
+                    var viewModelPath = scaffolder.GetWidgetViewModelPath();
+                    var viewModelTemplate = scaffolder.GetWidgetViewModelTemplate();
+                    var viewModelParams = scaffolder.GetWidgetViewModelParameters();
+
+                    this.AddFileFromTemplate(Context.ActiveProject, viewModelPath, viewModelTemplate, viewModelParams, skipIfExists: false);
+                }
             }
             catch (InvalidOperationException ex)
             {

@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 namespace KendoScaffolder
 {
     [Export(typeof(CodeGeneratorFactory))]
-    public class KendoScaffolderFactory : CodeGeneratorFactory
+    public class KendoScaffolderCodeGeneratorFactory : CodeGeneratorFactory
     {
         /// <summary>
         ///  Information about the code generator goes here.
@@ -21,12 +21,12 @@ namespace KendoScaffolder
             description: "Generates UI for ASP.NET MVC server-side wrapper widget declarations together with the related Controller action methods.",
             author: "Telerik",
             version: new Version(2015, 2, 624), //Update version in source.extension.vsixmanifest too!
-            id: typeof(KendoScaffolderClass).Name,
+            id: typeof(KendoScaffolderCodeGenerator).Name,
             icon: ToImageSource(Resources.ScaffolderIcon),
             gestures: new[] { "Controller", "View", "Area" },
             categories: new[] { Categories.Common, Categories.MvcController, Categories.MvcView, Categories.Other });
 
-        public KendoScaffolderFactory()
+        public KendoScaffolderCodeGeneratorFactory()
             : base(_info)
         {
         }
@@ -38,7 +38,7 @@ namespace KendoScaffolder
         /// <returns>Instance of CodeGenerator.</returns>
         public override ICodeGenerator CreateInstance(CodeGenerationContext context)
         {
-            return new KendoScaffolderClass(context, Information);
+            return new KendoScaffolderCodeGenerator(context, Information);
         }
 
         /// <summary>

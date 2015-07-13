@@ -68,8 +68,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="KendoConstants.cs" />
-    <Compile Include="KendoScaffolderFactory.cs" />
-    <Compile Include="KendoScaffolder.cs" />
+    <Compile Include="KendoScaffolderCodeGeneratorFactory.cs" />
+    <Compile Include="KendoScaffolderCodeGenerator.cs" />
     <Compile Include="KendoWidgets.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -124,64 +124,70 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Templates\KendoScaffolder\Chart\Controllers\ChartController.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Chart\Controllers\ChartController.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Chart\Controllers\ImportsChartController.include.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Chart\Controllers\ImportsChartController.include.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Chart\Views\ChartLocalDataView.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Chart\Views\ChartLocalDataView.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Chart\Views\ChartRemoteDataView.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Chart\Views\ChartRemoteDataView.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Chart\Views\ImportsChartView.include.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Chart\Views\ImportsChartView.include.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Grid\Controllers\AjaxBatchController.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Controllers\AjaxBatchController.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Grid\Controllers\AjaxController.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Controllers\AjaxController.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Grid\Controllers\ImportsGridController.include.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Controllers\ImportsGridController.include.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Grid\Controllers\ServerController.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Controllers\ServerController.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Grid\Views\razor\AjaxView.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Views\razor\AjaxView.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Grid\Views\ImportsGridView.include.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Views\ImportsGridView.include.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Grid\Views\razor\ServerView.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Views\razor\ServerView.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Grid\Controllers\WebApiController.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Controllers\WebApiController.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Grid\Views\razor\WebApiView.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Views\razor\WebApiView.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Scheduler\Controllers\AjaxController.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Controllers\AjaxController.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Scheduler\Controllers\ImportsSchedulerController.include.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Controllers\ImportsSchedulerController.include.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Scheduler\Controllers\WebApiController.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Controllers\WebApiController.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Scheduler\Views\ImportsSchedulerView.include.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Models\SchedulerViewModel.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Scheduler\Views\razor\AjaxView.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Models\ImportsSchedulerViewModel.include.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolder\Scheduler\Views\razor\WebApiView.cs.t4">
+    <None Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Views\ImportsSchedulerView.include.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Views\razor\AjaxView.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Views\razor\WebApiView.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -216,8 +222,8 @@
   <ItemGroup>
     <Folder Include="CodeGenerators\" />
     <Folder Include="Content\" />
-    <Folder Include="Templates\KendoScaffolder\Grid\Views\aspx\" />
-    <Folder Include="Templates\KendoScaffolder\Scheduler\Views\aspx\" />
+    <Folder Include="Templates\KendoScaffolderCodeGenerator\Grid\Views\aspx\" />
+    <Folder Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Views\aspx\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\grid-icon-white.png" />

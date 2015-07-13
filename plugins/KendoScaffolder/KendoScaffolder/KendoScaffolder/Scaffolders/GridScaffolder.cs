@@ -20,6 +20,13 @@ namespace KendoScaffolder.Scaffolders
         public CodeType DbContext { get; set; }
         public ModelMetadata EfMetadata { get; set; }
         public CodeGenerationContext Context { get; set; }
+        public bool UseWidgetViewModel
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         public Dictionary<string, object> CommonParameters { get; set; }
         public Dictionary<string, object> ControllerParameters { get; set; }
@@ -223,6 +230,21 @@ namespace KendoScaffolder.Scaffolders
             }
 
             return dataSourceType + "View";
+        }
+
+        public string GetWidgetViewModelPath()
+        {
+            throw new NotSupportedException();
+        }
+
+        public string GetWidgetViewModelTemplate()
+        {
+            throw new NotSupportedException();
+        }
+
+        public Dictionary<string, object> GetWidgetViewModelParameters()
+        {
+            throw new NotSupportedException();
         }
     }
 }

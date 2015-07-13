@@ -1,0 +1,67 @@
+﻿﻿<#@ template language="C#" HostSpecific="True" Debug="True" #>
+<#@ output extension="cs" #>
+<#@ include file="ImportsSchedulerViewModel.include.t4" #>
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+<# foreach (var namespaceName in RequiredNamespaces) { #>
+using <#= namespaceName #>;
+<# } #>
+
+namespace <#= Namespace #>
+{
+    public class <#= WidgetViewModelName #>: ISchedulerEvent
+    {
+        public int <#= PrimaryKeyName #> { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+
+        private DateTime start;
+        public DateTime Start
+        {
+            get
+            {
+                return start;
+            }
+            set
+            {
+                start = value.ToUniversalTime();
+            }
+        }
+
+        private DateTime end;
+        public DateTime End
+        {
+            get
+            {
+                return end;
+            }
+            set
+            {
+                end = value.ToUniversalTime();
+            }
+        }
+
+        public string RecurrenceRule { get; set; }
+        public int? RecurrenceID { get; set; }
+        public string RecurrenceException { get; set; }
+        public bool IsAllDay { get; set; }
+        
+        <# foreach (EnvDTE.CodeElement child in ModelTypeChildren) {
+            if (child.Kind == EnvDTE.vsCMElement.vsCMElementProperty) {
+                var prop = child as EnvDTE.CodeProperty;
+                var type = prop.Getter.Type.AsString;
+                if (SelectedModelTypeFields.IndexOf(prop.Name) > -1) { #>
+                public <#= type #> <#= prop.Name #> { get; set; }
+                <# } #>
+            <# } #>
+        <# } #>
+    }
+}
