@@ -1,0 +1,196 @@
+﻿﻿<#@ template language="C#" HostSpecific="True" debug="true" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="..\ImportsGridView.include.t4" #>
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+    var batchEditMode = "InCell";
+    var newLine = Environment.NewLine;
+#>
+<div id="grid"></div>
+<script>
+    $("#grid").kendoGrid({
+        height: 400,
+        columns: [
+<#
+    var properties = ModelMetadata.Properties
+        .Where(prop => prop.Scaffold && !prop.IsPrimaryKey && !prop.IsForeignKey && !prop.IsAssociation)
+        .ToList();    
+    for (int i = 0; i < properties.Count; i++) {       
+#>
+<#
+        if (UseViewModel) {
+            foreach (EnvDTE.CodeElement child in ViewModelTypeChildren) { 
+                if(child.Name.Equals(properties[i].PropertyName)) {
+#>
+<#
+                    RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable);
+#>
+<#
+                      break;
+                }
+            }
+        }  else {
+#>
+<#
+            RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable);      
+#>
+<#
+        }    
+    }
+#>
+<#
+    if(Editable && (EditableCreate || EditableUpdate || EditableDestroy)) {
+#>
+            {command: [<# if (EditMode != batchEditMode && (EditableCreate||EditableUpdate)) { #> "edit" <# } #><#= EditMode != batchEditMode && (EditableCreate||EditableUpdate) && EditableDestroy ? ", " : ""#><# if (EditableDestroy) { #>"destroy"<# } #>], width: 180 }
+<#
+    }
+#>
+        ],
+<#
+    if(EditableCreate || ExcelExport || PdfExport) {
+#>
+        toolbar: <#RenderToolbarOptions();#>
+        dataSource: {
+            transport: {
+            <#RenderCRUDOptions(entitySetName, ControllerRootName);#>
+            type: "aspnetmvc-ajax", <#=Editable ? EditMode.Equals(batchEditMode) ? "" + newLine + "\t\t\tbatch:true," : "" : "" #>
+            <#=ServerOperation ? "serverPaging: true,"+ newLine + "\t\t\tserverSorting: true,"+ newLine+"\t\t\tserverSorting: true" : "" #>,
+            schema: {
+                data: "Data",
+                model: {
+                    "id": "ProductID"
+                }
+            }
+        },
+<#
+    }
+    if(ColumnMenu) {
+#>
+        columnMenu: true,
+<#
+    }
+    if(Editable) {
+#>
+        editable: "<#= EditMode.ToLower() #>",
+<#
+    }
+    if(Pageable) {
+#>
+        pageable: true,
+<#
+    }
+    if(Navigatable) {
+#>
+        navigatable: true,
+<#
+    }
+    if(Selectable) {
+#>
+        selectable: "<#=SelectionMode.ToString().ToLower() #> <#=SelectionType.ToString().ToLower() #>",
+<#
+    } 
+    if(Sortable) {
+#>
+        sortable: {
+            mode: "<#=SortMode.ToString() == "MultipleColumn" ? "multiple" : "single"#>"<#=!AllowUnsort ? "," + newLine + "\t\t\tallowUnsort: false" : "" #>
+        },
+<#
+    }
+    if (Filterable) {
+#>
+        filterable: <#= FilterMode.ToString() == "Row" ? "{ " + newLine + "\t\t\tmode: \"row\""+ newLine +"\t\t}," : "true," #>
+<#
+    } 
+    if (GridEvents.Count > 0) {
+        for (int i = 0; i < GridEvents.Count; i++) {
+        RenderEvents(GridEvents[i], i == properties.Count - 1);
+#><#
+        }
+    }
+#>
+        scrollable: <#= !Scrollable ? "false" : "true"#>
+    })
+
+<#
+    foreach(string ev in GridEvents) {
+        RenderEventHandlers(ev);
+    }
+#>
+</script>
+<#+
+    private void RenderColumn(string field, bool isLast)
+    {
+#>
+            {field: "<#= field#>"}<#= isLast ? "" : "," #>
+<#+
+  }  
+#>
+<#+
+    private void RenderEvents(string ev, bool isLast)
+    {
+#>
+        <#= Char.ToLowerInvariant(ev[0]) + ev.Substring(1) #>: on<#= ev #>,
+<#+
+    }  
+#>
+<#+
+    private void RenderEventHandlers(string ev)
+    {
+#>
+    function on<#= ev #>(e){
+        //Implement the event handler for <#= Char.ToLowerInvariant(ev[0]) + ev.Substring(1) #>
+    }
+
+<#+
+    }  
+#>
+<#+
+    private void RenderToolbarOptions() 
+    {
+        string result = "[";
+        string[] toolbarOperations = new string[] { 
+            EditableCreate ? "\"create\"" : "",
+            Editable && EditMode.Equals("InCell") ? "\"save\"" : "",
+            ExcelExport ? "\"excel\"" : "",
+            PdfExport ? "\"pdf\"" : ""
+        };
+        toolbarOperations =  toolbarOperations.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+        for (int i = 0; i < toolbarOperations.Length; i++) {
+            if (i == toolbarOperations.Length - 1){
+                result += toolbarOperations[i];
+            } else {
+                result += toolbarOperations[i] + ", ";
+            }
+        }
+        result += "],";
+#>
+<#=result#>
+<#+
+    }
+#>
+
+<#+
+    private void RenderCRUDOptions(string EntitySetName, string ControllerRootName) 
+    {
+        var newLine = Environment.NewLine;
+        string result = "\tread: {" + newLine + "\t\t\t\t\turl: \"/" + ControllerRootName + "/" + EntitySetName + "_Read\"" + newLine + "\t\t\t\t}," + newLine; 
+        string[] transportOptions = new string[] { 
+            EditableCreate ? "create" : "",
+            EditableUpdate ? "update" : "",
+            EditableDestroy ? "destroy" : "",
+        };
+        transportOptions =  transportOptions.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+        for (int i = 0; i < transportOptions.Length; i++) {
+            var operation = transportOptions[i].Substring(0, 1).ToUpper() + transportOptions[i].Substring(1);
+            if (i == transportOptions.Length - 1){
+                result += "\t\t\t\t" + transportOptions[i] + ": { " + newLine + "\t\t\t\t\turl: \"/" + ControllerRootName + "/" + EntitySetName + "_" + operation + "\"" + newLine + "\t\t\t\t}";
+            } else {
+                result += "\t\t\t\t" + transportOptions[i] + ": { " + newLine + "\t\t\t\t\turl: \"/" + ControllerRootName + "/" + EntitySetName + "_" + operation + "\""+ newLine +"\t\t\t\t}," + newLine;
+            }
+        }
+        result += newLine + "\t\t\t},";
+#>
+<#=result#>
+<#+
+    }
+#>
