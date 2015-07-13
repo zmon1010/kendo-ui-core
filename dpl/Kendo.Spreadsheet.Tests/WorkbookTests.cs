@@ -13,7 +13,7 @@ namespace Kendo.Spreadsheet.Tests
     public class WorkbookTests
     {
         [Fact]
-        public void CanInsertSheets()
+        public void Can_insert_sheets()
         {
             var workbook = new Workbook();
             workbook.Sheets.Add(new Worksheet());

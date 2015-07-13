@@ -71,6 +71,7 @@
     <Compile Include="MimeTypes.cs" />
     <Compile Include="Models\Cell.cs" />
     <Compile Include="Models\Column.cs" />
+    <Compile Include="Models\Workbook.Interop.cs" />
     <Compile Include="Models\Workbook.cs" />
     <Compile Include="Models\Worksheet.cs" />
     <Compile Include="Models\Row.cs" />
