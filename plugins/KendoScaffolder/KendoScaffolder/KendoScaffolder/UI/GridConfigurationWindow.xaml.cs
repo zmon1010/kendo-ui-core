@@ -22,6 +22,9 @@ namespace KendoScaffolder.UI
     /// </summary>
     public partial class GridConfigurationWindow : Window
     {
+        public const string WebGridTitle = "Kendo UI Grid";
+        public const string MvcGridTitle = "Telerik ASP.NET MVC Grid";
+
         public GridConfigurationWindow(GridConfigurationViewModel viewModel)
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -30,6 +33,17 @@ namespace KendoScaffolder.UI
 
             GridEventsListBox.SelectionChanged += GridEventsListBoxSelectionChanged;
             //var a  = Microsoft.VisualStudio.PlatformUI.VSColorTheme;
+
+            if (viewModel.ViewType == ViewType.MVC)
+            {
+                WidgetTitle.Text = MvcGridTitle;
+                this.Title = MvcGridTitle;
+            }
+            else
+            {
+                WidgetTitle.Text = WebGridTitle;
+                this.Title = WebGridTitle;
+            }
 
             DataContext = viewModel;
         }
