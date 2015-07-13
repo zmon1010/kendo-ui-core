@@ -322,46 +322,6 @@
             }
         },
 
-        values: function(ref, values) {
-            var topLeftRow = ref.topLeft.row;
-            var topLeftCol = ref.topLeft.col;
-            var bottomRightRow = ref.bottomRight.row;
-            var bottomRightCol = ref.bottomRight.col;
-            var ci, ri;
-
-            if (values === undefined) {
-                values = new Array(ref.height());
-
-                for (var vi = 0; vi < values.length; vi++) {
-                    values[vi] = new Array(ref.width());
-                }
-
-                for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
-                    for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
-                        values[ri - topLeftRow][ci - topLeftCol] = this._value(ri, ci);
-                    }
-                }
-
-                return values;
-            } else {
-                for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
-                    for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
-                        var row = values[ri - topLeftRow];
-
-                        if (row) {
-                            var value = row[ci - topLeftCol];
-
-                            if (value !== undefined) {
-                                this._value(ri, ci, value);
-                            }
-                        }
-                    }
-                }
-
-                return this.triggerChange();
-            }
-        },
-
         select: function(ref) {
             if (ref) {
                 var mergedCells = this._mergedCells;

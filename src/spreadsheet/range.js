@@ -227,13 +227,46 @@
                 }
             }
 
-            var result = this._sheet.values(this._ref.toRangeRef(), values);
+            var ref = this._ref.toRangeRef();
+            var topLeftRow = ref.topLeft.row;
+            var topLeftCol = ref.topLeft.col;
+            var bottomRightRow = ref.bottomRight.row;
+            var bottomRightCol = ref.bottomRight.col;
+            var ci, ri;
 
             if (values === undefined) {
-                return result;
-            }
+                values = new Array(ref.height());
 
-            return this;
+                for (var vi = 0; vi < values.length; vi++) {
+                    values[vi] = new Array(ref.width());
+                }
+
+                for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
+                    for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
+                        values[ri - topLeftRow][ci - topLeftCol] = this._sheet._value(ri, ci);
+                    }
+                }
+
+                return values;
+            } else {
+                for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
+                    for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
+                        var row = values[ri - topLeftRow];
+
+                        if (row) {
+                            var value = row[ci - topLeftCol];
+
+                            if (value !== undefined) {
+                                this._sheet._value(ri, ci, value);
+                            }
+                        }
+                    }
+                }
+
+                this._sheet.triggerChange();
+
+                return this;
+            }
         },
 
         clear: function(options) {
