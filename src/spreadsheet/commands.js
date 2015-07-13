@@ -25,10 +25,10 @@
         exec: function() {
             var range = this.range();
             this._state = range[this._property]();
-            range[this._property](this._value).select();
+            range[this._property](this._value);
         },
         undo: function() {
-            this.range()[this._property](this._state).select();
+            this.range()[this._property](this._state);
         }
     });
 

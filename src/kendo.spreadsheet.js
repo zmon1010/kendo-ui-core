@@ -40,6 +40,7 @@
             this.element.addClass("k-widget k-spreadsheet");
 
             this.undoRedoStack = new kendo.util.UndoRedoStack();
+            this.undoRedoStack.bind(["undo", "redo"], this._onUndoRedo.bind(this));
 
             this._chrome();
 
@@ -81,6 +82,10 @@
             }
 
             return view;
+        },
+
+        _onUndoRedo: function(e) {
+            e.command.range().select();
         },
 
         _resize: function() {
