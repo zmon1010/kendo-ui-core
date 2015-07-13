@@ -19,8 +19,7 @@
             this._frozenRows = 0;
             this._frozenColumns = 0;
             this._suspendChanges = false;
-            this._selection = kendo.spreadsheet.NULLREF;
-            this._activeCell = kendo.spreadsheet.FIRSTREF.toRangeRef();
+            this._selection = this._activeCell = kendo.spreadsheet.FIRSTREF.toRangeRef();
             this._originalActiveCell = kendo.spreadsheet.FIRSTREF;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
             this._properties = new kendo.spreadsheet.PropertyBag(cellCount);

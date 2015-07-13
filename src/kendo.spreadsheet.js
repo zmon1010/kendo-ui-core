@@ -110,7 +110,7 @@
         _execCommand: function(commandType, options) {
             var sheet = this._sheet;
             var command = new commandType($.extend({
-                ref: sheet.activeCell(),
+                ref: sheet.select(),
                 sheet: sheet
             }, options));
             command.exec();
