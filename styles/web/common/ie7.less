@@ -259,10 +259,55 @@
 
 /*IE7 Scheduler*/
 
+.k-ie7 .k-scheduler-toolbar .k-nav-prev .k-link,
+.k-ie7 .k-scheduler-toolbar .k-nav-next .k-link
+{
+    height: 2.3em;
+    margin-top: -1px;
+    vertical-align: middle;
+}
+
+.k-ie7 .k-scheduler-toolbar .k-nav-prev .k-link .k-icon,
+.k-ie7 .k-scheduler-toolbar .k-nav-next .k-link .k-icon
+{
+    margin-top: .5em;
+}
+
+.k-ie7 .k-scheduler-content .k-scheduler-table
+{
+    width: auto;
+}
 
 /* IE7 Slider */
 
+.k-ie7 .k-slider .k-icon { margin-top: 2px; }
+
+/* fixes ticks position and removes spacing between them in IE7 */
+.k-ie7 .k-slider-vertical .k-tick { float: left; clear: left; width: 100%; }
+
 .k-ie7 .k-slider a.k-button { height: 22px; line-height: 22px; padding: 0; }
+
+/*IE7 TabStrip */
+
+.k-ie7 .k-tabstrip-items .k-item .k-image,
+.k-ie7 .k-tabstrip-items .k-item .k-sprite
+{
+    margin-top: -1px;
+    vertical-align: top;
+}
+
+/* IE7 Upload */
+
+.k-ie7 .k-dropzone em, .k-ie7 .k-upload-button { vertical-align: baseline; }
+
+.k-ie7 .k-upload-button
+{
+    margin: .8em;
+}
+
+.k-ie7 .k-upload-files .k-button{line-height: 1;} /*IE7*/
+
+.k-ie7 .k-upload-selected { min-width: 100px; }
 
 /* IE7 Map */
 
