@@ -103,11 +103,11 @@ namespace KendoScaffolder.Scaffolders
             switch (dataSourceType)
             {
                 case "Ajax":
-                    return (ViewModel.EditMode == "InCell") ? "AjaxBatchController" : "AjaxController";
+                    return "Grid" + ((ViewModel.EditMode == "InCell") ? "AjaxBatchController" : "AjaxController");
                 case "Server":
-                    return "ServerController";
+                    return "GridServerController";
                 case "WebApi":
-                    return "WebApiController";
+                    return "GridWebApiController";
                 default:
                     return "";
             }
@@ -229,7 +229,7 @@ namespace KendoScaffolder.Scaffolders
                 return dataSourceType + "WebView";
             }
 
-            return dataSourceType + "View";
+            return "Grid" + dataSourceType + "View";
         }
 
         public string GetWidgetViewModelPath()

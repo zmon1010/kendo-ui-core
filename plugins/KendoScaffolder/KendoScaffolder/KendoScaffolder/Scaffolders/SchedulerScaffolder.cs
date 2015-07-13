@@ -113,9 +113,9 @@ namespace KendoScaffolder.Scaffolders
             switch (dataSourceType)
             {
                 case "Ajax":
-                    return "AjaxController";
+                    return "SchedulerAjaxController";
                 case "WebApi":
-                    return "WebApiController";
+                    return "SchedulerWebApiController";
                 default:
                     return "";
             }
@@ -213,7 +213,7 @@ namespace KendoScaffolder.Scaffolders
         public string GetViewTemplate()
         {
             string dataSourceType = ViewModel.SelectedDataSourceType;
-            return dataSourceType + "View";
+            return "Scheduler" + dataSourceType + "View";
         }
 
         public string GetWidgetViewModelPath()
