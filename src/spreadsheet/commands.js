@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.core" ], f);
+    define([ "../kendo.core", "../kendo.binder", "../kendo.window" ], f);
 })(function(){
 
 (function(kendo) {
@@ -37,6 +37,45 @@
             options.property = "_editableValue";
             PropertyChangeCommand.fn.init.call(this, options);
         }
+    });
+
+    var PopupCommand = kendo.spreadsheet.PopupCommand = Command.extend({
+        init: function(options) {
+            Command.fn.init.call(this, options);
+            this._dialogOptions = options.dialogOptions;
+        },
+        popup: function() {
+            return this._popup;
+        },
+        template: "",
+        exec: function() {
+            this._popup = $("<div class='k-spreadsheet-window' />")
+                .append(this.template)
+                .appendTo(document.body)
+                .kendoWindow($.extend({
+                    modal: true,
+                    title: this.title,
+                    width: 300,
+                    height: 200,
+                    open: function() {
+                        this.center();
+                    },
+                    deactivate: function() {
+                        this.destroy();
+                    }
+                }, this._dialogOptions))
+                .data("kendoWindow");
+
+            kendo.bind(this._popup.element, this);
+        }
+    });
+
+    var FormatCellsCommand = kendo.spreadsheet.FormatCellsCommand = PopupCommand.extend({
+        preview: function() {
+            return this.range().value();
+        },
+        title: "Format Cells",
+        template: "<div class='k-spreadsheet-preview' data-bind='text: preview' />"
     });
 
 })(kendo);

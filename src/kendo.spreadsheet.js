@@ -157,6 +157,9 @@
                     .prependTo(this.element)
                     .kendoToolBar({
                         items: [
+                            { type: "button", text: "Format cells", click: function() {
+                                this._execCommand(kendo.spreadsheet.FormatCellsCommand);
+                            }.bind(this) },
                             { type: "buttonGroup", buttons: [
                                 toggleable({ text: "Bold", property: "fontWeight", value: "bold" }),
                                 toggleable({ text: "Italic", property: "fontStyle", value: "italic" }),
