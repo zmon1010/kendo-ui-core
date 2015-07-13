@@ -1542,17 +1542,26 @@
                 if (router instanceof CascadingRouter) {
                     var points = router.routePoints(sourcePoint, targetPoint, sourceConnector, targetConnector),
                         start, end,
-                        exclude, rect;
+                         rect;
                     points.unshift(sourcePoint);
                     points.push(targetPoint);
-                    exclude = [sourceConnector.shape, targetConnector.shape];
+
+
                     for (var idx = 1; idx < points.length; idx++) {
                         start = points[idx - 1];
                         end = points[idx];
                         rect = new Rect(math.min(start.x, end.x), math.min(start.y, end.y),
                                         math.abs(start.x - end.x), math.abs(start.y - end.y));
+                        if (rect.width > 0) {
+                            rect.x++;
+                            rect.width-=2;
+                        }
+                        if (rect.height > 0) {
+                            rect.y++;
+                            rect.height-=2;
+                        }
 
-                        if (this.diagram._shapesQuadTree.hitTestRect(rect, exclude)) {
+                        if (!rect.isEmpty() && this.diagram._shapesQuadTree.hitTestRect(rect)) {
                             passRoute = false;
                             break;
                         }
@@ -4635,18 +4644,20 @@
                 }
             },
 
-            hitTestRect: function(rect, exclude) {
+            hitTestRect: function(rect) {
                 var shapes = this.shapes;
                 var length = shapes.length;
-                var hit = false;
 
                 for (var i = 0; i < length; i++) {
-                    if (this._overlaps(shapes[i].bounds, rect) && !dataviz.inArray(shapes[i].shape, exclude)) {
-                        hit = true;
-                        break;
+                    if (this._testRect(shapes[i].shape, rect)) {
+                        return true;
                     }
                 }
-                return hit;
+            },
+
+            _testRect: function(shape, rect) {
+                var angle = shape.rotate().angle;
+                return Intersect.rects(rect, shape.bounds(), -angle);
             },
 
             _overlaps: function(rect1, rect2) {
@@ -4732,18 +4743,18 @@
                 }
             },
 
-            hitTestRect: function(rect, exclude) {
-                var idx, result = [];
+            hitTestRect: function(rect) {
+                var idx;
                 var children = this.children;
                 var length = children.length;
                 var hit = false;
 
                 if (this.overlapsBounds(rect)) {
-                    if (QuadRoot.fn.hitTestRect.call(this, rect, exclude)) {
+                    if (QuadRoot.fn.hitTestRect.call(this, rect)) {
                         hit = true;
                     } else {
                          for (idx = 0; idx < length; idx++) {
-                            if (children[idx].hitTestRect(rect, exclude)) {
+                            if (children[idx].hitTestRect(rect)) {
                                hit = true;
                                break;
                             }
@@ -4829,12 +4840,12 @@
                 return sectors;
             },
 
-            hitTestRect: function(rect, exclude) {
+            hitTestRect: function(rect) {
                 var sectors = this.getSectors(rect);
                 var xIdx, yIdx, x, y;
                 var root;
 
-                if (this.root.hitTestRect(rect, exclude)) {
+                if (this.root.hitTestRect(rect)) {
                     return true;
                 }
 
@@ -4843,7 +4854,7 @@
                     for (yIdx = 0; yIdx < sectors[1].length; yIdx++) {
                         y = sectors[1][yIdx];
                         root = (this.rootMap[x] || {})[y];
-                        if (root && root.hitTestRect(rect, exclude)) {
+                        if (root && root.hitTestRect(rect)) {
                             return true;
                         }
                     }
