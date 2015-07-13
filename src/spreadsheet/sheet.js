@@ -98,7 +98,6 @@
         },
 
         insertRow: function(rowIndex) {
-
             this.batch(function() {
 
                 var grid = this._grid;
@@ -132,7 +131,6 @@
         },
 
         deleteRow: function(rowIndex) {
-
             this.batch(function() {
                 var grid = this._grid;
                 var columnCount = grid.columnCount;
@@ -168,13 +166,7 @@
             return this;
         },
 
-        _copyColumn: function(ref, fromNextColumn) {
-            var grid = this._grid;
-            var rowCount = grid.rowCount;
-        },
-
         insertColumn: function(columnIndex) {
-
             this.batch(function() {
                 var grid = this._grid;
                 var columnCount = grid.columnCount;
@@ -211,7 +203,6 @@
         },
 
         deleteColumn: function(columnIndex) {
-
             this.batch(function() {
                 var grid = this._grid;
                 var columnCount = grid.columnCount;
@@ -646,22 +637,31 @@
             var index = this._grid.index(row, col);
 
             if (value !== undefined) {
-                var result = Sheet.parse(value, parseStrings);
-
-                if (result.type === "date") {
-                }
-
-                this._properties.set("value", index, result.value);
-                this._properties.set("type", index, result.type);
+                this._properties.set("value", index, index, value, parseStrings);
             } else {
-                value = this._properties.get("value", index);
-
-                if (this._properties.get("type", index) === "date") {
-                    value = kendo.spreadsheet.calc.runtime.serialToDate(value);
-                }
-
-                return value;
+                return this._properties.get("value", index);
             }
+        },
+
+        _set: function(ref, name, value, parseStrings) {
+            var topLeft = this._grid.normalize(ref.topLeft);
+
+            var bottomRight = this._grid.normalize(ref.bottomRight);
+
+            for (var ci = topLeft.col; ci <= bottomRight.col; ci++) {
+                var start = this._grid.index(topLeft.row, ci);
+                var end = this._grid.index(bottomRight.row, ci);
+
+                this._properties.set(name, start, end, value, parseStrings);
+            }
+        },
+
+        _get: function(ref, name) {
+            var topLeft = this._grid.normalize(ref.topLeft);
+
+            var index = this._grid.index(topLeft.row, topLeft.col);
+
+            return this._properties.get(name, index);
         },
 
         batch: function(callback, recalc) {

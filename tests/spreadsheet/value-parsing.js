@@ -18,7 +18,7 @@
 
         range.value(date);
 
-        equal(sheet._properties.get("value", 0), 2);
+        equal(sheet._properties.lists["value"].value(0, 0), 2);
         equal(sheet._properties.get("type", 0), "date");
     });
 

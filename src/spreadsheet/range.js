@@ -22,59 +22,33 @@
             return this._sheet._grid.normalize(ref);
         },
 
-        _property: function(name, value, recalc) {
-            if (value !== undefined) {
-                this._ref.forEach(function(ref) {
-                    ref = ref.toRangeRef();
+        _set: function(name, value, parseStrings, recalc) {
+            this._ref.forEach(function(ref) {
+                this._sheet._set(ref.toRangeRef(), name, value, parseStrings);
+            }.bind(this));
 
-                    var topLeft = this._normalize(ref.topLeft);
-                    var bottomRight = this._normalize(ref.bottomRight);
+            this._sheet.triggerChange(recalc);
 
-                    for (var ci = topLeft.col; ci <= bottomRight.col; ci++) {
-                        var start = this._sheet._grid.index(topLeft.row, ci);
-                        var end = this._sheet._grid.index(bottomRight.row, ci);
+            return this;
+        },
 
-                        this._sheet._properties.set(name, start, end, value);
-                    }
-                }.bind(this));
+        _get: function(name) {
+            return this._sheet._get(this._ref.toRangeRef(), name);
+        },
 
-                this._sheet.triggerChange(recalc);
-
-                return this;
+        _property: function(name, value, parseStrings, recalc) {
+            if (value === undefined) {
+                return this._get(name);
             } else {
-                var index = this._sheet._grid.cellRefIndex(this._normalize(this._ref.toRangeRef().topLeft));
-                return this._sheet._properties.get(name, index);
+                return this._set(name, value, parseStrings, recalc);
             }
         },
+
         value: function(value, parseStrings) {
-            var type = null;
-
-            if (value !== undefined) {
-                this._sheet.batch(function() {
-                    this._ref.forEach(function(ref) {
-                        ref = ref.toRangeRef();
-                        var topLeft = this._normalize(ref.topLeft);
-
-                        var bottomRight = this._normalize(ref.bottomRight);
-
-                        for (var ci = topLeft.col; ci <= bottomRight.col; ci++) {
-                            for (var ri = topLeft.row; ri <= bottomRight.row; ri++) {
-                               this._sheet._value(ri, ci, value, parseStrings);
-                            }
-                        }
-                    }.bind(this));
-                }.bind(this), true);
-
-                return this;
-            } else {
-                var topLeft = this._normalize(this._ref.toRangeRef().topLeft);
-
-                return this._sheet._value(topLeft.row, topLeft.col);
-            }
+            return this._property("value", value, parseStrings, true);
         },
-        _editableValue: function(value) {
-            var formula, type, parsed;
 
+        _editableValue: function(value) {
             if (value !== undefined) {
                 if ((/^=/).test(value)) {
                     this.formula(value);
@@ -87,19 +61,18 @@
 
                 return this;
             } else {
-                value = this._property("value");
-                type = this._property("type");
-                formula = this._property("formula");
+                var value = this._get("value");
+                var type = this._get("type");
+                var formula = this._get("formula");
 
                 if (formula) {
                     value = formula;
                 } else if (type === "date") {
-                    value = kendo.spreadsheet.calc.runtime.serialToDate(value);
                     value = kendo.toString(value, kendo.culture().calendar.patterns.d);
                 } else if (type === "string") {
-                    parsed = kendo.spreadsheet.Sheet.parse(value, true);
+                    var parsed = kendo.spreadsheet.Sheet.parse(value, true);
 
-                    if (parsed.type == "number") {
+                    if (parsed.type === "number") {
                         value = "'" + value;
                     }
                 }
@@ -108,7 +81,7 @@
             }
         },
         type: function() {
-            return this._property("type");
+            return this._get("type");
         },
         borderLeft: function(value) {
             var ref = this._ref.resize({ left: -1, right: -1 });
@@ -147,7 +120,6 @@
 
         formula: function(value) {
             if (value === null) {
-
                 var sheet = this._sheet;
                 sheet.batch(function() {
                     this._property("formula", null);
@@ -157,7 +129,7 @@
                 return this;
             }
 
-            return this._property("formula", value, true);
+            return this._property("formula", value, false, true);
         },
 
         merge: function() {
