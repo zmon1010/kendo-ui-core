@@ -29,6 +29,8 @@ namespace Kendo.Mvc.UI
         
         public string Mode { get; set; }
         
+        public bool? Move { get; set; }
+        
         public string Template { get; set; }
 
         public string TemplateId { get; set; }
@@ -46,6 +48,11 @@ namespace Kendo.Mvc.UI
                 json["mode"] = Mode;
             }
             
+            if (Move.HasValue)
+            {
+                json["move"] = Move;
+            }
+                
             if (!string.IsNullOrEmpty(TemplateId))
             {
                 json["template"] = new ClientHandlerDescriptor {

@@ -18,7 +18,7 @@ namespace Kendo.Mvc.UI.Fluent
         //>> Factory methods
         
         /// <summary>
-        /// Adds an item for a custom action. Specifying the name of the action is mandatory.
+        /// Adds an item for a custom action.
         /// </summary>
         public virtual TreeListColumnCommandBuilder<T> Custom()
         {

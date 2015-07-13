@@ -33,7 +33,7 @@ namespace Kendo.Mvc.UI
         public string Orientation { get; set; }
         
         public string ToggleButton { get; set; }
-
+        
         //<< Fields
 
         public HtmlTemplate Template
