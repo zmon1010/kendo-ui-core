@@ -649,7 +649,6 @@
                 var result = Sheet.parse(value, parseStrings);
 
                 if (result.type === "date") {
-                    this._properties.set("format", index, toExcelFormat(kendo.culture().calendar.patterns.d));
                 }
 
                 this._properties.set("value", index, result.value);
@@ -758,10 +757,6 @@
             value: value
         };
     };
-
-    function toExcelFormat(format) {
-        return format.replace(/M/g, "m").replace(/'/g, '"').replace(/tt/, "am/pm");
-    }
 
     kendo.spreadsheet.Sheet = Sheet;
 })(kendo);
