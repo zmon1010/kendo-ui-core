@@ -54,14 +54,13 @@ namespace <#= Namespace #>
         public string RecurrenceException { get; set; }
         public bool IsAllDay { get; set; }
         
-        <# foreach (EnvDTE.CodeElement child in ModelTypeChildren) {
+<# foreach (EnvDTE.CodeElement child in ModelTypeChildren) {
             if (child.Kind == EnvDTE.vsCMElement.vsCMElementProperty) {
                 var prop = child as EnvDTE.CodeProperty;
                 var type = prop.Getter.Type.AsString;
-                if (SelectedModelTypeFields.IndexOf(prop.Name) > -1) { #>
-                public <#= type #> <#= prop.Name #> { get; set; }
-                <# } #>
-            <# } #>
-        <# } #>
+                if (SelectedModelTypeFields.IndexOf(prop.Name) == -1) { #>
+        public <#= type #> <#= prop.Name #> { get; set; }
+<# } } } #>
+
     }
 }

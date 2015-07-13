@@ -74,7 +74,10 @@ namespace KendoScaffolder.Scaffolders
             //string pluralizedName = efMetadata.EntitySetName;
             //string modelNameSpace = modelType.Namespace != null ? modelType.Namespace.FullName : String.Empty;
             //string relativePath = string.Empty;
-            List<string> selectedModelTypeFields = ViewModel.SchedulerEventFields.ToList();
+            List<string> selectedModelTypeFields = ViewModel.SchedulerEventFields
+                .Select(field => field.Replace("SelectedEvent", "").Replace("Field", ""))
+                .ToList();
+
             selectedModelTypeFields.Add(primaryKey.PropertyName);
 
             if (ViewModel.SelectedModelResourceField != null)
@@ -85,7 +88,7 @@ namespace KendoScaffolder.Scaffolders
             var commonParameters = new Dictionary<string, object>()
             {
                 {"ControllerName", controllerName},
-                //{"ControllerRootName" , controllerRootName},
+                {"ControllerRootName" , controllerRootName},
                 {"ModelVariable", modelTypeVariable},
                 {"ModelMetadata", EfMetadata},
                 {"PdfExport", ViewModel.PdfExport},
