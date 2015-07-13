@@ -4,14 +4,32 @@
 
 (function(kendo) {
     kendo.spreadsheet.PropertyBag = kendo.Class.extend({
-        init: function() {
-            this._specs = [];
-            this._properties = {};
-        },
+        specs: [
+            { name: "value", value: null, sortable: true, serializable: true },
+            { name: "type",  value: null, sortable: true, serializable: false },
+            { name: "format", value: null, sortable: true, serializable: true },
+            { name: "formula", value: null, sortable: true, serializable: true },
+            { name: "compiledFormula", value: null, sortable: true, serializable: false },
+            { name: "background", value: null, sortable: true, serializable: true },
+            { name: "borderBottom", value: null, sortable: false, serializable: true },
+            { name: "borderRight", value: null, sortable: false, serializable: true },
+            { name: "fontColor", value: null, sortable: true, serializable: true },
+            { name: "fontFamily", value: null, sortable: true, serializable: true },
+            { name: "fontLine", value: null, sortable: true, serializable: true },
+            { name: "fontSize", value: null, sortable: true, serializable: true },
+            { name: "fontStyle", value: null, sortable: true, serializable: true },
+            { name: "fontWeight", value: null, sortable: true, serializable: true },
+            { name: "horizontalAlignment", value: null, sortable: true, serializable: true },
+            { name: "verticalAlignment", value: null, sortable: true, serializable: true },
+            { name: "wrap", value: null, sortable: true, serializable: true }
+        ],
 
-        register: function(spec) {
-            this._specs.push(spec);
-            this._properties[spec.name] = new kendo.spreadsheet.SparseRangeList(0, spec.count, spec.value);
+        init: function(cellCount) {
+            this._properties = {};
+
+            this.specs.forEach(function(spec) {
+               this._properties[spec.name] = new kendo.spreadsheet.SparseRangeList(0, cellCount, spec.value);
+            }, this);
         },
 
         get: function(name, index) {
@@ -36,7 +54,7 @@
         },
 
         copy: function(sourceStart, sourceEnd, targetStart) {
-            this._specs.forEach(function(spec) {
+            this.specs.forEach(function(spec) {
                 this._properties[spec.name].copy(sourceStart, sourceEnd, targetStart);
             }, this);
         },
@@ -46,14 +64,14 @@
         },
 
         sortable: function() {
-            return this._specs.filter(function(spec) { return spec.sortable; })
+            return this.specs.filter(function(spec) { return spec.sortable; })
                               .map(function(spec) {
                                 return this.get(spec.name);
                               }, this);
         },
 
         iterators: function(start, end, serializableOnly) {
-            var specs = this._specs;
+            var specs = this.specs;
 
             if (serializableOnly) {
                 specs = specs.filter(function(spec) {

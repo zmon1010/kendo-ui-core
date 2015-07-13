@@ -23,27 +23,7 @@
             this._activeCell = kendo.spreadsheet.FIRSTREF.toRangeRef();
             this._originalActiveCell = kendo.spreadsheet.FIRSTREF;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
-
             this._properties = new kendo.spreadsheet.PropertyBag(cellCount);
-
-            this._properties.register({ name: "value", count: cellCount, value: null, sortable:true, serializable: true });
-            this._properties.register({ name: "type", count: cellCount, value: null, sortable:true, serializable: false });
-            this._properties.register({ name: "format", count: cellCount, value: null, sortable:true, serializable: true });
-            this._properties.register({ name: "formula", count: cellCount, value: null, sortable:true, serializable: true });
-            this._properties.register({ name: "compiledFormula", count: cellCount, value: null, sortable:true, serializable: false });
-            this._properties.register({ name: "background", count: cellCount, value: null, sortable:true, serializable: true });
-            this._properties.register({ name: "borderBottom", count: cellCount, value: null, sortable:false, serializable: true });
-            this._properties.register({ name: "borderRight", count: cellCount, value: null, sortable:false, serializable: true });
-            this._properties.register({ name: "fontColor", count: cellCount, value: null, sortable:true, serializable: true });
-            this._properties.register({ name: "fontFamily", count: cellCount, value: null, sortable:true, serializable: true });
-            this._properties.register({ name: "fontLine", count: cellCount, value: null, sortable:true, serializable: true });
-            this._properties.register({ name: "fontSize", count: cellCount, value: null, sortable:true, serializable: true });
-            this._properties.register({ name: "fontStyle", count: cellCount, value: null, sortable:true, serializable: true });
-            this._properties.register({ name: "fontWeight", count: cellCount, value: null, sortable:true, serializable: true });
-            this._properties.register({ name: "horizontalAlignment", count: cellCount, value: null, sortable:true, serializable: true });
-            this._properties.register({ name: "verticalAlignment", count: cellCount, value: null, sortable:true, serializable: true });
-            this._properties.register({ name: "wrap", count: cellCount, value: null, sortable:true, serializable: true });
-
             this._sorter = new kendo.spreadsheet.Sorter(this._grid, this._properties.sortable());
         },
 
