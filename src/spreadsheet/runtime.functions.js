@@ -967,12 +967,6 @@
         [ "ref", [ "or", "area", "#matrix" ] ]
     ]);
 
-    defineFunction("transpose", function(m){
-        return m.transpose();
-    }).args([
-        [ "range", "matrix" ]
-    ]);
-
     defineFunction("vlookup", function(value, m, col, approx){
         var resultRow = null;
         m.eachRow(function(row){
@@ -996,6 +990,26 @@
         [ "range", "matrix" ],
         [ "col", "number++" ],
         [ "approx", [ "or", "boolean", [ "null", true ]]]
+    ]);
+
+    /* -----[ Matrix functions ]----- */
+
+    defineFunction("mdeterm", function(m){
+        var error = m.each(function(val){
+            if (typeof val != "number") {
+                return new CalcError("VALUE");
+            }
+        }, true);
+        return error || m.determinant();
+    }).args([
+        [ "m", [ "and", "matrix",
+                 [ "assert", "$m.width == $m.height" ] ] ]
+    ]);
+
+    defineFunction("transpose", function(m){
+        return m.transpose();
+    }).args([
+        [ "range", "matrix" ]
     ]);
 
     /* -----[ Other ]----- */

@@ -685,6 +685,23 @@
         });
     });
 
+    test("MDETERM", function(){
+        ss.fill({
+            A4: '=mdeterm(A1:C3)',
+            A5: '=mdeterm({ 5, 2; 7, 1 })',
+            A6: '=mdeterm({ 6, 4, 2; 3, 5, 3; 2, 3, 4 })',
+            A7: '=mdeterm({ 1, 2, 3; 4, 5, 6 })',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A4: 0,
+                A5: -9,
+                A6: 40,
+                A7: "#VALUE!",
+            });
+        });
+    });
+
     test("evaluate dependent formulas", function(){
         ss.fill({
             D1: '=sum(indirect("D2"):indirect("$D$3"))',

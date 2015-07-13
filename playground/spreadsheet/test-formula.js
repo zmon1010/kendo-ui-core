@@ -516,7 +516,7 @@ makeElements(".sheet");
 //         D1: '=countblank(A1:C3)',
 //     },
 //     sheet2: {
-        
+
 //     }
 // });
 
@@ -654,6 +654,11 @@ fillElements({
         F16: '=mode.mult({ 1, 3, 2, 2, 3, 3, 2, 1 })',
         F17: '=mode.mult({ 1, 2, 3 })',
 
+        G18: '=mdeterm({ 5, 2; 7, 1 })',
+        G19: '=mdeterm({ 6, 4, 2; 3, 5, 3; 2, 3, 4 })',
+        G20: '=mdeterm(A1:C3)',
+        G21: '=mdeterm(transpose(A1:C3))',
+
         H7: '=aggregate(1, 0, H1:H6)',
         H14: '=aggregate(1, 0, H1:H7)',
 
@@ -695,7 +700,7 @@ fillElements({
         F9: 1303,
         F10: 1299,
         F11: '=stdev.s(F1:F10)',
-        
+
     }
     // sheet1: {
     //     A1: '=CURRENCY("USD", "EUR") + CURRENCY("USD", "EUR")'

@@ -233,6 +233,13 @@
             this.width = 0;
             this.data = [];
         },
+        clone: function() {
+            var m = new Matrix(this.context);
+            m.height = this.height;
+            m.width = this.width;
+            m.data = this.data.map(function(row){ return row.slice(); });
+            return m;
+        },
         get: function(row, col) {
             var line = this.data[row];
             var val = line ? line[col] : null;
@@ -311,6 +318,34 @@
                 m.set(col, row, el);
             });
             return m;
+        },
+        determinant: function() {
+            // have to thank my father for this function.
+            // http://docere.ro/o-aplicatie-pentru-browser-cu-determinanti-si-sisteme-liniare/
+            var a = this.clone().data;
+            var n = a.length;
+            var d = 1, C, L, i, k;
+            for (C = 0; C < n; C++) {
+                for (L = C; (L < n) && (!a[L][C]); L++) {}
+                if (L == n) {
+                    return 0;
+                }
+                if (L != C) {
+                    d = -d;
+                    for (k = C; k < n; k++) {
+                        var t = a[C][k];
+                        a[C][k] = a[L][k];
+                        a[L][k] = t;
+                    }
+                }
+                for (i = C+1; i < n; i++) {
+                    for (k = C+1; k < n; k++) {
+                        a[i][k] -= a[C][k] * a[i][C] / a[C][C];
+                    }
+                }
+                d *= a[C][C];
+            }
+            return d;
         }
     });
 
