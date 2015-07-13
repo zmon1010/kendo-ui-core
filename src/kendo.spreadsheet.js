@@ -1,6 +1,5 @@
 (function(f, define){
     define([
-        "./kendo.toolbar",
         "./util/undoredostack",
         "./spreadsheet/commands",
         "./spreadsheet/formulabar",
@@ -19,7 +18,8 @@
         "./spreadsheet/runtime",
         "./spreadsheet/calc",
         "./spreadsheet/numformat",
-        "./spreadsheet/runtime.functions.js"
+        "./spreadsheet/runtime.functions.js",
+        "./spreadsheet/toolbar"
     ], f);
 })(function(){
     var __meta__ = {
@@ -131,6 +131,7 @@
         },
 
         _toolbar: function() {
+            var element;
             var toggle = function(value) {
                     return function(e) {
                         this._execCommand(kendo.spreadsheet.PropertyChangeCommand, {
@@ -145,6 +146,7 @@
                 return {
                     spriteCssClass: "k-tool-icon k-" + className,
                     id: options.property,
+                    attributes: { "data-property": options.property },
                     text: options.text,
                     togglable: true,
                     toggle: toggle(options.value),
@@ -158,20 +160,21 @@
             }
 
             if (this.options.toolbar) {
-                this.toolbar = $("<div />")
-                    .prependTo(this.element)
-                    .kendoToolBar({
-                        items: [
-                            { type: "button", text: "Format cells", click: function() {
-                                this._execCommand(kendo.spreadsheet.FormatCellsCommand);
-                            }.bind(this) },
-                            { type: "buttonGroup", buttons: [
-                                toggleable({ text: "Bold", property: "fontWeight", value: "bold" }),
-                                toggleable({ text: "Italic", property: "fontStyle", value: "italic" }),
-                                toggleable({ text: "Underline", property: "fontLine", value: "underline" })
-                            ] }
-                        ]
-                    }).data("kendoToolBar");
+                element = $("<div />").prependTo(this.element);
+                this.toolbar = new kendo.spreadsheet.toolbar(element, {
+                    items: [
+                        { type: "button", text: "Format cells", attributes: { "data-property": "format" }, click: function() {
+                            this._execCommand(kendo.spreadsheet.FormatCellsCommand);
+                        }.bind(this) },
+                        { type: "buttonGroup", buttons: [
+                            toggleable({ text: "Bold", property: "fontWeight", value: "bold" }),
+                            toggleable({ text: "Italic", property: "fontStyle", value: "italic" }),
+                            toggleable({ text: "Underline", property: "fontLine", value: "underline" })
+                        ] }
+                    ]
+                });
+
+                this.toolbar.bindTo(this);
             }
         },
 
