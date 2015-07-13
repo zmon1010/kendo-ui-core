@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../dist/styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../dist/styles/web/kendo.default.css" />
+    <script src="loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js",
+        "./test-pdf-helpers.js",
+      ]);
+    </script>
+    <style>
+      pre {
+        font-family: "DejaVu Mono";
+        padding: 9.5px;
+        word-break: break-all;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="pdf('pre')">PDF</button>
+
+    <pre style="width: 50em">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel enim leo. Suspendisse maximus sit amet libero vitae porttitor. Duis aliquam diam urna. Ut eleifend sit amet nulla vitae porttitor. Sed sem nisi, fermentum vel efficitur ut, efficitur sit amet mi. Aenean tempus odio vel ligula tempus ornare. Mauris placerat eros quis justo feugiat dignissim. Curabitur pharetra, ligula mollis porttitor pellentesque, turpis diam maximus urna, eu cursus sem leo vitae neque. Vestibulum elementum, urna ut luctus pretium, justo massa bibendum lectus, non malesuada urna magna in mauris. Fusce nec tortor sit amet nulla tempus finibus sed eget elit.
+
+Sed porta lorem orci, ut imperdiet tellus rutrum quis. Cras placerat cursus libero sit amet auctor. Maecenas placerat tortor vel diam pellentesque, ac congue augue sagittis. Etiam at est quis massa imperdiet sodales id quis leo. Cras pharetra feugiat scelerisque. Fusce viverra sem id faucibus mattis. Nullam faucibus maximus finibus. Maecenas feugiat, ipsum eget molestie consequat, enim lacus accumsan quam, et varius leo risus a nulla.
+    </pre>
+    <script>
+      //pdf("pre");
+    </script>
+  </body>
+</html>

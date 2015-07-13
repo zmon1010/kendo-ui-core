@@ -1024,10 +1024,17 @@
     }
 
     function actuallyGetRangeBoundingRect(range) {
-        if (browser.msie) {
+        if (browser.msie || browser.chrome) {
+            // Workaround browser bugs: IE and Chrome would sometimes
+            // return 0 or 1-width rectangles before or after the main
+            // one.  https://github.com/telerik/kendo/issues/4674
+            // These are probably not the only cases.
             var a = range.getClientRects();
-            if (a.length == 2 && a[1].width === 0) {
+            if (a.length == 2 && a[1].width <= 1) {
                 return a[0];
+            }
+            if (a.length == 3 && a[0].width <= 1 && a[2].width <= 1) {
+                return a[1];
             }
         }
         return range.getBoundingClientRect();
