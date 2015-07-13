@@ -52,19 +52,28 @@
                               }, this);
         },
 
-        iterators: function(start, end) {
-           return this._specs.map(function(spec) {
+        iterators: function(start, end, serializableOnly) {
+            var specs = this._specs;
+
+            if (serializableOnly) {
+                specs = specs.filter(function(spec) {
+                    return spec.serializable;
+                });
+            }
+
+            return specs.map(function(spec) {
                 var iterator = this.iterator(spec.name, start, end);
+
                 return {
                     name: spec.name,
                     value: spec.value,
                     at: iterator.at.bind(iterator)
                 };
-           }, this);
+            }, this);
         },
 
-        forEach: function(start, end, callback) {
-            var iterators = this.iterators(start, end);
+        forEach: function(start, end, callback, serializableOnly) {
+            var iterators = this.iterators(start, end, serializableOnly);
 
             for (var index = start; index <= end; index++) {
                 var values = {};

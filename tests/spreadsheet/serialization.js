@@ -165,6 +165,8 @@
         var json = sheet.toJSON();
 
         equal(json.rows[0].cells[0].formula, "=SUM(A1,A2)");
+
+        equal(Object.keys(json.rows[0].cells[0]).length, 3);
     });
 
     test("toJSON doesn't serialize empty style", function() {

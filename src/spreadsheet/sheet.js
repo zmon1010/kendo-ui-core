@@ -26,23 +26,23 @@
 
             this._properties = new kendo.spreadsheet.PropertyBag(cellCount);
 
-            this._properties.register({ name: "value", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "type", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "format", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "formula", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "compiledFormula", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "background", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "borderBottom", count: cellCount, value: null, sortable:false });
-            this._properties.register({ name: "borderRight", count: cellCount, value: null, sortable:false });
-            this._properties.register({ name: "fontColor", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "fontFamily", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "fontLine", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "fontSize", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "fontStyle", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "fontWeight", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "horizontalAlignment", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "verticalAlignment", count: cellCount, value: null, sortable:true });
-            this._properties.register({ name: "wrap", count: cellCount, value: null, sortable:true });
+            this._properties.register({ name: "value", count: cellCount, value: null, sortable:true, serializable: true });
+            this._properties.register({ name: "type", count: cellCount, value: null, sortable:true, serializable: false });
+            this._properties.register({ name: "format", count: cellCount, value: null, sortable:true, serializable: true });
+            this._properties.register({ name: "formula", count: cellCount, value: null, sortable:true, serializable: true });
+            this._properties.register({ name: "compiledFormula", count: cellCount, value: null, sortable:true, serializable: false });
+            this._properties.register({ name: "background", count: cellCount, value: null, sortable:true, serializable: true });
+            this._properties.register({ name: "borderBottom", count: cellCount, value: null, sortable:false, serializable: true });
+            this._properties.register({ name: "borderRight", count: cellCount, value: null, sortable:false, serializable: true });
+            this._properties.register({ name: "fontColor", count: cellCount, value: null, sortable:true, serializable: true });
+            this._properties.register({ name: "fontFamily", count: cellCount, value: null, sortable:true, serializable: true });
+            this._properties.register({ name: "fontLine", count: cellCount, value: null, sortable:true, serializable: true });
+            this._properties.register({ name: "fontSize", count: cellCount, value: null, sortable:true, serializable: true });
+            this._properties.register({ name: "fontStyle", count: cellCount, value: null, sortable:true, serializable: true });
+            this._properties.register({ name: "fontWeight", count: cellCount, value: null, sortable:true, serializable: true });
+            this._properties.register({ name: "horizontalAlignment", count: cellCount, value: null, sortable:true, serializable: true });
+            this._properties.register({ name: "verticalAlignment", count: cellCount, value: null, sortable:true, serializable: true });
+            this._properties.register({ name: "wrap", count: cellCount, value: null, sortable:true, serializable: true });
 
             this._sorter = new kendo.spreadsheet.Sorter(this._grid, this._properties.sortable());
         },
@@ -326,7 +326,7 @@
             this._mergedCells.forEach(callback);
         },
 
-        forEach: function(ref, callback) {
+        forEach: function(ref, callback, serializableOnly) {
             var topLeft = this._grid.normalize(ref.topLeft);
             var bottomRight = this._grid.normalize(ref.bottomRight);
 
@@ -338,7 +338,7 @@
 
                 this._properties.forEach(startCellIndex, endCellIndex, function(value) {
                     callback(ri++, ci, value);
-                });
+                }, serializableOnly);
             }
         },
 
@@ -502,7 +502,7 @@
                 }
 
                 row.cells.push(cell);
-            });
+            }, true);
 
             var json = {
                 rows: rows,
