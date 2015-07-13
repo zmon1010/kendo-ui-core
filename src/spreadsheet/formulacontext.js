@@ -84,9 +84,16 @@
         },
 
         onFormula: function(sheet, row, col, value) {
-            this.sheets[sheet].value(row, col, value);
-        }
+            sheet = this.sheets[sheet];
 
+            if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
+                value.each(function(value, row, col) {
+                    sheet._value(row, col, value, false);
+                });
+            } else {
+                sheet._value(row, col, value, false);
+            }
+        }
     });
 
     spreadsheet.FormulaContext = FormulaContext;

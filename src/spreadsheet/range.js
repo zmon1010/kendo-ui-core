@@ -59,7 +59,7 @@
 
                         for (var ci = topLeft.col; ci <= bottomRight.col; ci++) {
                             for (var ri = topLeft.row; ri <= bottomRight.row; ri++) {
-                               this._sheet._setValue(ri, ci, value, parseStrings);
+                               this._sheet._value(ri, ci, value, parseStrings);
                             }
                         }
                     }.bind(this));
@@ -69,7 +69,7 @@
             } else {
                 var topLeft = this._normalize(this._ref.toRangeRef().topLeft);
 
-                return this._sheet._getValue(topLeft.row, topLeft.col);
+                return this._sheet._value(topLeft.row, topLeft.col);
             }
         },
         _editableValue: function(value) {

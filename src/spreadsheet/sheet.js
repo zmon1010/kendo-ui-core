@@ -358,7 +358,7 @@
 
                 for (ci = topLeftCol; ci <= bottomRightCol; ci ++) {
                     for (ri = topLeftRow; ri <= bottomRightRow; ri ++) {
-                        values[ri - topLeftRow][ci - topLeftCol] = this._getValue(ri, ci);
+                        values[ri - topLeftRow][ci - topLeftCol] = this._value(ri, ci);
                     }
                 }
 
@@ -372,7 +372,7 @@
                             var value = row[ci - topLeftCol];
 
                             if (value !== undefined) {
-                                this._setValue(ri, ci, value);
+                                this._value(ri, ci, value);
                             }
                         }
                     }
@@ -702,39 +702,27 @@
             }, this);
         },
 
-        value: function(row, col, value) {
-            if (value instanceof kendo.spreadsheet.calc.runtime.Matrix) {
-                value.each(function(value, row, col) {
-                    this._setValue(row, col, value, false);
-                }.bind(this));
+        _value: function(row, col, value, parseStrings) {
+            var index = this._grid.index(row, col);
+
+            if (value !== undefined) {
+                var result = Sheet.parse(value, parseStrings);
+
+                if (result.type === "date") {
+                    this._properties.set("format", index, toExcelFormat(kendo.culture().calendar.patterns.d));
+                }
+
+                this._properties.set("value", index, result.value);
+                this._properties.set("type", index, result.type);
             } else {
-                this._setValue(row, col, value, false);
+                value = this._properties.get("value", index);
+
+                if (this._properties.get("type", index) === "date") {
+                    value = kendo.spreadsheet.calc.runtime.serialToDate(value);
+                }
+
+                return value;
             }
-        },
-
-        _setValue: function(row, col, value, parseStrings) {
-            var result = Sheet.parse(value, parseStrings);
-            var index = this._grid.index(row, col);
-
-            if (result.type === "date") {
-                this._properties.set("format", index, toExcelFormat(kendo.culture().calendar.patterns.d));
-            }
-
-            this._properties.set("value", index, result.value);
-            this._properties.set("type", index, result.type);
-        },
-        _getValue: function(row, col) {
-            var index = this._grid.index(row, col);
-
-            var type = this._properties.get("type", index);
-
-            var value = this._properties.get("value", index);
-
-            if (type === "date") {
-                value = kendo.spreadsheet.calc.runtime.serialToDate(value);
-            }
-
-            return value;
         },
 
         batch: function(callback, recalc) {
