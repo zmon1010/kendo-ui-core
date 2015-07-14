@@ -1,5 +1,0 @@
-/*
-* Kendo UI Promotional Edition v#= version # (http://www.telerik.com/kendo-ui)
-* Copyright #= year # Telerik AD. All rights reserved.
-*/
-
