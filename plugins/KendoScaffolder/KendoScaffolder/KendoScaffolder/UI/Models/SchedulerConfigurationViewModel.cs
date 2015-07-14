@@ -483,6 +483,7 @@
             {
                 TypeName = prop.FullName,
                 ShortTypeName = prop.Name,
+                GetterType = prop.Getter.Type.AsString,
                 DisplayName = prop.FullName == null
                 ? prop.Name
                 : String.Format(CultureInfo.InvariantCulture, "{0} ({1})", prop.Name, prop.FullName)

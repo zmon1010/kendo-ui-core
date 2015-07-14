@@ -35,5 +35,7 @@ namespace KendoScaffolder.UI
         public string TypeName { get; set; }
 
         public string ShortTypeName { get; set; }
+
+        public string GetterType { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace <#= Namespace #>
 {
     public class <#= WidgetViewModelName #>: ISchedulerEvent
     {
-        public int <#= PrimaryKeyName #> { get; set; }
+        public <#= PrimaryKeyType #> <#= PrimaryKeyName #> { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
 
@@ -49,8 +49,11 @@ namespace <#= Namespace #>
             }
         }
 
+        public string StartTimezone { get; set; }
+        public string EndTimezone { get; set; }
+
         public string RecurrenceRule { get; set; }
-        public int? RecurrenceID { get; set; }
+        public <#= RecurrenceIDType #> RecurrenceID { get; set; }
         public string RecurrenceException { get; set; }
         public bool IsAllDay { get; set; }
         

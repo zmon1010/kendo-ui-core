@@ -95,10 +95,21 @@ namespace KendoScaffolder.Scaffolders
                 {"PrimaryKeyMetadata", primaryKey},
                 {"PrimaryKeyName", primaryKey.PropertyName},
                 {"PrimaryKeyType", primaryKey.ShortTypeName},
+                {"RecurrenceIDType", ViewModel.SelectedEventRecurrenceIDField.GetterType},
                 {"ViewName", viewName},
                 {"ViewPrefix", ""},
                 {"WidgetViewModelName", widgetViewModelName},
-                {"SelectedModelTypeFields", selectedModelTypeFields}
+                {"SelectedModelTypeFields", selectedModelTypeFields},
+                {"SelectedEventTitleField", ViewModel.SelectedEventTitleField.ShortTypeName},
+                {"SelectedEventStartField", ViewModel.SelectedEventStartField.ShortTypeName},
+                {"SelectedEventEndField", ViewModel.SelectedEventEndField.ShortTypeName},
+                {"SelectedEventDescriptionField", ViewModel.SelectedEventDescriptionField.ShortTypeName},
+                {"SelectedEventIsAllDayField", ViewModel.SelectedEventIsAllDayField.ShortTypeName},
+                {"SelectedEventStartTimezoneField", ViewModel.SelectedEventStartTimezoneField.ShortTypeName},
+                {"SelectedEventEndTimezoneField", ViewModel.SelectedEventEndTimezoneField.ShortTypeName},
+                {"SelectedEventRecurrenceIDField", ViewModel.SelectedEventRecurrenceIDField.ShortTypeName},
+                {"SelectedEventRecurrenceRuleField", ViewModel.SelectedEventRecurrenceRuleField.ShortTypeName},
+                {"SelectedEventRecurrenceExceptionField", ViewModel.SelectedEventRecurrenceExceptionField.ShortTypeName},
             };
 
             return commonParameters;
@@ -152,12 +163,6 @@ namespace KendoScaffolder.Scaffolders
 
         public Dictionary<string, object> GetViewParameters()
         {
-            string viewDataTypeName = ModelType.Namespace.FullName + "." + ModelType.Name;
-
-            if (ViewModel.UseViewModel && ViewModelType != null)
-            {
-                viewDataTypeName = ViewModelType.Namespace.FullName + "." + ViewModelType.Name;
-            }
 
             var viewParameters = new Dictionary<string, object>(CommonParameters);
 
@@ -168,7 +173,7 @@ namespace KendoScaffolder.Scaffolders
             viewParameters.Add("IsPartialView", false);
             viewParameters.Add("LayoutPageFile", "");
             viewParameters.Add("Selectable", ViewModel.Selectable);
-            viewParameters.Add("ViewDataTypeName", viewDataTypeName);
+            viewParameters.Add("Namespace", KendoScaffolderUtils.GetDefaultNamespace(Context));
             viewParameters.Add("SchedulerEvents", ViewModel.SelectedSchedulerEvents);
             //viewParameters.Add("ServerOperation", ViewModel.ServerOperation);
 
