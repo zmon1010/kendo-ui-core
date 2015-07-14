@@ -50,6 +50,7 @@ var __meta__ = {
         isFunction = kendo.isFunction,
         CHANGE = "change",
         ERROR = "error",
+        MEASURES = "Measures",
         PROGRESS = "progress",
         STATERESET = "stateReset",
         AUTO = "auto",
@@ -226,7 +227,7 @@ var __meta__ = {
 
         if (measures.length > 1) {
             members.push({
-                name: "Measures",
+                name: MEASURES,
                 measure: true,
                 children: normalizeMembers(measures)
             });
@@ -1198,9 +1199,9 @@ var __meta__ = {
 
                     if (cube.measures) {
                         result.push({
-                            name: "Measures",
-                            caption: "Measures",
-                            uniqueName: "Measures",
+                            name: MEASURES,
+                            caption: MEASURES,
+                            uniqueName: MEASURES,
                             type: 2
                         });
                     }
@@ -2243,12 +2244,19 @@ var __meta__ = {
             return 0;
         }
 
-        var counter = Math.max(measures.length, 1);
+        var measuresLength = Math.max(measures.length, 1);
         var tuples = tuple.members.slice(0, memberIndex);
+        var counter = measuresLength;
         var current = tuples.shift();
 
+        if (measuresLength > 1) {
+            measuresLength += 1;
+        }
+
         while (current) {
-            if (current.children) {
+            if (current.name === MEASURES) {
+                counter += measuresLength;
+            } else if (current.children) {
                 //is member
                 [].push.apply(tuples, current.children);
             } else {
@@ -2443,7 +2451,7 @@ var __meta__ = {
             return;
         }
         var member = {
-            name: "Measures",
+            name: MEASURES,
             measure: true,
             children: [
                 $.extend({ members: [], dataIndex: tuple.dataIndex }, tuple.members[index])

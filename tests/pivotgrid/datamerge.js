@@ -99,6 +99,232 @@
         equal(data[4].value, 7);
     });
 
+    test("expand of second dimension of root column tuple after the second dimension of a child tuple is expanded", function() {
+        var columnTuples = [
+            {
+                tuples: [
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1", children: [] } ] },
+                    { members: [ { name: "dim 0-2", parentName: "dim 0", children: [] }, { name: "dim 1", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1-1", parentName: "dim 1", children: [] } ] }
+                ]
+            },
+            {
+                tuples: [
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] } ] },
+                ]
+            }
+        ];
+        var data = [
+            [ { value: 10, ordinal: 0 }, { value: 2, ordinal: 1 }, { value: 3, ordinal: 2 }, { value: 6, ordinal: 3 }, { value: 7, ordinal: 4 } ],
+            [ { value: 10, ordinal: 0 }, { value: 4, ordinal: 1 }, { value: 5, ordinal: 2 } ]
+        ];
+        var dataSource = new PivotDataSource({
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success({
+                        axes: {
+                            columns: columnTuples.shift()
+                        },
+                        data: data.shift()
+                    });
+                }
+            }
+        });
+
+        dataSource.read();
+        dataSource.expandColumn(["dim 0","dim 1"]);
+
+        var data = dataSource.data();
+        equal(data.length, 7);
+
+        equal(data[0].value, 10);
+        equal(data[1].value, 2);
+        equal(data[2].value, 6);
+        equal(data[3].value, 7);
+        equal(data[4].value, 3);
+        equal(data[5].value, 4);
+        equal(data[6].value, 5);
+    });
+
+    test("expand of second dimension of root column tuple after the second dimension of a child tuple is expanded (two measures)", function() {
+        var columnTuples = [
+            {
+                tuples: [
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0-2", parentName: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0-2", parentName: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1-1", parentName: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1-1", parentName: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] }, { name: "measure 2", children: [] } ] }
+                ]
+            },
+            {
+                tuples: [
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1-1", parentName: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1-1", parentName: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] }, { name: "measure 2", children: [] } ] }
+                ]
+            }
+        ];
+        var data = [
+            [ { value: 100, ordinal: 0 }, { value: 200, ordinal: 1 },
+              { value: 2, ordinal: 2 }, { value: 4, ordinal: 3 },
+              { value: 3, ordinal: 4 }, { value: 6, ordinal: 5 },
+              { value: 5, ordinal: 6 }, { value: 10, ordinal: 7 },
+              { value: 7, ordinal: 8 }, { value: 14, ordinal: 9 } ],
+
+            [ { value: 100, ordinal: 0 }, { value: 200, ordinal: 1 },
+              { value: 30, ordinal: 2 }, { value: 60, ordinal: 3 },
+              { value: 40, ordinal: 4 }, { value: 80, ordinal: 5 } ]
+        ];
+        var dataSource = new PivotDataSource({
+            measures: ["measure 1", "measure 2"],
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success({
+                        axes: {
+                            columns: columnTuples.shift()
+                        },
+                        data: data.shift()
+                    });
+                }
+            }
+        });
+
+        dataSource.read();
+        dataSource.expandColumn(["dim 0","dim 1"]);
+
+        var data = dataSource.data();
+
+        equal(data.length, 14);
+        equal(data[0].value, 100);
+        equal(data[1].value, 200);
+        equal(data[2].value, 2);
+        equal(data[3].value, 4);
+        equal(data[4].value, 5);
+        equal(data[5].value, 10);
+        equal(data[6].value, 7);
+        equal(data[7].value, 14);
+        equal(data[8].value, 3);
+        equal(data[9].value, 6);
+        equal(data[10].value, 30);
+        equal(data[11].value, 60);
+        equal(data[12].value, 40);
+        equal(data[13].value, 80);
+    });
+
+    test("expand of second dimension of root column tuple after the second dimension of a child tuple is expanded (three measures)", function() {
+        var columnTuples = [
+            {
+                tuples: [
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 3", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 3", children: [] } ] },
+                    { members: [ { name: "dim 0-2", parentName: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0-2", parentName: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0-2", parentName: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 3", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1-1", parentName: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1-1", parentName: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1-1", parentName: "dim 1", children: [] }, { name: "measure 3", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0-1", parentName: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] }, { name: "measure 3", children: [] } ] }
+                ]
+            },
+            {
+                tuples: [
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1", children: [] }, { name: "measure 3", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1-1", parentName: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1-1", parentName: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1-1", parentName: "dim 1", children: [] }, { name: "measure 3", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] }, { name: "measure 1", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] }, { name: "measure 2", children: [] } ] },
+                    { members: [ { name: "dim 0", children: [] }, { name: "dim 1-2", parentName: "dim 1", children: [] }, { name: "measure 3", children: [] } ] }
+                ]
+            }
+        ];
+        var data = [
+            [ { value: 100, ordinal: 0 }, { value: 200, ordinal: 1 }, { value: 300, ordinal: 2 },
+              { value: 2, ordinal: 3 }, { value: 4, ordinal: 4 }, { value: 8, ordinal: 5 },
+              { value: 3, ordinal: 6 }, { value: 6, ordinal: 7 }, { value: 9, ordinal: 8 },
+              { value: 5, ordinal: 9 }, { value: 10, ordinal: 10 }, { value: 15, ordinal: 11 },
+              { value: 7, ordinal: 12 }, { value: 14, ordinal: 13 }, { value: 21, ordinal: 14 } ],
+
+            [ { value: 100, ordinal: 0 }, { value: 200, ordinal: 1 }, { value: 300, ordinal: 2 },
+              { value: 30, ordinal: 3 }, { value: 60, ordinal: 4 }, { value: 90, ordinal: 5 },
+              { value: 40, ordinal: 6 }, { value: 80, ordinal: 7 }, { value: 120, ordinal: 8 } ]
+        ];
+        var dataSource = new PivotDataSource({
+            measures: ["measure 1", "measure 2", "measure 3"],
+            schema: {
+                axes: "axes",
+                data: "data"
+            },
+            transport: {
+                read: function(options) {
+                    options.success({
+                        axes: {
+                            columns: columnTuples.shift()
+                        },
+                        data: data.shift()
+                    });
+                }
+            }
+        });
+
+        dataSource.read();
+        dataSource.expandColumn(["dim 0","dim 1"]);
+
+        var data = dataSource.data();
+
+        equal(data.length, 21);
+        equal(data[0].value, 100);
+        equal(data[1].value, 200);
+        equal(data[2].value, 300);
+        equal(data[3].value, 2);
+        equal(data[4].value, 4);
+        equal(data[5].value, 8);
+        equal(data[6].value, 5);
+        equal(data[7].value, 10);
+        equal(data[8].value, 15);
+        equal(data[9].value, 7);
+        equal(data[10].value, 14);
+        equal(data[11].value, 21);
+        equal(data[12].value, 3);
+        equal(data[13].value, 6);
+        equal(data[14].value, 9);
+        equal(data[15].value, 30);
+        equal(data[16].value, 60);
+        equal(data[17].value, 90);
+        equal(data[18].value, 40);
+        equal(data[19].value, 80);
+        equal(data[20].value, 120);
+    });
+
     test("expand of root level row axis", function() {
         var rowTuples = [
             {
