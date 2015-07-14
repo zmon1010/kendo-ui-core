@@ -130,6 +130,10 @@ var __meta__ = {
                 this._contentDropArea.destroy();
             }
 
+            if (this._resizable) {
+                this._resizable.destroy();
+            }
+
             if (this.touch) {
                 this.touch.destroy();
             }
@@ -902,6 +906,26 @@ var __meta__ = {
             if (!this.options.resizable) {
                 return;
             }
+
+            if (this._resizable) {
+                this._resizable.destroy();
+            }
+
+            this._resizable = this.header.Resizable({
+                handle: "",
+                hint: function(handle) {
+
+                },
+                start: function(e) {
+
+                },
+                resize: function(e) {
+
+                },
+                resizeend: function() {
+
+                }
+            }).data("kendoResizable");
         },
 
         _modelFromElement: function(element) {
