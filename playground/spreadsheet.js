@@ -54,10 +54,6 @@ $("#redo").click(function() {
     spreadsheet.undoRedoStack.redo();
 });
 
-$("#toolbar-refresh").click(function() {
-    spreadsheet.toolbar.refresh();
-});
-
 $("#copy").on("click", function(e) {
     var range = sheet.range("K11:M16");
 
