@@ -57,6 +57,8 @@ var __meta__ = {
         iconPlaceHolder: "k-icon k-i-none",
         input: "k-input",
         link: "k-link",
+        resizeHandle: "k-resize-handle",
+        resizeHandleInner: "k-resize-handle-inner",
         dropPositions: "k-insert-top k-insert-bottom k-add k-insert-middle",
         dropTop: "k-insert-top",
         dropBottom: "k-insert-bottom",
@@ -130,8 +132,8 @@ var __meta__ = {
                 this._contentDropArea.destroy();
             }
 
-            if (this._resizable) {
-                this._resizable.destroy();
+            if (this._columnResizable) {
+                this._columnResizable.destroy();
             }
 
             if (this.touch) {
@@ -143,6 +145,7 @@ var __meta__ = {
             }
 
             this.content.off(NS);
+            this.header.find("thead").off(NS);
             this.header.find(DOT + GanttList.link).off(NS);
 
             this.header = null;
@@ -902,20 +905,59 @@ var __meta__ = {
 
         _resizable: function() {
             var that = this;
+            var listStyles = GanttList.styles;
+            var positionResizeHandle = function(e) {
+                var th = $(e.currentTarget);
+                var resizeHandle = that.resizeHandle;
+                var position = th.position();
+                var left = position.left;
+                var cellWidth = th.outerWidth();
+                var container = th.closest("div");
+                var clientX = e.clientX + $(window).scrollLeft();
+                var indicatorWidth = that.options.columnResizeHandleWidth;
+
+                left += container.scrollLeft();
+
+                if (!resizeHandle) {
+                    resizeHandle = that.resizeHandle = $(
+                        '<div class="' + listStyles.resizeHandle + '"><div class="' + listStyles.resizeHandleInner + '" /></div>'
+                    );
+                }
+
+                var cellOffset = th.offset().left + cellWidth;
+                var show = clientX > cellOffset - indicatorWidth && clientX < cellOffset + indicatorWidth;
+
+                if (!show) {
+                    resizeHandle.hide();
+                    return;
+                }
+
+                container.append(resizeHandle);
+
+                resizeHandle
+                    .show()
+                    .css({
+                        top: position.top,
+                        left: left + cellWidth - indicatorWidth - 1,
+                        height: th.outerHeight(),
+                        width: indicatorWidth * 3
+                    })
+                    .data("th", th);
+            };
 
             if (!this.options.resizable) {
                 return;
             }
 
-            if (this._resizable) {
-                this._resizable.destroy();
+            if (this._columnResizable) {
+                this._columnResizable.destroy();
             }
 
-            this._resizable = this.header.Resizable({
-                handle: "",
-                hint: function(handle) {
+            this.header.find("thead")
+               .on("mousemove" + NS, "th", positionResizeHandle);
 
-                },
+            this._columnResizable = this.header.kendoResizable({
+                handle: DOT + listStyles.resizeHandle,
                 start: function(e) {
 
                 },

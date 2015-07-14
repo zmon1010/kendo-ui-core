@@ -29,6 +29,7 @@ var __meta__ = {
     var isPlainObject = $.isPlainObject;
     var map = $.map;
     var keys = kendo.keys;
+    var defaultIndicatorWidth = 3;
     var NS = ".kendoGantt";
     var PERCENTAGE_FORMAT = "p0";
     var TABINDEX = "tabIndex";
@@ -1452,6 +1453,7 @@ var __meta__ = {
             selectable: true,
             editable: true,
             resizable: false,
+            columnResizeHandleWidth: defaultIndicatorWidth,
             columns: [],
             views: [],
             dataSource: {},
@@ -1838,7 +1840,8 @@ var __meta__ = {
                 dataSource: this.dataSource,
                 selectable: this.options.selectable,
                 editable: this.options.editable,
-                resizable:  this.options.resizable,
+                resizable: this.options.resizable,
+                columnResizeHandleWidth: this.options.columnResizeHandleWidth,
                 listWidth: listWrapper.outerWidth(),
                 resourcesField: this.resources.field
             };
