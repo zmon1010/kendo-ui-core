@@ -370,6 +370,52 @@ bundle :name => 'professional.trial',
           :changelog => true,
        }
 
+bundle :name => 'professional.office365',
+       :license => 'src-license-office365',
+       :eula => 'office365',
+       :readme => 'README.KendoUI.Office365',
+       :vsdoc => %w(all web mobile dataviz),
+       :intellisense => %w(all web mobile dataviz),
+       :type_script => %w(all web mobile dataviz),
+       :changelog => %w(components),
+       :demos => {
+           :dir => 'examples'
+       },
+       :product => 'Kendo UI Professional',
+       :upload_as_internal_build => true,
+       :release_build => {
+           :file_metadata => {
+             :zip => {
+              :label => "Manual Installation",
+              :download_name => "telerik.kendoui.professional.#{VERSION}.office365.zip",
+              :file_category => "Installation",
+              :file_type => "Paid Files",
+              :extension => "ZIP",
+              :file_markers => ["Default File"],
+              :websites => ["Telerik", "SiteFinity"],
+              :download_message => 'You have successfully downloaded the Kendo UI Promotional version. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
+              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />Complete Source Code</strong>"
+             },
+             :msi => {
+              :label => "Automatic Installation",
+              :download_name => "telerik.kendoui.professional.#{VERSION}.office365.msi",
+              :file_category => "Installation",
+              :file_type => "Paid Files",
+              :extension => "MSI",
+              :file_markers => ["Default File For Common Installer"],
+              :websites => ["Telerik"],
+              :download_message => 'You successfully downloaded the Kendo UI Professional installer. See <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">this article</a> on how to get started.',
+              :whats_included_message => "<strong>Quick Start Demos<br />Minified Javascript Files<br />Minified Css Styles<br />Complete Source Code</strong>"
+             }
+           }
+       },
+       :contents => {
+            'js' => COMPLETE_MIN_JS + COMPLETE_MIN_JS_MAP + JQUERY_MAP,
+            'styles' => MIN_CSS_RESOURCES,
+            'src/js' => COMPLETE_SRC_JS,
+            'src/styles' => SRC_CSS
+       }
+
 # UI for ASP.NET MVC
 bundle :name => 'aspnetmvc.trial',
        :skip_grunt_build => true,
