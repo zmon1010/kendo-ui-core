@@ -8,8 +8,10 @@
     var CellRef = kendo.spreadsheet.CellRef;
 
     var styles = [
-        "fontColor", "fontFamily", "fontLine", "fontSize", "fontStyle", "fontWeight",
-        "horizontalAlignment", "verticalAlignment", "background", "wrap"
+        "borderBottom", "borderRight", "fontColor",
+        "fontFamily", "fontLine", "fontSize",
+        "fontStyle", "fontWeight", "horizontalAlignment",
+        "verticalAlignment", "background", "wrap"
     ];
 
     var Range = kendo.Class.extend({
@@ -80,38 +82,21 @@
                 return value;
             }
         },
+
         type: function() {
             return this._get("type");
         },
+
         borderLeft: function(value) {
             var ref = this._ref.resize({ left: -1, right: -1 });
             var result = new Range(ref, this._sheet).borderRight(value);
             return value === undefined ? result : this;
         },
+
         borderTop: function(value) {
             var ref = this._ref.resize({ top: -1, bottom: -1 });
             var result = new Range(ref, this._sheet).borderBottom(value);
             return value === undefined ? result : this;
-        },
-        borderBottom: function(value) {
-            return this._jsonProperty("borderBottom", value);
-        },
-        borderRight: function(value) {
-            return this._jsonProperty("borderRight", value);
-        },
-
-        _jsonProperty: function(property, value) {
-            if (value !== undefined) {
-                value = JSON.stringify(value);
-            }
-
-            var result = this._property(property, value);
-
-            if (value === undefined) {
-                result = JSON.parse(result);
-            }
-
-            return result;
         },
 
         format: function(value) {
@@ -298,6 +283,7 @@
 
             return this;
         },
+
         filter: function(spec) {
             if (this._ref instanceof UnionRef) {
                 throw new Error("Unsupported for multiple ranges.");
@@ -314,6 +300,7 @@
 
             return this;
         },
+
         clearFilter: function(spec) {
             this._sheet._clearFilter(spec instanceof Array ? spec : [spec]);
         }

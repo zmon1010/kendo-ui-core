@@ -30,6 +30,16 @@
         }
     });
 
+    var JsonProperty = Property.extend({
+        get: function(index) {
+            return JSON.parse(this.list.value(index, index));
+        },
+
+        set: function(start, end, value) {
+            this.list.value(start, end, JSON.stringify(value));
+        }
+    });
+
     var ValueProperty = Property.extend({
         init: function(values, types) {
             Property.prototype.init.call(this, values);
@@ -63,8 +73,8 @@
             { property: Property, name: "formula", value: null, sortable: true, serializable: true },
             { property: Property, name: "compiledFormula", value: null, sortable: true, serializable: false },
             { property: Property, name: "background", value: null, sortable: true, serializable: true },
-            { property: Property, name: "borderBottom", value: null, sortable: false, serializable: true },
-            { property: Property, name: "borderRight", value: null, sortable: false, serializable: true },
+            { property: JsonProperty, name: "borderBottom", value: null, sortable: false, serializable: true },
+            { property: JsonProperty, name: "borderRight", value: null, sortable: false, serializable: true },
             { property: Property, name: "fontColor", value: null, sortable: true, serializable: true },
             { property: Property, name: "fontFamily", value: null, sortable: true, serializable: true },
             { property: Property, name: "fontLine", value: null, sortable: true, serializable: true },
