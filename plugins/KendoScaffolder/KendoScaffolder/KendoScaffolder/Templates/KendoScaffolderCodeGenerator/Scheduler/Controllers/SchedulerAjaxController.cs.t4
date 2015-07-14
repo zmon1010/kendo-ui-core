@@ -28,6 +28,10 @@ using <#= namespaceName #>;
 
 namespace <#= Namespace #>
 {
+<#
+    var entitySetName = ModelMetadata.EntitySetName;
+    var entitySetVar = ModelVariable ?? (String.IsNullOrEmpty(entitySetName) ? entitySetName : (entitySetName.Substring(0, length:1).ToLowerInvariant() + entitySetName.Substring(1)));
+#>
     public class <#= ControllerName #> : Controller
     {
         private <#= ContextTypeName #> db = new <#= ContextTypeName #>();
@@ -35,6 +39,26 @@ namespace <#= Namespace #>
         public ActionResult <#= ViewPrefix #><#= ViewName #>()
         {
             return View();
+        }
+
+        public ActionResult <#= entitySetName #>_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            var data = db.<#= entitySetName #>.ToList().Select(<#= entitySetName.ToLower() #> => new <#= WidgetViewModelName #>
+            {
+                <#= PrimaryKeyName #> = <#= entitySetName.ToLower() #>.<#= PrimaryKeyName #>,
+                Title = <#= entitySetName.ToLower() #>.<#= SelectedEventTitleField #>,
+                Start = DateTime.SpecifyKind(<#= entitySetName.ToLower() #>.<#= SelectedEventStartField #>, DateTimeKind.Utc),
+                End = DateTime.SpecifyKind(<#= entitySetName.ToLower() #>.<#= SelectedEventEndField #>, DateTimeKind.Utc),
+                StartTimezone = <#= entitySetName.ToLower() #>.<#= SelectedEventStartTimezoneField #>,
+                EndTimezone = <#= entitySetName.ToLower() #>.<#= SelectedEventEndTimezoneField #>,
+                Description = <#= entitySetName.ToLower() #>.<#= SelectedEventDescriptionField #>,
+                IsAllDay = <#= entitySetName.ToLower() #>.<#= SelectedEventIsAllDayField #>,
+                RecurrenceRule = <#= entitySetName.ToLower() #>.<#= SelectedEventRecurrenceRuleField #>,
+                RecurrenceException = <#= entitySetName.ToLower() #>.<#= SelectedEventRecurrenceExceptionField #>,
+                RecurrenceID = <#= entitySetName.ToLower() #>.<#= SelectedEventRecurrenceIDField #>
+            }).AsQueryable();
+
+            return Json(data.ToDataSourceResult(request));
         }
     }
 }
