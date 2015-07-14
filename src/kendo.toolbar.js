@@ -62,6 +62,20 @@ var __meta__ = { // jshint ignore:line
 
         KENDO_UID_ATTR = kendo.attr("uid");
 
+        kendo.toolbar = {};
+
+        var components = {
+            overflowAnchor: '<div class="k-overflow-anchor"></div>',
+            overflowContainer: '<ul class="k-overflow-container k-list-container"></ul>'
+        };
+
+        kendo.toolbar.registerComponent = function(name, toolbar, overflow) {
+            components[name] = {
+                toolbar: toolbar,
+                overflow: overflow
+            }
+        };
+
         var Item = kendo.Class.extend({
             addOverflowAttr: function() {
                 this.element.attr(kendo.attr("overflow"), this.options.overflow || OVERFLOW_AUTO);
@@ -126,6 +140,8 @@ var __meta__ = { // jshint ignore:line
                 }
             }
         });
+
+        kendo.toolbar.Item = Item;
 
         var Button = Item.extend({
             init: function(options, toolbar) {
@@ -234,6 +250,8 @@ var __meta__ = { // jshint ignore:line
             }
         });
 
+        kendo.toolbar.Button = Button;
+
         var ToolBarButton = Button.extend({
             init: function(options, toolbar) {
                 Button.fn.init.call(this, options, toolbar);
@@ -284,6 +302,8 @@ var __meta__ = { // jshint ignore:line
                 this.options.selected = selected;
             }
         });
+
+        kendo.toolbar.ToolBarButton = ToolBarButton;
 
         var OverflowButton = Button.extend({
             init: function(options, toolbar) {
@@ -350,6 +370,9 @@ var __meta__ = { // jshint ignore:line
             }
         });
 
+        kendo.toolbar.OverflowButton = OverflowButton;
+        kendo.toolbar.registerComponent("button", ToolBarButton, OverflowButton);
+
         var ButtonGroup = Item.extend({
             createButtons: function(buttonConstructor) {
                 var options = this.options;
@@ -370,6 +393,8 @@ var __meta__ = { // jshint ignore:line
                 this.element.children().filter(":not('." + STATE_HIDDEN + "'):last").addClass(GROUP_END);
             }
         });
+
+        kendo.toolbar.ButtonGroup = ButtonGroup;
 
         var ToolBarButtonGroup = ButtonGroup.extend({
             init: function(options, toolbar) {
@@ -398,6 +423,8 @@ var __meta__ = { // jshint ignore:line
             }
         });
 
+        kendo.toolbar.ToolBarButtonGroup = ToolBarButtonGroup;
+
         var OverflowButtonGroup = ButtonGroup.extend({
             init: function(options, toolbar) {
                 var element = this.element = $('<li></li>');
@@ -425,6 +452,9 @@ var __meta__ = { // jshint ignore:line
                 this.element.addClass(OVERFLOW_HIDDEN);
             }
         });
+
+        kendo.toolbar.OverflowButtonGroup = OverflowButtonGroup;
+        kendo.toolbar.registerComponent("buttonGroup", ToolBarButtonGroup, OverflowButtonGroup);
 
         var ToolBarSplitButton = Item.extend({
             init: function(options, toolbar) {
@@ -555,6 +585,8 @@ var __meta__ = { // jshint ignore:line
             }
         });
 
+        kendo.toolbar.ToolBarSplitButton = ToolBarSplitButton;
+
         var OverflowSplitButton = Item.extend({
             init: function(options, toolbar) {
                 var element = this.element = $('<li class="' + SPLIT_BUTTON + '"></li>'),
@@ -588,6 +620,9 @@ var __meta__ = { // jshint ignore:line
                 this.element.addClass(OVERFLOW_HIDDEN);
             }
         });
+
+        kendo.toolbar.OverflowSplitButton = OverflowSplitButton;
+        kendo.toolbar.registerComponent("splitButton", ToolBarSplitButton, OverflowSplitButton);
 
         var ToolBarSeparator = Item.extend({
             init: function(options, toolbar) {
@@ -637,6 +672,8 @@ var __meta__ = { // jshint ignore:line
             }
         });
 
+        kendo.toolbar.registerComponent("separator", ToolBarSeparator, OverflowSeparator);
+
         var TemplateItem = Item.extend({
             init: function(template, options, toolbar) {
                 var element = isFunction(template) ? template(options) : template;
@@ -663,6 +700,8 @@ var __meta__ = { // jshint ignore:line
                 });
             }
         });
+
+        kendo.toolbar.TemplateItem = TemplateItem;
 
         var OverflowTemplateItem = Item.extend({
             init: function(template, options, toolbar) {
@@ -695,6 +734,8 @@ var __meta__ = { // jshint ignore:line
                 this.element.addClass(OVERFLOW_HIDDEN);
             }
         });
+
+        kendo.toolbar.OverflowTemplateItem = OverflowTemplateItem;
 
         function adjustPopupWidth() {
             var anchor = this.options.anchor,
@@ -748,31 +789,6 @@ var __meta__ = { // jshint ignore:line
 
             return findFocusableSibling(candidate, dir);
         }
-
-        var components = {
-            button: {
-                toolbar: ToolBarButton,
-                overflow: OverflowButton
-            },
-
-            buttonGroup: {
-                toolbar: ToolBarButtonGroup,
-                overflow: OverflowButtonGroup
-            },
-
-            splitButton: {
-                toolbar: ToolBarSplitButton,
-                overflow: OverflowSplitButton
-            },
-
-            separator: {
-                toolbar: ToolBarSeparator,
-                overflow: OverflowSeparator
-            },
-
-            overflowAnchor: '<a href class="k-overflow-anchor"></a>',
-            overflowContainer: '<ul class="k-overflow-container k-list-container"></ul>'
-        };
 
         var Group = Class.extend({
             init: function(name) {
@@ -1028,16 +1044,7 @@ var __meta__ = { // jshint ignore:line
                 return {
                     type: type,
                     toolbar: toolbarItem,
-                    overflow: overflowItem,
-                    toggle: function(state) {
-                        if (this.toolbar) {
-                            this.toolbar.toggle(state);
-                        }
-
-                        if (this.overflow) {
-                            this.overflow.toggle(state);
-                        }
-                    }
+                    overflow: overflowItem
                 };
             },
 
