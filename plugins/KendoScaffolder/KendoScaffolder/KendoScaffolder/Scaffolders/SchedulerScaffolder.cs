@@ -96,6 +96,7 @@ namespace KendoScaffolder.Scaffolders
                 {"PrimaryKeyName", primaryKey.PropertyName},
                 {"PrimaryKeyType", primaryKey.ShortTypeName},
                 {"RecurrenceIDType", ViewModel.SelectedEventRecurrenceIDField.GetterType},
+                {"UseResources", ViewModel.UseResources},
                 {"ViewName", viewName},
                 {"ViewPrefix", ""},
                 {"WidgetViewModelName", widgetViewModelName},
@@ -111,6 +112,12 @@ namespace KendoScaffolder.Scaffolders
                 {"SelectedEventRecurrenceRuleField", ViewModel.SelectedEventRecurrenceRuleField.ShortTypeName},
                 {"SelectedEventRecurrenceExceptionField", ViewModel.SelectedEventRecurrenceExceptionField.ShortTypeName},
             };
+
+            if (ViewModel.UseResources)
+            {
+                commonParameters.Add("SelectedModelResourceField", ViewModel.SelectedModelResourceField.ShortTypeName);
+                commonParameters.Add("SelectedModelResourceFieldType", ViewModel.SelectedModelResourceField.GetterType);
+            }
 
             return commonParameters;
         }
