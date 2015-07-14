@@ -1028,7 +1028,16 @@ var __meta__ = { // jshint ignore:line
                 return {
                     type: type,
                     toolbar: toolbarItem,
-                    overflow: overflowItem
+                    overflow: overflowItem,
+                    toggle: function(state) {
+                        if (this.toolbar) {
+                            this.toolbar.toggle(state);
+                        }
+
+                        if (this.overflow) {
+                            this.overflow.toggle(state);
+                        }
+                    }
                 };
             },
 

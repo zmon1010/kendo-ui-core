@@ -11,48 +11,41 @@
         bindTo: function(spreadsheet) {
             this.spreadsheet = spreadsheet;
         },
-        getActiveRange: function() {
+        range: function() {
             var sheet = this.spreadsheet._sheet;
- 
+
             return sheet.range(sheet.activeCell());
         },
         refresh: function() {
-            var activeRange = this.getActiveRange();
- 
+            var range = this.range();
             var tools = this._tools();
 
             for (var name in tools) {
                 if (name.match(/(font)/)) {
-                    tools[name].toolbar.toggle(activeRange[name]() ? true : false, true);
+                    var active = !!range[name]();
+                    tools[name].toggle(active);
                 }
             }
         },
         _tools: function() {
-            var elements = this.element.children();
-            var tool, tools = {};
+            var elements = this.element.find("[data-command]");
+            var tool, property, tools = {};
 
             for (var i = 0; i < elements.length; i++) {
-                if (elements.eq(i).is(".k-overflow-anchor")) {
-                    continue;
-                }
-
                 tool = this._getItem(elements.eq(i));
 
-                if (tool.type === "buttonGroup") {
-                    elements.eq(i).children().each(function(idx, button) {
-                        tools[button.dataset.property] = this._getItem(button);
-                    }.bind(this));
-                } else {
-                    tools[elements.eq(i).data("property")] = tool;
-                }
+                property = elements.eq(i).data("property");
 
+                if (property) {
+                    tools[property] = tool;
+                }
             }
 
             return tools;
         }
     });
- 
-    kendo.spreadsheet.toolbar = SpreadsheetToolBar;
+
+    kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
 
 })(kendo);
 

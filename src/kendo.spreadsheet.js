@@ -105,6 +105,8 @@
             }
 
             this.formulaBar.value(this._editableValueForRef(e.sender.activeCell()));
+
+            this.toolbar.refresh();
         },
 
         _execCommand: function(commandType, options) {
@@ -132,24 +134,18 @@
 
         _toolbar: function() {
             var element;
-            var toggle = function(value) {
-                    return function(e) {
-                        this._execCommand(kendo.spreadsheet.PropertyChangeCommand, {
-                            property: e.id,
-                            value: e.checked ? value : null
-                        });
-                    }.bind(this);
-                }.bind(this);
 
             function toggleable(options) {
                 var className = options.text.toLowerCase();
                 return {
                     spriteCssClass: "k-tool-icon k-" + className,
-                    id: options.property,
-                    attributes: { "data-property": options.property },
+                    attributes: {
+                        "data-command": "PropertyChangeCommand",
+                        "data-property": options.property,
+                        "data-value": options.value
+                    },
                     text: options.text,
                     togglable: true,
-                    toggle: toggle(options.value),
                     showText: "overflow"
                 };
             }
@@ -161,11 +157,26 @@
 
             if (this.options.toolbar) {
                 element = $("<div />").prependTo(this.element);
-                this.toolbar = new kendo.spreadsheet.toolbar(element, {
+                this.toolbar = new kendo.spreadsheet.ToolBar(element, {
+                    click: function(e) {
+                        var commandType = e.target.attr("data-command");
+                        this._execCommand(kendo.spreadsheet[commandType]);
+                    }.bind(this),
+                    toggle: function(e) {
+                        var target = e.target;
+                        var commandType = e.target.attr("data-command");
+                        var property = target.attr("data-property");
+                        var value = target.attr("data-value");
+
+                        this._execCommand(kendo.spreadsheet[commandType], {
+                            property: property,
+                            value: e.checked ? value : null
+                        });
+                    }.bind(this),
                     items: [
-                        { type: "button", text: "Format cells", attributes: { "data-property": "format" }, click: function() {
-                            this._execCommand(kendo.spreadsheet.FormatCellsCommand);
-                        }.bind(this) },
+                        { type: "button", text: "Format cells", attributes: {
+                            "data-command": "FormatCellsCommand"
+                        } },
                         { type: "buttonGroup", buttons: [
                             toggleable({ text: "Bold", property: "fontWeight", value: "bold" }),
                             toggleable({ text: "Italic", property: "fontStyle", value: "italic" }),
