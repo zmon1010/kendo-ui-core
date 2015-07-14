@@ -3,7 +3,6 @@
 <#@ include file="..\ImportsSchedulerView.include.t4" #>
 <#
     var entitySetName = ModelMetadata.EntitySetName;
-    var batchEditMode = "InCell";
 #>
 @* Important! Register the following route if it's not existing in the RouteTable
 config.Routes.MapHttpRoute(
@@ -13,8 +12,9 @@ config.Routes.MapHttpRoute(
 );
 *@
 
-@(Html.Kendo().Scheduler<<#= ViewDataTypeName #>>()
+@(Html.Kendo().Scheduler<<#= Namespace #>.<#= WidgetViewModelName #>>()
       .Name("scheduler")
+      <#
     if(Selectable){
 #>
       .Selectable(<#=Selectable #>)
@@ -45,16 +45,19 @@ config.Routes.MapHttpRoute(
 <#
 
 #>
-          .Model(model => model.Id(p => p.<#= PrimaryKeyName #>))
+          .Model(m => {
+            m.Id(f => f.<#= PrimaryKeyName #>);
+            m.Field(f => f.Title).DefaultValue("No title");
+            m.RecurrenceId(f => f.RecurrenceID);
+          })
           .Read(read => read.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))
 <#
-if(Editable) {
-    if(EditableCreate) {
+    if(EditableCreate || EditableResize || EditableMove) {
 #>
           .Create(create => create.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))  
 <#
     }
-    if(EditableUpdate) {
+    if(EditableUpdate || EditableResize || EditableMove) {
 #>
           .Update(update => update.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
 <#
@@ -64,7 +67,6 @@ if(Editable) {
           .Destroy(destroy => destroy.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
 <#
     }
-}
 #>
       )
 )
