@@ -49,14 +49,16 @@
         },
         template: "",
         exec: function() {
-            this._popup = $("<div class='k-spreadsheet-window' />")
+            this._popup = $("<div class='k-spreadsheet-window k-action-window' />")
                 .append(this.template)
                 .appendTo(document.body)
                 .kendoWindow($.extend({
+                    scrollable: false,
+                    resizable: false,
+                    maximizable: false,
                     modal: true,
+                    width: 400,
                     title: this.title,
-                    width: 300,
-                    height: 200,
                     open: function() {
                         this.center();
                     },
@@ -75,7 +77,11 @@
             return this.range().value();
         },
         title: "Format Cells",
-        template: "<div class='k-spreadsheet-preview' data-bind='text: preview' />"
+        template: "<div class='k-spreadsheet-preview' data-bind='text: preview' />" +
+                  "<div class='k-action-buttons'>" +
+                      "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +
+                      "<button class='k-button' data-bind='click: cancel'>Cancel</button>" +
+                  "</div>"
     });
 
 })(kendo);
