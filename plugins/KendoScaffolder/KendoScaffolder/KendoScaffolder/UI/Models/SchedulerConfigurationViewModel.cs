@@ -25,7 +25,7 @@
             ModelFields = new ObservableCollection<ModelType>();
             ResourceModelFields = new ObservableCollection<ModelType>();
             ResourceModelStringFields = new ObservableCollection<ModelType>();
-          
+
             SelectedSchedulerEvents = new List<string>();
             SelectedSchedulerViewTypes = new List<string>() {
                     KendoScaffolder.UI.Models.SchedulerViewTypes.Day.ToString(),
@@ -223,6 +223,23 @@
                 {
                     selectedEventEndTimezoneField = value;
                     RaisePropertyChangeOnOtherEventFields("SelectedEventEndTimezoneField");
+                }
+            }
+        }
+
+        private ModelType selectedEventRecurrenceIDField { get; set; }
+        public ModelType SelectedEventRecurrenceIDField
+        {
+            get
+            {
+                return selectedEventRecurrenceIDField;
+            }
+            set
+            {
+                if (selectedEventRecurrenceIDField != value)
+                {
+                    selectedEventRecurrenceIDField = value;
+                    RaisePropertyChangeOnOtherEventFields("SelectedEventRecurrenceIDField");
                 }
             }
         }

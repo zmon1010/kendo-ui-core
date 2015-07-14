@@ -82,6 +82,8 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Content="Controller Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                     <TextBox Grid.Row="1" Name="ControllerName" Loaded="ControllerName_Loaded" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ControllerName}" />
@@ -199,8 +201,20 @@
                         </ComboBox.SelectedItem>
                     </ComboBox>
 
-                    <Label Grid.Row="16" Name="EventRecurrenceRuleFieldLabel" Content="Event RecurrenceRule (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="16" Name="EventRecurrenceRuleField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                    <Label Grid.Row="16" Name="EventRecurrenceIDFieldLabel" Content="Event RecurrenceID (same type as model ID field):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="16" Name="EventRecurrenceIDField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                              ItemsSource="{Binding ModelFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
+                        <ComboBox.SelectedItem>
+                            <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceIDField">
+                                <Binding.ValidationRules>
+                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="17" Name="EventRecurrenceRuleFieldLabel" Content="Event RecurrenceRule (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="17" Name="EventRecurrenceRuleField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
                               ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
                         <ComboBox.SelectedItem>
                             <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceRuleField">
@@ -211,8 +225,8 @@
                         </ComboBox.SelectedItem>
                     </ComboBox>
 
-                    <Label Grid.Row="17" Name="EventRecurrenceExceptionFieldLabel" Content="Event RecurrenceException (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="17" Name="EventRecurrenceExceptionField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                    <Label Grid.Row="18" Name="EventRecurrenceExceptionFieldLabel" Content="Event RecurrenceException (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <ComboBox Grid.Row="18" Name="EventRecurrenceExceptionField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
                               ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
                         <ComboBox.SelectedItem>
                             <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceExceptionField">
