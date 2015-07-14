@@ -20,3 +20,6 @@
 <#@ parameter type="EnvDTE.CodeElements" name="ModelTypeChildren" #>
 <#@ parameter type="System.String" name="WidgetViewModelName" #>
 <#@ parameter type="System.Collections.Generic.List<string>" name="SelectedModelTypeFields" #>
+<#@ parameter type="System.Boolean" name="UseResources" #>
+<#@ parameter type="System.String" name="SelectedModelResourceField" #>
+<#@ parameter type="System.String" name="SelectedModelResourceFieldType" #>

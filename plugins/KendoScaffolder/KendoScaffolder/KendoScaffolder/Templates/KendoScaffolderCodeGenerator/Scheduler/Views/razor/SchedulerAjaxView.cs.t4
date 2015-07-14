@@ -5,9 +5,20 @@
     var entitySetName = ModelMetadata.EntitySetName;
     var batchEditMode = "InCell";
 #>
+
 @(Html.Kendo().Scheduler<<#= Namespace #>.<#= WidgetViewModelName #>>()
     .Name("scheduler")
 <#
+    if(PdfExport) {
+#>
+    .Pdf(pdf => pdf
+        .FileName("Kendo UI Scheduler Export.pdf")
+        .ProxyURL(Url.Action("Pdf_Export_Save", "Scheduler"))
+    )
+    .Toolbar(t => t.Pdf())
+<#
+    }
+
     if(SchedulerEvents.Count > 0){
 #>
       .Events(events => {
