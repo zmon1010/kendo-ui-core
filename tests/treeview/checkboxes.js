@@ -415,7 +415,7 @@
         check();
         uncheck();
 
-        ok(!treeviewObject.dataSource.get(1).checked);
+        ok(!("checked" in treeviewObject.dataSource.get(1)));
     });
 
     test("enabled: false renders disabled checkbox", function() {

@@ -864,7 +864,7 @@ var __meta__ = {
                 if (checkbox.prop(INDETERMINATE) === false) {
                     this.dataItem(parentNode).set(CHECKED, checkbox.prop(CHECKED));
                 } else {
-                    this.dataItem(parentNode).checked = false;
+                    delete this.dataItem(parentNode).checked;
                 }
 
                 this._bubbleIndeterminate(parentNode);
