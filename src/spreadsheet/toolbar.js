@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.toolbar" ], f);
+    define([ "../kendo.toolbar", "../kendo.colorpicker" ], f);
 })(function(){
 
 (function(kendo) {
@@ -23,7 +23,7 @@
                         property: target.attr("data-property"),
                         value: e.checked ? target.attr("data-value") : null
                     });
-                }.bind(this),
+                }.bind(this)
             });
         },
         events: ToolBar.fn.events.concat([ "execute" ]),
@@ -43,9 +43,25 @@
             var tools = this._tools();
 
             for (var name in tools) {
-                if (name.match(/(font)/)) {
-                    var active = !!range[name]();
-                    tools[name].toggle(active);
+                var tool = tools[name];
+                var value = range[name]();
+
+                if (tool.type === "button") {
+                    if (tool.toolbar) {
+                        tool.toolbar.toggle(!!value);
+                    }
+
+                    if (tool.overflow) {
+                        tool.overflow.toggle(!!value);
+                    }
+                } else if (tool.type === "colorPicker") {
+                    if (tool.toolbar) {
+                        tool.toolbar.value(value);
+                    }
+
+                    if (tool.overflow) {
+                        tool.overflow.value(value);
+                    }
                 }
             }
         },
@@ -65,6 +81,45 @@
 
     kendo.spreadsheet.ToolBar = SpreadsheetToolBar;
 
+    var colorPicker = kendo.toolbar.Item.extend({
+        init: function(options, toolbar) {
+            var colorPicker = $("<input />").kendoColorPicker({
+                toolIcon: options.toolIcon,
+                change: function(e) {
+                    toolbar.trigger("execute", {
+                        commandType: "PropertyChangeCommand",
+                        property: options.property,
+                        value: this.value()
+                    });
+                }
+            }).data("kendoColorPicker");
+
+            this.colorPicker = colorPicker;
+            this.element = colorPicker.wrapper;
+            this.options = options;
+            this.toolbar = toolbar;
+
+            this.element.attr({
+                "data-command": "PropertyChangeCommand",
+                "data-property": options.property
+            });
+
+            this.element.data({
+                type: "colorPicker",
+                colorPicker: this
+            });
+        },
+
+        value: function(value) {
+            if (value !== undefined) {
+                this.colorPicker.value(value);
+            } else {
+                return this.colorPicker.value();
+            }
+        }
+    });
+
+    kendo.toolbar.registerComponent("colorPicker", colorPicker);
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
