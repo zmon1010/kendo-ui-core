@@ -2,6 +2,7 @@
     var sheet;
     var ValueFilter = kendo.spreadsheet.ValueFilter;
     var CustomFilter = kendo.spreadsheet.CustomFilter;
+    var TopFilter = kendo.spreadsheet.TopFilter;
     var filter;
 
     var defaults = kendo.ui.Spreadsheet.prototype.options;
@@ -411,5 +412,66 @@
         equal(filter.matches("Foo"), false);
         equal(filter.matches("foobar"), true);
         equal(filter.matches("bar"), true);
+    });
+
+    module("top filter");
+
+    test("top number matches the top X values", function() {
+        filter = new TopFilter({ type: "topNumber", value: 2 });
+
+        filter.prepare([
+            1, 10, 2, 4
+        ]);
+
+        equal(filter.matches(2), false);
+        equal(filter.matches(3), false);
+        equal(filter.matches(4), true);
+        equal(filter.matches(10), true);
+        equal(filter.matches(11), false);
+    });
+
+    test("bottom number matches the bottom X values", function() {
+        filter = new TopFilter({ type: "bottomNumber", value: 2 });
+
+        filter.prepare([
+            1, 10, 2, 4
+        ]);
+
+        equal(filter.matches(0), false);
+        equal(filter.matches(2), true);
+        equal(filter.matches(1), true);
+        equal(filter.matches(3), false);
+        equal(filter.matches(4), false);
+        equal(filter.matches(10), false);
+    });
+
+    test("top percent matches the top X percent ", function() {
+        filter = new TopFilter({ type: "topPercent", value: 25 });
+
+        filter.prepare([
+            1, 10, 2, 4
+        ]);
+
+        equal(filter.matches(1), false);
+        equal(filter.matches(2), false);
+        equal(filter.matches(3), false);
+        equal(filter.matches(4), false);
+        equal(filter.matches(10), true);
+        equal(filter.matches(11), false);
+    });
+
+    test("bottom percent matches the bottom X percent ", function() {
+        filter = new TopFilter({ type: "bottomPercent", value: 25 });
+
+        filter.prepare([
+            1, 10, 2, 4
+        ]);
+
+        equal(filter.matches(1), true);
+        equal(filter.matches(2), false);
+        equal(filter.matches(3), false);
+        equal(filter.matches(4), false);
+        equal(filter.matches(10), false);
+        equal(filter.matches(11), false);
     });
 })();

@@ -110,5 +110,37 @@
             };
         }
     });
+
+    kendo.spreadsheet.TopFilter = Filter.extend({
+        init: function(options) {
+            this.type = options.type;
+            this.value = options.value;
+            this.values = [];
+        },
+
+        prepare: function(values) {
+            if (this.type === "topNumber" || this.type == "topPercent") {
+                values.sort(function(x, y) {
+                    return y - x;
+                });
+            } else {
+                values.sort(function(x, y) {
+                    return x - y;
+                });
+            }
+
+            var count = this.value;
+
+            if (this.type === "topPercent" || this.type === "bottomPercent") {
+                count = (values.length * count / 100) >> 0;
+            }
+
+            this.values = values.slice(0, count);
+        },
+        matches: function(value) {
+            return this.values.indexOf(value) >= 0;
+        }
+    });
+
 })(kendo);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
