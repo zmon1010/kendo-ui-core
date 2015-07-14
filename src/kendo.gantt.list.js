@@ -105,6 +105,7 @@ var __meta__ = {
             this._editable();
             this._selectable();
             this._draggable();
+            this._resizable();
             this._attachEvents();
 
             this._adjustHeight();
@@ -150,7 +151,8 @@ var __meta__ = {
         options: {
             name: "GanttList",
             selectable: true,
-            editable: true
+            editable: true,
+            resizable: false
         },
 
         _attachEvents: function() {
@@ -892,6 +894,14 @@ var __meta__ = {
                         });
                    }
                }).data("kendoDropTargetArea");
+        },
+
+        _resizable: function() {
+            var that = this;
+
+            if (!this.options.resizable) {
+                return;
+            }
         },
 
         _modelFromElement: function(element) {

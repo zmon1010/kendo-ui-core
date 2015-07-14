@@ -1451,6 +1451,7 @@ var __meta__ = {
             navigatable: false,
             selectable: true,
             editable: true,
+            resizable: false,
             columns: [],
             views: [],
             dataSource: {},
@@ -1837,6 +1838,7 @@ var __meta__ = {
                 dataSource: this.dataSource,
                 selectable: this.options.selectable,
                 editable: this.options.editable,
+                resizable:  this.options.resizable,
                 listWidth: listWrapper.outerWidth(),
                 resourcesField: this.resources.field
             };
