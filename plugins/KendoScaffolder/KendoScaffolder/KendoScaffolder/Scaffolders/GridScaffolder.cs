@@ -44,6 +44,7 @@ namespace KendoScaffolder.Scaffolders
             // Ensure the Data Context
             string dbContextTypeName = viewModel.SelectedDbContextType.TypeName;
             IEntityFrameworkService efService = (IEntityFrameworkService)context.ServiceProvider.GetService(typeof(IEntityFrameworkService));
+
             try
             {
                 EfMetadata = efService.AddRequiredEntity(context, dbContextTypeName, ModelType.FullName);
@@ -103,7 +104,14 @@ namespace KendoScaffolder.Scaffolders
             switch (dataSourceType)
             {
                 case "Ajax":
-                    return "Grid" + ((ViewModel.EditMode == "InCell") ? "AjaxBatchController" : "AjaxController");
+                    if (ViewModel.ViewType == ViewType.Web)
+                    {
+                        return "GridAjaxWebView";
+                    }
+                    else 
+                    { 
+                        return "Grid" + ((ViewModel.EditMode == "InCell") ? "AjaxBatchController" : "AjaxController");
+                    }
                 case "Server":
                     return "GridServerController";
                 case "WebApi":
