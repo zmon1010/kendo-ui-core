@@ -5,8 +5,33 @@
     var entitySetName = ModelMetadata.EntitySetName;
     var batchEditMode = "InCell";
 #>
-@(Html.Kendo().Scheduler<<#= ViewDataTypeName #>>()
-      .Name("scheduler"))
+@(Html.Kendo().Scheduler<<#= Namespace #>.<#= WidgetViewModelName #>>()
+    .Name("scheduler")
+<#
+    if(SchedulerEvents.Count > 0){
+#>
+      .Events(events => {
+<#
+       foreach (string ev in SchedulerEvents)
+       {
+#>
+            events.<#= ev #>("on<#= ev #>");
+<#
+       }
+#>
+      })
+<#
+    }
+#>
+    .DataSource(d => d
+        .Model(m => {
+            m.Id(f => f.<#= PrimaryKeyName #>);
+            m.Field(f => f.Title).DefaultValue("No title");
+            m.RecurrenceId(f => f.RecurrenceID);
+        })
+        .Read(read => read.Action("<#= entitySetName #>_Read", "<#= ControllerRootName #>"))
+    )
+)
 
 <# if(SchedulerEvents.Count > 0){ #>
 <script>

@@ -10,7 +10,7 @@
 <#@ import namespace="Microsoft.AspNet.Scaffolding.Core.Metadata" #>
 <#@ parameter type="System.String" name="ControllerName" #>
 <#@ parameter type="System.String" name="ControllerRootName" #>
-<#@ parameter type="System.String" name="ViewDataTypeName" #>
+<#@ parameter type="System.String" name="Namespace" #>
 <#@ parameter type="System.Collections.Generic.List<string>" name="SchedulerEvents" #>
 <#@ parameter type="System.Boolean" name="EditableCreate" #>
 <#@ parameter type="System.Boolean" name="EditableUpdate" #>
@@ -28,3 +28,4 @@
 <#@ parameter type="Microsoft.AspNet.Scaffolding.Core.Metadata.ModelMetadata" name="ModelMetadata" #>
 <#@ parameter type="System.String" name="ModelVariable" #>
 <#@ parameter type="System.Version" name="MvcVersion" #>
+<#@ parameter type="System.String" name="WidgetViewModelName" #>
