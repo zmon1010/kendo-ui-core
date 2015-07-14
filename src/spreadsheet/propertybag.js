@@ -112,6 +112,18 @@
             this.properties[name].set(start, end, value, parseStrings);
         },
 
+        fromJSON: function(index, value) {
+            for (var si = 0; si < this.specs.length; si++) {
+                var spec = this.specs[si];
+
+                if (spec.serializable) {
+                    if (value[spec.name] !== undefined) {
+                        this.set(spec.name, index, index, value[spec.name], false);
+                    }
+                }
+            }
+        },
+
         copy: function(sourceStart, sourceEnd, targetStart) {
             this.specs.forEach(function(spec) {
                 this.properties[spec.name].copy(sourceStart, sourceEnd, targetStart);
@@ -133,7 +145,7 @@
             var specs = this.specs;
 
             if (serializableOnly) {
-                specs = specs.filter(function(spec) {
+                specs = this.specs.filter(function(spec) {
                     return spec.serializable;
                 });
             }
@@ -161,7 +173,6 @@
                     if (value !== iterator.value) {
                         values[iterator.name] = value;
                     }
-
                 });
 
                 callback(values);

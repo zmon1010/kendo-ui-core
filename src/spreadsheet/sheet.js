@@ -19,7 +19,8 @@
             this._frozenRows = 0;
             this._frozenColumns = 0;
             this._suspendChanges = false;
-            this._selection = this._activeCell = kendo.spreadsheet.FIRSTREF.toRangeRef();
+            this._selection = kendo.spreadsheet.NULLREF;
+            this._activeCell = kendo.spreadsheet.FIRSTREF.toRangeRef();
             this._originalActiveCell = kendo.spreadsheet.FIRSTREF;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
             this._properties = new kendo.spreadsheet.PropertyBag(cellCount);
@@ -504,65 +505,7 @@
                                     columnIndex = ci;
                                 }
 
-                                if (cell.value !== null) {
-                                    this.range(rowIndex, columnIndex).value(cell.value, false);
-                                }
-
-                                if (cell.background) {
-                                    this.range(rowIndex, columnIndex).background(cell.background);
-                                }
-
-                                if (cell.borderBottom) {
-                                    this.range(rowIndex, columnIndex).borderBottom(cell.borderBottom);
-                                }
-
-                                if (cell.borderRight) {
-                                    this.range(rowIndex, columnIndex).borderRight(cell.borderRight);
-                                }
-
-                                if (cell.fontColor) {
-                                    this.range(rowIndex, columnIndex).fontColor(cell.fontColor);
-                                }
-
-                                if (cell.fontFamily) {
-                                    this.range(rowIndex, columnIndex).fontFamily(cell.fontFamily);
-                                }
-
-                                if (cell.fontLine) {
-                                    this.range(rowIndex, columnIndex).fontLine(cell.fontLine);
-                                }
-
-                                if (cell.fontSize) {
-                                    this.range(rowIndex, columnIndex).fontSize(cell.fontSize);
-                                }
-
-                                if (cell.fontStyle) {
-                                    this.range(rowIndex, columnIndex).fontStyle(cell.fontStyle);
-                                }
-
-                                if (cell.fontWeight) {
-                                    this.range(rowIndex, columnIndex).fontWeight(cell.fontWeight);
-                                }
-
-                                if (cell.horizontalAlignment) {
-                                    this.range(rowIndex, columnIndex).horizontalAlignment(cell.horizontalAlignment);
-                                }
-
-                                if (cell.verticalAlignment) {
-                                    this.range(rowIndex, columnIndex).verticalAlignment(cell.verticalAlignment);
-                                }
-
-                                if (cell.wrap) {
-                                    this.range(rowIndex, columnIndex).wrap(cell.wrap);
-                                }
-
-                                if (cell.formula !== null) {
-                                    this.range(rowIndex, columnIndex).formula(cell.formula);
-                                }
-
-                                if (cell.format !== null) {
-                                    this.range(rowIndex, columnIndex).format(cell.format);
-                                }
+                                this._properties.fromJSON(this._grid.index(rowIndex, columnIndex), cell);
                             }
                         }
                     }
