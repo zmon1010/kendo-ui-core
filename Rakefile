@@ -991,6 +991,7 @@ BUNDLES = [
     'cdn.commercial',
     'professional.commercial',
     'professional.trial',
+    'professional.office365',
     'jsp.commercial',
     'jsp.trial',
     'php.commercial',
