@@ -158,20 +158,8 @@
             if (this.options.toolbar) {
                 element = $("<div />").prependTo(this.element);
                 this.toolbar = new kendo.spreadsheet.ToolBar(element, {
-                    click: function(e) {
-                        var commandType = e.target.attr("data-command");
-                        this._execCommand(kendo.spreadsheet[commandType]);
-                    }.bind(this),
-                    toggle: function(e) {
-                        var target = e.target;
-                        var commandType = e.target.attr("data-command");
-                        var property = target.attr("data-property");
-                        var value = target.attr("data-value");
-
-                        this._execCommand(kendo.spreadsheet[commandType], {
-                            property: property,
-                            value: e.checked ? value : null
-                        });
+                    execute: function(e) {
+                        this._execCommand(kendo.spreadsheet[e.commandType], e);
                     }.bind(this),
                     items: [
                         { type: "button", text: "Format cells", attributes: {

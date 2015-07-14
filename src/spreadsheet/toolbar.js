@@ -3,8 +3,30 @@
 })(function(){
 
 (function(kendo) {
+    var ToolBar = kendo.ui.ToolBar;
 
-    var SpreadsheetToolBar = kendo.ui.ToolBar.extend({
+    var SpreadsheetToolBar = ToolBar.extend({
+        init: function(element, options) {
+            ToolBar.fn.init.call(this, element, options);
+
+            this.bind({
+                click: function(e) {
+                    this.trigger("execute", {
+                        commandType: e.target.attr("data-command")
+                    });
+                }.bind(this),
+                toggle: function(e) {
+                    var target = e.target;
+
+                    this.trigger("execute", {
+                        commandType: target.attr("data-command"),
+                        property: target.attr("data-property"),
+                        value: e.checked ? target.attr("data-value") : null
+                    });
+                }.bind(this),
+            });
+        },
+        events: ToolBar.fn.events.concat([ "execute" ]),
         options: {
             name: "SpreadsheetToolBar"
         },
@@ -28,20 +50,16 @@
             }
         },
         _tools: function() {
-            var elements = this.element.find("[data-command]");
-            var tool, property, tools = {};
-
-            for (var i = 0; i < elements.length; i++) {
-                tool = this._getItem(elements.eq(i));
-
-                property = elements.eq(i).data("property");
+            return this.element.find("[data-command]").toArray().reduce(function(tools, element) {
+                element = $(element);
+                var property = element.attr("data-property");
 
                 if (property) {
-                    tools[property] = tool;
+                    tools[property] = this._getItem(element);
                 }
-            }
 
-            return tools;
+                return tools;
+            }.bind(this), {});
         }
     });
 
