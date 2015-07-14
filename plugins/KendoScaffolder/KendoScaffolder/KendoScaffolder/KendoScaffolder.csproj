@@ -166,7 +166,9 @@
     <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Views\razor\GridWebApiView.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Views\web\GridAjaxWebView.cs.t4" />
+    <None Include="Templates\KendoScaffolderCodeGenerator\Grid\Views\web\GridAjaxWebView.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Templates\KendoScaffolderCodeGenerator\Scheduler\Controllers\SchedulerAjaxController.cs.t4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

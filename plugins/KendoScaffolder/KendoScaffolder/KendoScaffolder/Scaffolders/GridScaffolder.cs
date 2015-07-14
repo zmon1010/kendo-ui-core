@@ -104,14 +104,7 @@ namespace KendoScaffolder.Scaffolders
             switch (dataSourceType)
             {
                 case "Ajax":
-                    if (ViewModel.ViewType == ViewType.Web)
-                    {
-                        return "GridAjaxWebView";
-                    }
-                    else 
-                    { 
-                        return "Grid" + ((ViewModel.EditMode == "InCell") ? "AjaxBatchController" : "AjaxController");
-                    }
+                    return "Grid" + ((ViewModel.EditMode == "InCell") ? "AjaxBatchController" : "AjaxController");
                 case "Server":
                     return "GridServerController";
                 case "WebApi":
@@ -234,7 +227,7 @@ namespace KendoScaffolder.Scaffolders
 
             if (ViewModel.ViewType == ViewType.Web)
             {
-                return dataSourceType + "WebView";
+                return "Grid" + dataSourceType + "WebView";
             }
 
             return "Grid" + dataSourceType + "View";
