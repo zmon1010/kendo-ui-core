@@ -644,6 +644,8 @@
                     var values = this._properties.iterator("value", this._grid.cellRefIndex(columnRef.topLeft),
                         this._grid.cellRefIndex(columnRef.bottomRight));
 
+                    column.filter.prepare(values.unique());
+
                     values.forEach(function(value, index) {
                         var row = this._grid.cellRef(index).row;
 

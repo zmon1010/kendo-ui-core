@@ -402,6 +402,12 @@
             this.ranges = ranges;
         },
 
+        unique: function() {
+            return this.ranges.map(function(range) {
+                return range.value;
+            });
+        },
+
         at: function(index) {
             while (this.ranges[this.index].end < index) {
                 this.index ++;

@@ -90,4 +90,26 @@
         equal(sheet.rowHeight(0), 20);
     });
 
+    test("prepares the filter with unique values", 3, function() {
+        var Filter = kendo.spreadsheet.Filter.extend({
+            prepare: function(values) {
+                equal(values.length, 2);
+                equal(values[0], 1);
+                equal(values[1], 2);
+            },
+            matches: function() {
+                return false;
+            }
+        });
+
+        sheet.range("A1:B3").values([
+            [1, 2],
+            [1, 3],
+            [2, 3]
+        ]).filter({
+            column: 0,
+            filter: new Filter()
+        });
+    });
+
 })();

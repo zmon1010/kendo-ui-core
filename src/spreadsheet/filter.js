@@ -4,6 +4,9 @@
 (function(kendo) {
     /*jshint evil: true */
     var Filter = kendo.spreadsheet.Filter = kendo.Class.extend({
+        prepare: function() {
+
+        },
         matches: function() {
             throw new Error("The 'matches' method is not implemented.");
         },
@@ -114,7 +117,7 @@
     kendo.spreadsheet.TopFilter = Filter.extend({
         init: function(options) {
             this.type = options.type;
-            this.value = options.value;
+            this.count = options.count;
             this.values = [];
         },
 
@@ -129,7 +132,7 @@
                 });
             }
 
-            var count = this.value;
+            var count = this.count;
 
             if (this.type === "topPercent" || this.type === "bottomPercent") {
                 count = (values.length * count / 100) >> 0;
