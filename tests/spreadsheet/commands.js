@@ -17,11 +17,10 @@
         return new RangeRef(new CellRef(row, col), new CellRef(row, col));
     }
 
-    function command(command, options) {
-        return new command($.extend({
-            ref: singleCellRange(0,0),
-            sheet: sheet
-        }, options))
+    function command(commandType, options) {
+        var command =  new commandType(options);
+        command.range(sheet.range("A1"));
+        return command;
     }
 
     module("SpreadSheet EditCommand", moduleOptions);

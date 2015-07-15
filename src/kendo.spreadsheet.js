@@ -109,12 +109,8 @@
             this.toolbar.refresh();
         },
 
-        _execCommand: function(commandType, options) {
-            var sheet = this._sheet;
-            var command = new commandType($.extend({
-                ref: sheet.select(),
-                sheet: sheet
-            }, options));
+        execute: function(command) {
+            command.range(this._sheet.selection());
             command.exec();
             this.undoRedoStack.push(command);
         },
@@ -123,9 +119,9 @@
             var formulaBar = $("<div />").prependTo(this.element);
             this.formulaBar = new kendo.spreadsheet.FormulaBar(formulaBar, {
                 change: function(e) {
-                    this._execCommand(kendo.spreadsheet.EditCommand, {
+                    this.execute(new kendo.spreadsheet.EditCommand({
                         value: e.value
-                    });
+                    }));
                 }.bind(this)
             });
 
@@ -159,7 +155,7 @@
                 element = $("<div />").prependTo(this.element);
                 this.toolbar = new kendo.spreadsheet.ToolBar(element, {
                     execute: function(e) {
-                        this._execCommand(kendo.spreadsheet[e.commandType], e);
+                        this.execute(new kendo.spreadsheet[e.commandType](e));
                     }.bind(this),
                     items: [
                         { type: "button", text: "Format cells", attributes: {

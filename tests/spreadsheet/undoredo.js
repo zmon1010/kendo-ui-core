@@ -11,6 +11,8 @@
             spreadsheet = new kendo.ui.Spreadsheet(element);
 
             sheet = spreadsheet.activeSheet();
+
+            sheet.range("A1").select();
         },
         teardown: function() {
             kendo.destroy(QUnit.fixture);
@@ -23,6 +25,14 @@
 
     test("changing formulaBar pushes command to undoRedo stack", function() {
         spreadsheet.formulaBar.trigger("change", { value: "foo" });
+
+        ok(spreadsheet.undoRedoStack.canUndo());
+    });
+
+    test("execute pushes command to undo/redo stack", function() {
+        var command = new kendo.spreadsheet.EditCommand({ value: "bar" });
+
+        spreadsheet.execute(command);
 
         ok(spreadsheet.undoRedoStack.canUndo());
     });

@@ -4,12 +4,12 @@
 
 (function(kendo) {
     var Command = kendo.spreadsheet.Command = kendo.Class.extend({
-        init: function(options) {
-            this._sheet = options.sheet;
-            this._ref = options.ref;
-        },
-        range: function() {
-            return this._sheet.range(this._ref);
+        range: function(range) {
+            if (range !== undefined) {
+                this._range = range;
+            }
+
+            return this._range;
         },
         redo: function() {
             this.exec();
@@ -18,7 +18,6 @@
 
     var PropertyChangeCommand = kendo.spreadsheet.PropertyChangeCommand = Command.extend({
         init: function(options) {
-            Command.fn.init.call(this, options);
             this._property = options.property;
             this._value = options.value;
         },
@@ -41,8 +40,7 @@
 
     var PopupCommand = kendo.spreadsheet.PopupCommand = Command.extend({
         init: function(options) {
-            Command.fn.init.call(this, options);
-            this._dialogOptions = options.dialogOptions;
+            this._dialogOptions = options && options.dialogOptions;
         },
         popup: function() {
             return this._popup;
