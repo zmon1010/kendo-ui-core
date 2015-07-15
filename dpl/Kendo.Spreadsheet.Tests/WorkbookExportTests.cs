@@ -108,6 +108,34 @@ namespace Kendo.Spreadsheet.Tests
             Assert.Equal("A2:B2", NameConverter.ConvertCellRangeToName(firstRange.FromIndex, firstRange.ToIndex));
         }
 
+        [Fact]
+        public void ToDocument_does_not_freeze_pane()
+        {
+            var pane = workbook.ToDocument().ActiveWorksheet.ViewState.Pane;
+
+            Assert.Equal(null, pane);
+        }
+
+        [Fact]
+        public void ToDocument_exports_frozen_rows()
+        {
+            sheet.FrozenRows = 4;
+            var pane = workbook.ToDocument().ActiveWorksheet.ViewState.Pane;
+
+            Assert.Equal(PaneState.Frozen, pane.State);
+            Assert.Equal(4, pane.TopLeftCellIndex.RowIndex);
+        }
+
+        [Fact]
+        public void ToDocument_exports_frozen_columns()
+        {
+            sheet.FrozenColumns = 4;
+            var pane = workbook.ToDocument().ActiveWorksheet.ViewState.Pane;
+
+            Assert.Equal(PaneState.Frozen, pane.State);
+            Assert.Equal(4, pane.TopLeftCellIndex.ColumnIndex);
+        }
+
         private CellSelection GetCell(int rowIndex, int columnIndex)
         {
             return workbook.ToDocument().ActiveWorksheet.Cells[rowIndex, columnIndex];

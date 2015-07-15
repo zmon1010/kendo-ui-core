@@ -66,10 +66,10 @@ namespace Kendo.Spreadsheet
                         documentSheet.Cells.GetCellSelection(mergedRange).Merge();
                     }
 
-                    //if (dtoSheet.FrozenColumns > 0 || dtoSheet.FrozenRows > 0)
-                    //{
-                    //    sheet.ViewState.FreezePanes(dtoSheet.FrozenRows, dtoSheet.FrozenColumns);
-                    //}
+                    if (sheet.FrozenColumns > 0 || sheet.FrozenRows > 0)
+                    {
+                        documentSheet.ViewState.FreezePanes(sheet.FrozenRows, sheet.FrozenColumns);
+                    }
                 }
             }
 
