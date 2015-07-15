@@ -128,7 +128,13 @@
         },
 
         prepare: function(range) {
-            var values = [].concat.apply([], range.values());
+            var values = range.values().map(function(row) {
+                return row[0];
+            })
+            .sort()
+            .filter(function(value, index, array) {
+                return index === 0 || value !== array[index - 1];
+            });
 
             if (this._type === "topNumber" || this._type == "topPercent") {
                 values.sort(function(x, y) {

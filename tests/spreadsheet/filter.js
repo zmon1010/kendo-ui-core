@@ -438,6 +438,22 @@
         equal(filter.matches(11), false);
     });
 
+    test("top number ignores duplicates", function() {
+        filter = new TopFilter({ type: "topNumber", value: 2 });
+
+        range.values([
+            [1], [10], [10], [4]
+        ]);
+
+        filter.prepare(range);
+
+        equal(filter.matches(2), false);
+        equal(filter.matches(3), false);
+        equal(filter.matches(4), true);
+        equal(filter.matches(10), true);
+        equal(filter.matches(11), false);
+    });
+
     test("bottom number matches the bottom X values", function() {
         filter = new TopFilter({ type: "bottomNumber", value: 2 });
 
