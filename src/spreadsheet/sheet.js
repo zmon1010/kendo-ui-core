@@ -297,7 +297,7 @@
             this._mergedCells.forEach(callback);
         },
 
-        forEach: function(ref, callback, serializableOnly) {
+        forEach: function(ref, callback) {
             var topLeft = this._grid.normalize(ref.topLeft);
             var bottomRight = this._grid.normalize(ref.bottomRight);
 
@@ -309,7 +309,7 @@
 
                 this._properties.forEach(startCellIndex, endCellIndex, function(value) {
                     callback(ri++, ci, value);
-                }, serializableOnly);
+                });
             }
         },
 
@@ -433,7 +433,7 @@
                 }
 
                 row.cells.push(cell);
-            }, true);
+            });
 
             var json = {
                 rows: rows,
@@ -651,7 +651,7 @@
                         } else {
                             this.unhideRow(row);
                         }
-                    }.bind(this), true);
+                    }.bind(this));
                 }, this);
 
                 this._filter = {

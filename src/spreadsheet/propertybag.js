@@ -137,14 +137,10 @@
                               }, this);
         },
 
-        iterators: function(start, end, serializableOnly) {
-            var specs = this.specs;
-
-            if (serializableOnly) {
-                specs = this.specs.filter(function(spec) {
-                    return spec.serializable;
-                });
-            }
+        iterators: function(start, end) {
+            var specs = this.specs.filter(function(spec) {
+                return spec.serializable;
+            });
 
             return specs.map(function(spec) {
                 var iterator = this.iterator(spec.name, start, end);
@@ -157,8 +153,8 @@
             }, this);
         },
 
-        forEach: function(start, end, callback, serializableOnly) {
-            var iterators = this.iterators(start, end, serializableOnly);
+        forEach: function(start, end, callback) {
+            var iterators = this.iterators(start, end);
 
             for (var index = start; index <= end; index++) {
                 var values = {};
