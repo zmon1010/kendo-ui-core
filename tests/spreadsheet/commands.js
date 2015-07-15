@@ -3,11 +3,13 @@
     var defaults = kendo.ui.Spreadsheet.prototype.options;
     var moduleOptions = {
         setup: function() {
+            kendo.effects.disable();
             sheet = new kendo.spreadsheet.Sheet(3, 3, defaults.rowHeight, defaults.columnWidth);
         },
         teardown: function() {
             sheet.unbind();
             $(".k-spreadsheet-window").kendoWindow("destroy");
+            kendo.effects.enable();
         }
     };
 
@@ -71,7 +73,7 @@
     });
 
     test("closing window destroys it", function() {
-        var command = popupCommand({ dialogOptions: { animation: false } });
+        var command = popupCommand();
 
         command.exec();
 
@@ -94,5 +96,35 @@
         var preview = command.popup().element.find(".k-spreadsheet-preview");
 
         equal(preview.text(), "bar");
+    });
+
+    test("clicking cancel closes window", function() {
+        var command = formatCellsCommand();
+
+        command.exec();
+
+        command.popup().element.find(".k-button:not(.k-primary)").click();
+
+        equal($(".k-spreadsheet-window").length, 0);
+    });
+
+    test("clicking apply closes window", function() {
+        var command = formatCellsCommand();
+
+        command.exec();
+
+        command.popup().element.find(".k-button.k-primary").click();
+
+        equal($(".k-spreadsheet-window").length, 0);
+    });
+
+    test("setting format previews it with sample", function() {
+        var command = formatCellsCommand();
+
+        command.exec();
+
+        command.format("foo");
+
+        equal(command.preview(), "foo");
     });
 })();
