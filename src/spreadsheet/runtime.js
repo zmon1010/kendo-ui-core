@@ -8,7 +8,7 @@
 
     // WARNING: removing the following jshint declaration and turning
     // == into === to make JSHint happy will break functionality.
-    /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true, validthis:true, -W054 */
+    /* jshint eqnull:true, newcap:false, laxbreak:true, shadow:true, validthis:true, -W054, loopfunc: true */
     /* global console */
 
     var calc = {};
@@ -319,6 +319,17 @@
             });
             return m;
         },
+        unit: function(n) {
+            this.width = this.height = n;
+            var a = this.data = new Array(n);
+            for (var i = n; --i >= 0;) {
+                var row = a[i] = new Array(n);
+                for (var j = n; --j >= 0;) {
+                    row[j] = i == j ? 1 : 0;
+                }
+            }
+            return this;
+        },
         determinant: function() {
             // have to thank my father for this function.
             // http://docere.ro/o-aplicatie-pentru-browser-cu-determinanti-si-sisteme-liniare/
@@ -346,8 +357,99 @@
                 d *= a[C][C];
             }
             return d;
-        }
+        },
+        inverse: function() {
+            var n = this.width;
+            var m = this.augment(new Matrix(this.context).unit(n));
+            var a = m.data;
+            var tmp;
+
+            // Gaussian elimination
+            // https://en.wikipedia.org/wiki/Gaussian_elimination#Finding_the_inverse_of_a_matrix
+
+            // 1. Get zeros below main diagonal
+            for (var k = 0; k < n; ++k) {
+                var imax = argmax(k, n, function(i){ return a[i][k]; });
+                if (!a[imax][k]) {
+                    return null; // singular matrix
+                }
+                if (k != imax) {
+                    tmp = a[k];
+                    a[k] = a[imax];
+                    a[imax] = tmp;
+                }
+                for (var i = k+1; i < n; ++i) {
+                    for (var j = k+1; j < 2*n; ++j) {
+                        a[i][j] -= a[k][j] * a[i][k] / a[k][k];
+                    }
+                    a[i][k] = 0;
+                }
+            }
+
+            // 2. Get 1-s on main diagonal, dividing by pivot
+            for (var i = 0; i < n; ++i) {
+                for (var f = a[i][i], j = 0; j < 2*n; ++j) {
+                    a[i][j] /= f;
+                }
+            }
+
+            // 3. Get zeros above main diagonal.  Actually, we only care to compute the right side
+            // here (that will be the inverse), so in the inner loop below we go while j >= n,
+            // instead of j >= k.
+            for (var k = n; --k >= 0;) {
+                for (var i = k; --i >= 0;) {
+                    if (a[i][k]) {
+                        for (var j = 2*n; --j >= n;) {
+                            a[i][j] -= a[k][j] * a[i][k];
+                        }
+                    }
+                }
+            }
+
+            return m.slice(0, n, n, n);
+        },
+        augment: function(m) {
+            var ret = this.clone(), n = ret.width;
+            m.each(function(val, row, col){
+                ret.set(row, col + n, val);
+            });
+            return ret;
+        },
+        slice: function(row, col, height, width) {
+            var m = new Matrix(this.context);
+            for (var i = 0; i < height; ++i) {
+                for (var j = 0; j < width; ++j) {
+                    m.set(i, j, this.get(row + i, col + j));
+                }
+            }
+            return m;
+        },
+
+        // XXX: debug
+        // dump: function() {
+        //     this.data.forEach(function(row){
+        //         console.log(row.map(function(val){
+        //             var str = val.toFixed(3).replace(/\.?0*$/, function(s){
+        //                 return [ "", " ", "  ", "   ", "    " ][s.length];
+        //             });
+        //             if (val >= 0) { str = " " + str; }
+        //             return str;
+        //         }).join("  "));
+        //     });
+        // }
     });
+
+    function argmax(i, end, f) {
+        var max = f(i), pos = i;
+        while (++i < end) {
+            var v = f(i);
+            if (v > max) {
+                max = v;
+                pos = i;
+            }
+        }
+        return pos;
+    }
 
     /* -----[ Formula ]----- */
 

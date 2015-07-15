@@ -523,7 +523,7 @@
                 res = [ num ];
             }
         });
-        var m = new Matrix();
+        var m = new Matrix(this);
         res.forEach(function(num, i){
             m.set(i, 0, num);
         });
@@ -1012,6 +1012,54 @@
         [ "range", "matrix" ]
     ]);
 
+    defineFunction("mmult", function(a, b){
+        var error = a.each(function(val){
+            if (typeof val != "number") {
+                return new CalcError("VALUE");
+            }
+        }, true) || b.each(function(val){
+            if (typeof val != "number") {
+                return new CalcError("VALUE");
+            }
+        }, true);
+        if (error) {
+            return error;
+        }
+        var m = new Matrix(this);
+        for (var row = 0; row < a.height; ++row) {
+            for (var col = 0; col < b.width; ++col) {
+                var s = 0;
+                for (var i = 0; i < a.width; ++i) {
+                    s += a.get(row, i) * b.get(i, col);
+                }
+                m.set(row, col, s);
+            }
+        }
+        return m;
+    }).args([
+        [ "a", "matrix" ],
+        [ "b", [ "and", "matrix",
+                 [ "assert", "$b.height == $a.width" ] ] ]
+    ]);
+
+    defineFunction("munit", function(n){
+        return new Matrix(this).unit(n);
+    }).args([
+        [ "n", "number" ]
+    ]);
+
+    defineFunction("minverse", function(m){
+        var error = m.each(function(val){
+            if (typeof val != "number") {
+                return new CalcError("VALUE");
+            }
+        }, true);
+        return error || m.inverse();
+    }).args([
+        [ "m", [ "and", "matrix",
+                 [ "assert", "$m.width == $m.height" ] ] ]
+    ]);
+
     /* -----[ Other ]----- */
 
     defineFunction("rand", function() {
@@ -1395,5 +1443,13 @@
     function descending(a, b) {
         return a === b ? 0 : a < b ? 1 : -1;
     }
+
+    // var m = new Matrix();
+    // m.data = [[1, 2, 3], [4, 1, 6], [7, 8, 9]];
+    // //m.data = [[0, 2, 1], [2, 6, 1], [1, 1, 4]];
+    // //m.data = [[1,4,1,1], [1,4,0,1], [2,3,1,2], [3,2,6,4]];
+    // m.width = m.height = 3;
+    // var x = m.inverse();
+    // x.dump();
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
