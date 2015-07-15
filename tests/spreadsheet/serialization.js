@@ -115,7 +115,7 @@
             {
                 column: 0,
                 filter: new kendo.spreadsheet.TopFilter({
-                    kind: "topPercent",
+                    type: "topPercent",
                     value: 13
                 })
             }
@@ -126,8 +126,7 @@
         equal(json.filter.ref, "A1:B2");
         equal(json.filter.columns.length, 1);
         equal(json.filter.columns[0].index, 0);
-        equal(json.filter.columns[0].type, "top");
-        equal(json.filter.columns[0].kind, "topPercent");
+        equal(json.filter.columns[0].type, "topPercent");
         equal(json.filter.columns[0].value, 13);
     });
 
@@ -444,7 +443,7 @@
                 columns: [
                     { index: 1, type: "custom", criteria: [ { operator: "eq", value: "foo" } ] },
                     { index: 0, type: "value", values: [1, 2] },
-                    { index: 2, type: "top", kind: "bottomPercent", value: 1 }
+                    { index: 2, type: "topPercent", value: 1 }
                 ]
             }
         });

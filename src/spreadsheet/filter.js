@@ -25,7 +25,11 @@
         var constructor = kendo.spreadsheet[type.charAt(0).toUpperCase() + type.substring(1) + "Filter"];
 
         if (!constructor) {
-            throw new Error("Filter type not recognized.");
+            if (/(top|bottom)(Number|Percent)/.test(type)) {
+                constructor = kendo.spreadsheet.TopFilter;
+            } else {
+                throw new Error("Filter type not recognized.");
+            }
         }
 
         return new constructor(options);
@@ -116,13 +120,13 @@
 
     kendo.spreadsheet.TopFilter = Filter.extend({
         init: function(options) {
-            this.kind = options.kind;
+            this.type = options.type;
             this.value = options.value;
             this.values = [];
         },
 
         prepare: function(values) {
-            if (this.kind === "topNumber" || this.kind == "topPercent") {
+            if (this.type === "topNumber" || this.type == "topPercent") {
                 values.sort(function(x, y) {
                     return y - x;
                 });
@@ -134,7 +138,7 @@
 
             var count = this.value;
 
-            if (this.kind === "topPercent" || this.kind === "bottomPercent") {
+            if (this.type === "topPercent" || this.type === "bottomPercent") {
                 count = (values.length * count / 100) >> 0;
             }
 
@@ -145,8 +149,7 @@
         },
         toJSON: function() {
             return {
-                type: "top",
-                kind: this.kind,
+                type: this.type,
                 value: this.value
             };
         }
