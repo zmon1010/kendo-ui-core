@@ -321,7 +321,12 @@
                     return ref.toRangeRef().union(mergedCells);
                 });
 
-                this.activeCell(this._selection.first());
+                if (ref instanceof RangeRef) {
+                    this.activeCell(this._selection.first());
+                } else {
+                    this.activeCell(ref);
+                }
+
             }
 
             return this._selection;
