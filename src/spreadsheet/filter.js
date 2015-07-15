@@ -116,13 +116,13 @@
 
     kendo.spreadsheet.TopFilter = Filter.extend({
         init: function(options) {
-            this.type = options.type;
-            this.count = options.count;
+            this.kind = options.kind;
+            this.value = options.value;
             this.values = [];
         },
 
         prepare: function(values) {
-            if (this.type === "topNumber" || this.type == "topPercent") {
+            if (this.kind === "topNumber" || this.kind == "topPercent") {
                 values.sort(function(x, y) {
                     return y - x;
                 });
@@ -132,9 +132,9 @@
                 });
             }
 
-            var count = this.count;
+            var count = this.value;
 
-            if (this.type === "topPercent" || this.type === "bottomPercent") {
+            if (this.kind === "topPercent" || this.kind === "bottomPercent") {
                 count = (values.length * count / 100) >> 0;
             }
 
@@ -142,6 +142,13 @@
         },
         matches: function(value) {
             return this.values.indexOf(value) >= 0;
+        },
+        toJSON: function() {
+            return {
+                type: "top",
+                kind: this.kind,
+                value: this.value
+            };
         }
     });
 

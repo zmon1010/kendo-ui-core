@@ -417,7 +417,7 @@
     module("top filter");
 
     test("top number matches the top X values", function() {
-        filter = new TopFilter({ type: "topNumber", count: 2 });
+        filter = new TopFilter({ kind: "topNumber", value: 2 });
 
         filter.prepare([
             1, 10, 2, 4
@@ -431,7 +431,7 @@
     });
 
     test("bottom number matches the bottom X values", function() {
-        filter = new TopFilter({ type: "bottomNumber", count: 2 });
+        filter = new TopFilter({ kind: "bottomNumber", value: 2 });
 
         filter.prepare([
             1, 10, 2, 4
@@ -446,7 +446,7 @@
     });
 
     test("top percent matches the top X percent ", function() {
-        filter = new TopFilter({ type: "topPercent", count: 25 });
+        filter = new TopFilter({ kind: "topPercent", value: 25 });
 
         filter.prepare([
             1, 10, 2, 4
@@ -461,7 +461,7 @@
     });
 
     test("bottom percent matches the bottom X percent ", function() {
-        filter = new TopFilter({ type: "bottomPercent", count: 25 });
+        filter = new TopFilter({ kind: "bottomPercent", value: 25 });
 
         filter.prepare([
             1, 10, 2, 4

@@ -110,6 +110,27 @@
         equal(json.filter.columns[0].criteria[1].value, 3);
     });
 
+    test("toJSON serializes top filter", function() {
+        sheet.range("A1:B2").filter([
+            {
+                column: 0,
+                filter: new kendo.spreadsheet.TopFilter({
+                    kind: "topPercent",
+                    value: 13
+                })
+            }
+        ]);
+
+        var json = sheet.toJSON();
+
+        equal(json.filter.ref, "A1:B2");
+        equal(json.filter.columns.length, 1);
+        equal(json.filter.columns[0].index, 0);
+        equal(json.filter.columns[0].type, "top");
+        equal(json.filter.columns[0].kind, "topPercent");
+        equal(json.filter.columns[0].value, 13);
+    });
+
     test("toJSON serializes cells that have format", function() {
         sheet.range("B2").format("#.#");
         var json = sheet.toJSON();
@@ -422,7 +443,8 @@
                 ref: "A1:B1",
                 columns: [
                     { index: 1, type: "custom", criteria: [ { operator: "eq", value: "foo" } ] },
-                    { index: 0, type: "value", values: [1, 2] }
+                    { index: 0, type: "value", values: [1, 2] },
+                    { index: 2, type: "top", kind: "bottomPercent", value: 1 }
                 ]
             }
         });
@@ -430,5 +452,7 @@
         equal(sheet._filter.ref.toString(), "A1:B1");
         equal(sheet._filter.columns[0].index, 1);
         ok(sheet._filter.columns[0].filter instanceof kendo.spreadsheet.CustomFilter);
+        ok(sheet._filter.columns[1].filter instanceof kendo.spreadsheet.ValueFilter);
+        ok(sheet._filter.columns[2].filter instanceof kendo.spreadsheet.TopFilter);
     });
 })();
