@@ -105,7 +105,6 @@
         equal(sheet.range("A1").wrap(), false);
         equal(sheet.range("A1").horizontalAlignment(), "right");
         equal(sheet.range("A1").verticalAlignment(), "top");
-        equal(sheet.range("A1").type(), "number");
         equal(sheet.range("A1").format(), "#");
         equal(sheet.range("A1").borderBottom(), null);
         equal(sheet.range("A1").borderRight(), null);

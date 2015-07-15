@@ -64,14 +64,14 @@
                 return this;
             } else {
                 var value = this._get("value");
-                var type = this._get("type");
+                var format = this._get("format");
                 var formula = this._get("formula");
 
                 if (formula) {
                     value = formula;
-                } else if (type === "date") {
-                    value = kendo.toString(value, kendo.culture().calendar.patterns.d);
-                } else if (type === "string") {
+                } else if (format === "m/d/yyyy") { //TODO: actual format type detection
+                    value = kendo.toString(kendo.spreadsheet.calc.runtime.serialToDate(value), kendo.culture().calendar.patterns.d);
+                } else if (typeof value === "string") {
                     var parsed = kendo.spreadsheet.Sheet.parse(value, true);
 
                     if (parsed.type === "number") {
@@ -81,10 +81,6 @@
 
                 return value;
             }
-        },
-
-        type: function() {
-            return this._get("type");
         },
 
         borderLeft: function(value) {

@@ -380,9 +380,6 @@
         return classes.join(" ");
     }
 
-    function toExcelFormat(format) {
-        return format.replace(/M/g, "m").replace(/'/g, '"').replace(/tt/, "am/pm");
-    }
 
     var Pane = kendo.Class.extend({
         init: function(sheet, grid) {
@@ -567,10 +564,6 @@
                        style.textAlign = "center";
                    break;
                 }
-            }
-
-            if (cell.type === "date" && !cell.format) {
-                cell.format = toExcelFormat(kendo.culture().calendar.patterns.d);
             }
 
             var td = table.addCell(row, cell.value, style);

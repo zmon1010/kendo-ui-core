@@ -41,34 +41,30 @@
     });
 
     var ValueProperty = Property.extend({
-        init: function(values, types) {
+        init: function(values, formats) {
             Property.prototype.init.call(this, values);
 
-            this.types = types;
-        },
-
-        get: function(index) {
-            var value = this.list.value(index, index);
-
-            if (this.types.value(index, index) === "date") {
-                value = kendo.spreadsheet.calc.runtime.serialToDate(value);
-            }
-
-            return value;
+            this.formats = formats;
         },
 
         set: function(start, end, value, parseStrings) {
             var result = kendo.spreadsheet.Sheet.parse(value, parseStrings);
 
+            if (result.type === "date") {
+                this.formats.value(start, end, toExcelFormat(kendo.culture().calendar.patterns.d));
+            }
+
             this.list.value(start, end, result.value);
-            this.types.value(start, end, result.type);
         }
     });
 
+    function toExcelFormat(format) {
+        return format.replace(/M/g, "m").replace(/'/g, '"').replace(/tt/, "am/pm");
+    }
+
     kendo.spreadsheet.PropertyBag = kendo.Class.extend({
         specs: [
-            { property: ValueProperty, name: "value", value: null, sortable: true, serializable: true, depends: "type" },
-            { property: Property, name: "type",  value: null, sortable: true, serializable: false },
+            { property: ValueProperty, name: "value", value: null, sortable: true, serializable: true, depends: "format" },
             { property: Property, name: "format", value: null, sortable: true, serializable: true },
             { property: Property, name: "formula", value: null, sortable: true, serializable: true },
             { property: Property, name: "compiledFormula", value: null, sortable: true, serializable: false },
