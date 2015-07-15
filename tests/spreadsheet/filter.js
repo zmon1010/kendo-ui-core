@@ -10,20 +10,15 @@
     module("filter");
 
     test("creates value filter", function() {
-        var filter = kendo.spreadsheet.Filter.create({ type: "value", values: [1, 2] });
+        var filter = kendo.spreadsheet.Filter.create({ type: "value" });
 
         ok(filter instanceof ValueFilter);
-        equal(filter.values.length, 2);
-        equal(filter.values[0], 1);
-        equal(filter.values[1], 2);
     });
 
     test("creates custom filter", function() {
         var filter = kendo.spreadsheet.Filter.create({ type: "custom", criteria: [{ operator: "eq", value: "foo" }] });
 
         ok(filter instanceof CustomFilter);
-        equal(filter.criteria[0].operator, "eq");
-        equal(filter.criteria[0].value, "foo");
     });
 
     test("create throws error if type is not specified", 1, function() {
@@ -414,14 +409,27 @@
         equal(filter.matches("bar"), true);
     });
 
-    module("top filter");
+    var defaults = kendo.ui.Spreadsheet.prototype.options;
+    var range;
+
+    module("top filter", {
+        setup: function() {
+            sheet = new kendo.spreadsheet.Sheet(4, 4, defaults.rowHeight, defaults.columnWidth);
+            range = sheet.range("A1:A4");
+        },
+        teardown: function() {
+            sheet.unbind();
+        }
+    });
 
     test("top number matches the top X values", function() {
         filter = new TopFilter({ type: "topNumber", value: 2 });
 
-        filter.prepare([
-            1, 10, 2, 4
+        range.values([
+            [1], [10], [2], [4]
         ]);
+
+        filter.prepare(range);
 
         equal(filter.matches(2), false);
         equal(filter.matches(3), false);
@@ -433,9 +441,11 @@
     test("bottom number matches the bottom X values", function() {
         filter = new TopFilter({ type: "bottomNumber", value: 2 });
 
-        filter.prepare([
-            1, 10, 2, 4
+        range.values([
+            [1], [10], [2], [4]
         ]);
+
+        filter.prepare(range);
 
         equal(filter.matches(0), false);
         equal(filter.matches(2), true);
@@ -448,9 +458,11 @@
     test("top percent matches the top X percent ", function() {
         filter = new TopFilter({ type: "topPercent", value: 25 });
 
-        filter.prepare([
-            1, 10, 2, 4
+        range.values([
+            [1], [10], [2], [4]
         ]);
+
+        filter.prepare(range);
 
         equal(filter.matches(1), false);
         equal(filter.matches(2), false);
@@ -463,9 +475,11 @@
     test("bottom percent matches the bottom X percent ", function() {
         filter = new TopFilter({ type: "bottomPercent", value: 25 });
 
-        filter.prepare([
-            1, 10, 2, 4
+        range.values([
+            [1], [10], [2], [4]
         ]);
+
+        filter.prepare(range);
 
         equal(filter.matches(1), true);
         equal(filter.matches(2), false);

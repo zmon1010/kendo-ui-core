@@ -90,12 +90,10 @@
         equal(sheet.rowHeight(0), 20);
     });
 
-    test("prepares the filter with unique values", 3, function() {
+    test("prepares the filter with column range", 1, function() {
         var Filter = kendo.spreadsheet.Filter.extend({
-            prepare: function(values) {
-                equal(values.length, 2);
-                equal(values[0], 1);
-                equal(values[1], 2);
+            prepare: function(range) {
+                equal(range._ref.toString(), "A1:A3");
             },
             matches: function() {
                 return false;

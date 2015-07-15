@@ -641,20 +641,17 @@
                 columns.forEach(function(column) {
                     var columnRef = ref.toColumn(column.index);
 
-                    var values = this._properties.iterator("value", this._grid.cellRefIndex(columnRef.topLeft),
-                        this._grid.cellRefIndex(columnRef.bottomRight));
+                    column.filter.prepare(new Range(columnRef, this));
 
-                    column.filter.prepare(values.unique());
-
-                    values.forEach(function(value, index) {
-                        var row = this._grid.cellRef(index).row;
+                    this.forEach(columnRef, function(row, col, cell) {
+                        var value = column.filter.value(cell);
 
                         if (column.filter.matches(value) === false) {
                             this.hideRow(row);
                         } else {
                             this.unhideRow(row);
                         }
-                    }.bind(this));
+                    }.bind(this), true);
                 }, this);
 
                 this._filter = {

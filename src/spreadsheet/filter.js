@@ -4,8 +4,10 @@
 (function(kendo) {
     /*jshint evil: true */
     var Filter = kendo.spreadsheet.Filter = kendo.Class.extend({
-        prepare: function() {
-
+        prepare: function(range) {
+        },
+        value: function(cell) {
+            return cell.value;
         },
         matches: function() {
             throw new Error("The 'matches' method is not implemented.");
@@ -36,33 +38,33 @@
     };
 
     kendo.spreadsheet.ValueFilter = Filter.extend({
-        values: [],
+        _values: [],
 
-        dates: [],
+        _dates: [],
 
-        blanks: false,
+        _blanks: false,
 
         init: function(options) {
             if (options.values !== undefined) {
-                this.values = options.values;
+                this._values = options.values;
             }
 
             if (options.blanks !== undefined) {
-                this.blanks = options.blanks;
+                this._blanks = options.blanks;
             }
 
             if (options.dates !== undefined) {
-                this.dates = options.dates;
+                this._dates = options.dates;
             }
         },
 
         matches: function(value) {
             if (value === null) {
-                return this.blanks;
+                return this._blanks;
             }
 
             if (value instanceof Date) {
-                return this.dates.some(function(date) {
+                return this._dates.some(function(date) {
                     return date.year === value.getFullYear() &&
                         (date.month === undefined || date.month === value.getMonth()) &&
                         (date.day === undefined || date.day === value.getDate()) &&
@@ -72,32 +74,32 @@
                 });
             }
 
-            return this.values.indexOf(value) >= 0;
+            return this._values.indexOf(value) >= 0;
         },
         toJSON: function() {
             return {
                 type: "value",
-                values: this.values.slice(0)
+                values: this._values.slice(0)
             };
         }
     });
 
     kendo.spreadsheet.CustomFilter = Filter.extend({
-        logic: "and",
+        _logic: "and",
         init: function(options) {
             if (options.logic !== undefined) {
-                this.logic = options.logic;
+                this._logic = options.logic;
             }
 
             if (options.criteria === undefined) {
                 throw new Error("Must specify criteria.");
             }
 
-            this.criteria = options.criteria;
+            this._criteria = options.criteria;
 
             var expression = kendo.data.Query.filterExpr({
-                logic: this.logic,
-                filters: this.criteria
+                logic: this._logic,
+                filters: this._criteria
             }).expression;
 
             this._matches = new Function("d", "return " + expression);
@@ -112,21 +114,23 @@
         toJSON: function() {
             return {
                 type: "custom",
-                logic: this.logic,
-                criteria: this.criteria
+                logic: this._logic,
+                criteria: this._criteria
             };
         }
     });
 
     kendo.spreadsheet.TopFilter = Filter.extend({
         init: function(options) {
-            this.type = options.type;
-            this.value = options.value;
-            this.values = [];
+            this._type = options.type;
+            this._value = options.value;
+            this._values = [];
         },
 
-        prepare: function(values) {
-            if (this.type === "topNumber" || this.type == "topPercent") {
+        prepare: function(range) {
+            var values = [].concat.apply([], range.values());
+
+            if (this._type === "topNumber" || this._type == "topPercent") {
                 values.sort(function(x, y) {
                     return y - x;
                 });
@@ -136,21 +140,21 @@
                 });
             }
 
-            var count = this.value;
+            var count = this._value;
 
-            if (this.type === "topPercent" || this.type === "bottomPercent") {
+            if (this._type === "topPercent" || this._type === "bottomPercent") {
                 count = (values.length * count / 100) >> 0;
             }
 
-            this.values = values.slice(0, count);
+            this._values = values.slice(0, count);
         },
         matches: function(value) {
-            return this.values.indexOf(value) >= 0;
+            return this._values.indexOf(value) >= 0;
         },
         toJSON: function() {
             return {
-                type: this.type,
-                value: this.value
+                type: this._type,
+                value: this._value
             };
         }
     });

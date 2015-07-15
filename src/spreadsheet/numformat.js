@@ -577,6 +577,7 @@
 
     kendo.spreadsheet.formatting = {
         compile : compile,
+        parse: parse,
         format  : function(value, format, culture) {
             return compile(format)(value, culture);
         }
