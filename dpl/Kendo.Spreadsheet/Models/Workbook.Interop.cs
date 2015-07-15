@@ -61,10 +61,10 @@ namespace Kendo.Spreadsheet
                         }
                     }
 
-                    //foreach (var mergedRange in dtoSheet.MergedCells)
-                    //{
-                    //    sheet.Cells.GetCellSelection(mergedRange).Merge();
-                    //}
+                    foreach (var mergedRange in sheet.MergedCells)
+                    {
+                        documentSheet.Cells.GetCellSelection(mergedRange).Merge();
+                    }
 
                     //if (dtoSheet.FrozenColumns > 0 || dtoSheet.FrozenRows > 0)
                     //{

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xunit;
 
 using Telerik.Windows.Documents.Spreadsheet.Model;
+using Telerik.Windows.Documents.Spreadsheet.Utilities;
 
 namespace Kendo.Spreadsheet.Tests
 {
@@ -94,6 +95,17 @@ namespace Kendo.Spreadsheet.Tests
             var value = GetValue(1, 4);
             Assert.Equal(CellValueType.Formula, value.ValueType);
             Assert.Equal("=A1 + B1", value.RawValue);
+        }
+
+        [Fact]
+        public void ToDocument_exports_merged_cells()
+        {
+            sheet.MergedCells.Add("A2:B2");
+            var mergedRanges = workbook.ToDocument().ActiveWorksheet.Cells.GetMergedCellRanges();
+            var firstRange = mergedRanges.First();
+
+            Assert.Equal(1, mergedRanges.Count());
+            Assert.Equal("A2:B2", NameConverter.ConvertCellRangeToName(firstRange.FromIndex, firstRange.ToIndex));
         }
 
         private CellSelection GetCell(int rowIndex, int columnIndex)
