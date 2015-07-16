@@ -109,8 +109,27 @@ var __meta__ = {
             this._draggable();
             this._resizable();
             this._attachEvents();
-
             this._adjustHeight();
+
+            this.bind("render", function() {
+                var headerCols;
+                var tableCols;
+
+                if (this.options.resizable) {
+                    headerCols = this.header.find("col");
+                    tableCols = this.content.find("col");
+
+                    this.header.find("th").not(':last').each(function(index) {
+                        var width = $(this).outerWidth();
+
+                        headerCols.eq(index).width(width);
+                        tableCols.eq(index).width(width);
+                    });
+
+                    headerCols.last().css("width", "auto");
+                    tableCols.last().css("width", "auto");
+                }
+            }, true);
         },
 
         _adjustHeight: function() {
@@ -259,11 +278,19 @@ var __meta__ = {
                 column = columns[i];
                 attr = {
                     "data-field": column.field,
-                    "data-title": column.title, className: GanttList.styles.header,
+                    "data-title": column.title,
+                    className: GanttList.styles.header,
                     "role": "columnheader"
                 };
 
                 ths.push(kendoDomElement("th", attr, [kendoTextElement(column.title)]));
+            }
+
+            if (this.options.resizable) {
+                ths.push(kendoDomElement("th", {
+                    className: GanttList.styles.header,
+                    "role": "columnheader"
+                }));
             }
 
             return ths;
@@ -287,6 +314,10 @@ var __meta__ = {
                 }
 
                 cols.push(kendoDomElement("col", style, []));
+            }
+
+            if (this.options.resizable) {
+                cols.push(kendoDomElement("col", { style: { width: "1px" }}));
             }
 
             return cols;
@@ -353,6 +384,10 @@ var __meta__ = {
                 children.push(this._td({ task: options.task, column: column, level: options.level }));
             }
 
+            if (this.options.resizable) {
+                children.push(kendoDomElement("td", { "role": "gridcell" }));
+            }
+
             return kendoDomElement("tr", options.attr, children);
         },
 
@@ -364,6 +399,7 @@ var __meta__ = {
             var column = options.column;
             var value = task.get(column.field) || [];
             var formatedValue;
+            var label;
 
             if (column.field == resourcesField) {
                 formatedValue = [];
@@ -375,7 +411,6 @@ var __meta__ = {
                 formatedValue = column.format ? kendo.format(column.format, value) : value;
             }
 
-            var label;
             if (column.field === "title") {
                 children = createPlaceholders({ level: options.level, className: listStyles.iconPlaceHolder });
                 children.push(kendoDomElement("span", {
@@ -418,7 +453,7 @@ var __meta__ = {
             var columns = this.columns;
             var column;
             var sortableInstance;
-            var cells = this.header.find("th");
+            var cells = this.header.find("th[" + kendo.attr("field") + "]");
             var handler = function(e) {
                 if (that.editable && that.editable.trigger("validate")) {
                     e.preventDefault();
@@ -959,13 +994,45 @@ var __meta__ = {
             this._columnResizable = this.header.kendoResizable({
                 handle: DOT + listStyles.resizeHandle,
                 start: function(e) {
+                    var th = $(e.currentTarget).data("th");
+                    var colSelector = "col:eq(" + th.index() + ")";
+                    var header = that.header.find("table");
+                    var contentTable = that.content.find("table");
 
+                    this.col = contentTable.children("colgroup").find(colSelector)
+                          .add(header.find(colSelector));
+
+                    this.th = th;
+                    this.startLocation = e.x.location;
+                    this.columnWidth = th.outerWidth();
+                    this.table = header.add(contentTable);
+                    this.totalWidth = (this.table.width() - header.find("th:last").outerWidth());
                 },
                 resize: function(e) {
+                    var minColumnWidth = 11;
+                    var delta = e.x.location - this.startLocation;
 
+                    if (this.columnWidth + delta < minColumnWidth) {
+                        delta = minColumnWidth - this.columnWidth;
+                    }
+
+                    this.table.css({
+                        "minWidth": (this.totalWidth + delta)
+                    });
+                    this.col.width(this.columnWidth + delta);
                 },
-                resizeend: function() {
+                resizeend: function(e) {
+                    var oldWidth = Math.floor(this.columnWidth);
+                    var newWidth = Math.floor(this.th.outerWidth());
+                    var column = that.columns[this.th.index()];
 
+                    that.trigger("columnResize", {
+                        column: column,
+                        oldWidth: oldWidth,
+                        newWidth: newWidth
+                    });
+
+                    this.table = this.col = this.th = null;
                 }
             }).data("kendoResizable");
         },

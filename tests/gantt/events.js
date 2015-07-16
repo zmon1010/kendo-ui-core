@@ -219,4 +219,21 @@
         gantt.list.trigger("change");
     });
 
+    test("trigger columnResize event", 4, function() {
+        var event = {
+            column: gantt.list.columns[0],
+            oldWidth: 200,
+            newWidth: 300
+
+        };
+        gantt.bind("columnResize", function(e) {
+            ok(true);
+            equal(e.column, event.column);
+            equal(e.oldWidth, event.oldWidth);
+            equal(e.newWidth, event.newWidth);
+        });
+
+        gantt.list.trigger("columnResize", event);
+    });
+
 })();

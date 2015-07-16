@@ -1443,7 +1443,8 @@ var __meta__ = {
             "moveEnd",
             "resizeStart",
             "resize",
-            "resizeEnd"
+            "resizeEnd",
+            "columnResize"
         ],
 
         options: {
@@ -1900,6 +1901,9 @@ var __meta__ = {
                         toggleButtons.attr("data-action", "add");
                         that.timeline.clearSelection();
                     }
+                })
+                .bind("columnResize", function(e) {
+                    that.trigger("columnResize", { column: e.column, oldWidth: e.oldWidth, newWidth: e.newWidth });
                 });
         },
 
