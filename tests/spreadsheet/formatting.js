@@ -210,4 +210,15 @@
         htmlEqual(format("foo"), "Some text: foo");
     });
 
+    test("data type", function(){
+        var format = '#';
+        equal(F.type(12345, format), "number");
+        equal(F.type("foo", format), "text");
+
+        var format = 'm/d/yyyy;[Red]#;"text:" @';
+        equal(F.type(12345, format), "date");
+        equal(F.type(-5, format), "number");
+        equal(F.type("foo", format), "text");
+    });
+
 })();

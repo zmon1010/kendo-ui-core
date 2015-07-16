@@ -302,11 +302,17 @@
         if (decFormat.length) {
             code += "var decPart = runtime.formatDec(culture, value, " + JSON.stringify(decFormat) + ", " + declen + "); ";
         }
+        if (intFormat.length || decFormat.length) {
+            code += "type = 'number'; ";
+        }
         if (hasDate) {
             code += "var date = runtime.unpackDate(value); ";
         }
         if (hasTime) {
             code += "var time = runtime.unpackTime(value); ";
+        }
+        if (hasDate || hasTime) {
+            code += "type = 'date'; ";
         }
 
         input.restart();
@@ -325,6 +331,7 @@
                 code += "output += " + JSON.stringify(tok.value) + "; ";
             }
             else if (tok.type == "text") {
+                code += "type = 'text'; ";
                 code += "output += value; ";
             }
             else if (tok.type == "space") {
@@ -358,6 +365,7 @@
         }
 
         code += "element.children.push(dom.text(output)); ";
+        code += "element.__dataType = type; ";
         code += "return element; ";
 
         if (format.cond) {
@@ -378,7 +386,7 @@
         code = "return function(value, culture){ "
             + "'use strict'; "
             + "if (!culture) culture = kendo.culture(); "
-            + "var output = '', element = dom.element('span'); " + code + " return element; };";
+            + "var output = '', type = null, element = dom.element('span'); " + code + "; return element; };";
         CACHE[format] = new Function("runtime", "dom", code)(runtime, kendo.dom);
         return CACHE[format];
     }
@@ -578,8 +586,11 @@
     kendo.spreadsheet.formatting = {
         compile : compile,
         parse: parse,
-        format  : function(value, format, culture) {
+        format: function(value, format, culture) {
             return compile(format)(value, culture);
+        },
+        type: function(value, format) {
+            return compile(format)(value).__dataType;
         }
     };
 
