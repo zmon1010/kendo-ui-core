@@ -1102,6 +1102,11 @@
         var serial = 0;
         year += Math.floor(month / 12);
         month %= 12;
+        if (month < 0) {
+            // no need to decrease year because e.g. Math.floor(-1/12) is -1, so
+            // it's already subtracted.
+            month += 12;
+        }
         if (year >= 1900) {
             for (var i = 1900; i < year; ++i) {
                 serial += daysInYear(i);
