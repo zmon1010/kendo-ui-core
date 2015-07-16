@@ -423,7 +423,7 @@
                 }
             }
             return m;
-        },
+        }
 
         // XXX: debug
         // dump: function() {
@@ -808,6 +808,9 @@
             }
             if (type == "boolean") {
                 return "(typeof " + force() + " == 'boolean')";
+            }
+            if (type == "logical") {
+                return "(typeof " + force() + " == 'boolean' || typeof $"+name+" == 'number')";
             }
             if (type == "matrix") {
                 force();

@@ -702,6 +702,31 @@
         });
     });
 
+    test("BINOMDIST", function(){
+        var ss = new Spreadsheet();
+        // some examples I found over the net
+        ss.fill({
+            A1: '=BinomDist(10, 20, 0.5, 1)',
+            A2: '=BinomDist(10, 20, 0.5, 0)',
+            A3: '=BINOMDIST(1, 6, 1/6, true)',
+            A4: '=BINOMDIST(1, 6, 1/6, false)',
+            A5: '=BINOM.DIST.RANGE(60, 0.75, 48)',
+            A6: '=BINOM.DIST.RANGE(60, 0.75, 45, 50)',
+            A7: '=negbinom.dist(10, 5, 0.25, false)',
+            A8: '=negbinom.dist(10, 5, 0.25, true)',
+        });
+        ss.recalculate(function(){
+            equal(ss.$("A1").toFixed(6), 0.588099);
+            equal(ss.$("A2").toFixed(6), 0.176197);
+            equal(ss.$("A3").toFixed(6), 0.736776);
+            equal(ss.$("A4").toFixed(6), 0.401878);
+            equal(ss.$("A5").toFixed(6), 0.083975);
+            equal(ss.$("A6").toFixed(6), 0.523630);
+            equal(ss.$("A7").toFixed(6), 0.055049);
+            //equal(ss.$("A8"), 0);
+        });
+    });
+
     test("evaluate dependent formulas", function(){
         ss.fill({
             D1: '=sum(indirect("D2"):indirect("$D$3"))',

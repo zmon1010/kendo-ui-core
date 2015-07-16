@@ -14,6 +14,7 @@
     var calc = spreadsheet.calc;
     var runtime = calc.runtime;
     var defineFunction = runtime.defineFunction;
+    var defineAlias = runtime.defineAlias;
     var CalcError = runtime.CalcError;
     var RangeRef = spreadsheet.RangeRef;
     var CellRef = spreadsheet.CellRef;
@@ -66,7 +67,7 @@
         [ "significance", [ "or", "*number", [ "null", 1 ] ] ]
     ]);
 
-    runtime.defineAlias("iso.ceiling", "ceiling.precise");
+    defineAlias("iso.ceiling", "ceiling.precise");
 
     // XXX: how do we know if this function is correct?
     //
@@ -553,13 +554,15 @@
         [ "n", "*number+" ]
     ]);
 
-    defineFunction("combin", function(n, k){
+    function _combinations(n, k) {
         for (var f1 = k + 1, f2 = 1, p1 = 1, p2 = 1; f2 <= n - k; ++f1, ++f2) {
             p1 *= f1;
             p2 *= f2;
         }
         return p1/p2;
-    }).args([
+    }
+
+    defineFunction("combin", _combinations).args([
         [ "n", "*number++" ],
         [ "k", [ "and", "*number++",
                  [ "assert", "$k <= $n" ] ] ]
@@ -645,8 +648,8 @@
         [ "quarter", [ "values", 0, 1, 2, 3, 4 ] ]
     ]);
 
-    runtime.defineAlias("quartile", "quartile.inc");
-    runtime.defineAlias("percentile", "percentile.inc");
+    defineAlias("quartile", "quartile.inc");
+    defineAlias("percentile", "percentile.inc");
 
     // AGGREGATE function
     //
@@ -746,6 +749,53 @@
         [ "numbers", [ "collect", "number" ] ]
     ]);
 
+    defineFunction("binom.dist", function(x, n, p, cumulative){
+        if (!cumulative) {
+            return _combinations(n, x) * Math.pow(p, x) * Math.pow(1-p, n-x);
+        } else {
+            var sum = 0;
+            for (var j = 0; j <= x; ++j) {
+                sum += _combinations(n, j) * Math.pow(p, j) * Math.pow(1-p, n-j);
+            }
+            return sum;
+        }
+    }).args([
+        [ "successes", "integer+" ],
+        [ "trials", [ "and", "integer", [ "assert", "$trials >= $successes" ] ] ],
+        [ "probability", [ "and", "number", [ "[between]", 0, 1 ] ] ],
+        [ "cumulative", "logical" ]
+    ]);
+
+    defineAlias("binomdist", "binom.dist");
+
+    defineFunction("binom.dist.range", function(n, p, s, s2){
+        var sum = 0;
+        for (var k = s; k <= s2; ++k) {
+            sum += _combinations(n, k) * Math.pow(p, k) * Math.pow(1-p, n-k);
+        }
+        return sum;
+    }).args([
+        [ "trials", "integer+" ],
+        [ "probability", [ "and", "number", [ "[between]", 0, 1 ] ] ],
+        [ "successes_min", [ "and", "integer", [ "[between]", 0, "$trials" ] ] ],
+        [ "successes_max", [ "or",
+                             [ "and", "integer",
+                               [ "[between]", "$successes_min", "$trials" ] ],
+                             [ "null", "$successes_min" ] ] ]
+    ]);
+
+    defineFunction("negbinom.dist", function(x, k, p, cumulative){
+        if (cumulative) {
+            return new CalcError("WIP");
+        }
+        return _combinations(x+k-1, x) * Math.pow(p, k) * Math.pow(1-p, x);
+    }).args([
+        [ "number_f", "integer+" ],
+        [ "number_s", "integer+" ],
+        [ "probability_s", [ "and", "number", [ "[between]", 0, 1 ] ] ],
+        [ "cumulative", "logical" ]
+    ]);
+
     /* -----[ lookup functions ]----- */
 
     defineFunction("address", function(row, col, abs, a1, sheet){
@@ -760,7 +810,7 @@
         [ "row", "number++" ],
         [ "col", "number++" ],
         [ "abs", [ "or", [ "null", 1 ], [ "values", 1, 2, 3, 4 ]]],
-        [ "a1", [ "or", [ "null", true ], "boolean" ]],
+        [ "a1", [ "or", [ "null", true ], "logical" ]],
         [ "sheet", [ "or", "null", "string" ]]
     ]);
 
@@ -842,7 +892,7 @@
         [ "value", "anyvalue" ],
         [ "range", "matrix" ],
         [ "row", "number++" ],
-        [ "approx", [ "or", "boolean", [ "null", true ]]]
+        [ "approx", [ "or", "logical", [ "null", true ]]]
     ]);
 
     defineFunction("index", function(m, row, col){
@@ -989,7 +1039,7 @@
         [ "value", "anyvalue" ],
         [ "range", "matrix" ],
         [ "col", "number++" ],
-        [ "approx", [ "or", "boolean", [ "null", true ]]]
+        [ "approx", [ "or", "logical", [ "null", true ]]]
     ]);
 
     /* -----[ Matrix functions ]----- */
@@ -1054,7 +1104,7 @@
                 return new CalcError("VALUE");
             }
         }, true);
-        return error || m.inverse();
+        return error || m.inverse() || new CalcError("VALUE");
     }).args([
         [ "m", [ "and", "matrix",
                  [ "assert", "$m.width == $m.height" ] ] ]
