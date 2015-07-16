@@ -104,8 +104,8 @@
     var View = kendo.Class.extend({
         init: function(element) {
             element.append(VIEW_CONTENTS);
-            this.container = element.children()[0];
-            this.scroller = element.children()[1];
+            this.container = element.find(".k-spreadsheet-fixed-container")[0];
+            this.scroller = element.find(".k-spreadsheet-scroller")[0];
             this.clipboard = element.find(".k-spreadsheet-clipboard");
             this.viewSize = $(this.scroller.firstChild);
 
