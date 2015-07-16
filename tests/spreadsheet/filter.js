@@ -78,6 +78,18 @@
         equal(filter.matches(null), true);
     });
 
+    test("value returns Date object if dates are specified", function() {
+        filter = new ValueFilter({
+            dates: [
+                {
+                    year: 1999
+                }
+            ]
+        });
+
+        ok(filter.value({ value: 1, format: "m/d/yyyy" }) instanceof Date);
+    });
+
     test("returns true for dates that are from the same year", function() {
         filter = new ValueFilter({
             dates: [

@@ -58,6 +58,20 @@
             }
         },
 
+        value: function(cell) {
+            var value = cell.value;
+
+            if (this._dates.length > 0 && cell.format && typeof value === "number") {
+                var type = kendo.spreadsheet.formatting.type(value, cell.format);
+
+                if (type === "date") {
+                    value = kendo.spreadsheet.numberToDate(value);
+                }
+            }
+
+            return value;
+        },
+
         matches: function(value) {
             if (value === null) {
                 return this._blanks;
