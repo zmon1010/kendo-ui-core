@@ -1131,19 +1131,19 @@
     defineFunction("hour", function(time){
         return runtime.unpackTime(time).hours;
     }).args([
-        [ "time", "datetime" ]
+        [ "time", "*datetime" ]
     ]);
 
     defineFunction("minute", function(time){
         return runtime.unpackTime(time).minutes;
     }).args([
-        [ "time", "datetime" ]
+        [ "time", "*datetime" ]
     ]);
 
     defineFunction("second", function(time){
         return runtime.unpackTime(time).seconds;
     }).args([
-        [ "time", "datetime" ]
+        [ "time", "*datetime" ]
     ]);
 
     defineFunction("edate", function(base, months){
