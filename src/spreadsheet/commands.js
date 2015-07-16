@@ -1,9 +1,9 @@
 (function(f, define){
-    define([ "../kendo.core", "../kendo.binder", "../kendo.window", "../kendo.listview" ], f);
+    define([ "../kendo.core", "../kendo.binder", "../kendo.window", "../kendo.list" ], f);
 })(function(){
 
 (function(kendo) {
-    var Command = kendo.spreadsheet.Command = kendo.Class.extend({
+    var Command = kendo.spreadsheet.Command = kendo.data.ObservableObject.extend({
         range: function(range) {
             if (range !== undefined) {
                 this._range = range;
@@ -18,6 +18,7 @@
 
     var PropertyChangeCommand = kendo.spreadsheet.PropertyChangeCommand = Command.extend({
         init: function(options) {
+            Command.fn.init.call(this);
             this._property = options.property;
             this._value = options.value;
         },
@@ -40,6 +41,7 @@
 
     var PopupCommand = kendo.spreadsheet.PopupCommand = Command.extend({
         init: function(options) {
+            Command.fn.init.call(this);
             this._dialogOptions = options && options.dialogOptions;
         },
         popup: function() {
@@ -74,42 +76,32 @@
         init: function(options) {
             PopupCommand.fn.init.call(this, options);
 
-            this.formats = (options && options.formats || this.options.formats).slice(0);
+            var formats = (options && options.formats || this.options.formats).slice(0);
+            this.formats = new kendo.data.ObservableArray(formats);
         },
         options: {
             formats: [
-                { category: "general", value: null, name: "Automatic" },
+                { category: "general", value: null, name: "General" },
                 { category: "date", value: "m/d", name: "3/14" },
-                { category: "date", value: "m/d/y", name: "3/14/01" },
-                { category: "date", value: "mm/dd/y", name: "03/14/01" },
+                { category: "date", value: "m/d/yy", name: "3/14/01" },
+                { category: "date", value: "mm/dd/yy", name: "03/14/01" },
                 { category: "date", value: "d-mmm", name: "14-Mar" },
-                { category: "date", value: "d-mmm-y", name: "14-Mar-01" },
-                { category: "date", value: "dd-mmm-y", name: "14-Mar-01" },
-                { category: "date", value: "mmm-y", name: "Mar-01" },
-                { category: "date", value: "mmmm-y", name: "March-01" },
+                { category: "date", value: "d-mmm-yy", name: "14-Mar-01" },
+                { category: "date", value: "dd-mmm-yy", name: "14-Mar-01" },
+                { category: "date", value: "mmm-yy", name: "Mar-01" },
+                { category: "date", value: "mmmm-yy", name: "March-01" },
                 { category: "date", value: "mmmm dd, yyyy", name: "March 14, 2001" },
-                { category: "date", value: "m/d/y hh:mm AM/PM", name: "3/14/01 1:30 PM" },
-                { category: "date", value: "m/d/y h:mm", name: "3/14/01 13:30" },
+                { category: "date", value: "m/d/yy hh:mm AM/PM", name: "3/14/01 1:30 PM" },
+                { category: "date", value: "m/d/yy h:mm", name: "3/14/01 13:30" },
                 { category: "date", value: "mmmmm", name: "M" },
-                { category: "date", value: "mmmmm-y", name: "M-01" },
+                { category: "date", value: "mmmmm-yy", name: "M-01" },
                 { category: "date", value: "m/d/yyyy", name: "3/14/2001" },
-                { category: "date", value: "d-mmm-yyyy", name: "14-Mar-2001" },
+                { category: "date", value: "d-mmm-yyyy", name: "14-Mar-2001" }
             ]
         },
-        _formatChange: function(e) {
-            var listview = e.sender;
-            var dataItem = listview.dataItem(listview.select());
-            this.format(dataItem.value);
-        },
-        format: function(format) {
-            if (format !== undefined) {
-                this._format = format;
-            }
-
-            return this._format;
-        },
+        format: null,
         preview: function() {
-            var format = this.format();
+            var format = this.get("format");
             var value = this.range().value() || 0;
 
             if (format) {
@@ -119,7 +111,13 @@
                 return value;
             }
         },
+        exec: function() {
+            this.format = this.range().format();
+
+            PopupCommand.fn.exec.call(this);
+        },
         apply: function() {
+            this.range().format(this.format);
             this.close();
         },
         close: function() {
@@ -128,14 +126,16 @@
         title: "Format Cells",
         template: "<div class='k-spreadsheet-preview' data-bind='text: preview' />" +
 
-                  "<script type='text/x-kendo-template' id='formats-template'>" +
-                      "<li class='k-item' data-value='#= data.value #'>#: data.name #</li>" +
+                  "<script type='text/x-kendo-template' id='format-item-template'>" +
+                      "#: data.name #" +
                   "</script>" +
 
-                  "<ul data-role='listview' " +
-                      "data-template='formats-template' " +
-                      "data-selectable='true' " +
-                      "data-bind='source: formats, events: { change: _formatChange }' />" +
+                  "<ul data-role='staticlist' " +
+                      "class='k-list k-reset' " +
+                      "data-template='format-item-template' " +
+                      "data-value-primitive='true' " +
+                      "data-value-field='value' " +
+                      "data-bind='source: formats, value: format' />" +
 
                   "<div class='k-action-buttons'>" +
                       "<button class='k-button k-primary' data-bind='click: apply'>Apply</button>" +

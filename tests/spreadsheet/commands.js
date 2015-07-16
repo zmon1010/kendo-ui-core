@@ -84,7 +84,14 @@
 
     module("SpreadSheet FormatCellsCommand", moduleOptions);
 
-    var formatCellsCommand = $.proxy(command, this, kendo.spreadsheet.FormatCellsCommand);
+    var formatCellsCommand = $.proxy(command, this, kendo.spreadsheet.FormatCellsCommand, {
+        formats: [
+            { name: "Null", value: null },
+            { name: "Foo", value: "foo" },
+            { name: "Bar", value: "bar" },
+            { name: "Date", value: "mm-yy" }
+        ]
+    });
 
     test("shows preview text", function() {
         sheet.range("A1").value("bar");
@@ -123,8 +130,56 @@
 
         command.exec();
 
-        command.format("foo");
+        command.set("format", "foo");
 
         equal(command.preview(), "foo");
+    });
+
+    test("apply sets cell format", function() {
+        var command = formatCellsCommand();
+
+        command.exec();
+
+        command.set("format", "foo");
+
+        command.apply();
+
+        equal(sheet.range("A1").format(), "foo");
+    });
+
+    test("clicking format previews it", function() {
+        var command = formatCellsCommand();
+
+        command.exec();
+
+        command.set("format", "bar");
+
+        var preview = command.popup().element.find(".k-spreadsheet-preview");
+
+        equal(preview.text(), "bar");
+    });
+
+    test("changing date format", function() {
+        sheet.range("A1").value("11/11/2015");
+
+        var command = formatCellsCommand();
+
+        command.exec();
+
+        command.set("format", "mm-yy");
+
+        var preview = command.popup().element.find(".k-spreadsheet-preview");
+
+        equal(preview.text(), "11-15");
+    });
+
+    test("date format is pre-set", function() {
+        sheet.range("A1").value("11/11/2011").format("mm-yy");
+
+        var command = formatCellsCommand();
+
+        command.exec();
+
+        equal(command.format, "mm-yy");
     });
 })();
