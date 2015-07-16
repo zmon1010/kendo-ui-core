@@ -87,7 +87,7 @@
     }).args([
         [ "number", "*number" ],
         [ "significance", [ "or", "*number", [ "null", "$number < 0 ? -1 : 1" ] ] ],
-        [ "mode", [ "or", "*number", [ "null", 0 ] ] ]
+        [ "mode", [ "or", "*logical", [ "null", 0 ] ] ]
     ]);
 
     defineFunction("floor", function(num, s){
@@ -118,7 +118,7 @@
     }).args([
         [ "number", "*number" ],
         [ "significance", [ "or", "*number", [ "null", "$number < 0 ? -1 : 1" ] ] ],
-        [ "mode", [ "or", "*number", [ "null", 0 ] ] ]
+        [ "mode", [ "or", "*logical", [ "null", 0 ] ] ]
     ]);
 
     defineFunction("int", Math.floor).args([
@@ -842,8 +842,8 @@
         }
         return a1 ? cell.print(0, 0) : cell.print();
     }).args([
-        [ "row", "number++" ],
-        [ "col", "number++" ],
+        [ "row", "integer++" ],
+        [ "col", "integer++" ],
         [ "abs", [ "or", [ "null", 1 ], [ "values", 1, 2, 3, 4 ]]],
         [ "a1", [ "or", [ "null", true ], "logical" ]],
         [ "sheet", [ "or", "null", "string" ]]
@@ -871,7 +871,7 @@
             return arguments[index];
         }
     }).args([
-        [ "index", "*number++" ],
+        [ "index", "*integer++" ],
         [ "+", [ "value", "anything" ] ]
     ]);
 
@@ -926,7 +926,7 @@
     }).args([
         [ "value", "anyvalue" ],
         [ "range", "matrix" ],
-        [ "row", "number++" ],
+        [ "row", "integer++" ],
         [ "approx", [ "or", "logical", [ "null", true ]]]
     ]);
 
@@ -958,8 +958,8 @@
         return new CalcError("REF");
     }).args([
         [ "range", "matrix" ],
-        [ "row", [ "or", "number++", "null" ]],
-        [ "col", [ "or", "number++", "null" ]]
+        [ "row", [ "or", "integer++", "null" ]],
+        [ "col", [ "or", "integer++", "null" ]]
     ]);
 
     defineFunction("indirect", function(thing){
@@ -1026,10 +1026,10 @@
         return topLeft;
     }).args([
         [ "ref", "area" ],
-        [ "rows", "*number" ],
-        [ "cols", "*number" ],
-        [ "height", [ "or", "*number++", [ "null", "$ref.height()" ]]],
-        [ "width", [ "or", "*number++", [ "null", "$ref.width()" ]]]
+        [ "rows", "*integer" ],
+        [ "cols", "*integer" ],
+        [ "height", [ "or", "*integer++", [ "null", "$ref.height()" ]]],
+        [ "width", [ "or", "*integer++", [ "null", "$ref.width()" ]]]
     ]);
 
     defineFunction("row", function(ref){
@@ -1073,7 +1073,7 @@
     }).args([
         [ "value", "anyvalue" ],
         [ "range", "matrix" ],
-        [ "col", "number++" ],
+        [ "col", "integer++" ],
         [ "approx", [ "or", "logical", [ "null", true ]]]
     ]);
 
@@ -1255,7 +1255,7 @@
     defineFunction("munit", function(n){
         return new Matrix(this).unit(n);
     }).args([
-        [ "n", "number" ]
+        [ "n", "integer+" ]
     ]);
 
     defineFunction("minverse", function(m){
@@ -1279,8 +1279,8 @@
     defineFunction("randbetween", function(min, max){
         return min + Math.floor((max - min + 1) * Math.random());
     }).args([
-        [ "min", "number" ],
-        [ "max", [ "and", "number", [ "assert", "$max >= $min" ] ] ]
+        [ "min", "integer" ],
+        [ "max", [ "and", "integer", [ "assert", "$max >= $min" ] ] ]
     ]);
 
     defineFunction("true", function(){
