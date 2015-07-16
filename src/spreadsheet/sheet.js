@@ -316,8 +316,9 @@
         select: function(ref) {
             if (ref) {
                 var mergedCells = this._mergedCells;
+                ref = this._ref(ref);
 
-                this._selection = this._ref(ref).map(function(ref) {
+                this._selection = ref.map(function(ref) {
                     return ref.toRangeRef().union(mergedCells);
                 });
 
