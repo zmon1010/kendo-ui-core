@@ -279,6 +279,20 @@
         return value;
     }
 
+    function memoize(f) {
+        var cache = Object.create(null);
+        return function() {
+            var id = "";
+            for (var i = arguments.length; --i >= 0;) {
+                id += ":" + arguments[i];
+            }
+            if (id in cache) {
+                return cache[id];
+            }
+            return f.apply(this, arguments);
+        };
+    }
+
     // Exports ================================================================
     deepExtend(kendo, {
         util: {
@@ -313,7 +327,8 @@
             sqr: sqr,
             valueOrDefault: valueOrDefault,
             romanToArabic: romanToArabic,
-            arabicToRoman: arabicToRoman
+            arabicToRoman: arabicToRoman,
+            memoize: memoize
         }
     });
 
