@@ -702,18 +702,22 @@
         });
     });
 
-    test("BINOMDIST", function(){
+    test("BINOMDIST and friends", function(){
         var ss = new Spreadsheet();
         // some examples I found over the net
         ss.fill({
-            A1: '=BinomDist(10, 20, 0.5, 1)',
-            A2: '=BinomDist(10, 20, 0.5, 0)',
-            A3: '=BINOMDIST(1, 6, 1/6, true)',
-            A4: '=BINOMDIST(1, 6, 1/6, false)',
-            A5: '=BINOM.DIST.RANGE(60, 0.75, 48)',
-            A6: '=BINOM.DIST.RANGE(60, 0.75, 45, 50)',
-            A7: '=negbinom.dist(10, 5, 0.25, false)',
-            A8: '=negbinom.dist(10, 5, 0.25, true)',
+            A1  : '=BinomDist(10, 20, 0.5, 1)',
+            A2  : '=BinomDist(10, 20, 0.5, 0)',
+            A3  : '=BINOMDIST(1, 6, 1/6, true)',
+            A4  : '=BINOMDIST(1, 6, 1/6, false)',
+            A5  : '=BINOM.DIST.RANGE(60, 0.75, 48)',
+            A6  : '=BINOM.DIST.RANGE(60, 0.75, 45, 50)',
+            A7  : '=negbinom.dist(10, 5, 0.25, false)',
+            A8  : '=negbinom.dist(10, 5, 0.25, true)',
+
+            A9  : '=binom.inv(100, 50%, 20%)',
+            A10 : '=binom.inv(100, 50%, 50%)',
+            A11 : '=binom.inv(100, 50%, 90%)',
         });
         ss.recalculate(function(){
             equal(ss.$("A1").toFixed(6), 0.588099);
@@ -724,6 +728,10 @@
             equal(ss.$("A6").toFixed(6), 0.523630);
             equal(ss.$("A7").toFixed(6), 0.055049);
             equal(ss.$("A8").toFixed(6), 0.313514);
+
+            equal(ss.$("A9"), 46);
+            equal(ss.$("A10"), 50);
+            equal(ss.$("A11"), 56);
         });
     });
 

@@ -749,7 +749,7 @@
         [ "numbers", [ "collect", "number" ] ]
     ]);
 
-    defineFunction("binom.dist", function(x, n, p, cumulative){
+    function _binom_dist(x, n, p, cumulative) {
         if (!cumulative) {
             return _combinations(n, x) * Math.pow(p, x) * Math.pow(1-p, n-x);
         } else {
@@ -759,7 +759,9 @@
             }
             return sum;
         }
-    }).args([
+    }
+
+    defineFunction("binom.dist", _binom_dist).args([
         [ "successes", "integer+" ],
         [ "trials", [ "and", "integer", [ "assert", "$trials >= $successes" ] ] ],
         [ "probability", [ "and", "number", [ "[between]", 0, 1 ] ] ],
@@ -767,6 +769,22 @@
     ]);
 
     defineAlias("binomdist", "binom.dist");
+
+    defineFunction("binom.inv", function(n, p, alpha){
+        // XXX: could a binary search be faster?
+        for (var x = 0; x <= n; ++x) {
+            if (_binom_dist(x, n, p, true) >= alpha) {
+                return x;
+            }
+        }
+        return new CalcError("N/A"); // XXX: is this right?
+    }).args([
+        [ "trials", "integer+" ],
+        [ "probability", [ "and", "number", [ "[between]", 0, 1 ] ] ],
+        [ "alpha", [ "and", "number", [ "[between]", 0, 1 ] ] ]
+    ]);
+
+    defineAlias("critbinom", "binom.inv");
 
     defineFunction("binom.dist.range", function(n, p, s, s2){
         var sum = 0;
