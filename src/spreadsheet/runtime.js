@@ -1157,6 +1157,7 @@
     exports.defineAlias = function(alias, name) {
         FUNCS[alias] = FUNCS[name];
     };
+    exports.FUNCS = FUNCS;
 
     /* -----[ Excel operators ]----- */
 
