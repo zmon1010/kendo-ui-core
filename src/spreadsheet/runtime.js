@@ -1150,6 +1150,9 @@
     exports.serialToDate = serialToDate;
     exports.dateToSerial = dateToSerial;
 
+    spreadsheet.dateToNumber = dateToSerial;
+    spreadsheet.numberToDate = serialToDate;
+
     exports.defineFunction = defineFunction;
     exports.defineAlias = function(alias, name) {
         FUNCS[alias] = FUNCS[name];
