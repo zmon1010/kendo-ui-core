@@ -214,8 +214,15 @@
 
                 setTimeout(function() {
                     clipboard.select().focus();
-                }, 100);
+                });
             }.bind(this));
+
+            keyListener.on("mouseup", function(event, action) {
+                clipboard.css({
+                    left: -10000,
+                    top: -10000
+                });
+            });
         },
 
         objectAt: function(x, y) {

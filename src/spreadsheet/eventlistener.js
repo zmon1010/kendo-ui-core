@@ -30,7 +30,7 @@
                 this.handleEvent(e, KEY_NAMES[e.keyCode]);
             }.bind(this));
 
-            target.on("mousedown", function(e) {
+            target.on("mousedown mouseup", function(e) {
                 this.handleEvent(e, e.type);
             }.bind(this));
         },
