@@ -373,8 +373,16 @@
         _passWheelEvent: function(e) {
             var element = this.scroller;
 
-            element.scrollTop += e.originalEvent.deltaY;
-            element.scrollLeft += e.originalEvent.deltaX;
+            var deltaX = e.originalEvent.deltaX;
+            var deltaY = e.originalEvent.deltaY;
+
+            if (e.originalEvent.deltaMode === 1) {
+                deltaX *= 10;
+                deltaY *= 10
+            }
+
+            element.scrollLeft += deltaX;
+            element.scrollTop += deltaY;
 
             e.preventDefault();
         }
