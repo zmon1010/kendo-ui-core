@@ -30,7 +30,7 @@
                 this.handleEvent(e, KEY_NAMES[e.keyCode]);
             }.bind(this));
 
-            target.on("mousedown mouseup", function(e) {
+            target.on("mousedown mouseup cut copy paste", function(e) {
                 this.handleEvent(e, e.type);
             }.bind(this));
         },

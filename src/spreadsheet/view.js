@@ -192,6 +192,9 @@
             var clipboard = this.clipboard;
             var that = this;
 
+            // Warning - DO NOT extract var sheet = that._sheet.
+            // This reference may change at runtime.
+
             var listener = this.listener = new kendo.spreadsheet.EventListener(container);
             var keyListener = this.keyListener = new kendo.spreadsheet.EventListener(this.clipboard);
 
@@ -221,6 +224,18 @@
                 clipboard.css({
                     left: -10000,
                     top: -10000
+                });
+            });
+
+            keyListener.on("cut", function(event, action) {
+                setTimeout(function() {
+                    that._sheet.selection().value("");
+                });
+            });
+
+            keyListener.on("paste", function(event, action) {
+                setTimeout(function() {
+                    that._sheet.selection().value(clipboard.val());
                 });
             });
         },
