@@ -86,10 +86,10 @@
 
     var formatCellsCommand = $.proxy(command, this, kendo.spreadsheet.FormatCellsCommand, {
         formats: [
-            { name: "Null", value: null },
-            { name: "Foo", value: "foo" },
-            { name: "Bar", value: "bar" },
-            { name: "Date", value: "mm-yy" }
+            { category: "a", name: "Null", value: null },
+            { category: "a", name: "Foo", value: "foo" },
+            { category: "a", name: "Bar", value: "bar" },
+            { category: "b", name: "Date", value: "mm-yy" }
         ]
     });
 
@@ -181,5 +181,13 @@
         command.exec();
 
         equal(command.format, "mm-yy");
+    });
+
+    test("lists categories", function() {
+        var command = formatCellsCommand();
+
+        command.exec();
+
+        deepEqual(command.categories(), [ "a", "b" ]);
     });
 })();
