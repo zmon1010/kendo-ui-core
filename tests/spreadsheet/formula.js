@@ -735,6 +735,38 @@
         });
     });
 
+    test("COMBIN", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: '=combin(5,0)',
+            A2: '=combin(5,1)',
+            A3: '=combin(5,2)',
+            A4: '=combin(5,3)',
+            A5: '=combin(5,4)',
+            A6: '=combin(5,5)',
+            A7: '=combin(5,6)',
+            A8: '=combin(5,4)',
+
+            B1: '=combina(4,3)',
+            B2: '=combina(10,3)',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A1: 1,
+                A2: 5,
+                A3: 10,
+                A4: 10,
+                A5: 5,
+                A6: 1,
+                A7: "#VALUE!",
+                A8: 5,
+
+                B1: 20,
+                B2: 220,
+            });
+        });
+    });
+
     test("evaluate dependent formulas", function(){
         ss.fill({
             D1: '=sum(indirect("D2"):indirect("$D$3"))',

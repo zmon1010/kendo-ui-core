@@ -10,6 +10,7 @@
     // == into === to make JSHint happy will break functionality.
     /* jshint eqnull:true, newcap:false, laxbreak:true, validthis:true */
 
+    var util = kendo.util;
     var spreadsheet = kendo.spreadsheet;
     var calc = spreadsheet.calc;
     var runtime = calc.runtime;
@@ -535,36 +536,45 @@
 
     /* -----[  ]----- */
 
-    defineFunction("fact", function(n){
+    var _fact = util.memoize(function(n){
         for (var i = 2, fact = 1; i <= n; ++i) {
             fact *= i;
         }
         return fact;
-    }).args([
-        [ "n", "*number+" ]
+    });
+
+    defineFunction("fact", _fact).args([
+        [ "n", "*integer+" ]
     ]);
 
     defineFunction("factdouble", function(n){
-        n = n|0;
         for (var i = 2 + (n&1), fact = 1; i <= n; i += 2) {
             fact *= i;
         }
         return fact;
     }).args([
-        [ "n", "*number+" ]
+        [ "n", "*integer+" ]
     ]);
 
-    function _combinations(n, k) {
+    var _combinations = util.memoize(function (n, k){
         for (var f1 = k + 1, f2 = 1, p1 = 1, p2 = 1; f2 <= n - k; ++f1, ++f2) {
             p1 *= f1;
             p2 *= f2;
         }
         return p1/p2;
-    }
+    });
 
     defineFunction("combin", _combinations).args([
-        [ "n", "*number++" ],
-        [ "k", [ "and", "*number++",
+        [ "n", "*integer++" ],
+        [ "k", [ "and", "*integer+",
+                 [ "assert", "$k <= $n" ] ] ]
+    ]);
+
+    defineFunction("combina", function(n, k){
+        return _combinations(n + k - 1, n - 1);
+    }).args([
+        [ "n", "*integer++" ],
+        [ "k", [ "and", "*integer++",
                  [ "assert", "$k <= $n" ] ] ]
     ]);
 
@@ -1157,13 +1167,13 @@
     }).args([]);
 
     defineFunction("roman", function(num){
-        return kendo.util.arabicToRoman(num).toUpperCase();
+        return util.arabicToRoman(num).toUpperCase();
     }).args([
         [ "number", "*integer" ]
     ]);
 
     defineFunction("arabic", function(rom){
-        var num = kendo.util.romanToArabic(rom);
+        var num = util.romanToArabic(rom);
         return num == null ? new CalcError("VALUE") : num;
     }).args([
         [ "roman", "*string" ]
