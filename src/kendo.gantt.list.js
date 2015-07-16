@@ -575,7 +575,7 @@ var __meta__ = {
                     return;
                 }
 
-                if (column.editable) {
+                if (column && column.editable) {
                     that._editCell({ cell: td, column: column });
                 }
             };

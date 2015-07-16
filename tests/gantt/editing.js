@@ -901,7 +901,7 @@
     module("Gantt non-editable", {
         setup: function() {
             element = $("<div/>");
-            
+
             gantt = new Gantt(element, { editable: false });
         },
         teardown: function() {
@@ -911,6 +911,42 @@
 
     test("does not attach edit handler", function() {
         ok(!gantt.list._startEditHandler);
+    });
+
+    module("Gantt inline editing with column resizing", {
+        setup: function() {
+            element = $("<div/>").appendTo(QUnit.fixture);
+
+            columns = [
+                { field: "title", editable: true, editor: function() { } },
+                { field: "start", editable: true },
+                { field: "summary" }
+            ];
+
+            dataSource = new GanttDataSource({
+                data: [{ title: "foo", start: new Date(), parentId: null, id: 1, summary: true }],
+                schema: {
+                    model: {
+                        id: "id"
+                    }
+                }
+            });
+
+
+            gantt = new Gantt(element, { columns: columns, dataSource: dataSource, resizable: true, navigatable: true });
+        },
+        teardown: function() {
+            gantt.destroy();
+            kendo.destroy(QUnit.fixture);
+            element.remove();
+        }
+    });
+
+    test("does not trigger edit upon dbclick on dummy column", function() {
+        stub(gantt.list, "_editCell");
+        doubleTap(gantt.list.content.find("td:last"));
+
+        ok(!gantt.list.calls("_editCell"));
     });
 
 })();
