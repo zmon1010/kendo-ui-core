@@ -1015,6 +1015,7 @@ var __meta__ = {
                         rowDescriptor = expandedRows[rowIdx];
 
                         if (!this._matchDescriptors(dataItem, rowDescriptor, rowGetters)) {
+                            this._processColumns(measureAggregators, expandedColumns, columnGetters, columns, aggregatorContext, { items: {}, aggregates: {} }, state, true);
                             continue;
                         }
 
@@ -1567,11 +1568,13 @@ var __meta__ = {
                     axisToSkip = "columns";
                     axes.columns = resultAxis;
                     adjustDataByColumn(tuples, resultAxis.tuples, axes.rows.tuples.length, measures, data);
-                    data = this._normalizeData({
-                        columnsLength: membersCount(axes.columns.tuples, measures),
-                        rowsLength: axes.rows.tuples.length,
-                        data: data
-                    });
+                    if (!this.cubeBuilder) {
+                        data = this._normalizeData({
+                            columnsLength: membersCount(axes.columns.tuples, measures),
+                            rowsLength: axes.rows.tuples.length,
+                            data: data
+                        });
+                    }
                 }
             } else if (this._lastExpanded == "columns") {
                 tuples = axes.rows.tuples;
@@ -1583,11 +1586,13 @@ var __meta__ = {
                     axes.rows = resultAxis;
                     adjustDataByRow(tuples, resultAxis.tuples, axes.columns.tuples.length, measures, data);
 
-                    data = this._normalizeData({
-                        columnsLength: membersCount(axes.rows.tuples, measures),
-                        rowsLength: axes.columns.tuples.length,
-                        data: data
-                    });
+                    if (!this.cubeBuilder) {
+                        data = this._normalizeData({
+                            columnsLength: membersCount(axes.rows.tuples, measures),
+                            rowsLength: axes.columns.tuples.length,
+                            data: data
+                        });
+                    }
                 }
             }
 

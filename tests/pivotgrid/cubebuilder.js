@@ -137,6 +137,46 @@
         equal(result.data.length, 3);
     });
 
+
+    test("process creates tuples for opposite axis when current data item does not match", function() {
+        var builder = new PivotCubeBuilder({
+            measures: [
+                { name: "Sum", caption: "Sum", field: "value",  aggregate: "sum" },
+                { name: "Count", caption: "Count", field: "value",  aggregate: "count" }
+            ]
+        });
+
+        var data = [
+            { FirstName: "Name2", LastName: "LastName2", Discontinued: false, Age: 52, value: 1  },
+            { FirstName: "Name1", LastName: "LastName1", Discontinued: true, Age: 42, value: 1 },
+            { FirstName: "Name2", LastName: "LastName1", Discontinued: true, Age: 42, value: 1  }
+        ];
+
+        var options = {
+            columns: [{ name: "FirstName", expand: true }, { name: "LastName", expand: false }],
+            rows: [{ name: "Discontinued&false", expand: false }, { name: "Age", expand: true }],
+            measuresAxis: "columns",
+            measures: [{ name: "Sum" }, { name: "Count" }]
+        };
+
+        var result = builder.process(data, options);
+        var data = result.data;
+
+        equal(data.length, 12);
+        equal(data[0].value, 3);
+        equal(data[1].value, 3);
+        equal(data[2].value, 2);
+        equal(data[3].value, 2);
+        equal(data[4].value, 1);
+        equal(data[5].value, 1);
+        equal(data[6].value, 1);
+        equal(data[7].value, 1);
+        equal(data[8].value, 1);
+        equal(data[9].value, 1);
+        equal(data[10].value, "");
+        equal(data[11].value, "");
+    });
+
     test("process data items are correctly formatted", function() {
         var builder = new PivotCubeBuilder();
 
