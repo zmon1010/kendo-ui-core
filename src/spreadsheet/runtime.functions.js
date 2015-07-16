@@ -1077,6 +1077,131 @@
         [ "approx", [ "or", "logical", [ "null", true ]]]
     ]);
 
+    /* -----[ Date and time functions ]----- */
+
+    defineFunction("date", function(year, month, date){
+        return runtime.packDate(year, month-1, date);
+    }).args([
+        [ "year", "*integer" ],
+        [ "month", "*integer" ],
+        [ "date", "*integer" ]
+    ]);
+
+    defineFunction("day", function(date){
+        return runtime.unpackDate(date).date;
+    }).args([
+        [ "date", "*date" ]
+    ]);
+
+    defineFunction("month", function(date){
+        return runtime.unpackDate(date).month + 1;
+    }).args([
+        [ "date", "*date" ]
+    ]);
+
+    defineFunction("year", function(date){
+        return runtime.unpackDate(date).year;
+    }).args([
+        [ "date", "*date" ]
+    ]);
+
+    defineFunction("weekday", function(date, type){
+        // XXX: TODO type
+        return runtime.unpackDate(date).day + 1;
+    }).args([
+        [ "date", "*date" ]
+    ]);
+
+    defineFunction("now", function(){
+        return runtime.dateToSerial(new Date());
+    }).args([]);
+
+    defineFunction("today", function(){
+        return runtime.dateToSerial(new Date()) | 0;
+    }).args([]);
+
+    defineFunction("time", function(hh, mm, ss){
+        return runtime.packTime(hh, mm, ss, 0);
+    }).args([
+        [ "hours", "*integer" ],
+        [ "minutes", "*integer" ],
+        [ "seconds", "*integer" ]
+    ]);
+
+    defineFunction("hour", function(time){
+        return runtime.unpackTime(time).hours;
+    }).args([
+        [ "time", "datetime" ]
+    ]);
+
+    defineFunction("minute", function(time){
+        return runtime.unpackTime(time).minutes;
+    }).args([
+        [ "time", "datetime" ]
+    ]);
+
+    defineFunction("second", function(time){
+        return runtime.unpackTime(time).seconds;
+    }).args([
+        [ "time", "datetime" ]
+    ]);
+
+    defineFunction("edate", function(base, months){
+        var d = runtime.unpackDate(base);
+        var m = d.month + months;
+        var y = d.year + Math.floor(m/12);
+        m %= 12;
+        if (m < 0) {
+            m += 12;
+        }
+        d = Math.min(d.date, runtime.daysInMonth(y, m));
+        return runtime.packDate(y, m, d);
+    }).args([
+        [ "start_date", "*date" ],
+        [ "months", "*integer" ]
+    ]);
+
+    defineFunction("eomonth", function(base, months){
+        var d = runtime.unpackDate(base);
+        var m = d.month + months;
+        var y = d.year + Math.floor(m/12);
+        m %= 12;
+        if (m < 0) {
+            m += 12;
+        }
+        d = runtime.daysInMonth(y, m);
+        return runtime.packDate(y, m, d);
+    }).args([
+        [ "start_date", "*date" ],
+        [ "months", "*integer" ]
+    ]);
+
+    defineFunction("workday", function(date, n, holidays){
+        // XXX: the algorithm here is pretty dumb, can we do better?
+        var inc = n > 0 ? 1 : -1;
+        n = Math.abs(n);
+        var dow = runtime.unpackDate(date).day;
+        while (n > 0) {
+            date += inc;
+            dow = (dow + inc) % 7;
+            if (dow > 0 && dow < 6 && holidays.indexOf(date) < 0) {
+                --n;
+            }
+        }
+        return date;
+    }).args([
+        [ "start_date", "date" ],
+        [ "days", "integer" ],
+        [ "holidays", [ "collect", "date" ] ]
+    ]);
+
+    defineFunction("days", function(start, end){
+        return Math.abs(start - end);
+    }).args([
+        [ "start_date", "*date" ],
+        [ "end_date", "*date" ]
+    ]);
+
     /* -----[ Matrix functions ]----- */
 
     defineFunction("mdeterm", function(m){

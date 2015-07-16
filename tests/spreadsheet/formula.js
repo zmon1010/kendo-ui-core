@@ -173,6 +173,10 @@
         }
     });
 
+    function DATE(str) {
+        return runtime.dateToSerial(new Date(str)) | 0;
+    }
+
     // test async function
     runtime.defineFunction("asum", function(callback, timeout, numbers) {
         var self = this;
@@ -1267,6 +1271,115 @@
                 a4: 6,
                 a5: 6,
                 a6: "#N/A!"
+            });
+        });
+    });
+
+    /* -----[ date/time functions ]----- */
+
+    test("EDATE, EOMONTH", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: "2008-01-31",
+            A2: "2008-01-31",
+            A3: "2008-01-31",
+            A4: "2008-02-28",
+            A5: "2008-02-29",
+
+            B1: "=edate(A1, 9)",
+            B2: "=edate(A2, 22)",
+            B3: "=edate(A3, -16)",
+            B4: "=edate(A4, 12)",
+            B5: "=edate(A5, 12)",
+
+            C1: "=eomonth(A1+5, 9)",
+            C2: "=eomonth(A2+5, 22)",
+            C3: "=eomonth(A3+5, -16)",
+            C4: "=eomonth(A4+5, 12)",
+            C5: "=eomonth(A5+5, 12)",
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                B1: DATE("2008-10-31"),
+                B2: DATE("2009-11-30"),
+                B3: DATE("2006-09-30"),
+                B4: DATE("2009-02-28"),
+                B5: DATE("2009-02-28"),
+
+                C1: DATE("2008-11-30"),
+                C2: DATE("2009-12-31"),
+                C3: DATE("2006-10-31"),
+                C4: DATE("2009-03-31"),
+                C5: DATE("2009-03-31"),
+            });
+        });
+    });
+
+    test("WORKDAY", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            B1: "2010-12-01",
+            B2: "2010-12-27",
+            B3: "2010-12-28",
+            B4: "2011-01-03",
+            C2: "=workday(B1, 25)",
+            C3: "=workday(B1, 25, B2:B4)",
+            C4: "=workday(date(2010, 12, 1), 25, B2:B4)",
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                C2: DATE("2011-01-05"),
+                C3: DATE("2011-01-10"),
+                C4: DATE("2011-01-10"),
+            });
+        });
+    });
+
+    test("DAYS", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: "2015-01-01",
+            A2: "2015-02-02",
+            A3: "=DAYS(A1, A2)",
+            A4: "=DAYS(A2, A1)",
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A3: 32, A4: 32,
+            });
+        });
+    });
+
+    test("DATE, TIME and friends", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1  : "=now()",
+            A2  : "=today()",
+            A3  : "=date(2015, 7, 16)",
+            A4  : "=year(A3)",
+            A5  : "=month(A3)",
+            A6  : "=day(A3)",
+            A7  : "=weekday(A3)",
+            A8  : "=time(10, 20, 30)",
+            A9  : "=hour(A8)",
+            A10 : "=minute(A8)",
+            A11 : "=second(A8)",
+        });
+        ss.recalculate(function(){
+            // need to lose some precision here, milliseconds matter.
+            equal(ss.$("A1").toFixed(3), runtime.dateToSerial(new Date()).toFixed(3));
+
+            ss.expectEqual({
+                A2: runtime.dateToSerial(new Date()) | 0,
+                A3: DATE("2015-07-16"),
+                A4: 2015,
+                A5: 7,
+                A6: 16,
+                A7: 5,
+                A8: runtime.packTime(10, 20, 30, 0),
+                A9: 10,
+                A10: 20,
+                A11: 30
             });
         });
     });

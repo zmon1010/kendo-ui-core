@@ -787,6 +787,12 @@
             if (type == "integer") {
                 return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') ? ($"+name+" |= 0, true) : false)";
             }
+            if (type == "date") {
+                return "((typeof " + force() + " == 'number') ? ($"+name+" |= 0, true) : false)";
+            }
+            if (type == "datetime") {
+                return "(typeof " + force() + " == 'number')";
+            }
             if (type == "divisor") {
                 return "((typeof " + force() + " == 'number' || typeof $"+name+" == 'boolean') && "
                     + "($"+name+" == 0 ? ((err = 'DIV/0'), false) : true))";
@@ -1154,6 +1160,8 @@
     exports.unpackTime = unpackTime;
     exports.serialToDate = serialToDate;
     exports.dateToSerial = dateToSerial;
+    exports.daysInMonth = daysInMonth;
+    exports.isLeapYear = isLeapYear;
 
     spreadsheet.dateToNumber = dateToSerial;
     spreadsheet.numberToDate = serialToDate;
