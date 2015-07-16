@@ -321,12 +321,11 @@
                     return ref.toRangeRef().union(mergedCells);
                 });
 
-                if (ref instanceof RangeRef) {
-                    this.activeCell(this._selection.first());
-                } else {
+                if (ref.isCell()) {
                     this.activeCell(ref);
+                } else {
+                    this.activeCell(this._selection.first());
                 }
-
             }
 
             return this._selection;
