@@ -723,7 +723,7 @@
             equal(ss.$("A5").toFixed(6), 0.083975);
             equal(ss.$("A6").toFixed(6), 0.523630);
             equal(ss.$("A7").toFixed(6), 0.055049);
-            //equal(ss.$("A8"), 0);
+            equal(ss.$("A8").toFixed(6), 0.313514);
         });
     });
 

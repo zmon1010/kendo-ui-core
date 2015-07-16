@@ -786,7 +786,12 @@
 
     defineFunction("negbinom.dist", function(x, k, p, cumulative){
         if (cumulative) {
-            return new CalcError("WIP");
+            var sum = 0;
+            while (x >= 0) {
+                sum += _combinations(x+k-1, x) * Math.pow(p, k) * Math.pow(1-p, x);
+                x--;
+            }
+            return sum;
         }
         return _combinations(x+k-1, x) * Math.pow(p, k) * Math.pow(1-p, x);
     }).args([
@@ -795,6 +800,8 @@
         [ "probability_s", [ "and", "number", [ "[between]", 0, 1 ] ] ],
         [ "cumulative", "logical" ]
     ]);
+
+    defineAlias("negbinomdist", "negbinom.dist");
 
     /* -----[ lookup functions ]----- */
 
