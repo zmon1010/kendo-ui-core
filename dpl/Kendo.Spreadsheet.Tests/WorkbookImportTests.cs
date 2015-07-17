@@ -95,7 +95,7 @@ namespace Kendo.Spreadsheet.Tests
         }
 
         [Fact]
-        public void ToDocument_imports_cell_formula()
+        public void FromDocument_imports_cell_formula()
         {
             var value = GetCell(1, 4).Formula;
             Assert.Equal("=A1 + B1", value);
