@@ -584,6 +584,20 @@
         equal(configurator.element.height(), 300);
     });
 
+    test("PivotGrid sets calculates inner height based on parent when height is 100%", function() {
+        var height = 500;
+
+        $(div).wrap('<div style="height: ' + height + 'px"></div>');
+
+        var configurator = createConfigurator({
+            height: "100%"
+        });
+
+        equal(configurator.element.height(), 500);
+        ok(configurator.element.children(".k-columns").height() > 440);
+        ok(configurator.element.children(".k-columns").height() < 500);
+    });
+
     test("drop KPI group creates list of measures", function() {
         var configurator = createConfigurator({
             dataSource: {

@@ -374,13 +374,15 @@ var __meta__ = {
                 return;
             }
 
-            if (element.is(":visible")) {
-                element.height(height);
+            element.height(height);
 
+            if (element.is(":visible")) {
                 fields = element.children(".k-columns")
                                 .children("div.k-state-default");
 
-                border = (element.outerHeight() - element.innerHeight()) / 2;
+                height = element.innerHeight();
+
+                border = (element.outerHeight() - height) / 2;
                 height = height - (fields.outerHeight(true) - fields.height()) - border;
 
                 fields.height(height);
