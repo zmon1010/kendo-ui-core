@@ -999,6 +999,8 @@ var __meta__ = {
                     var header = that.header.find("table");
                     var contentTable = that.content.find("table");
 
+                    that.element.addClass("k-grid-column-resizing");
+
                     this.col = contentTable.children("colgroup").find(colSelector)
                           .add(header.find(colSelector));
 
@@ -1022,6 +1024,8 @@ var __meta__ = {
                     this.col.width(this.columnWidth + delta);
                 },
                 resizeend: function(e) {
+                    that.element.removeClass("k-grid-column-resizing");
+
                     var oldWidth = Math.floor(this.columnWidth);
                     var newWidth = Math.floor(this.th.outerWidth());
                     var column = that.columns[this.th.index()];
