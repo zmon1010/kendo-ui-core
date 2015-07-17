@@ -19462,6 +19462,12 @@ data source is fired. By default the widget will bind to the data source specifi
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description>Defines the width of the column resize handle in pixels. Apply a larger value for easier grasping.</description>
+            <name>columnResizeHandleWidth</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>float</type>
+        </attribute>
+        <attribute>
             <description>If set to false the "current time" marker of the Gantt would not be displayed.</description>
             <name>currentTimeMarker</name>
             <rtexprvalue>true</rtexprvalue>
@@ -19508,6 +19514,12 @@ instance.If the dependencies option is set to a JavaScript object or array the w
         <attribute>
             <description>If set to true the user could navigate the widget using the keyboard. By default keyboard navigation is disabled.</description>
             <name>navigatable</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>If set to true allows users to resize columns by dragging their header borders. By default resizing is disabled.</description>
+            <name>resizable</name>
             <rtexprvalue>true</rtexprvalue>
             <type>boolean</type>
         </attribute>
@@ -19604,6 +19616,11 @@ and the string value will be passed as an argument to a kendo.template() functio
         <attribute>
             <description>Fired when the user selects a task in the Gantt.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
             <name>change</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Fired when the user resizes a column.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+            <name>columnResize</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -20386,6 +20403,12 @@ By default the Kendo UI Gantt widget displays "day", "week", and "month" views.<
         <description>Fired when the user selects a task in the Gantt.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
         <name>gantt-change</name>
         <tag-class>com.kendoui.taglib.gantt.ChangeFunctionTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <description>Fired when the user resizes a column.The event handler function context (available via the this keyword) will be set to the widget instance.</description>
+        <name>gantt-columnResize</name>
+        <tag-class>com.kendoui.taglib.gantt.ColumnResizeFunctionTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
