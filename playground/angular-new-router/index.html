@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <title>New Router demo</title>
+
+  <link rel="stylesheet" href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.common-office365.min.css" />
+  <link rel="stylesheet" href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.office365.min.css" />
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="node_modules/angular/angular.js"></script>
+  <script src="node_modules/angular-new-router/dist/router.es5.js"></script>
+  <script type="text/javascript" src="http://cdn.kendostatic.com/2015.2.624/js/kendo.all.min.js"></script>
+</head>
+<body ng-app="directory.app" ng-controller="AppController as app">
+  <div ng-viewport></div>
+
+  <script src="components/directory/directory.js"></script>
+
+  <script type="text/javascript">
+  (function() {
+    angular.module('directory.app',['ngNewRouter', 'kendo.directives', 'app.directory'])
+           .controller('AppController', ['$router', AppController]);
+
+    AppController.$routeConfig = [
+       { path: '/', redirectTo: '/directory' },
+       { path: '/directory', component: 'directory'}
+    ];
+
+    function AppController ($router) {}
+  })();
+  </script>
+</body>
+</html>
