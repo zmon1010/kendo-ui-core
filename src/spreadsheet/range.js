@@ -63,7 +63,7 @@
 
                 return this;
             } else {
-                var value = this._get("value");
+                value = this._get("value");
                 var type = typeof value;
                 var format = this._get("format");
                 var formula = this._get("formula");
@@ -101,6 +101,10 @@
         },
 
         formula: function(value) {
+            if (value !== undefined) {
+                this._property("compiledFormula", null);
+            }
+
             if (value === null) {
                 var sheet = this._sheet;
                 sheet.batch(function() {
