@@ -29,6 +29,7 @@ var __meta__ = {
     var isPlainObject = $.isPlainObject;
     var map = $.map;
     var keys = kendo.keys;
+    var defaultIndicatorWidth = 3;
     var NS = ".kendoGantt";
     var PERCENTAGE_FORMAT = "p0";
     var TABINDEX = "tabIndex";
@@ -1442,7 +1443,8 @@ var __meta__ = {
             "moveEnd",
             "resizeStart",
             "resize",
-            "resizeEnd"
+            "resizeEnd",
+            "columnResize"
         ],
 
         options: {
@@ -1451,6 +1453,8 @@ var __meta__ = {
             navigatable: false,
             selectable: true,
             editable: true,
+            resizable: false,
+            columnResizeHandleWidth: defaultIndicatorWidth,
             columns: [],
             views: [],
             dataSource: {},
@@ -1837,6 +1841,8 @@ var __meta__ = {
                 dataSource: this.dataSource,
                 selectable: this.options.selectable,
                 editable: this.options.editable,
+                resizable: this.options.resizable,
+                columnResizeHandleWidth: this.options.columnResizeHandleWidth,
                 listWidth: listWrapper.outerWidth(),
                 resourcesField: this.resources.field
             };
@@ -1895,6 +1901,9 @@ var __meta__ = {
                         toggleButtons.attr("data-action", "add");
                         that.timeline.clearSelection();
                     }
+                })
+                .bind("columnResize", function(e) {
+                    that.trigger("columnResize", { column: e.column, oldWidth: e.oldWidth, newWidth: e.newWidth });
                 });
         },
 

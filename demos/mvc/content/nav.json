@@ -3779,17 +3779,30 @@
         }
       },
       {
-          "text": "Export to PDF",
-          "url": "gantt/pdf-export",
-          "title": {
-              "kendo-ui": "Exporting to PDF"
-          },
-          "meta": {
-              "kendo-ui": "Export Kendo UI gantt as PDF file"
-          },
-          "packages": [
-              "!offline"
-          ]
+        "text": "Column resizing",
+        "url": "gantt/column-resizing",
+        "new": "true",
+        "title": {
+            "kendo-ui": "Columns resizing in Kendo UI Gantt control | Kendo UI Web demo",
+            "aspnet-mvc": "Column resizing in Telerik ASP.NET MVC Gantt"
+        },
+        "meta": {
+            "kendo-ui": "This demo shows the column resizing feature of the KendoGantt control.",
+            "aspnet-mvc": "In this demo you can see how simple it is to resize columns in the Telerik ASP.NET MVC Gantt."
+        }
+      },
+      {
+        "text": "Export to PDF",
+        "url": "gantt/pdf-export",
+        "title": {
+            "kendo-ui": "Exporting to PDF"
+        },
+        "meta": {
+            "kendo-ui": "Export Kendo UI gantt as PDF file"
+        },
+        "packages": [
+            "!offline"
+        ]
       },
       {
         "text": "Resources",

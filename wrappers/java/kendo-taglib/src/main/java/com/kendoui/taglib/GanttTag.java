@@ -105,6 +105,10 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
         setEvent("change", value.getBody());
     }
 
+    public void setColumnResize(ColumnResizeFunctionTag value) {
+        setEvent("columnResize", value.getBody());
+    }
+
     public void setDataBinding(DataBindingFunctionTag value) {
         setEvent("dataBinding", value.getBody());
     }
@@ -165,6 +169,14 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
         setProperty("autoBind", value);
     }
 
+    public float getColumnResizeHandleWidth() {
+        return (float)getProperty("columnResizeHandleWidth");
+    }
+
+    public void setColumnResizeHandleWidth(float value) {
+        setProperty("columnResizeHandleWidth", value);
+    }
+
     public boolean getCurrentTimeMarker() {
         return (boolean)getProperty("currentTimeMarker");
     }
@@ -223,6 +235,14 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
 
     public void setNavigatable(boolean value) {
         setProperty("navigatable", value);
+    }
+
+    public boolean getResizable() {
+        return (boolean)getProperty("resizable");
+    }
+
+    public void setResizable(boolean value) {
+        setProperty("resizable", value);
     }
 
     public boolean getSelectable() {
@@ -331,6 +351,18 @@ public class GanttTag extends WidgetTag /* interfaces */implements DataBoundWidg
 
     public void setChange(String value) {
         setProperty("change", new Function(value));
+    }
+
+    public String getColumnResize() {
+        Function property = ((Function)getProperty("columnResize"));
+        if (property != null) {
+            return property.getBody();
+        }
+        return null;
+    }
+
+    public void setColumnResize(String value) {
+        setProperty("columnResize", new Function(value));
     }
 
     public String getDataBinding() {

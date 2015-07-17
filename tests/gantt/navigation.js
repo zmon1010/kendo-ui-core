@@ -330,6 +330,41 @@
         equal(gantt.view().title, "Day");
     });
 
+    module("Gantt navigatable with column resizing", {
+        setup: function() {
+            element = $("<div/>").appendTo(QUnit.fixture);
+
+            columns = [
+                { field: "title", title: "Title", editable: true, sortable: true },
+            ];
+
+            gantt = new Gantt(element, {
+                columns: columns,
+                navigatable: true,
+                resizable: true,
+                dataSource: {
+                    data: data
+                }
+            });
+        },
+        teardown: function() {
+            gantt = null;
+            kendo.destroy(element);
+            element.remove();
+        }
+    });
+
+    test("enter does not trigger edit on dummy column", function() {
+        var content = gantt.list.content;
+
+        focusTable();
+        stub(gantt.list, "_editCell");
+        keyDown(content.find("table"), keys.RIGHT);
+        keyDown(content.find("table"), keys.ENTER);
+
+        ok(!gantt.list.calls("_editCell"));
+    });
+
     module("Action drop-down navigatable", {
         setup: function() {
             element = $("<div/>").appendTo(QUnit.fixture);

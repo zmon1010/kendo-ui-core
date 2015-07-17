@@ -87,6 +87,8 @@ namespace Kendo.Mvc.UI
         
         public bool? AutoBind { get; set; }
         
+        public double? ColumnResizeHandleWidth { get; set; }
+        
         public GanttCurrentTimeMarkerSettings CurrentTimeMarker
         {
             get;
@@ -128,6 +130,8 @@ namespace Kendo.Mvc.UI
             get;
             set;
         }
+        
+        public bool? Resizable { get; set; }
         
         public bool? Selectable { get; set; }
         
@@ -181,6 +185,11 @@ namespace Kendo.Mvc.UI
             if (AutoBind.HasValue)
             {
                 json["autoBind"] = AutoBind;
+            }
+                
+            if (ColumnResizeHandleWidth.HasValue)
+            {
+                json["columnResizeHandleWidth"] = ColumnResizeHandleWidth;
             }
 
             if (CurrentTimeMarker.Enabled == false)
@@ -259,6 +268,11 @@ namespace Kendo.Mvc.UI
             {
                 json["pdf"] = pdf;
             }
+            if (Resizable.HasValue)
+            {
+                json["resizable"] = Resizable;
+            }
+                
             if (Selectable.HasValue)
             {
                 json["selectable"] = Selectable;

@@ -104,6 +104,17 @@ namespace Kendo.Mvc.UI.Fluent
         }
         
         /// <summary>
+        /// Fired when the user resizes a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+        /// </summary>
+        /// <param name="handler">The name of the JavaScript function that will handle the columnResize event.</param>
+        public GanttEventBuilder ColumnResize(string handler)
+        {
+            Handler("columnResize", handler);
+
+            return this;
+        }
+        
+        /// <summary>
         /// Fired when the user changes the selected view of the Gantt.The event handler function context (available via the this keyword) will be set to the widget instance.
         /// </summary>
         /// <param name="handler">The name of the JavaScript function that will handle the navigate event.</param>

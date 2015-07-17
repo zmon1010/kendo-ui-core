@@ -57,6 +57,8 @@ var __meta__ = {
         iconPlaceHolder: "k-icon k-i-none",
         input: "k-input",
         link: "k-link",
+        resizeHandle: "k-resize-handle",
+        resizeHandleInner: "k-resize-handle-inner",
         dropPositions: "k-insert-top k-insert-bottom k-add k-insert-middle",
         dropTop: "k-insert-top",
         dropBottom: "k-insert-bottom",
@@ -105,9 +107,29 @@ var __meta__ = {
             this._editable();
             this._selectable();
             this._draggable();
+            this._resizable();
             this._attachEvents();
-
             this._adjustHeight();
+
+            this.bind("render", function() {
+                var headerCols;
+                var tableCols;
+
+                if (this.options.resizable) {
+                    headerCols = this.header.find("col");
+                    tableCols = this.content.find("col");
+
+                    this.header.find("th").not(':last').each(function(index) {
+                        var width = $(this).outerWidth();
+
+                        headerCols.eq(index).width(width);
+                        tableCols.eq(index).width(width);
+                    });
+
+                    headerCols.last().css("width", "auto");
+                    tableCols.last().css("width", "auto");
+                }
+            }, true);
         },
 
         _adjustHeight: function() {
@@ -129,6 +151,10 @@ var __meta__ = {
                 this._contentDropArea.destroy();
             }
 
+            if (this._columnResizable) {
+                this._columnResizable.destroy();
+            }
+
             if (this.touch) {
                 this.touch.destroy();
             }
@@ -138,6 +164,7 @@ var __meta__ = {
             }
 
             this.content.off(NS);
+            this.header.find("thead").off(NS);
             this.header.find(DOT + GanttList.link).off(NS);
 
             this.header = null;
@@ -150,7 +177,8 @@ var __meta__ = {
         options: {
             name: "GanttList",
             selectable: true,
-            editable: true
+            editable: true,
+            resizable: false
         },
 
         _attachEvents: function() {
@@ -250,11 +278,19 @@ var __meta__ = {
                 column = columns[i];
                 attr = {
                     "data-field": column.field,
-                    "data-title": column.title, className: GanttList.styles.header,
+                    "data-title": column.title,
+                    className: GanttList.styles.header,
                     "role": "columnheader"
                 };
 
                 ths.push(kendoDomElement("th", attr, [kendoTextElement(column.title)]));
+            }
+
+            if (this.options.resizable) {
+                ths.push(kendoDomElement("th", {
+                    className: GanttList.styles.header,
+                    "role": "columnheader"
+                }));
             }
 
             return ths;
@@ -278,6 +314,10 @@ var __meta__ = {
                 }
 
                 cols.push(kendoDomElement("col", style, []));
+            }
+
+            if (this.options.resizable) {
+                cols.push(kendoDomElement("col", { style: { width: "1px" }}));
             }
 
             return cols;
@@ -344,6 +384,10 @@ var __meta__ = {
                 children.push(this._td({ task: options.task, column: column, level: options.level }));
             }
 
+            if (this.options.resizable) {
+                children.push(kendoDomElement("td", { "role": "gridcell" }));
+            }
+
             return kendoDomElement("tr", options.attr, children);
         },
 
@@ -355,6 +399,7 @@ var __meta__ = {
             var column = options.column;
             var value = task.get(column.field) || [];
             var formatedValue;
+            var label;
 
             if (column.field == resourcesField) {
                 formatedValue = [];
@@ -366,7 +411,6 @@ var __meta__ = {
                 formatedValue = column.format ? kendo.format(column.format, value) : value;
             }
 
-            var label;
             if (column.field === "title") {
                 children = createPlaceholders({ level: options.level, className: listStyles.iconPlaceHolder });
                 children.push(kendoDomElement("span", {
@@ -409,7 +453,7 @@ var __meta__ = {
             var columns = this.columns;
             var column;
             var sortableInstance;
-            var cells = this.header.find("th");
+            var cells = this.header.find("th[" + kendo.attr("field") + "]");
             var handler = function(e) {
                 if (that.editable && that.editable.trigger("validate")) {
                     e.preventDefault();
@@ -531,7 +575,7 @@ var __meta__ = {
                     return;
                 }
 
-                if (column.editable) {
+                if (column && column.editable) {
                     that._editCell({ cell: td, column: column });
                 }
             };
@@ -892,6 +936,109 @@ var __meta__ = {
                         });
                    }
                }).data("kendoDropTargetArea");
+        },
+
+        _resizable: function() {
+            var that = this;
+            var listStyles = GanttList.styles;
+            var positionResizeHandle = function(e) {
+                var th = $(e.currentTarget);
+                var resizeHandle = that.resizeHandle;
+                var position = th.position();
+                var left = position.left;
+                var cellWidth = th.outerWidth();
+                var container = th.closest("div");
+                var clientX = e.clientX + $(window).scrollLeft();
+                var indicatorWidth = that.options.columnResizeHandleWidth;
+
+                left += container.scrollLeft();
+
+                if (!resizeHandle) {
+                    resizeHandle = that.resizeHandle = $(
+                        '<div class="' + listStyles.resizeHandle + '"><div class="' + listStyles.resizeHandleInner + '" /></div>'
+                    );
+                }
+
+                var cellOffset = th.offset().left + cellWidth;
+                var show = clientX > cellOffset - indicatorWidth && clientX < cellOffset + indicatorWidth;
+
+                if (!show) {
+                    resizeHandle.hide();
+                    return;
+                }
+
+                container.append(resizeHandle);
+
+                resizeHandle
+                    .show()
+                    .css({
+                        top: position.top,
+                        left: left + cellWidth - indicatorWidth - 1,
+                        height: th.outerHeight(),
+                        width: indicatorWidth * 3
+                    })
+                    .data("th", th);
+            };
+
+            if (!this.options.resizable) {
+                return;
+            }
+
+            if (this._columnResizable) {
+                this._columnResizable.destroy();
+            }
+
+            this.header.find("thead")
+               .on("mousemove" + NS, "th", positionResizeHandle);
+
+            this._columnResizable = this.header.kendoResizable({
+                handle: DOT + listStyles.resizeHandle,
+                start: function(e) {
+                    var th = $(e.currentTarget).data("th");
+                    var colSelector = "col:eq(" + th.index() + ")";
+                    var header = that.header.find("table");
+                    var contentTable = that.content.find("table");
+
+                    that.element.addClass("k-grid-column-resizing");
+
+                    this.col = contentTable.children("colgroup").find(colSelector)
+                          .add(header.find(colSelector));
+
+                    this.th = th;
+                    this.startLocation = e.x.location;
+                    this.columnWidth = th.outerWidth();
+                    this.table = header.add(contentTable);
+                    this.totalWidth = (this.table.width() - header.find("th:last").outerWidth());
+                },
+                resize: function(e) {
+                    var minColumnWidth = 11;
+                    var delta = e.x.location - this.startLocation;
+
+                    if (this.columnWidth + delta < minColumnWidth) {
+                        delta = minColumnWidth - this.columnWidth;
+                    }
+
+                    this.table.css({
+                        "minWidth": (this.totalWidth + delta)
+                    });
+                    this.col.width(this.columnWidth + delta);
+                },
+                resizeend: function(e) {
+                    that.element.removeClass("k-grid-column-resizing");
+
+                    var oldWidth = Math.floor(this.columnWidth);
+                    var newWidth = Math.floor(this.th.outerWidth());
+                    var column = that.columns[this.th.index()];
+
+                    that.trigger("columnResize", {
+                        column: column,
+                        oldWidth: oldWidth,
+                        newWidth: newWidth
+                    });
+
+                    this.table = this.col = this.th = null;
+                }
+            }).data("kendoResizable");
         },
 
         _modelFromElement: function(element) {

@@ -194,6 +194,7 @@
     <Compile Include="Controllers\Collapsible\NestedController.cs" />
     <Compile Include="Controllers\ComboBox\GroupingController.cs" />
     <Compile Include="Controllers\ComboBox\VirtualizationController.cs" />
+    <Compile Include="Controllers\Gantt\Column_ResizingController.cs" />
     <Compile Include="Controllers\MultiSelect\Tag_ModeController.cs" />
     <Compile Include="Controllers\TabStrip\Scrollable_TabsController.cs" />
     <Compile Include="Controllers\ToolBar\Keyboard_NavigationController.cs" />
@@ -927,6 +928,7 @@
     <Content Include="Areas\aspx\Views\dropdownlist\virtualization.aspx" />
     <Content Include="Areas\aspx\Views\financial\pdf_export.aspx" />
     <Content Include="Areas\aspx\Views\gantt\api.aspx" />
+    <Content Include="Areas\aspx\Views\gantt\column_resizing.aspx" />
     <Content Include="Areas\aspx\Views\gantt\right_to_left_support.aspx" />
     <Content Include="Areas\aspx\Views\gantt\resources.aspx" />
     <Content Include="Areas\aspx\Views\gantt\pdf_export.aspx" />
@@ -3298,6 +3300,7 @@
     <Content Include="Areas\razor\Views\tabstrip\scrollable_tabs.cshtml" />
     <Content Include="Areas\razor\Views\toolbar\keyboard_navigation.cshtml" />
     <Content Include="Areas\razor\Views\treelist\dragdrop.cshtml" />
+    <Content Include="Areas\razor\Views\gantt\column_resizing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\razor\Views\map\api.cshtml" />

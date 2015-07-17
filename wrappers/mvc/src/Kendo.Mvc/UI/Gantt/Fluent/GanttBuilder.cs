@@ -120,6 +120,16 @@ namespace Kendo.Mvc.UI.Fluent
             return Editable(true);
         }
 
+        /// <summary>
+        /// Defines the width of the column resize handle in pixels. Apply a larger value for easier grasping.
+        /// </summary>
+        /// <param name="value">The value that configures the columnResizeHandleWidth.</param>
+        public GanttBuilder<TTaskModel, TDependenciesModel> ColumnResizeHandleWidth(double value)
+        {
+            container.ColumnResizeHandleWidth = value;
+
+            return this;
+        }
         
         /// <summary>
         /// If set to false the "current time" marker of the Gantt would not be displayed.
@@ -273,6 +283,17 @@ namespace Kendo.Mvc.UI.Fluent
         public GanttBuilder<TTaskModel,TDependenciesModel> Pdf(Action<GanttPdfSettingsBuilder> configurator)
         {
             configurator(new GanttPdfSettingsBuilder(container.Pdf));
+            return this;
+        }
+        
+        /// <summary>
+        /// If set to true allows users to resize columns by dragging their header borders. By default resizing is disabled.
+        /// </summary>
+        /// <param name="value">The value that configures the resizable.</param>
+        public GanttBuilder<TTaskModel,TDependenciesModel> Resizable(bool value)
+        {
+            container.Resizable = value;
+
             return this;
         }
         
