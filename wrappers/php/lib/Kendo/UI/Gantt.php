@@ -28,6 +28,15 @@ data source is fired. By default the widget will bind to the data source specifi
     }
 
     /**
+    * Defines the width of the column resize handle in pixels. Apply a larger value for easier grasping.
+    * @param float $value
+    * @return \Kendo\UI\Gantt
+    */
+    public function columnResizeHandleWidth($value) {
+        return $this->setProperty('columnResizeHandleWidth', $value);
+    }
+
+    /**
     * Adds GanttColumn to the Gantt.
     * @param \Kendo\UI\GanttColumn|array,... $value one or more GanttColumn to add.
     * @return \Kendo\UI\Gantt
@@ -170,6 +179,15 @@ instance.If the dependencies option is set to a JavaScript object or array the w
     */
     public function pdf($value) {
         return $this->setProperty('pdf', $value);
+    }
+
+    /**
+    * If set to true allows users to resize columns by dragging their header borders. By default resizing is disabled.
+    * @param boolean $value
+    * @return \Kendo\UI\Gantt
+    */
+    public function resizable($value) {
+        return $this->setProperty('resizable', $value);
     }
 
     /**
@@ -346,6 +364,20 @@ with a gantt task.
         }
 
         return $this->setProperty('change', $value);
+    }
+
+    /**
+    * Sets the columnResize event of the Gantt.
+    * Fired when the user resizes a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+    * @param string|\Kendo\JavaScriptFunction $value Can be a JavaScript function definition or name.
+    * @return \Kendo\UI\Gantt
+    */
+    public function columnResize($value) {
+        if (is_string($value)) {
+            $value = new \Kendo\JavaScriptFunction($value);
+        }
+
+        return $this->setProperty('columnResize', $value);
     }
 
     /**
