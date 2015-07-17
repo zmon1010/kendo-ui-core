@@ -2245,8 +2245,65 @@
         return element.options[element.selectedIndex];
     }
 
+    function renderCheckbox(element, group) {
+        var style = getComputedStyle(element);
+        var color = getPropertyValue(style, "color");
+        var box = element.getBoundingClientRect();
+        if (element.type == "checkbox") {
+            group.append(
+                drawing.Path.fromRect(
+                    new geo.Rect([ box.left+1, box.top+1 ],
+                                 [ box.width-2, box.height-2 ])
+                ).stroke(color, 1)
+            );
+            if (element.checked) {
+                // fill a rectangle inside?  looks kinda ugly.
+                // group.append(
+                //     drawing.Path.fromRect(
+                //         new geo.Rect([ box.left+4, box.top+4 ],
+                //                      [ box.width-8, box.height-8])
+                //     ).fill(color).stroke(null)
+                // );
+
+                // let's draw a checkmark instead.  artistic, eh?
+                group.append(
+                    new drawing.Path()
+                        .stroke(color, 1.2)
+                        .moveTo(box.left + 0.22 * box.width,
+                                box.top + 0.55 * box.height)
+                        .lineTo(box.left + 0.45 * box.width,
+                                box.top + 0.75 * box.height)
+                        .lineTo(box.left + 0.78 * box.width,
+                                box.top + 0.22 * box.width)
+                );
+            }
+        } else {
+            group.append(
+                new drawing.Circle(
+                    new geo.Circle([
+                        (box.left + box.right) / 2,
+                        (box.top + box.bottom) / 2
+                    ], Math.min(box.width-2, box.height-2) / 2)
+                ).stroke(color, 1)
+            );
+            if (element.checked) {
+                group.append(
+                    new drawing.Circle(
+                        new geo.Circle([
+                            (box.left + box.right) / 2,
+                            (box.top + box.bottom) / 2
+                        ], Math.min(box.width-8, box.height-8) / 2)
+                    ).fill(color).stroke(null)
+                );
+            }
+        }
+    }
+
     function renderFormField(element, group) {
         var tag = element.tagName.toLowerCase();
+        if (tag == "input" && (element.type == "checkbox" || element.type == "radio")) {
+            return renderCheckbox(element, group);
+        }
         var p = element.parentNode;
         var doc = element.ownerDocument;
         var el = doc.createElement(KENDO_PSEUDO_ELEMENT);

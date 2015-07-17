@@ -44,8 +44,17 @@
   </head>
   <body>
 
+    <button onclick="pdf('#content')">PDF all</button>
+    <button onclick="draw('#content')">Draw all</button>
+
     <div id="content">
       <table cellspacing="0" cellpadding="0"><tr><td>
+        <div style="color: blue">
+          <label><input style="color: red" type="checkbox" checked /> Checked</label><br />
+          <label><input style="color: red" type="checkbox" /> Unchecked</label><br />
+          <label><input style="color: red" type="radio" checked /> Checked</label><br />
+          <label><input style="color: red" type="radio" /> Unchecked</label><br /><br />
+        </div>
         <label>
           A plain select:
           <select>
@@ -105,9 +114,6 @@
         <input id="slider" />
       </td></tr></table>
     </div>
-
-    <button onclick="pdf('#content')">PDF all</button>
-    <button onclick="draw('#content')">Draw all</button>
 
     <script>
 
