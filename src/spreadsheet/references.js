@@ -84,6 +84,43 @@
         },
         isCell: function() {
             return false;
+        },
+        eq: function(reference) {
+            var r1 = this;
+            var r2 = reference;
+
+            // make positions consistent
+            if ((r2 instanceof CellRef) || (r2 instanceof RangeRef && !(r1 instanceof CellRef))) {
+               r1 = reference;
+               r2 = this;
+            }
+
+            if (r1 instanceof CellRef) { // cell eq *
+                r2 = r2.simplify();
+                return r2 instanceof CellRef && r1.row == r2.row && r1.col == r2.col && r1.sheet == r2.sheet;
+            }
+            else if (r1 instanceof RangeRef) { // range eq range/union
+                if (r2 instanceof RangeRef) {
+                    return r2.topLeft.eq(r1.topLeft) && r2.bottomRight.eq(r1.bottomRight);
+                }
+                if (r2 instanceof UnionRef) {
+                    return r2.single() && r1.eq(r2.refs[0]);
+                }
+            } else { // union eq union
+                var refs1 = r1.refs;
+                var refs2 = r2.refs;
+                if (refs1.length != refs2.length) {
+                   return false;
+                }
+
+                for (var i = 0, len = refs1.length; i < len; i++) {
+                    if (!refs1[i].eq(refs2[i])) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
         }
     });
 
@@ -98,6 +135,9 @@
         },
         clone: function() {
             return this;
+        },
+        eq: function(ref) {
+            return ref === this;
         },
         forEach: $.noop
     }))();
@@ -133,7 +173,7 @@
         },
         intersect: function(ref) {
             if (ref instanceof CellRef) {
-                if (ref.row == this.row && ref.col == this.col && ref.sheet == this.sheet) {
+                if (this.eq(ref)) {
                     return this;
                 } else {
                     return NULL;
@@ -206,6 +246,9 @@
         },
         isCell: function() {
             return true;
+        },
+        simplify: function() {
+            return this;
         }
     });
 
@@ -441,7 +484,7 @@
             return this.topLeft;
         },
         isCell: function() {
-            return this.topLeft.row == this.bottomRight.row && this.topLeft.col == this.bottomRight.col;
+            return this.topLeft.eq(this.bottomRight);
         },
         toString: function() {
             return this.topLeft + ":" + this.bottomRight;
@@ -468,7 +511,7 @@
             return NULL;
         },
         simplify: function() {
-            if (this.refs.length == 1) {
+            if (this.single()) {
                 return this.refs[0].simplify();
             }
             return this;
@@ -490,8 +533,11 @@
         first: function() {
             return this.refs[0].first();
         },
+        single: function() {
+            return this.refs.length == 1;
+        },
         isCell: function() {
-            return this.refs.length == 1 && this.refs[0].isCell();
+            return this.single() && this.refs[0].isCell();
         }
     });
 

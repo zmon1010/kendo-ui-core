@@ -623,12 +623,16 @@
             var view = this._currentView;
             var activeCell = sheet.activeCell().toRangeRef();
             var className = orientedClass(
-                "k-spreadsheet-active-cell",
+                 "k-spreadsheet-active-cell",
                 !activeCell.move(0, -1).intersects(view.ref),
                 !activeCell.move(-1, 0).intersects(view.ref),
                 !activeCell.move(0, 1).intersects(view.ref),
                 !activeCell.move(1, 0).intersects(view.ref)
             );
+
+            if (sheet.select().eq(activeCell)) {
+                className += " k-single";
+            }
 
             sheet.select().forEach(function(ref) {
                 if (ref === kendo.spreadsheet.NULLREF) {
