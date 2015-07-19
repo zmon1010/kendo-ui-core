@@ -49,6 +49,14 @@
         element.pressKey(kendo.keys.DOWN, false, true);
     });
 
+    test("recognizes shift and ctrl key", 1, function() {
+        listener.on(["shift+ctrl+down"], function() {
+            ok(true);
+        });
+
+        element.pressKey(kendo.keys.DOWN, true, true);
+    });
+
     test("recognizes mousedown", 1, function() {
         listener.on("mousedown", function() {
             ok(true);

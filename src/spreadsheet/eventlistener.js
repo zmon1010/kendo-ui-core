@@ -45,12 +45,12 @@
 
         handleEvent: function(e, name) {
             var eventKey = "";
-            if (e.ctrlKey) {
-               eventKey = "ctrl+";
-            }
-
             if (e.shiftKey) {
                eventKey += "shift+";
+            }
+
+            if (e.ctrlKey) {
+               eventKey += "ctrl+";
             }
 
             eventKey += name;
