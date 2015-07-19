@@ -1,7 +1,13 @@
 angular.module('app.directory', ["ngNewRouter", "kendo.directives"])
-  .controller('DirectoryController',[ '$routeParams', DirectoryController]);
+  .controller('DirectoryController',[ '$routeParams', function ($routeParams) {
+      this.items = [
+          "foo",
+          "bar",
+          "baz"
+      ];
 
-function DirectoryController($routeParams) {
+    this.activated = true;
+
     this.mainGridOptions = {
 	height: 800,
         dataSource: {
@@ -38,4 +44,6 @@ function DirectoryController($routeParams) {
     this.monthSelectorOptions = {
       format: "MMM yyyy"
     };
-}
+}]);
+
+

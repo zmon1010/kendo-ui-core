@@ -1,6 +1,10 @@
 Options:
 {{directory.mainGridOptions}}
 
-<div kendo-grid k-options="directory.mainGridOptions" ></div>
+<div ng-repeat="n in directory.items">
+    {{n}}
+</div>
+
+<div kendo-grid k-options="directory.mainGridOptions" k-ng-delay="directory.mainGridOptions"></div>
 
 <input kendo-date-picker k-options="monthSelectorOptions" />

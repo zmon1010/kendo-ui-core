@@ -9,7 +9,13 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="node_modules/angular/angular.js"></script>
   <script src="node_modules/angular-new-router/dist/router.es5.js"></script>
-  <script type="text/javascript" src="http://cdn.kendostatic.com/2015.2.624/js/kendo.all.min.js"></script>
+    <script src="../loader.js"></script>
+    <script>
+      requireSync([
+        "../../../src/kendo.angular.js",
+        "../../../src/kendo.grid.js"
+      ]);
+    </script>
 </head>
 <body ng-app="directory.app" ng-controller="AppController as app">
   <div ng-viewport></div>
@@ -18,7 +24,7 @@
 
   <script type="text/javascript">
   (function() {
-    angular.module('directory.app',['ngNewRouter', 'kendo.directives', 'app.directory'])
+    angular.module('directory.app', ['ngNewRouter', 'kendo.directives', 'app.directory'])
            .controller('AppController', ['$router', AppController]);
 
     AppController.$routeConfig = [
