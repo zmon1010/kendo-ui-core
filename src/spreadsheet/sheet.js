@@ -313,7 +313,7 @@
             }
         },
 
-        select: function(ref) {
+        select: function(ref, changeActiveCell) {
             if (ref) {
                 var mergedCells = this._mergedCells;
                 ref = this._ref(ref);
@@ -322,10 +322,14 @@
                     return ref.toRangeRef().union(mergedCells);
                 });
 
-                if (ref.isCell()) {
-                    this.activeCell(ref);
+                if (changeActiveCell !== false) {
+                    if (ref.isCell()) {
+                        this.activeCell(ref);
+                    } else {
+                        this.activeCell(this._selection.first());
+                    }
                 } else {
-                    this.activeCell(this._selection.first());
+                    this.trigger("change");
                 }
             }
 

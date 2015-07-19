@@ -96,9 +96,11 @@
     };
 
     var ACTION_KEYS = [];
+    var SHIFT_ACTION_KEYS = [];
 
     for (var key in ACTIONS) {
         ACTION_KEYS.push(key);
+        SHIFT_ACTION_KEYS.push("shift+" + key);
     }
 
     var View = kendo.Class.extend({
@@ -125,6 +127,90 @@
 
         sheet: function(sheet) {
             this._sheet = sheet;
+        },
+
+        modifySelection: function(direction) {
+            var sheet = this._sheet;
+            var scroller = this.scroller;
+            var selection = sheet.select();
+            var activeCell = sheet.activeCell();
+            var topLeft = selection.topLeft.clone();
+            var bottomRight = selection.bottomRight.clone();
+
+            var rows = sheet._grid._rows;
+            var columns = sheet._grid._columns;
+
+            var leftMode = activeCell.topLeft.col == topLeft.col;
+            var topMode = activeCell.topLeft.row == topLeft.row;
+            var pageHeight = scroller.clientHeight;
+
+            // TODO: scrolling into view gets negated by the active cell changing. fix with reason
+            switch (direction) {
+                case "shrink-left":
+                    bottomRight.col = columns.prevVisible(bottomRight.col);
+                    break;
+                case "expand-left":
+                    topLeft.col = columns.prevVisible(topLeft.col);
+                    break;
+                case "expand-right":
+                    bottomRight.col = columns.nextVisible(bottomRight.col);
+                    break;
+                case "shrink-right":
+                    topLeft.col = columns.nextVisible(topLeft.col);
+                    break;
+                case "shrink-up":
+                    bottomRight.row = rows.prevVisible(bottomRight.row);
+                    break;
+                case "expand-up":
+                    topLeft.row = rows.prevVisible(topLeft.row);
+                    break;
+                case "shrink-page-up":
+                    bottomRight.row = rows.prevPage(bottomRight.row, pageHeight);
+                    break;
+                case "expand-page-up":
+                    topLeft.row = rows.prevPage(topLeft.row, pageHeight);
+                    break;
+                case "expand-down":
+                    bottomRight.row = rows.nextVisible(bottomRight.row);
+                    break;
+                case "shrink-down":
+                    topLeft.row = rows.nextVisible(topLeft.row);
+                    break;
+                case "expand-page-down":
+                    bottomRight.row = rows.nextPage(bottomRight.row, pageHeight);
+                    break;
+                case "shrink-page-down":
+                    topLeft.row = rows.nextPage(topLeft.row, pageHeight);
+                    break;
+                case "first-col":
+                    topLeft.col = columns.firstVisible();
+                    bottomRight.col = activeCell.bottomRight.col;
+                    break;
+                case "last-col":
+                    bottomRight.col = columns.lastVisible();
+                    topLeft.col = activeCell.topLeft.col;
+                    break;
+                case "first-row":
+                    topLeft.row = rows.firstVisible();
+                    bottomRight.row = activeCell.bottomRight.row;
+                    break;
+                case "last-row":
+                    bottomRight.col = rows.lastVisible();
+                    topLeft.row = activeCell.topLeft.row;
+                    break;
+                case "last":
+                    bottomRight.row = rows.lastVisible();
+                    bottomRight.col = columns.lastVisible();
+                    topLeft = activeCell.topLeft;
+                    break;
+                case "first":
+                    topLeft.row = rows.firstVisible();
+                    topLeft.col = columns.firstVisible();
+                    bottomRight = activeCell.bottomRight;
+                    break;
+            }
+
+            sheet.select(new kendo.spreadsheet.RangeRef(topLeft, bottomRight), false);
         },
 
         moveActiveCell: function(direction) {
@@ -203,17 +289,52 @@
                 event.preventDefault();
             });
 
+            keyListener.on(SHIFT_ACTION_KEYS, function(event, action) {
+                action = ACTIONS[action.replace("shift+", "")];
+
+                var activeCell = that._sheet.activeCell();
+                var selectionTopLeft = that._sheet.select().topLeft;
+
+                var leftMode = activeCell.topLeft.col == selectionTopLeft.col;
+                var topMode = activeCell.topLeft.row == selectionTopLeft.row;
+
+                switch(action) {
+                    case "left":
+                        action = leftMode ? "shrink-left" : "expand-left";
+                        break;
+                    case "right":
+                        action = leftMode ? "expand-right" : "shrink-right";
+                        break;
+                    case "up":
+                        action = topMode ? "shrink-up" : "expand-up";
+                        break;
+                    case "down":
+                        action = topMode ? "expand-down" : "shrink-down";
+                        break;
+                    case "prev-page":
+                        action = topMode ? "shrink-page-up" : "expand-page-up";
+                        break;
+                    case "next-page":
+                        action = topMode ? "expand-page-down" : "shrink-page-down";
+                        break;
+                }
+
+                that.modifySelection(action);
+
+                event.preventDefault();
+            });
+
             listener.on("mousedown", function(event, action) {
                 var offset = container.offset();
-                var object = this.objectAt(event.pageX - offset.left, event.pageY - offset.top);
+                var left = event.pageX - offset.left;
+                var top = event.pageY - offset.top;
+
+                var object = this.objectAt(left, top);
                 if (object.type === "cell") {
                     that._sheet.select(object.ref);
                 }
 
-                clipboard.css({
-                    left: event.pageX - offset.left - 4,
-                    top: event.pageY - offset.top - 4
-                });
+                clipboard.css({ left: left - 4, top: top - 4 });
 
                 setTimeout(function() {
                     clipboard.select().focus();
@@ -270,11 +391,12 @@
         },
 
         refresh: function() {
-            this.viewSize[0].style.height = this._sheet._grid.totalHeight() + "px";
-            this.viewSize[0].style.width = this._sheet._grid.totalWidth() + "px";
+            var sheet = this._sheet;
+            this.viewSize[0].style.height = sheet._grid.totalHeight() + "px";
+            this.viewSize[0].style.width = sheet._grid.totalWidth() + "px";
 
-            var frozenColumns = this._sheet.frozenColumns();
-            var frozenRows = this._sheet.frozenRows();
+            var frozenColumns = sheet.frozenColumns();
+            var frozenRows = sheet.frozenRows();
 
             // main or bottom or right pane
             this.panes = [ this._pane(frozenRows, frozenColumns) ];
@@ -294,27 +416,26 @@
                 this.panes.push(this._pane(0, 0, frozenRows, frozenColumns));
             }
 
-            var text = this._sheet.selection().values().map(function(row) {
+            var text = sheet.selection().values().map(function(row) {
                 return row.join("\t");
             }).join("\r\n");
 
             this.clipboard.val(text).select().focus();
 
-            this.scrollIntoView();
+            this.scrollIntoView(sheet.activeCell().toRangeRef());
         },
 
-        scrollIntoView: function() {
-            var activeCell = this._sheet.activeCell().toRangeRef();
+        scrollIntoView: function(cell) {
             var theGrid;
 
             this.panes.forEach(function(pane) {
                 var grid = pane._grid;
-                if (!theGrid && grid.contains(activeCell)) {
+                if (!theGrid && grid.contains(cell)) {
                     theGrid = grid;
                 }
             });
 
-            var boundaries = theGrid.scrollBoundaries(activeCell);
+            var boundaries = theGrid.scrollBoundaries(cell);
 
             var scroller = this.scroller;
             var scrollTop = theGrid.rows.frozen ? 0 : scroller.scrollTop;
