@@ -378,7 +378,7 @@
 
             if (e.originalEvent.deltaMode === 1) {
                 deltaX *= 10;
-                deltaY *= 10
+                deltaY *= 10;
             }
 
             element.scrollLeft += deltaX;

@@ -429,7 +429,7 @@
                     positions[row] = position;
                 }
 
-                var row = rows[position];
+                row = rows[position];
 
                 cell.index = col;
 
