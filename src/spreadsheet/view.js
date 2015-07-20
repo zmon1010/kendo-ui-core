@@ -5,6 +5,10 @@
 (function(kendo) {
     var CellRef = kendo.spreadsheet.CellRef;
 
+
+    function hasChanged(e, name) {
+           return !e || e.changed == name;
+    }
     var HtmlTable = kendo.Class.extend({
         init: function(rowHeight, columnWidth) {
             this.rowHeight = rowHeight;
@@ -127,6 +131,7 @@
 
         sheet: function(sheet) {
             this._sheet = sheet;
+            this.refresh();
         },
 
         modifySelection: function(direction) {
@@ -144,71 +149,92 @@
             var topMode = activeCell.topLeft.row == topLeft.row;
             var pageHeight = scroller.clientHeight;
 
+            var scrollInto;
             // TODO: scrolling into view gets negated by the active cell changing. fix with reason
             switch (direction) {
                 case "shrink-left":
                     bottomRight.col = columns.prevVisible(bottomRight.col);
+                    scrollInto = bottomRight;
                     break;
                 case "expand-left":
                     topLeft.col = columns.prevVisible(topLeft.col);
+                    scrollInto = topLeft;
                     break;
                 case "expand-right":
                     bottomRight.col = columns.nextVisible(bottomRight.col);
+                    scrollInto = bottomRight;
                     break;
                 case "shrink-right":
                     topLeft.col = columns.nextVisible(topLeft.col);
+                    scrollInto = topLeft;
                     break;
                 case "shrink-up":
                     bottomRight.row = rows.prevVisible(bottomRight.row);
+                    scrollInto = bottomRight;
                     break;
                 case "expand-up":
                     topLeft.row = rows.prevVisible(topLeft.row);
+                    scrollInto = topLeft;
                     break;
                 case "shrink-page-up":
                     bottomRight.row = rows.prevPage(bottomRight.row, pageHeight);
+                    scrollInto = bottomRight;
                     break;
                 case "expand-page-up":
                     topLeft.row = rows.prevPage(topLeft.row, pageHeight);
+                    scrollInto = topLeft;
                     break;
                 case "expand-down":
                     bottomRight.row = rows.nextVisible(bottomRight.row);
+                    scrollInto = bottomRight;
                     break;
                 case "shrink-down":
                     topLeft.row = rows.nextVisible(topLeft.row);
+                    scrollInto = topLeft;
                     break;
                 case "expand-page-down":
                     bottomRight.row = rows.nextPage(bottomRight.row, pageHeight);
+                    scrollInto = bottomRight;
                     break;
                 case "shrink-page-down":
                     topLeft.row = rows.nextPage(topLeft.row, pageHeight);
+                    scrollInto = topLeft;
                     break;
                 case "first-col":
                     topLeft.col = columns.firstVisible();
                     bottomRight.col = activeCell.bottomRight.col;
+                    scrollInto = topLeft;
                     break;
                 case "last-col":
                     bottomRight.col = columns.lastVisible();
                     topLeft.col = activeCell.topLeft.col;
+                    scrollInto = bottomRight;
                     break;
                 case "first-row":
                     topLeft.row = rows.firstVisible();
                     bottomRight.row = activeCell.bottomRight.row;
+                    scrollInto = topLeft;
                     break;
                 case "last-row":
                     bottomRight.col = rows.lastVisible();
                     topLeft.row = activeCell.topLeft.row;
+                    scrollInto = bottomRight;
                     break;
                 case "last":
                     bottomRight.row = rows.lastVisible();
                     bottomRight.col = columns.lastVisible();
                     topLeft = activeCell.topLeft;
+                    scrollInto = bottomRight;
                     break;
                 case "first":
                     topLeft.row = rows.firstVisible();
                     topLeft.col = columns.firstVisible();
                     bottomRight = activeCell.bottomRight;
+                    scrollInto = topLeft;
                     break;
             }
+
+            this.scrollIntoView(scrollInto.toRangeRef());
 
             sheet.select(new kendo.spreadsheet.RangeRef(topLeft, bottomRight), false);
         },
@@ -390,43 +416,55 @@
             })[0];
         },
 
-        refresh: function() {
+        // XXX: Fix the return here. It breaks many tests, though.
+        refresh: function(e) {
             var sheet = this._sheet;
+            var render = true;
             this.viewSize[0].style.height = sheet._grid.totalHeight() + "px";
             this.viewSize[0].style.width = sheet._grid.totalWidth() + "px";
 
-            var frozenColumns = sheet.frozenColumns();
-            var frozenRows = sheet.frozenRows();
+            if (hasChanged(e, "frozenRows") || hasChanged(e, "frozenColumns")) {
+                var frozenColumns = sheet.frozenColumns();
+                var frozenRows = sheet.frozenRows();
 
-            // main or bottom or right pane
-            this.panes = [ this._pane(frozenRows, frozenColumns) ];
+                // main or bottom or right pane
+                this.panes = [ this._pane(frozenRows, frozenColumns) ];
 
-            // left pane
-            if (frozenColumns > 0) {
-                this.panes.push(this._pane(frozenRows, 0, null, frozenColumns));
+                // left pane
+                if (frozenColumns > 0) {
+                    this.panes.push(this._pane(frozenRows, 0, null, frozenColumns));
+                }
+
+                // top pane
+                if (frozenRows > 0) {
+                    this.panes.push(this._pane(0, frozenColumns, frozenRows, null));
+                }
+
+                // left-top "fixed" pane
+                if (frozenRows > 0 && frozenColumns > 0) {
+                    this.panes.push(this._pane(0, 0, frozenRows, frozenColumns));
+                }
             }
 
-            // top pane
-            if (frozenRows > 0) {
-                this.panes.push(this._pane(0, frozenColumns, frozenRows, null));
+            if (hasChanged(e, "selection") || hasChanged(e, "activecell")) {
+                var text = sheet.selection().values().map(function(row) {
+                    return row.join("\t");
+                }).join("\r\n");
+
+                this.clipboard.val(text).select().focus();
             }
 
-            // left-top "fixed" pane
-            if (frozenRows > 0 && frozenColumns > 0) {
-                this.panes.push(this._pane(0, 0, frozenRows, frozenColumns));
-            }
 
-            var text = sheet.selection().values().map(function(row) {
-                return row.join("\t");
-            }).join("\r\n");
+            if (hasChanged(e, "activecell")) {
+                render = !this.scrollIntoView(sheet.activeCell().toRangeRef());
+            };
 
-            this.clipboard.val(text).select().focus();
-
-            this.scrollIntoView(sheet.activeCell().toRangeRef());
+            return render;
         },
 
         scrollIntoView: function(cell) {
             var theGrid;
+            var willScroll = false;
 
             this.panes.forEach(function(pane) {
                 var grid = pane._grid;
@@ -442,20 +480,26 @@
             var scrollLeft = theGrid.columns.frozen ? 0 : scroller.scrollLeft;
 
             if (boundaries.top < scrollTop) {
+                willScroll = true;
                 scroller.scrollTop = boundaries.top;
             }
 
             if (boundaries.bottom > scrollTop) {
+                willScroll = true;
                 scroller.scrollTop = boundaries.bottom;
             }
 
             if (boundaries.left < scrollLeft) {
+                willScroll = true;
                 scroller.scrollLeft = boundaries.left;
             }
 
             if (boundaries.right > scrollLeft) {
+                willScroll = true;
                 scroller.scrollLeft = boundaries.right;
             }
+
+            return willScroll;
         },
 
         render: function() {

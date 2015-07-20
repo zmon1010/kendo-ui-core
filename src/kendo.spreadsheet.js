@@ -176,12 +176,16 @@
         },
 
         refresh: function(e) {
-            if (!e || e.recalc === true) {
+        // TODO: Ugly!
+            if (!e || e.changed === "data") {
                 this._sheet.recalc(this._context);
             }
-            this._view.refresh();
-            this._view.render();
-            this.trigger("render");
+
+            if (this._view.refresh(e)) {
+                this._view.render();
+            }
+
+            this.trigger("render", { changed: e ? e.changed : null });
             return this;
         },
 

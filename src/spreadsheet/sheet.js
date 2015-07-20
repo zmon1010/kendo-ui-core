@@ -43,7 +43,7 @@
             } else {
                 accessor(value);
 
-                return this.triggerChange();
+                return this.triggerChange("config");
             }
         },
 
@@ -53,7 +53,7 @@
             } else {
                 this[name] = value;
 
-                return this.triggerChange();
+                return this.triggerChange("config");
             }
         },
 
@@ -67,9 +67,9 @@
             return this;
         },
 
-        triggerChange: function(recalc) {
+        triggerChange: function(changed) {
             if (!this._suspendChanges) {
-                this.trigger("change", { recalc: recalc });
+                this.trigger("change", { changed: changed });
             }
             return this;
         },
@@ -361,7 +361,7 @@
                         this.activeCell(this._selection.first());
                     }
                 } else {
-                    this.trigger("change");
+                    this.triggerChange("selection");
                 }
             }
 
@@ -371,11 +371,10 @@
         activeCell: function(ref) {
             if (ref) {
                 var mergedCells = this._mergedCells;
-
                 this._originalActiveCell = ref;
                 this._activeCell = ref.toRangeRef().union(mergedCells);
 
-                this.trigger("change");
+                this.triggerChange("activecell");
             }
 
             return this._activeCell;
@@ -627,12 +626,17 @@
             return this._properties.get(name, index);
         },
 
+        // TODO: fix the boolean parameter here - not necessary
         batch: function(callback, recalc) {
             var suspended = this.suspendChanges();
 
             this.suspendChanges(true);
 
             callback.call(this);
+
+            if (recalc) {
+                recalc = "data";
+            }
 
             return this.suspendChanges(suspended).triggerChange(recalc);
         },
@@ -649,7 +653,7 @@
                 columns: columns
             };
 
-            this.triggerChange(true);
+            this.triggerChange("data");
         },
         _filterBy: function(ref, columns) {
             this.batch(function() {

@@ -29,7 +29,7 @@
                 this._sheet._set(ref.toRangeRef(), name, value, parseStrings);
             }.bind(this));
 
-            this._sheet.triggerChange(recalc);
+            this._sheet.triggerChange("data");
 
             return this;
         },
@@ -161,7 +161,7 @@
                 });
             });
 
-            this._sheet.triggerChange();
+            this._sheet.triggerChange("config");
 
             return this;
         },
@@ -221,7 +221,7 @@
                     }
                 }
 
-                this._sheet.triggerChange();
+                this._sheet.triggerChange("data");
 
                 return this;
             }
