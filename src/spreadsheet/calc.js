@@ -93,7 +93,10 @@
         return {
             type: "exp",
             ast: parseExpression(true),
-            refs: refs
+            refs: refs,
+            sheet: sheet,
+            row: row,
+            col: col
         };
 
         function addReference(ref) {
@@ -711,7 +714,7 @@
             // its value will depend on its location, hence we need different objects.  Still, using
             // this cache is a good idea because we'll reuse the same refs array, handler and
             // printer instead of allocating new ones (and we skip compiling it).
-            return FORMULA_CACHE[hash].clone();
+            return FORMULA_CACHE[hash].clone(exp.sheet, exp.row, exp.col);
         }
         var code = js(toCPS(exp.ast, function(ret){
             return {
@@ -727,7 +730,7 @@
             "}"
         ].join(";\n");
 
-        var formula = new runtime.Formula(exp.refs, makeClosure(code), printer);
+        var formula = new runtime.Formula(exp.refs, makeClosure(code), printer, exp.sheet, exp.row, exp.col);
         FORMULA_CACHE[hash] = formula;
         return formula;
 

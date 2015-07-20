@@ -155,7 +155,7 @@
                 callback();
             }
             cells.forEach(function(cell){
-                cell.formula.exec(self, "sheet1", cell.row, cell.col, function(){
+                cell.formula.exec(self, function(){
                     if (callback && !--count) {
                         callback();
                     }

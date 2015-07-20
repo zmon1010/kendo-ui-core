@@ -97,6 +97,30 @@
             this._properties.copy(nextIndex, nextBottomIndex, targetIndex);
         },
 
+        _adjustFormulas: function(operation, start, delta) {
+            this._forFormulas(function(formula, index){
+                formula.adjust(operation, start, delta);
+                var newStr = "=" + formula.print(formula.row, formula.col);
+                this._properties.set("formula", index, newStr);
+            });
+        },
+
+        _forFormulas: function(callback) {
+            var props = this._properties;
+            props.get("formula").values().forEach(function(f){
+                for (var index = f.start; index <= f.end; ++index) {
+                    var formulaObj = props.get("compiledFormula", index);
+                    if (formulaObj === null) {
+                        var cell = this._grid.cellRef(index);
+                        var x = kendo.spreadsheet.calc.parse(this._name, cell.row, cell.col, f.value);
+                        formulaObj = kendo.spreadsheet.calc.compile(x);
+                        props.set("compiledFormula", index, formulaObj);
+                    }
+                    callback.call(this, formulaObj, index);
+                }
+            }, this);
+        },
+
         insertRow: function(rowIndex) {
             this.batch(function() {
 
@@ -126,6 +150,8 @@
                     new Range(ref, this).clear();
                 }
             }.bind(this));
+
+            this._adjustFormulas("row", rowIndex, 1);
 
             return this;
         },
@@ -163,6 +189,8 @@
 
             }.bind(this));
 
+            this._adjustFormulas("row", rowIndex, -1);
+
             return this;
         },
 
@@ -199,6 +227,8 @@
                 }
             }.bind(this));
 
+            this._adjustFormulas("col", columnIndex, 1);
+
             return this;
         },
 
@@ -234,6 +264,8 @@
                     this._copyRange(nextRef, topLeft);
                 }
             }.bind(this));
+
+            this._adjustFormulas("col", columnIndex, -1);
 
             return this;
         },
@@ -307,6 +339,7 @@
                 var startCellIndex = this._grid.index(ri, ci);
                 var endCellIndex = this._grid.index(bottomRight.row, ci);
 
+                /* jshint loopfunc: true */
                 this._properties.forEach(startCellIndex, endCellIndex, function(value) {
                     callback(ri++, ci, value);
                 });
@@ -552,35 +585,15 @@
         },
 
         recalc: function(context) {
-            var formulas = this._properties.get("formula").values();
             var compiledFormulas = [];
 
-            formulas.forEach(function(formula) {
-                for (var index = formula.start; index <= formula.end; index++) {
-                    var cell = this._grid.cellRef(index);
+            this._forFormulas(function(formula, cell){
+                formula.reset();
+                compiledFormulas.push(formula);
+            });
 
-                    var compiled = this._properties.get("compiledFormula", index);
-
-                    if (compiled === null) {
-                        var x = kendo.spreadsheet.calc.parse(this._name, cell.row, cell.col, formula.value);
-
-                        compiled = kendo.spreadsheet.calc.compile(x);
-
-                        this._properties.set("compiledFormula", index, compiled);
-                    }
-
-                    compiled.reset();
-
-                    compiledFormulas.push({
-                        cell: cell,
-                        index: index,
-                        formula: compiled
-                    });
-                }
-            }, this);
-
-            compiledFormulas.forEach(function(value) {
-                value.formula.exec(context, this._name, value.cell.row, value.cell.col);
+            compiledFormulas.forEach(function(formula) {
+                formula.exec(context);
             }, this);
         },
 

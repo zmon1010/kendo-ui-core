@@ -71,7 +71,7 @@ Spreadsheet.prototype = {
             cell.formula.reset();
         });
         cells.forEach(function(cell){
-            cell.formula.exec(self, cell.sheet, cell.row, cell.col);
+            cell.formula.exec(self);
         });
     },
 

@@ -38,13 +38,13 @@
     /* -----[ Context ]----- */
 
     var Context = Class.extend({
-        init: function Context(callback, formula, ss, sheet, row, col) {
+        init: function Context(callback, formula, ss) {
             this.callback = callback;
             this.formula = formula;
             this.ss = ss;
-            this.sheet = sheet;
-            this.row = row;
-            this.col = col;
+            this.sheet = formula.sheet;
+            this.row = formula.row;
+            this.col = formula.col;
         },
 
         resolve: function(val) {
@@ -95,7 +95,7 @@
                 fetch(formulas[i]);
             }
             function fetch(cell) {
-                cell.formula.exec(context.ss, cell.sheet, cell.row, cell.col, function(val){
+                cell.formula.exec(context.ss, function(val){
                     if (!--pending) {
                         f.call(context);
                     }
@@ -454,16 +454,19 @@
     /* -----[ Formula ]----- */
 
     var Formula = Class.extend({
-        init: function Formula(refs, handler, printer){
+        init: function Formula(refs, handler, printer, sheet, row, col){
             this.refs = refs;
             this.handler = handler;
             this.print = printer;
             this.absrefs = null;
+            this.sheet = sheet;
+            this.row = row;
+            this.col = col;
         },
-        clone: function() {
-            return new Formula(this.refs, this.handler, this.print);
+        clone: function(sheet, row, col) {
+            return new Formula(this.refs, this.handler, this.print, sheet, row, col);
         },
-        exec: function(ss, sheet, row, col, callback) {
+        exec: function(ss, callback) {
             if ("value" in this) {
                 if (callback) {
                     callback(this.value);
@@ -471,17 +474,31 @@
             } else {
                 if (!this.absrefs) {
                     this.absrefs = this.refs.map(function(ref){
-                        return ref.absolute(row, col);
+                        return ref.absolute(this.row, this.col);
                     }, this);
                 }
-                var ctx = new Context(callback, this, ss, sheet, row, col);
+                var ctx = new Context(callback, this, ss);
                 this.handler.call(ctx);
             }
         },
         reset: function() {
             delete this.value;
         },
-        adjust: function(operation, start, delta, formulaRow, formulaCol) {
+        adjust: function(operation, start, delta) {
+            var formulaRow = this.row;
+            var formulaCol = this.col;
+            switch (operation) {
+              case "row":
+                if (formulaRow >= start) {
+                    this.row += delta;
+                }
+                break;
+              case "col":
+                if (formulaCol >= start) {
+                    this.col += delta;
+                }
+                break;
+            }
             this.absrefs = null;
             this.refs = this.refs.map(function(ref){
                 if (ref instanceof CellRef) {
@@ -1261,7 +1278,7 @@
     // range operator
     defineFunction("binary:", function(a, b){
         return new RangeRef(a, b)
-            .setSheet(a.sheet || this.formula.sheet, a.hasSheet());
+            .setSheet(a.sheet || this.sheet, a.hasSheet());
     }).args([
         [ "a", "cell" ],
         [ "b", "cell" ]
