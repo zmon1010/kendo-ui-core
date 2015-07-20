@@ -6159,7 +6159,7 @@ var __meta__ = {
                     }
 
                     if (th.title) {
-                        html += kendo.attr("title") + '="' + th.title.replace(/'/g, "\'") + '" ';
+                        html += kendo.attr("title") + '="' + th.title.replace('"', '&quot;').replace(/'/g, "\'") + '" ';
                     }
 
                     if (th.groupable !== undefined) {
