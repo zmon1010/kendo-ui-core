@@ -59,4 +59,43 @@
         sheet.range("A1:A2").sort({ column: 0, ascending: false});
         equal(sheet.range("B1").value(), 2);
     });
+
+    test("insertRow / deleteRow adjusts formula", function(){
+        sheet.range("D2").formula("=sum(A1:C3)");
+        sheet.insertRow(1);
+        equal(sheet.range("D3").formula(), "=sum(A1:C4)");
+        sheet.insertRow(0);
+        equal(sheet.range("D4").formula(), "=sum(A2:C5)");
+        sheet.insertRow(5);
+        equal(sheet.range("D4").formula(), "=sum(A2:C5)");
+        sheet.insertRow(4);
+        equal(sheet.range("D4").formula(), "=sum(A2:C6)");
+        sheet.deleteRow(4);
+        equal(sheet.range("D4").formula(), "=sum(A2:C5)");
+        sheet.deleteRow(1);
+        equal(sheet.range("D3").formula(), "=sum(A2:C4)");
+        sheet.deleteRow(3);
+        equal(sheet.range("D3").formula(), "=sum(A2:C3)");
+        sheet.deleteRow(1);
+        equal(sheet.range("D2").formula(), "=sum(A2:C2)");
+    });
+
+    test("insertColumn / deleteColumn adjusts formulas", function(){
+        sheet.range("H1").formula("=sum(A1:D5)");
+        equal(sheet.range("H1").value(), 0);
+        sheet.range("A1:D5").value(5);
+        equal(sheet.range("H1").value(), 100);
+        sheet.insertColumn(1);
+        equal(sheet.range("I1").formula(), "=sum(A1:E5)");
+        sheet.insertColumn(0);
+        equal(sheet.range("J1").formula(), "=sum(B1:F5)");
+        sheet.deleteColumn(0);
+        equal(sheet.range("I1").formula(), "=sum(A1:E5)");
+        sheet.deleteColumn(0);
+        equal(sheet.range("H1").formula(), "=sum(A1:D5)");
+        sheet.deleteColumn(3);
+        equal(sheet.range("G1").formula(), "=sum(A1:C5)");
+        equal(sheet.range("G1").value(), 50);
+    });
+
 })();

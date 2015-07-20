@@ -649,8 +649,8 @@
             var json = JSON.parse(value);
             return [
                 "solid",
-                json.size || "1px",
-                json.color || "#000"
+                json && json.size || "1px",
+                json && json.color || "#000"
             ].join(" ");
         },
 
