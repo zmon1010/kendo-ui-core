@@ -16,6 +16,7 @@ var __meta__ = {
     var Widget = kendo.ui.Widget;
     var kendoDomElement = kendo.dom.element;
     var kendoTextElement = kendo.dom.text;
+    var kendoHtmlElement = kendo.dom.html;
     var isPlainObject = $.isPlainObject;
     var extend = $.extend;
     var proxy = $.proxy;
@@ -180,6 +181,9 @@ var __meta__ = {
             this._headerTree = options.headerTree;
 
             this._taskTree = options.taskTree;
+
+            this._taskTemplate = this.options.taskTemplate ? kendo.template(this.options.taskTemplate, extend({}, kendo.Template, this.options.templateSettings)) :
+                this.options.taskTemplate;
 
             this._dependencyTree = options.dependencyTree;
 
@@ -548,7 +552,7 @@ var __meta__ = {
                 taskWrapper.children.push(kendoDomElement("div", { className: styles.taskDot + " " + styles.taskDotEnd }));
             }
 
-            if (!task.summary && !task.isMilestone() && editable) {
+            if (!task.summary && !task.isMilestone() && editable && this._taskTemplate === null) {
                 progressHandleOffset = Math.round(position.width * task.percentComplete);
 
                 dragHandleStyle[isRtl ? "right" : "left"] = progressHandleOffset + "px";
@@ -561,12 +565,23 @@ var __meta__ = {
         _renderSingleTask: function(task, position) {
             var styles = GanttView.styles;
             var progressWidth = Math.round(position.width * task.percentComplete);
+            var taskChildren = [];
+            var taskContent;
+
+            if (this._taskTemplate !== null) {
+                taskContent = kendoHtmlElement(this._taskTemplate(task));
+            } else {
+                taskContent = kendoTextElement(task.title);
+                taskChildren.push(kendoDomElement("div", { className: styles.taskComplete, style: { width: progressWidth + "px" } }));
+            }
 
             var content = kendoDomElement("div", { className: styles.taskContent }, [
                 kendoDomElement("div", { className: styles.taskTemplate }, [
-                    kendoTextElement(task.title)
+                    taskContent
                 ])
             ]);
+
+            taskChildren.push(content);
 
             if (this.options.editable) {
                 content.children.push(kendoDomElement("span", { className: styles.taskActions }, [
@@ -580,10 +595,10 @@ var __meta__ = {
                 content.children.push(kendoDomElement("span", { className: styles.taskResizeHandle + " " + styles.taskResizeHandleEast }));
             }
 
-            var element = kendoDomElement("div", { className: styles.task + " " + styles.taskSingle, "data-uid": task.uid, style: { width: Math.max((position.width - position.borderWidth * 2), 0) + "px" } }, [
-                kendoDomElement("div", { className: styles.taskComplete, style: { width: progressWidth + "px" } }),
-                content
-            ]);
+            var element = kendoDomElement("div", {
+                className: styles.task + " " + styles.taskSingle, "data-uid": task.uid, style:
+                    { width: Math.max((position.width - position.borderWidth * 2), 0) + "px" }
+            }, taskChildren);
 
             return element;
         },

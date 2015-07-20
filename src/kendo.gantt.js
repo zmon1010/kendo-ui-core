@@ -1461,6 +1461,7 @@ var __meta__ = {
             dependencies: {},
             resources: {},
             assignments: {},
+            taskTemplate: null,
             messages: {
                 save: "Save",
                 cancel: "Cancel",
