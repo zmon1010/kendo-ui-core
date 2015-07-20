@@ -149,9 +149,9 @@
 
                     new Range(ref, this).clear();
                 }
-            }.bind(this));
 
-            this._adjustFormulas("row", rowIndex, 1);
+                this._adjustFormulas("row", rowIndex, 1);
+            }, true);
 
             return this;
         },
@@ -187,9 +187,8 @@
                     new Range(new RangeRef(nextRefBottomRight, nextRefBottomRight), this).clear();
                 }
 
-            }.bind(this));
-
-            this._adjustFormulas("row", rowIndex, -1);
+                this._adjustFormulas("row", rowIndex, -1);
+            }, true);
 
             return this;
         },
@@ -225,9 +224,9 @@
 
                     this._copyRange(nextRef, topLeft);
                 }
-            }.bind(this));
 
-            this._adjustFormulas("col", columnIndex, 1);
+                this._adjustFormulas("col", columnIndex, 1);
+            }, true);
 
             return this;
         },
@@ -263,9 +262,9 @@
 
                     this._copyRange(nextRef, topLeft);
                 }
-            }.bind(this));
 
-            this._adjustFormulas("col", columnIndex, -1);
+                this._adjustFormulas("col", columnIndex, -1);
+            }, true);
 
             return this;
         },
@@ -577,7 +576,7 @@
                         })
                     };
                 }
-            }.bind(this));
+            });
         },
 
         compiledFormula: function(ref) {
@@ -633,7 +632,7 @@
 
             this.suspendChanges(true);
 
-            callback();
+            callback.call(this);
 
             return this.suspendChanges(suspended).triggerChange(recalc);
         },
@@ -680,7 +679,7 @@
                     ref: ref,
                     columns: columns
                 };
-            }.bind(this));
+            });
         },
         clearFilter: function(spec) {
             this._clearFilter(spec instanceof Array ? spec : [spec]);
@@ -693,7 +692,7 @@
                     });
 
                     this._filterBy(this._filter.ref, columns);
-                }.bind(this));
+                });
             }
         }
     });
