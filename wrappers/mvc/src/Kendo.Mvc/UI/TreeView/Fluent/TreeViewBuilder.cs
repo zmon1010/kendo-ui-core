@@ -603,9 +603,9 @@ namespace Kendo.Mvc.UI.Fluent
 		/// If an array, each level uses the field that is at the same index in the array, or the last item in the array.
         /// </summary>
         /// <param name="value">The value that configures the datatextfield.</param>
-        public TreeViewBuilder DataTextField(string value)
+        public TreeViewBuilder DataTextField(params string[] value)
         {
-            container.DataTextField = value;
+            container.DataTextField.AddRange(value);
 
             return this;
         }

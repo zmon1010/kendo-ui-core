@@ -226,5 +226,39 @@ namespace Kendo.Mvc.UI.Tests
 
             Assert.IsType(typeof(TreeViewBuilder), returnedBuilder);
         }
+
+        [Fact]
+        public void DataTextField_should_return_builder()
+        {
+            var returnedBuilder = builder.DataTextField("foo");
+
+            Assert.IsType(typeof(TreeViewBuilder), returnedBuilder);
+        }
+
+        [Fact]
+        public void DataTextField_should_set_single_text_field()
+        {
+            var returnedBuilder = builder.DataTextField("foo");
+            treeView.DataTextField[0].ShouldEqual("foo");
+            treeView.DataTextField.Count.ShouldEqual(1);
+        }
+
+        [Fact]
+        public void DataTextField_should_set_multiple_text_fields()
+        {
+            var returnedBuilder = builder.DataTextField("foo", "bar");
+            treeView.DataTextField[0].ShouldEqual("foo");
+            treeView.DataTextField[1].ShouldEqual("bar");
+            treeView.DataTextField.Count.ShouldEqual(2);
+        }
+
+        [Fact]
+        public void DataTextField_should_set_multiple_text_fields_from_array()
+        {
+            var returnedBuilder = builder.DataTextField(new string[] { "foo", "bar" });
+            treeView.DataTextField[0].ShouldEqual("foo");
+            treeView.DataTextField[1].ShouldEqual("bar");
+            treeView.DataTextField.Count.ShouldEqual(2);
+        }
     }
 }

@@ -39,6 +39,8 @@ namespace Kendo.Mvc.UI
 
             AutoBind = true;
 
+            DataTextField = new List<string>();
+
 //>> Initialization
         
             Messages = new TreeViewMessagesSettings();
@@ -54,7 +56,7 @@ namespace Kendo.Mvc.UI
         
         public string DataSpriteCssClassField { get; set; }
         
-        public string DataTextField { get; set; }
+        public List<string> DataTextField { get; set; }
         
         public string DataUrlField { get; set; }
         
@@ -267,7 +269,7 @@ namespace Kendo.Mvc.UI
                 json["dataSpriteCssClassField"] = DataSpriteCssClassField;
             }
             
-            if (DataTextField.HasValue())
+            if (DataTextField.Any())
             {
                 json["dataTextField"] = DataTextField;
             }
