@@ -164,18 +164,19 @@ namespace Kendo.Mvc.UI
 
             var instance = Activator.CreateInstance<T>();
 
-            if (grid.DataSource.Schema.Model != null && 
+            if (grid.DataSource.Schema.Model != null &&
                 grid.DataSource.Schema.Model.Fields.Any())
             {
-                grid.DataSource.Schema.Model.Fields.Each(f => {
+                grid.DataSource.Schema.Model.Fields.Each(f =>
+                {
                     var property = typeof(T).GetProperty(f.Member, BindingFlags.Public | BindingFlags.Instance);
                     if (property != null && property.CanWrite)
-	                {
+                    {
                         if (f.DefaultValue == null || f.DefaultValue.GetType() != typeof(ClientHandlerDescriptor))
                         {
                             property.SetValue(instance, f.DefaultValue, null);
                         }
-	                }                     
+                    }
                 });
             }
 
@@ -184,35 +185,9 @@ namespace Kendo.Mvc.UI
 
         private IDictionary<string, object> SerializePopUp()
         {
-            var result = new Dictionary<string, object>();
-            var title = PopUp.Title ?? Messages.Grid_Edit;
+            PopUp.Title = PopUp.Title ?? Messages.Grid_Edit;
 
-            FluentDictionary.For(result)
-                .Add("title", title)
-                .Add("modal", PopUp.Modal)
-                .Add("draggable", PopUp.Draggable)
-                .Add("resizable", PopUp.ResizingSettings.Enabled)
-                .Add("width", PopUp.Width, 0)
-                .Add("height", PopUp.Height, 0);
-
-            if (PopUp.PositionSettings.Left != int.MinValue || PopUp.PositionSettings.Top != int.MinValue)
-            {
-                var topLeft = new Dictionary<string, int>();
-
-                if (PopUp.PositionSettings.Top != int.MinValue)
-                {
-                    topLeft.Add("top", PopUp.PositionSettings.Top);
-                }
-
-                if (PopUp.PositionSettings.Left != int.MinValue)
-                {
-                    topLeft.Add("left", PopUp.PositionSettings.Left);
-                }
-
-                result.Add("position", topLeft);
-            }
-
-            return result;
+            return PopUp.Serialize();
         }
 
         protected override void Serialize(IDictionary<string, object> json)
@@ -230,7 +205,7 @@ namespace Kendo.Mvc.UI
                                 .Replace("\r\n", string.Empty)
                                 .Replace("</script>", "<\\/script>")
                                 .Replace("jQuery(\"#", "jQuery(\"\\\\#")
-                                .Replace("#", "\\#");                
+                                .Replace("#", "\\#");
             }
 
             if (DisplayDeleteConfirmation)

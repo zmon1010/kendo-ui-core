@@ -195,7 +195,7 @@ namespace Kendo.Mvc.UI
             private set;
         }
 
-        public override void WriteInitializationScript(TextWriter writer)
+        public Dictionary<string, object> Serialize()
         {
             var options = new Dictionary<string, object>(Events);
 
@@ -280,8 +280,12 @@ namespace Kendo.Mvc.UI
                 options.Add("position", topLeft);
             }
 
-            writer.Write(Initializer.Initialize(Selector, "Window", options));
+            return options;
+        }
 
+        public override void WriteInitializationScript(TextWriter writer)
+        {
+            writer.Write(Initializer.Initialize(Selector, "Window", Serialize()));
 
             base.WriteInitializationScript(writer);
         }
