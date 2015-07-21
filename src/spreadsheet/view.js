@@ -4,7 +4,7 @@
 
 (function(kendo) {
     var CellRef = kendo.spreadsheet.CellRef;
-
+    var RangeRef = kendo.spreadsheet.RangeRef;
 
     function hasChanged(e, name) {
            return !e || e.changed == name;
@@ -178,11 +178,9 @@
                     break;
                 case "shrink-page-up":
                     bottomRight.row = rows.prevPage(bottomRight.row, pageHeight);
-                    scrollInto = bottomRight;
                     break;
                 case "expand-page-up":
                     topLeft.row = rows.prevPage(topLeft.row, pageHeight);
-                    scrollInto = topLeft;
                     break;
                 case "expand-down":
                     bottomRight.row = rows.nextVisible(bottomRight.row);
@@ -194,11 +192,9 @@
                     break;
                 case "expand-page-down":
                     bottomRight.row = rows.nextPage(bottomRight.row, pageHeight);
-                    scrollInto = bottomRight;
                     break;
                 case "shrink-page-down":
                     topLeft.row = rows.nextPage(topLeft.row, pageHeight);
-                    scrollInto = topLeft;
                     break;
                 case "first-col":
                     topLeft.col = columns.firstVisible();
@@ -234,9 +230,11 @@
                     break;
             }
 
-            this.scrollIntoView(scrollInto.toRangeRef());
+            if (scrollInto) {
+                this._focus = scrollInto.toRangeRef();
+            }
 
-            sheet.select(new kendo.spreadsheet.RangeRef(topLeft, bottomRight), false);
+            sheet.select(new RangeRef(topLeft, bottomRight), false);
         },
 
         moveActiveCell: function(direction) {
@@ -288,11 +286,9 @@
                     break;
                 case "next-page":
                     row = rows.nextPage(bottomRight.row, scroller.clientHeight);
-                    scroller.scrollTop += scroller.clientHeight;
                     break;
                 case "prev-page":
                     row = rows.prevPage(bottomRight.row, scroller.clientHeight);
-                    scroller.scrollTop -= scroller.clientHeight;
                     break;
             }
 
@@ -313,6 +309,14 @@
             keyListener.on(ACTION_KEYS, function(event, action) {
                 that.moveActiveCell(ACTIONS[action]);
                 event.preventDefault();
+            });
+
+            keyListener.on("*+pageup", function() {
+                that.scroller.scrollTop -= that.scroller.clientHeight;
+            });
+
+            keyListener.on("*+pagedown", function() {
+                that.scroller.scrollTop += that.scroller.clientHeight;
             });
 
             keyListener.on(SHIFT_ACTION_KEYS, function(event, action) {
@@ -419,7 +423,6 @@
         // XXX: Fix the return here. It breaks many tests, though.
         refresh: function(e) {
             var sheet = this._sheet;
-            var render = true;
             this.viewSize[0].style.height = sheet._grid.totalHeight() + "px";
             this.viewSize[0].style.width = sheet._grid.totalWidth() + "px";
 
@@ -456,10 +459,8 @@
 
 
             if (hasChanged(e, "activecell")) {
-                render = !this.scrollIntoView(sheet.activeCell().toRangeRef());
+                this._focus = sheet.activeCell().toRangeRef();
             };
-
-            return render;
         },
 
         scrollIntoView: function(cell) {
@@ -503,6 +504,13 @@
         },
 
         render: function() {
+            var focus = this._focus;
+            this._focus = null;
+
+            if (focus && this.scrollIntoView(focus)) {
+                return;
+            }
+
             var grid = this._sheet._grid;
 
             var scrollTop = this.scroller.scrollTop;

@@ -64,4 +64,13 @@
 
         element.trigger({ type: "mousedown" });
     });
+
+    test("recognizes *", 2, function() {
+        listener.on(["*+down"], function() {
+            ok(true);
+        });
+
+        element.pressKey(kendo.keys.DOWN, false, true);
+        element.pressKey(kendo.keys.DOWN, false, false);
+    });
 })();

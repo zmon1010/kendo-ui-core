@@ -180,10 +180,8 @@
             if (!e || e.changed === "data") {
                 this._sheet.recalc(this._context);
             }
-
-            if (this._view.refresh(e)) {
-                this._view.render();
-            }
+            this._view.refresh(e);
+            this._view.render();
 
             this.trigger("render", { changed: e ? e.changed : null });
             return this;
