@@ -482,22 +482,22 @@
 
             if (boundaries.top < scrollTop) {
                 willScroll = true;
-                scroller.scrollTop = boundaries.top;
+                scroller.scrollTop = boundaries.scrollTop;
             }
 
             if (boundaries.bottom > scrollTop) {
                 willScroll = true;
-                scroller.scrollTop = boundaries.bottom;
+                scroller.scrollTop = boundaries.scrollBottom;
             }
 
             if (boundaries.left < scrollLeft) {
                 willScroll = true;
-                scroller.scrollLeft = boundaries.left;
+                scroller.scrollLeft = boundaries.scrollLeft;
             }
 
             if (boundaries.right > scrollLeft) {
                 willScroll = true;
-                scroller.scrollLeft = boundaries.right;
+                scroller.scrollLeft = boundaries.scrollRight;
             }
 
             return willScroll;

@@ -191,12 +191,22 @@
         scrollBoundaries: function(cell) {
             var position = this.boundingRectangle(cell);
 
-            return {
+            var boundaries = {
                 top: position.top - this.top + (this.hasColumnHeader ? 0 : this.headerHeight),
                 left: position.left - this.left + (this.hasRowHeader ? 0 : this.headerWidth),
                 right: position.right - this.columns._viewSize + this.headerWidth,
                 bottom: position.bottom - this.rows._viewSize + this.headerHeight
             };
+
+            var widthCompensation = this.columns.defaultValue / 2;
+            var heightCompensation = this.rows.defaultValue / 2;
+
+            boundaries.scrollTop = boundaries.top - heightCompensation;
+            boundaries.scrollBottom = boundaries.bottom + heightCompensation;
+
+            boundaries.scrollLeft = boundaries.left - widthCompensation;
+            boundaries.scrollRight = boundaries.right + widthCompensation;
+            return boundaries;
         }
     });
 

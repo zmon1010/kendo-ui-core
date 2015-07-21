@@ -234,6 +234,7 @@
            this._count = count;
            this.hasHeader = start === 0;
            this.headerSize = headerSize;
+           this.defaultValue = axis._value;
            this.frozen = count > 0;
         },
 
