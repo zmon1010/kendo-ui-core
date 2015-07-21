@@ -1335,6 +1335,25 @@
         });
     });
 
+    test("NETWORKDAYS", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: "2010-12-01",
+            A2: "2011-01-05",
+            A3: "2010-12-27",
+            A4: "2010-12-28",
+            A5: "2011-01-03",
+            B1: "=networkdays(a1, a2)",
+            B2: "=networkdays(a1, a2, a3:a5)",
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                B1: 26,
+                B2: 23,
+            });
+        });
+    });
+
     test("DAYS", function(){
         var ss = new Spreadsheet();
         ss.fill({

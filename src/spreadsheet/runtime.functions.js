@@ -1196,6 +1196,29 @@
         [ "holidays", [ "collect", "date" ] ]
     ]);
 
+    defineFunction("networkdays", function(date, end, holidays){
+        // XXX: the algorithm here is pretty dumb, can we do better?
+        if (date > end) {
+            var tmp = date;
+            date = end;
+            end = tmp;
+        }
+        var count = 0;
+        var dow = runtime.unpackDate(date).day;
+        while (date <= end) {
+            if (dow > 0 && dow < 6 && holidays.indexOf(date) < 0) {
+                count++;
+            }
+            date++;
+            dow = (dow + 1) % 7;
+        }
+        return count;
+    }).args([
+        [ "start_date", "date" ],
+        [ "end_date", "date" ],
+        [ "holidays", [ "collect", "date" ] ]
+    ]);
+
     defineFunction("days", function(start, end){
         return end - start;
     }).args([
