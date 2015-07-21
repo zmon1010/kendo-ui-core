@@ -1113,6 +1113,49 @@
         [ "date", "*date" ]
     ]);
 
+    // https://support.office.com/en-GB/article/WEEKNUM-function-e5c43a03-b4ab-426c-b411-b18c13c75340
+    // XXX: this is a mess.
+    defineFunction("weeknum", function(date, type){
+        var fw = runtime.packDate(runtime.unpackDate(date).year, 0, 1);
+        var sy = runtime.unpackDate(fw);
+        var diff;
+        if (type == 21) {
+            // Monday-based weeks, first week is the one containing the first Thursday of the year
+            // we want to place in fw and sy the first Thursday
+            diff = 3 - (sy.day + 6) % 7;
+            if (diff < 0) {
+                diff += 7;
+            }
+            fw += diff;
+            sy.date += diff;
+            sy.day = 4;         // Thursday.
+            type = 1;
+        } else {
+            if (type == 1) {
+                type = 0;
+            } else if (type == 2) {
+                type = 1;
+            } else {
+                type = (type - 10) % 7;
+            }
+            // finally compatible with what we got:
+            // type == 0 means week starts on Sunday
+            //         1                      Monday
+            //         2                      Tuesday
+            // ...
+        }
+        diff = sy.day - type;
+        if (diff < 0) {
+            diff += 7;
+        }
+        fw -= diff;
+        return Math.ceil((date + 1 - fw) / 7);
+    }).args([
+        [ "date", "*date" ],
+        [ "type", [ "or", [ "null", 1 ],
+                    [ "values", 1, 2, 11, 12, 13, 14, 15, 16, 17, 21 ] ] ]
+    ]);
+
     defineFunction("now", function(){
         return runtime.dateToSerial(new Date());
     }).args([]);

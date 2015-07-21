@@ -676,6 +676,12 @@ fillElements({
         A22: '2010-12-01',
         A23: '2011-01-05',
         A24: '=networkdays(A22, A23)',
+        A26: '=WEEKNUM(DATE(2016, 3, 8), 21)',
+        A27: '=WEEKNUM(DATE(2012, 3, 9))',
+        A28: '=WEEKNUM(DATE(2012, 3, 9), 2)',
+        A29: '=WEEKNUM(DATE(2015, 1, 3), 21)',
+        A30: '=WEEKNUM(DATE(2016, 1, 1), 21)',
+        A30: '=WEEKNUM(DATE(2016, 1, 31), 21)',
 
         //E5: "=sum(A1:C3)",
         // E5: "=B2",
