@@ -210,9 +210,9 @@
             var operation = transportOptions[i].Substring(0, 1).ToUpper() + transportOptions[i].Substring(1);
         
             if (i != transportOptions.Length - 1){
-                result += "\t\t\t\t" + transportOptions[i] + ": { " + newLine + "\t\t\t\t\turl: " + EntitySetName + "_" + operation + "\""+ newLine +"\t\t\t\t}," + newLine;
+                result += "\t\t\t\t" + transportOptions[i] + ": { " + newLine + "\t\t\t\t\turl: \"" + EntitySetName + "_" + operation + "\""+ newLine +"\t\t\t\t}," + newLine;
             } else {
-                result += "\t\t\t\t" + transportOptions[i] + ": { " + newLine + "\t\t\t\t\turl: " + EntitySetName + "_" + operation + "\"" + newLine + "\t\t\t\t}";
+                result += "\t\t\t\t" + transportOptions[i] + ": { " + newLine + "\t\t\t\t\turl: \"" + EntitySetName + "_" + operation + "\"" + newLine + "\t\t\t\t}";
             }
         }
         result += newLine + "\t\t\t},";
@@ -223,28 +223,73 @@
 #>
 
 <#+
-    private string RenderFieldTypes(KeyValuePair<string, Dictionary<string, string>> attribute)
+    private string RenderSchemaFields(KeyValuePair<string, Dictionary<string, string>> model)
     {
+            bool validationAttributesPresent = IsValidationAttributePresent(model);
+            var newLine = Environment.NewLine;
             string result = "";
-            result += "\t\t\t\t\t\t\"" + attribute.Key + "\"" + ": {" + Environment.NewLine;
-            result += "\t\t\t\t\t\t\ttype: " + "\"" + attribute.Value["type"] + "\"" + Environment.NewLine;
+            result += "\t\t\t\t\t\t\"" + model.Key + "\"" + ": {" + newLine;
+            result += "\t\t\t\t\t\t\ttype: " + "\"" + model.Value["type"] + "\"";
+            result += validationAttributesPresent ? "" : newLine;
+        
+
+            if (validationAttributesPresent) 
+            {
+                result += "," + newLine + "\t\t\t\t\t\t\tvalidation: {";
+                result += RenderValidationAttributes(model);
+                result += "}" + newLine;
+            }
             result += "\t\t\t\t\t\t}," + Environment.NewLine;
 
             return result;
     }
 
+    private bool IsValidationAttributePresent(KeyValuePair<string, Dictionary<string,string>> model)
+    {
+        string[] validations = {"pattern", "min", "max", "required"};   
+        return model.Value.Any(element => element.Key == "pattern" || element.Key == "min" || element.Key == "max" || element.Key == "required");
+        
+    }
+
+    public Dictionary<string, string> GetDistinctValidation(Dictionary<string, string> models)
+    {
+        Dictionary<string, string> distinct = new Dictionary<string, string>();
+        foreach (var item in models)
+        {
+            if (item.Key == "pattern" || item.Key == "max" || item.Key == "required" || item.Key == "min")
+            {
+                distinct.Add(item.Key, item.Value);
+            }
+        }
+        return distinct;
+    }
+
+    private string RenderValidationAttributes(KeyValuePair<string, Dictionary<string, string>> model)
+    {
+        string result = "";
+        Dictionary<string,string> distincValues = GetDistinctValidation(model.Value);
+
+        foreach (var item in distincValues) 
+        {
+            var isLast = item.Equals(distincValues.Last());
+            result += item.Key + ": \"" + item.Value + "\"";
+            result += isLast ? "" : ", ";
+        }
+        return result;
+    }
+
     private void RenderFields() 
     {
         var newLine = Environment.NewLine;
-        string result = "," + newLine + "\t\t\t\t\tfields: {" + newLine;
-        string[] validations = {"pattern", "min", "max", "required"};       
+        string result = "," + newLine + "\t\t\t\t\tfields: {" + newLine;    
         
-        foreach (var attribute in DataAnnotationAttributes)
-        {
-            if (!(attribute.Value.ContainsKey("scaffold") && attribute.Value["scaffold"] == "false"))
+        foreach (var model in DataAnnotationAttributes)
+        {            
+            if (!(model.Value.ContainsKey("scaffold") && model.Value["scaffold"] == "false"))
             {
-                result += RenderFieldTypes(attribute);
+                result += RenderSchemaFields(model);
             }
+
         }
 
         result += newLine + "\t\t\t\t\t}";
