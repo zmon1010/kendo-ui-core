@@ -32,10 +32,10 @@ module("editor resizable toolbar", {
                 "insertOrderedList",
                 "indent",
                 "outdent",
-                "formatting",
                 "createLink",
                 "unlink",
-                "insertImage"
+                "insertImage",
+                "formatting"
             ]
         }
     },
@@ -58,6 +58,11 @@ test('does not add k-toolbar-resizable class if resizable is set to false', func
 test('renders "overflow" tool', function () {
     var editor = textarea.kendoEditor(options).data("kendoEditor");
     ok(editor.toolbar.element.children("li.k-overflow-tools").length);
+});
+
+test('"overflow" tool is the only one in its group', function () {
+    var editor = textarea.kendoEditor(options).data("kendoEditor");
+    equal(editor.toolbar.element.children("li.k-overflow-tools").children().length, 1);
 });
 
 test('tool groups that fit in the toolbar container are visible', function() {

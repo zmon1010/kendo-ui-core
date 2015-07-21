@@ -14,6 +14,7 @@
     var EditorUtils = kendo.ui.editor.EditorUtils;
     var ToolTemplate = kendo.ui.editor.ToolTemplate;
     var Tool = kendo.ui.editor.Tool;
+    var OVERFLOWANCHOR = "overflowAnchor";
 
     var focusable = ".k-tool-group:visible a.k-tool:not(.k-state-disabled)," +
                     ".k-tool.k-overflow-anchor," +
@@ -33,7 +34,7 @@
         },
 
         options: {
-            name: "overflowAnchor"
+            name: OVERFLOWANCHOR
         },
 
         command: $.noop,
@@ -42,7 +43,7 @@
 
     });
 
-    EditorUtils.registerTool("overflowAnchor", new OverflowAnchorTool({
+    EditorUtils.registerTool(OVERFLOWANCHOR, new OverflowAnchorTool({
         key: "",
         ctrl: true,
         template: new ToolTemplate({ template: EditorUtils.overflowAnchorTemplate })
@@ -85,7 +86,7 @@
             colors: [ "foreColor", "backColor" ]
         },
 
-        overflowFlaseTools: [ "formatting", "fontName", "fontSize", "foreColor", "backColor" ],
+        overflowFlaseTools: [ "formatting", "fontName", "fontSize", "foreColor", "backColor", "insertHtml" ],
 
         _initPopup: function() {
             this.window = $(this.element)
@@ -198,7 +199,7 @@
             that._editor = editor;
 
             if (that.options.resizable && that.options.resizable.toolbar) {
-                editor.options.tools.push("overflowAnchor");
+                editor.options.tools.push(OVERFLOWANCHOR);
             }
 
             // re-initialize the tools
@@ -456,7 +457,7 @@
             }
 
             function startGroup(toolName) {
-                if (toolName !== "overflowAnchor") {
+                if (toolName !== OVERFLOWANCHOR) {
                     group = $("<li class='k-tool-group' role='presentation' />");
                     group.data("overflow", $.inArray(toolName, overflowFlaseTools) === -1 ? true : false);
                 } else {
@@ -493,7 +494,7 @@
 
                 newGroupName = that.toolGroupFor(toolName);
 
-                if (groupName != newGroupName) {
+                if (groupName != newGroupName || toolName == OVERFLOWANCHOR) {
                     endGroup();
                     startGroup(toolName, overflowFlaseTools);
                     groupName = newGroupName;
