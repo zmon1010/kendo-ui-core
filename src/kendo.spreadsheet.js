@@ -7,6 +7,7 @@
         "./spreadsheet/rangelist",
         "./spreadsheet/propertybag",
         "./spreadsheet/references",
+        "./spreadsheet/navigator",
         "./spreadsheet/range",
         "./spreadsheet/sheet",
         "./spreadsheet/formulacontext",
@@ -176,7 +177,7 @@
         },
 
         refresh: function(e) {
-        // TODO: Ugly!
+            // TODO: Ugly!
             if (!e || e.changed === "data") {
                 this._sheet.recalc(this._context);
             }

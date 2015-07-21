@@ -373,11 +373,21 @@
                 var mergedCells = this._mergedCells;
                 this._originalActiveCell = ref;
                 this._activeCell = ref.toRangeRef().union(mergedCells);
-
+                this.focus(this._activeCell);
                 this.triggerChange("activecell");
             }
 
             return this._activeCell;
+        },
+
+        focus: function(ref) {
+            if (ref) {
+                this._focus = ref.toRangeRef();
+            } else {
+                var focus = this._focus;
+                this._focus = null;
+                return focus;
+            }
         },
 
         originalActiveCell: function() {

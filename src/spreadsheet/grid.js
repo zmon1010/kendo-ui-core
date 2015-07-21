@@ -192,8 +192,8 @@
             var position = this.boundingRectangle(cell);
 
             var boundaries = {
-                top: position.top - this.top + (this.hasColumnHeader ? 0 : this.headerHeight),
-                left: position.left - this.left + (this.hasRowHeader ? 0 : this.headerWidth),
+                top: Math.max(0, position.top - this.top + (this.hasColumnHeader ? 0 : this.headerHeight)),
+                left: Math.max(0, position.left - this.left + (this.hasRowHeader ? 0 : this.headerWidth)),
                 right: position.right - this.columns._viewSize + this.headerWidth,
                 bottom: position.bottom - this.rows._viewSize + this.headerHeight
             };

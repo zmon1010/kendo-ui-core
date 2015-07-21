@@ -131,168 +131,8 @@
 
         sheet: function(sheet) {
             this._sheet = sheet;
+            this.navigator = new kendo.spreadsheet.SheetNavigator(sheet, this.scroller.clientHeight);
             this.refresh();
-        },
-
-        modifySelection: function(direction) {
-            var sheet = this._sheet;
-            var scroller = this.scroller;
-            var selection = sheet.select();
-            var activeCell = sheet.activeCell();
-            var topLeft = selection.topLeft.clone();
-            var bottomRight = selection.bottomRight.clone();
-
-            var rows = sheet._grid._rows;
-            var columns = sheet._grid._columns;
-
-            var leftMode = activeCell.topLeft.col == topLeft.col;
-            var topMode = activeCell.topLeft.row == topLeft.row;
-            var pageHeight = scroller.clientHeight;
-
-            var scrollInto;
-            // TODO: scrolling into view gets negated by the active cell changing. fix with reason
-            switch (direction) {
-                case "shrink-left":
-                    bottomRight.col = columns.prevVisible(bottomRight.col);
-                    scrollInto = bottomRight;
-                    break;
-                case "expand-left":
-                    topLeft.col = columns.prevVisible(topLeft.col);
-                    scrollInto = topLeft;
-                    break;
-                case "expand-right":
-                    bottomRight.col = columns.nextVisible(bottomRight.col);
-                    scrollInto = bottomRight;
-                    break;
-                case "shrink-right":
-                    topLeft.col = columns.nextVisible(topLeft.col);
-                    scrollInto = topLeft;
-                    break;
-                case "shrink-up":
-                    bottomRight.row = rows.prevVisible(bottomRight.row);
-                    scrollInto = bottomRight;
-                    break;
-                case "expand-up":
-                    topLeft.row = rows.prevVisible(topLeft.row);
-                    scrollInto = topLeft;
-                    break;
-                case "shrink-page-up":
-                    bottomRight.row = rows.prevPage(bottomRight.row, pageHeight);
-                    break;
-                case "expand-page-up":
-                    topLeft.row = rows.prevPage(topLeft.row, pageHeight);
-                    break;
-                case "expand-down":
-                    bottomRight.row = rows.nextVisible(bottomRight.row);
-                    scrollInto = bottomRight;
-                    break;
-                case "shrink-down":
-                    topLeft.row = rows.nextVisible(topLeft.row);
-                    scrollInto = topLeft;
-                    break;
-                case "expand-page-down":
-                    bottomRight.row = rows.nextPage(bottomRight.row, pageHeight);
-                    break;
-                case "shrink-page-down":
-                    topLeft.row = rows.nextPage(topLeft.row, pageHeight);
-                    break;
-                case "first-col":
-                    topLeft.col = columns.firstVisible();
-                    bottomRight.col = activeCell.bottomRight.col;
-                    scrollInto = topLeft;
-                    break;
-                case "last-col":
-                    bottomRight.col = columns.lastVisible();
-                    topLeft.col = activeCell.topLeft.col;
-                    scrollInto = bottomRight;
-                    break;
-                case "first-row":
-                    topLeft.row = rows.firstVisible();
-                    bottomRight.row = activeCell.bottomRight.row;
-                    scrollInto = topLeft;
-                    break;
-                case "last-row":
-                    bottomRight.col = rows.lastVisible();
-                    topLeft.row = activeCell.topLeft.row;
-                    scrollInto = bottomRight;
-                    break;
-                case "last":
-                    bottomRight.row = rows.lastVisible();
-                    bottomRight.col = columns.lastVisible();
-                    topLeft = activeCell.topLeft;
-                    scrollInto = bottomRight;
-                    break;
-                case "first":
-                    topLeft.row = rows.firstVisible();
-                    topLeft.col = columns.firstVisible();
-                    bottomRight = activeCell.bottomRight;
-                    scrollInto = topLeft;
-                    break;
-            }
-
-            if (scrollInto) {
-                this._focus = scrollInto.toRangeRef();
-            }
-
-            sheet.select(new RangeRef(topLeft, bottomRight), false);
-        },
-
-        moveActiveCell: function(direction) {
-            var sheet = this._sheet;
-            var scroller = this.scroller;
-            var activeCell = sheet.activeCell();
-            var topLeft = activeCell.topLeft;
-            var bottomRight = activeCell.bottomRight;
-
-            var cell = sheet.originalActiveCell();
-            var rows = sheet._grid._rows;
-            var columns = sheet._grid._columns;
-
-            var row = cell.row;
-            var column = cell.col;
-
-            switch (direction) {
-                case "left":
-                    column = columns.prevVisible(topLeft.col);
-                    break;
-                case "up":
-                    row = rows.prevVisible(topLeft.row);
-                    break;
-                case "right":
-                    column = columns.nextVisible(bottomRight.col);
-                    break;
-                case "down":
-                    row = rows.nextVisible(bottomRight.row);
-                    break;
-                case "first-col":
-                    column = columns.firstVisible();
-                    break;
-                case "last-col":
-                    column = columns.lastVisible();
-                    break;
-                case "first-row":
-                    row = rows.firstVisible();
-                    break;
-                case "last-row":
-                    row = rows.lastVisible();
-                    break;
-                case "last":
-                    row = rows.lastVisible();
-                    column = columns.lastVisible();
-                    break;
-                case "first":
-                    row = rows.firstVisible();
-                    column = columns.firstVisible();
-                    break;
-                case "next-page":
-                    row = rows.nextPage(bottomRight.row, scroller.clientHeight);
-                    break;
-                case "prev-page":
-                    row = rows.prevPage(bottomRight.row, scroller.clientHeight);
-                    break;
-            }
-
-            sheet.select(new CellRef(row, column));
         },
 
         handleKbd: function() {
@@ -307,7 +147,7 @@
             var keyListener = this.keyListener = new kendo.spreadsheet.EventListener(this.clipboard);
 
             keyListener.on(ACTION_KEYS, function(event, action) {
-                that.moveActiveCell(ACTIONS[action]);
+                that.navigator.moveActiveCell(ACTIONS[action]);
                 event.preventDefault();
             });
 
@@ -349,7 +189,7 @@
                         break;
                 }
 
-                that.modifySelection(action);
+                that.navigator.modifySelection(action);
 
                 event.preventDefault();
             });
@@ -420,7 +260,6 @@
             })[0];
         },
 
-        // XXX: Fix the return here. It breaks many tests, though.
         refresh: function(e) {
             var sheet = this._sheet;
             this.viewSize[0].style.height = sheet._grid.totalHeight() + "px";
@@ -456,7 +295,6 @@
 
                 this.clipboard.val(text).select().focus();
             }
-
 
             if (hasChanged(e, "activecell")) {
                 this._focus = sheet.activeCell().toRangeRef();
@@ -504,14 +342,14 @@
         },
 
         render: function() {
-            var focus = this._focus;
-            this._focus = null;
+            var sheet = this._sheet;
+            var focus = sheet.focus();
 
             if (focus && this.scrollIntoView(focus)) {
                 return;
             }
 
-            var grid = this._sheet._grid;
+            var grid = sheet._grid;
 
             var scrollTop = this.scroller.scrollTop;
             var scrollLeft = this.scroller.scrollLeft;
@@ -582,7 +420,6 @@
 
         return classes.join(" ");
     }
-
 
     var Pane = kendo.Class.extend({
         init: function(sheet, grid) {
