@@ -109,3 +109,10 @@ $("#filter").on("click", function() {
     }
     filtered = !filtered;
 });
+
+$("#pdf").on("click", function(){
+    kendo.drawing.drawDOM("#spreadsheet .k-spreadsheet-view").then(function(group){
+        group.options.set("pdf.margin", "1cm");
+        kendo.drawing.pdf.saveAs(group, "spreadsheet.pdf");
+    });
+});
