@@ -1434,6 +1434,28 @@
         });
     });
 
+    test("ISOWEEKNUM", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: '=ISOWEEKNUM(DATE(2016, 3, 8))',
+            A2: '=ISOWEEKNUM(DATE(2012, 3, 9))',
+            A3: '=ISOWEEKNUM(DATE(2014, 12, 31))',
+            A4: '=ISOWEEKNUM(DATE(2015, 1, 3))',
+            A5: '=ISOWEEKNUM(DATE(2016, 1, 1))',
+            A6: '=ISOWEEKNUM(DATE(2016, 1, 31))',
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A1: 10,
+                A2: 10,
+                A3: 1,
+                A4: 1,
+                A5: 53,
+                A6: 4,
+            });
+        });
+    });
+
     test("DATE, TIME and friends", function(){
         var ss = new Spreadsheet();
         ss.fill({

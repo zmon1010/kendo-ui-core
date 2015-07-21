@@ -23,6 +23,9 @@
     var Matrix = runtime.Matrix;
     var Ref = spreadsheet.Ref;
     var daysInMonth = runtime.daysInMonth;
+    var packDate = runtime.packDate;
+    var unpackDate = runtime.unpackDate;
+    var daysInYear = runtime.daysInYear;
 
     /* -----[ Math functions ]----- */
 
@@ -1081,7 +1084,7 @@
     /* -----[ Date and time functions ]----- */
 
     defineFunction("date", function(year, month, date){
-        return runtime.packDate(year, month-1, date);
+        return packDate(year, month-1, date);
     }).args([
         [ "year", "*integer" ],
         [ "month", "*integer" ],
@@ -1089,26 +1092,26 @@
     ]);
 
     defineFunction("day", function(date){
-        return runtime.unpackDate(date).date;
+        return unpackDate(date).date;
     }).args([
         [ "date", "*date" ]
     ]);
 
     defineFunction("month", function(date){
-        return runtime.unpackDate(date).month + 1;
+        return unpackDate(date).month + 1;
     }).args([
         [ "date", "*date" ]
     ]);
 
     defineFunction("year", function(date){
-        return runtime.unpackDate(date).year;
+        return unpackDate(date).year;
     }).args([
         [ "date", "*date" ]
     ]);
 
     defineFunction("weekday", function(date, type){
         // XXX: TODO type
-        return runtime.unpackDate(date).day + 1;
+        return unpackDate(date).day + 1;
     }).args([
         [ "date", "*date" ]
     ]);
@@ -1116,8 +1119,8 @@
     // https://support.office.com/en-GB/article/WEEKNUM-function-e5c43a03-b4ab-426c-b411-b18c13c75340
     // XXX: this is a mess.
     defineFunction("weeknum", function(date, type){
-        var fw = runtime.packDate(runtime.unpackDate(date).year, 0, 1);
-        var sy = runtime.unpackDate(fw);
+        var fw = packDate(unpackDate(date).year, 0, 1);
+        var sy = unpackDate(fw);
         var diff;
         if (type == 21) {
             // Monday-based weeks, first week is the one containing the first Thursday of the year
@@ -1156,6 +1159,30 @@
                     [ "values", 1, 2, 11, 12, 13, 14, 15, 16, 17, 21 ] ] ]
     ]);
 
+    function weeksInYear(year) {
+        var d = unpackDate(packDate(year, 0, 1));
+        if ((d.day == 4) || (d.day == 3 && runtime.isLeapYear(year))) {
+            // long year
+            return 53;
+        }
+        return 52;
+    }
+
+    defineFunction("isoweeknum", function isoweeknum(date){
+        // https://en.wikipedia.org/wiki/ISO_week_date#Calculating_the_week_number_of_a_given_date
+        var d = unpackDate(date);
+        var dow = d.day || 7;
+        var wk = Math.floor((d.ord - dow + 10) / 7);
+        if (wk < 1) {
+            return weeksInYear(d.year - 1);
+        } else if (wk == 53 && wk > weeksInYear(d.year)) {
+            return 1;
+        }
+        return wk;
+    }).args([
+        [ "date", "*date" ]
+    ]);
+
     defineFunction("now", function(){
         return runtime.dateToSerial(new Date());
     }).args([]);
@@ -1191,7 +1218,7 @@
     ]);
 
     defineFunction("edate", function(base, months){
-        var d = runtime.unpackDate(base);
+        var d = unpackDate(base);
         var m = d.month + months;
         var y = d.year + Math.floor(m/12);
         m %= 12;
@@ -1199,14 +1226,14 @@
             m += 12;
         }
         d = Math.min(d.date, daysInMonth(y, m));
-        return runtime.packDate(y, m, d);
+        return packDate(y, m, d);
     }).args([
         [ "start_date", "*date" ],
         [ "months", "*integer" ]
     ]);
 
     defineFunction("eomonth", function(base, months){
-        var d = runtime.unpackDate(base);
+        var d = unpackDate(base);
         var m = d.month + months;
         var y = d.year + Math.floor(m/12);
         m %= 12;
@@ -1214,7 +1241,7 @@
             m += 12;
         }
         d = daysInMonth(y, m);
-        return runtime.packDate(y, m, d);
+        return packDate(y, m, d);
     }).args([
         [ "start_date", "*date" ],
         [ "months", "*integer" ]
@@ -1224,7 +1251,7 @@
         // XXX: the algorithm here is pretty dumb, can we do better?
         var inc = n > 0 ? 1 : -1;
         n = Math.abs(n);
-        var dow = runtime.unpackDate(date).day;
+        var dow = unpackDate(date).day;
         while (n > 0) {
             date += inc;
             dow = (dow + inc) % 7;
@@ -1247,7 +1274,7 @@
             end = tmp;
         }
         var count = 0;
-        var dow = runtime.unpackDate(date).day;
+        var dow = unpackDate(date).day;
         while (date <= end) {
             if (dow > 0 && dow < 6 && holidays.indexOf(date) < 0) {
                 count++;
@@ -1270,8 +1297,8 @@
     ]);
 
     function _days_360(start, end, method) {
-        var d1 = runtime.unpackDate(start);
-        var d2 = runtime.unpackDate(end);
+        var d1 = unpackDate(start);
+        var d2 = unpackDate(end);
 
         // https://en.wikipedia.org/wiki/360-day_calendar
         // humanity is a mess.
@@ -1314,7 +1341,7 @@
           case 0:
             return _days_360(start, end, false) / 360;
           case 1:
-            return (end - start) / runtime.daysInYear(runtime.unpackDate(start).year);
+            return (end - start) / daysInYear(unpackDate(start).year);
           case 2:
             return (end - start) / 360;
           case 3:

@@ -1015,20 +1015,22 @@
                           31, 31, 30,
                           31, 30, 31 ];
 
+    var ORDINAL_ADD_DAYS = [
+        [ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ], // non-leap year
+        [ 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 ]  // leap year
+    ];
+
     function isLeapYear(yr) {
-        // if (yr == 1900) {
-        //     return true;        // Excel's Leap Year Bug™
-        // }
         if (yr % 4) {
-            return false;
+            return 0;
         }
         if (yr % 100) {
-            return true;
+            return 1;
         }
         if (yr % 400) {
-            return false;
+            return 0;
         }
-        return true;
+        return 1;
     }
 
     function daysInYear(yr) {
@@ -1117,7 +1119,11 @@
         }
 
         return {
-            year: year, month: month, date: serial, day: day
+            year  : year,
+            month : month,
+            date  : serial,
+            day   : day,
+            ord   : ORDINAL_ADD_DAYS[isLeapYear(year)][month] + serial
         };
     }
 
