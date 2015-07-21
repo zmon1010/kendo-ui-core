@@ -1,9 +1,9 @@
 namespace Kendo.Mvc.UI
 {
     using System;
-    using System.Collections.Generic;    
+    using System.Collections.Generic;
     using System.Linq;
-    using Extensions;    
+    using Extensions;
     using Kendo.Mvc.Resources;
     using System.Reflection;
     using System.Text.RegularExpressions;
@@ -25,7 +25,7 @@ namespace Kendo.Mvc.UI
         {
             this.grid = grid;
 
-            DisplayDeleteConfirmation = true;         
+            DisplayDeleteConfirmation = true;
 
             DefaultDataItem = CreateDefaultItem;
             Confirmation = Messages.Grid_Confirmation;
@@ -33,7 +33,7 @@ namespace Kendo.Mvc.UI
             CancelDelete = Messages.Grid_CancelDelete;
             CreateAt = GridInsertRowPosition.Top;
         }
-		
+
         public Window PopUp
 		{
 			get;
@@ -104,24 +104,24 @@ namespace Kendo.Mvc.UI
         {
             get;
             set;
-        }       
+        }
 
         private T CreateDefaultItem()
         {
             var instance = Activator.CreateInstance<T>();
 
-            if (grid.DataSource.Schema.Model != null && 
+            if (grid.DataSource.Schema.Model != null &&
                 grid.DataSource.Schema.Model.Fields.Any())
             {
                 grid.DataSource.Schema.Model.Fields.Each(f => {
-                    var property = typeof(T).GetProperty(f.Member, BindingFlags.Public | BindingFlags.Instance);
+                    var property = typeof(T).GetProperty(f.Member, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
                     if (property != null && property.CanWrite)
 	                {
                         if (f.DefaultValue == null || f.DefaultValue.GetType() != typeof(ClientHandlerDescriptor))
                         {
                             property.SetValue(instance, f.DefaultValue, null);
                         }
-	                }                     
+	                }
                 });
             }
 
@@ -178,7 +178,7 @@ namespace Kendo.Mvc.UI
                                 .Replace("\r\n", string.Empty)
                                 .Replace("</script>", "<\\/script>")
                                 .Replace("jQuery(\"#", "jQuery(\"\\\\#")
-                                .Replace("#", "\\#");                
+                                .Replace("#", "\\#");
             }
 
             if (DisplayDeleteConfirmation)
@@ -196,15 +196,15 @@ namespace Kendo.Mvc.UI
 			json.AddRange(new Dictionary<string, object> {
 				["confirmDelete"] = ConfirmDelete,
 				["cancelDelete"] = CancelDelete,
-				["mode"] = Mode.ToString().ToLowerInvariant(),				
+				["mode"] = Mode.ToString().ToLowerInvariant(),
 				["create"] = IsClientBinding,
 				["update"] = IsClientBinding,
 				["destroy"] = IsClientBinding
 			});
 
 			json.Add("template", editorHtml, () => Mode != GridEditMode.InLine)
-				.Add("createAt", CreateAt.ToString().ToLower(), () => CreateAt != GridInsertRowPosition.Top)		
-				.Add("window", SerializePopUp(), () => Mode == GridEditMode.PopUp && IsClientBinding);			
+				.Add("createAt", CreateAt.ToString().ToLower(), () => CreateAt != GridInsertRowPosition.Top)
+				.Add("window", SerializePopUp(), () => Mode == GridEditMode.PopUp && IsClientBinding);
 		}
 
 		private bool IsClientBinding

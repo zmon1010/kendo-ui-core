@@ -169,7 +169,8 @@ namespace Kendo.Mvc.UI
             {
                 grid.DataSource.Schema.Model.Fields.Each(f =>
                 {
-                    var property = typeof(T).GetProperty(f.Member, BindingFlags.Public | BindingFlags.Instance);
+                    var property = typeof(T).GetProperty(f.Member, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
                     if (property != null && property.CanWrite)
                     {
                         if (f.DefaultValue == null || f.DefaultValue.GetType() != typeof(ClientHandlerDescriptor))
