@@ -665,6 +665,10 @@ fillElements({
         H7: '=aggregate(1, 0, H1:H6)',
         H14: '=aggregate(1, 0, H1:H7)',
 
+        H16: '2008-05-01',
+        H17: '2015-03-08',
+        H18: '=days360(h16, h17, true)',
+
         //E5: "=sum(A1:C3)",
         // E5: "=B2",
         // E6: "=B$2",
@@ -703,7 +707,6 @@ fillElements({
         F9: 1303,
         F10: 1299,
         F11: '=stdev.s(F1:F10)',
-
     }
     // sheet1: {
     //     A1: '=CURRENCY("USD", "EUR") + CURRENCY("USD", "EUR")'

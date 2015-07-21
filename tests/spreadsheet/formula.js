@@ -1345,7 +1345,34 @@
         });
         ss.recalculate(function(){
             ss.expectEqual({
-                A3: 32, A4: 32,
+                A3: 32, A4: -32,
+            });
+        });
+    });
+
+    test("DAYS360", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: "2015-01-01",
+            A2: "2015-01-31",
+            A3: "2015-02-01",
+            A4: "2008-02-29",
+            A5: "2015-03-31",
+            B1: "=DAYS360(A1, A2)",
+            B2: "=DAYS360(A1, A2, TRUE)",
+            B3: "=DAYS360(A1, A3, FALSE)",
+            B4: "=DAYS360(A3, DATE(2015, 2, 2))",
+            B5: "=days360(A4, A5, true)",
+            B6: "=days360(A4, A5, false)",
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                B1: 30,
+                B2: 29,
+                B3: 30,
+                B4: 1,
+                B5: 2551,
+                B6: 2550,
             });
         });
     });

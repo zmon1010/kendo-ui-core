@@ -22,6 +22,7 @@
     var UnionRef = spreadsheet.UnionRef;
     var Matrix = runtime.Matrix;
     var Ref = spreadsheet.Ref;
+    var daysInMonth = runtime.daysInMonth;
 
     /* -----[ Math functions ]----- */
 
@@ -1154,7 +1155,7 @@
         if (m < 0) {
             m += 12;
         }
-        d = Math.min(d.date, runtime.daysInMonth(y, m));
+        d = Math.min(d.date, daysInMonth(y, m));
         return runtime.packDate(y, m, d);
     }).args([
         [ "start_date", "*date" ],
@@ -1169,7 +1170,7 @@
         if (m < 0) {
             m += 12;
         }
-        d = runtime.daysInMonth(y, m);
+        d = daysInMonth(y, m);
         return runtime.packDate(y, m, d);
     }).args([
         [ "start_date", "*date" ],
@@ -1196,10 +1197,56 @@
     ]);
 
     defineFunction("days", function(start, end){
-        return Math.abs(start - end);
+        return end - start;
     }).args([
         [ "start_date", "*date" ],
         [ "end_date", "*date" ]
+    ]);
+
+    function _days_diff(start, end, method) {
+        var d1 = runtime.unpackDate(start);
+        var d2 = runtime.unpackDate(end);
+
+        if (!method) {
+            return d2 - d1;
+        }
+
+        // https://en.wikipedia.org/wiki/360-day_calendar
+        // humanity is a mess.
+        if (method == 1) {
+            // EU method
+            if (d1.date == 31) {
+                d1.date = 30;
+            }
+            if (d2.date == 31) {
+                d2.date = 30;
+            }
+        } else {
+            // US method
+            if (d1.month == 1 && d2.month == 1
+                && d1.date == daysInMonth(d1.year, 1)
+                && d2.date == daysInMonth(d2.year, 1)) {
+                d2.date = 30;
+            }
+            if (d1.date == daysInMonth(d1.year, d1.month)) {
+                d1.date = 30;
+                if (d2.date == 31) {
+                    d2.date = 30;
+                }
+            }
+        }
+
+        return (360 * (d2.year - d1.year)
+                + 30 * (d2.month - d1.month)
+                + (d2.date - d1.date));
+    }
+
+    defineFunction("days360", function(start, end, method){
+        return _days_diff(start, end, method ? 1 : 2);
+    }).args([
+        [ "start_date", "*date" ],
+        [ "end_date", "*date" ],
+        [ "method", [ "or", "*logical", [ "null", "false" ] ] ]
     ]);
 
     /* -----[ Matrix functions ]----- */
