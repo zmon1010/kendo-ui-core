@@ -169,8 +169,7 @@
             }
 
             sheet.select(new CellRef(row, column));
-        },
-
+        }
     });
 
     kendo.spreadsheet.SheetNavigator = SheetNavigator;

@@ -55,7 +55,7 @@
 
             eventKey += name;
 
-            var catchAllHandler = this._handlers['*+' + name]
+            var catchAllHandler = this._handlers['*+' + name];
 
             if (catchAllHandler) {
                 catchAllHandler(e, eventKey);

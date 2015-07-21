@@ -73,7 +73,7 @@ var __meta__ = { // jshint ignore:line
             components[name] = {
                 toolbar: toolbar,
                 overflow: overflow
-            }
+            };
         };
 
         var Item = kendo.Class.extend({

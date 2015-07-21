@@ -298,7 +298,7 @@
 
             if (hasChanged(e, "activecell")) {
                 this._focus = sheet.activeCell().toRangeRef();
-            };
+            }
         },
 
         scrollIntoView: function(cell) {

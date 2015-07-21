@@ -113,7 +113,7 @@
                 this._category = category;
                 var formats = this._allFormats.filter(function(x) { return x.category == category; });
                 this.set("format", formats[0].value);
-                this.set("formats", new kendo.data.ObservableArray(formats))
+                this.set("formats", new kendo.data.ObservableArray(formats));
             }
 
             return this._category || "Number";
