@@ -3938,7 +3938,7 @@
                     transform: scale
                 });
 
-                var root = this.canvas.drawingElement.children[0];
+                var root = this.mainLayer.drawingElement;
                 wrap.children.push(root);
 
                 return wrap;
