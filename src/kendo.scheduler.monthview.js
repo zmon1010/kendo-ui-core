@@ -281,9 +281,15 @@ var __meta__ = {
 
         _touchEditable: function() {
             var that = this;
+            var threshold = 0;
+
+            if (kendo.support.mobileOS.android) {
+                threshold = 5;
+            }
 
             if (that.options.editable.create !== false) {
                 that._addUserEvents = new kendo.UserEvents(that.element, {
+                    threshold: threshold,
                     filter: ".k-scheduler-monthview .k-scheduler-content td",
                     tap: function(e) {
                         var offset = $(e.target).offset();
@@ -301,6 +307,7 @@ var __meta__ = {
 
             if (that.options.editable.update !== false) {
                 that._editUserEvents = new kendo.UserEvents(that.element, {
+                    threshold: threshold,
                     filter:  ".k-scheduler-monthview .k-event",
                     tap: function(e) {
                         if ($(e.event.target).closest("a:has(.k-si-close)").length === 0) {

@@ -2367,15 +2367,19 @@ var __meta__ = {
             var clonedEvent;
             var that = this;
             var originSlot;
+            var distance = 0;
 
             var isMobile = that._isMobile();
             var movable = that.options.editable && that.options.editable.move !== false;
             var resizable = that.options.editable && that.options.editable.resize !== false;
 
             if (movable || (resizable && isMobile)) {
+                if (isMobile && kendo.support.mobileOS.android) {
+                    distance = 5;
+                }
 
                 that._moveDraggable = new kendo.ui.Draggable(that.element, {
-                    distance: 0,
+                    distance: distance,
                     filter: ".k-event",
                     ignore: ".k-resize-handle",
                     holdToDrag: isMobile
@@ -2532,6 +2536,7 @@ var __meta__ = {
             var clonedEvent;
             var slot;
             var that = this;
+            var distance = 0;
 
             function direction(handle) {
                 var directions = {
@@ -2548,8 +2553,12 @@ var __meta__ = {
                 }
             }
 
+            if (that._isMobile() && kendo.support.mobileOS.android) {
+                distance = 5;
+            }
+
             that._resizeDraggable = new kendo.ui.Draggable(that.element, {
-                distance: 0,
+                distance: distance,
                 filter: ".k-resize-handle",
                 dragstart: function(e) {
                     var dragHandle = $(e.currentTarget);

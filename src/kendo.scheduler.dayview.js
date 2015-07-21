@@ -700,9 +700,15 @@ var __meta__ = {
 
         _touchEditable: function() {
             var that = this;
+            var threshold = 0;
+
+            if (kendo.support.mobileOS.android) {
+                threshold = 5;
+            }
 
             if (that.options.editable.create !== false) {
                 that._addUserEvents = new kendo.UserEvents(that.element, {
+                    threshold: threshold,
                     filter:  ".k-scheduler-content td",
                     tap: function(e) {
                         if (!$(e.target).parent().hasClass("k-scheduler-header-all-day")) {
@@ -719,6 +725,7 @@ var __meta__ = {
                 });
 
                 that._allDayUserEvents = new kendo.UserEvents(that.element, {
+                    threshold: threshold,
                     filter: ".k-scheduler-header-all-day td",
                     tap: function(e) {
                         var slot = that._slotByPosition(e.x.location, e.y.location);
@@ -735,6 +742,7 @@ var __meta__ = {
 
             if (that.options.editable.update !== false) {
                 that._editUserEvents = new kendo.UserEvents(that.element, {
+                    threshold: threshold,
                     filter: ".k-event",
                     tap: function(e) {
                         var eventElement = $(e.target).closest(".k-event");
