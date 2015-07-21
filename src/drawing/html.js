@@ -183,10 +183,18 @@
 
             // make sure <tfoot> elements are at the end (Grid widget
             // places TFOOT before TBODY, tricking our algorithm to
-            // insert a page break right before the header).
+            // insert a page break right after the header).
             // https://github.com/telerik/kendo/issues/4699
             $(copy).find("tfoot").each(function(){
                 this.parentNode.appendChild(this);
+            });
+
+            // remember the index of each LI from an ordered list.
+            // we'll use it to reconstruct the proper numbering.
+            $(copy).find("ol").each(function(){
+                $(this).children().each(function(index){
+                    this.setAttribute("kendo-split-index", index);
+                });
             });
 
             $(container).css({
@@ -1809,6 +1817,10 @@
 
             function elementIndex(f) {
                 var a = element.parentNode.children;
+                var k = element.getAttribute("kendo-split-index");
+                if (k != null) {
+                    return f(k|0, a.length);
+                }
                 for (var i = 0; i < a.length; ++i) {
                     if (a[i] === element) {
                         return f(i, a.length);

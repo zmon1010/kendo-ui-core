@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Untitled</title>
+
+    <link rel="stylesheet" href="../styles/web/kendo.common.css" />
+    <link rel="stylesheet" href="../styles/web/kendo.default.css" />
+    <script src="./loader.js"></script>
+    <script>
+      requireSync([
+        "../src/jquery.js",
+        "../src/kendo.all.js"
+      ]);
+    </script>
+
+  </head>
+  <style>
+    .pdfArea {
+      /*display:none;*/
+
+      font-size: 9pt;
+      font-family: Arial !important;
+      line-height: 2em !important;
+    }
+
+    .pdf-page {
+      margin: 0 auto;
+      box-sizing: border-box;
+      box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .3);
+      background-color: #fff;
+      color: #333;
+      position: relative;
+    }
+
+    .pdf-body {
+      padding: 0.5in !important;
+      position: absolute;
+    }
+
+    .mainbar,
+    body {
+      background: none !important;
+      font-family: Arial !important;
+      margin-left: 10px;
+    }
+
+    .btn {
+      display: none !important;
+    }
+
+    .widget-head,
+    .widget-foot,
+    .navbar,
+    .sidebar,
+    .k-tabstrip-items,
+    .k-select {
+      display: none !important;
+    }
+
+    .document-title {
+      font-size: 1.5em !important;
+      font-weight: 700;
+      text-align: center;
+      color: black;
+      font-family: Arial !important;
+      /*text-transform: uppercase;*/
+    }
+
+    .section {
+      font-size: 1.2em !important;
+      font-weight: 700;
+      text-align: center;
+      color: black;
+      font-family: Arial !important;
+      /*text-transform: uppercase;*/
+    }
+
+    .category-heading {
+      font-size: 1.2em !important;
+      font-weight: 700;
+      color: red;
+      font-family: Arial !important;
+      padding-top: 3em;
+    }
+
+    .text-heading {
+      color: #4040FF;
+      font-weight: 700;
+      font-size: 1.2em !important;
+      font-family: Arial !important;
+      padding-top: 1em;
+    }
+
+    .sub-text-heading {
+      color: #4040FF;
+      font-weight: 700;
+      font-size: 1.2em !important;
+      font-family: Arial !important;
+    }
+
+    .sub-sub-text-heading {
+      color: #4040FF;
+      font-weight: 700;
+      font-size: 1.05em !important;
+      font-family: Arial !important;
+    }
+
+    .field-text {
+      font-size: 1em !important;
+      padding-left: 2em;
+      color: black;
+      font-family: Arial !important;
+    }
+
+    tr:nth-child(odd) {
+      color: #000;
+      background: #E0DFE2;
+    }
+
+    tr:nth-child(even) {
+      color: #000;
+      background: #C5C1CB;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      font-size: 1em !important;
+      padding-left: 2em;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      color: black;
+      font-family: Arial !important;
+    }
+
+    td {
+      padding-left: 10px;
+    }
+
+    li {
+      padding-left: 0px !important;
+    }
+  </style>
+  <body>
+    <div>
+      <div class="k-button " onclick="savePDF()">render to PDF</div>
+      <div class="gap">&nbsp;</div>
+      <section class="matter">
+        <div class="container">
+          <div class="pdfArea" id="pdfArea">
+            <a id="pdf-body" class="pdf-body" >
+              <div class="document-title">20160550006</div>
+              <div class="category-heading">REFERENCES</div>
+              <ol type="1">
+                <li style="" class="field-text">2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</li>
+                <li style="" class="field-text"><span>2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</span></li>
+                <li style="" class="field-text">2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</li>
+                <li style="" class="field-text"><span>2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</span></li>
+                <li style="" class="field-text">2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</li>
+                <li style="" class="field-text"><span>2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</span></li>
+                <li style="" class="field-text">2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</li>
+                <li style="" class="field-text"><span>2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</span></li>
+                <li style="" class="field-text">2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</li>
+                <li style="" class="field-text"><span>2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</span></li>
+                <li style="" class="field-text">2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</li>
+                <li style="" class="field-text"><span>2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</span></li>
+                <li style="" class="field-text">2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</li>
+                <li style="" class="field-text"><span>2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</span></li>
+                <li style="" class="field-text">2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</li>
+                <li style="" class="field-text"><span>2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</span></li>
+                <li style="" class="field-text">2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</li>
+                <li style="" class="field-text"><span>2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</span></li>
+                <li style="" class="field-text">2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</li>
+                <li style="" class="field-text"><span>2.  Sievert, D.M., et al., Antimicrobial-Resistant Pathogens Associated with Healthcare-Associated Infections: Summary of Data Reported to the National Healthcare Safety Network at the Centers for Disease Control and Prevention, 2009-2010. Infection Control and Hospital Epidemiology, 2013. 34(1): p. 1-14.</span></li>
+              </ol>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script>
+      function savePDF() {
+        kendo.drawing
+        .drawDOM("#pdf-body", {
+          paperSize: "letter",
+          forcePageBreak: ".page-break"
+        })
+        .then(function(group) {
+          kendo.drawing.pdf.saveAs(group, "test_Proposal.pdf")
+        });
+      }
+    </script>
+  </body>
+</html>
