@@ -127,9 +127,7 @@
         }
 
         function parseExpression(commas) {
-            return maybeCall(
-                maybeBinary(
-                    maybeIntersect(parseAtom(commas)), 0, commas));
+            return maybeBinary(maybeIntersect(parseAtom(commas)), 0, commas);
         }
 
         function maybeRef(name) {
@@ -170,36 +168,35 @@
         }
 
         function parseAtom(commas) {
-            var exp = maybeRange();
-            if (exp) {
-                return exp;
+            var exp = maybeRange() || maybeCall();
+            if (!exp) {
+                if (is("punc", "(")) {
+                    input.next();
+                    exp = parseExpression(true);
+                    skip("punc", ")");
+                }
+                else if (is("num") || is("str")) {
+                    exp = input.next();
+                }
+                else if (is("sym")) {
+                    exp = parseSymbol(input.next(), true);
+                }
+                else if (is("op", "+") || is("op", "-")) {
+                    exp = {
+                        type: "prefix",
+                        op: input.next().value,
+                        exp: parseExpression(commas)
+                    };
+                }
+                else if (is("punc", "{")) {
+                    input.next();
+                    exp = parseArray();
+                }
+                else {
+                    input.croak("Parse error");
+                }
             }
-            if (is("punc", "(")) {
-                input.next();
-                exp = parseExpression(true);
-                skip("punc", ")");
-            }
-            else if (is("num") || is("str")) {
-                exp = input.next();
-            }
-            else if (is("sym")) {
-                exp = parseSymbol(input.next(), true);
-            }
-            else if (is("op", "+") || is("op", "-")) {
-                exp = {
-                    type: "prefix",
-                    op: input.next().value,
-                    exp: parseExpression(commas)
-                };
-            }
-            else if (is("punc", "{")) {
-                input.next();
-                exp = parseArray();
-            }
-            else {
-                input.croak("Parse error");
-            }
-            return maybeCall(exp);
+            return maybePercent(exp);
         }
 
         function parseArray() {
@@ -235,51 +232,44 @@
             }
         }
 
-        function maybeCall(exp) {
-            if (is("punc", "(")) {
-                var fname;
-                if (exp.type == "bool") {
-                    fname = exp.value+"";
-                } else if (exp.type == "ref" && exp.ref == "name") {
-                    fname = exp.name;
-                } else {
-                    input.croak("Expecting function name");
-                }
-                refs.pop();     // not real reference
-                var args = [];
-                input.next();
-                if (!is("punc", ")")) {
-                    while (1) {
-                        if (is("op", ",")) {
-                            args.push({ type: "null" });
-                            input.next();
-                            continue;
+        function maybeCall() {
+            return input.ahead(2, function(fname, b){
+                if (fname.type == "sym" && b.type == "punc" && b.value == "(") {
+                    fname = fname.value;
+                    input.skip(2);
+                    var args = [];
+                    if (!is("punc", ")")) {
+                        while (1) {
+                            if (is("op", ",")) {
+                                args.push({ type: "null" });
+                                input.next();
+                                continue;
+                            }
+                            args.push(parseExpression(false));
+                            if (input.eof() || is("punc", ")")) {
+                                break;
+                            }
+                            skip("op", ",");
                         }
-                        args.push(parseExpression(false));
-                        if (input.eof() || is("punc", ")")) {
-                            break;
-                        }
-                        skip("op", ",");
                     }
+                    skip("punc", ")");
+                    return {
+                        type: "func",
+                        func: fname,
+                        args: args
+                    };
                 }
-                skip("punc", ")");
-                exp = {
-                    type: "func",
-                    func: fname,
-                    args: args
-                };
-            }
-            return maybePercent(exp);
+            });
         }
 
         function maybePercent(exp) {
             if (is("op", "%")) {
                 input.next();
-                return {
+                return maybePercent({
                     type: "postfix",
                     op: "%",
                     exp: exp
-                };
+                });
             } else {
                 return exp;
             }
