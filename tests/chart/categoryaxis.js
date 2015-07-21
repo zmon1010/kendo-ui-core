@@ -119,6 +119,17 @@
             equal(categoryAxis.options.autoRotateLabels, true);
         });
 
+        test("labels are not created if _deferLabels option is true", function() {
+            categoryAxis = new CategoryAxis({
+                labels: {
+                    visible: true
+                },
+                categories: ["foo"],
+                _deferLabels: true
+            });
+            ok(!categoryAxis.labels);
+        });
+
         // ------------------------------------------------------------
         module("Category Axis / Horizontal / Rendering", {
             setup: function() {

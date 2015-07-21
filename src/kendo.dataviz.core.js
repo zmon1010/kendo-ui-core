@@ -1704,7 +1704,7 @@ var __meta__ = {
                 align: axis.options.majorTickType
             });
 
-            if (!this.options._deferLables) {
+            if (!this.options._deferLabels) {
                 axis.createLabels();
             }
 
