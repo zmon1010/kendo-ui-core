@@ -1377,6 +1377,22 @@
         });
     });
 
+    test("YEARFRAC", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: "2012-01-01",
+            A2: "2012-07-30",
+            A3: "=YEARFRAC(A1,A2)",
+            A4: "=YEARFRAC(A1,A2,1)",
+            A5: "=YEARFRAC(A1,A2,3)",
+        });
+        ss.recalculate(function(){
+            equal(ss.$("A3").toFixed(8), 0.58055556);
+            equal(ss.$("A4").toFixed(8), 0.57650273);
+            equal(ss.$("A5").toFixed(8), 0.57808219);
+        });
+    });
+
     test("DATE, TIME and friends", function(){
         var ss = new Spreadsheet();
         ss.fill({

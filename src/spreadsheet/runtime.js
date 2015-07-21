@@ -1179,6 +1179,7 @@
     exports.dateToSerial = dateToSerial;
     exports.daysInMonth = daysInMonth;
     exports.isLeapYear = isLeapYear;
+    exports.daysInYear = daysInYear;
 
     spreadsheet.dateToNumber = dateToSerial;
     spreadsheet.numberToDate = serialToDate;

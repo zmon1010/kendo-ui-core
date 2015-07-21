@@ -1203,17 +1203,13 @@
         [ "end_date", "*date" ]
     ]);
 
-    function _days_diff(start, end, method) {
+    function _days_360(start, end, method) {
         var d1 = runtime.unpackDate(start);
         var d2 = runtime.unpackDate(end);
 
-        if (!method) {
-            return d2 - d1;
-        }
-
         // https://en.wikipedia.org/wiki/360-day_calendar
         // humanity is a mess.
-        if (method == 1) {
+        if (method) {
             // EU method
             if (d1.date == 31) {
                 d1.date = 30;
@@ -1241,12 +1237,29 @@
                 + (d2.date - d1.date));
     }
 
-    defineFunction("days360", function(start, end, method){
-        return _days_diff(start, end, method ? 1 : 2);
-    }).args([
+    defineFunction("days360", _days_360).args([
         [ "start_date", "*date" ],
         [ "end_date", "*date" ],
         [ "method", [ "or", "*logical", [ "null", "false" ] ] ]
+    ]);
+
+    defineFunction("yearfrac", function(start, end, method){
+        switch (method) {
+          case 0:
+            return _days_360(start, end, false) / 360;
+          case 1:
+            return (end - start) / runtime.daysInYear(runtime.unpackDate(start).year);
+          case 2:
+            return (end - start) / 360;
+          case 3:
+            return (end - start) / 365;
+          case 4:
+            return _days_360(start, end, true) / 360;
+        }
+    }).args([
+        [ "start_date", "*date" ],
+        [ "end_date", "*date" ],
+        [ "method", [ "or", [ "null", 0 ], [ "values", 0, 1, 2, 3, 4 ] ] ]
     ]);
 
     /* -----[ Matrix functions ]----- */
