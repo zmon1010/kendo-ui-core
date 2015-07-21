@@ -1096,7 +1096,7 @@
             day = (day + 7) % 7;
         }
 
-        while (serial >= (tmp = daysInYear(year))) {
+        while (serial > (tmp = daysInYear(year))) {
             serial -= tmp;
             year += backwards ? -1 : 1;
         }
