@@ -23,7 +23,23 @@
                 if(child.Name.Equals(properties[i].PropertyName)) {
 #>
 <#
-                    RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable);
+                    var rendered = false;
+                    if (DataAnnotationAttributes.ContainsKey(properties[i].PropertyName))
+                    {
+                        Dictionary<string, string> attribute = DataAnnotationAttributes[properties[i].PropertyName];
+                        var annotations = DataAnnotationAttributes[properties[i].PropertyName];
+                        foreach (var item in annotations)
+                        {
+                            if (item.Key == "Name")
+                            {
+                                RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, item.Value);
+                                rendered = true;
+                            }
+                        }             
+                    } 
+                    if (!rendered) {
+                        RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, "");
+                    }
 #>
 <#
                       break;
@@ -32,7 +48,7 @@
         }  else {
 #>
 <#
-            RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable);      
+            RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, "");      
 #>
 <#
         }    
@@ -50,20 +66,23 @@
     if(EditableCreate || ExcelExport || PdfExport) {
 #>
         toolbar: <#RenderToolbarOptions();#>
+<#
+    }
+#>
         dataSource: {
-            transport: {
-            <#RenderCRUDOptions(entitySetName, ControllerRootName);#>
             type: "aspnetmvc-ajax", <#=Editable ? EditMode.Equals(batchEditMode) ? "" + newLine + "\t\t\tbatch:true," : "" : "" #>
-            <#=ServerOperation ? "serverPaging: true,"+ newLine + "\t\t\tserverSorting: true,"+ newLine+"\t\t\tserverSorting: true" : "" #>,
+            transport: {
+                read: {
+                     url: "<#= entitySetName #>_Read"
+                }<# RenderCRUDOptions(entitySetName, ControllerRootName); #>
             schema: {
                 data: "Data",
                 model: {
-                    "id": "ProductID"
+                    id: "<#= PrimaryKeyName#>" <# RenderFields(); #>
                 }
-            }
+            }<#=ServerOperation ? ", "+ newLine +"\t\t\tserverPaging: true,"+ newLine + "\t\t\tserverSorting: true,"+ newLine+"\t\t\tserverSorting: true" : "," #>,
         },
 <#
-    }
     if(ColumnMenu) {
 #>
         columnMenu: true,
@@ -118,10 +137,10 @@
 #>
 </script>
 <#+
-    private void RenderColumn(string field, bool isLast)
+    private void RenderColumn(string field, bool isLast, string title)
     {
 #>
-            {field: "<#= field#>"}<#= isLast ? "" : "," #>
+            {field: "<#= field#>"<#= title.Length > 0 ?", title: \"" + title +"\"" : "" #>}<#= isLast ? "" : "," #>
 <#+
   }  
 #>
@@ -173,22 +192,62 @@
     private void RenderCRUDOptions(string EntitySetName, string ControllerRootName) 
     {
         var newLine = Environment.NewLine;
-        string result = "\tread: {" + newLine + "\t\t\t\t\turl: \"/" + ControllerRootName + "/" + EntitySetName + "_Read\"" + newLine + "\t\t\t\t}," + newLine; 
+        string result = "";
+
+        if (EditableCreate || EditableDestroy || EditableUpdate)
+        {
+            result += ", " + newLine;
+        }
+
         string[] transportOptions = new string[] { 
             EditableCreate ? "create" : "",
             EditableUpdate ? "update" : "",
             EditableDestroy ? "destroy" : "",
         };
         transportOptions =  transportOptions.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
         for (int i = 0; i < transportOptions.Length; i++) {
             var operation = transportOptions[i].Substring(0, 1).ToUpper() + transportOptions[i].Substring(1);
-            if (i == transportOptions.Length - 1){
-                result += "\t\t\t\t" + transportOptions[i] + ": { " + newLine + "\t\t\t\t\turl: \"/" + ControllerRootName + "/" + EntitySetName + "_" + operation + "\"" + newLine + "\t\t\t\t}";
+        
+            if (i != transportOptions.Length - 1){
+                result += "\t\t\t\t" + transportOptions[i] + ": { " + newLine + "\t\t\t\t\turl: " + EntitySetName + "_" + operation + "\""+ newLine +"\t\t\t\t}," + newLine;
             } else {
-                result += "\t\t\t\t" + transportOptions[i] + ": { " + newLine + "\t\t\t\t\turl: \"/" + ControllerRootName + "/" + EntitySetName + "_" + operation + "\""+ newLine +"\t\t\t\t}," + newLine;
+                result += "\t\t\t\t" + transportOptions[i] + ": { " + newLine + "\t\t\t\t\turl: " + EntitySetName + "_" + operation + "\"" + newLine + "\t\t\t\t}";
             }
         }
         result += newLine + "\t\t\t},";
+#>
+<#=result#>
+<#+
+    }
+#>
+
+<#+
+    private string RenderFieldTypes(KeyValuePair<string, Dictionary<string, string>> attribute)
+    {
+            string result = "";
+            result += "\t\t\t\t\t\t\"" + attribute.Key + "\"" + ": {" + Environment.NewLine;
+            result += "\t\t\t\t\t\t\ttype: " + "\"" + attribute.Value["type"] + "\"" + Environment.NewLine;
+            result += "\t\t\t\t\t\t}," + Environment.NewLine;
+
+            return result;
+    }
+
+    private void RenderFields() 
+    {
+        var newLine = Environment.NewLine;
+        string result = "," + newLine + "\t\t\t\t\tfields: {" + newLine;
+        string[] validations = {"pattern", "min", "max", "required"};       
+        
+        foreach (var attribute in DataAnnotationAttributes)
+        {
+            if (!(attribute.Value.ContainsKey("scaffold") && attribute.Value["scaffold"] == "false"))
+            {
+                result += RenderFieldTypes(attribute);
+            }
+        }
+
+        result += newLine + "\t\t\t\t\t}";
 #>
 <#=result#>
 <#+

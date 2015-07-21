@@ -43,3 +43,4 @@
 <#@ parameter type="System.String" name="ModelVariable" #>
 <#@ parameter type="System.Version" name="MvcVersion" #>
 <#@ parameter type="System.Boolean" name="ServerOperation" #>
+<#@ parameter type="System.Collections.Generic.Dictionary<string, System.Collections.Generic.Dictionary<string, string>>" name="DataAnnotationAttributes" #>
