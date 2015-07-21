@@ -181,6 +181,14 @@
             var container = doc.createElement("KENDO-PDF-DOCUMENT");
             var adjust = 0;
 
+            // make sure <tfoot> elements are at the end (Grid widget
+            // places TFOOT before TBODY, tricking our algorithm to
+            // insert a page break right before the header).
+            // https://github.com/telerik/kendo/issues/4699
+            $(copy).find("tfoot").each(function(){
+                this.parentNode.appendChild(this);
+            });
+
             $(container).css({
                 display   : "block",
                 position  : "absolute",
