@@ -145,7 +145,7 @@
             { value: "materialblack", name: "Material Black", colors: ["#3f51b5", "#1c1c1c", "#4d4d4d"] },
             { value: "fiori", name: "Fiori", colors: ["#007cc0", "#e6f2f9", "#f0f0f0"] },
             { value: "office365", name: "Office 365", colors: ["#0072c6", "#cde6f7", "#fff"] },
-            { value: "nova", name: "Nova", colors: ["#ff6666", "#ff6666", "#ff6666"] }
+            { value: "nova", name: "Nova", colors: ["#32364c", "#ff4350", "#dfe0e1"] }
         ],
         sizes: [
             { name: "Standard", value: "common" },

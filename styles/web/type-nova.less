@@ -17,14 +17,14 @@
 @content-background-color: @background;
 @hover-background-color: @hover-background;
 @hover-border-color: #9ca3a6;
-@hover-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+@hover-shadow: none;
 @select-background-color: @background;
 @select-border-color: @hover-background;
 @select-hover-background-color: lighten(@background, 17%);
 @select-group-background-color: #ffffff;
 @selected-background-color: @background;
 @selected-border-color: lighten(@background, 17%);
-@selected-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+@selected-shadow: none;
 @focused-border-color: #67afe9;
 @focused-shadow: none;
 @focused-item-shadow: 0 6px 17px 0 rgba(0, 0, 0, 0.3);
@@ -63,7 +63,7 @@
 @draghandle-shadow: none;
 @draghandle-hover-border-color: @accent;
 @draghandle-hover-background-color: @accent;
-@draghandle-hover-shadow: 0 0 0 8px RGBA(63, 81, 181, 0.3);
+@draghandle-hover-shadow: none;
 @alt-background-color: contrast(@background, lighten(@background, 14%), darken(@background, 2%), 0.5);
 @nested-alt-background-color: darken(@alt-background-color, 8%);
 @cell-border-color: #e7e7e7;
@@ -171,8 +171,8 @@
 @button-active-background: contrast(@background, lighten(@background, 23%), darken(@background, 14%), 0.5);
 @button-active-border-color: contrast(@background, lighten(@background, 23%), darken(@background, 14%), 0.5);
 @button-focused-border-color: contrast(@background, lighten(@background, 17%), darken(@background, 14%), 0.5);
-@button-focused-shadow: 0 6px 17px 0 #c4c4c4;
-@button-focused-active-shadow: 0 6px 17px 0 fadeout(@hover-background, 70%);
+@button-focused-shadow: none;
+@button-focused-active-shadow: none;
 @secondary-background-color: contrast(@background, lighten(@background, 14%), darken(@background, 2%), 0.5);
 @secondary-hover-background-color: #5c6bc0;
 @secondary-header-color: rgba(256, 256, 256, 0.5);
@@ -789,12 +789,6 @@ html .km-pane-wrapper .k-header
     color: @hover-text-color;
 }
 
-.k-calendar .k-link.k-state-hover,
-.k-window-titlebar .k-link
-{
-    border-radius: @calendar-border-radius;
-}
-
 .k-calendar .k-footer .k-link
 {
     border-radius: 0;
@@ -1043,13 +1037,13 @@ div.k-filebrowser-dropzone em
 
 .k-state-disabled
 {
-    opacity:.7;
+    opacity:.5;
 }
 
 .k-ie7 .k-state-disabled,
 .k-ie8 .k-state-disabled
 {
-    filter:alpha(opacity=70);
+    filter:alpha(opacity=50);
 }
 
 .k-tile-empty.k-state-selected,
