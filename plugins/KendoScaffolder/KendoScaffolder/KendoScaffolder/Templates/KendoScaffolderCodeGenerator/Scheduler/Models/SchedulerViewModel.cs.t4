@@ -19,6 +19,25 @@ namespace <#= Namespace #>
 {
     public class <#= WidgetViewModelName #>: ISchedulerEvent
     {
+        public <#= WidgetViewModelName #>()
+        {
+        }
+
+        public <#= WidgetViewModelName #>(<#= ModelTypeName #> <#= ModelVariable #>)
+        {
+                <#= PrimaryKeyName #> = <#= ModelVariable #>.<#= PrimaryKeyName #>;
+                Title = <#= ModelVariable #>.<#= SelectedEventTitleField #>;
+                Start = DateTime.SpecifyKind(<#= ModelVariable #>.<#= SelectedEventStartField #>, DateTimeKind.Utc);
+                End = DateTime.SpecifyKind(<#= ModelVariable #>.<#= SelectedEventEndField #>, DateTimeKind.Utc);
+                StartTimezone = <#= ModelVariable #>.<#= SelectedEventStartTimezoneField #>;
+                EndTimezone = <#= ModelVariable #>.<#= SelectedEventEndTimezoneField #>;
+                Description = <#= ModelVariable #>.<#= SelectedEventDescriptionField #>;
+                IsAllDay = <#= ModelVariable #>.<#= SelectedEventIsAllDayField #>;
+                RecurrenceRule = <#= ModelVariable #>.<#= SelectedEventRecurrenceRuleField #>;
+                RecurrenceException = <#= ModelVariable #>.<#= SelectedEventRecurrenceExceptionField #>;
+                RecurrenceID = <#= ModelVariable #>.<#= SelectedEventRecurrenceIDField #>;
+        }
+
         public <#= PrimaryKeyType #> <#= PrimaryKeyName #> { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -60,5 +79,23 @@ namespace <#= Namespace #>
 <# if(UseResources) { #>
         public <#= SelectedModelResourceFieldType #> <#= SelectedModelResourceField #> { get; set; }
 <# } #>
+
+        public <#= ModelTypeName #> ToEntity()
+        {
+            return new <#= ModelTypeName #>
+            {
+                <#= PrimaryKeyName #> = <#= PrimaryKeyName #>,
+                <#= SelectedEventTitleField #> = Title,
+                <#= SelectedEventStartField #> = Start,
+                <#= SelectedEventEndField #> = End,
+                <#= SelectedEventStartTimezoneField #> = StartTimezone,
+                <#= SelectedEventEndTimezoneField #> = EndTimezone,
+                <#= SelectedEventDescriptionField #> = Description,
+                <#= SelectedEventIsAllDayField #> = IsAllDay,
+                <#= SelectedEventRecurrenceRuleField #> = RecurrenceRule,
+                <#= SelectedEventRecurrenceExceptionField #> = RecurrenceException,
+                <#= SelectedEventRecurrenceIDField #> = RecurrenceID
+            };
+        }
     }
 }

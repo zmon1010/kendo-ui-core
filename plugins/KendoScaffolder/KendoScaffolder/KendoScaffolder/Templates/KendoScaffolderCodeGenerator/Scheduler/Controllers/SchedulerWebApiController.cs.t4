@@ -100,6 +100,24 @@ namespace <#= Namespace #>
             };
         }
 
+<#
+    if(EditableCreate || EditableResize || EditableMove) {
+#>
+        ////////////////////////
+<#
+    }
+    if(EditableUpdate || EditableResize || EditableMove) {
+#>
+        ////////////////////////
+<#
+    }
+    if(EditableDestroy) {
+#>
+        ////////////////////////
+<#
+    }
+#>
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

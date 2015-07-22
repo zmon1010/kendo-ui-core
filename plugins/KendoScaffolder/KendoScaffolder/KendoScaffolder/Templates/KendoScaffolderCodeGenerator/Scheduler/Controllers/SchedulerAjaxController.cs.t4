@@ -52,23 +52,73 @@ namespace <#= Namespace #>
 
         public ActionResult <#= entitySetName #>_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = db.<#= entitySetName #>.ToList().Select(<#= entitySetName.ToLower() #> => new <#= WidgetViewModelName #>
-            {
-                <#= PrimaryKeyName #> = <#= entitySetName.ToLower() #>.<#= PrimaryKeyName #>,
-                Title = <#= entitySetName.ToLower() #>.<#= SelectedEventTitleField #>,
-                Start = DateTime.SpecifyKind(<#= entitySetName.ToLower() #>.<#= SelectedEventStartField #>, DateTimeKind.Utc),
-                End = DateTime.SpecifyKind(<#= entitySetName.ToLower() #>.<#= SelectedEventEndField #>, DateTimeKind.Utc),
-                StartTimezone = <#= entitySetName.ToLower() #>.<#= SelectedEventStartTimezoneField #>,
-                EndTimezone = <#= entitySetName.ToLower() #>.<#= SelectedEventEndTimezoneField #>,
-                Description = <#= entitySetName.ToLower() #>.<#= SelectedEventDescriptionField #>,
-                IsAllDay = <#= entitySetName.ToLower() #>.<#= SelectedEventIsAllDayField #>,
-                RecurrenceRule = <#= entitySetName.ToLower() #>.<#= SelectedEventRecurrenceRuleField #>,
-                RecurrenceException = <#= entitySetName.ToLower() #>.<#= SelectedEventRecurrenceExceptionField #>,
-                RecurrenceID = <#= entitySetName.ToLower() #>.<#= SelectedEventRecurrenceIDField #>
-            }).AsQueryable();
+            var data = db.<#= entitySetName #>.ToList()
+                        .Select(<#= ModelVariable #> => new <#= WidgetViewModelName #>(<#= ModelVariable #>))
+                        .AsQueryable();
 
             return Json(data.ToDataSourceResult(request));
         }
+
+<#
+    if(EditableCreate || EditableResize || EditableMove) {
+#>
+        public virtual JsonResult <#= entitySetName #>_Create([DataSourceRequest] DataSourceRequest request, <#= WidgetViewModelName #> <#= ModelVariable #>)
+        {
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty( <#= ModelVariable #>.Title))
+                {
+                     <#= ModelVariable #>.Title = "";
+                }
+
+                var entity = <#= ModelVariable #>.ToEntity();
+                db.<#= entitySetName #>.Add(entity);
+                db.SaveChanges();
+                <#= ModelVariable #>.<#= PrimaryKeyName #> = entity.<#= PrimaryKeyName #>;
+            }
+
+            return Json(new[] { <#= ModelVariable #> }.ToDataSourceResult(request, ModelState));
+        }
+<#
+    }
+    if(EditableUpdate || EditableResize || EditableMove) {
+#>
+        public virtual JsonResult <#= entitySetName #>_Update([DataSourceRequest] DataSourceRequest request, <#= WidgetViewModelName #> <#= ModelVariable #>)
+        {
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty( <#= ModelVariable #>.Title))
+                {
+                     <#= ModelVariable #>.Title = "";
+                }
+
+                var entity = <#= ModelVariable #>.ToEntity();
+                db.<#= entitySetName #>.Attach(entity);
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return Json(new[] { <#= ModelVariable #> }.ToDataSourceResult(request, ModelState));
+        }
+<#
+    }
+    if(EditableDestroy) {
+#>
+        public virtual JsonResult <#= entitySetName #>_Destroy([DataSourceRequest] DataSourceRequest request, <#= WidgetViewModelName #> <#= ModelVariable #>)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = <#= ModelVariable #>.ToEntity();
+                db.<#= entitySetName #>.Attach(entity);
+                db.<#= entitySetName #>.Remove(entity);
+                db.SaveChanges();
+            }
+
+            return Json(new[] { <#= ModelVariable #> }.ToDataSourceResult(request, ModelState));
+        }
+<#
+    }
+#>
 
         protected override void Dispose(bool disposing)
         {

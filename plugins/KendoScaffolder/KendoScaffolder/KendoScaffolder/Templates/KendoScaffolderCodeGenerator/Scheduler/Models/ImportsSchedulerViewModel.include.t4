@@ -23,3 +23,13 @@
 <#@ parameter type="System.Boolean" name="UseResources" #>
 <#@ parameter type="System.String" name="SelectedModelResourceField" #>
 <#@ parameter type="System.String" name="SelectedModelResourceFieldType" #>
+<#@ parameter type="System.String" name="SelectedEventTitleField" #>
+<#@ parameter type="System.String" name="SelectedEventStartField" #>
+<#@ parameter type="System.String" name="SelectedEventEndField" #>
+<#@ parameter type="System.String" name="SelectedEventDescriptionField" #>
+<#@ parameter type="System.String" name="SelectedEventIsAllDayField" #>
+<#@ parameter type="System.String" name="SelectedEventStartTimezoneField" #>
+<#@ parameter type="System.String" name="SelectedEventEndTimezoneField" #>
+<#@ parameter type="System.String" name="SelectedEventRecurrenceIDField" #>
+<#@ parameter type="System.String" name="SelectedEventRecurrenceRuleField" #>
+<#@ parameter type="System.String" name="SelectedEventRecurrenceExceptionField" #>

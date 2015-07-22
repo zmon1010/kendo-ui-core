@@ -157,13 +157,11 @@ namespace KendoScaffolder.Scaffolders
                 controllerParameters.Add("ViewModelTypeChildren", ViewModelType.Children);
             }
 
-            //if (ViewModel.Editable)
-            //{
-            //    controllerParameters.Add("EditMode", ViewModel.EditMode);
-            //    controllerParameters.Add("EditableCreate", ViewModel.EditableCreate);
-            //    controllerParameters.Add("EditableUpdate", ViewModel.EditableUpdate);
-            //    controllerParameters.Add("EditableDestroy", ViewModel.EditableDestroy);
-            //}
+            controllerParameters.Add("EditableCreate", ViewModel.EditableCreate);
+            controllerParameters.Add("EditableUpdate", ViewModel.EditableUpdate);
+            controllerParameters.Add("EditableDestroy", ViewModel.EditableDestroy);
+            controllerParameters.Add("EditableResize", ViewModel.EditableResize);
+            controllerParameters.Add("EditableMove", ViewModel.EditableMove);
 
             return controllerParameters;
         }
@@ -189,13 +187,11 @@ namespace KendoScaffolder.Scaffolders
                 viewParameters.Add("ViewModelTypeChildren", ViewModelType.Children);
             }
 
-            //if (ViewModel.Editable)
-            //{
-            //    viewParameters.Add("EditMode", ViewModel.EditMode);
-            //    viewParameters.Add("EditableCreate", ViewModel.EditableCreate);
-            //    viewParameters.Add("EditableUpdate", ViewModel.EditableUpdate);
-            //    viewParameters.Add("EditableDestroy", ViewModel.EditableDestroy);
-            //}
+            viewParameters.Add("EditableCreate", ViewModel.EditableCreate);
+            viewParameters.Add("EditableUpdate", ViewModel.EditableUpdate);
+            viewParameters.Add("EditableDestroy", ViewModel.EditableDestroy);
+            viewParameters.Add("EditableResize", ViewModel.EditableResize);
+            viewParameters.Add("EditableMove", ViewModel.EditableMove);
 
             if (ViewModel.Selectable)
             {
