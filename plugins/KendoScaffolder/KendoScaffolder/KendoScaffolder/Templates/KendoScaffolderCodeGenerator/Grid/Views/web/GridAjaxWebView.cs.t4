@@ -15,27 +15,30 @@
     var properties = ModelMetadata.Properties
         .Where(prop => prop.Scaffold && !prop.IsPrimaryKey && !prop.IsForeignKey && !prop.IsAssociation)
         .ToList();    
-    for (int i = 0; i < properties.Count; i++) {       
+    for (int i = 0; i < properties.Count; i++) { 
+        var propertyName = properties[i].PropertyName;
+        var isLast = i == properties.Count - 1;
 #>
 <#
         if (UseViewModel) {
             foreach (EnvDTE.CodeElement child in ViewModelTypeChildren) { 
-                if(child.Name.Equals(properties[i].PropertyName)) {
+                if(child.Name.Equals(propertyName)) {
 #>
 <#
                     var rendered = false;
-                    if (DataAnnotationAttributes.ContainsKey(properties[i].PropertyName))
+                    if (DataAnnotationAttributes.ContainsKey(propertyName))
                     {
-                        Dictionary<string, string> attribute = DataAnnotationAttributes[properties[i].PropertyName];
-                        var annotations = DataAnnotationAttributes[properties[i].PropertyName];
-                        foreach (var item in annotations)
+                        Dictionary<string, string> attribute = DataAnnotationAttributes[propertyName];
+                        var annotations = DataAnnotationAttributes[propertyName];
+                        var scaffoldable = annotations.ContainsKey("scaffold") && annotations["scaffold"] == "false" ? false : true;
+                        rendered = scaffoldable ? false : true;
+
+                        if (annotations.ContainsKey("Name") && scaffoldable)
                         {
-                            if (item.Key == "Name")
-                            {
-                                RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, item.Value);
-                                rendered = true;
-                            }
-                        }             
+                            var item = annotations["Name"];
+                            RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, item);
+                            rendered = true;
+                        }                                  
                     } 
                     if (!rendered) {
                         RenderColumn(properties[i].PropertyName, i == properties.Count - 1 && !Editable, "");
@@ -223,32 +226,24 @@
 #>
 
 <#+
-    private string RenderSchemaFields(KeyValuePair<string, Dictionary<string, string>> model)
+    private string RenderSchemaFields(KeyValuePair<string, Dictionary<string, string>> model, bool isLast)
     {
-            bool validationAttributesPresent = IsValidationAttributePresent(model);
+            bool distinctValidators = GetDistinctValidation(model.Value).Count > 0 ? true : false;
             var newLine = Environment.NewLine;
             string result = "";
             result += "\t\t\t\t\t\t\"" + model.Key + "\"" + ": {" + newLine;
             result += "\t\t\t\t\t\t\ttype: " + "\"" + model.Value["type"] + "\"";
-            result += validationAttributesPresent ? "" : newLine;
+            result += distinctValidators ? "" : newLine;
         
-
-            if (validationAttributesPresent) 
+            if (distinctValidators) 
             {
                 result += "," + newLine + "\t\t\t\t\t\t\tvalidation: {";
                 result += RenderValidationAttributes(model);
                 result += "}" + newLine;
             }
-            result += "\t\t\t\t\t\t}," + Environment.NewLine;
+            result +=  isLast? "\t\t\t\t\t\t}" : "\t\t\t\t\t\t}," + Environment.NewLine;
 
             return result;
-    }
-
-    private bool IsValidationAttributePresent(KeyValuePair<string, Dictionary<string,string>> model)
-    {
-        string[] validations = {"pattern", "min", "max", "required"};   
-        return model.Value.Any(element => element.Key == "pattern" || element.Key == "min" || element.Key == "max" || element.Key == "required");
-        
     }
 
     public Dictionary<string, string> GetDistinctValidation(Dictionary<string, string> models)
@@ -273,12 +268,12 @@
         {
             var isLast = item.Equals(distincValues.Last());
 
-            if (item.Key == "max" || item.Key == "min" || item.Key == "required") 
-            {
-                result += item.Key + ": " + item.Value;
-            } else 
+            if (item.Key == "pattern") 
             {
                 result += item.Key + ": \"" + item.Value + "\"";
+            } else 
+            {
+                result += item.Key + ": " + item.Value; 
             }
 
             result += isLast ? "" : ", ";
@@ -295,7 +290,8 @@
         {            
             if (!(model.Value.ContainsKey("scaffold") && model.Value["scaffold"] == "false"))
             {
-                result += RenderSchemaFields(model);
+                var isLast = model.Equals(DataAnnotationAttributes.Last());
+                result += RenderSchemaFields(model, isLast);
             }
 
         }
