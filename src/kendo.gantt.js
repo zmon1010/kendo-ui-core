@@ -1508,7 +1508,8 @@ var __meta__ = {
             hourSpan: 1,
             snap: true,
             height: 600,
-            listWidth: "30%"
+            listWidth: "30%",
+            rowHeight: "2.3em"
         },
 
         select: function(value) {
@@ -1845,7 +1846,8 @@ var __meta__ = {
                 resizable: this.options.resizable,
                 columnResizeHandleWidth: this.options.columnResizeHandleWidth,
                 listWidth: listWrapper.outerWidth(),
-                resourcesField: this.resources.field
+                resourcesField: this.resources.field,
+                rowHeight: this.options.rowHeight
             };
             var columns = options.columns;
             var column;

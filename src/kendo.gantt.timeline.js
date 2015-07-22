@@ -25,6 +25,7 @@ var __meta__ = {
     var isRtl = false;
     var keys = kendo.keys;
     var Query = kendo.data.Query;
+    var STRING = "string";
     var NS = ".kendoGanttTimeline";
     var CLICK = "click";
     var DBLCLICK = "dblclick";
@@ -299,10 +300,16 @@ var __meta__ = {
             var rows = [];
             var row;
             var styles = GanttView.styles;
-            var attributes = [null, { className: styles.alt }];
+            var options = this.options;
+            var rowHeight = typeof options.rowHeight === STRING ? options.rowHeight :
+                options.rowHeight + "px";
+            var attributes = [null, {
+                className: styles.alt
+            }];
+
 
             for (var i = 0; i < rowCount; i++) {
-                row = kendoDomElement("tr", attributes[i % 2], [
+                row = kendoDomElement("tr", extend(attributes[i % 2], { style: { height: rowHeight } }), [
                     kendoDomElement("td", null, [
                         kendoTextElement("\u00a0")
                     ])
@@ -368,6 +375,9 @@ var __meta__ = {
             var resourcesMargin = this._calculateResourcesMargin();
             var taskBorderWidth = this._calculateTaskBorderWidth();
             var resourceStyle;
+            var options = this.options;
+            var rowHeight = typeof options.rowHeight === STRING ? options.rowHeight :
+               options.rowHeight + "px";
 
             var addCoordinates = function(rowIndex) {
                 var taskLeft;
@@ -394,7 +404,7 @@ var __meta__ = {
                 position = this._taskPosition(task);
                 position.borderWidth = taskBorderWidth;
 
-                row = kendoDomElement("tr", null);
+                row = kendoDomElement("tr", { style: { height: rowHeight } });
 
                 cell = kendoDomElement("td", null, [this._renderTask(tasks[i], position)]);
 

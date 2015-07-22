@@ -212,7 +212,7 @@ var __meta__ = {
             };
 
             this.columns = map(columns, function(column) {
-                column = typeof column === "string" ? {
+                column = typeof column === STRING ? {
                     field: column, title: titleFromField[column]
                 } : column;
 
@@ -330,6 +330,9 @@ var __meta__ = {
             var className = [];
             var level;
             var listStyles = GanttList.styles;
+            var options = this.options;
+            var rowHeight = typeof options.rowHeight === STRING ? options.rowHeight : 
+                options.rowHeight + "px";
 
             for (var i = 0, length = tasks.length; i < length; i++) {
                 task = tasks[i];
@@ -342,7 +345,10 @@ var __meta__ = {
                 attr = {
                     "data-uid": task.uid,
                     "data-level": level,
-                    "role": "row"
+                    "role": "row",
+                    style: {
+                        height: rowHeight
+                    }
                 };
 
                 if (task.summary) {
