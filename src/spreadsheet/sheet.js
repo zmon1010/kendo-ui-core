@@ -347,12 +347,10 @@
 
         select: function(ref, changeActiveCell) {
             if (ref) {
-                var mergedCells = this._mergedCells;
                 ref = this._ref(ref);
 
-                this._selection = ref.map(function(ref) {
-                    return ref.toRangeRef().union(mergedCells);
-                });
+                this._originalSelection = ref.toRangeRef();
+                this._selection = this.unionWithMerged(ref);
 
                 if (changeActiveCell !== false) {
                     if (ref.isCell()) {
@@ -368,16 +366,31 @@
             return this._selection;
         },
 
+        originalSelect: function() {
+            return this._originalSelection;
+        },
+
+        unionWithMerged: function(ref) {
+            var mergedCells = this._mergedCells;
+
+            return ref.map(function(ref) {
+                return ref.toRangeRef().union(mergedCells);
+            });
+        },
+
         activeCell: function(ref) {
             if (ref) {
-                var mergedCells = this._mergedCells;
                 this._originalActiveCell = ref;
-                this._activeCell = ref.toRangeRef().union(mergedCells);
+                this._activeCell = this.unionWithMerged(ref.toRangeRef());
                 this.focus(this._activeCell);
                 this.triggerChange("activecell");
             }
 
             return this._activeCell;
+        },
+
+        originalActiveCell: function() {
+            return this._originalActiveCell;
         },
 
         focus: function(ref) {
@@ -388,10 +401,6 @@
                 this._focus = null;
                 return focus;
             }
-        },
-
-        originalActiveCell: function() {
-            return this._originalActiveCell;
         },
 
         selection: function() {
