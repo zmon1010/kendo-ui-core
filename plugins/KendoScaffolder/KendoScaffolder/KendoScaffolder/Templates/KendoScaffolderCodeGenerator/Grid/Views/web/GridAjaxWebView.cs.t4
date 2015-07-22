@@ -272,7 +272,15 @@
         foreach (var item in distincValues) 
         {
             var isLast = item.Equals(distincValues.Last());
-            result += item.Key + ": \"" + item.Value + "\"";
+
+            if (item.Key == "max" || item.Key == "min" || item.Key == "required") 
+            {
+                result += item.Key + ": " + item.Value;
+            } else 
+            {
+                result += item.Key + ": \"" + item.Value + "\"";
+            }
+
             result += isLast ? "" : ", ";
         }
         return result;
