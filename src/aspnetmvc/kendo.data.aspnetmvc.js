@@ -294,7 +294,7 @@
        schemas: {
            "webapi": kendo.data.schemas["aspnetmvc-ajax"]
        }
-    })
+    });
 
     extend(true, kendo.data, {
         transports: {
