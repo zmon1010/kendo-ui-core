@@ -1301,6 +1301,26 @@ var __meta__ = {
         return result;
     }
 
+    function groupFooters(data) {
+        var result = [];
+        var item;
+
+        for (var idx = 0; idx < data.length; idx++) {
+            item = data[idx];
+            if (!("field" in item && "value" in item && "items" in item)) {
+                break;
+            }
+
+            if (item.hasSubgroups) {
+                result = result.concat(groupFooters(item.items));
+            }
+
+            result.push(item.aggregates);
+        }
+
+        return result;
+    }
+
     function showColumnCells(rows, columnIndex) {
         var idx = 0,
             length = rows.length,
@@ -7325,6 +7345,8 @@ var __meta__ = {
            }
 
            this._angularGroupItems(cmd);
+
+           this._angularGroupFooterItems(cmd);
        },
 
        _cleanupDetailItems: function() {
@@ -7347,6 +7369,22 @@ var __meta__ = {
                    return {
                        elements: that.tbody.children(".k-grouping-row"),
                        data: $.map(groupRows(that.dataSource.view()), function(dataItem){
+                           return { dataItem: dataItem };
+                       })
+                   };
+               });
+           }
+       },
+
+       _angularGroupFooterItems: function(cmd) {
+           var that = this;
+
+           if (that._group && that.groupFooterTemplate) {
+
+               that.angular(cmd, function() {
+                   return {
+                       elements: that.tbody.children(".k-group-footer"),
+                       data: $.map(groupFooters(that.dataSource.view()), function(dataItem){
                            return { dataItem: dataItem };
                        })
                    };

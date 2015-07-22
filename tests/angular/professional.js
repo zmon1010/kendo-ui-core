@@ -218,6 +218,132 @@
     }
     );
 
+    ngTest("Grid compiles groupFooterTemplate", 1, function(){
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: {
+                    group: { field: "text" },
+                    data: [
+                        { text: "Foo", id: 1 },
+                        { text: "Bar", id: 2 }
+                    ]
+                },
+                columns: [
+                    {
+                        field: "text",
+                        groupFooterTemplate: "<input ng-click='clickHandler()' />"
+                    }
+                ]
+            };
+
+            $scope.clickHandler = function() {
+                ok(true);
+            };
+        });
+
+        $("<div ng-controller=mine><div kendo-grid='grid' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function() {
+        var grid = QUnit.fixture.find('[data-role=grid]').getKendoGrid();
+
+        var rows = grid.tbody.children(".k-group-footer");
+
+        rows.first().find("input").click();
+    }
+    );
+
+    ngTest("Grid provides aggregates in groupFooterTemplate", 2, function(){
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: {
+                    group: {
+                        field: "text",
+                        dir: "desc",
+                        aggregates: [
+                            { field: "text", aggregate: "count" },
+                            { field: "id", aggregate: "sum" }
+                        ]
+                    },
+                    data: [
+                        { text: "Foo", id: 1 },
+                        { text: "Foo", id: 3 },
+                        { text: "Bar", id: 2 }
+                    ]
+                },
+                columns: [
+                    {
+                        field: "text",
+                        groupFooterTemplate: "|{{dataItem.text.count}}|-|{{dataItem.id.sum}}|"
+                    }
+                ]
+            };
+        });
+
+        $("<div ng-controller=mine><div kendo-grid='grid' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function() {
+        var grid = QUnit.fixture.find('[data-role=grid]').getKendoGrid();
+
+        var rows = grid.tbody.children(".k-group-footer");
+
+        equal(rows.eq(0).children().eq(1).text(), "|2|-|4|");
+        equal(rows.eq(1).children().eq(1).text(), "|1|-|2|");
+    }
+    );
+
+    ngTest("Grid aggregates in groupFooterTemplate with nested groups", 5, function(){
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: {
+                    group: [
+                        {
+                            field: "text",
+                            dir: "desc",
+                            aggregates: [
+                                { field: "text", aggregate: "count" }
+                            ]
+                        },
+                        {
+                            field: "id",
+                            dir: "desc",
+                            aggregates: [
+                                { field: "text", aggregate: "count" }
+                            ]
+                        }
+                    ],
+                    data: [
+                        { text: "Foo", id: 1 },
+                        { text: "Foo", id: 3 },
+                        { text: "Bar", id: 2 }
+                    ]
+                },
+                columns: [
+                    {
+                        field: "text",
+                        groupFooterTemplate: "|{{dataItem.text.count}}|"
+                    }
+                ]
+            };
+        });
+
+        $("<div ng-controller=mine><div kendo-grid='grid' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function() {
+        var grid = QUnit.fixture.find('[data-role=grid]').getKendoGrid();
+
+        var rows = grid.tbody.children(".k-group-footer");
+
+        equal(rows.eq(0).children().last().text(), "|1|");
+        equal(rows.eq(1).children().last().text(), "|1|");
+        equal(rows.eq(2).children().last().text(), "|2|");
+        equal(rows.eq(3).children().last().text(), "|1|");
+        equal(rows.eq(4).children().last().text(), "|1|");
+    }
+    );
+
     ngTest("Grid getOptions does not contain circular references", 1, function(){
         angular.module("kendo.tests").controller("mine", function($scope) {
             $scope.options = {
