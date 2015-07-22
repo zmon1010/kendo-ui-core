@@ -15,6 +15,7 @@
             return View();
         }
 
+        [HttpPost]
         public ActionResult Virtualization_Read([DataSourceRequest] DataSourceRequest request)
         {
             return Json(GetOrders().ToDataSourceResult(request));

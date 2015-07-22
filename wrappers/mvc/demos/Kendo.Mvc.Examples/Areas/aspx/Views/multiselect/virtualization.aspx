@@ -10,10 +10,10 @@
     <%= Html.Kendo().MultiSelect()
           .Name("orders")
           .DataTextField("ShipName")
-          .DataTextField("OrderID")
+          .DataValueField("OrderID")
           .HtmlAttributes(new { style = "width:450px" })
-          .Placeholder("Type a ship name")
-          .ItemTemplate("#= OrderID # | For: #= ShipName #, #= ShipCountry #")
+          .Placeholder("Select addresses...")
+          .ItemTemplate("<span class=\"order-id\">#= OrderID #</span> #= ShipName #, #= ShipCountry #")
           .Height(520)
           .DataSource(source => {
               source.Custom()
