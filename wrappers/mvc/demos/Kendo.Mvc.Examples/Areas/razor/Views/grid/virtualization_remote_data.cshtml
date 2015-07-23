@@ -2,12 +2,12 @@
     .Name("grid")
     .Columns(columns =>
     {
-        columns.Bound(o => o.OrderID).Width(60);
-        columns.Bound(o => o.CustomerID).Width(90);
-        columns.Bound(o => o.ShipName).Width(220);
-        columns.Bound(o => o.ShipAddress).Width(280);
-        columns.Bound(o => o.ShipCity).Width(110);
-        columns.Bound(o => o.ShipCountry).Width(110);
+        columns.Bound(o => o.OrderID).Width(110);
+        columns.Bound(o => o.CustomerID).Width(130);
+        columns.Bound(o => o.ShipName).Width(280);
+        columns.Bound(o => o.ShipAddress);
+        columns.Bound(o => o.ShipCity).Width(160);
+        columns.Bound(o => o.ShipCountry).Width(160);
     })
     .Sortable()
     .Scrollable(scrollable => scrollable.Virtual(true))

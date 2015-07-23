@@ -10,12 +10,12 @@
     <kendo:grid name="grid" sortable="true" height="430px">
     	<kendo:grid-scrollable virtual="true"/>
         <kendo:grid-columns>
-            <kendo:grid-column title="Order ID" field="orderId" width="60px" />
-            <kendo:grid-column title="Customer ID" field="customerId" width="90px" />
-            <kendo:grid-column title="Ship Name" field="shipName" width="220px" />   
-            <kendo:grid-column title="Ship Address" field="shipAddress" width="280px" />           
-            <kendo:grid-column title="Ship City" field="shipCity" width="110px" />
-            <kendo:grid-column title="Ship Country" field="shipCountry" width="110px" />
+            <kendo:grid-column title="Order ID" field="orderId" width="110" />
+            <kendo:grid-column title="Customer ID" field="customerId" width="130" />
+            <kendo:grid-column title="Ship Name" field="shipName" width="280" />   
+            <kendo:grid-column title="Ship Address" field="shipAddress" />           
+            <kendo:grid-column title="Ship City" field="shipCity" width="160" />
+            <kendo:grid-column title="Ship Country" field="shipCountry" width="160" />
         </kendo:grid-columns>
         <kendo:dataSource pageSize="100" serverPaging="true" serverSorting="true">
             <kendo:dataSource-transport>            	

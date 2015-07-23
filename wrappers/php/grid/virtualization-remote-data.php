@@ -45,32 +45,31 @@ $grid = new \Kendo\UI\Grid('grid');
 
 $orderID = new \Kendo\UI\GridColumn();
 $orderID->field('OrderID')
-            ->width(60)
+            ->width(110)
             ->title('Order ID');
 
 $customerID = new \Kendo\UI\GridColumn();
 $customerID->field('CustomerID')
-          ->width(90)
+          ->width(130)
           ->title('Customer ID');
 
 $shipName = new \Kendo\UI\GridColumn();
 $shipName->field('ShipName')
-          ->width(220)
+          ->width(280)
           ->title('Ship Name');
 
 $shipAddress = new \Kendo\UI\GridColumn();
 $shipAddress->field('ShipAddress')
-          ->width(380)
           ->title('Ship Address');
 
 $shipCity = new \Kendo\UI\GridColumn();
 $shipCity->field('ShipCity')
-          ->width(110)
+          ->width(160)
           ->title('Ship City');
 
 $shipCountry = new \Kendo\UI\GridColumn();
 $shipCountry->field('ShipCountry')
-          ->width(110)
+          ->width(160)
           ->title('Ship Country');
 
 $scrollable = new \Kendo\UI\GridScrollable();

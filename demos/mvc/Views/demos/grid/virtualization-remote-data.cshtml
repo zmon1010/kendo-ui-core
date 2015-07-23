@@ -1,6 +1,6 @@
 
         <div id="example">
-            <div id="grid"> </div>
+            <div id="grid"></div>
             <script>
                 $(document).ready(function() {
                     $("#grid").kendoGrid({
@@ -21,12 +21,21 @@
                         columns: [
                             { field: "OrderID", title: "Order ID", width: 110 },
                             { field: "CustomerID", title: "Customer ID", width: 130},
-                            { field: "ShipName", title:"Ship Name", width: 220 },
-                            { field: "ShipAddress", title:"Ship Address" },
-                            { field: "ShipCity", title:"Ship City" },
-                            { field: "ShipCountry", title:"Ship Country" }
+                            { field: "ShipName", title: "Ship Name", width: 280 },
+                            { field: "ShipAddress", title: "Ship Address" },
+                            { field: "ShipCity", title: "Ship City", width: 160 },
+                            { field: "ShipCountry", title: "Ship Country", width: 160 }
                         ]
                     });
                 });
             </script>
+            <style>
+
+                /*horizontal Grid scrollbar should appear if the browser window is shrinked too much*/
+                #grid table
+                {
+                    min-width: 1190px;
+                }
+
+            </style>
         </div>
