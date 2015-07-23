@@ -81,7 +81,7 @@
             schema: {
                 data: "Data",
                 model: {
-                    id: "<#= PrimaryKeyName#>" <# RenderFields(); #>
+                    id: "<#= PrimaryKeyName#>" <# RenderFields(PrimaryKeyName); #>
                 }
             }<#=ServerOperation ? ", "+ newLine +"\t\t\tserverPaging: true,"+ newLine + "\t\t\tserverSorting: true,"+ newLine+"\t\t\tserverSorting: true" : "," #>,
         },
@@ -281,10 +281,11 @@
         return result;
     }
 
-    private void RenderFields() 
+    private void RenderFields(string primaryKey) 
     {
         var newLine = Environment.NewLine;
         string result = "," + newLine + "\t\t\t\t\tfields: {" + newLine;    
+        DataAnnotationAttributes.Remove(primaryKey);
         
         foreach (var model in DataAnnotationAttributes)
         {            
