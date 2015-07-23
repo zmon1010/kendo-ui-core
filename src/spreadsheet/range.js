@@ -25,12 +25,15 @@
         },
 
         _set: function(name, value, parseStrings, recalc) {
+            var sheet = this._sheet;
             this._ref.forEach(function(ref) {
-                this._sheet._set(ref.toRangeRef(), name, value, parseStrings);
-            }.bind(this));
-
-            this._sheet.triggerChange("data");
-
+                ref = ref.toRangeRef();
+                if (name == "formula") {
+                    sheet._set(ref, "compiledFormula", null);
+                }
+                sheet._set(ref, name, value, parseStrings);
+            });
+            sheet.triggerChange("data");
             return this;
         },
 
@@ -101,10 +104,6 @@
         },
 
         formula: function(value) {
-            if (value !== undefined) {
-                this._property("compiledFormula", null);
-            }
-
             if (value === null) {
                 var sheet = this._sheet;
                 sheet.batch(function() {
