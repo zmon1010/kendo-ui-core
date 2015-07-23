@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.toolbar", "../kendo.colorpicker" ], f);
+    define([ "../kendo.toolbar", "../kendo.colorpicker", "../kendo.combobox" ], f);
 })(function(){
 
 (function(kendo) {
@@ -62,6 +62,14 @@
                     if (tool.overflow) {
                         tool.overflow.value(value);
                     }
+                } else if (tool.type === "comboBox") {
+                    if (tool.toolbar) {
+                        tool.toolbar.value(kendo.parseInt(value));
+                    }
+
+                    if (tool.overflow) {
+                        tool.overflow.value(kendo.parseInt(value));
+                    }
                 }
             }
         },
@@ -120,6 +128,48 @@
     });
 
     kendo.toolbar.registerComponent("colorPicker", colorPicker);
+
+    var FONT_SIZES = [8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72];
+    var comboBox = kendo.toolbar.Item.extend({
+        init: function(options, toolbar) {
+            var comboBox = $("<input />").kendoComboBox({
+                change: function(e) {
+                    toolbar.trigger("execute", {
+                        commandType: "PropertyChangeCommand",
+                        property: options.property,
+                        value: kendo.parseInt(this.value()) + "px"
+                    });
+                },
+                dataSource: options.fontSizes || FONT_SIZES
+            }).data("kendoComboBox");
+
+            this.comboBox = comboBox;
+            this.element = comboBox.wrapper;
+            this.options = options;
+            this.toolbar = toolbar;
+
+            this.element.width(options.width).attr({
+                "data-command": "PropertyChangeCommand",
+                "data-property": options.property
+            });
+
+            this.element.data({
+                type: "comboBox",
+                comboBox: this
+            });
+        },
+
+        value: function(value) {
+            if (value !== undefined) {
+                this.comboBox.value(value);
+            } else {
+                return this.comboBox.value();
+            }
+        }
+    });
+
+    kendo.toolbar.registerComponent("comboBox", comboBox);
+
 })(kendo);
 
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
