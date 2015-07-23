@@ -520,11 +520,28 @@ span.k-tooltip
 
 .k-block > .k-header, 
 .k-window-titlebar {
-    padding: 0.5em 0 0.571em;
+    padding: 0.486em 0;
+    height: 2.362em;
+    border-width: 0;
 }
 
 .k-window-titlebar .k-window-actions {
-	right: 0.929em;
+    padding-top: 0;
+	right: 0;
+}
+
+.k-window-titlebar .k-window-action
+{
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    padding: 0;
+    border-width: 0;
+}
+
+.k-window-titlebar .k-window-action > .k-icon
+{
+    margin-top: 16px;
 }
 
 div.k-window {
@@ -534,6 +551,7 @@ div.k-window {
 .k-window-title {
     right: 1.143em;
     left: 1.143em;
+    line-height: 2.362em;
 }
 
 div.k-window-content {
