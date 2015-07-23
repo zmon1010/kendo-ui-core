@@ -3,11 +3,27 @@
 <#@ include file="..\ImportsSchedulerView.include.t4" #>
 <#
     var entitySetName = ModelMetadata.EntitySetName;
-    var batchEditMode = "InCell";
 #>
 
 @(Html.Kendo().Scheduler<<#= Namespace #>.<#= WidgetViewModelName #>>()
     .Name("scheduler")
+    .Selectable(<#= Selectable.ToString().ToLower() #>)
+<#
+    if(SchedulerViewTypes.Count > 0){
+#>
+    .Views(views => {
+<#
+    foreach (string view in SchedulerViewTypes)
+    {
+#>
+        views.<#= view #>View();
+<#
+    }
+#>
+    })
+<#
+    }
+#>
 <#
     if(PdfExport) {
 #>
@@ -18,19 +34,18 @@
     .Toolbar(t => t.Pdf())
 <#
     }
-
     if(SchedulerEvents.Count > 0){
 #>
-      .Events(events => {
+    .Events(events => {
 <#
-       foreach (string ev in SchedulerEvents)
-       {
+    foreach (string ev in SchedulerEvents)
+    {
 #>
-            events.<#= ev #>("on<#= ev #>");
+        events.<#= ev #>("on<#= ev #>");
 <#
-       }
+    }
 #>
-      })
+    })
 <#
     }
 #>

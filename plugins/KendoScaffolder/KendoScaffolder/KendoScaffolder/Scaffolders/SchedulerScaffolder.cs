@@ -180,8 +180,10 @@ namespace KendoScaffolder.Scaffolders
             viewParameters.Add("Selectable", ViewModel.Selectable);
             viewParameters.Add("Namespace", KendoScaffolderUtils.GetDefaultNamespace(Context));
             viewParameters.Add("SchedulerEvents", ViewModel.SelectedSchedulerEvents);
+            viewParameters.Add("SchedulerViewTypes", ViewModel.SelectedSchedulerViewTypes);
             //viewParameters.Add("ServerOperation", ViewModel.ServerOperation);
 
+            //use View model ?
             if (ViewModel.UseViewModel)
             {
                 viewParameters.Add("ViewModelTypeChildren", ViewModelType.Children);
@@ -192,11 +194,6 @@ namespace KendoScaffolder.Scaffolders
             viewParameters.Add("EditableDestroy", ViewModel.EditableDestroy);
             viewParameters.Add("EditableResize", ViewModel.EditableResize);
             viewParameters.Add("EditableMove", ViewModel.EditableMove);
-
-            if (ViewModel.Selectable)
-            {
-                viewParameters.Add("Selectable", ViewModel.Selectable);
-            }
 
             return viewParameters;
         }

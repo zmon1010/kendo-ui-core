@@ -352,7 +352,7 @@
                     <Label Grid.Row="4" Margin="0, 0, 0, 0" Content="Other options:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <CheckBox Grid.Row="5" Content="PdfExport"  Margin="15, 0, 0, 0" IsChecked="{Binding PdfExport, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <CheckBox Grid.Row="6" Content="Selectable" Margin="15, 0, 0, 0" IsChecked="{Binding Selectable, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <CheckBox Grid.Row="7" Content="Footer" Margin="15, 0, 0, 0" IsChecked="{Binding Footer, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <CheckBox Grid.Row="7" Content="Footer" Margin="15, 0, 0, 0" IsChecked="{Binding Footer, Mode=OneWayToSource}" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed" />
 
                     <Label Grid.Row="8" Margin="0, 10, 0, 0" Content="Scheduler Views:" VerticalAlignment="Center" />
                     <WrapPanel Grid.Row="9"  Margin="15, 5, 0, 0">

@@ -21,6 +21,7 @@
 <#@ parameter type="Microsoft.AspNet.Scaffolding.Core.Metadata.ModelMetadata" name="ModelMetadata" #>
 <#@ parameter type="System.String" name="ModelTypeName" #>
 <#@ parameter type="System.String" name="PrimaryKeyName" #>
+<#@ parameter type="System.String" name="PrimaryKeyType" #>
 <#@ parameter type="System.String" name="Namespace" #>
 <#@ parameter type="System.Collections.Generic.HashSet<System.String>" name="RequiredNamespaces" #>
 <#@ parameter type="System.String" name ="ViewName" #>

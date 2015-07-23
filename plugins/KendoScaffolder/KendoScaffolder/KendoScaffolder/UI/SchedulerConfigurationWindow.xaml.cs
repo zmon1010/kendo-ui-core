@@ -19,23 +19,40 @@
             InitializeComponent();
 
             SchedulerEventsListBox.SelectionChanged += SchedulerEventsListBoxSelectionChanged;
+            SchedulerViewsListBox.SelectionChanged += SchedulerViewsListBoxSelectionChanged;
             ValidationErrors = new ObservableCollection<ValidationError>();
             DataContext = viewModel;
         }
 
         private static void SchedulerEventsListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var gridEventsListBox = sender as ListBox;
-            if (gridEventsListBox == null) return;
+            var schedulerEventsListBox = sender as ListBox;
+            if (schedulerEventsListBox == null) return;
 
-            var viewModel = gridEventsListBox.DataContext as SchedulerConfigurationViewModel;
+            var viewModel = schedulerEventsListBox.DataContext as SchedulerConfigurationViewModel;
             if (viewModel == null) return;
 
             viewModel.SelectedSchedulerEvents.Clear();
 
-            foreach (CheckBoxListItem item in gridEventsListBox.SelectedItems)
+            foreach (CheckBoxListItem item in schedulerEventsListBox.SelectedItems)
             {
                 viewModel.SelectedSchedulerEvents.Add(item.Text);
+            }
+        }
+
+        private static void SchedulerViewsListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var schedulerViewsListBox = sender as ListBox;
+            if (schedulerViewsListBox == null) return;
+
+            var viewModel = schedulerViewsListBox.DataContext as SchedulerConfigurationViewModel;
+            if (viewModel == null) return;
+
+            viewModel.SelectedSchedulerViewTypes.Clear();
+
+            foreach (CheckBoxListItem item in schedulerViewsListBox.SelectedItems)
+            {
+                viewModel.SelectedSchedulerViewTypes.Add(item.Text);
             }
         }
 

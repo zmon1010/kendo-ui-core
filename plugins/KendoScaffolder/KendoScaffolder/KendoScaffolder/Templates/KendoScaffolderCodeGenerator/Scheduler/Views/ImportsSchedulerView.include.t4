@@ -12,6 +12,7 @@
 <#@ parameter type="System.String" name="ControllerRootName" #>
 <#@ parameter type="System.String" name="Namespace" #>
 <#@ parameter type="System.Collections.Generic.List<string>" name="SchedulerEvents" #>
+<#@ parameter type="System.Collections.Generic.List<string>" name="SchedulerViewTypes" #>
 <#@ parameter type="System.Boolean" name="EditableCreate" #>
 <#@ parameter type="System.Boolean" name="EditableUpdate" #>
 <#@ parameter type="System.Boolean" name="EditableDestroy" #>

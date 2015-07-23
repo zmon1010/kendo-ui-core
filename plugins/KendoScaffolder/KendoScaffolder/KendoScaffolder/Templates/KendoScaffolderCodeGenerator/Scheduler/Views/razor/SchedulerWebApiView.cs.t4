@@ -13,14 +13,25 @@ config.Routes.MapHttpRoute(
 *@
 
 @(Html.Kendo().Scheduler<<#= Namespace #>.<#= WidgetViewModelName #>>()
-      .Name("scheduler")
-      <#
-    if(Selectable){
+    .Name("scheduler")
+    .Selectable(<#= Selectable.ToString().ToLower() #>)
+<#
+    if(SchedulerViewTypes.Count > 0){
 #>
-      .Selectable(<#=Selectable #>)
+    .Views(views => {
+<#
+    foreach (string view in SchedulerViewTypes)
+    {
+#>
+        views.<#= view #>View();
 <#
     }
-
+#>
+    })
+<#
+    }
+#>
+<#
     if(PdfExport) {
 #>
     .Pdf(pdf => pdf
@@ -30,47 +41,43 @@ config.Routes.MapHttpRoute(
     .Toolbar(t => t.Pdf())
 <#
     }
-
     if(SchedulerEvents.Count > 0) {
 #>
-      .Events(events => {
+    .Events(events => {
 <#
       foreach (string ev in SchedulerEvents)
       {
 #>
-          events.<#= ev #>("on<#= ev #>");
+        events.<#= ev #>("on<#= ev #>");
 <#
       }
 #>
-      })
+    })
 <#
     }
 #>
-      .DataSource(dataSource => dataSource
-          .WebApi()
-<#
-
-#>
-          .Model(m => {
+    .DataSource(dataSource => dataSource
+        .WebApi()
+        .Model(m => {
             m.Id(f => f.<#= PrimaryKeyName #>);
             m.Field(f => f.Title).DefaultValue("No title");
             m.RecurrenceId(f => f.RecurrenceID);
-          })
-          .Read(read => read.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))
+        })
+        .Read(read => read.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))
 <#
     if(EditableCreate || EditableResize || EditableMove) {
 #>
-          .Create(create => create.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))  
+        .Create(create => create.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>" })))
 <#
     }
     if(EditableUpdate || EditableResize || EditableMove) {
 #>
-          .Update(update => update.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
+        .Update(update => update.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
 <#
     }
     if(EditableDestroy) {
 #>
-          .Destroy(destroy => destroy.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
+        .Destroy(destroy => destroy.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
 <#
     }
 #>
