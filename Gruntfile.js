@@ -1,4 +1,5 @@
 /* jshint browser:false, node:true */
+/* global KENDO_SRC_DIR */
 var META = require("./build/kendo-meta.js");
 var PATH = require("path");
 
@@ -60,6 +61,7 @@ module.exports = function(grunt) {
     var mainKendoFiles = META.listKendoFiles().map(addSrc);
 
     // Project configuration.
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         jshint: {
@@ -192,7 +194,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: KENDO_SRC_DIR,
                     src: [ "jszip.*" ],
-                    dest: '<%= kendo.options.jsDestDir %>/',
+                    dest: '<%= kendo.options.jsDestDir %>/'
                 }]
             },
             pako: {
@@ -200,7 +202,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: KENDO_SRC_DIR,
                     src: [ "pako*.*" ],
-                    dest: '<%= kendo.options.jsDestDir %>/',
+                    dest: '<%= kendo.options.jsDestDir %>/'
                 }]
             },
             timezones: {
@@ -269,7 +271,7 @@ module.exports = function(grunt) {
 
         less: {
             options: {
-                destDir: "<%= kendo.options.destDir %>",
+                destDir: "<%= kendo.options.destDir %>"
                 autoprefixer: {
                     browsers: ([
                         "Explorer >= 7",
