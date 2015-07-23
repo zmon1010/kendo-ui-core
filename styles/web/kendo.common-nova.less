@@ -66,24 +66,24 @@
 }
 
 .k-tabstrip-top > .k-tabstrip-items > .k-item {
-    border-bottom-width: 2px;
+    border-bottom-width: 3px;
 }
 
 .k-tabstrip-left > .k-tabstrip-items .k-tab-on-top,
 .k-tabstrip-left > .k-tabstrip-items .k-state-active {
-    margin-right: -2px;
+    margin-right: -3px;
 }
 
 .k-tabstrip-left > .k-tabstrip-items > .k-item {
-    border-right-width: 2px;
+    border-right-width: 3px;
 }
 
 .k-tabstrip-right > .k-tabstrip-items > .k-item {
-    border-left-width: 2px;
+    border-left-width: 3px;
 }
 
 .k-tabstrip-bottom > .k-tabstrip-items > .k-item {
-    border-top-width: 2px;
+    border-top-width: 3px;
 }
 
 .k-tabstrip-items .k-link {
@@ -326,10 +326,10 @@
 
 .k-widget.k-calendar .k-nav-fast
 {
-    width: 65%;
-    height: 2.571em;
-    line-height: 2.571em;
-    margin: 0.429em -0.08333em 0.429em 0;
+    width: 64%;
+    height: 3.43em;
+    line-height: 3.43em;
+    margin: 0;
 }
 
 .k-calendar .k-header .k-icon
@@ -342,15 +342,14 @@
 {
     position: absolute;
     top: 0;
-    line-height: 3.36em;
-    height: 3.36em;
 }
 
 .k-calendar .k-header .k-link.k-nav-prev,
 .k-calendar .k-header .k-link.k-nav-next
 {
-    height: 3.36em;
-    width: 3.36em;
+    height: 3.43em;
+    width: 3.43em;
+    line-height: 3.43em;
 }
 
 .k-widget.k-calendar .k-nav-prev {
@@ -460,7 +459,7 @@ table.k-editor {
 }
 
 .k-button-group .k-tool {
-	margin: 6px 0;
+	margin: 0;
 }
 
 .k-editor-toolbar .k-button-group .k-tool-icon,
@@ -476,10 +475,6 @@ table.k-editor {
 
 .k-editor-toolbar .k-state-selected {
     font-weight: bold;  
-}
-
-.k-editor-toolbar .k-tool.k-state-hover {
-    border-radius: 50%;
 }
 
 .k-filebrowser {
@@ -641,16 +636,18 @@ div.editorToolbarWindow.k-window-content {
     margin-left: -1px;
 }
 
-.k-slider-horizontal .k-draghandle,
-.k-slider-vertical .k-draghandle,
-.k-flatcolorpicker .k-hue-slider .k-draghandle,
-.k-flatcolorpicker .k-transparency-slider .k-draghandle {
-    width: 6px;
-    height: 6px;
+.k-slider-horizontal .k-draghandle {
+  top: -6px;
+  width: 13px;
+  height: 13px;
+  border-width: 1px;
 }
 
-.k-flatcolorpicker .k-hue-slider .k-draghandle {
-    margin-top: -1px;
+.k-slider-vertical .k-draghandle
+{
+    width: 13px;
+    left: -7px;
+    border-width: 1px;
 }
 
 .k-colorpicker
@@ -663,28 +660,6 @@ div.editorToolbarWindow.k-window-content {
         height: @input-height;
         padding: 0.177em 0;
     }      
-}
-
-.k-draghandle.k-state-selected,
-.k-draghandle.k-state-selected:link,
-.k-flatcolorpicker .k-hue-slider .k-draghandle.k-state-selected,
-.k-flatcolorpicker .k-transparency-slider .k-draghandle.k-state-selected
-{
-    width: 10px;
-    height: 10px;
-}
-
-.k-draghandle.k-state-focused.k-state-selected {
-	margin-left: -2px;
-}
-
-.k-slider-horizontal .k-draghandle.k-state-selected,
-.k-flatcolorpicker .k-hue-slider .k-draghandle.k-state-selected {
-    top: -6px;
-}
-
-.k-slider-vertical .k-draghandle.k-state-selected {
-    left: -4px;
 }
 
 /* Editor */

@@ -87,9 +87,9 @@
 @loading-panel-color: #ffffff;
 @shadow-color: rgba(0, 0, 0, .2);
 @shadow-inset-color: #cccccc;
-@main-border-radius: 2px;
-@list-border-radius: @main-border-radius - 1;
-@inner-border-radius: @main-border-radius - 1;
+@main-border-radius: 0;
+@list-border-radius: 0;
+@inner-border-radius: 0;
 @slider-border-radius: 13px;
 @default-icon-opacity: .7;
 @calendar-border-radius: 50%;
@@ -3316,12 +3316,6 @@ table.k-editor {
 
 .k-filebrowser .k-header {
     color: @widget-text-color;
-}
-
-.k-editor-toolbar .k-tool,
-.k-group-start.k-group-end.k-tool {
-    border-color: @alt-background-color;
-    border-radius: 50%;
 }
 
 .k-treeview .k-state-selected,
