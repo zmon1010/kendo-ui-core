@@ -153,4 +153,14 @@
         navigator.modifySelection('shrink-left');
         selectionEqual('A3:A3');
     });
+
+    test("falls back to the other direction if merged cell keeps it expanded", function() {
+        sheet.range('B3:D3').merge();
+        sheet.range('C4').select();
+        navigator.modifySelection('expand-up');
+        selectionEqual('B3:D4');
+        navigator.modifySelection('shrink-right');
+        navigator.modifySelection('shrink-right');
+        selectionEqual('B3:F4');
+    });
 })();

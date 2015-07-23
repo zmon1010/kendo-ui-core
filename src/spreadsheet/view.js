@@ -164,25 +164,31 @@
 
                 var activeCell = that._sheet.activeCell();
                 var selectionTopLeft = that._sheet.select().topLeft;
+                var selectionBottomRight = that._sheet.select().bottomRight;
 
+                // There may be a third, indeterminate state, caused by a merged cell.
+                // In this state, all key movements are treated as shrinks.
+                // The navigator will reverse them if it detects that it will cause the selection to exclude the active cell.
                 var leftMode = activeCell.topLeft.col == selectionTopLeft.col;
+                var rightMode = activeCell.bottomRight.col == selectionBottomRight.col;
                 var topMode = activeCell.topLeft.row == selectionTopLeft.row;
+                var bottomMode = activeCell.bottomRight.row == selectionBottomRight.row;
 
                 switch(action) {
                     case "left":
-                        action = leftMode ? "shrink-left" : "expand-left";
+                        action = rightMode ? "expand-left" : "shrink-left";
                         break;
                     case "right":
                         action = leftMode ? "expand-right" : "shrink-right";
                         break;
                     case "up":
-                        action = topMode ? "shrink-up" : "expand-up";
+                        action = bottomMode ? "expand-up" : "shrink-up";
                         break;
                     case "down":
                         action = topMode ? "expand-down" : "shrink-down";
                         break;
                     case "prev-page":
-                        action = topMode ? "shrink-page-up" : "expand-page-up";
+                        action = bottomMode ? "expand-page-up" : "shrink-page-up";
                         break;
                     case "next-page":
                         action = topMode ? "expand-page-down" : "shrink-page-down";

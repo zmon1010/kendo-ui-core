@@ -168,11 +168,19 @@
                     break;
             }
 
+            var newSelection = new RangeRef(topLeft, bottomRight);
+
+            if (!this.union(newSelection).intersects(activeCell)) {
+                // throw new Error(newSelection.print() + " does not contain " + activeCell.print());
+                this.modifySelection(direction.replace("shrink", "expand"));
+                return;
+            }
+
             if (scrollInto) {
                 sheet.focus(scrollInto);
             }
 
-            sheet.select(new RangeRef(topLeft, bottomRight), false);
+            sheet.select(newSelection, false);
         },
 
         moveActiveCell: function(direction) {
