@@ -24,17 +24,6 @@
 <#@ parameter type="System.String" name="PrimaryKeyType" #>
 <#@ parameter type="System.String" name="Namespace" #>
 <#@ parameter type="System.Collections.Generic.HashSet<System.String>" name="RequiredNamespaces" #>
-<#@ parameter type="System.String" name ="ViewName" #>
 <#@ parameter type="System.String" name ="ViewPrefix" #>
 <#@ parameter type="System.String" name="WidgetViewModelName" #>
-<#@ parameter type="System.Collections.Generic.List<string>" name="SelectedModelTypeFields" #>
-<#@ parameter type="System.String" name="SelectedEventTitleField" #>
-<#@ parameter type="System.String" name="SelectedEventStartField" #>
-<#@ parameter type="System.String" name="SelectedEventEndField" #>
-<#@ parameter type="System.String" name="SelectedEventDescriptionField" #>
-<#@ parameter type="System.String" name="SelectedEventIsAllDayField" #>
-<#@ parameter type="System.String" name="SelectedEventStartTimezoneField" #>
-<#@ parameter type="System.String" name="SelectedEventEndTimezoneField" #>
-<#@ parameter type="System.String" name="SelectedEventRecurrenceIDField" #>
-<#@ parameter type="System.String" name="SelectedEventRecurrenceRuleField" #>
-<#@ parameter type="System.String" name="SelectedEventRecurrenceExceptionField" #>
+<#@ parameter type="System.String" name ="ViewName" #>

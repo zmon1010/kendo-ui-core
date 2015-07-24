@@ -66,14 +66,11 @@ namespace KendoScaffolder.Scaffolders
         private Dictionary<string, object> GetCommonParameters()
         {
             string viewName = (ViewModel.ViewName != String.Empty) ? ViewModel.ViewName : KendoConstants.DefaultViewName;
-            string controllerName = (ViewModel.ControllerName != String.Empty) ? ViewModel.ControllerName : KendoConstants.DefaultGridControllerName;
+            string controllerName = (ViewModel.ControllerName != String.Empty) ? ViewModel.ControllerName : KendoConstants.DefaultSchedulerControllerName;
             string controllerRootName = controllerName.Replace("Controller", "");
             string modelTypeVariable = KendoScaffolderUtils.GetTypeVariable(ModelType.Name);
             PropertyMetadata primaryKey = EfMetadata.PrimaryKeys.FirstOrDefault();
             string widgetViewModelName = string.Format("{0}ViewModel", ModelType.Name);
-            //string pluralizedName = efMetadata.EntitySetName;
-            //string modelNameSpace = modelType.Namespace != null ? modelType.Namespace.FullName : String.Empty;
-            //string relativePath = string.Empty;
             List<string> selectedModelTypeFields = ViewModel.SchedulerEventFields
                 .Select(field => field.Replace("SelectedEvent", "").Replace("Field", ""))
                 .ToList();
@@ -100,17 +97,7 @@ namespace KendoScaffolder.Scaffolders
                 {"ViewName", viewName},
                 {"ViewPrefix", ""},
                 {"WidgetViewModelName", widgetViewModelName},
-                {"SelectedModelTypeFields", selectedModelTypeFields},
-                {"SelectedEventTitleField", ViewModel.SelectedEventTitleField.ShortTypeName},
-                {"SelectedEventStartField", ViewModel.SelectedEventStartField.ShortTypeName},
-                {"SelectedEventEndField", ViewModel.SelectedEventEndField.ShortTypeName},
-                {"SelectedEventDescriptionField", ViewModel.SelectedEventDescriptionField.ShortTypeName},
-                {"SelectedEventIsAllDayField", ViewModel.SelectedEventIsAllDayField.ShortTypeName},
-                {"SelectedEventStartTimezoneField", ViewModel.SelectedEventStartTimezoneField.ShortTypeName},
-                {"SelectedEventEndTimezoneField", ViewModel.SelectedEventEndTimezoneField.ShortTypeName},
-                {"SelectedEventRecurrenceIDField", ViewModel.SelectedEventRecurrenceIDField.ShortTypeName},
-                {"SelectedEventRecurrenceRuleField", ViewModel.SelectedEventRecurrenceRuleField.ShortTypeName},
-                {"SelectedEventRecurrenceExceptionField", ViewModel.SelectedEventRecurrenceExceptionField.ShortTypeName},
+                {"SelectedModelTypeFields", selectedModelTypeFields}
             };
 
             if (ViewModel.UseResources)
@@ -172,11 +159,7 @@ namespace KendoScaffolder.Scaffolders
             var viewParameters = new Dictionary<string, object>(CommonParameters);
 
 
-            //viewParameters.Add("Editable", ViewModel.Editable);
-            viewParameters.Add("IsBundleConfigPresent", true);
-            viewParameters.Add("IsLayoutPageSelected", true);
-            viewParameters.Add("IsPartialView", false);
-            viewParameters.Add("LayoutPageFile", "");
+
             viewParameters.Add("Selectable", ViewModel.Selectable);
             viewParameters.Add("Namespace", KendoScaffolderUtils.GetDefaultNamespace(Context));
             viewParameters.Add("SchedulerEvents", ViewModel.SelectedSchedulerEvents);
@@ -239,9 +222,18 @@ namespace KendoScaffolder.Scaffolders
             var widgetViewModelParameters = new Dictionary<string, object>(CommonParameters);
 
             widgetViewModelParameters.Add("ModelTypeName", ModelType.Name);
-            widgetViewModelParameters.Add("ModelTypeChildren", ModelType.Children);
             widgetViewModelParameters.Add("Namespace", KendoScaffolderUtils.GetDefaultNamespace(Context));
             widgetViewModelParameters.Add("RequiredNamespaces", new HashSet<string>() { ModelType.Namespace.FullName });
+            widgetViewModelParameters.Add("SelectedEventTitleField", ViewModel.SelectedEventTitleField.ShortTypeName);
+            widgetViewModelParameters.Add("SelectedEventStartField", ViewModel.SelectedEventStartField.ShortTypeName);
+            widgetViewModelParameters.Add("SelectedEventEndField", ViewModel.SelectedEventEndField.ShortTypeName);
+            widgetViewModelParameters.Add("SelectedEventDescriptionField", ViewModel.SelectedEventDescriptionField.ShortTypeName);
+            widgetViewModelParameters.Add("SelectedEventIsAllDayField", ViewModel.SelectedEventIsAllDayField.ShortTypeName);
+            widgetViewModelParameters.Add("SelectedEventStartTimezoneField", ViewModel.SelectedEventStartTimezoneField.ShortTypeName);
+            widgetViewModelParameters.Add("SelectedEventEndTimezoneField", ViewModel.SelectedEventEndTimezoneField.ShortTypeName);
+            widgetViewModelParameters.Add("SelectedEventRecurrenceIDField", ViewModel.SelectedEventRecurrenceIDField.ShortTypeName);
+            widgetViewModelParameters.Add("SelectedEventRecurrenceRuleField", ViewModel.SelectedEventRecurrenceRuleField.ShortTypeName);
+            widgetViewModelParameters.Add("SelectedEventRecurrenceExceptionField", ViewModel.SelectedEventRecurrenceExceptionField.ShortTypeName);
 
             return widgetViewModelParameters;
         }

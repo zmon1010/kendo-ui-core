@@ -7,19 +7,14 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="Microsoft.AspNet.Scaffolding.Core.Metadata" #>
 <#@ ScaffoldingAssembly Processor="ScaffoldingAssemblyLoader" #>
-<#@ parameter type="System.String" name="AreaName" #>
-<#@ parameter type="System.String" name="ContextTypeName" #>
 <#@ parameter type="System.String" name="ModelVariable" #>
-<#@ parameter type="Microsoft.AspNet.Scaffolding.Core.Metadata.ModelMetadata" name="ModelMetadata" #>
 <#@ parameter type="System.String" name="ModelTypeName" #>
+<#@ parameter type="System.String" name="WidgetViewModelName" #>
 <#@ parameter type="System.String" name="PrimaryKeyName" #>
 <#@ parameter type="System.String" name="PrimaryKeyType" #>
 <#@ parameter type="System.String" name="RecurrenceIDType" #>
 <#@ parameter type="System.String" name="Namespace" #>
 <#@ parameter type="System.Collections.Generic.HashSet<System.String>" name="RequiredNamespaces" #>
-<#@ parameter type="EnvDTE.CodeElements" name="ModelTypeChildren" #>
-<#@ parameter type="System.String" name="WidgetViewModelName" #>
-<#@ parameter type="System.Collections.Generic.List<string>" name="SelectedModelTypeFields" #>
 <#@ parameter type="System.Boolean" name="UseResources" #>
 <#@ parameter type="System.String" name="SelectedModelResourceField" #>
 <#@ parameter type="System.String" name="SelectedModelResourceFieldType" #>
