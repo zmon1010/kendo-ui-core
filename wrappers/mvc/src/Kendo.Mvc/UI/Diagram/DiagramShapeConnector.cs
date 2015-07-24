@@ -39,7 +39,7 @@ namespace Kendo.Mvc.UI
                 json["name"] = Name;
             }
             
-            if (Position.HasValue())
+            if (Position != null)
             {
                 json["position"] = Position;
             }
