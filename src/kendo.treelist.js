@@ -1699,6 +1699,15 @@ var __meta__ = {
             return grep(this.columns, not(is("locked")));
         },
 
+        _flushCache: function() {
+            if (this.options.$angular) {
+                this._contentTree.render([]);
+                if (this._hasLockedColumns) {
+                    this._lockedContentTree.render([]);
+                }
+            }
+        },
+
         _render: function(options) {
             options = options || {};
 
@@ -1713,6 +1722,7 @@ var __meta__ = {
 
             this._angularItems("cleanup");
             this._angularFooters("cleanup");
+            this._flushCache();
 
             if (options.error) {
                 // root-level error message
@@ -1727,6 +1737,7 @@ var __meta__ = {
                 // no rows message
                 this._showStatus(kendo.htmlEncode(messages.noRows));
             } else {
+
                 // render rows
                 this._hideStatus();
                 this._contentTree.render(this._trs({

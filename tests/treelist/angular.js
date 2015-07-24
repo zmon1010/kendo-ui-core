@@ -65,6 +65,33 @@
         equal(instance.calls("angular"), 2);
     });
 
+    ngTest("repaint templates when changing data item", 2, function() {
+        angular.module("kendo.tests").controller("mine", function($scope) {
+            $scope.options = {
+                dataSource: {
+                    data: [
+                        { id: 1, parentId: null, text: "foo" }
+                    ]
+                },
+                columns: [
+                    { field: "id" },
+                    { template: "{{dataItem.text}}" }
+                ]
+            };
+        });
+
+        $("<div ng-controller=mine><div kendo-treelist='tree' k-options='options'></div></div>").appendTo(QUnit.fixture);
+    },
+
+    function() {
+        var treeList = QUnit.fixture.find('[data-role=treelist]').getKendoTreeList();
+        treeList.dataSource.view()[0].set("text", "bar");
+
+        var tds = treeList.content.find("td");
+        equal(tds.eq(0).text(), "1");
+        equal(tds.eq(1).text(), "bar");
+    });
+
     ngTest("repaint templates when changing data source", 2, function() {
         angular.module("kendo.tests").controller("mine", function($scope) {
             $scope.options = {
