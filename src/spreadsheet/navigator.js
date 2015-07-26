@@ -45,13 +45,16 @@
     });
 
     var SheetNavigator = kendo.Class.extend({
-        init: function(sheet, viewPortHeight) {
+        init: function(sheet) {
             this._sheet = sheet;
             this.columns = this._sheet._grid._columns;
-            this._viewPortHeight = viewPortHeight;
 
             this.colEdge = new EdgeNavigator("col", this._sheet._grid._columns, this.columnRange.bind(this), this.union.bind(this));
             this.rowEdge = new EdgeNavigator("row", this._sheet._grid._rows, this.rowRange.bind(this), this.union.bind(this));
+        },
+
+        height: function(height) {
+            this._viewPortHeight = height;
         },
 
         union: function(ref) {

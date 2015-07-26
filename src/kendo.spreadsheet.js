@@ -11,6 +11,7 @@
         "./spreadsheet/range",
         "./spreadsheet/sheet",
         "./spreadsheet/formulacontext",
+        "./spreadsheet/view/eventhandler",
         "./spreadsheet/view",
         "./spreadsheet/grid",
         "./spreadsheet/axis",

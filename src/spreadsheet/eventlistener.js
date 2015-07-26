@@ -18,10 +18,12 @@
         33: 'pageup',
         34: 'pagedown'
     };
+
     var EventListener = kendo.Class.extend({
-        init: function (target) {
+        init: function(target, observer, handlers) {
             this._handlers = {};
             this.target = target;
+            this._observer = observer || window;
 
             this.keyDownProxy = this.keyDown.bind(this);
             this.mouseProxy = this.mouse.bind(this);
@@ -30,9 +32,15 @@
                 this.handleEvent(e, KEY_NAMES[e.keyCode]);
             }.bind(this));
 
-            target.on("mousedown mouseup cut copy paste", function(e) {
+            target.on("mousedown mouseup cut copy paste scroll wheel", function(e) {
                 this.handleEvent(e, e.type);
             }.bind(this));
+
+            if (handlers) {
+                for (var key in handlers) {
+                    this.on(key, handlers[key]);
+                }
+            }
         },
 
         keyDown: function(e) {
@@ -58,26 +66,30 @@
             var catchAllHandler = this._handlers['*+' + name];
 
             if (catchAllHandler) {
-                catchAllHandler(e, eventKey);
+                catchAllHandler.call(this._observer, e, eventKey);
             }
 
             var handler = this._handlers[eventKey];
 
             if (handler) {
-                handler(e, eventKey);
+                handler.call(this._observer, e, eventKey);
             }
         },
 
         on: function(event, callback) {
             var handlers = this._handlers;
 
-            if (event instanceof Array) {
-                event.forEach(function(e) {
-                    handlers[e] = callback;
-                });
-            }  else {
-                handlers[event] = callback;
+            if (typeof callback === "string") {
+                callback = this._observer[callback];
             }
+
+            if (typeof event === "string") {
+                event = event.split(",");
+            }
+
+            event.forEach(function(e) {
+                handlers[e] = callback;
+            });
         },
 
         destroy: function() {

@@ -82,40 +82,6 @@
         return value >= min && value <= max;
     }
 
-    var ACTIONS = {
-       "up": "up",
-       "down": "down",
-       "left": "left",
-       "right": "right",
-       "home": "first-col",
-       "ctrl+left": "first-col",
-       "end": "last-col",
-       "ctrl+right": "last-col",
-       "ctrl+up": "first-row",
-       "ctrl+down": "last-row",
-       "ctrl+home": "first",
-       "ctrl+end": "last",
-       "pageup": "prev-page",
-       "pagedown": "next-page"
-    };
-
-    var ENTRY_ACTIONS = {
-        "tab": "next"
-    };
-
-    var ACTION_KEYS = [];
-    var SHIFT_ACTION_KEYS = [];
-    var ENTRY_ACTION_KEYS = [];
-
-    for (var key in ACTIONS) {
-        ACTION_KEYS.push(key);
-        SHIFT_ACTION_KEYS.push("shift+" + key);
-    }
-
-    for (key in ENTRY_ACTIONS) {
-        ENTRY_ACTION_KEYS.push(key);
-    }
-
     var View = kendo.Class.extend({
         init: function(element) {
             element.append(VIEW_CONTENTS);
@@ -125,130 +91,20 @@
             this.viewSize = $(this.scroller.firstChild);
 
             this.tree = new kendo.dom.Tree(this.container);
+            this.eventHandler = new kendo.spreadsheet.ViewEventHandler(this);
 
             var scrollbar = kendo.support.scrollbar();
 
             $(this.container).css({
                 width: element[0].clientWidth - scrollbar,
                 height: element[0].clientHeight - scrollbar
-            }).on("wheel", this._passWheelEvent.bind(this));
-
-            $(this.scroller).on("scroll", this.render.bind(this));
-
-            this.handleKbd();
+            });
         },
 
         sheet: function(sheet) {
             this._sheet = sheet;
-            this.navigator = new kendo.spreadsheet.SheetNavigator(sheet, this.scroller.clientHeight);
+            this.eventHandler.sheet(sheet);
             this.refresh();
-        },
-
-        handleKbd: function() {
-            var container = $(this.container);
-            var clipboard = this.clipboard;
-            var that = this;
-
-            // Warning - DO NOT extract var sheet = that._sheet.
-            // This reference may change at runtime.
-
-            var listener = this.listener = new kendo.spreadsheet.EventListener(container);
-            var keyListener = this.keyListener = new kendo.spreadsheet.EventListener(this.clipboard);
-
-            keyListener.on(ACTION_KEYS, function(event, action) {
-                that.navigator.moveActiveCell(ACTIONS[action]);
-                event.preventDefault();
-            });
-
-            keyListener.on("*+pageup", function() {
-                that.scroller.scrollTop -= that.scroller.clientHeight;
-            });
-
-            keyListener.on("*+pagedown", function() {
-                that.scroller.scrollTop += that.scroller.clientHeight;
-            });
-
-            keyListener.on(ENTRY_ACTION_KEYS, function(event, action) {
-                that.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
-                event.preventDefault();
-            });
-
-            keyListener.on(SHIFT_ACTION_KEYS, function(event, action) {
-                action = ACTIONS[action.replace("shift+", "")];
-
-                var activeCell = that._sheet.activeCell();
-                var selectionTopLeft = that._sheet.select().topLeft;
-                var selectionBottomRight = that._sheet.select().bottomRight;
-
-                // There may be a third, indeterminate state, caused by a merged cell.
-                // In this state, all key movements are treated as shrinks.
-                // The navigator will reverse them if it detects that it will cause the selection to exclude the active cell.
-                var leftMode = activeCell.topLeft.col == selectionTopLeft.col;
-                var rightMode = activeCell.bottomRight.col == selectionBottomRight.col;
-                var topMode = activeCell.topLeft.row == selectionTopLeft.row;
-                var bottomMode = activeCell.bottomRight.row == selectionBottomRight.row;
-
-                switch(action) {
-                    case "left":
-                        action = rightMode ? "expand-left" : "shrink-left";
-                        break;
-                    case "right":
-                        action = leftMode ? "expand-right" : "shrink-right";
-                        break;
-                    case "up":
-                        action = bottomMode ? "expand-up" : "shrink-up";
-                        break;
-                    case "down":
-                        action = topMode ? "expand-down" : "shrink-down";
-                        break;
-                    case "prev-page":
-                        action = bottomMode ? "expand-page-up" : "shrink-page-up";
-                        break;
-                    case "next-page":
-                        action = topMode ? "expand-page-down" : "shrink-page-down";
-                        break;
-                }
-
-                that.navigator.modifySelection(action);
-
-                event.preventDefault();
-            });
-
-            listener.on("mousedown", function(event, action) {
-                var offset = container.offset();
-                var left = event.pageX - offset.left;
-                var top = event.pageY - offset.top;
-
-                var object = this.objectAt(left, top);
-                if (object.type === "cell") {
-                    that._sheet.select(object.ref);
-                }
-
-                clipboard.css({ left: left - 4, top: top - 4 });
-
-                setTimeout(function() {
-                    clipboard.select().focus();
-                });
-            }.bind(this));
-
-            keyListener.on("mouseup", function(event, action) {
-                clipboard.css({
-                    left: -10000,
-                    top: -10000
-                });
-            });
-
-            keyListener.on("cut", function(event, action) {
-                setTimeout(function() {
-                    that._sheet.selection().value("");
-                });
-            });
-
-            keyListener.on("paste", function(event, action) {
-                setTimeout(function() {
-                    that._sheet.selection().value(clipboard.val());
-                });
-            });
         },
 
         objectAt: function(x, y) {
@@ -282,6 +138,7 @@
 
         refresh: function(e) {
             var sheet = this._sheet;
+            this.eventHandler.refresh();
             this.viewSize[0].style.height = sheet._grid.totalHeight() + "px";
             this.viewSize[0].style.width = sheet._grid.totalWidth() + "px";
 
@@ -399,23 +256,6 @@
             var pane = new Pane(this._sheet, this._sheet._grid.pane({ row: row, column: column, rowCount: rowCount, columnCount: columnCount }));
             pane.refresh(this.scroller.clientWidth, this.scroller.clientHeight);
             return pane;
-        },
-
-        _passWheelEvent: function(e) {
-            var element = this.scroller;
-
-            var deltaX = e.originalEvent.deltaX;
-            var deltaY = e.originalEvent.deltaY;
-
-            if (e.originalEvent.deltaMode === 1) {
-                deltaX *= 10;
-                deltaY *= 10;
-            }
-
-            element.scrollLeft += deltaX;
-            element.scrollTop += deltaY;
-
-            e.preventDefault();
         }
     });
 
