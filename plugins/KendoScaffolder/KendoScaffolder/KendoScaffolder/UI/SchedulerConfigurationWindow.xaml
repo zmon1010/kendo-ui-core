@@ -61,182 +61,186 @@
                 </Style>
             </TabControl.Resources>
             <TabItem Height="36" Width="220" Header="Model Options">
-                <Grid Margin="20, 20, 0, 0" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="Controller Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                    <TextBox Grid.Row="1" Name="ControllerName" Loaded="ControllerName_Loaded" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ControllerName}" />
+                <Border>
+                    <AdornerDecorator>
+                        <Grid Margin="20, 20, 0, 0" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Content="Controller Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <TextBox Grid.Row="1" Name="ControllerName" Loaded="ControllerName_Loaded" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ControllerName}" />
 
-                    <Label Grid.Row="2" Content="View Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-                    <TextBox Grid.Row="3" Name="ViewName" Loaded="ViewName_Loaded" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ViewName}" />
+                            <Label Grid.Row="2" Content="View Name:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                            <TextBox Grid.Row="3" Name="ViewName" Loaded="ViewName_Loaded" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" Text="{Binding ViewName}" />
 
-                    <Label Grid.Row="4" Content="Data Context Class:" VerticalAlignment="Bottom" />
-                    <ComboBox Grid.Row="5" Grid.Column="1" Width="311" Height="23" Name="DataContextClass" HorizontalAlignment="Left"  VerticalAlignment="Top"
+                            <Label Grid.Row="4" Content="Data Context Class:" VerticalAlignment="Bottom" />
+                            <ComboBox Grid.Row="5" Grid.Column="1" Width="311" Height="23" Name="DataContextClass" HorizontalAlignment="Left"  VerticalAlignment="Top"
                     		ItemsSource="{Binding DbContextTypes}" SelectionChanged="RequiredField_SelectionChanged" DisplayMemberPath="DisplayName">
-                        <ComboBox.SelectedItem>
-                            <Binding NotifyOnValidationError="True" Path="SelectedDbContextType">
-                                <Binding.ValidationRules>
-                                    <local:ComboBoxRequiredValidationRule ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
+                                <ComboBox.SelectedItem>
+                                    <Binding NotifyOnValidationError="True" Path="SelectedDbContextType">
+                                        <Binding.ValidationRules>
+                                            <local:ComboBoxRequiredValidationRule ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
-                    <Label Grid.Row="6" Content="Model Class:" HorizontalAlignment="Left"  VerticalAlignment="Bottom"/>
-                    <ComboBox Grid.Row="7" Name="ModelType" Width="311" Height="23" HorizontalAlignment="Left"  VerticalAlignment="Top"  
+                            <Label Grid.Row="6" Content="Model Class:" HorizontalAlignment="Left"  VerticalAlignment="Bottom"/>
+                            <ComboBox Grid.Row="7" Name="ModelType" Width="311" Height="23" HorizontalAlignment="Left"  VerticalAlignment="Top"  
                               ItemsSource="{Binding ModelTypes}" SelectionChanged="ModelType_SelectionChanged" DisplayMemberPath="DisplayName" >
-                        <ComboBox.SelectedItem>
-                            <Binding NotifyOnValidationError="True" Path="SelectedModelType">
-                                <Binding.ValidationRules>
-                                    <local:ComboBoxRequiredValidationRule ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
+                                <ComboBox.SelectedItem>
+                                    <Binding NotifyOnValidationError="True" Path="SelectedModelType">
+                                        <Binding.ValidationRules>
+                                            <local:ComboBoxRequiredValidationRule ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
-                    <Label Grid.Row="8" Name="ModelMappingsLabel" Content="Define model mappings" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed" />
+                            <Label Grid.Row="8" Name="ModelMappingsLabel" Content="Define model mappings" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed" />
 
-                    <Label Grid.Row="9" Name="EventTitleFieldLabel" Content="Event Title (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="9" Name="EventTitleField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="9" Name="EventTitleFieldLabel" Content="Event Title (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="9" Name="EventTitleField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
                              ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
-                        <ComboBox.SelectedItem>
-                            <Binding NotifyOnValidationError="True" Path="SelectedEventTitleField">
-                                <Binding.ValidationRules>
-                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
+                                <ComboBox.SelectedItem>
+                                    <Binding NotifyOnValidationError="True" Path="SelectedEventTitleField">
+                                        <Binding.ValidationRules>
+                                            <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
-                    <Label Grid.Row="10" Name="EventStartFieldLabel" Content="Event Start (DateTime):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="10" Name="EventStartField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="10" Name="EventStartFieldLabel" Content="Event Start (DateTime):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="10" Name="EventStartField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
                               ItemsSource="{Binding ModelDateTimeFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
-                        <ComboBox.SelectedItem>
-                            <Binding NotifyOnValidationError="True" Path="SelectedEventStartField">
-                                <Binding.ValidationRules>
-                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
+                                <ComboBox.SelectedItem>
+                                    <Binding NotifyOnValidationError="True" Path="SelectedEventStartField">
+                                        <Binding.ValidationRules>
+                                            <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
-                    <Label Grid.Row="11" Name="EventEndFieldLabel" Content="Event End (DateTime):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="11" Name="EventEndField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="11" Name="EventEndFieldLabel" Content="Event End (DateTime):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="11" Name="EventEndField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
                               ItemsSource="{Binding ModelDateTimeFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
-                        <ComboBox.SelectedItem>
-                            <Binding NotifyOnValidationError="True" Path="SelectedEventEndField">
-                                <Binding.ValidationRules>
-                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
+                                <ComboBox.SelectedItem>
+                                    <Binding NotifyOnValidationError="True" Path="SelectedEventEndField">
+                                        <Binding.ValidationRules>
+                                            <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
-                    <Label Grid.Row="12" Name="EventDescriptionFieldLabel" Content="Event Description (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="12" Name="EventDescriptionField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="12" Name="EventDescriptionFieldLabel" Content="Event Description (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="12" Name="EventDescriptionField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
                               ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
-                        <ComboBox.SelectedItem>
-                            <Binding NotifyOnValidationError="True" Path="SelectedEventDescriptionField">
-                                <Binding.ValidationRules>
-                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
+                                <ComboBox.SelectedItem>
+                                    <Binding NotifyOnValidationError="True" Path="SelectedEventDescriptionField">
+                                        <Binding.ValidationRules>
+                                            <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
-                    <Label Grid.Row="13" Name="EventIsAllDayFieldLabel" Content="Event IsAllDay (bool):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="13" Name="EventIsAllDayField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="13" Name="EventIsAllDayFieldLabel" Content="Event IsAllDay (bool):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="13" Name="EventIsAllDayField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
                               ItemsSource="{Binding ModelBoolFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
-                        <ComboBox.SelectedItem>
-                            <Binding NotifyOnValidationError="True" Path="SelectedEventIsAllDayField">
-                                <Binding.ValidationRules>
-                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
+                                <ComboBox.SelectedItem>
+                                    <Binding NotifyOnValidationError="True" Path="SelectedEventIsAllDayField">
+                                        <Binding.ValidationRules>
+                                            <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
-                    <Label Grid.Row="14" Name="EventStartTimezoneFieldLabel" Content="Event StartTimezone (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="14" Name="EventStartTimezoneField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="14" Name="EventStartTimezoneFieldLabel" Content="Event StartTimezone (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="14" Name="EventStartTimezoneField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
                               ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
-                        <ComboBox.SelectedItem>
-                            <Binding NotifyOnValidationError="True" Path="SelectedEventStartTimezoneField">
-                                <Binding.ValidationRules>
-                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
+                                <ComboBox.SelectedItem>
+                                    <Binding NotifyOnValidationError="True" Path="SelectedEventStartTimezoneField">
+                                        <Binding.ValidationRules>
+                                            <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
-                    <Label Grid.Row="15" Name="EventEndTimezoneFieldLabel" Content="Event EndTimezone (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="15" Name="EventEndTimezoneField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="15" Name="EventEndTimezoneFieldLabel" Content="Event EndTimezone (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="15" Name="EventEndTimezoneField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
                               ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
-                        <ComboBox.SelectedItem>
-                            <Binding NotifyOnValidationError="True" Path="SelectedEventEndTimezoneField">
-                                <Binding.ValidationRules>
-                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
+                                <ComboBox.SelectedItem>
+                                    <Binding NotifyOnValidationError="True" Path="SelectedEventEndTimezoneField">
+                                        <Binding.ValidationRules>
+                                            <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
-                    <Label Grid.Row="16" Name="EventRecurrenceIDFieldLabel" Content="Event RecurrenceID (same type as model ID field):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="16" Name="EventRecurrenceIDField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="16" Name="EventRecurrenceIDFieldLabel" Content="Event RecurrenceID (same type as model ID field):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="16" Name="EventRecurrenceIDField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
                               ItemsSource="{Binding ModelFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
-                        <ComboBox.SelectedItem>
-                            <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceIDField">
-                                <Binding.ValidationRules>
-                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
+                                <ComboBox.SelectedItem>
+                                    <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceIDField">
+                                        <Binding.ValidationRules>
+                                            <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
-                    <Label Grid.Row="17" Name="EventRecurrenceRuleFieldLabel" Content="Event RecurrenceRule (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="17" Name="EventRecurrenceRuleField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="17" Name="EventRecurrenceRuleFieldLabel" Content="Event RecurrenceRule (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="17" Name="EventRecurrenceRuleField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
                               ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
-                        <ComboBox.SelectedItem>
-                            <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceRuleField">
-                                <Binding.ValidationRules>
-                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
+                                <ComboBox.SelectedItem>
+                                    <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceRuleField">
+                                        <Binding.ValidationRules>
+                                            <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
-                    <Label Grid.Row="18" Name="EventRecurrenceExceptionFieldLabel" Content="Event RecurrenceException (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                    <ComboBox Grid.Row="18" Name="EventRecurrenceExceptionField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="18" Name="EventRecurrenceExceptionFieldLabel" Content="Event RecurrenceException (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="18" Name="EventRecurrenceExceptionField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
                               ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
-                        <ComboBox.SelectedItem>
-                            <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceExceptionField">
-                                <Binding.ValidationRules>
-                                    <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
-                </Grid>
+                                <ComboBox.SelectedItem>
+                                    <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceExceptionField">
+                                        <Binding.ValidationRules>
+                                            <local:ComboBoxEventFieldValidationRule ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
+                        </Grid>
+                    </AdornerDecorator>
+                </Border>
             </TabItem>
             <TabItem Height="36" Width="220" Header="Resources" Visibility="Collapsed">
                 <Grid Margin="20, 20, 0, 0" >
