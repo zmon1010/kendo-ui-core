@@ -235,9 +235,73 @@
                 case "prev-page":
                     row = rows.prevPage(bottomRight.row, this._viewPortHeight);
                     break;
+
             }
 
             sheet.select(new CellRef(row, column));
+        },
+
+        shouldSkip: function(row, col) {
+            var ref = new CellRef(row, col);
+            var isMerged = false;
+            this._sheet.forEachMergedCell(function(merged) {
+                if (merged.intersects(ref) && !merged.collapse().eq(ref)) {
+                    isMerged = true;
+                }
+            });
+
+            return isMerged;
+        },
+
+        navigateInSelection: function(direction) {
+            var sheet = this._sheet;
+            var activeCell = sheet.activeCell();
+            var topLeft = activeCell.topLeft;
+            var bottomRight = activeCell.bottomRight;
+
+            var cell = sheet.originalActiveCell();
+            var rows = sheet._grid._rows;
+            var columns = sheet._grid._columns;
+
+            var row = cell.row;
+            var column = cell.col;
+
+            var selection = sheet.currentSelectionRange();
+            var selTopLeft = selection.topLeft;
+            var selBottomRight = selection.bottomRight;
+
+            var done = false;
+            var newActiveCell;
+
+            var topLeftCol = topLeft.col;
+
+            while (!done) {
+                switch (direction) {
+                    case "next":
+                        if (bottomRight.eq(selBottomRight)) {
+                            selection = sheet.nextSelectionRange();
+                            row = selection.topLeft.row;
+                            column = selection.topLeft.col;
+                        } else {
+                            column = columns.nextVisible(topLeftCol);
+                            if (column > selBottomRight.col) {
+                                column = selTopLeft.col;
+                                row ++;
+                            }
+                        }
+                        break;
+                }
+
+                done = !this.shouldSkip(row, column);
+                // if (!done) { console.log("skipping", row, column); }
+                topLeftCol = column;
+            }
+
+            if (sheet.singleCellSelection()) {
+                sheet.select(new CellRef(row, column));
+            } else {
+                sheet.activeCell(new CellRef(row, column));
+            }
         }
     });
 

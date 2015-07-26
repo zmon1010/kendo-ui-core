@@ -23,6 +23,7 @@
             this._activeCell = kendo.spreadsheet.FIRSTREF.toRangeRef();
             this._originalActiveCell = kendo.spreadsheet.FIRSTREF;
             this._grid = new kendo.spreadsheet.Grid(this._rows, this._columns, rowCount, columnCount, headerHeight, headerWidth);
+            this._sheetRef = this._grid.normalize(kendo.spreadsheet.SHEETREF);
             this._properties = new kendo.spreadsheet.PropertyBag(cellCount);
             this._sorter = new kendo.spreadsheet.Sorter(this._grid, this._properties.sortable());
         },
@@ -358,12 +359,28 @@
                     } else {
                         this.activeCell(this._selection.first());
                     }
+                    this._selectionRangeIndex = 0;
                 } else {
                     this.triggerChange("selection");
                 }
             }
 
             return this._selection;
+        },
+
+        currentSelectionRange: function() {
+            if (this.singleCellSelection()) {
+                return this._sheetRef;
+            } else {
+                return this._selection.rangeAt(this._selectionRangeIndex).toRangeRef();
+            }
+        },
+
+        nextSelectionRange: function() {
+            if (!this.singleCellSelection()) {
+                this._selectionRangeIndex = this._selection.nextRangeIndex(this._selectionRangeIndex);
+            }
+            return this.currentSelectionRange();
         },
 
         originalSelect: function() {
@@ -405,6 +422,10 @@
 
         selection: function() {
             return new Range(this._grid.normalize(this._selection), this);
+        },
+
+        singleCellSelection: function() {
+            return this._activeCell.eq(this._selection);
         },
 
         selectedHeaders: function() {

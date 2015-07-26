@@ -4,16 +4,101 @@
     var success = $.proxy(ok, null, true);
     var failure = $.proxy(ok, null, false);
 
+    function newSheet() {
+       return new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns, defaults.rowHeight, defaults.columnWidth);
+    }
+
     function selectionEqual(ref) {
         ref = kendo.spreadsheet.calc.parseReference(ref);
-        selection = sheet.select();
-        ok(selection.eq(ref), ref.print() + " expected, was " + selection.print());
+        var selection = sheet.select();
+        ok(selection.eq(ref), "selection " + ref.print() + " expected, was " + selection.print());
     }
+
+    function activeCellEqual(ref) {
+        ref = kendo.spreadsheet.calc.parseReference(ref);
+        var cell = sheet.activeCell();
+        ok(cell.eq(ref), "active cell " + ref.print() + " expected, was " + cell.print());
+    }
+
+    module("entry navigation", {
+        setup: function() {
+            sheet = newSheet();
+            navigator = new kendo.spreadsheet.SheetNavigator(sheet, 1000);
+        }
+    });
+
+    test("secondary merged cells should be skipped", function() {
+        sheet.range("B2:C3").merge();
+        ok(!navigator.shouldSkip(1, 1)); // top left is ok
+        ok(navigator.shouldSkip(1, 2)); // rest are not
+        ok(navigator.shouldSkip(2, 1));
+        ok(navigator.shouldSkip(2, 2));
+    });
+
+    function next(times) {
+        times = times || 1;
+        for (var i = 0; i < times; i++) {
+            navigator.navigateInSelection("next");
+        }
+    }
+
+    test("next moves over the entire sheet if selection is a single cell", function() {
+        sheet.range("B2").select();
+        next();
+        activeCellEqual("C2");
+        selectionEqual("C2");
+    });
+
+    test("next selects next cell in selection", function() {
+        sheet.range("B2:C3").select();
+        activeCellEqual("B2");
+        next();
+        activeCellEqual("C2");
+    });
+
+    test("next moves to the next row", function() {
+        sheet.range("B2:C3").select();
+        activeCellEqual("B2");
+        next(2);
+        activeCellEqual("B3");
+    });
+
+    test("next rewinds back to the first cell", function() {
+        sheet.range("B2:C3").select();
+        next(4);
+        activeCellEqual("B2");
+    });
+
+    test("next skips merged cells", function() {
+        sheet.range("B2:C3").merge();
+        sheet.range("B2:D4").select();
+        activeCellEqual("B2:C3");
+
+        next();
+        activeCellEqual("D2");
+        next();
+        activeCellEqual("D3");
+        next();
+        activeCellEqual("B4");
+        next(3);
+        activeCellEqual("B2:C3");
+    });
+
+    test("next moves to the next range", function() {
+        sheet.range("B2:C3,D4:E5").select();
+        next(4);
+        activeCellEqual("D4");
+    });
+
+    test("next eventually comes back to the first range", function() {
+        sheet.range("B2:C3,D4:E5").select();
+        next(8);
+        activeCellEqual("B2");
+    });
 
     module("Sheet Navigator edges", {
         setup: function() {
-            sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,
-            defaults.rowHeight, defaults.columnWidth);
+            sheet = newSheet();
             sheet.range('B2:C3').merge();
             navigator = new kendo.spreadsheet.SheetNavigator(sheet, 1000);
         }

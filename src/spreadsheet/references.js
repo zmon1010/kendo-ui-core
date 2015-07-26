@@ -85,6 +85,18 @@
         isCell: function() {
             return false;
         },
+
+        // UnionRef overrides these, to access its subranges.
+        rangeAt: function() {
+            return this;
+        },
+        nextRangeIndex: function() {
+            return 0;
+        },
+        previousRangeIndex: function() {
+            return 0;
+        },
+
         eq: function(reference) {
             var r1 = this;
             var r2 = reference;
@@ -496,10 +508,11 @@
     var UnionRef = Ref.extend({
         init: function UnionRef(refs){
             this.refs = refs;
+            this.length = this.refs.length;
         },
         intersect: function(ref) {
             var a = [];
-            for (var i = 0; i < this.refs.length; ++i) {
+            for (var i = 0; i < this.length; ++i) {
                 var x = ref.intersect(this.refs[i]);
                 if (x !== NULL) {
                     a.push(x);
@@ -534,10 +547,27 @@
             return this.refs[0].first();
         },
         single: function() {
-            return this.refs.length == 1;
+            return this.length == 1;
         },
         isCell: function() {
             return this.single() && this.refs[0].isCell();
+        },
+        rangeAt: function(index) {
+            return this.refs[index];
+        },
+        nextRangeIndex: function(index) {
+            if (index === this.length - 1) {
+                return 0;
+            } else {
+                return index + 1;
+            }
+        },
+        previousRangeIndex: function(index) {
+            if (index === 0) {
+                return this.length - 1;
+            } else {
+                return index - 1;
+            }
         }
     });
 

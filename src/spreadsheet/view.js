@@ -99,12 +99,21 @@
        "pagedown": "next-page"
     };
 
+    var ENTRY_ACTIONS = {
+        "tab": "next"
+    };
+
     var ACTION_KEYS = [];
     var SHIFT_ACTION_KEYS = [];
+    var ENTRY_ACTION_KEYS = [];
 
     for (var key in ACTIONS) {
         ACTION_KEYS.push(key);
         SHIFT_ACTION_KEYS.push("shift+" + key);
+    }
+
+    for (key in ENTRY_ACTIONS) {
+        ENTRY_ACTION_KEYS.push(key);
     }
 
     var View = kendo.Class.extend({
@@ -157,6 +166,11 @@
 
             keyListener.on("*+pagedown", function() {
                 that.scroller.scrollTop += that.scroller.clientHeight;
+            });
+
+            keyListener.on(ENTRY_ACTION_KEYS, function(event, action) {
+                that.navigator.navigateInSelection(ENTRY_ACTIONS[action]);
+                event.preventDefault();
             });
 
             keyListener.on(SHIFT_ACTION_KEYS, function(event, action) {
