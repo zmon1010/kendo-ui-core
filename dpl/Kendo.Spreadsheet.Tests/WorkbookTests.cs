@@ -12,8 +12,6 @@ namespace Kendo.Spreadsheet.Tests
 {
     public class WorkbookTests
     {
-        private const string CELL_VALUE = "Фу";
-
         [Fact]
         public void Can_insert_sheets()
         {
