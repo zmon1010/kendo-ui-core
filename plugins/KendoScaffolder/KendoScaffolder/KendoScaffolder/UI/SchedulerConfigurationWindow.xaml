@@ -119,8 +119,9 @@
 
                             <Label Grid.Row="8" Name="ModelMappingsLabel" Content="Define model mappings" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed" />
 
-                            <Label Grid.Row="9" Name="EventTitleFieldLabel" Content="Event Title (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                            <ComboBox Grid.Row="9" Name="EventTitleField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="9" Name="EventTitleFieldLabel" ToolTip="The title of the event which is displayed by the scheduler widget. Field should be 'string' type." Content="Event Title:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="9" Name="EventTitleField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="160 0 0 0" Visibility="Collapsed"
+                             ToolTip="The title of the event which is displayed by the scheduler widget. Field should be 'string' type."
                              ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
                                 <ComboBox.SelectedItem>
                                     <Binding NotifyOnValidationError="True" Path="SelectedEventTitleField">
@@ -131,8 +132,9 @@
                                 </ComboBox.SelectedItem>
                             </ComboBox>
 
-                            <Label Grid.Row="10" Name="EventStartFieldLabel" Content="Event Start (DateTime):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                            <ComboBox Grid.Row="10" Name="EventStartField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="10" Name="EventStartFieldLabel" ToolTip="The date at which the scheduler event starts. Field should be 'DateTime' type." Content="Event Start:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="10" Name="EventStartField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="160 0 0 0" Visibility="Collapsed"
+                              ToolTip="The date at which the scheduler event starts. Field should be 'DateTime' type."
                               ItemsSource="{Binding ModelDateTimeFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
                                 <ComboBox.SelectedItem>
                                     <Binding NotifyOnValidationError="True" Path="SelectedEventStartField">
@@ -143,8 +145,9 @@
                                 </ComboBox.SelectedItem>
                             </ComboBox>
 
-                            <Label Grid.Row="11" Name="EventEndFieldLabel" Content="Event End (DateTime):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                            <ComboBox Grid.Row="11" Name="EventEndField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="11" Name="EventEndFieldLabel" ToolTip="The date at which the scheduler event ends. Field should be 'DateTime' type." Content="Event End:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="11" Name="EventEndField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="160 0 0 0" Visibility="Collapsed"
+                              ToolTip="The date at which the scheduler event ends. Field should be 'DateTime' type."
                               ItemsSource="{Binding ModelDateTimeFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
                                 <ComboBox.SelectedItem>
                                     <Binding NotifyOnValidationError="True" Path="SelectedEventEndField">
@@ -155,8 +158,9 @@
                                 </ComboBox.SelectedItem>
                             </ComboBox>
 
-                            <Label Grid.Row="12" Name="EventDescriptionFieldLabel" Content="Event Description (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                            <ComboBox Grid.Row="12" Name="EventDescriptionField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="12" Name="EventDescriptionFieldLabel" ToolTip="The optional event description. Field should be 'string' type." Content="Event Description:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="12" Name="EventDescriptionField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="160 0 0 0" Visibility="Collapsed"
+                              ToolTip="The optional event description. Field should be 'string' type."
                               ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
                                 <ComboBox.SelectedItem>
                                     <Binding NotifyOnValidationError="True" Path="SelectedEventDescriptionField">
@@ -167,8 +171,9 @@
                                 </ComboBox.SelectedItem>
                             </ComboBox>
 
-                            <Label Grid.Row="13" Name="EventIsAllDayFieldLabel" Content="Event IsAllDay (bool):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                            <ComboBox Grid.Row="13" Name="EventIsAllDayField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="13" Name="EventIsAllDayFieldLabel" ToolTip="If set to true the event is 'all day'. By default events are not all day. Field should be 'bool' type." Content="Event IsAllDay:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="13" Name="EventIsAllDayField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="160 0 0 0" Visibility="Collapsed"
+                              ToolTip="If set to true the event is 'all day'. By default events are not all day. Field should be 'bool' type."
                               ItemsSource="{Binding ModelBoolFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
                                 <ComboBox.SelectedItem>
                                     <Binding NotifyOnValidationError="True" Path="SelectedEventIsAllDayField">
@@ -179,8 +184,9 @@
                                 </ComboBox.SelectedItem>
                             </ComboBox>
 
-                            <Label Grid.Row="14" Name="EventStartTimezoneFieldLabel" Content="Event StartTimezone (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                            <ComboBox Grid.Row="14" Name="EventStartTimezoneField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="14" Name="EventStartTimezoneFieldLabel" ToolTip="The timezone of the start date. If not specified the Scheduler timezone will be used. Field should be 'string' type." Content="Event StartTimezone:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="14" Name="EventStartTimezoneField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="160 0 0 0" Visibility="Collapsed"
+                              ToolTip="The timezone of the start date. If not specified the Scheduler timezone will be used. Field should be 'string' type."
                               ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
                                 <ComboBox.SelectedItem>
                                     <Binding NotifyOnValidationError="True" Path="SelectedEventStartTimezoneField">
@@ -191,8 +197,9 @@
                                 </ComboBox.SelectedItem>
                             </ComboBox>
 
-                            <Label Grid.Row="15" Name="EventEndTimezoneFieldLabel" Content="Event EndTimezone (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                            <ComboBox Grid.Row="15" Name="EventEndTimezoneField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="15" Name="EventEndTimezoneFieldLabel" ToolTip="The timezone of the end date. If not specified the Scheduler timezone will be used. Field should be 'string' type." Content="Event EndTimezone:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="15" Name="EventEndTimezoneField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="160 0 0 0" Visibility="Collapsed"
+                              ToolTip="The timezone of the end date. If not specified the Scheduler timezone will be used. Field should be 'string' type."
                               ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
                                 <ComboBox.SelectedItem>
                                     <Binding NotifyOnValidationError="True" Path="SelectedEventEndTimezoneField">
@@ -203,8 +210,9 @@
                                 </ComboBox.SelectedItem>
                             </ComboBox>
 
-                            <Label Grid.Row="16" Name="EventRecurrenceIDFieldLabel" Content="Event RecurrenceID (same type as model ID field):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                            <ComboBox Grid.Row="16" Name="EventRecurrenceIDField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="16" Name="EventRecurrenceIDFieldLabel" ToolTip="The id of the recurrence parent event. Required for events that are recurrence exceptions. Field should be same type as model ID type." Content="Event RecurrenceID:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="16" Name="EventRecurrenceIDField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="160 0 0 0" Visibility="Collapsed"
+                              ToolTip="The id of the recurrence parent event. Required for events that are recurrence exceptions. Field should be same type as model ID type."
                               ItemsSource="{Binding ModelFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
                                 <ComboBox.SelectedItem>
                                     <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceIDField">
@@ -215,8 +223,9 @@
                                 </ComboBox.SelectedItem>
                             </ComboBox>
 
-                            <Label Grid.Row="17" Name="EventRecurrenceRuleFieldLabel" Content="Event RecurrenceRule (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                            <ComboBox Grid.Row="17" Name="EventRecurrenceRuleField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="17" Name="EventRecurrenceRuleFieldLabel" ToolTip="The recurrence rule describing the recurring pattern of the event. Field should be 'string' type." Content="Event RecurrenceRule:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="17" Name="EventRecurrenceRuleField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="160 0 0 0" Visibility="Collapsed"
+                              ToolTip="The recurrence rule describing the recurring pattern of the event. Field should be 'string' type."
                               ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
                                 <ComboBox.SelectedItem>
                                     <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceRuleField">
@@ -227,8 +236,9 @@
                                 </ComboBox.SelectedItem>
                             </ComboBox>
 
-                            <Label Grid.Row="18" Name="EventRecurrenceExceptionFieldLabel" Content="Event RecurrenceException (string):" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
-                            <ComboBox Grid.Row="18" Name="EventRecurrenceExceptionField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="250 0 0 0" Visibility="Collapsed"
+                            <Label Grid.Row="18" Name="EventRecurrenceExceptionFieldLabel" ToolTip="The recurrence exceptions. A list of semi-colon separated dates formatted using the yyyyMMddTHHmmssZ format string. Field should be 'string' type." Content="Event RecurrenceException:" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <ComboBox Grid.Row="18" Name="EventRecurrenceExceptionField" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="160 0 0 0" Visibility="Collapsed"
+                              ToolTip="The recurrence exceptions. A list of semi-colon separated dates formatted using the yyyyMMddTHHmmssZ format string. Field should be 'string' type."
                               ItemsSource="{Binding ModelStringFields}" SelectionChanged="RequiredEventField_SelectionChanged" DisplayMemberPath="DisplayName">
                                 <ComboBox.SelectedItem>
                                     <Binding NotifyOnValidationError="True" Path="SelectedEventRecurrenceExceptionField">
