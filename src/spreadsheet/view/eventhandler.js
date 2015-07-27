@@ -174,10 +174,12 @@
         },
 
         onMouseUp: function(event, action) {
-            this.clipboard.css({
-                left: -10000,
-                top: -10000
-            });
+            setTimeout(function() {
+                this.clipboard.css({
+                    left: -10000,
+                    top: -10000
+                });
+            }.bind(this));
         },
 
         onCut: function(event, action) {
