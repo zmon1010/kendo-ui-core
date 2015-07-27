@@ -62,13 +62,13 @@
                     if (tool.overflow) {
                         tool.overflow.value(value);
                     }
-                } else if (tool.type === "comboBox") {
+                } else if (tool.type === "fontSize") {
                     if (tool.toolbar) {
-                        tool.toolbar.value(kendo.parseInt(value));
+                        tool.toolbar.value(kendo.parseInt(value) || DEFAULT_FONT_SIZE);
                     }
 
                     if (tool.overflow) {
-                        tool.overflow.value(kendo.parseInt(value));
+                        tool.overflow.value(kendo.parseInt(value) || DEFAULT_FONT_SIZE);
                     }
                 }
             }
@@ -130,6 +130,8 @@
     kendo.toolbar.registerComponent("colorPicker", colorPicker);
 
     var FONT_SIZES = [8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72];
+    var DEFAULT_FONT_SIZE = 12;
+
     var fontSize = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
             var comboBox = $("<input />").kendoComboBox({
@@ -140,7 +142,8 @@
                         value: kendo.parseInt(this.value()) + "px"
                     });
                 },
-                dataSource: options.fontSizes || FONT_SIZES
+                dataSource: options.fontSizes || FONT_SIZES,
+                value: DEFAULT_FONT_SIZE
             }).data("kendoComboBox");
 
             this.comboBox = comboBox;
@@ -155,7 +158,7 @@
 
             this.element.data({
                 type: "fontSize",
-                comboBox: this
+                fontSize: this
             });
         },
 
