@@ -33,7 +33,7 @@
     });
 
     test("left side returns row header", function() {
-        view.refresh();
+        view.refresh(kendo.spreadsheet.ALL_REASONS);
         var result = view.objectAt(3, 45);
         equal(result.type, "rowheader");
         equal(result.row, 1); // second row, minus the header size

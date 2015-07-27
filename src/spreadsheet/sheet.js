@@ -38,23 +38,23 @@
             return this;
         },
 
-        _property: function(accessor, value) {
+        _property: function(accessor, value, reason) {
             if (value === undefined) {
                 return accessor();
             } else {
                 accessor(value);
 
-                return this.triggerChange("config");
+                return this.triggerChange(reason);
             }
         },
 
-        _field: function(name, value) {
+        _field: function(name, value, reason) {
             if (value === undefined) {
                 return this[name];
             } else {
                 this[name] = value;
 
-                return this.triggerChange("config");
+                return this.triggerChange(reason);
             }
         },
 
@@ -68,19 +68,19 @@
             return this;
         },
 
-        triggerChange: function(changed) {
+        triggerChange: function(reason) {
             if (!this._suspendChanges) {
-                this.trigger("change", { changed: changed });
+                this.trigger("change", reason);
             }
             return this;
         },
 
         hideColumn: function(columnIndex) {
-            return this._property(this._columns.hide.bind(this._columns), columnIndex);
+            return this._property(this._columns.hide.bind(this._columns), columnIndex, { layout: true });
         },
 
         unhideColumn: function(columnIndex) {
-            return this._property(this._columns.unhide.bind(this._columns), columnIndex);
+            return this._property(this._columns.unhide.bind(this._columns), columnIndex, { layout: true });
         },
 
         _copyRange: function(sourceRangeRef, targetRef) {
@@ -152,7 +152,7 @@
                 }
 
                 this._adjustFormulas("row", rowIndex, 1);
-            }, true);
+            }, { recalc: true, layout: true });
 
             return this;
         },
@@ -189,7 +189,7 @@
                 }
 
                 this._adjustFormulas("row", rowIndex, -1);
-            }, true);
+            }, { recalc: true, layout: true });
 
             return this;
         },
@@ -227,7 +227,7 @@
                 }
 
                 this._adjustFormulas("col", columnIndex, 1);
-            }, true);
+            }, { recalc: true, layout: true });
 
             return this;
         },
@@ -265,33 +265,33 @@
                 }
 
                 this._adjustFormulas("col", columnIndex, -1);
-            }, true);
+            }, { recalc: true, layout: true });
 
             return this;
         },
 
         hideRow: function(rowIndex) {
-            return this._property(this._rows.hide.bind(this._rows), rowIndex);
+            return this._property(this._rows.hide.bind(this._rows), rowIndex, { layout: true });
         },
 
         unhideRow: function(rowIndex) {
-            return this._property(this._rows.unhide.bind(this._rows), rowIndex);
+            return this._property(this._rows.unhide.bind(this._rows), rowIndex, { layout: true });
         },
 
         columnWidth: function(columnIndex, width) {
-            return this._property(this._columns.value.bind(this._columns, columnIndex, columnIndex), width);
+            return this._property(this._columns.value.bind(this._columns, columnIndex, columnIndex), width, { layout: true });
         },
 
         rowHeight: function(rowIndex, height) {
-            return this._property(this._rows.value.bind(this._rows, rowIndex, rowIndex), height);
+            return this._property(this._rows.value.bind(this._rows, rowIndex, rowIndex), height, { layout: true });
         },
 
         frozenRows: function(value) {
-            return this._field("_frozenRows", value);
+            return this._field("_frozenRows", value, { layout: true });
         },
 
         frozenColumns: function(value) {
-            return this._field("_frozenColumns", value);
+            return this._field("_frozenColumns", value, { layout: true });
         },
 
         _ref: function(row, column, numRows, numColumns) {
@@ -361,7 +361,7 @@
                     }
                     this._selectionRangeIndex = 0;
                 } else {
-                    this.triggerChange("selection");
+                    this.triggerChange({ selection: true });
                 }
             }
 
@@ -400,7 +400,7 @@
                 this._originalActiveCell = ref;
                 this._activeCell = this.unionWithMerged(ref.toRangeRef());
                 this.focus(this._activeCell);
-                this.triggerChange("activecell");
+                this.triggerChange({ activeCell: true, selection: true });
             }
 
             return this._activeCell;
@@ -666,19 +666,14 @@
             return this._properties.get(name, index);
         },
 
-        // TODO: fix the boolean parameter here - not necessary
-        batch: function(callback, recalc) {
+        batch: function(callback, reason) {
             var suspended = this.suspendChanges();
 
             this.suspendChanges(true);
 
             callback.call(this);
 
-            if (recalc) {
-                recalc = "data";
-            }
-
-            return this.suspendChanges(suspended).triggerChange(recalc);
+            return this.suspendChanges(suspended).triggerChange(reason);
         },
 
         _sortBy: function(ref, columns) {
@@ -693,7 +688,7 @@
                 columns: columns
             };
 
-            this.triggerChange("data");
+            this.triggerChange({ recalc: true });
         },
         _filterBy: function(ref, columns) {
             this.batch(function() {
@@ -723,7 +718,7 @@
                     ref: ref,
                     columns: columns
                 };
-            });
+            }, { layout: true });
         },
         clearFilter: function(spec) {
             this._clearFilter(spec instanceof Array ? spec : [spec]);
@@ -736,7 +731,7 @@
                     });
 
                     this._filterBy(this._filter.ref, columns);
-                });
+                }, { layout: true });
             }
         }
     });

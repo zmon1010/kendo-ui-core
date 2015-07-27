@@ -35,6 +35,13 @@
 
     var Widget = kendo.ui.Widget;
 
+    var ALL_REASONS = {
+        recalc: true,
+        selection: true,
+        activeCell: true,
+        layout: true
+    };
+
     var Spreadsheet = kendo.ui.Widget.extend({
         init: function(element, options) {
             Widget.fn.init.call(this, element, options);
@@ -177,15 +184,19 @@
             }
         },
 
-        refresh: function(e) {
-            // TODO: Ugly!
-            if (!e || e.changed === "data") {
+        refresh: function(reason) {
+            if (!reason) {
+                reason = ALL_REASONS;
+            }
+
+            if (reason.recalc) {
                 this._sheet.recalc(this._context);
             }
-            this._view.refresh(e);
+
+            this._view.refresh(reason);
             this._view.render();
 
-            this.trigger("render", { changed: e ? e.changed : null });
+            this.trigger("render");
             return this;
         },
 
@@ -238,5 +249,6 @@
         ]
     });
 
+    kendo.spreadsheet.ALL_REASONS = ALL_REASONS;
     kendo.ui.plugin(Spreadsheet);
 }, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });

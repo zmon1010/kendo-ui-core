@@ -9,6 +9,7 @@
     function hasChanged(e, name) {
            return !e || e.changed == name;
     }
+
     var HtmlTable = kendo.Class.extend({
         init: function(rowHeight, columnWidth) {
             this.rowHeight = rowHeight;
@@ -104,7 +105,7 @@
         sheet: function(sheet) {
             this._sheet = sheet;
             this.eventHandler.sheet(sheet);
-            this.refresh();
+            this.refresh(kendo.spreadsheet.ALL_REASONS);
         },
 
         objectAt: function(x, y) {
@@ -136,13 +137,13 @@
             })[0];
         },
 
-        refresh: function(e) {
+        refresh: function(reason) {
             var sheet = this._sheet;
             this.eventHandler.refresh();
             this.viewSize[0].style.height = sheet._grid.totalHeight() + "px";
             this.viewSize[0].style.width = sheet._grid.totalWidth() + "px";
 
-            if (hasChanged(e, "frozenRows") || hasChanged(e, "frozenColumns")) {
+            if (reason.layout) {
                 var frozenColumns = sheet.frozenColumns();
                 var frozenRows = sheet.frozenRows();
 
@@ -165,7 +166,7 @@
                 }
             }
 
-            if (hasChanged(e, "selection") || hasChanged(e, "activecell")) {
+            if (reason.selection) {
                 var text = sheet.selection().values().map(function(row) {
                     return row.join("\t");
                 }).join("\r\n");
@@ -173,7 +174,7 @@
                 this.clipboard.val(text).select().focus();
             }
 
-            if (hasChanged(e, "activecell")) {
+            if (reason.activeCell) {
                 this._focus = sheet.activeCell().toRangeRef();
             }
         },

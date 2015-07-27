@@ -159,13 +159,14 @@
             for (var index = start; index <= end; index++) {
                 var values = {};
 
-                iterators.forEach(function(iterator) {
+                for (var i = 0; i < iterators.length; i++) {
+                    var iterator = iterators[i];
                     var value = iterator.at(index);
 
                     if (value !== iterator.value) {
                         values[iterator.name] = value;
                     }
-                });
+                }
 
                 callback(values);
             }

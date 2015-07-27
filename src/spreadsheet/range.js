@@ -28,12 +28,13 @@
             var sheet = this._sheet;
             this._ref.forEach(function(ref) {
                 ref = ref.toRangeRef();
+                // TODO: update this - should be changed to dependant formula
                 if (name == "formula") {
                     sheet._set(ref, "compiledFormula", null);
                 }
                 sheet._set(ref, name, value, parseStrings);
             });
-            sheet.triggerChange("data");
+            sheet.triggerChange({ recalc: name == "formula" || name == "value" });
             return this;
         },
 
@@ -61,7 +62,7 @@
                     this._sheet.batch(function() {
                         this.formula(null);
                         this.value(value);
-                    }.bind(this), true);
+                    }.bind(this), { recalc: true });
                 }
 
                 return this;
@@ -109,7 +110,7 @@
                 sheet.batch(function() {
                     this._property("formula", null);
                     this.value(null);
-                }.bind(this), true);
+                }.bind(this), { recalc: true });
 
                 return this;
             }
@@ -146,7 +147,7 @@
                     mergedCells.push(currentRef);
                     return currentRef;
                 });
-            }.bind(this));
+            }.bind(this), {});
 
             return this;
         },
@@ -160,7 +161,7 @@
                 });
             });
 
-            this._sheet.triggerChange("config");
+            this._sheet.triggerChange({});
 
             return this;
         },
@@ -220,7 +221,7 @@
                     }
                 }
 
-                this._sheet.triggerChange("data");
+                this._sheet.triggerChange({ recalc: true });
 
                 return this;
             }
@@ -231,14 +232,17 @@
 
             var sheet = this._sheet;
 
+            var reason = {
+                recalc: clearAll || (options && options.contentsOnly === true)
+            };
+
             sheet.batch(function() {
 
-                if (clearAll || (options && options.contentsOnly === true)) {
+                if (reason.recalc) {
                     this.formula(null);
                 }
 
                 if (clearAll || (options && options.formatOnly === true)) {
-
                     styles.forEach(function(x) {
                         this[x](null);
                     }.bind(this));
@@ -246,7 +250,7 @@
                     this.unmerge();
                 }
 
-            }.bind(this));
+            }.bind(this), reason);
 
             return this;
         },
