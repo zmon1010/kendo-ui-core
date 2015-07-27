@@ -130,7 +130,7 @@
     kendo.toolbar.registerComponent("colorPicker", colorPicker);
 
     var FONT_SIZES = [8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72];
-    var comboBox = kendo.toolbar.Item.extend({
+    var fontSize = kendo.toolbar.Item.extend({
         init: function(options, toolbar) {
             var comboBox = $("<input />").kendoComboBox({
                 change: function(e) {
@@ -154,7 +154,7 @@
             });
 
             this.element.data({
-                type: "comboBox",
+                type: "fontSize",
                 comboBox: this
             });
         },
@@ -168,7 +168,7 @@
         }
     });
 
-    kendo.toolbar.registerComponent("comboBox", comboBox);
+    kendo.toolbar.registerComponent("fontSize", fontSize);
 
 })(kendo);
 
