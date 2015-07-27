@@ -305,7 +305,7 @@ module CodeGen::TypeScript
 
     class Method < CodeGen::Method
 
-        attr_accessor :jsdoc
+        attr_accessor :jsdoc, :twin
 
         def result_class
             Result
@@ -363,6 +363,20 @@ module CodeGen::TypeScript
             composite = composite_parameters
 
             parameters.find_all { |p| p.composite? || !composite.any? { |composite| composite.name == p.name } }
+        end
+
+        def selector? type
+            type.sort.join(",") == "Element,String,jQuery"
+        end
+
+        def add_parameter(settings)
+            target_param = parameters[0]
+
+            if twin && target_param && twin.parameters.empty?
+                twin.parameters.push(target_param) if selector? target_param.type
+            end
+
+            super(settings)
         end
     end
 
@@ -511,12 +525,18 @@ module CodeGen::TypeScript
 
                 settings[:result] = nil
 
-                super(:description => description,
-                      :name => settings[:name],
-                      :result => result)
+                getter = super(
+                    :description => description,
+                    :name => settings[:name],
+                    :result => result
+                )
             end
 
-            super(settings)
+            setter = super(settings)
+
+            setter.twin = getter if getter
+
+            setter
         end
     end
 
@@ -622,13 +642,16 @@ namespace :type_script do
         namespace branch do
             desc "Test TypeScript generation"
             task :test do
+                tsc = "node node_modules/typescript/bin/tsc --noImplicitAny"
                 %w(all web dataviz mobile).each do |suite|
                     path = "dist/kendo.#{suite}.d.ts"
 
                     File.write(path, get_type_script(path, md_api_suite(suite), false))
 
-                    sh "node node_modules/typescript/bin/tsc --noImplicitAny build/jquery.d.ts #{path}"
+                    sh "#{tsc} build/jquery.d.ts #{path}"
                 end
+
+                sh "#{tsc} --out dist/type_script.tests.js build/type_script.tests.ts"
             end
         end
     end
