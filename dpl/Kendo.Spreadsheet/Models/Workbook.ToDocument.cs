@@ -42,6 +42,11 @@ namespace Kendo.Spreadsheet
                         documentSheet.ViewState.FreezePanes(sheet.FrozenRows, sheet.FrozenColumns);
                     }
                 }
+
+                if (document.Worksheets.Count > 0)
+                {
+                    document.ActiveWorksheet = document.Worksheets[0];
+                }
             }
 
             document.History.IsEnabled = true;

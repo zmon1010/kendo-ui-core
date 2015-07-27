@@ -11,6 +11,7 @@ namespace Kendo.Spreadsheet
         static Workbook()
         {
             WorkbookFormatProvidersManager.RegisterFormatProvider(new XlsxFormatProvider());
+            WorkbookFormatProvidersManager.RegisterFormatProvider(new JsonFormatProvider());
         }
 
         public static Document Load(string path)
@@ -27,7 +28,7 @@ namespace Kendo.Spreadsheet
 
         public void Save(string path)
         {
-            var document = new Document();
+            var document = this.ToDocument();
 
             using (var file = File.OpenWrite(path))
             {
