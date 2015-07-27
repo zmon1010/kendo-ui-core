@@ -14,12 +14,10 @@ namespace Kendo.Spreadsheet.Tests
 {
     public class JsonFormatProviderTests
     {
-        private const string CELL_VALUE = "Фоо";
-
         [Fact]
         public void Imports_JSON_from_stream()
         {
-            var workbook = CreateWorkbook();
+            var workbook = TestHelper.CreateWorkbook();
 
             var serializer = new JsonSerializer();
             using (var stream = new MemoryStream())
@@ -35,14 +33,14 @@ namespace Kendo.Spreadsheet.Tests
                 var provider = new JsonFormatProvider();
                 var document = provider.Import(stream);
 
-                Assert.Equal(CELL_VALUE, document.ActiveWorksheet.Cells[1, 1].GetValue().Value.RawValue);
+                Assert.Equal("Фу", document.ActiveWorksheet.Cells[1, 5].GetValue().Value.RawValue);
             }
         }
 
         [Fact]
         public void Imports_JSON_from_stream_with_specified_encoding()
         {
-            var workbook = CreateWorkbook();
+            var workbook = TestHelper.CreateWorkbook();
 
             var serializer = new JsonSerializer();
             using (var stream = new MemoryStream())
@@ -61,14 +59,14 @@ namespace Kendo.Spreadsheet.Tests
 
                 var document = provider.Import(stream);
 
-                Assert.Equal(CELL_VALUE, document.ActiveWorksheet.Cells[1, 1].GetValue().Value.RawValue);
+                Assert.Equal("Фу", document.ActiveWorksheet.Cells[1, 5].GetValue().Value.RawValue);
             }
         }
 
         [Fact]
         public void Exports_document_to_JSON()
         {
-            var document = CreateDocument();
+            var document = TestHelper.CreateDocument();
 
             using (var stream = new MemoryStream())
             {
@@ -82,9 +80,8 @@ namespace Kendo.Spreadsheet.Tests
                     var json = reader.ReadToEnd();
                     var result = JsonConvert.DeserializeObject<Workbook>(json);
 
-                    var cell = result.Sheets[0].Rows[0].Cells[0];
-                    Assert.Equal(CELL_VALUE, cell.Value);
-                    Assert.Equal(1, cell.Index);
+                    var cell = result.Sheets[0].Rows[0].Cells.Where(c => c.Index == 5).First();
+                    Assert.Equal("Фу", cell.Value);
                 }
             }
         }
@@ -92,7 +89,7 @@ namespace Kendo.Spreadsheet.Tests
         [Fact]
         public void Exports_document_to_JSON_with_specified_encoding()
         {
-            var document = CreateDocument();
+            var document = TestHelper.CreateDocument();
             var encoding = System.Text.Encoding.GetEncoding(1251);
 
             using (var stream = new MemoryStream())
@@ -108,30 +105,10 @@ namespace Kendo.Spreadsheet.Tests
                     var json = reader.ReadToEnd();
                     var result = JsonConvert.DeserializeObject<Workbook>(json);
 
-                    var cell = result.Sheets[0].Rows[0].Cells[0];
-                    Assert.Equal(CELL_VALUE, cell.Value);
-                    Assert.Equal(1, cell.Index);
+                    var cell = result.Sheets[0].Rows[0].Cells.Where(c => c.Index == 5).First();
+                    Assert.Equal("Фу", cell.Value);
                 }
             }
-        }
-
-        private static Workbook CreateWorkbook()
-        {
-            var workbook = new Workbook();
-            var sheet = new Worksheet();
-            var row = new Row { Index = 1 };
-            row.Cells.Add(new Cell { Index = 1, Value = CELL_VALUE });
-            sheet.Rows.Add(row);
-            workbook.Sheets.Add(sheet);
-            return workbook;
-        }
-
-        private static Document CreateDocument()
-        {
-            var document = new Document();
-            var worksheet = document.Worksheets.Add();
-            worksheet.Cells[1, 1].SetValue(CELL_VALUE);
-            return document;
         }
     }
 }

@@ -16,16 +16,9 @@ namespace Kendo.Spreadsheet.Tests
     {
         public WorkbookExportTests()
         {
-            workbook = new Workbook();
-            sheet = new Worksheet();
-            row = new Row { Index = 1 };
-            row.Cells.Add(new Cell { Index = 1, Value = "Foo", Format = "@" });
-            row.Cells.Add(new Cell { Index = 2, Value = 42 });
-            row.Cells.Add(new Cell { Index = 3, Value = 2.71 });
-            row.Cells.Add(new Cell { Index = 4, Formula = "=A1 + B1" });
-
-            sheet.Rows.Add(row);
-            workbook.Sheets.Add(sheet);
+            workbook = TestHelper.CreateWorkbook();
+            sheet = workbook.Sheets[0];
+            row = sheet.Rows[0];
         }
 
         private Workbook workbook;

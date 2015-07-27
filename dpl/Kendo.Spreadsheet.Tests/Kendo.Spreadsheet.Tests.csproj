@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JsonFormatProviderTests.cs" />
+    <Compile Include="TestHelper.cs" />
     <Compile Include="WorkbookImportTests.cs" />
     <Compile Include="WorkbookExportTests.cs" />
     <Compile Include="WorkbookTests.cs" />

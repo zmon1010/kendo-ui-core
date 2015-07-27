@@ -19,15 +19,8 @@ namespace Kendo.Spreadsheet.Tests
     {
         public WorkbookImportTests()
         {
-            document = new Document();
-            worksheet = document.Worksheets.Add();
-
-            worksheet.Cells[1, 1].SetValue("Foo");
-            worksheet.Cells[1, 1].SetFormat(new CellValueFormat("@"));
-
-            worksheet.Cells[1, 2].SetValue(42);
-            worksheet.Cells[1, 3].SetValue(2.71);
-            worksheet.Cells[1, 4].SetValue("=A1 + B1");
+            document = TestHelper.CreateDocument();
+            worksheet = document.ActiveWorksheet;
         }
 
         private Document document;
@@ -65,7 +58,7 @@ namespace Kendo.Spreadsheet.Tests
         [Fact]
         public void FromDocument_imports_cells()
         {
-            Assert.Equal(4, Workbook.FromDocument(document).Sheets[0].Rows[0].Cells.Count);
+            Assert.Equal(5, Workbook.FromDocument(document).Sheets[0].Rows[0].Cells.Count);
         }
 
         [Fact]

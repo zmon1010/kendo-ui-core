@@ -12,7 +12,7 @@ namespace Kendo.Spreadsheet.Tests
 {
     public class WorkbookTests
     {
-        private const string CELL_VALUE = "Фоо";
+        private const string CELL_VALUE = "Фу";
 
         [Fact]
         public void Can_insert_sheets()
@@ -35,7 +35,7 @@ namespace Kendo.Spreadsheet.Tests
         [Fact]
         public void Saves_xlsx_file()
         {
-            var workbook = CreateWorkbook();
+            var workbook = TestHelper.CreateWorkbook();
             var path = Path.Combine("Data", Path.GetRandomFileName() + ".xlsx");
 
             try
@@ -43,7 +43,7 @@ namespace Kendo.Spreadsheet.Tests
                 workbook.Save(path);
 
                 var document = Workbook.Load(path);
-                Assert.Equal(document.ActiveWorksheet.Cells[1, 1].GetValue().Value.RawValue, "Фоо");
+                Assert.Equal(document.ActiveWorksheet.Cells[1, 5].GetValue().Value.RawValue, "Фу");
             }
             finally
             {
@@ -57,13 +57,13 @@ namespace Kendo.Spreadsheet.Tests
             var path = Path.Combine("Data", "Sample.json");
 
             var document = Workbook.Load(path);
-            Assert.Equal(document.ActiveWorksheet.Cells[1, 1].GetValue().Value.RawValue, "Фоо");
+            Assert.Equal(document.ActiveWorksheet.Cells[1, 1].GetValue().Value.RawValue, "Фу");
         }
 
         [Fact]
         public void Saves_JSON_file()
         {
-            var workbook = CreateWorkbook();
+            var workbook = TestHelper.CreateWorkbook();
             var path = Path.Combine("Data", Path.GetRandomFileName() + ".json");
 
             try
@@ -71,23 +71,12 @@ namespace Kendo.Spreadsheet.Tests
                 workbook.Save(path);
 
                 var document = Workbook.Load(path);
-                Assert.Equal(document.ActiveWorksheet.Cells[1, 1].GetValue().Value.RawValue, "Фоо");
+                Assert.Equal(document.ActiveWorksheet.Cells[1, 5].GetValue().Value.RawValue, "Фу");
             }
             finally
             {
                 File.Delete(path);
             }
-        }
-
-        private static Workbook CreateWorkbook()
-        {
-            var workbook = new Workbook();
-            var sheet = new Worksheet();
-            var row = new Row { Index = 1 };
-            row.Cells.Add(new Cell { Index = 1, Value = CELL_VALUE });
-            sheet.Rows.Add(row);
-            workbook.Sheets.Add(sheet);
-            return workbook;
         }
     }
 }
