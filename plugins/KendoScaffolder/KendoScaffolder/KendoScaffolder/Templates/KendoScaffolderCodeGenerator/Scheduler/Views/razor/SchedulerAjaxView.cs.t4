@@ -67,7 +67,7 @@
         .Update(update => update.Action("<#= entitySetName #>_Update", "<#= ControllerRootName #>"))
 <#
     }
-    if(EditableDestroy) {
+    if(EditableDestroy || EditableResize || EditableMove) {
 #>
         .Destroy(destroy => destroy.Action("<#= entitySetName #>_Destroy", "<#= ControllerRootName #>"))
 <#

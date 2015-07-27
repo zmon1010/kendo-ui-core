@@ -75,7 +75,7 @@ config.Routes.MapHttpRoute(
         .Update(update => update.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
 <#
     }
-    if(EditableDestroy) {
+    if(EditableDestroy || EditableResize || EditableMove) {
 #>
         .Destroy(destroy => destroy.Url(Url.HttpRouteUrl("DefaultApi", new { controller = "<#= entitySetName #>", id = "{0}" })))
 <#

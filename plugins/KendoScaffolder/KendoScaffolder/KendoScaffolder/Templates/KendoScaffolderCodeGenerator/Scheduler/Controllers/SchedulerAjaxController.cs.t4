@@ -102,7 +102,7 @@ namespace <#= Namespace #>
         }
 <#
     }
-    if(EditableDestroy) {
+    if(EditableDestroy || EditableResize || EditableMove) {
 #>
         public virtual JsonResult <#= entitySetName #>_Destroy([DataSourceRequest] DataSourceRequest request, <#= WidgetViewModelName #> <#= ModelVariable #>)
         {

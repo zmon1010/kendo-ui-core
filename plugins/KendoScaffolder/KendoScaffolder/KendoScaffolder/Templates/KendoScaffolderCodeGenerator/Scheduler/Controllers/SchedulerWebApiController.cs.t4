@@ -144,7 +144,7 @@ namespace <#= Namespace #>
         }
 <#
     }
-    if(EditableDestroy) {
+    if(EditableDestroy || EditableResize || EditableMove) {
 #>
         public HttpResponseMessage Delete<#= ModelTypeName #>(int id)
         {
