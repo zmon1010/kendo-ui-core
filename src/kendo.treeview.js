@@ -386,7 +386,10 @@ var __meta__ = {
                             sourceNode: options.source,
                             destinationNode: options.destination,
                             valid: options.valid,
-                            setValid: options.setValid,
+                            setValid: function(state) {
+                                this.valid = state;
+                                options.setValid(state);
+                            },
                             dropTarget: options.dropTarget,
                             dropPosition: options.position
                         });

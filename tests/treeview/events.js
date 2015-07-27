@@ -179,6 +179,9 @@
                 e.setValid(false);
 
                 ok(!e.valid);
+            },
+            dragend: function(e) {
+                ok(false);
             }
         });
 
