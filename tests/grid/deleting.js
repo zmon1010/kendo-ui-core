@@ -74,6 +74,27 @@
             ok(!tr.is(":visible"));
         });
 
+        test("removeRow hides coresponding locked row from the grid", function() {
+            var grid = setup({
+                editable: { mode: "incell", confirmation: false },
+                height: 800,
+                columns: [
+                    { field: "foo", locked: true, width: 100 },
+                    { field: "bar", locked: true, width: 100 },
+                    { command: "destroy", width: 100 }
+                ]});
+
+            grid.dataSource.group({ field: "foo" });
+
+            var lockedRow = grid.lockedTable.find("tbody>tr:not(.k-grouping-row):first");
+            var tr = grid.tbody.find("tr:not(.k-grouping-row):first");
+
+            grid.removeRow(tr);
+
+            ok(!tr.is(":visible"), "non-locked");
+            ok(!lockedRow.is(":visible"), "locked");
+        });
+
         test("removeRow does not call DataSource remove method if not existing row", function() {
             var grid = setup();
             var removeMethod = stub(dataSource, "remove");

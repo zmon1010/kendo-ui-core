@@ -2917,7 +2917,13 @@ var __meta__ = {
                 that.cancelRow();
             }
 
-            row = $(row).hide();
+            row = $(row);
+
+            if (that.lockedContent) {
+                row = row.add(that._relatedRow(row));
+            }
+
+            row = row.hide();
             model = that._modelForContainer(row);
 
             if (model && !that.trigger(REMOVE, { row: row, model: model })) {
