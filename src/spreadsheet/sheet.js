@@ -701,17 +701,25 @@
                 columns.forEach(function(column) {
                     var columnRef = ref.toColumn(column.index);
 
-                    column.filter.prepare(new Range(columnRef, this));
+                    var cells = [];
 
                     this.forEach(columnRef, function(row, col, cell) {
+                        cell.row = row;
+                        cells.push(cell);
+                    });
+
+                    column.filter.prepare(cells);
+
+                    for (var ci = 0; ci < cells.length; ci++) {
+                        var cell = cells[ci];
                         var value = column.filter.value(cell);
 
                         if (column.filter.matches(value) === false) {
-                            this.hideRow(row);
+                            this.hideRow(cell.row);
                         } else {
-                            this.unhideRow(row);
+                            this.unhideRow(cell.row);
                         }
-                    }.bind(this));
+                    }
                 }, this);
 
                 this._filter = {

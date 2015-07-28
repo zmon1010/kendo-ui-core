@@ -92,8 +92,8 @@
 
     test("prepares the filter with column range", 1, function() {
         var Filter = kendo.spreadsheet.Filter.extend({
-            prepare: function(range) {
-                equal(range._ref.toString(), "A1:A3");
+            prepare: function(cells) {
+                equal(cells.length, 3)
             },
             matches: function() {
                 return false;

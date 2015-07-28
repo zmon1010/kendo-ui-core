@@ -4,7 +4,7 @@
 (function(kendo) {
     /*jshint evil: true */
     var Filter = kendo.spreadsheet.Filter = kendo.Class.extend({
-        prepare: function(range) {
+        prepare: function(cells) {
         },
         value: function(cell) {
             return cell.value;
@@ -137,10 +137,8 @@
             this._values = [];
         },
 
-        prepare: function(range) {
-            var values = range.values().map(function(row) {
-                return row[0];
-            })
+        prepare: function(cells) {
+            var values = cells.map(this.value)
             .sort()
             .filter(function(value, index, array) {
                 return index === 0 || value !== array[index - 1];
@@ -173,6 +171,100 @@
                 type: this._type,
                 value: this._value
             };
+        }
+    });
+
+    kendo.spreadsheet.DynamicFilter = Filter.extend({
+        init: function(options) {
+            this._type = options.type;
+
+            this._predicate = this[options.type];
+
+            if (typeof this._predicate !== "function") {
+                throw new Error("DynamicFilter type '" + options.type + "' not recognized.");
+            }
+        },
+        value: function(cell) {
+            var value = cell.value;
+
+            if (cell.format) {
+                var type = kendo.spreadsheet.formatting.type(value, cell.format);
+
+                if (type === "date") {
+                    value = kendo.spreadsheet.numberToDate(value);
+                }
+            }
+
+            return value;
+        },
+        prepare: function(cells) {
+            var sum = 0;
+            var count = 0;
+
+            for (var ci = 0; ci < cells.length; ci++) {
+                var value = this.value(cells[ci]);
+
+                if (typeof value === "number") {
+                    sum += value;
+                    count ++;
+                }
+            }
+
+            if (count > 0) {
+                this._average = sum / count;
+            } else {
+                this._average = 0;
+            }
+        },
+        matches: function(value) {
+            return this._predicate(value);
+        },
+        aboveAverage: function(value) {
+            if (value instanceof Date) {
+                value = kendo.spreadsheet.dateToNumber(value);
+            }
+
+            if (typeof value !== "number") {
+                return false;
+            }
+
+            return value > this._average;
+        },
+        belowAverage: function(value) {
+            if (value instanceof Date) {
+                value = kendo.spreadsheet.dateToNumber(value);
+            }
+
+            if (typeof value !== "number") {
+                return false;
+            }
+
+            return value < this._average;
+        },
+        tomorrow: function(value) {
+            if (value instanceof Date) {
+                var tomorrow = kendo.date.addDays(kendo.date.today(), 1);
+
+                return kendo.date.getDate(value).getTime() === tomorrow.getTime();
+            }
+
+            return false;
+        },
+        today: function(value) {
+            if (value instanceof Date) {
+                return kendo.date.isToday(value);
+            }
+
+            return false;
+        },
+        yesterday: function(value) {
+            if (value instanceof Date) {
+                var yesterday = kendo.date.addDays(kendo.date.today(), -1);
+
+                return kendo.date.getDate(value).getTime() === yesterday.getTime();
+            }
+
+            return false;
         }
     });
 

@@ -1,7 +1,7 @@
 (function() {
-    var sheet;
     var ValueFilter = kendo.spreadsheet.ValueFilter;
     var CustomFilter = kendo.spreadsheet.CustomFilter;
+    var DynamicFilter = kendo.spreadsheet.DynamicFilter;
     var TopFilter = kendo.spreadsheet.TopFilter;
     var filter;
 
@@ -183,12 +183,7 @@
         equal(filter.matches(new Date("1/2/1999 13:52:22")), false);
     });
 
-    module("custom filter", {
-        setup: function() {
-            sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,
-                defaults.rowHeight, defaults.columnWidth);
-        }
-    });
+    module("custom filter");
 
     test("returns false for null values", function() {
         filter = new CustomFilter({
@@ -416,27 +411,17 @@
         equal(filter.matches("bar"), true);
     });
 
-    var defaults = kendo.ui.Spreadsheet.prototype.options;
-    var range;
-
-    module("top filter", {
-        setup: function() {
-            sheet = new kendo.spreadsheet.Sheet(4, 4, defaults.rowHeight, defaults.columnWidth);
-            range = sheet.range("A1:A4");
-        },
-        teardown: function() {
-            sheet.unbind();
-        }
-    });
+    module("top filter");
 
     test("top number matches the top X values", function() {
         filter = new TopFilter({ type: "topNumber", value: 2 });
 
-        range.values([
-            [1], [10], [2], [4]
+        filter.prepare([
+            { value: 1 },
+            { value: 10 },
+            { value: 2 },
+            { value: 4 }
         ]);
-
-        filter.prepare(range);
 
         equal(filter.matches(2), false);
         equal(filter.matches(3), false);
@@ -448,11 +433,12 @@
     test("top number ignores duplicates", function() {
         filter = new TopFilter({ type: "topNumber", value: 2 });
 
-        range.values([
-            [1], [10], [10], [4]
+        filter.prepare([
+            { value: 1 },
+            { value: 10 },
+            { value: 2 },
+            { value: 4 }
         ]);
-
-        filter.prepare(range);
 
         equal(filter.matches(2), false);
         equal(filter.matches(3), false);
@@ -464,11 +450,12 @@
     test("bottom number matches the bottom X values", function() {
         filter = new TopFilter({ type: "bottomNumber", value: 2 });
 
-        range.values([
-            [1], [10], [2], [4]
+        filter.prepare([
+            { value: 1 },
+            { value: 10 },
+            { value: 2 },
+            { value: 4 }
         ]);
-
-        filter.prepare(range);
 
         equal(filter.matches(0), false);
         equal(filter.matches(2), true);
@@ -481,11 +468,12 @@
     test("top percent matches the top X percent ", function() {
         filter = new TopFilter({ type: "topPercent", value: 25 });
 
-        range.values([
-            [1], [10], [2], [4]
+        filter.prepare([
+            { value: 1 },
+            { value: 10 },
+            { value: 2 },
+            { value: 4 }
         ]);
-
-        filter.prepare(range);
 
         equal(filter.matches(1), false);
         equal(filter.matches(2), false);
@@ -498,11 +486,12 @@
     test("bottom percent matches the bottom X percent ", function() {
         filter = new TopFilter({ type: "bottomPercent", value: 25 });
 
-        range.values([
-            [1], [10], [2], [4]
+        filter.prepare([
+            { value: 1 },
+            { value: 10 },
+            { value: 2 },
+            { value: 4 }
         ]);
-
-        filter.prepare(range);
 
         equal(filter.matches(1), true);
         equal(filter.matches(2), false);
@@ -510,5 +499,158 @@
         equal(filter.matches(4), false);
         equal(filter.matches(10), false);
         equal(filter.matches(11), false);
+    });
+
+    module("dynamic filter");
+
+    test("below average filter", function() {
+        filter = new DynamicFilter({ type: "belowAverage" });
+
+        filter.prepare([
+            { value: 1 },
+            { value: 10 },
+            { value: 2 },
+            { value: 4 }
+        ]);
+
+        equal(filter.matches(1), true);
+        equal(filter.matches(10), false);
+        equal(filter.matches(2), true);
+        equal(filter.matches(5), false);
+    });
+
+    test("above average filter", function() {
+        filter = new DynamicFilter({ type: "aboveAverage" });
+
+        filter.prepare([
+            { value: 1 },
+            { value: 10 },
+            { value: 2 },
+            { value: 4 }
+        ]);
+
+        equal(filter.matches(1), false);
+        equal(filter.matches(10), true);
+        equal(filter.matches(2), false);
+        equal(filter.matches(5), true);
+    });
+
+    test("above average filter treats dates as numbers", function() {
+        filter = new DynamicFilter({ type: "aboveAverage" });
+
+        filter.prepare([
+            { value: 3 }
+        ]);
+
+        equal(filter.matches(new Date("1/1/1900")), false);
+        equal(filter.matches(new Date("1/5/1900")), true);
+    });
+
+    test("above average filter treats dates as numbers", function() {
+        filter = new DynamicFilter({ type: "aboveAverage" });
+
+        filter.prepare([
+            { value: 3 }
+        ]);
+
+        equal(filter.matches(new Date("1/1/1900")), false);
+        equal(filter.matches(new Date("1/5/1900")), true);
+    });
+
+    test("above average doesn't match strings and booleans", function() {
+        filter = new DynamicFilter({ type: "aboveAverage" });
+
+        filter.prepare([
+            { value: 1 }
+        ]);
+
+        equal(filter.matches("1"), false);
+        equal(filter.matches(true), false);
+        equal(filter.matches(false), false);
+    });
+
+    test("below average doesn't match strings and booleans", function() {
+        filter = new DynamicFilter({ type: "belowAverage" });
+
+        filter.prepare([
+            { value: 1 }
+        ]);
+
+        equal(filter.matches("1"), false);
+        equal(filter.matches(true), false);
+        equal(filter.matches(false), false);
+    });
+
+    test("below average filter treats dates as numbers", function() {
+        filter = new DynamicFilter({ type: "belowAverage" });
+
+        filter.prepare([
+            { value: 3 }
+        ]);
+
+        equal(filter.matches(new Date("1/1/1900")), true);
+        equal(filter.matches(new Date("1/5/1900")), false);
+    });
+
+    test("dates are ignored during average calculation", function() {
+        filter = new DynamicFilter({ type: "aboveAverage" });
+
+        filter.prepare([
+            { value: 2, format: "m/d/yyyy" },
+            { value: 1 },
+            { value: 10 },
+            { value: 2 },
+            { value: 4 }
+        ]);
+
+        equal(filter._average, 4.25);
+    });
+
+    test("tomorrow", function() {
+        filter = new DynamicFilter({ type: "tomorrow" });
+
+        var today = kendo.date.today();
+
+        var tomorrow = kendo.date.addDays(today, 1);
+
+        equal(filter.matches(today), false);
+        equal(filter.matches(tomorrow), true);
+        tomorrow.setHours(10);
+        equal(filter.matches(tomorrow), true);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("today", function() {
+        filter = new DynamicFilter({ type: "today" });
+
+        var today = kendo.date.today();
+
+        var tomorrow = kendo.date.addDays(today, 1);
+
+        equal(filter.matches(today), true);
+        equal(filter.matches(tomorrow), false);
+        today.setHours(10);
+        equal(filter.matches(today), true);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
+    });
+
+    test("yesterday", function() {
+        filter = new DynamicFilter({ type: "yesterday" });
+
+        var today = kendo.date.today();
+
+        var yesterday = kendo.date.addDays(today, -1);
+
+        equal(filter.matches(today), false);
+        equal(filter.matches(yesterday), true);
+        yesterday.setHours(10);
+        equal(filter.matches(yesterday), true);
+        equal(filter.matches(true), false);
+        equal(filter.matches(""), false);
+        equal(filter.matches(1), false);
     });
 })();
