@@ -1490,4 +1490,30 @@
         });
     });
 
+    test("RANK", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: '=rank.eq(5, { 5, 4, 5, 5, 6 })',
+            A2: '=rank.avg(5, { 5, 5, 4, 5, 5, 6 })'
+        });
+        ss.recalculate(function(){
+            ss.expectEqual({
+                A1: 2,
+                A2: 3.5,
+            });
+        });
+    });
+
+    test("KURT", function(){
+        var ss = new Spreadsheet();
+        ss.fill({
+            A1: '=kurt({ 3, 4, 5, 2, 3, 4, 5, 6, 4, 7 })',
+            A2: '=kurt({ 4, 5, 4, 4, 4, 4, 4, 2, 3, 5, 5, 3 })'
+        });
+        ss.recalculate(function(){
+            equal(ss.$("A1").toFixed(6), -0.1518);
+            equal(ss.$("A2").toFixed(6), 0.532658);
+        });
+    });
+
 })();

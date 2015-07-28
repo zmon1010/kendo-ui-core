@@ -708,14 +708,20 @@
         ]);
     });
 
-    function _var_sp(numbers, divisor) {
+    function _avg(numbers) {
+        return numbers.reduce(function(sum, num){
+            return sum + num;
+        }, 0) / numbers.length;
+    }
+
+    function _var_sp(numbers, divisor, avg) {
         var n = numbers.length;
         if (n < 2) {
             return new CalcError("NUM");
         }
-        var avg = numbers.reduce(function(sum, num){
-            return sum + num;
-        }, 0) / n;
+        if (avg == null) {
+            avg = _avg(numbers);
+        }
         return numbers.reduce(function(sum, num){
             return sum + Math.pow(num - avg, 2);
         }, 0) / divisor;
@@ -890,6 +896,50 @@
     }).args([
         [ "data", [ "collect", "number", 1 ] ],
         [ "bins", [ "collect", "number", 1 ] ]
+    ]);
+
+    defineFunction("rank.eq", function(val, numbers, asc) {
+        numbers.sort(asc ? ascending : descending);
+        var pos = numbers.indexOf(val);
+        return pos < 0 ? new CalcError("N/A") : pos + 1;
+    }).args([
+        [ "value", "number" ],
+        [ "numbers", [ "collect", "number" ] ],
+        [ "order", [ "or", "logical", [ "null", false ] ] ]
+    ]);
+
+    defineAlias("rank", "rank.eq");
+
+    defineFunction("rank.avg", function(val, numbers, asc) {
+        numbers.sort(asc ? ascending : descending);
+        var pos = numbers.indexOf(val);
+        if (pos < 0) {
+            return new CalcError("N/A");
+        }
+        for (var i = pos; numbers[i] == val; ++i){}
+        return (pos + i + 1) / 2;
+    }).args([
+        [ "value", "number" ],
+        [ "numbers", [ "collect", "number" ] ],
+        [ "order", [ "or", "logical", [ "null", false ] ] ]
+    ]);
+
+    // formula available at https://support.office.microsoft.com/en-us/article/KURT-function-cbbc2312-dfa6-4cc4-b5c0-1b3c59cc9377
+    defineFunction("kurt", function(numbers){
+        var n = numbers.length;
+        if (n < 4) {
+            return new CalcError("DIV/0");
+        }
+        var avg = _avg(numbers);
+        var variance = _var_sp(numbers, n-1, avg);
+        var stddev = Math.sqrt(variance);
+        var sum = numbers.reduce(function(sum, num){
+            return sum + Math.pow((num - avg) / stddev, 4);
+        }, 0);
+        return n*(n+1)/((n-1)*(n-2)*(n-3)) * sum
+            - 3*Math.pow(n-1, 2)/((n-2)*(n-3));
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
     ]);
 
     /* -----[ Factorials ]----- */
