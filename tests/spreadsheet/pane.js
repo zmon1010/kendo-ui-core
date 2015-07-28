@@ -124,7 +124,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { horizontalAlignment: "foo" });
+        pane.addCell(table, {}, { textAlign: "foo" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].textAlign, "foo");

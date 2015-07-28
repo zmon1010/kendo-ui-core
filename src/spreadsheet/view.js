@@ -427,8 +427,8 @@
                 style.fontStyle = cell.fontStyle;
             }
 
-            if (cell.horizontalAlignment) {
-                style.textAlign = cell.horizontalAlignment;
+            if (cell.textAlign) {
+                style.textAlign = cell.textAlign;
             }
 
             if (cell.verticalAlignment) {

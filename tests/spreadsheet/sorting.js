@@ -87,7 +87,7 @@
                          .fontWeight("bold")
                          .format("#")
                          .background("green")
-                         .horizontalAlignment("right")
+                         .textAlign("right")
                          .verticalAlignment("top")
                          .wrap(false)
                          .borderBottom({size: "3px", color: "green"})
@@ -103,7 +103,7 @@
         equal(sheet.range("A1").fontWeight(), "bold");
         equal(sheet.range("A1").background(), "green");
         equal(sheet.range("A1").wrap(), false);
-        equal(sheet.range("A1").horizontalAlignment(), "right");
+        equal(sheet.range("A1").textAlign(), "right");
         equal(sheet.range("A1").verticalAlignment(), "top");
         equal(sheet.range("A1").format(), "#");
         equal(sheet.range("A1").borderBottom(), null);

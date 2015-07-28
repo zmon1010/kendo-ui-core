@@ -122,10 +122,10 @@
         equal(range.fontWeight(), "bold");
     });
 
-    test("horizontalAlignment returns the horizontalAlignment of a range", function() {
-        range.horizontalAlignment("foo");
+    test("textAlign returns the textAlign of a range", function() {
+        range.textAlign("foo");
 
-        equal(range.horizontalAlignment(), "foo");
+        equal(range.textAlign(), "foo");
     });
 
     test("verticalAlignment returns the horizontalAlignment of a range", function() {

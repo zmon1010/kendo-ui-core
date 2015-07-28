@@ -77,7 +77,7 @@
             { property: Property, name: "fontSize", value: null, sortable: true, serializable: true },
             { property: Property, name: "fontStyle", value: null, sortable: true, serializable: true },
             { property: Property, name: "fontWeight", value: null, sortable: true, serializable: true },
-            { property: Property, name: "horizontalAlignment", value: null, sortable: true, serializable: true },
+            { property: Property, name: "textAlign", value: null, sortable: true, serializable: true },
             { property: Property, name: "verticalAlignment", value: null, sortable: true, serializable: true },
             { property: Property, name: "wrap", value: null, sortable: true, serializable: true }
         ],
