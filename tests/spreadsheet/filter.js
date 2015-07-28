@@ -10,13 +10,13 @@
     module("filter");
 
     test("creates value filter", function() {
-        var filter = kendo.spreadsheet.Filter.create({ type: "value" });
+        var filter = kendo.spreadsheet.Filter.create({ filter: "value" });
 
         ok(filter instanceof ValueFilter);
     });
 
     test("creates custom filter", function() {
-        var filter = kendo.spreadsheet.Filter.create({ type: "custom", criteria: [{ operator: "eq", value: "foo" }] });
+        var filter = kendo.spreadsheet.Filter.create({ filter: "custom", criteria: [{ operator: "eq", value: "foo" }] });
 
         ok(filter instanceof CustomFilter);
     });
@@ -32,20 +32,15 @@
 
     test("create throws error if unknown type is specified", 1, function() {
         try {
-            kendo.spreadsheet.Filter.create({ type: "foo" });
+            kendo.spreadsheet.Filter.create({ filter: "foo" });
         } catch(e) {
             equal(e.message, "Filter type not recognized.");
         }
     });
 
-    module("value filter", {
-        setup: function() {
-            sheet = new kendo.spreadsheet.Sheet(defaults.rows, defaults.columns,
-                defaults.rowHeight, defaults.columnWidth);
-        }
-    });
+    module("value filter");
 
-   test("returns true for known values", function() {
+    test("returns true for known values", function() {
         filter = new ValueFilter({
             values: [1, 2]
         });

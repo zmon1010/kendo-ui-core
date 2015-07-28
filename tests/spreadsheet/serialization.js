@@ -79,7 +79,7 @@
         equal(json.filter.ref, "A1:B2");
         equal(json.filter.columns.length, 1);
         equal(json.filter.columns[0].index, 0);
-        equal(json.filter.columns[0].type, "value");
+        equal(json.filter.columns[0].filter, "value");
         equal(json.filter.columns[0].values[0], 0);
         equal(json.filter.columns[0].values[1], 1);
     });
@@ -102,7 +102,7 @@
         equal(json.filter.ref, "A1:B2");
         equal(json.filter.columns.length, 1);
         equal(json.filter.columns[0].index, 0);
-        equal(json.filter.columns[0].type, "custom");
+        equal(json.filter.columns[0].filter, "custom");
         equal(json.filter.columns[0].logic, "and");
         equal(json.filter.columns[0].criteria[0].operator, "eq");
         equal(json.filter.columns[0].criteria[0].value, "foo");
@@ -126,6 +126,7 @@
         equal(json.filter.ref, "A1:B2");
         equal(json.filter.columns.length, 1);
         equal(json.filter.columns[0].index, 0);
+        equal(json.filter.columns[0].filter, "top");
         equal(json.filter.columns[0].type, "topPercent");
         equal(json.filter.columns[0].value, 13);
     });
@@ -441,9 +442,9 @@
             filter: {
                 ref: "A1:B1",
                 columns: [
-                    { index: 1, type: "custom", criteria: [ { operator: "eq", value: "foo" } ] },
-                    { index: 0, type: "value", values: [1, 2] },
-                    { index: 2, type: "topPercent", value: 1 }
+                    { index: 1, filter: "custom", criteria: [ { operator: "eq", value: "foo" } ] },
+                    { index: 0, filter: "value", values: [1, 2] },
+                    { index: 2, filter: "top", type: "topPercent", value: 1 }
                 ]
             }
         });

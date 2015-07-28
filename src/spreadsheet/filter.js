@@ -18,20 +18,16 @@
     });
 
     Filter.create = function(options) {
-        var type = options.type;
+        var filter = options.filter;
 
-        if (!type) {
+        if (!filter) {
             throw new Error("Filter type not specified.");
         }
 
-        var constructor = kendo.spreadsheet[type.charAt(0).toUpperCase() + type.substring(1) + "Filter"];
+        var constructor = kendo.spreadsheet[filter.charAt(0).toUpperCase() + filter.substring(1) + "Filter"];
 
         if (!constructor) {
-            if (/(top|bottom)(Number|Percent)/.test(type)) {
-                constructor = kendo.spreadsheet.TopFilter;
-            } else {
-                throw new Error("Filter type not recognized.");
-            }
+            throw new Error("Filter type not recognized.");
         }
 
         return new constructor(options);
@@ -92,7 +88,7 @@
         },
         toJSON: function() {
             return {
-                type: "value",
+                filter: "value",
                 values: this._values.slice(0)
             };
         }
@@ -127,7 +123,7 @@
         },
         toJSON: function() {
             return {
-                type: "custom",
+                filter: "custom",
                 logic: this._logic,
                 criteria: this._criteria
             };
@@ -173,6 +169,7 @@
         },
         toJSON: function() {
             return {
+                filter: "top",
                 type: this._type,
                 value: this._value
             };
