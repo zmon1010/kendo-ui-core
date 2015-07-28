@@ -26,8 +26,8 @@ namespace Kendo.Spreadsheet.Tests
         {
             var path = Path.Combine("Data", "Sample.xlsx");
 
-            var document = Workbook.Load(path);
-            Assert.Equal(document.Worksheets.Count, 1);
+            var workbook = Workbook.Load(path);
+            Assert.Equal(workbook.Sheets.Count, 1);
         }
 
         [Fact]
@@ -40,8 +40,8 @@ namespace Kendo.Spreadsheet.Tests
             {
                 workbook.Save(path);
 
-                var document = Workbook.Load(path);
-                Assert.Equal(document.ActiveWorksheet.Cells[1, 5].GetValue().Value.RawValue, "Фу");
+                var result = Workbook.Load(path);
+                Assert.Equal(result.Sheets[0].Rows[0].Cells.Where(c => c.Index == 5).First().Value, "Фу");
             }
             finally
             {
@@ -54,8 +54,8 @@ namespace Kendo.Spreadsheet.Tests
         {
             var path = Path.Combine("Data", "Sample.json");
 
-            var document = Workbook.Load(path);
-            Assert.Equal(document.ActiveWorksheet.Cells[1, 1].GetValue().Value.RawValue, "Фу");
+            var workbook = Workbook.Load(path);
+            Assert.Equal(workbook.Sheets[0].Rows[0].Cells[0].Value, "Фу");
         }
 
         [Fact]
@@ -68,8 +68,8 @@ namespace Kendo.Spreadsheet.Tests
             {
                 workbook.Save(path);
 
-                var document = Workbook.Load(path);
-                Assert.Equal(document.ActiveWorksheet.Cells[1, 5].GetValue().Value.RawValue, "Фу");
+                var result = Workbook.Load(path);
+                Assert.Equal(result.Sheets[0].Rows[0].Cells.Where(c => c.Index == 5).First().Value, "Фу");
             }
             finally
             {

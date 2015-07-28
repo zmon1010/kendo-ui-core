@@ -21,7 +21,7 @@ namespace Kendo.Spreadsheet
         /// </summary>
         /// <param name="path">The fully-qualified path to the file</param>
         /// <returns>The populated Workbook</returns>
-        public static Document Load(string path)
+        public static Workbook Load(string path)
         {
             Document document;
             using (var file = File.OpenRead(path))
@@ -30,7 +30,7 @@ namespace Kendo.Spreadsheet
                 document = WorkbookFormatProvidersManager.Import(extension, file);
             }
 
-            return document;
+            return Workbook.FromDocument(document);
         }
 
         /// <summary>
