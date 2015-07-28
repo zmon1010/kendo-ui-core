@@ -176,14 +176,14 @@
                             toggleable({ text: "Underline", property: "textDecoration", value: "underline" })
                         ] },
                         { type: "buttonGroup", buttons: [
-                            toggleable({ text: "JustifyLeft", property: "horizontalAlignment", value: "left" }),
-                            toggleable({ text: "JustifyCenter", property: "horizontalAlignment", value: "center" }),
-                            toggleable({ text: "JustifyRight", property: "horizontalAlignment", value: "right" })
+                            toggleable({ text: "JustifyLeft", property: "textAlign", value: "left" }),
+                            toggleable({ text: "JustifyCenter", property: "textAlign", value: "center" }),
+                            toggleable({ text: "JustifyRight", property: "textAlign", value: "right" })
                         ] },
                         { type: "buttonGroup", buttons: [
-                            toggleable({ text: "JustifyTop", property: "verticalAlignment", value: "top" }),
-                            toggleable({ text: "JustifyMiddle", property: "verticalAlignment", value: "middle" }),
-                            toggleable({ text: "JustifyBottom", property: "verticalAlignment", value: "bottom" })
+                            toggleable({ text: "JustifyTop", property: "verticalAlign", value: "top" }),
+                            toggleable({ text: "JustifyMiddle", property: "verticalAlign", value: "middle" }),
+                            toggleable({ text: "JustifyBottom", property: "verticalAlign", value: "bottom" })
                         ] },
                         { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
                         { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },
