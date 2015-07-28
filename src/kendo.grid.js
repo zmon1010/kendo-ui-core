@@ -76,7 +76,6 @@ var __meta__ = {
     var kendo = window.kendo,
         ui = kendo.ui,
         DataSource = kendo.data.DataSource,
-        Groupable = ui.Groupable,
         tbodySupportsInnerHtml = kendo.support.tbodyInnerHtml,
         activeElement = kendo._activeElement,
         Widget = ui.Widget,
@@ -3635,7 +3634,7 @@ var __meta__ = {
                     that.groupable.destroy();
                 }
 
-                that.groupable = new Groupable(wrapper, extend({}, groupable, {
+                that.groupable = new ui.Groupable(wrapper, extend({}, groupable, {
                     draggable: that._draggableInstance,
                     groupContainer: ">div.k-grouping-header",
                     dataSource: that.dataSource,
