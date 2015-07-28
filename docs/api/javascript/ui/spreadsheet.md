@@ -70,9 +70,9 @@ Represents the Kendo UI Spreadsheet widget. Inherits from [Widget](/api/javascri
 
 ### sheets.rows.cells.fontSize `String`
 
-### sheets.rows.cells.fontStyle `String`
+### sheets.rows.cells.italic `Boolean`
 
-### sheets.rows.cells.fontWeight `String`
+### sheets.rows.cells.bold `Boolean`
 
 ### sheets.rows.cells.format `String`
 
@@ -82,9 +82,9 @@ Represents the Kendo UI Spreadsheet widget. Inherits from [Widget](/api/javascri
 
 ### sheets.rows.cells.textAlign `String`
 
-### sheets.rows.cells.textDecoration `String`
+### sheets.rows.cells.underline `Boolean`
 
-### sheets.rows.cells.value `Object`
+### sheets.rows.cells.value `Number|String|Boolean|Date`
 
 ### sheets.rows.cells.verticalAlign `String`
 
