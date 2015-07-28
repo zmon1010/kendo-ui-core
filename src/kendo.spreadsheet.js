@@ -141,7 +141,7 @@
             var element;
 
             function toggleable(options) {
-                var className = options.text.toLowerCase();
+                var className = options.text[0].toLowerCase() + options.text.substr(1);
                 return {
                     spriteCssClass: "k-tool-icon k-" + className,
                     attributes: {
@@ -174,6 +174,16 @@
                             toggleable({ text: "Bold", property: "fontWeight", value: "bold" }),
                             toggleable({ text: "Italic", property: "fontStyle", value: "italic" }),
                             toggleable({ text: "Underline", property: "textDecoration", value: "underline" })
+                        ] },
+                        { type: "buttonGroup", buttons: [
+                            toggleable({ text: "JustifyLeft", property: "horizontalAlignment", value: "left" }),
+                            toggleable({ text: "JustifyCenter", property: "horizontalAlignment", value: "center" }),
+                            toggleable({ text: "JustifyRight", property: "horizontalAlignment", value: "right" })
+                        ] },
+                        { type: "buttonGroup", buttons: [
+                            toggleable({ text: "JustifyTop", property: "verticalAlignment", value: "top" }),
+                            toggleable({ text: "JustifyMiddle", property: "verticalAlignment", value: "middle" }),
+                            toggleable({ text: "JustifyBottom", property: "verticalAlignment", value: "bottom" })
                         ] },
                         { type: "fontFamily", property: "fontFamily", width: 130, overflow: "never" },
                         { type: "fontSize", property: "fontSize", width: 60, overflow: "never" },

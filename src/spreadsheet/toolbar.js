@@ -1,5 +1,5 @@
 (function(f, define){
-    define([ "../kendo.toolbar", "../kendo.colorpicker", "../kendo.combobox" ], f);
+    define([ "../kendo.toolbar", "../kendo.colorpicker", "../kendo.combobox", "../kendo.dropdownlist" ], f);
 })(function(){
 
 (function(kendo) {
@@ -46,7 +46,17 @@
                 var tool = tools[name];
                 var value = range[name]();
 
-                if (tool.type === "button") {
+                if (tool instanceof Array) { //text alignment tool groups
+                    for (var i = 0; i < tool.length; i++) {
+                        if (tool[i].toolbar) {
+                            tool[i].toolbar.toggle(tool[i].toolbar.element.attr("data-value") === value);
+                        }
+
+                        if (tool[i].overflow) {
+                            tool[i].overflow.toggle(tool[i].overflow.element.attr("data-value") === value);
+                        }
+                    }
+                } else if (tool.type === "button") {
                     if (tool.toolbar) {
                         tool.toolbar.toggle(!!value);
                     }
@@ -85,9 +95,17 @@
             return this.element.find("[data-command]").toArray().reduce(function(tools, element) {
                 element = $(element);
                 var property = element.attr("data-property");
+                var toolGroup;
 
                 if (property) {
-                    tools[property] = this._getItem(element);
+                    if (tools[property]) {
+                        if (!(tools[property] instanceof Array)) {
+                            tools[property] = new Array(tools[property]);
+                        }
+                        tools[property].push(this._getItem(element));
+                    } else {
+                        tools[property] = this._getItem(element);
+                    }
                 }
 
                 return tools;
