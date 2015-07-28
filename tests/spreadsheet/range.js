@@ -98,10 +98,10 @@
         equal(range.fontFamily(), "foo");
     });
 
-    test("fontLine returns the fontLine of a range", function() {
-        range.fontLine("foo");
+    test("textDecoration returns the textDecorationfontLine of a range", function() {
+        range.textDecoration("foo");
 
-        equal(range.fontLine(), "foo");
+        equal(range.textDecoration(), "foo");
     });
 
     test("fontLine returns the fontLine of a range", function() {

@@ -173,7 +173,7 @@
                         { type: "buttonGroup", buttons: [
                             toggleable({ text: "Bold", property: "fontWeight", value: "bold" }),
                             toggleable({ text: "Italic", property: "fontStyle", value: "italic" }),
-                            toggleable({ text: "Underline", property: "fontLine", value: "underline" })
+                            toggleable({ text: "Underline", property: "textDecoration", value: "underline" })
                         ] },
                         { type: "colorPicker", property: "background", toolIcon: "k-backColor", overflow: "never" },
                         { type: "colorPicker", property: "color", toolIcon: "k-foreColor", overflow: "never" }

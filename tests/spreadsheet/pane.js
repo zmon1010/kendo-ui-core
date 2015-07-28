@@ -80,7 +80,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { fontLine: "foo" });
+        pane.addCell(table, {}, { textDecoration: "foo" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].textDecoration, "foo");
