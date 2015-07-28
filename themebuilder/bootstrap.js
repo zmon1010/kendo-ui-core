@@ -10,7 +10,7 @@
         })(),
         FAST = "fast",
         // caution: variables below are generated during builds. update build/theme_builder.rb if you change them!
-        KENDO_LOCATION = "http://cdn.kendostatic.com/2015.1.429/",
+        KENDO_LOCATION = "http://kendo.cdn.telerik.com/2015.1.429/",
         JQUERY_LOCATION = "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js",
         requiredJs = [ "scripts/less.js", "scripts/themebuilder.js", "scripts/constants.js", "scripts/less/type-default.js", "scripts/less/type-bootstrap.js", "scripts/less/type-flat.js", "scripts/less/type-fiori.js", "scripts/less/type-highcontrast.js", "scripts/less/type-material.js", "scripts/less/type-office365.js", "scripts/less/type-metro.js", "scripts/less/common-mixins.js", "scripts/less/themes-type.js" ],
         requiredCss = ["styles/styles.css"],

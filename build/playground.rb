@@ -5,7 +5,7 @@ PLAYGROUND_SCRIPTS = %w(
     js/jquery.min.js
 )
 
-CDN_PREFIX = "http://cdn.kendostatic.com/2013.2.716/"
+CDN_PREFIX = "http://kendo.cdn.telerik.com/2013.2.716/"
 
 PLAYGROUND_STYLES = %w(
         styles/kendo.mobile.flat.min.css

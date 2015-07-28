@@ -125,12 +125,12 @@
     // Import DejaVu Sans font for embedding
 
     // NOTE: Only required if the Kendo UI stylesheets are loaded
-    // from a different origin, e.g. cdn.kendostatic.com
+    // from a different origin, e.g. kendo.cdn.telerik.com
     kendo.pdf.defineFont({
-        "DejaVu Sans"             : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf",
-        "DejaVu Sans|Bold"        : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
-        "DejaVu Sans|Bold|Italic" : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
-        "DejaVu Sans|Italic"      : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
+        "DejaVu Sans"             : "http://kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf",
+        "DejaVu Sans|Bold"        : "http://kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+        "DejaVu Sans|Bold|Italic" : "http://kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+        "DejaVu Sans|Italic"      : "http://kendo.cdn.telerik.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
     });
 
     $(".export-pdf").click(function () {
@@ -189,7 +189,7 @@
 </script>
 
 <!-- Load Pako ZLIB library to enable PDF compression -->
-<script src="http://cdn.kendostatic.com/2015.1.408/js/pako_deflate.min.js"></script>
+<script src="http://kendo.cdn.telerik.com/2015.1.408/js/pako_deflate.min.js"></script>
 <style>
 .export-app {
     display: table;
