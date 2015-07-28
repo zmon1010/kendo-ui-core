@@ -176,7 +176,7 @@
                             toggleable({ text: "Underline", property: "fontLine", value: "underline" })
                         ] },
                         { type: "colorPicker", property: "background", toolIcon: "k-backColor", overflow: "never" },
-                        { type: "colorPicker", property: "fontColor", toolIcon: "k-foreColor", overflow: "never" }
+                        { type: "colorPicker", property: "color", toolIcon: "k-foreColor", overflow: "never" }
                     ]
                 });
 

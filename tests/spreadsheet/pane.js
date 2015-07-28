@@ -58,7 +58,7 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { fontColor: "red" });
+        pane.addCell(table, {}, { color: "red" });
 
         equal(table.calls("addCell"), 1);
         equal(table.args("addCell", 0)[2].color, "red");

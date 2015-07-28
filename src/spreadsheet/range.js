@@ -8,7 +8,7 @@
     var CellRef = kendo.spreadsheet.CellRef;
 
     var styles = [
-        "borderBottom", "borderRight", "fontColor",
+        "borderBottom", "borderRight", "color",
         "fontFamily", "fontLine", "fontSize",
         "fontStyle", "fontWeight", "horizontalAlignment",
         "verticalAlignment", "background", "wrap"

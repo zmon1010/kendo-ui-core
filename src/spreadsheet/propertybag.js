@@ -71,7 +71,7 @@
             { property: Property, name: "background", value: null, sortable: true, serializable: true },
             { property: JsonProperty, name: "borderBottom", value: null, sortable: false, serializable: true },
             { property: JsonProperty, name: "borderRight", value: null, sortable: false, serializable: true },
-            { property: Property, name: "fontColor", value: null, sortable: true, serializable: true },
+            { property: Property, name: "color", value: null, sortable: true, serializable: true },
             { property: Property, name: "fontFamily", value: null, sortable: true, serializable: true },
             { property: Property, name: "fontLine", value: null, sortable: true, serializable: true },
             { property: Property, name: "fontSize", value: null, sortable: true, serializable: true },

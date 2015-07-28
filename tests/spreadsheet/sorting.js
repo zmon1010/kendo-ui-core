@@ -79,7 +79,7 @@
     test("sorts properties", function() {
         sheet.range("A1").value("foo");
         sheet.range("A2").value(2)
-                         .fontColor("green")
+                         .color("green")
                          .fontFamily("Arial")
                          .fontLine("underline")
                          .fontSize("1px")
@@ -95,7 +95,7 @@
 
         sheet.range("A1:A2").sort();
 
-        equal(sheet.range("A1").fontColor(), "green");
+        equal(sheet.range("A1").color(), "green");
         equal(sheet.range("A1").fontFamily(), "Arial");
         equal(sheet.range("A1").fontLine(), "underline");
         equal(sheet.range("A1").fontSize(), "1px");

@@ -86,10 +86,10 @@
         equal(range.background(), "foo");
     });
 
-    test("fontColor returns the fontColor of a range", function() {
-        range.fontColor("foo");
+    test("color returns the color of a range", function() {
+        range.color("foo");
 
-        equal(range.fontColor(), "foo");
+        equal(range.color(), "foo");
     });
 
     test("fontFamily returns the fontFamily of a range", function() {
@@ -220,11 +220,11 @@
 
     test("setting style property to null removes it from the style object", function() {
         range.background("red");
-        range.fontColor("red");
+        range.color("red");
         range.background(null);
 
         equal(range.background(), null);
-        equal(range.fontColor(), "red");
+        equal(range.color(), "red");
     });
 
     test("values returns two dimensional array containing cell values", function() {

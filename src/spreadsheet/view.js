@@ -411,8 +411,8 @@
                 style.backgroundColor = cell.background;
             }
 
-            if (cell.fontColor) {
-                style.color = cell.fontColor;
+            if (cell.color) {
+                style.color = cell.color;
             }
 
             if (cell.fontFamily) {
