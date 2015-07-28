@@ -70,6 +70,14 @@
                     if (tool.overflow) {
                         tool.overflow.value(kendo.parseInt(value) || DEFAULT_FONT_SIZE);
                     }
+                } else if (tool.type === "fontFamily") {
+                    if (tool.toolbar) {
+                        tool.toolbar.value(value || DEFAULT_FONT_FAMILY);
+                    }
+
+                    if (tool.overflow) {
+                        tool.overflow.value(value || DEFAULT_FONT_FAMILY);
+                    }
                 }
             }
         },
@@ -172,6 +180,50 @@
     });
 
     kendo.toolbar.registerComponent("fontSize", fontSize);
+
+    var FONT_FAMILIES = ["Arial", "Courier New", "Georgia", "Times New Roman", "Trebuchet MS", "Verdana"];
+    var DEFAULT_FONT_FAMILY = "Arial";
+
+    var fontFamily = kendo.toolbar.Item.extend({
+        init: function(options, toolbar) {
+            var dropDownList = $("<select />").kendoDropDownList({
+                change: function(e) {
+                    toolbar.trigger("execute", {
+                        commandType: "PropertyChangeCommand",
+                        property: options.property,
+                        value: this.value()
+                    });
+                },
+                dataSource: options.fontFamilies || FONT_FAMILIES,
+                value: DEFAULT_FONT_FAMILY
+            }).data("kendoDropDownList");
+
+            this.dropDownList = dropDownList;
+            this.element = dropDownList.wrapper;
+            this.options = options;
+            this.toolbar = toolbar;
+
+            this.element.width(options.width).attr({
+                "data-command": "PropertyChangeCommand",
+                "data-property": options.property
+            });
+
+            this.element.data({
+                type: "fontFamily",
+                fontFamily: this
+            });
+        },
+
+        value: function(value) {
+            if (value !== undefined) {
+                this.dropDownList.value(value);
+            } else {
+                return this.dropDownList.value();
+            }
+        }
+    });
+
+    kendo.toolbar.registerComponent("fontFamily", fontFamily);
 
 })(kendo);
 
