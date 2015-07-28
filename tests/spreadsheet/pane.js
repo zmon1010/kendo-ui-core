@@ -80,10 +80,10 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { textDecoration: "foo" });
+        pane.addCell(table, {}, { underline: true });
 
         equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].textDecoration, "foo");
+        equal(table.args("addCell", 0)[2].textDecoration, "underline");
     });
 
     test("adds font-size style to the cell", function() {

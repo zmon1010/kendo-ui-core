@@ -419,8 +419,8 @@
                 style.fontFamily = cell.fontFamily;
             }
 
-            if (cell.textDecoration) {
-                style.textDecoration = cell.textDecoration;
+            if (cell.underline) {
+                style.textDecoration = "underline";
             }
 
             if (cell.italic) {

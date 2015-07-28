@@ -81,7 +81,7 @@
         sheet.range("A2").value(2)
                          .color("green")
                          .fontFamily("Arial")
-                         .textDecoration("underline")
+                         .underline(true)
                          .fontSize("1px")
                          .italic(true)
                          .bold(true)
@@ -97,7 +97,7 @@
 
         equal(sheet.range("A1").color(), "green");
         equal(sheet.range("A1").fontFamily(), "Arial");
-        equal(sheet.range("A1").textDecoration(), "underline");
+        equal(sheet.range("A1").underline(), true);
         equal(sheet.range("A1").fontSize(), "1px");
         equal(sheet.range("A1").italic(), true);
         equal(sheet.range("A1").bold(), true);

@@ -98,25 +98,25 @@
         equal(range.fontFamily(), "foo");
     });
 
-    test("textDecoration returns the textDecorationfontLine of a range", function() {
-        range.textDecoration("foo");
+    test("underline returns the underline of a range", function() {
+        range.underline(true);
 
-        equal(range.textDecoration(), "foo");
+        equal(range.underline(), true);
     });
 
-    test("fontLine returns the fontLine of a range", function() {
+    test("fontSize returns the fontSize of a range", function() {
         range.fontSize("12px");
 
         equal(range.fontSize(), "12px");
     });
 
-    test("fontStyle returns the fontStyle of a range", function() {
-        range.fontSize("italic");
+    test("italic returns the italic of a range", function() {
+        range.italic(true);
 
-        equal(range.fontSize(), "italic");
+        equal(range.italic(), true);
     });
 
-    test("fontWeight returns the fontWeight of a range", function() {
+    test("bold returns the bold of a range", function() {
         range.bold(true);
 
         ok(range.bold());
