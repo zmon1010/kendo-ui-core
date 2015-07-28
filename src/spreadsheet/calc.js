@@ -84,7 +84,7 @@
         throw new Error("Cannot parse reference: " + name);
     }
 
-    function parse(sheet, row, col, input) {
+    function parseFormula(sheet, row, col, input) {
         var refs = [];
 
         if (typeof input == "string") {
@@ -995,7 +995,7 @@
         if (/^=/.test(input)) {
             input = input.substr(1);
             if (/\S/.test(input)) {
-                return parse(sheet, row, col, input);
+                return parseFormula(sheet, row, col, input);
             } else {
                 return {
                     type: "string",
@@ -1029,7 +1029,7 @@
         };
     };
 
-    exports.parseFormula = parse;
+    exports.parseFormula = parseFormula;
     exports.parseReference = parseReference;
     exports.compile = makeFormula;
     exports.InputStream = InputStream;
