@@ -16,6 +16,10 @@ namespace Kendo.Spreadsheet
 {
     public partial class Workbook
     {
+        /// <summary>
+        /// Converts the Workbook to a <see cref="Telerik.Windows.Documents.Spreadsheet.Model.Workbook">Telerik DPL Workbook Document</see>.
+        /// </summary>
+        /// <returns></returns>
         public Document ToDocument()
         {
             var document = new Document();

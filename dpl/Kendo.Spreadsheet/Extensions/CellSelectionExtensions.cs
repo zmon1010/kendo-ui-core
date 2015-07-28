@@ -3,8 +3,17 @@ using Telerik.Windows.Documents.Spreadsheet.Utilities;
 
 namespace Kendo.Spreadsheet
 {
+    /// <summary>
+    /// Extensions for the Cells class
+    /// </summary>
     public static class CellSelectionExtensions
     {
+        /// <summary>
+        /// Gets a cell selection from A1 reference
+        /// </summary>
+        /// <param name="cells">The cells collection</param>
+        /// <param name="cellRangeRef">An A1 reference designating a rectangular area, e.g. "A1:B5"</param>
+        /// <returns>A cell selection matching the referenced area</returns>
         public static CellSelection GetCellSelection(this Cells cells, string cellRangeRef)
         {
             var cellNames = cellRangeRef.Split(':');

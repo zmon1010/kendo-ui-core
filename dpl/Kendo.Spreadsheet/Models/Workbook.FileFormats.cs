@@ -14,6 +14,13 @@ namespace Kendo.Spreadsheet
             WorkbookFormatProvidersManager.RegisterFormatProvider(new JsonFormatProvider());
         }
 
+        /// <summary>
+        /// Creates a Workbook instance and populates it with data from the specified file.
+        /// 
+        /// Supported file formats are XLSX, CSV, TXT (Tab-separated) and JSON.
+        /// </summary>
+        /// <param name="path">The fully-qualified path to the file</param>
+        /// <returns>The populated Workbook</returns>
         public static Document Load(string path)
         {
             Document document;
@@ -26,6 +33,12 @@ namespace Kendo.Spreadsheet
             return document;
         }
 
+        /// <summary>
+        /// Stores the data from the Workbook in the specified file.
+        /// 
+        /// Supported file formats are XLSX, CSV, TXT (Tab-separated) and JSON.
+        /// </summary>
+        /// <param name="path">The fully-qualified path to the output file</param>
         public void Save(string path)
         {
             var document = this.ToDocument();
