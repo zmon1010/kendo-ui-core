@@ -397,11 +397,16 @@
                     return print(node.exp, OPERATORS[node.op]) + " + " + JSON.stringify(node.op);
                 });
               case "binary":
-                // XXX: (FOO):(BAR) where FOO and BAR are NameRef-s — should parenthesize
                 return withParens(node.op, prec, function(){
-                    return print(node.left, OPERATORS[node.op])
-                        + " + " + JSON.stringify(node.op) + " + "
-                        + print(node.right, OPERATORS[node.op]);
+                    var left = parenthesize(
+                        print(node.left, OPERATORS[node.op]),
+                        node.left instanceof spreadsheet.NameRef && node.op == ":"
+                    );
+                    var right = parenthesize(
+                        print(node.right, OPERATORS[node.op]),
+                        node.right instanceof spreadsheet.NameRef && node.op == ":"
+                    );
+                    return left + " + " + JSON.stringify(node.op) + " + " + right;
                 });
               case "func":
                 return JSON.stringify(node.func + "(") + " + "
@@ -422,14 +427,12 @@
             }
             throw new Error("Cannot make printer for node " + node.type);
         }
+        function parenthesize(code, cond) {
+            return cond ? "'(' + " + code + " + ')'" : code;
+        }
         function withParens(op, prec, f) {
             var needParens = (OPERATORS[op] < prec || (!prec && op == ","));
-            var code = f();
-            if (needParens) {
-                return "'(' + " + code + " + ')'";
-            } else {
-                return code;
-            }
+            return parenthesize(f(), needParens);
         }
     }
 

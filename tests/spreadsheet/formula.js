@@ -414,6 +414,18 @@
         testOne("=C3", "R[-2]C[-2]");
     });
 
+    test("parenthesize name references in range operator", function(){
+        function testOne(input, output) {
+            var exp = calc.parse("sheet1", 0, 0, input);
+            var formula = calc.compile(exp);
+            equal(formula.print(0, 0), output);
+        }
+
+        testOne("=sum((foo):(bar))", "sum((foo):(bar))");
+        testOne("=sum(a1:(bar))", "sum(A1:(bar))");
+        testOne("=sum((foo):a1)", "sum((foo):A1)");
+    });
+
     test("formula cache", function(){
         function testOne(f1, f2) {
             var e1 = calc.parse("sheet1", 0, 0, f1);
