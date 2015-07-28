@@ -431,8 +431,8 @@
                 style.textAlign = cell.textAlign;
             }
 
-            if (cell.verticalAlignment) {
-                style.verticalAlign = cell.verticalAlignment;
+            if (cell.verticalAlign) {
+                style.verticalAlign = cell.verticalAlign;
             }
 
             if (cell.fontWeight) {

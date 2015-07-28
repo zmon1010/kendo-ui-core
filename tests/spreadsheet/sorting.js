@@ -88,7 +88,7 @@
                          .format("#")
                          .background("green")
                          .textAlign("right")
-                         .verticalAlignment("top")
+                         .verticalAlign("top")
                          .wrap(false)
                          .borderBottom({size: "3px", color: "green"})
                          .borderRight({size: "3px", color: "green"})
@@ -104,7 +104,7 @@
         equal(sheet.range("A1").background(), "green");
         equal(sheet.range("A1").wrap(), false);
         equal(sheet.range("A1").textAlign(), "right");
-        equal(sheet.range("A1").verticalAlignment(), "top");
+        equal(sheet.range("A1").verticalAlign(), "top");
         equal(sheet.range("A1").format(), "#");
         equal(sheet.range("A1").borderBottom(), null);
         equal(sheet.range("A1").borderRight(), null);

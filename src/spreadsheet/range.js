@@ -11,7 +11,7 @@
         "borderBottom", "borderRight", "color",
         "fontFamily", "textDecoration", "fontSize",
         "fontStyle", "fontWeight", "textAlign",
-        "verticalAlignment", "background", "wrap"
+        "verticalAlign", "background", "wrap"
     ];
 
     var Range = kendo.Class.extend({

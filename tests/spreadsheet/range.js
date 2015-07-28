@@ -128,10 +128,10 @@
         equal(range.textAlign(), "foo");
     });
 
-    test("verticalAlignment returns the horizontalAlignment of a range", function() {
-        range.verticalAlignment("foo");
+    test("verticalAlign returns the verticalAlign of a range", function() {
+        range.verticalAlign("foo");
 
-        equal(range.verticalAlignment(), "foo");
+        equal(range.verticalAlign(), "foo");
     });
 
     test("borderLeft symmetry", function() {
