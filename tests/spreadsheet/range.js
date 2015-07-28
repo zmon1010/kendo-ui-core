@@ -117,9 +117,9 @@
     });
 
     test("fontWeight returns the fontWeight of a range", function() {
-        range.fontWeight("bold");
+        range.bold(true);
 
-        equal(range.fontWeight(), "bold");
+        ok(range.bold());
     });
 
     test("textAlign returns the textAlign of a range", function() {

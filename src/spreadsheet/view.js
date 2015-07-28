@@ -435,8 +435,8 @@
                 style.verticalAlign = cell.verticalAlign;
             }
 
-            if (cell.fontWeight) {
-                style.fontWeight = cell.fontWeight;
+            if (cell.bold === true) {
+                style.fontWeight = "bold";
             }
 
             if (cell.fontSize) {

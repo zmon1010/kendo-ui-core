@@ -113,10 +113,10 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { fontWeight: "foo" });
+        pane.addCell(table, {}, { bold: true });
 
         equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].fontWeight, "foo");
+        equal(table.args("addCell", 0)[2].fontWeight, "bold");
     });
 
     test("adds text-align  style to the cell", function() {

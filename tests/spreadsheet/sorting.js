@@ -84,7 +84,7 @@
                          .textDecoration("underline")
                          .fontSize("1px")
                          .fontStyle("italic")
-                         .fontWeight("bold")
+                         .bold(true)
                          .format("#")
                          .background("green")
                          .textAlign("right")
@@ -100,7 +100,7 @@
         equal(sheet.range("A1").textDecoration(), "underline");
         equal(sheet.range("A1").fontSize(), "1px");
         equal(sheet.range("A1").fontStyle(), "italic");
-        equal(sheet.range("A1").fontWeight(), "bold");
+        equal(sheet.range("A1").bold(), true);
         equal(sheet.range("A1").background(), "green");
         equal(sheet.range("A1").wrap(), false);
         equal(sheet.range("A1").textAlign(), "right");
