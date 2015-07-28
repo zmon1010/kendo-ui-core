@@ -75,7 +75,7 @@
             { property: Property, name: "fontFamily", value: null, sortable: true, serializable: true },
             { property: Property, name: "textDecoration", value: null, sortable: true, serializable: true },
             { property: Property, name: "fontSize", value: null, sortable: true, serializable: true },
-            { property: Property, name: "fontStyle", value: null, sortable: true, serializable: true },
+            { property: Property, name: "italic", value: null, sortable: true, serializable: true },
             { property: Property, name: "bold", value: null, sortable: true, serializable: true },
             { property: Property, name: "textAlign", value: null, sortable: true, serializable: true },
             { property: Property, name: "verticalAlign", value: null, sortable: true, serializable: true },

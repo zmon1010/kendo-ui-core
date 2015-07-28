@@ -83,7 +83,7 @@
                          .fontFamily("Arial")
                          .textDecoration("underline")
                          .fontSize("1px")
-                         .fontStyle("italic")
+                         .italic(true)
                          .bold(true)
                          .format("#")
                          .background("green")
@@ -99,7 +99,7 @@
         equal(sheet.range("A1").fontFamily(), "Arial");
         equal(sheet.range("A1").textDecoration(), "underline");
         equal(sheet.range("A1").fontSize(), "1px");
-        equal(sheet.range("A1").fontStyle(), "italic");
+        equal(sheet.range("A1").italic(), true);
         equal(sheet.range("A1").bold(), true);
         equal(sheet.range("A1").background(), "green");
         equal(sheet.range("A1").wrap(), false);

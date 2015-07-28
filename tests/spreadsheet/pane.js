@@ -102,10 +102,10 @@
 
         var table = stub({}, "addCell");
 
-        pane.addCell(table, {}, { fontStyle: "foo" });
+        pane.addCell(table, {}, { italic: true });
 
         equal(table.calls("addCell"), 1);
-        equal(table.args("addCell", 0)[2].fontStyle, "foo");
+        equal(table.args("addCell", 0)[2].fontStyle, "italic");
     });
 
     test("adds font-weight style to the cell", function() {

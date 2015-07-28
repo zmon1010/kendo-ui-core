@@ -10,7 +10,7 @@
     var styles = [
         "borderBottom", "borderRight", "color",
         "fontFamily", "textDecoration", "fontSize",
-        "fontStyle", "bold", "textAlign",
+        "italic", "bold", "textAlign",
         "verticalAlign", "background", "wrap"
     ];
 

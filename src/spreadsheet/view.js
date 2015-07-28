@@ -423,8 +423,8 @@
                 style.textDecoration = cell.textDecoration;
             }
 
-            if (cell.fontStyle) {
-                style.fontStyle = cell.fontStyle;
+            if (cell.italic) {
+                style.fontStyle = "italic";
             }
 
             if (cell.textAlign) {
