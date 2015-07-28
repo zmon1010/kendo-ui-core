@@ -29,11 +29,154 @@
 
     /* -----[ Math functions ]----- */
 
-    [ "abs", "cos", "sin", "acos", "asin", "tan", "atan", "exp", "log", "sqrt" ].forEach(function(name){
+    [ "abs", "cos", "sin", "acos", "asin", "tan", "atan", "exp", "sqrt" ].forEach(function(name){
         defineFunction(name, Math[name]).args([
             [ "n", "*number" ]
         ]);
     });
+
+    defineFunction("ln", Math.log).args([
+        [ "n", "*number" ]
+    ]);
+
+    defineFunction("log", function(num, base){
+        return Math.log(num) / Math.log(base);
+    }).args([
+        [ "num", [ "and", "*number",
+                   [ "assert", "$num > 0", "NUM" ] ] ],
+        [ "base", [ "and", [ "or", "*number", [ "null", 10 ] ],
+                    [ "assert", "$base != 1", "DIV/0" ],
+                    [ "assert", "$base > 0", "NUM" ] ] ]
+    ]);
+
+    defineFunction("log10", function(num){
+        return Math.log(num) / Math.log(10);
+    }).args([
+        [ "num", [ "and", "*number",
+                   [ "assert", "$num > 0", "NUM" ] ] ]
+    ]);
+
+    defineFunction("pi", function(){
+        return Math.PI;
+    }).args([]);
+
+    defineFunction("sqrtpi", function(n){
+        return Math.sqrt(n * Math.PI);
+    }).args([
+        [ "num", "*number+" ]
+    ]);
+
+    defineFunction("degrees", function(rad){
+        return ((180 * rad) / Math.PI) % 360;
+    }).args([
+        [ "radians", "*number" ]
+    ]);
+
+    defineFunction("radians", function(deg){
+        return Math.PI * deg / 180;
+    }).args([
+        [ "degrees", "*number" ]
+    ]);
+
+    function _cosh(n){
+        return (Math.exp(n) + Math.exp(-n)) / 2;
+    }
+
+    defineFunction("cosh", _cosh).args([
+        [ "num", "*number" ]
+    ]);
+
+    defineFunction("acosh", function(n){
+        return Math.log(n + Math.sqrt(n - 1) * Math.sqrt(n + 1));
+    }).args([
+        [ "num", [ "and", "*number",
+                   [ "assert", "$num >= 1" ] ] ]
+    ]);
+
+    function _sinh(n){
+        return (Math.exp(n) - Math.exp(-n)) / 2;
+    }
+
+    defineFunction("sinh", _sinh).args([
+        [ "num", "*number" ]
+    ]);
+
+    defineFunction("asinh", function(n){
+        return Math.log(n + Math.sqrt(n * n + 1));
+    }).args([
+        [ "num", "*number" ]
+    ]);
+
+    defineFunction("sec", function(n){
+        return 1 / Math.cos(n);
+    }).args([
+        [ "num", "*number" ]
+    ]);
+
+    defineFunction("sech", function(n){
+        return 1 / _cosh(n);
+    }).args([
+        [ "num", "*number" ]
+    ]);
+
+    defineFunction("csc", function(n){
+        return 1 / Math.sin(n);
+    }).args([
+        [ "num", "*number" ]
+    ]);
+
+    defineFunction("csch", function(n){
+        return 1 / _sinh(n);
+    }).args([
+        [ "num", "*number" ]
+    ]);
+
+    defineFunction("atan2", function(x, y){
+        return Math.atan(y / x);
+    }).args([
+        [ "x", "*divisor" ],
+        [ "y", "*number" ]
+    ]);
+
+    function _tanh(n) {
+        return _sinh(n) / _cosh(n);
+    }
+
+    defineFunction("tanh", _tanh).args([
+        [ "num", "*number" ]
+    ]);
+
+    defineFunction("atanh", function(n){
+        return Math.log(Math.sqrt(1 - n*n) / (1 - n));
+    }).args([
+        [ "num", [ "and", "*number",
+                   [ "assert", "$num > -1 && $num < 1" ] ] ]
+    ]);
+
+    defineFunction("cot", function(n){
+        return 1 / Math.tan(n);
+    }).args([
+        [ "num", "*divisor" ]
+    ]);
+
+    defineFunction("coth", function(n){
+        return 1 / _tanh(n);
+    }).args([
+        [ "num", "*divisor" ]
+    ]);
+
+    defineFunction("acot", function(n){
+        return Math.PI / 2 - Math.atan(n);
+    }).args([
+        [ "num", "*number" ]
+    ]);
+
+    defineFunction("acoth", function(n){
+        return Math.log((n + 1) / (n - 1)) / 2;
+    }).args([
+        [ "num", [ "and", "*number",
+                   [ "assert", "$num < -1 || $num > 1" ] ] ]
+    ]);
 
     defineFunction("power", function(a, b){
         return Math.pow(a, b);
@@ -205,6 +348,102 @@
         [ "numbers", [ "collect", "number" ] ]
     ]);
 
+    defineFunction("sumproduct", function() {
+        var sum = 0, a = arguments;
+        a[0].each(function(p, row, col){
+            if (typeof p == "number") {
+                for (var i = 1; i < a.length; ++i) {
+                    var v = a[i].get(row, col);
+                    if (typeof v != "number") {
+                        return;
+                    }
+                    p *= v;
+                }
+                sum += p;
+            }
+        });
+        return sum;
+    }).args([
+        [ "a1", "matrix" ],
+        [ "+",
+          [ "a2", [ "and", "matrix",
+                    [ "assert", "$a2.width == $a1.width" ],
+                    [ "assert", "$a2.height == $a1.height" ] ] ] ]
+    ]);
+
+    defineFunction("sumsq", function(numbers){
+        return numbers.reduce(function(sum, num){
+            return sum + num * num;
+        }, 0);
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
+
+    defineFunction("sumx2my2", function(a, b){
+        var sum = 0;
+        a.each(function(x, row, col){
+            var y = b.get(row, col);
+            if (typeof x == "number" && typeof y == "number") {
+                sum += x*x - y*y;
+            }
+        });
+        return sum;
+    }).args([
+        [ "a", "matrix" ],
+        [ "b", [ "and", "matrix",
+                 [ "assert", "$b.width == $a.width" ],
+                 [ "assert", "$b.height == $a.height" ] ] ]
+    ]);
+
+    defineFunction("sumx2py2", function(a, b){
+        var sum = 0;
+        a.each(function(x, row, col){
+            var y = b.get(row, col);
+            if (typeof x == "number" && typeof y == "number") {
+                sum += x*x + y*y;
+            }
+        });
+        return sum;
+    }).args([
+        [ "a", "matrix" ],
+        [ "b", [ "and", "matrix",
+                 [ "assert", "$b.width == $a.width" ],
+                 [ "assert", "$b.height == $a.height" ] ] ]
+    ]);
+
+    defineFunction("sumxmy2", function(a, b){
+        var sum = 0;
+        a.each(function(x, row, col){
+            var y = b.get(row, col);
+            if (typeof x == "number" && typeof y == "number") {
+                sum += (x - y) * (x - y);
+            }
+        });
+        return sum;
+    }).args([
+        [ "a", "matrix" ],
+        [ "b", [ "and", "matrix",
+                 [ "assert", "$b.width == $a.width" ],
+                 [ "assert", "$b.height == $a.height" ] ] ]
+    ]);
+
+    defineFunction("seriessum", function(x, n, m, a){
+        var sum = 0;
+        a.each(function(coef){
+            if (typeof coef != "number") {
+                throw new CalcError("VALUE");
+            }
+            sum += coef * Math.pow(x, n);
+            n += m;
+        });
+        return sum;
+    }).args([
+        [ "x", "number" ],
+        [ "y", "number" ],
+        [ "m", "number" ],
+        [ "a", "matrix" ]
+    ]);
+
     defineFunction("min", function(numbers){
         if (numbers.length) {
             return Math.min.apply(Math, numbers);
@@ -272,6 +511,40 @@
     }).args([
         [ "+", [ "args", [ "or", "matrix", "anyvalue" ] ] ]
     ]);
+
+    defineFunction("isnumber", function(val){
+        return typeof val == "number";
+    }).args([
+        [ "value", "*anyvalue" ]
+    ]);
+
+    defineFunction("iseven", function(num){
+        return num % 2 === 0;
+    }).args([
+        [ "number", "*number" ]
+    ]);
+
+    defineFunction("isodd", function(num){
+        return num % 2 !== 0;
+    }).args([
+        [ "number", "*number" ]
+    ]);
+
+    defineFunction("n", function(val){
+        if (typeof val == "boolean") {
+            return val ? 1 : 0;
+        }
+        if (typeof val == "number") {
+            return val;
+        }
+        return 0;
+    }).args([
+        [ "value", "*anyvalue" ]
+    ]);
+
+    defineFunction("na", function(){
+        return new CalcError("N/A");
+    }).args([]);
 
     /* -----[ the "*IFS" functions ]----- */
 
@@ -538,7 +811,88 @@
         [ "numbers", [ "collect", "number" ] ]
     ]);
 
-    /* -----[  ]----- */
+    defineFunction("geomean", function(numbers){
+        var n = numbers.length;
+        if (!n) {
+            return new CalcError("VALUE");
+        }
+        var p = numbers.reduce(function(p, num){
+            if (num < 0) {
+                throw new CalcError("NUM");
+            }
+            return p * num;
+        }, 1);
+        return Math.pow(p, 1/n);
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
+
+    defineFunction("harmean", function(numbers){
+        var n = numbers.length;
+        if (!n) {
+            return new CalcError("VALUE");
+        }
+        var s = numbers.reduce(function(s, num){
+            if (!num) {
+                throw new CalcError("DIV/0");
+            }
+            return s + 1 / num;
+        }, 0);
+        return n / s;
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
+    ]);
+
+    defineFunction("trimmean", function(numbers, p){
+        var n = numbers.length;
+        if (!n) {
+            return new CalcError("VALUE");
+        }
+        numbers.sort(ascending);
+        var discard = Math.floor(n * p);
+        if (discard % 2) {
+            --discard;
+        }
+        discard /= 2;
+        var sum = 0;
+        for (var i = discard; i < n-discard; ++i) {
+            sum += numbers[i];
+        }
+        return sum / (n - discard * 2);
+    }).args([
+        [ "array", [ "collect", "number", 1 ] ],
+        [ "percent", [ "and", "number",
+                       [ "assert", "$percent >= 0 && $percent < 1", "NUM" ] ] ]
+    ]);
+
+    defineFunction("frequency", function(data, bins){
+        // apparently this always returns a vertical matrix in Excel, so we collect all numbers in
+        // bins instead of receiving it as a Matrix and try to mimic its shape.
+        data.sort(ascending);
+        bins.sort(ascending);
+        var prev = -Infinity;
+        var i = 0;
+        function count(max) {
+            var n = 0;
+            while (i < data.length && data[i] > prev && data[i] <= max) {
+                ++n; ++i;
+            }
+            return n;
+        }
+        var m = new Matrix(this);
+        bins.forEach(function(val, i){
+            var n = count(val);
+            prev = val;
+            m.set(i, 0, n);
+        });
+        m.set(m.height, 0, data.length - i);
+        return m;
+    }).args([
+        [ "data", [ "collect", "number", 1 ] ],
+        [ "bins", [ "collect", "number", 1 ] ]
+    ]);
+
+    /* -----[ Factorials ]----- */
 
     var _fact = util.memoize(function(n){
         for (var i = 2, fact = 1; i <= n; ++i) {
@@ -558,6 +912,20 @@
         return fact;
     }).args([
         [ "n", "*integer+" ]
+    ]);
+
+    defineFunction("multinomial", function(numbers){
+        var div = 1, sum = 0;
+        numbers.forEach(function(n){
+            if (n < 0) {
+                throw new CalcError("NUM");
+            }
+            sum += n;
+            div *= _fact(n);
+        });
+        return _fact(sum) / div;
+    }).args([
+        [ "numbers", [ "collect", "number" ] ]
     ]);
 
     var _combinations = util.memoize(function (n, k){
@@ -1355,6 +1723,37 @@
         [ "method", [ "or", [ "null", 0 ], [ "values", 0, 1, 2, 3, 4 ] ] ]
     ]);
 
+    defineFunction("datevalue", function(text){
+        var date = kendo.parseDate(text);
+        if (date) {
+            return runtime.dateToSerial(date);
+        }
+        return new CalcError("VALUE");
+    }).args([
+        [ "text", "*string" ]
+    ]);
+
+    defineFunction("timevalue", function(text){
+        var m = text.toLowerCase().match(/(\d+):(\d+)(:(\d+)(\.(\d+))?)?\s*(am?|pm?)?/);
+        if (m) {
+            var hh = parseFloat(m[1]);
+            var mm = parseFloat(m[2]);
+            var ss = m[3] ? parseFloat(m[4]) : 0;
+            var ms = m[5] ? parseFloat(m[6]) : 0;
+            var ampm = m[7];
+            if (ampm && (hh > 12 || hh < 1)) {
+                return new CalcError("VALUE");
+            }
+            if (/^p/.test(ampm)) {
+                hh += 12;
+            }
+            return runtime.packTime(hh, mm, ss, 0);
+        }
+        return new CalcError("VALUE");
+    }).args([
+        [ "text", "*string" ]
+    ]);
+
     /* -----[ Matrix functions ]----- */
 
     defineFunction("mdeterm", function(m){
@@ -1511,6 +1910,9 @@
     }).args([
         [ "text", "*string" ]
     ]);
+
+    defineAlias("unichar", "char");
+    defineAlias("unicode", "code");
 
     defineFunction("concatenate", function(){
         var out = "";

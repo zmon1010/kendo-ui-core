@@ -787,6 +787,9 @@
                     return "(" + force() + " > " + type[1] + " && " + "$"+name+" < " + type[2] + ")";
                 }
                 if (type[0] == "assert") {
+                    if (type[2]) {
+                        return "((" + type[1] + ") ? true : (err = " + JSON.stringify(type[2]) + ", false))";
+                    }
                     return "(" + type[1] + ")";
                 }
                 if (type[0] == "not") {
@@ -833,7 +836,7 @@
                 return "(typeof " + force() + " == 'boolean')";
             }
             if (type == "logical") {
-                return "(typeof " + force() + " == 'boolean' || typeof $"+name+" == 'number')";
+                return "(typeof " + force() + " == 'boolean' || (typeof $"+name+" == 'number' ? ($"+name+" = !!$"+name+", true) : false))";
             }
             if (type == "matrix") {
                 force();
@@ -889,7 +892,15 @@
                                 if (xargs instanceof CalcError) {
                                     result.set(row, col, xargs);
                                 } else {
-                                    result.set(row, col, handler.apply(this, xargs));
+                                    try {
+                                        result.set(row, col, handler.apply(this, xargs));
+                                    } catch(ex) {
+                                        if (ex instanceof CalcError) {
+                                            result.set(row, col, ex);
+                                        } else {
+                                            throw ex;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -900,7 +911,17 @@
                 if (xargs instanceof CalcError) {
                     callback(xargs);
                 } else {
-                    callback(handler.apply(this, xargs));
+                    var val;
+                    try {
+                        val = handler.apply(this, xargs);
+                    } catch(ex) {
+                        if (ex instanceof CalcError) {
+                            val = ex;
+                        } else {
+                            throw ex;
+                        }
+                    }
+                    callback(val);
                 }
             }
             if (resolve) {
