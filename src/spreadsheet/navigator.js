@@ -277,16 +277,22 @@
             var newActiveCell;
 
             var topLeftCol = topLeft.col;
+            var topLeftRow = topLeft.row;
+
+            var bottomRightCol = bottomRight.col;
+            var bottomRightRow = bottomRight.row;
 
             while (!done) {
+                var current = new CellRef(row, column);
+
                 switch (direction) {
                     case "next":
-                        if (bottomRight.eq(selBottomRight)) {
+                        if (selBottomRight.eq(current)) {
                             selection = sheet.nextSelectionRange();
                             row = selection.topLeft.row;
                             column = selection.topLeft.col;
                         } else {
-                            column = columns.nextVisible(topLeftCol);
+                            column = columns.nextVisible(topLeftCol, true);
                             if (column > selBottomRight.col) {
                                 column = selTopLeft.col;
                                 row ++;
@@ -294,15 +300,41 @@
                         }
                         break;
                     case "previous":
-                        if (topLeft.eq(selTopLeft)) {
+                        if (selTopLeft.eq(current)) {
                             selection = sheet.previousSelectionRange();
                             row = selection.bottomRight.row;
                             column = selection.bottomRight.col;
                         } else {
-                            column = columns.prevVisible(topLeftCol);
+                            column = columns.prevVisible(topLeftCol, true);
                             if (column < selTopLeft.col) {
                                 column = selBottomRight.col;
                                 row --;
+                            }
+                        }
+                        break;
+                    case "lower":
+                        if (selBottomRight.eq(current)) {
+                            selection = sheet.nextSelectionRange();
+                            row = selection.topLeft.row;
+                            column = selection.topLeft.col;
+                        } else {
+                            row = rows.nextVisible(topLeftRow, true);
+                            if (row > selBottomRight.row) {
+                                row = selTopLeft.row;
+                                column ++;
+                            }
+                        }
+                        break;
+                    case "upper":
+                        if (selTopLeft.eq(current)) {
+                            selection = sheet.previousSelectionRange();
+                            row = selection.bottomRight.row;
+                            column = selection.bottomRight.col;
+                        } else {
+                            row = rows.prevVisible(topLeftRow, true);
+                            if (row < selTopLeft.row) {
+                                row = selBottomRight.row;
+                                column --;
                             }
                         }
                         break;
@@ -313,6 +345,7 @@
                 done = !this.shouldSkip(row, column);
                 // if (!done) { console.log("skipping", row, column); }
                 topLeftCol = column;
+                topLeftRow = row;
             }
 
             if (sheet.singleCellSelection()) {

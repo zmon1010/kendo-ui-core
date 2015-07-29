@@ -42,13 +42,6 @@
         }
     }
 
-    function previous(times) {
-        times = times || 1;
-        for (var i = 0; i < times; i++) {
-            navigator.navigateInSelection("previous");
-        }
-    }
-
     module("next navigation", {
         setup: function() {
             sheet = newSheet();
@@ -98,6 +91,19 @@
         activeCellEqual("B2:C3");
     });
 
+    test("next skips merged cells (end)", function() {
+        sheet.range("B2:C3").merge();
+        sheet.range("A2:C3").select();
+        activeCellEqual("A2");
+
+        next();
+        activeCellEqual("B2:C3");
+        next();
+        activeCellEqual("A3");
+        next();
+        activeCellEqual("A2");
+    });
+
     test("next moves to the next range", function() {
         sheet.range("B2:C3,D4:E5").select();
         next(4);
@@ -116,6 +122,13 @@
             navigator = new kendo.spreadsheet.SheetNavigator(sheet, 1000);
         }
     });
+
+    function previous(times) {
+        times = times || 1;
+        for (var i = 0; i < times; i++) {
+            navigator.navigateInSelection("previous");
+        }
+    }
 
     test("moves over the entire sheet if selection is a single cell", function() {
         sheet.range("B2").select();
@@ -155,6 +168,19 @@
         activeCellEqual("D2");
     });
 
+    test("previous skips merged cells (end)", function() {
+        sheet.range("B2:C3").merge();
+        sheet.range("A2:C3").select();
+        activeCellEqual("A2");
+
+        previous();
+        activeCellEqual("A3");
+        previous();
+        activeCellEqual("B2:C3");
+        previous();
+        activeCellEqual("A2");
+    });
+
     test("previous moves to the previous range", function() {
         sheet.range("B2:C3,D4:E5").select();
         previous(2);
@@ -164,6 +190,148 @@
     test("previous eventually comes back to the first range", function() {
         sheet.range("B2:C3,D4:E5").select();
         previous(8);
+        activeCellEqual("B2");
+    });
+
+    module("lower navigation", {
+        setup: function() {
+            sheet = newSheet();
+            navigator = new kendo.spreadsheet.SheetNavigator(sheet, 1000);
+        }
+    });
+
+    function lower(times) {
+        times = times || 1;
+        for (var i = 0; i < times; i++) {
+            navigator.navigateInSelection("lower");
+        }
+    }
+
+    test("moves over the entire sheet if selection is a single cell", function() {
+        sheet.range("B2").select();
+        lower();
+        activeCellEqual("B3");
+        selectionEqual("B3");
+    });
+
+    test("selects lower cell in selection", function() {
+        sheet.range("B2:C3").select();
+        activeCellEqual("B2");
+        lower();
+        activeCellEqual("B3");
+    });
+
+    test("moves to the next col", function() {
+        sheet.range("B2:C3").select();
+        activeCellEqual("B2");
+        lower(2);
+        activeCellEqual("C2");
+    });
+
+    test("rewinds back to the first cell", function() {
+        sheet.range("B2:C3").select();
+        lower(4);
+        activeCellEqual("B2");
+    });
+
+    test("skips merged cells", function() {
+        sheet.range("B2:C3").merge();
+        sheet.range("B2:D4").select();
+        activeCellEqual("B2:C3");
+        lower();
+        activeCellEqual("B4");
+        lower();
+        activeCellEqual("C4");
+        lower();
+        activeCellEqual("D2");
+    });
+
+    test("skips merged cells (end)", function() {
+        sheet.range("B2:C3").merge();
+        sheet.range("B1:C3").select();
+        activeCellEqual("B1");
+        lower();
+        activeCellEqual("B2:C3");
+        lower();
+        activeCellEqual("C1");
+        lower();
+        activeCellEqual("B1");
+    });
+
+    test("moves to the lower range", function() {
+        sheet.range("B2:C3,D4:E5").select();
+        lower(4);
+        activeCellEqual("D4");
+    });
+
+    test("eventually comes back to the first range", function() {
+        sheet.range("B2:C3,D4:E5").select();
+        lower(8);
+        activeCellEqual("B2");
+    });
+
+    module("upper navigation", {
+        setup: function() {
+            sheet = newSheet();
+            navigator = new kendo.spreadsheet.SheetNavigator(sheet, 1000);
+        }
+    });
+
+    function upper(times) {
+        times = times || 1;
+        for (var i = 0; i < times; i++) {
+            navigator.navigateInSelection("upper");
+        }
+    }
+
+    test("moves over the entire sheet if selection is a single cell", function() {
+        sheet.range("B2").select();
+        upper();
+        activeCellEqual("B1");
+        selectionEqual("B1");
+    });
+
+    test("selects upper cell in selection", function() {
+        sheet.range("B2:C3").select();
+        activeCellEqual("B2");
+        upper();
+        activeCellEqual("C3");
+    });
+
+    test("moves to the next col", function() {
+        sheet.range("B2:C3").select();
+        activeCellEqual("B2");
+        upper(2);
+        activeCellEqual("C2");
+    });
+
+    test("rewinds back to the first cell", function() {
+        sheet.range("B2:C3").select();
+        upper(4);
+        activeCellEqual("B2");
+    });
+
+    test("skips merged cells (end)", function() {
+        sheet.range("B2:C3").merge();
+        sheet.range("B2:C4").select();
+        activeCellEqual("B2:C3");
+        upper();
+        activeCellEqual("C4");
+        upper();
+        activeCellEqual("B4");
+        upper();
+        activeCellEqual("B2:C3");
+    });
+
+    test("moves to the upper range", function() {
+        sheet.range("B2:C3,D4:E5").select();
+        upper(4);
+        activeCellEqual("D4");
+    });
+
+    test("eventually comes back to the first range", function() {
+        sheet.range("B2:C3,D4:E5").select();
+        upper(8);
         activeCellEqual("B2");
     });
 

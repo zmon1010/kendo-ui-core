@@ -67,11 +67,11 @@
             return this._hidden.value(index, index) !== 0;
         },
 
-        nextVisible: function(index) {
+        nextVisible: function(index, overflow) {
             var end = this._count - 1;
 
             if (index === end) {
-                return index;
+                return overflow ? index + 1 : index;
             }
 
             index += 1;
@@ -113,9 +113,9 @@
             }
         },
 
-        prevVisible: function(index) {
+        prevVisible: function(index, overflow) {
             if (index === 0) {
-                return 0;
+                return overflow ? -1 : 0;
             }
 
             index -= 1;

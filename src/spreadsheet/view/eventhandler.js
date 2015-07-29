@@ -22,9 +22,10 @@
 
     var ENTRY_ACTIONS = {
         "tab": "next",
-        "shift+tab": "previous"
+        "shift+tab": "previous",
+        "enter": "lower",
+        "shift+enter": "upper"
     };
-
 
     var CONTAINER_EVENTS = {
         "wheel": "onWheel",
