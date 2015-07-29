@@ -131,6 +131,25 @@
         equal(json.filter.columns[0].value, 13);
     });
 
+    test("toJSON serializes dynamic filter", function() {
+        sheet.range("A1:B2").filter([
+            {
+                column: 0,
+                filter: new kendo.spreadsheet.DynamicFilter({
+                    type: "january"
+                })
+            }
+        ]);
+
+        var json = sheet.toJSON();
+
+        equal(json.filter.ref, "A1:B2");
+        equal(json.filter.columns.length, 1);
+        equal(json.filter.columns[0].index, 0);
+        equal(json.filter.columns[0].filter, "dynamic");
+        equal(json.filter.columns[0].type, "january");
+    });
+
     test("toJSON serializes cells that have format", function() {
         sheet.range("B2").format("#.#");
         var json = sheet.toJSON();

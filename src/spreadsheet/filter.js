@@ -336,6 +336,12 @@
             }
 
             return false;
+        },
+        toJSON: function() {
+            return {
+                filter: "dynamic",
+                type: this._type
+            };
         }
     });
 
