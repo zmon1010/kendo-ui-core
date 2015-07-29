@@ -89,7 +89,7 @@ namespace Kendo.Spreadsheet
         protected override Document ImportOverride(Stream input)
         {
             var serializer = new JsonSerializer();
-            using (var reader = new StreamReader(input, ImportSettings.Encoding, true, ImportSettings.BufferSize, ImportSettings.LeaveOpen))
+            using (var reader = new StreamReader(input, ImportSettings.Encoding, true, ImportSettings.BufferSize))
             using (var jsonReader = new JsonTextReader(reader))
             {
                 var workbook = serializer.Deserialize<Workbook>(jsonReader);
@@ -107,7 +107,7 @@ namespace Kendo.Spreadsheet
             var workbook = Workbook.FromDocument(document);
 
             var serializer = new JsonSerializer();
-            using (var writer = new StreamWriter(output, System.Text.Encoding.UTF8, 4096, true))
+            using (var writer = new StreamWriter(output, ExportSettings.Encoding, ExportSettings.BufferSize))
             using (var jsonWriter = new JsonTextWriter(writer))
             {
                 serializer.Serialize(jsonWriter, workbook);

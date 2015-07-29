@@ -73,9 +73,8 @@ namespace Kendo.Spreadsheet.Tests
                 var provider = new JsonFormatProvider();
                 provider.Export(document, stream);
 
-                stream.Seek(0, SeekOrigin.Begin);
-
-                using (var reader = new StreamReader(stream))
+                using (var streamCopy = new MemoryStream(stream.ToArray()))
+                using (var reader = new StreamReader(streamCopy))
                 {
                     var json = reader.ReadToEnd();
                     var result = JsonConvert.DeserializeObject<Workbook>(json);
@@ -98,9 +97,8 @@ namespace Kendo.Spreadsheet.Tests
                 provider.ExportSettings.Encoding = encoding;
                 provider.Export(document, stream);
 
-                stream.Seek(0, SeekOrigin.Begin);
-
-                using (var reader = new StreamReader(stream, encoding))
+                using (var streamCopy = new MemoryStream(stream.ToArray()))
+                using (var reader = new StreamReader(streamCopy, encoding))
                 {
                     var json = reader.ReadToEnd();
                     var result = JsonConvert.DeserializeObject<Workbook>(json);

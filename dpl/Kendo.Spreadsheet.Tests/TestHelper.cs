@@ -38,6 +38,6 @@ namespace Kendo.Spreadsheet.Tests
             document.ActiveWorksheet = worksheet;
 
             return document;
-        }
+        }        
     }
 }

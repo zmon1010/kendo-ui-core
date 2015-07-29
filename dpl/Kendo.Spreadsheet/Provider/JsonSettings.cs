@@ -18,7 +18,6 @@ namespace Kendo.Spreadsheet
         {
             Encoding = System.Text.Encoding.UTF8;
             BufferSize = 4096;
-            LeaveOpen = true;
         }
 
         /// <summary>
@@ -32,11 +31,5 @@ namespace Kendo.Spreadsheet
         /// The default value is 4096.
         /// </summary>
         public int BufferSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets a flag that inidicates whether to leave the stream open after the import/export operation.
-        /// The default is true.
-        /// </summary>
-        public bool LeaveOpen { get; set; }
     }
 }
