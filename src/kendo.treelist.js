@@ -946,7 +946,7 @@ var __meta__ = {
                 autoScroll: true,
                 filter: "tbody>tr",
                 itemSelector: "tr",
-                allowedContainers: "#" + this.wrapper.attr("id"),
+                allowedContainers: this.wrapper,
                 hintText: function(row) {
                     var text = function() { return $(this).text(); };
                     var separator = "<span class='k-header k-drag-separator' />";
